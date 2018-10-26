@@ -1,2 +1,3 @@
 # motrpac-frontend
-User interface and Frontend for MoTrPAC Bioinformatics Center 
+**User interface and Frontend for MoTrPAC Bioinformatics Center**
+ 
