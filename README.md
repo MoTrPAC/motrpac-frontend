@@ -15,3 +15,5 @@
  * Style guide:
      - [Eslint](https://github.com/eslint/eslint) 
      - [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
+
+---
