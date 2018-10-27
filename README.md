@@ -2,9 +2,9 @@
 **User interface and Frontend for MoTrPAC Bioinformatics Center**
 ---
 
-###Software versions and styles
+### Software versions and styles
 
-####Software:
+#### Software:
 
  * [Node v10](https://github.com/nodejs/Release)
      - Check your version: `node --version`
