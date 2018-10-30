@@ -11,6 +11,7 @@
      - If the version is not 10, you can `brew install node@10` or use [nvm](https://github.com/creationix/nvm/blob/master/README.md#installation), the Node Version Manager
      
  * [React v16](https://reactjs.org/versions)
+     - Storybook used to visualize individual UI components
 
  * Style guide:
      - [Eslint](https://github.com/eslint/eslint) 
