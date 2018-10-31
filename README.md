@@ -5,9 +5,9 @@
 ### Directory Layout and Setup
 
 #### File Structure
-`.  
-├── src   
 
+.  
+├── src  
 │   ├── components: jsx UI components  
 │   ├── index.css  
 │   ├── index.js  
@@ -21,7 +21,7 @@
 ├── public  
 ├── .storybook: configuration for storybook  
 ├── .eslintrc.js: ESlint configuration  
-`
+
 
 #### Building and running
 
