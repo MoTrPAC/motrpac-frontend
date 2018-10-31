@@ -6,7 +6,8 @@
 
 #### File Structure
 `.  
-├── src  
+├── src   
+
 │   ├── components: jsx UI components  
 │   ├── index.css  
 │   ├── index.js  
