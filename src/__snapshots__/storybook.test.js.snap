@@ -1,0 +1,1839 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Drag and Drop Upload File Area  3 Files Added 1`] = `
+<div
+  className="upload-component"
+  style={
+    Object {
+      "padding": "3rem",
+    }
+  }
+>
+  <div
+    className="uploadAreaDnD "
+    onDragEnter={[Function]}
+    onDragLeave={[Function]}
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <div
+      className="row fileArea"
+    >
+      <div
+        className="col-3 fileCont"
+        id="test1.fa"
+      >
+        <div
+          className="file"
+        >
+          <button
+            className="btn xBtn btn-light"
+            onClick={[Function]}
+            type="button"
+          >
+            x
+          </button>
+          <p>
+            test1.fa
+          </p>
+        </div>
+      </div>
+      <div
+        className="col-3 fileCont"
+        id="test2.fa"
+      >
+        <div
+          className="file"
+        >
+          <button
+            className="btn xBtn btn-light"
+            onClick={[Function]}
+            type="button"
+          >
+            x
+          </button>
+          <p>
+            test2.fa
+          </p>
+        </div>
+      </div>
+      <div
+        className="col-3 fileCont"
+        id="test3.fa"
+      >
+        <div
+          className="file"
+        >
+          <button
+            className="btn xBtn btn-light"
+            onClick={[Function]}
+            type="button"
+          >
+            x
+          </button>
+          <p>
+            test3.fa
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      className="selectArea"
+    >
+      <label
+        className="btn btn-primary"
+        htmlFor="fileUpload"
+        id="fileUploadLabel"
+      >
+        Select Files
+        <input
+          id="fileUpload"
+          multiple={true}
+          name="fileUpload"
+          type="file"
+        />
+      </label>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Drag and Drop Upload File Area  Active Dragging 1`] = `
+<div
+  className="upload-component"
+  style={
+    Object {
+      "padding": "3rem",
+    }
+  }
+>
+  <div
+    className="uploadAreaDnD dragging"
+    onDragEnter={[Function]}
+    onDragLeave={[Function]}
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <div
+      className="row fileArea"
+    >
+      <div
+        className="centered noFiles"
+      >
+        <br />
+        <br />
+        <br />
+        <br />
+        <span
+          className="oi oi-cloud-upload"
+        />
+        <h3>
+          Drag and drop files here
+          <br />
+          Or
+        </h3>
+      </div>
+    </div>
+    <div
+      className="selectArea"
+    >
+      <label
+        className="btn btn-primary"
+        htmlFor="fileUpload"
+        id="fileUploadLabel"
+      >
+        Select Files
+        <input
+          id="fileUpload"
+          multiple={true}
+          name="fileUpload"
+          type="file"
+        />
+      </label>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Drag and Drop Upload File Area  No Files Added 1`] = `
+<div
+  className="upload-component"
+  style={
+    Object {
+      "padding": "3rem",
+    }
+  }
+>
+  <div
+    className="uploadAreaDnD "
+    onDragEnter={[Function]}
+    onDragLeave={[Function]}
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <div
+      className="row fileArea"
+    >
+      <div
+        className="centered noFiles"
+      >
+        <br />
+        <br />
+        <br />
+        <br />
+        <span
+          className="oi oi-cloud-upload"
+        />
+        <h3>
+          Drag and drop files here
+          <br />
+          Or
+        </h3>
+      </div>
+    </div>
+    <div
+      className="selectArea"
+    >
+      <label
+        className="btn btn-primary"
+        htmlFor="fileUpload"
+        id="fileUploadLabel"
+      >
+        Select Files
+        <input
+          id="fileUpload"
+          multiple={true}
+          name="fileUpload"
+          type="file"
+        />
+      </label>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Drag and Drop Upload File Area  Overflow Files 1`] = `
+<div
+  className="upload-component"
+  style={
+    Object {
+      "padding": "3rem",
+    }
+  }
+>
+  <div
+    className="uploadAreaDnD "
+    onDragEnter={[Function]}
+    onDragLeave={[Function]}
+    onDragOver={[Function]}
+    onDrop={[Function]}
+  >
+    <div
+      className="row fileArea"
+    >
+      <div
+        className="col-3 fileCont"
+        id="test1.fa"
+      >
+        <div
+          className="file"
+        >
+          <button
+            className="btn xBtn btn-light"
+            onClick={[Function]}
+            type="button"
+          >
+            x
+          </button>
+          <p>
+            test1.fa
+          </p>
+        </div>
+      </div>
+      <div
+        className="col-3 fileCont"
+        id="test2.fa"
+      >
+        <div
+          className="file"
+        >
+          <button
+            className="btn xBtn btn-light"
+            onClick={[Function]}
+            type="button"
+          >
+            x
+          </button>
+          <p>
+            test2.fa
+          </p>
+        </div>
+      </div>
+      <div
+        className="col-3 fileCont"
+        id="test3.fa"
+      >
+        <div
+          className="file"
+        >
+          <button
+            className="btn xBtn btn-light"
+            onClick={[Function]}
+            type="button"
+          >
+            x
+          </button>
+          <p>
+            test3.fa
+          </p>
+        </div>
+      </div>
+      <div
+        className="col-3 fileCont"
+        id="test4.fa"
+      >
+        <div
+          className="file"
+        >
+          <button
+            className="btn xBtn btn-light"
+            onClick={[Function]}
+            type="button"
+          >
+            x
+          </button>
+          <p>
+            test4.fa
+          </p>
+        </div>
+      </div>
+      <div
+        className="col-3 fileCont"
+        id="test5.fa"
+      >
+        <div
+          className="file"
+        >
+          <button
+            className="btn xBtn btn-light"
+            onClick={[Function]}
+            type="button"
+          >
+            x
+          </button>
+          <p>
+            test5.fa
+          </p>
+        </div>
+      </div>
+      <div
+        className="col-3 fileCont"
+        id="test6.fa"
+      >
+        <div
+          className="file"
+        >
+          <button
+            className="btn xBtn btn-light"
+            onClick={[Function]}
+            type="button"
+          >
+            x
+          </button>
+          <p>
+            test6.fa
+          </p>
+        </div>
+      </div>
+      <div
+        className="col-3 fileCont"
+        id="test7.fa"
+      >
+        <div
+          className="file"
+        >
+          <button
+            className="btn xBtn btn-light"
+            onClick={[Function]}
+            type="button"
+          >
+            x
+          </button>
+          <p>
+            test7.fa
+          </p>
+        </div>
+      </div>
+      <div
+        className="col-3 fileCont"
+        id="test8.fa"
+      >
+        <div
+          className="file"
+        >
+          <button
+            className="btn xBtn btn-light"
+            onClick={[Function]}
+            type="button"
+          >
+            x
+          </button>
+          <p>
+            test8.fa
+          </p>
+        </div>
+      </div>
+      <div
+        className="col-3 fileCont"
+        id="test9.fa"
+      >
+        <div
+          className="file"
+        >
+          <button
+            className="btn xBtn btn-light"
+            onClick={[Function]}
+            type="button"
+          >
+            x
+          </button>
+          <p>
+            test9.fa
+          </p>
+        </div>
+      </div>
+      <div
+        className="col-3 fileCont"
+        id="test10.fa"
+      >
+        <div
+          className="file"
+        >
+          <button
+            className="btn xBtn btn-light"
+            onClick={[Function]}
+            type="button"
+          >
+            x
+          </button>
+          <p>
+            test10.fa
+          </p>
+        </div>
+      </div>
+      <div
+        className="col-3 fileCont"
+        id="test11.fa"
+      >
+        <div
+          className="file"
+        >
+          <button
+            className="btn xBtn btn-light"
+            onClick={[Function]}
+            type="button"
+          >
+            x
+          </button>
+          <p>
+            test11.fa
+          </p>
+        </div>
+      </div>
+      <div
+        className="col-3 fileCont"
+        id="test12.fa"
+      >
+        <div
+          className="file"
+        >
+          <button
+            className="btn xBtn btn-light"
+            onClick={[Function]}
+            type="button"
+          >
+            x
+          </button>
+          <p>
+            test12.fa
+          </p>
+        </div>
+      </div>
+      <div
+        className="col-3 fileCont"
+        id="test13.fa"
+      >
+        <div
+          className="file"
+        >
+          <button
+            className="btn xBtn btn-light"
+            onClick={[Function]}
+            type="button"
+          >
+            x
+          </button>
+          <p>
+            test13.fa
+          </p>
+        </div>
+      </div>
+      <div
+        className="col-3 fileCont"
+        id="test14.fa"
+      >
+        <div
+          className="file"
+        >
+          <button
+            className="btn xBtn btn-light"
+            onClick={[Function]}
+            type="button"
+          >
+            x
+          </button>
+          <p>
+            test14.fa
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      className="selectArea"
+    >
+      <label
+        className="btn btn-primary"
+        htmlFor="fileUpload"
+        id="fileUploadLabel"
+      >
+        Select Files
+        <input
+          id="fileUpload"
+          multiple={true}
+          name="fileUpload"
+          type="file"
+        />
+      </label>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Upload Form Empty Form 1`] = `
+<div
+  className="upload-component"
+  style={
+    Object {
+      "padding": "3rem",
+    }
+  }
+>
+  <form
+    className="needs-validation"
+    id="uploadForm"
+    name="uploadForm"
+    noValidate={true}
+    onSubmit={[Function]}
+  >
+    <div
+      className="form-group"
+    >
+      <div
+        className="invalid-feedback"
+      >
+        Field Required
+      </div>
+      <label
+        htmlFor="data-type"
+      >
+        Data Type *
+        <input
+          className="form-control"
+          id="dataType"
+          placeholder="Ex. Metabolomics"
+          required={true}
+          type="text"
+          value=""
+        />
+      </label>
+    </div>
+    <div
+      className="form-group"
+    >
+      <div
+        className="invalid-feedback"
+      >
+        Field Required
+      </div>
+      <label
+        htmlFor="identifier"
+      >
+        Identifier(s) * – comma seperate if multiple
+        <input
+          className="form-control"
+          id="identifier"
+          placeholder="Ex: AS213141"
+          required={true}
+          type="text"
+          value=""
+        />
+      </label>
+    </div>
+    <div
+      className="form-group"
+    >
+      <div
+        className="invalid-feedback"
+      >
+        Field Required
+      </div>
+      <label
+        htmlFor="collection-date"
+      >
+        Collection Date *
+        <input
+          className="form-control"
+          id="collectionDate"
+          placeholder="MM/DD/YYYY"
+          required={true}
+          type="text"
+          value=""
+        />
+      </label>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        htmlFor="subject-type"
+      >
+        Subject Type *
+        <select
+          className="form-control"
+          id="subjectType"
+          value=""
+        >
+          <option
+            value="Human"
+          >
+            Human
+          </option>
+          <option
+            value="Animal"
+          >
+            Animal
+          </option>
+        </select>
+      </label>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        htmlFor="study-phase"
+      >
+        Study Phase *
+        <select
+          className="form-control"
+          id="studyPhase"
+          value=""
+        >
+          <option
+            value="1"
+          >
+            1
+          </option>
+          <option
+            value="1A"
+          >
+            1A
+          </option>
+          <option
+            value="1B"
+          >
+            1B
+          </option>
+          <option
+            value="2"
+          >
+            2
+          </option>
+          <option
+            value="2A"
+          >
+            2A
+          </option>
+          <option
+            value="2B"
+          >
+            2B
+          </option>
+          <option
+            value="N/A"
+          >
+            N/A
+          </option>
+          <option
+            value="other"
+          >
+            Other
+          </option>
+        </select>
+      </label>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        htmlFor="description"
+      >
+        Description
+        <textarea
+          className="form-control"
+          id="description"
+          placeholder="Description"
+          type="textarea"
+        />
+      </label>
+    </div>
+    <input
+      id="submit-form"
+      style={
+        Object {
+          "visibility": "hidden",
+        }
+      }
+      type="submit"
+    />
+  </form>
+</div>
+`;
+
+exports[`Storyshots Upload Form Unfilled Error 1`] = `
+<div
+  className="upload-component"
+  style={
+    Object {
+      "padding": "3rem",
+    }
+  }
+>
+  <form
+    className="was-validated"
+    id="uploadForm"
+    name="uploadForm"
+    noValidate={true}
+    onSubmit={[Function]}
+  >
+    <div
+      className="form-group"
+    >
+      <div
+        className="invalid-feedback"
+      >
+        Field Required
+      </div>
+      <label
+        htmlFor="data-type"
+      >
+        Data Type *
+        <input
+          className="form-control"
+          id="dataType"
+          placeholder="Ex. Metabolomics"
+          required={true}
+          type="text"
+          value=""
+        />
+      </label>
+    </div>
+    <div
+      className="form-group"
+    >
+      <div
+        className="invalid-feedback"
+      >
+        Field Required
+      </div>
+      <label
+        htmlFor="identifier"
+      >
+        Identifier(s) * – comma seperate if multiple
+        <input
+          className="form-control"
+          id="identifier"
+          placeholder="Ex: AS213141"
+          required={true}
+          type="text"
+          value=""
+        />
+      </label>
+    </div>
+    <div
+      className="form-group"
+    >
+      <div
+        className="invalid-feedback"
+      >
+        Field Required
+      </div>
+      <label
+        htmlFor="collection-date"
+      >
+        Collection Date *
+        <input
+          className="form-control"
+          id="collectionDate"
+          placeholder="MM/DD/YYYY"
+          required={true}
+          type="text"
+          value=""
+        />
+      </label>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        htmlFor="subject-type"
+      >
+        Subject Type *
+        <select
+          className="form-control"
+          id="subjectType"
+          value=""
+        >
+          <option
+            value="Human"
+          >
+            Human
+          </option>
+          <option
+            value="Animal"
+          >
+            Animal
+          </option>
+        </select>
+      </label>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        htmlFor="study-phase"
+      >
+        Study Phase *
+        <select
+          className="form-control"
+          id="studyPhase"
+          value=""
+        >
+          <option
+            value="1"
+          >
+            1
+          </option>
+          <option
+            value="1A"
+          >
+            1A
+          </option>
+          <option
+            value="1B"
+          >
+            1B
+          </option>
+          <option
+            value="2"
+          >
+            2
+          </option>
+          <option
+            value="2A"
+          >
+            2A
+          </option>
+          <option
+            value="2B"
+          >
+            2B
+          </option>
+          <option
+            value="N/A"
+          >
+            N/A
+          </option>
+          <option
+            value="other"
+          >
+            Other
+          </option>
+        </select>
+      </label>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        htmlFor="description"
+      >
+        Description
+        <textarea
+          className="form-control"
+          id="description"
+          placeholder="Description"
+          type="textarea"
+        />
+      </label>
+    </div>
+    <input
+      id="submit-form"
+      style={
+        Object {
+          "visibility": "hidden",
+        }
+      }
+      type="submit"
+    />
+  </form>
+</div>
+`;
+
+exports[`Storyshots Upload List Empty List 1`] = `
+<div
+  className="upload-component"
+  style={
+    Object {
+      "padding": "3rem",
+    }
+  }
+>
+  <div
+    className="noListItems centered"
+  >
+    <br />
+    <br />
+    <br />
+    <h2>
+      Upload files and they will appear here!
+    </h2>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Upload List Filled Test List 1`] = `
+<div
+  className="upload-component"
+  style={
+    Object {
+      "padding": "3rem",
+    }
+  }
+>
+  <table
+    className="table table-hover uploadList"
+  >
+    <thead>
+      <tr>
+        <th
+          scope="col"
+        >
+          File Name
+        </th>
+        <th
+          scope="col"
+        >
+          Status
+        </th>
+        <th
+          className="centered"
+          scope="col"
+        >
+          Upload Successful
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        className="uploadItem"
+      >
+        <td>
+          test1.fa
+        </td>
+        <td>
+          Uploading...
+        </td>
+        <td
+          className="centered"
+        >
+          <span
+            className="oi loadIndicator oi-loop-circular"
+          />
+        </td>
+      </tr>
+      <tr
+        className="uploadItem"
+      >
+        <td>
+          test2.fa
+        </td>
+        <td>
+          Error: 1234
+        </td>
+        <td
+          className="centered"
+        >
+          <span
+            className="oi oi-warning"
+          />
+        </td>
+      </tr>
+      <tr
+        className="uploadItem"
+      >
+        <td>
+          test3.fa
+        </td>
+        <td>
+          Upload Successful
+        </td>
+        <td
+          className="centered"
+        >
+          <span
+            className="oi oi-check"
+          />
+        </td>
+      </tr>
+      <tr
+        className="uploadItem"
+      >
+        <td>
+          test4.fa
+        </td>
+        <td>
+          Status Undefined
+        </td>
+        <td
+          className="centered"
+        >
+          <span
+            className="oi oi-question-mark"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`Storyshots Upload List Items Failed 1`] = `
+<table
+  className="upload-component table table-hover uploadList"
+>
+  <thead>
+    <tr>
+      <th
+        scope="col"
+      >
+        File Name
+      </th>
+      <th
+        scope="col"
+      >
+        Status
+      </th>
+      <th
+        className="centered"
+        scope="col"
+      >
+        Upload Successful
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      className="uploadItem"
+    >
+      <td>
+        test2.fa
+      </td>
+      <td>
+        Error: 1234
+      </td>
+      <td
+        className="centered"
+      >
+        <span
+          className="oi oi-warning"
+        />
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`Storyshots Upload List Items Successful Upload 1`] = `
+<table
+  className="upload-component table table-hover uploadList"
+>
+  <thead>
+    <tr>
+      <th
+        scope="col"
+      >
+        File Name
+      </th>
+      <th
+        scope="col"
+      >
+        Status
+      </th>
+      <th
+        className="centered"
+        scope="col"
+      >
+        Upload Successful
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      className="uploadItem"
+    >
+      <td>
+        test3.fa
+      </td>
+      <td>
+        Upload Successful
+      </td>
+      <td
+        className="centered"
+      >
+        <span
+          className="oi oi-check"
+        />
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`Storyshots Upload List Items Unknown Status 1`] = `
+<table
+  className="upload-component table table-hover uploadList"
+>
+  <thead>
+    <tr>
+      <th
+        scope="col"
+      >
+        File Name
+      </th>
+      <th
+        scope="col"
+      >
+        Status
+      </th>
+      <th
+        className="centered"
+        scope="col"
+      >
+        Upload Successful
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      className="uploadItem"
+    >
+      <td>
+        test4.fa
+      </td>
+      <td>
+        Status Undefined
+      </td>
+      <td
+        className="centered"
+      >
+        <span
+          className="oi oi-question-mark"
+        />
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`Storyshots Upload List Items Uploading 1`] = `
+<table
+  className="upload-component table table-hover uploadList"
+>
+  <thead>
+    <tr>
+      <th
+        scope="col"
+      >
+        File Name
+      </th>
+      <th
+        scope="col"
+      >
+        Status
+      </th>
+      <th
+        className="centered"
+        scope="col"
+      >
+        Upload Successful
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      className="uploadItem"
+    >
+      <td>
+        test1.fa
+      </td>
+      <td>
+        Uploading...
+      </td>
+      <td
+        className="centered"
+      >
+        <span
+          className="oi loadIndicator oi-loop-circular"
+        />
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`Storyshots Upload Screen Default 1`] = `
+<div
+  className="upload-component container"
+  style={
+    Object {
+      "padding": "1em",
+    }
+  }
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-4"
+    >
+      <form
+        className="needs-validation"
+        id="uploadForm"
+        name="uploadForm"
+        noValidate={true}
+        onSubmit={[Function]}
+      >
+        <div
+          className="form-group"
+        >
+          <div
+            className="invalid-feedback"
+          >
+            Field Required
+          </div>
+          <label
+            htmlFor="data-type"
+          >
+            Data Type *
+            <input
+              className="form-control"
+              id="dataType"
+              placeholder="Ex. Metabolomics"
+              required={true}
+              type="text"
+            />
+          </label>
+        </div>
+        <div
+          className="form-group"
+        >
+          <div
+            className="invalid-feedback"
+          >
+            Field Required
+          </div>
+          <label
+            htmlFor="identifier"
+          >
+            Identifier(s) * – comma seperate if multiple
+            <input
+              className="form-control"
+              id="identifier"
+              placeholder="Ex: AS213141"
+              required={true}
+              type="text"
+            />
+          </label>
+        </div>
+        <div
+          className="form-group"
+        >
+          <div
+            className="invalid-feedback"
+          >
+            Field Required
+          </div>
+          <label
+            htmlFor="collection-date"
+          >
+            Collection Date *
+            <input
+              className="form-control"
+              id="collectionDate"
+              placeholder="MM/DD/YYYY"
+              required={true}
+              type="text"
+            />
+          </label>
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="subject-type"
+          >
+            Subject Type *
+            <select
+              className="form-control"
+              id="subjectType"
+            >
+              <option
+                value="Human"
+              >
+                Human
+              </option>
+              <option
+                value="Animal"
+              >
+                Animal
+              </option>
+            </select>
+          </label>
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="study-phase"
+          >
+            Study Phase *
+            <select
+              className="form-control"
+              id="studyPhase"
+            >
+              <option
+                value="1"
+              >
+                1
+              </option>
+              <option
+                value="1A"
+              >
+                1A
+              </option>
+              <option
+                value="1B"
+              >
+                1B
+              </option>
+              <option
+                value="2"
+              >
+                2
+              </option>
+              <option
+                value="2A"
+              >
+                2A
+              </option>
+              <option
+                value="2B"
+              >
+                2B
+              </option>
+              <option
+                value="N/A"
+              >
+                N/A
+              </option>
+              <option
+                value="other"
+              >
+                Other
+              </option>
+            </select>
+          </label>
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="description"
+          >
+            Description
+            <textarea
+              className="form-control"
+              id="description"
+              placeholder="Description"
+              type="textarea"
+            />
+          </label>
+        </div>
+        <input
+          id="submit-form"
+          style={
+            Object {
+              "visibility": "hidden",
+            }
+          }
+          type="submit"
+        />
+      </form>
+    </div>
+    <div
+      className="col-8 centered"
+    >
+      <br />
+      <div
+        className="uploadAreaDnD "
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+      >
+        <div
+          className="row fileArea"
+        >
+          <div
+            className="centered noFiles"
+          >
+            <br />
+            <br />
+            <br />
+            <br />
+            <span
+              className="oi oi-cloud-upload"
+            />
+            <h3>
+              Drag and drop files here
+              <br />
+              Or
+            </h3>
+          </div>
+        </div>
+        <div
+          className="selectArea"
+        >
+          <label
+            className="btn btn-primary"
+            htmlFor="fileUpload"
+            id="fileUploadLabel"
+          >
+            Select Files
+            <input
+              id="fileUpload"
+              multiple={true}
+              name="fileUpload"
+              onChange={[Function]}
+              type="file"
+            />
+          </label>
+        </div>
+      </div>
+      <br />
+      <br />
+      <label
+        className="btn btn-success"
+        htmlFor="submit-form"
+        tabIndex={0}
+      >
+        Upload
+      </label>
+    </div>
+    <div
+      className="col-12"
+    >
+      <h3 />
+      <div
+        className="noListItems centered"
+      >
+        <br />
+        <br />
+        <br />
+        <h2>
+          Upload files and they will appear here!
+        </h2>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
+<div
+  className="upload-component container"
+  style={
+    Object {
+      "padding": "1em",
+    }
+  }
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-4"
+    >
+      <form
+        className="needs-validation"
+        id="uploadForm"
+        name="uploadForm"
+        noValidate={true}
+        onSubmit={[Function]}
+      >
+        <div
+          className="form-group"
+        >
+          <div
+            className="invalid-feedback"
+          >
+            Field Required
+          </div>
+          <label
+            htmlFor="data-type"
+          >
+            Data Type *
+            <input
+              className="form-control"
+              id="dataType"
+              placeholder="Ex. Metabolomics"
+              required={true}
+              type="text"
+              value="ATAC-Seq"
+            />
+          </label>
+        </div>
+        <div
+          className="form-group"
+        >
+          <div
+            className="invalid-feedback"
+          >
+            Field Required
+          </div>
+          <label
+            htmlFor="identifier"
+          >
+            Identifier(s) * – comma seperate if multiple
+            <input
+              className="form-control"
+              id="identifier"
+              placeholder="Ex: AS213141"
+              required={true}
+              type="text"
+              value="AS12313"
+            />
+          </label>
+        </div>
+        <div
+          className="form-group"
+        >
+          <div
+            className="invalid-feedback"
+          >
+            Field Required
+          </div>
+          <label
+            htmlFor="collection-date"
+          >
+            Collection Date *
+            <input
+              className="form-control"
+              id="collectionDate"
+              placeholder="MM/DD/YYYY"
+              required={true}
+              type="text"
+              value="10/23/18"
+            />
+          </label>
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="subject-type"
+          >
+            Subject Type *
+            <select
+              className="form-control"
+              id="subjectType"
+              value="Animal"
+            >
+              <option
+                value="Human"
+              >
+                Human
+              </option>
+              <option
+                value="Animal"
+              >
+                Animal
+              </option>
+            </select>
+          </label>
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="study-phase"
+          >
+            Study Phase *
+            <select
+              className="form-control"
+              id="studyPhase"
+              value="2"
+            >
+              <option
+                value="1"
+              >
+                1
+              </option>
+              <option
+                value="1A"
+              >
+                1A
+              </option>
+              <option
+                value="1B"
+              >
+                1B
+              </option>
+              <option
+                value="2"
+              >
+                2
+              </option>
+              <option
+                value="2A"
+              >
+                2A
+              </option>
+              <option
+                value="2B"
+              >
+                2B
+              </option>
+              <option
+                value="N/A"
+              >
+                N/A
+              </option>
+              <option
+                value="other"
+              >
+                Other
+              </option>
+            </select>
+          </label>
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="description"
+          >
+            Description
+            <textarea
+              className="form-control"
+              id="description"
+              placeholder="Description"
+              type="textarea"
+            />
+          </label>
+        </div>
+        <input
+          id="submit-form"
+          style={
+            Object {
+              "visibility": "hidden",
+            }
+          }
+          type="submit"
+        />
+      </form>
+    </div>
+    <div
+      className="col-8 centered"
+    >
+      <br />
+      <div
+        className="uploadAreaDnD "
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+      >
+        <div
+          className="row fileArea"
+        >
+          <div
+            className="centered noFiles"
+          >
+            <br />
+            <br />
+            <br />
+            <br />
+            <span
+              className="oi oi-cloud-upload"
+            />
+            <h3>
+              Drag and drop files here
+              <br />
+              Or
+            </h3>
+          </div>
+        </div>
+        <div
+          className="selectArea"
+        >
+          <label
+            className="btn btn-primary"
+            htmlFor="fileUpload"
+            id="fileUploadLabel"
+          >
+            Select Files
+            <input
+              id="fileUpload"
+              multiple={true}
+              name="fileUpload"
+              onChange={[Function]}
+              type="file"
+            />
+          </label>
+        </div>
+      </div>
+      <br />
+      <br />
+      <label
+        className="btn btn-success"
+        htmlFor="submit-form"
+        tabIndex={0}
+      >
+        Upload
+      </label>
+    </div>
+    <div
+      className="col-12"
+    >
+      <h3>
+        AS12313
+      </h3>
+      <table
+        className="table table-hover uploadList"
+      >
+        <thead>
+          <tr>
+            <th
+              scope="col"
+            >
+              File Name
+            </th>
+            <th
+              scope="col"
+            >
+              Status
+            </th>
+            <th
+              className="centered"
+              scope="col"
+            >
+              Upload Successful
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            className="uploadItem"
+          >
+            <td>
+              test1.fa
+            </td>
+            <td>
+              Uploading...
+            </td>
+            <td
+              className="centered"
+            >
+              <span
+                className="oi loadIndicator oi-loop-circular"
+              />
+            </td>
+          </tr>
+          <tr
+            className="uploadItem"
+          >
+            <td>
+              test2.fa
+            </td>
+            <td>
+              Error: 1234
+            </td>
+            <td
+              className="centered"
+            >
+              <span
+                className="oi oi-warning"
+              />
+            </td>
+          </tr>
+          <tr
+            className="uploadItem"
+          >
+            <td>
+              test3.fa
+            </td>
+            <td>
+              Upload Successful
+            </td>
+            <td
+              className="centered"
+            >
+              <span
+                className="oi oi-check"
+              />
+            </td>
+          </tr>
+          <tr
+            className="uploadItem"
+          >
+            <td>
+              test4.fa
+            </td>
+            <td>
+              Status Undefined
+            </td>
+            <td
+              className="centered"
+            >
+              <span
+                className="oi oi-question-mark"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;

@@ -2,6 +2,40 @@
 **User interface and Frontend for MoTrPAC Bioinformatics Center**
 ---
 
+### Directory Layout and Setup
+
+#### File Structure
+`.  
+├── src  
+│   ├── components: jsx UI components  
+│   ├── index.css  
+│   ├── index.js  
+│   ├── logo.svg  
+│   ├── main.css: Compiled from sass/main.sass  
+│   ├── reducers.js: Handles logic for redux store  
+│   ├── sass: source sass styling  
+│   ├── stories: UI visual tests for storybook  
+│   ├── storybook.test.js: initialize snapshots for storybook tests  
+│   └── testData: Mock data  
+├── public  
+├── .storybook: configuration for storybook  
+├── .eslintrc.js: ESlint configuration  
+`
+
+#### Building and running
+
+ * Running Storybook:
+   - `yarn run storybook`
+   - runs storybook server at localhost:9009
+
+ * testing:
+   - `yarn test`
+   - runs tests and storybook snapshots
+
+ * Building CSS:
+   - `yarn sass`
+   - compiles sass from src/sass/main.sass to src/main.css
+
 ### Software versions and styles
 
 #### Software:
