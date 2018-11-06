@@ -10,7 +10,11 @@
             "name": "test2.fa"
         },
         "status":"FAILED",
-        "errorCode": "1234"
+        "error": {
+            "code": "1234",
+            "message": "This error occurs when… \n Contact … with comments/questions.",
+            "title": "Descriptive Title"
+        }
     },
     {
         "file": {

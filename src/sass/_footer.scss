@@ -1,0 +1,28 @@
+
+.copyright {
+  font-size: 75%;
+  text-align: center;
+  p { 
+    position: relative;
+    top: 80%;
+  }
+}
+footer {
+  background-color: $gray-semi-transparent;
+  color: white;
+  .rightAlign {
+    text-align: right;
+  }
+}
+.logInOutBtn {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-weight: $heavy-weight;
+  position: relative;
+  top:30%;
+  font-size:120%;
+}
+.componentHolder {
+  min-height: 50vh;
+}

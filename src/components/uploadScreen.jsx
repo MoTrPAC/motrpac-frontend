@@ -13,6 +13,7 @@ import UploadAreaDnD from './uploadAreaDnD';
 function UploadScreen({
   dragging,
   validated,
+  submitted,
   formValues,
   files,
   uploadFiles,
@@ -26,7 +27,12 @@ function UploadScreen({
   const screen = (
     <div className="row">
       <div className="col-4">
-        <UploadForm validated={validated} formValues={formValues} handleSubmit={onFormSubmit} />
+        <UploadForm
+          validated={validated}
+          submitted={submitted}
+          formValues={formValues}
+          handleSubmit={onFormSubmit}
+        />
       </div>
       <div className="col-8 centered">
         <br />
@@ -54,6 +60,7 @@ function UploadScreen({
 
 UploadScreen.propTypes = {
   dragging: PropTypes.number.isRequired,
+  submitted: PropTypes.bool,
   files: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
   })).isRequired,
@@ -63,6 +70,9 @@ UploadScreen.propTypes = {
     collectionDate: PropTypes.string,
     subjectType: PropTypes.string,
     studyPhase: PropTypes.string,
+    submitted: PropTypes.bool,
+    rawData: PropTypes.bool,
+    processedData: PropTypes.bool,
   }),
   uploadFiles: PropTypes.arrayOf(PropTypes.shape({
     file: PropTypes.file,

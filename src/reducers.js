@@ -68,6 +68,7 @@ function UploadReducer(state = {}, action) {
         ...state,
         formValues: formData,
         validated: true,
+        submitted: true,
         uploadFiles: [...uploadingFiles.filter(UniqueUploadCheck), ...state.uploadFiles],
         files: [],
       };

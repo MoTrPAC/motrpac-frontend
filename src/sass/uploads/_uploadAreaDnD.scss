@@ -4,13 +4,13 @@
   border: 1px dashed $dblue;
   border-radius: 5px;
   padding: 15px;
-  background-color: $dblue-transparent;  
+  background-color: $blue-transparent;  
   opacity: 17%;
   display:inline-block;
 }
 .dragging {
   background-color: white;
-  border: 3px dashed $dblue;
+  border: 3px dashed $blue;
 }
 #fileUpload {
   display: none;
@@ -25,13 +25,13 @@
 }
 .oi-cloud-upload {
   font-size: 500%;
-  color: $dblue-semi-transparent;
+  color: $blue-semi-transparent;
 }
 .noFiles {
   width:100%;
 }
 h3 {
-  color: $dblue-semi-transparent;
+  color: $blue-semi-transparent;
 }
 .fileArea h2 {
   text-align: center;
@@ -40,11 +40,11 @@ h3 {
   text-align: center;
   width:100%;
   padding-top:10px;
-  border-top: 1px solid $dblue;
+  border-top: 1px solid $blue;
 }
 .selectArea .btn-primary {
-  background-color: $dblue;
-  border-color: $dblue;
+  background-color: $blue;
+  border-color: $blue;
   text-align: center;
 
 }
@@ -59,7 +59,7 @@ h3 {
 .file {
   height: 100%;
   border-radius: 0px 0px 0px 20px;
-  background-color: $dblue;
+  background-color: $blue;
   color:white;
   overflow-wrap: break-word; 
   overflow: hidden;

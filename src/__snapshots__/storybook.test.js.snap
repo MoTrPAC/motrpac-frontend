@@ -519,6 +519,604 @@ exports[`Storyshots Drag and Drop Upload File Area  Overflow Files 1`] = `
 </div>
 `;
 
+exports[`Storyshots Footer Logged in 1`] = `
+<footer
+  className="footer"
+>
+  <div
+    className="container-fluid"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col"
+      >
+        <p>
+          Data Hub designed and maintained by the MoTrPAC BioInformatics Center at
+          <a
+            href="https://www.stanford.edu/"
+            target="_new"
+          >
+             Stanford University
+          </a>
+        </p>
+        <p>
+          Funded by the
+          <a
+            href="https://commonfund.nih.gov/"
+            target="_new"
+          >
+             NIH Common Fund
+          </a>
+        </p>
+      </div>
+      <div
+        className="col copyright"
+      >
+        <p>
+          © XXXX 2018
+        </p>
+      </div>
+      <div
+        className="col rightAlign"
+      >
+        <button
+          className="logInOutBtn btn"
+          type="button"
+        >
+          Test User Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</footer>
+`;
+
+exports[`Storyshots Footer default 1`] = `
+<footer
+  className="footer"
+>
+  <div
+    className="container-fluid"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col"
+      >
+        <p>
+          Data Hub designed and maintained by the MoTrPAC BioInformatics Center at
+          <a
+            href="https://www.stanford.edu/"
+            target="_new"
+          >
+             Stanford University
+          </a>
+        </p>
+        <p>
+          Funded by the
+          <a
+            href="https://commonfund.nih.gov/"
+            target="_new"
+          >
+             NIH Common Fund
+          </a>
+        </p>
+      </div>
+      <div
+        className="col copyright"
+      >
+        <p>
+          © XXXX 2018
+        </p>
+      </div>
+      <div
+        className="col rightAlign"
+      >
+        <button
+          className="logInOutBtn btn"
+          type="button"
+        >
+          Submitter Login
+        </button>
+      </div>
+    </div>
+  </div>
+</footer>
+`;
+
+exports[`Storyshots Landing Page default 1`] = `
+<div
+  className="App"
+>
+  <header>
+    <nav
+      className="navbar navbar-expand-lg navbar-dark"
+    >
+      <div
+        className="container"
+      >
+        <a
+          className="navbar-brand siteTitle"
+          href="#"
+        >
+          MoTrPAC 
+          <span
+            className="light"
+          >
+            Data Hub
+          </span>
+        </a>
+        <button
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          className="navbar-toggler"
+          data-target="#navbarSupportedContent"
+          data-toggle="collapse"
+          type="button"
+        >
+          <span
+            className="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          className="collapse navbar-collapse flex-row-reverse"
+          id="navbarSupportedContent"
+        >
+          <ul
+            className="navbar-nav"
+          >
+            
+            <li
+              className="nav-item navItem"
+            >
+              <a
+                className="nav-link"
+                href=""
+              >
+                Data
+              </a>
+            </li>
+            <li
+              className="nav-item navItem dropdown"
+            >
+              <a
+                className="nav-link dropdown-toggle"
+                data-toggle="dropdown"
+                href=""
+                id="navbarDropdownMenuLink"
+                role="button"
+              >
+                About
+              </a>
+              <div
+                aria-labelledby="navbarDropdownMenuLink"
+                className="dropdown-menu"
+              >
+                <a
+                  className="dropdown-item"
+                  href=""
+                >
+                  Useful Links
+                </a>
+                <a
+                  className="dropdown-item"
+                  href=""
+                >
+                  Who we are
+                </a>
+              </div>
+            </li>
+            <li
+              className="nav-item navItem"
+            >
+              <a
+                className="nav-link"
+                href=""
+              >
+                Contact
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div
+    className="componentHolder"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="row welcome"
+      >
+        <div
+          className="col-8"
+        >
+          <h3
+            className="light"
+          >
+            Welcome to the MoTrPAC Data Hub
+          </h3>
+        </div>
+      </div>
+      <div
+        className="row Landinginfo"
+      >
+        <div
+          className="col whatis"
+        >
+          <h5
+            className="heavy"
+          >
+            What is MoTrPAC?
+          </h5>
+          <p>
+            MoTrPAC is a national research consortium designed to discover and perform preliminary characterization of the range of molecular transducers (the “molecular map”) that underlie the effects of physical activity in humans. The program’s goal is to study the molecular changes that occur during and after exercise and ultimately to advance the understanding of how physical activity improves and preserves health.
+          </p>
+          <br />
+          <p>
+            The MoTrPAC program is supported by the NIH Common Fund and is managed by a trans-agency working group representing multiple NIH institutes and centers, led by the NIH Office of Strategic Coordination, National Institute of Arthritis and Musculoskeletal and Skin Diseases, National Institute of Diabetes and Digestive and Kidney Diseases, National Institute on Aging, and National Institute of Biomedical Imaging and Bioengineering.
+          </p>
+          <br />
+          <p>
+            For more information on all the sites associated with MoTrPAC and protocols for data collection please visit
+            <a
+              href="https://www.motrpac.org/"
+              target="_new"
+            >
+               MoTrPAC.org.
+            </a>
+          </p>
+          <br />
+        </div>
+        <div
+          className="col"
+        >
+          <div
+            className="accessDataInfo"
+          >
+            <h5
+              className="heavy"
+            >
+              Accessing Data: 
+            </h5>
+            <p>
+              Data generated to date is not yet publicly accessible. For updates when publicly accessible data are available contact us at
+              <a
+                href="mailto:MoTrPAC-data-requests@xxx.xxx"
+                target="_new"
+              >
+                 MoTrPAC-data-requests@xxx.xxx
+              </a>
+            </p>
+            <h5
+              className="heavy"
+            >
+              Uploading Data From Study Sites:
+            </h5>
+            <p>
+              If you are a member of one of the sites involved with MoTrPAC please log in using your provided ID at the link on the bottom right of this website.  If you have issues logging in please contact the bioinformatic center at
+              <a
+                href="mailto:MoTrPAC-helpdesk@xxx.xxx"
+                target="_new"
+              >
+                 MoTrPAC-helpdesk@xxx.xxx
+              </a>
+            </p>
+          </div>
+          <br />
+          <div
+            className="logoCont"
+          >
+            <img
+              alt="MoTrPAC Logo"
+              className="img-fluid"
+              src="MoTrPAC_horizontal.png"
+            />
+          </div>
+          <br />
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer
+    className="footer"
+  >
+    <div
+      className="container-fluid"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col"
+        >
+          <p>
+            Data Hub designed and maintained by the MoTrPAC BioInformatics Center at
+            <a
+              href="https://www.stanford.edu/"
+              target="_new"
+            >
+               Stanford University
+            </a>
+          </p>
+          <p>
+            Funded by the
+            <a
+              href="https://commonfund.nih.gov/"
+              target="_new"
+            >
+               NIH Common Fund
+            </a>
+          </p>
+        </div>
+        <div
+          className="col copyright"
+        >
+          <p>
+            © XXXX 2018
+          </p>
+        </div>
+        <div
+          className="col rightAlign"
+        >
+          <button
+            className="logInOutBtn btn"
+            type="button"
+          >
+            Submitter Login
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+`;
+
+exports[`Storyshots Navbar Logged in 1`] = `
+<nav
+  className="navbar navbar-expand-lg navbar-dark"
+>
+  <div
+    className="container"
+  >
+    <a
+      className="navbar-brand siteTitle"
+      href="#"
+    >
+      MoTrPAC 
+      <span
+        className="light"
+      >
+        Data Hub
+      </span>
+    </a>
+    <button
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      className="navbar-toggler"
+      data-target="#navbarSupportedContent"
+      data-toggle="collapse"
+      type="button"
+    >
+      <span
+        className="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      className="collapse navbar-collapse flex-row-reverse"
+      id="navbarSupportedContent"
+    >
+      <ul
+        className="navbar-nav"
+      >
+        <li
+          className="nav-item navItem"
+        >
+          <a
+            className="nav-link"
+            href=""
+          >
+            Dashboard
+          </a>
+        </li>
+        <li
+          className="nav-item navItem dropdown"
+        >
+          <a
+            className="nav-link dropdown-toggle"
+            data-toggle="dropdown"
+            href=""
+            id="navbarDropdownMenuLinkAnalysis"
+            role="button"
+          >
+            Analysis
+          </a>
+          <div
+            aria-labelledby="navbarDropdownMenuLinkAnalysis"
+            className="dropdown-menu"
+          >
+            <a
+              className="dropdown-item"
+              href=""
+            >
+              Animal
+            </a>
+            <a
+              className="dropdown-item"
+              href=""
+            >
+              Human
+            </a>
+          </div>
+        </li>
+        <li
+          className="nav-item navItem"
+        >
+          <a
+            className="nav-link"
+            href=""
+          >
+            Methods
+          </a>
+        </li>
+        <li
+          className="nav-item navItem"
+        >
+          <a
+            className="nav-link"
+            href=""
+          >
+            Data
+          </a>
+        </li>
+        <li
+          className="nav-item navItem dropdown"
+        >
+          <a
+            className="nav-link dropdown-toggle"
+            data-toggle="dropdown"
+            href=""
+            id="navbarDropdownMenuLink"
+            role="button"
+          >
+            About
+          </a>
+          <div
+            aria-labelledby="navbarDropdownMenuLink"
+            className="dropdown-menu"
+          >
+            <a
+              className="dropdown-item"
+              href=""
+            >
+              Useful Links
+            </a>
+            <a
+              className="dropdown-item"
+              href=""
+            >
+              Who we are
+            </a>
+          </div>
+        </li>
+        <li
+          className="nav-item navItem"
+        >
+          <a
+            className="nav-link"
+            href=""
+          >
+            Contact
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+`;
+
+exports[`Storyshots Navbar default 1`] = `
+<nav
+  className="navbar navbar-expand-lg navbar-dark"
+>
+  <div
+    className="container"
+  >
+    <a
+      className="navbar-brand siteTitle"
+      href="#"
+    >
+      MoTrPAC 
+      <span
+        className="light"
+      >
+        Data Hub
+      </span>
+    </a>
+    <button
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      className="navbar-toggler"
+      data-target="#navbarSupportedContent"
+      data-toggle="collapse"
+      type="button"
+    >
+      <span
+        className="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      className="collapse navbar-collapse flex-row-reverse"
+      id="navbarSupportedContent"
+    >
+      <ul
+        className="navbar-nav"
+      >
+        
+        <li
+          className="nav-item navItem"
+        >
+          <a
+            className="nav-link"
+            href=""
+          >
+            Data
+          </a>
+        </li>
+        <li
+          className="nav-item navItem dropdown"
+        >
+          <a
+            className="nav-link dropdown-toggle"
+            data-toggle="dropdown"
+            href=""
+            id="navbarDropdownMenuLink"
+            role="button"
+          >
+            About
+          </a>
+          <div
+            aria-labelledby="navbarDropdownMenuLink"
+            className="dropdown-menu"
+          >
+            <a
+              className="dropdown-item"
+              href=""
+            >
+              Useful Links
+            </a>
+            <a
+              className="dropdown-item"
+              href=""
+            >
+              Who we are
+            </a>
+          </div>
+        </li>
+        <li
+          className="nav-item navItem"
+        >
+          <a
+            className="nav-link"
+            href=""
+          >
+            Contact
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+`;
+
 exports[`Storyshots Upload Form Empty Form 1`] = `
 <div
   className="upload-component"
@@ -530,6 +1128,7 @@ exports[`Storyshots Upload Form Empty Form 1`] = `
 >
   <form
     className="needs-validation"
+    disabled={false}
     id="uploadForm"
     name="uploadForm"
     noValidate={true}
@@ -547,14 +1146,135 @@ exports[`Storyshots Upload Form Empty Form 1`] = `
         htmlFor="data-type"
       >
         Data Type *
-        <input
+        <select
           className="form-control"
+          disabled={false}
           id="dataType"
-          placeholder="Ex. Metabolomics"
           required={true}
           type="text"
           value=""
-        />
+        >
+          <option
+            value="WGS"
+          >
+            WGS
+          </option>
+          <option
+            value="RNA-seq"
+          >
+            RNA-seq
+          </option>
+          <option
+            value="Methylome (Gastroc, White Fat, Liver, Heart)"
+          >
+            Methylome (Gastroc, White Fat, Liver, Heart)
+          </option>
+          <option
+            value="ATAC-Seq"
+          >
+            ATAC-Seq
+          </option>
+          <option
+            value="Untargeted RP"
+          >
+            Untargeted RP
+          </option>
+          <option
+            value="Untargeted HILIC-positive"
+          >
+            Untargeted HILIC-positive
+          </option>
+          <option
+            value="Untargeted HILIC -negative"
+          >
+            Untargeted HILIC -negative
+          </option>
+          <option
+            value="Untargeted Lipidomics"
+          >
+            Untargeted Lipidomics
+          </option>
+          <option
+            value="Targeted Acyl-CoA"
+          >
+            Targeted Acyl-CoA
+          </option>
+          <option
+            value="Targeted Acylcarnitines"
+          >
+            Targeted Acylcarnitines
+          </option>
+          <option
+            value="Targeted Ketoacids"
+          >
+            Targeted Ketoacids
+          </option>
+          <option
+            value="Targeted Organic Acids"
+          >
+            Targeted Organic Acids
+          </option>
+          <option
+            value="Targeted Eicosanoids"
+          >
+            Targeted Eicosanoids
+          </option>
+          <option
+            value="Targeted Nucleotides"
+          >
+            Targeted Nucleotides
+          </option>
+          <option
+            value="Targeted oxylipins"
+          >
+            Targeted oxylipins
+          </option>
+          <option
+            value="Targeted Amines"
+          >
+            Targeted Amines
+          </option>
+          <option
+            value="Targeted Steroids"
+          >
+            Targeted Steroids
+          </option>
+          <option
+            value="TCA Cycle"
+          >
+            TCA Cycle
+          </option>
+          <option
+            value="Targeted Ceramides"
+          >
+            Targeted Ceramides
+          </option>
+          <option
+            value="Global Proteomics"
+          >
+            Global Proteomics
+          </option>
+          <option
+            value="Global Phospho-proteomics"
+          >
+            Global Phospho-proteomics
+          </option>
+          <option
+            value="Redox proteome"
+          >
+            Redox proteome
+          </option>
+          <option
+            value="Acyl/Acetyl proteome"
+          >
+            Acyl/Acetyl proteome
+          </option>
+          <option
+            value="SomaLogic"
+          >
+            SomaLogic
+          </option>
+        </select>
       </label>
     </div>
     <div
@@ -571,6 +1291,7 @@ exports[`Storyshots Upload Form Empty Form 1`] = `
         Identifier(s) * – comma seperate if multiple
         <input
           className="form-control"
+          disabled={false}
           id="identifier"
           placeholder="Ex: AS213141"
           required={true}
@@ -593,6 +1314,7 @@ exports[`Storyshots Upload Form Empty Form 1`] = `
         Collection Date *
         <input
           className="form-control"
+          disabled={false}
           id="collectionDate"
           placeholder="MM/DD/YYYY"
           required={true}
@@ -610,6 +1332,7 @@ exports[`Storyshots Upload Form Empty Form 1`] = `
         Subject Type *
         <select
           className="form-control"
+          disabled={false}
           id="subjectType"
           value=""
         >
@@ -635,9 +1358,15 @@ exports[`Storyshots Upload Form Empty Form 1`] = `
         Study Phase *
         <select
           className="form-control"
+          disabled={false}
           id="studyPhase"
           value=""
         >
+          <option
+            value="Vanguard"
+          >
+            Vanguard
+          </option>
           <option
             value="1"
           >
@@ -659,14 +1388,356 @@ exports[`Storyshots Upload Form Empty Form 1`] = `
             2
           </option>
           <option
-            value="2A"
+            value="N/A"
           >
-            2A
+            N/A
           </option>
           <option
-            value="2B"
+            value="other"
           >
-            2B
+            Other
+          </option>
+        </select>
+      </label>
+    </div>
+    <div
+      className="form-check form-check-inline"
+    >
+      <input
+        checked={true}
+        className="form-check-input"
+        disabled={false}
+        id="rawData"
+        name="Raw"
+        type="checkbox"
+        value="Raw Data"
+      />
+      <label
+        className="form-check-label"
+        htmlFor="rawData"
+      >
+        Raw Data
+      </label>
+    </div>
+    <div
+      className="form-check form-check-inline"
+    >
+      <input
+        checked={false}
+        className="form-check-input"
+        disabled={false}
+        id="processedData"
+        name="Pre-Processed"
+        type="checkbox"
+        value="Processed Data"
+      />
+      <label
+        className="form-check-label"
+        htmlFor="processedData"
+      >
+        Pre-Processed Data
+      </label>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        htmlFor="description"
+      >
+        <br />
+        Description
+        <textarea
+          className="form-control"
+          disabled={false}
+          id="description"
+          placeholder="Description"
+          type="textarea"
+          value=""
+        />
+      </label>
+    </div>
+    <input
+      id="submit-form"
+      style={
+        Object {
+          "visibility": "hidden",
+        }
+      }
+      type="submit"
+    />
+  </form>
+</div>
+`;
+
+exports[`Storyshots Upload Form Submitted 1`] = `
+<div
+  className="upload-component"
+  style={
+    Object {
+      "padding": "3rem",
+    }
+  }
+>
+  <form
+    className="was-validated"
+    disabled={true}
+    id="uploadForm"
+    name="uploadForm"
+    noValidate={true}
+    onSubmit={[Function]}
+  >
+    <div
+      className="form-group"
+    >
+      <div
+        className="invalid-feedback"
+      >
+        Field Required
+      </div>
+      <label
+        htmlFor="data-type"
+      >
+        Data Type *
+        <select
+          className="form-control"
+          disabled={true}
+          id="dataType"
+          required={true}
+          type="text"
+          value="ATAC-Seq"
+        >
+          <option
+            value="WGS"
+          >
+            WGS
+          </option>
+          <option
+            value="RNA-seq"
+          >
+            RNA-seq
+          </option>
+          <option
+            value="Methylome (Gastroc, White Fat, Liver, Heart)"
+          >
+            Methylome (Gastroc, White Fat, Liver, Heart)
+          </option>
+          <option
+            value="ATAC-Seq"
+          >
+            ATAC-Seq
+          </option>
+          <option
+            value="Untargeted RP"
+          >
+            Untargeted RP
+          </option>
+          <option
+            value="Untargeted HILIC-positive"
+          >
+            Untargeted HILIC-positive
+          </option>
+          <option
+            value="Untargeted HILIC -negative"
+          >
+            Untargeted HILIC -negative
+          </option>
+          <option
+            value="Untargeted Lipidomics"
+          >
+            Untargeted Lipidomics
+          </option>
+          <option
+            value="Targeted Acyl-CoA"
+          >
+            Targeted Acyl-CoA
+          </option>
+          <option
+            value="Targeted Acylcarnitines"
+          >
+            Targeted Acylcarnitines
+          </option>
+          <option
+            value="Targeted Ketoacids"
+          >
+            Targeted Ketoacids
+          </option>
+          <option
+            value="Targeted Organic Acids"
+          >
+            Targeted Organic Acids
+          </option>
+          <option
+            value="Targeted Eicosanoids"
+          >
+            Targeted Eicosanoids
+          </option>
+          <option
+            value="Targeted Nucleotides"
+          >
+            Targeted Nucleotides
+          </option>
+          <option
+            value="Targeted oxylipins"
+          >
+            Targeted oxylipins
+          </option>
+          <option
+            value="Targeted Amines"
+          >
+            Targeted Amines
+          </option>
+          <option
+            value="Targeted Steroids"
+          >
+            Targeted Steroids
+          </option>
+          <option
+            value="TCA Cycle"
+          >
+            TCA Cycle
+          </option>
+          <option
+            value="Targeted Ceramides"
+          >
+            Targeted Ceramides
+          </option>
+          <option
+            value="Global Proteomics"
+          >
+            Global Proteomics
+          </option>
+          <option
+            value="Global Phospho-proteomics"
+          >
+            Global Phospho-proteomics
+          </option>
+          <option
+            value="Redox proteome"
+          >
+            Redox proteome
+          </option>
+          <option
+            value="Acyl/Acetyl proteome"
+          >
+            Acyl/Acetyl proteome
+          </option>
+          <option
+            value="SomaLogic"
+          >
+            SomaLogic
+          </option>
+        </select>
+      </label>
+    </div>
+    <div
+      className="form-group"
+    >
+      <div
+        className="invalid-feedback"
+      >
+        Field Required
+      </div>
+      <label
+        htmlFor="identifier"
+      >
+        Identifier(s) * – comma seperate if multiple
+        <input
+          className="form-control"
+          disabled={true}
+          id="identifier"
+          placeholder="Ex: AS213141"
+          required={true}
+          type="text"
+          value="100010208"
+        />
+      </label>
+    </div>
+    <div
+      className="form-group"
+    >
+      <div
+        className="invalid-feedback"
+      >
+        Field Required
+      </div>
+      <label
+        htmlFor="collection-date"
+      >
+        Collection Date *
+        <input
+          className="form-control"
+          disabled={true}
+          id="collectionDate"
+          placeholder="MM/DD/YYYY"
+          required={true}
+          type="text"
+          value="10/21/18"
+        />
+      </label>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        htmlFor="subject-type"
+      >
+        Subject Type *
+        <select
+          className="form-control"
+          disabled={true}
+          id="subjectType"
+          value="Human"
+        >
+          <option
+            value="Human"
+          >
+            Human
+          </option>
+          <option
+            value="Animal"
+          >
+            Animal
+          </option>
+        </select>
+      </label>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        htmlFor="study-phase"
+      >
+        Study Phase *
+        <select
+          className="form-control"
+          disabled={true}
+          id="studyPhase"
+          value="Vanguard"
+        >
+          <option
+            value="Vanguard"
+          >
+            Vanguard
+          </option>
+          <option
+            value="1"
+          >
+            1
+          </option>
+          <option
+            value="1A"
+          >
+            1A
+          </option>
+          <option
+            value="1B"
+          >
+            1B
+          </option>
+          <option
+            value="2"
+          >
+            2
           </option>
           <option
             value="N/A"
@@ -682,14 +1753,54 @@ exports[`Storyshots Upload Form Empty Form 1`] = `
       </label>
     </div>
     <div
+      className="form-check form-check-inline"
+    >
+      <input
+        checked={true}
+        className="form-check-input"
+        disabled={true}
+        id="rawData"
+        name="Raw"
+        type="checkbox"
+        value="Raw Data"
+      />
+      <label
+        className="form-check-label"
+        htmlFor="rawData"
+      >
+        Raw Data
+      </label>
+    </div>
+    <div
+      className="form-check form-check-inline"
+    >
+      <input
+        checked={false}
+        className="form-check-input"
+        disabled={true}
+        id="processedData"
+        name="Pre-Processed"
+        type="checkbox"
+        value="Processed Data"
+      />
+      <label
+        className="form-check-label"
+        htmlFor="processedData"
+      >
+        Pre-Processed Data
+      </label>
+    </div>
+    <div
       className="form-group"
     >
       <label
         htmlFor="description"
       >
+        <br />
         Description
         <textarea
           className="form-control"
+          disabled={true}
           id="description"
           placeholder="Description"
           type="textarea"
@@ -720,6 +1831,7 @@ exports[`Storyshots Upload Form Unfilled Error 1`] = `
 >
   <form
     className="was-validated"
+    disabled={false}
     id="uploadForm"
     name="uploadForm"
     noValidate={true}
@@ -737,14 +1849,135 @@ exports[`Storyshots Upload Form Unfilled Error 1`] = `
         htmlFor="data-type"
       >
         Data Type *
-        <input
+        <select
           className="form-control"
+          disabled={false}
           id="dataType"
-          placeholder="Ex. Metabolomics"
           required={true}
           type="text"
           value=""
-        />
+        >
+          <option
+            value="WGS"
+          >
+            WGS
+          </option>
+          <option
+            value="RNA-seq"
+          >
+            RNA-seq
+          </option>
+          <option
+            value="Methylome (Gastroc, White Fat, Liver, Heart)"
+          >
+            Methylome (Gastroc, White Fat, Liver, Heart)
+          </option>
+          <option
+            value="ATAC-Seq"
+          >
+            ATAC-Seq
+          </option>
+          <option
+            value="Untargeted RP"
+          >
+            Untargeted RP
+          </option>
+          <option
+            value="Untargeted HILIC-positive"
+          >
+            Untargeted HILIC-positive
+          </option>
+          <option
+            value="Untargeted HILIC -negative"
+          >
+            Untargeted HILIC -negative
+          </option>
+          <option
+            value="Untargeted Lipidomics"
+          >
+            Untargeted Lipidomics
+          </option>
+          <option
+            value="Targeted Acyl-CoA"
+          >
+            Targeted Acyl-CoA
+          </option>
+          <option
+            value="Targeted Acylcarnitines"
+          >
+            Targeted Acylcarnitines
+          </option>
+          <option
+            value="Targeted Ketoacids"
+          >
+            Targeted Ketoacids
+          </option>
+          <option
+            value="Targeted Organic Acids"
+          >
+            Targeted Organic Acids
+          </option>
+          <option
+            value="Targeted Eicosanoids"
+          >
+            Targeted Eicosanoids
+          </option>
+          <option
+            value="Targeted Nucleotides"
+          >
+            Targeted Nucleotides
+          </option>
+          <option
+            value="Targeted oxylipins"
+          >
+            Targeted oxylipins
+          </option>
+          <option
+            value="Targeted Amines"
+          >
+            Targeted Amines
+          </option>
+          <option
+            value="Targeted Steroids"
+          >
+            Targeted Steroids
+          </option>
+          <option
+            value="TCA Cycle"
+          >
+            TCA Cycle
+          </option>
+          <option
+            value="Targeted Ceramides"
+          >
+            Targeted Ceramides
+          </option>
+          <option
+            value="Global Proteomics"
+          >
+            Global Proteomics
+          </option>
+          <option
+            value="Global Phospho-proteomics"
+          >
+            Global Phospho-proteomics
+          </option>
+          <option
+            value="Redox proteome"
+          >
+            Redox proteome
+          </option>
+          <option
+            value="Acyl/Acetyl proteome"
+          >
+            Acyl/Acetyl proteome
+          </option>
+          <option
+            value="SomaLogic"
+          >
+            SomaLogic
+          </option>
+        </select>
       </label>
     </div>
     <div
@@ -761,6 +1994,7 @@ exports[`Storyshots Upload Form Unfilled Error 1`] = `
         Identifier(s) * – comma seperate if multiple
         <input
           className="form-control"
+          disabled={false}
           id="identifier"
           placeholder="Ex: AS213141"
           required={true}
@@ -783,6 +2017,7 @@ exports[`Storyshots Upload Form Unfilled Error 1`] = `
         Collection Date *
         <input
           className="form-control"
+          disabled={false}
           id="collectionDate"
           placeholder="MM/DD/YYYY"
           required={true}
@@ -800,6 +2035,7 @@ exports[`Storyshots Upload Form Unfilled Error 1`] = `
         Subject Type *
         <select
           className="form-control"
+          disabled={false}
           id="subjectType"
           value=""
         >
@@ -825,9 +2061,15 @@ exports[`Storyshots Upload Form Unfilled Error 1`] = `
         Study Phase *
         <select
           className="form-control"
+          disabled={false}
           id="studyPhase"
           value=""
         >
+          <option
+            value="Vanguard"
+          >
+            Vanguard
+          </option>
           <option
             value="1"
           >
@@ -849,16 +2091,6 @@ exports[`Storyshots Upload Form Unfilled Error 1`] = `
             2
           </option>
           <option
-            value="2A"
-          >
-            2A
-          </option>
-          <option
-            value="2B"
-          >
-            2B
-          </option>
-          <option
             value="N/A"
           >
             N/A
@@ -872,17 +2104,58 @@ exports[`Storyshots Upload Form Unfilled Error 1`] = `
       </label>
     </div>
     <div
+      className="form-check form-check-inline"
+    >
+      <input
+        checked={true}
+        className="form-check-input"
+        disabled={false}
+        id="rawData"
+        name="Raw"
+        type="checkbox"
+        value="Raw Data"
+      />
+      <label
+        className="form-check-label"
+        htmlFor="rawData"
+      >
+        Raw Data
+      </label>
+    </div>
+    <div
+      className="form-check form-check-inline"
+    >
+      <input
+        checked={false}
+        className="form-check-input"
+        disabled={false}
+        id="processedData"
+        name="Pre-Processed"
+        type="checkbox"
+        value="Processed Data"
+      />
+      <label
+        className="form-check-label"
+        htmlFor="processedData"
+      >
+        Pre-Processed Data
+      </label>
+    </div>
+    <div
       className="form-group"
     >
       <label
         htmlFor="description"
       >
+        <br />
         Description
         <textarea
           className="form-control"
+          disabled={false}
           id="description"
           placeholder="Description"
           type="textarea"
+          value=""
         />
       </label>
     </div>
@@ -978,7 +2251,25 @@ exports[`Storyshots Upload List Filled Test List 1`] = `
           test2.fa
         </td>
         <td>
-          Error: 1234
+          <div>
+            <button
+              className="errorHovButton"
+              type="button"
+            >
+              Error: 1234
+            </button>
+            <div
+              className="errorHover"
+            >
+              <h5>
+                Error 1234: Descriptive Title
+              </h5>
+              <p>
+                This error occurs when… 
+ Contact … with comments/questions.
+              </p>
+            </div>
+          </div>
         </td>
         <td
           className="centered"
@@ -1059,7 +2350,25 @@ exports[`Storyshots Upload List Items Failed 1`] = `
         test2.fa
       </td>
       <td>
-        Error: 1234
+        <div>
+          <button
+            className="errorHovButton"
+            type="button"
+          >
+            Error: 1234
+          </button>
+          <div
+            className="errorHover"
+          >
+            <h5>
+              Error 1234: Descriptive Title
+            </h5>
+            <p>
+              This error occurs when… 
+ Contact … with comments/questions.
+            </p>
+          </div>
+        </div>
       </td>
       <td
         className="centered"
@@ -1228,6 +2537,7 @@ exports[`Storyshots Upload Screen Default 1`] = `
     >
       <form
         className="needs-validation"
+        disabled={false}
         id="uploadForm"
         name="uploadForm"
         noValidate={true}
@@ -1245,13 +2555,134 @@ exports[`Storyshots Upload Screen Default 1`] = `
             htmlFor="data-type"
           >
             Data Type *
-            <input
+            <select
               className="form-control"
+              disabled={false}
               id="dataType"
-              placeholder="Ex. Metabolomics"
               required={true}
               type="text"
-            />
+            >
+              <option
+                value="WGS"
+              >
+                WGS
+              </option>
+              <option
+                value="RNA-seq"
+              >
+                RNA-seq
+              </option>
+              <option
+                value="Methylome (Gastroc, White Fat, Liver, Heart)"
+              >
+                Methylome (Gastroc, White Fat, Liver, Heart)
+              </option>
+              <option
+                value="ATAC-Seq"
+              >
+                ATAC-Seq
+              </option>
+              <option
+                value="Untargeted RP"
+              >
+                Untargeted RP
+              </option>
+              <option
+                value="Untargeted HILIC-positive"
+              >
+                Untargeted HILIC-positive
+              </option>
+              <option
+                value="Untargeted HILIC -negative"
+              >
+                Untargeted HILIC -negative
+              </option>
+              <option
+                value="Untargeted Lipidomics"
+              >
+                Untargeted Lipidomics
+              </option>
+              <option
+                value="Targeted Acyl-CoA"
+              >
+                Targeted Acyl-CoA
+              </option>
+              <option
+                value="Targeted Acylcarnitines"
+              >
+                Targeted Acylcarnitines
+              </option>
+              <option
+                value="Targeted Ketoacids"
+              >
+                Targeted Ketoacids
+              </option>
+              <option
+                value="Targeted Organic Acids"
+              >
+                Targeted Organic Acids
+              </option>
+              <option
+                value="Targeted Eicosanoids"
+              >
+                Targeted Eicosanoids
+              </option>
+              <option
+                value="Targeted Nucleotides"
+              >
+                Targeted Nucleotides
+              </option>
+              <option
+                value="Targeted oxylipins"
+              >
+                Targeted oxylipins
+              </option>
+              <option
+                value="Targeted Amines"
+              >
+                Targeted Amines
+              </option>
+              <option
+                value="Targeted Steroids"
+              >
+                Targeted Steroids
+              </option>
+              <option
+                value="TCA Cycle"
+              >
+                TCA Cycle
+              </option>
+              <option
+                value="Targeted Ceramides"
+              >
+                Targeted Ceramides
+              </option>
+              <option
+                value="Global Proteomics"
+              >
+                Global Proteomics
+              </option>
+              <option
+                value="Global Phospho-proteomics"
+              >
+                Global Phospho-proteomics
+              </option>
+              <option
+                value="Redox proteome"
+              >
+                Redox proteome
+              </option>
+              <option
+                value="Acyl/Acetyl proteome"
+              >
+                Acyl/Acetyl proteome
+              </option>
+              <option
+                value="SomaLogic"
+              >
+                SomaLogic
+              </option>
+            </select>
           </label>
         </div>
         <div
@@ -1268,6 +2699,7 @@ exports[`Storyshots Upload Screen Default 1`] = `
             Identifier(s) * – comma seperate if multiple
             <input
               className="form-control"
+              disabled={false}
               id="identifier"
               placeholder="Ex: AS213141"
               required={true}
@@ -1289,6 +2721,7 @@ exports[`Storyshots Upload Screen Default 1`] = `
             Collection Date *
             <input
               className="form-control"
+              disabled={false}
               id="collectionDate"
               placeholder="MM/DD/YYYY"
               required={true}
@@ -1305,6 +2738,7 @@ exports[`Storyshots Upload Screen Default 1`] = `
             Subject Type *
             <select
               className="form-control"
+              disabled={false}
               id="subjectType"
             >
               <option
@@ -1329,8 +2763,14 @@ exports[`Storyshots Upload Screen Default 1`] = `
             Study Phase *
             <select
               className="form-control"
+              disabled={false}
               id="studyPhase"
             >
+              <option
+                value="Vanguard"
+              >
+                Vanguard
+              </option>
               <option
                 value="1"
               >
@@ -1352,16 +2792,6 @@ exports[`Storyshots Upload Screen Default 1`] = `
                 2
               </option>
               <option
-                value="2A"
-              >
-                2A
-              </option>
-              <option
-                value="2B"
-              >
-                2B
-              </option>
-              <option
                 value="N/A"
               >
                 N/A
@@ -1375,14 +2805,52 @@ exports[`Storyshots Upload Screen Default 1`] = `
           </label>
         </div>
         <div
+          className="form-check form-check-inline"
+        >
+          <input
+            className="form-check-input"
+            disabled={false}
+            id="rawData"
+            name="Raw"
+            type="checkbox"
+            value="Raw Data"
+          />
+          <label
+            className="form-check-label"
+            htmlFor="rawData"
+          >
+            Raw Data
+          </label>
+        </div>
+        <div
+          className="form-check form-check-inline"
+        >
+          <input
+            className="form-check-input"
+            disabled={false}
+            id="processedData"
+            name="Pre-Processed"
+            type="checkbox"
+            value="Processed Data"
+          />
+          <label
+            className="form-check-label"
+            htmlFor="processedData"
+          >
+            Pre-Processed Data
+          </label>
+        </div>
+        <div
           className="form-group"
         >
           <label
             htmlFor="description"
           >
+            <br />
             Description
             <textarea
               className="form-control"
+              disabled={false}
               id="description"
               placeholder="Description"
               type="textarea"
@@ -1496,6 +2964,7 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
     >
       <form
         className="needs-validation"
+        disabled={true}
         id="uploadForm"
         name="uploadForm"
         noValidate={true}
@@ -1513,14 +2982,135 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
             htmlFor="data-type"
           >
             Data Type *
-            <input
+            <select
               className="form-control"
+              disabled={true}
               id="dataType"
-              placeholder="Ex. Metabolomics"
               required={true}
               type="text"
               value="ATAC-Seq"
-            />
+            >
+              <option
+                value="WGS"
+              >
+                WGS
+              </option>
+              <option
+                value="RNA-seq"
+              >
+                RNA-seq
+              </option>
+              <option
+                value="Methylome (Gastroc, White Fat, Liver, Heart)"
+              >
+                Methylome (Gastroc, White Fat, Liver, Heart)
+              </option>
+              <option
+                value="ATAC-Seq"
+              >
+                ATAC-Seq
+              </option>
+              <option
+                value="Untargeted RP"
+              >
+                Untargeted RP
+              </option>
+              <option
+                value="Untargeted HILIC-positive"
+              >
+                Untargeted HILIC-positive
+              </option>
+              <option
+                value="Untargeted HILIC -negative"
+              >
+                Untargeted HILIC -negative
+              </option>
+              <option
+                value="Untargeted Lipidomics"
+              >
+                Untargeted Lipidomics
+              </option>
+              <option
+                value="Targeted Acyl-CoA"
+              >
+                Targeted Acyl-CoA
+              </option>
+              <option
+                value="Targeted Acylcarnitines"
+              >
+                Targeted Acylcarnitines
+              </option>
+              <option
+                value="Targeted Ketoacids"
+              >
+                Targeted Ketoacids
+              </option>
+              <option
+                value="Targeted Organic Acids"
+              >
+                Targeted Organic Acids
+              </option>
+              <option
+                value="Targeted Eicosanoids"
+              >
+                Targeted Eicosanoids
+              </option>
+              <option
+                value="Targeted Nucleotides"
+              >
+                Targeted Nucleotides
+              </option>
+              <option
+                value="Targeted oxylipins"
+              >
+                Targeted oxylipins
+              </option>
+              <option
+                value="Targeted Amines"
+              >
+                Targeted Amines
+              </option>
+              <option
+                value="Targeted Steroids"
+              >
+                Targeted Steroids
+              </option>
+              <option
+                value="TCA Cycle"
+              >
+                TCA Cycle
+              </option>
+              <option
+                value="Targeted Ceramides"
+              >
+                Targeted Ceramides
+              </option>
+              <option
+                value="Global Proteomics"
+              >
+                Global Proteomics
+              </option>
+              <option
+                value="Global Phospho-proteomics"
+              >
+                Global Phospho-proteomics
+              </option>
+              <option
+                value="Redox proteome"
+              >
+                Redox proteome
+              </option>
+              <option
+                value="Acyl/Acetyl proteome"
+              >
+                Acyl/Acetyl proteome
+              </option>
+              <option
+                value="SomaLogic"
+              >
+                SomaLogic
+              </option>
+            </select>
           </label>
         </div>
         <div
@@ -1537,6 +3127,7 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
             Identifier(s) * – comma seperate if multiple
             <input
               className="form-control"
+              disabled={true}
               id="identifier"
               placeholder="Ex: AS213141"
               required={true}
@@ -1559,6 +3150,7 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
             Collection Date *
             <input
               className="form-control"
+              disabled={true}
               id="collectionDate"
               placeholder="MM/DD/YYYY"
               required={true}
@@ -1576,6 +3168,7 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
             Subject Type *
             <select
               className="form-control"
+              disabled={true}
               id="subjectType"
               value="Animal"
             >
@@ -1601,9 +3194,15 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
             Study Phase *
             <select
               className="form-control"
+              disabled={true}
               id="studyPhase"
               value="2"
             >
+              <option
+                value="Vanguard"
+              >
+                Vanguard
+              </option>
               <option
                 value="1"
               >
@@ -1625,16 +3224,6 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
                 2
               </option>
               <option
-                value="2A"
-              >
-                2A
-              </option>
-              <option
-                value="2B"
-              >
-                2B
-              </option>
-              <option
                 value="N/A"
               >
                 N/A
@@ -1648,14 +3237,53 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
           </label>
         </div>
         <div
+          className="form-check form-check-inline"
+        >
+          <input
+            checked={true}
+            className="form-check-input"
+            disabled={true}
+            id="rawData"
+            name="Raw"
+            type="checkbox"
+            value="Raw Data"
+          />
+          <label
+            className="form-check-label"
+            htmlFor="rawData"
+          >
+            Raw Data
+          </label>
+        </div>
+        <div
+          className="form-check form-check-inline"
+        >
+          <input
+            className="form-check-input"
+            disabled={true}
+            id="processedData"
+            name="Pre-Processed"
+            type="checkbox"
+            value="Processed Data"
+          />
+          <label
+            className="form-check-label"
+            htmlFor="processedData"
+          >
+            Pre-Processed Data
+          </label>
+        </div>
+        <div
           className="form-group"
         >
           <label
             htmlFor="description"
           >
+            <br />
             Description
             <textarea
               className="form-control"
+              disabled={true}
               id="description"
               placeholder="Description"
               type="textarea"
@@ -1787,7 +3415,25 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
               test2.fa
             </td>
             <td>
-              Error: 1234
+              <div>
+                <button
+                  className="errorHovButton"
+                  type="button"
+                >
+                  Error: 1234
+                </button>
+                <div
+                  className="errorHover"
+                >
+                  <h5>
+                    Error 1234: Descriptive Title
+                  </h5>
+                  <p>
+                    This error occurs when… 
+ Contact … with comments/questions.
+                  </p>
+                </div>
+              </div>
             </td>
             <td
               className="centered"

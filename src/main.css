@@ -5,6 +5,7 @@
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+@import url("https://fonts.googleapis.com/css?family=Raleway:200,400,700");
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -8610,10 +8611,26 @@ h3 {
     border-color: #dee2e6;
   }
 }
+h1, h2, h3, h4 {
+  font-family: "Raleway", sans-serif;
+}
+
+.light {
+  font-weight: 200;
+}
+
+.heavy {
+  font-weight: 700;
+}
+
+a {
+  color: #336699;
+}
+
 .uploadAreaDnD {
   width: 40vw;
   height: 30vw;
-  border: 1px dashed #336699;
+  border: 1px dashed #11397E;
   border-radius: 5px;
   padding: 15px;
   background-color: #3366992c;
@@ -8707,7 +8724,7 @@ h3 {
 }
 
 .uploadAreaDnD :-moz-drag-over {
-  border: 1px solid #DD4330;
+  border: 1px solid #b33521;
 }
 
 .centered {
@@ -8719,7 +8736,7 @@ h3 {
 }
 
 .oi-warning {
-  color: #DD4330;
+  color: #b33521;
 }
 
 .oi-question-mark {
@@ -8744,8 +8761,134 @@ h3 {
     transform: rotate(-360deg);
   }
 }
+.errorHovButton {
+  color: #b33521;
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+}
+
+.errorHover {
+  opacity: 0;
+  display: block;
+  position: absolute;
+  background-color: #E3EAF1;
+  color: #336699;
+  max-width: 100%;
+  border-radius: 0 20px 20px 20px;
+  padding: 10px;
+}
+.errorHover p {
+  color: gray;
+}
+
+.errorHovButton:hover + .errorHover {
+  display: block;
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.1s;
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .form-group label {
   width: 100%;
+  color: #336699;
+}
+
+nav {
+  background-color: #336699;
+  font-family: "Raleway", sans-serif;
+}
+
+.light {
+  font-weight: 200;
+}
+
+.navItem {
+  font-size: 120%;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.siteTitle {
+  font-size: 150%;
+}
+
+.dropdown-menu {
+  background-color: #336699b6;
+  border: none;
+}
+.dropdown-menu .dropdown-item {
+  color: white;
+  font-weight: 400;
+}
+.dropdown-menu .dropdown-item:hover {
+  background-color: #336699;
+}
+
+.dropdown-toggle {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.copyright {
+  font-size: 75%;
+  text-align: center;
+}
+.copyright p {
+  position: relative;
+  top: 80%;
+}
+
+footer {
+  background-color: #7070705b;
+  color: white;
+}
+footer .rightAlign {
+  text-align: right;
+}
+
+.logInOutBtn {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-weight: 700;
+  position: relative;
+  top: 30%;
+  font-size: 120%;
+}
+
+.componentHolder {
+  min-height: 50vh;
+}
+
+.welcome {
+  margin-top: 20px;
+}
+.welcome h3 {
+  color: #11397E;
+}
+
+h5 {
+  color: #11397E;
+}
+
+.accessDataInfo {
+  border: 1px solid #707070;
+  border-radius: 10px;
+  padding: 20px;
 }
 
 /*# sourceMappingURL=main.css.map */
