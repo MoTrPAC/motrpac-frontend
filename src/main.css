@@ -5,7 +5,8 @@
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-@import url("https://fonts.googleapis.com/css?family=Raleway:200,400,700");
+@import url("https://fonts.googleapis.com/css?family=Raleway:200,400,600");
+@import 'assets/open-iconic-master/font/css/open-iconic-bootstrap.css';
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -8611,6 +8612,10 @@ h3 {
     border-color: #dee2e6;
   }
 }
+html, body {
+  height: 100%;
+}
+
 h1, h2, h3, h4 {
   font-family: "Raleway", sans-serif;
 }
@@ -8804,6 +8809,13 @@ h3 {
   color: #336699;
 }
 
+.uploadScreen {
+  margin-top: 15px;
+}
+.uploadScreen h2 {
+  color: #11397E;
+}
+
 nav {
   background-color: #336699;
   font-family: "Raleway", sans-serif;
@@ -8864,7 +8876,7 @@ footer .rightAlign {
   background-color: transparent;
   border: none;
   color: white;
-  font-weight: 700;
+  font-weight: 600;
   position: relative;
   top: 30%;
   font-size: 120%;
@@ -8889,6 +8901,10 @@ h5 {
   border: 1px solid #707070;
   border-radius: 10px;
   padding: 20px;
+}
+
+h2 {
+  color: #11397E;
 }
 
 /*# sourceMappingURL=main.css.map */

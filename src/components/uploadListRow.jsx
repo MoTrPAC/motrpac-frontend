@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../main.css';
-
-import '../assets/open-iconic-master/font/css/open-iconic-bootstrap.css';
+// import '../assets/open-iconic-master/font/css/open-iconic-bootstrap.css';
 
 
 function UploadListRow({ uploadItem }) {

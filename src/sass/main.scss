@@ -1,4 +1,4 @@
-@import 'bootstrap/bootstrap';
+@import '../../node_modules/bootstrap/scss/bootstrap';
 @import 'colors';
 @import 'fonts';
 @import 'base';
@@ -6,3 +6,4 @@
 @import 'navbar';
 @import 'footer';
 @import 'landingPage';
+@import 'dashboard';

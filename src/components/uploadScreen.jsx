@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
 import UploadForm from './uploadForm';
 import UploadList from './uploadList';
 import UploadAreaDnD from './uploadAreaDnD';
@@ -10,7 +9,7 @@ import UploadAreaDnD from './uploadAreaDnD';
 //    and a display for monitoring file status
 // * Unintended but potentially useful bug: onces a valid form submitted,
 //    cannot change form data but can still upload more files
-function UploadScreen({
+export function UploadScreen({
   dragging,
   validated,
   submitted,
@@ -25,33 +24,40 @@ function UploadScreen({
   onFormSubmit,
 }) {
   const screen = (
-    <div className="row">
-      <div className="col-4">
-        <UploadForm
-          validated={validated}
-          submitted={submitted}
-          formValues={formValues}
-          handleSubmit={onFormSubmit}
-        />
+    <div className="container uploadScreen upload">
+      <div className="row">
+        <div className="col">
+          <h2 className="light">Upload Data</h2>
+        </div>
       </div>
-      <div className="col-8 centered">
-        <br />
-        <UploadAreaDnD
-          dragging={dragging}
-          files={files}
-          fileAdded={e => onFileAdded(e)}
-          dragEnter={() => onDragEnter()}
-          dragLeave={() => onDragLeave()}
-          dragDrop={e => onDragDrop(e)}
-          removeFile={onRemoveFile}
-        />
-        <br />
-        <br />
-        <label htmlFor="submit-form" className="btn btn-success" tabIndex={0}>Upload</label>
-      </div>
-      <div className="col-12">
-        <h3>{formValues.identifier}</h3>
-        <UploadList uploadFiles={uploadFiles} />
+      <div className="row">
+        <div className="col-4">
+          <UploadForm
+            validated={validated}
+            submitted={submitted}
+            formValues={formValues}
+            handleSubmit={onFormSubmit}
+          />
+        </div>
+        <div className="col-8 centered">
+          <br />
+          <UploadAreaDnD
+            dragging={dragging}
+            files={files}
+            fileAdded={e => onFileAdded(e)}
+            dragEnter={() => onDragEnter()}
+            dragLeave={() => onDragLeave()}
+            dragDrop={e => onDragDrop(e)}
+            removeFile={onRemoveFile}
+          />
+          <br />
+          <br />
+          <label htmlFor="submit-form" className="btn btn-success" tabIndex={0}>Upload</label>
+        </div>
+        <div className="col-12">
+          <h3>{formValues.identifier}</h3>
+          <UploadList uploadFiles={uploadFiles} />
+        </div>
       </div>
     </div>
   );
@@ -88,7 +94,7 @@ UploadScreen.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  ...state,
+  ...(state.upload),
 });
 
 // Maps required functions to specific actions handled by reducer in src/reducers.js
@@ -116,7 +122,8 @@ const mapDispatchToProps = dispatch => ({
   }),
   onFormSubmit: e => dispatch({
     type: 'FORM_SUBMIT',
-    target: e.target,
+    validity: e.target.checkValidity(),
+    elements: e.target.elements,
   }),
 });
 

@@ -1,5 +1,193 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots Dashboard default 1`] = `
+<div
+  className="App"
+>
+  <header>
+    <nav
+      className="navbar navbar-expand-lg navbar-dark"
+    >
+      <div
+        className="container"
+      >
+        <a
+          className="navbar-brand siteTitle"
+          href="/"
+        >
+          MoTrPAC
+          <span
+            className="light"
+          >
+              Data Hub
+          </span>
+        </a>
+        <button
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          className="navbar-toggler"
+          data-target="#navbarSupportedContent"
+          data-toggle="collapse"
+          type="button"
+        >
+          <span
+            className="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          className="collapse navbar-collapse flex-row-reverse"
+          id="navbarSupportedContent"
+        >
+          <ul
+            className="navbar-nav"
+          >
+            
+            <li
+              className="nav-item navItem"
+            >
+              <a
+                className="nav-link"
+                href="/data"
+              >
+                Data
+              </a>
+            </li>
+            <li
+              className="nav-item navItem dropdown"
+            >
+              <div
+                className="nav-link dropdown-toggle"
+                data-toggle="dropdown"
+                id="navbarDropdownMenuLink"
+                role="button"
+              >
+                About
+              </div>
+              <div
+                aria-labelledby="navbarDropdownMenuLink"
+                className="dropdown-menu"
+              >
+                <a
+                  className="dropdown-item"
+                  href="/linkout"
+                >
+                  Useful Links
+                </a>
+                <a
+                  className="dropdown-item"
+                  href="/team"
+                >
+                  Who we are
+                </a>
+              </div>
+            </li>
+            <li
+              className="nav-item navItem"
+            >
+              <a
+                className="nav-link"
+                href="/contact"
+              >
+                Contact
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div
+    className="componentHolder"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col"
+        >
+          <br />
+          <h2
+            className="light"
+          >
+            Welcome testUser1 at testCAS
+          </h2>
+        </div>
+      </div>
+      <div
+        className="row"
+      >
+        <div
+          className="col"
+        >
+          <a
+            className="uploadBtn btn btn-primary"
+            href="/upload"
+          >
+            Upload Data
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer
+    className="footer"
+  >
+    <div
+      className="container-fluid"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col"
+        >
+          <p>
+            Data Hub designed and maintained by the MoTrPAC BioInformatics Center at
+            <a
+              href="https://www.stanford.edu/"
+              target="_new"
+            >
+               Stanford University
+            </a>
+          </p>
+          <p>
+            Funded by the
+            <a
+              href="https://commonfund.nih.gov/"
+              target="_new"
+            >
+               NIH Common Fund
+            </a>
+          </p>
+        </div>
+        <div
+          className="col copyright"
+        >
+          <p>
+            © XXXX 2018
+          </p>
+        </div>
+        <div
+          className="col rightAlign"
+        >
+          <button
+            className="logInOutBtn btn"
+            onClick={[Function]}
+            type="button"
+          >
+            Test User Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+`;
+
 exports[`Storyshots Drag and Drop Upload File Area  3 Files Added 1`] = `
 <div
   className="upload-component"
@@ -563,6 +751,7 @@ exports[`Storyshots Footer Logged in 1`] = `
       >
         <button
           className="logInOutBtn btn"
+          onClick={[Function]}
           type="button"
         >
           Test User Logout
@@ -617,6 +806,7 @@ exports[`Storyshots Footer default 1`] = `
       >
         <button
           className="logInOutBtn btn"
+          onClick={[Function]}
           type="button"
         >
           Submitter Login
@@ -640,13 +830,13 @@ exports[`Storyshots Landing Page default 1`] = `
       >
         <a
           className="navbar-brand siteTitle"
-          href="#"
+          href="/"
         >
-          MoTrPAC 
+          MoTrPAC
           <span
             className="light"
           >
-            Data Hub
+              Data Hub
           </span>
         </a>
         <button
@@ -675,7 +865,7 @@ exports[`Storyshots Landing Page default 1`] = `
             >
               <a
                 className="nav-link"
-                href=""
+                href="/data"
               >
                 Data
               </a>
@@ -683,28 +873,27 @@ exports[`Storyshots Landing Page default 1`] = `
             <li
               className="nav-item navItem dropdown"
             >
-              <a
+              <div
                 className="nav-link dropdown-toggle"
                 data-toggle="dropdown"
-                href=""
                 id="navbarDropdownMenuLink"
                 role="button"
               >
                 About
-              </a>
+              </div>
               <div
                 aria-labelledby="navbarDropdownMenuLink"
                 className="dropdown-menu"
               >
                 <a
                   className="dropdown-item"
-                  href=""
+                  href="/linkout"
                 >
                   Useful Links
                 </a>
                 <a
                   className="dropdown-item"
-                  href=""
+                  href="/team"
                 >
                   Who we are
                 </a>
@@ -715,7 +904,7 @@ exports[`Storyshots Landing Page default 1`] = `
             >
               <a
                 className="nav-link"
-                href=""
+                href="/contact"
               >
                 Contact
               </a>
@@ -867,6 +1056,7 @@ exports[`Storyshots Landing Page default 1`] = `
         >
           <button
             className="logInOutBtn btn"
+            onClick={[Function]}
             type="button"
           >
             Submitter Login
@@ -887,13 +1077,13 @@ exports[`Storyshots Navbar Logged in 1`] = `
   >
     <a
       className="navbar-brand siteTitle"
-      href="#"
+      href="/"
     >
-      MoTrPAC 
+      MoTrPAC
       <span
         className="light"
       >
-        Data Hub
+          Data Hub
       </span>
     </a>
     <button
@@ -921,7 +1111,7 @@ exports[`Storyshots Navbar Logged in 1`] = `
         >
           <a
             className="nav-link"
-            href=""
+            href="/dashboard"
           >
             Dashboard
           </a>
@@ -929,28 +1119,27 @@ exports[`Storyshots Navbar Logged in 1`] = `
         <li
           className="nav-item navItem dropdown"
         >
-          <a
+          <div
             className="nav-link dropdown-toggle"
             data-toggle="dropdown"
-            href=""
             id="navbarDropdownMenuLinkAnalysis"
             role="button"
           >
             Analysis
-          </a>
+          </div>
           <div
             aria-labelledby="navbarDropdownMenuLinkAnalysis"
             className="dropdown-menu"
           >
             <a
               className="dropdown-item"
-              href=""
+              href="/analysis/animal"
             >
               Animal
             </a>
             <a
               className="dropdown-item"
-              href=""
+              href="/analysis/human"
             >
               Human
             </a>
@@ -961,7 +1150,7 @@ exports[`Storyshots Navbar Logged in 1`] = `
         >
           <a
             className="nav-link"
-            href=""
+            href="/methods"
           >
             Methods
           </a>
@@ -971,7 +1160,7 @@ exports[`Storyshots Navbar Logged in 1`] = `
         >
           <a
             className="nav-link"
-            href=""
+            href="/data"
           >
             Data
           </a>
@@ -979,28 +1168,27 @@ exports[`Storyshots Navbar Logged in 1`] = `
         <li
           className="nav-item navItem dropdown"
         >
-          <a
+          <div
             className="nav-link dropdown-toggle"
             data-toggle="dropdown"
-            href=""
             id="navbarDropdownMenuLink"
             role="button"
           >
             About
-          </a>
+          </div>
           <div
             aria-labelledby="navbarDropdownMenuLink"
             className="dropdown-menu"
           >
             <a
               className="dropdown-item"
-              href=""
+              href="/linkout"
             >
               Useful Links
             </a>
             <a
               className="dropdown-item"
-              href=""
+              href="/team"
             >
               Who we are
             </a>
@@ -1011,7 +1199,7 @@ exports[`Storyshots Navbar Logged in 1`] = `
         >
           <a
             className="nav-link"
-            href=""
+            href="/contact"
           >
             Contact
           </a>
@@ -1031,13 +1219,13 @@ exports[`Storyshots Navbar default 1`] = `
   >
     <a
       className="navbar-brand siteTitle"
-      href="#"
+      href="/"
     >
-      MoTrPAC 
+      MoTrPAC
       <span
         className="light"
       >
-        Data Hub
+          Data Hub
       </span>
     </a>
     <button
@@ -1066,7 +1254,7 @@ exports[`Storyshots Navbar default 1`] = `
         >
           <a
             className="nav-link"
-            href=""
+            href="/data"
           >
             Data
           </a>
@@ -1074,28 +1262,27 @@ exports[`Storyshots Navbar default 1`] = `
         <li
           className="nav-item navItem dropdown"
         >
-          <a
+          <div
             className="nav-link dropdown-toggle"
             data-toggle="dropdown"
-            href=""
             id="navbarDropdownMenuLink"
             role="button"
           >
             About
-          </a>
+          </div>
           <div
             aria-labelledby="navbarDropdownMenuLink"
             className="dropdown-menu"
           >
             <a
               className="dropdown-item"
-              href=""
+              href="/linkout"
             >
               Useful Links
             </a>
             <a
               className="dropdown-item"
-              href=""
+              href="/team"
             >
               Who we are
             </a>
@@ -1106,7 +1293,7 @@ exports[`Storyshots Navbar default 1`] = `
         >
           <a
             className="nav-link"
-            href=""
+            href="/contact"
           >
             Contact
           </a>
@@ -2186,10 +2373,11 @@ exports[`Storyshots Upload List Empty List 1`] = `
   >
     <br />
     <br />
-    <br />
     <h2>
       Upload files and they will appear here!
     </h2>
+    <br />
+    <br />
   </div>
 </div>
 `;
@@ -2522,964 +2710,1287 @@ exports[`Storyshots Upload List Items Uploading 1`] = `
 
 exports[`Storyshots Upload Screen Default 1`] = `
 <div
-  className="upload-component container"
-  style={
-    Object {
-      "padding": "1em",
-    }
-  }
+  className="App"
 >
-  <div
-    className="row"
-  >
-    <div
-      className="col-4"
+  <header>
+    <nav
+      className="navbar navbar-expand-lg navbar-dark"
     >
-      <form
-        className="needs-validation"
-        disabled={false}
-        id="uploadForm"
-        name="uploadForm"
-        noValidate={true}
-        onSubmit={[Function]}
-      >
-        <div
-          className="form-group"
-        >
-          <div
-            className="invalid-feedback"
-          >
-            Field Required
-          </div>
-          <label
-            htmlFor="data-type"
-          >
-            Data Type *
-            <select
-              className="form-control"
-              disabled={false}
-              id="dataType"
-              required={true}
-              type="text"
-            >
-              <option
-                value="WGS"
-              >
-                WGS
-              </option>
-              <option
-                value="RNA-seq"
-              >
-                RNA-seq
-              </option>
-              <option
-                value="Methylome (Gastroc, White Fat, Liver, Heart)"
-              >
-                Methylome (Gastroc, White Fat, Liver, Heart)
-              </option>
-              <option
-                value="ATAC-Seq"
-              >
-                ATAC-Seq
-              </option>
-              <option
-                value="Untargeted RP"
-              >
-                Untargeted RP
-              </option>
-              <option
-                value="Untargeted HILIC-positive"
-              >
-                Untargeted HILIC-positive
-              </option>
-              <option
-                value="Untargeted HILIC -negative"
-              >
-                Untargeted HILIC -negative
-              </option>
-              <option
-                value="Untargeted Lipidomics"
-              >
-                Untargeted Lipidomics
-              </option>
-              <option
-                value="Targeted Acyl-CoA"
-              >
-                Targeted Acyl-CoA
-              </option>
-              <option
-                value="Targeted Acylcarnitines"
-              >
-                Targeted Acylcarnitines
-              </option>
-              <option
-                value="Targeted Ketoacids"
-              >
-                Targeted Ketoacids
-              </option>
-              <option
-                value="Targeted Organic Acids"
-              >
-                Targeted Organic Acids
-              </option>
-              <option
-                value="Targeted Eicosanoids"
-              >
-                Targeted Eicosanoids
-              </option>
-              <option
-                value="Targeted Nucleotides"
-              >
-                Targeted Nucleotides
-              </option>
-              <option
-                value="Targeted oxylipins"
-              >
-                Targeted oxylipins
-              </option>
-              <option
-                value="Targeted Amines"
-              >
-                Targeted Amines
-              </option>
-              <option
-                value="Targeted Steroids"
-              >
-                Targeted Steroids
-              </option>
-              <option
-                value="TCA Cycle"
-              >
-                TCA Cycle
-              </option>
-              <option
-                value="Targeted Ceramides"
-              >
-                Targeted Ceramides
-              </option>
-              <option
-                value="Global Proteomics"
-              >
-                Global Proteomics
-              </option>
-              <option
-                value="Global Phospho-proteomics"
-              >
-                Global Phospho-proteomics
-              </option>
-              <option
-                value="Redox proteome"
-              >
-                Redox proteome
-              </option>
-              <option
-                value="Acyl/Acetyl proteome"
-              >
-                Acyl/Acetyl proteome
-              </option>
-              <option
-                value="SomaLogic"
-              >
-                SomaLogic
-              </option>
-            </select>
-          </label>
-        </div>
-        <div
-          className="form-group"
-        >
-          <div
-            className="invalid-feedback"
-          >
-            Field Required
-          </div>
-          <label
-            htmlFor="identifier"
-          >
-            Identifier(s) * – comma seperate if multiple
-            <input
-              className="form-control"
-              disabled={false}
-              id="identifier"
-              placeholder="Ex: AS213141"
-              required={true}
-              type="text"
-            />
-          </label>
-        </div>
-        <div
-          className="form-group"
-        >
-          <div
-            className="invalid-feedback"
-          >
-            Field Required
-          </div>
-          <label
-            htmlFor="collection-date"
-          >
-            Collection Date *
-            <input
-              className="form-control"
-              disabled={false}
-              id="collectionDate"
-              placeholder="MM/DD/YYYY"
-              required={true}
-              type="text"
-            />
-          </label>
-        </div>
-        <div
-          className="form-group"
-        >
-          <label
-            htmlFor="subject-type"
-          >
-            Subject Type *
-            <select
-              className="form-control"
-              disabled={false}
-              id="subjectType"
-            >
-              <option
-                value="Human"
-              >
-                Human
-              </option>
-              <option
-                value="Animal"
-              >
-                Animal
-              </option>
-            </select>
-          </label>
-        </div>
-        <div
-          className="form-group"
-        >
-          <label
-            htmlFor="study-phase"
-          >
-            Study Phase *
-            <select
-              className="form-control"
-              disabled={false}
-              id="studyPhase"
-            >
-              <option
-                value="Vanguard"
-              >
-                Vanguard
-              </option>
-              <option
-                value="1"
-              >
-                1
-              </option>
-              <option
-                value="1A"
-              >
-                1A
-              </option>
-              <option
-                value="1B"
-              >
-                1B
-              </option>
-              <option
-                value="2"
-              >
-                2
-              </option>
-              <option
-                value="N/A"
-              >
-                N/A
-              </option>
-              <option
-                value="other"
-              >
-                Other
-              </option>
-            </select>
-          </label>
-        </div>
-        <div
-          className="form-check form-check-inline"
-        >
-          <input
-            className="form-check-input"
-            disabled={false}
-            id="rawData"
-            name="Raw"
-            type="checkbox"
-            value="Raw Data"
-          />
-          <label
-            className="form-check-label"
-            htmlFor="rawData"
-          >
-            Raw Data
-          </label>
-        </div>
-        <div
-          className="form-check form-check-inline"
-        >
-          <input
-            className="form-check-input"
-            disabled={false}
-            id="processedData"
-            name="Pre-Processed"
-            type="checkbox"
-            value="Processed Data"
-          />
-          <label
-            className="form-check-label"
-            htmlFor="processedData"
-          >
-            Pre-Processed Data
-          </label>
-        </div>
-        <div
-          className="form-group"
-        >
-          <label
-            htmlFor="description"
-          >
-            <br />
-            Description
-            <textarea
-              className="form-control"
-              disabled={false}
-              id="description"
-              placeholder="Description"
-              type="textarea"
-            />
-          </label>
-        </div>
-        <input
-          id="submit-form"
-          style={
-            Object {
-              "visibility": "hidden",
-            }
-          }
-          type="submit"
-        />
-      </form>
-    </div>
-    <div
-      className="col-8 centered"
-    >
-      <br />
       <div
-        className="uploadAreaDnD "
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
+        className="container"
       >
-        <div
-          className="row fileArea"
+        <a
+          className="navbar-brand siteTitle"
+          href="/"
         >
-          <div
-            className="centered noFiles"
+          MoTrPAC
+          <span
+            className="light"
           >
-            <br />
-            <br />
-            <br />
-            <br />
-            <span
-              className="oi oi-cloud-upload"
-            />
-            <h3>
-              Drag and drop files here
-              <br />
-              Or
-            </h3>
-          </div>
-        </div>
-        <div
-          className="selectArea"
+              Data Hub
+          </span>
+        </a>
+        <button
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          className="navbar-toggler"
+          data-target="#navbarSupportedContent"
+          data-toggle="collapse"
+          type="button"
         >
-          <label
-            className="btn btn-primary"
-            htmlFor="fileUpload"
-            id="fileUploadLabel"
+          <span
+            className="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          className="collapse navbar-collapse flex-row-reverse"
+          id="navbarSupportedContent"
+        >
+          <ul
+            className="navbar-nav"
           >
-            Select Files
-            <input
-              id="fileUpload"
-              multiple={true}
-              name="fileUpload"
-              onChange={[Function]}
-              type="file"
-            />
-          </label>
+            
+            <li
+              className="nav-item navItem"
+            >
+              <a
+                className="nav-link"
+                href="/data"
+              >
+                Data
+              </a>
+            </li>
+            <li
+              className="nav-item navItem dropdown"
+            >
+              <div
+                className="nav-link dropdown-toggle"
+                data-toggle="dropdown"
+                id="navbarDropdownMenuLink"
+                role="button"
+              >
+                About
+              </div>
+              <div
+                aria-labelledby="navbarDropdownMenuLink"
+                className="dropdown-menu"
+              >
+                <a
+                  className="dropdown-item"
+                  href="/linkout"
+                >
+                  Useful Links
+                </a>
+                <a
+                  className="dropdown-item"
+                  href="/team"
+                >
+                  Who we are
+                </a>
+              </div>
+            </li>
+            <li
+              className="nav-item navItem"
+            >
+              <a
+                className="nav-link"
+                href="/contact"
+              >
+                Contact
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
-      <br />
-      <br />
-      <label
-        className="btn btn-success"
-        htmlFor="submit-form"
-        tabIndex={0}
-      >
-        Upload
-      </label>
-    </div>
+    </nav>
+  </header>
+  <div
+    className="componentHolder"
+  >
     <div
-      className="col-12"
+      className="container uploadScreen upload"
     >
-      <h3 />
       <div
-        className="noListItems centered"
+        className="row"
       >
-        <br />
-        <br />
-        <br />
-        <h2>
-          Upload files and they will appear here!
-        </h2>
+        <div
+          className="col"
+        >
+          <h2
+            className="light"
+          >
+            Upload Data
+          </h2>
+        </div>
+      </div>
+      <div
+        className="row"
+      >
+        <div
+          className="col-4"
+        >
+          <form
+            className="needs-validation"
+            disabled={false}
+            id="uploadForm"
+            name="uploadForm"
+            noValidate={true}
+            onSubmit={[Function]}
+          >
+            <div
+              className="form-group"
+            >
+              <div
+                className="invalid-feedback"
+              >
+                Field Required
+              </div>
+              <label
+                htmlFor="data-type"
+              >
+                Data Type *
+                <select
+                  className="form-control"
+                  disabled={false}
+                  id="dataType"
+                  required={true}
+                  type="text"
+                >
+                  <option
+                    value="WGS"
+                  >
+                    WGS
+                  </option>
+                  <option
+                    value="RNA-seq"
+                  >
+                    RNA-seq
+                  </option>
+                  <option
+                    value="Methylome (Gastroc, White Fat, Liver, Heart)"
+                  >
+                    Methylome (Gastroc, White Fat, Liver, Heart)
+                  </option>
+                  <option
+                    value="ATAC-Seq"
+                  >
+                    ATAC-Seq
+                  </option>
+                  <option
+                    value="Untargeted RP"
+                  >
+                    Untargeted RP
+                  </option>
+                  <option
+                    value="Untargeted HILIC-positive"
+                  >
+                    Untargeted HILIC-positive
+                  </option>
+                  <option
+                    value="Untargeted HILIC -negative"
+                  >
+                    Untargeted HILIC -negative
+                  </option>
+                  <option
+                    value="Untargeted Lipidomics"
+                  >
+                    Untargeted Lipidomics
+                  </option>
+                  <option
+                    value="Targeted Acyl-CoA"
+                  >
+                    Targeted Acyl-CoA
+                  </option>
+                  <option
+                    value="Targeted Acylcarnitines"
+                  >
+                    Targeted Acylcarnitines
+                  </option>
+                  <option
+                    value="Targeted Ketoacids"
+                  >
+                    Targeted Ketoacids
+                  </option>
+                  <option
+                    value="Targeted Organic Acids"
+                  >
+                    Targeted Organic Acids
+                  </option>
+                  <option
+                    value="Targeted Eicosanoids"
+                  >
+                    Targeted Eicosanoids
+                  </option>
+                  <option
+                    value="Targeted Nucleotides"
+                  >
+                    Targeted Nucleotides
+                  </option>
+                  <option
+                    value="Targeted oxylipins"
+                  >
+                    Targeted oxylipins
+                  </option>
+                  <option
+                    value="Targeted Amines"
+                  >
+                    Targeted Amines
+                  </option>
+                  <option
+                    value="Targeted Steroids"
+                  >
+                    Targeted Steroids
+                  </option>
+                  <option
+                    value="TCA Cycle"
+                  >
+                    TCA Cycle
+                  </option>
+                  <option
+                    value="Targeted Ceramides"
+                  >
+                    Targeted Ceramides
+                  </option>
+                  <option
+                    value="Global Proteomics"
+                  >
+                    Global Proteomics
+                  </option>
+                  <option
+                    value="Global Phospho-proteomics"
+                  >
+                    Global Phospho-proteomics
+                  </option>
+                  <option
+                    value="Redox proteome"
+                  >
+                    Redox proteome
+                  </option>
+                  <option
+                    value="Acyl/Acetyl proteome"
+                  >
+                    Acyl/Acetyl proteome
+                  </option>
+                  <option
+                    value="SomaLogic"
+                  >
+                    SomaLogic
+                  </option>
+                </select>
+              </label>
+            </div>
+            <div
+              className="form-group"
+            >
+              <div
+                className="invalid-feedback"
+              >
+                Field Required
+              </div>
+              <label
+                htmlFor="identifier"
+              >
+                Identifier(s) * – comma seperate if multiple
+                <input
+                  className="form-control"
+                  disabled={false}
+                  id="identifier"
+                  placeholder="Ex: AS213141"
+                  required={true}
+                  type="text"
+                />
+              </label>
+            </div>
+            <div
+              className="form-group"
+            >
+              <div
+                className="invalid-feedback"
+              >
+                Field Required
+              </div>
+              <label
+                htmlFor="collection-date"
+              >
+                Collection Date *
+                <input
+                  className="form-control"
+                  disabled={false}
+                  id="collectionDate"
+                  placeholder="MM/DD/YYYY"
+                  required={true}
+                  type="text"
+                />
+              </label>
+            </div>
+            <div
+              className="form-group"
+            >
+              <label
+                htmlFor="subject-type"
+              >
+                Subject Type *
+                <select
+                  className="form-control"
+                  disabled={false}
+                  id="subjectType"
+                >
+                  <option
+                    value="Human"
+                  >
+                    Human
+                  </option>
+                  <option
+                    value="Animal"
+                  >
+                    Animal
+                  </option>
+                </select>
+              </label>
+            </div>
+            <div
+              className="form-group"
+            >
+              <label
+                htmlFor="study-phase"
+              >
+                Study Phase *
+                <select
+                  className="form-control"
+                  disabled={false}
+                  id="studyPhase"
+                >
+                  <option
+                    value="Vanguard"
+                  >
+                    Vanguard
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    1
+                  </option>
+                  <option
+                    value="1A"
+                  >
+                    1A
+                  </option>
+                  <option
+                    value="1B"
+                  >
+                    1B
+                  </option>
+                  <option
+                    value="2"
+                  >
+                    2
+                  </option>
+                  <option
+                    value="N/A"
+                  >
+                    N/A
+                  </option>
+                  <option
+                    value="other"
+                  >
+                    Other
+                  </option>
+                </select>
+              </label>
+            </div>
+            <div
+              className="form-check form-check-inline"
+            >
+              <input
+                className="form-check-input"
+                disabled={false}
+                id="rawData"
+                name="Raw"
+                type="checkbox"
+                value="Raw Data"
+              />
+              <label
+                className="form-check-label"
+                htmlFor="rawData"
+              >
+                Raw Data
+              </label>
+            </div>
+            <div
+              className="form-check form-check-inline"
+            >
+              <input
+                className="form-check-input"
+                disabled={false}
+                id="processedData"
+                name="Pre-Processed"
+                type="checkbox"
+                value="Processed Data"
+              />
+              <label
+                className="form-check-label"
+                htmlFor="processedData"
+              >
+                Pre-Processed Data
+              </label>
+            </div>
+            <div
+              className="form-group"
+            >
+              <label
+                htmlFor="description"
+              >
+                <br />
+                Description
+                <textarea
+                  className="form-control"
+                  disabled={false}
+                  id="description"
+                  placeholder="Description"
+                  type="textarea"
+                />
+              </label>
+            </div>
+            <input
+              id="submit-form"
+              style={
+                Object {
+                  "visibility": "hidden",
+                }
+              }
+              type="submit"
+            />
+          </form>
+        </div>
+        <div
+          className="col-8 centered"
+        >
+          <br />
+          <div
+            className="uploadAreaDnD "
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+          >
+            <div
+              className="row fileArea"
+            >
+              <div
+                className="centered noFiles"
+              >
+                <br />
+                <br />
+                <br />
+                <br />
+                <span
+                  className="oi oi-cloud-upload"
+                />
+                <h3>
+                  Drag and drop files here
+                  <br />
+                  Or
+                </h3>
+              </div>
+            </div>
+            <div
+              className="selectArea"
+            >
+              <label
+                className="btn btn-primary"
+                htmlFor="fileUpload"
+                id="fileUploadLabel"
+              >
+                Select Files
+                <input
+                  id="fileUpload"
+                  multiple={true}
+                  name="fileUpload"
+                  onChange={[Function]}
+                  type="file"
+                />
+              </label>
+            </div>
+          </div>
+          <br />
+          <br />
+          <label
+            className="btn btn-success"
+            htmlFor="submit-form"
+            tabIndex={0}
+          >
+            Upload
+          </label>
+        </div>
+        <div
+          className="col-12"
+        >
+          <h3 />
+          <div
+            className="noListItems centered"
+          >
+            <br />
+            <br />
+            <h2>
+              Upload files and they will appear here!
+            </h2>
+            <br />
+            <br />
+          </div>
+        </div>
       </div>
     </div>
   </div>
+  <footer
+    className="footer"
+  >
+    <div
+      className="container-fluid"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col"
+        >
+          <p>
+            Data Hub designed and maintained by the MoTrPAC BioInformatics Center at
+            <a
+              href="https://www.stanford.edu/"
+              target="_new"
+            >
+               Stanford University
+            </a>
+          </p>
+          <p>
+            Funded by the
+            <a
+              href="https://commonfund.nih.gov/"
+              target="_new"
+            >
+               NIH Common Fund
+            </a>
+          </p>
+        </div>
+        <div
+          className="col copyright"
+        >
+          <p>
+            © XXXX 2018
+          </p>
+        </div>
+        <div
+          className="col rightAlign"
+        >
+          <button
+            className="logInOutBtn btn"
+            onClick={[Function]}
+            type="button"
+          >
+            Test User Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>
 `;
 
 exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
 <div
-  className="upload-component container"
-  style={
-    Object {
-      "padding": "1em",
-    }
-  }
+  className="App"
 >
-  <div
-    className="row"
-  >
-    <div
-      className="col-4"
+  <header>
+    <nav
+      className="navbar navbar-expand-lg navbar-dark"
     >
-      <form
-        className="needs-validation"
-        disabled={true}
-        id="uploadForm"
-        name="uploadForm"
-        noValidate={true}
-        onSubmit={[Function]}
-      >
-        <div
-          className="form-group"
-        >
-          <div
-            className="invalid-feedback"
-          >
-            Field Required
-          </div>
-          <label
-            htmlFor="data-type"
-          >
-            Data Type *
-            <select
-              className="form-control"
-              disabled={true}
-              id="dataType"
-              required={true}
-              type="text"
-              value="ATAC-Seq"
-            >
-              <option
-                value="WGS"
-              >
-                WGS
-              </option>
-              <option
-                value="RNA-seq"
-              >
-                RNA-seq
-              </option>
-              <option
-                value="Methylome (Gastroc, White Fat, Liver, Heart)"
-              >
-                Methylome (Gastroc, White Fat, Liver, Heart)
-              </option>
-              <option
-                value="ATAC-Seq"
-              >
-                ATAC-Seq
-              </option>
-              <option
-                value="Untargeted RP"
-              >
-                Untargeted RP
-              </option>
-              <option
-                value="Untargeted HILIC-positive"
-              >
-                Untargeted HILIC-positive
-              </option>
-              <option
-                value="Untargeted HILIC -negative"
-              >
-                Untargeted HILIC -negative
-              </option>
-              <option
-                value="Untargeted Lipidomics"
-              >
-                Untargeted Lipidomics
-              </option>
-              <option
-                value="Targeted Acyl-CoA"
-              >
-                Targeted Acyl-CoA
-              </option>
-              <option
-                value="Targeted Acylcarnitines"
-              >
-                Targeted Acylcarnitines
-              </option>
-              <option
-                value="Targeted Ketoacids"
-              >
-                Targeted Ketoacids
-              </option>
-              <option
-                value="Targeted Organic Acids"
-              >
-                Targeted Organic Acids
-              </option>
-              <option
-                value="Targeted Eicosanoids"
-              >
-                Targeted Eicosanoids
-              </option>
-              <option
-                value="Targeted Nucleotides"
-              >
-                Targeted Nucleotides
-              </option>
-              <option
-                value="Targeted oxylipins"
-              >
-                Targeted oxylipins
-              </option>
-              <option
-                value="Targeted Amines"
-              >
-                Targeted Amines
-              </option>
-              <option
-                value="Targeted Steroids"
-              >
-                Targeted Steroids
-              </option>
-              <option
-                value="TCA Cycle"
-              >
-                TCA Cycle
-              </option>
-              <option
-                value="Targeted Ceramides"
-              >
-                Targeted Ceramides
-              </option>
-              <option
-                value="Global Proteomics"
-              >
-                Global Proteomics
-              </option>
-              <option
-                value="Global Phospho-proteomics"
-              >
-                Global Phospho-proteomics
-              </option>
-              <option
-                value="Redox proteome"
-              >
-                Redox proteome
-              </option>
-              <option
-                value="Acyl/Acetyl proteome"
-              >
-                Acyl/Acetyl proteome
-              </option>
-              <option
-                value="SomaLogic"
-              >
-                SomaLogic
-              </option>
-            </select>
-          </label>
-        </div>
-        <div
-          className="form-group"
-        >
-          <div
-            className="invalid-feedback"
-          >
-            Field Required
-          </div>
-          <label
-            htmlFor="identifier"
-          >
-            Identifier(s) * – comma seperate if multiple
-            <input
-              className="form-control"
-              disabled={true}
-              id="identifier"
-              placeholder="Ex: AS213141"
-              required={true}
-              type="text"
-              value="AS12313"
-            />
-          </label>
-        </div>
-        <div
-          className="form-group"
-        >
-          <div
-            className="invalid-feedback"
-          >
-            Field Required
-          </div>
-          <label
-            htmlFor="collection-date"
-          >
-            Collection Date *
-            <input
-              className="form-control"
-              disabled={true}
-              id="collectionDate"
-              placeholder="MM/DD/YYYY"
-              required={true}
-              type="text"
-              value="10/23/18"
-            />
-          </label>
-        </div>
-        <div
-          className="form-group"
-        >
-          <label
-            htmlFor="subject-type"
-          >
-            Subject Type *
-            <select
-              className="form-control"
-              disabled={true}
-              id="subjectType"
-              value="Animal"
-            >
-              <option
-                value="Human"
-              >
-                Human
-              </option>
-              <option
-                value="Animal"
-              >
-                Animal
-              </option>
-            </select>
-          </label>
-        </div>
-        <div
-          className="form-group"
-        >
-          <label
-            htmlFor="study-phase"
-          >
-            Study Phase *
-            <select
-              className="form-control"
-              disabled={true}
-              id="studyPhase"
-              value="2"
-            >
-              <option
-                value="Vanguard"
-              >
-                Vanguard
-              </option>
-              <option
-                value="1"
-              >
-                1
-              </option>
-              <option
-                value="1A"
-              >
-                1A
-              </option>
-              <option
-                value="1B"
-              >
-                1B
-              </option>
-              <option
-                value="2"
-              >
-                2
-              </option>
-              <option
-                value="N/A"
-              >
-                N/A
-              </option>
-              <option
-                value="other"
-              >
-                Other
-              </option>
-            </select>
-          </label>
-        </div>
-        <div
-          className="form-check form-check-inline"
-        >
-          <input
-            checked={true}
-            className="form-check-input"
-            disabled={true}
-            id="rawData"
-            name="Raw"
-            type="checkbox"
-            value="Raw Data"
-          />
-          <label
-            className="form-check-label"
-            htmlFor="rawData"
-          >
-            Raw Data
-          </label>
-        </div>
-        <div
-          className="form-check form-check-inline"
-        >
-          <input
-            className="form-check-input"
-            disabled={true}
-            id="processedData"
-            name="Pre-Processed"
-            type="checkbox"
-            value="Processed Data"
-          />
-          <label
-            className="form-check-label"
-            htmlFor="processedData"
-          >
-            Pre-Processed Data
-          </label>
-        </div>
-        <div
-          className="form-group"
-        >
-          <label
-            htmlFor="description"
-          >
-            <br />
-            Description
-            <textarea
-              className="form-control"
-              disabled={true}
-              id="description"
-              placeholder="Description"
-              type="textarea"
-            />
-          </label>
-        </div>
-        <input
-          id="submit-form"
-          style={
-            Object {
-              "visibility": "hidden",
-            }
-          }
-          type="submit"
-        />
-      </form>
-    </div>
-    <div
-      className="col-8 centered"
-    >
-      <br />
       <div
-        className="uploadAreaDnD "
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
+        className="container"
       >
-        <div
-          className="row fileArea"
+        <a
+          className="navbar-brand siteTitle"
+          href="/"
         >
-          <div
-            className="centered noFiles"
+          MoTrPAC
+          <span
+            className="light"
           >
-            <br />
-            <br />
-            <br />
-            <br />
-            <span
-              className="oi oi-cloud-upload"
-            />
-            <h3>
-              Drag and drop files here
-              <br />
-              Or
-            </h3>
-          </div>
-        </div>
-        <div
-          className="selectArea"
+              Data Hub
+          </span>
+        </a>
+        <button
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          className="navbar-toggler"
+          data-target="#navbarSupportedContent"
+          data-toggle="collapse"
+          type="button"
         >
-          <label
-            className="btn btn-primary"
-            htmlFor="fileUpload"
-            id="fileUploadLabel"
+          <span
+            className="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          className="collapse navbar-collapse flex-row-reverse"
+          id="navbarSupportedContent"
+        >
+          <ul
+            className="navbar-nav"
           >
-            Select Files
-            <input
-              id="fileUpload"
-              multiple={true}
-              name="fileUpload"
-              onChange={[Function]}
-              type="file"
-            />
-          </label>
+            
+            <li
+              className="nav-item navItem"
+            >
+              <a
+                className="nav-link"
+                href="/data"
+              >
+                Data
+              </a>
+            </li>
+            <li
+              className="nav-item navItem dropdown"
+            >
+              <div
+                className="nav-link dropdown-toggle"
+                data-toggle="dropdown"
+                id="navbarDropdownMenuLink"
+                role="button"
+              >
+                About
+              </div>
+              <div
+                aria-labelledby="navbarDropdownMenuLink"
+                className="dropdown-menu"
+              >
+                <a
+                  className="dropdown-item"
+                  href="/linkout"
+                >
+                  Useful Links
+                </a>
+                <a
+                  className="dropdown-item"
+                  href="/team"
+                >
+                  Who we are
+                </a>
+              </div>
+            </li>
+            <li
+              className="nav-item navItem"
+            >
+              <a
+                className="nav-link"
+                href="/contact"
+              >
+                Contact
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
-      <br />
-      <br />
-      <label
-        className="btn btn-success"
-        htmlFor="submit-form"
-        tabIndex={0}
-      >
-        Upload
-      </label>
-    </div>
+    </nav>
+  </header>
+  <div
+    className="componentHolder"
+  >
     <div
-      className="col-12"
+      className="container uploadScreen upload"
     >
-      <h3>
-        AS12313
-      </h3>
-      <table
-        className="table table-hover uploadList"
+      <div
+        className="row"
       >
-        <thead>
-          <tr>
-            <th
-              scope="col"
-            >
-              File Name
-            </th>
-            <th
-              scope="col"
-            >
-              Status
-            </th>
-            <th
-              className="centered"
-              scope="col"
-            >
-              Upload Successful
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            className="uploadItem"
+        <div
+          className="col"
+        >
+          <h2
+            className="light"
           >
-            <td>
-              test1.fa
-            </td>
-            <td>
-              Uploading...
-            </td>
-            <td
-              className="centered"
-            >
-              <span
-                className="oi loadIndicator oi-loop-circular"
-              />
-            </td>
-          </tr>
-          <tr
-            className="uploadItem"
+            Upload Data
+          </h2>
+        </div>
+      </div>
+      <div
+        className="row"
+      >
+        <div
+          className="col-4"
+        >
+          <form
+            className="needs-validation"
+            disabled={true}
+            id="uploadForm"
+            name="uploadForm"
+            noValidate={true}
+            onSubmit={[Function]}
           >
-            <td>
-              test2.fa
-            </td>
-            <td>
-              <div>
-                <button
-                  className="errorHovButton"
-                  type="button"
-                >
-                  Error: 1234
-                </button>
-                <div
-                  className="errorHover"
-                >
-                  <h5>
-                    Error 1234: Descriptive Title
-                  </h5>
-                  <p>
-                    This error occurs when… 
- Contact … with comments/questions.
-                  </p>
-                </div>
+            <div
+              className="form-group"
+            >
+              <div
+                className="invalid-feedback"
+              >
+                Field Required
               </div>
-            </td>
-            <td
-              className="centered"
+              <label
+                htmlFor="data-type"
+              >
+                Data Type *
+                <select
+                  className="form-control"
+                  disabled={true}
+                  id="dataType"
+                  required={true}
+                  type="text"
+                  value="ATAC-Seq"
+                >
+                  <option
+                    value="WGS"
+                  >
+                    WGS
+                  </option>
+                  <option
+                    value="RNA-seq"
+                  >
+                    RNA-seq
+                  </option>
+                  <option
+                    value="Methylome (Gastroc, White Fat, Liver, Heart)"
+                  >
+                    Methylome (Gastroc, White Fat, Liver, Heart)
+                  </option>
+                  <option
+                    value="ATAC-Seq"
+                  >
+                    ATAC-Seq
+                  </option>
+                  <option
+                    value="Untargeted RP"
+                  >
+                    Untargeted RP
+                  </option>
+                  <option
+                    value="Untargeted HILIC-positive"
+                  >
+                    Untargeted HILIC-positive
+                  </option>
+                  <option
+                    value="Untargeted HILIC -negative"
+                  >
+                    Untargeted HILIC -negative
+                  </option>
+                  <option
+                    value="Untargeted Lipidomics"
+                  >
+                    Untargeted Lipidomics
+                  </option>
+                  <option
+                    value="Targeted Acyl-CoA"
+                  >
+                    Targeted Acyl-CoA
+                  </option>
+                  <option
+                    value="Targeted Acylcarnitines"
+                  >
+                    Targeted Acylcarnitines
+                  </option>
+                  <option
+                    value="Targeted Ketoacids"
+                  >
+                    Targeted Ketoacids
+                  </option>
+                  <option
+                    value="Targeted Organic Acids"
+                  >
+                    Targeted Organic Acids
+                  </option>
+                  <option
+                    value="Targeted Eicosanoids"
+                  >
+                    Targeted Eicosanoids
+                  </option>
+                  <option
+                    value="Targeted Nucleotides"
+                  >
+                    Targeted Nucleotides
+                  </option>
+                  <option
+                    value="Targeted oxylipins"
+                  >
+                    Targeted oxylipins
+                  </option>
+                  <option
+                    value="Targeted Amines"
+                  >
+                    Targeted Amines
+                  </option>
+                  <option
+                    value="Targeted Steroids"
+                  >
+                    Targeted Steroids
+                  </option>
+                  <option
+                    value="TCA Cycle"
+                  >
+                    TCA Cycle
+                  </option>
+                  <option
+                    value="Targeted Ceramides"
+                  >
+                    Targeted Ceramides
+                  </option>
+                  <option
+                    value="Global Proteomics"
+                  >
+                    Global Proteomics
+                  </option>
+                  <option
+                    value="Global Phospho-proteomics"
+                  >
+                    Global Phospho-proteomics
+                  </option>
+                  <option
+                    value="Redox proteome"
+                  >
+                    Redox proteome
+                  </option>
+                  <option
+                    value="Acyl/Acetyl proteome"
+                  >
+                    Acyl/Acetyl proteome
+                  </option>
+                  <option
+                    value="SomaLogic"
+                  >
+                    SomaLogic
+                  </option>
+                </select>
+              </label>
+            </div>
+            <div
+              className="form-group"
             >
-              <span
-                className="oi oi-warning"
+              <div
+                className="invalid-feedback"
+              >
+                Field Required
+              </div>
+              <label
+                htmlFor="identifier"
+              >
+                Identifier(s) * – comma seperate if multiple
+                <input
+                  className="form-control"
+                  disabled={true}
+                  id="identifier"
+                  placeholder="Ex: AS213141"
+                  required={true}
+                  type="text"
+                  value="AS12313"
+                />
+              </label>
+            </div>
+            <div
+              className="form-group"
+            >
+              <div
+                className="invalid-feedback"
+              >
+                Field Required
+              </div>
+              <label
+                htmlFor="collection-date"
+              >
+                Collection Date *
+                <input
+                  className="form-control"
+                  disabled={true}
+                  id="collectionDate"
+                  placeholder="MM/DD/YYYY"
+                  required={true}
+                  type="text"
+                  value="10/23/18"
+                />
+              </label>
+            </div>
+            <div
+              className="form-group"
+            >
+              <label
+                htmlFor="subject-type"
+              >
+                Subject Type *
+                <select
+                  className="form-control"
+                  disabled={true}
+                  id="subjectType"
+                  value="Animal"
+                >
+                  <option
+                    value="Human"
+                  >
+                    Human
+                  </option>
+                  <option
+                    value="Animal"
+                  >
+                    Animal
+                  </option>
+                </select>
+              </label>
+            </div>
+            <div
+              className="form-group"
+            >
+              <label
+                htmlFor="study-phase"
+              >
+                Study Phase *
+                <select
+                  className="form-control"
+                  disabled={true}
+                  id="studyPhase"
+                  value="2"
+                >
+                  <option
+                    value="Vanguard"
+                  >
+                    Vanguard
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    1
+                  </option>
+                  <option
+                    value="1A"
+                  >
+                    1A
+                  </option>
+                  <option
+                    value="1B"
+                  >
+                    1B
+                  </option>
+                  <option
+                    value="2"
+                  >
+                    2
+                  </option>
+                  <option
+                    value="N/A"
+                  >
+                    N/A
+                  </option>
+                  <option
+                    value="other"
+                  >
+                    Other
+                  </option>
+                </select>
+              </label>
+            </div>
+            <div
+              className="form-check form-check-inline"
+            >
+              <input
+                checked={true}
+                className="form-check-input"
+                disabled={true}
+                id="rawData"
+                name="Raw"
+                type="checkbox"
+                value="Raw Data"
               />
-            </td>
-          </tr>
-          <tr
-            className="uploadItem"
+              <label
+                className="form-check-label"
+                htmlFor="rawData"
+              >
+                Raw Data
+              </label>
+            </div>
+            <div
+              className="form-check form-check-inline"
+            >
+              <input
+                className="form-check-input"
+                disabled={true}
+                id="processedData"
+                name="Pre-Processed"
+                type="checkbox"
+                value="Processed Data"
+              />
+              <label
+                className="form-check-label"
+                htmlFor="processedData"
+              >
+                Pre-Processed Data
+              </label>
+            </div>
+            <div
+              className="form-group"
+            >
+              <label
+                htmlFor="description"
+              >
+                <br />
+                Description
+                <textarea
+                  className="form-control"
+                  disabled={true}
+                  id="description"
+                  placeholder="Description"
+                  type="textarea"
+                />
+              </label>
+            </div>
+            <input
+              id="submit-form"
+              style={
+                Object {
+                  "visibility": "hidden",
+                }
+              }
+              type="submit"
+            />
+          </form>
+        </div>
+        <div
+          className="col-8 centered"
+        >
+          <br />
+          <div
+            className="uploadAreaDnD "
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
           >
-            <td>
-              test3.fa
-            </td>
-            <td>
-              Upload Successful
-            </td>
-            <td
-              className="centered"
+            <div
+              className="row fileArea"
             >
-              <span
-                className="oi oi-check"
-              />
-            </td>
-          </tr>
-          <tr
-            className="uploadItem"
+              <div
+                className="centered noFiles"
+              >
+                <br />
+                <br />
+                <br />
+                <br />
+                <span
+                  className="oi oi-cloud-upload"
+                />
+                <h3>
+                  Drag and drop files here
+                  <br />
+                  Or
+                </h3>
+              </div>
+            </div>
+            <div
+              className="selectArea"
+            >
+              <label
+                className="btn btn-primary"
+                htmlFor="fileUpload"
+                id="fileUploadLabel"
+              >
+                Select Files
+                <input
+                  id="fileUpload"
+                  multiple={true}
+                  name="fileUpload"
+                  onChange={[Function]}
+                  type="file"
+                />
+              </label>
+            </div>
+          </div>
+          <br />
+          <br />
+          <label
+            className="btn btn-success"
+            htmlFor="submit-form"
+            tabIndex={0}
           >
-            <td>
-              test4.fa
-            </td>
-            <td>
-              Status Undefined
-            </td>
-            <td
-              className="centered"
-            >
-              <span
-                className="oi oi-question-mark"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            Upload
+          </label>
+        </div>
+        <div
+          className="col-12"
+        >
+          <h3>
+            AS12313
+          </h3>
+          <table
+            className="table table-hover uploadList"
+          >
+            <thead>
+              <tr>
+                <th
+                  scope="col"
+                >
+                  File Name
+                </th>
+                <th
+                  scope="col"
+                >
+                  Status
+                </th>
+                <th
+                  className="centered"
+                  scope="col"
+                >
+                  Upload Successful
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                className="uploadItem"
+              >
+                <td>
+                  test1.fa
+                </td>
+                <td>
+                  Uploading...
+                </td>
+                <td
+                  className="centered"
+                >
+                  <span
+                    className="oi loadIndicator oi-loop-circular"
+                  />
+                </td>
+              </tr>
+              <tr
+                className="uploadItem"
+              >
+                <td>
+                  test2.fa
+                </td>
+                <td>
+                  <div>
+                    <button
+                      className="errorHovButton"
+                      type="button"
+                    >
+                      Error: 1234
+                    </button>
+                    <div
+                      className="errorHover"
+                    >
+                      <h5>
+                        Error 1234: Descriptive Title
+                      </h5>
+                      <p>
+                        This error occurs when… 
+ Contact … with comments/questions.
+                      </p>
+                    </div>
+                  </div>
+                </td>
+                <td
+                  className="centered"
+                >
+                  <span
+                    className="oi oi-warning"
+                  />
+                </td>
+              </tr>
+              <tr
+                className="uploadItem"
+              >
+                <td>
+                  test3.fa
+                </td>
+                <td>
+                  Upload Successful
+                </td>
+                <td
+                  className="centered"
+                >
+                  <span
+                    className="oi oi-check"
+                  />
+                </td>
+              </tr>
+              <tr
+                className="uploadItem"
+              >
+                <td>
+                  test4.fa
+                </td>
+                <td>
+                  Status Undefined
+                </td>
+                <td
+                  className="centered"
+                >
+                  <span
+                    className="oi oi-question-mark"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
+  <footer
+    className="footer"
+  >
+    <div
+      className="container-fluid"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col"
+        >
+          <p>
+            Data Hub designed and maintained by the MoTrPAC BioInformatics Center at
+            <a
+              href="https://www.stanford.edu/"
+              target="_new"
+            >
+               Stanford University
+            </a>
+          </p>
+          <p>
+            Funded by the
+            <a
+              href="https://commonfund.nih.gov/"
+              target="_new"
+            >
+               NIH Common Fund
+            </a>
+          </p>
+        </div>
+        <div
+          className="col copyright"
+        >
+          <p>
+            © XXXX 2018
+          </p>
+        </div>
+        <div
+          className="col rightAlign"
+        >
+          <button
+            className="logInOutBtn btn"
+            onClick={[Function]}
+            type="button"
+          >
+            Test User Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>
 `;

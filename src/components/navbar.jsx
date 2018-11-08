@@ -33,11 +33,11 @@ function Navbar({ loggedIn }) {
             <li className="nav-item navItem dropdown">
               <div className="nav-link dropdown-toggle" role="button" id="navbarDropdownMenuLink" data-toggle="dropdown">About</div>
               <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a href="" className="dropdown-item">Useful Links</a>
-                <a href="" className="dropdown-item">Who we are</a>
+                <a href="/linkout" className="dropdown-item">Useful Links</a>
+                <a href="/team" className="dropdown-item">Who we are</a>
               </div>
             </li>
-            <li className="nav-item navItem"><a href="" className="nav-link">Contact</a></li>
+            <li className="nav-item navItem"><a href="/contact" className="nav-link">Contact</a></li>
           </ul>
         </div>
       </div>

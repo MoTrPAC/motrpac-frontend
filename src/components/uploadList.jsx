@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import '../main.css';
 import UploadListRow from './uploadListRow';
 
 function UploadList({ uploadFiles }) {
@@ -11,8 +9,9 @@ function UploadList({ uploadFiles }) {
       <div className="noListItems centered">
         <br />
         <br />
-        <br />
         <h2>Upload files and they will appear here!</h2>
+        <br />
+        <br />
       </div>
     );
   }

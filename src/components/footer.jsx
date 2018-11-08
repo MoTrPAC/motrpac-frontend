@@ -1,18 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { action } from '@storybook/addon-actions';
 
-function Footer({ user, loggedIn }) {
+function Footer({ user, loggedIn = false, handleLogInOut = action('Logging In/Out') }) {
   let logoutBtn;
+  // TODO: Find out how to best do error handling
+
+  // Throws error if there is a user passed, and not logged in
+  if (user && !loggedIn) {
+    Error('User exists, but not loggedin in');
+  }
   if (loggedIn) {
+    // Throws error if loggedIn and no user
+    if (!user) {
+      Error('Logged in with no user');
+    }
+
     logoutBtn = (
-      <button type="button" className="logInOutBtn btn">
+      <button type="button" onClick={() => handleLogInOut(loggedIn)} className="logInOutBtn btn">
         {`${user.name} Logout`}
       </button>
     );
   }
   const loginBtn = (
 
-    <button type="button" className="logInOutBtn btn">
+    <button type="button" onClick={() => handleLogInOut(loggedIn)} className="logInOutBtn btn">
       Submitter Login
     </button>
   );
