@@ -5,28 +5,30 @@ export const defaultUploadState = {
   dragging: 0,
 };
 
+// Creates filter to not allow already existing files based on file name
+//  Input: Names of files already in area of interest.
+//  Output: Filter to remove files in that original list
+function createFileFilter(originalFileNames) {
+  // Filter to ensure files don't share the same name
+  function uniqueFileNameFilter(file) {
+    // equals 1 if  file already in original filenames --> criteria to remove
+    const isIn = originalFileNames.filter(name => name === file.name).length;
+    return !(isIn === 1);
+  }
+  return uniqueFileNameFilter;
+}
+
+// Reducer to handle actions sent from componenets related to uploading data
 export function UploadReducer(state = { ...defaultUploadState }, action) {
   // TODO: Filter by name && path? Add suffix for duplicates?
-  const fileNames = state.files.map(stagedFile => stagedFile.name);
-  // Filter to ensure files sent to staging don't share the same name
-  function uniqueFileNameCheck(file) {
-    // TODO: Look in to 'const isIn = fileNames.filter(name => name === file.name);'
-    const isIn = fileNames.indexOf(file.name);
-    if (isIn === -1) {
-      return true;
-    }
-    return false;
-  }
 
-  const uploadNames = state.uploadFiles.map(uploadingFile => uploadingFile.file.name);
+  // Filter to ensure files sent to staging don't share the same name
+  const fileNames = state.files.map(stagedFile => stagedFile.name);
+  const uniqueFileNameCheck = createFileFilter(fileNames);
+
   // Filter to ensure files sent from staging to upload don't share the same name
-  function uniqueUploadCheck(upload) {
-    const isIn = uploadNames.indexOf(upload.file.name);
-    if (isIn === -1) {
-      return true;
-    }
-    return false;
-  }
+  const uploadNames = state.uploadFiles.map(uploadingFile => uploadingFile.file.name);
+  const uniqueUploadCheck = createFileFilter(uploadNames);
 
   // Handles state to return based on action
   switch (action.type) {
