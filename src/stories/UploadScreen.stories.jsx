@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf, action } from '@storybook/react';
 import { UploadScreen } from '../components/uploadScreen';
 import Navbar from '../components/navbar';
-import Footer from '../components/footer';
+import { Footer } from '../components/footer';
 
 const TestUploads = require('../testData/testUploads');
 

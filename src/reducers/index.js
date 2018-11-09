@@ -1,23 +1,14 @@
 import { combineReducers } from 'redux';
-import uploadReducer from './uploadReducer';
-import AuthReducer from './authReducer';
-
-const testUser = require('../testData/testUser');
+import uploadReducer, { defaultUploadState } from './uploadReducer';
+import authReducer, { defaultAuthState } from './authReducer';
 
 // TODO: Screen change reducer
 export default combineReducers({
   upload: uploadReducer,
-  auth: AuthReducer,
+  auth: authReducer,
 });
 
 export const defaultRootState = {
-  upload: {
-    dragging: 0,
-    files: [],
-    formValues: {},
-    uploadFiles: [],
-  },
-  auth: {
-    user: testUser,
-  },
+  upload: defaultUploadState,
+  auth: defaultAuthState,
 };

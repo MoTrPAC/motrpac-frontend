@@ -1,16 +1,19 @@
 import React from 'react';
 import { storiesOf, action } from '@storybook/react';
-import Footer from '../components/footer';
+import { Footer } from '../components/footer';
 
 const loggedOutState = {
-  handleLogInOut: action('Logging In'),
+  loggedIn: false,
+  onLogIn: action('Logging In'),
+  onLogOut: action('Logging Out'),
 };
 const loggedInState = {
   loggedIn: true,
   user: {
     name: 'Test User',
   },
-  handleLogInOut: action('Logging Out'),
+  onLogIn: action('Logging In'),
+  onLogOut: action('Logging Out'),
 };
 storiesOf('Footer', module)
   .add('default', () => <Footer {...loggedOutState} />)

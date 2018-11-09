@@ -1,32 +1,13 @@
 import React from 'react';
-import { action } from '@storybook/addon-actions';
+import { connect } from 'react-redux';
 
-function Footer({ user, loggedIn = false, handleLogInOut = action('Logging In/Out') }) {
-  let logoutBtn;
+export function Footer({
+  user,
+  loggedIn = false,
+  onLogIn,
+  onLogOut,
+}) {
   // TODO: Find out how to best do error handling
-
-  // Throws error if there is a user passed, and not logged in
-  if (user && !loggedIn) {
-    Error('User exists, but not loggedin in');
-  }
-  if (loggedIn) {
-    // Throws error if loggedIn and no user
-    if (!user) {
-      Error('Logged in with no user');
-    }
-
-    logoutBtn = (
-      <button type="button" onClick={() => handleLogInOut(loggedIn)} className="logInOutBtn btn">
-        {`${user.name} Logout`}
-      </button>
-    );
-  }
-  const loginBtn = (
-
-    <button type="button" onClick={() => handleLogInOut(loggedIn)} className="logInOutBtn btn">
-      Submitter Login
-    </button>
-  );
   const footer = (
     <footer className="footer">
       <div className="container-fluid">
@@ -46,7 +27,7 @@ function Footer({ user, loggedIn = false, handleLogInOut = action('Logging In/Ou
             <p>&#169; XXXX 2018</p>
           </div>
           <div className="col rightAlign">
-            {loggedIn ? logoutBtn : loginBtn}
+            <AuthButton loggedInStatus={loggedIn} user={user} onLogIn={onLogIn} onLogOut={onLogOut} />
           </div>
         </div>
       </div>
@@ -56,4 +37,44 @@ function Footer({ user, loggedIn = false, handleLogInOut = action('Logging In/Ou
   return footer;
 }
 
-export default Footer;
+function AuthButton({
+  loggedInStatus,
+  user,
+  onLogIn,
+  onLogOut,
+}) {
+  if (loggedInStatus === true) {
+    return (
+      <button type="button" onClick={onLogOut} className="logInOutBtn btn">
+        {`${user.name} Logout`}
+      </button>
+    );
+  }
+  return (
+    <button type="button" onClick={onLogIn} className="logInOutBtn btn">
+      Submitter Login
+    </button>
+  );
+}
+
+
+const mapStateToProps = state => ({
+  loggedIn: state.auth.loggedIn,
+  user: state.auth.user,
+});
+
+
+const testUser = require('../testData/testUser');
+
+const mapDispatchToProps = dispatch => ({
+  onLogIn: () => dispatch({
+    type: 'LOGIN_SUCCESS',
+    user: testUser,
+  }),
+  onLogOut: () => dispatch({
+    type: 'LOGOUT',
+  }),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Footer);

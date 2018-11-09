@@ -13,12 +13,8 @@ require('bootstrap');
 
 
 function App() {
-  function handleLogInOut(loggedIn) {
-    console.log(loggedIn);
-  }
-
   return (
-    <Provider store={createStore(rootReducer, defaultRootState)}>
+    <Provider store={createStore(rootReducer, defaultRootState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}>
       <BrowserRouter>
         <div className="App">
           <header>
@@ -29,7 +25,7 @@ function App() {
             <Route path="/dashboard" component={dashboard} />
             <Route path="/upload" component={uploadScreen} />
           </div>
-          <Footer handleLogInOut={handleLogInOut} />
+          <Footer />
         </div>
       </BrowserRouter>
     </Provider>
