@@ -3,11 +3,11 @@ import { UploadReducer, defaultUploadState } from '../../reducers/uploadReducer'
 const testFiles = require('../../testData/testFiles');
 
 describe('Upload Reducer', () => {
-  it('Return initial state if no action or state', () => {
+  test('Return initial state if no action or state', () => {
     expect(UploadReducer(undefined, {})).toEqual({ ...defaultUploadState });
   });
 
-  it('Returns state given if no action', () => {
+  test('Returns state given if no action', () => {
     expect(UploadReducer({ ...defaultUploadState, files: ['fileName.fileExt'] }, {})).toEqual({ ...defaultUploadState, files: ['fileName.fileExt'] });
   });
 
@@ -19,7 +19,7 @@ describe('Upload Reducer', () => {
     ...defaultUploadState,
     files: [testFiles[1]],
   };
-  it('Does not add files if filename previously added', () => {
+  test('Does not add files if filename previously added', () => {
     expect(UploadReducer(fileAddedState, addFileAction))
       .toEqual(fileAddedState);
   });
@@ -36,7 +36,7 @@ describe('Upload Reducer', () => {
     },
   };
 
-  it('Changes validated state to true on submitting invalid form', () => {
+  test('Changes validated state to true on submitting invalid form', () => {
     expect(UploadReducer(undefined, formSubmitAction))
       .toEqual({
         ...defaultUploadState,

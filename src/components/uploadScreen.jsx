@@ -52,7 +52,7 @@ export function UploadScreen({
           />
           <br />
           <br />
-          <label htmlFor="submit-form" className="btn btn-success" tabIndex={0}>Upload</label>
+          <label htmlFor="submit-form" id="formSubmitLabel" className="btn btn-success" tabIndex={0}>Upload</label>
         </div>
         <div className="col-12">
           <h3>{formValues.identifier}</h3>
@@ -88,7 +88,7 @@ UploadScreen.propTypes = {
   onDragEnter: PropTypes.func.isRequired,
   onDragLeave: PropTypes.func.isRequired,
   onDragDrop: PropTypes.func.isRequired,
-  onUpload: PropTypes.func.isRequired,
+  // onUpload: PropTypes.func.isRequired, // replaced by onFormSubmit
   onFileAdded: PropTypes.func.isRequired,
   onRemoveFile: PropTypes.func.isRequired,
 };

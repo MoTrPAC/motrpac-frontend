@@ -29,6 +29,11 @@
   4. Integrate required actions in to associated reducer (ex. for upload handling logic that would be src/reducers/uploadReducer.js)
   5. If it is a full page, add routing logic to src/App.jsx
 
+#### Notes on redux integration
+ - Components that need to be linked to a redux store in implementation are exported by default as connected functions/containers. They are also exported in pure function form (ex: "import { UploadScreen } from 'path/to/component' " for pure function and "import UploadScreen from 'path/to/component'" for container).
+ - mapStateToProps used to link the section from the combined reducer to properties required by the container
+ - mapDispatchtoProps defines required actions and what to send to a reducer.
+
 #### Building and running
 
  * Running React App 
