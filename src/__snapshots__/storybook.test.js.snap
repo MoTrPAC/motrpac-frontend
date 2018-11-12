@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots Authentication Loading Default 1`] = `
+<div
+  className="authLoading"
+>
+  <span
+    className="oi oi-shield"
+  />
+  <h3
+    onClick={[Function]}
+  >
+    Authenticating...
+  </h3>
+</div>
+`;
+
 exports[`Storyshots Dashboard default 1`] = `
 <div
   className="App"
@@ -14,6 +29,7 @@ exports[`Storyshots Dashboard default 1`] = `
         <a
           className="navbar-brand siteTitle"
           href="/"
+          onClick={[Function]}
         >
           MoTrPAC
           <span
@@ -49,6 +65,7 @@ exports[`Storyshots Dashboard default 1`] = `
               <a
                 className="nav-link"
                 href="/data"
+                onClick={[Function]}
               >
                 Data
               </a>
@@ -71,12 +88,14 @@ exports[`Storyshots Dashboard default 1`] = `
                 <a
                   className="dropdown-item"
                   href="/linkout"
+                  onClick={[Function]}
                 >
                   Useful Links
                 </a>
                 <a
                   className="dropdown-item"
                   href="/team"
+                  onClick={[Function]}
                 >
                   Who we are
                 </a>
@@ -88,6 +107,7 @@ exports[`Storyshots Dashboard default 1`] = `
               <a
                 className="nav-link"
                 href="/contact"
+                onClick={[Function]}
               >
                 Contact
               </a>
@@ -126,6 +146,7 @@ exports[`Storyshots Dashboard default 1`] = `
           <a
             className="uploadBtn btn btn-primary"
             href="/upload"
+            onClick={[Function]}
           >
             Upload Data
           </a>
@@ -168,7 +189,8 @@ exports[`Storyshots Dashboard default 1`] = `
           className="col copyright"
         >
           <p>
-            © XXXX 2018
+            © XXXX  
+            2018
           </p>
         </div>
         <div
@@ -308,10 +330,6 @@ exports[`Storyshots Drag and Drop Upload File Area  Active Dragging 1`] = `
       <div
         className="centered noFiles"
       >
-        <br />
-        <br />
-        <br />
-        <br />
         <span
           className="oi oi-cloud-upload"
         />
@@ -365,10 +383,6 @@ exports[`Storyshots Drag and Drop Upload File Area  No Files Added 1`] = `
       <div
         className="centered noFiles"
       >
-        <br />
-        <br />
-        <br />
-        <br />
         <span
           className="oi oi-cloud-upload"
         />
@@ -743,7 +757,8 @@ exports[`Storyshots Footer Logged in 1`] = `
         className="col copyright"
       >
         <p>
-          © XXXX 2018
+          © XXXX  
+          2018
         </p>
       </div>
       <div
@@ -798,7 +813,8 @@ exports[`Storyshots Footer default 1`] = `
         className="col copyright"
       >
         <p>
-          © XXXX 2018
+          © XXXX  
+          2018
         </p>
       </div>
       <div
@@ -831,6 +847,7 @@ exports[`Storyshots Landing Page default 1`] = `
         <a
           className="navbar-brand siteTitle"
           href="/"
+          onClick={[Function]}
         >
           MoTrPAC
           <span
@@ -866,6 +883,7 @@ exports[`Storyshots Landing Page default 1`] = `
               <a
                 className="nav-link"
                 href="/data"
+                onClick={[Function]}
               >
                 Data
               </a>
@@ -888,12 +906,14 @@ exports[`Storyshots Landing Page default 1`] = `
                 <a
                   className="dropdown-item"
                   href="/linkout"
+                  onClick={[Function]}
                 >
                   Useful Links
                 </a>
                 <a
                   className="dropdown-item"
                   href="/team"
+                  onClick={[Function]}
                 >
                   Who we are
                 </a>
@@ -905,6 +925,7 @@ exports[`Storyshots Landing Page default 1`] = `
               <a
                 className="nav-link"
                 href="/contact"
+                onClick={[Function]}
               >
                 Contact
               </a>
@@ -1048,7 +1069,8 @@ exports[`Storyshots Landing Page default 1`] = `
           className="col copyright"
         >
           <p>
-            © XXXX 2018
+            © XXXX  
+            2018
           </p>
         </div>
         <div
@@ -1078,6 +1100,7 @@ exports[`Storyshots Navbar Logged in 1`] = `
     <a
       className="navbar-brand siteTitle"
       href="/"
+      onClick={[Function]}
     >
       MoTrPAC
       <span
@@ -1112,6 +1135,7 @@ exports[`Storyshots Navbar Logged in 1`] = `
           <a
             className="nav-link"
             href="/dashboard"
+            onClick={[Function]}
           >
             Dashboard
           </a>
@@ -1134,12 +1158,14 @@ exports[`Storyshots Navbar Logged in 1`] = `
             <a
               className="dropdown-item"
               href="/analysis/animal"
+              onClick={[Function]}
             >
               Animal
             </a>
             <a
               className="dropdown-item"
               href="/analysis/human"
+              onClick={[Function]}
             >
               Human
             </a>
@@ -1151,6 +1177,7 @@ exports[`Storyshots Navbar Logged in 1`] = `
           <a
             className="nav-link"
             href="/methods"
+            onClick={[Function]}
           >
             Methods
           </a>
@@ -1161,6 +1188,7 @@ exports[`Storyshots Navbar Logged in 1`] = `
           <a
             className="nav-link"
             href="/data"
+            onClick={[Function]}
           >
             Data
           </a>
@@ -1183,12 +1211,14 @@ exports[`Storyshots Navbar Logged in 1`] = `
             <a
               className="dropdown-item"
               href="/linkout"
+              onClick={[Function]}
             >
               Useful Links
             </a>
             <a
               className="dropdown-item"
               href="/team"
+              onClick={[Function]}
             >
               Who we are
             </a>
@@ -1200,6 +1230,7 @@ exports[`Storyshots Navbar Logged in 1`] = `
           <a
             className="nav-link"
             href="/contact"
+            onClick={[Function]}
           >
             Contact
           </a>
@@ -1220,6 +1251,7 @@ exports[`Storyshots Navbar default 1`] = `
     <a
       className="navbar-brand siteTitle"
       href="/"
+      onClick={[Function]}
     >
       MoTrPAC
       <span
@@ -1255,6 +1287,7 @@ exports[`Storyshots Navbar default 1`] = `
           <a
             className="nav-link"
             href="/data"
+            onClick={[Function]}
           >
             Data
           </a>
@@ -1277,12 +1310,14 @@ exports[`Storyshots Navbar default 1`] = `
             <a
               className="dropdown-item"
               href="/linkout"
+              onClick={[Function]}
             >
               Useful Links
             </a>
             <a
               className="dropdown-item"
               href="/team"
+              onClick={[Function]}
             >
               Who we are
             </a>
@@ -1294,6 +1329,7 @@ exports[`Storyshots Navbar default 1`] = `
           <a
             className="nav-link"
             href="/contact"
+            onClick={[Function]}
           >
             Contact
           </a>
@@ -2722,6 +2758,7 @@ exports[`Storyshots Upload Screen Default 1`] = `
         <a
           className="navbar-brand siteTitle"
           href="/"
+          onClick={[Function]}
         >
           MoTrPAC
           <span
@@ -2757,6 +2794,7 @@ exports[`Storyshots Upload Screen Default 1`] = `
               <a
                 className="nav-link"
                 href="/data"
+                onClick={[Function]}
               >
                 Data
               </a>
@@ -2779,12 +2817,14 @@ exports[`Storyshots Upload Screen Default 1`] = `
                 <a
                   className="dropdown-item"
                   href="/linkout"
+                  onClick={[Function]}
                 >
                   Useful Links
                 </a>
                 <a
                   className="dropdown-item"
                   href="/team"
+                  onClick={[Function]}
                 >
                   Who we are
                 </a>
@@ -2796,6 +2836,7 @@ exports[`Storyshots Upload Screen Default 1`] = `
               <a
                 className="nav-link"
                 href="/contact"
+                onClick={[Function]}
               >
                 Contact
               </a>
@@ -3180,10 +3221,6 @@ exports[`Storyshots Upload Screen Default 1`] = `
               <div
                 className="centered noFiles"
               >
-                <br />
-                <br />
-                <br />
-                <br />
                 <span
                   className="oi oi-cloud-upload"
                 />
@@ -3218,6 +3255,7 @@ exports[`Storyshots Upload Screen Default 1`] = `
           <label
             className="btn btn-success"
             htmlFor="submit-form"
+            id="formSubmitLabel"
             tabIndex={0}
           >
             Upload
@@ -3277,7 +3315,8 @@ exports[`Storyshots Upload Screen Default 1`] = `
           className="col copyright"
         >
           <p>
-            © XXXX 2018
+            © XXXX  
+            2018
           </p>
         </div>
         <div
@@ -3311,6 +3350,7 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
         <a
           className="navbar-brand siteTitle"
           href="/"
+          onClick={[Function]}
         >
           MoTrPAC
           <span
@@ -3346,6 +3386,7 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
               <a
                 className="nav-link"
                 href="/data"
+                onClick={[Function]}
               >
                 Data
               </a>
@@ -3368,12 +3409,14 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
                 <a
                   className="dropdown-item"
                   href="/linkout"
+                  onClick={[Function]}
                 >
                   Useful Links
                 </a>
                 <a
                   className="dropdown-item"
                   href="/team"
+                  onClick={[Function]}
                 >
                   Who we are
                 </a>
@@ -3385,6 +3428,7 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
               <a
                 className="nav-link"
                 href="/contact"
+                onClick={[Function]}
               >
                 Contact
               </a>
@@ -3775,10 +3819,6 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
               <div
                 className="centered noFiles"
               >
-                <br />
-                <br />
-                <br />
-                <br />
                 <span
                   className="oi oi-cloud-upload"
                 />
@@ -3813,6 +3853,7 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
           <label
             className="btn btn-success"
             htmlFor="submit-form"
+            id="formSubmitLabel"
             tabIndex={0}
           >
             Upload
@@ -3975,7 +4016,8 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
           className="col copyright"
         >
           <p>
-            © XXXX 2018
+            © XXXX  
+            2018
           </p>
         </div>
         <div

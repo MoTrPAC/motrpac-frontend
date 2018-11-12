@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 export function Footer({
@@ -7,6 +8,20 @@ export function Footer({
   onLogIn,
   onLogOut,
 }) {
+  function AuthButton() {
+    if (loggedIn) {
+      return (
+        <button type="button" onClick={onLogOut} className="logInOutBtn btn">
+          {`${user.name} Logout`}
+        </button>
+      );
+    }
+    return (
+      <button type="button" onClick={onLogIn} className="logInOutBtn btn">
+        Submitter Login
+      </button>
+    );
+  }
   function getCopyrightYear() {
     const today = new Date();
     const year = today.getFullYear();
@@ -36,7 +51,7 @@ export function Footer({
             </p>
           </div>
           <div className="col rightAlign">
-            <AuthButton loggedInStatus={loggedIn} user={user} onLogIn={onLogIn} onLogOut={onLogOut} />
+            <AuthButton />
           </div>
         </div>
       </div>
@@ -46,26 +61,18 @@ export function Footer({
   return footer;
 }
 
-function AuthButton({
-  loggedInStatus,
-  user,
-  onLogIn,
-  onLogOut,
-}) {
-  if (loggedInStatus) {
-    return (
-      <button type="button" onClick={onLogOut} className="logInOutBtn btn">
-        {`${user.name} Logout`}
-      </button>
-    );
-  }
-  return (
-    <button type="button" onClick={onLogIn} className="logInOutBtn btn">
-      Submitter Login
-    </button>
-  );
-}
-
+Footer.propTypes = {
+  user: PropTypes.shape({
+    name: PropTypes.string,
+  }),
+  loggedIn: PropTypes.bool,
+  onLogIn: PropTypes.func.isRequired,
+  onLogOut: PropTypes.func.isRequired,
+};
+Footer.defaultProps = {
+  user: {},
+  loggedIn: false,
+};
 
 const mapStateToProps = state => ({
   loggedIn: state.auth.loggedIn,

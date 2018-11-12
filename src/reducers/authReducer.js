@@ -1,7 +1,7 @@
 export const defaultAuthState = {
   user: {},
-  loggedIn: 'false',
-  authenticating: 'false',
+  loggedIn: false,
+  authenticating: false,
 };
 
 export function AuthReducer(state = {}, action) {

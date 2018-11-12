@@ -14,6 +14,9 @@
     animation: loadingAnimation 3s infinite;
     color: $dblue;
   }
+  a :hover{
+    text-decoration: none;
+  }
 }
 
 @keyframes loadingAnimation {

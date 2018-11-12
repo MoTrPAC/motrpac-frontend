@@ -6,8 +6,12 @@ import { Footer } from '../../components/footer';
 Enzyme.configure({ adapter: new Adapter() });
 const testUser = require('../../testData/testUser');
 
-const defaultMountFooter = mount(<Footer />);
-const loggedInMountFooter = mount(<Footer user={testUser} loggedIn />);
+const footerActions = {
+  onLogIn: jest.fn(),
+  onLogOut: jest.fn(),
+};
+const defaultMountFooter = mount(<Footer {...footerActions} />);
+const loggedInMountFooter = mount(<Footer user={testUser} loggedIn {...footerActions} />);
 
 describe('Footer', () => {
   test('Has submitter login button by default', () => {

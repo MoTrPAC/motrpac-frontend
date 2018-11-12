@@ -1,8 +1,9 @@
 import React from 'react';
-import { Route, BrowserRouter } from 'react-router-dom';
+import { Route, Router } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer, { defaultRootState } from './reducers/index';
+import history from './history';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import LandingPage from './components/landingPage';
@@ -17,7 +18,7 @@ function App() {
   // TODO: Before production remove redux devtools extension javascript
   return (
     <Provider store={createStore(rootReducer, defaultRootState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}>
-      <BrowserRouter>
+      <Router history={history}>
         <div className="App">
           <header>
             <Navbar />
@@ -30,7 +31,7 @@ function App() {
           <Footer />
           <AuthLoading />
         </div>
-      </BrowserRouter>
+      </Router>
     </Provider>
   );
 }

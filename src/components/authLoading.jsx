@@ -1,18 +1,34 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import history from '../history';
 
+// Intended to act as placeholder until auth0 or other auth system
+//  is in place. Clicking the h3 element authorizes test user logIng.
 export function AuthLoading({ authenticating, authSuccess }) {
+  function clickH3() {
+    authSuccess();
+    history.push('/dashboard');
+  }
   if (authenticating === true) {
     return (
       <div className="authLoading">
         <span className="oi oi-shield" />
-        <h3 onClick={authSuccess} ><Link to="/dashboard">Authenticating...</Link></h3>
+        <h3 onClick={clickH3}>Authenticating...</h3>
       </div>
     );
   }
   return (<div />);
 }
+
+AuthLoading.propTypes = {
+  authSuccess: PropTypes.func.isRequired,
+  authenticating: PropTypes.bool,
+};
+AuthLoading.defaultProps = {
+  authenticating: false,
+};
+
 const mapStateToProps = state => ({
   authenticating: state.auth.authenticating,
 });

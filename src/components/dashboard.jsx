@@ -4,7 +4,7 @@ import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export function Dashboard({ user, loggedIn }) {
-  if (loggedIn === true) {
+  if (loggedIn) {
     return (
       <div className="container">
         <div className="row">
@@ -36,6 +36,7 @@ Dashboard.defaultProps = {
 
 const mapStateToProps = state => ({
   user: state.auth.user,
+  loggedIn: state.auth.loggedIn,
 });
 
 // Fill dispatch to props once actions implemented
