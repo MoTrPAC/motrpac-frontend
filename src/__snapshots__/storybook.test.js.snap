@@ -168,7 +168,8 @@ exports[`Storyshots Dashboard default 1`] = `
           className="col copyright"
         >
           <p>
-            © XXXX 2018
+            © XXXX  
+            2018
           </p>
         </div>
         <div
@@ -176,7 +177,6 @@ exports[`Storyshots Dashboard default 1`] = `
         >
           <button
             className="logInOutBtn btn"
-            onClick={[Function]}
             type="button"
           >
             Test User Logout
@@ -308,10 +308,6 @@ exports[`Storyshots Drag and Drop Upload File Area  Active Dragging 1`] = `
       <div
         className="centered noFiles"
       >
-        <br />
-        <br />
-        <br />
-        <br />
         <span
           className="oi oi-cloud-upload"
         />
@@ -365,10 +361,6 @@ exports[`Storyshots Drag and Drop Upload File Area  No Files Added 1`] = `
       <div
         className="centered noFiles"
       >
-        <br />
-        <br />
-        <br />
-        <br />
         <span
           className="oi oi-cloud-upload"
         />
@@ -743,7 +735,8 @@ exports[`Storyshots Footer Logged in 1`] = `
         className="col copyright"
       >
         <p>
-          © XXXX 2018
+          © XXXX  
+          2018
         </p>
       </div>
       <div
@@ -798,7 +791,8 @@ exports[`Storyshots Footer default 1`] = `
         className="col copyright"
       >
         <p>
-          © XXXX 2018
+          © XXXX  
+          2018
         </p>
       </div>
       <div
@@ -1048,7 +1042,8 @@ exports[`Storyshots Landing Page default 1`] = `
           className="col copyright"
         >
           <p>
-            © XXXX 2018
+            © XXXX  
+            2018
           </p>
         </div>
         <div
@@ -1056,7 +1051,6 @@ exports[`Storyshots Landing Page default 1`] = `
         >
           <button
             className="logInOutBtn btn"
-            onClick={[Function]}
             type="button"
           >
             Submitter Login
@@ -3180,10 +3174,6 @@ exports[`Storyshots Upload Screen Default 1`] = `
               <div
                 className="centered noFiles"
               >
-                <br />
-                <br />
-                <br />
-                <br />
                 <span
                   className="oi oi-cloud-upload"
                 />
@@ -3218,6 +3208,7 @@ exports[`Storyshots Upload Screen Default 1`] = `
           <label
             className="btn btn-success"
             htmlFor="submit-form"
+            id="formSubmitLabel"
             tabIndex={0}
           >
             Upload
@@ -3277,7 +3268,8 @@ exports[`Storyshots Upload Screen Default 1`] = `
           className="col copyright"
         >
           <p>
-            © XXXX 2018
+            © XXXX  
+            2018
           </p>
         </div>
         <div
@@ -3285,7 +3277,6 @@ exports[`Storyshots Upload Screen Default 1`] = `
         >
           <button
             className="logInOutBtn btn"
-            onClick={[Function]}
             type="button"
           >
             Test User Logout
@@ -3775,10 +3766,6 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
               <div
                 className="centered noFiles"
               >
-                <br />
-                <br />
-                <br />
-                <br />
                 <span
                   className="oi oi-cloud-upload"
                 />
@@ -3813,6 +3800,7 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
           <label
             className="btn btn-success"
             htmlFor="submit-form"
+            id="formSubmitLabel"
             tabIndex={0}
           >
             Upload
@@ -3975,7 +3963,8 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
           className="col copyright"
         >
           <p>
-            © XXXX 2018
+            © XXXX  
+            2018
           </p>
         </div>
         <div
@@ -3983,7 +3972,6 @@ exports[`Storyshots Upload Screen Files Uploaded, form filled 1`] = `
         >
           <button
             className="logInOutBtn btn"
-            onClick={[Function]}
             type="button"
           >
             Test User Logout
