@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-function Navbar({ loggedIn = false }) {
+export function Navbar({ loggedIn = false }) {
   const loggedInNavItems = (
     <React.Fragment>
       <li className="nav-item navItem"><Link to="/dashboard" className="nav-link">Dashboard</Link></li>
@@ -47,4 +48,11 @@ function Navbar({ loggedIn = false }) {
   return navbar;
 }
 
-export default Navbar;
+const mapStateToProps = state => ({
+  loggedIn: state.auth.loggedIn,
+});
+
+// Fill dispatch to props once actions implemented
+// const mapDispatchToProps = dispatch => ({ });
+
+export default connect(mapStateToProps)(Navbar);

@@ -7,7 +7,7 @@ import history from './history';
 import NavbarConnected from './components/navbar';
 import FooterConnected from './components/footer';
 import LandingPageConnected from './components/landingPage';
-import DashbboardConnected from './components/dashboard';
+import DashboardConnected from './components/dashboard';
 import UploadScreenConnected from './components/uploadScreen';
 import AuthLoadingConnected from './components/authLoading';
 
@@ -29,7 +29,7 @@ function App() {
           </header>
           <div className="componentHolder">
             <Route path="/" exact component={LandingPageConnected} />
-            <Route path="/Dashbboard" component={DashbboardConnected} />
+            <Route path="/dashboard" component={DashboardConnected} />
             <Route path="/upload" component={UploadScreenConnected} />
           </div>
           <FooterConnected />
