@@ -4,12 +4,12 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer, { defaultRootState } from './reducers/index';
 import history from './history';
-import Navbar from './components/navbar';
-import Footer from './components/footer';
-import LandingPage from './components/landingPage';
-import dashboard from './components/dashboard';
-import uploadScreen from './components/uploadScreen';
-import AuthLoading from './components/authLoading';
+import NavbarConnected from './components/navbar';
+import FooterConnected from './components/footer';
+import LandingPageConnected from './components/landingPage';
+import DashbboardConnected from './components/dashboard';
+import UploadScreenConnected from './components/uploadScreen';
+import AuthLoadingConnected from './components/authLoading';
 
 require('bootstrap');
 
@@ -17,19 +17,23 @@ require('bootstrap');
 function App() {
   // TODO: Before production remove redux devtools extension javascript
   return (
-    <Provider store={createStore(rootReducer, defaultRootState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}>
+    <Provider store={createStore(rootReducer,
+      defaultRootState,
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+      }
+    >
       <Router history={history}>
         <div className="App">
           <header>
-            <Navbar />
+            <NavbarConnected />
           </header>
           <div className="componentHolder">
-            <Route path="/" exact component={LandingPage} />
-            <Route path="/dashboard" component={dashboard} />
-            <Route path="/upload" component={uploadScreen} />
+            <Route path="/" exact component={LandingPageConnected} />
+            <Route path="/Dashbboard" component={DashbboardConnected} />
+            <Route path="/upload" component={UploadScreenConnected} />
           </div>
-          <Footer />
-          <AuthLoading />
+          <FooterConnected />
+          <AuthLoadingConnected />
         </div>
       </Router>
     </Provider>
