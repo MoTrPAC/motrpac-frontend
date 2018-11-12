@@ -64,12 +64,9 @@ const mapStateToProps = state => ({
 });
 
 
-const testUser = require('../testData/testUser');
-
 const mapDispatchToProps = dispatch => ({
   onLogIn: () => dispatch({
-    type: 'LOGIN_SUCCESS',
-    user: testUser,
+    type: 'AUTHENTICATING',
   }),
   onLogOut: () => dispatch({
     type: 'LOGOUT',

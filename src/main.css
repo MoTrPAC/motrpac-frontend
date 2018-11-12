@@ -8907,4 +8907,34 @@ h2 {
   color: #11397E;
 }
 
+.authLoading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #336699b6;
+  text-align: center;
+  padding-top: 40vh;
+}
+.authLoading span {
+  font-size: 400%;
+}
+.authLoading span, .authLoading h3 {
+  animation: loadingAnimation 3s infinite;
+  color: #11397E;
+}
+
+@keyframes loadingAnimation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 /*# sourceMappingURL=main.css.map */

@@ -8,11 +8,13 @@ import Footer from './components/footer';
 import LandingPage from './components/landingPage';
 import dashboard from './components/dashboard';
 import uploadScreen from './components/uploadScreen';
+import AuthLoading from './components/authLoading';
 
 require('bootstrap');
 
 
 function App() {
+  // TODO: Before production remove redux devtools extension javascript
   return (
     <Provider store={createStore(rootReducer, defaultRootState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}>
       <BrowserRouter>
@@ -26,6 +28,7 @@ function App() {
             <Route path="/upload" component={uploadScreen} />
           </div>
           <Footer />
+          <AuthLoading />
         </div>
       </BrowserRouter>
     </Provider>

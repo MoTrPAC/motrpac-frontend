@@ -1,8 +1,14 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import logo from '../assets/MoTrPAC_horizontal.png';
 
-function LandingPage() {
+export function LandingPage({ loggedIn }) {
   // TODO: Update email and email link for help requests
+  if (loggedIn === true) {
+    return (<Redirect to="/dashboard" />);
+  }
   return (
     <div className="container">
       <div className="row welcome">
@@ -63,5 +69,15 @@ function LandingPage() {
     </div>
   );
 }
+LandingPage.propTypes = {
+  loggedIn: PropTypes.bool,
+};
+LandingPage.defaultProps = {
+  loggedIn: false,
+};
 
-export default LandingPage;
+const mapStateToProps = state => ({
+  loggedIn: state.auth.loggedIn,
+});
+
+export default connect(mapStateToProps)(LandingPage);

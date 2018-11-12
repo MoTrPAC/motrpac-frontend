@@ -19,4 +19,4 @@ storiesOf('Dashboard', module)
     </div>
 
   ))
-  .add('default', () => <Dashboard user={testUser} />);
+  .add('default', () => <Dashboard user={testUser} loggedIn />);

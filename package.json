@@ -17,7 +17,8 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.5",
     "redux": "^4.0.1",
-    "sass": "^1.14.3"
+    "sass": "^1.14.3",
+    "storybook-react-router": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
