@@ -25,10 +25,6 @@ function FileArea({ files = [], removeFile }) {
   if (!files.length) {
     return (
       <div className="centered noFiles">
-        <br />
-        <br />
-        <br />
-        <br />
         <span className="oi oi-cloud-upload" />
         <h3>
           Drag and drop files here

@@ -7,6 +7,11 @@ export function Footer({
   onLogIn,
   onLogOut,
 }) {
+  function getCopyrightYear() {
+    const today = new Date();
+    const year = today.getFullYear();
+    return year;
+  }
   // TODO: Find out how to best do error handling
   const footer = (
     <footer className="footer">
@@ -24,7 +29,11 @@ export function Footer({
             </p>
           </div>
           <div className="col copyright">
-            <p>&#169; XXXX 2018</p>
+            <p>
+              &#169; XXXX
+              &nbsp;
+              {getCopyrightYear()}
+            </p>
           </div>
           <div className="col rightAlign">
             <AuthButton loggedInStatus={loggedIn} user={user} onLogIn={onLogIn} onLogOut={onLogOut} />
@@ -43,7 +52,7 @@ function AuthButton({
   onLogIn,
   onLogOut,
 }) {
-  if (loggedInStatus === true) {
+  if (loggedInStatus) {
     return (
       <button type="button" onClick={onLogOut} className="logInOutBtn btn">
         {`${user.name} Logout`}

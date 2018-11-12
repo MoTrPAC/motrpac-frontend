@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Navbar({ loggedIn }) {
+function Navbar({ loggedIn = false }) {
   const loggedInNavItems = (
     <React.Fragment>
       <li className="nav-item navItem"><a href="/dashboard" className="nav-link">Dashboard</a></li>
