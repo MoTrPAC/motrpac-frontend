@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Navbar({ loggedIn }) {
+function Navbar({ loggedIn = false }) {
   const loggedInNavItems = (
     <React.Fragment>
       <li className="nav-item navItem"><Link to="/dashboard" className="nav-link">Dashboard</Link></li>
