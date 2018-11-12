@@ -69,3 +69,6 @@ yarn.lock
 # Compiled CSS from Sass
 src/main.css
 src/main.css.map
+
+# Snapshots
+src/__snapshots__/*
