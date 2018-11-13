@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf, action } from '@storybook/react';
-import LinkoutPage from '../components/linkoutPage';
+import { LinkoutPage } from '../components/linkoutPage';
 import { Navbar } from '../components/navbar';
 import { Footer } from '../components/footer';
 

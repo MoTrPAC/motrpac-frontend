@@ -12,7 +12,7 @@ import LandingPageConnected from './components/landingPage';
 import DashboardConnected from './components/dashboard';
 import UploadScreenConnected from './components/uploadScreen';
 import AuthLoadingConnected from './components/authLoading';
-import LinkoutPage from './components/linkoutPage'
+import LinkoutPageConnected from './components/linkoutPage';
 
 const hist = History;
 
@@ -33,7 +33,7 @@ function App({ history = hist }) {
             <Route path="/" exact component={LandingPageConnected} />
             <Route path="/dashboard" component={DashboardConnected} />
             <Route path="/upload" component={UploadScreenConnected} />
-            <Route path="/linkout" component={LinkoutPage} />
+            <Route path="/linkout" component={LinkoutPageConnected} />
           </div>
           <FooterConnected />
           <AuthLoadingConnected />
