@@ -54,6 +54,7 @@ describe('Authenticated Application routing', () => {
   beforeAll(() => {
     history = createBrowserHistory();
     mountApp = mount(<App history={history} />);
+    // Dispatch successful login
     mountApp.find('Provider').props().store.dispatch(loginSuccessAction);
   });
   afterAll(() => {
@@ -65,6 +66,7 @@ describe('Authenticated Application routing', () => {
   });
   test('loads the dashboard at /dashboard', () => {
     history.push('/dashboard');
+    // Update required to re-render the application
     mountApp.update();
     expect(history.location.pathname).toEqual('/dashboard');
     expect(mountApp.find('LandingPage')).toHaveLength(0);

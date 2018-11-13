@@ -15,7 +15,7 @@
 │   ├── reducers: Handles logic for redux store  
 │   ├── sass: source sass styling  
 │   ├── stories: UI visual tests for storybook  
-│   ├── storybook.test.js: initialize snapshots for storybook tests  
+│   ├── storybook.test.js: initialize snapshots for storybook tests 
 │   ├── tests: Contains tests for components and reducers
 │   └── testData: Mock data used in stories and tests
 ├── public  
@@ -69,6 +69,12 @@
  - mapStateToProps used to link the section from the combined reducer to properties required by the container
  - mapDispatchtoProps defines required actions and what to send to a reducer.
 
- #### Potential down the line dependency issues
-  - Storybook has trouble integrating with react-route, I installed a package called storybook-react-router to make them work together. If you run in to an issue with storybook saying something like "You should not use <Link > outside <Router >" it has something to do with react-router and storybook-react-router
+#### Potential down the line dependency issues
+  - Storybook has trouble integrating with react-router, I installed a package called storybook-react-router to make them work together. If you run in to an issue with storybook saying something like "You should not use <Link > outside <Router >" it has something to do with react-router and storybook-react-router
+
+#### Current navigation/routing implementation
+  - React-router is being used to handle routing
+  - history ( createBrowserHistory ) is used to update location from button clicks and function calls ( history.push('path/to/new/location') )
+  - \< Link > tags  from react-router are used in place of \< a > tags handle navigation from links. Certain elements return \< Redirect to="path/to/new/location" > elements if protected and user not authenticated.
+
 ---
