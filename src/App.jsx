@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Route, Router } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer, { defaultRootState } from './reducers/index';
-import history from './history';
+import 'bootstrap';
+import History from './history';
 import NavbarConnected from './components/navbar';
 import FooterConnected from './components/footer';
 import LandingPageConnected from './components/landingPage';
@@ -11,10 +13,9 @@ import DashboardConnected from './components/dashboard';
 import UploadScreenConnected from './components/uploadScreen';
 import AuthLoadingConnected from './components/authLoading';
 
-require('bootstrap');
+const hist = History;
 
-
-function App() {
+function App({ history = hist }) {
   // TODO: Before production remove redux devtools extension javascript
   return (
     <Provider store={createStore(rootReducer,
@@ -40,5 +41,27 @@ function App() {
   );
 }
 
+App.propTypes = {
+  history: PropTypes.shape({
+    length: PropTypes.number,
+    action: PropTypes.string,
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+      hash: PropTypes.string,
+      key: PropTypes.string,
+    }),
+    createHref: PropTypes.func,
+    push: PropTypes.func,
+    replace: PropTypes.func,
+    go: PropTypes.func,
+    goBack: PropTypes.func,
+    goForward: PropTypes.func,
+    block: PropTypes.func,
+    listen: PropTypes.func,
+  }),
+};
+App.defaultProps = {
+  history: hist,
+};
 
 export default App;

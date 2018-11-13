@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Enzyme, { shallow, mount } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import { createBrowserHistory } from 'history';
 import App from '../App';
-import history from '../history';
 
 Enzyme.configure({ adapter: new Adapter() });
 const testUser = require('../testData/testUser');
@@ -15,15 +15,20 @@ it('renders without crashing', () => {
 });
 
 describe('Unauthenticated Application routing', () => {
-  const mountApp = mount(<App />);
+  const history = createBrowserHistory();
+  const mountApp = mount(<App history={history} />);
   test('loads the landing page component at index', () => {
     history.push('/');
+    mountApp.update();
+    expect(history.location.pathname).toEqual('/');
     expect(mountApp.find('LandingPage')).toHaveLength(1);
     expect(mountApp.find('Dashboard')).toHaveLength(0);
     expect(mountApp.find('UploadScreen')).toHaveLength(0);
   });
   test('loads the landing page at /dashboard', () => {
     history.push('/dashboard');
+    mountApp.update();
+    expect(history.location.pathname).toEqual('/');
     expect(mountApp.find('LandingPage')).toHaveLength(1);
     expect(mountApp.find('Dashboard')).toHaveLength(0);
     expect(mountApp.find('UploadScreen')).toHaveLength(0);
@@ -31,6 +36,8 @@ describe('Unauthenticated Application routing', () => {
 
   test('loads the landing page at /upload', () => {
     history.push('/dashboard');
+    mountApp.update();
+    expect(history.location.pathname).toEqual('/');
     expect(mountApp.find('LandingPage')).toHaveLength(1);
     expect(mountApp.find('Dashboard')).toHaveLength(0);
     expect(mountApp.find('UploadScreen')).toHaveLength(0);
@@ -38,24 +45,34 @@ describe('Unauthenticated Application routing', () => {
 });
 
 describe('Authenticated Application routing', () => {
-  const mountApp = mount(<App />);
+  let history = createBrowserHistory();
+  let mountApp = mount(<App history={history} />);
   const loginSuccessAction = {
     type: 'LOGIN_SUCCESS',
     user: testUser,
   };
-  mountApp.find('Provider').props().store.dispatch(loginSuccessAction);
+  beforeAll(() => {
+    history = createBrowserHistory();
+    mountApp = mount(<App history={history} />);
+    mountApp.find('Provider').props().store.dispatch(loginSuccessAction);
+  });
+  afterAll(() => {
+    mountApp.unmount();
+  });
 
-  test('State should change to logged in on dispatch', () => {
+  test('State should change to logged in on loginSuccess dispatch', () => {
     expect(mountApp.find('Provider').props().store.getState().auth.loggedIn).toBeTruthy();
   });
   test('loads the dashboard at /dashboard', () => {
     history.push('/dashboard');
     mountApp.update();
+    expect(history.location.pathname).toEqual('/dashboard');
     expect(mountApp.find('LandingPage')).toHaveLength(0);
     expect(mountApp.find('UploadScreen')).toHaveLength(0);
     expect(mountApp.find('Dashboard')).toHaveLength(1);
   });
-  test('dashboard displays correct text on Login', () => {
-    expect(mountApp.find('.light').text()).toEqual(`Welcome ${testUser.name} at ${testUser.site}`);
+  test('dashboard displays correct text on Dashboard', () => {
+    expect(history.location.pathname).toEqual('/dashboard');
+    expect(mountApp.find('h2.light').text()).toEqual(`Welcome ${testUser.name} at ${testUser.siteName}`);
   });
 });

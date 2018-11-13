@@ -27,6 +27,7 @@ export function Dashboard({ user, loggedIn }) {
 Dashboard.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string,
+    siteName: PropTypes.string,
   }).isRequired,
   loggedIn: PropTypes.bool,
 };
