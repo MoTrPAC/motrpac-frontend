@@ -15,9 +15,9 @@
 │   ├── reducers: Handles logic for redux store  
 │   ├── sass: source sass styling  
 │   ├── stories: UI visual tests for storybook  
-│   ├── storybook.test.js: initialize snapshots for storybook tests 
+│   ├── storybook.test.js: initialize snapshots for storybook tests  
 │   ├── tests: Contains tests for components and reducers
-│   └── testData: Mock data used in stories and tests
+│   └── testData: Mock data used in stories and tests  
 ├── public  
 ├── .storybook: configuration for storybook  
 ├── .eslintrc.js: ESlint configuration  

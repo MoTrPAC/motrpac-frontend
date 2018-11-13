@@ -32,7 +32,7 @@ export function Footer({
     <footer className="footer">
       <div className="container-fluid">
         <div className="row">
-          <div className="col">
+          <div className="col-5">
             <p>
               Data Hub designed and maintained by the MoTrPAC
               BioInformatics Center at
@@ -50,7 +50,7 @@ export function Footer({
               {getCopyrightYear()}
             </p>
           </div>
-          <div className="col rightAlign">
+          <div className="col-5 rightAlign">
             <AuthButton />
           </div>
         </div>

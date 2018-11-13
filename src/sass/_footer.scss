@@ -8,10 +8,16 @@
   }
 }
 footer {
+  padding-top: 20px;
+  padding-bottom: 20px;
   background-color: $gray-semi-transparent;
   color: white;
   .rightAlign {
     text-align: right;
+  }
+  p {
+    font-size: 75%;
+    margin-bottom:5px;
   }
 }
 .logInOutBtn {
@@ -20,7 +26,6 @@ footer {
   color: white;
   font-weight: $heavy-weight;
   position: relative;
-  top:30%;
   font-size:120%;
 }
 .componentHolder {
