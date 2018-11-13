@@ -45,7 +45,6 @@ export function UploadScreen({
           />
         </div>
         <div className="col-8 centered">
-          <br />
           <UploadAreaDnD
             dragging={dragging}
             files={files}
@@ -55,9 +54,9 @@ export function UploadScreen({
             dragDrop={e => onDragDrop(e)}
             removeFile={onRemoveFile}
           />
-          <br />
-          <br />
-          <label htmlFor="submit-form" id="formSubmitLabel" className="btn btn-success" tabIndex={0}>Upload</label>
+          <div className="col-12 centered">
+            <label htmlFor="submit-form" id="formSubmitLabel" className="btn btn-success uploadBtn" tabIndex={0}>Upload</label>
+          </div>
         </div>
         <div className="col-12">
           <h3>{formValues.identifier}</h3>

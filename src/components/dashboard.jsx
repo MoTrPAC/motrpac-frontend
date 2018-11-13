@@ -9,8 +9,7 @@ export function Dashboard({ user, loggedIn }) {
       <div className="container">
         <div className="row">
           <div className="col">
-            <br />
-            <h2 className="light">{`Welcome ${user.name} at ${user.siteName}`}</h2>
+            <h2 className="welcomeUser light">{`Welcome ${user.name} at ${user.siteName}`}</h2>
           </div>
         </div>
         <div className="row">

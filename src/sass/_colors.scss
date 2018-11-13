@@ -6,5 +6,6 @@ $blue-semi-transparent: #336699b6;
 $lblue: #E3EAF1;
 $green: #4C9046;
 $yellow: #D6C714;
-$gray-semi-transparent: #7070705b;
 $gray: #707070;
+$gray-semi-transparent: #7070705b;
+$gray-transparent: transparentize($gray,0.9);
