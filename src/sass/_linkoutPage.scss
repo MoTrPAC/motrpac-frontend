@@ -1,5 +1,29 @@
 .linkoutPage{
   h3 {
     color: $dblue;
+    font-weight: $light-weight;
+    margin-bottom: 10px;
+  }
+  h4 {
+    color: $blue;
+    font-size: 120%;
+    margin-top:20px;
+  }
+  a {
+    color:$dblue;
+    overflow-wrap: break-word;
+  }
+  .linkCategory {
+    margin-bottom: 20px;
+  }
+  .linkRow {
+    font-size: 110%;
+    line-height: 1.25rem;
+    vertical-align: middle;
+    border-radius: 10px;
+    margin-bottom:5px;
+    &:hover {
+      background-color: $blue-transparent;
+    }
   }
 }
