@@ -15,7 +15,7 @@ storiesOf('Dashboard', module)
   .addDecorator(story => (
     <div className="App">
       <header>
-        <Navbar />
+        <Navbar loggedIn />
       </header>
       <div className="componentHolder">
         {story()}
