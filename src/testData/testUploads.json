@@ -1,0 +1,31 @@
+[
+    {
+        "file": {
+            "name": "test1.fa"
+        },
+        "status":"UPLOADING"
+    },
+    {
+        "file": {
+            "name": "test2.fa"
+        },
+        "status":"FAILED",
+        "error": {
+            "code": "1234",
+            "message": "This error occurs when… \n Contact … with comments/questions.",
+            "title": "Descriptive Title"
+        }
+    },
+    {
+        "file": {
+            "name": "test3.fa"
+        },
+        "status":"UPLOAD_SUCCESS"
+    },
+    {
+        "file": {
+            "name": "test4.fa"
+        },
+        "status":"UNDEFINED"
+    }
+]

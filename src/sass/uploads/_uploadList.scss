@@ -1,0 +1,60 @@
+.centered {
+    text-align: center;
+}
+.oi-check {
+    color:$green;
+}
+.oi-warning {
+    color: $red;
+}
+.oi-question-mark {
+    color: $yellow;
+    
+}
+.loadIndicator {
+    color:darken($lblue,20%);
+    font-size:150%;
+    animation: spin 2s linear infinite;
+}
+.noListItems {
+    color: grey;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}
+.errorHovButton {
+    color: $red;
+    background-color: transparent;
+    border:none;
+    text-decoration: underline;
+}
+.errorHover {
+    opacity: 0;
+    display: block;
+    position: absolute;
+    background-color: $lblue;
+    color: $blue;
+    max-width: 100%;
+    border-radius: 0 20px 20px 20px;
+    padding:10px;
+    p {
+        color: gray;
+    }
+}
+.errorHovButton:hover + .errorHover {
+    display:block;
+    opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: .1s;
+}
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
