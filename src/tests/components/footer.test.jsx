@@ -21,6 +21,7 @@ describe('Footer', () => {
 
   test('Has [username] logout button if logged in', () => {
     expect(loggedInMountFooter.props().loggedIn).toBeTruthy();
-    expect(loggedInMountFooter.find('.logInOutBtn').text()).toBe(`${testUser.name} Logout`);
+    expect(loggedInMountFooter.find('.logInOutBtn').text()).toMatch(new RegExp(testUser.name));
+    expect(loggedInMountFooter.find('.logInOutBtn').text()).toMatch('Logout');
   });
 });

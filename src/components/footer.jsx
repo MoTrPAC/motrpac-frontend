@@ -12,7 +12,8 @@ export function Footer({
     if (loggedIn) {
       return (
         <button type="button" onClick={onLogOut} className="logInOutBtn btn">
-          {`${user.name} Logout`}
+          {user.name}
+          &nbsp;Logout
         </button>
       );
     }
