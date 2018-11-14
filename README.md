@@ -46,6 +46,8 @@
  * Building CSS:
    - `yarn sass`
    - compiles sass from src/sass/main.sass to src/main.css
+   - `yarn sass-watch`
+   - compiles sass from src/sass/main.sass to src/main.css and watches for changes
 
 ### Software versions and styles
 
