@@ -64,7 +64,8 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
       }
 
       // Initiates files sent to upload area with status "uploading"
-      const uploadingFiles = [...state.files].map(file => ({ file, status: 'UPLOADING' }));
+      // NOTE: Filtering done by ID, but in current implementation ID is set to FILENAME
+      const uploadingFiles = [...state.files].map(file => ({ file, status: 'UPLOADING', id: file.name }));
 
       // Creates dictionary from form fields
       const formData = {
@@ -82,6 +83,14 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         submitted: true,
         uploadFiles: [...uploadingFiles.filter(uniqueUploadCheck), ...state.uploadFiles],
         files: [],
+      };
+    }
+
+    case 'CANCEL_UPLOAD': {
+      const remainingFiles = state.uploadFiles.filter(upload => !(upload.id === action.id));
+      return {
+        ...state,
+        uploadFiles: remainingFiles,
       };
     }
 

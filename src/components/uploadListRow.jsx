@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // import '../assets/open-iconic-master/font/css/open-iconic-bootstrap.css';
 
 
-function UploadListRow({ uploadItem }) {
+function UploadListRow({ uploadItem, cancelUpload }) {
   let icon;
   let message;
   // Changes  error message and icon based on upload status
@@ -42,6 +42,7 @@ function UploadListRow({ uploadItem }) {
       <td>{uploadItem.file.name}</td>
       <td>{message}</td>
       <td className="centered">{icon}</td>
+      <td className="centered"><button type="button" className="btn cancelBtn" onClick={() => cancelUpload(uploadItem.id)}><span className="oi oi-circle-x" /></button></td>
     </tr>
   );
 }
@@ -68,6 +69,7 @@ UploadListRow.propTypes = {
       title: PropTypes.string,
     }),
   }).isRequired,
+  cancelUpload: PropTypes.func.isRequired,
 };
 
 

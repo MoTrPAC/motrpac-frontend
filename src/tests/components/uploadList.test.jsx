@@ -4,11 +4,14 @@ import Enzyme, { shallow } from 'enzyme';
 import UploadList from '../../components/uploadList';
 
 Enzyme.configure({ adapter: new Adapter() });
-
+const uploadListActions = {
+  cancelUpload: jest.fn(),
+};
 const testUploads = require('../../testData/testUploads');
 
-const shallowEmptyList = shallow(<UploadList uploadFiles={[]} />);
-const shallow3RowList = shallow(<UploadList uploadFiles={testUploads.slice(0, 3)} />);
+const threeUploads = testUploads.slice(0, 3);
+const shallowEmptyList = shallow(<UploadList uploadFiles={[]} {...uploadListActions} />);
+const shallow3RowList = shallow(<UploadList uploadFiles={threeUploads} {...uploadListActions} />);
 
 describe('Upload List', () => {
   test('No upload list table if no uploads', () => {

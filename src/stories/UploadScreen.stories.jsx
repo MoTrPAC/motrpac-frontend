@@ -38,6 +38,7 @@ const actions = {
   onFileAdded: action('onFileAdded'),
   onRemoveFile: action('onRemoveFile'),
   onFormSubmit: action('onFormSubmit'),
+  cancelUpload: action('cancelUpload'),
 };
 const footerActions = {
   onLogIn: action('logging in'),

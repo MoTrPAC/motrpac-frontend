@@ -11,6 +11,14 @@
     color: $yellow;
     
 }
+.cancelBtn{
+    .oi-circle-x {
+        color: $red;
+    }
+    background-color:transparent;
+    border: 1px solid $red;
+
+}
 .loadIndicator {
     color:darken($lblue,20%);
     font-size:150%;
