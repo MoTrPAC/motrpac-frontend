@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 const linkList = [
@@ -81,5 +82,12 @@ function UsefulLink({ link }) {
     </div>
   );
 }
+UsefulLink.propTypes = {
+  link: PropTypes.shape({
+    protocol: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 export default connect()(LinkoutPage);
