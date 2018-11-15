@@ -62,4 +62,13 @@ describe('Connected Upload Screen', () => {
     expect(mountedUploadScreen.find('UploadList')).toHaveLength(1);
     expect(mountedUploadScreen.find('UploadForm')).toHaveLength(1);
   });
+  const addFileAction = {
+    type: 'FILES_ADDED',
+    files: testFiles,
+  };
+  test('Added files do not move to upload area on upload button click if form not valid', () => {
+    mountedUploadScreen.find('Provider').props().store.dispatch(addFileAction);
+    mountedUploadScreen.find('#submit-form').simulate('click');
+    expect(mountedUploadScreen.find('.noListItems')).toHaveLength(1);
+  });
 });

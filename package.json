@@ -15,7 +15,6 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.5",
     "redux": "^4.0.1",
-    "sass": "^1.14.3",
     "storybook-react-router": "^1.0.1"
   },
   "scripts": {
@@ -25,8 +24,8 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "sass": "sass src/sass/main.scss src/main.css",
-    "sass-watch": "sass --watch src/sass/main.scss src/main.css"
+    "sass": "node-sass src/sass/main.scss src/main.css",
+    "sass-watch": "node-sass --watch src/sass/main.scss src/main.css"
   },
   "browserslist": [
     ">0.2%",

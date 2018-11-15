@@ -43,7 +43,7 @@
    - `yarn test`
    - runs tests and storybook snapshots
 
- * Building CSS:
+ * Building CSS: Uses node-sass plugin
    - `yarn sass`
    - compiles sass from src/sass/main.sass to src/main.css
    - `yarn sass-watch`
