@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 const linkList = [
+/* Currently not desired to be on this page
   {
     name: 'Source Code',
     links: [
@@ -18,6 +19,7 @@ const linkList = [
       },
     ],
   },
+*/
   {
     name: 'Partners',
     links: [
@@ -28,7 +30,7 @@ const linkList = [
       },
       {
         protocol: 'https',
-        url: 'ENCODEdcc.org',
+        url: 'ENCODEProject.org',
         text: 'ENCODE project website',
       },
       {
@@ -74,7 +76,11 @@ function UsefulLink({ link }) {
   return (
     <div className="row linkRow">
       <div className="col">
-        <a href={`${link.protocol}://www.${link.url}`} target="_new">{link.url}</a>
+        <a href={`${link.protocol}://www.${link.url}`} target="_new">
+          <span className="oi oi-external-link" />
+          &nbsp;&nbsp;
+          {link.url}
+        </a>
         &nbsp;–&nbsp;
         {link.text}
       </div>
