@@ -63,7 +63,9 @@ export function LinkoutPage() {
         </div>
       </div>
       <UsefulLink link={{ url: 'MoTrPAC.org', text: 'Main entrance point for overview of the entire MoTrPAC project', protocol: 'https' }} />
-      {links}
+      <div className="externalLinks">
+        {links}
+      </div>
     </div>
   );
 }
@@ -71,13 +73,10 @@ export function LinkoutPage() {
 function UsefulLink({ link }) {
   return (
     <div className="row linkRow">
-      <div className="col-5">
-        <a href={`${link.protocol}://www.${link.url}`} target="_new">{link.url}</a>
-      </div>
       <div className="col">
-        <p>
-          {link.text}
-        </p>
+        <a href={`${link.protocol}://www.${link.url}`} target="_new">{link.url}</a>
+        &nbsp;–&nbsp;
+        {link.text}
       </div>
     </div>
   );
