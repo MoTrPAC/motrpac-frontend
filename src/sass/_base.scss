@@ -14,3 +14,14 @@ h1,h2,h3,h4 {
 a {
   color: $blue;
 }
+
+header {
+  min-height:10vh
+}
+footer {
+  min-height:10vh;
+}
+
+.componentHolder {
+  min-height: 80vh;
+}

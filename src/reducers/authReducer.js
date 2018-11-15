@@ -1,13 +1,20 @@
 export const defaultAuthState = {
   user: {},
-  loggedIn: 'false',
+  loggedIn: false,
+  authenticating: false,
 };
 
 export function AuthReducer(state = {}, action) {
   switch (action.type) {
+    case 'AUTHENTICATING':
+      return ({
+        ...state,
+        authenticating: true,
+      });
     case 'LOGIN_SUCCESS':
       return ({
         ...state,
+        authenticating: false,
         user: action.user,
         loggedIn: true,
       });

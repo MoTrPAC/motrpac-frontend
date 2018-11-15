@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf, action } from '@storybook/react';
 import { UploadScreen } from '../components/uploadScreen';
-import Navbar from '../components/navbar';
+import { Navbar } from '../components/navbar';
 import { Footer } from '../components/footer';
 
 const TestUploads = require('../testData/testUploads');
@@ -13,6 +13,7 @@ const defaultState = {
   files: [],
   formValues: {},
   uploadFiles: [],
+  loggedIn: true,
 };
 
 const filledState = {
@@ -38,6 +39,10 @@ const actions = {
   onRemoveFile: action('onRemoveFile'),
   onFormSubmit: action('onFormSubmit'),
 };
+const footerActions = {
+  onLogIn: action('logging in'),
+  onLogOut: action('logging out'),
+};
 
 // Provider necessary to link data from components of UploadScreen
 storiesOf('Upload Screen', module)
@@ -49,7 +54,7 @@ storiesOf('Upload Screen', module)
       <div className="componentHolder">
         {story()}
       </div>
-      <Footer loggedIn user={{ name: 'Test User', site: 'CAS' }} />
+      <Footer loggedIn {...footerActions} user={{ name: 'Test User', site: 'CAS' }} />
     </div>
 
   ))

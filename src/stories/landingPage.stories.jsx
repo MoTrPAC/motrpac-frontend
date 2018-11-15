@@ -1,8 +1,13 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import LandingPage from '../components/landingPage';
-import Navbar from '../components/navbar';
+import { storiesOf, action } from '@storybook/react';
+import { LandingPage } from '../components/landingPage';
+import { Navbar } from '../components/navbar';
 import { Footer } from '../components/footer';
+
+const footerActions = {
+  onLogIn: action('logging in'),
+  onLogOut: action('logging out'),
+};
 
 storiesOf('Landing Page', module)
   .addDecorator(story => (
@@ -13,7 +18,7 @@ storiesOf('Landing Page', module)
       <div className="componentHolder">
         {story()}
       </div>
-      <Footer />
+      <Footer {...footerActions} />
     </div>
 
   ))

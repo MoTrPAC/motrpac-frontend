@@ -7,11 +7,7 @@ function UploadList({ uploadFiles }) {
   if (!uploadFiles.length) {
     return (
       <div className="noListItems centered">
-        <br />
-        <br />
         <h2>Upload files and they will appear here!</h2>
-        <br />
-        <br />
       </div>
     );
   }

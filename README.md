@@ -17,7 +17,7 @@
 │   ├── stories: UI visual tests for storybook  
 │   ├── storybook.test.js: initialize snapshots for storybook tests  
 │   ├── tests: Contains tests for components and reducers
-│   └── testData: Mock data used in stories and tests
+│   └── testData: Mock data used in stories and tests  
 ├── public  
 ├── .storybook: configuration for storybook  
 ├── .eslintrc.js: ESlint configuration  
@@ -28,11 +28,6 @@
   3. Create tests in tests/components/\[component\].test.jsx
   4. Integrate required actions in to associated reducer (ex. for upload handling logic that would be src/reducers/uploadReducer.js)
   5. If it is a full page, add routing logic to src/App.jsx
-
-#### Notes on redux integration
- - Components that need to be linked to a redux store in implementation are exported by default as connected functions/containers. They are also exported in pure function form (ex: "import { UploadScreen } from 'path/to/component' " for pure function and "import UploadScreen from 'path/to/component'" for container).
- - mapStateToProps used to link the section from the combined reducer to properties required by the container
- - mapDispatchtoProps defines required actions and what to send to a reducer.
 
 #### Building and running
 
@@ -66,5 +61,20 @@
  * Style guide:
      - [Eslint](https://github.com/eslint/eslint) 
      - [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
+
+### Additional Notes
+
+#### Notes on redux integration
+ - Components that need to be linked to a redux store in implementation are exported by default as connected functions/containers. They are also exported in pure function form (ex: "import { UploadScreen } from 'path/to/component' " for pure function and "import UploadScreen from 'path/to/component'" for container).
+ - mapStateToProps used to link the section from the combined reducer to properties required by the container
+ - mapDispatchtoProps defines required actions and what to send to a reducer.
+
+#### Potential down the line dependency issues
+  - Storybook has trouble integrating with react-router, I installed a package called storybook-react-router to make them work together. If you run in to an issue with storybook saying something like "You should not use <Link > outside <Router >" it has something to do with react-router and storybook-react-router
+
+#### Current navigation/routing implementation
+  - React-router is being used to handle routing
+  - history ( createBrowserHistory ) is used to update location from button clicks and function calls ( history.push('path/to/new/location') )
+  - \< Link > tags  from react-router are used in place of \< a > tags handle navigation from links. Certain elements return \< Redirect to="path/to/new/location" > elements if protected and user not authenticated.
 
 ---

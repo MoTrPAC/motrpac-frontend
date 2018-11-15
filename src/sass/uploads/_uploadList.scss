@@ -17,7 +17,14 @@
     animation: spin 2s linear infinite;
 }
 .noListItems {
-    color: grey;
+    background-color: $gray-transparent;
+    border-radius: 20px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin-bottom:20px;
+    h2 {
+        color: $gray;
+    }
 }
 @keyframes spin {
     0% { transform: rotate(0deg); }

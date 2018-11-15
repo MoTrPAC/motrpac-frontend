@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import logo from '../assets/MoTrPAC_horizontal.png';
 
-function LandingPage() {
+export function LandingPage() {
   // TODO: Update email and email link for help requests
+
   return (
     <div className="container">
       <div className="row welcome">
@@ -21,7 +23,6 @@ function LandingPage() {
            the molecular changes that occur during and after exercise and ultimately to advance
            the understanding of how physical activity improves and preserves health.
           </p>
-          <br />
           <p>
           The MoTrPAC program is supported by the NIH Common Fund and is managed by a trans-agency
            working group representing multiple NIH institutes and centers, led by the NIH Office of
@@ -29,13 +30,11 @@ function LandingPage() {
            Diseases, National Institute of Diabetes and Digestive and Kidney Diseases, National
            Institute on Aging, and National Institute of Biomedical Imaging and Bioengineering.
           </p>
-          <br />
           <p>
           For more information on all the sites associated with MoTrPAC and protocols for
            data collection please visit
             <a href="https://www.motrpac.org/" target="_new"> MoTrPAC.org.</a>
           </p>
-          <br />
         </div>
         <div className="col">
           <div className="accessDataInfo">
@@ -53,15 +52,13 @@ function LandingPage() {
               <a href="mailto:MoTrPAC-helpdesk@xxx.xxx" target="_new"> MoTrPAC-helpdesk@xxx.xxx</a>
             </p>
           </div>
-          <br />
           <div className="logoCont">
             <img src={logo} className="img-fluid" alt="MoTrPAC Logo" />
           </div>
-          <br />
         </div>
       </div>
     </div>
   );
 }
 
-export default LandingPage;
+export default connect()(LandingPage);

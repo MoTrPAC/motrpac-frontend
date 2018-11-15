@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import UploadForm from './uploadForm';
 import UploadList from './uploadList';
@@ -22,7 +23,11 @@ export function UploadScreen({
   onFileAdded,
   onRemoveFile,
   onFormSubmit,
+  loggedIn,
 }) {
+  if (!loggedIn) {
+    return (<Redirect to="/" />);
+  }
   const screen = (
     <div className="container uploadScreen upload">
       <div className="row">
@@ -40,7 +45,6 @@ export function UploadScreen({
           />
         </div>
         <div className="col-8 centered">
-          <br />
           <UploadAreaDnD
             dragging={dragging}
             files={files}
@@ -50,9 +54,9 @@ export function UploadScreen({
             dragDrop={e => onDragDrop(e)}
             removeFile={onRemoveFile}
           />
-          <br />
-          <br />
-          <label htmlFor="submit-form" id="formSubmitLabel" className="btn btn-success" tabIndex={0}>Upload</label>
+          <div className="col-12 centered">
+            <label htmlFor="submit-form" id="formSubmitLabel" className="btn btn-success uploadBtn" tabIndex={0}>Upload</label>
+          </div>
         </div>
         <div className="col-12">
           <h3>{formValues.identifier}</h3>
@@ -88,13 +92,14 @@ UploadScreen.propTypes = {
   onDragEnter: PropTypes.func.isRequired,
   onDragLeave: PropTypes.func.isRequired,
   onDragDrop: PropTypes.func.isRequired,
-  // onUpload: PropTypes.func.isRequired, // replaced by onFormSubmit
   onFileAdded: PropTypes.func.isRequired,
   onRemoveFile: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   ...(state.upload),
+  loggedIn: state.auth.loggedIn,
 });
 
 // Maps required functions to specific actions handled by reducer in src/reducers.js

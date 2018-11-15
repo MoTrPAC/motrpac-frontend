@@ -1,10 +1,11 @@
 $red: rgb(179,53,33);
 $dblue: #11397E;
 $blue: #336699;
-$blue-transparent: #3366992c;
-$blue-semi-transparent: #336699b6;
+$blue-semi-transparent: transparentize($blue,0.5);
+$blue-transparent: transparentize($blue,0.9);
 $lblue: #E3EAF1;
 $green: #4C9046;
 $yellow: #D6C714;
-$gray-semi-transparent: #7070705b;
 $gray: #707070;
+$gray-semi-transparent: transparentize($gray,0.5);
+$gray-transparent: transparentize($gray,0.9);
