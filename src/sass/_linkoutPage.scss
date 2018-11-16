@@ -3,15 +3,61 @@
   font-size: 90%;
 }
 .linkoutPage{
+  .row {
+    margin:0;
+  }
+  .motrLink {
+    img {
+      max-height:20vh;
+    }
+    .MoTrLinkInfo {
+      vertical-align: middle;
+    }
+  }
  .externalLinks {
-  background-color: $blue-transparent;
+  //background-color: $blue-transparent;
   border-radius: 10px;
-  margin-top:10px;
-  padding: 5px;
-  padding-top: 10px;
-  padding-bottom:20px;
-  .oi-external-link {
-    font-size: 90%;
+  .linkTile {
+    padding: 0px;
+    border-radius:20px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    min-height:150px;
+    .linkInfoCont {
+      height:100%;
+      width:100%;
+      border-radius:20px;
+      transition: .2s;
+      text-align: center;
+      padding-top:20px;
+      a {
+        background-color:transparentize(white,.05);
+        color: $dblue;
+        box-shadow: 0px 0px 6px $dblue;
+        border-radius:10px;
+        padding:3px;
+        width:100%;
+        display: block;
+      }
+      p {
+        color: transparent;
+      }
+      &:hover{
+        background-color:transparentize($blue,.05);
+        color:white;
+        a {
+          color:white;
+          background-color: transparent;
+          box-shadow: none;
+          font-weight: $heavy-weight;
+          text-align: center;
+        }
+        p {
+          color: white;
+        }
+      }
+    }
   }
   }
   h3 {
@@ -21,28 +67,12 @@
     margin-top:20px;
   }
   h4 {
-    color: $blue;
-    font-size: 120%;
+    color: $dblue;
+    font-size: 150%;
     margin-top:20px;
   }
   a {
     color:$dblue;
     overflow-wrap: break-word;
-  }
-  .linkCategory {
-    margin-bottom: 20px;
-  }
-  .linkRow {
-    font-size: 110%;
-    line-height: 1.25rem;
-    border-radius: 10px;
-    margin-bottom:10px;
-    padding: 10px 10px;
-    p{
-      margin:0;
-    }
-    &:hover {
-      background-color: $blue-transparent;
-    }
   }
 }
