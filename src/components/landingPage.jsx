@@ -14,7 +14,7 @@ export function LandingPage() {
       </div>
 
       <div className="row Landinginfo">
-        <div className="col whatis">
+        <div className="col-12 col-md-6 whatis">
           <h5 className="heavy">What is MoTrPAC?</h5>
           <p>
           MoTrPAC is a national research consortium designed to discover and perform preliminary
@@ -36,7 +36,7 @@ export function LandingPage() {
             <a href="https://www.motrpac.org/" target="_new"> MoTrPAC.org.</a>
           </p>
         </div>
-        <div className="col">
+        <div className="col-12 col-md-6">
           <div className="accessDataInfo">
             <h5 className="heavy">Accessing Data: </h5>
             <p>
