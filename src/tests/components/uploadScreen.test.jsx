@@ -8,6 +8,41 @@ import rootReducer, { defaultRootState } from '../../reducers/index';
 import UploadScreenConnected, { UploadScreen } from '../../components/uploadScreen';
 
 Enzyme.configure({ adapter: new Adapter() });
+
+const testFiles = require('../../testData/testFiles');
+const testUploads = require('../../testData/testUploads');
+
+const formFilledState = {
+  auth: {
+    ...defaultRootState.auth,
+    loggedIn: true,
+  },
+  upload: {
+    ...defaultUploadState,
+    formValues: {
+      dataType: 'ATAC-Seq',
+      identifier: '1',
+      collectionDate: '10/21/18',
+      subjectType: 'Animal',
+      studyPhase: '1',
+      descript: 'description',
+      rawData: true,
+      processedData: false,
+    },
+  },
+};
+
+const uploadingState = {
+  auth: {
+    ...defaultRootState.auth,
+    loggedIn: true,
+  },
+  upload: {
+    ...defaultUploadState,
+    uploadFiles: testUploads,
+  },
+};
+
 const screenActions = {
   onDragEnter: jest.fn(),
   onDragLeave: jest.fn(),
@@ -38,8 +73,6 @@ const loggedInRootState = {
   upload: defaultUploadState,
 };
 
-const testFiles = require('../../testData/testFiles');
-const testUploads = require('../../testData/testUploads');
 
 describe('Connected Upload Screen', () => {
   let mountedUploadScreen = mount((
@@ -67,9 +100,40 @@ describe('Connected Upload Screen', () => {
     type: 'FILES_ADDED',
     files: testFiles,
   };
-  test('Added files do not move to upload area on upload button click if form not valid', () => {
+  test('Added files do not move to upload area on form submit if form not valid', () => {
     mountedUploadScreen.find('Provider').props().store.dispatch(addFileAction);
-    mountedUploadScreen.find('#submit-form').simulate('click');
+    mountedUploadScreen.find('form').simulate('submit');
+    mountedUploadScreen.update();
     expect(mountedUploadScreen.find('.noListItems')).toHaveLength(1);
+  });
+  test('Added files do move to upload area with valid form', () => {
+    mountedUploadScreen = mount((
+      <Provider store={createStore(rootReducer, formFilledState)}>
+        <UploadScreenConnected />
+      </Provider>
+    ));
+    mountedUploadScreen.find('Provider').props().store.dispatch(addFileAction);
+    mountedUploadScreen.find('form').simulate('submit');
+    mountedUploadScreen.update();
+
+    // Checking redux state
+    expect(mountedUploadScreen.find('Provider').props().store.getState().upload.submitted).toBeTruthy();
+    expect(mountedUploadScreen.find('Provider').props().store.getState().upload.files).toHaveLength(0);
+    expect(mountedUploadScreen.find('Provider').props().store.getState().upload.uploadFiles).toHaveLength(testFiles.length);
+
+    // Checking rendered components
+    expect(mountedUploadScreen.find('UploadListRow')).toHaveLength(testFiles.length);
+    expect(mountedUploadScreen.find('.noListItems')).toHaveLength(0);
+  });
+  test('Canceling uploading file removes it', () => {
+    mountedUploadScreen = mount((
+      <Provider store={createStore(rootReducer, uploadingState)}>
+        <UploadScreenConnected />
+      </Provider>
+    ));
+    expect(mountedUploadScreen.find('UploadListRow')).toHaveLength(testUploads.length);
+    mountedUploadScreen.find('UploadListRow').first().find('.cancelUploadConfirm').simulate('click');
+    mountedUploadScreen.update();
+    expect(mountedUploadScreen.find('UploadListRow')).toHaveLength(testUploads.length - 1);
   });
 });

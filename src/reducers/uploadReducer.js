@@ -1,6 +1,8 @@
 export const defaultUploadState = {
   files: [],
   uploadFiles: [],
+  submitted: false,
+  validated: false,
   formValues: {
     dataType: 'WGS',
     collectionDate: '',
@@ -64,7 +66,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
       };
 
     case 'FORM_CHANGE': {
-      let NewFormValues = {
+      const NewFormValues = {
         ...state.formValues,
       };
 
@@ -100,6 +102,8 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         collectionDate: action.elements.collectionDate.value,
         subjectType: action.elements.subjectType.value,
         studyPhase: action.elements.studyPhase.value,
+        rawData: action.elements.rawData.checked,
+        processedData: action.elements.processedData.checked,
       };
 
       return {
