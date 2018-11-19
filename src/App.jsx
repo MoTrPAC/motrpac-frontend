@@ -33,7 +33,7 @@ function App({ history = hist }) {
             <Route path="/" exact component={LandingPageConnected} />
             <Route path="/dashboard" component={DashboardConnected} />
             <Route path="/upload" component={UploadScreenConnected} />
-            <Route path="/linkout" component={LinkoutPageConnected} />
+            <Route path="/external-links" component={LinkoutPageConnected} />
           </div>
           <FooterConnected />
           <AuthLoadingConnected />

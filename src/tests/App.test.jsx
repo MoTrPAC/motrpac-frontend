@@ -16,15 +16,18 @@ it('renders without crashing', () => {
 
 // No other routes render components, and only one component rendered
 function testCorrectComponentInPath(app, componentName, path, history) {
+  let noPath = true;
   app.find('Route').forEach((route) => {
     expect(history.location.pathname).toEqual(path);
     if (route.props().path === path) {
       expect(route.children()).toHaveLength(1);
       expect(route.find(componentName)).toHaveLength(1);
+      noPath = false;
     } else {
       expect(route.children()).toHaveLength(0);
     }
   });
+  expect(noPath).toBeFalsy();
 }
 
 describe('Unauthenticated Application routing', () => {
@@ -49,10 +52,10 @@ describe('Unauthenticated Application routing', () => {
     testCorrectComponentInPath(mountApp, 'LandingPage', '/', history);
   });
 
-  test('loads the linkout page at /linkout', () => {
-    history.push('/linkout');
+  test('loads the linkout page at /external-links', () => {
+    history.push('/external-links');
     mountApp.update();
-    testCorrectComponentInPath(mountApp, 'LinkoutPage', '/linkout', history);
+    testCorrectComponentInPath(mountApp, 'LinkoutPage', '/external-links', history);
   });
 });
 

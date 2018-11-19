@@ -3,11 +3,17 @@
   text-align: center;
 }
 footer {
+  @media screen and (max-width: 767.98px){
+    text-align:center; 
+  }
   padding-top: 10px;
   background-color: $gray-semi-transparent;
   color: white;
   .rightAlign {
     text-align: right;
+    @media screen and (max-width: 767.98px){
+      text-align:center; 
+    }
   }
   line-height: 1rem;
   p {

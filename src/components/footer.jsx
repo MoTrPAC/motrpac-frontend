@@ -33,7 +33,7 @@ export function Footer({
     <footer className="footer">
       <div className="container-fluid">
         <div className="row">
-          <div className="col-9">
+          <div className="col-12 col-md-9">
             <p>
               Data Hub designed and maintained by the MoTrPAC
               BioInformatics Center at
@@ -44,7 +44,7 @@ export function Footer({
               <a href="https://commonfund.nih.gov/" target="_new"> NIH Common Fund</a>
             </p>
           </div>
-          <div className="col rightAlign">
+          <div className="col-12 col-md-3 rightAlign">
             <AuthButton />
           </div>
         </div>
