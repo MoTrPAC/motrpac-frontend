@@ -32,28 +32,28 @@ const linkList = [
         protocol: 'https',
         url: 'Commonfund.nih.gov',
         text: 'The primary funding source for the MoTrPAC Initiative',
-        image: `url(${NIHLogo})`,
+        image: NIHLogo,
         title: 'NIH Common Fund',
       },
       {
         protocol: 'https',
         url: 'ENCODEProject.org',
         text: 'ENCODE project website',
-        image: `url(${ENCODELogo})`,
+        image: ENCODELogo,
         title: 'ENCODE Project',
       },
       {
         protocol: 'http',
         url: 'METABOLOMICSworkbench.org',
         text: 'UCSD Metabolomics Workbench',
-        image: `url(${MWLogo})`,
+        image: MWLogo,
         title: 'Metabolomics Workbench',
       },
       {
         protocol: 'https',
         url: 'GTExPortal.org',
         text: 'The Genotype-Tissue Expression (GTEx) project',
-        image: `url(${GTExLogo})`,
+        image: GTExLogo,
         title: 'GTEx',
       },
     ],
@@ -79,8 +79,8 @@ export function LinkoutPage() {
           <h3>Useful Links</h3>
         </div>
       </div>
-      <div className="row align-items-center motrLink">
-        <div className="col-12 col-md-6">
+      <div className="row align-items-center justify-content-center motrLink">
+        <div className="col-12 col-md-6 centered">
           <img src={MOTRLogo} className="img-fluid" alt="MoTrPAC Logo" />
         </div>
         <div className="col MoTrLinkInfo">
@@ -102,23 +102,21 @@ export function LinkoutPage() {
 }
 
 function UsefulLink({ link }) {
-  let imgUrl = 'url("https://via.placeholder.com/200")';
+  let imgUrl = 'https://via.placeholder.com/200';
   if (link.image) {
     imgUrl = link.image;
   }
   return (
-    <div className="col-12 col-sm-4 col-lg-3 p-1 linkTile" style={{ backgroundImage: imgUrl }}>
-      <div className="linkInfoCont">
-        <a href={`${link.protocol}://www.${link.url}`} target="_new">
-          {link.title}
-          &nbsp;
-          <span className="oi oi-external-link" />
-        </a>
-        <p>
-          &nbsp;
-          {link.text}
-        </p>
-      </div>
+    <div className="col-12 col-sm-6 col-md-4 col-lg-3 p-4 linkTile centered">
+      <a href={`${link.protocol}://www.${link.url}`} target="_new">
+        <div className="imgCont" style={{ backgroundImage: `url("${imgUrl}")` }} />
+        {link.title}
+        &nbsp;
+        <span className="oi oi-external-link" />
+      </a>
+      <p>
+        {link.text}
+      </p>
     </div>
   );
 }
