@@ -70,7 +70,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         ...state.formValues,
       };
 
-      if (action.eID === 'preProcessedData' || action.eID === 'rawData') {
+      if (action.eID === 'processedData' || action.eID === 'rawData') {
         NewFormValues[action.eID] = action.checked;
       } else {
         NewFormValues[action.eID] = action.changeValue;
