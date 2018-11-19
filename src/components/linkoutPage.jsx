@@ -80,7 +80,7 @@ export function LinkoutPage() {
         </div>
       </div>
       <div className="row align-items-center justify-content-center motrLink">
-        <div className="col-12 col-md-6 centered">
+        <div className="col-12 col-md-5 centered">
           <img src={MOTRLogo} className="img-fluid" alt="MoTrPAC Logo" />
         </div>
         <div className="col MoTrLinkInfo">
