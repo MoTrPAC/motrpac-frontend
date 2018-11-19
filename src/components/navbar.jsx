@@ -35,7 +35,7 @@ export function Navbar({ loggedIn = false }) {
             <li className="nav-item navItem dropdown">
               <div className="nav-link dropdown-toggle" role="button" id="navbarDropdownMenuLink" data-toggle="dropdown">About</div>
               <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <Link to="/linkout" className="dropdown-item">Useful Links</Link>
+                <Link to="/external-links" className="dropdown-item">Useful Links</Link>
                 <Link to="/team" className="dropdown-item">Who we are</Link>
               </div>
             </li>
