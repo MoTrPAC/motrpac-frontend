@@ -22,6 +22,7 @@ const formFilledState = {
 };
 const formActions = {
   handleSubmit: jest.fn(),
+  onFormChange: jest.fn(),
 };
 const mountDefaultForm = mount(<UploadForm {...defaultUploadState} {...formActions} />);
 const shallowFilledForm = shallow(<UploadForm {...formFilledState} {...formActions} />);

@@ -24,6 +24,7 @@ export function UploadScreen({
   onRemoveFile,
   onFormSubmit,
   cancelUpload,
+  handleFormChange,
   loggedIn,
 }) {
   if (!loggedIn) {
@@ -43,6 +44,7 @@ export function UploadScreen({
             submitted={submitted}
             formValues={formValues}
             handleSubmit={onFormSubmit}
+            handleFormChange={handleFormChange}
           />
         </div>
         <div className="col-8 centered">
@@ -136,6 +138,12 @@ const mapDispatchToProps = dispatch => ({
   cancelUpload: ident => dispatch({
     type: 'CANCEL_UPLOAD',
     id: ident,
+  }),
+  handleFormChange: e => dispatch({
+    type: 'FORM_CHANGE',
+    eID: e.target.id,
+    changeValue: e.target.value,
+    checked: e.target.checked,
   }),
 });
 

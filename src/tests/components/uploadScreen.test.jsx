@@ -15,6 +15,7 @@ const screenActions = {
   onFileAdded: jest.fn(),
   onRemoveFile: jest.fn(),
   onFormSubmit: jest.fn(),
+  handleFormChange: jest.fn(),
   cancelUpload: jest.fn(),
 };
 

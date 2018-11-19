@@ -23,6 +23,7 @@ const submittedState = {
 };
 const actions = {
   handleSubmit: action('onHandleSubmit'),
+  handleFormChange: action('onFormChange'),
 };
 storiesOf('Upload Form', module)
   .addDecorator(story => <div className="upload-component" style={{ padding: '3rem' }}>{story()}</div>)

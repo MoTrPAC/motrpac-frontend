@@ -33,6 +33,7 @@ function UploadForm({
   submitted,
   formValues,
   handleSubmit,
+  handleFormChange,
 }) {
   return (
     <form onSubmit={(e) => { e.preventDefault(); handleSubmit(e); }} id="uploadForm" name="uploadForm" className={validated ? 'was-validated' : 'needs-validation'} noValidate disabled={submitted}>
@@ -40,7 +41,7 @@ function UploadForm({
         <div className="invalid-feedback">Field Required</div>
         <label htmlFor="data-type">
           Data Type *
-          <select type="text" value={formValues.dataType} className="form-control" id="dataType" required disabled={submitted}>
+          <select type="text" onChange={handleFormChange} value={formValues.dataType} className="form-control" id="dataType" required disabled={submitted}>
             {assayList.map(assay => <option key={assay} value={assay}>{assay}</option>)}
           </select>
 
@@ -51,7 +52,7 @@ function UploadForm({
         <div className="invalid-feedback">Field Required</div>
         <label htmlFor="identifier">
           Identifier(s) * – comma seperate if multiple
-          <input type="text" value={formValues.identifier} className="form-control" id="identifier" placeholder="Ex: AS213141" required disabled={submitted} />
+          <input type="text" onChange={handleFormChange} value={formValues.identifier} className="form-control" id="identifier" placeholder="Ex: AS213141" required disabled={submitted} />
         </label>
       </div>
 
@@ -59,14 +60,14 @@ function UploadForm({
         <div className="invalid-feedback">Field Required</div>
         <label htmlFor="collection-date">
           Collection Date *
-          <input type="text" value={formValues.collectionDate} className="form-control" id="collectionDate" placeholder="MM/DD/YYYY" required disabled={submitted} />
+          <input type="text" onChange={handleFormChange} value={formValues.collectionDate} className="form-control" id="collectionDate" placeholder="MM/DD/YYYY" required disabled={submitted} />
         </label>
       </div>
 
       <div className="form-group">
         <label htmlFor="subject-type">
           Subject Type *
-          <select value={formValues.subjectType} className="form-control" id="subjectType" disabled={submitted}>
+          <select value={formValues.subjectType} onChange={handleFormChange} className="form-control" id="subjectType" disabled={submitted}>
             <option value="Human">Human</option>
             <option value="Animal">Animal</option>
           </select>
@@ -76,7 +77,7 @@ function UploadForm({
       <div className="form-group">
         <label htmlFor="study-phase">
           Study Phase *
-          <select value={formValues.studyPhase} className="form-control" id="studyPhase" disabled={submitted}>
+          <select value={formValues.studyPhase} onChange={handleFormChange} className="form-control" id="studyPhase" disabled={submitted}>
             <option value="Vanguard">Vanguard</option>
             <option value="1">1</option>
             <option value="1A">1A</option>
@@ -88,14 +89,14 @@ function UploadForm({
         </label>
       </div>
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="checkbox" name="Raw" id="rawData" value="Raw Data" disabled={submitted} checked={formValues.rawData} />
+        <input className="form-check-input" onChange={handleFormChange} type="checkbox" name="Raw" id="rawData" value="Raw Data" disabled={submitted} checked={formValues.rawData} />
         <label className="form-check-label" htmlFor="rawData">
           Raw Data
         </label>
       </div>
 
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="checkbox" name="Pre-Processed" id="processedData" value="Processed Data" checked={formValues.processedData} disabled={submitted} />
+        <input className="form-check-input" onChange={handleFormChange} type="checkbox" name="Pre-Processed" id="processedData" value="Processed Data" checked={formValues.processedData} disabled={submitted} />
         <label className="form-check-label" htmlFor="processedData">
           Pre-Processed Data
         </label>
@@ -105,7 +106,7 @@ function UploadForm({
         <label htmlFor="description">
           <br />
           Description
-          <textarea type="textarea" className="form-control" id="description" placeholder="Description" value={formValues.descript} disabled={submitted} />
+          <textarea type="textarea" onChange={handleFormChange} className="form-control" id="description" placeholder="Description" value={formValues.descript} disabled={submitted} />
         </label>
       </div>
 
@@ -130,6 +131,7 @@ UploadForm.propTypes = {
     processedData: PropTypes.bool,
   }),
   handleSubmit: PropTypes.func.isRequired,
+  handleFormChange: PropTypes.func.isRequired,
 };
 UploadForm.defaultProps = {
   validated: false,

@@ -1,7 +1,16 @@
 export const defaultUploadState = {
   files: [],
   uploadFiles: [],
-  formValues: {},
+  formValues: {
+    dataType: 'WGS',
+    collectionDate: '',
+    identifier: '',
+    subjectType: 'Human',
+    studyPhase: '1',
+    rawData: false,
+    processedData: false,
+    description: '',
+  },
   dragging: 0,
 };
 
@@ -53,6 +62,23 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         ...state,
         files: state.files.filter(file => file.name !== action.name),
       };
+
+    case 'FORM_CHANGE': {
+      let NewFormValues = {
+        ...state.formValues,
+      };
+
+      if (action.eID === 'preProcessedData' || action.eID === 'rawData') {
+        NewFormValues[action.eID] = action.checked;
+      } else {
+        NewFormValues[action.eID] = action.changeValue;
+      }
+
+      return {
+        ...state,
+        formValues: NewFormValues,
+      };
+    }
     // On form submit sends staged files to upload status area.
     case 'FORM_SUBMIT': {
       // if form invalid or no files staged, returns previous state

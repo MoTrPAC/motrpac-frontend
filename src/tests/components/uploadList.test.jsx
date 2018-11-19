@@ -4,7 +4,7 @@ import Enzyme, { shallow, mount } from 'enzyme';
 import UploadList from '../../components/uploadList';
 
 Enzyme.configure({ adapter: new Adapter() });
-let uploadListActions = {
+const uploadListActions = {
   cancelUpload: jest.fn(),
 };
 const testUploads = require('../../testData/testUploads');
