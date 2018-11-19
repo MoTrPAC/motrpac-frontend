@@ -1,6 +1,6 @@
 {
   "name": "MoTrPAC",
-  "version": "0.24.5",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "bootstrap": "^4.1.3",
