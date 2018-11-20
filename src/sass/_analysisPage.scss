@@ -1,14 +1,12 @@
 .analysisPage {
-
-  button {
-    max-width: 100%;
-  }
-  .analysisTypeButton { 
+  margin-top: 10px;
+  .analysisType{ 
     background-color:$blue-transparent;
     border:1px solid $dblue;
-    h3 {
+    p {
       color: $dblue;
-      word-wrap: break-word;
+      font-size:1.25rem;
+      font-weight:$light-weight;
     }
     border-radius:20px;
     img {
