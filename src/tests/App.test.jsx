@@ -14,33 +14,48 @@ it('renders without crashing', () => {
   ReactDOM.unmountComponentAtNode(div);
 });
 
+// No other routes render components, and only one component rendered
+function testCorrectComponentInPath(app, componentName, path, history) {
+  let noPath = true;
+  app.find('Route').forEach((route) => {
+    expect(history.location.pathname).toEqual(path);
+    if (route.props().path === path) {
+      expect(route.children()).toHaveLength(1);
+      expect(route.find(componentName)).toHaveLength(1);
+      noPath = false;
+    } else {
+      expect(route.children()).toHaveLength(0);
+    }
+  });
+  expect(noPath).toBeFalsy();
+}
+
 describe('Unauthenticated Application routing', () => {
   const history = createBrowserHistory();
   const mountApp = mount(<App history={history} />);
+
   test('loads the landing page component at index', () => {
     history.push('/');
     mountApp.update();
-    expect(history.location.pathname).toEqual('/');
-    expect(mountApp.find('LandingPage')).toHaveLength(1);
-    expect(mountApp.find('Dashboard')).toHaveLength(0);
-    expect(mountApp.find('UploadScreen')).toHaveLength(0);
+    testCorrectComponentInPath(mountApp, 'LandingPage', '/', history);
   });
+
   test('loads the landing page at /dashboard', () => {
     history.push('/dashboard');
     mountApp.update();
-    expect(history.location.pathname).toEqual('/');
-    expect(mountApp.find('LandingPage')).toHaveLength(1);
-    expect(mountApp.find('Dashboard')).toHaveLength(0);
-    expect(mountApp.find('UploadScreen')).toHaveLength(0);
+    testCorrectComponentInPath(mountApp, 'LandingPage', '/', history);
   });
 
   test('loads the landing page at /upload', () => {
     history.push('/dashboard');
     mountApp.update();
-    expect(history.location.pathname).toEqual('/');
-    expect(mountApp.find('LandingPage')).toHaveLength(1);
-    expect(mountApp.find('Dashboard')).toHaveLength(0);
-    expect(mountApp.find('UploadScreen')).toHaveLength(0);
+    testCorrectComponentInPath(mountApp, 'LandingPage', '/', history);
+  });
+
+  test('loads the linkout page at /external-links', () => {
+    history.push('/external-links');
+    mountApp.update();
+    testCorrectComponentInPath(mountApp, 'LinkoutPage', '/external-links', history);
   });
 });
 
@@ -51,12 +66,14 @@ describe('Authenticated Application routing', () => {
     type: 'LOGIN_SUCCESS',
     user: testUser,
   };
+
   beforeAll(() => {
     history = createBrowserHistory();
     mountApp = mount(<App history={history} />);
     // Dispatch successful login
     mountApp.find('Provider').props().store.dispatch(loginSuccessAction);
   });
+
   afterAll(() => {
     mountApp.unmount();
   });
@@ -64,15 +81,14 @@ describe('Authenticated Application routing', () => {
   test('State should change to logged in on loginSuccess dispatch', () => {
     expect(mountApp.find('Provider').props().store.getState().auth.loggedIn).toBeTruthy();
   });
+
   test('loads the dashboard at /dashboard', () => {
     history.push('/dashboard');
     // Update required to re-render the application
     mountApp.update();
-    expect(history.location.pathname).toEqual('/dashboard');
-    expect(mountApp.find('LandingPage')).toHaveLength(0);
-    expect(mountApp.find('UploadScreen')).toHaveLength(0);
-    expect(mountApp.find('Dashboard')).toHaveLength(1);
+    testCorrectComponentInPath(mountApp, 'Dashboard', '/dashboard', history);
   });
+
   test('dashboard displays correct text on Dashboard', () => {
     expect(history.location.pathname).toEqual('/dashboard');
     expect(mountApp.find('h2.light').text()).toEqual(`Welcome ${testUser.name} at ${testUser.siteName}`);

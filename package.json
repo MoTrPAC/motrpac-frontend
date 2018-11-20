@@ -25,7 +25,8 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "sass": "sass --watch src/sass/main.scss src/main.css"
+    "sass": "sass src/sass/main.scss src/main.css",
+    "sass-watch": "sass --watch src/sass/main.scss src/main.css"
   },
   "browserslist": [
     ">0.2%",
