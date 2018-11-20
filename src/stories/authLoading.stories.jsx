@@ -1,11 +1,10 @@
 import React from 'react';
-import { storiesOf, action } from '@storybook/react';
-import StoryRouter from 'storybook-react-router';
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import { AuthLoading } from '../components/authLoading';
 
 const authActions = {
   authSuccess: action('Authorized!'),
 };
 storiesOf('Authentication Loading', module)
-  .addDecorator(StoryRouter())
   .add('Default', () => <AuthLoading authenticating {...authActions} />);

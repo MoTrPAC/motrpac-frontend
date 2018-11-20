@@ -1,23 +1,26 @@
 
 .copyright {
-  font-size: 75%;
   text-align: center;
-  p { 
-    position: relative;
-    top: 80%;
-  }
 }
 footer {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  @media screen and (max-width: 767.98px){
+    text-align:center; 
+  }
+  padding-top: 10px;
   background-color: $gray-semi-transparent;
   color: white;
   .rightAlign {
     text-align: right;
+    @media screen and (max-width: 767.98px){
+      text-align:center; 
+    }
   }
+  line-height: 1rem;
   p {
-    font-size: 80%;
-    margin-bottom:5px;
+    margin-bottom: 5px
+  }
+  .btn {
+    padding: 0;
   }
 }
 .logInOutBtn {
@@ -25,6 +28,4 @@ footer {
   border: none;
   color: white;
   font-weight: $heavy-weight;
-  position: relative;
-  font-size:120%;
 }

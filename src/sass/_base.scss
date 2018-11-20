@@ -1,5 +1,7 @@
 html,body{
   height:100%;
+  margin: 0;
+  padding: 0;
 }
 h1,h2,h3,h4 {
   font-family: $raleway;
@@ -15,13 +17,11 @@ a {
   color: $blue;
 }
 
-header {
-  min-height:10vh
+.App {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
-footer {
-  min-height:10vh;
-}
-
 .componentHolder {
-  min-height: 80vh;
+  flex: 1;
 }

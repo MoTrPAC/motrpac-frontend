@@ -1,28 +1,25 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { Dashboard } from '../components/dashboard';
+import { LinkoutPage } from '../components/linkoutPage';
 import { Navbar } from '../components/navbar';
 import { Footer } from '../components/footer';
-
-const testUser = require('../testData/testUser');
 
 const footerActions = {
   onLogIn: action('logging in'),
   onLogOut: action('logging out'),
 };
 
-storiesOf('Dashboard', module)
+storiesOf('Linkout Page', module)
   .addDecorator(story => (
     <div className="App">
       <header>
-        <Navbar loggedIn />
+        <Navbar />
       </header>
       <div className="componentHolder">
         {story()}
       </div>
-      <Footer loggedIn {...footerActions} user={{ name: 'Test User', site: 'CAS' }} />
+      <Footer {...footerActions} />
     </div>
-
   ))
-  .add('default', () => <Dashboard user={testUser} loggedIn />);
+  .add('Default', () => <LinkoutPage />);
