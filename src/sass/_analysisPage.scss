@@ -1,0 +1,18 @@
+.analysisPage {
+
+  button {
+    max-width: 100%;
+  }
+  .analysisTypeButton { 
+    background-color:$blue-transparent;
+    border:1px solid $dblue;
+    h3 {
+      color: $dblue;
+      word-wrap: break-word;
+    }
+    border-radius:20px;
+    img {
+      max-width: 100%;
+    }
+  }
+}
