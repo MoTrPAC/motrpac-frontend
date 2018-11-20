@@ -2,60 +2,51 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import globeIcon from '../assets/analysisIcons/Globe.png';
-import moleculeIcon from '../assets/analysisIcons/Molecule.png';
-import lungIcon from '../assets/analysisIcons/Lungs.png';
-import networkIcon from '../assets/analysisIcons/Network.png';
-import timeIcon from '../assets/analysisIcons/TimeSeries.png';
-import omicsIcon from '../assets/analysisIcons/Omics.png';
+import analysisTypes from '../assets/analysisIcons/analysisTypes';
 
-const analysisTypes = [
-  {
-    title: 'Published Data Meta-Analysis',
-    shortName: 'PDMA',
-    icon: globeIcon,
-  },
-  {
-    title: 'Differential Molecules',
-    shortName: 'DM',
-    icon: moleculeIcon,
-  },
-  {
-    title: 'Tissue Comparison',
-    shortName: 'TC',
-    icon: lungIcon,
-  },
-  {
-    title: 'Network Analysis',
-    shortName: 'NA',
-    icon: networkIcon,
-  },
-  {
-    title: 'Time Course Visualization',
-    shortName: 'TCV',
-    icon: timeIcon,
-  },
-  {
-    title: 'Omics Comparison',
-    shortName: 'OC',
-    icon: omicsIcon,
-  },
-];
-
-export function AnalysisHomePage({ match, depth, currentAnalysis, onPickAnalysis, goBack}) {
-  function pickAnalysis(e) {
-    onPickAnalysis(e);
-  }
+export function AnalysisHomePage({ match, depth, currentAnalysis, onPickAnalysis, goBack }) {
   let subjectType = match.params.subjectType.slice(0).toLowerCase();
 
   // Redirects to dashboard if incorrect url
   if (!(subjectType === 'animal' || subjectType === 'human')) {
     return <Redirect to="/dashboard" />;
   }
+
+  // Button to select inital analysis category
+  function AnalysisTypeButton({ analysisType }) {
+    return (
+      <div id={analysisType.shortName} onClick={onPickAnalysis} onKeyPress={onPickAnalysis} tabIndex={0} role="button" className="col-5 col-md-4 col-lg-2 m-3 analysisType">
+        <p className="centered">{analysisType.title}</p>
+        <img src={analysisType.icon} className="align-self-end" alt={`${analysisType.title} Icon`} />
+      </div>
+    );
+  }
+  AnalysisTypeButton.propTypes = {
+    analysisType: PropTypes.shape({
+      title: PropTypes.string,
+      shortName: PropTypes.string,
+      icon: PropTypes.string,
+    }).isRequired,
+  };
+
+  // Button to return 1 depth level
+  function BackButton() {
+    return <button onClick={goBack} type="button"><span className="oi backButton oi-arrow-thick-left" /></button>;
+  }
+  // Analysis split in to groups of three for rendering in 2 rows
   const threeAnalyses = analysisTypes.slice(0, 3)
-    .map(analysisType => <AnalysisTypeButton key={analysisType.shortName} onPickAnalysis={pickAnalysis} analysisType={analysisType} />);
+    .map(analysisType => (
+      <AnalysisTypeButton
+        key={analysisType.shortName}
+        analysisType={analysisType}
+      />));
   const nextThreeAnalyses = analysisTypes.slice(3)
-    .map(analysisType => <AnalysisTypeButton key={analysisType.shortName} onPickAnalysis={pickAnalysis} analysisType={analysisType} />);
+    .map(analysisType => (
+      <AnalysisTypeButton
+        key={analysisType.shortName}
+        analysisType={analysisType}
+      />));
+
   const selectAnalysis = (
     <div>
       <div className="row justify-content-center">
@@ -72,6 +63,7 @@ export function AnalysisHomePage({ match, depth, currentAnalysis, onPickAnalysis
     .split(' ')
     .map(s => s.charAt(0).toUpperCase() + s.substring(1))
     .join(' ');
+
   return (
     <div className="container analysisPage">
       <div className="row">
@@ -84,7 +76,7 @@ export function AnalysisHomePage({ match, depth, currentAnalysis, onPickAnalysis
       </div>
       <div className="row">
         <div className="col">
-          {(depth > 0) ? <BackButton goBack={goBack} /> : ''}
+          {(depth > 0) ? <BackButton /> : ''}
         </div>
       </div>
       {(depth === 1) ? currentAnalysis : ''}
@@ -99,30 +91,10 @@ AnalysisHomePage.propTypes = {
       subjectType: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-};
-
-function AnalysisTypeButton({ analysisType, onPickAnalysis }) {
-  return (
-    <div id={analysisType.shortName} onClick={onPickAnalysis} onKeyPress={onPickAnalysis} tabIndex={0} role="button" className="col-5 col-md-4 col-lg-2 m-3 analysisType">
-      <p className="centered">{analysisType.title}</p>
-      <img src={analysisType.icon} className="align-self-end" alt={`${analysisType.title} Icon`} />
-    </div>
-  );
-}
-AnalysisTypeButton.propTypes = {
-  analysisType: PropTypes.shape({
-    title: PropTypes.string,
-    shortName: PropTypes.string,
-    icon: PropTypes.string,
-  }).isRequired,
-  onPickAnalysis: PropTypes.func.isRequired,
-};
-
-function BackButton({ goBack }) {
-  return <button onClick={goBack} type="button"><span className="oi backButton oi-arrow-thick-left" /></button>
-}
-BackButton.propTypes = {
+  depth: PropTypes.number.isRequired,
+  currentAnalysis: PropTypes.string.isRequired,
   goBack: PropTypes.func.isRequired,
+  onPickAnalysis: PropTypes.func.isRequired,
 };
 
 
