@@ -82,7 +82,7 @@ export function AnalysisHomePage({
   function BackButton() {
     return <button className="backButton btn" onClick={goBack} type="button"><span className="oi backButton oi-arrow-thick-left" /></button>;
   }
-  // Analysis split in to groups of three for rendering in 2 rows
+
   const analyses = analysisTypes
     .map(analysisType => (
       <AnalysisTypeButton
