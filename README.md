@@ -45,11 +45,7 @@
    - `yarn test --coverage`
    - runs all tests and returns table illustrating code coverage
 
-<<<<<<< HEAD
- * Building CSS: Uses node-sass plugin
-=======
  * Building CSS: Uses sass in node_modules/sass/sass.js
->>>>>>> 66ad90471a944478f2de6067d2a253520d63165a
    - `yarn sass`
    - compiles sass from src/sass/main.scss to src/main.css
    - `yarn sass-watch`

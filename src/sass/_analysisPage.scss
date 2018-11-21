@@ -1,6 +1,6 @@
 .analysisPage {
   margin-top: 10px;
-  .analysisType{ 
+  .analysisType { 
     background-color:$blue-transparent;
     border:1px solid $dblue;
     p {
@@ -11,6 +11,37 @@
     border-radius:20px;
     img {
       max-width: 100%;
+    }
+  }
+  .inactiveAnalysis {
+    border-color: $gray;
+    background-color: $gray-transparent;
+    p {
+      color: $gray;
+    }
+  }
+  .subAnalysisRow {
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid $gray;
+    color: $dblue;
+    h3 {
+      color: $dblue;
+    }
+    p {
+      font-size:1.25rem;
+      font-weight:$light-weight;
+    }
+    img {
+      max-width: 70%;
+      background-color: $blue-transparent;
+      border-radius: 20px;
+      border: 1px solid $dblue;
+    }
+    &:hover {
+      border: 1px solid $dblue;
+      background-color: $blue-transparent;
+      transition: .2s;
     }
   }
 }

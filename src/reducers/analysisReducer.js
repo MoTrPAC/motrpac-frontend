@@ -1,6 +1,9 @@
 export const defaultAnalysisState = {
   currentAnalysis: '',
+  currentSubAnalysis: '',
   depth: 0,
+  analysisSelected: false,
+  subAnalysisSelected: false,
 };
 
 export default function AnalysisReducer(state = { ...defaultAnalysisState }, action) {
@@ -11,6 +14,13 @@ export default function AnalysisReducer(state = { ...defaultAnalysisState }, act
         currentAnalysis: action.analysis,
         analysisSelected: true,
         depth: 1,
+      };
+    case 'SUBANALYSIS_SELECT':
+      return {
+        ...state,
+        currentSubAnalysis: action.subAnalysis,
+        subAnalysisSelected: true,
+        depth: 2,
       };
     case 'GO_BACK':
       return {
