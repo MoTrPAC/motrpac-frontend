@@ -1,6 +1,6 @@
 import auth0 from 'auth0-js';
 
-export default class Auth {
+class Auth {
   constructor() {
     this.auth0 = new auth0.WebAuth({
       domain: 'hypeway.auth0.com',
@@ -58,3 +58,7 @@ export default class Auth {
     this.expiresAt = authResult.expiresIn * 1000 + new Date().getTime();
   }
 }
+
+const auth0Client = new Auth();
+
+export default auth0Client;
