@@ -16,7 +16,7 @@ function Footer(props) {
   // Function to render login button
   const LoginButton = () => {
     return (
-      <span className="user-login">
+      <span className="user-login-button">
         {auth0Client.isAuthenticated() ?
           <button type="button" onClick={() => {logOut()}} className="logInOutBtn btn">
             {auth0Client.getProfile().name}&nbsp;Logout
