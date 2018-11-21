@@ -44,6 +44,6 @@ storiesOf('Analysis Page', module)
       <Footer {...footerActions} />
     </div>
   ))
-  .add('Animal', () => <AnalysisHomePage loggedIn match={animalMatch} {...defaultAnalysisState} {...AnalysisActions} />)
-  .add('Human', () => <AnalysisHomePage loggedIn match={humanMatch} {...defaultAnalysisState} {...AnalysisActions} />)
+  .add('Animal', () => <AnalysisHomePage loggedIn {...defaultAnalysisState} match={animalMatch} {...AnalysisActions} />)
+  .add('Human', () => <AnalysisHomePage loggedIn {...defaultAnalysisState} match={humanMatch} {...AnalysisActions} />)
   .add('Human Depth 1', () => <AnalysisHomePage loggedIn {...depth1State} {...AnalysisActions} />);
