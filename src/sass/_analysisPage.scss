@@ -1,9 +1,23 @@
 .analysisPage {
   margin-top: 10px;
+  .oi-media-record {
+    color: $gray-semi-transparent;
+    margin: 2px;
+  }
+  .active {
+    color:$dblue;
+  }
+  .backButton {
+    color: $dblue;
+    font-size: 2.5rem;
+    line-height:1rem;
+    padding: 0;
+  }
   .analysisType { 
     background-color:$blue-transparent;
     border:1px solid $dblue;
     p {
+      margin-top:5px;
       color: $dblue;
       font-size:1.25rem;
       font-weight:$light-weight;
@@ -33,7 +47,7 @@
       font-weight:$light-weight;
     }
     img {
-      max-width: 70%;
+      max-width: 80%;
       background-color: $blue-transparent;
       border-radius: 20px;
       border: 1px solid $dblue;
@@ -42,6 +56,11 @@
       border: 1px solid $dblue;
       background-color: $blue-transparent;
       transition: .2s;
+    }
+    .imgCont, h3 {
+      @media screen and (max-width: 767.98px){
+        text-align:center; 
+      }
     }
   }
 }

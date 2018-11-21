@@ -4,6 +4,8 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import analysisTypes from '../assets/analysisIcons/analysisTypes';
 
+// TODO: Add animation of transitions potentially with CSSTransitions package
+
 export function AnalysisHomePage({
   match, // match object from react-router used to find human vs animal in route
   depth,
@@ -49,11 +51,11 @@ export function AnalysisHomePage({
 
   function SubAnalysisButton({ subAnalysis }) {
     return (
-      <div className="row subAnalysisRow justify-content-center m-4" onClick={onPickSubAnalysis} onKeyPress={onPickSubAnalysis} tabIndex={0} role="button" id={subAnalysis.shortName}>
-        <div className="col m-4 align-self-center centered">
+      <div className="row subAnalysisRow justify-content-center m-1 m-sm-4" onClick={onPickSubAnalysis} onKeyPress={onPickSubAnalysis} tabIndex={0} role="button" id={subAnalysis.shortName}>
+        <div className="col-11 col-md-5 m-1 my-2 align-self-center imgCont">
           <img src={subAnalysis.icon} className="align-self-end" alt={`${subAnalysis.title} Icon`} />
         </div>
-        <div className="col align-self-center">
+        <div className="col-11 col-md-5 p-2 align-self-center">
           <h3>{subAnalysis.title}</h3>
           <p>
             <strong>Input: </strong>
@@ -77,7 +79,7 @@ export function AnalysisHomePage({
   };
   // Button to return 1 depth level
   function BackButton() {
-    return <button onClick={goBack} type="button"><span className="oi backButton oi-arrow-thick-left" /></button>;
+    return <button className="backButton btn" onClick={goBack} type="button"><span className="oi backButton oi-arrow-thick-left" /></button>;
   }
   // Analysis split in to groups of three for rendering in 2 rows
   const analyses = analysisTypes
@@ -124,6 +126,13 @@ export function AnalysisHomePage({
       </div>
       {(depth === 1) ? selectSubAnalyses : ''}
       {(depth === 0) ? selectAnalysis : ''}
+      <div className="row breadcrumbs justify-content-center">
+        <div className="col centered">
+          <span className={`oi oi-media-record ${depth === 0 ? 'active' : ''}`} />
+          <span className={`oi oi-media-record ${depth === 1 ? 'active' : ''}`} />
+          <span className={`oi oi-media-record ${depth === 2 ? 'active' : ''}`} />
+        </div>
+      </div>
     </div>
   );
 }
@@ -138,6 +147,7 @@ AnalysisHomePage.propTypes = {
   currentAnalysis: PropTypes.string.isRequired,
   goBack: PropTypes.func.isRequired,
   onPickAnalysis: PropTypes.func.isRequired,
+  onPickSubAnalysis: PropTypes.func.isRequired,
 };
 
 
