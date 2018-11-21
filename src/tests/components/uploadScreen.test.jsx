@@ -66,11 +66,11 @@ describe('Pure Upload Screen', () => {
 });
 
 const loggedInRootState = {
+  ...defaultRootState,
   auth: {
     ...defaultRootState.auth,
     loggedIn: true,
   },
-  upload: defaultUploadState,
 };
 
 

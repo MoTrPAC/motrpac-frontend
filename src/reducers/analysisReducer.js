@@ -1,4 +1,9 @@
 export const defaultAnalysisState = {
+  match: {
+    params: {
+      subjectType: '',
+    },
+  },
   currentAnalysis: '',
   currentSubAnalysis: '',
   depth: 0,
@@ -25,7 +30,7 @@ export default function AnalysisReducer(state = { ...defaultAnalysisState }, act
     case 'GO_BACK':
       return {
         ...state,
-        depth: state.depth ? state.depth - 1 : 0,
+        depth: (state.depth > 0) ? state.depth - 1 : 0,
       };
     default:
       return state;

@@ -8,6 +8,7 @@ import analysisTypes from '../assets/analysisIcons/analysisTypes';
 
 export function AnalysisHomePage({
   match, // match object from react-router used to find human vs animal in route
+  loggedIn,
   depth,
   currentAnalysis,
   onPickAnalysis,
@@ -17,14 +18,14 @@ export function AnalysisHomePage({
   let subjectType = match.params.subjectType.slice(0).toLowerCase();
 
   // Redirects to dashboard if incorrect url
-  if (!(subjectType === 'animal' || subjectType === 'human')) {
+  if (!(subjectType === 'animal' || subjectType === 'human') || !(loggedIn)) {
     return <Redirect to="/dashboard" />;
   }
   // Button to select inital analysis category
   function AnalysisTypeButton({ analysisType }) {
     if (analysisType.active) {
       return (
-        <div id={analysisType.shortName} onClick={onPickAnalysis} onKeyPress={onPickAnalysis} tabIndex={0} role="button" className="col-5 col-sm-3 m-3 analysisType">
+        <div id={analysisType.shortName} onClick={onPickAnalysis} onKeyPress={onPickAnalysis} tabIndex={0} role="button" className="col-5 col-sm-3 m-3 analysisType analysisTypeActive">
           <p className="centered">{analysisType.title}</p>
           <img src={analysisType.icon} className="align-self-end" alt={`${analysisType.title} Icon`} />
         </div>
@@ -114,8 +115,7 @@ export function AnalysisHomePage({
       <div className="row">
         <div className="col">
           <h2 className="light">
-            {subjectType}
-            &nbsp; Data Analysis
+            {`${subjectType} Data Analysis`}
           </h2>
         </div>
       </div>
@@ -142,18 +142,26 @@ AnalysisHomePage.propTypes = {
     params: PropTypes.shape({
       subjectType: PropTypes.string.isRequired,
     }).isRequired,
-  }).isRequired,
+  }),
   depth: PropTypes.number.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
   currentAnalysis: PropTypes.string.isRequired,
   goBack: PropTypes.func.isRequired,
   onPickAnalysis: PropTypes.func.isRequired,
   onPickSubAnalysis: PropTypes.func.isRequired,
 };
-
+AnalysisHomePage.defaultProps = {
+  match: {
+    params: {
+      subjectType: '',
+    },
+  },
+};
 
 const mapStateToProps = state => ({
   depth: state.analysis.depth,
   currentAnalysis: state.analysis.currentAnalysis,
+  loggedIn: state.auth.loggedIn,
 });
 const mapDispatchToProps = dispatch => ({
   onPickAnalysis: e => dispatch({
