@@ -11,6 +11,21 @@
     color: $yellow;
     
 }
+.cancelBtn{
+    .oi-circle-x {
+        color: $red;
+    }
+    background-color:transparent;
+    border: 1px solid $red;
+
+}
+.cancelUploadConfirm {
+    color: white;
+    background-color: $red;
+}
+.modal-title{
+    color: $red;
+}
 .loadIndicator {
     color:darken($lblue,20%);
     font-size:150%;

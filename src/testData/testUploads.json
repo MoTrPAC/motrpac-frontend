@@ -1,11 +1,13 @@
 [
     {
+        "id": "1",
         "file": {
             "name": "test1.fa"
         },
         "status":"UPLOADING"
     },
     {
+        "id": "2",
         "file": {
             "name": "test2.fa"
         },
@@ -17,12 +19,14 @@
         }
     },
     {
+        "id": "3",
         "file": {
             "name": "test3.fa"
         },
         "status":"UPLOAD_SUCCESS"
     },
     {
+        "id": "4",
         "file": {
             "name": "test4.fa"
         },

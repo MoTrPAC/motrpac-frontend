@@ -42,12 +42,14 @@
  * testing:
    - `yarn test`
    - runs tests and storybook snapshots
+   - `yarn test --coverage`
+   - runs all tests and returns table illustrating code coverage
 
- * Building CSS:
+ * Building CSS: Uses sass in node_modules/sass/sass.js
    - `yarn sass`
-   - compiles sass from src/sass/main.sass to src/main.css
+   - compiles sass from src/sass/main.scss to src/main.css
    - `yarn sass-watch`
-   - compiles sass from src/sass/main.sass to src/main.css and watches for changes
+   - compiles sass from src/sass/main.scss to src/main.css and watches for changes
 
 ### Software versions and styles
 

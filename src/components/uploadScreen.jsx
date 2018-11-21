@@ -23,6 +23,8 @@ export function UploadScreen({
   onFileAdded,
   onRemoveFile,
   onFormSubmit,
+  cancelUpload,
+  handleFormChange,
   loggedIn,
 }) {
   if (!loggedIn) {
@@ -42,6 +44,7 @@ export function UploadScreen({
             submitted={submitted}
             formValues={formValues}
             handleSubmit={onFormSubmit}
+            handleFormChange={handleFormChange}
           />
         </div>
         <div className="col-8 centered">
@@ -60,7 +63,7 @@ export function UploadScreen({
         </div>
         <div className="col-12">
           <h3>{formValues.identifier}</h3>
-          <UploadList uploadFiles={uploadFiles} />
+          <UploadList uploadFiles={uploadFiles} cancelUpload={cancelUpload} />
         </div>
       </div>
     </div>
@@ -85,6 +88,7 @@ UploadScreen.propTypes = {
     processedData: PropTypes.bool,
   }),
   uploadFiles: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
     file: PropTypes.file,
     status: PropTypes.string,
     errorCode: PropTypes.string,
@@ -94,6 +98,7 @@ UploadScreen.propTypes = {
   onDragDrop: PropTypes.func.isRequired,
   onFileAdded: PropTypes.func.isRequired,
   onRemoveFile: PropTypes.func.isRequired,
+  cancelUpload: PropTypes.func.isRequired,
   loggedIn: PropTypes.bool,
 };
 
@@ -129,6 +134,16 @@ const mapDispatchToProps = dispatch => ({
     type: 'FORM_SUBMIT',
     validity: e.target.checkValidity(),
     elements: e.target.elements,
+  }),
+  cancelUpload: ident => dispatch({
+    type: 'CANCEL_UPLOAD',
+    id: ident,
+  }),
+  handleFormChange: e => dispatch({
+    type: 'FORM_CHANGE',
+    eID: e.target.id,
+    changeValue: e.target.value,
+    checked: e.target.checked,
   }),
 });
 
