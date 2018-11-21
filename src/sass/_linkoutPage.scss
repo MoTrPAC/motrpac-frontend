@@ -2,8 +2,6 @@
 .oi-external-link {
   font-size: 90%;
 }
-.LinkCategory { 
-}
 .linkoutPage{
   .row {
     margin:0;
@@ -17,44 +15,6 @@
       vertical-align: middle;
     }
     padding-bottom: 10px;
-  }
- .externalLinks {
-  border-radius: 10px;
-  .linkTile {
-    padding: 0px;
-    min-height:150px;
-    .imgCont {
-      height:20vh;
-      width: 95%;
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: center;
-      border-radius:10px;
-      margin: 0 auto;
-    }
-    a {
-      color: $dblue;
-      padding:3px;
-      width:100%;
-      display: block;
-      padding-bottom:5px;
-    }
-    p {
-      color: $gray;
-      text-align: center;
-      font-size:80%;
-      padding:5px;
-      border-radius:10px;
-    }
-    .linkInfoCont {
-      height:100%;
-      width:100%;
-      border-radius:20px;
-      transition: .2s;
-      text-align: center;
-      padding-top:20px;
-    }
-  }
   }
   h3 {
     color: $dblue;
@@ -70,5 +30,43 @@
   a {
     color:$dblue;
     overflow-wrap: break-word;
+  }
+  .externalLinks {
+    border-radius: 10px;
+    .linkTile {
+      padding: 0px;
+      min-height:150px;
+      .imgCont {
+        height:20vh;
+        width: 95%;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        border-radius:10px;
+        margin: 0 auto;
+      }
+      a {
+        color: $dblue;
+        padding:3px;
+        width:100%;
+        display: block;
+        padding-bottom:5px;
+      }
+      p {
+        color: $gray;
+        text-align: center;
+        font-size:80%;
+        padding:5px;
+        border-radius:10px;
+      }
+      .linkInfoCont {
+        height:100%;
+        width:100%;
+        border-radius:20px;
+        transition: .2s;
+        text-align: center;
+        padding-top:20px;
+      }
+    }
   }
 }
