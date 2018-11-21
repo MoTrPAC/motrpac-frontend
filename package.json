@@ -13,9 +13,7 @@
     "react-redux": "^5.1.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.5",
-    "redux": "^4.0.1",
-    "sass": "^1.14.3",
-    "storybook-react-router": "^1.0.1"
+    "redux": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -24,8 +22,8 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "sass": "sass src/sass/main.scss src/main.css",
-    "sass-watch": "sass --watch src/sass/main.scss src/main.css"
+    "sass": "node_modules/sass/sass.js src/sass/main.scss src/main.css",
+    "sass-watch": "node_modules/sass/sass.js --watch src/sass/main.scss src/main.css"
   },
   "browserslist": [
     ">0.2%",
@@ -44,6 +42,8 @@
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
     "eslint-config-airbnb": "^17.1.0",
-    "react-test-renderer": "^16.5.2"
+    "react-test-renderer": "^16.5.2",
+    "sass": "^1.15.1",
+    "storybook-react-router": "^1.0.1"
   }
 }

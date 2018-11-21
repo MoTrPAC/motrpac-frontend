@@ -53,5 +53,43 @@ describe('Upload Reducer', () => {
     expect(UploadReducer(fileAddedState, removeFileAction))
       .toEqual(defaultUploadState);
   });
+
+  const testUploads = require('../../testData/testUploads');
+  const cancelUploadAction = {
+    type: 'CANCEL_UPLOAD',
+    id: testUploads[0].id,
+  };
+  const uploadingState = {
+    ...defaultUploadState,
+    uploadFiles: testUploads,
+  };
+  const oneUploadRemovedState = {
+    ...defaultUploadState,
+    uploadFiles: testUploads.slice(1),
+  };
+
+  test('Removes uploading file from state on cancel upload', () => {
+    expect(UploadReducer(uploadingState, cancelUploadAction)).toEqual(oneUploadRemovedState);
+  });
+
+  test('Updates text based form values after form change', () => {
+    const formChangeAction = {
+      type: 'FORM_CHANGE',
+      eID: 'identifier',
+      changeValue: '123123',
+    };
+    expect(UploadReducer(defaultUploadState, formChangeAction).formValues.identifier)
+      .toEqual(formChangeAction.changeValue);
+  });
+
+  test('Updates boolean based form values after form change', () => {
+    const formChangeAction = {
+      type: 'FORM_CHANGE',
+      eID: 'rawData',
+      checked: true,
+    };
+    expect(UploadReducer(defaultUploadState, formChangeAction).formValues.rawData)
+      .toEqual(formChangeAction.checked);
+  });
   // TODO: Handle if they upload files with the same name, at the same time
 });
