@@ -1,6 +1,19 @@
-h2{
-  color: $dblue;
+.Dashboard {
+  margin-top:20px; 
+  h2 { color: $dblue;
+  }
+  .uploadBtn { 
+    background: $dblue;
+    border-color: $dblue;
+  }
+  .downloadBtn { 
+    background: $green;
+    border-color: $green;
+  }
+  .disabled {
+    //background: $gray;
+    //border-color: $gray;
+    border: 1px dashed $gray-semi-transparent;
+  }
 }
-.welcomeUser {
-  margin-top: 20px;
-}
+
