@@ -4,16 +4,31 @@ import PropTypes from 'prop-types';
 
 function PreviousUploadsTable({ previousUploads }) {
   const uploadRows = previousUploads
-    .map(upload => <tr key={upload.identifier}><td>{upload.identifier}</td></tr>);
+    .map(upload => (
+      <tr key={upload.identifier}>
+        <td>{upload.identifier}</td>
+        <td>{upload.subject}</td>
+        <td>{upload.phase}</td>
+        <td>{upload.type}</td>
+        <td>{upload.date}</td>
+      </tr>));
   return (
-    <table className="table">
-      <thead>
-        <th>Identifier</th>
-      </thead>
-      <tbody>
-        {uploadRows}
-      </tbody>
-    </table>
+    <div className="col table-responsive-md col-md-6">
+      <table className="table table-sm table-hover previousUploadsTable">
+        <thead>
+          <tr>
+            <th>Identifier</th>
+            <th>Subject</th>
+            <th>Phase</th>
+            <th>Type</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {uploadRows}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
