@@ -35,6 +35,9 @@ export function AnalysisHomePage({
       <div id={analysisType.shortName} className="col-sm-3 col-5 m-3 analysisType inactiveAnalysis">
         <p className="centered">{analysisType.title}</p>
         <img src={analysisType.inactiveIcon} className="align-self-end" alt={`${analysisType.title} Icon`} />
+        <div className="comingSoon align-self-center centered">
+          <p>Coming Soon!</p>
+        </div>
       </div>
     );
   }
