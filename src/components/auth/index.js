@@ -1,26 +1,38 @@
 import auth0 from 'auth0-js';
+import { AUTH_CONFIG } from './auth0-variables';
 
-class Auth {
+export default class Auth {
   constructor() {
     this.auth0 = new auth0.WebAuth({
-      domain: 'hypeway.auth0.com',
-      audience: 'https://hypeway.auth0.com/userinfo',
-      clientID: 'a8bPMoRQMu_3oe1Lzj0JKmUSakiOXlOp',
-      redirectUri: 'http://localhost:3000/dashboard',
+      domain: AUTH_CONFIG.domain,
+      audience: AUTH_CONFIG.audience,
+      clientID: AUTH_CONFIG.clientId,
+      redirectUri: AUTH_CONFIG.callbackUrl,
       responseType: 'token id_token',
-      scope: 'openid profile',
+      scope: 'openid profile user_metadata',
     });
 
-    this.getProfile = this.getProfile.bind(this);
-    this.handleAuthentication = this.handleAuthentication.bind(this);
-    this.isAuthenticated = this.isAuthenticated.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
+    this.handleAuthentication = this.handleAuthentication.bind(this);
+    this.isAuthenticated = this.isAuthenticated.bind(this);
     this.setSession = this.setSession.bind(this);
+    this.getProfile = this.getProfile.bind(this);
+    this.renderUserName = this.renderUserName.bind(this);
   }
 
-  getProfile() {
-    return this.profile;
+  userProfile;
+
+  login() {
+    this.auth0.authorize();
+  }
+
+  logout() {
+    // Clear access token and ID token from local storage
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('expires_at');
+    this.userProfile = null;
   }
 
   handleAuthentication() {
@@ -37,28 +49,42 @@ class Auth {
     });
   }
 
-  isAuthenticated() {
-    return new Date().getTime() < this.expiresAt;
-  }
-
-  login() {
-    this.auth0.authorize();
-  }
-
-  logout() {
-    // clear id token and expiration
-    this.idToken = null;
-    this.expiresAt = null;
-  }
-
   setSession(authResult) {
-    this.idToken = authResult.idToken;
-    this.profile = authResult.idTokenPayload;
-    // set the time that the id token will expire at
-    this.expiresAt = authResult.expiresIn * 1000 + new Date().getTime();
+    // Set the time that the access token will expire at
+    let expiresAt = JSON.stringify(
+      authResult.expiresIn * 1000 + new Date().getTime()
+    );
+    localStorage.setItem('access_token', authResult.accessToken);
+    localStorage.setItem('id_token', authResult.idToken);
+    localStorage.setItem('expires_at', expiresAt);
+  }
+
+  isAuthenticated() {
+    let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    return new Date().getTime() < expiresAt;
+  }
+
+  getProfile() {
+    if (!this.userProfile) {
+      const accessToken = localStorage.getItem('access_token');
+
+      if (!accessToken) {
+        console.log('Access Token must exist to fetch profile');
+      }
+
+      this.auth0.client.userInfo(accessToken, (err, profile) => {
+        if (profile) {
+          this.userProfile = profile;
+          this.renderUserName();
+        }
+      });
+    } else {
+      this.renderUserName();
+    }
+  }
+
+  renderUserName() {
+    document.querySelector('.welcomeUser .user-name').innerHTML = this.userProfile.name;
+    document.querySelector('.user-login-button img').src = this.userProfile.picture;
   }
 }
-
-const auth0Client = new Auth();
-
-export default auth0Client;
