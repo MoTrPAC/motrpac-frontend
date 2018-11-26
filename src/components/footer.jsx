@@ -1,30 +1,42 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import auth0Client from './auth';
 
 /**
  * Method to render global footer
- * @param {object} props 
+ * @param {object} props - Properties passed from parent
+ * TODO: try changing this to class component and to use 'setState' for user profile UI rendering
  */
 function Footer(props) {
-  // Function to log out
-  const logOut = () => {
-    auth0Client.logout();
-    props.history.replace('/');
+  const { authenticated } = props;
+
+  // Function to sign out
+  const logout = () => {
+    props.auth.logout();
+    props.history.push('/');
   };
   
   // Function to render login button
+  // FIXME: removing `props.auth.getProfile()` method from <button> breaks the UI
   const LoginButton = () => {
     return (
       <span className="user-login-button">
-        {auth0Client.isAuthenticated() ?
-          <button type="button" onClick={() => {logOut()}} className="logInOutBtn btn">
-            {auth0Client.getProfile().name}&nbsp;Logout
-          </button>
-          :
-          <button type="button" onClick={auth0Client.login} className="logInOutBtn btn">
-            Submitter Login
-          </button>
+        {
+          authenticated && (
+            <span>
+              <img className="user-avatar" alt="avatar" />
+              <button type="button" onClick={logout} className="logInOutBtn btn">
+                {props.auth.getProfile()}
+                &nbsp;Log out
+              </button>
+            </span>
+          )
+        }
+        {
+          !authenticated && (
+            <button type="button" onClick={props.auth.login} className="logInOutBtn btn">
+              Submitter Log in
+            </button>
+          )
         }
       </span>
     );
@@ -59,7 +71,9 @@ function Footer(props) {
         <div className="row">
           <div className="col copyright">
             <p className="footer-content">
-              &#169;&nbsp;{getCopyrightYear()}&nbsp;Stanford University
+              &#169;&nbsp;
+              {getCopyrightYear()}
+              &nbsp;Stanford University
             </p>
           </div>
         </div>
