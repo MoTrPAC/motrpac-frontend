@@ -1,45 +1,48 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { Link, withRouter } from 'react-router-dom';
 
-export function Dashboard({ user, loggedIn }) {
-  if (loggedIn) {
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col">
-            <h2 className="welcomeUser light">{`Welcome ${user.name} at ${user.siteName}`}</h2>
+/**
+ * Method to render dashboard view
+ * @param {object} props - Properties passed from parent
+ * TODO: try changing this to class component and to use 'setState' for rendering username
+ */
+function Dashboard(props) {
+  const { authenticated } = props;
+
+  return (
+    <span className="user-login-button">
+      {
+        authenticated && (
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                <h2 className="welcomeUser light">Welcome and hello, <span className="user-name"></span></h2>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col">
+                <Link className="uploadBtn btn btn-primary" to="/upload">Upload Data</Link>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col">
-            <Link className="uploadBtn btn btn-primary" to="/upload">Upload Data</Link>
+        )
+      }
+      {
+        !authenticated && (
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                <h2 className="light">Please log in</h2>
+                <button type="button" onClick={props.auth.login} className="btn btn-primary">
+                  Log in
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    );
-  }
-  return (<Redirect to="/" />);
+        )
+      }
+    </span>
+  );
 }
 
-Dashboard.propTypes = {
-  user: PropTypes.shape({
-    name: PropTypes.string,
-    siteName: PropTypes.string,
-  }).isRequired,
-  loggedIn: PropTypes.bool,
-};
-Dashboard.defaultProps = {
-  loggedIn: false,
-};
-
-const mapStateToProps = state => ({
-  user: state.auth.user,
-  loggedIn: state.auth.loggedIn,
-});
-
-// Fill dispatch to props once actions implemented
-// const mapDispatchToProps = dispatch => ({ });
-
-export default connect(mapStateToProps)(Dashboard);
+export default withRouter(Dashboard);
