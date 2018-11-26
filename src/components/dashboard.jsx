@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import PreviousUploadsTable from './previousUploadsTable';
+import PreviousUploadsGraph from './previousUploadsGraph';
 
 const previousUploads = require('../testData/testPreviousUploads');
 
@@ -25,8 +26,9 @@ export function Dashboard({ user, loggedIn }) {
           </div>
         </div>
         <hr />
-        <div className="row">
+        <div className="row align-items-center">
           <PreviousUploadsTable previousUploads={previousUploads} />
+          <PreviousUploadsGraph previousUploads={previousUploads} />
         </div>
       </div>
     );

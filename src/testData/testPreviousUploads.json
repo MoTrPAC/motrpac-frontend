@@ -10,14 +10,14 @@
     "identifier": "AS12346",
     "subject": "Human",
     "phase": "1A",
-    "type": "ATAC-Seq",
+    "type": "RNA-Seq",
     "date": "09/15/2018"
   },
   {
     "identifier": "AS12347",
     "subject": "Human",
     "phase": "1A",
-    "type": "ATAC-Seq",
+    "type": "RNA-Seq",
     "date": "09/25/2018"
   },
   {
@@ -52,7 +52,7 @@
     "identifier": "AS12352",
     "subject": "Human",
     "phase": "1A",
-    "type": "ATAC-Seq",
+    "type": "Metabolomics",
     "date": "11/25/2018"
   },
   {

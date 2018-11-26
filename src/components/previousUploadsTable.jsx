@@ -13,8 +13,8 @@ function PreviousUploadsTable({ previousUploads }) {
         <td>{upload.date}</td>
       </tr>));
   return (
-    <div className="col table-responsive-md col-md-6">
-      <table className="table table-sm table-hover previousUploadsTable">
+    <div className="col-12 table-responsive-md col-md-6 previousUploadsTable">
+      <table className="table table-sm table-hover">
         <thead>
           <tr>
             <th>Identifier</th>
