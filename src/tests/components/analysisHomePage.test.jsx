@@ -119,6 +119,7 @@ describe('Connected AnalysisPage', () => {
     expect(mountedAnalysis.find('SubAnalysisButton')).not.toHaveLength(0);
     expect(mountedAnalysis.find('AnalysisTypeButton')).toHaveLength(0);
 
+    // Click back button --> replace SubAnalysisButton with AnalysisTypeButton
     mountedAnalysis.find('.backButton').first().simulate('click');
     expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(0);
     mountedAnalysis.update();
