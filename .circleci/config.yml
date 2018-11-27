@@ -12,12 +12,12 @@ jobs:
       - checkout
 
       - restore_cache:
-          #note: we are not currently version controlling yarn.lock so the cache restore will not work
-          #TODO: enable for production builds
           name: Restore core JS dependencies cache
           keys:
+            # TODO: enable and version control yarn.lock for production builds
+            # TODO: uncomment to explicicitly load the cache from the latest yarn.lock
             # - v1-js-dependencies-{{ checksum "yarn.lock" }}
-            # uncomment to allow fallback to using the latest cache if no exact match is found
+            # comment to prevent fallback to using the latest cache if no exact match is found
             - v1-js-dependencies-
           paths:
             - ~/.cache/yarn
