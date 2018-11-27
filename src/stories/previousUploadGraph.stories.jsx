@@ -5,7 +5,9 @@ import Plot from 'react-plotly.js';
 import { BarChart, Bar, XAxis as RCxaxis, YAxis as RCyaxis } from 'recharts';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { Bar as CBar } from 'react-chartjs-2';
 import PreviousUploadsGraph, { countUploads } from '../components/previousUploadsGraph';
+import { Object } from 'es6-shim';
 
 const previousUploads = require('../testData/testPreviousUploads');
 
@@ -71,9 +73,30 @@ function HighChartsUploadsGraph() {
     />
   );
 }
+
+function ChartJSUploadsGraph() {
+  const data = {
+    labels: Object.keys(dataCount),
+    datasets: [{
+      label: 'Uploads by Type',
+      data: Object.values(dataCount),
+      borderColor: '#11397E',
+      borderWidth: 1,
+      backgroundColor: '#E3EAF1',
+    }],
+  };
+  return (
+    <CBar
+      data={data}
+      width={100}
+      height={50}
+    />
+  );
+}
 storiesOf('Previous Uploads Graph', module)
   .add('Victory', () => <PreviousUploadsGraph previousUploads={previousUploads} />)
   .add('React-Vis', () => <ReactVisUploadsGraph />)
   .add('Plotly', () => <PlotlyUploadsGraph />)
   .add('ReCharts', () => <ReChartsUploadsGraph />)
-  .add('HighCharts', () => <HighChartsUploadsGraph />);
+  .add('HighCharts', () => <HighChartsUploadsGraph />)
+  .add('ChartJS', () => <ChartJSUploadsGraph />);
