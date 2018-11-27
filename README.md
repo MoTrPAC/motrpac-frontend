@@ -65,6 +65,7 @@
  * Style guide:
      - [Eslint](https://github.com/eslint/eslint) 
      - [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
+     - [Style Lint Recommended SCSS Guide](https://github.com/stylelint/stylelint-config-recommended)
 
 ### Additional Notes
 
@@ -80,5 +81,6 @@
   - React-router is being used to handle routing
   - history ( createBrowserHistory ) is used to update location from button clicks and function calls ( history.push('path/to/new/location') )
   - \< Link > tags  from react-router are used in place of \< a > tags handle navigation from links. Certain elements return \< Redirect to="path/to/new/location" > elements if protected and user not authenticated.
+  - Analysis page only uses routing to differentiate between human and analysis (/analysis/human or /analysis/animal). After that it acts as a single page application.
 
 ---

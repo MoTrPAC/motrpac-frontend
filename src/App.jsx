@@ -13,6 +13,7 @@ import DashboardConnected from './components/dashboard';
 import UploadScreenConnected from './components/uploadScreen';
 import AuthLoadingConnected from './components/authLoading';
 import LinkoutPageConnected from './components/linkoutPage';
+import AnalysisHomePageConnected from './components/analysisHomePage';
 
 const hist = History;
 
@@ -34,6 +35,7 @@ function App({ history = hist }) {
             <Route path="/dashboard" component={DashboardConnected} />
             <Route path="/upload" component={UploadScreenConnected} />
             <Route path="/external-links" component={LinkoutPageConnected} />
+            <Route path="/analysis/:subjectType" component={AnalysisHomePageConnected} />
           </div>
           <FooterConnected />
           <AuthLoadingConnected />
