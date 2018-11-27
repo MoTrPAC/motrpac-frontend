@@ -16,9 +16,9 @@ jobs:
           #TODO: enable for production builds
           name: Restore core JS dependencies cache
           keys:
-            - v1-js-dependencies-{{ checksum "yarn.lock" }}
+            # - v1-js-dependencies-{{ checksum "yarn.lock" }}
             # uncomment to allow fallback to using the latest cache if no exact match is found
-            # - v1-dependencies-
+            - v1-dependencies-
           paths:
             - ~/.cache/yarn
 
