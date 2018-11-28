@@ -24,9 +24,9 @@ function PreviousUploadsGraph({ previousUploads }) {
       {
         label: 'Pending QC',
         data: Object.values(pendingQCCount),
-        borderColor: 'gray',
+        borderColor: '#404040',
         borderWidth: 1,
-        backgroundColor: '#F1F1F1',
+        backgroundColor: '#D9D9D9',
       },
       {
         label: 'Internally Available',
@@ -38,9 +38,9 @@ function PreviousUploadsGraph({ previousUploads }) {
       {
         label: 'Publicly Available',
         data: Object.values(publicAvailableCount),
-        borderColor: '#4C9046',
+        borderColor: '#2d5e2d',
         borderWidth: 1,
-        backgroundColor: '#EDF4EC',
+        backgroundColor: '#D5DFD5',
       },
     ],
   };
