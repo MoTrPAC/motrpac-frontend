@@ -4,31 +4,53 @@ import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import PreviousUploadsTable from './previousUploadsTable';
 import PreviousUploadsGraph from './previousUploadsGraph';
+import AllUploadsDoughnut from './allUploadsDoughnut';
+import AllUploadStats from '../components/allUploadStats';
 
 const previousUploads = require('../testData/testPreviousUploads');
 
-export function Dashboard({ user, loggedIn }) {
+export function Dashboard({ user, loggedIn, featureAvailable }) {
+  const editBtn = (
+    <div className="col-auto">
+      <Link className="editBtn btn btn-light disabled" to="/edit-dashboard">Edit Dashboard</Link>
+    </div>
+  );
   if (loggedIn) {
     return (
       <div className="container Dashboard">
         <div className="row align-items-center">
-          <div className="col-auto align-self-center">
+          <div className="col align-self-center">
             <h2 className="welcomeUser light">{`Welcome ${user.name} at ${user.siteName}`}</h2>
           </div>
           <div className="col-auto">
             <Link className="uploadBtn btn btn-primary" to="/upload">Upload Data</Link>
           </div>
           <div className="col-auto">
-            <Link className="downloadBtn btn btn-primary" to="/download">Download/View Upload Data</Link>
+            <Link className="downloadBtn btn btn-primary" to="/download">Download/View Data</Link>
           </div>
-          <div className="col-auto">
-            <Link className="editBtn btn btn-light disabled" to="/edit-dashboard">Edit Dashboard</Link>
+          {featureAvailable.dashboardEditable ? editBtn : ''}
+        </div>
+        <div className="row">
+          <div className="col">
+            <h3 className="divHeader">
+              {user.siteName}
+            </h3>
           </div>
         </div>
-        <hr />
         <div className="row align-items-center">
           <PreviousUploadsTable previousUploads={previousUploads} />
           <PreviousUploadsGraph previousUploads={previousUploads} />
+        </div>
+        <div className="row">
+          <div className="col">
+            <h3 className="divHeader">
+              All Sites
+            </h3>
+          </div>
+        </div>
+        <div className="row align-items-center pb-4">
+          <AllUploadsDoughnut allUploads={previousUploads} />
+          <AllUploadStats />
         </div>
       </div>
     );
@@ -42,9 +64,15 @@ Dashboard.propTypes = {
     siteName: PropTypes.string,
   }).isRequired,
   loggedIn: PropTypes.bool,
+  featureAvailable: PropTypes.shape({
+    dashboardEditable: PropTypes.bool,
+  }),
 };
 Dashboard.defaultProps = {
   loggedIn: false,
+  featureAvailable: {
+    dashboardEditable: false,
+  },
 };
 
 const mapStateToProps = state => ({
