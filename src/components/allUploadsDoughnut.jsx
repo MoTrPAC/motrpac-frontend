@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Doughnut } from 'react-chartjs-2';
 import { countUploads } from './previousUploadsGraph';
+import colors from '../assets/colors';
 
 function AllUploadsDoughnut({ allUploads }) {
   const availabilityCount = countUploads(allUploads.map(upload => upload.availability));
@@ -10,8 +11,8 @@ function AllUploadsDoughnut({ allUploads }) {
     datasets: [
       {
         data: Object.values(availabilityCount),
-        backgroundColor: ['#EAEFF4', '#EDF4EC', '#F1F1F1'],
-        borderColor: ['#11397E', '#4C9046', 'gray'],
+        backgroundColor: [colors.graphs.lgreen, colors.graphs.lblue, colors.graphs.lgray],
+        borderColor: [colors.graphs.dgreen, colors.graphs.dblue, colors.graphs.dgray],
         borderWidth: 0.5,
       },
     ],
