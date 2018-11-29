@@ -5,7 +5,8 @@
     "phase": "1A",
     "type": "ATAC-Seq",
     "date": "09/05/2018",
-    "availability": "Publicly Available"
+    "availability": "Publicly Available",
+    "site": "Stanford CAS"
   },
   {
     "identifier": "AS12346",
@@ -13,7 +14,8 @@
     "phase": "1A",
     "type": "RNA-Seq",
     "date": "09/15/2018",
-    "availability": "Internally Available"
+    "availability": "Internally Available",
+    "site": "Stanford CAS"
   },
   {
     "identifier": "AS12347",
@@ -21,7 +23,8 @@
     "phase": "1A",
     "type": "Metabolomics",
     "date": "09/25/2018",
-    "availability": "Pending QC"
+    "availability": "Pending QC",
+    "site": "Stanford CAS"
   },
   {
     "identifier": "AS12348",
@@ -29,7 +32,8 @@
     "phase": "1A",
     "type": "RNA-Seq",
     "date": "10/05/2018",
-    "availability": "Pending QC"
+    "availability": "Pending QC",
+    "site": "Stanford CAS"
   },
   {
     "identifier": "AS12349",
@@ -37,7 +41,8 @@
     "phase": "1A",
     "type": "RNA-Seq",
     "date": "11/05/2018",
-    "availability": "Publicly Available"
+    "availability": "Publicly Available",
+    "site": "Stanford CAS"
   },
   {
     "identifier": "AS12350",
@@ -45,7 +50,8 @@
     "phase": "1A",
     "type": "ATAC-Seq",
     "date": "11/10/2018",
-    "availability": "Internally Available"
+    "availability": "Internally Available",
+    "site": "Stanford CAS"
   },
   {
     "identifier": "AS12351",
@@ -53,7 +59,8 @@
     "phase": "1A",
     "type": "ATAC-Seq",
     "date": "11/15/2018",
-    "availability": "Publicly Available"
+    "availability": "Publicly Available",
+    "site": "Stanford CAS"
   },
   {
     "identifier": "AS12352",
@@ -61,7 +68,8 @@
     "phase": "1A",
     "type": "Metabolomics",
     "date": "11/25/2018",
-    "availability": "Pending QC"
+    "availability": "Pending QC",
+    "site": "Stanford CAS"
   },
   {
     "identifier": "AS12353",
@@ -69,7 +77,8 @@
     "phase": "1A",
     "type": "ATAC-Seq",
     "date": "12/05/2018",
-    "availability": "Pending QC"
+    "availability": "Pending QC",
+    "site": "Stanford CAS"
   },
   {
     "identifier": "AS12354",
@@ -77,6 +86,7 @@
     "phase": "1A",
     "type": "ATAC-Seq",
     "date": "12/11/2018",
-    "availability": "Publicly Available"
+    "availability": "Publicly Available",
+    "site": "Stanford CAS"
   }
 ]

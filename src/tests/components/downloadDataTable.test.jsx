@@ -8,9 +8,15 @@ Enzyme.configure({ adapter: new Adapter() });
 
 const testPreviousUploads = require('../../testData/testPreviousUploads');
 
+const downloadActions = {
+  onDownload: jest.fn(),
+};
+
 describe('Download Data Table', () => {
   test('Renders correct amount of rows', () => {
-    const shallowTable = shallow(<DownloadDataTable allUploads={testPreviousUploads} />);
+    const shallowTable = shallow(
+      <DownloadDataTable allUploads={testPreviousUploads} {...downloadActions} />,
+    );
     expect(shallowTable.find('DownloadRow')).toHaveLength(testPreviousUploads.length);
   });
 });

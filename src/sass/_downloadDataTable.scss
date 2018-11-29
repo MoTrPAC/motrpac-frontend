@@ -1,0 +1,11 @@
+.downloadTable {
+  .public {
+    background-color:transparentize($green, .9);
+  }
+  .internal {
+    background-color:transparentize($blue, .9);
+  }
+  .pending {
+    background-color:transparentize($red, .9);
+  }
+}
