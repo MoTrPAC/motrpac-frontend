@@ -1,34 +1,81 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export function DownloadDataTable({ allUploads, onDownload }) {
+function DownloadDataTable({
+  allUploads,
+  onDownload,
+  onChangeSort,
+}) {
   // TODO: Find out how actual downloading works
+  if (allUploads.length === 0) {
+    return (
+      <div className="noData col">
+        <h2>
+          No Downloadable Data Available
+        </h2>
+      </div>
+    );
+  }
   const uploadList = allUploads
     .map(upload => <DownloadRow key={upload.identifier} upload={upload} onDownload={onDownload} />);
 
   return (
-    <table className="table table-sm downloadTable">
-      <thead>
-        <tr>
-          <th>Identifier</th>
-          <th>Subject Type</th>
-          <th>Phase</th>
-          <th>Data Type</th>
-          <th>Date Uploaded</th>
-          <th>Site</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {uploadList}
-      </tbody>
-    </table>
+    <div className="col">
+      <table className="table downloadTable">
+        <thead>
+          <tr>
+            <th>
+              <button type="button" onClick={() => onChangeSort('identifier')} className="btn btn-light sortBtn">
+                Identifier
+              </button>
+            </th>
+            <th>
+              <button type="button" onClick={() => onChangeSort('subject')} className="btn btn-light sortBtn">
+                Subject Type
+              </button>
+            </th>
+            <th>
+              <button type="button" onClick={() => onChangeSort('phase')} className="btn btn-light sortBtn">
+                Phase
+              </button>
+            </th>
+            <th>
+              <button type="button" onClick={() => onChangeSort('type')} className="btn btn-light sortBtn">
+                Data Type
+              </button>
+            </th>
+            <th>
+              <button type="button" onClick={() => onChangeSort('date')} className="btn btn-light sortBtn">
+                Date Uploaded
+              </button>
+            </th>
+            <th>
+              <button type="button" onClick={() => onChangeSort('site')} className="btn btn-light sortBtn">
+                Site
+              </button>
+            </th>
+            <th>
+              <button type="button" onClick={() => onChangeSort('availability')} className="btn btn-light sortBtn">
+                Status
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {uploadList}
+        </tbody>
+      </table>
+    </div>
   );
 }
 DownloadDataTable.propTypes = {
   allUploads: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onDownload: PropTypes.func.isRequired,
+  onChangeSort: PropTypes.func.isRequired,
 };
+DownloadDataTable.defaultProps = {
+};
+
 
 export function DownloadRow({ upload, onDownload }) {
   function DownloadBtn() {
@@ -59,7 +106,7 @@ export function DownloadRow({ upload, onDownload }) {
       <td>{upload.type}</td>
       <td>{upload.date}</td>
       <td>{upload.site}</td>
-      <td>{upload.availability}</td>
+      <td className="availCol">{upload.availability}</td>
       <td>
         <DownloadBtn />
       </td>

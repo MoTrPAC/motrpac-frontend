@@ -1,11 +1,53 @@
 .downloadTable {
+  thead {
+    color: $dblue;
+  }
+  .sortBtn {
+    border: none;
+    color: $dblue;
+    background-color: transparent;
+    font-weight:$heavy-weight;
+    padding:0;
+    &:hover, &:focus, &:active{
+      background-color: transparent;
+    }
+  }
   .public {
-    background-color:transparentize($green, .9);
+    .availCol {
+      color: $green;
+    }
+    &:hover {
+      background-color:transparentize($green, .9);
+    }
   }
   .internal {
-    background-color:transparentize($blue, .9);
+    .availCol {
+      color: $dblue;
+    }
+    &:hover {
+      background-color:transparentize($blue, .9);
+    }
   }
   .pending {
-    background-color:transparentize($red, .9);
+    .availCol {
+      color: $red;
+    }
+    &:hover {
+      background-color:transparentize($red, .9);
+    }
   }
+  .downloadBtn {
+    background-color: $dblue;
+    color:white;
+    line-height: 1;
+  }
+}
+.noData {
+  background-color: $gray-transparent;
+  border-radius: 20px;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  margin: 2rem;
+  color: $gray;
+  text-align: center;
 }
