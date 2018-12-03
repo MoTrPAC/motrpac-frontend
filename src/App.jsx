@@ -1,10 +1,7 @@
-import React from 'react';
-import { Route, Router, withRouter } from 'react-router-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import rootReducer, { defaultRootState } from './reducers/index';
+import React, { Component } from 'react';
+import { Route, Switch, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import 'bootstrap';
-import History from './history';
 import NavbarConnected from './components/navbar';
 import Footer from './components/footer';
 import LandingPageConnected from './components/landingPage';
@@ -13,68 +10,72 @@ import UploadScreenConnected from './components/uploadScreen';
 import LinkoutPageConnected from './components/linkoutPage';
 import AnalysisHomePageConnected from './components/analysisHomePage';
 import Callback from './components/callback';
+import actions from './actions';
 
-function App(props) {
-  const authenticated = props.auth.isAuthenticated();
+class App extends Component {
+  componentDidMount() {
+    this.fetchData();
+  }
 
-  // TODO: Before production remove redux devtools extension javascript
-  return (
-    <Provider
-      store={createStore(
-        rootReducer,
-        defaultRootState,
-        window.__REDUX_DEVTOOLS_EXTENSION__ &&
-          window.__REDUX_DEVTOOLS_EXTENSION__()
-      )}>
-      <Router history={History}>
-        <div className="App">
+  componentDidUpdate(prevProps) {
+    if (this.props.auth.isAuthenticated !== prevProps.auth.isAuthenticated) {
+      this.fetchData();
+    }
+  }
+
+  fetchData() {
+    const { isAuthenticated } = this.props.auth;
+    const { getProfile } = this.props;
+
+    if (isAuthenticated) {
+      getProfile();
+    }
+  }
+
+  render() {
+    const { isAuthenticated } = this.props.auth;
+    const { history } = this.props;
+
+    return (
+      <div className="App">
+        <header>
+          <NavbarConnected isAuthenticated={isAuthenticated} />
+        </header>
+        <Switch>
+          <Route path="/" exact component={LandingPageConnected} />
+          <Route exact path="/callback" component={Callback} />
           <Route
             exact
-            path="/callback"
-            render={() => <Callback auth={props.auth} />}
+            path="/dashboard"
+            render={() => (
+              <Dashboard isAuthenticated={isAuthenticated} history={history} />
+            )}
           />
-          <header>
-            <NavbarConnected />
-          </header>
-          <div className="componentHolder">
-            <Route path="/" exact component={LandingPageConnected} />
-            <Route
-              exact
-              path="/dashboard"
-              render={() => (
-                <Dashboard
-                  authenticated={authenticated}
-                  auth={props.auth}
-                  history={props.history}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/upload"
-              render={() => (
-                <UploadScreenConnected
-                  authenticated={authenticated}
-                  auth={props.auth}
-                  history={props.history}
-                />
-              )}
-            />
-            <Route path="/external-links" component={LinkoutPageConnected} />
-            <Route
-              path="/analysis/:subjectType"
-              component={AnalysisHomePageConnected}
-            />
-          </div>
-          <Footer
-            authenticated={authenticated}
-            auth={props.auth}
-            history={props.history}
+          <Route
+            exact
+            path="/upload"
+            render={() => (
+              <UploadScreenConnected
+                isAuthenticated={isAuthenticated}
+                history={history}
+              />
+            )}
           />
-        </div>
-      </Router>
-    </Provider>
-  );
+          <Route path="/external-links" component={LinkoutPageConnected} />
+          <Route
+            path="/analysis/:subjectType"
+            component={AnalysisHomePageConnected}
+          />
+        </Switch>
+        <Footer isAuthenticated={isAuthenticated} history={history} />
+      </div>
+    );
+  }
 }
 
-export default withRouter(App);
+export default withRouter(
+  connect(
+    state => state,
+    actions
+  )(App)
+);
