@@ -18,10 +18,8 @@ export default class Auth {
     this.isAuthenticated = this.isAuthenticated.bind(this);
     this.setSession = this.setSession.bind(this);
     this.getProfile = this.getProfile.bind(this);
-    this.renderUserName = this.renderUserName.bind(this);
+    this.getAccessToken = this.getAccessToken.bind(this);
   }
-
-  userProfile;
 
   login() {
     this.auth0.authorize();
@@ -32,21 +30,6 @@ export default class Auth {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
-    this.userProfile = null;
-  }
-
-  handleAuthentication() {
-    return new Promise((resolve, reject) => {
-      this.auth0.parseHash((err, authResult) => {
-        if (err) return reject(err);
-        console.log(authResult);
-        if (!authResult || !authResult.idToken) {
-          return reject(err);
-        }
-        this.setSession(authResult);
-        resolve();
-      });
-    });
   }
 
   setSession(authResult) {
@@ -59,32 +42,55 @@ export default class Auth {
     localStorage.setItem('expires_at', expiresAt);
   }
 
+  handleAuthentication(cb) {
+    this.auth0.parseHash((err, authResult) => {
+      if (err) {
+        console.log(`${err.error}: ${err.errorDescription}`);
+        console.log('Could not authenticate');
+        cb(err);
+      } else if (authResult && authResult.accessToken && authResult.idToken) {
+        console.log('Authenticated');
+        this.setSession(authResult);
+        cb(null, authResult);
+      } else {
+        console.log(`Unexpected format of authResult: ${authResult}`);
+        cb(new Error('Unexpected format of authResult'));
+      }
+    });
+  }
+
   isAuthenticated() {
+    if (
+      !localStorage.getItem('access_token') ||
+      !localStorage.getItem('id_token') ||
+      !localStorage.getItem('expires_at')
+    ) {
+      return false;
+    }
+
     let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
   }
 
-  getProfile() {
-    if (!this.userProfile) {
-      const accessToken = localStorage.getItem('access_token');
+  getAccessToken() {
+    const accessToken = localStorage.getItem('access_token');
 
-      if (!accessToken) {
-        console.log('Access Token must exist to fetch profile');
-      }
-
-      this.auth0.client.userInfo(accessToken, (err, profile) => {
-        if (profile) {
-          this.userProfile = profile;
-          this.renderUserName();
-        }
-      });
-    } else {
-      this.renderUserName();
+    if (!accessToken) {
+      throw new Error('No access token found');
     }
+    return accessToken;
   }
 
-  renderUserName() {
-    document.querySelector('.welcomeUser .user-name').innerHTML = this.userProfile.name;
-    document.querySelector('.user-login-button img').src = this.userProfile.picture;
+  getProfile(cb) {
+    let accessToken = this.getAccessToken();
+
+    this.auth0.client.userInfo(accessToken, (err, profile) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+
+      cb(null, profile);
+    });
   }
 }

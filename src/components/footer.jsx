@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import actions from '../actions';
 
 /**
  * Method to render global footer
@@ -7,37 +9,28 @@ import { Link, withRouter } from 'react-router-dom';
  * TODO: try changing this to class component and to use 'setState' for user profile UI rendering
  */
 function Footer(props) {
-  const { authenticated } = props;
+  const { isAuthenticated, login, logout } = props;
+  const { profile } = props.auth;
 
-  // Function to sign out
-  const logout = () => {
-    props.auth.logout();
-    props.history.push('/');
-  };
-  
   // Function to render login button
   // FIXME: removing `props.auth.getProfile()` method from <button> breaks the UI
   const LoginButton = () => {
     return (
       <span className="user-login-button">
-        {
-          authenticated && (
-            <span>
-              <img className="user-avatar" alt="avatar" />
-              <button type="button" onClick={logout} className="logInOutBtn btn">
-                {props.auth.getProfile()}
-                &nbsp;Log out
-              </button>
-            </span>
-          )
-        }
-        {
-          !authenticated && (
-            <button type="button" onClick={props.auth.login} className="logInOutBtn btn">
-              Submitter Log in
+        {isAuthenticated && (
+          <span>
+            <img src={profile.picture} className="user-avatar" alt="avatar" />
+            <button type="button" onClick={logout} className="logInOutBtn btn">
+              {profile.name}
+              &nbsp;Logout
             </button>
-          )
-        }
+          </span>
+        )}
+        {!isAuthenticated && (
+          <button type="button" onClick={login} className="logInOutBtn btn">
+            Submitter Log in
+          </button>
+        )}
       </span>
     );
   };
@@ -56,12 +49,19 @@ function Footer(props) {
         <div className="row">
           <div className="col-9">
             <p className="footer-content">
-              Data Hub designed and maintained by the MoTrPAC BioInformatics Center at
-              <Link to="https://www.stanford.edu/" target="_new"> Stanford University</Link>
+              Data Hub designed and maintained by the MoTrPAC BioInformatics
+              Center at
+              <Link to="https://www.stanford.edu/" target="_new">
+                {' '}
+                Stanford University
+              </Link>
             </p>
             <p className="footer-content">
               Funded by the
-              <Link to="https://commonfund.nih.gov/" target="_new"> NIH Common Fund</Link>
+              <Link to="https://commonfund.nih.gov/" target="_new">
+                {' '}
+                NIH Common Fund
+              </Link>
             </p>
           </div>
           <div className="col user-login">
@@ -82,4 +82,9 @@ function Footer(props) {
   );
 }
 
-export default withRouter(Footer);
+export default withRouter(
+  connect(
+    state => state,
+    actions
+  )(Footer)
+);
