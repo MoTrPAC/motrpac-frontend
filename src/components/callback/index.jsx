@@ -1,17 +1,23 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { Component } from 'react';
 
-function Callback(props) {
-  props.auth.handleAuthentication().then(() => {
-    props.history.push('/dashboard');
-  });
+class Callback extends Component {
+  componentDidMount = () => {
+    // Handle authentication if expected values are in the URL.
+    if (/access_token|id_token|error/.test(this.props.location.hash)) {
+      this.props.auth.handleAuthentication();
+    } else {
+      throw new Error('Invalid callback URL.');
+    }
+  };
 
-  return (
-    <div className="authLoading">
-      <span className="oi oi-shield" />
-      <h3>Authenticating...</h3>
-    </div>
-  );
+  render() {
+    return (
+      <div className="authLoading">
+        <span className="oi oi-shield" />
+        <h3>Authenticating...</h3>
+      </div>
+    );
+  }
 }
 
-export default withRouter(Callback);
+export default Callback;
