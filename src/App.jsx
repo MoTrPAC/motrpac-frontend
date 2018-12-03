@@ -11,6 +11,7 @@ import LandingPageConnected from './components/landingPage';
 import Dashboard from './components/dashboard';
 import UploadScreenConnected from './components/uploadScreen';
 import LinkoutPageConnected from './components/linkoutPage';
+import AnalysisHomePageConnected from './components/analysisHomePage';
 import Callback from './components/callback';
 
 function App(props) {
@@ -18,39 +19,52 @@ function App(props) {
 
   // TODO: Before production remove redux devtools extension javascript
   return (
-    <Provider store={createStore(rootReducer,
-      defaultRootState,
-      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
-      }
-    >
+    <Provider
+      store={createStore(
+        rootReducer,
+        defaultRootState,
+        window.__REDUX_DEVTOOLS_EXTENSION__ &&
+          window.__REDUX_DEVTOOLS_EXTENSION__()
+      )}>
       <Router history={History}>
         <div className="App">
-          <Route exact path='/callback' render={() => (
-            <Callback auth={props.auth} />
-          )}
+          <Route
+            exact
+            path="/callback"
+            render={() => <Callback auth={props.auth} />}
           />
           <header>
             <NavbarConnected />
           </header>
           <div className="componentHolder">
             <Route path="/" exact component={LandingPageConnected} />
-            <Route exact path="/dashboard" render={() => (
-              <Dashboard
-                authenticated={authenticated}
-                auth={props.auth}
-                history={props.history}
-              />)
-            }
+            <Route
+              exact
+              path="/dashboard"
+              render={() => (
+                <Dashboard
+                  authenticated={authenticated}
+                  auth={props.auth}
+                  history={props.history}
+                />
+              )}
             />
-            <Route exact path="/upload" render={() => (
-              <UploadScreenConnected
-                authenticated={authenticated}
-                auth={props.auth}
-                history={props.history}
-              />)
-            }
+            <Route
+              exact
+              path="/upload"
+              render={() => (
+                <UploadScreenConnected
+                  authenticated={authenticated}
+                  auth={props.auth}
+                  history={props.history}
+                />
+              )}
             />
             <Route path="/external-links" component={LinkoutPageConnected} />
+            <Route
+              path="/analysis/:subjectType"
+              component={AnalysisHomePageConnected}
+            />
           </div>
           <Footer
             authenticated={authenticated}
