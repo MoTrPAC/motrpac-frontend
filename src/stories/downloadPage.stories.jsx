@@ -12,6 +12,9 @@ const testPreviousUploads = require('../testData/testPreviousUploads');
 const downloadActions = {
   onDownload: action('on Download'),
   onChangeSort: action('on Change Sort'),
+  onChangeFilter: action('Change Filter'),
+  onChangePage: action('Change Page'),
+  onCartClick: action('Add/Remove from Cart'),
 };
 
 const loggedInState = {
@@ -23,6 +26,7 @@ const withFilesState = {
   ...defaultDownloadState,
   loggedIn: true,
   allUploads: testPreviousUploads,
+  filteredUploads: testPreviousUploads,
 };
 
 const footerActions = {

@@ -1,0 +1,37 @@
+.downloadFilter {
+  border: 1px solid $gray;
+  border-radius: 10px;
+  h4 {
+    margin-top: 1rem;
+  }
+  .filterCategory {
+    margin-top:1rem;
+  }
+  .filterBtn {
+    background-color: white;
+    border: 1px solid $gray;
+    border-radius: 20px;
+    font-size: .85rem;
+    line-height: .75rem;
+    padding: .3rem .4rem;
+    margin-top: .25rem;
+    white-space: normal;
+  }
+// Remove icon text (e.g 'Publicly Available') when small
+  
+  .activeFilter {
+    background-color: $dgray;
+    color: white;
+  }
+}
+
+@include media-breakpoint-down(xs) { 
+  .downloadFilter{
+    border: none;
+    border-bottom: 1px solid $gray;
+    border-top: 1px solid $gray;
+    padding-bottom:1rem;
+    margin-bottom: 1rem;
+    border-radius: 0;
+  }
+}

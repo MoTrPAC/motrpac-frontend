@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import PreviousUploadsTable from './previousUploadsTable';
 import PreviousUploadsGraph from './previousUploadsGraph';
 import AllUploadsDoughnut from './allUploadsDoughnut';
-import AllUploadStats from '../components/allUploadStats';
+import AllUploadStats from './allUploadStats';
 
 const previousUploads = require('../testData/testPreviousUploads');
 

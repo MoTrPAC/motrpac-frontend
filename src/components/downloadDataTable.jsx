@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function DownloadDataTable({
-  allUploads,
-  onDownload,
-  onChangeSort,
+  filteredUploads,
+  onCartClick,
+  cartItems,
 }) {
   // TODO: Find out how actual downloading works
-  if (allUploads.length === 0) {
+  if (filteredUploads.length === 0) {
     return (
       <div className="noData col">
         <h2>
@@ -16,101 +16,114 @@ function DownloadDataTable({
       </div>
     );
   }
-  const uploadList = allUploads
-    .map(upload => <DownloadRow key={upload.identifier} upload={upload} onDownload={onDownload} />);
+  const uploadList = filteredUploads
+    .map((upload) => {
+      const inCart = !(cartItems.indexOf(upload) === -1);
+      return (
+        <DownloadRow
+          key={upload.identifier + upload.type}
+          upload={upload}
+          onCartClick={onCartClick}
+          inCart={inCart}
+        />
+      );
+    });
 
   return (
-    <div className="col">
-      <table className="table downloadTable">
-        <thead>
-          <tr>
-            <th>
-              <button type="button" onClick={() => onChangeSort('identifier')} className="btn btn-light sortBtn">
-                Identifier
-              </button>
-            </th>
-            <th>
-              <button type="button" onClick={() => onChangeSort('subject')} className="btn btn-light sortBtn">
-                Subject Type
-              </button>
-            </th>
-            <th>
-              <button type="button" onClick={() => onChangeSort('phase')} className="btn btn-light sortBtn">
-                Phase
-              </button>
-            </th>
-            <th>
-              <button type="button" onClick={() => onChangeSort('type')} className="btn btn-light sortBtn">
-                Data Type
-              </button>
-            </th>
-            <th>
-              <button type="button" onClick={() => onChangeSort('date')} className="btn btn-light sortBtn">
-                Date Uploaded
-              </button>
-            </th>
-            <th>
-              <button type="button" onClick={() => onChangeSort('site')} className="btn btn-light sortBtn">
-                Site
-              </button>
-            </th>
-            <th>
-              <button type="button" onClick={() => onChangeSort('availability')} className="btn btn-light sortBtn">
-                Status
-              </button>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {uploadList}
-        </tbody>
-      </table>
+    <div className="col downloadTable">
+      {uploadList}
     </div>
   );
 }
 DownloadDataTable.propTypes = {
-  allUploads: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  onDownload: PropTypes.func.isRequired,
-  onChangeSort: PropTypes.func.isRequired,
+  filteredUploads: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  cartItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  onCartClick: PropTypes.func.isRequired,
 };
 DownloadDataTable.defaultProps = {
 };
 
 
-export function DownloadRow({ upload, onDownload }) {
+export function DownloadRow({ upload, onCartClick, inCart }) {
   function DownloadBtn() {
     return (
-      <button className="btn downloadBtn" type="button" onClick={() => onDownload(upload.identifier)}>Download</button>
+      <button title="Add To Cart" className={`btn downloadBtn ${inCart && 'inCart'}`} type="button" onClick={() => onCartClick(upload)}>
+        <span className="oi oi-cart" />
+      </button>
     );
   }
   let availClass;
+  let availIcon;
   switch (upload.availability) {
     case 'Publicly Available': {
       availClass = 'public';
+      availIcon = (
+        <p className="statusText">
+          <span className="iconText">
+            Publically Available&nbsp;
+          </span>
+          <span className="oi oi-circle-check" />
+        </p>
+      );
       break;
     }
     case 'Internally Available': {
       availClass = 'internal';
+      availIcon = (
+        <p className="statusText">
+          <span className="iconText">
+            Internally Available&nbsp;
+          </span>
+          <span className="oi oi-beaker" />
+        </p>
+      );
       break;
     }
     default: {
       availClass = 'pending';
+      availIcon = (
+        <p className="statusText">
+          <span className="iconText">
+            Pending Q.C.&nbsp;
+          </span>
+          <span className="oi oi-ellipses" />
+        </p>
+      );
       break;
     }
   }
   return (
-    <tr className={`downloadRow ${availClass}`}>
-      <td>{upload.identifier}</td>
-      <td>{upload.subject}</td>
-      <td>{upload.phase}</td>
-      <td>{upload.type}</td>
-      <td>{upload.date}</td>
-      <td>{upload.site}</td>
-      <td className="availCol">{upload.availability}</td>
-      <td>
-        <DownloadBtn />
-      </td>
-    </tr>
+    <div className={`downloadRow m-2 row ${availClass}`}>
+      <div className="col leftSide mt-2">
+        <h4>{`ID: ${upload.identifier}`}</h4>
+        <p>
+          <span className="heavy">Subject: </span>
+          {upload.subject}
+        </p>
+        <p>
+          <span className="heavy">Data Type: </span>
+          {upload.type}
+        </p>
+        <p className="endP">
+          <span className="heavy">Uploaded: </span>
+          {upload.date}
+          &nbsp;by&nbsp;
+          <span className="siteName">{upload.site}</span>
+        </p>
+      </div>
+      <div className="col col-auto d-flex flex-column justify-content-between">
+        <div className="row rightAlign">
+          <div className="col mt-2">
+            <DownloadBtn />
+          </div>
+        </div>
+        <div className="row rightAlign">
+          <div className="col">
+            {availIcon}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 DownloadRow.propTypes = {
@@ -121,7 +134,8 @@ DownloadRow.propTypes = {
     site: PropTypes.string.isRequired,
     availability: PropTypes.string.isRequired,
   }).isRequired,
-  onDownload: PropTypes.func.isRequired,
+  inCart: PropTypes.bool.isRequired,
+  onCartClick: PropTypes.func.isRequired,
 };
 
 export default DownloadDataTable;

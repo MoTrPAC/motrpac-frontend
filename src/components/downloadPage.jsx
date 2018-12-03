@@ -3,17 +3,21 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import DownloadDataTable from './downloadDataTable';
-import AllUploadsDoughnut from './allUploadsDoughnut';
-
-const testUploads = require('../testData/testPreviousUploads');
+import DownloadFilter from './downloadFilter';
+import DownloadPaginator from './downloadPaginator';
 
 export function DownloadPage({
   loggedIn,
-  allUploads,
+  filteredUploads,
+  cartItems,
   sortBy,
-  devEnv,
-  onDownload,
+  activeFilters,
+  currentPage,
+  maxRows,
+  onCartClick,
   onChangeSort,
+  onChangeFilter,
+  onChangePage,
 }) {
   if (!loggedIn) {
     return <Redirect to="/" />;
@@ -26,46 +30,71 @@ export function DownloadPage({
         </div>
       </div>
       <div className="row justify-content-center">
+        <DownloadFilter
+          activeFilters={activeFilters}
+          onChangeFilter={onChangeFilter}
+        />
         <DownloadDataTable
-          allUploads={devEnv ? testUploads : allUploads}
+          filteredUploads={filteredUploads}
+          cartItems={cartItems}
           sortBy={sortBy}
-          onDownload={onDownload}
+          onCartClick={onCartClick}
           onChangeSort={onChangeSort}
         />
       </div>
+      <DownloadPaginator
+        currentPage={currentPage}
+        filteredUploads={filteredUploads}
+        maxRows={maxRows}
+        onChangePage={onChangePage}
+      />
     </div>
   );
 }
 DownloadPage.propTypes = {
-  allUploads: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  filteredUploads: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   sortBy: PropTypes.string,
   loggedIn: PropTypes.bool,
-  onDownload: PropTypes.func.isRequired,
+  activeFilters: DownloadFilter.propTypes.activeFilters.isRequired,
+  maxRows: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  onCartClick: PropTypes.func.isRequired,
   onChangeSort: PropTypes.func.isRequired,
-  devEnv: PropTypes.bool,
+  onChangeFilter: PropTypes.func.isRequired,
+  onChangePage: PropTypes.func.isRequired,
 };
 DownloadPage.defaultProps = {
   sortBy: 'identifier',
   loggedIn: false,
-  // TODO: Change to false before production
-  devEnv: false,
 };
 
 const mapStateToProps = state => ({
   sortBy: state.download.sortBy,
-  allUploads: state.download.allUploads,
+  filteredUploads: state.download.filteredUploads,
+  cartItems: state.download.cartItems,
   loggedIn: state.auth.loggedIn,
-  devEnv: state.env.testData,
+  activeFilters: state.download.activeFilters,
+  currentPage: state.download.currentPage,
+  maxRows: state.download.maxRows,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onDownload: file => dispatch({
-    type: 'ANALYSIS_SELECT',
-    downloadFile: file,
+  onCartClick: file => dispatch({
+    type: 'ADD_TO_CART',
+    cartItem: file,
   }),
   onChangeSort: sortCol => dispatch({
     type: 'SORT_CHANGE',
     column: sortCol,
+  }),
+  onChangeFilter: (cat, filt) => dispatch({
+    type: 'CHANGE_FILTER',
+    category: cat,
+    filter: filt,
+  }),
+  onChangePage: toPage => dispatch({
+    type: 'CHANGE_PAGE',
+    page: toPage,
   }),
 });
 

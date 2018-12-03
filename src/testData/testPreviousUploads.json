@@ -6,7 +6,8 @@
     "type": "ATAC-Seq",
     "date": "09/05/2018",
     "availability": "Publicly Available",
-    "site": "Stanford CAS"
+    "site": "Stanford CAS",
+    "inCart": true
   },
   {
     "identifier": "AS12346",

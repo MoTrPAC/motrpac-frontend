@@ -1,45 +1,41 @@
 .downloadTable {
-  thead {
-    color: $dblue;
-  }
-  .sortBtn {
-    border: none;
-    color: $dblue;
-    background-color: transparent;
-    font-weight:$heavy-weight;
-    padding:0;
-    &:hover, &:focus, &:active{
-      background-color: transparent;
-    }
-  }
   .public {
-    .availCol {
+    .statusText{
       color: $green;
     }
     &:hover {
       background-color:transparentize($green, .9);
+      border-color: $green;
     }
   }
   .internal {
-    .availCol {
+    .statusText{
       color: $dblue;
     }
     &:hover {
       background-color:transparentize($blue, .9);
+      border-color: $blue;
     }
   }
   .pending {
-    .availCol {
-      color: $red;
+    .statusText{
+      color: $dgray;
     }
     &:hover {
-      background-color:transparentize($red, .9);
+      background-color:transparentize($gray, .9);
+      border:1px dashed $gray;
     }
   }
   .downloadBtn {
-    background-color: $dblue;
-    color:white;
+    background-color: white;
+    color:$dblue;
+    border: 1px dashed $dblue;
+    border-radius: 10px;
     line-height: 1;
+  }
+  .inCart {
+    background-color: $dblue;
+    color: white;
   }
 }
 .noData {
@@ -47,7 +43,35 @@
   border-radius: 20px;
   padding-top: 2rem;
   padding-bottom: 2rem;
-  margin: 2rem;
-  color: $gray;
   text-align: center;
+  margin: 2rem;
+  h2 {
+    color: $gray;
+  }
+}
+
+.downloadRow {
+  border: 1px solid $gray;
+  border-radius: 10px;
+  .rightAlign {
+    text-align: right;
+  }
+  .siteName {
+    color: $blue;
+  }
+  .leftSide { 
+    p {
+      line-height: 1.25rem;
+      margin-bottom:0;
+    }
+    .endP {
+      margin-bottom: 1rem;
+    }
+  }
+}
+// Remove icon text (e.g 'Publicly Available') when small
+@include media-breakpoint-down(xs) { 
+  .iconText {
+    display: none;
+  }
 }

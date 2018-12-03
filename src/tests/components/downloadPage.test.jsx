@@ -10,6 +10,8 @@ import DownloadPageConnected, { DownloadPage } from '../../components/downloadPa
 Enzyme.configure({ adapter: new Adapter() });
 
 
+const testPreviousUploads = require('../../testData/testPreviousUploads');
+
 const loggedInRootState = {
   ...defaultRootState,
   auth: {
@@ -17,12 +19,24 @@ const loggedInRootState = {
     loggedIn: true,
   },
 };
+const withUploadsRootState = {
+  ...defaultRootState,
+  auth: {
+    ...defaultRootState.auth,
+    loggedIn: true,
+  },
+  download: {
+    ...defaultDownloadState,
+    allUploads: testPreviousUploads,
+  },
+};
 const downloadActions = {
-  onDownload: jest.fn(),
+  onCartClick: jest.fn(),
   onChangeSort: jest.fn(),
+  onChangeFilter: jest.fn(),
+  onChangePage: jest.fn(),
 };
 
-const testPreviousUploads = require('../../testData/testPreviousUploads');
 
 describe('Pure Download Page', () => {
   test('Redirects to home if not logged in', () => {
@@ -33,7 +47,8 @@ describe('Pure Download Page', () => {
         allUploads={testPreviousUploads}
       />,
     );
-    expect(shallowDownload.find('Redirect')).toHaveLength(1);
+    expect(shallowDownload.find('Redirect'))
+      .toHaveLength(1);
   });
   test('Has required components', () => {
     const shallowDownload = shallow(
@@ -44,24 +59,34 @@ describe('Pure Download Page', () => {
         loggedIn
       />,
     );
-    expect(shallowDownload.find('DownloadDataTable')).toHaveLength(1);
+    expect(shallowDownload.find('DownloadDataTable'))
+      .toHaveLength(1);
+    expect(shallowDownload.find('DownloadFilter'))
+      .toHaveLength(1);
   });
 });
 
 describe('Connected Download Page', () => {
   let mountedDownload = mount((
-    <Provider store={createStore(rootReducer, loggedInRootState)}>
+    <Provider store={createStore(rootReducer, withUploadsRootState)}>
       <DownloadPageConnected />
     </Provider>
   ));
   beforeAll(() => {
     mountedDownload = mount((
-      <Provider store={createStore(rootReducer, loggedInRootState)}>
+      <Provider store={createStore(rootReducer, withUploadsRootState)}>
         <DownloadPageConnected />
       </Provider>
     ));
   });
   afterAll(() => {
     mountedDownload.unmount();
+  });
+
+  test('Has Required Components', () => {
+    expect(mountedDownload.find('DownloadFilter'))
+      .toHaveLength(1);
+    expect(mountedDownload.find('DownloadDataTable'))
+      .toHaveLength(1);
   });
 });
