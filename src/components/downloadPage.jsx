@@ -10,6 +10,7 @@ export function DownloadPage({
   loggedIn,
   filteredUploads,
   cartItems,
+  uploadCount,
   sortBy,
   activeFilters,
   currentPage,
@@ -40,6 +41,8 @@ export function DownloadPage({
           sortBy={sortBy}
           onCartClick={onCartClick}
           onChangeSort={onChangeSort}
+          maxRows={maxRows}
+          currentPage={currentPage}
         />
       </div>
       <DownloadPaginator
@@ -47,13 +50,16 @@ export function DownloadPage({
         filteredUploads={filteredUploads}
         maxRows={maxRows}
         onChangePage={onChangePage}
+        uploadCount={uploadCount}
       />
     </div>
   );
 }
 DownloadPage.propTypes = {
   filteredUploads: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  cartItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   sortBy: PropTypes.string,
+  uploadCount: PropTypes.number.isRequired,
   loggedIn: PropTypes.bool,
   activeFilters: DownloadFilter.propTypes.activeFilters.isRequired,
   maxRows: PropTypes.number.isRequired,
@@ -76,6 +82,7 @@ const mapStateToProps = state => ({
   activeFilters: state.download.activeFilters,
   currentPage: state.download.currentPage,
   maxRows: state.download.maxRows,
+  uploadCount: state.download.uploadCount,
 });
 
 const mapDispatchToProps = dispatch => ({

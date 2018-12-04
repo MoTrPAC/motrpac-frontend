@@ -5,6 +5,8 @@ function DownloadDataTable({
   filteredUploads,
   onCartClick,
   cartItems,
+  maxRows,
+  currentPage,
 }) {
   // TODO: Find out how actual downloading works
   if (filteredUploads.length === 0) {
@@ -16,7 +18,12 @@ function DownloadDataTable({
       </div>
     );
   }
-  const uploadList = filteredUploads
+  let displayedUploads = [...filteredUploads];
+  if (filteredUploads.length > maxRows) {
+    displayedUploads = filteredUploads
+      .slice((currentPage - 1) * maxRows, currentPage * maxRows);
+  }
+  const uploadList = displayedUploads
     .map((upload) => {
       const inCart = !(cartItems.indexOf(upload) === -1);
       return (
@@ -38,6 +45,8 @@ function DownloadDataTable({
 DownloadDataTable.propTypes = {
   filteredUploads: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   cartItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  maxRows: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
   onCartClick: PropTypes.func.isRequired,
 };
 DownloadDataTable.defaultProps = {

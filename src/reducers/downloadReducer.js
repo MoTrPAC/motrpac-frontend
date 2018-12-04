@@ -71,17 +71,11 @@ function downloadReducer(state = defaultDownloadState, action) {
         }
       });
 
-      // Pagination
-      const fileCount = filtUploads.length;
-      if (filtUploads.length > state.maxRows) {
-        filtUploads = filtUploads
-          .slice((state.currentPage - 1) * state.maxRows, state.currentPage * state.maxRows);
-      }
       return {
         ...state,
         activeFilters: newActiveFilters,
         filteredUploads: filtUploads,
-        uploadCount: fileCount,
+        uploadCount: filtUploads.length,
       };
     }
 
@@ -91,10 +85,16 @@ function downloadReducer(state = defaultDownloadState, action) {
         sortBy: action.column,
         allUploads: state.allUploads.sort(createSorter(action.column)),
       };
+    case 'CHANGE_PAGE':
+      return {
+        ...state,
+        currentPage: action.page,
+      };
     case 'UPDATE_LIST':
       return {
         ...state,
         allUploads: action.uploads.sort(createSorter(state.sortBy)),
+        uploadCount: action.uploads.length,
       };
 
     default:

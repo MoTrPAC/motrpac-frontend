@@ -8,14 +8,12 @@ const testUploads = require('../testData/testPreviousUploads');
 
 // Set to false to unload test data
 const TESTING = true;
-let testDownloadState;
-if (TESTING) {
-  testDownloadState = {
-    ...defaultDownloadState,
-    allUploads: testUploads,
-    filteredUploads: testUploads.slice(0, defaultDownloadState.maxRows),
-  };
-}
+const testDownloadState = {
+  ...defaultDownloadState,
+  allUploads: testUploads,
+  filteredUploads: testUploads,
+  uploadCount: testUploads.length,
+};
 
 // TODO: Screen change reducer
 export default combineReducers({

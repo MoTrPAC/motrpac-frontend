@@ -20,7 +20,7 @@ describe('Download Data Table', () => {
     const shallowTable = shallow(
       <DownloadDataTable {...defaultDownloadState} filteredUploads={testPreviousUploads} {...downloadActions} />,
     );
-    expect(shallowTable.find('DownloadRow')).toHaveLength(testPreviousUploads.length);
+    expect(shallowTable.find('DownloadRow')).toHaveLength(defaultDownloadState.maxRows);
   });
   test('No uploads message loads if nothing uploaded', () => {
     const shallowTable = shallow(

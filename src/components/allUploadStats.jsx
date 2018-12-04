@@ -26,4 +26,11 @@ function AllUploadStats({ allUploadStats = stats }) {
   );
 }
 
+AllUploadStats.propTypes = {
+  allUploadStats: PropTypes.shape({
+    totalSamples: PropTypes.number.isRequired,
+    totalSize: PropTypes.number.isRequired,
+  }).isRequired,
+};
+
 export default AllUploadStats;
