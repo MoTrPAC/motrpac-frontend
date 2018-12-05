@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Router } from 'react-router-dom';
-import { createStore } from 'redux';
+import thunkMiddleWare from 'redux-thunk';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer, { defaultRootState } from './reducers/index';
 import 'bootstrap';
@@ -17,14 +18,16 @@ import AnalysisHomePageConnected from './components/analysisHomePage';
 import DownloadPageConnected from './components/downloadPage';
 
 const hist = History;
-
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const enchancer = composeEnhancers(
+  applyMiddleware(thunkMiddleWare),
+);
 function App({ history = hist }) {
   // TODO: Before production remove redux devtools extension javascript
   return (
     <Provider store={createStore(rootReducer,
       defaultRootState,
-      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
-      }
+      enchancer)}
     >
       <Router history={history}>
         <div className="App">

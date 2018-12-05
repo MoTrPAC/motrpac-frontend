@@ -1,6 +1,7 @@
 import DownloadReducer, { defaultDownloadState } from '../../reducers/downloadReducer';
+import actions from '../../reducers/downloadActions';
 
-const testPreviousUploads = require('../../testData/testPreviousUploads');
+const testAllUploads = require('../../testData/testAllUploads');
 
 const shortTestUploads = [
   {
@@ -33,7 +34,13 @@ const shortTestUploads = [
 ];
 const defaultWithUploadsState = {
   ...defaultDownloadState,
-  allUploads: testPreviousUploads,
+  allUploads: testAllUploads,
+};
+const viewCartWithCartItemsState = {
+  ...defaultDownloadState,
+  allUploads: testAllUploads,
+  viewCart: true,
+  cartItems: [testAllUploads[0]],
 };
 
 describe('Download Reducer Tests', () => {
@@ -47,14 +54,8 @@ describe('Download Reducer Tests', () => {
       .toEqual({ ...defaultDownloadState, files: ['fileName.fileExt'] });
   });
 
-  const updateListAction = {
-    type: 'UPDATE_LIST',
-    uploads: shortTestUploads,
-  };
-  const updateListActionLong = {
-    type: 'UPDATE_LIST',
-    uploads: testPreviousUploads,
-  };
+  const updateListAction = actions.recieveUpdateList(3, shortTestUploads);
+  const updateListActionLong = actions.recieveUpdateList(11, testAllUploads);
 
   test('Update uploads action changes listed files', () => {
     const shortTestUploadsState = DownloadReducer(defaultDownloadState, updateListAction);
@@ -63,44 +64,52 @@ describe('Download Reducer Tests', () => {
       .toEqual(shortTestUploads);
 
     expect(DownloadReducer(shortTestUploadsState, updateListActionLong).allUploads)
-      .toEqual(testPreviousUploads);
+      .toEqual(testAllUploads);
   });
-  const addToCartAction = {
-    type: 'ADD_TO_CART',
-    cartItem: testPreviousUploads[1],
-  };
+  const addToCartAction = actions.addToCart(testAllUploads[1]);
 
-  test('Adding to cart updates inCart status of item', () => {
+  test('Adding to cart updates cartItems', () => {
     expect(DownloadReducer(defaultWithUploadsState, addToCartAction).cartItems[0])
       .toBe(addToCartAction.cartItem);
   });
+
   test('Adding already added item, removes item from cart ', () => {
     const addedState = DownloadReducer(defaultWithUploadsState, addToCartAction);
-    const secondAddToCart = {
-      type: 'ADD_TO_CART',
-      cartItem: addedState.allUploads[1],
-    };
+    const secondAddToCart = actions.addToCart(addedState.cartItems[0])
     expect(DownloadReducer(addedState, secondAddToCart).cartItems[0])
       .toBeFalsy();
   });
+
   test('Adding to cart does not create new entries', () => {
     expect(DownloadReducer(defaultWithUploadsState, addToCartAction).allUploads)
-      .toHaveLength(testPreviousUploads.length);
+      .toHaveLength(testAllUploads.length);
   });
-  const addFilterAction = {
-    type: 'CHANGE_FILTER',
-    filter: 'RNA-Seq',
-    category: 'type',
-  };
+
+  const addFilterAction = actions.changeFilter('type', 'RNA-Seq');
   test('Adding filter updates activeFilter list', () => {
     expect(DownloadReducer(defaultWithUploadsState, addFilterAction).activeFilters[addFilterAction.category])
       .toHaveLength(1);
     expect(DownloadReducer(defaultWithUploadsState, addFilterAction).activeFilters[addFilterAction.category])
       .toEqual([addFilterAction.filter]);
   });
+
   test('Changing previously added filter, clears filter', () => {
     const filterAddedState = DownloadReducer(defaultWithUploadsState, addFilterAction);
     expect(DownloadReducer(filterAddedState, addFilterAction).activeFilters[addFilterAction.category])
       .toHaveLength(0);
+  });
+
+  test('View cart dispatch toggles viewCart', () => {
+    expect(DownloadReducer(defaultDownloadState, actions.viewCart()).viewCart)
+      .toBeTruthy();
+    expect(DownloadReducer(viewCartWithCartItemsState, actions.viewCart()).viewCart)
+      .toBeFalsy();
+  });
+
+  test('Adding to cart adds to inCart', () => {
+    expect(DownloadReducer(defaultDownloadState, actions.addToCart(testAllUploads[0])).cartItems[0])
+      .toBe(testAllUploads[0]);
+    expect(DownloadReducer(viewCartWithCartItemsState, actions.addToCart(testAllUploads[0])).cartItems[0])
+      .not.toBe(testAllUploads[0]);
   });
 });

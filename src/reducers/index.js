@@ -4,7 +4,7 @@ import authReducer, { defaultAuthState } from './authReducer';
 import analysisReducer, { defaultAnalysisState } from './analysisReducer';
 import downloadReducer, { defaultDownloadState } from './downloadReducer';
 
-const testUploads = require('../testData/testPreviousUploads');
+const testUploads = require('../testData/testAllUploads');
 
 // Set to false to unload test data
 const TESTING = true;

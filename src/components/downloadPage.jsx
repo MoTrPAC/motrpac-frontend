@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import DownloadDataTable from './downloadDataTable';
 import DownloadFilter from './downloadFilter';
 import DownloadPaginator from './downloadPaginator';
+import actions from '../reducers/downloadActions';
 
 export function DownloadPage({
   loggedIn,
@@ -23,12 +24,14 @@ export function DownloadPage({
   onChangeSort,
   onChangeFilter,
   onChangePage,
+  getUpdatedList,
 }) {
   if (!loggedIn) {
     return <Redirect to="/" />;
   }
   return (
     <div className="container downloadPage">
+      <button className="btn btn-primary" type="button" onClick={getUpdatedList}>GetUpdatedList</button>
       <div className="row titleRow mb-1">
         <div className="col-12 col-md-4">
           <h2>Download Data</h2>
@@ -106,32 +109,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onCartClick: file => dispatch({
-    type: 'ADD_TO_CART',
-    cartItem: file,
-  }),
-  onChangeSort: sortCol => dispatch({
-    type: 'SORT_CHANGE',
-    column: sortCol,
-  }),
-  onChangeFilter: (cat, filt) => dispatch({
-    type: 'CHANGE_FILTER',
-    category: cat,
-    filter: filt,
-  }),
-  onChangePage: toPage => dispatch({
-    type: 'CHANGE_PAGE',
-    page: toPage,
-  }),
-  onViewCart: () => dispatch({
-    type: 'VIEW_CART',
-  }),
-  onEmptyCart: () => dispatch({
-    type: 'EMPTY_CART',
-  }),
-  onAddAllToCart: () => dispatch({
-    type: 'ADD_ALL_TO_CART',
-  }),
+  onCartClick: file => dispatch(actions.addToCart(file)),
+  onChangeSort: column => dispatch(actions.sortChange(column)),
+  onChangeFilter: (category, filter) => dispatch(actions.changeFilter(category, filter)),
+  onChangePage: page => dispatch(actions.changePage(page)),
+  onViewCart: () => dispatch(actions.viewCart()),
+  onEmptyCart: () => dispatch(actions.emptyCart()),
+  onAddAllToCart: () => dispatch(actions.addAllToCart()),
+  getUpdatedList: params => dispatch(actions.getUpdatedList(params)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DownloadPage);

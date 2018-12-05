@@ -1,3 +1,5 @@
+import { types } from './downloadActions';
+
 export const defaultDownloadState = {
   sortBy: 'identifier',
   allUploads: [],
@@ -12,6 +14,7 @@ export const defaultDownloadState = {
   cartItems: [],
   uploadCount: 0,
   viewCart: false,
+  listUpdating: false,
 };
 
 
@@ -30,7 +33,7 @@ function createSorter(sortBy) {
 
 function downloadReducer(state = defaultDownloadState, action) {
   switch (action.type) {
-    case 'ADD_TO_CART': {
+    case types.ADD_TO_CART: {
       let newItem = true;
       const newCartItems = state.cartItems.filter((item) => {
         if (item === action.cartItem) {
@@ -54,14 +57,18 @@ function downloadReducer(state = defaultDownloadState, action) {
       };
     }
 
-    case 'CHANGE_FILTER': {
+    case types.CHANGE_FILTER: {
       const isActiveFilter = state.activeFilters[action.category].indexOf(action.filter);
       const newActiveFilters = { ...state.activeFilters };
+
       if (isActiveFilter === -1) {
+        // Adds filter if new
         newActiveFilters[action.category] = newActiveFilters[action.category]
           .concat([action.filter]);
       } else {
-        newActiveFilters[action.category] = newActiveFilters[action.category].filter(filter => !(filter === action.filter));
+        // Removes filter if already exists
+        newActiveFilters[action.category] = newActiveFilters[action.category]
+          .filter(filter => !(filter === action.filter));
       }
       let filtUploads = state.allUploads;
 
@@ -80,34 +87,58 @@ function downloadReducer(state = defaultDownloadState, action) {
         uploadCount: filtUploads.length,
       };
     }
-    case 'VIEW_CART':
+    case types.APPLY_FILTERS: {
+      let filtUploads = state.allUploads;
+      Object.keys(state.activeFilters).forEach((cat) => {
+        if (state.activeFilters[cat].length) {
+          filtUploads = filtUploads
+            .filter(upload => !(state.activeFilters[cat].indexOf(upload[cat]) === -1));
+        }
+      });
+      return {
+        ...state,
+        filteredUploads: filtUploads,
+      };
+    }
+    case types.VIEW_CART:
       return {
         ...state,
         viewCart: !state.viewCart,
       };
-    case 'SORT_CHANGE':
+    case types.SORT_CHANGE:
       return {
         ...state,
         sortBy: action.column,
         allUploads: state.allUploads.sort(createSorter(action.column)),
       };
-    case 'CHANGE_PAGE':
+    case types.CHANGE_PAGE:
       return {
         ...state,
         currentPage: action.page,
       };
-    case 'UPDATE_LIST':
+    case types.REQUEST_UPDATE_LIST:
+      return {
+        ...state,
+        listUpdating: true,
+      };
+    case types.RECIEVE_UPDATE_LIST:
       return {
         ...state,
         allUploads: action.uploads.sort(createSorter(state.sortBy)),
-        uploadCount: action.uploads.length,
+        listUpdating: false,
+        uploadCount: action.uploadCount,
       };
-    case 'ADD_ALL_TO_CART':
+    case types.ADD_ALL_TO_CART: {
+      let cartItems = [...state.cartItems];
+      state.filteredUploads.forEach((upload) => {
+        cartItems = cartItems.filter(cartItem => cartItem !== upload);
+      });
       return {
         ...state,
-        cartItems: state.filteredUploads,
+        cartItems: [...cartItems, ...state.filteredUploads],
       };
-    case 'EMPTY_CART':
+    }
+    case types.EMPTY_CART:
       return {
         ...state,
         cartItems: [],
