@@ -11,3 +11,18 @@ $dgray: #404040;
 $gray: #707070;
 $gray-semi-transparent: transparentize($gray,0.5);
 $gray-transparent: transparentize($gray,0.9);
+$brown: #7E5610;
+$burgundy: #7E1139;
+
+.dblue {
+  color: $dblue;
+}
+.burgundy {
+  color: $burgundy;
+}
+.green {
+  color: $green;
+}
+.dgray {
+  color: $dgray
+}

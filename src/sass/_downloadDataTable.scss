@@ -37,6 +37,9 @@
     background-color: $dblue;
     color: white;
   }
+  .viewCartTitle {
+    margin-top: 0.5rem;
+  }
 }
 .noData {
   background-color: $gray-transparent;
@@ -67,6 +70,14 @@
     .endP {
       margin-bottom: 1rem;
     }
+  }
+  .animal {
+    color: $dblue;
+    font-size: 1.2rem;
+  }
+  .human {
+    font-size: 1.2rem;
+    color: $burgundy;
   }
 }
 // Remove icon text (e.g 'Publicly Available') when small

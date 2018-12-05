@@ -11,7 +11,7 @@ function DownloadFilter({
       <h5>{category.name}</h5>
       {
         category.filters
-          .map((filter) => {
+          .map((filter, i) => {
             const isActiveFilter = !(activeFilters[category.keyName].indexOf(filter) === -1);
             return (
               <button
@@ -21,6 +21,8 @@ function DownloadFilter({
                 onClick={() => onChangeFilter(category.keyName, filter)}
               >
                 {filter}
+                &nbsp;
+                {category.icons ? category.icons[i] : ''}
               </button>);
           })
       }

@@ -12,6 +12,10 @@ export function DownloadPage({
   cartItems,
   uploadCount,
   sortBy,
+  viewCart,
+  onViewCart,
+  onEmptyCart,
+  onAddAllToCart,
   activeFilters,
   currentPage,
   maxRows,
@@ -25,9 +29,17 @@ export function DownloadPage({
   }
   return (
     <div className="container downloadPage">
-      <div className="row titleRow">
-        <div className="col">
+      <div className="row titleRow mb-1">
+        <div className="col-12 col-md-4">
           <h2>Download Data</h2>
+        </div>
+        <div className="col">
+          <button className={`viewCart m-1 mr-5 btn ${viewCart ? 'active' : ''}`} type="button" onClick={onViewCart}>
+            View Cart&nbsp;
+            {cartItems.length ? (<span className="badge badge-pill cartCount">{cartItems.length}</span>) : ''}
+          </button>
+          <button className="emptyCart m-1 btn" type="button" onClick={onEmptyCart}>Empty Cart</button>
+          <button className="addAllToCart m-1 btn" type="button" onClick={onAddAllToCart}>Add All To Cart</button>
         </div>
       </div>
       <div className="row justify-content-center">
@@ -43,6 +55,7 @@ export function DownloadPage({
           onChangeSort={onChangeSort}
           maxRows={maxRows}
           currentPage={currentPage}
+          viewCart={viewCart}
         />
       </div>
       <DownloadPaginator
@@ -51,6 +64,8 @@ export function DownloadPage({
         maxRows={maxRows}
         onChangePage={onChangePage}
         uploadCount={uploadCount}
+        viewCart={viewCart}
+        cartItems={cartItems}
       />
     </div>
   );
@@ -61,6 +76,7 @@ DownloadPage.propTypes = {
   sortBy: PropTypes.string,
   uploadCount: PropTypes.number.isRequired,
   loggedIn: PropTypes.bool,
+  viewCart: PropTypes.bool.isRequired,
   activeFilters: DownloadFilter.propTypes.activeFilters.isRequired,
   maxRows: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
@@ -68,6 +84,9 @@ DownloadPage.propTypes = {
   onChangeSort: PropTypes.func.isRequired,
   onChangeFilter: PropTypes.func.isRequired,
   onChangePage: PropTypes.func.isRequired,
+  onViewCart: PropTypes.func.isRequired,
+  onEmptyCart: PropTypes.func.isRequired,
+  onAddAllToCart: PropTypes.func.isRequired,
 };
 DownloadPage.defaultProps = {
   sortBy: 'identifier',
@@ -83,6 +102,7 @@ const mapStateToProps = state => ({
   currentPage: state.download.currentPage,
   maxRows: state.download.maxRows,
   uploadCount: state.download.uploadCount,
+  viewCart: state.download.viewCart,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -102,6 +122,15 @@ const mapDispatchToProps = dispatch => ({
   onChangePage: toPage => dispatch({
     type: 'CHANGE_PAGE',
     page: toPage,
+  }),
+  onViewCart: () => dispatch({
+    type: 'VIEW_CART',
+  }),
+  onEmptyCart: () => dispatch({
+    type: 'EMPTY_CART',
+  }),
+  onAddAllToCart: () => dispatch({
+    type: 'ADD_ALL_TO_CART',
   }),
 });
 

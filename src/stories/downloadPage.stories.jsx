@@ -15,6 +15,9 @@ const downloadActions = {
   onChangeFilter: action('Change Filter'),
   onChangePage: action('Change Page'),
   onCartClick: action('Add/Remove from Cart'),
+  onViewCart: action('View Cart'),
+  onEmptyCart: action('Empty Cart'),
+  onAddAllToCart: action('Add All To Cart'),
 };
 
 const loggedInState = {
@@ -27,6 +30,14 @@ const withFilesState = {
   loggedIn: true,
   allUploads: testPreviousUploads,
   filteredUploads: testPreviousUploads,
+};
+const viewCartState = {
+  ...defaultDownloadState,
+  loggedIn: true,
+  allUploads: testPreviousUploads,
+  filteredUploads: testPreviousUploads,
+  cartItems: testPreviousUploads,
+  viewCart: true,
 };
 
 const footerActions = {
@@ -49,3 +60,4 @@ storiesOf('Download Page', module)
   ))
   .add('default', () => <DownloadPage {...loggedInState} {...downloadActions} />)
   .add('With Data', () => <DownloadPage {...withFilesState} {...downloadActions} />)
+  .add('View Cart', () => <DownloadPage {...viewCartState} {...downloadActions} />);

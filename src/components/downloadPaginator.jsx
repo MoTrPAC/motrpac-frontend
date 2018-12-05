@@ -6,6 +6,8 @@ function DownloadPaginator({
   maxRows,
   onChangePage,
   uploadCount,
+  viewCart,
+  cartItems,
 }) {
   const PrevBtn = (
     <button type="button" className="btn prevBtn" onClick={() => onChangePage(currentPage - 1)}>
@@ -17,7 +19,7 @@ function DownloadPaginator({
       <span className="oi oi-arrow-thick-right" />
     </button>
   );
-  const lastPage = Math.ceil(uploadCount / maxRows);
+  const lastPage = viewCart ? Math.ceil(cartItems.length / maxRows) : Math.ceil(uploadCount / maxRows);
   return (
     <div className="downloadPaginator centered row">
       <div className="col">
@@ -29,7 +31,7 @@ function DownloadPaginator({
         {currentPage !== lastPage && NextBtn}
         <p>
           Total Results:&nbsp;
-          {uploadCount}
+          {viewCart ? cartItems.length : uploadCount}
         </p>
       </div>
     </div>

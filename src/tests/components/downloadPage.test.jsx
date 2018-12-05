@@ -35,6 +35,9 @@ const downloadActions = {
   onChangeSort: jest.fn(),
   onChangeFilter: jest.fn(),
   onChangePage: jest.fn(),
+  onViewCart: jest.fn(),
+  onEmptyCart: jest.fn(),
+  onAddAllToCart: jest.fn(),
 };
 
 

@@ -6,7 +6,7 @@ const stats = {
   totalSize: 13.4,
 };
 
-function AllUploadStats({ allUploadStats = stats }) {
+function AllUploadStats({ allUploadStats }) {
   return (
     <div className="col uploadStats align-self-center ">
       <p className="align-middle">
@@ -30,7 +30,10 @@ AllUploadStats.propTypes = {
   allUploadStats: PropTypes.shape({
     totalSamples: PropTypes.number.isRequired,
     totalSize: PropTypes.number.isRequired,
-  }).isRequired,
+  }),
+};
+AllUploadStats.defaultProps = {
+  allUploadStats: stats,
 };
 
 export default AllUploadStats;

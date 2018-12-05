@@ -19,7 +19,7 @@ export function Dashboard({ user, loggedIn, featureAvailable }) {
     return (
       <div className="container Dashboard">
         <div className="row align-items-center">
-          <div className="col align-self-center">
+          <div className="col-12 col-md-6 align-self-center">
             <h2 className="welcomeUser light">{`Welcome ${user.name} at ${user.siteName}`}</h2>
           </div>
           <div className="col-auto">

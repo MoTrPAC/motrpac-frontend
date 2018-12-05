@@ -12,16 +12,31 @@
     border: 1px solid $gray;
     border-radius: 20px;
     font-size: .85rem;
-    line-height: .75rem;
+    line-height: .85rem;
     padding: .3rem .4rem;
     margin-top: .25rem;
     white-space: normal;
+    .filterIcon {
+      font-size:1.25rem;
+    }
+    .green {
+      color: $green;
+    }
+    .dblue {
+      color: $dblue;
+    }
+    .dgray {
+      color: $dgray;
+    }
   }
 // Remove icon text (e.g 'Publicly Available') when small
   
   .activeFilter {
     background-color: $dgray;
     color: white;
+    span, .green, .dblue, .dgray {
+      color: white;
+    }
   }
 }
 

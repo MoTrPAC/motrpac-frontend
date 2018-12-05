@@ -5,6 +5,7 @@ function DownloadDataTable({
   filteredUploads,
   onCartClick,
   cartItems,
+  viewCart,
   maxRows,
   currentPage,
 }) {
@@ -19,7 +20,10 @@ function DownloadDataTable({
     );
   }
   let displayedUploads = [...filteredUploads];
-  if (filteredUploads.length > maxRows) {
+  if (viewCart) {
+    displayedUploads = [...cartItems];
+  }
+  if (displayedUploads.length > maxRows) {
     displayedUploads = filteredUploads
       .slice((currentPage - 1) * maxRows, currentPage * maxRows);
   }
@@ -38,6 +42,7 @@ function DownloadDataTable({
 
   return (
     <div className="col downloadTable">
+      {viewCart ? <h4 className="viewCartTitle">Your Cart</h4> : ''}
       {uploadList}
     </div>
   );
@@ -45,6 +50,7 @@ function DownloadDataTable({
 DownloadDataTable.propTypes = {
   filteredUploads: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   cartItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  viewCart: PropTypes.bool.isRequired,
   maxRows: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
   onCartClick: PropTypes.func.isRequired,
@@ -83,7 +89,7 @@ export function DownloadRow({ upload, onCartClick, inCart }) {
           <span className="iconText">
             Internally Available&nbsp;
           </span>
-          <span className="oi oi-beaker" />
+          <span className="oi oi-loop-square" />
         </p>
       );
       break;
@@ -104,11 +110,10 @@ export function DownloadRow({ upload, onCartClick, inCart }) {
   return (
     <div className={`downloadRow m-2 row ${availClass}`}>
       <div className="col leftSide mt-2">
-        <h4>{`ID: ${upload.identifier}`}</h4>
-        <p>
-          <span className="heavy">Subject: </span>
-          {upload.subject}
-        </p>
+        <h4>
+          {upload.subject === 'Animal' ? <span title="Subject: Animal" className="icon-Animal animal" /> : <span title="Subject: Human" className="icon-Human human" /> }
+          {` ID: ${upload.identifier} `}
+        </h4>
         <p>
           <span className="heavy">Data Type: </span>
           {upload.type}

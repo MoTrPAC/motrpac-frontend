@@ -2,14 +2,16 @@ export const defaultDownloadState = {
   sortBy: 'identifier',
   allUploads: [],
   filteredUploads: [],
-  maxRows: 5,
+  maxRows: 10,
   currentPage: 1,
   activeFilters: {
     type: [],
     subject: [],
+    availability: [],
   },
   cartItems: [],
   uploadCount: 0,
+  viewCart: false,
 };
 
 
@@ -78,7 +80,11 @@ function downloadReducer(state = defaultDownloadState, action) {
         uploadCount: filtUploads.length,
       };
     }
-
+    case 'VIEW_CART':
+      return {
+        ...state,
+        viewCart: !state.viewCart,
+      };
     case 'SORT_CHANGE':
       return {
         ...state,
@@ -95,6 +101,16 @@ function downloadReducer(state = defaultDownloadState, action) {
         ...state,
         allUploads: action.uploads.sort(createSorter(state.sortBy)),
         uploadCount: action.uploads.length,
+      };
+    case 'ADD_ALL_TO_CART':
+      return {
+        ...state,
+        cartItems: state.filteredUploads,
+      };
+    case 'EMPTY_CART':
+      return {
+        ...state,
+        cartItems: [],
       };
 
     default:
