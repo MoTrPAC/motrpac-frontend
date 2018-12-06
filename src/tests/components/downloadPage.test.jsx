@@ -10,34 +10,32 @@ import DownloadPageConnected, { DownloadPage } from '../../components/downloadPa
 Enzyme.configure({ adapter: new Adapter() });
 
 
-const testPreviousUploads = require('../../testData/testPreviousUploads');
+const testAllUploads = require('../../testData/testAllUploads');
 
 const loggedInRootState = {
   ...defaultRootState,
   auth: {
     ...defaultRootState.auth,
     loggedIn: true,
+    siteName: 'Stanford CAS',
   },
 };
 const withUploadsRootState = {
-  ...defaultRootState,
-  auth: {
-    ...defaultRootState.auth,
-    loggedIn: true,
-  },
+  ...loggedInRootState,
   download: {
     ...defaultDownloadState,
-    allUploads: testPreviousUploads,
+    allUploads: testAllUploads,
   },
 };
 const downloadActions = {
   onCartClick: jest.fn(),
   onChangeSort: jest.fn(),
   onChangeFilter: jest.fn(),
-  onChangePage: jest.fn(),
+  changePageRequest: jest.fn(),
   onViewCart: jest.fn(),
   onEmptyCart: jest.fn(),
   onAddAllToCart: jest.fn(),
+  getUpdatedList: jest.fn(),
 };
 
 
@@ -47,7 +45,7 @@ describe('Pure Download Page', () => {
       <DownloadPage
         {...defaultDownloadState}
         {...downloadActions}
-        allUploads={testPreviousUploads}
+        allUploads={testAllUploads}
       />,
     );
     expect(shallowDownload.find('Redirect'))
@@ -58,8 +56,9 @@ describe('Pure Download Page', () => {
       <DownloadPage
         {...defaultDownloadState}
         {...downloadActions}
-        allUploads={testPreviousUploads}
+        allUploads={testAllUploads}
         loggedIn
+        siteName="Stanford CAS"
       />,
     );
     expect(shallowDownload.find('DownloadDataTable'))

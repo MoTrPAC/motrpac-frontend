@@ -15,6 +15,7 @@ export const defaultDownloadState = {
   uploadCount: 0,
   viewCart: false,
   listUpdating: false,
+  requireUpdate: false,
 };
 
 
@@ -84,7 +85,7 @@ function downloadReducer(state = defaultDownloadState, action) {
         ...state,
         activeFilters: newActiveFilters,
         filteredUploads: filtUploads,
-        uploadCount: filtUploads.length,
+        requireUpdate: true,
       };
     }
     case types.APPLY_FILTERS: {
@@ -126,6 +127,7 @@ function downloadReducer(state = defaultDownloadState, action) {
         ...state,
         allUploads: action.uploads.sort(createSorter(state.sortBy)),
         listUpdating: false,
+        requireUpdate: false,
         uploadCount: action.uploadCount,
       };
     case types.ADD_ALL_TO_CART: {

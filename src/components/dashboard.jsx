@@ -8,6 +8,7 @@ import AllUploadsDoughnut from './allUploadsDoughnut';
 import AllUploadStats from './allUploadStats';
 
 const previousUploads = require('../testData/testPreviousUploads');
+const allUploads = require('../testData/testAllUploads');
 
 export function Dashboard({ user, loggedIn, featureAvailable }) {
   const editBtn = (
@@ -49,7 +50,7 @@ export function Dashboard({ user, loggedIn, featureAvailable }) {
           </div>
         </div>
         <div className="row align-items-center pb-4">
-          <AllUploadsDoughnut allUploads={previousUploads} />
+          <AllUploadsDoughnut allUploads={allUploads} />
           <AllUploadStats />
         </div>
       </div>

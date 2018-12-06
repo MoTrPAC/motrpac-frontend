@@ -7,7 +7,7 @@ import { defaultDownloadState } from '../../reducers/downloadReducer';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const testPreviousUploads = require('../../testData/testPreviousUploads');
+const testAllUploads = require('../../testData/testAllUploads');
 
 const downloadActions = {
   onCartClick: jest.fn(),
@@ -18,13 +18,13 @@ const downloadActions = {
 describe('Download Data Table', () => {
   test('Renders correct amount of rows', () => {
     const shallowTable = shallow(
-      <DownloadDataTable {...defaultDownloadState} filteredUploads={testPreviousUploads} {...downloadActions} />,
+      <DownloadDataTable siteName="Stanford CAS" {...defaultDownloadState} filteredUploads={testAllUploads} {...downloadActions} />,
     );
-    expect(shallowTable.find('DownloadRow')).toHaveLength(defaultDownloadState.maxRows);
+    expect(shallowTable.find('DownloadRow')).toHaveLength(testAllUploads.length);
   });
   test('No uploads message loads if nothing uploaded', () => {
     const shallowTable = shallow(
-      <DownloadDataTable {...defaultDownloadState} filteredUploads={[]} {...downloadActions} />,
+      <DownloadDataTable siteName="Stanford CAS" {...defaultDownloadState} filteredUploads={[]} {...downloadActions} />,
     );
     expect(shallowTable.find('DownloadRow')).toHaveLength(0);
     expect(shallowTable.find('.noData')).toHaveLength(1);

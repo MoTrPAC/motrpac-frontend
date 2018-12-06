@@ -88,19 +88,34 @@ function applyFilters() {
 }
 
 // Mock Async Getting List
-const uploads = require('../testData/testPreviousUploads');
+const uploads = require('../testData/testAllUploads');
 
 const uploadCount = uploads.length;
 
-function getUpdatedList(params) {
+function changePageRequest(maxRows, page) {
   return (dispatch) => {
     dispatch(requestUpdateList());
+    dispatch(changePage(page));
     return setTimeout(() => {
-      dispatch(recieveUpdateList(uploadCount, uploads.slice(0, 3)));
+      // assumes database returned relevant uploads and total count
+      dispatch(recieveUpdateList(uploadCount, uploads.slice(maxRows * (page - 1), maxRows * page)));
       dispatch(applyFilters());
     }, 1000);
   };
 }
+/* Implement later when database more setup, will send request to database for results from a filter
+function changeFilterRequest(maxRows, category, filters) {
+  return (dispatch) => {
+    dispatch(requestUpdateList());
+    dispatch(changePage(1));
+    return setTimeout(() => {
+      // assumes database returned relevant uploads and total count
+      dispatch(recieveUpdateList(uploadCount, uploads.slice(maxRows * (page - 1), maxRows * page)));
+      dispatch(applyFilters());
+    }, 1000);
+  };
+}
+*/
 
 const actions = {
   addToCart,
@@ -110,7 +125,7 @@ const actions = {
   recieveUpdateList,
   viewCart,
   sortChange,
-  getUpdatedList,
+  changePageRequest,
   addAllToCart,
   emptyCart,
 };

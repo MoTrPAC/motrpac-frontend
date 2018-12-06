@@ -11,7 +11,7 @@ const TESTING = true;
 const testDownloadState = {
   ...defaultDownloadState,
   allUploads: testUploads,
-  filteredUploads: testUploads,
+  filteredUploads: testUploads.slice(0, defaultDownloadState.maxRows),
   uploadCount: testUploads.length,
 };
 

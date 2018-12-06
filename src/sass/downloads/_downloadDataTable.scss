@@ -1,4 +1,18 @@
 .downloadTable {
+  &.updating {
+    text-align: center;
+    border: 1px solid $gray-semi-transparent;
+    background-color: $gray-transparent;
+    padding: 2rem;
+    margin: 2rem;
+    border-radius: 20px;
+    h2,span{
+      color: $gray;
+    }
+    span {
+      font-size:3rem;
+    }
+  }
   .public {
     .statusText{
       color: $green;
@@ -52,7 +66,6 @@
     color: $gray;
   }
 }
-
 .downloadRow {
   border: 1px solid $gray;
   border-radius: 10px;

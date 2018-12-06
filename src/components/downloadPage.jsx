@@ -9,6 +9,7 @@ import actions from '../reducers/downloadActions';
 
 export function DownloadPage({
   loggedIn,
+  siteName,
   filteredUploads,
   cartItems,
   uploadCount,
@@ -20,25 +21,24 @@ export function DownloadPage({
   activeFilters,
   currentPage,
   maxRows,
+  listUpdating,
   onCartClick,
   onChangeSort,
   onChangeFilter,
-  onChangePage,
-  getUpdatedList,
+  changePageRequest,
 }) {
   if (!loggedIn) {
     return <Redirect to="/" />;
   }
   return (
     <div className="container downloadPage">
-      <button className="btn btn-primary" type="button" onClick={getUpdatedList}>GetUpdatedList</button>
       <div className="row titleRow mb-1">
         <div className="col-12 col-md-4">
           <h2>Download Data</h2>
         </div>
         <div className="col">
-          <button className={`viewCart m-1 mr-5 btn ${viewCart ? 'active' : ''}`} type="button" onClick={onViewCart}>
-            View Cart&nbsp;
+          <button className={`viewCart m-1 mr-sm-5 btn ${viewCart ? 'active' : ''}`} type="button" onClick={onViewCart}>
+            {viewCart ? 'Return' : 'View Cart '}
             {cartItems.length ? (<span className="badge badge-pill cartCount">{cartItems.length}</span>) : ''}
           </button>
           <button className="emptyCart m-1 btn" type="button" onClick={onEmptyCart}>Empty Cart</button>
@@ -59,16 +59,16 @@ export function DownloadPage({
           maxRows={maxRows}
           currentPage={currentPage}
           viewCart={viewCart}
+          listUpdating={listUpdating}
+          siteName={siteName}
         />
       </div>
       <DownloadPaginator
         currentPage={currentPage}
-        filteredUploads={filteredUploads}
         maxRows={maxRows}
-        onChangePage={onChangePage}
+        onChangePage={changePageRequest}
         uploadCount={uploadCount}
         viewCart={viewCart}
-        cartItems={cartItems}
       />
     </div>
   );
@@ -79,25 +79,29 @@ DownloadPage.propTypes = {
   sortBy: PropTypes.string,
   uploadCount: PropTypes.number.isRequired,
   loggedIn: PropTypes.bool,
+  siteName: PropTypes.string,
   viewCart: PropTypes.bool.isRequired,
+  listUpdating: PropTypes.bool.isRequired,
   activeFilters: DownloadFilter.propTypes.activeFilters.isRequired,
   maxRows: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
   onCartClick: PropTypes.func.isRequired,
   onChangeSort: PropTypes.func.isRequired,
   onChangeFilter: PropTypes.func.isRequired,
-  onChangePage: PropTypes.func.isRequired,
   onViewCart: PropTypes.func.isRequired,
   onEmptyCart: PropTypes.func.isRequired,
   onAddAllToCart: PropTypes.func.isRequired,
+  changePageRequest: PropTypes.func.isRequired,
 };
 DownloadPage.defaultProps = {
   sortBy: 'identifier',
   loggedIn: false,
+  siteName: '',
 };
 
 const mapStateToProps = state => ({
   sortBy: state.download.sortBy,
+  siteName: state.auth.user.siteName,
   filteredUploads: state.download.filteredUploads,
   cartItems: state.download.cartItems,
   loggedIn: state.auth.loggedIn,
@@ -106,17 +110,17 @@ const mapStateToProps = state => ({
   maxRows: state.download.maxRows,
   uploadCount: state.download.uploadCount,
   viewCart: state.download.viewCart,
+  listUpdating: state.download.listUpdating,
 });
 
 const mapDispatchToProps = dispatch => ({
   onCartClick: file => dispatch(actions.addToCart(file)),
   onChangeSort: column => dispatch(actions.sortChange(column)),
   onChangeFilter: (category, filter) => dispatch(actions.changeFilter(category, filter)),
-  onChangePage: page => dispatch(actions.changePage(page)),
   onViewCart: () => dispatch(actions.viewCart()),
   onEmptyCart: () => dispatch(actions.emptyCart()),
   onAddAllToCart: () => dispatch(actions.addAllToCart()),
-  getUpdatedList: params => dispatch(actions.getUpdatedList(params)),
+  changePageRequest: (maxRows, page) => dispatch(actions.changePageRequest(maxRows, page)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DownloadPage);

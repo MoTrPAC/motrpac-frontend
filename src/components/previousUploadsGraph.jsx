@@ -13,7 +13,7 @@ export function countUploads(data) {
 }
 
 function PreviousUploadsGraph({ previousUploads }) {
-  const pendingQC = previousUploads.filter(upload => upload.availability === 'Pending QC');
+  const pendingQC = previousUploads.filter(upload => upload.availability === 'Pending Q.C.');
   const pendingQCCount = countUploads(pendingQC.map(upload => upload.type));
   const internalAvailable = previousUploads.filter(upload => upload.availability === 'Internally Available');
   const internalAvailableCount = countUploads(internalAvailable.map(upload => upload.type));
@@ -23,7 +23,7 @@ function PreviousUploadsGraph({ previousUploads }) {
     labels: Object.keys(pendingQCCount),
     datasets: [
       {
-        label: 'Pending QC',
+        label: 'Pending Q.C.',
         data: Object.values(pendingQCCount),
         borderColor: colors.graphs.dgray,
         borderWidth: 1,
