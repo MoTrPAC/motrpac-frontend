@@ -44,4 +44,18 @@ describe('Download Row', () => {
     );
     expect(shallowRow.find('DownloadBtn')).toHaveLength(1);
   });
+  test('If pending Q.C. and is users site, show download button', () => {
+    const shallowRow = shallow(
+      <DownloadRow {...defaultRowState} {...downloadActions} upload={pendingUpload} />,
+    );
+    expect(shallowRow.find('DownloadBtn')).toHaveLength(1);
+    expect(shallowRow.find('.noDownload')).toHaveLength(0);
+  });
+  test('If pending Q.C. and not users site, no download button', () => {
+    const shallowRow = shallow(
+      <DownloadRow {...defaultRowState} {...downloadActions} upload={pendingUnavailableUpload} />,
+    );
+    expect(shallowRow.find('DownloadBtn')).toHaveLength(0);
+    expect(shallowRow.find('.noDownload')).toHaveLength(1);
+  });
 });

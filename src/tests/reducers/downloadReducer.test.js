@@ -35,12 +35,19 @@ const shortTestUploads = [
 const defaultWithUploadsState = {
   ...defaultDownloadState,
   allUploads: testAllUploads,
+  filteredUploads: testAllUploads,
+  siteName: 'Stanford CAS',
 };
 const viewCartWithCartItemsState = {
   ...defaultDownloadState,
   allUploads: testAllUploads,
   viewCart: true,
   cartItems: [testAllUploads[0]],
+};
+const unavailableDownload = {
+  ...testAllUploads[0],
+  availability: 'Pending Q.C.',
+  site: 'Not Stanford CAS',
 };
 
 describe('Download Reducer Tests', () => {
@@ -111,5 +118,19 @@ describe('Download Reducer Tests', () => {
       .toBe(testAllUploads[0]);
     expect(DownloadReducer(viewCartWithCartItemsState, actions.addToCart(testAllUploads[0])).cartItems[0])
       .not.toBe(testAllUploads[0]);
+  });
+
+  test('Adding to cart pending Q.C and site not user site, does not add to cart', () => {
+    expect(DownloadReducer(defaultDownloadState, actions.addToCart(unavailableDownload)).cartItems[0])
+      .not.toBe(unavailableDownload);
+    expect(DownloadReducer(defaultDownloadState, actions.addToCart(unavailableDownload)).cartItems)
+      .toHaveLength(0);
+  });
+
+  test('Adding all to cart, does not allow items that are both pending Q.C and not from user site', () => {
+    DownloadReducer(defaultWithUploadsState, actions.addAllToCart()).cartItems.forEach((item) => {
+      expect((item.availability !== 'Pending Q.C.') || (item.site === defaultWithUploadsState.siteName))
+        .toBeTruthy();
+    });
   });
 });

@@ -13,6 +13,7 @@ const testDownloadState = {
   allUploads: testUploads,
   filteredUploads: testUploads.slice(0, defaultDownloadState.maxRows),
   uploadCount: testUploads.length,
+  siteName: 'Stanford CAS',
 };
 
 // TODO: Screen change reducer

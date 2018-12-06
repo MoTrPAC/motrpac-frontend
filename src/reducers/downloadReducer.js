@@ -16,6 +16,7 @@ export const defaultDownloadState = {
   viewCart: false,
   listUpdating: false,
   requireUpdate: false,
+  siteName: '',
 };
 
 
@@ -43,6 +44,13 @@ function downloadReducer(state = defaultDownloadState, action) {
         }
         return true;
       });
+      // if not downloadable
+      if ((action.cartItem.availability === 'Pending Q.C.') && (action.cartItem.site !== state.siteName)) {
+        return {
+          ...state,
+        };
+      }
+      // if new cart item, add to cart
       if (newItem) {
         return {
           ...state,
@@ -52,6 +60,7 @@ function downloadReducer(state = defaultDownloadState, action) {
           ],
         };
       }
+      // removes from cart if already in cart
       return {
         ...state,
         cartItems: newCartItems,
@@ -132,12 +141,22 @@ function downloadReducer(state = defaultDownloadState, action) {
       };
     case types.ADD_ALL_TO_CART: {
       let cartItems = [...state.cartItems];
-      state.filteredUploads.forEach((upload) => {
+      // Only uploads available to user added to cart
+      const filtUploads = [...state.filteredUploads].filter((upload) => {
+        if ((upload.availability === 'Pending Q.C.') && (upload.site !== state.siteName)) {
+          return false;
+        }
+        return true;
+      });
+
+      // Filters out items that are not unique
+      filtUploads.forEach((upload) => {
         cartItems = cartItems.filter(cartItem => cartItem !== upload);
       });
+
       return {
         ...state,
-        cartItems: [...cartItems, ...state.filteredUploads],
+        cartItems: [...cartItems, ...filtUploads],
       };
     }
     case types.EMPTY_CART:

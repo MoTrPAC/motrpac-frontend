@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function DownloadRow({ upload, onCartClick, inCart, siteName }) {
+  const downloadable = !((upload.availability === 'Pending Q.C.') && (upload.site !== siteName));
   function DownloadBtn() {
     return (
       <button title="Add To Cart" className={`btn downloadBtn ${inCart && 'inCart'}`} type="button" onClick={() => onCartClick(upload)}>
@@ -70,7 +71,7 @@ function DownloadRow({ upload, onCartClick, inCart, siteName }) {
       <div className="col col-auto d-flex flex-column justify-content-between">
         <div className="row rightAlign">
           <div className="col mt-2">
-            <DownloadBtn />
+            {downloadable ? <DownloadBtn /> : <p className="noDownload">Currently Unavailable</p>}
           </div>
         </div>
         <div className="row rightAlign">

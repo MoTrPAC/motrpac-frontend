@@ -13,6 +13,9 @@
       font-size:3rem;
     }
   }
+  .noDownload {
+    font-weight: $heavy-weight;
+  }
   .public {
     .statusText{
       color: $green;
