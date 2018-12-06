@@ -38,7 +38,7 @@ export function DownloadPage({
         </div>
         <div className="col">
           <button className={`viewCart m-1 mr-sm-5 btn ${viewCart ? 'active' : ''}`} type="button" onClick={onViewCart}>
-            {viewCart ? 'Return' : 'View Cart '}
+            {viewCart ? 'Return ' : 'View Cart '}
             {cartItems.length ? (<span className="badge badge-pill cartCount">{cartItems.length}</span>) : ''}
           </button>
           <button className="emptyCart m-1 btn" type="button" onClick={onEmptyCart}>Empty Cart</button>

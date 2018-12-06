@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function DownloadRow({ upload, onCartClick, inCart, siteName }) {
+function DownloadRow({
+  upload,
+  onCartClick,
+  inCart,
+  siteName,
+}) {
   const downloadable = !((upload.availability === 'Pending Q.C.') && (upload.site !== siteName));
   function DownloadBtn() {
     return (
@@ -71,7 +76,7 @@ function DownloadRow({ upload, onCartClick, inCart, siteName }) {
       <div className="col col-auto d-flex flex-column justify-content-between">
         <div className="row rightAlign">
           <div className="col mt-2">
-            {downloadable ? <DownloadBtn /> : <p className="noDownload">Currently Unavailable</p>}
+            {downloadable ? <DownloadBtn /> : <p title="Data are pending Q.C. and are not from your site" className="noDownload">Currently Unavailable</p>}
           </div>
         </div>
         <div className="row rightAlign">

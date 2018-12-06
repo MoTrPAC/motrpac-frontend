@@ -25,4 +25,4 @@ const assayList = [
   'SomaLogic',
 ];
 
-export default assayList;
+export default assayList.sort();
