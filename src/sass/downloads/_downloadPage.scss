@@ -6,10 +6,6 @@
     background-color: white;
     border: 1px solid $dblue;
     color: $dblue;
-    .cartCount {
-      color:white;
-      background-color: $dblue;
-    }
   }
 }
 .emptyCart {
@@ -19,10 +15,15 @@
 }
 .addAllToCart {
   color: white;
-  background-color: $dgreen;
+  background-color: $green;
   border-radius: 10px;
 }
-.cartCount {
-  background-color: white;
-  color: $dblue;
+.downloadCart {
+  color: white;
+  background-color: $blue;
+  border-radius: 10px;
+  .cartCount {
+    background-color: white;
+    color: $dblue;
+  }
 }

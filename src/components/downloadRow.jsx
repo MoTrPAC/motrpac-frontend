@@ -10,7 +10,7 @@ function DownloadRow({
   const downloadable = !((upload.availability === 'Pending Q.C.') && (upload.site !== siteName));
   function DownloadBtn() {
     return (
-      <button title="Add To Cart" className={`btn downloadBtn ${inCart && 'inCart'}`} type="button" onClick={() => onCartClick(upload)}>
+      <button title={inCart ? 'Remove from Cart' : 'Add To Cart'} className={`btn downloadBtn ${inCart && 'inCart'}`} type="button" onClick={() => onCartClick(upload)}>
         <span className="oi oi-cart" />
       </button>
     );

@@ -90,5 +90,7 @@ describe('Connected Download Page', () => {
       .toHaveLength(1);
     expect(mountedDownload.find('DownloadDataTable'))
       .toHaveLength(1);
+    expect(mountedDownload.find('DownloadPaginator'))
+      .toHaveLength(1);
   });
 });
