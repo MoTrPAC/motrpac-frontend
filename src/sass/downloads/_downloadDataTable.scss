@@ -49,6 +49,7 @@
     border: 1px dashed $dblue;
     border-radius: 10px;
     line-height: 1;
+    box-shadow: 1px 3px 5px lighten($blue, 40%);
   }
   .inCart {
     background-color: $dblue;
@@ -72,6 +73,7 @@
 .downloadRow {
   border: 1px solid $gray;
   border-radius: 10px;
+  background-color: white;
   .rightAlign {
     text-align: right;
   }
@@ -89,10 +91,10 @@
   }
   .animal {
     color: $dblue;
-    font-size: 1.2rem;
+    font-size: 1.75rem;
   }
   .human {
-    font-size: 1.2rem;
+    font-size: 1.75rem;
     color: $burgundy;
   }
 }
