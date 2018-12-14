@@ -19,7 +19,7 @@ function TeamPage() {
       <div className="row mt-2 justify-content-center">
         {PIs}
       </div>
-      <div className="row mt-4 pb-4 justify-content-around">
+      <div className="row mt-4 pb-4 justify-content-center px-md-5">
         {staff}
       </div>
     </div>

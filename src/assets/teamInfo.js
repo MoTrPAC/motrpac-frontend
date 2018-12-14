@@ -36,7 +36,7 @@ const teamInfo = {
     },
     {
       name: 'Karen Dalton',
-      title: 'Lead Software Developer',
+      title: 'Senior Software Developer',
       image: KarenImg,
     },
     {
