@@ -1,44 +1,73 @@
+import EuanImg from './teamMemberPhotos/Euan.jpg';
+import MattImg from './teamMemberPhotos/Matt.jpg';
+import SteveImg from './teamMemberPhotos/Steve.jpg';
+import MaleneImg from './teamMemberPhotos/Malene.jpg';
+import KarenImg from './teamMemberPhotos/Karen.jpg';
+import JimmyImg from './teamMemberPhotos/Jimmy.jpg';
+import DavidJMImg from './teamMemberPhotos/DavidJM.jpg';
+import ShrutiImg from './teamMemberPhotos/Shruti.jpg';
+import DavidAImg from './teamMemberPhotos/DavidA.jpg';
+import ArchanaImg from './teamMemberPhotos/Archana.png';
+import SamirImg from './teamMemberPhotos/Samir.jpg';
 
 const teamInfo = {
   PIs: [
     {
       name: 'Euan Ashley, M.D., Ph.D.',
       title: 'Principal Investigator',
-      image: 'https://via.placeholder.com/150',
+      image: EuanImg,
     },
     {
       name: 'Matthew Wheeler, M.D., Ph.D',
       title: 'Principal Investigator',
-      image: 'https://via.placeholder.com/150',
+      image: MattImg,
     },
   ],
-  SoftwareDevs: [
+  Staff: [
+    {
+      name: 'Steven Hershman, Ph.D.',
+      title: 'Director of mHealth',
+      image: SteveImg,
+    },
+    {
+      name: 'Malene Lindholm, Ph.D.',
+      title: 'Postdoctoral Scholar',
+      image: MaleneImg,
+    },
     {
       name: 'Karen Dalton',
-      title: 'Senior Software Developer',
-      image: 'https://via.placeholder.com/150',
+      title: 'Lead Software Developer',
+      image: KarenImg,
     },
     {
       name: 'Jimmy Zhen',
       title: 'Senior Software Developer',
-      image: 'https://via.placeholder.com/150',
+      image: JimmyImg,
     },
-  ],
-  Bioinfo: [
     {
       name: 'David Jimenez-Morales, Ph.D.',
       title: 'Senior Computational Biologist',
-      image: 'https://via.placeholder.com/150',
+      image: DavidJMImg,
     },
     {
       name: 'Shruti Marwaha, Ph.D.',
       title: 'Senior Computational Biologist',
-      image: 'https://via.placeholder.com/150',
+      image: ShrutiImg,
+    },
+    {
+      name: 'David Amar, Ph.D.',
+      title: 'Senior Computational Biologist',
+      image: DavidAImg,
     },
     {
       name: 'Archana Raja, Ph.D.',
       title: 'Senior Computational Biologist',
-      image: 'https://via.placeholder.com/150',
+      image: ArchanaImg,
+    },
+    {
+      name: 'Samir Akre',
+      title: 'Software & Pipeline Developer',
+      image: SamirImg,
     },
   ],
 };

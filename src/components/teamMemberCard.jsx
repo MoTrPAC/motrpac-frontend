@@ -7,7 +7,7 @@ function TeamMemberCard({
     <div className="teamMember col-10 col-sm-6 col-md-4 mt-4">
       <div className="row">
         <div className="col-auto">
-          <img src={memberInfo.image} alt={`${memberInfo.name}`} />
+          <div className="teamMemberImage" style={{ backgroundImage: `url(${memberInfo.image})` }} />
         </div>
         <div className="col">
           <h3>{memberInfo.name}</h3>

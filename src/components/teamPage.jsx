@@ -3,13 +3,14 @@ import TeamMemberCard from './teamMemberCard';
 import teamInfo from '../assets/teamInfo';
 
 function TeamPage() {
-  const PIs = teamInfo.PIs.map(pi => <TeamMemberCard memberInfo={pi} />);
-  const SDs = teamInfo.SoftwareDevs.map(sd => <TeamMemberCard memberInfo={sd} />) 
-  const BIs= teamInfo.Bioinfo.map(bi => <TeamMemberCard memberInfo={bi} />) 
+  const PIs = teamInfo.PIs
+    .map(pi => <TeamMemberCard key={pi.name} memberInfo={pi} />);
+  const staff = teamInfo.Staff
+    .map(member => <TeamMemberCard key={member.name} memberInfo={member} />);
   return (
-    <div className="teamPage container-fluid">
-      <div className="row mt-2 justify-content-center">
-        <div className="col-12 col-sm-10">
+    <div className="teamPage container-fluid ">
+      <div className="row mt-4 justify-content-center">
+        <div className="col-12 col-sm-8">
           <h2 className="light">
             The Bioinformatics Center Team
           </h2>
@@ -18,9 +19,8 @@ function TeamPage() {
       <div className="row mt-2 justify-content-center">
         {PIs}
       </div>
-      <div className="row mt-4 pb-4 ">
-        {SDs}
-        {BIs}
+      <div className="row mt-4 pb-4 justify-content-around">
+        {staff}
       </div>
     </div>
   );
