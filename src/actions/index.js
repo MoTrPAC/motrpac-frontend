@@ -1,5 +1,4 @@
 import Auth from '../Auth/Auth';
-import history from '../history';
 
 // Possible states for login and logout
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
@@ -53,7 +52,7 @@ export const handleAuthCallbackAsync = () => dispatch => {
     }
 
     dispatch(loginSuccess(data));
-    dispatch(history.push('/'));
+    dispatch(this.context.props.history.push('/'));
   });
 };
 
