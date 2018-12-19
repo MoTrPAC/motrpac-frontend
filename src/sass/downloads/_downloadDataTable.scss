@@ -1,0 +1,106 @@
+.downloadTable {
+  &.updating {
+    text-align: center;
+    border: 1px solid $gray-semi-transparent;
+    background-color: $gray-transparent;
+    padding: 2rem;
+    margin: 2rem;
+    border-radius: 20px;
+    h2,span{
+      color: $gray;
+    }
+    span {
+      font-size:3rem;
+    }
+  }
+  .noDownload {
+    font-weight: $heavy-weight;
+  }
+  .public {
+    .statusText{
+      color: $green;
+    }
+    &:hover {
+      background-color:transparentize($green, .9);
+      border-color: $green;
+    }
+  }
+  .internal {
+    .statusText{
+      color: $dblue;
+    }
+    &:hover {
+      background-color:transparentize($blue, .9);
+      border-color: $blue;
+    }
+  }
+  .pending {
+    .statusText{
+      color: $dgray;
+    }
+    &:hover {
+      background-color:transparentize($gray, .9);
+      border:1px dashed $gray;
+    }
+  }
+  .downloadBtn {
+    background-color: white;
+    color:$dblue;
+    border: 1px dashed $dblue;
+    border-radius: 10px;
+    line-height: 1;
+    box-shadow: 1px 3px 5px lighten($blue, 40%);
+  }
+  .inCart {
+    background-color: $dblue;
+    color: white;
+  }
+  .viewCartTitle {
+    margin-top: 0.5rem;
+  }
+}
+.noData {
+  background-color: $gray-transparent;
+  border-radius: 20px;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  text-align: center;
+  margin: 2rem;
+  h2 {
+    color: $gray;
+  }
+}
+.downloadRow {
+  border: 1px solid $gray;
+  border-radius: 10px;
+  background-color: white;
+  .rightAlign {
+    text-align: right;
+  }
+  .siteName {
+    color: $blue;
+  }
+  .leftSide { 
+    p {
+      line-height: 1.25rem;
+      margin-bottom:0;
+    }
+    .endP {
+      margin-bottom: 1rem;
+    }
+  }
+  .animal {
+    color: $dblue;
+    font-size: 1.75rem;
+  }
+  .human {
+    font-size: 1.75rem;
+    color: $burgundy;
+  }
+}
+// Remove icon text (e.g 'Publicly Available') when small
+@include media-breakpoint-down(xs) { 
+  .iconText {
+    display: none;
+  }
+}

@@ -4,8 +4,25 @@ $blue: #336699;
 $blue-semi-transparent: transparentize($blue,0.5);
 $blue-transparent: transparentize($blue,0.9);
 $lblue: #E3EAF1;
-$green: #4C9046;
+$dgreen: #2d5e2d;
+$green: lighten($dgreen,15%);
 $yellow: #D6C714;
+$dgray: #404040;
 $gray: #707070;
 $gray-semi-transparent: transparentize($gray,0.5);
 $gray-transparent: transparentize($gray,0.9);
+$brown: #7E5610;
+$burgundy: #7E1139;
+
+.dblue {
+  color: $dblue;
+}
+.burgundy {
+  color: $burgundy;
+}
+.green {
+  color: $green;
+}
+.dgray {
+  color: $dgray
+}

@@ -1,32 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import assayList from '../lib/assayList';
 
-const assayList = [
-  'WGS',
-  'RNA-seq',
-  'Methylome (Gastroc, White Fat, Liver, Heart)',
-  'ATAC-Seq',
-  'Untargeted RP',
-  'Untargeted HILIC-positive',
-  'Untargeted HILIC -negative',
-  'Untargeted Lipidomics',
-  'Targeted Acyl-CoA',
-  'Targeted Acylcarnitines',
-  'Targeted Ketoacids',
-  'Targeted Organic Acids',
-  'Targeted Eicosanoids',
-  'Targeted Nucleotides',
-  'Targeted oxylipins',
-  'Targeted Amines',
-  'Targeted Steroids',
-  'TCA Cycle',
-  'Targeted Ceramides',
-  'Global Proteomics',
-  'Global Phospho-proteomics',
-  'Redox proteome',
-  'Acyl/Acetyl proteome',
-  'SomaLogic',
-];
 // Form element for submission of data associated with files
 function UploadForm({
   validated,

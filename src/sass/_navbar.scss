@@ -16,7 +16,7 @@ nav {
   font-size: 150%;
 }
 .dropdown-menu {
-  background-color:$blue-semi-transparent;
+  background-color:transparentize($blue, .1);
   border: none;
   .dropdown-item {
     color: white;
