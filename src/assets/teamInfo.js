@@ -36,32 +36,32 @@ const teamInfo = {
     },
     {
       name: 'Karen Dalton',
-      title: 'Senior Software Developer',
+      title: 'Software Developer',
       image: KarenImg,
     },
     {
       name: 'Jimmy Zhen',
-      title: 'Senior Software Developer',
+      title: 'Software Developer',
       image: JimmyImg,
     },
     {
       name: 'David Jimenez-Morales, Ph.D.',
-      title: 'Senior Computational Biologist',
+      title: 'Computational Biologist',
       image: DavidJMImg,
     },
     {
       name: 'Shruti Marwaha, Ph.D.',
-      title: 'Senior Computational Biologist',
+      title: 'Computational Biologist',
       image: ShrutiImg,
     },
     {
       name: 'David Amar, Ph.D.',
-      title: 'Senior Computational Biologist',
+      title: 'Computational Biologist',
       image: DavidAImg,
     },
     {
       name: 'Archana Raja, Ph.D.',
-      title: 'Senior Computational Biologist',
+      title: 'Computational Biologist',
       image: ArchanaImg,
     },
     {
