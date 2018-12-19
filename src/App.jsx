@@ -19,7 +19,7 @@ import DownloadPageConnected from './components/downloadPage';
 
 const hist = History;
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const enchancer = composeEnhancers(
+const enhancer = composeEnhancers(
   applyMiddleware(thunkMiddleWare),
 );
 function App({ history = hist }) {
@@ -27,7 +27,7 @@ function App({ history = hist }) {
   return (
     <Provider store={createStore(rootReducer,
       defaultRootState,
-      enchancer)}
+      enhancer)}
     >
       <Router history={history}>
         <div className="App">

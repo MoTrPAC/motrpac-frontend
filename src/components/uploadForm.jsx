@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import assayList from '../assets/assayList';
+import assayList from '../lib/assayList';
 
 // Form element for submission of data associated with files
 function UploadForm({

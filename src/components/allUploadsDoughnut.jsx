@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Doughnut } from 'react-chartjs-2';
 import { countUploads } from './previousUploadsGraph';
-import colors from '../assets/colors';
+import colors from '../lib/colors';
 
 function AllUploadsDoughnut({ allUploads }) {
   const availabilityCount = countUploads(allUploads.map(upload => upload.availability));

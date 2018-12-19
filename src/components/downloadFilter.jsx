@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import downloadFilters from '../assets/downloadFilters';
+import downloadFilters from '../lib/downloadFilters';
 
 function DownloadFilter({
   activeFilters,
