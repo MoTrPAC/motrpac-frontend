@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actions from '../actions';
 
@@ -8,10 +9,12 @@ import actions from '../actions';
  * @param {object} props - Properties passed from parent
  * TODO: try changing this to class component and to use 'setState' for user profile UI rendering
  */
-function Footer(props) {
-  const { isAuthenticated, login, logout } = props;
-  const { profile } = props.auth;
-
+function Footer({
+  isAuthenticated,
+  profile,
+  login,
+  logout,
+}) {
   // Function to render login button
   // FIXME: removing `props.auth.getProfile()` method from <button> breaks the UI
   const LoginButton = () => {
@@ -82,9 +85,21 @@ function Footer(props) {
   );
 }
 
-export default withRouter(
-  connect(
-    state => state,
-    actions
-  )(Footer)
-);
+Footer.propTypes = {
+  profile: PropTypes.obejct,
+  isAuthenticated: PropTypes.bool,
+  login: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  profile: state.auth.profile,
+});
+
+const mapDispatchToProps = dispatch => ({
+  login: actions.login,
+  logout: actions.logout,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Footer);
