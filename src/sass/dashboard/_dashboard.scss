@@ -1,0 +1,29 @@
+.Dashboard {
+  margin-top:20px; 
+  h2 { color: $dblue;
+  }
+  .divHeader {
+    color: $dblue;
+    font-size: 1.25rem;
+    font-weight: $light-weight;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top:10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 1rem;
+  }
+  .uploadBtn { 
+    background: $dblue;
+    border-color: $dblue;
+  }
+  .downloadBtn { 
+    background: $green;
+    border-color: $green;
+  }
+  .disabled {
+    //background: $gray;
+    //border-color: $gray;
+    border: 1px dashed $gray-semi-transparent;
+  }
+}
+

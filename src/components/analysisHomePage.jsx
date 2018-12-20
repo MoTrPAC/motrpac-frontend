@@ -147,7 +147,7 @@ AnalysisHomePage.propTypes = {
     }).isRequired,
   }),
   depth: PropTypes.number.isRequired,
-  loggedIn: PropTypes.bool.isRequired,
+  loggedIn: PropTypes.bool,
   currentAnalysis: PropTypes.string.isRequired,
   goBack: PropTypes.func.isRequired,
   onPickAnalysis: PropTypes.func.isRequired,
@@ -159,6 +159,7 @@ AnalysisHomePage.defaultProps = {
       subjectType: '',
     },
   },
+  loggedIn: false,
 };
 
 const mapStateToProps = state => ({

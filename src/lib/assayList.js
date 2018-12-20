@@ -1,0 +1,28 @@
+const assayList = [
+  'WGS',
+  'RNA-Seq',
+  'Methylome',
+  'ATAC-Seq',
+  'Untargeted RP',
+  'Untargeted HILIC-positive',
+  'Untargeted HILIC -negative',
+  'Untargeted Lipidomics',
+  'Targeted Acyl-CoA',
+  'Targeted Acylcarnitines',
+  'Targeted Ketoacids',
+  'Targeted Organic Acids',
+  'Targeted Eicosanoids',
+  'Targeted Nucleotides',
+  'Targeted oxylipins',
+  'Targeted Amines',
+  'Targeted Steroids',
+  'TCA Cycle',
+  'Targeted Ceramides',
+  'Global Proteomics',
+  'Global Phospho-proteomics',
+  'Redox proteome',
+  'Acyl/Acetyl proteome',
+  'SomaLogic',
+];
+
+export default assayList.sort();

@@ -13,13 +13,7 @@
     line-height:1rem;
     padding: 0;
   }
-  .inactiveAnalysis {
-    border-color: $gray;
-    background-color: $gray-transparent;
-    p {
-      color: $gray;
-    }
-  }
+
   .subAnalysisRow {
     border-radius: 10px;
     background-color: white;
@@ -83,6 +77,13 @@
       display: block;
       transition: .2s;
       }
+    }
+  }
+  .inactiveAnalysis {
+    border-color: $gray;
+    background-color: $gray-transparent;
+    p {
+      color: $gray;
     }
   }
 }

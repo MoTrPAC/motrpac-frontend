@@ -27,6 +27,7 @@ function testCorrectComponentInPath(app, componentName, path, history) {
       expect(route.children()).toHaveLength(0);
     }
   });
+  // If this is true, route for given component does not exist in App.jsx
   expect(noPath).toBeFalsy();
 }
 
@@ -47,7 +48,13 @@ describe('Unauthenticated Application routing', () => {
   });
 
   test('loads the landing page at /upload', () => {
-    history.push('/dashboard');
+    history.push('/upload');
+    mountApp.update();
+    testCorrectComponentInPath(mountApp, 'LandingPage', '/', history);
+  });
+
+  test('loads the landing page at /download', () => {
+    history.push('/download');
     mountApp.update();
     testCorrectComponentInPath(mountApp, 'LandingPage', '/', history);
   });
@@ -92,5 +99,12 @@ describe('Authenticated Application routing', () => {
   test('dashboard displays correct text on Dashboard', () => {
     expect(history.location.pathname).toEqual('/dashboard');
     expect(mountApp.find('h2.light').text()).toEqual(`Welcome ${testUser.name} at ${testUser.siteName}`);
+  });
+
+  test('loads the download page at /download', () => {
+    history.push('/download');
+    // Update required to re-render the application
+    mountApp.update();
+    testCorrectComponentInPath(mountApp, 'DownloadPage', '/download', history);
   });
 });

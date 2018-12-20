@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import 'bootstrap';
 import configureStore from './configureStore';
@@ -11,6 +12,7 @@ import Dashboard from './components/dashboard';
 import UploadScreenConnected from './components/uploadScreen';
 import LinkoutPageConnected from './components/linkoutPage';
 import AnalysisHomePageConnected from './components/analysisHomePage';
+import DownloadPageConnected from './components/downloadPage';
 import Callback from './components/callback';
 
 const store = configureStore();
@@ -21,7 +23,7 @@ function App() {
 
   return (
     <Provider store={store}>
-      <Router forceRefresh={!supportsHistory}>
+      <BrowserRouter forceRefresh={!supportsHistory}>
         <div className="App">
           <header>
             <NavbarConnected isAuthenticated={isAuthenticated} />
@@ -35,8 +37,13 @@ function App() {
             <ProtectedRoute path="/analysis/:subjectType" component={AnalysisHomePageConnected} />
           </Switch>
           <Footer isAuthenticated={isAuthenticated} />
+            <Route path="/download" component={DownloadPageConnected} />
+            <Route path="/analysis/:subjectType" component={AnalysisHomePageConnected} />
+          </div>
+          <FooterConnected />
+          <AuthLoadingConnected />
         </div>
-      </Router>
+      </BrowserRouter>
     </Provider>
   );
 }

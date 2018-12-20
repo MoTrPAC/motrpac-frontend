@@ -73,8 +73,9 @@ function Footer({
         </div>
         <div className="row">
           <div className="col copyright">
-            <p className="footer-content">
-              &#169;&nbsp;
+            <p>
+              &#169; Stanford
+              &nbsp;
               {getCopyrightYear()}
               &nbsp;Stanford University
             </p>
