@@ -1,0 +1,101 @@
+[
+  {
+    "identifier": "AS12345",
+    "subject": "Animal",
+    "phase": "1A",
+    "type": "ATAC-Seq",
+    "date": "09/05/2018",
+    "availability": "Publicly Available",
+    "site": "Stanford CAS"
+  },
+  {
+    "identifier": "AS12346",
+    "subject": "Human",
+    "phase": "1A",
+    "type": "RNA-Seq",
+    "date": "09/15/2018",
+    "availability": "Internally Available",
+    "site": "Stanford CAS"
+  },
+  {
+    "identifier": "AS12347",
+    "subject": "Human",
+    "phase": "1A",
+    "type": "WGS",
+    "date": "09/25/2018",
+    "availability": "Pending Q.C.",
+    "site": "Stanford CAS"
+  },
+  {
+    "identifier": "AS12348",
+    "subject": "Human",
+    "phase": "1A",
+    "type": "RNA-Seq",
+    "date": "10/05/2018",
+    "availability": "Pending Q.C.",
+    "site": "Stanford CAS"
+  },
+  {
+    "identifier": "AS12349",
+    "subject": "Human",
+    "phase": "1A",
+    "type": "RNA-Seq",
+    "date": "11/05/2018",
+    "availability": "Publicly Available",
+    "site": "Stanford CAS"
+  },
+  {
+    "identifier": "AS12350",
+    "subject": "Human",
+    "phase": "1A",
+    "type": "ATAC-Seq",
+    "date": "11/10/2018",
+    "availability": "Internally Available",
+    "site": "Stanford CAS"
+  },
+  {
+    "identifier": "AS12351",
+    "subject": "Human",
+    "phase": "1A",
+    "type": "ATAC-Seq",
+    "date": "11/15/2018",
+    "availability": "Publicly Available",
+    "site": "Stanford CAS"
+  },
+  {
+    "identifier": "AS12352",
+    "subject": "Human",
+    "phase": "1A",
+    "type": "Metabolomics",
+    "date": "11/25/2018",
+    "availability": "Pending Q.C.",
+    "site": "Stanford CAS"
+  },
+  {
+    "identifier": "AS12353",
+    "subject": "Animal",
+    "phase": "1A",
+    "type": "ATAC-Seq",
+    "date": "12/05/2018",
+    "availability": "Pending Q.C.",
+    "site": "Stanford CAS"
+  },
+  {
+    "identifier": "AS12354",
+    "subject": "Human",
+    "phase": "1A",
+    "type": "ATAC-Seq",
+    "date": "12/11/2018",
+    "availability": "Publicly Available",
+    "site": "Stanford CAS"
+  },
+  {
+    "identifier": "AS12355",
+    "subject": "Animal",
+    "phase": "1A",
+    "type": "ATAC-Seq",
+    "date": "12/11/2018",
+    "availability": "Publicly Available",
+    "site": "Stanford CAS"
+  }
+]

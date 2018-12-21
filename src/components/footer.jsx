@@ -51,7 +51,7 @@ export function Footer({
         <div className="row">
           <div className="col copyright">
             <p>
-              &#169; XXXX
+              &#169; Stanford
               &nbsp;
               {getCopyrightYear()}
             </p>

@@ -14,6 +14,13 @@ export function Navbar({ loggedIn = false }) {
         </div>
       </li>
       <li className="nav-item navItem"><Link to="/methods" className="nav-link">Methods</Link></li>
+      <li className="nav-item navItem dropdown">
+        <div className="nav-link dropdown-toggle" role="button" id="navbarDropdownMenuLinkData" data-toggle="dropdown">Data</div>
+        <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkData">
+          <Link to="/download" className="dropdown-item">Download/View Data</Link>
+          <Link to="/upload" className="dropdown-item">Upload Data</Link>
+        </div>
+      </li>
     </React.Fragment>
   );
   const navbar = (
@@ -30,8 +37,7 @@ export function Navbar({ loggedIn = false }) {
         </button>
         <div className="collapse navbar-collapse flex-row-reverse" id="navbarSupportedContent">
           <ul className="navbar-nav">
-            {loggedIn ? loggedInNavItems : ''}
-            <li className="nav-item navItem"><Link to="/data" className="nav-link">Data</Link></li>
+            {loggedIn && loggedInNavItems}
             <li className="nav-item navItem dropdown">
               <div className="nav-link dropdown-toggle" role="button" id="navbarDropdownMenuLink" data-toggle="dropdown">About</div>
               <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

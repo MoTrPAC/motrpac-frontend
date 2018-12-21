@@ -1,0 +1,11 @@
+.previousUploadsTable {
+  max-height: 60vh;
+  overflow: scroll;
+  th {
+    color: $dblue;
+  }
+  tr {
+    font-size: .8rem;
+    text-align: center;
+  }
+}

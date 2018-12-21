@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import rootReducer, { defaultRootState } from '../../reducers/index';
 import { defaultAnalysisState } from '../../reducers/analysisReducer';
 import AnalysisHomePageConnected, { AnalysisHomePage } from '../../components/analysisHomePage';
+import { defaultDownloadState } from '../../reducers/downloadReducer';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -36,6 +37,15 @@ function constructMatchState(subject) {
 }
 
 describe('Pure AnalysisHome Page', () => {
+  test('Redirects to home if not logged in', () => {
+    const shallowAnalysis = shallow(
+      <AnalysisHomePage
+        {...defaultAnalysisState}
+        {...analysisActions}
+      />,
+    );
+    expect(shallowAnalysis.find('Redirect')).toHaveLength(1);
+  });
   test('Redirects if no url match (animal or human)', () => {
     const shallowAnalysis = shallow(
       <AnalysisHomePage

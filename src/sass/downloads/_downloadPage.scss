@@ -1,0 +1,29 @@
+.viewCart{
+  color: white;
+  background-color: $dblue;
+  border-radius: 10px;
+  &.active {
+    background-color: white;
+    border: 1px solid $dblue;
+    color: $dblue;
+  }
+}
+.emptyCart {
+  color:white;
+  background-color: $gray;
+  border-radius: 10px;
+}
+.addAllToCart {
+  color: white;
+  background-color: $green;
+  border-radius: 10px;
+}
+.downloadCart {
+  color: white;
+  background-color: $blue;
+  border-radius: 10px;
+  .cartCount {
+    background-color: white;
+    color: $dblue;
+  }
+}
