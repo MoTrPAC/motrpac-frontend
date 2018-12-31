@@ -1,5 +1,7 @@
 import Auth from '../Auth/Auth';
 
+const auth = new Auth();
+
 // Possible states for login and logout
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -8,59 +10,76 @@ export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const PROFILE_REQUEST = 'PROFILE_REQUEST';
 export const PROFILE_RECEIVE = 'PROFILE_RECEIVE';
 
-export const requestLogin = () => ({
-  type: LOGIN_REQUEST,
-});
+export function requestLogin() {
+  return {
+    type: LOGIN_REQUEST,
+  };
+}
 
-export const loginSuccess = () => ({
-  type: LOGIN_SUCCESS,
-});
+export function loginSuccess() {
+  return {
+    type: LOGIN_SUCCESS,
+  };
+}
 
-export const loginError = (message = '') => ({
-  type: LOGIN_FAILURE,
-  message,
-});
+export function loginError(message = '') {
+  return {
+    type: LOGIN_FAILURE,
+    message,
+  };
+}
 
-export const receiveLogout = () => ({
-  type: LOGOUT_SUCCESS,
-});
+export function receiveLogout() {
+  return {
+    type: LOGOUT_SUCCESS,
+  };
+}
 
-export const receiveProfile = profile => ({
-  type: PROFILE_RECEIVE,
-  profile,
-});
+export function receiveProfile(profile) {
+  return {
+    type: PROFILE_RECEIVE,
+    profile,
+  };
+}
 
 /**
  * Async action creators with redux-thunk
  */
 
-export const loginAsync = () => dispatch => {
-  dispatch(requestLogin());
-  Auth.login();
-};
+export function loginAsync() {
+  return (dispatch) => {
+    dispatch(requestLogin());
+    auth.login();
+  };
+}
 
-export const logoutAsync = () => dispatch => {
-  Auth.logout();
-  dispatch(receiveLogout());
-};
+export function logoutAsync() {
+  return (dispatch) => {
+    auth.logout();
+    dispatch(receiveLogout());
+  };
+}
 
-export const handleAuthCallbackAsync = () => dispatch => {
-  Auth.handleAuthentication((err, data) => {
-    if (err) {
-      dispatch(loginError(`${err.error}: ${err.errorDescription}`));
-      return;
-    }
+export function handleAuthCallbackAsync() {
+  return (dispatch) => {
+    auth.handleAuthentication((err, data) => {
+      if (err) {
+        dispatch(loginError(`${err.error}: ${err.errorDescription}`));
+        return;
+      }
 
-    dispatch(loginSuccess(data));
-    dispatch(this.context.props.history.push('/'));
-  });
-};
+      dispatch(loginSuccess(data));
+    });
+  };
+}
 
-export const getProfileAsync = () => dispatch => {
-  Auth.getProfile((err, profile) => {
-    dispatch(receiveProfile(profile));
-  });
-};
+export function getProfileAsync() {
+  return (dispatch) => {
+    auth.getProfile((err, profile) => {
+      dispatch(receiveProfile(profile));
+    });
+  };
+}
 
 export default {
   getProfile: getProfileAsync,
