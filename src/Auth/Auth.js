@@ -82,7 +82,7 @@ export default class Auth {
   }
 
   getProfile(cb) {
-    let accessToken = this.getAccessToken();
+    const accessToken = this.getAccessToken();
 
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (err) {
