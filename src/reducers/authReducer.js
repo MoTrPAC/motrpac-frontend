@@ -13,7 +13,7 @@ export const defaultAuthState = {
   isAuthenticated: localStorage.getItem('id_token') ? true : false,
 };
 
-export function AuthReducer(state = {}, action) {
+export function AuthReducer(state = defaultAuthState, action) {
   switch (action.type) {
     case LOGIN_REQUEST:
       return {
