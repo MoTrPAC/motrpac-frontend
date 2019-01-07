@@ -6,24 +6,26 @@ import actions from '../actions';
 
 /**
  * Method to render global footer
- * @param {object} props - Properties passed from parent
- * TODO: try changing this to class component and to use 'setState' for user profile UI rendering
  */
-function Footer({
+export function Footer({
+  history,
   isAuthenticated,
   profile,
   login,
   logout,
 }) {
+  const handleLogout = () => {
+    logout();
+    history.push("/");
+  }
   // Function to render login button
-  // FIXME: removing `props.auth.getProfile()` method from <button> breaks the UI
   const LoginButton = () => {
     return (
       <span className="user-login-button">
         {isAuthenticated && (
           <span>
             <img src={profile.picture} className="user-avatar" alt="avatar" />
-            <button type="button" onClick={logout} className="logInOutBtn btn">
+            <button type="button" onClick={handleLogout} className="logInOutBtn btn">
               {profile.name}
               &nbsp;Logout
             </button>
@@ -87,20 +89,21 @@ function Footer({
 }
 
 Footer.propTypes = {
-  profile: PropTypes.obejct,
+  history: PropTypes.object,
+  profile: PropTypes.object,
   isAuthenticated: PropTypes.bool,
   login: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
   profile: state.auth.profile,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 const mapDispatchToProps = dispatch => ({
-  login: actions.login,
-  logout: actions.logout,
+  login: () => dispatch(actions.login()),
+  logout: () => dispatch(actions.logout()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);
