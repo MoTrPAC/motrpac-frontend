@@ -1,3 +1,4 @@
+import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -9,18 +10,18 @@ import AllUploadStats from './allUploadStats';
 const previousUploads = require('../testData/testPreviousUploads');
 const allUploads = require('../testData/testAllUploads');
 
-export function Dashboard({ user, loggedIn, featureAvailable }) {
+export function Dashboard({ profile, isAuthenticated, featureAvailable }) {
   const editBtn = (
     <div className="col-auto">
       <Link className="editBtn btn btn-light disabled" to="/edit-dashboard">Edit Dashboard</Link>
     </div>
   );
-  if (loggedIn) {
+  if (isAuthenticated) {
     return (
       <div className="container Dashboard">
         <div className="row align-items-center">
           <div className="col-12 col-md-6 align-self-center">
-            <h2 className="welcomeUser light">{`Welcome ${user.name} at ${user.siteName}`}</h2>
+            <h2 className="welcomeUser light">{`Welcome ${profile.name} at ${profile.nickname}`}</h2>
           </div>
           <div className="col-auto">
             <Link className="uploadBtn btn btn-primary" to="/upload">Upload Data</Link>
@@ -33,7 +34,7 @@ export function Dashboard({ user, loggedIn, featureAvailable }) {
         <div className="row">
           <div className="col">
             <h3 className="divHeader">
-              {user.siteName}
+              {profile.nickname}
             </h3>
           </div>
         </div>
@@ -59,25 +60,25 @@ export function Dashboard({ user, loggedIn, featureAvailable }) {
 }
 
 Dashboard.propTypes = {
-  user: PropTypes.shape({
+  profile: PropTypes.shape({
     name: PropTypes.string,
-    siteName: PropTypes.string,
+    nickname: PropTypes.string,
   }).isRequired,
-  loggedIn: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
   featureAvailable: PropTypes.shape({
     dashboardEditable: PropTypes.bool,
   }),
 };
 Dashboard.defaultProps = {
-  loggedIn: false,
+  isAuthenticated: false,
   featureAvailable: {
     dashboardEditable: false,
   },
 };
 
 const mapStateToProps = state => ({
-  user: state.auth.user,
-  loggedIn: state.auth.loggedIn,
+  profile: state.auth.profile,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 // Fill dispatch to props once actions implemented
