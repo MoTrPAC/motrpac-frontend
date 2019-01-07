@@ -7,7 +7,6 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
-export const PROFILE_REQUEST = 'PROFILE_REQUEST';
 export const PROFILE_RECEIVE = 'PROFILE_RECEIVE';
 
 export function requestLogin() {
@@ -16,9 +15,11 @@ export function requestLogin() {
   };
 }
 
-export function loginSuccess() {
+export function loginSuccess(profile, token) {
   return {
     type: LOGIN_SUCCESS,
+    profile,
+    token,
   };
 }
 
@@ -64,25 +65,18 @@ export function handleAuthCallbackAsync() {
   return (dispatch) => {
     auth.handleAuthentication((err, data) => {
       if (err) {
-        dispatch(loginError(`${err.error}: ${err.errorDescription}`));
-        return;
+        return dispatch(loginError(`${err.error}: ${err.errorDescription}`));
       }
 
       dispatch(loginSuccess(data));
-    });
-  };
-}
-
-export function getProfileAsync() {
-  return (dispatch) => {
-    auth.getProfile((err, profile) => {
-      dispatch(receiveProfile(profile));
+      auth.getProfile((err, profile) => {
+        return dispatch(receiveProfile(profile));
+      });
     });
   };
 }
 
 export default {
-  getProfile: getProfileAsync,
   handleAuthCallback: handleAuthCallbackAsync,
   login: loginAsync,
   loginError,
