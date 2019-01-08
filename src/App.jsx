@@ -1,18 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import 'bootstrap';
 import NavbarConnected from './components/navbar';
 import FooterConnected from './components/footer';
 import LandingPageConnected from './components/landingPage';
-import Dashboard from './components/dashboard';
+import DashboardConnected from './components/dashboard';
 import UploadScreenConnected from './components/uploadScreen';
 import LinkoutPageConnected from './components/linkoutPage';
 import AnalysisHomePageConnected from './components/analysisHomePage';
 import DownloadPageConnected from './components/downloadPage';
 import CallbackConnected from './components/callback';
 
-function App({ history }) {
+function App() {
   return (
     <div className="App">
       <header>
@@ -20,22 +19,18 @@ function App({ history }) {
       </header>
       <div className="componentHolder">
         <Switch>
-          <Route path="/callback" component={CallbackConnected} history={history} />
+          <Route path="/callback" component={CallbackConnected} />
           <Route path="/" exact component={LandingPageConnected} />
-          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/dashboard" component={DashboardConnected} />
           <Route path="/upload" component={UploadScreenConnected} />
           <Route path="/external-links" component={LinkoutPageConnected} />
           <Route path="/download" component={DownloadPageConnected} />
           <Route path="/analysis/:subjectType" component={AnalysisHomePageConnected} />
         </Switch>
       </div>
-      <FooterConnected history={history} />
+      <FooterConnected />
     </div>
   );
 }
 
-App.propTypes = {
-  history: PropTypes.object
-};
-
-export default withRouter(App);
+export default App;
