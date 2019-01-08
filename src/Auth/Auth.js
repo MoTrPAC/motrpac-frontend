@@ -44,17 +44,17 @@ export default class Auth {
 
   handleAuthentication(cb) {
     this.auth0.parseHash((err, authResult) => {
-      if (err) {
-        console.log(`${err.error}: ${err.errorDescription}`);
-        console.log('Could not authenticate');
-        cb(err);
-      } else if (authResult && authResult.accessToken && authResult.idToken) {
+      if (authResult && authResult.accessToken && authResult.idToken) {
         console.log(authResult);
         this.setSession(authResult);
         cb(null, authResult);
+      } else if (err) {
+        console.log(`${err.error}: ${err.errorDescription}`);
+        console.log('Could not authenticate');
+        cb(err);
       } else {
-        console.log(`Unexpected format of authResult: ${authResult}`);
-        cb(new Error('Unexpected format of authResult'));
+        console.log(`Unexpected error encountered: ${authResult}`);
+        cb(new Error('Unexpected error encountered'));
       }
     });
   }
