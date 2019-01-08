@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-export function Navbar({ loggedIn = false }) {
+export function Navbar({ isAuthenticated = false }) {
   const loggedInNavItems = (
     <React.Fragment>
       <li className="nav-item navItem"><Link to="/dashboard" className="nav-link">Dashboard</Link></li>
@@ -37,7 +37,7 @@ export function Navbar({ loggedIn = false }) {
         </button>
         <div className="collapse navbar-collapse flex-row-reverse" id="navbarSupportedContent">
           <ul className="navbar-nav">
-            {loggedIn && loggedInNavItems}
+            {isAuthenticated && loggedInNavItems}
             <li className="nav-item navItem dropdown">
               <div className="nav-link dropdown-toggle" role="button" id="navbarDropdownMenuLink" data-toggle="dropdown">About</div>
               <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -55,7 +55,7 @@ export function Navbar({ loggedIn = false }) {
 }
 
 const mapStateToProps = state => ({
-  loggedIn: state.auth.loggedIn,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 // Fill dispatch to props once actions implemented
