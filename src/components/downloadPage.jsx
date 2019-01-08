@@ -8,7 +8,7 @@ import DownloadPaginator from './downloadPaginator';
 import actions from '../reducers/downloadActions';
 
 export function DownloadPage({
-  loggedIn,
+  isAuthenticated,
   siteName,
   filteredUploads,
   cartItems,
@@ -27,7 +27,7 @@ export function DownloadPage({
   onChangeFilter,
   changePageRequest,
 }) {
-  if (!loggedIn) {
+  if (!isAuthenticated) {
     return <Redirect to="/" />;
   }
   return (
@@ -81,7 +81,7 @@ DownloadPage.propTypes = {
   cartItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   sortBy: PropTypes.string,
   uploadCount: PropTypes.number.isRequired,
-  loggedIn: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
   siteName: PropTypes.string,
   viewCart: PropTypes.bool.isRequired,
   listUpdating: PropTypes.bool.isRequired,
@@ -98,7 +98,7 @@ DownloadPage.propTypes = {
 };
 DownloadPage.defaultProps = {
   sortBy: 'identifier',
-  loggedIn: false,
+  isAuthenticated: false,
   siteName: '',
 };
 
@@ -107,7 +107,7 @@ const mapStateToProps = state => ({
   siteName: state.auth.user.siteName,
   filteredUploads: state.download.filteredUploads,
   cartItems: state.download.cartItems,
-  loggedIn: state.auth.loggedIn,
+  isAuthenticated: state.auth.isAuthenticated,
   activeFilters: state.download.activeFilters,
   currentPage: state.download.currentPage,
   maxRows: state.download.maxRows,
