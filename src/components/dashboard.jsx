@@ -10,12 +10,26 @@ import AllUploadStats from './allUploadStats';
 const previousUploads = require('../testData/testPreviousUploads');
 const allUploads = require('../testData/testAllUploads');
 
-export function Dashboard({ profile, isAuthenticated, featureAvailable }) {
+export function Dashboard({ profile, isAuthenticated, isPending, featureAvailable }) {
   const editBtn = (
     <div className="col-auto">
       <Link className="editBtn btn btn-light disabled" to="/edit-dashboard">Edit Dashboard</Link>
     </div>
   );
+
+  // FIXME: temp workaround to handle callback redirect
+  if (isPending) {
+    const pendingMsg = 'Authenticating...';
+
+  return (
+    <div className="authLoading">
+      <span className="oi oi-shield" />
+      <h3>{pendingMsg}</h3>
+    </div>
+  );
+  }
+
+
   if (isAuthenticated) {
     return (
       <div className="container Dashboard">
@@ -79,6 +93,7 @@ Dashboard.defaultProps = {
 const mapStateToProps = state => ({
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
+  isPending: state.auth.isPending,
 });
 
 // Fill dispatch to props once actions implemented
