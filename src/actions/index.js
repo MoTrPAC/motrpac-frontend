@@ -4,6 +4,7 @@ const auth = new Auth();
 
 // Possible states for login and logout
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_PENDING = 'LOGIN_PENDING';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
@@ -15,11 +16,16 @@ export function requestLogin() {
   };
 }
 
-export function loginSuccess(profile, token) {
+export function loginPending() {
+  return {
+    type: LOGIN_PENDING,
+  };
+}
+
+export function loginSuccess(payload) {
   return {
     type: LOGIN_SUCCESS,
-    profile,
-    token,
+    payload,
   };
 }
 
@@ -82,4 +88,5 @@ export default {
   loginError,
   loginSuccess,
   logout: logoutAsync,
+  loginPending,
 };
