@@ -16,7 +16,7 @@ const loggedInRootState = {
   ...defaultRootState,
   auth: {
     ...defaultRootState.auth,
-    loggedIn: true,
+    isAuthenticated: true,
     siteName: 'Stanford CAS',
   },
 };
@@ -57,7 +57,7 @@ describe('Pure Download Page', () => {
         {...defaultDownloadState}
         {...downloadActions}
         allUploads={testAllUploads}
-        loggedIn
+        isAuthenticated
         siteName="Stanford CAS"
       />,
     );
