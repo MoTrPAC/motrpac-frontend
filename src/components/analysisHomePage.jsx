@@ -8,7 +8,7 @@ import analysisTypes from '../assets/analysisIcons/analysisTypes';
 
 export function AnalysisHomePage({
   match, // match object from react-router used to find human vs animal in route
-  loggedIn,
+  isAuthenticated,
   depth,
   currentAnalysis,
   onPickAnalysis,
@@ -18,7 +18,7 @@ export function AnalysisHomePage({
   let subjectType = match.params.subjectType.slice(0).toLowerCase();
 
   // Redirects to dashboard if incorrect url
-  if (!(subjectType === 'animal' || subjectType === 'human') || !(loggedIn)) {
+  if (!(subjectType === 'animal' || subjectType === 'human') || !isAuthenticated) {
     return <Redirect to="/dashboard" />;
   }
   // Button to select inital analysis category
@@ -147,7 +147,7 @@ AnalysisHomePage.propTypes = {
     }).isRequired,
   }),
   depth: PropTypes.number.isRequired,
-  loggedIn: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
   currentAnalysis: PropTypes.string.isRequired,
   goBack: PropTypes.func.isRequired,
   onPickAnalysis: PropTypes.func.isRequired,
@@ -159,13 +159,13 @@ AnalysisHomePage.defaultProps = {
       subjectType: '',
     },
   },
-  loggedIn: false,
+  isAuthenticated: false,
 };
 
 const mapStateToProps = state => ({
   depth: state.analysis.depth,
   currentAnalysis: state.analysis.currentAnalysis,
-  loggedIn: state.auth.loggedIn,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 const mapDispatchToProps = dispatch => ({
   onPickAnalysis: e => dispatch({
