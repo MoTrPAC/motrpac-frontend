@@ -48,12 +48,14 @@ export function AuthReducer(state = defaultAuthState, action) {
     case LOGOUT_SUCCESS:
       return {
         ...state,
-        isFetching: true,
         isAuthenticated: false,
+        payload: {},
+        profile: {},
       };
     case PROFILE_RECEIVE:
       return {
         ...state,
+        payload: {},
         profile: action.profile,
       };
     default:
