@@ -1,5 +1,6 @@
 import {
   LOGIN_REQUEST,
+  LOGIN_PENDING,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT_SUCCESS,
@@ -7,9 +8,11 @@ import {
 } from '../actions';
 
 export const defaultAuthState = {
+  payload: {},
   profile: {},
   message: '',
   isFetching: false,
+  isPending: false,
   isAuthenticated: localStorage.getItem('id_token') ? true : false,
 };
 
@@ -21,11 +24,19 @@ export function AuthReducer(state = defaultAuthState, action) {
         isFetching: true,
         isAuthenticated: false,
       };
+    case LOGIN_PENDING:
+      return {
+        ...state,
+        isPending: true,
+        isAuthenticated: false,
+      };
     case LOGIN_SUCCESS:
       return {
         ...state,
         isFetching: false,
+        isPending: false,
         isAuthenticated: true,
+        payload: action.payload,
       };
     case LOGIN_FAILURE:
       return {
