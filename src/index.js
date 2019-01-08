@@ -8,11 +8,10 @@ import * as serviceWorker from './serviceWorker';
 import './main.css';
 
 const store = configureStore();
-const supportsHistory = 'pushState' in window.history;
 
 render(
   <Provider store={store}>
-    <Router forceRefresh={!supportsHistory}>
+    <Router>
       <App />
     </Router>
   </Provider>,
