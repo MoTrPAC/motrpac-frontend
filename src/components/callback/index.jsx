@@ -2,18 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import actions from '../../actions';
+import actions, { loginPending } from '../../actions';
 
 export function Callback({
-  history,
   location,
   message,
   handleAuthCallback,
+  loginPending,
 }) {
+  // FIXME: Workaround to make the <Redirect /> to work
+  loginPending();
   // Handle authentication if expected values are in the URL.
   if (/access_token|id_token|error/.test(location.hash)) {
     handleAuthCallback();
-    // history.push('/dashboard');
     return <Redirect to="/dashboard" />
   }
 
@@ -25,14 +26,13 @@ export function Callback({
       <h3>{callbackMsg}</h3>
     </div>
   );
-
 }
 
 Callback.propTypes = {
-  history: PropTypes.object,
   location: PropTypes.object,
   message: PropTypes.string,
   handleAuthCallback: PropTypes.func.isRequired,
+  loginPending: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -40,7 +40,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleAuthCallback: () => dispatch(actions.handleAuthCallback())
+  handleAuthCallback: () => dispatch(actions.handleAuthCallback()),
+  loginPending: () => dispatch(loginPending()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Callback);
