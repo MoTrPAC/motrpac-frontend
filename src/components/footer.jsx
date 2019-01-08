@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actions from '../actions';
 
@@ -8,7 +8,6 @@ import actions from '../actions';
  * Method to render global footer
  */
 export function Footer({
-  history,
   isAuthenticated,
   profile,
   login,
@@ -16,7 +15,7 @@ export function Footer({
 }) {
   const handleLogout = () => {
     logout();
-    history.push("/");
+    return <Redirect to="/" />
   }
   // Function to render login button
   const LoginButton = () => {
@@ -89,7 +88,6 @@ export function Footer({
 }
 
 Footer.propTypes = {
-  history: PropTypes.object,
   profile: PropTypes.object,
   isAuthenticated: PropTypes.bool,
   login: PropTypes.func.isRequired,
