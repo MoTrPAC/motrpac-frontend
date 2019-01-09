@@ -9,7 +9,7 @@ import actions from '../reducers/downloadActions';
 
 export function DownloadPage({
   isAuthenticated,
-  siteName,
+  profile,
   filteredUploads,
   cartItems,
   uploadCount,
@@ -27,6 +27,7 @@ export function DownloadPage({
   onChangeFilter,
   changePageRequest,
 }) {
+  let siteName = profile && profile.user_metadata && profile.user_metadata.siteName ? profile.user_metadata.siteName : null;
   if (!isAuthenticated) {
     return <Redirect to="/" />;
   }
@@ -82,7 +83,7 @@ DownloadPage.propTypes = {
   sortBy: PropTypes.string,
   uploadCount: PropTypes.number.isRequired,
   isAuthenticated: PropTypes.bool,
-  siteName: PropTypes.string,
+  profile: PropTypes.object,
   viewCart: PropTypes.bool.isRequired,
   listUpdating: PropTypes.bool.isRequired,
   activeFilters: DownloadFilter.propTypes.activeFilters.isRequired,
@@ -99,12 +100,12 @@ DownloadPage.propTypes = {
 DownloadPage.defaultProps = {
   sortBy: 'identifier',
   isAuthenticated: false,
-  siteName: '',
+  profile: {},
 };
 
 const mapStateToProps = state => ({
   sortBy: state.download.sortBy,
-  siteName: state.auth.profile.user_metadata.siteName,
+  profile: state.auth.profile,
   filteredUploads: state.download.filteredUploads,
   cartItems: state.download.cartItems,
   isAuthenticated: state.auth.isAuthenticated,
