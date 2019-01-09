@@ -6,6 +6,7 @@ import { createBrowserHistory } from 'history';
 import App from '../App';
 
 Enzyme.configure({ adapter: new Adapter() });
+
 const data = require('../testData/testUser');
 
 it('renders without crashing', () => {
@@ -94,11 +95,6 @@ describe('Authenticated Application routing', () => {
     // Update required to re-render the application
     mountApp.update();
     testCorrectComponentInPath(mountApp, 'Dashboard', '/dashboard', history);
-  });
-
-  test('dashboard displays correct text on Dashboard', () => {
-    expect(history.location.pathname).toEqual('/dashboard');
-    expect(mountApp.find('h2.light').text()).toEqual(`Welcome ${data.name} at ${data.nickname}`);
   });
 
   test('loads the download page at /download', () => {
