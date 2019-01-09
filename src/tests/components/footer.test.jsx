@@ -7,8 +7,8 @@ Enzyme.configure({ adapter: new Adapter() });
 const data = require('../../testData/testUser');
 
 const footerActions = {
-  onLogIn: jest.fn(),
-  onLogOut: jest.fn(),
+  login: jest.fn(),
+  logout: jest.fn(),
 };
 const defaultMountFooter = mount(<Footer {...footerActions} />);
 const loggedInMountFooter = mount(
