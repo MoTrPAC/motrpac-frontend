@@ -15,7 +15,7 @@ const testUploads = require('../../testData/testUploads');
 const formFilledState = {
   auth: {
     ...defaultRootState.auth,
-    loggedIn: true,
+    isAuthenticated: true,
   },
   upload: {
     ...defaultUploadState,
@@ -35,7 +35,7 @@ const formFilledState = {
 const uploadingState = {
   auth: {
     ...defaultRootState.auth,
-    loggedIn: true,
+    isAuthenticated: true,
   },
   upload: {
     ...defaultUploadState,
@@ -57,7 +57,7 @@ const screenActions = {
 describe('Pure Upload Screen', () => {
   test('Renders required componenents', () => {
     const shallowScreen = shallow(
-      <UploadScreen {...defaultUploadState} loggedIn {...screenActions} />,
+      <UploadScreen {...defaultUploadState} isAuthenticated {...screenActions} />,
     );
     expect(shallowScreen.find('UploadAreaDnD')).toHaveLength(1);
     expect(shallowScreen.find('UploadList')).toHaveLength(1);
@@ -69,7 +69,7 @@ const loggedInRootState = {
   ...defaultRootState,
   auth: {
     ...defaultRootState.auth,
-    loggedIn: true,
+    isAuthenticated: true,
   },
 };
 

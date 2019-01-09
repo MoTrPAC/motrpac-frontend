@@ -6,7 +6,7 @@ import { createBrowserHistory } from 'history';
 import App from '../App';
 
 Enzyme.configure({ adapter: new Adapter() });
-const testUser = require('../testData/testUser');
+const data = require('../testData/testUser');
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
@@ -71,7 +71,7 @@ describe('Authenticated Application routing', () => {
   let mountApp = mount(<App history={history} />);
   const loginSuccessAction = {
     type: 'LOGIN_SUCCESS',
-    user: testUser,
+    payload: data,
   };
 
   beforeAll(() => {
@@ -86,7 +86,7 @@ describe('Authenticated Application routing', () => {
   });
 
   test('State should change to logged in on loginSuccess dispatch', () => {
-    expect(mountApp.find('Provider').props().store.getState().auth.loggedIn).toBeTruthy();
+    expect(mountApp.find('Provider').props().store.getState().auth.isAuthenticated).toBeTruthy();
   });
 
   test('loads the dashboard at /dashboard', () => {
@@ -98,7 +98,7 @@ describe('Authenticated Application routing', () => {
 
   test('dashboard displays correct text on Dashboard', () => {
     expect(history.location.pathname).toEqual('/dashboard');
-    expect(mountApp.find('h2.light').text()).toEqual(`Welcome ${testUser.name} at ${testUser.siteName}`);
+    expect(mountApp.find('h2.light').text()).toEqual(`Welcome ${data.name} at ${data.nickname}`);
   });
 
   test('loads the download page at /download', () => {

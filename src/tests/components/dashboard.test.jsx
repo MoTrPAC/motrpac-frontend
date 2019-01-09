@@ -8,12 +8,12 @@ import DashboardConnected, { Dashboard } from '../../components/dashboard';
 
 Enzyme.configure({ adapter: new Adapter() });
 const testPreviousUploads = require('../../testData/testPreviousUploads');
-const testUser = require('../../testData/testUser');
+const data = require('../../testData/testUser');
 
 describe('Shallow Dashboard', () => {
   test('Has expected widgets', () => {
     const shallowDash = shallow(
-      <Dashboard loggedIn user={testUser} previousUploads={testPreviousUploads} />
+      <Dashboard isAuthenticated profile={data} previousUploads={testPreviousUploads} />
     );
     expect(shallowDash.find('PreviousUploadsTable')).toHaveLength(1);
     expect(shallowDash.find('PreviousUploadsGraph')).toHaveLength(1);
