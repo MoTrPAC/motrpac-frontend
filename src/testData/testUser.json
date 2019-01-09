@@ -3,5 +3,8 @@
   "picture": "http://url.com/gavatar.png",
   "nickname": "testUser1",
   "name": "Test User 1",
-  "siteName": "Stanford CAS"
+  "user_metadata": {
+    "name": "Test User",
+    "siteName": "Stanford CAS"
+  }
 }
