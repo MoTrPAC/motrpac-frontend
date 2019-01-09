@@ -17,6 +17,8 @@ export function Dashboard({ profile, isAuthenticated, isPending, featureAvailabl
     </div>
   );
 
+  const siteName = profile.user_metadata && profile.user_metadata.siteName ? profile.user_metadata.siteName : null;
+
   // FIXME: temp workaround to handle callback redirect
   if (isPending) {
     const pendingMsg = 'Authenticating...';
@@ -34,7 +36,7 @@ export function Dashboard({ profile, isAuthenticated, isPending, featureAvailabl
       <div className="container Dashboard">
         <div className="row align-items-center">
           <div className="col-12 col-md-6 align-self-center">
-            <h2 className="welcomeUser light">{`Welcome ${profile.name} at ${profile.user_metadata.siteName}`}</h2>
+            <h2 className="welcomeUser light">{`Welcome ${profile.name} at ${siteName}`}</h2>
           </div>
           <div className="col-auto">
             <Link className="uploadBtn btn btn-primary" to="/upload">Upload Data</Link>
