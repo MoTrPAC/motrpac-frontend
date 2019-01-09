@@ -104,7 +104,7 @@ DownloadPage.defaultProps = {
 
 const mapStateToProps = state => ({
   sortBy: state.download.sortBy,
-  siteName: state.auth.user.siteName,
+  siteName: state.auth.profile.user_metadata.siteName,
   filteredUploads: state.download.filteredUploads,
   cartItems: state.download.cartItems,
   isAuthenticated: state.auth.isAuthenticated,
