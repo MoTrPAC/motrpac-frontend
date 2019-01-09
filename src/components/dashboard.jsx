@@ -21,14 +21,13 @@ export function Dashboard({ profile, isAuthenticated, isPending, featureAvailabl
   if (isPending) {
     const pendingMsg = 'Authenticating...';
 
-  return (
-    <div className="authLoading">
-      <span className="oi oi-shield" />
-      <h3>{pendingMsg}</h3>
-    </div>
-  );
+    return (
+      <div className="authLoading">
+        <span className="oi oi-shield" />
+        <h3>{pendingMsg}</h3>
+      </div>
+    );
   }
-
 
   if (isAuthenticated) {
     return (
