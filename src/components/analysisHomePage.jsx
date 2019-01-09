@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import analysisTypes from '../assets/analysisIcons/analysisTypes';
+import analysisTypes from '../lib/analysisTypes';
 
 // TODO: Add animation of transitions potentially with CSSTransitions package
 

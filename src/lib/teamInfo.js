@@ -1,14 +1,14 @@
-import EuanImg from './teamMemberPhotos/Euan.jpg';
-import MattImg from './teamMemberPhotos/Matt.jpg';
-import SteveImg from './teamMemberPhotos/Steve.jpg';
-import MaleneImg from './teamMemberPhotos/Malene.jpg';
-import KarenImg from './teamMemberPhotos/Karen.jpg';
-import JimmyImg from './teamMemberPhotos/Jimmy.jpg';
-import DavidJMImg from './teamMemberPhotos/DavidJM.jpg';
-import ShrutiImg from './teamMemberPhotos/Shruti.jpg';
-import DavidAImg from './teamMemberPhotos/DavidA.jpg';
-import ArchanaImg from './teamMemberPhotos/Archana.png';
-import SamirImg from './teamMemberPhotos/Samir.jpg';
+import EuanImg from '../assets/teamMemberPhotos/Euan.jpg';
+import MattImg from '../assets/teamMemberPhotos/Matt.jpg';
+import SteveImg from '../assets/teamMemberPhotos/Steve.jpg';
+import MaleneImg from '../assets/teamMemberPhotos/Malene.jpg';
+import KarenImg from '../assets/teamMemberPhotos/Karen.jpg';
+import JimmyImg from '../assets/teamMemberPhotos/Jimmy.jpg';
+import DavidJMImg from '../assets/teamMemberPhotos/DavidJM.jpg';
+import ShrutiImg from '../assets/teamMemberPhotos/Shruti.jpg';
+import DavidAImg from '../assets/teamMemberPhotos/DavidA.jpg';
+import ArchanaImg from '../assets/teamMemberPhotos/Archana.png';
+import SamirImg from '../assets/teamMemberPhotos/Samir.jpg';
 
 const teamInfo = {
   PIs: [
@@ -51,7 +51,7 @@ const teamInfo = {
     },
     {
       name: 'Shruti Marwaha, Ph.D.',
-      title: 'Computational Biologist',
+      title: 'Research Engineer',
       image: ShrutiImg,
     },
     {

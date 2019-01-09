@@ -1,19 +1,19 @@
-import globeIcon from './Globe.svg';
-import moleculeIcon from './Molecule.svg';
-import lungIcon from './Lungs.svg';
-import networkIcon from './Network.svg';
-import timeIcon from './TimeSeries.svg';
-import omicsIcon from './Omics.svg';
-import MAGeneIcon from './MA_gene.svg';
-import MATimeIcon from './MA_time.svg';
-import globeIconInactive from './Globe_inactive.svg';
-import moleculeIconInactive from './Molecule_inactive.svg';
-import lungIconInactive from './Lungs_inactive.svg';
-import networkIconInactive from './Network_inactive.svg';
-import timeIconInactive from './TimeSeries_inactive.svg';
-import omicsIconInactive from './Omics_inactive.svg';
-import MAGeneIconInactive from './MA_gene_inactive.svg';
-import MATimeIconInactive from './MA_time_inactive.svg';
+import globeIcon from '../assets/analysisIcons/Globe.svg';
+import moleculeIcon from '../assets/analysisIcons/Molecule.svg';
+import lungIcon from '../assets/analysisIcons/Lungs.svg';
+import networkIcon from '../assets/analysisIcons/Network.svg';
+import timeIcon from '../assets/analysisIcons/TimeSeries.svg';
+import omicsIcon from '../assets/analysisIcons/Omics.svg';
+import MAGeneIcon from '../assets/analysisIcons/MA_gene.svg';
+import MATimeIcon from '../assets/analysisIcons/MA_time.svg';
+import globeIconInactive from '../assets/analysisIcons/Globe_inactive.svg';
+import moleculeIconInactive from '../assets/analysisIcons/Molecule_inactive.svg';
+import lungIconInactive from '../assets/analysisIcons/Lungs_inactive.svg';
+import networkIconInactive from '../assets/analysisIcons/Network_inactive.svg';
+import timeIconInactive from '../assets/analysisIcons/TimeSeries_inactive.svg';
+import omicsIconInactive from '../assets/analysisIcons/Omics_inactive.svg';
+import MAGeneIconInactive from '../assets/analysisIcons/MA_gene_inactive.svg';
+import MATimeIconInactive from '../assets/analysisIcons/MA_time_inactive.svg';
 
 const analysisTypes = [
   {
@@ -21,7 +21,7 @@ const analysisTypes = [
     shortName: 'PDMA',
     icon: globeIcon,
     inactiveIcon: globeIconInactive,
-    active: true,
+    active: false,
     subAnalyses: [
       {
         title: 'Meta-Analysis of a Gene',

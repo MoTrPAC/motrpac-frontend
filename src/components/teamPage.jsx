@@ -1,6 +1,6 @@
 import React from 'react';
 import TeamMemberCard from './teamMemberCard';
-import teamInfo from '../assets/teamInfo';
+import teamInfo from '../lib/teamInfo';
 
 function TeamPage() {
   const PIs = teamInfo.PIs
