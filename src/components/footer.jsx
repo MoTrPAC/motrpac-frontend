@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actions from '../actions';
 
@@ -32,7 +32,7 @@ export function Footer({
         )}
         {!isAuthenticated && (
           <button type="button" onClick={login} className="logInOutBtn btn">
-            Submitter Log in
+            Submitter Login
           </button>
         )}
       </span>
@@ -55,17 +55,17 @@ export function Footer({
             <p className="footer-content">
               Data Hub designed and maintained by the MoTrPAC BioInformatics
               Center at
-              <Link to="https://www.stanford.edu/" target="_new">
+              <a href="https://www.stanford.edu/" target="_blank" rel="noopener noreferrer">
                 {' '}
                 Stanford University
-              </Link>
+              </a>
             </p>
             <p className="footer-content">
               Funded by the
-              <Link to="https://commonfund.nih.gov/" target="_new">
+              <a href="https://commonfund.nih.gov/" target="_blank" rel="noopener noreferrer">
                 {' '}
                 NIH Common Fund
-              </Link>
+              </a>
             </p>
           </div>
           <div className="col user-login">
@@ -88,10 +88,21 @@ export function Footer({
 }
 
 Footer.propTypes = {
-  profile: PropTypes.object,
+  profile: PropTypes.shape({
+    name: PropTypes.string,
+    nickname: PropTypes.string,
+    email: PropTypes.string,
+    picture: PropTypes.string,
+    user_metadata: PropTypes.object,
+  }),
   isAuthenticated: PropTypes.bool,
   login: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
+};
+
+Footer.defaultProps = {
+  profile: {},
+  isAuthenticated: false,
 };
 
 const mapStateToProps = state => ({
