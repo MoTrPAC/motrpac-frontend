@@ -6,9 +6,18 @@ import { Provider } from 'react-redux';
 import rootReducer, { defaultRootState } from '../../reducers/index';
 import { defaultAnalysisState } from '../../reducers/analysisReducer';
 import AnalysisHomePageConnected, { AnalysisHomePage } from '../../components/analysisHomePage';
-import { defaultDownloadState } from '../../reducers/downloadReducer';
+import analysisTypes from '../../lib/analysisTypes';
 
 Enzyme.configure({ adapter: new Adapter() });
+
+// Checks if any of the analyses has been set to true
+//   Used to determine if other tests depending on these to be active should run
+let anyAnalysisActive = false;
+analysisTypes.forEach((analysis) => {
+  if (analysis.active) {
+    anyAnalysisActive = true;
+  }
+});
 
 
 const loggedInRootState = {
@@ -119,21 +128,25 @@ describe('Connected AnalysisPage', () => {
   });
 
   test('Clicking active analysis displays subanalyses, clicking back returns to initial', () => {
-    // Initially shows analysisTypeButton
-    expect(mountedAnalysis.find('AnalysisTypeButton')).not.toHaveLength(0);
+    if (anyAnalysisActive) {
+      // Initially shows analysisTypeButton
+      expect(mountedAnalysis.find('AnalysisTypeButton')).not.toHaveLength(0);
 
-    // Click button --> replace analysisTypeButton with SubAnalysisButton
-    mountedAnalysis.find('.analysisTypeActive').first().simulate('click');
-    expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(1);
-    mountedAnalysis.update();
-    expect(mountedAnalysis.find('SubAnalysisButton')).not.toHaveLength(0);
-    expect(mountedAnalysis.find('AnalysisTypeButton')).toHaveLength(0);
+      // Click button --> replace analysisTypeButton with SubAnalysisButton
+      mountedAnalysis.find('.analysisTypeActive').first().simulate('click');
+      expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(1);
+      mountedAnalysis.update();
+      expect(mountedAnalysis.find('SubAnalysisButton')).not.toHaveLength(0);
+      expect(mountedAnalysis.find('AnalysisTypeButton')).toHaveLength(0);
 
-    // Click back button --> replace SubAnalysisButton with AnalysisTypeButton
-    mountedAnalysis.find('.backButton').first().simulate('click');
-    expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(0);
-    mountedAnalysis.update();
-    expect(mountedAnalysis.find('SubAnalysisButton')).toHaveLength(0);
-    expect(mountedAnalysis.find('AnalysisTypeButton')).not.toHaveLength(0);
+      // Click back button --> replace SubAnalysisButton with AnalysisTypeButton
+      mountedAnalysis.find('.backButton').first().simulate('click');
+      expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(0);
+      mountedAnalysis.update();
+      expect(mountedAnalysis.find('SubAnalysisButton')).toHaveLength(0);
+      expect(mountedAnalysis.find('AnalysisTypeButton')).not.toHaveLength(0);
+    } else {
+      expect(mountedAnalysis.find('.analysisTypeActive')).toHaveLength(0);
+    }
   });
 });
