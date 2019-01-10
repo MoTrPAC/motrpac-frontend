@@ -14,6 +14,8 @@ export const defaultUploadState = {
     description: '',
   },
   dragging: 0,
+  previousUploads: [],
+  experimentIndex: -1, // Index of experiment currently being modified with uploads
 };
 
 // Creates filter to not allow already existing files based on file name
@@ -106,6 +108,28 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         processedData: action.elements.processedData.checked,
       };
 
+      let experimentIndex = state.previousUploads.findIndex(exp => ((exp.identifier === formData.identifier) && (exp.dataType === formData.dataType)));
+      if (experimentIndex === -1) {
+        experimentIndex = state.previousUploads.length();
+        const d = new Date();
+        const uploadDate = d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear();
+        const experiment = {
+          identifier: formData.identifier,
+          dataType: formData.dataType,
+          subject: formData.subjectType,
+          phase: formData.studyPhase,
+          date: formData.collectionDate,
+          lastUpdated: uploadDate,
+          history: [{
+            fileNames: [],
+            date: uploadDate,
+          }],
+        };
+        const previousUploads = [...state.previousUploads, experiment];
+      } else {
+        const experiment = 
+      }
+      
       return {
         ...state,
         formValues: formData,
@@ -122,6 +146,12 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         ...state,
         uploadFiles: remainingFiles,
       };
+    }
+    case 'UPLOAD_SUCCESS': {
+     return {
+       ...state,
+       //previousUploads: [...state.previousUploads, upload]
+     } 
     }
 
     default:

@@ -9,7 +9,7 @@ function PreviousUploadsTable({ previousUploads }) {
         <td>{upload.identifier}</td>
         <td>{upload.subject}</td>
         <td>{upload.phase}</td>
-        <td>{upload.type}</td>
+        <td>{upload.dataType}</td>
         <td>{upload.date}</td>
       </tr>));
   return (

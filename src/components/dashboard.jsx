@@ -7,10 +7,9 @@ import PreviousUploadsGraph from './previousUploadsGraph';
 import AllUploadsDoughnut from './allUploadsDoughnut';
 import AllUploadStats from './allUploadStats';
 
-const previousUploads = require('../testData/testPreviousUploads');
 const allUploads = require('../testData/testAllUploads');
 
-export function Dashboard({ user, loggedIn, featureAvailable }) {
+export function Dashboard({ user, loggedIn, featureAvailable, previousUploads }) {
   const editBtn = (
     <div className="col-auto">
       <Link className="editBtn btn btn-light disabled" to="/edit-dashboard">Edit Dashboard</Link>
@@ -68,6 +67,9 @@ Dashboard.propTypes = {
   featureAvailable: PropTypes.shape({
     dashboardEditable: PropTypes.bool,
   }),
+  previousUploads: PropTypes.arrayOf(PropTypes.shape({
+    identifier: PropTypes.string.isRequired,
+  })).isRequired,
 };
 Dashboard.defaultProps = {
   loggedIn: false,
@@ -79,6 +81,7 @@ Dashboard.defaultProps = {
 const mapStateToProps = state => ({
   user: state.auth.user,
   loggedIn: state.auth.loggedIn,
+  previousUploads: state.upload.previousUploads,
 });
 
 // Fill dispatch to props once actions implemented

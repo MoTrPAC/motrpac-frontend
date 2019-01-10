@@ -14,11 +14,11 @@ export function countUploads(data) {
 
 function PreviousUploadsGraph({ previousUploads }) {
   const pendingQC = previousUploads.filter(upload => upload.availability === 'Pending Q.C.');
-  const pendingQCCount = countUploads(pendingQC.map(upload => upload.type));
+  const pendingQCCount = countUploads(pendingQC.map(upload => upload.dataType));
   const internalAvailable = previousUploads.filter(upload => upload.availability === 'Internally Available');
-  const internalAvailableCount = countUploads(internalAvailable.map(upload => upload.type));
+  const internalAvailableCount = countUploads(internalAvailable.map(upload => upload.dataType));
   const publicAvailable = previousUploads.filter(upload => upload.availability === 'Publicly Available');
-  const publicAvailableCount = countUploads(publicAvailable.map(upload => upload.type));
+  const publicAvailableCount = countUploads(publicAvailable.map(upload => upload.dataType));
   const data = {
     labels: Object.keys(pendingQCCount),
     datasets: [
