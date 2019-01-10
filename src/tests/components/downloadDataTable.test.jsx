@@ -7,8 +7,6 @@ import { defaultDownloadState } from '../../reducers/downloadReducer';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const data = require('../../testData/testUser');
-
 const testAllUploads = require('../../testData/testAllUploads');
 
 const downloadActions = {
@@ -20,13 +18,13 @@ const downloadActions = {
 describe('Download Data Table', () => {
   test('Renders correct amount of rows', () => {
     const shallowTable = shallow(
-      <DownloadDataTable siteName={data.user_metadata.siteName} {...defaultDownloadState} filteredUploads={testAllUploads} {...downloadActions} />,
+      <DownloadDataTable siteName="Stanford CAS" {...defaultDownloadState} filteredUploads={testAllUploads} {...downloadActions} />,
     );
     expect(shallowTable.find('DownloadRow')).toHaveLength(testAllUploads.length);
   });
   test('No uploads message loads if nothing uploaded', () => {
     const shallowTable = shallow(
-      <DownloadDataTable siteName={data.user_metadata.siteName} {...defaultDownloadState} filteredUploads={[]} {...downloadActions} />,
+      <DownloadDataTable siteName="Stanford CAS" {...defaultDownloadState} filteredUploads={[]} {...downloadActions} />,
     );
     expect(shallowTable.find('DownloadRow')).toHaveLength(0);
     expect(shallowTable.find('.noData')).toHaveLength(1);
