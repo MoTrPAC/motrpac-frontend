@@ -2,6 +2,9 @@ import auth0 from 'auth0-js';
 import { AUTH_CONFIG } from './auth0-variables';
 
 export default class Auth {
+  expiresAt;
+  tokenRenewalTimeout;
+
   constructor() {
     this.auth0 = new auth0.WebAuth({
       domain: AUTH_CONFIG.domain,
@@ -17,6 +20,7 @@ export default class Auth {
     this.isAuthenticated = this.isAuthenticated.bind(this);
     this.setSession = this.setSession.bind(this);
     this.getProfile = this.getProfile.bind(this);
+    this.scheduleRenewal();
   }
 
   login() {
@@ -29,6 +33,7 @@ export default class Auth {
     localStorage.removeItem('id_token');
     localStorage.removeItem('id_token_payload');
     localStorage.removeItem('expires_at');
+    clearTimeout(this.tokenRenewalTimeout);
   }
 
   setSession(authResult) {
@@ -40,12 +45,14 @@ export default class Auth {
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('id_token_payload', JSON.stringify(authResult.idTokenPayload));
     localStorage.setItem('expires_at', expiresAt);
+
+    // schedule a token renewal
+    this.scheduleRenewal();
   }
 
   handleAuthentication(cb) {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
-        console.log(authResult);
         this.setSession(authResult);
         cb(null, authResult);
       } else if (err) {
@@ -69,7 +76,7 @@ export default class Auth {
       return false;
     }
 
-    let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
   }
 
@@ -87,5 +94,26 @@ export default class Auth {
       app_metadata: idTokenPayload.app_metadata
     }
     cb(null, profile);
+  }
+
+  renewSession() {
+    this.auth0.checkSession({}, (err, authResult) => {
+      if (authResult && authResult.accessToken && authResult.idToken) {
+        this.setSession(authResult);
+      } else if (err) {
+        this.logout();
+        console.log(`Could not get a new token (${err.error}: ${err.error_description}).`);
+      }
+    });
+  }
+
+  scheduleRenewal() {
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    const timeout = expiresAt - Date.now();
+    if (timeout > 0) {
+      this.tokenRenewalTimeout = setTimeout(() => {
+        this.renewSession();
+      }, timeout);
+    }
   }
 }
