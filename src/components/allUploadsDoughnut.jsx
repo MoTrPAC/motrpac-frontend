@@ -5,7 +5,8 @@ import { countUploads } from './previousUploadsGraph';
 import colors from '../lib/colors';
 
 function AllUploadsDoughnut({ allUploads }) {
-  const availabilityCount = countUploads(allUploads.map(upload => upload.availability));
+  const types = [...new Set(allUploads.map(upload => upload.availability))];
+  const availabilityCount = countUploads(allUploads.map(upload => upload.availability), types);
   const data = {
     labels: Object.keys(availabilityCount),
     datasets: [
