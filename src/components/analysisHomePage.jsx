@@ -54,10 +54,29 @@ export function AnalysisHomePage({
   };
 
   function SubAnalysisButton({ subAnalysis }) {
+    if (subAnalysis.active) {
+      return (
+        <div className="row subAnalysisRow justify-content-center m-1 m-sm-4" onClick={onPickSubAnalysis} onKeyPress={onPickSubAnalysis} tabIndex={0} role="button" id={subAnalysis.shortName}>
+          <div className="col-11 col-md-5 m-1 my-2 align-self-center imgCont">
+            <img src={subAnalysis.icon} className="align-self-end" alt={`${subAnalysis.title} Icon`} />
+          </div>
+          <div className="col-11 col-md-5 p-2 align-self-center">
+            <h3>{subAnalysis.title}</h3>
+            <p>
+              <strong>Input: </strong>
+              {subAnalysis.input}
+            </p>
+            <p>
+              {subAnalysis.description}
+            </p>
+          </div>
+        </div>
+      );
+    }
     return (
-      <div className="row subAnalysisRow justify-content-center m-1 m-sm-4" onClick={onPickSubAnalysis} onKeyPress={onPickSubAnalysis} tabIndex={0} role="button" id={subAnalysis.shortName}>
+      <div className="row subAnalysisRow justify-content-center m-1 m-sm-4 inactiveSubAnalysisRow" id={subAnalysis.shortName}>
         <div className="col-11 col-md-5 m-1 my-2 align-self-center imgCont">
-          <img src={subAnalysis.icon} className="align-self-end" alt={`${subAnalysis.title} Icon`} />
+          <img src={subAnalysis.inactiveIcon} className="align-self-end" alt={`${subAnalysis.title} Icon`} />
         </div>
         <div className="col-11 col-md-5 p-2 align-self-center">
           <h3>{subAnalysis.title}</h3>
@@ -69,6 +88,9 @@ export function AnalysisHomePage({
             {subAnalysis.description}
           </p>
         </div>
+        <div className="comingSoon align-self-center centered">
+          <p>Coming Soon!</p>
+        </div>
       </div>
     );
   }
@@ -79,6 +101,8 @@ export function AnalysisHomePage({
       description: PropTypes.string.isRequired,
       shortName: PropTypes.string.isRequired,
       icon: PropTypes.string.isRequired,
+      inactiveIcon: PropTypes.string.isRequired,
+      active: PropTypes.bool.isRequired,
     }).isRequired,
   };
   // Button to return 1 depth level
