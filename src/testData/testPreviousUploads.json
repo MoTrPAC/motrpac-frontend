@@ -10,13 +10,13 @@
     "lastUpdated": "09/05/2018",
     "history": [
       {
-        "fileNames":["manifest.json","mockfile2.ext","mockfile.ext"],
-        "date":"09/03/2018",
+        "fileName": "manifest.json",
+        "timeStamp": 1547241116820,
         "user":"Test User"
       },
       {
-        "fileNames":["manifest.json","mockfile2.ext","mockfile.ext"],
-        "date":"09/05/2018",
+        "fileName": "mockfile.ext",
+        "timeStamp": 1547241120820,
         "user":"Test User"
       }
     ]
@@ -32,8 +32,8 @@
     "lastUpdated": "09/15/2018",
     "history": [
       {
-        "fileNames":["manifest.json","mockfile2.ext","mockfile.ext"],
-        "date":"09/15/2018",
+        "fileName":"mockfile2.ext",
+        "timeStamp": 1547241116820,
         "user":"Test User"
       }
     ]
@@ -49,8 +49,8 @@
     "lastUpdated": "09/25/2018",
     "history": [
       {
-        "fileNames":["manifest.json","mockfile2.ext","mockfile.ext"],
-        "date":"09/25/2018",
+        "fileName":"manifest.json",
+        "timeStamp": 1540241116820,
         "user":"Test User"
       }
     ]

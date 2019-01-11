@@ -68,7 +68,7 @@ function PreviousUploadsGraph({ previousUploads }) {
 
 PreviousUploadsGraph.propTypes = {
   previousUploads: PropTypes.arrayOf(PropTypes.shape({
-    type: PropTypes.string.isRequired,
+    type: PropTypes.string,
   })).isRequired,
 };
 export default PreviousUploadsGraph;

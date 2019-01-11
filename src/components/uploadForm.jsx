@@ -25,9 +25,9 @@ function UploadForm({
 
       <div className="form-group">
         <div className="invalid-feedback">Field Required</div>
-        <label htmlFor="identifier">
-          Identifier(s) * – comma seperate if multiple
-          <input type="text" onChange={handleFormChange} value={formValues.identifier} className="form-control" id="identifier" placeholder="Ex: AS213141" required disabled={submitted} />
+        <label htmlFor="biospecimenID">
+          Biospecimen ID(s) * – comma seperate if multiple
+          <input type="text" onChange={handleFormChange} value={formValues.biospecimenID} className="form-control" id="biospecimenID" placeholder="Ex: AS213141" required disabled={submitted} />
         </label>
       </div>
 
@@ -96,7 +96,7 @@ UploadForm.propTypes = {
   submitted: PropTypes.bool,
   formValues: PropTypes.shape({
     dataType: PropTypes.string,
-    identifier: PropTypes.string,
+    biospecimenID: PropTypes.string,
     collectionDate: PropTypes.string,
     subjectType: PropTypes.string,
     studyPhase: PropTypes.string,
@@ -113,7 +113,7 @@ UploadForm.defaultProps = {
   submitted: false,
   formValues: {
     dataType: '',
-    identifier: '',
+    biospecimenID: '',
     collectionDate: '',
     subjectType: '',
     studyPhase: '',

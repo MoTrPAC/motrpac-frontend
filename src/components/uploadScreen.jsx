@@ -15,7 +15,7 @@ export function UploadScreen({
   validated,
   submitted,
   formValues,
-  files,
+  stagedFiles,
   uploadFiles,
   onDragEnter,
   onDragLeave,
@@ -25,6 +25,7 @@ export function UploadScreen({
   onFormSubmit,
   cancelUpload,
   handleFormChange,
+  clearForm,
   loggedIn,
 }) {
   if (!loggedIn) {
@@ -48,21 +49,30 @@ export function UploadScreen({
           />
         </div>
         <div className="col-8 centered">
-          <UploadAreaDnD
-            dragging={dragging}
-            files={files}
-            fileAdded={e => onFileAdded(e)}
-            dragEnter={() => onDragEnter()}
-            dragLeave={() => onDragLeave()}
-            dragDrop={e => onDragDrop(e)}
-            removeFile={onRemoveFile}
-          />
-          <div className="col-12 centered">
-            <label htmlFor="submit-form" id="formSubmitLabel" className="btn btn-success uploadBtn" tabIndex={0}>Upload</label>
+          <div className="row">
+            <div className="col">
+              <UploadAreaDnD
+                dragging={dragging}
+                files={stagedFiles}
+                fileAdded={e => onFileAdded(e)}
+                dragEnter={() => onDragEnter()}
+                dragLeave={() => onDragLeave()}
+                dragDrop={e => onDragDrop(e)}
+                removeFile={onRemoveFile}
+              />
+            </div>
+          </div>
+          <div className="row justify-content-center">
+            <div className="col-3 centered">
+              <label htmlFor="submit-form" id="formSubmitLabel" className="btn btn-success uploadBtn" tabIndex={0}>Upload</label>
+            </div>
+            <div className="col-3 centered">
+              <button onClick={clearForm} type="button" className="btn btn-danger clearFormBtn">Clear Form</button>
+            </div>
           </div>
         </div>
         <div className="col-12">
-          <h3>{formValues.identifier}</h3>
+          <h3>{formValues.biospecimenID}</h3>
           <UploadList uploadFiles={uploadFiles} cancelUpload={cancelUpload} />
         </div>
       </div>
@@ -74,12 +84,12 @@ export function UploadScreen({
 UploadScreen.propTypes = {
   dragging: PropTypes.number.isRequired,
   submitted: PropTypes.bool,
-  files: PropTypes.arrayOf(PropTypes.shape({
+  stagedFiles: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
   })).isRequired,
   formValues: PropTypes.shape({
     dataType: PropTypes.string,
-    identifier: PropTypes.string,
+    biospecimenID: PropTypes.string,
     collectionDate: PropTypes.string,
     subjectType: PropTypes.string,
     studyPhase: PropTypes.string,
@@ -99,6 +109,7 @@ UploadScreen.propTypes = {
   onFileAdded: PropTypes.func.isRequired,
   onRemoveFile: PropTypes.func.isRequired,
   cancelUpload: PropTypes.func.isRequired,
+  clearForm: PropTypes.func.isRequired,
   loggedIn: PropTypes.bool,
 };
 
@@ -144,6 +155,9 @@ const mapDispatchToProps = dispatch => ({
     eID: e.target.id,
     changeValue: e.target.value,
     checked: e.target.checked,
+  }),
+  clearForm: () => dispatch({
+    type: 'CLEAR_FORM',
   }),
 });
 

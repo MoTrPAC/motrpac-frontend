@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 function PreviousUploadsTable({ previousUploads }) {
   const uploadRows = previousUploads
     .map(upload => (
-      <tr key={upload.identifier}>
-        <td>{upload.identifier}</td>
+      <tr key={upload.biospecimenID + upload.dataType}>
+        <td>{upload.biospecimenID}</td>
         <td>{upload.subject}</td>
         <td>{upload.phase}</td>
         <td>{upload.dataType}</td>
@@ -34,7 +34,7 @@ function PreviousUploadsTable({ previousUploads }) {
 
 PreviousUploadsTable.propTypes = {
   previousUploads: PropTypes.arrayOf(PropTypes.shape({
-    identifier: PropTypes.string.isRequired,
+    biospecimenID: PropTypes.string.isRequired,
   })).isRequired,
 };
 

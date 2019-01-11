@@ -68,7 +68,7 @@ Dashboard.propTypes = {
     dashboardEditable: PropTypes.bool,
   }),
   previousUploads: PropTypes.arrayOf(PropTypes.shape({
-    identifier: PropTypes.string.isRequired,
+    identifier: PropTypes.string,
   })).isRequired,
 };
 Dashboard.defaultProps = {
