@@ -13,6 +13,8 @@ import LinkoutPageConnected from './components/linkoutPage';
 import AnalysisHomePageConnected from './components/analysisHomePage';
 import DownloadPageConnected from './components/downloadPage';
 import MethodsConnected from './components/methods';
+import Team from './components/team';
+import Contact from './components/contact';
 import CallbackConnected from './components/callback';
 
 const store = configureStore();
@@ -35,6 +37,8 @@ function App({ history = History }) {
               <Route path="/download" component={DownloadPageConnected} />
               <Route path="/analysis/:subjectType" component={AnalysisHomePageConnected} />
               <Route path="/methods" component={MethodsConnected} />
+              <Route path="/team" component={Team} />
+              <Route path="/contact" component={Contact} />
             </Switch>
           </div>
           <FooterConnected />
