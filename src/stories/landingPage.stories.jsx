@@ -6,8 +6,8 @@ import { Navbar } from '../components/navbar';
 import { Footer } from '../components/footer';
 
 const footerActions = {
-  onLogIn: action('logging in'),
-  onLogOut: action('logging out'),
+  login: action('logging in'),
+  logout: action('logging out'),
 };
 
 storiesOf('Landing Page', module)

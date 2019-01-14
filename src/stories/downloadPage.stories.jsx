@@ -7,6 +7,7 @@ import { defaultDownloadState } from '../reducers/downloadReducer';
 import { Navbar } from '../components/navbar';
 import { Footer } from '../components/footer';
 
+const data = require('../testData/testUser');
 const testPreviousUploads = require('../testData/testPreviousUploads');
 
 const downloadActions = {
@@ -22,18 +23,18 @@ const downloadActions = {
 
 const loggedInState = {
   ...defaultDownloadState,
-  loggedIn: true,
+  isAuthenticated: true,
 };
 
 const withFilesState = {
   ...defaultDownloadState,
-  loggedIn: true,
+  isAuthenticated: true,
   allUploads: testPreviousUploads,
   filteredUploads: testPreviousUploads,
 };
 const viewCartState = {
   ...defaultDownloadState,
-  loggedIn: true,
+  isAuthenticated: true,
   allUploads: testPreviousUploads,
   filteredUploads: testPreviousUploads,
   cartItems: testPreviousUploads,
@@ -41,20 +42,20 @@ const viewCartState = {
 };
 
 const footerActions = {
-  onLogIn: action('logging in'),
-  onLogOut: action('logging out'),
+  login: action('logging in'),
+  logout: action('logging out'),
 };
 
 storiesOf('Download Page', module)
   .addDecorator(story => (
     <div className="App">
       <header>
-        <Navbar loggedIn />
+        <Navbar isAuthenticated />
       </header>
       <div className="componentHolder">
         {story()}
       </div>
-      <Footer loggedIn {...footerActions} user={{ name: 'Test User', site: 'CAS' }} />
+      <Footer isAuthenticated {...footerActions} profile={data} />
     </div>
 
   ))
