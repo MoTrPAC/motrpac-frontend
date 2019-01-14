@@ -42,6 +42,7 @@ export function AuthReducer(state = defaultAuthState, action) {
       return {
         ...state,
         isFetching: false,
+        isPending: false,
         isAuthenticated: false,
         errorMessage: action.message,
       };
