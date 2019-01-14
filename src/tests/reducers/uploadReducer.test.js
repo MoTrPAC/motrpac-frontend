@@ -24,7 +24,7 @@ describe('Upload Reducer', () => {
   });
 
   const formSubmitAction = {
-    type: 'FORM_SUBMIT',
+    type: types.FORM_SUBMIT,
     validity: false,
     elements: {
       dataType: { value: '' },
@@ -45,20 +45,15 @@ describe('Upload Reducer', () => {
       });
   });
 
-  const removeFileAction = {
-    type: 'REMOVE_FILE',
-    name: testFiles[1].name,
-  };
+  const removeFileAction = actions.removeFile(testFiles[1].name);
 
   it('Removed file is not in returned state', () => {
     expect(UploadReducer(fileAddedState, removeFileAction))
       .toEqual(defaultUploadState);
   });
 
-  const cancelUploadAction = {
-    type: 'CANCEL_UPLOAD',
-    id: testUploads[0].id,
-  };
+  
+  const cancelUploadAction = actions.cancelUpload(testUploads[0].id);
   const uploadingState = {
     ...defaultUploadState,
     uploadFiles: testUploads,
@@ -118,9 +113,8 @@ describe('Upload Reducer', () => {
   test('Upload of new experiment/biospecimenID adds new entry to previousUploads', () => {
     expect(newExperimentState.previousUploads.slice(-1)[0]).toEqual(noExperimentExpectedValue);
   });
-  const clearFormAction = {
-    type: 'CLEAR_FORM',
-  };
+  const clearFormAction = actions.clearForm();
+
   const addToExpFormSubmitAction = {
     ...formSubmitValidAction,
     elements: {
@@ -176,10 +170,7 @@ describe('Upload Reducer', () => {
       .toEqual(addToExpFormSubmitAction.elements.biospecimenID.value);
   });
 
-  const uploadSuccessAction = {
-    type: 'UPLOAD_SUCCESS',
-    upload: testUploads[0],
-  };
+  const uploadSuccessAction = actions.uploadSuccess(testUploads[0]);
 
   test('On successful upload, add to relevant experiments history', () => {
     const addUploadHistoryState = UploadReducer(newExperimentState, uploadSuccessAction)

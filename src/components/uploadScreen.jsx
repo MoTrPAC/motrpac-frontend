@@ -124,41 +124,15 @@ const mapStateToProps = state => ({
 
 // Maps required functions to specific actions handled by reducer in src/reducers.js
 const mapDispatchToProps = dispatch => ({
-  onDragEnter: () => dispatch({
-    type: 'DRAG_ENTER',
-  }),
-  onDragLeave: () => dispatch({
-    type: 'DRAG_LEAVE',
-  }),
-  onDragDrop: e => dispatch({
-    type: 'FILES_ADDED',
-    files: e.dataTransfer.files,
-  }),
-  onFileAdded: e => dispatch({
-    type: 'FILES_ADDED',
-    files: e.target.files,
-  }),
-  onUpload: () => dispatch({
-    type: 'UPLOADING_FILES',
-  }),
-  onRemoveFile: fileName => dispatch({
-    type: 'REMOVE_FILE',
-    name: fileName,
-  }),
+  onDragEnter: () => dispatch(actions.dragEnter()),
+  onDragLeave: () => dispatch(actions.dragLeave()),
+  onDragDrop: e => dispatch(actions.stageFiles(e.dataTransfer.files)),
+  onFileAdded: e => dispatch(actions.stageFiles(e.target.files)),
+  onRemoveFile: fileName => dispatch(actions.removeFile(fileName)),
   onFormSubmit: e => dispatch(actions.formSubmit(e)),
-  cancelUpload: ident => dispatch({
-    type: 'CANCEL_UPLOAD',
-    id: ident,
-  }),
-  handleFormChange: e => dispatch({
-    type: 'FORM_CHANGE',
-    eID: e.target.id,
-    changeValue: e.target.value,
-    checked: e.target.checked,
-  }),
-  clearForm: () => dispatch({
-    type: 'CLEAR_FORM',
-  }),
+  cancelUpload: ident => dispatch(actions.cancelUpload(ident)),
+  handleFormChange: e => dispatch(actions.formChange(e)),
+  clearForm: () => dispatch(actions.clearForm()),
   uploadSuccess: upload => dispatch(actions.uploadSuccess(upload)),
 });
 

@@ -24,6 +24,18 @@ export const types = {
   SET_ALL_SUCCESS,
 };
 
+function dragEnter() {
+  return {
+    type: DRAG_ENTER,
+  };
+}
+
+function dragLeave() {
+  return {
+    type: DRAG_LEAVE,
+  };
+}
+
 function stageFiles(files) {
   return {
     type: FILES_ADDED,
@@ -53,11 +65,12 @@ function cancelUpload(id) {
   };
 }
 
-function formChange(eid, value) {
+function formChange(e) {
   return {
     type: FORM_CHANGE,
-    eID: eid,
-    changeValue: value,
+    eID: e.target.id,
+    changeValue: e.target.value,
+    checked: e.target.checked,
   };
 }
 
@@ -100,6 +113,8 @@ const actions = {
   clearForm,
   uploadSuccess,
   setSuccess,
+  dragEnter,
+  dragLeave,
 };
 
 export default actions;
