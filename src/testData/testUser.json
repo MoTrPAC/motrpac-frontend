@@ -1,6 +1,6 @@
 {
   "email": "email@example.com",
-  "picture": "http://url.com/gavatar.png",
+  "picture": "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y",
   "nickname": "testUser1",
   "name": "Test User 1",
   "user_metadata": {
