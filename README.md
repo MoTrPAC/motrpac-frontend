@@ -34,8 +34,8 @@
 #### Building and running
 
  * Build and run
-  - `bash build_serve.sh`
-  - Compiles node modules, Scss, and starts react app 
+   - `bash build_serve.sh`
+   - Compiles node modules, Scss, and starts react app 
 
  * Running React App 
    - `yarn start`
