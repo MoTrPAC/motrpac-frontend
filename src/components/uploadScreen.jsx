@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import UploadForm from './uploadForm';
 import UploadList from './uploadList';
 import UploadAreaDnD from './uploadAreaDnD';
+import actions from '../reducers/uploadActions';
 
 // Returns element containing a drag and drop area for file input
 //    and a display for monitoring file status
@@ -26,6 +27,7 @@ export function UploadScreen({
   cancelUpload,
   handleFormChange,
   clearForm,
+  uploadSuccess,
   loggedIn,
 }) {
   if (!loggedIn) {
@@ -67,7 +69,9 @@ export function UploadScreen({
               <label htmlFor="submit-form" id="formSubmitLabel" className="btn btn-success uploadBtn" tabIndex={0}>Upload</label>
             </div>
             <div className="col-3 centered">
-              <button onClick={clearForm} type="button" className="btn btn-danger clearFormBtn">Clear Form</button>
+              <button onClick={clearForm} type="button" className="btn btn-danger clearFormBtn">
+                {submitted ? 'Start New Sample' : 'Clear Form'}
+              </button>
             </div>
           </div>
         </div>
@@ -141,11 +145,7 @@ const mapDispatchToProps = dispatch => ({
     type: 'REMOVE_FILE',
     name: fileName,
   }),
-  onFormSubmit: e => dispatch({
-    type: 'FORM_SUBMIT',
-    validity: e.target.checkValidity(),
-    elements: e.target.elements,
-  }),
+  onFormSubmit: e => dispatch(actions.formSubmit(e)),
   cancelUpload: ident => dispatch({
     type: 'CANCEL_UPLOAD',
     id: ident,
@@ -159,6 +159,7 @@ const mapDispatchToProps = dispatch => ({
   clearForm: () => dispatch({
     type: 'CLEAR_FORM',
   }),
+  uploadSuccess: upload => dispatch(actions.uploadSuccess(upload)),
 });
 
 // exports screen using redux method to allow for interaction between individual components

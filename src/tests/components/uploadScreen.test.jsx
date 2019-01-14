@@ -1,8 +1,9 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow, mount } from 'enzyme';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunkMiddleWare from 'redux-thunk';
 import { defaultUploadState } from '../../reducers/uploadReducer';
 import rootReducer, { defaultRootState } from '../../reducers/index';
 import UploadScreenConnected, { UploadScreen } from '../../components/uploadScreen';
@@ -77,13 +78,13 @@ const loggedInRootState = {
 
 describe('Connected Upload Screen', () => {
   let mountedUploadScreen = mount((
-    <Provider store={createStore(rootReducer, loggedInRootState)}>
+    <Provider store={createStore(rootReducer, loggedInRootState, applyMiddleware(thunkMiddleWare))}>
       <UploadScreenConnected />
     </Provider>
   ));
   beforeAll(() => {
     mountedUploadScreen = mount((
-      <Provider store={createStore(rootReducer, loggedInRootState)}>
+      <Provider store={createStore(rootReducer, loggedInRootState, applyMiddleware(thunkMiddleWare))}>
         <UploadScreenConnected />
       </Provider>
     ));
@@ -117,7 +118,7 @@ describe('Connected Upload Screen', () => {
   });
   test('Added files do move to upload area with valid form', () => {
     mountedUploadScreen = mount((
-      <Provider store={createStore(rootReducer, formFilledState)}>
+      <Provider store={createStore(rootReducer, formFilledState, applyMiddleware(thunkMiddleWare))}>
         <UploadScreenConnected />
       </Provider>
     ));
@@ -146,7 +147,7 @@ describe('Connected Upload Screen', () => {
   });
   test('Canceling uploading file removes it', () => {
     mountedUploadScreen = mount((
-      <Provider store={createStore(rootReducer, uploadingState)}>
+      <Provider store={createStore(rootReducer, uploadingState, applyMiddleware(thunkMiddleWare))}>
         <UploadScreenConnected />
       </Provider>
     ));
@@ -158,7 +159,7 @@ describe('Connected Upload Screen', () => {
 
   test('Clear Form, makes form empty and available to enter again', () => {
     mountedUploadScreen = mount((
-      <Provider store={createStore(rootReducer, formFilledState)}>
+      <Provider store={createStore(rootReducer, formFilledState, applyMiddleware(thunkMiddleWare))}>
         <UploadScreenConnected />
       </Provider>
     ));

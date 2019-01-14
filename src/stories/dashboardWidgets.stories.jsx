@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import PreviousUploadsGraph from '../components/previousUploadsGraph';
-import PreviousUploadsTable from '../components/previousUploadsTable';
+import { PreviousUploadsTable } from '../components/previousUploadsTable';
 import AllUploadsDoughnut from '../components/allUploadsDoughnut';
 import AllUploadStats from '../components/allUploadStats';
 

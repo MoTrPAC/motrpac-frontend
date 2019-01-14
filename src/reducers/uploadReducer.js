@@ -1,3 +1,5 @@
+import { types } from './uploadActions';
+
 export const defaultUploadState = {
   stagedFiles: [],
   uploadFiles: [],
@@ -47,13 +49,13 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
   // Handles state to return based on action
   switch (action.type) {
     // Dragging state modified when file dragged over or exits
-    case 'DRAG_ENTER':
+    case types.DRAG_ENTER:
       return { ...state, dragging: state.dragging + 1 };
-    case 'DRAG_LEAVE':
+    case types.DRAG_LEAVE:
       return { ...state, dragging: state.dragging - 1 };
 
     // Fires on file drop in to area or when files selected
-    case 'FILES_ADDED':
+    case types.FILES_ADDED:
     // Returns state with unique file names
       return {
         ...state,
@@ -62,13 +64,13 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
       };
 
     // Removes staged file if X button clicked
-    case 'REMOVE_FILE':
+    case types.REMOVE_FILE:
       return {
         ...state,
         stagedFiles: state.stagedFiles.filter(file => file.name !== action.name),
       };
 
-    case 'FORM_CHANGE': {
+    case types.FORM_CHANGE: {
       const NewFormValues = {
         ...state.formValues,
       };
@@ -85,7 +87,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
       };
     }
     // On form submit sends staged files to upload status area.
-    case 'FORM_SUBMIT': {
+    case types.FORM_SUBMIT: {
       // if form invalid or no files staged, returns previous state
       if (!action.validity || state.stagedFiles.length === 0) {
         return {
@@ -112,7 +114,8 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
       let expIndex = state.previousUploads
         .findIndex(exp => ((exp.biospecimenID === formData.biospecimenID) && (exp.dataType === formData.dataType)));
 
-      const d = new Date();
+      const now = Date.now();
+      const d = new Date(now);
 
       let prevUploads = [...state.previousUploads];
 
@@ -143,7 +146,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         experimentIndex: expIndex,
       };
     }
-    case 'CANCEL_UPLOAD': {
+    case types.CANCEL_UPLOAD: {
       const remainingFiles = state.uploadFiles.filter(upload => !(upload.id === action.id));
       return {
         ...state,
@@ -151,7 +154,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
       };
     }
 
-    case 'UPLOAD_SUCCESS': {
+    case types.UPLOAD_SUCCESS: {
       // Update status of succesful file
       const newUploadsState = state.uploadFiles.map((uploadItem) => {
         if (uploadItem.id === action.upload.id) {
@@ -189,11 +192,67 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
       };
     }
 
-    case 'CLEAR_FORM':
+    case types.CLEAR_FORM:
       return {
         ...defaultUploadState,
         previousUploads: [...state.previousUploads],
       };
+    
+    case types.EXPAND_UPLOAD_HISTORY: {
+      const prevUploads = state.previousUploads.map((upload) => {
+        if (action.upload === upload) {
+          return {
+            ...upload,
+            expanded: !(upload.expanded),
+          };
+        }
+        return upload;
+      });
+      return {
+        ...state,
+        previousUploads: prevUploads,
+      };
+    }
+
+    case types.SET_ALL_SUCCESS: {
+      // Update status of succesful file
+      const newUploadsState = state.uploadFiles.map((uploadItem) => {
+        if (uploadItem.status === 'UPLOADING') {
+          return {
+            ...uploadItem,
+            status: 'UPLOAD_SUCCESS',
+          };
+        }
+        return uploadItem;
+      });
+
+      // Update upload history with filename
+      const d = Date.now();
+      const successUploads = newUploadsState.filter(upload => (upload.status === 'UPLOAD_SUCCESS'));
+      const historyAddition = successUploads.map((upload) => {
+        return {
+          fileName: upload.file.name,
+          timeStamp: d,
+        };
+      });
+      const experiment = {
+        ...state.previousUploads[state.experimentIndex],
+        history: [
+          ...historyAddition,
+          ...state.previousUploads[state.experimentIndex].history,
+        ],
+      };
+      const prevUploads = [
+        ...state.previousUploads,
+      ];
+
+      prevUploads[state.experimentIndex] = experiment;
+      return {
+        ...state,
+        previousUploads: prevUploads,
+        uploadFiles: newUploadsState,
+      };
+    }
 
     default:
       return state;

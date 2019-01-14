@@ -1,4 +1,5 @@
 import { UploadReducer, defaultUploadState } from '../../reducers/uploadReducer';
+import actions, { types } from '../../reducers/uploadActions';
 
 const testFiles = require('../../testData/testFiles');
 const testUploads = require('../../testData/testUploads');
@@ -12,10 +13,7 @@ describe('Upload Reducer', () => {
     expect(UploadReducer({ ...defaultUploadState, stagedFiles: ['fileName.fileExt'] }, {})).toEqual({ ...defaultUploadState, stagedFiles: ['fileName.fileExt'] });
   });
 
-  const addFileAction = {
-    type: 'FILES_ADDED',
-    files: [testFiles[1], testFiles[1]],
-  };
+  const addFileAction = actions.stageFiles([testFiles[1], testFiles[1]]);
   const fileAddedState = {
     ...defaultUploadState,
     stagedFiles: [testFiles[1]],
@@ -123,26 +121,27 @@ describe('Upload Reducer', () => {
   const clearFormAction = {
     type: 'CLEAR_FORM',
   };
+  const addToExpFormSubmitAction = {
+    ...formSubmitValidAction,
+    elements: {
+      ...formSubmitValidAction.elements,
+      biospecimenID: { value: 'NEW_IDENTIFIER_2' },
+    },
+  };
+  // State has 1 unique experiment
+  const addToExperimentState = UploadReducer(newExperimentState, formSubmitValidAction);
+  const freshFormState = {
+    ...UploadReducer(addToExperimentState, clearFormAction),
+    // Added files and validity to enable submission of form to pass checks
+    stagedFiles: [testFiles[3]],
+    validity: true,
+  };
+  // State has 2 experiments
+  const addNewExperimentState = UploadReducer(freshFormState, addToExpFormSubmitAction);
   test('Upload of existing experiment/biospecimenID adds to history of correct element in previousUploads', () => {
-    const addToExpFormSubmitAction = {
-      ...formSubmitValidAction,
-      elements: {
-        ...formSubmitValidAction.elements,
-        biospecimenID: { value: 'NEW_IDENTIFIER_2' },
-      },
-    };
-    const addToExperimentState = UploadReducer(newExperimentState, formSubmitValidAction);
-
     // Adding experiment, adds new experiment to previousUploads list
     expect(addToExperimentState.previousUploads).toHaveLength(1);
     expect(addToExperimentState.experimentIndex).toEqual(0);
-
-    const freshFormState = {
-      ...UploadReducer(addToExperimentState, clearFormAction),
-      // Added files and validity to enable submission of form to pass checks
-      stagedFiles: [testFiles[3]],
-      validity: true,
-    };
 
     // Clearing form empties the form values
     expect(freshFormState.formValues)
@@ -151,9 +150,6 @@ describe('Upload Reducer', () => {
     // Clearing form doesn't change previousUploads
     expect(freshFormState.previousUploads[0].biospecimenID)
       .toEqual(formSubmitValidAction.elements.biospecimenID.value);
-
-    const addNewExperimentState = UploadReducer(freshFormState, addToExpFormSubmitAction);
-
 
     // Form is valid, submission went through
     expect(addNewExperimentState.validity)
@@ -194,6 +190,21 @@ describe('Upload Reducer', () => {
       .toHaveLength(1);
     expect(addUploadHistory[0].fileName)
       .toEqual(uploadSuccessAction.upload.file.name);
+  });
+
+  const expandRowAction = {
+    type: 'EXPAND_UPLOAD_HISTORY',
+    upload: addNewExperimentState.previousUploads[1],
+  };
+  test('On expand upload row, sets appropriate upload to have status expanded', () => {
+    const expandedRowState = UploadReducer(addNewExperimentState, expandRowAction);
+    // Correct upload set to expanded
+    expect(expandedRowState.previousUploads[1].expanded)
+      .toBeTruthy();
+
+    // Other uploads are not expanded
+    expect(expandedRowState.previousUploads[0].expanded)
+      .toBeFalsy();
   });
   // TODO: Handle if they upload files with the same name, at the same time
 });

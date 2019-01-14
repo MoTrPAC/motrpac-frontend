@@ -6,6 +6,8 @@ import { Navbar } from '../components/navbar';
 import { Footer } from '../components/footer';
 
 const testUser = require('../testData/testUser');
+const previousUploads = require('../testData/testPreviousUploads');
+const allUploads = require('../testData/testAllUploads');
 
 const footerActions = {
   onLogIn: action('logging in'),
@@ -25,4 +27,4 @@ storiesOf('Dashboard', module)
     </div>
 
   ))
-  .add('default', () => <Dashboard user={testUser} loggedIn />);
+  .add('With Test Data', () => <Dashboard user={testUser} previousUploads={previousUploads} allUploads={allUploads} disconnectComponents loggedIn />);
