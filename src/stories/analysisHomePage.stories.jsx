@@ -6,9 +6,11 @@ import { Navbar } from '../components/navbar';
 import { Footer } from '../components/footer';
 import { defaultAnalysisState } from '../reducers/analysisReducer';
 
+const data = require('../testData/testUser');
+
 const footerActions = {
-  onLogIn: action('logging in'),
-  onLogOut: action('logging out'),
+  login: action('logging in'),
+  logout: action('logging out'),
 };
 const AnalysisActions = {
   goBack: action('Back'),
@@ -36,14 +38,14 @@ storiesOf('Analysis Page', module)
   .addDecorator(story => (
     <div className="App">
       <header>
-        <Navbar />
+        <Navbar isAuthenticated />
       </header>
       <div className="componentHolder">
         {story()}
       </div>
-      <Footer {...footerActions} />
+      <Footer isAuthenticated {...footerActions} profile={data} />
     </div>
   ))
-  .add('Animal', () => <AnalysisHomePage loggedIn {...defaultAnalysisState} match={animalMatch} {...AnalysisActions} />)
-  .add('Human', () => <AnalysisHomePage loggedIn {...defaultAnalysisState} match={humanMatch} {...AnalysisActions} />)
-  .add('Human Depth 1', () => <AnalysisHomePage loggedIn {...depth1State} {...AnalysisActions} />);
+  .add('Animal', () => <AnalysisHomePage isAuthenticated {...defaultAnalysisState} match={animalMatch} {...AnalysisActions} />)
+  .add('Human', () => <AnalysisHomePage isAuthenticated {...defaultAnalysisState} match={humanMatch} {...AnalysisActions} />)
+  .add('Human Depth 1', () => <AnalysisHomePage isAuthenticated {...depth1State} {...AnalysisActions} />);
