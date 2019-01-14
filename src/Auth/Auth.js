@@ -90,8 +90,8 @@ export default class Auth {
       nickname: idTokenPayload.nickname,
       email: idTokenPayload.email,
       picture: idTokenPayload.picture,
-      user_metadata: idTokenPayload.user_metadata,
-      app_metadata: idTokenPayload.app_metadata
+      user_metadata: idTokenPayload['https://motrpac.org/user_metadata'],
+      app_metadata: idTokenPayload['https://motrpac.org/app_metadata']
     }
     cb(null, profile);
   }
