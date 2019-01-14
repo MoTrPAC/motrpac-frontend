@@ -13,10 +13,11 @@ export function Footer({
   login,
   logout,
 }) {
+  const userGivenName = profile.user_metadata && profile.user_metadata.givenName ? profile.user_metadata.givenName : profile.name;
   const handleLogout = () => {
     logout();
-    return <Redirect to="/" />
-  }
+    return <Redirect to="/" />;
+  };
   // Function to render login button
   const LoginButton = () => {
     return (
@@ -25,7 +26,7 @@ export function Footer({
           <span>
             <img src={profile.picture} className="user-avatar" alt="avatar" />
             <button type="button" onClick={handleLogout} className="logInOutBtn btn">
-              {profile.name}
+              {userGivenName}
               &nbsp;Logout
             </button>
           </span>
