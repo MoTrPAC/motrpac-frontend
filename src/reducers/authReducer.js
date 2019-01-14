@@ -44,7 +44,7 @@ export function AuthReducer(state = defaultAuthState, action) {
         isFetching: false,
         isPending: false,
         isAuthenticated: false,
-        errorMessage: action.message,
+        message: action.message,
       };
     case LOGOUT_SUCCESS:
       return {
