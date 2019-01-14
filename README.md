@@ -8,19 +8,21 @@
 
 .  
 ├── src  
+│   ├── assets: images, logos, etc.
 │   ├── components: jsx UI components  
-│   ├── index.css  
-│   ├── index.js  
+│   ├── lib: static information like team member names and assay lists
 │   ├── main.css: Compiled from sass/main.sass  
 │   ├── reducers: Handles logic for redux store  
 │   ├── sass: source sass styling  
 │   ├── stories: UI visual tests for storybook  
 │   ├── storybook.test.js: initialize snapshots for storybook tests  
-│   ├── tests: Contains tests for components and reducers
+│   ├── storybookSnapshotInit.Skiptest.js: rename Skiptest to test to include snapshot testing
+│   ├── tests: Contains jest/enzyme based tests for components and reducers
 │   └── testData: Mock data used in stories and tests  
 ├── public  
 ├── .storybook: configuration for storybook  
 ├── .eslintrc.js: ESlint configuration  
+├── .stylelint.config.js: StyleLint configurations for Sass Linting
 
 #### Flow for creating new components
   1. Create \[component\].jsx file in src/components
@@ -30,6 +32,10 @@
   5. If it is a full page, add routing logic to src/App.jsx
 
 #### Building and running
+
+ * Build and run
+  - `bash build_serve.sh`
+  - Compiles node modules, Scss, and starts react app 
 
  * Running React App 
    - `yarn start`
