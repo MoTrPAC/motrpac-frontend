@@ -5,24 +5,24 @@ import { Dashboard } from '../components/dashboard';
 import { Navbar } from '../components/navbar';
 import { Footer } from '../components/footer';
 
-const testUser = require('../testData/testUser');
+const data = require('../testData/testUser');
 
 const footerActions = {
-  onLogIn: action('logging in'),
-  onLogOut: action('logging out'),
+  login: action('logging in'),
+  logout: action('logging out'),
 };
 
 storiesOf('Dashboard', module)
   .addDecorator(story => (
     <div className="App">
       <header>
-        <Navbar loggedIn />
+        <Navbar isAuthenticated />
       </header>
       <div className="componentHolder">
         {story()}
       </div>
-      <Footer loggedIn {...footerActions} user={{ name: 'Test User', site: 'CAS' }} />
+      <Footer isAuthenticated {...footerActions} profile={data} />
     </div>
 
   ))
-  .add('default', () => <Dashboard user={testUser} loggedIn />);
+  .add('default', () => <Dashboard profile={data} isAuthenticated />);
