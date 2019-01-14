@@ -8,16 +8,16 @@
 
 .  
 ├── src  
-│   ├── assets: images, logos, etc.
+│   ├── assets: images, logos, etc.  
 │   ├── components: jsx UI components  
-│   ├── lib: static information like team member names and assay lists
+│   ├── lib: static information like team member names and assay lists  
 │   ├── main.css: Compiled from sass/main.sass  
 │   ├── reducers: Handles logic for redux store  
 │   ├── sass: source sass styling  
 │   ├── stories: UI visual tests for storybook  
 │   ├── storybook.test.js: initialize snapshots for storybook tests  
-│   ├── storybookSnapshotInit.Skiptest.js: rename Skiptest to test to include snapshot testing
-│   ├── tests: Contains jest/enzyme based tests for components and reducers
+│   ├── storybookSnapshotInit.Skiptest.js: rename Skiptest to test to include snapshot testing  
+│   ├── tests: Contains jest/enzyme based tests for components and reducers  
 │   └── testData: Mock data used in stories and tests  
 ├── public  
 ├── .storybook: configuration for storybook  
