@@ -10,14 +10,21 @@ import AllUploadStats from './allUploadStats';
 const previousUploads = require('../testData/testPreviousUploads');
 const allUploads = require('../testData/testAllUploads');
 
-export function Dashboard({ profile, isAuthenticated, isPending, featureAvailable }) {
+export function Dashboard({
+  profile,
+  isAuthenticated,
+  isPending,
+  featureAvailable,
+}) {
   const editBtn = (
     <div className="col-auto">
       <Link className="editBtn btn btn-light disabled" to="/edit-dashboard">Edit Dashboard</Link>
     </div>
   );
 
-  const siteName = profile.user_metadata && profile.user_metadata.siteName ? profile.user_metadata.siteName : null;
+  const userGivenName = profile.user_metadata && profile.user_metadata.givenName ? profile.user_metadata.givenName : profile.name;
+  const userDisplayName = profile.user_metadata && profile.user_metadata.givenName ? profile.user_metadata.name : profile.name;
+  const siteName = profile.user_metadata && profile.user_metadata.siteName ? profile.user_metadata.siteName : '';
 
   // FIXME: temp workaround to handle callback redirect
   if (isPending) {
@@ -36,7 +43,7 @@ export function Dashboard({ profile, isAuthenticated, isPending, featureAvailabl
       <div className="container Dashboard">
         <div className="row align-items-center">
           <div className="col-12 col-md-6 align-self-center">
-            <h2 className="welcomeUser light">{`Welcome ${profile.name} at ${siteName}`}</h2>
+            <h2 className="welcomeUser light">{`Welcome ${userGivenName} at ${siteName}`}</h2>
           </div>
           <div className="col-auto">
             <Link className="uploadBtn btn btn-primary" to="/upload">Upload Data</Link>
@@ -49,7 +56,7 @@ export function Dashboard({ profile, isAuthenticated, isPending, featureAvailabl
         <div className="row">
           <div className="col">
             <h3 className="divHeader">
-              {profile.nickname}
+              {userDisplayName}
             </h3>
           </div>
         </div>
@@ -78,14 +85,17 @@ Dashboard.propTypes = {
   profile: PropTypes.shape({
     name: PropTypes.string,
     user_metadata: PropTypes.object,
-  }).isRequired,
+  }),
   isAuthenticated: PropTypes.bool,
+  isPending: PropTypes.bool,
   featureAvailable: PropTypes.shape({
     dashboardEditable: PropTypes.bool,
   }),
 };
 Dashboard.defaultProps = {
+  profile: {},
   isAuthenticated: false,
+  isPending: false,
   featureAvailable: {
     dashboardEditable: false,
   },
