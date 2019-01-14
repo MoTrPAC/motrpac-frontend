@@ -4,4 +4,4 @@ import { Navbar } from '../components/navbar';
 
 storiesOf('Navbar', module)
   .add('default', () => <Navbar />)
-  .add('Logged in', () => <Navbar loggedIn />);
+  .add('Logged in', () => <Navbar isAuthenticated />);
