@@ -43,7 +43,7 @@ export function DownloadPage({
           </button>
           <button className="emptyCart m-1 btn" type="button" onClick={onEmptyCart}>Empty Cart</button>
           <button className="addAllToCart m-1 btn" type="button" onClick={onAddAllToCart}>Add All To Cart</button>
-          <button className="downloadCart m-1 btn" type="button">
+          <button className="downloadCart m-1 btn" type="button" disabled>
             Download Items&nbsp;
             {cartItems.length ? (<span className="badge badge-pill cartCount">{cartItems.length}</span>) : ''}
           </button>
