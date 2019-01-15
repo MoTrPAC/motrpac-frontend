@@ -122,13 +122,12 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         .findIndex(exp => ((exp.biospecimenID === formData.biospecimenID) && (exp.dataType === formData.dataType)));
 
       const now = Date.now();
-      const d = new Date(now);
 
       let prevUploads = [...state.previousUploads];
 
       if (expIndex === -1) {
         expIndex = 0;
-        const uploadDate = (d.getMonth()+1) + '/' + d.getDate() + '/' + d.getFullYear();
+        const uploadDate = now;
         const experiment = {
           biospecimenID: formData.biospecimenID,
           dataType: formData.dataType,
@@ -174,13 +173,12 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
       });
 
       // Update upload history with filename
-      const d = new Date();
       const experiment = {
         ...state.previousUploads[state.experimentIndex],
         history: [
           {
             fileName: action.upload.file.name,
-            timeStamp: d.getMilliseconds(),
+            timeStamp: Date.now(),
             uuid: generateUUID(),
           },
           ...state.previousUploads[state.experimentIndex].history,
@@ -235,12 +233,11 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
       });
 
       // Update upload history with filename
-      const d = Date.now();
       const successUploads = newUploadsState.filter(upload => (upload.status === 'UPLOAD_SUCCESS'));
       const historyAddition = successUploads.map((upload) => {
         return {
           fileName: upload.file.name,
-          timeStamp: d,
+          timeStamp: Date.now(),
           uuid: generateUUID(),
         };
       });
