@@ -1,5 +1,5 @@
 import DownloadReducer, { defaultDownloadState } from '../../reducers/downloadReducer';
-import actions from '../../reducers/downloadActions';
+import actions from '../../actions/downloadActions';
 
 const testAllUploads = require('../../testData/testAllUploads');
 

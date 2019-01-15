@@ -41,7 +41,7 @@
    - `yarn run storybook`
    - runs storybook server at localhost:9009
 
- * testing:
+ * Testing:
    - `yarn test`
    - runs tests and storybook snapshots
    - `yarn test --coverage`

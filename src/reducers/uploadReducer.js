@@ -1,4 +1,4 @@
-import { types } from './uploadActions';
+import { types } from '../actions/uploadActions';
 
 export const defaultUploadState = {
   stagedFiles: [],
