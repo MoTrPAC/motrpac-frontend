@@ -2,7 +2,7 @@ import React from 'react';
 import { Bar as CBar } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import colors from '../lib/colors';
-import { Object } from 'es6-shim';
+
 // Returns an object with unique keys for each present analysis and values
 //   corresponding to the count of each analysis for creating histograms
 export function countUploads(data, types) {
