@@ -7,7 +7,7 @@ import App from '../App';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const data = require('../testData/testUser');
+const testUser = require('../testData/testUser');
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
@@ -72,7 +72,7 @@ describe('Authenticated Application routing', () => {
   let mountApp = mount(<App history={history} />);
   const loginSuccessAction = {
     type: 'LOGIN_SUCCESS',
-    payload: data,
+    payload: testUser,
   };
 
   beforeAll(() => {
