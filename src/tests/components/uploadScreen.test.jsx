@@ -1,8 +1,9 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow, mount } from 'enzyme';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunkMiddleWare from 'redux-thunk';
 import { defaultUploadState } from '../../reducers/uploadReducer';
 import rootReducer, { defaultRootState } from '../../reducers/index';
 import UploadScreenConnected, { UploadScreen } from '../../components/uploadScreen';
@@ -21,7 +22,7 @@ const formFilledState = {
     ...defaultUploadState,
     formValues: {
       dataType: 'ATAC-Seq',
-      identifier: '1',
+      biospecimenID: '1',
       collectionDate: '10/21/18',
       subjectType: 'Animal',
       studyPhase: '1',
@@ -52,6 +53,7 @@ const screenActions = {
   onFormSubmit: jest.fn(),
   handleFormChange: jest.fn(),
   cancelUpload: jest.fn(),
+  clearForm: jest.fn(),
 };
 
 describe('Pure Upload Screen', () => {
@@ -76,13 +78,13 @@ const loggedInRootState = {
 
 describe('Connected Upload Screen', () => {
   let mountedUploadScreen = mount((
-    <Provider store={createStore(rootReducer, loggedInRootState)}>
+    <Provider store={createStore(rootReducer, loggedInRootState, applyMiddleware(thunkMiddleWare))}>
       <UploadScreenConnected />
     </Provider>
   ));
   beforeAll(() => {
     mountedUploadScreen = mount((
-      <Provider store={createStore(rootReducer, loggedInRootState)}>
+      <Provider store={createStore(rootReducer, loggedInRootState, applyMiddleware(thunkMiddleWare))}>
         <UploadScreenConnected />
       </Provider>
     ));
@@ -91,10 +93,18 @@ describe('Connected Upload Screen', () => {
     mountedUploadScreen.unmount();
   });
 
-  test('Renders Required Components', () => {
+  test('Renders Required Components in correct state', () => {
     expect(mountedUploadScreen.find('UploadAreaDnD')).toHaveLength(1);
     expect(mountedUploadScreen.find('UploadList')).toHaveLength(1);
     expect(mountedUploadScreen.find('UploadForm')).toHaveLength(1);
+    expect(mountedUploadScreen.find('.uploadBtn')).toHaveLength(1);
+    expect(mountedUploadScreen.find('.clearFormBtn')).toHaveLength(1);
+    expect(mountedUploadScreen.find('UploadForm').find('select').forEach((formComponent) => {
+      expect(formComponent.prop('disabled')).toBeFalsy();
+    }));
+    expect(mountedUploadScreen.find('UploadForm').find('input').forEach((formComponent) => {
+      expect(formComponent.prop('disabled')).toBeFalsy();
+    }));
   });
   const addFileAction = {
     type: 'FILES_ADDED',
@@ -108,7 +118,7 @@ describe('Connected Upload Screen', () => {
   });
   test('Added files do move to upload area with valid form', () => {
     mountedUploadScreen = mount((
-      <Provider store={createStore(rootReducer, formFilledState)}>
+      <Provider store={createStore(rootReducer, formFilledState, applyMiddleware(thunkMiddleWare))}>
         <UploadScreenConnected />
       </Provider>
     ));
@@ -118,16 +128,26 @@ describe('Connected Upload Screen', () => {
 
     // Checking redux state
     expect(mountedUploadScreen.find('Provider').props().store.getState().upload.submitted).toBeTruthy();
-    expect(mountedUploadScreen.find('Provider').props().store.getState().upload.files).toHaveLength(0);
+    expect(mountedUploadScreen.find('Provider').props().store.getState().upload.stagedFiles).toHaveLength(0);
     expect(mountedUploadScreen.find('Provider').props().store.getState().upload.uploadFiles).toHaveLength(testFiles.length);
 
     // Checking rendered components
     expect(mountedUploadScreen.find('UploadListRow')).toHaveLength(testFiles.length);
     expect(mountedUploadScreen.find('.noListItems')).toHaveLength(0);
+
+    // Check that form inputs disabled
+    expect(mountedUploadScreen.find('UploadForm').find('select').forEach((formComponent) => {
+      expect(formComponent.prop('disabled')).toBeTruthy();
+    }));
+    expect(mountedUploadScreen.find('UploadForm').find('input').forEach((formComponent) => {
+      if (formComponent.prop('type') !== 'submit') {
+        expect(formComponent.prop('disabled')).toBeTruthy();
+      }
+    }));
   });
   test('Canceling uploading file removes it', () => {
     mountedUploadScreen = mount((
-      <Provider store={createStore(rootReducer, uploadingState)}>
+      <Provider store={createStore(rootReducer, uploadingState, applyMiddleware(thunkMiddleWare))}>
         <UploadScreenConnected />
       </Provider>
     ));
@@ -135,5 +155,32 @@ describe('Connected Upload Screen', () => {
     mountedUploadScreen.find('UploadListRow').first().find('.cancelUploadConfirm').simulate('click');
     mountedUploadScreen.update();
     expect(mountedUploadScreen.find('UploadListRow')).toHaveLength(testUploads.length - 1);
+  });
+
+  test('Clear Form, makes form empty and available to enter again', () => {
+    mountedUploadScreen = mount((
+      <Provider store={createStore(rootReducer, formFilledState, applyMiddleware(thunkMiddleWare))}>
+        <UploadScreenConnected />
+      </Provider>
+    ));
+
+    mountedUploadScreen.find('.clearFormBtn').simulate('click');
+    mountedUploadScreen.update();
+
+    expect(mountedUploadScreen.find('UploadForm').find('select').forEach((formComponent) => {
+      expect(formComponent.prop('disabled')).toBeFalsy();
+      expect(formComponent.prop('value')).toEqual(defaultUploadState.formValues[formComponent.prop('id')]);
+    }));
+    expect(mountedUploadScreen.find('UploadForm').find('input').forEach((formComponent) => {
+      if (formComponent.prop('type') !== 'submit') {
+        expect(formComponent.prop('disabled')).toBeFalsy();
+        if (formComponent.prop('type') === 'text') {
+          expect(formComponent.prop('value')).toEqual(defaultUploadState.formValues[formComponent.prop('id')]);
+        }
+        if (formComponent.prop('type') === 'checkbox') {
+          expect(formComponent.prop('checked')).toEqual(defaultUploadState.formValues[formComponent.prop('id')]);
+        }
+      }
+    }));
   });
 });

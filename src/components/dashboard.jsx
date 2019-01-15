@@ -2,15 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import PreviousUploadsTable from './previousUploadsTable';
+import PreviousUploadsTableConnected, { PreviousUploadsTable } from './previousUploadsTable';
 import PreviousUploadsGraph from './previousUploadsGraph';
 import AllUploadsDoughnut from './allUploadsDoughnut';
 import AllUploadStats from './allUploadStats';
 
-const previousUploads = require('../testData/testPreviousUploads');
 const allUploads = require('../testData/testAllUploads');
 
-export function Dashboard({ user, loggedIn, featureAvailable }) {
+export function Dashboard({ user, loggedIn, featureAvailable, previousUploads, disconnectComponents }) {
   const editBtn = (
     <div className="col-auto">
       <Link className="editBtn btn btn-light disabled" to="/edit-dashboard">Edit Dashboard</Link>
@@ -39,7 +38,7 @@ export function Dashboard({ user, loggedIn, featureAvailable }) {
           </div>
         </div>
         <div className="row align-items-center">
-          <PreviousUploadsTable previousUploads={previousUploads} />
+          { disconnectComponents ? <PreviousUploadsTable previousUploads={previousUploads} /> : <PreviousUploadsTableConnected />}
           <PreviousUploadsGraph previousUploads={previousUploads} />
         </div>
         <div className="row">
@@ -68,17 +67,23 @@ Dashboard.propTypes = {
   featureAvailable: PropTypes.shape({
     dashboardEditable: PropTypes.bool,
   }),
+  previousUploads: PropTypes.arrayOf(PropTypes.shape({
+    identifier: PropTypes.string,
+  })).isRequired,
+  disconnectComponents: PropTypes.bool,
 };
 Dashboard.defaultProps = {
   loggedIn: false,
   featureAvailable: {
     dashboardEditable: false,
   },
+  disconnectComponents: false,
 };
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   loggedIn: state.auth.loggedIn,
+  previousUploads: state.upload.previousUploads,
 });
 
 // Fill dispatch to props once actions implemented
