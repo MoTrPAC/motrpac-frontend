@@ -11,7 +11,7 @@ const formFilledState = {
   ...defaultUploadState,
   formValues: {
     dataType: 'ATAC-Seq',
-    identifier: '1',
+    biospecimenID: '1',
     collectionDate: '10/21/18',
     subjectType: 'Animal',
     studyPhase: '1',
@@ -34,7 +34,7 @@ describe('Upload Form', () => {
   });
   test('Form values correctly populate fields', () => {
     expect(shallowFilledForm.find('#dataType').props().value).toBe(formFilledState.formValues.dataType);
-    expect(shallowFilledForm.find('#identifier').props().value).toBe(formFilledState.formValues.identifier);
+    expect(shallowFilledForm.find('#biospecimenID').props().value).toBe(formFilledState.formValues.biospecimenID);
     expect(shallowFilledForm.find('#collectionDate').props().value).toBe(formFilledState.formValues.collectionDate);
     expect(shallowFilledForm.find('#subjectType').props().value).toBe(formFilledState.formValues.subjectType);
     expect(shallowFilledForm.find('#studyPhase').props().value).toBe(formFilledState.formValues.studyPhase);

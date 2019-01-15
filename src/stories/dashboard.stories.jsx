@@ -5,7 +5,9 @@ import { Dashboard } from '../components/dashboard';
 import { Navbar } from '../components/navbar';
 import { Footer } from '../components/footer';
 
-const data = require('../testData/testUser');
+const testUser = require('../testData/testUser');
+const previousUploads = require('../testData/testPreviousUploads');
+const allUploads = require('../testData/testAllUploads');
 
 const footerActions = {
   login: action('logging in'),
@@ -21,8 +23,8 @@ storiesOf('Dashboard', module)
       <div className="componentHolder">
         {story()}
       </div>
-      <Footer isAuthenticated {...footerActions} profile={data} />
+      <Footer isAuthenticated {...footerActions} profile={testUser} />
     </div>
 
   ))
-  .add('default', () => <Dashboard profile={data} isAuthenticated />);
+  .add('With Test Data', () => <Dashboard profile={testUser} previousUploads={previousUploads} allUploads={allUploads} disconnectComponents isAuthenticated />);

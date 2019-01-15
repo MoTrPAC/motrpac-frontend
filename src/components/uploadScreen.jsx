@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import UploadForm from './uploadForm';
 import UploadList from './uploadList';
 import UploadAreaDnD from './uploadAreaDnD';
+import actions from '../reducers/uploadActions';
 
 // Returns element containing a drag and drop area for file input
 //    and a display for monitoring file status
@@ -15,7 +16,7 @@ export function UploadScreen({
   validated,
   submitted,
   formValues,
-  files,
+  stagedFiles,
   uploadFiles,
   onDragEnter,
   onDragLeave,
@@ -25,6 +26,8 @@ export function UploadScreen({
   onFormSubmit,
   cancelUpload,
   handleFormChange,
+  clearForm,
+  uploadSuccess,
   isAuthenticated,
 }) {
   if (!isAuthenticated) {
@@ -48,21 +51,32 @@ export function UploadScreen({
           />
         </div>
         <div className="col-8 centered">
-          <UploadAreaDnD
-            dragging={dragging}
-            files={files}
-            fileAdded={e => onFileAdded(e)}
-            dragEnter={() => onDragEnter()}
-            dragLeave={() => onDragLeave()}
-            dragDrop={e => onDragDrop(e)}
-            removeFile={onRemoveFile}
-          />
-          <div className="col-12 centered">
-            <label htmlFor="submit-form" id="formSubmitLabel" className="btn btn-success uploadBtn" tabIndex={0}>Upload</label>
+          <div className="row">
+            <div className="col">
+              <UploadAreaDnD
+                dragging={dragging}
+                files={stagedFiles}
+                fileAdded={e => onFileAdded(e)}
+                dragEnter={() => onDragEnter()}
+                dragLeave={() => onDragLeave()}
+                dragDrop={e => onDragDrop(e)}
+                removeFile={onRemoveFile}
+              />
+            </div>
+          </div>
+          <div className="row justify-content-center">
+            <div className="col-3 centered">
+              <label htmlFor="submit-form" id="formSubmitLabel" className="btn btn-success uploadBtn" tabIndex={0}>Upload</label>
+            </div>
+            <div className="col-3 centered">
+              <button onClick={clearForm} type="button" className="btn btn-danger clearFormBtn">
+                {submitted ? 'Start New Sample' : 'Clear Form'}
+              </button>
+            </div>
           </div>
         </div>
         <div className="col-12">
-          <h3>{formValues.identifier}</h3>
+          <h3>{formValues.biospecimenID}</h3>
           <UploadList uploadFiles={uploadFiles} cancelUpload={cancelUpload} />
         </div>
       </div>
@@ -74,12 +88,12 @@ export function UploadScreen({
 UploadScreen.propTypes = {
   dragging: PropTypes.number.isRequired,
   submitted: PropTypes.bool,
-  files: PropTypes.arrayOf(PropTypes.shape({
+  stagedFiles: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
   })).isRequired,
   formValues: PropTypes.shape({
     dataType: PropTypes.string,
-    identifier: PropTypes.string,
+    biospecimenID: PropTypes.string,
     collectionDate: PropTypes.string,
     subjectType: PropTypes.string,
     studyPhase: PropTypes.string,
@@ -99,6 +113,7 @@ UploadScreen.propTypes = {
   onFileAdded: PropTypes.func.isRequired,
   onRemoveFile: PropTypes.func.isRequired,
   cancelUpload: PropTypes.func.isRequired,
+  clearForm: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
 };
 
@@ -109,42 +124,16 @@ const mapStateToProps = state => ({
 
 // Maps required functions to specific actions handled by reducer in src/reducers.js
 const mapDispatchToProps = dispatch => ({
-  onDragEnter: () => dispatch({
-    type: 'DRAG_ENTER',
-  }),
-  onDragLeave: () => dispatch({
-    type: 'DRAG_LEAVE',
-  }),
-  onDragDrop: e => dispatch({
-    type: 'FILES_ADDED',
-    files: e.dataTransfer.files,
-  }),
-  onFileAdded: e => dispatch({
-    type: 'FILES_ADDED',
-    files: e.target.files,
-  }),
-  onUpload: () => dispatch({
-    type: 'UPLOADING_FILES',
-  }),
-  onRemoveFile: fileName => dispatch({
-    type: 'REMOVE_FILE',
-    name: fileName,
-  }),
-  onFormSubmit: e => dispatch({
-    type: 'FORM_SUBMIT',
-    validity: e.target.checkValidity(),
-    elements: e.target.elements,
-  }),
-  cancelUpload: ident => dispatch({
-    type: 'CANCEL_UPLOAD',
-    id: ident,
-  }),
-  handleFormChange: e => dispatch({
-    type: 'FORM_CHANGE',
-    eID: e.target.id,
-    changeValue: e.target.value,
-    checked: e.target.checked,
-  }),
+  onDragEnter: () => dispatch(actions.dragEnter()),
+  onDragLeave: () => dispatch(actions.dragLeave()),
+  onDragDrop: e => dispatch(actions.stageFiles(e.dataTransfer.files)),
+  onFileAdded: e => dispatch(actions.stageFiles(e.target.files)),
+  onRemoveFile: fileName => dispatch(actions.removeFile(fileName)),
+  onFormSubmit: e => dispatch(actions.formSubmit(e)),
+  cancelUpload: ident => dispatch(actions.cancelUpload(ident)),
+  handleFormChange: e => dispatch(actions.formChange(e)),
+  clearForm: () => dispatch(actions.clearForm()),
+  uploadSuccess: upload => dispatch(actions.uploadSuccess(upload)),
 });
 
 // exports screen using redux method to allow for interaction between individual components

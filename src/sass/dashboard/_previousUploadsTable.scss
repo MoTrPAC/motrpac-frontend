@@ -1,11 +1,36 @@
 .previousUploadsTable {
   max-height: 60vh;
-  overflow: scroll;
-  th {
+  overflow-y: scroll;
+  .expandBtn {
+    background-color: white;
+    border: none;
     color: $dblue;
   }
-  tr {
+  .uploadHeader {
+    color: $dblue;
+  }
+  .uploadRow {
+    background-color:white;
+    transition: .15s ease-in-out;
+    &:hover{
+      background-color: $blue-transparent;
+      transition: .15s ease-in-out;
+    }
+  }
+  .history{
+    p {
+      margin: 0
+    }
     font-size: .8rem;
-    text-align: center;
+    line-height: 1rem;
+  }
+  .historyItem {
+    margin-top: 10px;
+  }
+  .caretCol {
+    padding:0;
+  }
+  .hiddenCaret {
+    color: transparent;
   }
 }

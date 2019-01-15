@@ -2,12 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import PreviousUploadsTable from './previousUploadsTable';
+import PreviousUploadsTableConnected, { PreviousUploadsTable } from './previousUploadsTable';
 import PreviousUploadsGraph from './previousUploadsGraph';
 import AllUploadsDoughnut from './allUploadsDoughnut';
 import AllUploadStats from './allUploadStats';
 
-const previousUploads = require('../testData/testPreviousUploads');
 const allUploads = require('../testData/testAllUploads');
 
 export function Dashboard({
@@ -15,6 +14,8 @@ export function Dashboard({
   isAuthenticated,
   isPending,
   featureAvailable,
+  previousUploads,
+  disconnectComponents,
 }) {
   const editBtn = (
     <div className="col-auto">
@@ -61,7 +62,7 @@ export function Dashboard({
           </div>
         </div>
         <div className="row align-items-center">
-          <PreviousUploadsTable previousUploads={previousUploads} />
+          { disconnectComponents ? <PreviousUploadsTable previousUploads={previousUploads} /> : <PreviousUploadsTableConnected />}
           <PreviousUploadsGraph previousUploads={previousUploads} />
         </div>
         <div className="row">
@@ -91,7 +92,12 @@ Dashboard.propTypes = {
   featureAvailable: PropTypes.shape({
     dashboardEditable: PropTypes.bool,
   }),
+  previousUploads: PropTypes.arrayOf(PropTypes.shape({
+    identifier: PropTypes.string,
+  })).isRequired,
+  disconnectComponents: PropTypes.bool,
 };
+
 Dashboard.defaultProps = {
   profile: {},
   isAuthenticated: false,
@@ -99,15 +105,14 @@ Dashboard.defaultProps = {
   featureAvailable: {
     dashboardEditable: false,
   },
+  disconnectComponents: false,
 };
 
 const mapStateToProps = state => ({
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
   isPending: state.auth.isPending,
+  previousUploads: state.upload.previousUploads,
 });
-
-// Fill dispatch to props once actions implemented
-// const mapDispatchToProps = dispatch => ({ });
 
 export default connect(mapStateToProps)(Dashboard);
