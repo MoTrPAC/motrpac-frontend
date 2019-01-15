@@ -27,7 +27,7 @@ export function DownloadPage({
   onChangeFilter,
   changePageRequest,
 }) {
-  let siteName = profile && profile.user_metadata && profile.user_metadata.siteName ? profile.user_metadata.siteName : null;
+  const siteName = profile.user_metadata.siteName ? profile.user_metadata.siteName : null;
   if (!isAuthenticated) {
     return <Redirect to="/" />;
   }
