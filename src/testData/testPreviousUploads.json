@@ -7,17 +7,19 @@
     "date": "09/03/2018",
     "availability": "Publicly Available",
     "site": "Stanford CAS",
-    "lastUpdated": "09/05/2018",
+    "lastUpdated": 1547241116820,
     "history": [
       {
         "fileName": "manifest.json",
         "timeStamp": 1547241116820,
-        "user":"Test User"
+        "user":"Test User",
+        "uuid": "1"
       },
       {
         "fileName": "mockfile.ext",
         "timeStamp": 1547241120820,
-        "user":"Test User"
+        "user":"Test User",
+        "uuid": "2"
       }
     ]
   },
@@ -29,12 +31,13 @@
     "date": "09/15/2018",
     "availability": "Internally Available",
     "site": "Stanford CAS",
-    "lastUpdated": "09/15/2018",
+    "lastUpdated": 1547241116820,
     "history": [
       {
         "fileName":"mockfile2.ext",
         "timeStamp": 1547241116820,
-        "user":"Test User"
+        "user":"Test User",
+        "uuid": "3"
       }
     ]
   },
@@ -46,12 +49,13 @@
     "date": "09/25/2018",
     "availability": "Pending Q.C.",
     "site": "Stanford CAS",
-    "lastUpdated": "09/25/2018",
+    "lastUpdated": 1540241116820,
     "history": [
       {
         "fileName":"manifest.json",
         "timeStamp": 1540241116820,
-        "user":"Test User"
+        "user":"Test User",
+        "uuid": "1"
       }
     ]
   },
@@ -62,6 +66,7 @@
     "dataType": "RNA-Seq",
     "date": "10/05/2018",
     "availability": "Pending Q.C.",
+    "lastUpdated": 1540241116820,
     "site": "Stanford CAS"
   },
   {
@@ -71,6 +76,7 @@
     "dataType": "RNA-Seq",
     "date": "11/05/2018",
     "availability": "Publicly Available",
+    "lastUpdated": 1540241116820,
     "site": "Stanford CAS"
   },
   {
@@ -80,6 +86,7 @@
     "dataType": "ATAC-Seq",
     "date": "11/10/2018",
     "availability": "Internally Available",
+    "lastUpdated": 1540241116820,
     "site": "Stanford CAS"
   },
   {
@@ -89,6 +96,7 @@
     "dataType": "ATAC-Seq",
     "date": "11/15/2018",
     "availability": "Publicly Available",
+    "lastUpdated": 1540241116820,
     "site": "Stanford CAS"
   },
   {
@@ -98,6 +106,7 @@
     "dataType": "Metabolomics",
     "date": "11/25/2018",
     "availability": "Pending Q.C.",
+    "lastUpdated": 1540241156820,
     "site": "Stanford CAS"
   },
   {
@@ -107,6 +116,7 @@
     "dataType": "ATAC-Seq",
     "date": "12/05/2018",
     "availability": "Pending Q.C.",
+    "lastUpdated": 1540241126820,
     "site": "Stanford CAS"
   },
   {
@@ -116,6 +126,7 @@
     "dataType": "ATAC-Seq",
     "date": "12/11/2018",
     "availability": "Publicly Available",
+    "lastUpdated": 1540241056820,
     "site": "Stanford CAS"
   },
   {
@@ -125,6 +136,7 @@
     "dataType": "ATAC-Seq",
     "date": "12/11/2018",
     "availability": "Publicly Available",
+    "lastUpdated": 1540241016820,
     "site": "Stanford CAS"
   }
 ]

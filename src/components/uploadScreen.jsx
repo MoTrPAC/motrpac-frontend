@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import UploadForm from './uploadForm';
 import UploadList from './uploadList';
 import UploadAreaDnD from './uploadAreaDnD';
-import actions from '../reducers/uploadActions';
+import actions from '../actions/uploadActions';
 
 // Returns element containing a drag and drop area for file input
 //    and a display for monitoring file status

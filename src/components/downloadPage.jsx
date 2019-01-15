@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import DownloadDataTable from './downloadDataTable';
 import DownloadFilter from './downloadFilter';
 import DownloadPaginator from './downloadPaginator';
-import actions from '../reducers/downloadActions';
+import actions from '../actions/downloadActions';
 
 export function DownloadPage({
   isAuthenticated,

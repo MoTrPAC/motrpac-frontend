@@ -1,5 +1,5 @@
 import { UploadReducer, defaultUploadState } from '../../reducers/uploadReducer';
-import actions, { types } from '../../reducers/uploadActions';
+import actions, { types } from '../../actions/uploadActions';
 
 const testFiles = require('../../testData/testFiles');
 const testUploads = require('../../testData/testUploads');
@@ -87,8 +87,7 @@ describe('Upload Reducer', () => {
       .toEqual(formChangeAction.checked);
   });
 
-  const d = new Date();
-  const uploadDate = (d.getMonth()+1) + '/' + d.getDate() + '/' + d.getFullYear();
+  const uploadDate = Date.now();
 
   const formSubmitValidAction = {
     ...formSubmitAction,
@@ -111,7 +110,12 @@ describe('Upload Reducer', () => {
 
   const newExperimentState = UploadReducer(fileAddedState, formSubmitValidAction);
   test('Upload of new experiment/biospecimenID adds new entry to previousUploads', () => {
-    expect(newExperimentState.previousUploads.slice(-1)[0]).toEqual(noExperimentExpectedValue);
+    expect(newExperimentState.previousUploads.slice(-1)[0].biospecimenID)
+      .toEqual(noExperimentExpectedValue.biospecimenID);
+    expect(newExperimentState.previousUploads.slice(-1)[0].history)
+      .toEqual(noExperimentExpectedValue.history);
+    expect(newExperimentState.previousUploads.slice(-1)[0].lastUpdated)
+      .toBeGreaterThanOrEqual(noExperimentExpectedValue.lastUpdated);
   });
   const clearFormAction = actions.clearForm();
 
