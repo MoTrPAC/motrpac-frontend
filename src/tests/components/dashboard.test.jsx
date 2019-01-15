@@ -13,7 +13,6 @@ describe('Shallow Dashboard', () => {
   );
 
   test('Has expected widgets', () => {
-    expect(shallowDash.find('PreviousUploadsTable')).toHaveLength(1);
     expect(shallowDash.find('Connect(PreviousUploadsTable)')).toHaveLength(1);
     expect(shallowDash.find('PreviousUploadsGraph')).toHaveLength(1);
     expect(shallowDash.find('AllUploadsDoughnut')).toHaveLength(1);
@@ -21,6 +20,6 @@ describe('Shallow Dashboard', () => {
   });
 
   test('dashboard displays correct text on Dashboard', () => {
-    expect(shallowDash.find('h2.light').text()).toEqual(`Welcome ${testUser.name} at ${testUser.user_metadata.siteName}`);
+    expect(shallowDash.find('h2.light').text()).toEqual(`Welcome ${testUser.user_metadata.givenName} at ${testUser.user_metadata.siteName}`);
   });
 });
