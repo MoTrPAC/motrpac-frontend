@@ -7,8 +7,9 @@ import downloadReducer, { defaultDownloadState } from './downloadReducer';
 const testUploads = require('../testData/testAllUploads');
 const testPreviousUploads = require('../testData/testPreviousUploads');
 
-// Set to false to unload test data
-const TESTING = true;
+// loads test data if in development or testing
+const loadTestData = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
+
 const testDownloadState = {
   ...defaultDownloadState,
   allUploads: testUploads,
@@ -21,7 +22,6 @@ const testUploadState = {
   previousUploads: testPreviousUploads,
 };
 
-// TODO: Screen change reducer
 export default combineReducers({
   upload: uploadReducer,
   auth: authReducer,
@@ -30,8 +30,8 @@ export default combineReducers({
 });
 
 export const defaultRootState = {
-  upload: TESTING ? testUploadState : defaultUploadState,
+  upload: loadTestData ? testUploadState : defaultUploadState,
   auth: defaultAuthState,
   analysis: defaultAnalysisState,
-  download: TESTING ? testDownloadState : defaultDownloadState,
+  download: loadTestData ? testDownloadState : defaultDownloadState,
 };

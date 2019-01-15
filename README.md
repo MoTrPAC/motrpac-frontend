@@ -33,7 +33,7 @@
 
 #### Building and running
 
- * Running React App 
+ * Running React App:
    - `yarn start`
    - runs core React app at localhost:3000
 
@@ -41,7 +41,7 @@
    - `yarn run storybook`
    - runs storybook server at localhost:9009
 
- * testing:
+ * Testing:
    - `yarn test`
    - runs tests and storybook snapshots
    - `yarn test --coverage`
@@ -52,6 +52,10 @@
    - compiles sass from src/sass/main.scss to src/main.css
    - `yarn sass-watch`
    - compiles sass from src/sass/main.scss to src/main.css and watches for changes
+
+ * Quickly inspect someone's branch:
+   - `yarn inspect-branch`
+   - compiles Scss, rebuilds node_modules if different, and starts react app
 
 ### Software versions and styles
 
