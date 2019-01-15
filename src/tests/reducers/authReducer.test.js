@@ -1,6 +1,6 @@
 import { AuthReducer, defaultAuthState } from '../../reducers/authReducer';
 
-const data = require('../../testData/testUser');
+const testUser = require('../../testData/testUser');
 
 const loginRequestState = {
   ...defaultAuthState,
@@ -11,13 +11,13 @@ const loginRequestState = {
 const loggedInState = {
   ...defaultAuthState,
   isAuthenticated: true,
-  payload: data,
+  payload: testUser,
 };
 
 const receiveProfileState = {
   ...defaultAuthState,
   isAuthenticated: true,
-  profile: data,
+  profile: testUser,
 };
 
 const loginRequestAction = {
@@ -26,12 +26,12 @@ const loginRequestAction = {
 
 const loginSuccessAction = {
   type: 'LOGIN_SUCCESS',
-  payload: data,
+  payload: testUser,
 };
 
 const receiveProfileAction = {
   type: 'PROFILE_RECEIVE',
-  profile: data,
+  profile: testUser,
 };
 
 const logoutAction = {
