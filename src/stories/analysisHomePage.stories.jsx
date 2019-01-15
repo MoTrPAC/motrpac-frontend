@@ -6,7 +6,7 @@ import { Navbar } from '../components/navbar';
 import { Footer } from '../components/footer';
 import { defaultAnalysisState } from '../reducers/analysisReducer';
 
-const data = require('../testData/testUser');
+const testUser = require('../testData/testUser');
 
 const footerActions = {
   login: action('logging in'),
@@ -43,7 +43,7 @@ storiesOf('Analysis Page', module)
       <div className="componentHolder">
         {story()}
       </div>
-      <Footer isAuthenticated {...footerActions} profile={data} />
+      <Footer isAuthenticated {...footerActions} profile={testUser} />
     </div>
   ))
   .add('Animal', () => <AnalysisHomePage isAuthenticated {...defaultAnalysisState} match={animalMatch} {...AnalysisActions} />)

@@ -7,7 +7,7 @@ import { defaultDownloadState } from '../reducers/downloadReducer';
 import { Navbar } from '../components/navbar';
 import { Footer } from '../components/footer';
 
-const data = require('../testData/testUser');
+const testUser = require('../testData/testUser');
 const testPreviousUploads = require('../testData/testPreviousUploads');
 
 const downloadActions = {
@@ -55,7 +55,7 @@ storiesOf('Download Page', module)
       <div className="componentHolder">
         {story()}
       </div>
-      <Footer isAuthenticated {...footerActions} profile={data} />
+      <Footer isAuthenticated {...footerActions} profile={testUser} />
     </div>
 
   ))

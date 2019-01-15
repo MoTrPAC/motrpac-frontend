@@ -5,7 +5,7 @@ import { UploadScreen } from '../components/uploadScreen';
 import { Navbar } from '../components/navbar';
 import { Footer } from '../components/footer';
 
-const data = require('../testData/testUser');
+const testUser = require('../testData/testUser');
 const TestUploads = require('../testData/testUploads');
 
 // Commented out since no longer need to test staged files in this screen
@@ -58,7 +58,7 @@ storiesOf('Upload Screen', module)
       <div className="componentHolder">
         {story()}
       </div>
-      <Footer isAuthenticated {...footerActions} profile={data} />
+      <Footer isAuthenticated {...footerActions} profile={testUser} />
     </div>
 
   ))
