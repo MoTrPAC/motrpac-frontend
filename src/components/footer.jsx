@@ -76,8 +76,7 @@ export function Footer({
         <div className="row">
           <div className="col copyright">
             <p>
-              &#169; Stanford
-              &nbsp;
+              &#169;
               {getCopyrightYear()}
               &nbsp;Stanford University
             </p>
