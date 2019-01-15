@@ -32,7 +32,7 @@ export function PreviousUploadsTable({ previousUploads, expandRow }) {
         <div className="col-12 history">
           {
             upload.history
-              .map(hist => <UploadHistoryRow historyItem={hist} key={Math.random()} />)
+              .map(hist => <UploadHistoryRow historyItem={hist} key={hist.uuid} />)
           }
         </div>
       );

@@ -34,6 +34,13 @@ function createFileFilter(originalFileNames) {
   return uniqueFileNameFilter;
 }
 
+// Mock function for creating UUIDs, Ideally they would be returned from a backend
+// TODO: Make this function irrelvant through backend integration
+function generateUUID() {
+  return Math.ceil(Math.random() * 1000000);
+}
+
+
 // Reducer to handle actions sent from componenets related to uploading data
 export function UploadReducer(state = { ...defaultUploadState }, action) {
   // TODO: Filter by name && path? Add suffix for duplicates?
@@ -174,6 +181,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
           {
             fileName: action.upload.file.name,
             timeStamp: d.getMilliseconds(),
+            uuid: generateUUID(),
           },
           ...state.previousUploads[state.experimentIndex].history,
         ],
@@ -233,6 +241,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         return {
           fileName: upload.file.name,
           timeStamp: d,
+          uuid: generateUUID(),
         };
       });
       const experiment = {

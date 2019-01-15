@@ -12,12 +12,14 @@
       {
         "fileName": "manifest.json",
         "timeStamp": 1547241116820,
-        "user":"Test User"
+        "user":"Test User",
+        "uuid": "1"
       },
       {
         "fileName": "mockfile.ext",
         "timeStamp": 1547241120820,
-        "user":"Test User"
+        "user":"Test User",
+        "uuid": "2"
       }
     ]
   },
@@ -34,7 +36,8 @@
       {
         "fileName":"mockfile2.ext",
         "timeStamp": 1547241116820,
-        "user":"Test User"
+        "user":"Test User",
+        "uuid": "3"
       }
     ]
   },
@@ -51,7 +54,8 @@
       {
         "fileName":"manifest.json",
         "timeStamp": 1540241116820,
-        "user":"Test User"
+        "user":"Test User",
+        "uuid": "1"
       }
     ]
   },
