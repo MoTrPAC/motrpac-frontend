@@ -13,7 +13,7 @@ export const defaultAuthState = {
   message: '',
   isFetching: false,
   isPending: false,
-  isAuthenticated: localStorage.getItem('id_token') ? true : false,
+  isAuthenticated: false,
 };
 
 export function AuthReducer(state = defaultAuthState, action) {
