@@ -8,7 +8,7 @@ import analysisTypes from '../assets/analysisIcons/analysisTypes';
 
 export function AnalysisHomePage({
   match, // match object from react-router used to find human vs animal in route
-  loggedIn,
+  isAuthenticated,
   depth,
   currentAnalysis,
   onPickAnalysis,
@@ -18,7 +18,7 @@ export function AnalysisHomePage({
   let subjectType = match.params.subjectType.slice(0).toLowerCase();
 
   // Redirects to dashboard if incorrect url
-  if (!(subjectType === 'animal' || subjectType === 'human') || !(loggedIn)) {
+  if (!(subjectType === 'animal' || subjectType === 'human') || !isAuthenticated) {
     return <Redirect to="/dashboard" />;
   }
   // Button to select inital analysis category
@@ -54,10 +54,29 @@ export function AnalysisHomePage({
   };
 
   function SubAnalysisButton({ subAnalysis }) {
+    if (subAnalysis.active) {
+      return (
+        <div className="row subAnalysisRow justify-content-center m-1 m-sm-4" onClick={onPickSubAnalysis} onKeyPress={onPickSubAnalysis} tabIndex={0} role="button" id={subAnalysis.shortName}>
+          <div className="col-11 col-md-5 m-1 my-2 align-self-center imgCont">
+            <img src={subAnalysis.icon} className="align-self-end" alt={`${subAnalysis.title} Icon`} />
+          </div>
+          <div className="col-11 col-md-5 p-2 align-self-center">
+            <h3>{subAnalysis.title}</h3>
+            <p>
+              <strong>Input: </strong>
+              {subAnalysis.input}
+            </p>
+            <p>
+              {subAnalysis.description}
+            </p>
+          </div>
+        </div>
+      );
+    }
     return (
-      <div className="row subAnalysisRow justify-content-center m-1 m-sm-4" onClick={onPickSubAnalysis} onKeyPress={onPickSubAnalysis} tabIndex={0} role="button" id={subAnalysis.shortName}>
+      <div className="row subAnalysisRow justify-content-center m-1 m-sm-4 inactiveSubAnalysisRow" id={subAnalysis.shortName}>
         <div className="col-11 col-md-5 m-1 my-2 align-self-center imgCont">
-          <img src={subAnalysis.icon} className="align-self-end" alt={`${subAnalysis.title} Icon`} />
+          <img src={subAnalysis.inactiveIcon} className="align-self-end" alt={`${subAnalysis.title} Icon`} />
         </div>
         <div className="col-11 col-md-5 p-2 align-self-center">
           <h3>{subAnalysis.title}</h3>
@@ -69,6 +88,9 @@ export function AnalysisHomePage({
             {subAnalysis.description}
           </p>
         </div>
+        <div className="comingSoon align-self-center centered">
+          <p>Coming Soon!</p>
+        </div>
       </div>
     );
   }
@@ -79,6 +101,8 @@ export function AnalysisHomePage({
       description: PropTypes.string.isRequired,
       shortName: PropTypes.string.isRequired,
       icon: PropTypes.string.isRequired,
+      inactiveIcon: PropTypes.string.isRequired,
+      active: PropTypes.bool.isRequired,
     }).isRequired,
   };
   // Button to return 1 depth level
@@ -147,7 +171,7 @@ AnalysisHomePage.propTypes = {
     }).isRequired,
   }),
   depth: PropTypes.number.isRequired,
-  loggedIn: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
   currentAnalysis: PropTypes.string.isRequired,
   goBack: PropTypes.func.isRequired,
   onPickAnalysis: PropTypes.func.isRequired,
@@ -159,13 +183,13 @@ AnalysisHomePage.defaultProps = {
       subjectType: '',
     },
   },
-  loggedIn: false,
+  isAuthenticated: false,
 };
 
 const mapStateToProps = state => ({
   depth: state.analysis.depth,
   currentAnalysis: state.analysis.currentAnalysis,
-  loggedIn: state.auth.loggedIn,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 const mapDispatchToProps = dispatch => ({
   onPickAnalysis: e => dispatch({

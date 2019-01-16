@@ -9,18 +9,41 @@ import AllUploadStats from './allUploadStats';
 
 const allUploads = require('../testData/testAllUploads');
 
-export function Dashboard({ user, loggedIn, featureAvailable, previousUploads, disconnectComponents }) {
+export function Dashboard({
+  profile,
+  isAuthenticated,
+  isPending,
+  featureAvailable,
+  previousUploads,
+  disconnectComponents,
+}) {
   const editBtn = (
     <div className="col-auto">
       <Link className="editBtn btn btn-light disabled" to="/edit-dashboard">Edit Dashboard</Link>
     </div>
   );
-  if (loggedIn) {
+
+  const userDisplayName = profile.user_metadata && profile.user_metadata.name ? profile.user_metadata.name : profile.name;
+  const siteName = profile.user_metadata && profile.user_metadata.siteName ? profile.user_metadata.siteName : null;
+
+  // FIXME: temp workaround to handle callback redirect
+  if (isPending) {
+    const pendingMsg = 'Authenticating...';
+
+    return (
+      <div className="authLoading">
+        <span className="oi oi-shield" />
+        <h3>{pendingMsg}</h3>
+      </div>
+    );
+  }
+
+  if (isAuthenticated) {
     return (
       <div className="container Dashboard">
         <div className="row align-items-center">
           <div className="col-12 col-md-6 align-self-center">
-            <h2 className="welcomeUser light">{`Welcome ${user.name} at ${user.siteName}`}</h2>
+            <h2 className="welcomeUser light">Overview</h2>
           </div>
           <div className="col-auto">
             <Link className="uploadBtn btn btn-primary" to="/upload">Upload Data</Link>
@@ -33,7 +56,7 @@ export function Dashboard({ user, loggedIn, featureAvailable, previousUploads, d
         <div className="row">
           <div className="col">
             <h3 className="divHeader">
-              {user.siteName}
+              {`${userDisplayName}, ${siteName}`}
             </h3>
           </div>
         </div>
@@ -59,11 +82,12 @@ export function Dashboard({ user, loggedIn, featureAvailable, previousUploads, d
 }
 
 Dashboard.propTypes = {
-  user: PropTypes.shape({
+  profile: PropTypes.shape({
     name: PropTypes.string,
-    siteName: PropTypes.string,
-  }).isRequired,
-  loggedIn: PropTypes.bool,
+    user_metadata: PropTypes.object,
+  }),
+  isAuthenticated: PropTypes.bool,
+  isPending: PropTypes.bool,
   featureAvailable: PropTypes.shape({
     dashboardEditable: PropTypes.bool,
   }),
@@ -72,8 +96,11 @@ Dashboard.propTypes = {
   })).isRequired,
   disconnectComponents: PropTypes.bool,
 };
+
 Dashboard.defaultProps = {
-  loggedIn: false,
+  profile: {},
+  isAuthenticated: false,
+  isPending: false,
   featureAvailable: {
     dashboardEditable: false,
   },
@@ -81,12 +108,10 @@ Dashboard.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  user: state.auth.user,
-  loggedIn: state.auth.loggedIn,
+  profile: state.auth.profile,
+  isAuthenticated: state.auth.isAuthenticated,
+  isPending: state.auth.isPending,
   previousUploads: state.upload.previousUploads,
 });
-
-// Fill dispatch to props once actions implemented
-// const mapDispatchToProps = dispatch => ({ });
 
 export default connect(mapStateToProps)(Dashboard);

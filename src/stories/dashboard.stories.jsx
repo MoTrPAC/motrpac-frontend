@@ -10,21 +10,21 @@ const previousUploads = require('../testData/testPreviousUploads');
 const allUploads = require('../testData/testAllUploads');
 
 const footerActions = {
-  onLogIn: action('logging in'),
-  onLogOut: action('logging out'),
+  login: action('logging in'),
+  logout: action('logging out'),
 };
 
 storiesOf('Dashboard', module)
   .addDecorator(story => (
     <div className="App">
       <header>
-        <Navbar loggedIn />
+        <Navbar isAuthenticated />
       </header>
       <div className="componentHolder">
         {story()}
       </div>
-      <Footer loggedIn {...footerActions} user={{ name: 'Test User', site: 'CAS' }} />
+      <Footer isAuthenticated {...footerActions} profile={testUser} />
     </div>
 
   ))
-  .add('With Test Data', () => <Dashboard user={testUser} previousUploads={previousUploads} allUploads={allUploads} disconnectComponents loggedIn />);
+  .add('With Test Data', () => <Dashboard profile={testUser} previousUploads={previousUploads} allUploads={allUploads} disconnectComponents isAuthenticated />);

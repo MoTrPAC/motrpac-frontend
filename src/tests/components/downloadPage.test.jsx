@@ -9,6 +9,7 @@ import DownloadPageConnected, { DownloadPage } from '../../components/downloadPa
 
 Enzyme.configure({ adapter: new Adapter() });
 
+const testUser = require('../../testData/testUser');
 
 const testAllUploads = require('../../testData/testAllUploads');
 
@@ -16,8 +17,8 @@ const loggedInRootState = {
   ...defaultRootState,
   auth: {
     ...defaultRootState.auth,
-    loggedIn: true,
-    siteName: 'Stanford CAS',
+    isAuthenticated: true,
+    profile: testUser,
   },
 };
 const withUploadsRootState = {
@@ -57,8 +58,8 @@ describe('Pure Download Page', () => {
         {...defaultDownloadState}
         {...downloadActions}
         allUploads={testAllUploads}
-        loggedIn
-        siteName="Stanford CAS"
+        isAuthenticated
+        profile={testUser}
       />,
     );
     expect(shallowDownload.find('DownloadDataTable'))

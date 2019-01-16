@@ -3,19 +3,21 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { Footer } from '../components/footer';
 
+const testUser = require('../testData/testUser');
+
 const loggedOutState = {
-  loggedIn: false,
-  onLogIn: action('Logging In'),
-  onLogOut: action('Logging Out'),
+  isAuthenticated: false,
+  login: action('Logging In'),
+  logout: action('Logging Out'),
 };
+
 const loggedInState = {
-  loggedIn: true,
-  user: {
-    name: 'Test User',
-  },
-  onLogIn: action('Logging In'),
-  onLogOut: action('Logging Out'),
+  isAuthenticated: true,
+  profile: testUser,
+  login: action('Logging In'),
+  logout: action('Logging Out'),
 };
+
 storiesOf('Footer', module)
   .add('default', () => <Footer {...loggedOutState} />)
   .add('Logged in', () => <Footer {...loggedInState} />);

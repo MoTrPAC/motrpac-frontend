@@ -13,13 +13,13 @@
         "fileName": "manifest.json",
         "timeStamp": 1547241116820,
         "user":"Test User",
-        "uuid": "1"
+        "uuid": "9ac44a8-c5a0-4904-8873-68e6b909b759"
       },
       {
         "fileName": "mockfile.ext",
         "timeStamp": 1547241120820,
         "user":"Test User",
-        "uuid": "2"
+        "uuid": "740fd6e9-7fb8-48ee-a5a1-fba5a404e3cb"
       }
     ]
   },
@@ -37,7 +37,7 @@
         "fileName":"mockfile2.ext",
         "timeStamp": 1547241116820,
         "user":"Test User",
-        "uuid": "3"
+        "uuid": "9687a3ee-a76e-415e-a1f6-6a336fca900b"
       }
     ]
   },
@@ -55,7 +55,7 @@
         "fileName":"manifest.json",
         "timeStamp": 1540241116820,
         "user":"Test User",
-        "uuid": "1"
+        "uuid": "639c47d2-fde5-4e88-b16b-8149cd0196bb"
       }
     ]
   },

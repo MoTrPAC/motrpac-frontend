@@ -19,6 +19,7 @@
     background-color: white;
     border: 1px solid $gray;
     color: $dblue;
+    position: relative;
     h3 {
       color: $dblue;
     }
@@ -32,11 +33,13 @@
       border-radius: 20px;
       border: 1px solid $dblue;
     }
+    /*Temporarily disabling subAnalysis rows for alpha release
     &:hover {
       border: 1px solid $dblue;
       background-color: $blue-transparent;
       transition: .2s;
     }
+    */
     .imgCont, h3 {
       @media screen and (max-width: 767.98px){
         text-align:center; 
@@ -84,6 +87,43 @@
     background-color: $gray-transparent;
     p {
       color: $gray;
+    }
+  }
+  /* Temporarily disabling subAnalysis rows for alpha release */
+  .inactiveSubAnalysisRow {
+    border-color: $gray;
+    background-color: $gray-transparent;
+    img {
+      background-color: $gray-transparent;
+      border-color: $gray;
+    }
+    h3 {
+      color: $gray;
+    }
+    p {
+      color: $gray;
+    }
+    .comingSoon {
+      width:100%;
+      height:100%;
+      position: absolute;
+      top:0;
+      left:0;
+      display: none;
+      background-color: transparentize($gray,.1);
+      border-radius: 10px;
+      p {
+        color: white;
+        font-size: 1.5rem;
+        height: 100%;
+        margin-top: 10%;
+      }
+    }
+    &:hover {
+      .comingSoon {
+      display: block;
+      transition: .2s;
+      }
     }
   }
 }

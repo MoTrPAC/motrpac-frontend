@@ -1,31 +1,42 @@
-
-.copyright {
-  text-align: center;
-}
 footer {
   @media screen and (max-width: 767.98px){
     text-align:center; 
   }
-  padding-top: 10px;
+
   background-color: $gray-semi-transparent;
-  color: white;
-  .rightAlign {
+  color: #fff;
+  line-height: 1.4rem;
+  padding: 15px 0;
+
+  .footer-content {
+    font-size: 0.9em;
+    margin-bottom: 0;
+  }
+
+  .user-login {
     text-align: right;
-    @media screen and (max-width: 767.98px){
-      text-align:center; 
-    }
   }
-  line-height: 1rem;
-  p {
-    margin-bottom: 5px
-  }
+
   .btn {
     padding: 0;
   }
-}
-.logInOutBtn {
-  background-color: transparent;
-  border: none;
-  color: white;
-  font-weight: $heavy-weight;
+
+  .logInOutBtn {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 1.1em;
+    font-weight: $heavy-weight;
+  }
+
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 100%;
+    margin-right: 0.35em;
+  }
+
+  .copyright {
+    text-align: center;
+  }
 }

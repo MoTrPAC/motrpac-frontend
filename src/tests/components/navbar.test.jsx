@@ -6,7 +6,7 @@ import { Navbar } from '../../components/navbar';
 Enzyme.configure({ adapter: new Adapter() });
 
 const shallowDefaultNav = shallow(<Navbar />);
-const shallowLoggedInNav = shallow(<Navbar loggedIn />);
+const shallowLoggedInNav = shallow(<Navbar isAuthenticated />);
 
 const loggedInItems = ['Dashboard', 'Analysis', 'Methods'];
 const navItems = ['Dashboard', 'Analysis', 'Methods', 'Data', 'About', 'Contact'];

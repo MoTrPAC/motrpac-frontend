@@ -1,29 +1,64 @@
+import {
+  LOGIN_REQUEST,
+  LOGIN_PENDING,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  LOGOUT_SUCCESS,
+  PROFILE_RECEIVE,
+} from '../actions';
+
 export const defaultAuthState = {
-  user: {},
-  loggedIn: false,
-  authenticating: false,
+  payload: {},
+  profile: {},
+  message: '',
+  isFetching: false,
+  isPending: false,
+  isAuthenticated: false,
 };
 
-export function AuthReducer(state = {}, action) {
+export function AuthReducer(state = defaultAuthState, action) {
   switch (action.type) {
-    case 'AUTHENTICATING':
-      return ({
+    case LOGIN_REQUEST:
+      return {
         ...state,
-        authenticating: true,
-      });
-    case 'LOGIN_SUCCESS':
-      return ({
+        isFetching: true,
+        isAuthenticated: false,
+      };
+    case LOGIN_PENDING:
+      return {
         ...state,
-        authenticating: false,
-        user: action.user,
-        loggedIn: true,
-      });
-    case 'LOGOUT':
-      return ({
+        isPending: true,
+        isAuthenticated: false,
+      };
+    case LOGIN_SUCCESS:
+      return {
         ...state,
-        user: {},
-        loggedIn: false,
-      });
+        isFetching: false,
+        isPending: false,
+        isAuthenticated: true,
+        payload: action.payload,
+      };
+    case LOGIN_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        isPending: false,
+        isAuthenticated: false,
+        message: action.message,
+      };
+    case LOGOUT_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: false,
+        payload: {},
+        profile: {},
+      };
+    case PROFILE_RECEIVE:
+      return {
+        ...state,
+        payload: {},
+        profile: action.profile,
+      };
     default:
       return state;
   }

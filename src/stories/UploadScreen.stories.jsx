@@ -5,6 +5,7 @@ import { UploadScreen } from '../components/uploadScreen';
 import { Navbar } from '../components/navbar';
 import { Footer } from '../components/footer';
 
+const testUser = require('../testData/testUser');
 const TestUploads = require('../testData/testUploads');
 
 // Commented out since no longer need to test staged files in this screen
@@ -14,7 +15,7 @@ const defaultState = {
   files: [],
   formValues: {},
   uploadFiles: [],
-  loggedIn: true,
+  isAuthenticated: true,
 };
 
 const filledState = {
@@ -43,8 +44,8 @@ const actions = {
   handleFormChange: action('onFormChange'),
 };
 const footerActions = {
-  onLogIn: action('logging in'),
-  onLogOut: action('logging out'),
+  login: action('logging in'),
+  logout: action('logging out'),
 };
 
 // Provider necessary to link data from components of UploadScreen
@@ -52,12 +53,12 @@ storiesOf('Upload Screen', module)
   .addDecorator(story => (
     <div className="App">
       <header>
-        <Navbar />
+        <Navbar isAuthenticated />
       </header>
       <div className="componentHolder">
         {story()}
       </div>
-      <Footer loggedIn {...footerActions} user={{ name: 'Test User', site: 'CAS' }} />
+      <Footer isAuthenticated {...footerActions} profile={testUser} />
     </div>
 
   ))

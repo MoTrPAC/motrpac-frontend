@@ -88,6 +88,7 @@ function DownloadRow({
     </div>
   );
 }
+
 DownloadRow.propTypes = {
   upload: PropTypes.shape({
     identifier: PropTypes.string.isRequired,
@@ -98,7 +99,11 @@ DownloadRow.propTypes = {
   }).isRequired,
   inCart: PropTypes.bool.isRequired,
   onCartClick: PropTypes.func.isRequired,
-  siteName: PropTypes.string.isRequired,
+  siteName: PropTypes.string,
+};
+
+DownloadRow.defaultProps = {
+  siteName: '',
 };
 
 export default DownloadRow;

@@ -61,9 +61,10 @@ DownloadDataTable.propTypes = {
   viewCart: PropTypes.bool.isRequired,
   listUpdating: PropTypes.bool.isRequired,
   onCartClick: PropTypes.func.isRequired,
-  siteName: PropTypes.string.isRequired,
+  siteName: PropTypes.string,
 };
 DownloadDataTable.defaultProps = {
+  siteName: '',
 };
 
 

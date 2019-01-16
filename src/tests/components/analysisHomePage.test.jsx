@@ -15,7 +15,7 @@ const loggedInRootState = {
   ...defaultRootState,
   auth: {
     ...defaultRootState.auth,
-    loggedIn: true,
+    isAuthenticated: true,
   },
 };
 
@@ -27,7 +27,7 @@ const analysisActions = {
 function constructMatchState(subject) {
   return {
     ...defaultAnalysisState,
-    loggedIn: true,
+    isAuthenticated: true,
     match: {
       params: {
         subjectType: subject,

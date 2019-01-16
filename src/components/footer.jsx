@@ -1,96 +1,118 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import actions from '../actions';
 
+/**
+ * Method to render global footer
+ */
 export function Footer({
-  user,
-  loggedIn = false,
-  onLogIn,
-  onLogOut,
+  isAuthenticated,
+  profile,
+  login,
+  logout,
 }) {
-  function AuthButton() {
-    if (loggedIn) {
-      return (
-        <button type="button" onClick={onLogOut} className="logInOutBtn btn">
-          {user.name}
-          &nbsp;Logout
-        </button>
-      );
-    }
+  const userGivenName = profile.user_metadata && profile.user_metadata.givenName ? profile.user_metadata.givenName : profile.name;
+  const handleLogout = () => {
+    logout();
+    return <Redirect to="/" />;
+  };
+  // Function to render login button
+  const LoginButton = () => {
     return (
-      <button type="button" onClick={onLogIn} className="logInOutBtn btn">
-        Submitter Login
-      </button>
+      <span className="user-login-button">
+        {isAuthenticated && (
+          <span>
+            <img src={profile.picture} className="user-avatar" alt="avatar" />
+            <button type="button" onClick={handleLogout} className="logInOutBtn btn">
+              {userGivenName}
+              &nbsp;Logout
+            </button>
+          </span>
+        )}
+        {!isAuthenticated && (
+          <button type="button" onClick={login} className="logInOutBtn btn">
+            Submitter Login
+          </button>
+        )}
+      </span>
     );
-  }
-  function getCopyrightYear() {
+  };
+
+  // Function to get current copyright year
+  const getCopyrightYear = () => {
     const today = new Date();
     const year = today.getFullYear();
     return year;
-  }
+  };
+
   // TODO: Find out how to best do error handling
-  const footer = (
+  return (
     <footer className="footer">
-      <div className="container-fluid">
+      <div className="container">
         <div className="row">
-          <div className="col-12 col-md-9">
-            <p>
-              Data Hub designed and maintained by the MoTrPAC
-              BioInformatics Center at
-              <a href="https://www.stanford.edu/" target="_new"> Stanford University</a>
+          <div className="col-9">
+            <p className="footer-content">
+              Data Hub designed and maintained by the MoTrPAC BioInformatics
+              Center at
+              <a href="https://www.stanford.edu/" target="_blank" rel="noopener noreferrer">
+                {' '}
+                Stanford University
+              </a>
             </p>
-            <p>
+            <p className="footer-content">
               Funded by the
-              <a href="https://commonfund.nih.gov/" target="_new"> NIH Common Fund</a>
+              <a href="https://commonfund.nih.gov/" target="_blank" rel="noopener noreferrer">
+                {' '}
+                NIH Common Fund
+              </a>
             </p>
           </div>
-          <div className="col-12 col-md-3 rightAlign">
-            <AuthButton />
+          <div className="col user-login">
+            <LoginButton />
           </div>
         </div>
         <div className="row">
           <div className="col copyright">
             <p>
-              &#169; Stanford
-              &nbsp;
+              &#169;
               {getCopyrightYear()}
+              &nbsp;Stanford University
             </p>
           </div>
         </div>
       </div>
     </footer>
-
   );
-  return footer;
 }
 
 Footer.propTypes = {
-  user: PropTypes.shape({
+  profile: PropTypes.shape({
     name: PropTypes.string,
+    nickname: PropTypes.string,
+    email: PropTypes.string,
+    picture: PropTypes.string,
+    user_metadata: PropTypes.object,
   }),
-  loggedIn: PropTypes.bool,
-  onLogIn: PropTypes.func.isRequired,
-  onLogOut: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+  login: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 };
+
 Footer.defaultProps = {
-  user: {},
-  loggedIn: false,
+  profile: {},
+  isAuthenticated: false,
 };
 
 const mapStateToProps = state => ({
-  loggedIn: state.auth.loggedIn,
-  user: state.auth.user,
+  profile: state.auth.profile,
+  isAuthenticated: state.auth.isAuthenticated,
 });
-
 
 const mapDispatchToProps = dispatch => ({
-  onLogIn: () => dispatch({
-    type: 'AUTHENTICATING',
-  }),
-  onLogOut: () => dispatch({
-    type: 'LOGOUT',
-  }),
+  login: () => dispatch(actions.login()),
+  logout: () => dispatch(actions.logout()),
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);

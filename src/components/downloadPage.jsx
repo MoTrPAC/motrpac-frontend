@@ -8,8 +8,8 @@ import DownloadPaginator from './downloadPaginator';
 import actions from '../actions/downloadActions';
 
 export function DownloadPage({
-  loggedIn,
-  siteName,
+  isAuthenticated,
+  profile,
   filteredUploads,
   cartItems,
   uploadCount,
@@ -27,7 +27,8 @@ export function DownloadPage({
   onChangeFilter,
   changePageRequest,
 }) {
-  if (!loggedIn) {
+  const siteName = profile.user_metadata && profile.user_metadata.siteName ? profile.user_metadata.siteName : null;
+  if (!isAuthenticated) {
     return <Redirect to="/" />;
   }
   return (
@@ -42,7 +43,7 @@ export function DownloadPage({
           </button>
           <button className="emptyCart m-1 btn" type="button" onClick={onEmptyCart}>Empty Cart</button>
           <button className="addAllToCart m-1 btn" type="button" onClick={onAddAllToCart}>Add All To Cart</button>
-          <button className="downloadCart m-1 btn" type="button">
+          <button className="downloadCart m-1 btn" type="button" disabled>
             Download Items&nbsp;
             {cartItems.length ? (<span className="badge badge-pill cartCount">{cartItems.length}</span>) : ''}
           </button>
@@ -81,8 +82,8 @@ DownloadPage.propTypes = {
   cartItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   sortBy: PropTypes.string,
   uploadCount: PropTypes.number.isRequired,
-  loggedIn: PropTypes.bool,
-  siteName: PropTypes.string,
+  isAuthenticated: PropTypes.bool,
+  profile: PropTypes.object,
   viewCart: PropTypes.bool.isRequired,
   listUpdating: PropTypes.bool.isRequired,
   activeFilters: DownloadFilter.propTypes.activeFilters.isRequired,
@@ -98,16 +99,16 @@ DownloadPage.propTypes = {
 };
 DownloadPage.defaultProps = {
   sortBy: 'identifier',
-  loggedIn: false,
-  siteName: '',
+  isAuthenticated: false,
+  profile: {},
 };
 
 const mapStateToProps = state => ({
   sortBy: state.download.sortBy,
-  siteName: state.auth.user.siteName,
+  profile: state.auth.profile,
   filteredUploads: state.download.filteredUploads,
   cartItems: state.download.cartItems,
-  loggedIn: state.auth.loggedIn,
+  isAuthenticated: state.auth.isAuthenticated,
   activeFilters: state.download.activeFilters,
   currentPage: state.download.currentPage,
   maxRows: state.download.maxRows,

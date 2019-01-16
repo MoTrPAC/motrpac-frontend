@@ -20,6 +20,7 @@
 }
 .downloadCart {
   color: white;
+  cursor: not-allowed; // Temporarily disabled for demo
   background-color: $blue;
   border-radius: 10px;
   .cartCount {

@@ -28,9 +28,9 @@ export function UploadScreen({
   handleFormChange,
   clearForm,
   uploadSuccess,
-  loggedIn,
+  isAuthenticated,
 }) {
-  if (!loggedIn) {
+  if (!isAuthenticated) {
     return (<Redirect to="/" />);
   }
   const screen = (
@@ -114,12 +114,12 @@ UploadScreen.propTypes = {
   onRemoveFile: PropTypes.func.isRequired,
   cancelUpload: PropTypes.func.isRequired,
   clearForm: PropTypes.func.isRequired,
-  loggedIn: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   ...(state.upload),
-  loggedIn: state.auth.loggedIn,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 // Maps required functions to specific actions handled by reducer in src/reducers.js

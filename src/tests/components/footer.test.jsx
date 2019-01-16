@@ -4,24 +4,31 @@ import Enzyme, { mount } from 'enzyme';
 import { Footer } from '../../components/footer';
 
 Enzyme.configure({ adapter: new Adapter() });
+
 const testUser = require('../../testData/testUser');
 
 const footerActions = {
-  onLogIn: jest.fn(),
-  onLogOut: jest.fn(),
+  login: jest.fn(),
+  logout: jest.fn(),
 };
 const defaultMountFooter = mount(<Footer {...footerActions} />);
-const loggedInMountFooter = mount(<Footer user={testUser} loggedIn {...footerActions} />);
+const loggedInMountFooter = mount(
+  <Footer profile={testUser} isAuthenticated {...footerActions} />,
+);
 
 describe('Footer', () => {
   test('Has submitter login button by default', () => {
-    expect(defaultMountFooter.props().loggedIn).toBeFalsy();
-    expect(defaultMountFooter.find('.logInOutBtn').text()).toBe('Submitter Login');
+    expect(defaultMountFooter.props().isAuthenticated).toBeFalsy();
+    expect(defaultMountFooter.find('.logInOutBtn').text()).toBe(
+      'Submitter Login',
+    );
   });
 
   test('Has [username] logout button if logged in', () => {
-    expect(loggedInMountFooter.props().loggedIn).toBeTruthy();
-    expect(loggedInMountFooter.find('.logInOutBtn').text()).toMatch(new RegExp(testUser.name));
+    expect(loggedInMountFooter.props().isAuthenticated).toBeTruthy();
+    expect(loggedInMountFooter.find('.logInOutBtn').text()).toMatch(
+      new RegExp(testUser.user_metadata.givenName),
+    );
     expect(loggedInMountFooter.find('.logInOutBtn').text()).toMatch('Logout');
   });
 });
