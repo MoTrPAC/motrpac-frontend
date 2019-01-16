@@ -23,7 +23,7 @@ export function Dashboard({
     </div>
   );
 
-  const userDisplayName = profile.user_metadata && profile.user_metadata.givenName ? profile.user_metadata.name : profile.name;
+  const userDisplayName = profile.user_metadata && profile.user_metadata.name ? profile.user_metadata.name : profile.name;
   const siteName = profile.user_metadata && profile.user_metadata.siteName ? profile.user_metadata.siteName : null;
 
   // FIXME: temp workaround to handle callback redirect
@@ -56,9 +56,7 @@ export function Dashboard({
         <div className="row">
           <div className="col">
             <h3 className="divHeader">
-              {userDisplayName}
-              <span>, </span>
-              {siteName}
+              {`${userDisplayName}, ${siteName}`}
             </h3>
           </div>
         </div>
