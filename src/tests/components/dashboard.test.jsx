@@ -20,6 +20,6 @@ describe('Shallow Dashboard', () => {
   });
 
   test('dashboard displays correct text on Dashboard', () => {
-    expect(shallowDash.find('h2.light').text()).toEqual(`Welcome ${testUser.user_metadata.givenName} at ${testUser.user_metadata.siteName}`);
+    expect(shallowDash.find('h3.divHeader').first().text()).toEqual(`${testUser.user_metadata.name}, ${testUser.user_metadata.siteName}`);
   });
 });
