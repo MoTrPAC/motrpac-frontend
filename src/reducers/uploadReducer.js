@@ -37,9 +37,11 @@ function createFileFilter(originalFileNames) {
 // Mock function for creating UUIDs, Ideally they would be returned from a backend
 // TODO: Make this function irrelvant through backend integration
 function generateUUID() {
-  return Math.ceil(Math.random() * 1000000);
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
-
 
 // Reducer to handle actions sent from componenets related to uploading data
 export function UploadReducer(state = { ...defaultUploadState }, action) {
