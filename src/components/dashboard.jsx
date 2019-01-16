@@ -23,9 +23,7 @@ export function Dashboard({
     </div>
   );
 
-  const userGivenName = profile.user_metadata && profile.user_metadata.givenName ? profile.user_metadata.givenName : profile.name;
   const userDisplayName = profile.user_metadata && profile.user_metadata.givenName ? profile.user_metadata.name : profile.name;
-  const siteName = profile.user_metadata && profile.user_metadata.siteName ? profile.user_metadata.siteName : '';
 
   // FIXME: temp workaround to handle callback redirect
   if (isPending) {
@@ -44,7 +42,7 @@ export function Dashboard({
       <div className="container Dashboard">
         <div className="row align-items-center">
           <div className="col-12 col-md-6 align-self-center">
-            <h2 className="welcomeUser light">{`Welcome ${userGivenName} at ${siteName}`}</h2>
+            <h2 className="welcomeUser light">Overview</h2>
           </div>
           <div className="col-auto">
             <Link className="uploadBtn btn btn-primary" to="/upload">Upload Data</Link>
