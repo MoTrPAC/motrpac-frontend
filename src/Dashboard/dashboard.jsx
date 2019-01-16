@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import PreviousUploadsTableConnected, { PreviousUploadsTable } from './previousUploadsTable';
-import PreviousUploadsGraph from './previousUploadsGraph';
-import AllUploadsDoughnut from './allUploadsDoughnut';
-import AllUploadStats from './allUploadStats';
+import PreviousUploadsTableConnected, { PreviousUploadsTable } from '../Widgets/previousUploadsTable';
+import PreviousUploadsGraph from '../Widgets/previousUploadsGraph';
+import AllUploadsDoughnut from '../Widgets/allUploadsDoughnut';
+import AllUploadStats from '../Widgets/allUploadStats';
 
 const allUploads = require('../testData/testAllUploads');
 

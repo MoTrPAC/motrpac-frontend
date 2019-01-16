@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { UploadScreen } from '../components/uploadScreen';
-import { Navbar } from '../components/navbar';
-import { Footer } from '../components/footer';
+import { Navbar } from '../../components/navbar';
+import { Footer } from '../../components/footer';
 
 const testUser = require('../testData/testUser');
 const TestUploads = require('../testData/testUploads');

@@ -1,7 +1,7 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
-import { Dashboard } from '../../components/dashboard';
+import { Dashboard } from '../dashboard';
 
 Enzyme.configure({ adapter: new Adapter() });
 const testPreviousUploads = require('../../testData/testPreviousUploads');
