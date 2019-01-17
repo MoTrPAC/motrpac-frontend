@@ -16,7 +16,7 @@
 │   ├── storybook.test.js: initialize snapshots for storybook tests  
 │   ├── storybookSnapshotInit.Skiptest.js: rename Skiptest to test to include snapshot testing  
 │   ├── testData: Mock data used in stories and tests  
-│   └── \[Component/Feature Name\]: contains reducers, actions, components, subcomponents, and tests
+│   └── \[Component/Feature Name\]: contains reducers, actions, components, subcomponents, and tests  
 │   |   └── \_\_test\_\_: contains the storybook story and jest tests for the feature.  
 ├── public  
 ├── .storybook: configuration for storybook  
