@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import UploadAreaDnD from '../components/uploadAreaDnD';
+import UploadAreaDnD from '../uploadAreaDnD';
 
-const testFiles = require('../testData/testFiles');
+const testFiles = require('../../testData/testFiles');
 
 const actions = {
   handleSubmit: action('onHandleSubmit'),

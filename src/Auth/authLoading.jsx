@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import history from '../history';
+import history from '../App/history';
 
 // Intended to act as placeholder until auth0 or other auth system
 //  is in place. Clicking the h3 element authorizes test user logIng.

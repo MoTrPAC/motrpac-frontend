@@ -1,4 +1,4 @@
-import { AuthReducer, defaultAuthState } from '../../reducers/authReducer';
+import { AuthReducer, defaultAuthState } from '../authReducer';
 
 const testUser = require('../../testData/testUser');
 

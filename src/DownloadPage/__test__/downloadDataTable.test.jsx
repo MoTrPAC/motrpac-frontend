@@ -2,8 +2,8 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
-import DownloadDataTable from '../../components/downloadDataTable';
-import { defaultDownloadState } from '../../reducers/downloadReducer';
+import DownloadDataTable from '../downloadDataTable';
+import { defaultDownloadState } from '../downloadReducer';
 
 Enzyme.configure({ adapter: new Adapter() });
 

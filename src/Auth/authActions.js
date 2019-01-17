@@ -1,4 +1,4 @@
-import Auth from '../Auth/Auth';
+import Auth from './Auth';
 
 const auth = new Auth();
 

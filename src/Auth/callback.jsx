@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import actions, { loginPending } from '../../actions';
+import actions, { loginPending } from './authActions';
 
 export function Callback({
   location,

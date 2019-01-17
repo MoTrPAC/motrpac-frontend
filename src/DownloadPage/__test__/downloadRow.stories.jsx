@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import DownloadRow from '../components/downloadRow';
+import DownloadRow from '../downloadRow';
 
-const testAllUploads = require('../testData/testAllUploads');
+const testAllUploads = require('../../testData/testAllUploads');
 
 const downloadActions = {
   onCartClick: action('OnCartClick'),

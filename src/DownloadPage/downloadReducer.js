@@ -1,4 +1,4 @@
-import { types } from '../actions/downloadActions';
+import { types } from './downloadActions';
 
 export const defaultDownloadState = {
   sortBy: 'identifier',

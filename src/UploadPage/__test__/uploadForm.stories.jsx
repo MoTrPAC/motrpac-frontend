@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import UploadForm from '../components/uploadForm';
+import UploadForm from '../uploadForm';
 
 const validState = {
   files: [],

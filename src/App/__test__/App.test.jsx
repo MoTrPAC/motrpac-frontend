@@ -7,7 +7,7 @@ import App from '../App';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const testUser = require('../testData/testUser');
+const testUser = require('../../testData/testUser');
 
 it('renders without crashing', () => {
   const div = document.createElement('div');

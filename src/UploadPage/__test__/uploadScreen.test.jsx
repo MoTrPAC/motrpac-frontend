@@ -4,9 +4,9 @@ import Enzyme, { shallow, mount } from 'enzyme';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleWare from 'redux-thunk';
-import { defaultUploadState } from '../../reducers/uploadReducer';
-import rootReducer, { defaultRootState } from '../../reducers/index';
-import UploadScreenConnected, { UploadScreen } from '../../components/uploadScreen';
+import { defaultUploadState } from '../uploadReducer';
+import rootReducer, { defaultRootState } from '../../App/reducers';
+import UploadScreenConnected, { UploadScreen } from '../uploadScreen';
 
 Enzyme.configure({ adapter: new Adapter() });
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
-import UploadAreaDnD from '../../components/uploadAreaDnD';
-import { defaultUploadState } from '../../reducers/uploadReducer';
+import UploadAreaDnD from '../uploadAreaDnD';
+import { defaultUploadState } from '../uploadReducer';
 
 Enzyme.configure({ adapter: new Adapter() });
 const draggingState = {

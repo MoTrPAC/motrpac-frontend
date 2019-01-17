@@ -3,10 +3,9 @@ import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow, mount } from 'enzyme';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import rootReducer, { defaultRootState } from '../../reducers/index';
-import { defaultAnalysisState } from '../../reducers/analysisReducer';
-import AnalysisHomePageConnected, { AnalysisHomePage } from '../../components/analysisHomePage';
-import { defaultDownloadState } from '../../reducers/downloadReducer';
+import rootReducer, { defaultRootState } from '../../App/reducers';
+import { defaultAnalysisState } from '../analysisReducer';
+import AnalysisHomePageConnected, { AnalysisHomePage } from '../analysisHomePage';
 
 Enzyme.configure({ adapter: new Adapter() });
 

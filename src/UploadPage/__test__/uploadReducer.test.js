@@ -1,5 +1,5 @@
-import { UploadReducer, defaultUploadState } from '../../reducers/uploadReducer';
-import actions, { types } from '../../actions/uploadActions';
+import { UploadReducer, defaultUploadState } from '../uploadReducer';
+import actions, { types } from '../uploadActions';
 
 const testFiles = require('../../testData/testFiles');
 const testUploads = require('../../testData/testUploads');

@@ -1,7 +1,7 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow, mount } from 'enzyme';
-import UploadList from '../../components/uploadList';
+import UploadList from '../uploadList';
 
 Enzyme.configure({ adapter: new Adapter() });
 const uploadListActions = {

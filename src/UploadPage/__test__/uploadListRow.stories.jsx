@@ -1,12 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import UploadListRow from '../components/uploadListRow';
+import UploadListRow from '../uploadListRow';
 
 const uploadItemActions = {
   cancelUpload: action('Cancel Upload'),
 };
-const testUploads = require('../testData/testUploads');
+const testUploads = require('../../testData/testUploads');
 
 storiesOf('Upload List Items', module)
   .addDecorator(story => (

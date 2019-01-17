@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import uploadReducer, { defaultUploadState } from './uploadReducer';
-import authReducer, { defaultAuthState } from './authReducer';
-import analysisReducer, { defaultAnalysisState } from './analysisReducer';
-import downloadReducer, { defaultDownloadState } from './downloadReducer';
+import uploadReducer, { defaultUploadState } from '../UploadPage/uploadReducer';
+import authReducer, { defaultAuthState } from '../Auth/authReducer';
+import analysisReducer, { defaultAnalysisState } from '../AnalysisPage/analysisReducer';
+import downloadReducer, { defaultDownloadState } from '../DownloadPage/downloadReducer';
 
 const testUploads = require('../testData/testAllUploads');
 const testPreviousUploads = require('../testData/testPreviousUploads');

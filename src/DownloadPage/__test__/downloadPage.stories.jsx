@@ -2,13 +2,13 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { DownloadPage } from '../components/downloadPage';
-import { defaultDownloadState } from '../reducers/downloadReducer';
-import { Navbar } from '../components/navbar';
-import { Footer } from '../components/footer';
+import { DownloadPage } from '../downloadPage';
+import { defaultDownloadState } from '../downloadReducer';
+import { Navbar } from '../../Navbar/navbar';
+import { Footer } from '../../Footer/footer';
 
-const testUser = require('../testData/testUser');
-const testPreviousUploads = require('../testData/testPreviousUploads');
+const testUser = require('../../testData/testUser');
+const testPreviousUploads = require('../../testData/testPreviousUploads');
 
 const downloadActions = {
   onDownload: action('on Download'),

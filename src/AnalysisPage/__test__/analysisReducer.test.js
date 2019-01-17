@@ -1,4 +1,4 @@
-import AnalysisReducer, { defaultAnalysisState } from '../../reducers/analysisReducer';
+import AnalysisReducer, { defaultAnalysisState } from '../analysisReducer';
 
 const analysisSelectAction = {
   type: 'ANALYSIS_SELECT',

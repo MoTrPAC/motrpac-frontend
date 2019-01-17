@@ -1,8 +1,8 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { mount, shallow } from 'enzyme';
-import { defaultUploadState } from '../../reducers/uploadReducer';
-import UploadForm from '../../components/uploadForm';
+import { defaultUploadState } from '../uploadReducer';
+import UploadForm from '../uploadForm';
 
 Enzyme.configure({ adapter: new Adapter() });
 

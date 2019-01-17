@@ -1,12 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { UploadScreen } from '../components/uploadScreen';
-import { Navbar } from '../../components/navbar';
-import { Footer } from '../../components/footer';
+import { UploadScreen } from '../uploadScreen';
+import { Navbar } from '../../Navbar/navbar';
+import { Footer } from '../../Footer/footer';
 
-const testUser = require('../testData/testUser');
-const TestUploads = require('../testData/testUploads');
+const testUser = require('../../testData/testUser');
+const TestUploads = require('../../testData/testUploads');
 
 // Commented out since no longer need to test staged files in this screen
 // const TestFiles = TestUploads.map(upload => upload.file);

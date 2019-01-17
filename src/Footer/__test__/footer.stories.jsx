@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { Footer } from '../components/footer';
+import { Footer } from '../footer';
 
-const testUser = require('../testData/testUser');
+const testUser = require('../../testData/testUser');
 
 const loggedOutState = {
   isAuthenticated: false,

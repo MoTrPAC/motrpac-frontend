@@ -1,12 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import UploadList from '../components/uploadList';
+import UploadList from '../uploadList';
 
 const uploadListActions = {
   cancelUpload: action('Cancel Upload'),
 };
-const testUploads = require('../testData/testUploads');
+const testUploads = require('../../testData/testUploads');
 
 storiesOf('Upload List', module)
   // Padding added to indicate it is a component

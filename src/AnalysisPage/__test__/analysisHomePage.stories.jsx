@@ -1,12 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { AnalysisHomePage } from '../components/analysisHomePage';
-import { Navbar } from '../components/navbar';
-import { Footer } from '../components/footer';
-import { defaultAnalysisState } from '../reducers/analysisReducer';
+import { AnalysisHomePage } from '../analysisHomePage';
+import { Navbar } from '../../Navbar/navbar';
+import { Footer } from '../../Footer/footer';
+import { defaultAnalysisState } from '../analysisReducer';
 
-const testUser = require('../testData/testUser');
+const testUser = require('../../testData/testUser');
 
 const footerActions = {
   login: action('logging in'),

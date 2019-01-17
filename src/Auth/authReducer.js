@@ -5,7 +5,7 @@ import {
   LOGIN_FAILURE,
   LOGOUT_SUCCESS,
   PROFILE_RECEIVE,
-} from '../actions';
+} from './authActions';
 
 export const defaultAuthState = {
   payload: {},
