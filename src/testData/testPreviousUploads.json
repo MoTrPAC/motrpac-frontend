@@ -1,101 +1,142 @@
 [
   {
-    "identifier": "AS12345",
+    "biospecimenID": "AS12345",
     "subject": "Animal",
     "phase": "1A",
-    "type": "ATAC-Seq",
-    "date": "09/05/2018",
+    "dataType": "ATAC-Seq",
+    "date": "09/03/2018",
     "availability": "Publicly Available",
-    "site": "Stanford CAS"
+    "site": "Stanford CAS",
+    "lastUpdated": 1547241116820,
+    "history": [
+      {
+        "fileName": "manifest.json",
+        "timeStamp": 1547241116820,
+        "user":"Test User",
+        "uuid": "9ac44a8-c5a0-4904-8873-68e6b909b759"
+      },
+      {
+        "fileName": "mockfile.ext",
+        "timeStamp": 1547241120820,
+        "user":"Test User",
+        "uuid": "740fd6e9-7fb8-48ee-a5a1-fba5a404e3cb"
+      }
+    ]
   },
   {
-    "identifier": "AS12346",
+    "biospecimenID": "AS12346",
     "subject": "Human",
     "phase": "1A",
-    "type": "RNA-Seq",
+    "dataType": "RNA-Seq",
     "date": "09/15/2018",
     "availability": "Internally Available",
-    "site": "Stanford CAS"
+    "site": "Stanford CAS",
+    "lastUpdated": 1547241116820,
+    "history": [
+      {
+        "fileName":"mockfile2.ext",
+        "timeStamp": 1547241116820,
+        "user":"Test User",
+        "uuid": "9687a3ee-a76e-415e-a1f6-6a336fca900b"
+      }
+    ]
   },
   {
-    "identifier": "AS12347",
+    "biospecimenID": "AS12347",
     "subject": "Human",
     "phase": "1A",
-    "type": "WGS",
+    "dataType": "WGS",
     "date": "09/25/2018",
     "availability": "Pending Q.C.",
-    "site": "Stanford CAS"
+    "site": "Stanford CAS",
+    "lastUpdated": 1540241116820,
+    "history": [
+      {
+        "fileName":"manifest.json",
+        "timeStamp": 1540241116820,
+        "user":"Test User",
+        "uuid": "639c47d2-fde5-4e88-b16b-8149cd0196bb"
+      }
+    ]
   },
   {
-    "identifier": "AS12348",
+    "biospecimenID": "AS12348",
     "subject": "Human",
     "phase": "1A",
-    "type": "RNA-Seq",
+    "dataType": "RNA-Seq",
     "date": "10/05/2018",
     "availability": "Pending Q.C.",
+    "lastUpdated": 1540241116820,
     "site": "Stanford CAS"
   },
   {
-    "identifier": "AS12349",
+    "biospecimenID": "AS12349",
     "subject": "Human",
     "phase": "1A",
-    "type": "RNA-Seq",
+    "dataType": "RNA-Seq",
     "date": "11/05/2018",
     "availability": "Publicly Available",
+    "lastUpdated": 1540241116820,
     "site": "Stanford CAS"
   },
   {
-    "identifier": "AS12350",
+    "biospecimenID": "AS12350",
     "subject": "Human",
     "phase": "1A",
-    "type": "ATAC-Seq",
+    "dataType": "ATAC-Seq",
     "date": "11/10/2018",
     "availability": "Internally Available",
+    "lastUpdated": 1540241116820,
     "site": "Stanford CAS"
   },
   {
-    "identifier": "AS12351",
+    "biospecimenID": "AS12351",
     "subject": "Human",
     "phase": "1A",
-    "type": "ATAC-Seq",
+    "dataType": "ATAC-Seq",
     "date": "11/15/2018",
     "availability": "Publicly Available",
+    "lastUpdated": 1540241116820,
     "site": "Stanford CAS"
   },
   {
-    "identifier": "AS12352",
+    "biospecimenID": "AS12352",
     "subject": "Human",
     "phase": "1A",
-    "type": "Metabolomics",
+    "dataType": "Metabolomics",
     "date": "11/25/2018",
     "availability": "Pending Q.C.",
+    "lastUpdated": 1540241156820,
     "site": "Stanford CAS"
   },
   {
-    "identifier": "AS12353",
+    "biospecimenID": "AS12353",
     "subject": "Animal",
     "phase": "1A",
-    "type": "ATAC-Seq",
+    "dataType": "ATAC-Seq",
     "date": "12/05/2018",
     "availability": "Pending Q.C.",
+    "lastUpdated": 1540241126820,
     "site": "Stanford CAS"
   },
   {
-    "identifier": "AS12354",
+    "biospecimenID": "AS12354",
     "subject": "Human",
     "phase": "1A",
-    "type": "ATAC-Seq",
+    "dataType": "ATAC-Seq",
     "date": "12/11/2018",
     "availability": "Publicly Available",
+    "lastUpdated": 1540241056820,
     "site": "Stanford CAS"
   },
   {
-    "identifier": "AS12355",
+    "biospecimenID": "AS12355",
     "subject": "Animal",
     "phase": "1A",
-    "type": "ATAC-Seq",
+    "dataType": "ATAC-Seq",
     "date": "12/11/2018",
     "availability": "Publicly Available",
+    "lastUpdated": 1540241016820,
     "site": "Stanford CAS"
   }
 ]

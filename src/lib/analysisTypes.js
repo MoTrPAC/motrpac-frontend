@@ -30,6 +30,7 @@ const analysisTypes = [
         shortName: 'MA_G',
         input: 'Specific Tissue(s), Gene, and Time Window',
         description: 'Displays up and down regulations. Gene lists are detected for interpretation',
+        active: false,
       },
       {
         title: 'Gene Time Course Clustering',
@@ -38,6 +39,7 @@ const analysisTypes = [
         shortName: 'MA_GTCC',
         input: 'Differentially Expressed Genes',
         description: 'Genes are clustered by their trajectories. Results sorted by tissue',
+        active: false,
       },
     ],
   },

@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "auth0-js": "^9.8.2",
     "bootstrap": "^4.1.3",
     "chart.js": "^2.7.3",
+    "dayjs": "^1.8.0",
     "history": "^4.7.2",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.4",
@@ -26,8 +28,10 @@
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "sass": "node_modules/sass/sass.js src/sass/main.scss src/main.css",
-    "sass-watch": "node_modules/sass/sass.js --watch src/sass/main.scss src/main.css"
+    "sass-watch": "node_modules/sass/sass.js --watch src/sass/main.scss src/main.css",
+    "inspect-branch": "yarn && yarn sass && yarn start"
   },
+  "proxy": "http://localhost:3001",
   "browserslist": [
     ">0.2%",
     "not dead",

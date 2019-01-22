@@ -1,4 +1,11 @@
 {
-"name": "testUser1",
-"siteName": "Stanford CAS"
+  "email": "email@example.com",
+  "picture": "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y",
+  "nickname": "testUser1",
+  "name": "Test User",
+  "user_metadata": {
+    "name": "Test User",
+    "givenName": "TestUser",
+    "siteName": "Stanford CAS"
+  }
 }
