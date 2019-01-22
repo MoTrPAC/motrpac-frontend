@@ -27,7 +27,7 @@ function UploadForm({
       <div className="invalid-feedback">Field Required</div>
       <label htmlFor="collection-date">
         Collection Date *
-        <input type="text" onChange={handleFormChange} value={formValues.collectionDate} className="form-control" id="collectionDate" placeholder="MM/DD/YYYY" required disabled={submitted} />
+        <input type="text" pattern="\d{1,2}\/\d{1,2}\/\d{4}" onChange={handleFormChange} value={formValues.collectionDate} className="form-control" id="collectionDate" placeholder="MM/DD/YYYY" required disabled={submitted} />
       </label>
     </div>
   );
@@ -46,9 +46,9 @@ function UploadForm({
 
       <div className="form-group">
         <div className="invalid-feedback">Field Required</div>
-        <label htmlFor="biospecimenID">
-          Biospecimen ID(s) * – comma seperate if multiple
-          <input type="text" onChange={handleFormChange} value={formValues.biospecimenID} className="form-control" id="biospecimenID" placeholder="Ex: AS213141" required disabled={submitted} />
+        <label htmlFor="biospecimenBarcode">
+          Biospecimen Barcode(s) * – comma seperate if multiple
+          <input type="text" onChange={handleFormChange} value={formValues.biospecimenBarcode} className="form-control" id="biospecimenBarcode" placeholder="Ex: 10001010208" required disabled={submitted} />
         </label>
       </div>
 
@@ -111,7 +111,7 @@ UploadForm.propTypes = {
   submitted: PropTypes.bool,
   formValues: PropTypes.shape({
     dataType: PropTypes.string,
-    biospecimenID: PropTypes.string,
+    biospecimenBarcode: PropTypes.string,
     collectionDate: PropTypes.string,
     subjectType: PropTypes.string,
     studyPhase: PropTypes.string,
@@ -128,7 +128,7 @@ UploadForm.defaultProps = {
   submitted: false,
   formValues: {
     dataType: '',
-    biospecimenID: '',
+    biospecimenBarcode: '',
     collectionDate: '',
     subjectType: '',
     studyPhase: '',

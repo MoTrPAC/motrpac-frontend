@@ -23,7 +23,7 @@ const filledState = {
   uploadFiles: TestUploads,
   submitted: true,
   formValues: {
-    identifier: 'AS12313',
+    biospecimenBarcode: 'AS12313',
     studyPhase: '2',
     subjectType: 'Animal',
     collectionDate: '10/23/18',

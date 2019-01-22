@@ -14,7 +14,7 @@ const historyPropType = {
 const uploadPropType = {
   history: PropTypes.arrayOf(PropTypes.shape({ ...historyPropType })),
   expanded: PropTypes.bool,
-  biospecimenID: PropTypes.string,
+  biospecimenBarcode: PropTypes.string,
   subject: PropTypes.string,
   phase: PropTypes.string,
   dataType: PropTypes.string,
@@ -80,7 +80,7 @@ export function PreviousUploadsTable({ previousUploads, expandRow }) {
         <div className="col-auto caretCol">
           <Caret upload={upload} />
         </div>
-        <div className="col-2">{upload.biospecimenID}</div>
+        <div className="col-2">{upload.biospecimenBarcode.substring(0, 5)}</div>
         <div className="col-2">{upload.subject}</div>
         <div className="col-2">{upload.phase}</div>
         <div className="col-3">{upload.dataType}</div>
@@ -99,7 +99,7 @@ export function PreviousUploadsTable({ previousUploads, expandRow }) {
   // creating an upload row for each unique experiment
   const uploadRows = previousUploads
     .map(upload => (
-      <UploadRow upload={upload} key={upload.biospecimenID + upload.dataType} />
+      <UploadRow upload={upload} key={upload.biospecimenBarcode + upload.dataType} />
     ));
   return (
     <div className="col-12 col-md-7 previousUploadsTable">

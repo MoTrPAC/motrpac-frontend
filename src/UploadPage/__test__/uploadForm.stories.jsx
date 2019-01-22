@@ -14,7 +14,7 @@ const submittedState = {
   submitted: true,
   formValues: {
     dataType: 'ATAC-Seq',
-    identifier: '100010208',
+    biospecimenBarcode: '100010208',
     collectionDate: '',
     subjectType: 'Animal',
     studyPhase: '1A',

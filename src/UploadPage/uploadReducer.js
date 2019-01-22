@@ -8,7 +8,7 @@ export const defaultUploadState = {
   formValues: {
     dataType: 'WGS',
     collectionDate: '',
-    biospecimenID: '',
+    biospecimenBarcode: '',
     subjectType: 'Animal',
     studyPhase: '1A',
     rawData: false,
@@ -118,7 +118,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
       // Creates dictionary from form fields
       const formData = {
         dataType: action.elements.dataType.value,
-        biospecimenID: action.elements.biospecimenID.value,
+        biospecimenBarcode: action.elements.biospecimenBarcode.value,
         collectionDate: action.elements.subjectType.value === 'Human' ? '' : action.elements.collectionDate.value,
         subjectType: action.elements.subjectType.value,
         studyPhase: action.elements.studyPhase.value,
@@ -127,7 +127,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
       };
 
       let expIndex = state.previousUploads
-        .findIndex(exp => ((exp.biospecimenID === formData.biospecimenID) && (exp.dataType === formData.dataType)));
+        .findIndex(exp => ((exp.biospecimenBarcode === formData.biospecimenBarcode) && (exp.dataType === formData.dataType)));
 
       const now = Date.now();
 
@@ -137,7 +137,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         expIndex = 0;
         const uploadDate = now;
         const experiment = {
-          biospecimenID: formData.biospecimenID,
+          biospecimenBarcode: formData.biospecimenBarcode,
           dataType: formData.dataType,
           subject: formData.subjectType,
           phase: formData.studyPhase,
