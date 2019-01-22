@@ -24,10 +24,10 @@ function UploadForm({
 }) {
   const collectionDateField = formValues.subjectType === 'Human' ? '' : (
     <div className="form-group">
-      <div className="invalid-feedback">Field Required</div>
       <label htmlFor="collection-date">
         Collection Date *
         <input type="text" pattern="\d{1,2}\/\d{1,2}\/\d{4}" onChange={handleFormChange} value={formValues.collectionDate} className="form-control" id="collectionDate" placeholder="MM/DD/YYYY" required disabled={submitted} />
+        <div className="invalid-feedback">Collection Date required and must be in format MM/DD/YYYY</div>
       </label>
     </div>
   );
@@ -45,10 +45,10 @@ function UploadForm({
       </div>
 
       <div className="form-group">
-        <div className="invalid-feedback">Field Required</div>
         <label htmlFor="biospecimenBarcode">
           Biospecimen Barcode(s) * – comma seperate if multiple
-          <input type="text" pattern="\d{9,11},|\d{9,11}" min="9" onChange={handleFormChange} value={formValues.biospecimenBarcode} className="form-control" id="biospecimenBarcode" placeholder="Ex: 10001010208" required disabled={submitted} />
+          <input type="text" pattern="(\d{9,11},|\d{9,11}){1,}" min="9" onChange={handleFormChange} value={formValues.biospecimenBarcode} className="form-control" id="biospecimenBarcode" placeholder="Ex: 10001010208" required disabled={submitted} />
+          <div className="invalid-feedback">Barcodes must be 9 to 11 digits (5 digit BID + 2 digit time point + 2 digit sample type + 2 digit cryovial ID)</div>
         </label>
       </div>
 

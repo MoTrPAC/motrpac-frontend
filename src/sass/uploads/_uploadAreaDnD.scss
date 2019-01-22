@@ -12,6 +12,9 @@
   background-color: white;
   border: 3px dashed $blue;
 }
+.showValidation {
+  border: 1px dashed $red;
+}
 #fileUpload {
   display: none;
 }

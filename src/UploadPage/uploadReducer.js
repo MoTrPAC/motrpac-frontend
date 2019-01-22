@@ -126,28 +126,32 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         processedData: action.elements.processedData.checked,
       };
 
-      let expIndex = state.previousUploads
-        .findIndex(exp => ((exp.biospecimenBarcode === formData.biospecimenBarcode) && (exp.dataType === formData.dataType)));
-
       const now = Date.now();
 
       let prevUploads = [...state.previousUploads];
+      const barcodes = formData.biospecimenBarcode.split(',');
+      let expIndex = -1;
 
-      if (expIndex === -1) {
-        expIndex = 0;
-        const uploadDate = now;
-        const experiment = {
-          biospecimenBarcode: formData.biospecimenBarcode,
-          dataType: formData.dataType,
-          subject: formData.subjectType,
-          phase: formData.studyPhase,
-          date: formData.collectionDate,
-          lastUpdated: uploadDate,
-          availability: 'Pending Q.C.',
-          history: [],
-        };
-        prevUploads = [experiment, ...state.previousUploads];
-      }
+      barcodes.forEach((bc) => {
+        expIndex = state.previousUploads
+          .findIndex(exp => ((exp.biospecimenBarcode === bc) && (exp.dataType === formData.dataType)));
+
+        if (expIndex === -1) {
+          expIndex = 0;
+          const uploadDate = now;
+          const experiment = {
+            biospecimenBarcode: formData.biospecimenBarcode,
+            dataType: formData.dataType,
+            subject: formData.subjectType,
+            phase: formData.studyPhase,
+            date: formData.collectionDate,
+            lastUpdated: uploadDate,
+            availability: 'Pending Q.C.',
+            history: [],
+          };
+          prevUploads = [experiment, ...prevUploads];
+        }
+      });
 
       return {
         ...state,

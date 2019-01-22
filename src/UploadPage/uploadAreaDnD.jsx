@@ -2,10 +2,10 @@ import React from 'react';
 
 // Element for handling file staging before uploading using drag and drop or file select
 function UploadAreaDnD({
-  dragging, files, fileAdded, dragEnter, dragLeave, dragDrop, removeFile,
+  dragging, files, fileAdded, dragEnter, dragLeave, dragDrop, removeFile, showValidation
 }) {
   const uploadArea = (
-    <div className={`uploadAreaDnD ${dragging ? 'dragging' : ''}`} onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }} onDragEnter={dragEnter} onDragLeave={dragLeave} onDrop={(e) => { e.preventDefault(); e.stopPropagation(); dragDrop(e); }}>
+    <div className={`uploadAreaDnD ${dragging ? 'dragging' : ''} ${showValidation ? 'showValidation' : ''}`} onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }} onDragEnter={dragEnter} onDragLeave={dragLeave} onDrop={(e) => { e.preventDefault(); e.stopPropagation(); dragDrop(e); }}>
       <div className="row fileArea">
         <FileArea files={files} removeFile={removeFile} />
       </div>
