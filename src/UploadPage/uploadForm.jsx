@@ -48,7 +48,7 @@ function UploadForm({
         <div className="invalid-feedback">Field Required</div>
         <label htmlFor="biospecimenBarcode">
           Biospecimen Barcode(s) * – comma seperate if multiple
-          <input type="text" onChange={handleFormChange} value={formValues.biospecimenBarcode} className="form-control" id="biospecimenBarcode" placeholder="Ex: 10001010208" required disabled={submitted} />
+          <input type="text" pattern="\d{9,11},|\d{9,11}" min="9" onChange={handleFormChange} value={formValues.biospecimenBarcode} className="form-control" id="biospecimenBarcode" placeholder="Ex: 10001010208" required disabled={submitted} />
         </label>
       </div>
 
