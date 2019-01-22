@@ -2,6 +2,12 @@ import React from 'react';
 import TeamMemberCard from './teamMemberCard';
 import teamInfo from '../lib/teamInfo';
 
+/**
+ * The team page, includes all team members listed in the /src/lib/teamInfo.json file.
+ * Members seperated by PI's and Staff
+ *
+ * @returns {Object} Team Page
+ */
 function TeamPage() {
   const PIs = teamInfo.PIs
     .map(pi => <TeamMemberCard key={pi.name} memberInfo={pi} />);

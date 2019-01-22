@@ -1,5 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
+/**
+ * Individual card for a team member, displays on team page.
+ * @param {Object} memberInfo general information for a given team member
+ *
+ * @returns {Objcet} JSX representation of a team member
+ */
 function TeamMemberCard({
   memberInfo,
 }) {
@@ -16,6 +23,14 @@ function TeamMemberCard({
       </div>
     </div>
   );
+}
+
+TeamMemberCard.propTypes = {
+  memberInfo: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    backgroundImage: PropTypes.string,
+  }).isRequired,
 }
 
 export default TeamMemberCard;

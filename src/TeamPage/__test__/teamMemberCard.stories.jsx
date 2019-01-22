@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import TeamMemberCard from '../components/teamMemberCard';
-import teamInfo from '../assets/teamInfo';
+import TeamMemberCard from '../teamMemberCard';
+import teamInfo from '../../lib/teamInfo';
 
 const oneMember = teamInfo.PIs[0];
 

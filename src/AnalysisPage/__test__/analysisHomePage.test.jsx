@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import rootReducer, { defaultRootState } from '../../App/reducers';
 import { defaultAnalysisState } from '../analysisReducer';
 import AnalysisHomePageConnected, { AnalysisHomePage } from '../analysisHomePage';
+import analysisTypes from '../../lib/analysisTypes';
 
 Enzyme.configure({ adapter: new Adapter() });
 

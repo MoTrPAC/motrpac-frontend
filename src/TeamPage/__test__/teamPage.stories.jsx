@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import TeamPage from '../components/teamPage';
-import { Navbar } from '../components/navbar';
-import { Footer } from '../components/footer';
+import TeamPage from '../teamPage';
+import { Navbar } from '../../Navbar/navbar';
+import { Footer } from '../../Footer/footer';
 
 const footerActions = {
   onLogIn: action('logging in'),
