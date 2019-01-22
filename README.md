@@ -80,6 +80,10 @@
  - mapDispatchtoProps defines required actions and what to send to a reducer.
  - redux-thunk middleware used to handle asynchronous requests like for authentication
 
+#### Security considerations for after backend integrated
+ - Currently the the entire state is being stored in localStorage making it such that in the javascript console, I can get, mutate, and push the state to become logged in.
+ - This breach would not really do anything in terms of revealing data since any calls made to the backend would likely need user information like a password, so if a "hacker" did change the state to be loggedIn, they would also need something along the lines of a username and matching password, in which case they could have accessed that data through the standard user interface.
+
 #### Potential down the line dependency issues
   - Storybook has trouble integrating with react-router, I installed a package called storybook-react-router to make them work together. If you run in to an issue with storybook saying something like "You should not use <Link > outside <Router >" it has something to do with react-router and storybook-react-router
 
