@@ -2,7 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import assayList from '../lib/assayList';
 
-// Form element for submission of data associated with files
+/**
+ * Form element for submission of data associated with files
+ *
+ * @param {Bool} validated Checks if form has been validated --> shows errors and styles
+ * @param {Bool} submitted Checks if form has been successfully submitted,
+ * locks fields from changing
+ * @param {Object} formValues Stores all form values
+ * @param {Function} handleSubmit Runs on submition of form
+ * @param {Function} handleFormChange Runs after any change to any form field,
+ * typically updates redux store
+ *
+ * @returns {Object} Form for data uploads
+ */
 function UploadForm({
   validated,
   submitted,
@@ -10,6 +22,15 @@ function UploadForm({
   handleSubmit,
   handleFormChange,
 }) {
+  const collectionDateField = formValues.subjectType === 'Human' ? '' : (
+    <div className="form-group">
+      <div className="invalid-feedback">Field Required</div>
+      <label htmlFor="collection-date">
+        Collection Date *
+        <input type="text" onChange={handleFormChange} value={formValues.collectionDate} className="form-control" id="collectionDate" placeholder="MM/DD/YYYY" required disabled={submitted} />
+      </label>
+    </div>
+  );
   return (
     <form onSubmit={(e) => { e.preventDefault(); handleSubmit(e); }} id="uploadForm" name="uploadForm" className={validated ? 'was-validated' : 'needs-validation'} noValidate disabled={submitted}>
       <div className="form-group">
@@ -31,20 +52,14 @@ function UploadForm({
         </label>
       </div>
 
-      <div className="form-group">
-        <div className="invalid-feedback">Field Required</div>
-        <label htmlFor="collection-date">
-          Collection Date *
-          <input type="text" onChange={handleFormChange} value={formValues.collectionDate} className="form-control" id="collectionDate" placeholder="MM/DD/YYYY" required disabled={submitted} />
-        </label>
-      </div>
+      {collectionDateField}
 
       <div className="form-group">
         <label htmlFor="subject-type">
           Subject Type *
           <select value={formValues.subjectType} onChange={handleFormChange} className="form-control" id="subjectType" disabled={submitted}>
-            <option value="Human">Human</option>
             <option value="Animal">Animal</option>
+            <option value="Human">Human</option>
           </select>
         </label>
       </div>
@@ -53,10 +68,10 @@ function UploadForm({
         <label htmlFor="study-phase">
           Study Phase *
           <select value={formValues.studyPhase} onChange={handleFormChange} className="form-control" id="studyPhase" disabled={submitted}>
-            <option value="Vanguard">Vanguard</option>
-            <option value="1">1</option>
             <option value="1A">1A</option>
             <option value="1B">1B</option>
+            <option value="Vanguard">Vanguard</option>
+            <option value="1">1</option>
             <option value="2">2</option>
             <option value="N/A">N/A</option>
             <option value="other">Other</option>

@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import UploadForm from '../uploadForm';
+import { defaultUploadState } from '../uploadReducer';
 
 const validState = {
   files: [],
@@ -14,11 +15,19 @@ const submittedState = {
   formValues: {
     dataType: 'ATAC-Seq',
     identifier: '100010208',
-    collectionDate: '10/21/18',
-    subjectType: 'Human',
-    studyPhase: 'Vanguard',
+    collectionDate: '',
+    subjectType: 'Animal',
+    studyPhase: '1A',
     rawData: true,
     processedData: false,
+  },
+};
+const humanFilledState = {
+  ...defaultUploadState,
+  formValues:
+  {
+    ...defaultUploadState.formValues,
+    subjectType: 'Human',
   },
 };
 const actions = {
@@ -27,6 +36,7 @@ const actions = {
 };
 storiesOf('Upload Form', module)
   .addDecorator(story => <div className="upload-component" style={{ padding: '3rem' }}>{story()}</div>)
-  .add('Empty Form', () => <UploadForm {...actions} />)
+  .add('Empty Form - Animal', () => <UploadForm {...actions} />)
+  .add('Empty Form - Human', () => <UploadForm {...humanFilledState} {...actions} />)
   .add('Unfilled Error', () => <UploadForm {...validState} {...actions} />)
   .add('Submitted', () => <UploadForm {...submittedState} {...actions} />);

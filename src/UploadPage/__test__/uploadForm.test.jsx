@@ -20,12 +20,21 @@ const formFilledState = {
     processedData: false,
   },
 };
+const humanFormState = {
+  ...formFilledState,
+  formValues: {
+    ...formFilledState.formValues,
+    subjectType: 'Human',
+  },
+};
+
 const formActions = {
   handleSubmit: jest.fn(),
   handleFormChange: jest.fn(),
 };
 const mountDefaultForm = mount(<UploadForm {...defaultUploadState} {...formActions} />);
 const shallowFilledForm = shallow(<UploadForm {...formFilledState} {...formActions} />);
+const shallowHumanFilledForm = shallow(<UploadForm {...humanFormState} {...formActions} />);
 
 describe('Upload Form', () => {
   test('Submitting calls handleSubmit', () => {
@@ -41,5 +50,8 @@ describe('Upload Form', () => {
     expect(shallowFilledForm.find('#description').props().value).toBe(formFilledState.formValues.descript);
     expect(shallowFilledForm.find('#rawData').props().checked).toBeTruthy();
     expect(shallowFilledForm.find('#processedData').props().checked).toBeFalsy();
+  });
+  test('Collection Date not shown if Human', () => {
+    expect(shallowHumanFilledForm.find('#collectionDate')).toHaveLength(0);
   });
 });
