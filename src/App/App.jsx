@@ -13,7 +13,7 @@ import LinkoutPageConnected from '../LinkoutPage/linkoutPage';
 import AnalysisHomePageConnected from '../AnalysisPage/analysisHomePage';
 import DownloadPageConnected from '../DownloadPage/downloadPage';
 import MethodsConnected from '../MethodsPage/methods';
-import Team from '../TeamPage/team';
+import TeamPage from '../TeamPage/teamPage';
 import Contact from '../ContactPage/contact';
 import CallbackConnected from '../Auth/callback';
 
@@ -37,7 +37,7 @@ function App({ history = History }) {
               <Route path="/download" component={DownloadPageConnected} />
               <Route path="/analysis/:subjectType" component={AnalysisHomePageConnected} />
               <Route path="/methods" component={MethodsConnected} />
-              <Route path="/team" component={Team} />
+              <Route path="/team" component={TeamPage} />
               <Route path="/contact" component={Contact} />
             </Switch>
           </div>

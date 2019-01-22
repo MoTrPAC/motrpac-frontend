@@ -1,0 +1,19 @@
+.teamMember { 
+  h3,h4 {
+    font-size:1rem;
+  }
+  h3 {
+    color: $dblue;
+    font-weight: $heavy-weight;
+  }
+  img {
+    border-radius:20px;
+  }
+  .teamMemberImage {
+    height: 150px;
+    width: 150px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 20px;
+  }
+}
