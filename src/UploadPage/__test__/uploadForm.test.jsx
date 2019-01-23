@@ -48,6 +48,8 @@ describe('Upload Form', () => {
     expect(formActions.handleSubmit.mock.calls.length).toBe(1);
   });
   test('onBlur triggers form validation', () => {
+    // Not entirely sure why, but the tests only work if done on the DOMNode of the input field. When testing the wrapper alone,
+    // the className property does not update, but on the DOMNode the classList property does update.
     mountDefaultForm.find('#collectionDate').simulate('blur', { target: mountDefaultForm.find('#collectionDate').getDOMNode() });
     expect(mountDefaultForm.find('#collectionDate').getDOMNode().classList).toContain('is-invalid');
     expect(mountDefaultForm.find('#collectionDate').getDOMNode().classList).not.toContain('is-valid');
