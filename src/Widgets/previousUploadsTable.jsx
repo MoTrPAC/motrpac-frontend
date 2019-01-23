@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
+import { getStatusIcon } from '../DownloadPage/downloadRow';
 
 const timeFormat = 'MMM D, YYYY - h:m A'; //  Jan 31, 2019 - 2:34 PM
 const timeFormatCondensed = 'M/D/YYYY'; //  1/31/2019
@@ -56,6 +57,7 @@ export function PreviousUploadsTable({ previousUploads, expandRow }) {
   // The row on the table corresponding to one experiment.
   function UploadRow({ upload }) {
     let uploadHistory;
+    const [availClass, availIcon] = getStatusIcon(upload.availability, true);
     if (upload.history) {
       uploadHistory = (
         <div className="col-12 history">
@@ -76,15 +78,16 @@ export function PreviousUploadsTable({ previousUploads, expandRow }) {
     }
 
     return (
-      <div className="row uploadRow">
+      <div className={`row uploadRow ${availClass}`}>
         <div className="col-auto caretCol">
           <Caret upload={upload} />
         </div>
-        <div className="col-2">{upload.biospecimenID}</div>
-        <div className="col-2">{upload.subject}</div>
-        <div className="col-2">{upload.phase}</div>
-        <div className="col-3">{upload.dataType}</div>
-        <div className="col-2">{dayjs(upload.lastUpdated).format(timeFormatCondensed)}</div>
+        <div className="col-2"><p className="uploadRowP">{upload.biospecimenID}</p></div>
+        <div className="col-2"><p className="uploadRowP">{upload.subject}</p></div>
+        <div className="col-2"><p className="uploadRowP">{upload.phase}</p></div>
+        <div className="col-2"><p className="uploadRowP">{upload.dataType}</p></div>
+        <div className="col-2"><p className="uploadRowP">{dayjs(upload.lastUpdated).format(timeFormatCondensed)}</p></div>
+        <div className="col-auto">{availIcon}</div>
         {upload.expanded && uploadHistory}
       </div>
     );
@@ -110,7 +113,7 @@ export function PreviousUploadsTable({ previousUploads, expandRow }) {
         <div className="col-2">BID</div>
         <div className="col-2">Subject</div>
         <div className="col-2">Phase</div>
-        <div className="col-3">Type</div>
+        <div className="col-2">Type</div>
         <div className="col-2">Updated</div>
       </div>
       {uploadRows}

@@ -1,6 +1,59 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Returns text and an icon given the status of an upload.
+ *
+ * @param {String} availability The status of an uploaded item in the pipeline
+ * @param {Boolean} short Returned icon will not include surrounding text it true
+ *
+ * @returns {Array[String,Object]} The text status, and JSX object
+ * for representing availability of item
+ */
+export function getStatusIcon(availability, short = false) {
+  let availClass;
+  let availIcon;
+  switch (availability) {
+    case 'Publicly Available': {
+      availClass = 'public';
+      availIcon = short ? <span className="oi oi-circle-check" /> : (
+        <p className="statusText">
+          <span className="iconText">
+            Publically Available&nbsp;
+          </span>
+          <span className="oi oi-circle-check" />
+        </p>
+      );
+      break;
+    }
+    case 'Internally Available': {
+      availClass = 'internal';
+      availIcon = short ? <span className="oi oi-loop-square" /> : (
+        <p className="statusText">
+          <span className="iconText">
+            Internally Available&nbsp;
+          </span>
+          <span className="oi oi-loop-square" />
+        </p>
+      );
+      break;
+    }
+    default: {
+      availClass = 'pending';
+      availIcon = short ? <span className="oi oi-ellipses" /> : (
+        <p className="statusText">
+          <span className="iconText">
+            Pending Q.C.&nbsp;
+          </span>
+          <span className="oi oi-ellipses" />
+        </p>
+      );
+      break;
+    }
+  }
+  return [availClass, availIcon];
+}
+
 function DownloadRow({
   upload,
   onCartClick,
@@ -15,46 +68,8 @@ function DownloadRow({
       </button>
     );
   }
-  let availClass;
-  let availIcon;
-  switch (upload.availability) {
-    case 'Publicly Available': {
-      availClass = 'public';
-      availIcon = (
-        <p className="statusText">
-          <span className="iconText">
-            Publically Available&nbsp;
-          </span>
-          <span className="oi oi-circle-check" />
-        </p>
-      );
-      break;
-    }
-    case 'Internally Available': {
-      availClass = 'internal';
-      availIcon = (
-        <p className="statusText">
-          <span className="iconText">
-            Internally Available&nbsp;
-          </span>
-          <span className="oi oi-loop-square" />
-        </p>
-      );
-      break;
-    }
-    default: {
-      availClass = 'pending';
-      availIcon = (
-        <p className="statusText">
-          <span className="iconText">
-            Pending Q.C.&nbsp;
-          </span>
-          <span className="oi oi-ellipses" />
-        </p>
-      );
-      break;
-    }
-  }
+  const [availClass, availIcon] = getStatusIcon(upload.availability);
+
   return (
     <div className={`downloadRow m-2 row ${availClass}`}>
       <div className="col leftSide mt-2">
