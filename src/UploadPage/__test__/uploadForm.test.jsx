@@ -37,6 +37,12 @@ const shallowFilledForm = shallow(<UploadForm {...formFilledState} {...formActio
 const shallowHumanFilledForm = shallow(<UploadForm {...humanFormState} {...formActions} />);
 
 describe('Upload Form', () => {
+  test('No invalid feedback shows initialliy', () => {
+    expect(mountDefaultForm.find('form').hasClass('needs-validation'))
+      .toBeTruthy();
+    expect(mountDefaultForm.find('form').hasClass('was-validated'))
+      .toBeFalsy();
+  });
   test('Submitting calls handleSubmit', () => {
     mountDefaultForm.find('form').simulate('submit');
     expect(formActions.handleSubmit.mock.calls.length).toBe(1);
