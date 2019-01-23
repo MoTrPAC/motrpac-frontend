@@ -3,6 +3,22 @@ import PropTypes from 'prop-types';
 import assayList from '../lib/assayList';
 
 /**
+ * Sets appropriate form validation className to elements onBlur (onFocusOut).
+ *
+ * @param {Object} e element calling onBlur
+ */
+function validateOnBlur(e) {
+  const regex = new RegExp(e.target.pattern);
+  if (regex.test(e.target.value)) {
+    e.target.classList.remove('is-invalid');
+    e.target.classList.add('is-valid');
+  } else {
+    e.target.classList.remove('is-valid');
+    e.target.classList.add('is-invalid');
+  }
+}
+
+/**
  * Form element for submission of data associated with files
  *
  * @param {Bool} validated Checks if form has been validated --> shows errors and styles
@@ -26,7 +42,7 @@ function UploadForm({
     <div className="form-group">
       <label htmlFor="collection-date">
         Collection Date *
-        <input type="text" pattern="\d{1,2}\/\d{1,2}\/\d{4}" onChange={handleFormChange} value={formValues.collectionDate} className="form-control" id="collectionDate" placeholder="MM/DD/YYYY" required disabled={submitted} />
+        <input type="text" onBlur={validateOnBlur} pattern="\d{1,2}\/\d{1,2}\/\d{4}" onChange={handleFormChange} value={formValues.collectionDate} className="form-control" id="collectionDate" placeholder="MM/DD/YYYY" required disabled={submitted} />
         <div className="invalid-feedback">Collection Date required and must be in format MM/DD/YYYY</div>
       </label>
     </div>
@@ -47,7 +63,7 @@ function UploadForm({
       <div className="form-group">
         <label htmlFor="biospecimenBarcode">
           Biospecimen Barcode(s) * – comma seperate if multiple
-          <input type="text" pattern="(\d{9,11},|\d{9,11}){1,}" min="9" onChange={handleFormChange} value={formValues.biospecimenBarcode} className="form-control" id="biospecimenBarcode" placeholder="Ex: 10001010208" required disabled={submitted} />
+          <input type="text" pattern="(\d{9,11},|\d{9,11}){1,}" onBlur={validateOnBlur} min="9" onChange={handleFormChange} value={formValues.biospecimenBarcode} className="form-control" id="biospecimenBarcode" placeholder="Ex: 10001010208" required disabled={submitted} />
           <div className="invalid-feedback">Barcodes must be 9 to 11 digits (5 digit BID + 2 digit time point + 2 digit sample type + 2 digit cryovial ID)</div>
         </label>
       </div>
