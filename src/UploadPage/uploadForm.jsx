@@ -21,8 +21,8 @@ function validateOnBlur(e) {
 /**
  * Form element for submission of data associated with files
  *
- * @param {Bool} validated Checks if form has been validated --> shows errors and styles
- * @param {Bool} submitted Checks if form has been successfully submitted,
+ * @param {Boolean} validated Checks if form has been validated --> shows errors and styles
+ * @param {Boolean} submitted Checks if form has been successfully submitted,
  * locks fields from changing
  * @param {Object} formValues Stores all form values
  * @param {Function} handleSubmit Runs on submition of form

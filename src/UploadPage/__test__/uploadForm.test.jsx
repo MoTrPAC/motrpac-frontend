@@ -47,6 +47,15 @@ describe('Upload Form', () => {
     mountDefaultForm.find('form').simulate('submit');
     expect(formActions.handleSubmit.mock.calls.length).toBe(1);
   });
+  test('onBlur triggers form validation', () => {
+    mountDefaultForm.find('#collectionDate').simulate('blur', { target: mountDefaultForm.find('#collectionDate').getDOMNode() });
+    expect(mountDefaultForm.find('#collectionDate').getDOMNode().classList).toContain('is-invalid');
+    expect(mountDefaultForm.find('#collectionDate').getDOMNode().classList).not.toContain('is-valid');
+
+    mountDefaultForm.find('#biospecimenBarcode').simulate('blur', { target: mountDefaultForm.find('#biospecimenBarcode').getDOMNode() });
+    expect(mountDefaultForm.find('#biospecimenBarcode').getDOMNode().classList).toContain('is-invalid');
+    expect(mountDefaultForm.find('#biospecimenBarcode').getDOMNode().classList).not.toContain('is-valid');
+  });
   test('Form values correctly populate fields', () => {
     expect(shallowFilledForm.find('#dataType').props().value).toBe(formFilledState.formValues.dataType);
     expect(shallowFilledForm.find('#biospecimenBarcode').props().value).toBe(formFilledState.formValues.biospecimenBarcode);
