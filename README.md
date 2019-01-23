@@ -81,7 +81,7 @@
  - redux-thunk middleware used to handle asynchronous requests like for authentication
 
 #### Security considerations for after backend integrated
- - Currently the the entire state is being stored in localStorage making it such that in the javascript console, I can get, mutate, and push the state to become logged in.
+ - Currently the entire state is being stored in localStorage making it such that in the DevTools console, I can get, mutate, and push the state to become logged in.
  - This breach would not really do anything in terms of revealing data since any calls made to the backend would likely need user information like a password, so if a "hacker" did change the state to be loggedIn, they would also need something along the lines of a username and matching password, in which case they could have accessed that data through the standard user interface.
 
 #### Potential down the line dependency issues
