@@ -1,6 +1,5 @@
 .previousUploadsTable {
   max-height: 60vh;
-  overflow-y: scroll;
   .expandBtn {
     background-color: white;
     border: none;
@@ -9,14 +8,20 @@
   .uploadHeader {
     color: $dblue;
   }
-  .public .oi {
+  .public {
+    .oi, .hoverStatus {
     color: $green;
+    }
   }
-  .internal .oi {
-    color: $dblue;
+  .internal {
+    .oi, .hoverStatus {
+      color: $dblue;
+    }
   }
-  .pending .oi {
-    color: $dgray;
+  .pending {
+    .oi, .hoverStatus{
+      color: $dgray;
+    }
   }
   .uploadRow {
     .uploadRowP {
@@ -49,5 +54,26 @@
     .hiddenCaret {
       color: transparent;
     }
+  }
+  .hoverStatus {
+    background-color: $white;
+    min-width: 150px;
+    opacity: 0;
+    display: block;
+    position: absolute;
+    top:0%;
+    left:100%;
+    overflow: visible;
+    z-index:1000;
+    border-radius: 0 20px 20px 20px;
+    text-align: center;
+  }
+  .availIcon:hover + .hoverStatus {
+    display:block;
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: .1s;
   }
 }

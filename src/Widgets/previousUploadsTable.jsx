@@ -87,7 +87,10 @@ export function PreviousUploadsTable({ previousUploads, expandRow }) {
         <div className="col-2"><p className="uploadRowP">{upload.phase}</p></div>
         <div className="col-2"><p className="uploadRowP">{upload.dataType}</p></div>
         <div className="col-2"><p className="uploadRowP">{dayjs(upload.lastUpdated).format(timeFormatCondensed)}</p></div>
-        <div className="col-auto">{availIcon}</div>
+        <div className="col-auto">
+          {availIcon}
+          <div className="hoverStatus"><p>{upload.availability}</p></div>
+        </div>
         {upload.expanded && uploadHistory}
       </div>
     );
@@ -105,7 +108,7 @@ export function PreviousUploadsTable({ previousUploads, expandRow }) {
       <UploadRow upload={upload} key={upload.biospecimenID + upload.dataType} />
     ));
   return (
-    <div className="col-12 col-md-7 previousUploadsTable">
+    <div className="col-12 col-lg-7 previousUploadsTable">
       <div className="row uploadHeader uploadRow">
         <div className="col-auto caretCol">
           <span className="oi oi-caret-right hiddenCaret" />

@@ -16,7 +16,7 @@ export function getStatusIcon(availability, short = false) {
   switch (availability) {
     case 'Publicly Available': {
       availClass = 'public';
-      availIcon = short ? <span className="oi oi-circle-check" /> : (
+      availIcon = short ? <span className="oi availIcon oi-circle-check" /> : (
         <p className="statusText">
           <span className="iconText">
             Publically Available&nbsp;
@@ -28,7 +28,7 @@ export function getStatusIcon(availability, short = false) {
     }
     case 'Internally Available': {
       availClass = 'internal';
-      availIcon = short ? <span className="oi oi-loop-square" /> : (
+      availIcon = short ? <span className="oi availIcon oi-loop-square" /> : (
         <p className="statusText">
           <span className="iconText">
             Internally Available&nbsp;
@@ -40,7 +40,7 @@ export function getStatusIcon(availability, short = false) {
     }
     default: {
       availClass = 'pending';
-      availIcon = short ? <span className="oi oi-ellipses" /> : (
+      availIcon = short ? <span className="oi availIcon oi-ellipses" /> : (
         <p className="statusText">
           <span className="iconText">
             Pending Q.C.&nbsp;

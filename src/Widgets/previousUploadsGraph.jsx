@@ -58,7 +58,7 @@ function PreviousUploadsGraph({ previousUploads }) {
     },
   };
   return (
-    <div className="col-12 col-md-5 align-self-center">
+    <div className="col-12 col-lg-5 align-self-center">
       <CBar
         data={data}
         options={options}
