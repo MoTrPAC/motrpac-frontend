@@ -32,7 +32,6 @@
     "sass-watch": "node_modules/sass/sass.js --watch src/sass/main.scss src/main.css",
     "inspect-branch": "yarn && yarn sass && yarn start"
   },
-  "proxy": "http://localhost:3001",
   "browserslist": [
     ">0.2%",
     "not dead",
