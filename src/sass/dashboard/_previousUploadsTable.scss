@@ -24,15 +24,18 @@
     }
   }
   .uploadRow {
+    line-height: 1rem;
     .uploadRowP {
       text-overflow: clip;
       white-space: nowrap;
       overflow: hidden;
+      margin: 0;
     }
     background-color:white;
     transition: .15s ease-in-out;
+    border-bottom: 1px solid white;
     &:hover{
-      background-color: $blue-transparent;
+      border-color: $dblue;
       transition: .15s ease-in-out;
     }
   }
@@ -56,7 +59,8 @@
     }
   }
   .hoverStatus {
-    background-color: $lblue;
+    background-color: white;
+    border-color: $dblue;
     min-width: 150px;
     opacity: 0;
     display: block;
@@ -65,8 +69,7 @@
     left:100%;
     overflow: visible;
     z-index:1000;
-    border-radius: 0 20px 20px 20px;
-    text-align: center;
+    border-radius: 0 15px 15px 15px;
   }
   .availIcon:hover + .hoverStatus {
     display:block;

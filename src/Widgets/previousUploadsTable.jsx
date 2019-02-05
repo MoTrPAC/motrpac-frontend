@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { getStatusIcon } from '../DownloadPage/downloadRow';
 
 const timeFormat = 'MMM D, YYYY - h:m A'; //  Jan 31, 2019 - 2:34 PM
-const timeFormatCondensed = 'M/D/YYYY'; //  1/31/2019
+const timeFormatCondensed = 'M/D/YY'; //  1/31/19
 
 const historyPropType = {
   fileName: PropTypes.string,
@@ -15,7 +15,7 @@ const historyPropType = {
 const uploadPropType = {
   history: PropTypes.arrayOf(PropTypes.shape({ ...historyPropType })),
   expanded: PropTypes.bool,
-  biospecimenID: PropTypes.string,
+  biospecimenBarcode: PropTypes.string,
   subject: PropTypes.string,
   phase: PropTypes.string,
   dataType: PropTypes.string,
@@ -78,11 +78,11 @@ export function PreviousUploadsTable({ previousUploads, expandRow }) {
     }
 
     return (
-      <div className={`row uploadRow ${availClass}`}>
+      <div className={`row uploadRow ${availClass} align-items-center py-1`}>
         <div className="col-auto caretCol">
           <Caret upload={upload} />
         </div>
-        <div className="col-2"><p className="uploadRowP">{upload.biospecimenID}</p></div>
+        <div className="col-2"><p className="uploadRowP">{upload.biospecimenBarcode.slice(0, 5)}</p></div>
         <div className="col-2"><p className="uploadRowP">{upload.subject}</p></div>
         <div className="col-2"><p className="uploadRowP">{upload.phase}</p></div>
         <div className="col-2"><p className="uploadRowP">{upload.dataType}</p></div>
@@ -105,7 +105,7 @@ export function PreviousUploadsTable({ previousUploads, expandRow }) {
   // creating an upload row for each unique experiment
   const uploadRows = previousUploads
     .map(upload => (
-      <UploadRow upload={upload} key={upload.biospecimenID + upload.dataType} />
+      <UploadRow upload={upload} key={upload.biospecimenBarcode + upload.dataType} />
     ));
   return (
     <div className="col-12 col-lg-7 previousUploadsTable">
