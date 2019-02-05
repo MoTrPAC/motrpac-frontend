@@ -11,7 +11,7 @@ const formFilledState = {
   ...defaultUploadState,
   formValues: {
     dataType: 'ATAC-Seq',
-    biospecimenBarcode: '1',
+    biospecimenBarcode: '1000112345',
     collectionDate: '10/21/18',
     subjectType: 'Animal',
     studyPhase: '1',
