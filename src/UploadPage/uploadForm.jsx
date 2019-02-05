@@ -2,7 +2,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import assayList from '../lib/assayList';
 
-// Form element for submission of data associated with files
+/**
+ * Sets appropriate form validation className to elements onBlur (onFocusOut).
+ *
+ * @param {Object} e element calling onBlur
+ */
+function validateOnBlur(e) {
+  const regex = new RegExp(e.target.pattern);
+  if (regex.test(e.target.value)) {
+    e.target.classList.remove('is-invalid');
+    e.target.classList.add('is-valid');
+  } else {
+    e.target.classList.remove('is-valid');
+    e.target.classList.add('is-invalid');
+  }
+}
+
+/**
+ * Form element for submission of data associated with files
+ *
+ * @param {Boolean} validated Checks if form has been validated --> shows errors and styles
+ * @param {Boolean} submitted Checks if form has been successfully submitted,
+ * locks fields from changing
+ * @param {Object} formValues Stores all form values
+ * @param {Function} handleSubmit Runs on submition of form
+ * @param {Function} handleFormChange Runs after any change to any form field,
+ * typically updates redux store
+ *
+ * @returns {Object} Form for data uploads
+ */
 function UploadForm({
   validated,
   submitted,
@@ -10,6 +38,15 @@ function UploadForm({
   handleSubmit,
   handleFormChange,
 }) {
+  const collectionDateField = formValues.subjectType === 'Human' ? '' : (
+    <div className="form-group">
+      <label htmlFor="collection-date">
+        Collection Date *
+        <input type="text" onBlur={validateOnBlur} pattern="\d{1,2}\/\d{1,2}\/\d{4}" onChange={handleFormChange} value={formValues.collectionDate} className="form-control" id="collectionDate" placeholder="MM/DD/YYYY" required disabled={submitted} />
+        <div className="invalid-feedback">Collection Date required and must be in format MM/DD/YYYY</div>
+      </label>
+    </div>
+  );
   return (
     <form onSubmit={(e) => { e.preventDefault(); handleSubmit(e); }} id="uploadForm" name="uploadForm" className={validated ? 'was-validated' : 'needs-validation'} noValidate disabled={submitted}>
       <div className="form-group">
@@ -24,27 +61,21 @@ function UploadForm({
       </div>
 
       <div className="form-group">
-        <div className="invalid-feedback">Field Required</div>
-        <label htmlFor="biospecimenID">
-          Biospecimen ID(s) * – comma seperate if multiple
-          <input type="text" onChange={handleFormChange} value={formValues.biospecimenID} className="form-control" id="biospecimenID" placeholder="Ex: AS213141" required disabled={submitted} />
+        <label htmlFor="biospecimenBarcode">
+          Biospecimen Barcode(s) * – comma seperate if multiple
+          <input type="text" pattern="(\d{9,11},|\d{9,11}){1,}" onBlur={validateOnBlur} min="9" onChange={handleFormChange} value={formValues.biospecimenBarcode} className="form-control" id="biospecimenBarcode" placeholder="Ex: 10001010208" required disabled={submitted} />
+          <div className="invalid-feedback">Barcodes must be 9 to 11 digits (5 digit BID + 2 digit time point + 2 digit sample type + 2 digit cryovial ID)</div>
         </label>
       </div>
 
-      <div className="form-group">
-        <div className="invalid-feedback">Field Required</div>
-        <label htmlFor="collection-date">
-          Collection Date *
-          <input type="text" onChange={handleFormChange} value={formValues.collectionDate} className="form-control" id="collectionDate" placeholder="MM/DD/YYYY" required disabled={submitted} />
-        </label>
-      </div>
+      {collectionDateField}
 
       <div className="form-group">
         <label htmlFor="subject-type">
           Subject Type *
           <select value={formValues.subjectType} onChange={handleFormChange} className="form-control" id="subjectType" disabled={submitted}>
-            <option value="Human">Human</option>
             <option value="Animal">Animal</option>
+            <option value="Human">Human</option>
           </select>
         </label>
       </div>
@@ -53,10 +84,10 @@ function UploadForm({
         <label htmlFor="study-phase">
           Study Phase *
           <select value={formValues.studyPhase} onChange={handleFormChange} className="form-control" id="studyPhase" disabled={submitted}>
-            <option value="Vanguard">Vanguard</option>
-            <option value="1">1</option>
             <option value="1A">1A</option>
             <option value="1B">1B</option>
+            <option value="Vanguard">Vanguard</option>
+            <option value="1">1</option>
             <option value="2">2</option>
             <option value="N/A">N/A</option>
             <option value="other">Other</option>
@@ -96,7 +127,7 @@ UploadForm.propTypes = {
   submitted: PropTypes.bool,
   formValues: PropTypes.shape({
     dataType: PropTypes.string,
-    biospecimenID: PropTypes.string,
+    biospecimenBarcode: PropTypes.string,
     collectionDate: PropTypes.string,
     subjectType: PropTypes.string,
     studyPhase: PropTypes.string,
@@ -113,7 +144,7 @@ UploadForm.defaultProps = {
   submitted: false,
   formValues: {
     dataType: '',
-    biospecimenID: '',
+    biospecimenBarcode: '',
     collectionDate: '',
     subjectType: '',
     studyPhase: '',

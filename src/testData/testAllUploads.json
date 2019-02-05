@@ -1,6 +1,6 @@
 [
   {
-    "identifier": "AS22345",
+    "identifier": "1000122345",
     "subject": "Animal",
     "phase": "1A",
     "type": "ATAC-Seq",
@@ -9,7 +9,7 @@
     "site": "GT CAS"
   },
   {
-    "identifier": "AS22346",
+    "identifier": "1000122346",
     "subject": "Human",
     "phase": "1A",
     "type": "RNA-Seq",
@@ -18,7 +18,7 @@
     "site": "GT CAS"
   },
   {
-    "identifier": "AS22347",
+    "identifier": "1000122347",
     "subject": "Human",
     "phase": "1A",
     "type": "WGS",
@@ -27,7 +27,7 @@
     "site": "GT CAS"
   },
   {
-    "identifier": "AS22348",
+    "identifier": "1000122348",
     "subject": "Human",
     "phase": "1A",
     "type": "RNA-Seq",
@@ -36,7 +36,7 @@
     "site": "GT CAS"
   },
   {
-    "identifier": "AS22349",
+    "identifier": "1000122349",
     "subject": "Human",
     "phase": "1A",
     "type": "RNA-Seq",
@@ -45,7 +45,7 @@
     "site": "GT CAS"
   },
   {
-    "identifier": "AS22350",
+    "identifier": "1000122350",
     "subject": "Human",
     "phase": "1A",
     "type": "ATAC-Seq",
@@ -54,7 +54,7 @@
     "site": "GT CAS"
   },
   {
-    "identifier": "AS22351",
+    "identifier": "1000122351",
     "subject": "Human",
     "phase": "1A",
     "type": "ATAC-Seq",
@@ -63,7 +63,7 @@
     "site": "GT CAS"
   },
   {
-    "identifier": "AS22352",
+    "identifier": "1000122352",
     "subject": "Human",
     "phase": "1A",
     "type": "Metabolomics",
@@ -72,7 +72,7 @@
     "site": "GT CAS"
   },
   {
-    "identifier": "AS22353",
+    "identifier": "1000122353",
     "subject": "Animal",
     "phase": "1A",
     "type": "ATAC-Seq",
@@ -81,7 +81,7 @@
     "site": "GT CAS"
   },
   {
-    "identifier": "AS22354",
+    "identifier": "1000122354",
     "subject": "Human",
     "phase": "1A",
     "type": "ATAC-Seq",
@@ -90,7 +90,7 @@
     "site": "GT CAS"
   },
   {
-    "identifier": "AS22355",
+    "identifier": "1000122355",
     "subject": "Animal",
     "phase": "1A",
     "type": "ATAC-Seq",
@@ -99,7 +99,7 @@
     "site": "GT CAS"
   },
   {
-    "identifier": "AS12365",
+    "identifier": "1000112365",
     "subject": "Animal",
     "phase": "1A",
     "type": "ATAC-Seq",
@@ -108,7 +108,7 @@
     "site": "Mayo CAS"
   },
   {
-    "identifier": "AS12366",
+    "identifier": "1000112366",
     "subject": "Human",
     "phase": "1A",
     "type": "RNA-Seq",
@@ -117,7 +117,7 @@
     "site": "Mayo CAS"
   },
   {
-    "identifier": "AS12367",
+    "identifier": "1000112367",
     "subject": "Human",
     "phase": "1A",
     "type": "WGS",
@@ -126,7 +126,7 @@
     "site": "Mayo CAS"
   },
   {
-    "identifier": "AS12368",
+    "identifier": "1000112368",
     "subject": "Human",
     "phase": "1A",
     "type": "RNA-Seq",
@@ -135,7 +135,7 @@
     "site": "Mayo CAS"
   },
   {
-    "identifier": "AS12369",
+    "identifier": "1000112369",
     "subject": "Human",
     "phase": "1A",
     "type": "RNA-Seq",
@@ -144,7 +144,7 @@
     "site": "Mayo CAS"
   },
   {
-    "identifier": "AS12360",
+    "identifier": "1000112360",
     "subject": "Human",
     "phase": "1A",
     "type": "ATAC-Seq",
@@ -153,7 +153,7 @@
     "site": "Mayo CAS"
   },
   {
-    "identifier": "AS12371",
+    "identifier": "1000112371",
     "subject": "Human",
     "phase": "1A",
     "type": "ATAC-Seq",
@@ -162,7 +162,7 @@
     "site": "Mayo CAS"
   },
   {
-    "identifier": "AS12372",
+    "identifier": "1000112372",
     "subject": "Human",
     "phase": "1A",
     "type": "Metabolomics",
@@ -171,7 +171,7 @@
     "site": "Mayo CAS"
   },
   {
-    "identifier": "AS12373",
+    "identifier": "1000112373",
     "subject": "Animal",
     "phase": "1A",
     "type": "ATAC-Seq",
@@ -180,7 +180,7 @@
     "site": "Mayo CAS"
   },
   {
-    "identifier": "AS12374",
+    "identifier": "1000112374",
     "subject": "Human",
     "phase": "1A",
     "type": "ATAC-Seq",
@@ -189,7 +189,7 @@
     "site": "Mayo CAS"
   },
   {
-    "identifier": "AS12375",
+    "identifier": "1000112375",
     "subject": "Animal",
     "phase": "1A",
     "type": "ATAC-Seq",
@@ -198,7 +198,7 @@
     "site": "Mayo CAS"
   },
   {
-    "identifier": "AS12345",
+    "identifier": "1000112345",
     "subject": "Animal",
     "phase": "1A",
     "type": "ATAC-Seq",
@@ -207,7 +207,7 @@
     "site": "Stanford CAS"
   },
   {
-    "identifier": "AS12346",
+    "identifier": "1000112346",
     "subject": "Human",
     "phase": "1A",
     "type": "RNA-Seq",
@@ -216,7 +216,7 @@
     "site": "Stanford CAS"
   },
   {
-    "identifier": "AS12347",
+    "identifier": "1000112347",
     "subject": "Human",
     "phase": "1A",
     "type": "WGS",
@@ -225,7 +225,7 @@
     "site": "Stanford CAS"
   },
   {
-    "identifier": "AS12348",
+    "identifier": "1000112348",
     "subject": "Human",
     "phase": "1A",
     "type": "RNA-Seq",
@@ -234,7 +234,7 @@
     "site": "Stanford CAS"
   },
   {
-    "identifier": "AS12349",
+    "identifier": "1000112349",
     "subject": "Human",
     "phase": "1A",
     "type": "RNA-Seq",
@@ -243,7 +243,7 @@
     "site": "Stanford CAS"
   },
   {
-    "identifier": "AS12350",
+    "identifier": "1000112350",
     "subject": "Human",
     "phase": "1A",
     "type": "ATAC-Seq",
@@ -252,7 +252,7 @@
     "site": "Stanford CAS"
   },
   {
-    "identifier": "AS12351",
+    "identifier": "1000112351",
     "subject": "Human",
     "phase": "1A",
     "type": "ATAC-Seq",
@@ -261,7 +261,7 @@
     "site": "Stanford CAS"
   },
   {
-    "identifier": "AS12352",
+    "identifier": "1000112352",
     "subject": "Human",
     "phase": "1A",
     "type": "Metabolomics",
@@ -270,7 +270,7 @@
     "site": "Stanford CAS"
   },
   {
-    "identifier": "AS12353",
+    "identifier": "1000112353",
     "subject": "Animal",
     "phase": "1A",
     "type": "ATAC-Seq",
@@ -279,7 +279,7 @@
     "site": "Stanford CAS"
   },
   {
-    "identifier": "AS12354",
+    "identifier": "1000112354",
     "subject": "Human",
     "phase": "1A",
     "type": "ATAC-Seq",
@@ -288,7 +288,7 @@
     "site": "Stanford CAS"
   },
   {
-    "identifier": "AS12355",
+    "identifier": "1000112355",
     "subject": "Animal",
     "phase": "1A",
     "type": "ATAC-Seq",
