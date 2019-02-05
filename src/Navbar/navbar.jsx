@@ -2,6 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+/**
+ * Renders the global header nav bar.
+ * 
+ * @param {Boolean} isAuthenticated Redux state for user's authentication status.
+ * 
+ * @returns {Object} JSX representation of the global header nav bar.
+ */
 export function Navbar({ isAuthenticated = false }) {
   const loggedInNavItems = (
     <React.Fragment>
