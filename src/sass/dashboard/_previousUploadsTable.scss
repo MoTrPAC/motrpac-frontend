@@ -9,7 +9,21 @@
   .uploadHeader {
     color: $dblue;
   }
+  .public .oi {
+    color: $green;
+  }
+  .internal .oi {
+    color: $dblue;
+  }
+  .pending .oi {
+    color: $dgray;
+  }
   .uploadRow {
+    .uploadRowP {
+      text-overflow: clip;
+      white-space: nowrap;
+      overflow: hidden;
+    }
     background-color:white;
     transition: .15s ease-in-out;
     &:hover{
@@ -29,8 +43,11 @@
   }
   .caretCol {
     padding:0;
-  }
-  .hiddenCaret {
-    color: transparent;
+    .oi {
+      color: $dgray;
+    }
+    .hiddenCaret {
+      color: transparent;
+    }
   }
 }
