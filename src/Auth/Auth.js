@@ -1,15 +1,26 @@
 import auth0 from 'auth0-js';
-import { AUTH_CONFIG } from './auth0-variables';
+import { AUTH0_CONFIG } from './auth0-variables';
 
-export default class Auth {
+/**
+ * A class for Auth0 authentication.
+ * @class
+ * 
+ * @property expiresAt            A timestamp string parsed from localStorage.
+ * @property tokenRenewalTimeout  A reference to the setTimeout call.
+ * 
+ */
+class Auth {
   expiresAt;
   tokenRenewalTimeout;
 
+  /**
+   * @constructor
+   */
   constructor() {
     this.auth0 = new auth0.WebAuth({
-      domain: AUTH_CONFIG.domain,
-      clientID: AUTH_CONFIG.clientId,
-      redirectUri: AUTH_CONFIG.callbackUrl,
+      domain: AUTH0_CONFIG.domain,
+      clientID: AUTH0_CONFIG.clientId,
+      redirectUri: AUTH0_CONFIG.callbackUrl,
       responseType: 'token id_token',
       scope: 'openid profile',
     });
@@ -38,13 +49,13 @@ export default class Auth {
 
   setSession(authResult) {
     // Set the time that the access token will expire at
-    let expiresAt = JSON.stringify(
+    this.expiresAt = JSON.stringify(
       authResult.expiresIn * 1000 + new Date().getTime()
     );
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('id_token_payload', JSON.stringify(authResult.idTokenPayload));
-    localStorage.setItem('expires_at', expiresAt);
+    localStorage.setItem('expires_at', this.expiresAt);
 
     // schedule a token renewal
     this.scheduleRenewal();
@@ -76,8 +87,8 @@ export default class Auth {
       return false;
     }
 
-    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-    return new Date().getTime() < expiresAt;
+    this.expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    return new Date().getTime() < this.expiresAt;
   }
 
   getProfile(cb) {
@@ -108,8 +119,8 @@ export default class Auth {
   }
 
   scheduleRenewal() {
-    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-    const timeout = expiresAt - Date.now();
+    this.expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    const timeout = this.expiresAt - Date.now();
     if (timeout > 0) {
       this.tokenRenewalTimeout = setTimeout(() => {
         this.renewSession();
@@ -117,3 +128,5 @@ export default class Auth {
     }
   }
 }
+
+export default Auth;

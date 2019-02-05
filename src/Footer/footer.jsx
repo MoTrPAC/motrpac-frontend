@@ -5,7 +5,14 @@ import { connect } from 'react-redux';
 import actions from '../Auth/authActions';
 
 /**
- * Method to render global footer
+ * Renders the global footer.
+ * 
+ * @param {Boolean}   isAuthenticated Redux state for user's authentication status.
+ * @param {Object}    profile         Redux state for authenticated user's info.
+ * @param {Function}  login           Redux action for user login.
+ * @param {Function}  logout          Redux action for user logout.
+ * 
+ * @returns {object} JSX representation of the global footer.
  */
 export function Footer({
   isAuthenticated,

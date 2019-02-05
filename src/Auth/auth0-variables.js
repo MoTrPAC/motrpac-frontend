@@ -1,5 +1,7 @@
-export const AUTH_CONFIG = {
+const url = new URL(window.location.href);
+
+export const AUTH0_CONFIG = {
   domain: 'motrpac-project.auth0.com',
   clientId: '4dUo4JxLlZvCtFVCw21Nh0ZRKyznluAZ',
-  callbackUrl: 'http://localhost:3000/callback'
+  callbackUrl: `${url.origin}/callback`
 };
