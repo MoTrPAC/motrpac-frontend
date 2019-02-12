@@ -6,7 +6,7 @@ import { getStatusIcon } from '../DownloadPage/downloadRow';
 import actions from '../UploadPage/uploadActions';
 
 const timeFormat = 'MMM D, YYYY - h:m A'; //  Jan 31, 2019 - 2:34 PM
-const timeFormatCondensed = 'M/D/YYYY'; //  1/31/2019
+const timeFormatCondensed = 'M/D/YY'; //  1/31/2019
 
 const historyPropType = {
   fileName: PropTypes.string,
