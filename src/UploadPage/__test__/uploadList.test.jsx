@@ -35,7 +35,7 @@ const threeDoneUploads = [
     ...testUploads[1],
     status: 'FAILED',
     error: {
-      code: 1231,
+      code: '1231',
       message: 'Test Error Message',
       title: 'Test Error Title',
     },

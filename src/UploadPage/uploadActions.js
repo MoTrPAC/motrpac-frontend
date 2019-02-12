@@ -10,6 +10,7 @@ const CLEAR_FORM = 'CLEAR_FORM';
 const EXPAND_UPLOAD_HISTORY = 'EXPAND_UPLOAD_HISTORY';
 const SET_ALL_SUCCESS = 'SET_ALL_SUCCESS';
 const VIEW_MORE_HISTORY = 'VIEW_MORE_HISTORY';
+const EDIT_UPLOAD = 'EDIT_UPLOAD';
 
 export const types = {
   DRAG_ENTER,
@@ -24,6 +25,7 @@ export const types = {
   EXPAND_UPLOAD_HISTORY,
   SET_ALL_SUCCESS,
   VIEW_MORE_HISTORY,
+  EDIT_UPLOAD,
 };
 
 function dragEnter() {
@@ -109,6 +111,13 @@ function viewMoreHistory(upload) {
   };
 }
 
+function editUpload(upload) {
+  return {
+    type: EDIT_UPLOAD,
+    upload,
+  };
+}
+
 function formSubmitSuccessUploads(e) {
   return (dispatch) => {
     dispatch(formSubmit(e));
@@ -133,6 +142,7 @@ const actions = {
   dragLeave,
   expandRow,
   viewMoreHistory,
+  editUpload,
 };
 
 export default actions;

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 import { getStatusIcon } from '../DownloadPage/downloadRow';
 import actions from '../UploadPage/uploadActions';
+import history from '../App/history';
 
 const timeFormat = 'MMM D, YYYY - h:m A'; //  Jan 31, 2019 - 2:34 PM
 const timeFormatCondensed = 'M/D/YY'; //  1/31/2019
@@ -33,7 +34,7 @@ const uploadPropType = {
  * @param {Function} onViewMore Function which handles the logic of viewing more history items
  * for uploads with more than the 'MaxLength' of visible history. 
  */
-export function PreviousUploadsTable({ previousUploads, expandRow, onViewMoreHistory }) {
+export function PreviousUploadsTable({ previousUploads, expandRow, onViewMoreHistory, editUpload }) {
   // Component to display the granular information of an individual file upload.
   function UploadHistoryRow({ historyItem }) {
     return (
@@ -84,6 +85,7 @@ export function PreviousUploadsTable({ previousUploads, expandRow, onViewMoreHis
           {
             displayViewMoreBtn ? <button type="button" onClick={() => onViewMoreHistory(upload)} className="btn btn-default viewMoreBtn">{viewMore ? 'View Less' : 'View More'}</button> : ''
           }
+          <button type="button" onClick={() => { editUpload(upload); history.replace('/upload'); }} className="editUploadBtn btn btn-default">Edit</button>
         </div>
       );
     } else {
@@ -151,6 +153,7 @@ PreviousUploadsTable.propTypes = {
   previousUploads: PropTypes.arrayOf(PropTypes.shape({ ...uploadPropType })),
   expandRow: PropTypes.func.isRequired,
   onViewMoreHistory: PropTypes.func.isRequired,
+  editUpload: PropTypes.func.isRequired,
 };
 PreviousUploadsTable.defaultProps = {
   previousUploads: [],
@@ -161,6 +164,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
   expandRow: up => dispatch(actions.expandRow(up)),
+  editUpload: up => dispatch(actions.editUpload(up)),
   onViewMoreHistory: up => dispatch(actions.viewMoreHistory(up)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(PreviousUploadsTable);

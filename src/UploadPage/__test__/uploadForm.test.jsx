@@ -15,7 +15,7 @@ const formFilledState = {
     collectionDate: '10/21/18',
     subjectType: 'Animal',
     studyPhase: '1',
-    descript: 'description',
+    description: 'description',
     rawData: true,
     processedData: false,
   },
@@ -64,7 +64,7 @@ describe('Upload Form', () => {
     expect(shallowFilledForm.find('#collectionDate').props().value).toBe(formFilledState.formValues.collectionDate);
     expect(shallowFilledForm.find('#subjectType').props().value).toBe(formFilledState.formValues.subjectType);
     expect(shallowFilledForm.find('#studyPhase').props().value).toBe(formFilledState.formValues.studyPhase);
-    expect(shallowFilledForm.find('#description').props().value).toBe(formFilledState.formValues.descript);
+    expect(shallowFilledForm.find('#description').props().value).toBe(formFilledState.formValues.description);
     expect(shallowFilledForm.find('#rawData').props().checked).toBeTruthy();
     expect(shallowFilledForm.find('#processedData').props().checked).toBeFalsy();
   });

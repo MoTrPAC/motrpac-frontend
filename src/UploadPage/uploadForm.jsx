@@ -112,7 +112,7 @@ function UploadForm({
         <label htmlFor="description">
           <br />
           Description
-          <textarea type="textarea" onChange={handleFormChange} className="form-control" id="description" placeholder="Description" value={formValues.descript} disabled={submitted} />
+          <textarea type="textarea" onChange={handleFormChange} className="form-control" id="description" placeholder="Description" value={formValues.description} disabled={submitted} />
         </label>
       </div>
 
@@ -131,7 +131,7 @@ UploadForm.propTypes = {
     collectionDate: PropTypes.string,
     subjectType: PropTypes.string,
     studyPhase: PropTypes.string,
-    descript: PropTypes.string,
+    description: PropTypes.string,
     submitted: PropTypes.bool,
     rawData: PropTypes.bool,
     processedData: PropTypes.bool,

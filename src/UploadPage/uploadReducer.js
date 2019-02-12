@@ -124,6 +124,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         studyPhase: action.elements.studyPhase.value,
         rawData: action.elements.rawData.checked,
         processedData: action.elements.processedData.checked,
+        description: action.elements.description ? action.elements.description.value : '',
       };
 
       const now = Date.now();
@@ -145,6 +146,9 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
             subject: formData.subjectType,
             phase: formData.studyPhase,
             date: formData.collectionDate,
+            rawData: formData.rawData,
+            processedData: formData.processedData,
+            description: formData.description,
             lastUpdated: uploadDate,
             availability: 'Pending Q.C.',
             history: [],
@@ -174,7 +178,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
 
     case types.UPLOAD_SUCCESS: {
       // Update status of succesful file
-      const newUploadsState = state.uploadFiles.map((uploadItem) => {
+      const newUploadsState = state.uploadFiles.filter((uploadItem) => {
         if (uploadItem.id === action.upload.id) {
           return {
             ...uploadItem,
@@ -287,6 +291,33 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         ...state,
         previousUploads: prevUploads,
         uploadFiles: newUploadsState,
+      };
+    }
+    case types.EDIT_UPLOAD: {
+      const formData = {
+        dataType: action.upload.dataType,
+        biospecimenBarcode: action.upload.biospecimenBarcode,
+        collectionDate: action.upload.date ? action.upload.date : '',
+        subjectType: action.upload.subject,
+        studyPhase: action.upload.phase,
+        rawData: action.upload.rawData ? action.upload.rawData : false,
+        processedData: action.upload.processedData ? action.upload.processedData : false,
+        description: action.upload.description,
+      };
+      const uploadFiles = action.upload.history.map((upload) => {
+        return {
+          id: upload.uuid,
+          file: {
+            name: upload.fileName,
+          },
+          status: 'UPLOAD_SUCCESS',
+        };
+      });
+      return {
+        ...state,
+        submitted: true,
+        formValues: formData,
+        uploadFiles,
       };
     }
     default:

@@ -10,6 +10,7 @@ const testUploads = require('../../testData/testPreviousUploads');
 const tableActions = {
   expandRow: jest.fn(),
   onViewMoreHistory: jest.fn(),
+  editUpload: jest.fn(),
 };
 
 const expandedUploads = testUploads.map(upload => ({
