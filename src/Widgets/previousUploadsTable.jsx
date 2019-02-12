@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
+import { getStatusIcon } from '../DownloadPage/downloadRow';
 
 const timeFormat = 'MMM D, YYYY - h:m A'; //  Jan 31, 2019 - 2:34 PM
 const timeFormatCondensed = 'M/D/YY'; //  1/31/19
@@ -56,6 +57,7 @@ export function PreviousUploadsTable({ previousUploads, expandRow }) {
   // The row on the table corresponding to one experiment.
   function UploadRow({ upload }) {
     let uploadHistory;
+    const [availClass, availIcon] = getStatusIcon(upload.availability, true);
     if (upload.history) {
       uploadHistory = (
         <div className="col-12 history">
