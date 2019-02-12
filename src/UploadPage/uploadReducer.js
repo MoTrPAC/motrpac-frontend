@@ -231,6 +231,21 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         previousUploads: prevUploads,
       };
     }
+    case types.VIEW_MORE_HISTORY: {
+      const prevUploads = state.previousUploads.map((upload) => {
+        if (action.upload === upload) {
+          return {
+            ...upload,
+            viewMoreHistory: !(upload.viewMoreHistory),
+          };
+        }
+        return upload;
+      });
+      return {
+        ...state,
+        previousUploads: prevUploads,
+      };
+    }
 
     case types.SET_ALL_SUCCESS: {
       if (!(state.uploadFiles.length > 0)) {
@@ -274,7 +289,6 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         uploadFiles: newUploadsState,
       };
     }
-
     default:
       return state;
   }

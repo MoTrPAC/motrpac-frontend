@@ -1,5 +1,4 @@
 .previousUploadsTable {
-  max-height: 60vh;
   .expandBtn {
     background-color: white;
     border: none;
@@ -21,6 +20,7 @@
     }
   }
   .uploadRow {
+    text-align: center;
     .uploadRowP {
       text-overflow: clip;
       white-space: nowrap;
@@ -48,6 +48,7 @@
   }
   .historyItem {
     margin-top: 10px;
+    text-align: left;
   }
   .caretCol {
     padding:0;
@@ -79,5 +80,13 @@
     animation-iteration-count: 1;
     animation-timing-function: ease-in;
     animation-duration: .1s;
+  }
+  .viewMoreBtn {
+    text-align: center;
+    background-color: transparent;
+    border: 1px solid $blue;
+    color: $blue;
+    padding: 3px 9px;
+    margin: 6px auto;
   }
 }

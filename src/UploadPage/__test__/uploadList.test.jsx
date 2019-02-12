@@ -9,6 +9,7 @@ const uploadListActions = {
 };
 const testUploads = require('../../testData/testUploads');
 
+// All three when rendered should have cancel upload buttons
 const threeUploads = [
   {
     ...testUploads[0],
@@ -24,6 +25,7 @@ const threeUploads = [
   },
 ];
 
+// None of these should have cancel upload buttons
 const threeDoneUploads = [
   {
     ...testUploads[0],
