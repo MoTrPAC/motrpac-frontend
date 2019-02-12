@@ -103,4 +103,13 @@ describe('Authenticated Application routing', () => {
     mountApp.update();
     testCorrectComponentInPath(mountApp, 'DownloadPage', '/download', history);
   });
+
+  test('Edit button appears after expanding an upload on the dashboard', () => {
+    history.push('/dashboard');
+    mountApp.update();
+    expect(mountApp.find('.editUploadBtn')).toHaveLength(0);
+    mountApp.find('Caret').first().simulate('click');
+    mountApp.update();
+    expect(mountApp.find('.editUploadBtn')).toHaveLength(1);
+  });
 });
