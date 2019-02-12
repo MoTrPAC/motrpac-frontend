@@ -24,6 +24,26 @@ const threeUploads = [
   },
 ];
 
+const threeDoneUploads = [
+  {
+    ...testUploads[0],
+    status: 'UPLOAD_SUCCESS',
+  },
+  {
+    ...testUploads[1],
+    status: 'FAILED',
+    error: {
+      code: 1231,
+      message: 'Test Error Message',
+      title: 'Test Error Title',
+    },
+  },
+  {
+    ...testUploads[2],
+    status: 'UNDEFINED',
+  },
+];
+
 const shallowEmptyList = shallow(<UploadList uploadFiles={[]} {...uploadListActions} />);
 const shallow3RowList = shallow(<UploadList uploadFiles={threeUploads} {...uploadListActions} />);
 
@@ -49,5 +69,10 @@ describe('Upload List', () => {
     mount3RowList.find('.cancelUploadConfirm').at(2).simulate('click');
     expect(cancelUploadCallback.mock.calls.length).toBe(3);
     expect(cancelUploadCallback.mock.results[2].value).toBe(testUploads[2].id);
+  });
+  test('No cancel upload button if not uploading', () => {
+    const cancelUploadCallback = jest.fn(id => id);
+    const mount3RowList = mount(<UploadList uploadFiles={threeDoneUploads} cancelUpload={cancelUploadCallback} />);
+    expect(mount3RowList.find('.cancelUploadConfirm')).toHaveLength(0);
   });
 });
