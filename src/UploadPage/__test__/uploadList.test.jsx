@@ -9,7 +9,21 @@ const uploadListActions = {
 };
 const testUploads = require('../../testData/testUploads');
 
-const threeUploads = testUploads.slice(0, 3);
+const threeUploads = [
+  {
+    ...testUploads[0],
+    status: 'UPLOADING',
+  },
+  {
+    ...testUploads[1],
+    status: 'UPLOADING',
+  },
+  {
+    ...testUploads[2],
+    status: 'UPLOADING',
+  },
+];
+
 const shallowEmptyList = shallow(<UploadList uploadFiles={[]} {...uploadListActions} />);
 const shallow3RowList = shallow(<UploadList uploadFiles={threeUploads} {...uploadListActions} />);
 

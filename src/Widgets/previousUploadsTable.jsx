@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { getStatusIcon } from '../DownloadPage/downloadRow';
 
 const timeFormat = 'MMM D, YYYY - h:m A'; //  Jan 31, 2019 - 2:34 PM
-const timeFormatCondensed = 'M/D/YY'; //  1/31/19
+const timeFormatCondensed = 'M/D/YYYY'; //  1/31/2019
 
 const historyPropType = {
   fileName: PropTypes.string,
@@ -15,7 +15,7 @@ const historyPropType = {
 const uploadPropType = {
   history: PropTypes.arrayOf(PropTypes.shape({ ...historyPropType })),
   expanded: PropTypes.bool,
-  biospecimenBarcode: PropTypes.string,
+  biospecimenID: PropTypes.string,
   subject: PropTypes.string,
   phase: PropTypes.string,
   dataType: PropTypes.string,
@@ -78,7 +78,7 @@ export function PreviousUploadsTable({ previousUploads, expandRow }) {
     }
 
     return (
-      <div className={`row uploadRow ${availClass} align-items-center py-1`}>
+      <div className={`row uploadRow ${availClass}`}>
         <div className="col-auto caretCol">
           <Caret upload={upload} />
         </div>
@@ -116,7 +116,7 @@ export function PreviousUploadsTable({ previousUploads, expandRow }) {
         <div className="col-2">BID</div>
         <div className="col-2">Subject</div>
         <div className="col-2">Phase</div>
-        <div className="col-3">Type</div>
+        <div className="col-2">Type</div>
         <div className="col-2">Updated</div>
       </div>
       {uploadRows}
