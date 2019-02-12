@@ -87,13 +87,16 @@
     border: 1px solid $blue;
     color: $blue;
     padding: 3px 9px;
-    margin: 6px auto;
+    margin: 6px 6px;
   }
   .editUploadBtn {
     background-color: transparent;
-    border: 1px solid $dgray;
-    color: $dgray;
+    border: 1px solid $green;
+    color: $green;
     padding: 3px 9px;
-    margin: 6px auto;
+    margin: 6px 6px;
+    .addUploadIcon {
+      color: $green;
+    }
   }
 }

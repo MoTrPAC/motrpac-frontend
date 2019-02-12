@@ -85,7 +85,10 @@ export function PreviousUploadsTable({ previousUploads, expandRow, onViewMoreHis
           {
             displayViewMoreBtn ? <button type="button" onClick={() => onViewMoreHistory(upload)} className="btn btn-default viewMoreBtn">{viewMore ? 'View Less' : 'View More'}</button> : ''
           }
-          <button type="button" onClick={() => { editUpload(upload); history.replace('/upload'); }} className="editUploadBtn btn btn-default">Edit</button>
+          <button type="button" onClick={() => { editUpload(upload); history.replace('/upload'); }} className="editUploadBtn btn btn-default">
+            <span className="oi oi-plus addUploadIcon" />
+            &nbsp;Add Uploads
+          </button>
         </div>
       );
     } else {
