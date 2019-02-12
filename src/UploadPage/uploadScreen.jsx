@@ -33,6 +33,7 @@ export function UploadScreen({
   if (!isAuthenticated) {
     return (<Redirect to="/" />);
   }
+  const showFileUploadValidation = (validated && (stagedFiles.length === 0) && !submitted);
   const screen = (
     <div className="container uploadScreen upload">
       <div className="row">
@@ -61,10 +62,12 @@ export function UploadScreen({
                 dragLeave={() => onDragLeave()}
                 dragDrop={e => onDragDrop(e)}
                 removeFile={onRemoveFile}
+                showValidation={showFileUploadValidation}
               />
             </div>
           </div>
           <div className="row justify-content-center">
+            { showFileUploadValidation ? <div className="col-12 centered addFileError"><small>Please Add File to Upload</small></div> : '' }
             <div className="col-3 centered">
               <label htmlFor="submit-form" id="formSubmitLabel" className="btn btn-success uploadBtn" tabIndex={0}>Upload</label>
             </div>

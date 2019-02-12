@@ -1,6 +1,6 @@
 [
   {
-    "biospecimenBarcode": "AS12345",
+    "biospecimenBarcode": "1212345000",
     "subject": "Animal",
     "phase": "1A",
     "dataType": "ATAC-Seq",
@@ -24,7 +24,7 @@
     ]
   },
   {
-    "biospecimenBarcode": "AS12346",
+    "biospecimenBarcode": "1212346000",
     "subject": "Human",
     "phase": "1A",
     "dataType": "RNA-Seq",
@@ -42,7 +42,7 @@
     ]
   },
   {
-    "biospecimenBarcode": "AS12347",
+    "biospecimenBarcode": "1212347000",
     "subject": "Human",
     "phase": "1A",
     "dataType": "WGS",
@@ -60,7 +60,7 @@
     ]
   },
   {
-    "biospecimenBarcode": "AS12348",
+    "biospecimenBarcode": "1212348000",
     "subject": "Human",
     "phase": "1A",
     "dataType": "RNA-Seq",
@@ -70,7 +70,7 @@
     "site": "Stanford CAS"
   },
   {
-    "biospecimenBarcode": "AS12349",
+    "biospecimenBarcode": "1212349000",
     "subject": "Human",
     "phase": "1A",
     "dataType": "RNA-Seq",
@@ -80,7 +80,7 @@
     "site": "Stanford CAS"
   },
   {
-    "biospecimenBarcode": "AS12350",
+    "biospecimenBarcode": "1212350000",
     "subject": "Human",
     "phase": "1A",
     "dataType": "ATAC-Seq",
@@ -90,7 +90,7 @@
     "site": "Stanford CAS"
   },
   {
-    "biospecimenBarcode": "AS12351",
+    "biospecimenBarcode": "1212350001",
     "subject": "Human",
     "phase": "1A",
     "dataType": "ATAC-Seq",
@@ -100,7 +100,7 @@
     "site": "Stanford CAS"
   },
   {
-    "biospecimenBarcode": "AS12352",
+    "biospecimenBarcode": "1212352000",
     "subject": "Human",
     "phase": "1A",
     "dataType": "Metabolomics",
@@ -110,7 +110,7 @@
     "site": "Stanford CAS"
   },
   {
-    "biospecimenBarcode": "AS12353",
+    "biospecimenBarcode": "1212353000",
     "subject": "Animal",
     "phase": "1A",
     "dataType": "ATAC-Seq",
@@ -120,7 +120,7 @@
     "site": "Stanford CAS"
   },
   {
-    "biospecimenBarcode": "AS12354",
+    "biospecimenBarcode": "1212354000",
     "subject": "Human",
     "phase": "1A",
     "dataType": "ATAC-Seq",
@@ -130,7 +130,7 @@
     "site": "Stanford CAS"
   },
   {
-    "biospecimenBarcode": "AS12355",
+    "biospecimenBarcode": "1212355000",
     "subject": "Animal",
     "phase": "1A",
     "dataType": "ATAC-Seq",

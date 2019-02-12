@@ -8,9 +8,9 @@ export const defaultUploadState = {
   formValues: {
     dataType: 'WGS',
     collectionDate: '',
-    biospecimenID: '',
-    subjectType: 'Human',
-    studyPhase: '1',
+    biospecimenBarcode: '',
+    subjectType: 'Animal',
+    studyPhase: '1A',
     rawData: false,
     processedData: false,
     description: '',
@@ -21,9 +21,12 @@ export const defaultUploadState = {
   validity: false,
 };
 
-// Creates filter to not allow already existing files based on file name
-//  Input: Names of files already in area of interest.
-//  Output: Filter to remove files in that original list
+/**
+ * Creates filter to not allow already existing files based on file name
+ * @param {Array[String]} originalFileNames names of files that exist
+ *
+ * @returns {Object} Filter for unique files from input array
+ */
 function createFileFilter(originalFileNames) {
   // Filter to ensure files don't share the same name
   function uniqueFileNameFilter(file) {
@@ -34,8 +37,11 @@ function createFileFilter(originalFileNames) {
   return uniqueFileNameFilter;
 }
 
-// Mock function for creating UUIDs, Ideally they would be returned from a backend
-// TODO: Make this function irrelvant through backend integration
+/**
+ * Generate UUIDs for use in mock upload of data
+ *
+ * @returns {String} UUID
+ */
 function generateUUID() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
@@ -112,36 +118,40 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
       // Creates dictionary from form fields
       const formData = {
         dataType: action.elements.dataType.value,
-        biospecimenID: action.elements.biospecimenID.value,
-        collectionDate: action.elements.collectionDate.value,
+        biospecimenBarcode: action.elements.biospecimenBarcode.value,
+        collectionDate: action.elements.subjectType.value === 'Human' ? '' : action.elements.collectionDate.value,
         subjectType: action.elements.subjectType.value,
         studyPhase: action.elements.studyPhase.value,
         rawData: action.elements.rawData.checked,
         processedData: action.elements.processedData.checked,
       };
 
-      let expIndex = state.previousUploads
-        .findIndex(exp => ((exp.biospecimenID === formData.biospecimenID) && (exp.dataType === formData.dataType)));
-
       const now = Date.now();
 
       let prevUploads = [...state.previousUploads];
+      const barcodes = formData.biospecimenBarcode.split(',');
+      let expIndex = -1;
 
-      if (expIndex === -1) {
-        expIndex = 0;
-        const uploadDate = now;
-        const experiment = {
-          biospecimenID: formData.biospecimenID,
-          dataType: formData.dataType,
-          subject: formData.subjectType,
-          phase: formData.studyPhase,
-          date: formData.collectionDate,
-          lastUpdated: uploadDate,
-          availability: 'Pending Q.C.',
-          history: [],
-        };
-        prevUploads = [experiment, ...state.previousUploads];
-      }
+      barcodes.forEach((bc) => {
+        expIndex = state.previousUploads
+          .findIndex(exp => ((exp.biospecimenBarcode === bc) && (exp.dataType === formData.dataType)));
+
+        if (expIndex === -1) {
+          expIndex = 0;
+          const uploadDate = now;
+          const experiment = {
+            biospecimenBarcode: formData.biospecimenBarcode,
+            dataType: formData.dataType,
+            subject: formData.subjectType,
+            phase: formData.studyPhase,
+            date: formData.collectionDate,
+            lastUpdated: uploadDate,
+            availability: 'Pending Q.C.',
+            history: [],
+          };
+          prevUploads = [experiment, ...prevUploads];
+        }
+      });
 
       return {
         ...state,
@@ -223,6 +233,9 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
     }
 
     case types.SET_ALL_SUCCESS: {
+      if (!(state.uploadFiles.length > 0)) {
+        return state;
+      }
       // Update status of succesful file
       const newUploadsState = state.uploadFiles.map((uploadItem) => {
         if (uploadItem.status === 'UPLOADING') {

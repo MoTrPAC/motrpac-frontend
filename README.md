@@ -74,6 +74,11 @@
 
 ### Additional Notes
 
+#### Testing meta tags
+ - localtunnel used to serve react app with command `lt --port 3000` after running the app using `yarn start` in a seperate terminal
+ - url from localtunnel used to test in [Twitter Card Validator](https://cards-dev.twitter.com/validator)  and the [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/sharing/)
+ - `%PUBLIC_URL%` evaluates to nothing if the application is running on the dev server so the images which require absolute urls may not display
+
 #### Notes on redux integration
  - Components that need to be linked to a redux store in implementation are exported by default as connected functions/containers. They are also exported in pure function form (ex: "import { UploadScreen } from 'path/to/component' " for pure function and "import UploadScreen from 'path/to/component'" for container).
  - mapStateToProps used to link the section from the combined reducer to properties required by the container

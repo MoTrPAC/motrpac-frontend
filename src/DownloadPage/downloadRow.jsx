@@ -1,19 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-/**
- * Returns text and an icon given the status of an upload.
- *
- * @param {String} availability The status of an uploaded item in the pipeline
- * @param {Boolean} short Returned icon will not include surrounding text it true
- *
- * @returns {Array[String,Object]} The text status, and JSX object
- * for representing availability of item
- */
-export function getStatusIcon(availability, short = false) {
+function DownloadRow({
+  upload,
+  onCartClick,
+  inCart,
+  siteName,
+}) {
+  const downloadable = !((upload.availability === 'Pending Q.C.') && (upload.site !== siteName));
+  function DownloadBtn() {
+    return (
+      <button title={inCart ? 'Remove from Cart' : 'Add To Cart'} className={`btn downloadBtn ${inCart && 'inCart'}`} type="button" onClick={() => onCartClick(upload)}>
+        <span className="oi oi-cart" />
+      </button>
+    );
+  }
   let availClass;
   let availIcon;
-  switch (availability) {
+  switch (upload.availability) {
     case 'Publicly Available': {
       availClass = 'public';
       availIcon = short ? <span className="oi availIcon oi-circle-check" /> : (
@@ -51,25 +55,6 @@ export function getStatusIcon(availability, short = false) {
       break;
     }
   }
-  return [availClass, availIcon];
-}
-
-function DownloadRow({
-  upload,
-  onCartClick,
-  inCart,
-  siteName,
-}) {
-  const downloadable = !((upload.availability === 'Pending Q.C.') && (upload.site !== siteName));
-  function DownloadBtn() {
-    return (
-      <button title={inCart ? 'Remove from Cart' : 'Add To Cart'} className={`btn downloadBtn ${inCart && 'inCart'}`} type="button" onClick={() => onCartClick(upload)}>
-        <span className="oi oi-cart" />
-      </button>
-    );
-  }
-  const [availClass, availIcon] = getStatusIcon(upload.availability);
-
   return (
     <div className={`downloadRow m-2 row ${availClass}`}>
       <div className="col leftSide mt-2">
