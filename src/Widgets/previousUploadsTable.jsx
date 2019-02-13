@@ -5,6 +5,10 @@ import dayjs from 'dayjs';
 import { getStatusIcon } from '../DownloadPage/downloadRow';
 import actions from '../UploadPage/uploadActions';
 import history from '../App/history';
+import downloadFilters from '../lib/downloadFilters';
+
+// Dictionary mapping availability status to icons
+const statusOptions = downloadFilters[1];
 
 const timeFormat = 'MMM D, YYYY - h:m A'; //  Jan 31, 2019 - 2:34 PM
 const timeFormatCondensed = 'M/D/YY'; //  1/31/2019
@@ -130,6 +134,42 @@ export function PreviousUploadsTable({ previousUploads, expandRow, onViewMoreHis
     upload: PropTypes.shape({ ...uploadPropType }).isRequired,
   };
 
+  function Legend() {
+    return (
+      <div className="row legend">
+        <div className="col-auto legendItem">
+          <p>
+            <strong>Status Legend: </strong>
+          </p>
+        </div>
+        <div className="col-auto legendItem">
+          <p>
+            {statusOptions.filters[0]}
+            &nbsp;-
+            &nbsp;
+            <span className={statusOptions.icons[0]} />
+          </p>
+        </div>
+        <div className="col-auto legendItem">
+          <p>
+            {statusOptions.filters[1]}
+            &nbsp;-
+            &nbsp;
+            <span className={statusOptions.icons[1]} />
+          </p>
+        </div>
+        <div className="col-auto legendItem">
+          <p>
+            {statusOptions.filters[2]}
+            &nbsp;-
+            &nbsp;
+            <span className={statusOptions.icons[2]} />
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   // creating an upload row for each unique experiment
   const uploadRows = previousUploads
     .map(upload => (
@@ -137,6 +177,7 @@ export function PreviousUploadsTable({ previousUploads, expandRow, onViewMoreHis
     ));
   return (
     <div className="col-12 col-lg-7 previousUploadsTable">
+      <Legend />
       <div className="row uploadHeader uploadRow">
         <div className="col-auto caretCol">
           <span className="oi oi-caret-right hiddenCaret" />

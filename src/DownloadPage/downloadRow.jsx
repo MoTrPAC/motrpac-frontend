@@ -1,5 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import downloadFilters from '../lib/downloadFilters';
+
+// Dictionary mapping availability status to icons
+const statusOptions = downloadFilters[1];
 
 /**
  * Returns text and an icon given the status of an upload.
@@ -14,38 +18,41 @@ export function getStatusIcon(availability, short = false) {
   let availClass;
   let availIcon;
   switch (availability) {
-    case 'Publicly Available': {
+    case statusOptions.filters[0]: {
       availClass = 'public';
-      availIcon = short ? <span className="oi availIcon oi-circle-check" /> : (
+      availIcon = short ? <span className={`availIcon ${statusOptions.icons[0]}`} /> : (
         <p className="statusText">
           <span className="iconText">
-            Publically Available&nbsp;
+            {statusOptions.filters[0]}
+            &nbsp;
           </span>
-          <span className="oi oi-circle-check" />
+          <span className={statusOptions.icons[0]} />
         </p>
       );
       break;
     }
     case 'Internally Available': {
       availClass = 'internal';
-      availIcon = short ? <span className="oi availIcon oi-loop-square" /> : (
+      availIcon = short ? <span className={`availIcon ${statusOptions.icons[1]}`} /> : (
         <p className="statusText">
           <span className="iconText">
-            Internally Available&nbsp;
+            {statusOptions.filters[1]}
+            &nbsp;
           </span>
-          <span className="oi oi-loop-square" />
+          <span className={statusOptions.icons[1]} />
         </p>
       );
       break;
     }
     default: {
       availClass = 'pending';
-      availIcon = short ? <span className="oi availIcon oi-ellipses" /> : (
+      availIcon = short ? <span className={`availIcon ${statusOptions.icons[2]}`} /> : (
         <p className="statusText">
           <span className="iconText">
-            Pending Q.C.&nbsp;
+            {statusOptions.filters[2]}
+            &nbsp;
           </span>
-          <span className="oi oi-ellipses" />
+          <span className={statusOptions.icons[2]} />
         </p>
       );
       break;

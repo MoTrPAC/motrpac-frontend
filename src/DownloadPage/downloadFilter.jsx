@@ -22,7 +22,7 @@ function DownloadFilter({
               >
                 {filter}
                 &nbsp;
-                {category.icons ? category.icons[i] : ''}
+                {category.icons ? <span className={category.icons[i]} /> : ''}
               </button>);
           })
       }

@@ -6,13 +6,13 @@ const downloadFilters = [
     keyName: 'subject',
     name: 'Subject',
     filters: ['Human', 'Animal'],
-    icons: [(<span title="Subject: Human" className="icon-Human filterIcon burgundy" />), (<span title="Subject: Animal" className="icon-Animal filterIcon dblue" />)],
+    icons: ['icon-Human filterIcon burgundy', 'icon-Animal filterIcon dblue'],
   },
   {
     keyName: 'availability',
     name: 'Status',
     filters: ['Publicly Available', 'Internally Available', 'Pending Q.C.'],
-    icons: [(<span className="oi oi-circle-check green" />), (<span className="oi oi-loop-square dblue" />), (<span className="oi oi-ellipses dgray" />)],
+    icons: ['oi oi-circle-check green', 'oi oi-loop-square dblue', 'oi oi-clock dgray'],
   },
   {
     keyName: 'type',
