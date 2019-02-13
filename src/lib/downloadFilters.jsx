@@ -1,4 +1,3 @@
-import React from 'react';
 import assayList from './assayList';
 
 const downloadFilters = [

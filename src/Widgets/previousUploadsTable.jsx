@@ -106,8 +106,8 @@ export function PreviousUploadsTable({ previousUploads, expandRow, onViewMoreHis
     }
 
     return (
-      <div className={`row uploadRow ${availClass}`}>
-        <div className="col-auto caretCol">
+      <div className={`row py-1 uploadRow ${availClass}`}>
+        <div className="col-1 caretCol">
           <Caret upload={upload} />
         </div>
         <div className="col-2"><p className="uploadRowP">{upload.biospecimenBarcode.slice(0, 5)}</p></div>
@@ -115,9 +115,8 @@ export function PreviousUploadsTable({ previousUploads, expandRow, onViewMoreHis
         <div className="col-2"><p className="uploadRowP">{upload.phase}</p></div>
         <div className="col-2"><p className="uploadRowP">{upload.dataType}</p></div>
         <div className="col-2"><p className="uploadRowP">{dayjs(upload.lastUpdated).format(timeFormatCondensed)}</p></div>
-        <div className="col-auto">
+        <div className="col-1">
           {availIcon}
-          <div className="hoverStatus"><p>{upload.availability}</p></div>
         </div>
         {upload.expanded && uploadHistory}
       </div>
@@ -178,8 +177,8 @@ export function PreviousUploadsTable({ previousUploads, expandRow, onViewMoreHis
   return (
     <div className="col-12 col-lg-7 previousUploadsTable">
       <Legend />
-      <div className="row uploadHeader uploadRow">
-        <div className="col-auto caretCol">
+      <div className="row uploadHeader mb-2 uploadRow">
+        <div className="col-1 caretCol">
           <span className="oi oi-caret-right hiddenCaret" />
         </div>
         <div className="col-2">BID</div>
@@ -187,6 +186,7 @@ export function PreviousUploadsTable({ previousUploads, expandRow, onViewMoreHis
         <div className="col-2">Phase</div>
         <div className="col-2">Type</div>
         <div className="col-2">Updated</div>
+        <div className="col-1">Status</div>
       </div>
       {uploadRows}
     </div>
