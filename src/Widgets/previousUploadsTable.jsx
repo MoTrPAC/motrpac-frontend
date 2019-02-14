@@ -21,7 +21,7 @@ const historyPropType = {
 const uploadPropType = {
   history: PropTypes.arrayOf(PropTypes.shape({ ...historyPropType })),
   expanded: PropTypes.bool,
-  biospecimenID: PropTypes.string,
+  biospecimenBarcode: PropTypes.string,
   subject: PropTypes.string,
   phase: PropTypes.string,
   dataType: PropTypes.string,

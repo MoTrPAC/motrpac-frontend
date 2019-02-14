@@ -64,28 +64,6 @@
       color: transparent;
     }
   }
-  .hoverStatus {
-    background-color: $white;
-    min-width: 150px;
-    opacity: 0;
-    display: block;
-    position: absolute;
-    top:0%;
-    left:100%;
-    overflow: visible;
-    z-index:1000;
-    border-radius: 0 20px 20px 20px;
-    text-align: center;
-    margin:0;
-  }
-  .availIcon:hover + .hoverStatus {
-    display:block;
-    opacity: 1;
-    animation-name: fadeInOpacity;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-in;
-    animation-duration: .1s;
-  }
   .viewMoreBtn {
     text-align: center;
     background-color: transparent;
