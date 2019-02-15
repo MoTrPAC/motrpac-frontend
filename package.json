@@ -49,6 +49,7 @@
     "enzyme": "3.8.0",
     "enzyme-adapter-react-16": "1.9.1",
     "eslint-config-airbnb": "^17.1.0",
+    "jest-canvas-mock": "^2.0.0-alpha.3",
     "react-test-renderer": "16.8.1",
     "sass": "1.17.0",
     "storybook-react-router": "1.0.2",

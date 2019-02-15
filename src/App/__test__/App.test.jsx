@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import App from '../App';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const testUser = require('../../testData/testUser');
 
@@ -102,14 +99,5 @@ describe('Authenticated Application routing', () => {
     // Update required to re-render the application
     mountApp.update();
     testCorrectComponentInPath(mountApp, 'DownloadPage', '/download', history);
-  });
-
-  test('Edit button appears after expanding an upload on the dashboard', () => {
-    history.push('/dashboard');
-    mountApp.update();
-    expect(mountApp.find('.editUploadBtn')).toHaveLength(0);
-    mountApp.find('Caret').first().simulate('click');
-    mountApp.update();
-    expect(mountApp.find('.editUploadBtn')).toHaveLength(1);
   });
 });
