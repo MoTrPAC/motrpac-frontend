@@ -3,14 +3,19 @@ html,body{
   margin: 0;
   padding: 0;
 }
+
+body {
+  padding-top: 10rem;
+}
+
 h1,h2,h3,h4 {
-  font-family: $raleway;
+  font-family: $opensans;
   color: $dblue;
 }
 .titleRow {
   margin-top: 1rem;
   h2 {
-    font-weight:$light-weight;
+    font-weight: $light-weight;
     color: $dblue;
   }
 }
@@ -19,7 +24,7 @@ h1,h2,h3,h4 {
   font-weight: $light-weight;
 }
 .heavy {
-  font-weight:700;
+  font-weight: $bold-weight;
 }
 a {
   color: $blue;
