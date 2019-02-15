@@ -16,7 +16,7 @@ function UploadList({ uploadFiles, cancelUpload }) {
   const listObj = uploadFiles
     .map(uploadItem => (
       <UploadListRow
-        key={uploadItem.file.name}
+        key={uploadItem.id}
         uploadItem={uploadItem}
         cancelUpload={cancelUpload}
       />

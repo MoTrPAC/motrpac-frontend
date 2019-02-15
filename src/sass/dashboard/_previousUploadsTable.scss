@@ -1,35 +1,48 @@
 .previousUploadsTable {
-  max-height: 60vh;
-  overflow-y: scroll;
+  .legend {
+    p {
+      font-size:0.90rem;
+    }
+  }
   .expandBtn {
     background-color: white;
     border: none;
     color: $dblue;
   }
-  .uploadHeader {
-    color: $dblue;
-  }
-  .public .oi {
+  .public {
+    .oi, .hoverStatus {
     color: $green;
+    }
   }
-  .internal .oi {
-    color: $dblue;
+  .internal {
+    .oi, .hoverStatus {
+      color: $dblue;
+    }
   }
-  .pending .oi {
-    color: $dgray;
+  .pending {
+    .oi, .hoverStatus{
+      color: $dgray;
+    }
   }
   .uploadRow {
+    text-align: center;
     .uploadRowP {
       text-overflow: clip;
       white-space: nowrap;
       overflow: hidden;
+      margin: 0;
     }
     background-color:white;
     transition: .15s ease-in-out;
+    border-bottom: 1px solid transparentize($gray,0.8);
     &:hover{
-      background-color: $blue-transparent;
+      border-bottom: 1px solid $dblue;
       transition: .15s ease-in-out;
     }
+  }
+  .uploadHeader {
+    color: $dblue;
+    border-bottom: 1px solid $dblue;
   }
   .history{
     p {
@@ -40,6 +53,7 @@
   }
   .historyItem {
     margin-top: 10px;
+    text-align: left;
   }
   .caretCol {
     padding:0;
@@ -48,6 +62,24 @@
     }
     .hiddenCaret {
       color: transparent;
+    }
+  }
+  .viewMoreBtn {
+    text-align: center;
+    background-color: transparent;
+    border: 1px solid $blue;
+    color: $blue;
+    padding: 3px 9px;
+    margin: 6px 6px;
+  }
+  .editUploadBtn {
+    background-color: transparent;
+    border: 1px solid $green;
+    color: $green;
+    padding: 3px 9px;
+    margin: 6px 6px;
+    .addUploadIcon {
+      color: $green;
     }
   }
 }

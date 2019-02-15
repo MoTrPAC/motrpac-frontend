@@ -9,7 +9,43 @@ const uploadListActions = {
 };
 const testUploads = require('../../testData/testUploads');
 
-const threeUploads = testUploads.slice(0, 3);
+// All three when rendered should have cancel upload buttons
+const threeUploads = [
+  {
+    ...testUploads[0],
+    status: 'UPLOADING',
+  },
+  {
+    ...testUploads[1],
+    status: 'UPLOADING',
+  },
+  {
+    ...testUploads[2],
+    status: 'UPLOADING',
+  },
+];
+
+// None of these should have cancel upload buttons
+const threeDoneUploads = [
+  {
+    ...testUploads[0],
+    status: 'UPLOAD_SUCCESS',
+  },
+  {
+    ...testUploads[1],
+    status: 'FAILED',
+    error: {
+      code: '1231',
+      message: 'Test Error Message',
+      title: 'Test Error Title',
+    },
+  },
+  {
+    ...testUploads[2],
+    status: 'UNDEFINED',
+  },
+];
+
 const shallowEmptyList = shallow(<UploadList uploadFiles={[]} {...uploadListActions} />);
 const shallow3RowList = shallow(<UploadList uploadFiles={threeUploads} {...uploadListActions} />);
 
@@ -35,5 +71,10 @@ describe('Upload List', () => {
     mount3RowList.find('.cancelUploadConfirm').at(2).simulate('click');
     expect(cancelUploadCallback.mock.calls.length).toBe(3);
     expect(cancelUploadCallback.mock.results[2].value).toBe(testUploads[2].id);
+  });
+  test('No cancel upload button if not uploading', () => {
+    const cancelUploadCallback = jest.fn(id => id);
+    const mount3RowList = mount(<UploadList uploadFiles={threeDoneUploads} cancelUpload={cancelUploadCallback} />);
+    expect(mount3RowList.find('.cancelUploadConfirm')).toHaveLength(0);
   });
 });

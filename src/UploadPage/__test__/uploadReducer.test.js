@@ -69,7 +69,7 @@ describe('Upload Reducer', () => {
 
   test('Updates text based form values after form change', () => {
     const formChangeAction = {
-      type: 'FORM_CHANGE',
+      type: types.FORM_CHANGE,
       eID: 'biospecimenBarcode',
       changeValue: '123123',
     };
@@ -79,7 +79,7 @@ describe('Upload Reducer', () => {
 
   test('Updates boolean based form values after form change', () => {
     const formChangeAction = {
-      type: 'FORM_CHANGE',
+      type: types.FORM_CHANGE,
       eID: 'rawData',
       checked: true,
     };
@@ -200,6 +200,14 @@ describe('Upload Reducer', () => {
     // Other uploads are not expanded
     expect(expandedRowState.previousUploads[0].expanded)
       .toBeFalsy();
+  });
+  const viewMoreState = UploadReducer(newExperimentState, actions.viewMoreHistory(newExperimentState.previousUploads[0]));
+  test('On view more history, sets appropriate upload to have state viewMoreHistory', () => {
+    expect(viewMoreState.previousUploads[0].viewMoreHistory).toBeTruthy();
+  });
+  test('On view more history twice, sets appropriate upload to have state viewMoreHistory = false', () => {
+    const viewLessState = UploadReducer(viewMoreState, actions.viewMoreHistory(viewMoreState.previousUploads[0]));
+    expect(viewLessState.previousUploads[0].viewMoreHistory).toBeFalsy();
   });
   // TODO: Handle if they upload files with the same name, at the same time
 });
