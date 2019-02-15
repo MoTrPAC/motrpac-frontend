@@ -60,7 +60,7 @@ export function Dashboard({
             </h3>
           </div>
         </div>
-        <div className="row align-items-center">
+        <div className="row">
           { disconnectComponents ? <PreviousUploadsTable previousUploads={previousUploads} /> : <PreviousUploadsTableConnected />}
           <PreviousUploadsGraph previousUploads={previousUploads} />
         </div>
@@ -71,7 +71,7 @@ export function Dashboard({
             </h3>
           </div>
         </div>
-        <div className="row align-items-center pb-4">
+        <div className="row justify-content-center pb-4">
           <AllUploadsDoughnut allUploads={allUploads} />
           <AllUploadStats />
         </div>

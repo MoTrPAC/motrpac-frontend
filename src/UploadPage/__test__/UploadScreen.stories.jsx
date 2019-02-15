@@ -12,7 +12,7 @@ const TestUploads = require('../../testData/testUploads');
 // const TestFiles = TestUploads.map(upload => upload.file);
 const defaultState = {
   dragging: 0,
-  files: [],
+  stagedFiles: [],
   formValues: {},
   uploadFiles: [],
   isAuthenticated: true,
@@ -23,7 +23,7 @@ const filledState = {
   uploadFiles: TestUploads,
   submitted: true,
   formValues: {
-    identifier: 'AS12313',
+    biospecimenBarcode: '1000112313',
     studyPhase: '2',
     subjectType: 'Animal',
     collectionDate: '10/23/18',
@@ -64,6 +64,9 @@ storiesOf('Upload Screen', module)
   ))
   .add('Default', () => (
     <UploadScreen {...defaultState} {...actions} />
+  ))
+  .add('Validated', () => (
+    <UploadScreen validated {...defaultState} {...actions} />
   ))
   .add('Files Uploaded, form filled', () => (
     <UploadScreen {...filledState} {...actions} />

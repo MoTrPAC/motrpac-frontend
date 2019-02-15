@@ -3,6 +3,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
 
+/**
+ * Renders the global header nav bar.
+ * 
+ * @param {Boolean} isAuthenticated Redux state for user's authentication status.
+ * 
+ * @returns {Object} JSX representation of the global header nav bar.
+ */
 export function Navbar({ isAuthenticated = false }) {
   const scrollFunction = () => {
     if (document.body.scrollTop >= 30 || document.documentElement.scrollTop >= 30) {

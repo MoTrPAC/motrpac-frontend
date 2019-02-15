@@ -28,7 +28,7 @@ describe('Upload Reducer', () => {
     validity: false,
     elements: {
       dataType: { value: '' },
-      biospecimenID: { value: '' },
+      biospecimenBarcode: { value: '' },
       collectionDate: { value: '' },
       subjectType: { value: '' },
       studyPhase: { value: '' },
@@ -69,17 +69,17 @@ describe('Upload Reducer', () => {
 
   test('Updates text based form values after form change', () => {
     const formChangeAction = {
-      type: 'FORM_CHANGE',
-      eID: 'biospecimenID',
+      type: types.FORM_CHANGE,
+      eID: 'biospecimenBarcode',
       changeValue: '123123',
     };
-    expect(UploadReducer(defaultUploadState, formChangeAction).formValues.biospecimenID)
+    expect(UploadReducer(defaultUploadState, formChangeAction).formValues.biospecimenBarcode)
       .toEqual(formChangeAction.changeValue);
   });
 
   test('Updates boolean based form values after form change', () => {
     const formChangeAction = {
-      type: 'FORM_CHANGE',
+      type: types.FORM_CHANGE,
       eID: 'rawData',
       checked: true,
     };
@@ -93,12 +93,12 @@ describe('Upload Reducer', () => {
     ...formSubmitAction,
     elements: {
       ...formSubmitAction.elements,
-      biospecimenID: { value: 'NEW_IDENTIFIER' },
+      biospecimenBarcode: { value: 'NEW_IDENTIFIER' },
     },
     validity: true,
   };
   const noExperimentExpectedValue = {
-    biospecimenID: formSubmitValidAction.elements.biospecimenID.value,
+    biospecimenBarcode: formSubmitValidAction.elements.biospecimenBarcode.value,
     dataType: formSubmitValidAction.elements.dataType.value,
     subject: formSubmitValidAction.elements.subjectType.value,
     phase: formSubmitValidAction.elements.studyPhase.value,
@@ -109,9 +109,9 @@ describe('Upload Reducer', () => {
   };
 
   const newExperimentState = UploadReducer(fileAddedState, formSubmitValidAction);
-  test('Upload of new experiment/biospecimenID adds new entry to previousUploads', () => {
-    expect(newExperimentState.previousUploads.slice(-1)[0].biospecimenID)
-      .toEqual(noExperimentExpectedValue.biospecimenID);
+  test('Upload of new experiment/biospecimenBarcode adds new entry to previousUploads', () => {
+    expect(newExperimentState.previousUploads.slice(-1)[0].biospecimenBarcode)
+      .toEqual(noExperimentExpectedValue.biospecimenBarcode);
     expect(newExperimentState.previousUploads.slice(-1)[0].history)
       .toEqual(noExperimentExpectedValue.history);
     expect(newExperimentState.previousUploads.slice(-1)[0].lastUpdated)
@@ -123,7 +123,7 @@ describe('Upload Reducer', () => {
     ...formSubmitValidAction,
     elements: {
       ...formSubmitValidAction.elements,
-      biospecimenID: { value: 'NEW_IDENTIFIER_2' },
+      biospecimenBarcode: { value: 'NEW_IDENTIFIER_2' },
     },
   };
   // State has 1 unique experiment
@@ -136,7 +136,7 @@ describe('Upload Reducer', () => {
   };
   // State has 2 experiments
   const addNewExperimentState = UploadReducer(freshFormState, addToExpFormSubmitAction);
-  test('Upload of existing experiment/biospecimenID adds to history of correct element in previousUploads', () => {
+  test('Upload of existing experiment/biospecimenBarcode adds to history of correct element in previousUploads', () => {
     // Adding experiment, adds new experiment to previousUploads list
     expect(addToExperimentState.previousUploads).toHaveLength(1);
     expect(addToExperimentState.experimentIndex).toEqual(0);
@@ -146,16 +146,16 @@ describe('Upload Reducer', () => {
       .toEqual(defaultUploadState.formValues);
 
     // Clearing form doesn't change previousUploads
-    expect(freshFormState.previousUploads[0].biospecimenID)
-      .toEqual(formSubmitValidAction.elements.biospecimenID.value);
+    expect(freshFormState.previousUploads[0].biospecimenBarcode)
+      .toEqual(formSubmitValidAction.elements.biospecimenBarcode.value);
 
     // Form is valid, submission went through
     expect(addNewExperimentState.validity)
       .toBeTruthy();
 
     // Correct BID represented in returned states form values
-    expect(addNewExperimentState.formValues.biospecimenID)
-      .toEqual(addToExpFormSubmitAction.elements.biospecimenID.value);
+    expect(addNewExperimentState.formValues.biospecimenBarcode)
+      .toEqual(addToExpFormSubmitAction.elements.biospecimenBarcode.value);
 
     // Adding a unique experiment changes state
     expect(addNewExperimentState)
@@ -170,8 +170,8 @@ describe('Upload Reducer', () => {
       .toEqual(0);
 
     // experimentIndex points to correct location
-    expect(addNewExperimentState.previousUploads[addNewExperimentState.experimentIndex].biospecimenID)
-      .toEqual(addToExpFormSubmitAction.elements.biospecimenID.value);
+    expect(addNewExperimentState.previousUploads[addNewExperimentState.experimentIndex].biospecimenBarcode)
+      .toEqual(addToExpFormSubmitAction.elements.biospecimenBarcode.value);
   });
 
   const uploadSuccessAction = actions.uploadSuccess(testUploads[0]);
@@ -200,6 +200,14 @@ describe('Upload Reducer', () => {
     // Other uploads are not expanded
     expect(expandedRowState.previousUploads[0].expanded)
       .toBeFalsy();
+  });
+  const viewMoreState = UploadReducer(newExperimentState, actions.viewMoreHistory(newExperimentState.previousUploads[0]));
+  test('On view more history, sets appropriate upload to have state viewMoreHistory', () => {
+    expect(viewMoreState.previousUploads[0].viewMoreHistory).toBeTruthy();
+  });
+  test('On view more history twice, sets appropriate upload to have state viewMoreHistory = false', () => {
+    const viewLessState = UploadReducer(viewMoreState, actions.viewMoreHistory(viewMoreState.previousUploads[0]));
+    expect(viewLessState.previousUploads[0].viewMoreHistory).toBeFalsy();
   });
   // TODO: Handle if they upload files with the same name, at the same time
 });
