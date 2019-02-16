@@ -13,9 +13,9 @@ import MoTrPAClogo from '../assets/logo-motrpac.png';
 export function Navbar({ isAuthenticated = false }) {
   const scrollFunction = () => {
     if (document.body.scrollTop >= 30 || document.documentElement.scrollTop >= 30) {
-      document.querySelector('.navbar-brand img').classList.add('resized');
+      document.querySelector('.navbar-brand').classList.add('resized');
     } else {
-      document.querySelector('.navbar-brand img').classList.remove('resized');
+      document.querySelector('.navbar-brand').classList.remove('resized');
     }
   }
 
@@ -54,13 +54,13 @@ export function Navbar({ isAuthenticated = false }) {
           <ul className="navbar-nav">
             {isAuthenticated && loggedInNavItems}
             <li className="nav-item navItem dropdown">
-              <div className="nav-link dropdown-toggle" role="button" id="navbarDropdownMenuLink" data-toggle="dropdown">About</div>
+              <div className="nav-link dropdown-toggle" role="button" id="navbarDropdownMenuLink" data-toggle="dropdown">About Us</div>
               <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <Link to="/external-links" className="dropdown-item">Useful Links</Link>
                 <Link to="/team" className="dropdown-item">Who we are</Link>
               </div>
             </li>
-            <li className="nav-item navItem"><Link to="/contact" className="nav-link">Contact</Link></li>
+            <li className="nav-item navItem"><Link to="/contact" className="nav-link">Contact Us</Link></li>
           </ul>
         </div>
       </div>

@@ -5,23 +5,29 @@ nav {
   box-shadow: 0 0 5px 5px rgba(0,0,0,.08);
   
   .navbar-brand {
-    padding: 0;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
 
     img {
-      width: 228px;
-      height: 95px;
+      width: 294px;
+      height: 61px;
       transition: all 0.3s ease;
-  
-      &.resized {
-        width: 152px;
-        height: 63px;
+    }
+
+    &.resized {
+      padding-top: 0.3125rem;
+      padding-bottom: 0.3125rem;
+
+      img {
+        width: 206px;
+        height: 43px;
       }
     }
   }
 
   .navbar-nav {
     .navItem {
-      font-size: 110%;
+      font-weight: $semibold-weight;
 
       .nav-link {
         color: lighten($blue, 15%);
@@ -49,7 +55,7 @@ nav {
 
         .dropdown-item {
           color: lighten($blue, 15%);
-          font-weight: $regular-weight;
+          font-weight: $semibold-weight;
 
           &:hover {
             color: $blue;
@@ -62,7 +68,24 @@ nav {
         border: none;
         cursor: pointer;
       }
-      
+
+      .dropdown-toggle::after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: 0.275em;
+        vertical-align: 0.235em;
+        content: "";
+        border: solid lighten($blue, 15%);
+        border-width: 0 2px 2px 0;
+        padding: 2px;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+      }
+
+      .dropdown-toggle:hover::after {
+        border-color: $blue;
+      }
     }
   }
 }
