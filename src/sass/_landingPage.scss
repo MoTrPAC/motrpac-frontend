@@ -1,18 +1,105 @@
-.welcome {
-  h3 {
-    color: $dblue;
+main {
+  font-family: $opensans;
+  height: 37.5rem;
+
+  .motrpac-logo-animation {
+    img {
+      height: 31.25rem;
+    }
   }
-  margin-top:20px;
+
+  .motrpac-tag-line {
+    h3 {
+      color: #8a8a8a;
+      font-size: 1.875rem;
+      font-weight: $semibold-weight;
+
+      em {
+        color: $blue;
+        display: block;
+        font-size: 3.0rem;
+        font-style: normal;
+      }
+    }
+  }
 }
-h5 {
-  color: $dblue;
-}
-.accessDataInfo {
-  border: 1px solid $gray;
-  border-radius: 10px;
-  padding: 20px;
-}
-.logoCont {
-  margin-top:20px;
-  margin-bottom:20px;
+
+section {
+  font-family: $opensans;
+  height: 30.0rem;
+
+  &:last-child {
+    height: auto;
+  }
+
+  h3 {
+    font-size: 2.75rem;
+    font-weight: $semibold-weight;
+  }
+
+  p {
+    font-size: 1.25rem;
+    font-weight: normal;
+  }
+
+  button {
+    color: #fff;
+    font-family: $opensans;
+    font-weight: $semibold-weight;
+  }
+
+  .about-motrpac {
+    background-color: $blue;
+
+    h3 {
+      color: #f3a841;
+    }
+
+    p {
+      color: #fff;
+    }
+
+    button {
+      background-color: #68c2e3;
+    }
+  }
+
+  .ancillary-study {
+    img {
+      height: 28.0rem;
+    }
+
+    h3 {
+      color: #69a852;
+    }
+
+    p {
+      color: #8a8a8a;
+    }
+
+    button {
+      background-color: $blue;
+    }
+  }
+
+  .interrelated-components {
+    background-color: #b3d9fb;
+
+    h3 {
+      color: #462d77;
+    }
+
+    p {
+      color: #000;
+    }
+
+    button {
+      background-color: #9b2e28;
+    }
+  }
+
+  .data-policies {
+    margin-top: 1.875rem;
+    margin-bottom: 1.875rem;
+  }
 }
