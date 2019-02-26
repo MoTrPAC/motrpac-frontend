@@ -4,13 +4,17 @@ html,body{
   padding: 0;
 }
 
-body {
-  padding-top: 10rem;
+:root {
+  font-size: 16px;
 }
 
-h1,h2,h3,h4 {
-  font-family: $opensans;
+body {
+  padding-top: 6.25rem;
+}
+
+h1,h2,h3,h4,h5 {
   color: $dblue;
+  font-family: $opensans;
 }
 .titleRow {
   margin-top: 1rem;
@@ -28,6 +32,7 @@ h1,h2,h3,h4 {
 }
 a {
   color: $blue;
+  font-family: $opensans;
 }
 
 .App {
