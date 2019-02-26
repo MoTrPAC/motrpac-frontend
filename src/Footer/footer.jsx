@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actions from '../Auth/authActions';
+import MoTrPAClogo from '../assets/logo-motrpac.png';
 
 /**
  * Renders the global footer.
@@ -57,36 +58,40 @@ export function Footer({
   // TODO: Find out how to best do error handling
   return (
     <footer className="footer">
-      <div className="container">
-        <div className="row">
-          <div className="col-9">
-            <p className="footer-content">
-              Data Hub designed and maintained by the MoTrPAC BioInformatics
-              Center at
-              <a href="https://www.stanford.edu/" target="_blank" rel="noopener noreferrer">
-                {' '}
-                Stanford University
-              </a>
-            </p>
-            <p className="footer-content">
-              Funded by the
-              <a href="https://commonfund.nih.gov/" target="_blank" rel="noopener noreferrer">
-                {' '}
-                NIH Common Fund
-              </a>
-            </p>
-          </div>
-          <div className="col user-login">
+      <div className="container footer-nav d-md-flex h-100 align-items-center">
+        <Link to="/" className="navbar-brand footer-logo flex-grow-1">
+          <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
+        </Link>
+        <ul className="nav justify-content-end">
+          <li className="nav-item navItem"><Link to="/" className="nav-link">Home</Link></li>
+          <li className="nav-item navItem"><Link to="/team" className="nav-link">About Us</Link></li>
+          <li className="nav-item navItem"><Link to="/contact" className="nav-link">Contact Us</Link></li>
+          <li className="nav-item navItem">
             <LoginButton />
+          </li>
+        </ul>
+      </div>
+      <div className="footer-disclaimers">
+        <div className="container h-100 align-items-center">
+          <div className="footer-content">
+            MoTrPAC Data Hub is designed and maintained by the MoTrPAC BioInformatics
+            Center at
+            <a href="https://www.stanford.edu/" target="_blank" rel="noopener noreferrer">
+              {' '}
+              Stanford University
+            </a>
           </div>
-        </div>
-        <div className="row">
-          <div className="col copyright">
-            <p>
-              &#169;
-              {getCopyrightYear()}
-              &nbsp;Stanford University
-            </p>
+          <div className="footer-content">
+            Funded by the
+            <a href="https://commonfund.nih.gov/" target="_blank" rel="noopener noreferrer">
+              {' '}
+              NIH Common Fund
+            </a>
+          </div>
+          <div className="footer-content">
+            &#169;
+            {getCopyrightYear()}
+            &nbsp;Stanford University
           </div>
         </div>
       </div>
