@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Particles from 'react-particles-js';
 import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation.gif';
 import LayerRunner from '../assets/LandingPageGraphics/Layer_Runner_dark.png';
+import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Heart.png';
 
 export function LandingPage() {
   // TODO: Update email and email link for help requests
@@ -27,11 +28,13 @@ export function LandingPage() {
       <section>
         <div className="d-md-flex justify-content-center w-100 h-100 about-motrpac" id="about-motrpac">
           <Particles
-            className="position-absolute w-100"
+            className="position-absolute particles-wrapper"
             params={{
               particles: {
                 number: { value: 100 },
-                size: { value: 3.5 },
+                color: { value: '#000000' },
+                size: { value: 4.5 },
+                line_linked: { color: '#000000' },
               },
               interactivity: {
                 events: {
@@ -41,7 +44,7 @@ export function LandingPage() {
             }}
           />
           <div className="container featurette d-md-flex h-100 align-items-center">
-            <div className="col-md-5 align-self-center">
+            <div className="col-md-6 align-self-center">
               <h3>About MoTrPAC</h3>
               <p>
                 Molecular Transducers of Physical Activity Consortium is a national
@@ -58,7 +61,7 @@ export function LandingPage() {
       <section>
         <div className="d-md-flex justify-content-center w-100 h-100 ancillary-study">
           <div className="container featurette d-md-flex h-100 align-items-center">
-            <div className="col-md-6 motrpac-logo-animation d-md-flex justify-content-center h-100 align-items-end">
+            <div className="col-md-6 d-md-flex justify-content-center h-100 align-items-center">
               <img src={LayerRunner} alt="Runner on data layer" />
             </div>
             <div className="col-md-6 align-self-center">
@@ -75,14 +78,17 @@ export function LandingPage() {
       </section>
       <section>
         <div className="d-md-flex justify-content-center w-100 h-100 interrelated-components" id="interrelated-components">
-          <div className="container featurette d-md-flex h-100 align-items-center justify-content-end">
-            <div className="col-md-4 align-self-center">
+          <div className="container featurette d-md-flex h-100 align-items-center">
+            <div className="col-md-6 align-self-center">
               <h3>Interrelated Components</h3>
               <p>
                 Consisting of Clinical Centers, Preclinical Animal Study Sites, Chemical Analysis
                 Sites, Bioinformatics Center, Consortium Coordinating Center.
               </p>
               <button type="button" className="btn btn-read-more-interrelated-components">READ MORE</button>
+            </div>
+            <div className="col-md-6 d-md-flex justify-content-center h-100 align-items-center">
+              <img src={HealthyHeart} alt="Healthy Heart" />
             </div>
           </div>
         </div>
