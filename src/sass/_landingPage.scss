@@ -15,7 +15,7 @@ main {
       font-weight: $semibold-weight;
 
       em {
-        color: $blue;
+        color: #2094E8;
         display: block;
         font-size: 3.0rem;
         font-style: normal;
@@ -49,18 +49,26 @@ section {
   }
 
   .about-motrpac {
-    background-color: $blue;
+    background-color: #2094E8;
+    overflow: hidden;
+
+    .particles-wrapper {
+      width: 73%;
+      height: 30.0rem;
+    }
 
     h3 {
-      color: #f3a841;
+      color: #f9c002;
+      text-shadow: 0 0 0.3em $blue;
     }
 
     p {
       color: #fff;
+      text-shadow: 0 0 0.3em $dblue;
     }
 
     button {
-      background-color: #68c2e3;
+      background-color: $dblue;
     }
   }
 
@@ -70,7 +78,7 @@ section {
     }
 
     h3 {
-      color: #69a852;
+      color: #56bf46;
     }
 
     p {
@@ -78,15 +86,15 @@ section {
     }
 
     button {
-      background-color: $blue;
+      background-color: #2f005b;
     }
   }
 
   .interrelated-components {
-    background-color: #b3d9fb;
+    background-color: #f9c002;
 
     h3 {
-      color: #462d77;
+      color: #fff;
     }
 
     p {
@@ -94,7 +102,7 @@ section {
     }
 
     button {
-      background-color: #9b2e28;
+      background-color: #B1040E;
     }
   }
 
