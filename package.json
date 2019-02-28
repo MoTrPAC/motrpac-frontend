@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "auth0-js": "9.10.0",
-    "bootstrap": "4.3.0",
+    "bootstrap": "^4.3.1",
     "chart.js": "^2.7.3",
     "dayjs": "1.8.5",
     "history": "^4.7.2",
