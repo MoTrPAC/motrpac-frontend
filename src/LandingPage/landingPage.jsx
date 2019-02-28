@@ -59,19 +59,19 @@ export function LandingPage() {
         </div>
       </section>
       <section>
-        <div className="d-md-flex justify-content-center w-100 h-100 ancillary-study">
+        <div className="d-md-flex justify-content-center w-100 h-100 multi-omics">
           <div className="container featurette d-md-flex h-100 align-items-center">
             <div className="col-md-6 d-md-flex justify-content-center h-100 align-items-center">
               <img src={LayerRunner} alt="Runner on data layer" />
             </div>
             <div className="col-md-6 align-self-center">
-              <h3>Ancillary Study</h3>
+              <h3>Multi-Omics</h3>
               <p>
                 MoTrPAC encourages investigators to develop ancillary studies (AS) in
                 conjunction with the MoTrPAC study and to involve other investigators, within
                 and outside of MoTrPAC.
               </p>
-              <button type="button" className="btn btn-read-more-ancillary-study">READ MORE</button>
+              <button type="button" className="btn btn-read-more-multi-omics">READ MORE</button>
             </div>
           </div>
         </div>
