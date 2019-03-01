@@ -1,91 +1,98 @@
 .uploadAreaDnD {
   width: 40vw;
   height: 30vw;
-  border: 1px dashed $dblue;
+  border: 1px dashed $primary-blue;
   border-radius: 5px;
   padding: 15px;
   background-color: $blue-transparent;  
   opacity: 17%;
-  display:inline-block;
+  display: inline-block;
 }
+
 .dragging {
-  background-color: white;
-  border: 3px dashed $blue;
+  background-color: #fff;
+  border: 3px dashed $primary-blue;
 }
+
 .showValidation {
-  border: 1px dashed $danger;
+  border: 1px dashed $stanford-bright-red;
 }
+
 #fileUpload {
   display: none;
 }
+
 .fileArea {
-  height:80%;
+  height: 80%;
   width: 100%;
   text-align: center;
-  padding:5px;
-  margin:0;
-  overflow:scroll;
+  padding: 5px;
+  margin: 0;
+  overflow: scroll;
 }
+
 .oi-cloud-upload {
   font-size: 500%;
-  color: $blue-semi-transparent;
+  color: $blue-transparent;
 }
+
 .noFiles {
-  width:100%;
-  padding-top:30px;
+  width: 100%;
+  padding-top: 30px;
 }
+
 h3 {
-  color: $blue-semi-transparent;
+  color: $blue-transparent;
 }
+
 .fileArea h2 {
   text-align: center;
 }
+
 .selectArea {
   text-align: center;
-  width:100%;
-  padding-top:10px;
-  border-top: 1px solid $blue;
+  width: 100%;
+  padding-top: 10px;
+  border-top: 1px solid $primary-blue;
 }
-.selectArea .btn-primary {
-  background-color: $blue;
-  border-color: $blue;
-  text-align: center;
 
-}
 .centered {
-  text-align:center;
+  text-align: center;
 }
+
 .fileCont {
   max-height: 40%;
   min-height: 1em;
   padding: .5em;
 }
+
 .file {
   height: 100%;
   border-radius: 0px 0px 0px 20px;
-  background-color: $blue;
-  color:white;
+  background-color: $primary-blue;
+  color: #fff;
   overflow-wrap: break-word; 
   overflow: hidden;
-  
 }
+
 .file p {
   margin-top: 30%;
-  max-width:100%;
+  max-width: 100%;
   display: inline-block;
   font-size: 80%;
 }
+
 .xBtn {
-  padding:0;
-  height:3vh;
-  width:3vh;
+  padding: 0;
+  height: 3vh;
+  width: 3vh;
   font-size: 70%;
   position: absolute;
   top: 0%;
   left: 90%;
-  border-radius:50%;
-
+  border-radius: 50%;
 }
+
 .uploadAreaDnD :-moz-drag-over {
-  border: 1px solid $red;
+  border: 1px solid $stanford-bright-red;
 }

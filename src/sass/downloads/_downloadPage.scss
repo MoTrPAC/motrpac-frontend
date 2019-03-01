@@ -1,11 +1,11 @@
 .viewCart{
   color: white;
-  background-color: $dblue;
+  background-color: $primary-blue;
   border-radius: 10px;
   &.active {
     background-color: white;
-    border: 1px solid $dblue;
-    color: $dblue;
+    border: 1px solid $primary-blue;
+    color: $primary-blue;
   }
 }
 .emptyCart {
@@ -15,16 +15,16 @@
 }
 .addAllToCart {
   color: white;
-  background-color: $green;
+  background-color: $accent-green;
   border-radius: 10px;
 }
 .downloadCart {
   color: white;
   cursor: not-allowed; // Temporarily disabled for demo
-  background-color: $blue;
+  background-color: $primary-blue;
   border-radius: 10px;
   .cartCount {
     background-color: white;
-    color: $dblue;
+    color: $primary-blue;
   }
 }

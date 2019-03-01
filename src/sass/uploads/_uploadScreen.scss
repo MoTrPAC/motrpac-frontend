@@ -1,15 +1,15 @@
 .uploadScreen {
-  h2 {
-  color: $dblue;
-  }
-  margin-top:15px;
+  margin-top: 15px;
+
   #formSubmitLabel, .clearFormBtn {
-    margin-top:30px;
-}
-  .uploadAreaDnD {
-    margin-top:20px;
+    margin-top: 30px;
   }
+
+  .uploadAreaDnD {
+    margin-top: 20px;
+  }
+
   .addFileError {
-    color: $danger;
+    color: $stanford-bright-red;
   }
 }

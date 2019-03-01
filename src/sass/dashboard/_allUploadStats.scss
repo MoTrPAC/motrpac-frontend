@@ -1,12 +1,9 @@
 .uploadStats {
-  border: 1px solid $dblue;
+  border: 1px solid $primary-blue;
   border-radius: 10px;
   margin: 3rem;
   padding: 1rem;
-  color: $dblue;
+  color: $primary-blue;
   text-align: center;
   font-size: 1.5rem;
-  .green {
-    color: $green;
-  }
 }

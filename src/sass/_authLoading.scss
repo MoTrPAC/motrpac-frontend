@@ -4,7 +4,7 @@
   left:0;
   width:100%;
   height:100%;
-  background-color: $blue-semi-transparent;
+  background-color: $blue-transparent;
   text-align:center;
   padding-top:40vh;
   span {
@@ -12,7 +12,7 @@
   }
   span, h3{
     animation: loadingAnimation 3s infinite;
-    color: $dblue;
+    color: $primary-blue;
   }
   a :hover{
     text-decoration: none;

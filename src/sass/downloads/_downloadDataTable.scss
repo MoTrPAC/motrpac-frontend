@@ -18,25 +18,25 @@
   }
   .public {
     .statusText{
-      color: $green;
+      color: $accent-green;
     }
     &:hover {
-      background-color:transparentize($green, .9);
-      border-color: $green;
+      background-color:transparentize($accent-green, .9);
+      border-color: $accent-green;
     }
   }
   .internal {
     .statusText{
-      color: $dblue;
+      color: $primary-blue;
     }
     &:hover {
-      background-color:transparentize($blue, .9);
-      border-color: $blue;
+      background-color:transparentize($primary-blue, .9);
+      border-color: $primary-blue;
     }
   }
   .pending {
     .statusText{
-      color: $dgray;
+      color: $stanford-cool-grey;
     }
     &:hover {
       background-color:transparentize($gray, .9);
@@ -44,16 +44,16 @@
     }
   }
   .downloadBtn {
-    background-color: white;
-    color:$dblue;
-    border: 1px dashed $dblue;
+    background-color: #fff;
+    color: $primary-blue;
+    border: 1px dashed $primary-blue;
     border-radius: 10px;
     line-height: 1;
-    box-shadow: 1px 3px 5px lighten($blue, 40%);
+    box-shadow: 1px 3px 5px lighten($primary-blue, 40%);
   }
   .inCart {
-    background-color: $dblue;
-    color: white;
+    background-color: $primary-blue;
+    color: #fff;
   }
   .viewCartTitle {
     margin-top: 0.5rem;
@@ -73,29 +73,29 @@
 .downloadRow {
   border: 1px solid $gray;
   border-radius: 10px;
-  background-color: white;
+  background-color: #fff;
   .rightAlign {
     text-align: right;
   }
   .siteName {
-    color: $blue;
+    color: $primary-blue;
   }
   .leftSide { 
     p {
       line-height: 1.25rem;
-      margin-bottom:0;
+      margin-bottom: 0;
     }
     .endP {
       margin-bottom: 1rem;
     }
   }
   .animal {
-    color: $dblue;
+    color: $primary-blue;
     font-size: 1.75rem;
   }
   .human {
     font-size: 1.75rem;
-    color: $burgundy;
+    color: $stanford-cardinal-red;
   }
 }
 // Remove icon text (e.g 'Publicly Available') when small
