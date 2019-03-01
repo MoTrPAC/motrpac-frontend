@@ -53,7 +53,7 @@ export function LandingPage() {
                 (the "molecular map") that underlie the effects of physical activity
                 in humans.
               </p>
-              <button type="button" className="btn btn-read-more-about-motrpac">READ MORE</button>
+              <a href="https://motrpac.org/" className="btn btn-dark" role="button" target="_new">READ MORE</a>
             </div>
           </div>
         </div>
@@ -71,7 +71,7 @@ export function LandingPage() {
                 conjunction with the MoTrPAC study and to involve other investigators, within
                 and outside of MoTrPAC.
               </p>
-              <button type="button" className="btn btn-read-more-multi-omics">READ MORE</button>
+              <a href="https://motrpac.org/ancillarystudyguidelines.cfm" className="btn btn-primary" role="button" target="_new">READ MORE</a>
             </div>
           </div>
         </div>
@@ -85,7 +85,7 @@ export function LandingPage() {
                 Consisting of Clinical Centers, Preclinical Animal Study Sites, Chemical Analysis
                 Sites, Bioinformatics Center, Consortium Coordinating Center.
               </p>
-              <button type="button" className="btn btn-read-more-interrelated-components">READ MORE</button>
+              <a href="https://commonfund.nih.gov/MolecularTransducers/overview#ClinicalCenter" className="btn btn-success" role="button" target="_new">READ MORE</a>
             </div>
             <div className="col-md-6 d-md-flex justify-content-center h-100 align-items-center">
               <img src={HealthyHeart} alt="Healthy Heart" />
@@ -97,13 +97,13 @@ export function LandingPage() {
         <div className="d-md-flex flex-md-equal w-100 data-policies">
           <div className="container featurette d-md-flex">
             <div className="p-2 col-md access-data-info">
-              <h5 className="heavy">Accessing Data: </h5>
+              <h5>Accessing Data: </h5>
               Data generated to date is not yet publicly accessible. For updates when publicly
               accessible data are available contact us at&nbsp;
               <a href="mailto:MoTrPAC-data-requests@stanford.edu" target="_new">MoTrPAC-data-requests@stanford.edu</a>
             </div>
             <div className="p-2 col-md upload-data-info">
-              <h5 className="heavy">Uploading Data From Study Sites:</h5>
+              <h5>Uploading Data From Study Sites:</h5>
               If you are a member of one of the sites involved with MoTrPAC please log in using
               your provided ID at the link on the bottom right of this website.  If you have issues
               logging in please contact the bioinformatic center at&nbsp;
