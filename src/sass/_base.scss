@@ -1,5 +1,7 @@
-html,body{
-  height:100%;
+html, body {
+  color: $stanford-black;
+  font-family: $opensans;
+  height: 100%;
   margin: 0;
   padding: 0;
 }
@@ -8,31 +10,50 @@ html,body{
   font-size: 16px;
 }
 
-body {
-  padding-top: 6.25rem;
+h1, h2, h3, h4, h5 {
+  color: $stanford-cool-grey;
+  font-weight: $semibold-weight;
 }
 
-h1,h2,h3,h4,h5 {
-  color: $dblue;
-  font-family: $opensans;
-}
 .titleRow {
   margin-top: 1rem;
+
   h2 {
     font-weight: $light-weight;
-    color: $dblue;
   }
 }
 
 .light {
   font-weight: $light-weight;
 }
+
 .heavy {
   font-weight: $bold-weight;
 }
+
 a {
-  color: $blue;
-  font-family: $opensans;
+  color: $primary-blue;
+
+  &:hover {
+    color: $primary-blue-shade-medium;
+    text-decoration: none;
+  }
+}
+
+button {
+  background-color: $primary-blue;
+  color: #fff;
+  font-weight: $regular-weight;
+}
+
+label {
+  color: $stanford-cool-grey;
+  font-size: 0.75rem;
+}
+
+p {
+  color: $stanford-black;
+  font-size: 0.75rem;
 }
 
 .App {
@@ -40,6 +61,7 @@ a {
   min-height: 100vh;
   flex-direction: column;
 }
+
 .componentHolder {
   flex: 1;
 }
