@@ -1,10 +1,6 @@
 footer {
-  @media screen and (max-width: 767.98px){
-    text-align: center; 
-  }
-
   .footer-nav {
-    border-top: 1px solid #c8c8c8;
+    border-top: 1px solid $gray-400;
     padding-top: 1.875rem;
     padding-bottom: 1.875rem;
 
@@ -14,13 +10,15 @@ footer {
     }
 
     .nav-link {
+      color: $stanford-cool-grey;
       padding: 0.5rem 0.75rem;
+
+      &:hover {
+        color: $stanford-black;
+      }
     }
 
     .logInOutBtn {
-      background-color: #2094E8;
-      color: white;
-      font-weight: $semibold-weight;
       margin-left: 0.75rem;
     }
   
@@ -33,15 +31,14 @@ footer {
   }
 
   .footer-disclaimers {
-    background-color: #2094E8;
+    background-color: $primary-blue;
     color: #fff;
-    line-height: 1.5rem;
-    padding: 1.0rem 0;
+    line-height: 1.25rem;
+    padding: 0.85rem 0;
     text-align: center;
 
     .footer-content {
-      font-family: $opensans;
-      font-size: 0.9em;
+      font-size: 0.75em;
       margin-bottom: 0;
 
       a {
