@@ -40,7 +40,7 @@ export function Footer({
           </span>
         )}
         {!isAuthenticated && (
-          <button type="button" onClick={login} className="logInOutBtn btn">
+          <button type="button" onClick={login} className="logInOutBtn btn btn-primary">
             Submitter Login
           </button>
         )}
@@ -74,19 +74,21 @@ export function Footer({
       <div className="footer-disclaimers">
         <div className="container h-100 align-items-center">
           <div className="footer-content">
-            MoTrPAC Data Hub is designed and maintained by the MoTrPAC BioInformatics
-            Center at
-            <a href="https://www.stanford.edu/" target="_blank" rel="noopener noreferrer">
-              {' '}
-              Stanford University
-            </a>
-          </div>
-          <div className="footer-content">
-            Funded by the
-            <a href="https://commonfund.nih.gov/" target="_blank" rel="noopener noreferrer">
-              {' '}
-              NIH Common Fund
-            </a>
+            <span>
+              MoTrPAC Data Hub is designed and maintained by the MoTrPAC BioInformatics
+              Center at&nbsp;
+              <a href="https://www.stanford.edu/" target="_blank" rel="noopener noreferrer">
+                Stanford University
+              </a>
+              <span>.&nbsp;</span>
+            </span>
+            <span>
+              Funded by the&nbsp;
+              <a href="https://commonfund.nih.gov/" target="_blank" rel="noopener noreferrer">
+                NIH Common Fund
+              </a>
+              <span>.</span>
+            </span>
           </div>
           <div className="footer-content">
             &#169;
