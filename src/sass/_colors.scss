@@ -1,28 +1,46 @@
-$red: rgb(179,53,33);
-$dblue: #11397E;
-$blue: #336699;
-$blue-semi-transparent: transparentize($blue,0.5);
-$blue-transparent: transparentize($blue,0.9);
-$lblue: #E3EAF1;
-$dgreen: #2d5e2d;
-$green: lighten($dgreen,15%);
-$yellow: #D6C714;
-$dgray: #404040;
+/* base color palette */
+$primary-blue: #2094e8;
+$accent-green: #56bf46;
+$accent-yellow: #f9c002;
+$accent-red: #f20000;
+$accent-violet: #2f005b;
+
+/* stanford color palette */
+$stanford-cardinal-red: #8c1515;
+$stanford-bright-red: #B1040E;
+$stanford-cool-grey: #4d4f53;
+$stanford-black: #2e2d29;
+$stanford-palo-alto: #175e54;
+
+/* supporting colors */
+$primary-blue-shade-medium: lighten($primary-blue, 10%);
+$primary-blue-shade-light: lighten($primary-blue, 20%);
+$accent-green-shade-medium: lighten($accent-green, 10%);
+$accent-green-shade-light: lighten($accent-green, 20%);
+$accent-yellow-shade-medium: lighten($accent-yellow, 10%);
+$accent-yellow-shade-light: lighten($accent-yellow, 20%);
+$accent-red-shade-medium: lighten($accent-red, 10%);
+$accent-red-shade-light: lighten($accent-red, 20%);
+$accent-violet-shade-medium: lighten($accent-violet, 10%);
+$accent-violet-shade-light: lighten($accent-violet, 20%);
 $gray: #707070;
-$gray-semi-transparent: transparentize($gray,0.5);
-$gray-transparent: transparentize($gray,0.9);
-$brown: #7E5610;
-$burgundy: #7E1139;
+$gray-semi-transparent: transparentize($gray, 0.5);
+$gray-transparent: transparentize($gray, 0.9);
+$dblue: darken($primary-blue, 10%);
+$blue-transparent: transparentize($primary-blue, 0.9);
+
+.blue {
+  color: $primary-blue;
+}
+
+.green {
+  color: $accent-green;
+}
 
 .dblue {
   color: $dblue;
 }
-.burgundy {
-  color: $burgundy;
-}
-.green {
-  color: $green;
-}
+
 .dgray {
-  color: $dgray
+  color: $stanford-cool-grey;
 }
