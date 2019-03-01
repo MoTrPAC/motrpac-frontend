@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 @import 'assets/open-iconic-master/font/css/open-iconic-bootstrap.css';
 $opensans: 'Open Sans', sans-serif;
+$font-family-base: $opensans !default;
 $light-weight: 300;
 $regular-weight: 400;
 $semibold-weight: 600;
