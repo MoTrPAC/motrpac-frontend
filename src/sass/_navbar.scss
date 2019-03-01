@@ -1,12 +1,9 @@
 nav {
-  font-family: $opensans;
-  background-color: #fff;
   border-bottom: 1px solid transparent;
-  box-shadow: 0 0 5px 5px rgba(0,0,0,.08);
-  
+
   .navbar-brand {
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
+    padding-top: 1.15rem;
+    padding-bottom: 1.15rem;
 
     img {
       width: 436px;
@@ -15,8 +12,8 @@ nav {
     }
 
     &.resized {
-      padding-top: 0.3125rem;
-      padding-bottom: 0.3125rem;
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
 
       img {
         width: 305px;
@@ -30,35 +27,35 @@ nav {
       font-weight: $semibold-weight;
 
       .nav-link {
-        color: lighten($blue, 15%);
+        color: $stanford-cool-grey;
 
         &:hover {
-          color: $blue;
+          color: $stanford-black;
         }
 
         &.show, &.active {
-          color: $blue;
+          color: $stanford-black;
         }
       }
 
       &.show {
         .nav-link {
-          color: $blue;
+          color: $stanford-black;
         }
       }
 
       .dropdown-menu {
         background-color:transparentize(#fff, .1);
-        border: solid 1px lighten($blue, 15%);
+        border: solid 1px $stanford-cool-grey;
         top: 30px;
         left: 8px;
 
         .dropdown-item {
-          color: lighten($blue, 15%);
+          color: $stanford-cool-grey;
           font-weight: $semibold-weight;
 
           &:hover {
-            color: $blue;
+            color: $stanford-black;
           }
         }
       }
@@ -76,7 +73,7 @@ nav {
         margin-left: 0.275em;
         vertical-align: 0.235em;
         content: "";
-        border: solid lighten($blue, 15%);
+        border: solid $stanford-black;
         border-width: 0 2px 2px 0;
         padding: 2px;
         transform: rotate(45deg);
@@ -84,12 +81,8 @@ nav {
       }
 
       .dropdown-toggle:hover::after {
-        border-color: $blue;
+        border-color: $stanford-black;
       }
     }
   }
-}
-
-.light {
-  font-weight: $light-weight;
 }
