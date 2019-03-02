@@ -1,5 +1,13 @@
-body {
-  padding-top: 6.25rem;
+@include media-breakpoint-up(lg) {
+  body {
+    padding-top: 6.25rem;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  body {
+    padding-top: 4.35rem;
+  }
 }
 
 main {

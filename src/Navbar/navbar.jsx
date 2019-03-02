@@ -43,7 +43,7 @@ export function Navbar({ isAuthenticated = false }) {
   );
   const navbar = (
     <nav className="navbar navbar-expand-lg fixed-top navbar-light flex-md-nowrap p-0 shadow bg-white">
-      <div className="container">
+      <div className="container header-navbar-items">
         <Link to="/" className="navbar-brand header-logo">
           <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
         </Link>

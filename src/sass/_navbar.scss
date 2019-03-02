@@ -10,8 +10,10 @@ nav {
       height: 51px;
       transition: all 0.3s ease;
     }
+  }
 
-    &.resized {
+  @include media-breakpoint-up(lg) {
+    .navbar-brand.resized {
       padding-top: 0.75rem;
       padding-bottom: 0.75rem;
 
@@ -19,6 +21,25 @@ nav {
         width: 305px;
         height: 36px;
       }
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    .navbar-brand {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+
+      img {
+        width: 305px;
+        height: 36px;
+      }
+    }
+  }
+
+  @include media-breakpoint-down(xs) {
+    .header-navbar-items.container {
+      padding-left: 15px;
+      padding-right: 15px;
     }
   }
 
