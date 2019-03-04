@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actions from '../Auth/authActions';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
@@ -39,15 +38,15 @@ export function Footer({ isAuthenticated, login }) {
         <div className="container footer-nav">
           <div className="row align-items-end">
             <div className="col-12 col-lg-4 footer-nav-logo">
-              <Link to="/" className="navbar-brand footer-logo">
+              <a href="/" className="navbar-brand footer-logo">
                 <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
-              </Link>
+              </a>
             </div>
             <div className="col-12 col-lg-8 row justify-content-end footer-nav-items">
               <ul className="nav">
-                <li className="nav-item navItem"><Link to="/" className="nav-link">Home</Link></li>
-                <li className="nav-item navItem"><Link to="/team" className="nav-link">About Us</Link></li>
-                <li className="nav-item navItem"><Link to="/contact" className="nav-link">Contact Us</Link></li>
+                <li className="nav-item navItem"><a href="/" className="nav-link">Home</a></li>
+                <li className="nav-item navItem"><a href="/team" className="nav-link">About Us</a></li>
+                <li className="nav-item navItem"><a href="/contact" className="nav-link">Contact Us</a></li>
                 <li className="nav-item navItem">
                   <LoginButton />
                 </li>
