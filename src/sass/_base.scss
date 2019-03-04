@@ -1,7 +1,8 @@
-html, body {
+body {
   color: $stanford-black;
   font-family: $opensans;
   height: 100%;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
 }
@@ -56,12 +57,6 @@ p {
   font-size: 0.75rem;
 }
 
-.App {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
-
 .componentHolder {
-  flex: 1;
+  flex: 1 100%;
 }
