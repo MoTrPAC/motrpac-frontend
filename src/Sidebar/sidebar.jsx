@@ -1,15 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 /**
  * Renders the gloabl sidebar.
  *
- * @param {Boolean} isAuthenticated Redux state for user's authentication status.
- *
  * @returns {Object} JSX representation of the global sidebar.
  */
-export function Sidebar({ isAuthenticated = false }) {
+export function Sidebar() {
   const sidebar = (
     <nav className="col-md-2 d-none d-md-block bg-light sidebar">
       <div className="sidebar-sticky">
@@ -49,17 +46,7 @@ export function Sidebar({ isAuthenticated = false }) {
     </nav>
   );
 
-  if (isAuthenticated) {
-    return sidebar;
-  }
-  return null;
+  return sidebar;
 }
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
-
-// Fill dispatch to props once actions implemented
-// const mapDispatchToProps = dispatch => ({ });
-
-export default connect(mapStateToProps)(Sidebar);
+export default Sidebar;
