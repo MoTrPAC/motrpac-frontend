@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import actions from '../Auth/authActions';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
 
@@ -63,9 +63,9 @@ export function Navbar({
   const navbar = (
     <nav className="navbar navbar-expand-lg fixed-top navbar-light flex-md-nowrap p-0 shadow bg-white">
       <div className={navContainerClasses}>
-        <Link to="/" className={navBrandClasses}>
+        <a href="/" className={navBrandClasses}>
           <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
-        </Link>
+        </a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon" />
         </button>
@@ -74,11 +74,11 @@ export function Navbar({
             <li className="nav-item navItem dropdown">
               <div className="nav-link dropdown-toggle" role="button" id="navbarDropdownMenuLink" data-toggle="dropdown">About Us</div>
               <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <Link to="/external-links" className="dropdown-item">Useful Links</Link>
-                <Link to="/team" className="dropdown-item">Who we are</Link>
+                <a href="/external-links" className="dropdown-item">Useful Links</a>
+                <a href="/team" className="dropdown-item">Who we are</a>
               </div>
             </li>
-            <li className="nav-item navItem"><Link to="/contact" className="nav-link">Contact Us</Link></li>
+            <li className="nav-item navItem"><a href="/contact" className="nav-link">Contact Us</a></li>
             <li className="nav-item navItem">
               <LogoutButton />
             </li>
@@ -99,12 +99,13 @@ Navbar.propTypes = {
     user_metadata: PropTypes.object,
   }),
   isAuthenticated: PropTypes.bool,
-  logout: PropTypes.func.isRequired,
+  logout: PropTypes.func,
 };
 
 Navbar.defaultProps = {
   profile: {},
   isAuthenticated: false,
+  logout: null,
 };
 
 const mapStateToProps = state => ({
