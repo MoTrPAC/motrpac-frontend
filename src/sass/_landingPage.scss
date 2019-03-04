@@ -1,30 +1,30 @@
 @include media-breakpoint-up(lg) {
   body {
-    padding-top: 6.25rem;
-  }
-}
-
-@include media-breakpoint-down(md) {
-  body {
-    padding-top: 4.35rem;
+    padding-top: 5.60rem;
   }
 }
 
 main {
-  font-family: $opensans;
+  width: 100%;
   height: 37.5rem;
+  overflow: hidden;
 
-  .motrpac-logo-animation {
-    img {
-      height: 31.25rem;
-    }
+  .hero {
+    background: url(../src/assets/LandingPageGraphics/LogoAnimation.gif) 15px 4.375rem no-repeat;
+    background-size: 736px 460px;
   }
 
   .motrpac-tag-line {
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 15px;
+    position: relative;
+
     h3 {
       color: #8a8a8a;
       font-size: 1.875rem;
       font-weight: $semibold-weight;
+      width: 30%;
 
       em {
         color: #2094E8;
@@ -37,8 +37,7 @@ main {
 }
 
 section {
-  font-family: $opensans;
-  height: 30.0rem;
+  width: 100%;
 
   &:last-child {
     height: auto;
@@ -54,72 +53,323 @@ section {
     font-weight: normal;
   }
 
-  button {
-    color: #fff;
-    font-family: $opensans;
-    font-weight: $semibold-weight;
-  }
-
   .about-motrpac {
     background-color: #2094E8;
-    overflow: hidden;
+    height: 30.0rem;
 
     .particles-wrapper {
-      width: 73%;
-      height: 30.0rem;
+      width: 100%;
+      height: 100%;
     }
 
-    h3 {
-      color: #f9c002;
-      text-shadow: 0 0 0.3em $blue;
-    }
+    .featurette-wrapper {
+      width: 100%;
+      align-items: center;
+      justify-content: flex-start;
+      padding-left: 15px;
+      position: relative;
 
-    p {
-      color: #fff;
-      text-shadow: 0 0 0.3em $dblue;
-    }
+      .content {
+        width: 48%;
 
-    button {
-      background-color: $dblue;
+        h3 {
+          color: #f9c002;
+          text-shadow: 0 0 0.3em $blue;
+        }
+    
+        p {
+          color: #fff;
+          text-shadow: 0 0 0.3em $dblue;
+        }
+      }
     }
   }
 
   .multi-omics {
-    img {
-      height: 28.0rem;
-    }
+    background: url(../src/assets/LandingPageGraphics/Layer_Runner_dark.png) 13.5% 1.5rem no-repeat;
+    background-size: 399.625px 416px;
+    height: 30.0rem;
 
-    h3 {
-      color: #56bf46;
-    }
+    .featurette-wrapper {
+      width: 100%;
+      align-items: center;
+      justify-content: flex-end;
+      position: relative;
 
-    p {
-      color: #8a8a8a;
-    }
+      .content {
+        width: 46%;
 
-    button {
-      background-color: #2f005b;
+        h3 {
+          color: #56bf46;
+        }
+    
+        p {
+          color: #8a8a8a;
+        }
+      }
     }
   }
 
   .interrelated-components {
+    background: url(../src/assets/LandingPageGraphics/Infographic_Healthy_Heart.png) 77.5% 3.3125rem no-repeat;
     background-color: #f9c002;
+    height: 30.0rem;
 
-    h3 {
-      color: #fff;
-    }
+    .featurette-wrapper {
+      width: 100%;
+      align-items: center;
+      justify-content: flex-start;
+      padding-left: 15px;
+      position: relative;
 
-    p {
-      color: #000;
-    }
+      .content {
+        width: 48%;
 
-    button {
-      background-color: #B1040E;
+        h3 {
+          color: #fff;
+        }
+    
+        p {
+          color: #000;
+        }
+      }
     }
   }
 
   .data-policies {
     margin-top: 1.875rem;
     margin-bottom: 1.875rem;
+  }
+}
+
+/* responsive styling */
+
+/* Large devices (desktops, less than 1200px) */
+@include media-breakpoint-down(lg) {
+  main {
+    .hero {
+      background-position-x: center;
+      background-position-y: 8.0rem;
+      background-size: 80%;
+    }
+  
+    .motrpac-tag-line {
+      align-items: start;
+      justify-content: center;
+      padding-top: 1.50rem;
+      padding-right: 0;
+      text-align: center;
+  
+      h3 {
+        width: 100%;
+      }
+    }
+  }
+}
+
+/* Medium devices (tablets, less than 992px) */
+@include media-breakpoint-down(md) {
+  body {
+    padding-top: 4.35rem;
+  }
+
+  main {
+    height: 35.0rem;
+  
+    .hero {
+      background-position-x: center;
+      background-position-y: 10.0rem;
+      background-size: 80%;
+    }
+  
+    .motrpac-tag-line {
+      align-items: start;
+      justify-content: center;
+      padding-top: 1.50rem;
+      padding-right: 0;
+      text-align: center;
+  
+      h3 {
+        width: 80%;
+      }
+    }
+  }
+
+  section {
+    .about-motrpac {
+      .featurette-wrapper {
+        .content {
+          width: 60%;
+        }
+      }
+    }
+
+    .multi-omics {
+      background-position-x: 15px;
+      background-position-y: 2.75rem;
+      background-size: 50%;
+
+      .featurette-wrapper {
+        .content {
+          width: 42%;
+        }
+      }
+    }
+
+    .interrelated-components {
+      background-position-x: 87%;
+      background-position-y: 3.35rem;
+      background-size: 50%;
+    }
+  }
+}
+
+/* Small devices (landscape phones, less than 768px) */
+@include media-breakpoint-down(sm) {
+  main {
+    height: 34.5rem;
+  
+    .hero {
+      background-position-x: center;
+      background-position-y: 10.5rem;
+      background-size: 100%;
+    }
+  
+    .motrpac-tag-line {
+      align-items: start;
+      justify-content: center;
+      padding-top: 1.50rem;
+      padding-right: 0;
+      text-align: center;
+  
+      h3 {
+        width: 80%;
+      }
+    }
+  }
+
+  section {
+    .about-motrpac {
+      .featurette-wrapper {
+        .content {
+          text-align: center;
+          width: 100%;
+        }
+      }
+    }
+
+    .multi-omics {
+      background-position-x: center;
+      background-position-y: 17.75rem;
+      background-size: 70%;
+      height: 44.5rem;
+
+      .featurette-wrapper {
+        align-items: start;
+
+        .content {
+          padding-top: 1.50rem;
+          text-align: center;
+          width: 100%;
+        }
+      }
+    }
+
+    .interrelated-components {
+      background-position-x: center;
+      background-position-y: 19.0rem;
+      background-size: 55.5%;
+      height: 44.5rem;
+
+      .featurette-wrapper {
+        align-items: start;
+
+        .content {
+          padding-top: 1.50rem;
+          text-align: center;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@include media-breakpoint-down(xs) {
+  main {
+    height: 24.5rem;
+  
+    .hero {
+      background-position-x: center;
+      background-position-y: 8.5rem;
+      background-size: 90%;
+    }
+  
+    .motrpac-tag-line {
+      align-items: start;
+      justify-content: center;
+      padding-top: 1.50rem;
+      padding-right: 0;
+      text-align: center;
+  
+      h3 {
+        font-size: 140%;
+        width: 85%;
+
+        em {
+          font-size: 185%;
+        }
+      }
+    }
+  }
+
+  section {
+    .about-motrpac {
+      .featurette-wrapper {
+        .content {
+          text-align: center;
+          width: 100%;
+        }
+      }
+    }
+
+    .multi-omics {
+      background-position-x: center;
+      background-position-y: 20.25rem;
+      background-size: 70%;
+      height: 40.0rem;
+
+      .featurette-wrapper {
+        align-items: start;
+
+        .content {
+          padding-top: 1.50rem;
+          text-align: center;
+          width: 90%;
+        }
+      }
+    }
+
+    .interrelated-components {
+      background-position-x: center;
+      background-position-y: 21.5rem;
+      background-size: 55.5%;
+      height: 35.0rem;
+
+      .featurette-wrapper {
+        align-items: start;
+
+        .content {
+          padding-top: 1.50rem;
+          text-align: center;
+          width: 100%;
+        }
+      }
+    }
+
+    .data-policies {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
   }
 }
