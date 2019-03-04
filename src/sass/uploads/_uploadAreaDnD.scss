@@ -33,7 +33,7 @@
 
 .oi-cloud-upload {
   font-size: 500%;
-  color: $blue-transparent;
+  color: $primary-blue-shade-medium;
 }
 
 .noFiles {
@@ -42,7 +42,7 @@
 }
 
 h3 {
-  color: $blue-transparent;
+  color: $primary-blue-shade-medium;
 }
 
 .fileArea h2 {
@@ -69,13 +69,14 @@ h3 {
 .file {
   height: 100%;
   border-radius: 0px 0px 0px 20px;
-  background-color: $primary-blue;
+  background-color: $dblue;
   color: #fff;
   overflow-wrap: break-word; 
   overflow: hidden;
 }
 
 .file p {
+  color: #fff;
   margin-top: 30%;
   max-width: 100%;
   display: inline-block;
@@ -83,6 +84,8 @@ h3 {
 }
 
 .xBtn {
+  color: #212529;
+  border-color: #e2e6ea;
   padding: 0;
   height: 3vh;
   width: 3vh;
