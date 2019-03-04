@@ -1,49 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actions from '../Auth/authActions';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
 
 /**
  * Renders the global footer.
- * 
+ *
  * @param {Boolean}   isAuthenticated Redux state for user's authentication status.
  * @param {Object}    profile         Redux state for authenticated user's info.
  * @param {Function}  login           Redux action for user login.
  * @param {Function}  logout          Redux action for user logout.
- * 
+ *
  * @returns {object} JSX representation of the global footer.
  */
-export function Footer({
-  isAuthenticated,
-  profile,
-  login,
-  logout,
-}) {
-  const userGivenName = profile.user_metadata && profile.user_metadata.givenName ? profile.user_metadata.givenName : profile.name;
-  const handleLogout = () => {
-    logout();
-    return <Redirect to="/" />;
-  };
+export function Footer({ isAuthenticated, login }) {
   // Function to render login button
   const LoginButton = () => {
     return (
       <span className="user-login-button">
-        {isAuthenticated && (
-          <span>
-            <img src={profile.picture} className="user-avatar" alt="avatar" />
-            <button type="button" onClick={handleLogout} className="logInOutBtn btn">
-              {userGivenName}
-              &nbsp;Logout
-            </button>
-          </span>
-        )}
-        {!isAuthenticated && (
-          <button type="button" onClick={login} className="logInOutBtn btn btn-primary">
-            Submitter Login
-          </button>
-        )}
+        <button type="button" onClick={login} className="logInBtn btn btn-primary">
+          Submitter Login
+        </button>
       </span>
     );
   };
@@ -117,7 +96,6 @@ Footer.propTypes = {
   }),
   isAuthenticated: PropTypes.bool,
   login: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
 };
 
 Footer.defaultProps = {
@@ -132,7 +110,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   login: () => dispatch(actions.login()),
-  logout: () => dispatch(actions.logout()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);
