@@ -114,6 +114,21 @@ nav {
       .dropdown-toggle:hover::after {
         border-color: $stanford-black;
       }
+
+      .user-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 100%;
+        margin-right: 0.35em;
+      }
+
+      .user-logout-button {
+        margin-left: 0.75rem;
+
+        .logOutBtn {
+          margin-left: 0.5rem;
+        }
+      }
     }
   }
 }
