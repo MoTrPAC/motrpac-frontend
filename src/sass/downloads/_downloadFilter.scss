@@ -4,19 +4,24 @@
   h4 {
     margin-top: 1rem;
   }
+
   .filterCategory {
     margin-top: 1rem;
   }
+
   .filterBtn {
     background-color: #fff;
     border: 1px solid lighten($gray, 10%);
     border-radius: 20px;
+    color: $stanford-cool-grey;
     font-size: .85rem;
     margin-top: .25rem;
     white-space: normal;
+
     .filterIcon {
       font-size: 1.25rem;
     }
+
     .dblue {
       color: $primary-blue;
     }
