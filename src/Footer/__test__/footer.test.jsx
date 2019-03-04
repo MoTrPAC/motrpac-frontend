@@ -19,16 +19,14 @@ const loggedInMountFooter = mount(
 describe('Footer', () => {
   test('Has submitter login button by default', () => {
     expect(defaultMountFooter.props().isAuthenticated).toBeFalsy();
-    expect(defaultMountFooter.find('.logInOutBtn').text()).toBe(
+    expect(defaultMountFooter.find('.logInBtn').text()).toBe(
       'Submitter Login',
     );
   });
 
-  test('Has [username] logout button if logged in', () => {
+  test('Has no login or logout buttons if logged in', () => {
     expect(loggedInMountFooter.props().isAuthenticated).toBeTruthy();
-    expect(loggedInMountFooter.find('.logInOutBtn').text()).toMatch(
-      new RegExp(testUser.user_metadata.givenName),
-    );
-    expect(loggedInMountFooter.find('.logInOutBtn').text()).toMatch('Logout');
+    expect(loggedInMountFooter.find('.logInBtn')).not.toHaveLength(1);
+    expect(loggedInMountFooter.find('.logOutBtn')).not.toHaveLength(1);
   });
 });
