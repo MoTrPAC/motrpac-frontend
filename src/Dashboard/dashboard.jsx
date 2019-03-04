@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import SidebarConnected from '../Sidebar/sidebar';
+import Sidebar from '../Sidebar/sidebar';
 import PreviousUploadsTableConnected, { PreviousUploadsTable } from '../Widgets/previousUploadsTable';
 import PreviousUploadsGraph from '../Widgets/previousUploadsGraph';
 import AllUploadsDoughnut from '../Widgets/allUploadsDoughnut';
@@ -43,7 +43,7 @@ export function Dashboard({
     return (
       <div className="container-fluid">
         <div className="row">
-          <SidebarConnected />
+          <Sidebar />
           <div className="col-md-9 ml-sm-auto col-lg-10 px-4 Dashboard">
             <div className="row align-items-center">
               <div className="col-12 col-md-6 align-self-center">
