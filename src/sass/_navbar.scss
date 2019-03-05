@@ -1,3 +1,28 @@
+.header-navbar-container {
+  .test-interface-alert {
+    .alert {
+      background-color: $stanford-cardinal-red;
+      border: none;
+      border-radius: 0;
+      color: #fff;
+      font-size: 0.875rem;
+      padding: 0.65rem 0;
+      margin-bottom: 0;
+      text-align: center;
+
+      .close {
+        padding: 0.55rem 1.25rem;
+        opacity: 0.75;
+
+        &:hover {
+          color: #fff;
+          opacity: 1.0;
+        }
+      }
+    }
+  }
+}
+
 nav {
   border-bottom: 1px solid transparent;
 
@@ -9,6 +34,11 @@ nav {
       width: 436px;
       height: 51px;
       transition: all 0.3s ease;
+    }
+
+    /* temp flag UI for alpha or beta releases */
+    .badge {
+      margin-left: 0.55rem;
     }
   }
 
