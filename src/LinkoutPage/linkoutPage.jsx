@@ -73,7 +73,7 @@ export function LinkoutPage() {
   ));
 
   return (
-    <div className="container linkoutPage">
+    <div className="col-md-9 ml-sm-auto col-lg-10 px-4 linkoutPage">
       <div className="row title">
         <div className="col">
           <h3>Useful Links</h3>

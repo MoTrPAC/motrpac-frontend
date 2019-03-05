@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import TeamPage from '../teamPage';
+import { TeamPage } from '../teamPage';
 import { Navbar } from '../../Navbar/navbar';
 import { Footer } from '../../Footer/footer';
 
@@ -18,7 +18,7 @@ storiesOf('Team Page', module)
       <header>
         <Navbar isAuthenticated />
       </header>
-      <div className="componentHolder">
+      <div className="row justify-content-center">
         {story()}
       </div>
       <Footer isAuthenticated {...footerActions} profile={testUser} />

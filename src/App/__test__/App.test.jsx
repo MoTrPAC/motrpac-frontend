@@ -13,8 +13,9 @@ it('renders without crashing', () => {
 });
 
 // No other routes render components, and only one component rendered
-function testCorrectComponentInPath(app, componentName, path, history) {
+function testCorrectComponentInPath(app, componentName, path, history, auth=false) {
   let noPath = true;
+  // Checks the right component loaded at path and other components are not
   app.find('Route').forEach((route) => {
     expect(history.location.pathname).toEqual(path);
     if (route.props().path === path) {
@@ -25,6 +26,14 @@ function testCorrectComponentInPath(app, componentName, path, history) {
       expect(route.children()).toHaveLength(0);
     }
   });
+
+  // Checks that sidebar exists if logged-in
+  if (auth) {
+    expect(app.find('Sidebar').first().find('nav')).toHaveLength(1);
+  } else {
+    expect(app.find('Sidebar').first().find('nav')).toHaveLength(0);
+  }
+
   // If this is true, route for given component does not exist in App.jsx
   expect(noPath).toBeFalsy();
 }
@@ -62,6 +71,12 @@ describe('Unauthenticated Application routing', () => {
     mountApp.update();
     testCorrectComponentInPath(mountApp, 'LinkoutPage', '/external-links', history);
   });
+
+  test('loads the team page at /team', () => {
+    history.push('/team');
+    mountApp.update();
+    testCorrectComponentInPath(mountApp, 'TeamPage', '/team', history);
+  });
 });
 
 describe('Authenticated Application routing', () => {
@@ -91,13 +106,32 @@ describe('Authenticated Application routing', () => {
     history.push('/dashboard');
     // Update required to re-render the application
     mountApp.update();
-    testCorrectComponentInPath(mountApp, 'Dashboard', '/dashboard', history);
+    testCorrectComponentInPath(mountApp, 'Dashboard', '/dashboard', history, true);
   });
 
   test('loads the download page at /download', () => {
     history.push('/download');
     // Update required to re-render the application
     mountApp.update();
-    testCorrectComponentInPath(mountApp, 'DownloadPage', '/download', history);
+    testCorrectComponentInPath(mountApp, 'DownloadPage', '/download', history, true);
+  });
+
+  test('loads the upload page at /upload', () => {
+    history.push('/upload');
+    // Update required to re-render the application
+    mountApp.update();
+    testCorrectComponentInPath(mountApp, 'UploadScreen', '/upload', history, true);
+  });
+
+  test('loads the linkout page at /external-links', () => {
+    history.push('/external-links');
+    mountApp.update();
+    testCorrectComponentInPath(mountApp, 'LinkoutPage', '/external-links', history, true);
+  });
+
+  test('loads the team page at /team', () => {
+    history.push('/team');
+    mountApp.update();
+    testCorrectComponentInPath(mountApp, 'TeamPage', '/team', history, true);
   });
 });

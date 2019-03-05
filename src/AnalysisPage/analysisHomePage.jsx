@@ -138,7 +138,7 @@ export function AnalysisHomePage({
     .join(' ');
 
   return (
-    <div className="container analysisPage">
+    <div className="analysisPage col-md-9 ml-sm-auto col-lg-10 px-4">
       <div className="row">
         <div className="col">
           <h2 className="light">

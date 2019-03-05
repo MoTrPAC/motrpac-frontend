@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import actions from '../Auth/authActions';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
 
@@ -32,15 +32,9 @@ export function Navbar({
     return <Redirect to="/" />;
   };
 
-  let navContainerClasses;
-  let navBrandClasses;
-  if (window.location.pathname !== ('/' || '/external-links' || '/team' || '/contact')) {
-    navContainerClasses = 'container-fluid header-navbar-items';
-    navBrandClasses = 'navbar-brand header-logo resized';
+  if (isAuthenticated) {
+    window.removeEventListener('scroll', scrollFunction);
   } else {
-    navContainerClasses = 'container header-navbar-items';
-    navBrandClasses = 'navbar-brand header-logo';
-
     window.addEventListener('scroll', scrollFunction);
   }
 
@@ -89,14 +83,14 @@ export function Navbar({
       {urlParams.has('version') && urlParams.get('version') === 'alpha' && (
         <TestInterfaceAlert />
       )}
-      <nav className="navbar navbar-expand-lg navbar-light flex-md-nowrap p-0 shadow bg-white">
-        <div className={navContainerClasses}>
-          <a href="/" className={navBrandClasses}>
+      <nav className="navbar navbar-expand-lg navbar-light flex-md-nowrap p-0 shadow-sm bg-white">
+        <div className={`${isAuthenticated ? 'container-fluid' : 'container'} header-navbar-items`}>
+          <Link to="/" className={`navbar-brand header-logo ${isAuthenticated ? 'resized' : ''}`}>
             <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
             {urlParams.has('version') && urlParams.get('version') === 'alpha' && (
               <span className="badge badge-pill badge-warning">Alpha</span>
             )}
-          </a>
+          </Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />
           </button>
@@ -105,11 +99,11 @@ export function Navbar({
               <li className="nav-item navItem dropdown">
                 <div className="nav-link dropdown-toggle" role="button" id="navbarDropdownMenuLink" data-toggle="dropdown">About Us</div>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <a href="/external-links" className="dropdown-item">Useful Links</a>
-                  <a href="/team" className="dropdown-item">Who we are</a>
+                  <Link to="/external-links" className="dropdown-item">Useful Links</Link>
+                  <Link to="/team" className="dropdown-item">Who we are</Link>
                 </div>
               </li>
-              <li className="nav-item navItem"><a href="/contact" className="nav-link">Contact Us</a></li>
+              <li className="nav-item navItem"><Link to="/contact" className="nav-link">Contact Us</Link></li>
               <li className="nav-item navItem">
                 <LogoutButton />
               </li>

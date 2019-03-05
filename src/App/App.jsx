@@ -16,22 +16,24 @@ import MethodsConnected from '../MethodsPage/methods';
 import TeamPage from '../TeamPage/teamPage';
 import Contact from '../ContactPage/contact';
 import CallbackConnected from '../Auth/callback';
+import Sidebar from '../Sidebar/sidebar';
 
 const store = configureStore();
 
 function App({ history = History }) {
   // Temp config to show/hide test interface visuals
   const urlParams = new URLSearchParams(window.location.search);
-  const appClass = urlParams.has('version') && urlParams.get('version') === 'alpha' ? 'App test-version' : 'App';
+  const isAlpha = urlParams.has('version') && urlParams.get('version') === 'alpha';
 
   return (
     <Provider store={store}>
       <Router history={history}>
-        <div className={appClass}>
+        <div className={`App container-fluid ${isAlpha ? 'test-version' : ''}`}>
           <header>
             <NavbarConnected />
           </header>
-          <div className="componentHolder">
+          <div className="row justify-content-center">
+            <Sidebar />
             <Switch>
               <Route path="/callback" component={CallbackConnected} />
               <Route path="/" exact component={LandingPageConnected} />
@@ -45,9 +47,9 @@ function App({ history = History }) {
               <Route path="/contact" component={Contact} />
             </Switch>
           </div>
-          <FooterConnected />
         </div>
       </Router>
+      <FooterConnected />
     </Provider>
   );
 }

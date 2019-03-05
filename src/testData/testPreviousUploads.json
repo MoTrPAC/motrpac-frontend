@@ -103,7 +103,7 @@
     "biospecimenBarcode": "1212352000",
     "subject": "Human",
     "phase": "1A",
-    "dataType": "Metabolomics",
+    "dataType": "ATAC-Seq",
     "date": "11/25/2018",
     "availability": "Pending Q.C.",
     "lastUpdated": 1540241156820,

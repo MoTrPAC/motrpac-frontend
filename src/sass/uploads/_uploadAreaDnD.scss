@@ -7,6 +7,13 @@
   background-color: $blue-transparent;  
   opacity: 17%;
   display: inline-block;
+  h3 {
+    color: $primary-blue-shade-medium;
+  }
+  .oi-cloud-upload {
+    font-size: 500%;
+    color: $primary-blue-shade-medium;
+  }
 }
 
 .dragging {
@@ -31,18 +38,10 @@
   overflow: scroll;
 }
 
-.oi-cloud-upload {
-  font-size: 500%;
-  color: $primary-blue-shade-medium;
-}
 
 .noFiles {
   width: 100%;
   padding-top: 30px;
-}
-
-h3 {
-  color: $primary-blue-shade-medium;
 }
 
 .fileArea h2 {
