@@ -40,42 +40,42 @@ export function Dashboard({
 
   if (isAuthenticated) {
     return (
-          <div className="col-md-9 ml-sm-auto col-lg-10 px-4 Dashboard">
-            <div className="row align-items-center">
-              <div className="col-12 col-md-6 align-self-center">
-                <h2 className="welcomeUser light">Overview</h2>
-              </div>
-              <div className="col-auto">
-                <Link className="uploadBtn btn btn-primary" to="/upload">Upload Data</Link>
-              </div>
-              <div className="col-auto">
-                <Link className="downloadBtn btn btn-primary" to="/download">Download/View Data</Link>
-              </div>
-              {featureAvailable.dashboardEditable ? editBtn : ''}
-            </div>
-            <div className="row">
-              <div className="col">
-                <h3 className="divHeader">
-                  {`${userDisplayName}, ${siteName}`}
-                </h3>
-              </div>
-            </div>
-            <div className="row">
-              { disconnectComponents ? <PreviousUploadsTable previousUploads={previousUploads} /> : <PreviousUploadsTableConnected />}
-              <PreviousUploadsGraph previousUploads={previousUploads} />
-            </div>
-            <div className="row">
-              <div className="col">
-                <h3 className="divHeader">
-                  All Sites
-                </h3>
-              </div>
-            </div>
-            <div className="row justify-content-center pb-4">
-              <AllUploadsDoughnut allUploads={allUploads} />
-              <AllUploadStats />
-            </div>
+      <div className="col-md-9 ml-sm-auto col-lg-10 px-4 Dashboard">
+        <div className="row align-items-center">
+          <div className="col-12 col-md-6 align-self-center">
+            <h2 className="welcomeUser light">Dashboard</h2>
           </div>
+          <div className="col-auto">
+            <Link className="uploadBtn btn btn-primary" to="/upload">Upload Data</Link>
+          </div>
+          <div className="col-auto">
+            <Link className="downloadBtn btn btn-primary" to="/download">Download/View Data</Link>
+          </div>
+          {featureAvailable.dashboardEditable ? editBtn : ''}
+        </div>
+        <div className="row">
+          <div className="col">
+            <h3 className="divHeader">
+              {`${userDisplayName}, ${siteName}`}
+            </h3>
+          </div>
+        </div>
+        <div className="row">
+          { disconnectComponents ? <PreviousUploadsTable previousUploads={previousUploads} /> : <PreviousUploadsTableConnected />}
+          <PreviousUploadsGraph previousUploads={previousUploads} />
+        </div>
+        <div className="row">
+          <div className="col">
+            <h3 className="divHeader">
+              All Sites
+            </h3>
+          </div>
+        </div>
+        <div className="row justify-content-center pb-4">
+          <AllUploadsDoughnut allUploads={allUploads} />
+          <AllUploadStats />
+        </div>
+      </div>
     );
   }
   return (<Redirect to="/" />);

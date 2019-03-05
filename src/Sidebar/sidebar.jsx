@@ -17,11 +17,17 @@ export function Sidebar({
     <nav className="col-md-2 d-none d-md-block bg-light sidebar">
       <div className="sidebar-sticky">
         <ul className="nav flex-column">
-          <li className="nav-item">
-            <Link to="/dashboard" className="nav-link active">Dashboard</Link>
+          <li className="nav-item mt-2">
+            <Link to="/dashboard" className="nav-link active">
+              <span className="oi oi-home" />
+              &nbsp;Dashboard
+            </Link>
           </li>
           <li className="nav-item">
-            <Link to="/methods" className="nav-link">Methods</Link>
+            <Link to="/methods" className="nav-link">
+              <span className="oi oi-excerpt" />
+              &nbsp;Methods
+            </Link>
           </li>
         </ul>
 
@@ -29,11 +35,17 @@ export function Sidebar({
           <span>Analysis</span>
         </h6>
         <ul className="nav flex-column mb-2">
-          <li className="nav-item">
-            <Link to="/analysis/animal" className="nav-link">Animal</Link>
+          <li className="nav-item pl-2">
+            <Link to="/analysis/animal" className="nav-link">
+              <span className="icon-Animal" />
+              &nbsp;Animal
+            </Link>
           </li>
-          <li className="nav-item">
-            <Link to="/analysis/human" className="nav-link">Human</Link>
+          <li className="nav-item pl-2">
+            <Link to="/analysis/human" className="nav-link">
+              <span className="icon-Human" />
+              &nbsp;Human
+            </Link>
           </li>
         </ul>
 
@@ -41,11 +53,17 @@ export function Sidebar({
           <span>Data</span>
         </h6>
         <ul className="nav flex-column mb-2">
-          <li className="nav-item">
-            <Link to="/download" className="nav-link">Download/View Data</Link>
+          <li className="nav-item pl-2">
+            <Link to="/download" className="nav-link">
+              <span className="oi oi-data-transfer-download" />
+              &nbsp;Download/View Data
+            </Link>
           </li>
-          <li className="nav-item">
-            <Link to="/upload" className="nav-link">Upload Data</Link>
+          <li className="nav-item pl-2">
+            <Link to="/upload" className="nav-link">
+              <span className="oi oi-cloud-upload" />
+              &nbsp;Upload Data
+            </Link>
           </li>
         </ul>
       </div>

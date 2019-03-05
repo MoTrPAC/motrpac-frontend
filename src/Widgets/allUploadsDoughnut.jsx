@@ -8,7 +8,7 @@ import colors from '../lib/colors';
 function AllUploadsDoughnut({ allUploads }) {
   const types = [...new Set(allUploads.map(upload => upload.availability))];
   const availabilityCount = countUploads(allUploads.map(upload => upload.availability), types);
-  const baseColors = [colors.base_palette.accent_green, colors.base_palette.primary_blue, colors.base_palette.stanford_cool_grey];
+  const baseColors = [colors.base_palette.accent_green, colors.base_palette.primary_blue, colors.base_palette.accent_yellow];
   const borderColors = baseColors.map(c => tinycolor(c).darken(10).toHexString());
   const bgColors = baseColors.map(c => tinycolor(c).lighten(10).toHexString());
   const data = {

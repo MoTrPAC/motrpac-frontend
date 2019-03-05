@@ -56,7 +56,7 @@ function PreviousUploadsGraph({ previousUploads }) {
         // borderColor: pendingQCBorders,
         borderWidth: 1,
         // backgroundColor: pendingQCColors,
-        backgroundColor: colors.base_palette.stanford_cool_grey,
+        backgroundColor: colors.base_palette.accent_yellow,
       },
       {
         label: 'Internally Available',
