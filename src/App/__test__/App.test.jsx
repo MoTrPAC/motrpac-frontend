@@ -107,7 +107,6 @@ describe('Authenticated Application routing', () => {
     // Update required to re-render the application
     mountApp.update();
     testCorrectComponentInPath(mountApp, 'Dashboard', '/dashboard', history, true);
-    expect(mountApp.find('Sidebar').first().find('nav')).toHaveLength(1);
   });
 
   test('loads the download page at /download', () => {
@@ -115,7 +114,6 @@ describe('Authenticated Application routing', () => {
     // Update required to re-render the application
     mountApp.update();
     testCorrectComponentInPath(mountApp, 'DownloadPage', '/download', history, true);
-    expect(mountApp.find('Sidebar').first().find('nav')).toHaveLength(1);
   });
 
   test('loads the upload page at /upload', () => {
@@ -123,7 +121,6 @@ describe('Authenticated Application routing', () => {
     // Update required to re-render the application
     mountApp.update();
     testCorrectComponentInPath(mountApp, 'UploadScreen', '/upload', history, true);
-    expect(mountApp.find('Sidebar').first().find('nav')).toHaveLength(1);
   });
 
   test('loads the linkout page at /external-links', () => {
