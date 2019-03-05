@@ -32,7 +32,7 @@ export function DownloadPage({
     return <Redirect to="/" />;
   }
   return (
-    <div className="container downloadPage">
+    <div className="downloadPage col-md-9 ml-sm-auto col-lg-10 px-4">
       <div className="row titleRow mb-1">
         <div className="col-12 col-md-4">
           <h2>Download Data</h2>

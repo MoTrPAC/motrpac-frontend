@@ -3,8 +3,14 @@ import { Bar as CBar } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import colors from '../lib/colors';
 
-// Returns an object with unique keys for each present analysis and values
-//   corresponding to the count of each analysis for creating histograms
+/**
+ * Returns an object with unique keys for each present analysis and values
+ * corresponding to the count of each analysis for creating histograms
+ *
+ * @param {Object} data data set to have occurances counted
+ * @param {Array} types Array of unique labels for the data
+ * @return {Object} Number of occurances for each type of data
+ */
 export function countUploads(data, types) {
   const counts = {};
   types.forEach((type) => { counts[type] = 0; });
@@ -16,43 +22,63 @@ export function countUploads(data, types) {
 
 function PreviousUploadsGraph({ previousUploads }) {
   const types = [...new Set(previousUploads.map(upload => upload.dataType))];
+
+
+  // Pending Q.C. sorted data
   const pendingQC = previousUploads.filter(upload => upload.availability === 'Pending Q.C.');
   const pendingQCCount = countUploads(pendingQC.map(upload => upload.dataType), types);
+
+  // Internally available sorted data
   const internalAvailable = previousUploads.filter(upload => upload.availability === 'Internally Available');
   const internalAvailableCount = countUploads(internalAvailable.map(upload => upload.dataType), types);
+
+  // Publically available sorted data
   const publicAvailable = previousUploads.filter(upload => upload.availability === 'Publicly Available');
   const publicAvailableCount = countUploads(publicAvailable.map(upload => upload.dataType), types);
+
+  // Input to chartJS bar chart
   const data = {
     labels: Object.keys(pendingQCCount),
     datasets: [
       {
         label: 'Pending Q.C.',
         data: Object.values(pendingQCCount),
-        borderColor: colors.graphs.dgray,
         borderWidth: 1,
-        backgroundColor: colors.graphs.lgray,
+        backgroundColor: colors.base_palette.accent_yellow,
       },
       {
         label: 'Internally Available',
         data: Object.values(internalAvailableCount),
-        borderColor: colors.graphs.dblue,
         borderWidth: 1,
-        backgroundColor: colors.graphs.lblue,
+        backgroundColor: colors.base_palette.primary_blue,
       },
       {
         label: 'Publicly Available',
         data: Object.values(publicAvailableCount),
-        borderColor: colors.graphs.dgreen,
         borderWidth: 1,
-        backgroundColor: colors.graphs.lgreen,
+        backgroundColor: colors.base_palette.accent_green,
       },
     ],
   };
+
+  // ChartJS formatting options
   const options = {
     scales: {
       yAxes: [{
         ticks: {
           beginAtZero: true,
+        },
+        scaleLabel: {
+          display: true,
+          labelString: '# Of Uploads',
+          fontSize: 15,
+        },
+      }],
+      xAxes: [{
+        stacked: false,
+        ticks: {
+          fontSize: 15,
+          fontStyle: 'bold',
         },
       }],
     },

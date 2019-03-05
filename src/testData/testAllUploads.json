@@ -66,7 +66,7 @@
     "identifier": "1000122352",
     "subject": "Human",
     "phase": "1A",
-    "type": "Metabolomics",
+    "type": "SomaLogic",
     "date": "11/25/2018",
     "availability": "Pending Q.C.",
     "site": "GT CAS"
@@ -165,7 +165,7 @@
     "identifier": "1000112372",
     "subject": "Human",
     "phase": "1A",
-    "type": "Metabolomics",
+    "type": "SomaLogic",
     "date": "11/25/2018",
     "availability": "Pending Q.C.",
     "site": "Mayo CAS"
@@ -264,7 +264,7 @@
     "identifier": "1000112352",
     "subject": "Human",
     "phase": "1A",
-    "type": "Metabolomics",
+    "type": "SomaLogic",
     "date": "11/25/2018",
     "availability": "Pending Q.C.",
     "site": "Stanford CAS"
