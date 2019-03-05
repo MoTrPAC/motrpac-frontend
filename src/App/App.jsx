@@ -20,10 +20,14 @@ import CallbackConnected from '../Auth/callback';
 const store = configureStore();
 
 function App({ history = History }) {
+  // Temp config to show/hide test interface visuals
+  const urlParams = new URLSearchParams(window.location.search);
+  const appClass = urlParams.has('version') && urlParams.get('version') === 'alpha' ? 'App test-version' : 'App';
+
   return (
     <Provider store={store}>
       <Router history={history}>
-        <div className="App">
+        <div className={appClass}>
           <header>
             <NavbarConnected />
           </header>
