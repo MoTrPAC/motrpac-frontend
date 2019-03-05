@@ -1,0 +1,91 @@
+/* bootstrap customization */
+$blue:    $primary-blue !default;
+$purple:  $accent-violet !default;
+$red:     $accent-red !default;
+$yellow:  $accent-yellow !default;
+$green:   $accent-green !default;
+
+.btn {
+  color: #fff;
+  font-weight: $regular-weight;
+}
+
+.btn-primary {
+  background-color: $primary-blue;
+  border-color: $primary-blue;
+
+  &:hover, &:focus, &:active, &.active {
+    background-color: darken($primary-blue, 10%);
+    border-color: darken($primary-blue, 10%);
+  }
+
+  &.outline {
+    background-color: #fff;
+    color: $primary-blue;
+
+    &:hover, &:focus, &:active, &.active {
+      background-color: $primary-blue;
+      color: #fff;
+    }
+  }
+}
+
+.btn-success {
+  background-color: $accent-green;
+  border-color: $accent-green;
+
+  &:hover, &:focus, &:active, &.active {
+    background-color: darken($accent-green, 10%);
+    border-color: darken($accent-green, 10%);
+  }
+
+  &.outline {
+    background-color: #fff;
+    color: $accent-green;
+
+    &:hover, &:focus, &:active, &.active {
+      background-color: $accent-green;
+      color: #fff;
+    }
+  }
+}
+
+.btn-warning {
+  background-color: $accent-yellow;
+  border-color: $accent-yellow;
+
+  &:hover, &:focus, &:active, &.active {
+    background-color: darken($accent-yellow, 10%);
+    border-color: darken($accent-yellow, 10%);
+  }
+
+  &.outline {
+    background-color: #fff;
+    color: $accent-yellow;
+
+    &:hover, &:focus, &:active, &.active {
+      background-color: $accent-yellow;
+      color: #fff;
+    }
+  }
+}
+
+.btn-danger {
+  background-color: $accent-red;
+  border-color: $accent-red;
+
+  &:hover, &:focus, &:active, &.active {
+    background-color: darken($accent-red, 10%);
+    border-color: darken($accent-red, 10%);
+  }
+
+  &.outline {
+    background-color: #fff;
+    color: $accent-red;
+
+    &:hover, &:focus, &:active, &.active {
+      background-color: $accent-red;
+      color: #fff;
+    }
+  }
+}

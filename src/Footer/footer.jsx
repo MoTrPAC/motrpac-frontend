@@ -1,48 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actions from '../Auth/authActions';
+import MoTrPAClogo from '../assets/logo-motrpac.png';
 
 /**
  * Renders the global footer.
- * 
+ *
  * @param {Boolean}   isAuthenticated Redux state for user's authentication status.
- * @param {Object}    profile         Redux state for authenticated user's info.
  * @param {Function}  login           Redux action for user login.
- * @param {Function}  logout          Redux action for user logout.
- * 
+ *
  * @returns {object} JSX representation of the global footer.
  */
-export function Footer({
-  isAuthenticated,
-  profile,
-  login,
-  logout,
-}) {
-  const userGivenName = profile.user_metadata && profile.user_metadata.givenName ? profile.user_metadata.givenName : profile.name;
-  const handleLogout = () => {
-    logout();
-    return <Redirect to="/" />;
-  };
+export function Footer({ isAuthenticated, login }) {
   // Function to render login button
   const LoginButton = () => {
     return (
       <span className="user-login-button">
-        {isAuthenticated && (
-          <span>
-            <img src={profile.picture} className="user-avatar" alt="avatar" />
-            <button type="button" onClick={handleLogout} className="logInOutBtn btn">
-              {userGivenName}
-              &nbsp;Logout
-            </button>
-          </span>
-        )}
-        {!isAuthenticated && (
-          <button type="button" onClick={login} className="logInOutBtn btn">
-            Submitter Login
-          </button>
-        )}
+        <button type="button" onClick={login} className="logInBtn btn btn-primary">
+          Submitter Login
+        </button>
       </span>
     );
   };
@@ -57,37 +34,49 @@ export function Footer({
   // TODO: Find out how to best do error handling
   return (
     <footer className="footer">
-      <div className="container">
-        <div className="row">
-          <div className="col-9">
-            <p className="footer-content">
-              Data Hub designed and maintained by the MoTrPAC BioInformatics
-              Center at
-              <a href="https://www.stanford.edu/" target="_blank" rel="noopener noreferrer">
-                {' '}
-                Stanford University
+      {!isAuthenticated && (
+        <div className="container footer-nav">
+          <div className="row align-items-end">
+            <div className="col-12 col-lg-4 footer-nav-logo">
+              <a href="/" className="navbar-brand footer-logo">
+                <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
               </a>
-            </p>
-            <p className="footer-content">
-              Funded by the
-              <a href="https://commonfund.nih.gov/" target="_blank" rel="noopener noreferrer">
-                {' '}
-                NIH Common Fund
-              </a>
-            </p>
-          </div>
-          <div className="col user-login">
-            <LoginButton />
+            </div>
+            <div className="col-12 col-lg-8 row justify-content-end footer-nav-items">
+              <ul className="nav">
+                <li className="nav-item navItem"><a href="/" className="nav-link">Home</a></li>
+                <li className="nav-item navItem"><a href="/team" className="nav-link">About Us</a></li>
+                <li className="nav-item navItem"><a href="/contact" className="nav-link">Contact Us</a></li>
+                <li className="nav-item navItem">
+                  <LoginButton />
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col copyright">
-            <p>
-              &#169;
-              {getCopyrightYear()}
-              &nbsp;Stanford University
-            </p>
-          </div>
+      )}
+      <div className="footer-disclaimers">
+        <div className="footer-content">
+          <span>
+            MoTrPAC Data Hub is designed and maintained by the MoTrPAC BioInformatics
+            Center at&nbsp;
+            <a href="https://www.stanford.edu/" target="_blank" rel="noopener noreferrer">
+              Stanford University
+            </a>
+            <span>.&nbsp;</span>
+          </span>
+          <span>
+            Funded by the&nbsp;
+            <a href="https://commonfund.nih.gov/" target="_blank" rel="noopener noreferrer">
+              NIH Common Fund
+            </a>
+            <span>.</span>
+          </span>
+        </div>
+        <div className="footer-content">
+          &#169;
+          {getCopyrightYear()}
+          &nbsp;Stanford University
         </div>
       </div>
     </footer>
@@ -95,31 +84,20 @@ export function Footer({
 }
 
 Footer.propTypes = {
-  profile: PropTypes.shape({
-    name: PropTypes.string,
-    nickname: PropTypes.string,
-    email: PropTypes.string,
-    picture: PropTypes.string,
-    user_metadata: PropTypes.object,
-  }),
   isAuthenticated: PropTypes.bool,
   login: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
 };
 
 Footer.defaultProps = {
-  profile: {},
   isAuthenticated: false,
 };
 
 const mapStateToProps = state => ({
-  profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
 });
 
 const mapDispatchToProps = dispatch => ({
   login: () => dispatch(actions.login()),
-  logout: () => dispatch(actions.logout()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);

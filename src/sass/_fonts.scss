@@ -1,9 +1,11 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,500');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 @import 'assets/open-iconic-master/font/css/open-iconic-bootstrap.css';
-$raleway: 'Raleway', sans-serif;
+$opensans: 'Open Sans', sans-serif;
+$font-family-base: $opensans !default;
 $light-weight: 300;
 $regular-weight: 400;
-$heavy-weight: 600;
+$semibold-weight: 600;
+$bold-weight: 700;
 
 @font-face {
   font-family: 'icomoon';

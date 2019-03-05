@@ -5,23 +5,23 @@
     }
   }
   .expandBtn {
-    background-color: white;
+    background-color: #fff;
     border: none;
-    color: $dblue;
+    color: $primary-blue;
   }
   .public {
     .oi, .hoverStatus {
-    color: $green;
+    color: $accent-green;
     }
   }
   .internal {
     .oi, .hoverStatus {
-      color: $dblue;
+      color: $primary-blue;
     }
   }
   .pending {
     .oi, .hoverStatus{
-      color: $dgray;
+      color: $stanford-cool-grey;
     }
   }
   .uploadRow {
@@ -32,17 +32,17 @@
       overflow: hidden;
       margin: 0;
     }
-    background-color:white;
+    background-color:#fff;
     transition: .15s ease-in-out;
-    border-bottom: 1px solid transparentize($gray,0.8);
+    border-bottom: 1px solid transparentize($stanford-cool-grey ,0.8);
     &:hover{
-      border-bottom: 1px solid $dblue;
+      border-bottom: 1px solid $primary-blue;
       transition: .15s ease-in-out;
     }
   }
   .uploadHeader {
-    color: $dblue;
-    border-bottom: 1px solid $dblue;
+    color: $primary-blue;
+    border-bottom: 1px solid $primary-blue;
   }
   .history{
     p {
@@ -58,7 +58,7 @@
   .caretCol {
     padding:0;
     .oi {
-      color: $dgray;
+      color: $stanford-cool-grey;
     }
     .hiddenCaret {
       color: transparent;
@@ -67,19 +67,19 @@
   .viewMoreBtn {
     text-align: center;
     background-color: transparent;
-    border: 1px solid $blue;
-    color: $blue;
+    border: 1px solid $primary-blue;
+    color: $primary-blue;
     padding: 3px 9px;
     margin: 6px 6px;
   }
   .editUploadBtn {
     background-color: transparent;
-    border: 1px solid $green;
-    color: $green;
+    border: 1px solid $accent-green;
+    color: $accent-green;
     padding: 3px 9px;
     margin: 6px 6px;
     .addUploadIcon {
-      color: $green;
+      color: $accent-green;
     }
   }
 }

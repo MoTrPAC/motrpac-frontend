@@ -1,7 +1,6 @@
 .Dashboard {
-  margin-top:20px; 
-  h2 { color: $dblue;
-  }
+  margin-top: 20px; 
+
   .divHeader {
     color: $dblue;
     font-size: 1.25rem;
@@ -13,12 +12,12 @@
     padding-bottom: 1rem;
   }
   .uploadBtn { 
-    background: $dblue;
-    border-color: $dblue;
+    background: $primary-blue;
+    border-color: $primary-blue;
   }
   .downloadBtn { 
-    background: $green;
-    border-color: $green;
+    background: $accent-green;
+    border-color: $accent-green;
   }
   .disabled {
     //background: $gray;
