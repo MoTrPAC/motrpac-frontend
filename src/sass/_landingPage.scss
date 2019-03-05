@@ -59,7 +59,6 @@ section {
 
     .particles-wrapper {
       width: 100%;
-      height: 100%;
     }
 
     .featurette-wrapper {
@@ -68,19 +67,18 @@ section {
       justify-content: flex-start;
       padding-left: 15px;
       position: relative;
+    }
+    .content {
+      width: 48%;
 
-      .content {
-        width: 48%;
-
-        h3 {
-          color: #f9c002;
-          text-shadow: 0 0 0.3em $blue;
-        }
-    
-        p {
-          color: #fff;
-          text-shadow: 0 0 0.3em $dblue;
-        }
+      h3 {
+        color: #f9c002;
+        text-shadow: 0 0 0.3em $blue;
+      }
+  
+      p {
+        color: #fff;
+        text-shadow: 0 0 0.3em $dblue;
       }
     }
   }

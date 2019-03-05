@@ -1,10 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Particles from 'react-particles-js';
 
-export function LandingPage() {
+export function LandingPage({ isAuthenticated = false }) {
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
   return (
-    <div className="marketing">
+    <div className="row marketing">
       <main>
         <div className="container hero h-100">
           <div className="row motrpac-tag-line h-100">
@@ -112,4 +116,8 @@ export function LandingPage() {
   );
 }
 
-export default connect()(LandingPage);
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(LandingPage);

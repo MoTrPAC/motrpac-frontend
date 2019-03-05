@@ -16,6 +16,7 @@ import MethodsConnected from '../MethodsPage/methods';
 import TeamPage from '../TeamPage/teamPage';
 import Contact from '../ContactPage/contact';
 import CallbackConnected from '../Auth/callback';
+import Sidebar from '../Sidebar/sidebar';
 
 const store = configureStore();
 
@@ -23,11 +24,12 @@ function App({ history = History }) {
   return (
     <Provider store={store}>
       <Router history={history}>
-        <div className="App">
+        <div className="App container-fluid">
           <header>
             <NavbarConnected />
           </header>
-          <div className="componentHolder">
+          <div className="row justify-content-center">
+            <Sidebar />
             <Switch>
               <Route path="/callback" component={CallbackConnected} />
               <Route path="/" exact component={LandingPageConnected} />
@@ -41,9 +43,9 @@ function App({ history = History }) {
               <Route path="/contact" component={Contact} />
             </Switch>
           </div>
-          <FooterConnected />
         </div>
       </Router>
+      <FooterConnected />
     </Provider>
   );
 }

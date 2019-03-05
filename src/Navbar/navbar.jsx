@@ -62,7 +62,7 @@ export function Navbar({
   };
 
   const navbar = (
-    <nav className="navbar navbar-expand-lg fixed-top navbar-light flex-md-nowrap p-0 shadow bg-white">
+    <nav className="navbar navbar-expand-lg fixed-top navbar-light flex-md-nowrap p-0 shadow-sm bg-white">
       <div className={navContainerClasses}>
         <Link to="/" className={navBrandClasses}>
           <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />

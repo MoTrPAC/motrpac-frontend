@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Sidebar from '../Sidebar/sidebar';
 import PreviousUploadsTableConnected, { PreviousUploadsTable } from '../Widgets/previousUploadsTable';
 import PreviousUploadsGraph from '../Widgets/previousUploadsGraph';
 import AllUploadsDoughnut from '../Widgets/allUploadsDoughnut';
@@ -41,9 +40,6 @@ export function Dashboard({
 
   if (isAuthenticated) {
     return (
-      <div className="container-fluid">
-        <div className="row">
-          <Sidebar />
           <div className="col-md-9 ml-sm-auto col-lg-10 px-4 Dashboard">
             <div className="row align-items-center">
               <div className="col-12 col-md-6 align-self-center">
@@ -80,8 +76,6 @@ export function Dashboard({
               <AllUploadStats />
             </div>
           </div>
-        </div>
-      </div>
     );
   }
   return (<Redirect to="/" />);

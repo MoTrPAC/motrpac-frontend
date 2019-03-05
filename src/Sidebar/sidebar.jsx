@@ -1,12 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 /**
  * Renders the gloabl sidebar.
  *
  * @returns {Object} JSX representation of the global sidebar.
  */
-export function Sidebar() {
+export function Sidebar({
+  isAuthenticated = false,
+}) {
+  if (!isAuthenticated) {
+    return '';
+  }
   const sidebar = (
     <nav className="col-md-2 d-none d-md-block bg-light sidebar">
       <div className="sidebar-sticky">
@@ -48,5 +54,8 @@ export function Sidebar() {
 
   return sidebar;
 }
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
 
-export default Sidebar;
+export default connect(mapStateToProps)(Sidebar);

@@ -1,11 +1,19 @@
 const colors = {
+  base_palette: {
+    accent_violet: '#542E78',
+    accent_green: '#56bf46',
+    primary_blue: '#2094e8',
+    accent_red: '#f20000',
+    accent_yellow: '#f9c002',
+    stanford_cool_grey: '#4d4f53',
+  },
   graphs: {
-    dgray: '#404040',
+    gray: '#404040',
     lgray: '#8c8c8c',
-    dblue: '#183a7a',
-    lblue: '#8b9cbc',
-    dgreen: '#2d5e2d',
-    lgreen: '#96ae96',
+    dblue: '#2094E8',
+    lblue: '#71BAF0',
+    dgreen: '#3F8B33',
+    lgreen: '#93D689',
   },
 };
 
