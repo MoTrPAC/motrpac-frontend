@@ -9,13 +9,13 @@ import MoTrPAClogo from '../assets/logo-motrpac.png';
  * Renders the global header nav bar.
  *
  * @param {Boolean}   isAuthenticated Redux state for user's authentication status.
- * @param {object}    profile         Redux state for authenticated user's info.
+ * @param {Object}    profile         Redux state for authenticated user's info.
  * @param {Function}  logout          Redux action for user logout.
  *
  * @returns {Object} JSX representation of the global header nav bar.
  */
 export function Navbar({
-  isAuthenticated = false,
+  isAuthenticated,
   profile,
   logout,
 }) {
