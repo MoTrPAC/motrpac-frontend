@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 /**
  * Renders the gloabl sidebar.
  *
+ * @param {Boolean} isAuthenticated Redux state for user's authentication status.
+ *
  * @returns {Object} JSX representation of the global sidebar.
  */
 export function Sidebar({
