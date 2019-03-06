@@ -32,18 +32,14 @@ export function Navbar({
     return <Redirect to="/" />;
   };
 
-  let navContainerClasses;
-  let navBrandClasses;
   if (isAuthenticated) {
-    navContainerClasses = 'container-fluid header-navbar-items';
-    navBrandClasses = 'navbar-brand header-logo resized';
     window.removeEventListener('scroll', scrollFunction);
   } else {
-    navContainerClasses = 'container header-navbar-items';
-    navBrandClasses = 'navbar-brand header-logo';
-
     window.addEventListener('scroll', scrollFunction);
   }
+
+  // Temp config to show/hide test interface visuals
+  const urlParams = new URLSearchParams(window.location.search);
 
   // Function to render login button
   const LogoutButton = () => {
@@ -61,32 +57,61 @@ export function Navbar({
     );
   };
 
-  const navbar = (
-    <nav className="navbar navbar-expand-lg fixed-top navbar-light flex-md-nowrap p-0 shadow-sm bg-white">
-      <div className={navContainerClasses}>
-        <Link to="/" className={navBrandClasses}>
-          <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
-        </Link>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon" />
-        </button>
-        <div className="collapse navbar-collapse flex-row-reverse" id="navbarSupportedContent">
-          <ul className="navbar-nav">
-            <li className="nav-item navItem dropdown">
-              <div className="nav-link dropdown-toggle" role="button" id="navbarDropdownMenuLink" data-toggle="dropdown">About Us</div>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <Link to="/external-links" className="dropdown-item">Useful Links</Link>
-                <Link to="/team" className="dropdown-item">Who we are</Link>
-              </div>
-            </li>
-            <li className="nav-item navItem"><Link to="/contact" className="nav-link">Contact Us</Link></li>
-            <li className="nav-item navItem">
-              <LogoutButton />
-            </li>
-          </ul>
-        </div>
+  // Function to render test interface alert
+  const TestInterfaceAlert = () => {
+    const isTestInterface = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
+    return (
+      <div className="test-interface-alert w-100">
+        {isTestInterface && (
+          <div className="alert alert-dismissible fade show" role="alert">
+            <strong>Important: </strong>
+            <span>
+              This is a test version of the site. Any data enteredwill not be
+              preserved between releases.
+            </span>
+            <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        )}
       </div>
-    </nav>
+    );
+  };
+
+  const navbar = (
+    <div className="header-navbar-container fixed-top">
+      {urlParams.has('version') && urlParams.get('version') === 'alpha' && (
+        <TestInterfaceAlert />
+      )}
+      <nav className="navbar navbar-expand-lg navbar-light flex-md-nowrap p-0 shadow-sm bg-white">
+        <div className={`${isAuthenticated ? 'container-fluid' : 'container'} header-navbar-items`}>
+          <Link to="/" className={`navbar-brand header-logo ${isAuthenticated ? 'resized' : ''}`}>
+            <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
+            {urlParams.has('version') && urlParams.get('version') === 'alpha' && (
+              <span className="badge badge-pill badge-warning">Alpha</span>
+            )}
+          </Link>
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon" />
+          </button>
+          <div className="collapse navbar-collapse flex-row-reverse" id="navbarSupportedContent">
+            <ul className="navbar-nav">
+              <li className="nav-item navItem dropdown">
+                <div className="nav-link dropdown-toggle" role="button" id="navbarDropdownMenuLink" data-toggle="dropdown">About Us</div>
+                <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <Link to="/external-links" className="dropdown-item">Useful Links</Link>
+                  <Link to="/team" className="dropdown-item">Who we are</Link>
+                </div>
+              </li>
+              <li className="nav-item navItem"><Link to="/contact" className="nav-link">Contact Us</Link></li>
+              <li className="nav-item navItem">
+                <LogoutButton />
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
   );
   return navbar;
 }

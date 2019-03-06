@@ -61,6 +61,10 @@ p {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+
+  &.test-version {
+    background: url(../src/assets/background-img-test-version.gif);
+  }
 }
 
 .componentHolder {
