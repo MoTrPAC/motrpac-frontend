@@ -60,7 +60,7 @@ const teamInfo = {
       image: DavidAImg,
     },
     {
-      name: 'Archana Raja, Ph.D.',
+      name: 'Archana Raja, M.S.',
       title: 'Computational Biologist',
       image: ArchanaImg,
     },
