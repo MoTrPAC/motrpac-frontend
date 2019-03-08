@@ -60,7 +60,7 @@ const linkList = [
   },
 ];
 
-export function LinkoutPage() {
+export function LinkoutPage({ isAuthenticated }) {
   const links = linkList.map(category => (
     <div key={category.name} className="LinkCategory">
       <h4>{category.name}</h4>
@@ -73,7 +73,7 @@ export function LinkoutPage() {
   ));
 
   return (
-    <div className="col-md-9 ml-sm-auto col-lg-10 px-4 linkoutPage">
+    <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 linkoutPage`}>
       <div className="row title">
         <div className="col">
           <h3>Useful Links</h3>
@@ -120,6 +120,7 @@ function UsefulLink({ link }) {
     </div>
   );
 }
+
 UsefulLink.propTypes = {
   link: PropTypes.shape({
     protocol: PropTypes.string.isRequired,
@@ -128,4 +129,16 @@ UsefulLink.propTypes = {
   }).isRequired,
 };
 
-export default connect()(LinkoutPage);
+LinkoutPage.propTypes = {
+  isAuthenticated: PropTypes.bool,
+};
+
+LinkoutPage.defaultProps = {
+  isAuthenticated: false,
+};
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(LinkoutPage);
