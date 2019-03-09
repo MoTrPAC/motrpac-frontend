@@ -1,8 +1,8 @@
-body {
+html, body {
   color: $stanford-black;
   font-family: $opensans;
   height: 100%;
-  min-height: 100vh;
+  min-height: 100%;
   margin: 0;
   padding: 0;
 }
@@ -57,10 +57,16 @@ p {
   font-size: 0.85rem;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
 .App {
   display: flex;
-  min-height: 100vh;
   flex-direction: column;
+  flex-grow: 1 !important;
 
   &.test-version {
     background: url(../src/assets/background-img-test-version.gif);
