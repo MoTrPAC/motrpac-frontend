@@ -1,9 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Particles from 'react-particles-js';
+import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation.gif';
+import LayerRunner from '../assets/LandingPageGraphics/Layer_Runner_dark.png';
+import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Heart.png';
 
-export function LandingPage({ isAuthenticated = false }) {
+/**
+ * Renders the landing page in unauthenticated state.
+ *
+ * @param {Boolean} isAuthenticated Redux state for user's authentication status.
+ *
+ * @returns {object} JSX representation of the landing page.
+ */
+export function LandingPage({ isAuthenticated }) {
   if (isAuthenticated) {
     return <Redirect to="/dashboard" />;
   }
@@ -11,11 +22,16 @@ export function LandingPage({ isAuthenticated = false }) {
     <div className="row marketing">
       <main>
         <div className="container hero h-100">
-          <div className="row motrpac-tag-line h-100">
-            <h3>
-              <em>Understanding</em>
-              at the molecular level how activity makes us healthier
-            </h3>
+          <div className="row hero-wrapper h-100">
+            <div className="hero-image col-12 col-md-8 mx-auto">
+              <img src={LogoAnimation} className="img-fluid" alt="Data Layer Runner" />
+            </div>
+            <div className="content col-12 col-md-4 motrpac-tag-line">
+              <h3>
+                <em>Understanding</em>
+                at the molecular level how activity makes us healthier
+              </h3>
+            </div>
           </div>
         </div>
       </main>
@@ -47,7 +63,7 @@ export function LandingPage({ isAuthenticated = false }) {
           />
           <div className="container featurette h-100">
             <div className="row featurette-wrapper h-100">
-              <div className="content">
+              <div className="content col-12">
                 <h3>About MoTrPAC</h3>
                 <p>
                   Molecular Transducers of Physical Activity Consortium is a national
@@ -65,7 +81,10 @@ export function LandingPage({ isAuthenticated = false }) {
       <section>
         <div className="container featurette multi-omics" id="multi-omics">
           <div className="row featurette-wrapper h-100">
-            <div className="content">
+            <div className="feature-image col-12 col-md-6 mx-auto">
+              <img src={LayerRunner} className="img-fluid" alt="Data Layer Runner" />
+            </div>
+            <div className="content col-12 col-md-6">
               <h3>Multi-Omics</h3>
               <p>
                 MoTrPAC encourages investigators to develop ancillary studies (AS) in
@@ -81,13 +100,16 @@ export function LandingPage({ isAuthenticated = false }) {
         <div className="interrelated-components" id="interrelated-components">
           <div className="container featurette h-100">
             <div className="row featurette-wrapper h-100">
-              <div className="content">
+              <div className="content col-12 col-md-6">
                 <h3>Interrelated Components</h3>
                 <p>
                   Consisting of Clinical Centers, Preclinical Animal Study Sites, Chemical Analysis
                   Sites, Bioinformatics Center, Consortium Coordinating Center.
                 </p>
                 <a href="https://commonfund.nih.gov/MolecularTransducers/overview#ClinicalCenter" className="btn btn-success" role="button" target="_new">READ MORE</a>
+              </div>
+              <div className="feature-image col-12 col-md-6 mx-auto">
+                <img src={HealthyHeart} className="img-fluid" alt="Healthy Heart" />
               </div>
             </div>
           </div>
@@ -115,6 +137,14 @@ export function LandingPage({ isAuthenticated = false }) {
     </div>
   );
 }
+
+LandingPage.propTypes = {
+  isAuthenticated: PropTypes.bool,
+};
+
+LandingPage.defaultProps = {
+  isAuthenticated: false,
+};
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
