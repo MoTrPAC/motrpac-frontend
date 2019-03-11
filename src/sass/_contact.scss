@@ -1,5 +1,16 @@
-.Contact {
-  h2 {
-    margin-top: 2.0rem;
+.contactPage {
+  margin-top: 1.25rem;
+
+  .row {
+    margin: 0;
+  }
+
+  .page-title {
+    border-bottom: 1px solid $gray-400;
+    margin-bottom: 1.5rem;
+  }
+
+  p {
+    line-height: 1.5;
   }
 }

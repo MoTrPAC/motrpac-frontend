@@ -1,13 +1,41 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-export default function Contact() {
+/**
+ * Renders the Contact Us page in both
+ * unauthenticated and authenticated states.
+ *
+ * @param {Boolean} isAuthenticated Redux state for user's authentication status.
+ *
+ * @returns {Object} JSX representation of the Contact Us page.
+ */
+export function Contact({ isAuthenticated }) {
   return (
-    <div className="container Contact">
-      <div className="row align-items-center">
-        <div className="col-12 col-md-6 align-self-center">
-          <h2 className="light">Coming soon!</h2>
-        </div>
+    <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 contactPage`}>
+      <div className="page-title">
+        <h3>Contact Us</h3>
+      </div>
+      <div className="align-items-center">
+        <p>
+          For any questions or suggestions, please contact us at&nbsp;
+          <a href="mailto:motrpac-helpdesk@lists.stanford.edu">motrpac-helpdesk@lists.stanford.edu</a>
+        </p>
       </div>
     </div>
   );
 }
+
+Contact.propTypes = {
+  isAuthenticated: PropTypes.bool,
+};
+
+Contact.defaultProps = {
+  isAuthenticated: false,
+};
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(Contact);
