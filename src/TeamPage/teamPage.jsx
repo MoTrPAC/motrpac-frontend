@@ -27,7 +27,7 @@ export function TeamPage({ isAuthenticated }) {
             The Bioinformatics Center Team
           </h3>
         </div>
-        <div className="row">
+        <div className="row d-flex justify-content-center">
           {PIs}
         </div>
         <div className="row">
