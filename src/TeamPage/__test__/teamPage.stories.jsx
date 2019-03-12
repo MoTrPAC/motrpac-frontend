@@ -7,22 +7,25 @@ import { Footer } from '../../Footer/footer';
 
 const testUser = require('../../testData/testUser');
 
-const footerActions = {
-  login: action('logging in'),
+const navAction = {
   logout: action('logging out'),
+};
+
+const footerAction = {
+  login: action('logging in'),
 };
 
 storiesOf('Team Page', module)
   .addDecorator(story => (
     <div className="App">
       <header>
-        <Navbar isAuthenticated />
+        <Navbar isAuthenticated {...navAction} profile={testUser} />
       </header>
       <div className="row justify-content-center">
         {story()}
       </div>
-      <Footer isAuthenticated {...footerActions} profile={testUser} />
+      <Footer isAuthenticated {...footerAction} />
     </div>
 
   ))
-  .add('default', () => <TeamPage />);
+  .add('Default', () => <TeamPage />);
