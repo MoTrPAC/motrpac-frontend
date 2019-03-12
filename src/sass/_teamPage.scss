@@ -1,20 +1,27 @@
-.teamMember { 
-  h3, h4 {
-    font-size: 1rem;
-  }
-  h3 {
-    color: $primary-blue-shade-medium;
+.teamPage {
+  margin-top: 1.25rem;
+
+  .row {
+    margin: 0;
   }
 
-  img {
-    border-radius: 20px;
+  .page-title {
+    border-bottom: 1px solid $gray-400;
+    margin-bottom: 2.5rem;
   }
-  
-  .teamMemberImage {
-    height: 150px;
-    width: 150px;
-    background-position: center;
-    background-size: cover;
-    border-radius: 20px;
+
+  .teamMember {
+    .teamMemberImage {
+      height: 160px;
+      width: 160px;
+      background-position: center;
+      background-size: cover;
+      border: 8px solid $gray-400;
+      border-radius: 80px;
+    }
+
+    h6 {
+      color: $stanford-cardinal-red;
+    }
   }
 }
