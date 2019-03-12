@@ -1,37 +1,53 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TeamMemberCard from './teamMemberCard';
 import teamInfo from '../lib/teamInfo';
 
 /**
  * The team page, includes all team members listed in the /src/lib/teamInfo.json file.
- * Members seperated by PI's and Staff
+ * Members seperated by Principal Investigators, Staff and Co-Investigators
  *
- * @returns {Object} Team Page
+ * @param {Boolean} isAuthenticated Redux state for user's authentication status.
+ *
+ * @returns {Object} JSX representation of the Team page.
  */
-export function TeamPage({isAuthenticated = false}) {
+export function TeamPage({ isAuthenticated }) {
   const PIs = teamInfo.PIs
     .map(pi => <TeamMemberCard key={pi.name} memberInfo={pi} />);
   const staff = teamInfo.Staff
     .map(member => <TeamMemberCard key={member.name} memberInfo={member} />);
+  const CoIs = teamInfo.CoIs
+    .map(coi => <TeamMemberCard key={coi.name} memberInfo={coi} />);
   return (
-    <div className={`teamPage col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 `}>
-      <div className="row mt-4 justify-content-center">
-        <div className="col-12 col-sm-8">
-          <h2 className="light">
+    <div className={`teamPage col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4`}>
+      <div className={`${!isAuthenticated ? 'container' : ''}`}>
+        <div className="page-title">
+          <h3>
             The Bioinformatics Center Team
-          </h2>
+          </h3>
         </div>
-      </div>
-      <div className="row mt-2 justify-content-center">
-        {PIs}
-      </div>
-      <div className="row mt-4 pb-4 justify-content-center px-md-5">
-        {staff}
+        <div className="row">
+          {PIs}
+        </div>
+        <div className="row">
+          {staff}
+        </div>
+        <div className="row">
+          {CoIs}
+        </div>
       </div>
     </div>
   );
 }
+
+TeamPage.propTypes = {
+  isAuthenticated: PropTypes.bool,
+};
+
+TeamPage.defaultProps = {
+  isAuthenticated: false,
+};
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
