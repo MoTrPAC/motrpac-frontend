@@ -60,6 +60,14 @@ const linkList = [
   },
 ];
 
+/**
+ * Renders the External Links page in both
+ * unauthenticated and authenticated states.
+ *
+ * @param {Boolean} isAuthenticated Redux state for user's authentication status.
+ *
+ * @returns {Object} JSX representation of the External Links page.
+ */
 export function LinkoutPage({ isAuthenticated }) {
   const links = linkList.map(category => (
     <div key={category.name} className="LinkCategory">
@@ -74,27 +82,29 @@ export function LinkoutPage({ isAuthenticated }) {
 
   return (
     <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 linkoutPage`}>
-      <div className="page-title">
-        <h3>Useful Links</h3>
-      </div>
-      <div className="row align-items-center justify-content-center motrLink">
-        <div className="col-12 col-md-5 centered">
-          <img src={MOTRLogo} className="img-fluid" alt="MoTrPAC Logo" />
+      <div className={`${!isAuthenticated ? 'container' : ''}`}>
+        <div className="page-title">
+          <h3>Useful Links</h3>
         </div>
-        <div className="col MoTrLinkInfo h5">
-          <a href="http://MoTrPAC.org">
-            MoTrPAC Main Site
-            &nbsp;
-            <span className="oi oi-external-link" />
-          </a>
-          <p>
-            Primary entrance point for overarching MoTrPAC study of which the
-            Bioinformatic Datahub is a component.
-          </p>
+        <div className="row align-items-center justify-content-center motrLink">
+          <div className="col-12 col-md-5 centered">
+            <img src={MOTRLogo} className="img-fluid" alt="MoTrPAC Logo" />
+          </div>
+          <div className="col MoTrLinkInfo h5">
+            <a href="http://MoTrPAC.org">
+              MoTrPAC Main Site
+              &nbsp;
+              <span className="oi oi-external-link" />
+            </a>
+            <p>
+              Primary entrance point for overarching MoTrPAC study of which the
+              Bioinformatic Datahub is a component.
+            </p>
+          </div>
         </div>
-      </div>
-      <div className="externalLinks">
-        {links}
+        <div className="externalLinks">
+          {links}
+        </div>
       </div>
     </div>
   );

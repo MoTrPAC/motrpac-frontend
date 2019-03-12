@@ -13,14 +13,16 @@ import { connect } from 'react-redux';
 export function Contact({ isAuthenticated }) {
   return (
     <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 contactPage`}>
-      <div className="page-title">
-        <h3>Contact Us</h3>
-      </div>
-      <div className="align-items-center">
-        <p>
-          For any questions or suggestions, please contact us at&nbsp;
-          <a href="mailto:motrpac-helpdesk@lists.stanford.edu">motrpac-helpdesk@lists.stanford.edu</a>
-        </p>
+      <div className={`${!isAuthenticated ? 'container' : ''}`}>
+        <div className="page-title">
+          <h3>Contact Us</h3>
+        </div>
+        <div className="align-items-center">
+          <p>
+            For any questions or suggestions, please contact us at&nbsp;
+            <a href="mailto:motrpac-helpdesk@lists.stanford.edu">motrpac-helpdesk@lists.stanford.edu</a>
+          </p>
+        </div>
       </div>
     </div>
   );
