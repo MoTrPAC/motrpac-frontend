@@ -34,6 +34,7 @@ export function Navbar({
 
   if (isAuthenticated) {
     window.removeEventListener('scroll', scrollFunction);
+    document.querySelector('body').classList.add('authenticated');
   } else {
     window.addEventListener('scroll', scrollFunction);
   }
