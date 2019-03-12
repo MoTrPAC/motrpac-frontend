@@ -16,7 +16,7 @@ storiesOf('Linkout Page', module)
       <header>
         <Navbar />
       </header>
-      <div className="componentHolder">
+      <div className="row justify-content-center">
         {story()}
       </div>
       <Footer {...footerActions} />
