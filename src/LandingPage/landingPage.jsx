@@ -18,6 +18,17 @@ export function LandingPage({ isAuthenticated }) {
   if (isAuthenticated) {
     return <Redirect to="/dashboard" />;
   }
+
+  const scrollFunction = () => {
+    if (document.body.scrollTop >= 30 || document.documentElement.scrollTop >= 30) {
+      document.querySelector('.navbar-brand').classList.add('resized');
+    } else {
+      document.querySelector('.navbar-brand').classList.remove('resized');
+    }
+  };
+
+  window.addEventListener('scroll', scrollFunction, true);
+
   return (
     <div className="row marketing">
       <main>

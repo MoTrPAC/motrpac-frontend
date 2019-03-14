@@ -19,24 +19,13 @@ export function Navbar({
   profile,
   logout,
 }) {
-  const scrollFunction = () => {
-    if (document.body.scrollTop >= 30 || document.documentElement.scrollTop >= 30) {
-      document.querySelector('.navbar-brand').classList.add('resized');
-    } else {
-      document.querySelector('.navbar-brand').classList.remove('resized');
-    }
-  };
-
   const handleLogout = () => {
     logout();
     return <Redirect to="/" />;
   };
 
   if (isAuthenticated) {
-    window.removeEventListener('scroll', scrollFunction);
     document.querySelector('body').classList.add('authenticated');
-  } else {
-    window.addEventListener('scroll', scrollFunction);
   }
 
   // Temp config to show/hide test interface visuals
