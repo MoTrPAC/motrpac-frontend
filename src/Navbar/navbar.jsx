@@ -44,11 +44,20 @@ export function Navbar({
 
   // Function to render login button
   const LogoutButton = () => {
+    const userDisplayName = profile.user_metadata && profile.user_metadata.name
+      ? profile.user_metadata.name : profile.name;
+    const siteName = profile.user_metadata && profile.user_metadata.siteName
+      ? ', ' + profile.user_metadata.siteName : '';
+
     return (
       <span>
         {isAuthenticated && (
           <span className="user-logout-button">
             <img src={profile.picture} className="user-avatar" alt="avatar" />
+            <span className="user-display-name">
+              {userDisplayName}
+              {siteName}
+            </span>
             <button type="button" onClick={handleLogout} className="logOutBtn btn btn-primary">
               Log out
             </button>
@@ -120,8 +129,6 @@ export function Navbar({
 Navbar.propTypes = {
   profile: PropTypes.shape({
     name: PropTypes.string,
-    nickname: PropTypes.string,
-    email: PropTypes.string,
     picture: PropTypes.string,
     user_metadata: PropTypes.object,
   }),
