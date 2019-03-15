@@ -28,8 +28,9 @@ describe('Navbar', () => {
     expect(defaultMountNav.find('.logOutBtn')).not.toHaveLength(1);
   });
 
-  test('Has [username] logout button if logged in', () => {
+  test('Displays [username, sitename] and logout button if logged in', () => {
     expect(loggedInMountNav.find('Navbar').first().props().isAuthenticated).toBeTruthy();
+    expect(loggedInMountNav.find('.user-display-name').text()).toEqual(`${testUser.user_metadata.name}, ${testUser.user_metadata.siteName}`);
     expect(loggedInMountNav.find('.logOutBtn').text()).toMatch('Log out');
   });
 });
