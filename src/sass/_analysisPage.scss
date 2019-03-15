@@ -1,6 +1,9 @@
 .analysisPage {
-  margin-top: 10px;
-
+  .page-title {
+    h3 {
+      margin-bottom: 0;
+    }
+  }
   .oi-media-record {
     color: $gray-semi-transparent;
     margin: 2px;
