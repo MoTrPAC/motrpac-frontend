@@ -22,7 +22,7 @@ export function TeamPage({ isAuthenticated }) {
   return (
     <div className={`teamPage col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4`}>
       <div className={`${!isAuthenticated ? 'container' : ''}`}>
-        <div className="page-title">
+        <div className="page-title pt-3 pb-2 border-bottom">
           <h3>
             The Bioinformatics Center Team
           </h3>

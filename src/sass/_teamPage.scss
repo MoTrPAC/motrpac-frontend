@@ -1,13 +1,10 @@
 .teamPage {
-  margin-top: 1.25rem;
-
-  .row {
-    margin: 0;
-  }
-
   .page-title {
-    border-bottom: 1px solid $gray-400;
     margin-bottom: 2.5rem;
+
+    h3 {
+      margin-bottom: 0;
+    }
   }
 
   .teamMember {

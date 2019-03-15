@@ -14,7 +14,7 @@ export function Contact({ isAuthenticated }) {
   return (
     <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 contactPage`}>
       <div className={`${!isAuthenticated ? 'container' : ''}`}>
-        <div className="page-title">
+        <div className="page-title pt-3 pb-2 border-bottom">
           <h3>Contact Us</h3>
         </div>
         <div className="align-items-center">

@@ -83,7 +83,7 @@ export function LinkoutPage({ isAuthenticated }) {
   return (
     <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 linkoutPage`}>
       <div className={`${!isAuthenticated ? 'container' : ''}`}>
-        <div className="page-title">
+        <div className="page-title pt-3 pb-2 border-bottom">
           <h3>Useful Links</h3>
         </div>
         <div className="row align-items-center justify-content-center motrLink">
