@@ -166,7 +166,7 @@ export function PreviousUploadsTable({ previousUploads, expandRow, onViewMoreHis
           </p>
         </div>
       </div>
-    )
+    );
   }
 
   // creating an upload row for each unique experiment
@@ -175,9 +175,9 @@ export function PreviousUploadsTable({ previousUploads, expandRow, onViewMoreHis
       <UploadRow upload={upload} viewMore={upload.viewMoreHistory} key={upload.biospecimenBarcode + upload.dataType} />
     ));
   return (
-    <div className="col-12 col-lg-7 previousUploadsTable">
+    <div className="col-12 previousUploadsTable">
       <Legend />
-      <div className="row uploadHeader mb-2 uploadRow">
+      <div className="row uploadHeader uploadRow">
         <div className="col-1 caretCol">
           <span className="oi oi-caret-right hiddenCaret" />
         </div>

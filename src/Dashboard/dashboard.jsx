@@ -49,20 +49,32 @@ export function Dashboard({
           </div>
           {featureAvailable.dashboardEditable ? editBtn : ''}
         </div>
-        <div className="row">
-          { disconnectComponents ? <PreviousUploadsTable previousUploads={previousUploads} /> : <PreviousUploadsTableConnected />}
-          <PreviousUploadsGraph previousUploads={previousUploads} />
-        </div>
-        <div className="row">
-          <div className="col">
-            <h3 className="divHeader">
-              All Sites
-            </h3>
+        <div className="previous-uploads-table">
+          <div className="card">
+            <h5 className="card-header">Uploads</h5>
+            <div className="card-body">
+              { disconnectComponents ? <PreviousUploadsTable previousUploads={previousUploads} /> : <PreviousUploadsTableConnected /> }
+            </div>
           </div>
         </div>
-        <div className="row justify-content-center pb-4">
-          <AllUploadsDoughnut allUploads={allUploads} />
-          <AllUploadStats />
+        <div className="previous-uploads-graph">
+          <div className="card">
+            <h5 className="card-header">Assay Categories</h5>
+            <div className="card-body">
+              <PreviousUploadsGraph previousUploads={previousUploads} />
+            </div>
+          </div>
+        </div>
+        <div className="total-uploads-graph">
+          <div className="card">
+            <h5 className="card-header">Total Uploads By All Sites</h5>
+            <div className="card-body">
+              <div className="row justify-content-center">
+                <AllUploadsDoughnut allUploads={allUploads} />
+                <AllUploadStats />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
