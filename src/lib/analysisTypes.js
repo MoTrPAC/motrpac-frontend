@@ -17,6 +17,33 @@ import MATimeIconInactive from '../assets/analysisIcons/MA_time_inactive.svg';
 
 const analysisTypes = [
   {
+    title: 'Phenotypic Data',
+    shortName: 'PD',
+    icon: omicsIcon,
+    inactiveIcon: omicsIconInactive,
+    active: true,
+    subAnalyses: [
+      {
+        title: 'Acute Test',
+        icon: MAGeneIcon,
+        inactiveIcon: MAGeneIconInactive,
+        shortName: 'PD_AT',
+        input: 'Specific Tissue(s), Gene, and Time Window',
+        description: 'Displays up and down regulations. Gene lists are detected for interpretation',
+        active: true,
+      },
+      {
+        title: 'Familiarization',
+        icon: MATimeIcon,
+        inactiveIcon: MATimeIconInactive,
+        shortName: 'PD_F',
+        input: 'Differentially Expressed Genes',
+        description: 'Genes are clustered by their trajectories. Results sorted by tissue',
+        active: true,
+      },
+    ],
+  },
+  {
     title: 'Published Data Meta-Analysis',
     shortName: 'PDMA',
     icon: globeIcon,
