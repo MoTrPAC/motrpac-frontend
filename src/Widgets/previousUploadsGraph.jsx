@@ -86,7 +86,7 @@ function PreviousUploadsGraph({ previousUploads }) {
     maintainAspectRatio: false,
   };
   return (
-    <div className="col-12 col-lg-5 chartCol align-self-center">
+    <div className="col-12 chartCol align-self-center">
       <CBar
         data={data}
         options={options}

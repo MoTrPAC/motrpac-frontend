@@ -33,23 +33,23 @@ export function DownloadPage({
   }
   return (
     <div className="downloadPage col-md-9 ml-sm-auto col-lg-10 px-4">
-      <div className="row titleRow mb-1">
-        <div className="col-12 col-md-4">
-          <h2>Download Data</h2>
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <div className="page-title">
+          <h3>Download Data</h3>
         </div>
-        <div className="col">
-          <button className={`viewCart m-1 mr-sm-5 btn ${viewCart ? 'active' : ''}`} type="button" onClick={onViewCart}>
+        <div className="btn-toolbar">
+          <button className={`viewCart ml-1 mr-sm-4 btn btn-sm btn-primary ${viewCart ? 'active' : ''}`} type="button" onClick={onViewCart}>
             {viewCart ? 'Return ' : 'View Cart '}
           </button>
-          <button className="emptyCart m-1 btn" type="button" onClick={onEmptyCart}>Empty Cart</button>
-          <button className="addAllToCart m-1 btn" type="button" onClick={onAddAllToCart}>Add All To Cart</button>
-          <button className="downloadCart m-1 btn" type="button" disabled>
+          <button className="emptyCart ml-1 btn btn-sm btn-secondary" type="button" onClick={onEmptyCart}>Empty Cart</button>
+          <button className="addAllToCart ml-1 btn btn-sm btn-success" type="button" onClick={onAddAllToCart}>Add All To Cart</button>
+          <button className="downloadCart ml-1 btn btn-sm btn-info" type="button" disabled>
             Download Items&nbsp;
             {cartItems.length ? (<span className="badge badge-pill cartCount">{cartItems.length}</span>) : ''}
           </button>
         </div>
       </div>
-      <div className="row justify-content-center">
+      <div className="row justify-content-center download-content-container">
         <DownloadFilter
           activeFilters={activeFilters}
           onChangeFilter={onChangeFilter}

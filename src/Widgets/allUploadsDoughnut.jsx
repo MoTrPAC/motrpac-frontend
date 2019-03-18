@@ -23,7 +23,7 @@ function AllUploadsDoughnut({ allUploads }) {
     ],
   };
   return (
-    <div className="col-8 col-md-4 align-self-center">
+    <div className="col-8 col-md-5 align-self-center">
       <Doughnut
         data={data}
         width={50}

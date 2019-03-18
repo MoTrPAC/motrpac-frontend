@@ -1,7 +1,7 @@
 .previousUploadsTable {
   .legend {
     p {
-      font-size:0.90rem;
+      font-size: 0.85rem;
     }
   }
   .expandBtn {
@@ -42,7 +42,14 @@
   }
   .uploadHeader {
     color: $primary-blue;
-    border-bottom: 1px solid $primary-blue;
+    border-bottom: 2px solid $primary-blue;
+    font-size: 0.85rem;
+    font-weight: $semibold-weight;
+    padding-bottom: 0.15rem;
+
+    &:hover{
+      border-bottom: 2px solid $primary-blue;
+    }
   }
   .history{
     p {

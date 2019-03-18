@@ -90,7 +90,7 @@ describe('Pure AnalysisHome Page', () => {
           {...analysisActions}
         />,
       );
-      expect(shallowAnalysis.find('h2').text()).toEqual(expect.stringMatching(expected));
+      expect(shallowAnalysis.find('h3').text()).toEqual(expect.stringMatching(expected));
     });
   });
 
@@ -103,7 +103,7 @@ describe('Pure AnalysisHome Page', () => {
           {...analysisActions}
         />,
       );
-      expect(shallowAnalysis.find('h2')).toHaveLength(1);
+      expect(shallowAnalysis.find('h3')).toHaveLength(1);
       expect(shallowAnalysis.find('AnalysisTypeButton')).toHaveLength(6);
       expect(shallowAnalysis.find('.breadcrumbs')).toHaveLength(1);
     });

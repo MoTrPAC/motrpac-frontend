@@ -149,7 +149,15 @@ nav {
         width: 36px;
         height: 36px;
         border-radius: 100%;
-        margin-right: 0.35em;
+        margin-right: 0.35rem;
+      }
+
+      .user-display-name {
+        color: $stanford-cool-grey;
+        font-size: 0.9rem;
+        font-weight: $regular-weight;
+        margin-right: 0.5rem;
+        vertical-align: middle;
       }
 
       .user-logout-button {
@@ -157,6 +165,7 @@ nav {
 
         .logOutBtn {
           margin-left: 0.5rem;
+          margin-right: 0.25rem;
         }
       }
     }

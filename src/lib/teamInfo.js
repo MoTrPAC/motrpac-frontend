@@ -9,6 +9,10 @@ import ShrutiImg from '../assets/teamMemberPhotos/Shruti.jpg';
 import DavidAImg from '../assets/teamMemberPhotos/DavidA.jpg';
 import ArchanaImg from '../assets/teamMemberPhotos/Archana.png';
 import SamirImg from '../assets/teamMemberPhotos/Samir.jpg';
+import MannyImg from '../assets/teamMemberPhotos/Manny.jpg';
+import RobImg from '../assets/teamMemberPhotos/Rob.jpg';
+import TrevorImg from '../assets/teamMemberPhotos/Trevor.jpg';
+import KellyImg from '../assets/teamMemberPhotos/Kelly.jpg';
 
 const teamInfo = {
   PIs: [
@@ -60,7 +64,7 @@ const teamInfo = {
       image: DavidAImg,
     },
     {
-      name: 'Archana Raja, Ph.D.',
+      name: 'Archana Raja, M.S.',
       title: 'Computational Biologist',
       image: ArchanaImg,
     },
@@ -68,6 +72,28 @@ const teamInfo = {
       name: 'Samir Akre',
       title: 'Software & Pipeline Developer',
       image: SamirImg,
+    },
+  ],
+  CoIs: [
+    {
+      name: 'Manuel A. Rivas, Assistant Professor',
+      title: 'Co-Investigator',
+      image: MannyImg,
+    },
+    {
+      name: 'Rob Tibshirani, Professor, Ph.D.',
+      title: 'Co-Investigator',
+      image: RobImg,
+    },
+    {
+      name: 'Trevor Hastie, Professor, Ph.D.',
+      title: 'Co-Investigator',
+      image: TrevorImg,
+    },
+    {
+      name: 'Kelly E. Ormond, MS, CGC',
+      title: 'Co-Investigator',
+      image: KellyImg,
     },
   ],
 };

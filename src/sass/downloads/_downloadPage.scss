@@ -1,28 +1,18 @@
-.viewCart{
-  color: white;
-  background-color: $primary-blue;
-  border-radius: 10px;
-  &.active {
-    background-color: white;
-    border: 1px solid $primary-blue;
-    color: $primary-blue;
+.downloadPage {
+  .page-title {
+    h3 {
+      margin-bottom: 0;
+    }
+  }
+
+  .download-content-container {
+    margin-left: 0;
   }
 }
-.emptyCart {
-  color:white;
-  background-color: $gray;
-  border-radius: 10px;
-}
-.addAllToCart {
-  color: white;
-  background-color: $accent-green;
-  border-radius: 10px;
-}
+
 .downloadCart {
-  color: white;
   cursor: not-allowed; // Temporarily disabled for demo
-  background-color: $primary-blue;
-  border-radius: 10px;
+
   .cartCount {
     background-color: white;
     color: $primary-blue;

@@ -13,10 +13,10 @@ import LinkoutPageConnected from '../LinkoutPage/linkoutPage';
 import AnalysisHomePageConnected from '../AnalysisPage/analysisHomePage';
 import DownloadPageConnected from '../DownloadPage/downloadPage';
 import MethodsConnected from '../MethodsPage/methods';
-import TeamPage from '../TeamPage/teamPage';
-import Contact from '../ContactPage/contact';
+import TeamPageConnected from '../TeamPage/teamPage';
+import ContactConnected from '../ContactPage/contact';
 import CallbackConnected from '../Auth/callback';
-import Sidebar from '../Sidebar/sidebar';
+import SidebarConnected from '../Sidebar/sidebar';
 
 const store = configureStore();
 
@@ -33,7 +33,7 @@ function App({ history = History }) {
             <NavbarConnected />
           </header>
           <div className="row justify-content-center">
-            <Sidebar />
+            <SidebarConnected />
             <Switch>
               <Route path="/callback" component={CallbackConnected} />
               <Route path="/" exact component={LandingPageConnected} />
@@ -43,8 +43,8 @@ function App({ history = History }) {
               <Route path="/download" component={DownloadPageConnected} />
               <Route path="/analysis/:subjectType" component={AnalysisHomePageConnected} />
               <Route path="/methods" component={MethodsConnected} />
-              <Route path="/team" component={TeamPage} />
-              <Route path="/contact" component={Contact} />
+              <Route path="/team" component={TeamPageConnected} />
+              <Route path="/contact" component={ContactConnected} />
             </Switch>
           </div>
         </div>

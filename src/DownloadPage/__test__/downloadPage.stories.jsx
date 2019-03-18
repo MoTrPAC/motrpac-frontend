@@ -6,6 +6,7 @@ import { DownloadPage } from '../downloadPage';
 import { defaultDownloadState } from '../downloadReducer';
 import { Navbar } from '../../Navbar/navbar';
 import { Footer } from '../../Footer/footer';
+import { Sidebar } from '../../Sidebar/sidebar';
 
 const testUser = require('../../testData/testUser');
 const testPreviousUploads = require('../../testData/testPreviousUploads');
@@ -41,21 +42,29 @@ const viewCartState = {
   viewCart: true,
 };
 
-const footerActions = {
-  login: action('logging in'),
+const navbarAction = {
   logout: action('logging out'),
+};
+
+const footerAction = {
+  login: action('logging in'),
 };
 
 storiesOf('Download Page', module)
   .addDecorator(story => (
     <div className="App">
       <header>
-        <Navbar isAuthenticated />
+        <Navbar isAuthenticated {...navbarAction} profile={testUser} />
       </header>
       <div className="componentHolder">
-        {story()}
+        <div className="container-fluid">
+          <div className="row">
+            <Sidebar isAuthenticated />
+            {story()}
+          </div>
+        </div>
       </div>
-      <Footer isAuthenticated {...footerActions} profile={testUser} />
+      <Footer isAuthenticated {...footerAction} />
     </div>
 
   ))

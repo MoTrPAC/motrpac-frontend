@@ -139,12 +139,10 @@ export function AnalysisHomePage({
 
   return (
     <div className="analysisPage col-md-9 ml-sm-auto col-lg-10 px-4">
-      <div className="row">
-        <div className="col">
-          <h2 className="light">
-            {`${subjectType} Data Analysis`}
-          </h2>
-        </div>
+      <div className="page-title pt-3 pb-2 border-bottom">
+        <h3>
+          {`${subjectType} Data Analysis`}
+        </h3>
       </div>
       <div className="row">
         <div className="col">

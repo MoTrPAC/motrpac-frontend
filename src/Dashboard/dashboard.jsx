@@ -10,7 +10,6 @@ import AllUploadStats from '../Widgets/allUploadStats';
 const allUploads = require('../testData/testAllUploads');
 
 export function Dashboard({
-  profile,
   isAuthenticated,
   isPending,
   featureAvailable,
@@ -22,9 +21,6 @@ export function Dashboard({
       <Link className="editBtn btn btn-light disabled" to="/edit-dashboard">Edit Dashboard</Link>
     </div>
   );
-
-  const userDisplayName = profile.user_metadata && profile.user_metadata.name ? profile.user_metadata.name : profile.name;
-  const siteName = profile.user_metadata && profile.user_metadata.siteName ? profile.user_metadata.siteName : null;
 
   // FIXME: temp workaround to handle callback redirect
   if (isPending) {
@@ -41,39 +37,44 @@ export function Dashboard({
   if (isAuthenticated) {
     return (
       <div className="col-md-9 ml-sm-auto col-lg-10 px-4 Dashboard">
-        <div className="row align-items-center">
-          <div className="col-12 col-md-6 align-self-center">
-            <h2 className="welcomeUser light">Dashboard</h2>
+        <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <div className="page-title">
+            <h3>Dashboard</h3>
           </div>
-          <div className="col-auto">
-            <Link className="uploadBtn btn btn-primary" to="/upload">Upload Data</Link>
-          </div>
-          <div className="col-auto">
-            <Link className="downloadBtn btn btn-primary" to="/download">Download/View Data</Link>
+          <div className="btn-toolbar">
+            <div className="btn-group">
+              <Link className="uploadBtn btn btn-sm btn-outline-primary" to="/upload">Upload Data</Link>
+              <Link className="downloadBtn btn btn-sm btn-outline-primary" to="/download">Download/View Data</Link>
+            </div>
           </div>
           {featureAvailable.dashboardEditable ? editBtn : ''}
         </div>
-        <div className="row">
-          <div className="col">
-            <h3 className="divHeader">
-              {`${userDisplayName}, ${siteName}`}
-            </h3>
+        <div className="previous-uploads-table">
+          <div className="card">
+            <h5 className="card-header">Uploads</h5>
+            <div className="card-body">
+              { disconnectComponents ? <PreviousUploadsTable previousUploads={previousUploads} /> : <PreviousUploadsTableConnected /> }
+            </div>
           </div>
         </div>
-        <div className="row">
-          { disconnectComponents ? <PreviousUploadsTable previousUploads={previousUploads} /> : <PreviousUploadsTableConnected />}
-          <PreviousUploadsGraph previousUploads={previousUploads} />
-        </div>
-        <div className="row">
-          <div className="col">
-            <h3 className="divHeader">
-              All Sites
-            </h3>
+        <div className="previous-uploads-graph">
+          <div className="card">
+            <h5 className="card-header">Assay Categories</h5>
+            <div className="card-body">
+              <PreviousUploadsGraph previousUploads={previousUploads} />
+            </div>
           </div>
         </div>
-        <div className="row justify-content-center pb-4">
-          <AllUploadsDoughnut allUploads={allUploads} />
-          <AllUploadStats />
+        <div className="total-uploads-graph">
+          <div className="card">
+            <h5 className="card-header">Total Uploads By All Sites</h5>
+            <div className="card-body">
+              <div className="row justify-content-center">
+                <AllUploadsDoughnut allUploads={allUploads} />
+                <AllUploadStats />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -82,10 +83,6 @@ export function Dashboard({
 }
 
 Dashboard.propTypes = {
-  profile: PropTypes.shape({
-    name: PropTypes.string,
-    user_metadata: PropTypes.object,
-  }),
   isAuthenticated: PropTypes.bool,
   isPending: PropTypes.bool,
   featureAvailable: PropTypes.shape({
@@ -98,7 +95,6 @@ Dashboard.propTypes = {
 };
 
 Dashboard.defaultProps = {
-  profile: {},
   isAuthenticated: false,
   isPending: false,
   featureAvailable: {
@@ -108,7 +104,6 @@ Dashboard.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
   isPending: state.auth.isPending,
   previousUploads: state.upload.previousUploads,

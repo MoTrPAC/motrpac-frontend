@@ -4,6 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { UploadScreen } from '../uploadScreen';
 import { Navbar } from '../../Navbar/navbar';
 import { Footer } from '../../Footer/footer';
+import { Sidebar } from '../../Sidebar/sidebar';
 
 const testUser = require('../../testData/testUser');
 const TestUploads = require('../../testData/testUploads');
@@ -43,9 +44,13 @@ const actions = {
   cancelUpload: action('cancelUpload'),
   handleFormChange: action('onFormChange'),
 };
-const footerActions = {
-  login: action('logging in'),
+
+const navbarAction = {
   logout: action('logging out'),
+};
+
+const footerAction = {
+  login: action('logging in'),
 };
 
 // Provider necessary to link data from components of UploadScreen
@@ -53,12 +58,17 @@ storiesOf('Upload Screen', module)
   .addDecorator(story => (
     <div className="App">
       <header>
-        <Navbar isAuthenticated />
+        <Navbar isAuthenticated {...navbarAction} profile={testUser} />
       </header>
       <div className="componentHolder">
-        {story()}
+        <div className="container-fluid">
+          <div className="row">
+            <Sidebar isAuthenticated />
+            {story()}
+          </div>
+        </div>
       </div>
-      <Footer isAuthenticated {...footerActions} profile={testUser} />
+      <Footer isAuthenticated {...footerAction} profile={testUser} />
     </div>
 
   ))
