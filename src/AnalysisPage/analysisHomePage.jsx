@@ -115,7 +115,8 @@ export function AnalysisHomePage({
       <AnalysisTypeButton
         key={analysisType.shortName}
         analysisType={analysisType}
-      />));
+      />
+    ));
 
   let selectedAnalysis;
   let selectSubAnalyses;
@@ -177,6 +178,7 @@ AnalysisHomePage.propTypes = {
   onPickAnalysis: PropTypes.func.isRequired,
   onPickSubAnalysis: PropTypes.func.isRequired,
 };
+
 AnalysisHomePage.defaultProps = {
   match: {
     params: {
@@ -191,6 +193,7 @@ const mapStateToProps = state => ({
   currentAnalysis: state.analysis.currentAnalysis,
   isAuthenticated: state.auth.isAuthenticated,
 });
+
 const mapDispatchToProps = dispatch => ({
   onPickAnalysis: e => dispatch({
     type: 'ANALYSIS_SELECT',
@@ -204,6 +207,5 @@ const mapDispatchToProps = dispatch => ({
     subAnalysis: e.currentTarget.id,
   }),
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnalysisHomePage);
