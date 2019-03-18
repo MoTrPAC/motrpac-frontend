@@ -66,7 +66,7 @@ p {
 .App {
   display: flex;
   flex-direction: column;
-  flex-grow: 1 !important;
+  flex-grow: 1;
 
   &.test-version {
     background: url(../src/assets/background-img-test-version.gif);
