@@ -36,7 +36,13 @@ export function Navbar({
     const userDisplayName = profile.user_metadata && profile.user_metadata.name
       ? profile.user_metadata.name : profile.name;
     const siteName = profile.user_metadata && profile.user_metadata.siteName
-      ? ', ' + profile.user_metadata.siteName : '';
+      ? profile.user_metadata.siteName : null;
+    let siteDisplayName;
+    if (siteName && siteName.length) {
+      siteDisplayName = `, ${siteName}`;
+    } else {
+      siteDisplayName = '';
+    }
 
     return (
       <span>
@@ -45,7 +51,7 @@ export function Navbar({
             <img src={profile.picture} className="user-avatar" alt="avatar" />
             <span className="user-display-name">
               {userDisplayName}
-              {siteName}
+              {siteDisplayName}
             </span>
             <button type="button" onClick={handleLogout} className="logOutBtn btn btn-primary">
               Log out
