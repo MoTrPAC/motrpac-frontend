@@ -6,6 +6,7 @@ import timeIcon from '../assets/analysisIcons/TimeSeries.svg';
 import omicsIcon from '../assets/analysisIcons/Omics.svg';
 import MAGeneIcon from '../assets/analysisIcons/MA_gene.svg';
 import MATimeIcon from '../assets/analysisIcons/MA_time.svg';
+import chartbarIcon from '../assets/analysisIcons/ChartBar.svg';
 import globeIconInactive from '../assets/analysisIcons/Globe_inactive.svg';
 import moleculeIconInactive from '../assets/analysisIcons/Molecule_inactive.svg';
 import lungIconInactive from '../assets/analysisIcons/Lungs_inactive.svg';
@@ -19,8 +20,7 @@ const analysisTypes = [
   {
     title: 'Phenotypic Data',
     shortName: 'PD',
-    icon: omicsIcon,
-    inactiveIcon: omicsIconInactive,
+    icon: chartbarIcon,
     active: true,
     subAnalyses: [
       {
