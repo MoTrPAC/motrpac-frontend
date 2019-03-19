@@ -36,10 +36,8 @@ export function UploadScreen({
   const showFileUploadValidation = (validated && (stagedFiles.length === 0) && !submitted);
   const screen = (
     <div className="col-md-9 ml-sm-auto col-lg-10 px-4 uploadScreen upload">
-      <div className="row">
-        <div className="col">
-          <h2 className="light">Upload Data</h2>
-        </div>
+      <div className="page-title pt-3 pb-2 border-bottom">
+        <h3>Upload Data</h3>
       </div>
       <div className="row">
         <div className="col-4">

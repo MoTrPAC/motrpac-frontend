@@ -10,27 +10,30 @@ const testUser = require('../../testData/testUser');
 const previousUploads = require('../../testData/testPreviousUploads');
 const allUploads = require('../../testData/testAllUploads');
 
-const footerActions = {
-  login: action('logging in'),
+const navbarAction = {
   logout: action('logging out'),
+};
+
+const footerAction = {
+  login: action('logging in'),
 };
 
 storiesOf('Dashboard', module)
   .addDecorator(story => (
     <div className="App">
       <header>
-        <Navbar isAuthenticated profile={testUser} />
+        <Navbar isAuthenticated {...navbarAction} profile={testUser} />
       </header>
       <div className="componentHolder">
         <div className="container-fluid">
           <div className="row">
-            <Sidebar />
+            <Sidebar isAuthenticated />
             {story()}
           </div>
         </div>
       </div>
-      <Footer isAuthenticated {...footerActions} />
+      <Footer isAuthenticated {...footerAction} />
     </div>
 
   ))
-  .add('With Test Data', () => <Dashboard profile={testUser} previousUploads={previousUploads} allUploads={allUploads} disconnectComponents isAuthenticated />);
+  .add('With Test Data', () => <Dashboard previousUploads={previousUploads} allUploads={allUploads} disconnectComponents isAuthenticated />);

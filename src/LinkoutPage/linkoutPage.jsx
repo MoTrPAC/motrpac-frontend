@@ -60,11 +60,19 @@ const linkList = [
   },
 ];
 
-export function LinkoutPage() {
+/**
+ * Renders the External Links page in both
+ * unauthenticated and authenticated states.
+ *
+ * @param {Boolean} isAuthenticated Redux state for user's authentication status.
+ *
+ * @returns {Object} JSX representation of the External Links page.
+ */
+export function LinkoutPage({ isAuthenticated }) {
   const links = linkList.map(category => (
     <div key={category.name} className="LinkCategory">
       <h4>{category.name}</h4>
-      <div className="row">
+      <div className="card-deck">
         {
           category.links.map(link => <UsefulLink key={link.url} link={link} />)
         }
@@ -73,29 +81,30 @@ export function LinkoutPage() {
   ));
 
   return (
-    <div className="col-md-9 ml-sm-auto col-lg-10 px-4 linkoutPage">
-      <div className="row title">
-        <div className="col">
+    <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 linkoutPage`}>
+      <div className={`${!isAuthenticated ? 'container' : ''}`}>
+        <div className="page-title pt-3 pb-2 border-bottom">
           <h3>Useful Links</h3>
         </div>
-      </div>
-      <div className="row align-items-center justify-content-center motrLink">
-        <div className="col-12 col-md-5 centered">
-          <img src={MOTRLogo} className="img-fluid" alt="MoTrPAC Logo" />
+        <div className="row align-items-center justify-content-center motrLink">
+          <div className="col-12 col-md-5 centered">
+            <img src={MOTRLogo} className="img-fluid" alt="MoTrPAC Logo" />
+          </div>
+          <div className="col MoTrLinkInfo h5">
+            <a href="http://MoTrPAC.org">
+              MoTrPAC Main Site
+              &nbsp;
+              <span className="oi oi-external-link" />
+            </a>
+            <p>
+              Primary entrance point for overarching MoTrPAC study of which the
+              Bioinformatic Datahub is a component.
+            </p>
+          </div>
         </div>
-        <div className="col MoTrLinkInfo">
-          <a href="http://MoTrPAC.org">
-            MoTrPAC Main Site
-            &nbsp;
-            <span className="oi oi-external-link" />
-          </a>
-          <p>
-            Primary entrance point for overarching MoTrPAC study of which the Bioinformatic Datahub is a component.
-          </p>
+        <div className="externalLinks">
+          {links}
         </div>
-      </div>
-      <div className="externalLinks">
-        {links}
       </div>
     </div>
   );
@@ -107,19 +116,24 @@ function UsefulLink({ link }) {
     imgUrl = link.image;
   }
   return (
-    <div className="col-12 col-sm-6 col-md-4 col-lg-3 p-4 linkTile centered">
-      <a href={`${link.protocol}://www.${link.url}`} target="_new">
-        <div className="imgCont" style={{ backgroundImage: `url("${imgUrl}")` }} />
-        {link.title}
-        &nbsp;
-        <span className="oi oi-external-link" />
-      </a>
-      <p>
-        {link.text}
-      </p>
+    <div className="card mb-4 shadow-sm">
+      <div className="card-img-top" style={{ backgroundImage: `url("${imgUrl}")` }} />
+      <div className="card-body">
+        <h6 className="card-title">
+          <a href={`${link.protocol}://www.${link.url}`} target="_new">
+            {link.title}
+            &nbsp;
+            <span className="oi oi-external-link" />
+          </a>
+        </h6>
+        <p className="card-text">
+          {link.text}
+        </p>
+      </div>
     </div>
   );
 }
+
 UsefulLink.propTypes = {
   link: PropTypes.shape({
     protocol: PropTypes.string.isRequired,
@@ -128,4 +142,16 @@ UsefulLink.propTypes = {
   }).isRequired,
 };
 
-export default connect()(LinkoutPage);
+LinkoutPage.propTypes = {
+  isAuthenticated: PropTypes.bool,
+};
+
+LinkoutPage.defaultProps = {
+  isAuthenticated: false,
+};
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(LinkoutPage);

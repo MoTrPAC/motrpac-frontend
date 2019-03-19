@@ -18,8 +18,8 @@ export function Sidebar({
   const sidebar = (
     <nav className="col-md-2 d-none d-md-block bg-light sidebar">
       <div className="sidebar-sticky">
-        <ul className="nav flex-column">
-          <li className="nav-item mt-2">
+        <ul className="nav flex-column mt-1">
+          <li className="nav-item">
             <Link to="/dashboard" className="nav-link active">
               <span className="oi oi-home nav-link-icon" />
                 Dashboard
@@ -37,13 +37,13 @@ export function Sidebar({
           <span>Analysis</span>
         </h6>
         <ul className="nav flex-column mb-2">
-          <li className="nav-item pl-2">
+          <li className="nav-item">
             <Link to="/analysis/animal" className="nav-link">
               <span className="icon-Animal nav-link-icon" />
                 Animal
             </Link>
           </li>
-          <li className="nav-item pl-2">
+          <li className="nav-item">
             <Link to="/analysis/human" className="nav-link">
               <span className="icon-Human nav-link-icon" />
                 Human
@@ -55,13 +55,13 @@ export function Sidebar({
           <span>Data</span>
         </h6>
         <ul className="nav flex-column mb-2">
-          <li className="nav-item pl-2">
+          <li className="nav-item">
             <Link to="/download" className="nav-link">
               <span className="oi oi-data-transfer-download nav-link-icon" />
                 Download/View Data
             </Link>
           </li>
-          <li className="nav-item pl-2">
+          <li className="nav-item">
             <Link to="/upload" className="nav-link">
               <span className="oi oi-cloud-upload nav-link-icon" />
                 Upload Data

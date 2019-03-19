@@ -1,5 +1,11 @@
 .uploadScreen {
-  margin-top: 15px;
+  .page-title {
+    margin-bottom: 1.5rem;
+
+    h3 {
+      margin-bottom: 0;
+    }
+  }
 
   #formSubmitLabel, .clearFormBtn {
     margin-top: 30px;

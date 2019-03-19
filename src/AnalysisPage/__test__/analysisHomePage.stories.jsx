@@ -4,14 +4,19 @@ import { action } from '@storybook/addon-actions';
 import { AnalysisHomePage } from '../analysisHomePage';
 import { Navbar } from '../../Navbar/navbar';
 import { Footer } from '../../Footer/footer';
+import { Sidebar } from '../../Sidebar/sidebar';
 import { defaultAnalysisState } from '../analysisReducer';
 
 const testUser = require('../../testData/testUser');
 
-const footerActions = {
-  login: action('logging in'),
+const navbarAction = {
   logout: action('logging out'),
 };
+
+const footerAction = {
+  login: action('logging in'),
+};
+
 const AnalysisActions = {
   goBack: action('Back'),
   onPickAnalysis: action('Pick Analysis'),
@@ -38,12 +43,17 @@ storiesOf('Analysis Page', module)
   .addDecorator(story => (
     <div className="App">
       <header>
-        <Navbar isAuthenticated />
+        <Navbar isAuthenticated {...navbarAction} profile={testUser} />
       </header>
       <div className="componentHolder">
-        {story()}
+        <div className="container-fluid">
+          <div className="row">
+            <Sidebar isAuthenticated />
+            {story()}
+          </div>
+        </div>
       </div>
-      <Footer isAuthenticated {...footerActions} profile={testUser} />
+      <Footer isAuthenticated {...footerAction} />
     </div>
   ))
   .add('Animal', () => <AnalysisHomePage isAuthenticated {...defaultAnalysisState} match={animalMatch} {...AnalysisActions} />)

@@ -1,24 +1,14 @@
 .Dashboard {
-  margin-top: 20px; 
+  .page-title {
+    h3 {
+      margin-bottom: 0;
+    }
+  }
 
-  .divHeader {
-    color: $dblue;
-    font-size: 1.25rem;
-    font-weight: $light-weight;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    margin-top:10px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    padding-bottom: 1rem;
+  .card {
+    margin-bottom: 1.0rem;
   }
-  .uploadBtn { 
-    background: $primary-blue;
-    border-color: $primary-blue;
-  }
-  .downloadBtn { 
-    background: $accent-green;
-    border-color: $accent-green;
-  }
+
   .disabled {
     //background: $gray;
     //border-color: $gray;

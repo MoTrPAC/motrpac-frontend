@@ -11,15 +11,13 @@ function TeamMemberCard({
   memberInfo,
 }) {
   return (
-    <div className="teamMember col-10 col-sm-6 col-md-4 mt-4">
-      <div className="row">
-        <div className="col-auto">
-          <div className="teamMemberImage" style={{ backgroundImage: `url(${memberInfo.image})` }} />
-        </div>
-        <div className="col">
-          <h3>{memberInfo.name}</h3>
-          <h4>{memberInfo.title}</h4>
-        </div>
+    <div className="teamMember col-lg-4 mb-4 text-center">
+      <div className="col d-flex mb-3 justify-content-center">
+        <div className="teamMemberImage" style={{ backgroundImage: `url(${memberInfo.image})` }} />
+      </div>
+      <div className="col">
+        <h6>{memberInfo.name}</h6>
+        <p>{memberInfo.title}</p>
       </div>
     </div>
   );
@@ -31,6 +29,6 @@ TeamMemberCard.propTypes = {
     title: PropTypes.string.isRequired,
     backgroundImage: PropTypes.string,
   }).isRequired,
-}
+};
 
 export default TeamMemberCard;

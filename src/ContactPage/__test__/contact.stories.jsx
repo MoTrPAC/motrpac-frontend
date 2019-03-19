@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { LinkoutPage } from '../linkoutPage';
+import { Contact } from '../contact';
 import { Navbar } from '../../Navbar/navbar';
 import { Footer } from '../../Footer/footer';
 
@@ -15,7 +15,7 @@ const footerAction = {
   login: action('logging in'),
 };
 
-storiesOf('Linkout Page', module)
+storiesOf('Contact Us Page', module)
   .addDecorator(story => (
     <div className="App">
       <header>
@@ -27,4 +27,4 @@ storiesOf('Linkout Page', module)
       <Footer isAuthenticated {...footerAction} />
     </div>
   ))
-  .add('Default', () => <LinkoutPage />);
+  .add('Default', () => <Contact />);
