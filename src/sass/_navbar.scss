@@ -168,6 +168,21 @@ nav {
           margin-right: 0.25rem;
         }
       }
+
+      .user-login-button {
+        margin-left: 0.75rem;
+      }
+
+      @include media-breakpoint-down(md) {
+        .user-login-button {
+          margin-left: 0;
+          
+          .logInBtn {
+            margin-top: 0.75rem;
+            margin-bottom: 0.75rem;
+          }
+        }
+      }
     }
   }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import actions from '../Auth/authActions';
+import LoginButton from '../lib/loginButton';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
 
 /**
@@ -18,17 +19,6 @@ export function Footer({
   profile,
   login,
 }) {
-  // Function to render login button
-  const LoginButton = () => {
-    return (
-      <span className="user-login-button">
-        <button type="button" onClick={login} className="logInBtn btn btn-primary">
-          Submitter Login
-        </button>
-      </span>
-    );
-  };
-
   // Function to get current copyright year
   const getCopyrightYear = () => {
     const today = new Date();
@@ -55,7 +45,7 @@ export function Footer({
                 <li className="nav-item navItem"><a href="/team" className="nav-link">About Us</a></li>
                 <li className="nav-item navItem"><a href="/contact" className="nav-link">Contact Us</a></li>
                 <li className="nav-item navItem">
-                  <LoginButton />
+                  <LoginButton login={login} />
                 </li>
               </ul>
             </div>
