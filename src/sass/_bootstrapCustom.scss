@@ -32,12 +32,18 @@ $green:   $accent-green !default;
 
 .btn-outline-primary {
   background-color: #fff;
+  border-color: $primary-blue;
   color: $primary-blue;
 
   &:hover, &:focus, &:active, &.active {
     background-color: $primary-blue;
     color: #fff;
   }
+
+  &:not(:disabled):not(.disabled).active {
+    background-color: $primary-blue;
+    color: #fff;
+}
 }
 
 .btn-success {
