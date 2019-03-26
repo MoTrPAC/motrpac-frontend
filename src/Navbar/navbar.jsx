@@ -24,7 +24,9 @@ export function Navbar({
     return <Redirect to="/" />;
   };
 
-  if (isAuthenticated) {
+  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+
+  if (isAuthenticated && hasAccess) {
     document.querySelector('body').classList.add('authenticated');
   }
 
@@ -40,7 +42,7 @@ export function Navbar({
 
     return (
       <span>
-        {isAuthenticated && (
+        {(isAuthenticated && hasAccess) && (
           <span className="user-logout-button">
             <img src={profile.picture} className="user-avatar" alt="avatar" />
             <span className="user-display-name">
@@ -83,8 +85,8 @@ export function Navbar({
         <TestInterfaceAlert />
       )}
       <nav className="navbar navbar-expand-lg navbar-light flex-md-nowrap p-0 shadow-sm bg-white">
-        <div className={`${isAuthenticated ? 'container-fluid' : 'container'} header-navbar-items`}>
-          <Link to="/" className={`navbar-brand header-logo ${isAuthenticated ? 'resized' : ''}`}>
+        <div className={`${isAuthenticated && hasAccess ? 'container-fluid' : 'container'} header-navbar-items`}>
+          <Link to="/" className={`navbar-brand header-logo ${isAuthenticated && hasAccess ? 'resized' : ''}`}>
             <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
             {urlParams.has('version') && urlParams.get('version') === 'alpha' && (
               <span className="badge badge-pill badge-warning">Alpha</span>

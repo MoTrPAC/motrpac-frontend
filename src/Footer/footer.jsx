@@ -8,11 +8,16 @@ import MoTrPAClogo from '../assets/logo-motrpac.png';
  * Renders the global footer.
  *
  * @param {Boolean}   isAuthenticated Redux state for user's authentication status.
+ * @param {Object}    profile         Redux state for authenticated user's info.
  * @param {Function}  login           Redux action for user login.
  *
  * @returns {object} JSX representation of the global footer.
  */
-export function Footer({ isAuthenticated, login }) {
+export function Footer({
+  isAuthenticated,
+  profile,
+  login,
+}) {
   // Function to render login button
   const LoginButton = () => {
     return (
@@ -31,10 +36,12 @@ export function Footer({ isAuthenticated, login }) {
     return year;
   };
 
+  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+
   // TODO: Find out how to best do error handling
   return (
     <footer className="footer">
-      {!isAuthenticated && (
+      {!(isAuthenticated && hasAccess) && (
         <div className="container footer-nav">
           <div className="row align-items-end">
             <div className="col-12 col-lg-4 footer-nav-logo">
@@ -84,15 +91,20 @@ export function Footer({ isAuthenticated, login }) {
 }
 
 Footer.propTypes = {
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.object,
+  }),
   isAuthenticated: PropTypes.bool,
   login: PropTypes.func.isRequired,
 };
 
 Footer.defaultProps = {
+  profile: {},
   isAuthenticated: false,
 };
 
 const mapStateToProps = state => ({
+  profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
 });
 
