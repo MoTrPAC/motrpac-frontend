@@ -1,11 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 /**
  * Renders the Error page.
  *
  * @returns {Object} JSX representation of the Error page.
  */
-function ErrorPage() {
+export function ErrorPage({ isAuthenticated, profile }) {
+  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+
+  if (isAuthenticated && hasAccess) {
+    return <Redirect to="/dashboard" />;
+  }
+
   return (
     <div className="col-md-9 col-lg-10 px-4 errorPage">
       <div className="container">
@@ -25,4 +34,22 @@ function ErrorPage() {
   );
 }
 
-export default ErrorPage;
+ErrorPage.propTypes = {
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.object,
+  }),
+  isAuthenticated: PropTypes.bool,
+};
+
+ErrorPage.defaultProps = {
+  profile: {},
+  isAuthenticated: false,
+};
+
+const mapStateToProps = state => ({
+  profile: state.auth.profile,
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(ErrorPage);
+
