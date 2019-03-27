@@ -42,14 +42,11 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@babel/core": "^7.4.0",
-    "@babel/runtime": "^7.4.0",
     "@storybook/addon-actions": "5.0.3",
     "@storybook/addon-links": "5.0.3",
     "@storybook/addon-storyshots": "5.0.3",
     "@storybook/addons": "5.0.3",
     "@storybook/react": "5.0.3",
-    "babel-loader": "^8.0.0",
     "enzyme": "3.8.0",
     "enzyme-adapter-react-16": "1.9.1",
     "eslint-config-airbnb": "^17.1.0",
