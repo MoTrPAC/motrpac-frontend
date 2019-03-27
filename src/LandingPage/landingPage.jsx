@@ -22,10 +22,6 @@ export function LandingPage({ isAuthenticated, profile }) {
     return <Redirect to="/dashboard" />;
   }
 
-  if (isAuthenticated && !hasAccess) {
-    return <Redirect to="/error" />;
-  }
-
   const scrollFunction = () => {
     if (document.body.scrollTop >= 30 || document.documentElement.scrollTop >= 30) {
       document.querySelector('.navbar-brand').classList.add('resized');
