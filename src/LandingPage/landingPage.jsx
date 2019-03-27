@@ -11,12 +11,19 @@ import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Hear
  * Renders the landing page in unauthenticated state.
  *
  * @param {Boolean} isAuthenticated Redux state for user's authentication status.
+ * @param {Object}  profile         Redux state for authenticated user's info.
  *
  * @returns {object} JSX representation of the landing page.
  */
-export function LandingPage({ isAuthenticated }) {
-  if (isAuthenticated) {
+export function LandingPage({ isAuthenticated, profile }) {
+  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+
+  if (isAuthenticated && hasAccess) {
     return <Redirect to="/dashboard" />;
+  }
+
+  if (isAuthenticated && !hasAccess) {
+    return <Redirect to="/error" />;
   }
 
   const scrollFunction = () => {
@@ -150,14 +157,19 @@ export function LandingPage({ isAuthenticated }) {
 }
 
 LandingPage.propTypes = {
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.object,
+  }),
   isAuthenticated: PropTypes.bool,
 };
 
 LandingPage.defaultProps = {
+  profile: {},
   isAuthenticated: false,
 };
 
 const mapStateToProps = state => ({
+  profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
 });
 
