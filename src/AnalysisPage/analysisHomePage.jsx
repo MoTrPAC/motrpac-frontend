@@ -63,7 +63,7 @@ export function AnalysisHomePage({
           <div className="col-11 col-md-5 m-1 my-2 align-self-center imgCont">
             <img src={subAnalysis.icon} className="align-self-end" alt={`${subAnalysis.title} Icon`} />
           </div>
-          <div className="col-11 col-md-5 p-2 align-self-center">
+          <div className="col-11 col-md-6 p-2 align-self-center">
             <h3>{subAnalysis.title}</h3>
             <p>
               <strong>Input: </strong>
