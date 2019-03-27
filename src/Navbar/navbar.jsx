@@ -24,6 +24,7 @@ export function Navbar({
 }) {
   const handleLogout = () => {
     logout();
+    // FIXME: Redirect to landing page not working
     return <Redirect to="/" />;
   };
 
