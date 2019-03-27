@@ -46,7 +46,11 @@ export function Dashboard({
     );
   }
 
-  if (isAuthenticated && hasAccess) {
+  if (isAuthenticated) {
+    if (!hasAccess) {
+      return (<Redirect to="/error" />);
+    }
+
     return (
       <div className="col-md-9 ml-sm-auto col-lg-10 px-4 Dashboard">
         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -91,12 +95,12 @@ export function Dashboard({
       </div>
     );
   }
-  return (<Redirect to="/error" />);
+
+  return (<Redirect to="/" />);
 }
 
 Dashboard.propTypes = {
   profile: PropTypes.shape({
-    name: PropTypes.string,
     user_metadata: PropTypes.object,
   }),
   isAuthenticated: PropTypes.bool,
