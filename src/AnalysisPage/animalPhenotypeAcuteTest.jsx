@@ -384,6 +384,12 @@ function AnimalPhenotypeDataAcuteTest() {
         .domain(d3.extent(mappedData, d => d.fat)).nice()
         .range([height - margin.bottom, margin.top]);
 
+      // add the tooltip area to the webpage
+      const tooltip = d3.select('body')
+        .append('div')
+        .attr('class', 'tooltip')
+        .style('opacity', 0);
+
       // select DOM element to draw graph
       const group = d3.select(ref.current);
       group.selectAll('*').remove();
@@ -402,7 +408,23 @@ function AnimalPhenotypeDataAcuteTest() {
         .attr('r', 5)
         .attr('cx', d => x(d.weight))
         .attr('cy', d => y(d.fat))
-        .attr('fill', d => colorScale(colorValue(d)));
+        .attr('fill', d => colorScale(colorValue(d)))
+        .on('mouseover', (d) => {
+          tooltip
+            .transition()
+            .duration(200)
+            .style('opacity', 0.9);
+          tooltip
+            .html(`Weight: ${d.weight}; Fat: ${d.fat}`)
+            .style('left', `${d3.event.pageX + 5}px`)
+            .style('top', `${d3.event.pageY - 28}px`);
+        })
+        .on('mouseout', () => {
+          tooltip
+            .transition()
+            .duration(500)
+            .style('opacity', 0);
+        });
 
       // add x axis
       group.append('g')
