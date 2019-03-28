@@ -117,7 +117,7 @@ function AnimalPhenotypeDataAcuteTest() {
       group.append('text')
         .attr('transform', `translate(${width / 2}, ${height + margin.top + 5})`)
         .style('text-anchor', 'middle')
-        .text(historgramData);
+        .text(historgramData === 'Distance' ? `${historgramData} (m)` : `${historgramData} (gm)`);
 
       // add y axis
       group.append('g')
@@ -330,7 +330,7 @@ function AnimalPhenotypeDataAcuteTest() {
         .attr('x', 0 - (height / 2))
         .attr('dy', '1em')
         .style('text-anchor', 'middle')
-        .text('Distance');
+        .text('Distance (m)');
     }).catch((err) => {
       throw err;
     });
@@ -435,7 +435,7 @@ function AnimalPhenotypeDataAcuteTest() {
       group.append('text')
         .attr('transform', `translate(${width / 2}, ${height + margin.top + 5})`)
         .style('text-anchor', 'middle')
-        .text('Weight');
+        .text('Weight (m)');
 
       // add y axis
       group.append('g')
@@ -449,7 +449,7 @@ function AnimalPhenotypeDataAcuteTest() {
         .attr('x', 0 - (height / 2))
         .attr('dy', '1em')
         .style('text-anchor', 'middle')
-        .text('Fat');
+        .text('Fat (%)');
 
       // draw legend
       const legend = group.selectAll('.legend')
