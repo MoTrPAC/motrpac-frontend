@@ -19,7 +19,11 @@ function LoginButton({ login }) {
 }
 
 LoginButton.propTypes = {
-  login: PropTypes.func.isRequired,
+  login: PropTypes.func,
+};
+
+LoginButton.defaultProps = {
+  login: null,
 };
 
 export default LoginButton;
