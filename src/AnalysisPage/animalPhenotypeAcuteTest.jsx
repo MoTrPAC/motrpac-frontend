@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import dataAcuteTest from '../data/RLS0.01_1A.6M_DS_MoTrPAC.PASS_Animal.Acute.Test.csv';
-import dataRegistration from '../data/RLS0.01_1A.6M_DS_MoTrPAC.PASS_Animal.Registration.csv';
-import dataFamiliarization from '../data/RLS0.01_1A.6M_DS_MoTrPAC.PASS_Animal.Familiarization.csv';
+import dataAcuteTest from '../data/animal_acute_test.csv';
+import dataRegistration from '../data/animal_registration.csv';
+import dataFamiliarization from '../data/animal_familiarization.csv';
 
 /**
  * Dictionary
