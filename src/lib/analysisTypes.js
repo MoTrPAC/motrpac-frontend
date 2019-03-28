@@ -6,6 +6,7 @@ import timeIcon from '../assets/analysisIcons/TimeSeries.svg';
 import omicsIcon from '../assets/analysisIcons/Omics.svg';
 import MAGeneIcon from '../assets/analysisIcons/MA_gene.svg';
 import MATimeIcon from '../assets/analysisIcons/MA_time.svg';
+import chartbarIcon from '../assets/analysisIcons/ChartBar.svg';
 import globeIconInactive from '../assets/analysisIcons/Globe_inactive.svg';
 import moleculeIconInactive from '../assets/analysisIcons/Molecule_inactive.svg';
 import lungIconInactive from '../assets/analysisIcons/Lungs_inactive.svg';
@@ -16,6 +17,23 @@ import MAGeneIconInactive from '../assets/analysisIcons/MA_gene_inactive.svg';
 import MATimeIconInactive from '../assets/analysisIcons/MA_time_inactive.svg';
 
 const analysisTypes = [
+  {
+    title: 'Phenotypic Data',
+    shortName: 'PD',
+    icon: chartbarIcon,
+    active: true,
+    subAnalyses: [
+      {
+        title: 'Animal Phenotype Data',
+        icon: chartbarIcon,
+        inactiveIcon: MAGeneIconInactive,
+        shortName: 'PD_AT',
+        input: 'Distance, Gender, Weight and Fat',
+        description: 'Displays a number of visualizations in analyzing various animal phenotype data.',
+        active: true,
+      },
+    ],
+  },
   {
     title: 'Published Data Meta-Analysis',
     shortName: 'PDMA',

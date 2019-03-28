@@ -5,7 +5,9 @@ import { Sidebar } from '../sidebar';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const shallowDefaultSidebar = shallow(<Sidebar />);
+const testUser = require('../../testData/testUser');
+
+const shallowDefaultSidebar = shallow(<Sidebar profile={testUser} />);
 
 const navItems = ['Dashboard', 'Analysis', 'Methods', 'Data'];
 

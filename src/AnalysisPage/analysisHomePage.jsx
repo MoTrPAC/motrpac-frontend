@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import analysisTypes from '../lib/analysisTypes';
+import AnimalDataAnalysis from './animalDataAnalysis';
+import HumanDataAnalysis from './humanDataAnalysis';
 
 // TODO: Add animation of transitions potentially with CSSTransitions package
 
@@ -11,6 +13,7 @@ export function AnalysisHomePage({
   isAuthenticated,
   depth,
   currentAnalysis,
+  currentSubAnalysis,
   onPickAnalysis,
   onPickSubAnalysis,
   goBack,
@@ -25,7 +28,7 @@ export function AnalysisHomePage({
   function AnalysisTypeButton({ analysisType }) {
     if (analysisType.active) {
       return (
-        <div id={analysisType.shortName} onClick={onPickAnalysis} onKeyPress={onPickAnalysis} tabIndex={0} role="button" className="col-5 col-sm-3 m-3 analysisType analysisTypeActive">
+        <div id={analysisType.shortName} onClick={onPickAnalysis} onKeyPress={onPickAnalysis} tabIndex={0} role="button" className={`col-5 col-sm-3 m-3 analysisType analysisTypeActive ${subjectType}`}>
           <p className="centered">{analysisType.title}</p>
           <img src={analysisType.icon} className="align-self-end" alt={`${analysisType.title} Icon`} />
         </div>
@@ -52,7 +55,7 @@ export function AnalysisHomePage({
       })),
     }).isRequired,
   };
-
+  // Button to select sub analysis category
   function SubAnalysisButton({ subAnalysis }) {
     if (subAnalysis.active) {
       return (
@@ -60,7 +63,7 @@ export function AnalysisHomePage({
           <div className="col-11 col-md-5 m-1 my-2 align-self-center imgCont">
             <img src={subAnalysis.icon} className="align-self-end" alt={`${subAnalysis.title} Icon`} />
           </div>
-          <div className="col-11 col-md-5 p-2 align-self-center">
+          <div className="col-11 col-md-6 p-2 align-self-center">
             <h3>{subAnalysis.title}</h3>
             <p>
               <strong>Input: </strong>
@@ -107,7 +110,7 @@ export function AnalysisHomePage({
   };
   // Button to return 1 depth level
   function BackButton() {
-    return <button className="backButton btn" onClick={goBack} type="button"><span className="oi backButton oi-arrow-thick-left" /></button>;
+    return <button className="backButton btn btn-sm btn-primary" onClick={goBack} type="button"><span className="oi oi-arrow-thick-left" /></button>;
   }
 
   const analyses = analysisTypes
@@ -115,7 +118,8 @@ export function AnalysisHomePage({
       <AnalysisTypeButton
         key={analysisType.shortName}
         analysisType={analysisType}
-      />));
+      />
+    ));
 
   let selectedAnalysis;
   let selectSubAnalyses;
@@ -137,6 +141,13 @@ export function AnalysisHomePage({
     .map(s => s.charAt(0).toUpperCase() + s.substring(1))
     .join(' ');
 
+
+  const selectedDataAnalysis = (
+    subjectType.toLowerCase() === 'animal'
+      ? <AnimalDataAnalysis analysis={currentAnalysis} subAnalysis={currentSubAnalysis} />
+      : <HumanDataAnalysis analysis={currentAnalysis} subAnalysis={currentSubAnalysis} />
+  );
+
   return (
     <div className="analysisPage col-md-9 ml-sm-auto col-lg-10 px-4">
       <div className="page-title pt-3 pb-2 border-bottom">
@@ -149,6 +160,7 @@ export function AnalysisHomePage({
           {(depth > 0) ? <BackButton /> : ''}
         </div>
       </div>
+      {(depth === 2) ? selectedDataAnalysis : ''}
       {(depth === 1) ? selectSubAnalyses : ''}
       {(depth === 0) ? selectAnalysis : ''}
       <div className="row breadcrumbs justify-content-center">
@@ -171,10 +183,12 @@ AnalysisHomePage.propTypes = {
   depth: PropTypes.number.isRequired,
   isAuthenticated: PropTypes.bool,
   currentAnalysis: PropTypes.string.isRequired,
+  currentSubAnalysis: PropTypes.string.isRequired,
   goBack: PropTypes.func.isRequired,
   onPickAnalysis: PropTypes.func.isRequired,
   onPickSubAnalysis: PropTypes.func.isRequired,
 };
+
 AnalysisHomePage.defaultProps = {
   match: {
     params: {
@@ -187,8 +201,10 @@ AnalysisHomePage.defaultProps = {
 const mapStateToProps = state => ({
   depth: state.analysis.depth,
   currentAnalysis: state.analysis.currentAnalysis,
+  currentSubAnalysis: state.analysis.currentSubAnalysis,
   isAuthenticated: state.auth.isAuthenticated,
 });
+
 const mapDispatchToProps = dispatch => ({
   onPickAnalysis: e => dispatch({
     type: 'ANALYSIS_SELECT',
@@ -202,6 +218,5 @@ const mapDispatchToProps = dispatch => ({
     subAnalysis: e.currentTarget.id,
   }),
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnalysisHomePage);

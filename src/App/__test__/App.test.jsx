@@ -13,7 +13,7 @@ it('renders without crashing', () => {
 });
 
 // No other routes render components, and only one component rendered
-function testCorrectComponentInPath(app, componentName, path, history, auth=false) {
+function testCorrectComponentInPath(app, componentName, path, history, auth = false) {
   let noPath = true;
   // Checks the right component loaded at path and other components are not
   app.find('Route').forEach((route) => {
@@ -77,6 +77,18 @@ describe('Unauthenticated Application routing', () => {
     mountApp.update();
     testCorrectComponentInPath(mountApp, 'TeamPage', '/team', history);
   });
+
+  test('loads the contact page at /contact', () => {
+    history.push('/contact');
+    mountApp.update();
+    testCorrectComponentInPath(mountApp, 'Contact', '/contact', history);
+  });
+
+  test('loads the error page at /error', () => {
+    history.push('/error');
+    mountApp.update();
+    testCorrectComponentInPath(mountApp, 'ErrorPage', '/error', history);
+  });
 });
 
 describe('Authenticated Application routing', () => {
@@ -86,12 +98,18 @@ describe('Authenticated Application routing', () => {
     type: 'LOGIN_SUCCESS',
     payload: testUser,
   };
+  const profileReceiveAction = {
+    type: 'PROFILE_RECEIVE',
+    profile: testUser,
+  };
 
   beforeAll(() => {
     history = createBrowserHistory();
     mountApp = mount(<App history={history} />);
     // Dispatch successful login
     mountApp.find('Provider').props().store.dispatch(loginSuccessAction);
+    // FIXME: Need to chain multiple dispatchers or use async calls
+    mountApp.find('Provider').props().store.dispatch(profileReceiveAction);
   });
 
   afterAll(() => {

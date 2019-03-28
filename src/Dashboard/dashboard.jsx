@@ -9,7 +9,17 @@ import AllUploadStats from '../Widgets/allUploadStats';
 
 const allUploads = require('../testData/testAllUploads');
 
+/**
+ * Renders the Dashboard page.
+ *
+ * @param {Boolean}   isAuthenticated Redux state for user's authentication status.
+ * @param {Boolean}   isPending       Redux state for user's authentication progress.
+ * @param {Object}    profile         Redux state for authenticated user's info.
+ *
+ * @returns {object} JSX representation of the global footer.
+ */
 export function Dashboard({
+  profile,
   isAuthenticated,
   isPending,
   featureAvailable,
@@ -21,6 +31,8 @@ export function Dashboard({
       <Link className="editBtn btn btn-light disabled" to="/edit-dashboard">Edit Dashboard</Link>
     </div>
   );
+
+  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
 
   // FIXME: temp workaround to handle callback redirect
   if (isPending) {
@@ -35,6 +47,10 @@ export function Dashboard({
   }
 
   if (isAuthenticated) {
+    if (!hasAccess) {
+      return (<Redirect to="/error" />);
+    }
+
     return (
       <div className="col-md-9 ml-sm-auto col-lg-10 px-4 Dashboard">
         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -79,10 +95,14 @@ export function Dashboard({
       </div>
     );
   }
+
   return (<Redirect to="/" />);
 }
 
 Dashboard.propTypes = {
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.object,
+  }),
   isAuthenticated: PropTypes.bool,
   isPending: PropTypes.bool,
   featureAvailable: PropTypes.shape({
@@ -95,6 +115,7 @@ Dashboard.propTypes = {
 };
 
 Dashboard.defaultProps = {
+  profile: {},
   isAuthenticated: false,
   isPending: false,
   featureAvailable: {
@@ -104,6 +125,7 @@ Dashboard.defaultProps = {
 };
 
 const mapStateToProps = state => ({
+  profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
   isPending: state.auth.isPending,
   previousUploads: state.upload.previousUploads,

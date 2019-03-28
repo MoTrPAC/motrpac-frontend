@@ -6,13 +6,17 @@ import { connect } from 'react-redux';
  * Renders the gloabl sidebar.
  *
  * @param {Boolean} isAuthenticated Redux state for user's authentication status.
+ * @param {Object}  profile         Redux state for authenticated user's info.
  *
  * @returns {Object} JSX representation of the global sidebar.
  */
 export function Sidebar({
   isAuthenticated = false,
+  profile,
 }) {
-  if (!isAuthenticated) {
+  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+
+  if (!(isAuthenticated && hasAccess)) {
     return '';
   }
   const sidebar = (
@@ -75,6 +79,7 @@ export function Sidebar({
   return sidebar;
 }
 const mapStateToProps = state => ({
+  profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
 });
 

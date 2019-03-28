@@ -104,7 +104,7 @@ describe('Pure AnalysisHome Page', () => {
         />,
       );
       expect(shallowAnalysis.find('h3')).toHaveLength(1);
-      expect(shallowAnalysis.find('AnalysisTypeButton')).toHaveLength(6);
+      expect(shallowAnalysis.find('AnalysisTypeButton')).toHaveLength(7);
       expect(shallowAnalysis.find('.breadcrumbs')).toHaveLength(1);
     });
   });

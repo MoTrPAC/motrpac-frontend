@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import actions from '../Auth/authActions';
+import LoginButton from '../lib/loginButton';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
 
 /**
@@ -10,6 +11,7 @@ import MoTrPAClogo from '../assets/logo-motrpac.png';
  *
  * @param {Boolean}   isAuthenticated Redux state for user's authentication status.
  * @param {Object}    profile         Redux state for authenticated user's info.
+ * @param {Function}  login           Redux action for user login.
  * @param {Function}  logout          Redux action for user logout.
  *
  * @returns {Object} JSX representation of the global header nav bar.
@@ -17,14 +19,18 @@ import MoTrPAClogo from '../assets/logo-motrpac.png';
 export function Navbar({
   isAuthenticated,
   profile,
+  login,
   logout,
 }) {
   const handleLogout = () => {
     logout();
+    // FIXME: Redirect to landing page not working
     return <Redirect to="/" />;
   };
 
-  if (isAuthenticated) {
+  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+
+  if (isAuthenticated && hasAccess) {
     document.querySelector('body').classList.add('authenticated');
   }
 
@@ -38,22 +44,22 @@ export function Navbar({
     const siteName = profile.user_metadata && profile.user_metadata.siteName
       ? `, ${profile.user_metadata.siteName}` : '';
 
-    return (
-      <span>
-        {isAuthenticated && (
-          <span className="user-logout-button">
-            <img src={profile.picture} className="user-avatar" alt="avatar" />
-            <span className="user-display-name">
-              {userDisplayName}
-              {siteName}
-            </span>
-            <button type="button" onClick={handleLogout} className="logOutBtn btn btn-primary">
-              Log out
-            </button>
+    if (isAuthenticated && hasAccess) {
+      return (
+        <span className="user-logout-button">
+          <img src={profile.picture} className="user-avatar" alt="avatar" />
+          <span className="user-display-name">
+            {userDisplayName}
+            {siteName}
           </span>
-        )}
-      </span>
-    );
+          <button type="button" onClick={handleLogout} className="logOutBtn btn btn-primary">
+            Log out
+          </button>
+        </span>
+      );
+    }
+
+    return <LoginButton login={login} />;
   };
 
   // Function to render test interface alert
@@ -83,8 +89,8 @@ export function Navbar({
         <TestInterfaceAlert />
       )}
       <nav className="navbar navbar-expand-lg navbar-light flex-md-nowrap p-0 shadow-sm bg-white">
-        <div className={`${isAuthenticated ? 'container-fluid' : 'container'} header-navbar-items`}>
-          <Link to="/" className={`navbar-brand header-logo ${isAuthenticated ? 'resized' : ''}`}>
+        <div className={`${isAuthenticated && hasAccess ? 'container-fluid' : 'container'} header-navbar-items`}>
+          <Link to="/" className={`navbar-brand header-logo ${isAuthenticated && hasAccess ? 'resized' : ''}`}>
             <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
             {urlParams.has('version') && urlParams.get('version') === 'alpha' && (
               <span className="badge badge-pill badge-warning">Alpha</span>
@@ -122,12 +128,14 @@ Navbar.propTypes = {
     user_metadata: PropTypes.object,
   }),
   isAuthenticated: PropTypes.bool,
+  login: PropTypes.func,
   logout: PropTypes.func,
 };
 
 Navbar.defaultProps = {
   profile: {},
   isAuthenticated: false,
+  login: null,
   logout: null,
 };
 
@@ -137,6 +145,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  login: () => dispatch(actions.login()),
   logout: () => dispatch(actions.logout()),
 });
 

@@ -14,10 +14,10 @@
   }
 
   .backButton {
-    color: $primary-blue;
-    font-size: 2.5rem;
-    line-height: 1rem;
-    padding: 0;
+    margin-top: 0.45rem;
+    margin-bottom: 0.45rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
   }
 
   .subAnalysisRow {
@@ -41,13 +41,14 @@
       border-radius: 20px;
       border: 1px solid $primary-blue;
     }
-    /*Temporarily disabling subAnalysis rows for alpha release
+
     &:hover {
-      border: 1px solid $dblue;
+      border: 1px solid $primary-blue;
       background-color: $blue-transparent;
+      cursor: pointer;
       transition: .2s;
     }
-    */
+
     .imgCont, h3 {
       @media screen and (max-width: 767.98px){
         text-align: center; 
@@ -93,6 +94,11 @@
         display: block;
         transition: .2s;
       }
+    }
+
+    // Temporarily suppressing the display of phenotype data for human
+    &.Human {
+      display: none;
     }
   }
 

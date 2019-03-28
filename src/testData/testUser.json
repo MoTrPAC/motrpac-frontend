@@ -6,6 +6,7 @@
   "user_metadata": {
     "name": "Test User",
     "givenName": "TestUser",
-    "siteName": "Stanford CAS"
+    "siteName": "Stanford BIC",
+    "hasAccess": true
   }
 }

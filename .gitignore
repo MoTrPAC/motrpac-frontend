@@ -72,3 +72,6 @@ src/main.css.map
 
 # Snapshots
 src/__snapshots__/*
+
+# VS Code user settings
+.vscode/

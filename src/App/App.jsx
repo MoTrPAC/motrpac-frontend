@@ -15,6 +15,7 @@ import DownloadPageConnected from '../DownloadPage/downloadPage';
 import MethodsConnected from '../MethodsPage/methods';
 import TeamPageConnected from '../TeamPage/teamPage';
 import ContactConnected from '../ContactPage/contact';
+import ErrorPageConnected from '../ErrorPage/error';
 import CallbackConnected from '../Auth/callback';
 import SidebarConnected from '../Sidebar/sidebar';
 
@@ -45,6 +46,7 @@ function App({ history = History }) {
               <Route path="/methods" component={MethodsConnected} />
               <Route path="/team" component={TeamPageConnected} />
               <Route path="/contact" component={ContactConnected} />
+              <Route path="/error" component={ErrorPageConnected} />
             </Switch>
           </div>
         </div>

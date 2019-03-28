@@ -12,16 +12,18 @@ import History from '../../App/history';
 
 Enzyme.configure({ adapter: new Adapter() });
 const testPreviousUploads = require('../../testData/testPreviousUploads');
+const testUser = require('../../testData/testUser');
 
 describe('Shallow Dashboard', () => {
   const shallowDash = shallow(
-    <Dashboard isAuthenticated previousUploads={testPreviousUploads} />,
+    <Dashboard isAuthenticated profile={testUser} previousUploads={testPreviousUploads} />,
   );
   const loggedInRootState = {
     ...defaultRootState,
     auth: {
       ...defaultRootState.auth,
       isAuthenticated: true,
+      profile: testUser,
     },
     upload: {
       ...defaultUploadState,
