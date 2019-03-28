@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Particles from 'react-particles-js';
-import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation.gif';
+import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-yellow_pipelineball_left.gif';
 import LayerRunner from '../assets/LandingPageGraphics/Layer_Runner_dark.png';
 import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Heart.png';
 
