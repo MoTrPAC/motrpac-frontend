@@ -8,6 +8,7 @@ import History from '../../App/history';
 const testUser = require('../../testData/testUser');
 
 const navbarActions = {
+  login: jest.fn(),
   logout: jest.fn(),
 };
 
