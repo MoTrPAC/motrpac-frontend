@@ -533,7 +533,7 @@ function AnimalPhenotypeDataAcuteTest() {
   return (
     <div className="animal-phenotype-data-acute-test">
       <div className="card">
-        <h5 className="card-header">Phenotypic Data Acute Test</h5>
+        <h5 className="card-header">Phenotypic Data</h5>
         <div className="card-body">
           <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
             <div className="graph-title">
