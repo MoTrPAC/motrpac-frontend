@@ -95,6 +95,11 @@
         transition: .2s;
       }
     }
+
+    // Temporarily suppressing the display of phenotype data for human
+    &.Human {
+      display: none;
+    }
   }
 
   .inactiveAnalysis {

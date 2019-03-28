@@ -28,7 +28,7 @@ export function AnalysisHomePage({
   function AnalysisTypeButton({ analysisType }) {
     if (analysisType.active) {
       return (
-        <div id={analysisType.shortName} onClick={onPickAnalysis} onKeyPress={onPickAnalysis} tabIndex={0} role="button" className="col-5 col-sm-3 m-3 analysisType analysisTypeActive">
+        <div id={analysisType.shortName} onClick={onPickAnalysis} onKeyPress={onPickAnalysis} tabIndex={0} role="button" className={`col-5 col-sm-3 m-3 analysisType analysisTypeActive ${subjectType}`}>
           <p className="centered">{analysisType.title}</p>
           <img src={analysisType.icon} className="align-self-end" alt={`${analysisType.title} Icon`} />
         </div>
