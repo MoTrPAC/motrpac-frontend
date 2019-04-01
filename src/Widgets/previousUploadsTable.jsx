@@ -110,7 +110,7 @@ export function PreviousUploadsTable({ previousUploads, expandRow, onViewMoreHis
         <div className="col-1 caretCol">
           <Caret upload={upload} />
         </div>
-        <div className="col-2"><p className="uploadRowP">{upload.biospecimenBarcode.slice(0, 5)}</p></div>
+        <div className="col-2"><p className="uploadRowP">{upload.biospecimenBarcode}</p></div>
         <div className="col-2"><p className="uploadRowP">{upload.subject}</p></div>
         <div className="col-2"><p className="uploadRowP">{upload.phase}</p></div>
         <div className="col-2"><p className="uploadRowP">{upload.dataType}</p></div>
