@@ -61,8 +61,8 @@ function PreviousUploadsGraph({ previousUploads }) {
     ],
   };
 
-  // increment highest upload number displayed on graph
-  // to be 1 or greater than highest number on chart data
+  // increment y axis scale to be 1 or greater than the highest
+  // upload number (regardless of statues) on bar chart
   const uploadRange = [];
   if (data && data.datasets && data.datasets.length) {
     data.datasets.forEach((set) => {
