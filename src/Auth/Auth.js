@@ -39,11 +39,8 @@ class Auth {
   }
 
   logout() {
-    // Clear access token and ID token from local storage
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('id_token_payload');
-    localStorage.removeItem('expires_at');
+    // Clear all local storage items upon logging out
+    localStorage.clear();
     clearTimeout(this.tokenRenewalTimeout);
   }
 
