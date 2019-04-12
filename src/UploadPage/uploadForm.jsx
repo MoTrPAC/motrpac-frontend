@@ -11,9 +11,9 @@ function validateOnBlur(e) {
   const regex = new RegExp(e.target.pattern);
   if (regex.test(e.target.value)) {
     e.target.classList.remove('is-invalid');
-    e.target.classList.add('is-valid');
+    // e.target.classList.add('is-valid'); // Not needed if validated
   } else {
-    e.target.classList.remove('is-valid');
+    // e.target.classList.remove('is-valid');
     e.target.classList.add('is-invalid');
   }
 }
