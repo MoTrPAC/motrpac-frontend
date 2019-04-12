@@ -219,7 +219,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         ...defaultUploadState,
         previousUploads: [...state.previousUploads],
       };
-    
+
     case types.EXPAND_UPLOAD_HISTORY: {
       const prevUploads = state.previousUploads.map((upload) => {
         if (action.upload === upload) {
@@ -255,7 +255,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
       if (!(state.uploadFiles.length > 0)) {
         return state;
       }
-      // Update status of succesful file
+      // Update status of succesfull file
       const newUploadsState = state.uploadFiles.map((uploadItem) => {
         if (uploadItem.status === 'UPLOADING') {
           return {
@@ -291,6 +291,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         ...state,
         previousUploads: prevUploads,
         uploadFiles: newUploadsState,
+        formValues: defaultUploadState.formValues,
       };
     }
     case types.EDIT_UPLOAD: {
