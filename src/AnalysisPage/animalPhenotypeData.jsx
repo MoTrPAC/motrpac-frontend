@@ -27,7 +27,7 @@ const plot = {
  *
  * @return {Object} JSX representation of the animal phenotype data visualization
  */
-function AnimalPhenotypeDataAcuteTest() {
+function AnimalPhenotypeData() {
   // Local states
   const [graph, setGraph] = useState('histogram');
   const [graphTitle, setGraphTitle] = useState('Distribution of Distances');
@@ -599,4 +599,4 @@ function AnimalPhenotypeDataAcuteTest() {
   );
 }
 
-export default AnimalPhenotypeDataAcuteTest;
+export default AnimalPhenotypeData;
