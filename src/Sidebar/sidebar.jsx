@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import actions from '../UploadPage/uploadActions';
 
 /**
  * Renders the gloabl sidebar.
@@ -13,6 +14,7 @@ import { connect } from 'react-redux';
 export function Sidebar({
   isAuthenticated = false,
   profile,
+  clearForm,
 }) {
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
 
@@ -66,7 +68,7 @@ export function Sidebar({
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/upload" className="nav-link">
+            <Link to="/upload" onClick={clearForm} className="nav-link">
               <span className="oi oi-cloud-upload nav-link-icon" />
                 Upload Data
             </Link>
@@ -83,4 +85,10 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps)(Sidebar);
+// Need to clear the upload form values and recently uploaded files
+// if user navigates away from and returns to the upload page
+const mapDispatchToProps = dispatch => ({
+  clearForm: () => dispatch(actions.clearForm()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
