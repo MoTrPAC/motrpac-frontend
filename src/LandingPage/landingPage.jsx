@@ -57,11 +57,16 @@ export function LandingPage({ isAuthenticated, profile }) {
             className="position-absolute particles-wrapper"
             params={{
               particles: {
-                number: { value: 90, density: { enable: true, value_area: 500 } },
+                number: { value: 40, density: { enable: true, value_area: 500 } },
                 color: { value: '#000000' },
-                size: { value: 4.5 },
-                line_linked: { color: '#000000' },
-                move: { speed: 7 },
+                size: { value: 7.5 },
+                line_linked: {
+                  distance: 150,
+                  color: '#000000',
+                  opacity: 0.7,
+                  width: 2,
+                },
+                move: { speed: 5 },
               },
               interactivity: {
                 events: {
