@@ -19,7 +19,6 @@ analysisTypes.forEach((analysis) => {
   }
 });
 
-
 const loggedInRootState = {
   ...defaultRootState,
   auth: {
@@ -33,6 +32,7 @@ const analysisActions = {
   onPickSubAnalysis: jest.fn(),
   goBack: jest.fn(),
 };
+
 function constructMatchState(subject) {
   return {
     ...defaultAnalysisState,
@@ -45,7 +45,7 @@ function constructMatchState(subject) {
   };
 }
 
-describe('Pure AnalysisHome Page', () => {
+describe('Pure Analysis Home Page', () => {
   test('Redirects to home if not logged in', () => {
     const shallowAnalysis = shallow(
       <AnalysisHomePage
@@ -113,13 +113,13 @@ describe('Pure AnalysisHome Page', () => {
 describe('Connected AnalysisPage', () => {
   let mountedAnalysis = mount((
     <Provider store={createStore(rootReducer, loggedInRootState)}>
-      <AnalysisHomePageConnected match={{ params: { subjectType: 'human' } }} />
+      <AnalysisHomePageConnected match={{ params: { subjectType: 'animal' } }} />
     </Provider>
   ));
   beforeAll(() => {
     mountedAnalysis = mount((
       <Provider store={createStore(rootReducer, loggedInRootState)}>
-        <AnalysisHomePageConnected match={{ params: { subjectType: 'human' } }} />
+        <AnalysisHomePageConnected match={{ params: { subjectType: 'animal' } }} />
       </Provider>
     ));
   });
@@ -138,8 +138,16 @@ describe('Connected AnalysisPage', () => {
       mountedAnalysis.update();
       expect(mountedAnalysis.find('SubAnalysisButton')).not.toHaveLength(0);
       expect(mountedAnalysis.find('AnalysisTypeButton')).toHaveLength(0);
+      mountedAnalysis.find('.subAnalysisRow').first().simulate('click');
+      expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(2);
+      mountedAnalysis.update();
+      expect(mountedAnalysis.find('AnimalDataAnalysis')).not.toHaveLength(0);
 
       // Click back button --> replace SubAnalysisButton with AnalysisTypeButton
+      mountedAnalysis.find('.backButton').first().simulate('click');
+      expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(1);
+      mountedAnalysis.update();
+      expect(mountedAnalysis.find('AnimalDataAnalysis')).toHaveLength(0);
       mountedAnalysis.find('.backButton').first().simulate('click');
       expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(0);
       mountedAnalysis.update();
