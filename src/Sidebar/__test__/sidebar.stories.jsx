@@ -10,5 +10,5 @@ const loggedInState = {
 };
 
 storiesOf('Sidebar', module)
-  .add('default', () => <Sidebar />)
+  .add('default', () => <Sidebar profile={testUser} />)
   .add('Logged in', () => <Sidebar {...loggedInState} />);
