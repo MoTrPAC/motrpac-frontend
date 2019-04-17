@@ -33,11 +33,24 @@ const humanMatch = {
     subjectType: 'human',
   },
 };
-const depth1State = {
+const depth1StateHuman = {
   ...defaultAnalysisState,
   match: humanMatch,
   depth: 1,
   currentAnalysis: 'PDMA',
+};
+const depth1StateAnimal = {
+  ...defaultAnalysisState,
+  match: animalMatch,
+  depth: 1,
+  currentAnalysis: 'PD',
+};
+const depth2StateAnimal = {
+  ...defaultAnalysisState,
+  match: animalMatch,
+  depth: 2,
+  currentAnalysis: 'PD',
+  currentSubAnalysis: 'APD',
 };
 storiesOf('Analysis Page', module)
   .addDecorator(story => (
@@ -48,14 +61,16 @@ storiesOf('Analysis Page', module)
       <div className="componentHolder">
         <div className="container-fluid">
           <div className="row">
-            <Sidebar isAuthenticated />
+            <Sidebar isAuthenticated profile={testUser} />
             {story()}
           </div>
         </div>
       </div>
-      <Footer isAuthenticated {...footerAction} />
+      <Footer isAuthenticated profile={testUser} {...footerAction} />
     </div>
   ))
   .add('Animal', () => <AnalysisHomePage isAuthenticated {...defaultAnalysisState} match={animalMatch} {...AnalysisActions} />)
+  .add('Animal Depth 1', () => <AnalysisHomePage isAuthenticated {...depth1StateAnimal} {...AnalysisActions} />)
+  .add('Animal Depth 2', () => <AnalysisHomePage isAuthenticated {...depth2StateAnimal} {...AnalysisActions} />)
   .add('Human', () => <AnalysisHomePage isAuthenticated {...defaultAnalysisState} match={humanMatch} {...AnalysisActions} />)
-  .add('Human Depth 1', () => <AnalysisHomePage isAuthenticated {...depth1State} {...AnalysisActions} />);
+  .add('Human Depth 1', () => <AnalysisHomePage isAuthenticated {...depth1StateHuman} {...AnalysisActions} />);
