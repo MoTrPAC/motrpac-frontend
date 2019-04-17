@@ -27,12 +27,12 @@ storiesOf('Dashboard', module)
       <div className="componentHolder">
         <div className="container-fluid">
           <div className="row">
-            <Sidebar isAuthenticated />
+            <Sidebar isAuthenticated profile={testUser} />
             {story()}
           </div>
         </div>
       </div>
-      <Footer isAuthenticated {...footerAction} />
+      <Footer isAuthenticated profile={testUser} {...footerAction} />
     </div>
 
   ))
