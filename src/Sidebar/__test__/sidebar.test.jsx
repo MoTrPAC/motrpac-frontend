@@ -7,7 +7,11 @@ Enzyme.configure({ adapter: new Adapter() });
 
 const testUser = require('../../testData/testUser');
 
-const shallowDefaultSidebar = shallow(<Sidebar profile={testUser} />);
+const sidebarActions = {
+  clearForm: jest.fn(),
+};
+
+const shallowDefaultSidebar = shallow(<Sidebar profile={testUser} {...sidebarActions} />);
 
 const navItems = ['Dashboard', 'Analysis', 'Methods', 'Data'];
 
