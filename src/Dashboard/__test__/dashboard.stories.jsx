@@ -36,4 +36,12 @@ storiesOf('Dashboard', module)
     </div>
 
   ))
-  .add('With Test Data', () => <Dashboard previousUploads={previousUploads} allUploads={allUploads} disconnectComponents isAuthenticated />);
+  .add('With Test Data', () => (
+    <Dashboard
+      previousUploads={previousUploads}
+      allUploads={allUploads}
+      profile={testUser}
+      disconnectComponents
+      isAuthenticated
+    />
+  ));
