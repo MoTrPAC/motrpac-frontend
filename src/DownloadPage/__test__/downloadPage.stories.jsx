@@ -59,7 +59,7 @@ storiesOf('Download Page', module)
       <div className="componentHolder">
         <div className="container-fluid">
           <div className="row">
-            <Sidebar isAuthenticated />
+            <Sidebar isAuthenticated profile={testUser} />
             {story()}
           </div>
         </div>
