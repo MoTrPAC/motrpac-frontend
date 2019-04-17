@@ -24,7 +24,7 @@ storiesOf('Team Page', module)
       <div className="row justify-content-center">
         {story()}
       </div>
-      <Footer isAuthenticated {...footerAction} />
+      <Footer isAuthenticated profile={testUser} {...footerAction} />
     </div>
 
   ))
