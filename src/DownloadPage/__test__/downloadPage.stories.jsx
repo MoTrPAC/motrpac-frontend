@@ -64,7 +64,7 @@ storiesOf('Download Page', module)
           </div>
         </div>
       </div>
-      <Footer isAuthenticated {...footerAction} />
+      <Footer isAuthenticated profile={testUser} {...footerAction} />
     </div>
 
   ))
