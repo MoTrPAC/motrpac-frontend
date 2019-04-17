@@ -9,7 +9,7 @@ import { Footer } from '../../Footer/footer';
 import { Sidebar } from '../../Sidebar/sidebar';
 
 const testUser = require('../../testData/testUser');
-const testPreviousUploads = require('../../testData/testPreviousUploads');
+const testAllUploads = require('../../testData/testAllUploads');
 
 const downloadActions = {
   onDownload: action('on Download'),
@@ -30,15 +30,15 @@ const loggedInState = {
 const withFilesState = {
   ...defaultDownloadState,
   isAuthenticated: true,
-  allUploads: testPreviousUploads,
-  filteredUploads: testPreviousUploads,
+  allUploads: testAllUploads,
+  filteredUploads: testAllUploads,
 };
 const viewCartState = {
   ...defaultDownloadState,
   isAuthenticated: true,
-  allUploads: testPreviousUploads,
-  filteredUploads: testPreviousUploads,
-  cartItems: testPreviousUploads,
+  allUploads: testAllUploads,
+  filteredUploads: testAllUploads,
+  cartItems: testAllUploads,
   viewCart: true,
 };
 
