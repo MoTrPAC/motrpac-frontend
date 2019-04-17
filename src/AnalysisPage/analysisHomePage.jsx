@@ -141,12 +141,14 @@ export function AnalysisHomePage({
     .map(s => s.charAt(0).toUpperCase() + s.substring(1))
     .join(' ');
 
-
-  const selectedDataAnalysis = (
-    subjectType.toLowerCase() === 'animal'
-      ? <AnimalDataAnalysis analysis={currentAnalysis} subAnalysis={currentSubAnalysis} />
-      : <HumanDataAnalysis analysis={currentAnalysis} subAnalysis={currentSubAnalysis} />
-  );
+  let selectedDataAnalysis;
+  if (depth === 2 && currentAnalysis && currentSubAnalysis) {
+    selectedDataAnalysis = (
+      subjectType.toLowerCase() === 'animal'
+        ? <AnimalDataAnalysis analysis={currentAnalysis} subAnalysis={currentSubAnalysis} />
+        : <HumanDataAnalysis analysis={currentAnalysis} subAnalysis={currentSubAnalysis} />
+    );
+  }
 
   return (
     <div className="analysisPage col-md-9 ml-sm-auto col-lg-10 px-4">
