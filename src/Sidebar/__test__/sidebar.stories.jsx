@@ -10,10 +10,11 @@ const loggedInState = {
   profile: testUser,
 };
 
-const uploadAction = {
+const sidebarActions = {
   clearForm: action('clearing form'),
+  resetDepth: action('resetting depth'),
 };
 
 storiesOf('Sidebar', module)
   .add('default', () => <Sidebar profile={testUser} />)
-  .add('Logged in', () => <Sidebar {...loggedInState} {...uploadAction} />);
+  .add('Logged in', () => <Sidebar {...loggedInState} {...sidebarActions} />);
