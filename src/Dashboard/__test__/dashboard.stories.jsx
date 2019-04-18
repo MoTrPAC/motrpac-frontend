@@ -22,6 +22,11 @@ const uploadAction = {
   clearForm: action('clearing form'),
 };
 
+const sidebarActions = {
+  clearForm: action('clearing form'),
+  resetDepth: action('resetting depth'),
+};
+
 storiesOf('Dashboard', module)
   .addDecorator(story => (
     <div className="App">
@@ -31,7 +36,7 @@ storiesOf('Dashboard', module)
       <div className="componentHolder">
         <div className="container-fluid">
           <div className="row">
-            <Sidebar isAuthenticated profile={testUser} />
+            <Sidebar isAuthenticated profile={testUser} {...sidebarActions} />
             {story()}
           </div>
         </div>
