@@ -6,6 +6,9 @@ import App from '../App';
 
 const testUser = require('../../testData/testUser');
 
+// Mocking ReactGA for Google Analytics
+jest.mock('react-ga');
+
 it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(<App />, div);
