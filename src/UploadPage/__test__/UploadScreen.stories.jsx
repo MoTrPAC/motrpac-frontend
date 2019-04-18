@@ -8,6 +8,7 @@ import { Sidebar } from '../../Sidebar/sidebar';
 
 const testUser = require('../../testData/testUser');
 const TestUploads = require('../../testData/testUploads');
+const testPreviousUploads = require('../../testData/testPreviousUploads');
 
 // Commented out since no longer need to test staged files in this screen
 // const TestFiles = TestUploads.map(upload => upload.file);
@@ -17,6 +18,7 @@ const defaultState = {
   formValues: {},
   uploadFiles: [],
   isAuthenticated: true,
+  previousUploads: [],
 };
 
 const filledState = {
@@ -31,6 +33,7 @@ const filledState = {
     dataType: 'ATAC-Seq',
     rawData: true,
   },
+  previousUploads: testPreviousUploads,
 };
 
 const actions = {
