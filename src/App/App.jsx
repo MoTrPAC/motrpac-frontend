@@ -18,6 +18,7 @@ import ContactConnected from '../ContactPage/contact';
 import ErrorPageConnected from '../ErrorPage/error';
 import CallbackConnected from '../Auth/callback';
 import SidebarConnected from '../Sidebar/sidebar';
+import { withTracker } from '../GoogleAnalytics/googleAnalytics';
 
 const store = configureStore();
 
@@ -36,17 +37,17 @@ function App({ history = History }) {
           <div className="row justify-content-center">
             <SidebarConnected />
             <Switch>
-              <Route path="/callback" component={CallbackConnected} />
-              <Route path="/" exact component={LandingPageConnected} />
-              <Route path="/dashboard" component={DashboardConnected} />
-              <Route path="/upload" component={UploadScreenConnected} />
-              <Route path="/external-links" component={LinkoutPageConnected} />
-              <Route path="/download" component={DownloadPageConnected} />
-              <Route path="/analysis/:subjectType" component={AnalysisHomePageConnected} />
-              <Route path="/methods" component={MethodsConnected} />
-              <Route path="/team" component={TeamPageConnected} />
-              <Route path="/contact" component={ContactConnected} />
-              <Route path="/error" component={ErrorPageConnected} />
+              <Route path="/callback" component={withTracker(CallbackConnected)} />
+              <Route path="/" exact component={withTracker(LandingPageConnected)} />
+              <Route path="/dashboard" component={withTracker(DashboardConnected)} />
+              <Route path="/upload" component={withTracker(UploadScreenConnected)} />
+              <Route path="/external-links" component={withTracker(LinkoutPageConnected)} />
+              <Route path="/download" component={withTracker(DownloadPageConnected)} />
+              <Route path="/analysis/:subjectType" component={withTracker(AnalysisHomePageConnected)} />
+              <Route path="/methods" component={withTracker(MethodsConnected)} />
+              <Route path="/team" component={withTracker(TeamPageConnected)} />
+              <Route path="/contact" component={withTracker(ContactConnected)} />
+              <Route path="/error" component={withTracker(ErrorPageConnected)} />
             </Switch>
           </div>
         </div>
