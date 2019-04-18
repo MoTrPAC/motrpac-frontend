@@ -9,6 +9,7 @@ const testUser = require('../../testData/testUser');
 
 const sidebarActions = {
   clearForm: jest.fn(),
+  resetDepth: jest.fn(),
 };
 
 const shallowDefaultSidebar = shallow(<Sidebar profile={testUser} {...sidebarActions} />);
