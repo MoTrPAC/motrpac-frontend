@@ -62,7 +62,10 @@ function RecentUploadList({ previousUploads }) {
     <div className="recent-upload-activity">
       <div className="card">
         <h5 className="card-header">Recent Upload Activity</h5>
-        {previousUploads.length ? <RenderUploadActivity /> : <div className="card-body"><div>No recent uploads.</div></div>}
+        {previousUploads.length
+          ? <RenderUploadActivity />
+          : <div className="card-body"><div className="noUploadActivity">No recent uploads.</div></div>
+        }
       </div>
     </div>
   );
