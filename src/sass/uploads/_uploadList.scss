@@ -1,3 +1,15 @@
+.upload-file-list {
+    margin-bottom: 1.25rem;
+
+    table {
+        margin-bottom: 0;
+
+        thead th {
+            border-top: none;
+        }
+    }
+}
+
 .centered {
     text-align: center;
 }
@@ -40,13 +52,17 @@
 
 .noListItems {
     background-color: $gray-transparent;
-    border-radius: 20px;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    margin-bottom: 20px;
+    border-style: solid;
+    border-color: $gray-semi-transparent;
+    border-width: 1px;
+    border-radius: 4px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 1.25rem;
 
-    h2 {
+    h3 {
         color: $gray;
+        margin-bottom: 0;
     }
 }
 @keyframes spin {
