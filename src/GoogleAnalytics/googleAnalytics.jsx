@@ -15,16 +15,16 @@ export const initializeReactGA = () => {
   let analyticsTrackerHostname = document.location.hostname;
 
   // match hostname to google analytics domain identified for tracker
-  if (/^(www\.)?motrpac*.org/.test(analyticsTrackerHostname)) {
+  if (/^(www\.)?motrpac(-[a-z]+)?.org/.test(analyticsTrackerHostname)) {
     // production app
     analyticsTrackerHostname = 'www.motrpac-data.org';
-  } else if (/^beta.*.motrpac*.org/.test(analyticsTrackerHostname)) {
+  } else if (/^beta.*.motrpac(-[a-z]+)?.org/.test(analyticsTrackerHostname)) {
     // beta app
     analyticsTrackerHostname = 'beta.motrpac-data.org';
-  } else if (/^alpha.*.motrpac*.org/.test(analyticsTrackerHostname)) {
+  } else if (/^alpha.*.motrpac(-[a-z]+)?.org/.test(analyticsTrackerHostname)) {
     // alpha app
     analyticsTrackerHostname = 'alpha.motrpac-data.org';
-  } else if (/^test.*.motrpac*.org/.test(analyticsTrackerHostname)) {
+  } else if (/^test.*.motrpac(-[a-z]+)?.org/.test(analyticsTrackerHostname)) {
     // test app
     analyticsTrackerHostname = 'test.motrpac-data.org';
   } else {
