@@ -15,6 +15,7 @@ export function Sidebar({
   isAuthenticated = false,
   profile,
   clearForm,
+  resetDepth,
 }) {
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
 
@@ -44,13 +45,13 @@ export function Sidebar({
         </h6>
         <ul className="nav flex-column mb-2">
           <li className="nav-item">
-            <Link to="/analysis/animal" className="nav-link">
+            <Link to="/analysis/animal" onClick={resetDepth} className="nav-link">
               <span className="icon-Animal nav-link-icon" />
                 Animal
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/analysis/human" className="nav-link">
+            <Link to="/analysis/human" onClick={resetDepth} className="nav-link">
               <span className="icon-Human nav-link-icon" />
                 Human
             </Link>
@@ -89,6 +90,7 @@ const mapStateToProps = state => ({
 // if user navigates away from and returns to the upload page
 const mapDispatchToProps = dispatch => ({
   clearForm: () => dispatch(actions.clearForm()),
+  resetDepth: () => dispatch({ type: 'RESET_DEPTH' }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
