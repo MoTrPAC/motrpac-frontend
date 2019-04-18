@@ -18,6 +18,10 @@ const footerAction = {
   login: action('logging in'),
 };
 
+const uploadAction = {
+  clearForm: action('clearing form'),
+};
+
 storiesOf('Dashboard', module)
   .addDecorator(story => (
     <div className="App">
@@ -43,5 +47,6 @@ storiesOf('Dashboard', module)
       profile={testUser}
       disconnectComponents
       isAuthenticated
+      {...uploadAction}
     />
   ));
