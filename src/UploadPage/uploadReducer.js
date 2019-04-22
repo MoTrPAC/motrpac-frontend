@@ -19,6 +19,7 @@ export const defaultUploadState = {
   previousUploads: [],
   experimentIndex: -1, // Index of experiment currently being modified with uploads
   validity: false,
+  eidtUpload: false,
 };
 
 /**
@@ -303,8 +304,8 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         collectionDate: action.upload.date ? action.upload.date : '',
         subjectType: action.upload.subject,
         studyPhase: action.upload.phase,
-        rawData: action.upload.rawData ? action.upload.rawData : false,
-        processedData: action.upload.processedData ? action.upload.processedData : false,
+        rawData: action.upload.rawData ? action.upload.rawData : true,
+        processedData: action.upload.processedData ? action.upload.processedData : true,
         description: action.upload.description,
       };
       const uploadFiles = action.upload.history.map((upload) => {
@@ -321,6 +322,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         submitted: true,
         formValues: formData,
         uploadFiles,
+        editUpload: true,
       };
     }
     default:
