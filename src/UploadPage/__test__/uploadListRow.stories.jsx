@@ -14,8 +14,7 @@ storiesOf('Upload List Items', module)
       <thead>
         <tr>
           <th scope="col">File Name</th>
-          <th scope="col">Status</th>
-          <th className="centered" scope="col">Upload Successful</th>
+          <th className="centered" scope="col">Upload Status</th>
           <th className="centered" scope="col">Cancel Upload</th>
         </tr>
       </thead>
