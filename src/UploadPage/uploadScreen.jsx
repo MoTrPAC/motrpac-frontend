@@ -29,7 +29,6 @@ export function UploadScreen({
   clearForm,
   uploadSuccess,
   isAuthenticated,
-  previousUploads,
 }) {
   if (!isAuthenticated) {
     return (<Redirect to="/" />);
@@ -79,23 +78,13 @@ export function UploadScreen({
         </div>
         <div className="col-12">
           <h3>{formValues.biospecimenID}</h3>
-          <UploadList
-            uploadFiles={uploadFiles}
-            cancelUpload={cancelUpload}
-            previousUploads={previousUploads}
-          />
+          <UploadList uploadFiles={uploadFiles} cancelUpload={cancelUpload} />
         </div>
       </div>
     </div>
   );
   return screen;
 }
-
-const historyPropType = {
-  fileName: PropTypes.string,
-  timeStamp: PropTypes.number,
-  uuid: PropTypes.string,
-};
 
 UploadScreen.propTypes = {
   dragging: PropTypes.number.isRequired,
@@ -127,13 +116,6 @@ UploadScreen.propTypes = {
   cancelUpload: PropTypes.func.isRequired,
   clearForm: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
-  previousUploads: PropTypes.arrayOf(PropTypes.shape({
-    history: PropTypes.arrayOf(PropTypes.shape({ ...historyPropType })),
-    biospecimenBarcode: PropTypes.string,
-    subject: PropTypes.string,
-    phase: PropTypes.string,
-    dataType: PropTypes.string,
-  })),
 };
 
 const mapStateToProps = state => ({
