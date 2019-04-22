@@ -1,12 +1,21 @@
-.upload-file-list {
-    margin-bottom: 1.25rem;
+.uploadItem {
+    td:first-child {
+        width: 50%;
+    }
 
-    table {
-        margin-bottom: 0;
+    .badge {
+        font-size: 0.65rem;
+        line-height: unset;
+        margin-left: 0.5rem;
+        padding: 0.125rem 0.325rem;
+    }
 
-        thead th {
-            border-top: none;
-        }
+    .oi {
+        margin-right: 0.5rem;
+    }
+
+    .upload-status-error {
+        display: inline-block;
     }
 }
 
