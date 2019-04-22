@@ -118,12 +118,13 @@ function editUpload(upload) {
   };
 }
 
+// TODO: need handling to extend timeout to allow cancel upload modal to be dismissed
 function formSubmitSuccessUploads(e) {
   return (dispatch) => {
     dispatch(formSubmit(e));
     return setTimeout(() => {
       dispatch(setSuccess());
-    }, 2000);
+    }, 5000);
   };
 }
 
