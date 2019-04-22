@@ -19,7 +19,6 @@ export const defaultUploadState = {
   previousUploads: [],
   experimentIndex: -1, // Index of experiment currently being modified with uploads
   validity: false,
-  eidtUpload: false,
 };
 
 /**
@@ -265,13 +264,14 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
           return {
             ...uploadItem,
             status: 'UPLOAD_SUCCESS',
+            addition: true,
           };
         }
         return uploadItem;
       });
 
       // Update upload history with filename
-      const successUploads = newUploadsState.filter(upload => (upload.status === 'UPLOAD_SUCCESS'));
+      const successUploads = newUploadsState.filter(upload => (upload.status === 'UPLOAD_SUCCESS' && upload.addition));
       const historyAddition = successUploads.map((upload) => {
         return {
           fileName: upload.file.name,
@@ -304,8 +304,8 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         collectionDate: action.upload.date ? action.upload.date : '',
         subjectType: action.upload.subject,
         studyPhase: action.upload.phase,
-        rawData: action.upload.rawData ? action.upload.rawData : true,
-        processedData: action.upload.processedData ? action.upload.processedData : true,
+        rawData: action.upload.rawData ? action.upload.rawData : false,
+        processedData: action.upload.processedData ? action.upload.processedData : false,
         description: action.upload.description,
       };
       const uploadFiles = action.upload.history.map((upload) => {
@@ -315,6 +315,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
             name: upload.fileName,
           },
           status: 'UPLOAD_SUCCESS',
+          addition: false,
         };
       });
       return {
@@ -322,7 +323,6 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         submitted: true,
         formValues: formData,
         uploadFiles,
-        editUpload: true,
       };
     }
     default:
