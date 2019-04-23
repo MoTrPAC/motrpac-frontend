@@ -34,9 +34,6 @@ export function Navbar({
     document.querySelector('body').classList.add('authenticated');
   }
 
-  // Temp config to show/hide test interface visuals
-  const urlParams = new URLSearchParams(window.location.search);
-
   // Function to render login button
   const LogoutButton = () => {
     const userDisplayName = profile.user_metadata && profile.user_metadata.name
@@ -71,7 +68,7 @@ export function Navbar({
           <div className="alert alert-dismissible fade show" role="alert">
             <strong>Important: </strong>
             <span>
-              This is a test version of the site. Any data enteredwill not be
+              This is a test version of the site. Any data entered will not be
               preserved between releases.
             </span>
             <button type="button" className="close" data-dismiss="alert" aria-label="Close">
@@ -85,16 +82,14 @@ export function Navbar({
 
   const navbar = (
     <div className="header-navbar-container fixed-top">
-      {urlParams.has('version') && urlParams.get('version') === 'alpha' && (
+      {window.location.pathname === '/' && (
         <TestInterfaceAlert />
       )}
       <nav className="navbar navbar-expand-lg navbar-light flex-md-nowrap p-0 shadow-sm bg-white">
         <div className={`${isAuthenticated && hasAccess ? 'container-fluid' : 'container'} header-navbar-items`}>
           <Link to="/" className={`navbar-brand header-logo ${isAuthenticated && hasAccess ? 'resized' : ''}`}>
             <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
-            {urlParams.has('version') && urlParams.get('version') === 'alpha' && (
-              <span className="badge badge-pill badge-warning">Alpha</span>
-            )}
+            <span className="badge badge-pill badge-warning">Alpha</span>
           </Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />
