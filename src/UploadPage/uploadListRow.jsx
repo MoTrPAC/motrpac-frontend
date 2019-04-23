@@ -35,8 +35,8 @@ function UploadListRow({ uploadItem, cancelUpload }) {
   // Changes  error message and icon based on upload status
   switch (uploadItem.status) {
     case 'UPLOAD_SUCCESS': {
-      icon = <span className="oi oi-check" />;
-      message = 'Upload Successful';
+      icon = uploadItem.addition ? <span className="oi oi-check" /> : null;
+      message = uploadItem.addition ? 'Upload Successful' : 'Previously Uploaded';
       break;
     }
     case 'UPLOADING': {
@@ -47,7 +47,7 @@ function UploadListRow({ uploadItem, cancelUpload }) {
     case 'FAILED': {
       icon = <span className="oi oi-warning" />;
       message = (
-        <div>
+        <div className="upload-status-error">
           <button type="button" className="errorHovButton">
             {`Error: ${uploadItem.error.code}`}
           </button>
@@ -65,9 +65,8 @@ function UploadListRow({ uploadItem, cancelUpload }) {
 
   return (
     <tr className="uploadItem">
-      <td>{uploadItem.file.name}</td>
-      <td>{message}</td>
-      <td className="centered">{icon}</td>
+      <td>{uploadItem.file.name}{uploadItem.addition ? <span className="badge badge-success">NEW</span> : null}</td>
+      <td className="centered">{icon}{message}</td>
       {uploadItem.status === 'UPLOADING' ? (
         <td className="centered">
           <button type="button" className="btn cancelBtn" data-toggle="modal" data-target={`#cancelUpload${strID}`}>

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AnimalPhenotypeDataAcuteTest from './animalPhenotypeAcuteTest';
-import AnimalPhenotypeDataFamiliarization from './animalPhenotypeFamiliarization';
+import AnimalPhenotypeData from './animalPhenotypeData';
 
 export default function AnimalDataAnalysis({
   analysis,
@@ -9,10 +8,8 @@ export default function AnimalDataAnalysis({
 }) {
   if (analysis === 'PD') {
     switch (subAnalysis) {
-      case 'PD_AT':
-        return <AnimalPhenotypeDataAcuteTest />;
-      case 'PD_F':
-        return <AnimalPhenotypeDataFamiliarization />;
+      case 'APD':
+        return <AnimalPhenotypeData />;
       default:
         return null;
     }

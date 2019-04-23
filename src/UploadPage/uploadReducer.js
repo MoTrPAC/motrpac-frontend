@@ -30,7 +30,7 @@ export const defaultUploadState = {
 function createFileFilter(originalFileNames) {
   // Filter to ensure files don't share the same name
   function uniqueFileNameFilter(file) {
-    // equals 1 if  file already in original filenames --> criteria to remove
+    // equals 1 if file already in original filenames --> criteria to remove
     const isIn = originalFileNames.filter(name => name === file.name).length;
     return !(isIn === 1);
   }
@@ -49,7 +49,7 @@ function generateUUID() {
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
-// Reducer to handle actions sent from componenets related to uploading data
+// Reducer to handle actions sent from components related to uploading data
 export function UploadReducer(state = { ...defaultUploadState }, action) {
   // TODO: Filter by name && path? Add suffix for duplicates?
 
@@ -168,6 +168,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         experimentIndex: expIndex,
       };
     }
+
     case types.CANCEL_UPLOAD: {
       const remainingFiles = state.uploadFiles.filter(upload => !(upload.id === action.id));
       return {
@@ -206,7 +207,6 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
 
       prevUploads[state.experimentIndex] = experiment;
 
-
       return {
         ...state,
         previousUploads: prevUploads,
@@ -214,12 +214,14 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
       };
     }
 
+    // Revert form values and recently upload file list to default
     case types.CLEAR_FORM:
       return {
         ...defaultUploadState,
         previousUploads: [...state.previousUploads],
       };
-    
+
+    // Expand to detail view of a given previous upload batch
     case types.EXPAND_UPLOAD_HISTORY: {
       const prevUploads = state.previousUploads.map((upload) => {
         if (action.upload === upload) {
@@ -235,6 +237,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
         previousUploads: prevUploads,
       };
     }
+
     case types.VIEW_MORE_HISTORY: {
       const prevUploads = state.previousUploads.map((upload) => {
         if (action.upload === upload) {
@@ -255,19 +258,20 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
       if (!(state.uploadFiles.length > 0)) {
         return state;
       }
-      // Update status of succesful file
+      // Update status of successful file
       const newUploadsState = state.uploadFiles.map((uploadItem) => {
         if (uploadItem.status === 'UPLOADING') {
           return {
             ...uploadItem,
             status: 'UPLOAD_SUCCESS',
+            addition: true,
           };
         }
         return uploadItem;
       });
 
       // Update upload history with filename
-      const successUploads = newUploadsState.filter(upload => (upload.status === 'UPLOAD_SUCCESS'));
+      const successUploads = newUploadsState.filter(upload => (upload.status === 'UPLOAD_SUCCESS' && upload.addition));
       const historyAddition = successUploads.map((upload) => {
         return {
           fileName: upload.file.name,
@@ -311,6 +315,7 @@ export function UploadReducer(state = { ...defaultUploadState }, action) {
             name: upload.fileName,
           },
           status: 'UPLOAD_SUCCESS',
+          addition: false,
         };
       });
       return {

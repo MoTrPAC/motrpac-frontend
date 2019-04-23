@@ -17,14 +17,16 @@ const footerAction = {
 
 storiesOf('Linkout Page', module)
   .addDecorator(story => (
-    <div className="App">
-      <header>
-        <Navbar isAuthenticated {...navAction} profile={testUser} />
-      </header>
-      <div className="row justify-content-center">
-        {story()}
+    <React.Fragment>
+      <div className="App">
+        <header>
+          <Navbar isAuthenticated {...navAction} profile={testUser} />
+        </header>
+        <div className="row justify-content-center">
+          {story()}
+        </div>
       </div>
-      <Footer isAuthenticated {...footerAction} />
-    </div>
+      <Footer isAuthenticated profile={testUser} {...footerAction} />
+    </React.Fragment>
   ))
   .add('Default', () => <LinkoutPage />);

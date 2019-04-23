@@ -7,7 +7,7 @@ function UploadList({ uploadFiles, cancelUpload }) {
   if (!uploadFiles.length) {
     return (
       <div className="noListItems centered">
-        <h2>Upload files and they will appear here!</h2>
+        <h3>Upload files and they will appear here!</h3>
       </div>
     );
   }
@@ -23,19 +23,20 @@ function UploadList({ uploadFiles, cancelUpload }) {
     ));
 
   return (
-    <table className="table table-hover uploadList">
-      <thead>
-        <tr>
-          <th scope="col">File Name</th>
-          <th scope="col">Status</th>
-          <th className="centered" scope="col">Upload Successful</th>
-          <th className="centered" scope="col">Cancel Upload</th>
-        </tr>
-      </thead>
-      <tbody>
-        {listObj}
-      </tbody>
-    </table>
+    <div className="upload-file-list">
+      <table className="table table-hover uploadList">
+        <thead>
+          <tr>
+            <th scope="col">File Name</th>
+            <th className="centered" scope="col">Upload Status</th>
+            <th className="centered" scope="col">Cancel Upload</th>
+          </tr>
+        </thead>
+        <tbody>
+          {listObj}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
@@ -47,6 +48,7 @@ UploadList.propTypes = {
   })),
   cancelUpload: PropTypes.func.isRequired,
 };
+
 UploadList.defaultProps = {
   uploadFiles: [],
 };

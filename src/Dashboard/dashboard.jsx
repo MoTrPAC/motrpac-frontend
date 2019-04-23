@@ -6,6 +6,7 @@ import PreviousUploadsTableConnected, { PreviousUploadsTable } from '../Widgets/
 import PreviousUploadsGraph from '../Widgets/previousUploadsGraph';
 import AllUploadsDoughnut from '../Widgets/allUploadsDoughnut';
 import AllUploadStats from '../Widgets/allUploadStats';
+import actions from '../UploadPage/uploadActions';
 
 const allUploads = require('../testData/testAllUploads');
 
@@ -25,6 +26,7 @@ export function Dashboard({
   featureAvailable,
   previousUploads,
   disconnectComponents,
+  clearForm,
 }) {
   const editBtn = (
     <div className="col-auto">
@@ -59,7 +61,7 @@ export function Dashboard({
           </div>
           <div className="btn-toolbar">
             <div className="btn-group">
-              <Link className="uploadBtn btn btn-sm btn-outline-primary" to="/upload">Upload Data</Link>
+              <Link className="uploadBtn btn btn-sm btn-outline-primary" to="/upload" onClick={clearForm}>Upload Data</Link>
               <Link className="downloadBtn btn btn-sm btn-outline-primary" to="/download">Download/View Data</Link>
             </div>
           </div>
@@ -112,6 +114,7 @@ Dashboard.propTypes = {
     identifier: PropTypes.string,
   })).isRequired,
   disconnectComponents: PropTypes.bool,
+  clearForm: PropTypes.func.isRequired,
 };
 
 Dashboard.defaultProps = {
@@ -131,4 +134,10 @@ const mapStateToProps = state => ({
   previousUploads: state.upload.previousUploads,
 });
 
-export default connect(mapStateToProps)(Dashboard);
+// Need to clear the upload form values and recently uploaded files
+// if user navigates away from and returns to the upload page
+const mapDispatchToProps = dispatch => ({
+  clearForm: () => dispatch(actions.clearForm()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

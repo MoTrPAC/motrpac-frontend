@@ -32,6 +32,15 @@ export default function AnalysisReducer(state = { ...defaultAnalysisState }, act
         ...state,
         depth: (state.depth > 0) ? state.depth - 1 : 0,
       };
+    case 'RESET_DEPTH':
+      return {
+        ...state,
+        currentAnalysis: '',
+        currentSubAnalysis: '',
+        depth: 0,
+        analysisSelected: false,
+        subAnalysisSelected: false,
+      };
     default:
       return state;
   }

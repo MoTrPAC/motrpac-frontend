@@ -18,6 +18,15 @@ const footerAction = {
   login: action('logging in'),
 };
 
+const uploadAction = {
+  clearForm: action('clearing form'),
+};
+
+const sidebarActions = {
+  clearForm: action('clearing form'),
+  resetDepth: action('resetting depth'),
+};
+
 storiesOf('Dashboard', module)
   .addDecorator(story => (
     <div className="App">
@@ -27,13 +36,22 @@ storiesOf('Dashboard', module)
       <div className="componentHolder">
         <div className="container-fluid">
           <div className="row">
-            <Sidebar isAuthenticated />
+            <Sidebar isAuthenticated profile={testUser} {...sidebarActions} />
             {story()}
           </div>
         </div>
       </div>
-      <Footer isAuthenticated {...footerAction} />
+      <Footer isAuthenticated profile={testUser} {...footerAction} />
     </div>
 
   ))
-  .add('With Test Data', () => <Dashboard previousUploads={previousUploads} allUploads={allUploads} disconnectComponents isAuthenticated />);
+  .add('With Test Data', () => (
+    <Dashboard
+      previousUploads={previousUploads}
+      allUploads={allUploads}
+      profile={testUser}
+      disconnectComponents
+      isAuthenticated
+      {...uploadAction}
+    />
+  ));

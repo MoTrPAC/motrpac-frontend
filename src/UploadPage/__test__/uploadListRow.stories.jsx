@@ -14,8 +14,7 @@ storiesOf('Upload List Items', module)
       <thead>
         <tr>
           <th scope="col">File Name</th>
-          <th scope="col">Status</th>
-          <th className="centered" scope="col">Upload Successful</th>
+          <th className="centered" scope="col">Upload Status</th>
           <th className="centered" scope="col">Cancel Upload</th>
         </tr>
       </thead>
@@ -24,6 +23,7 @@ storiesOf('Upload List Items', module)
       </tbody>
     </table>))
   .add('Successful Upload', () => <UploadListRow uploadItem={testUploads[2]} {...uploadItemActions} />)
+  .add('Previously Uploaded', () => <UploadListRow uploadItem={testUploads[3]} {...uploadItemActions} />)
   .add('Uploading', () => <UploadListRow uploadItem={testUploads[0]} {...uploadItemActions} />)
   .add('Failed', () => <UploadListRow uploadItem={testUploads[1]} {...uploadItemActions} />)
-  .add('Unknown Status', () => <UploadListRow uploadItem={testUploads[3]} {...uploadItemActions} />);
+  .add('Unknown Status', () => <UploadListRow uploadItem={testUploads[4]} {...uploadItemActions} />);

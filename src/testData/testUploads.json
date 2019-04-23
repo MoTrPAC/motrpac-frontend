@@ -4,14 +4,14 @@
         "file": {
             "name": "test1.fa"
         },
-        "status":"UPLOADING"
+        "status": "UPLOADING"
     },
     {
         "id": "2",
         "file": {
             "name": "test2.fa"
         },
-        "status":"FAILED",
+        "status": "FAILED",
         "error": {
             "code": "1234",
             "message": "This error occurs when… \n Contact … with comments/questions.",
@@ -23,13 +23,22 @@
         "file": {
             "name": "test3.fa"
         },
-        "status":"UPLOAD_SUCCESS"
+        "status": "UPLOAD_SUCCESS",
+        "addition": true
     },
     {
         "id": "4",
         "file": {
             "name": "test4.fa"
         },
-        "status":"UNDEFINED"
+        "status": "UPLOAD_SUCCESS",
+        "addition": false
+    },
+    {
+        "id": "5",
+        "file": {
+            "name": "test5.fa"
+        },
+        "status": "UNDEFINED"
     }
 ]

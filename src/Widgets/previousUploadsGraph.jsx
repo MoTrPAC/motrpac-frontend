@@ -61,12 +61,24 @@ function PreviousUploadsGraph({ previousUploads }) {
     ],
   };
 
+  // increment y axis scale to be 1 or greater than the highest
+  // upload number (regardless of statues) on bar chart
+  const uploadRange = [];
+  if (data && data.datasets && data.datasets.length) {
+    data.datasets.forEach((set) => {
+      uploadRange.push(...set.data);
+    });
+  }
+  const maxScaleY = Math.max(...uploadRange);
+
   // ChartJS formatting options
   const options = {
     scales: {
       yAxes: [{
         ticks: {
+          stepSize: 1, // integer only
           beginAtZero: true,
+          suggestedMax: +maxScaleY + 1,
         },
         scaleLabel: {
           display: true,

@@ -9,6 +9,9 @@ import ShrutiImg from '../assets/teamMemberPhotos/Shruti.jpg';
 import DavidAImg from '../assets/teamMemberPhotos/DavidA.jpg';
 import ArchanaImg from '../assets/teamMemberPhotos/Archana.png';
 import SamirImg from '../assets/teamMemberPhotos/Samir.jpg';
+import JeffImg from '../assets/teamMemberPhotos/Jeff.jpg';
+import TerraImg from '../assets/teamMemberPhotos/Terra.jpg';
+import BrookeImg from '../assets/teamMemberPhotos/Brooke.jpg';
 import MannyImg from '../assets/teamMemberPhotos/Manny.jpg';
 import RobImg from '../assets/teamMemberPhotos/Rob.jpg';
 import TrevorImg from '../assets/teamMemberPhotos/Trevor.jpg';
@@ -29,6 +32,11 @@ const teamInfo = {
   ],
   Staff: [
     {
+      name: 'Jeff Christle, Ph.D.',
+      title: 'Clinical exercise physiologist',
+      image: JeffImg,
+    },
+    {
       name: 'Steven Hershman, Ph.D.',
       title: 'Director of mHealth',
       image: SteveImg,
@@ -44,19 +52,24 @@ const teamInfo = {
       image: KarenImg,
     },
     {
+      name: 'Samir Akre',
+      title: 'Software & Pipeline Developer',
+      image: SamirImg,
+    },
+    {
       name: 'Jimmy Zhen',
       title: 'Software Developer',
       image: JimmyImg,
     },
     {
-      name: 'David Jimenez-Morales, Ph.D.',
-      title: 'Computational Biologist',
-      image: DavidJMImg,
-    },
-    {
       name: 'Shruti Marwaha, Ph.D.',
       title: 'Research Engineer',
       image: ShrutiImg,
+    },
+    {
+      name: 'David Jimenez-Morales, Ph.D.',
+      title: 'Computational Biologist',
+      image: DavidJMImg,
     },
     {
       name: 'David Amar, Ph.D.',
@@ -69,9 +82,14 @@ const teamInfo = {
       image: ArchanaImg,
     },
     {
-      name: 'Samir Akre',
-      title: 'Software & Pipeline Developer',
-      image: SamirImg,
+      name: 'Terra Coakley',
+      title: 'Program Manager',
+      image: TerraImg,
+    },
+    {
+      name: 'Brooke Zelnik',
+      title: 'Administrative Associate',
+      image: BrookeImg,
     },
   ],
   CoIs: [

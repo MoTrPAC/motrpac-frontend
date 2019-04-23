@@ -1,3 +1,24 @@
+.uploadItem {
+    td:first-child {
+        width: 50%;
+    }
+
+    .badge {
+        font-size: 0.65rem;
+        line-height: unset;
+        margin-left: 0.5rem;
+        padding: 0.125rem 0.325rem;
+    }
+
+    .oi {
+        margin-right: 0.5rem;
+    }
+
+    .upload-status-error {
+        display: inline-block;
+    }
+}
+
 .centered {
     text-align: center;
 }
@@ -40,13 +61,17 @@
 
 .noListItems {
     background-color: $gray-transparent;
-    border-radius: 20px;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    margin-bottom: 20px;
+    border-style: solid;
+    border-color: $gray-semi-transparent;
+    border-width: 1px;
+    border-radius: 4px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 1.25rem;
 
-    h2 {
+    h3 {
         color: $gray;
+        margin-bottom: 0;
     }
 }
 @keyframes spin {

@@ -51,7 +51,7 @@ const shallow3RowList = shallow(<UploadList uploadFiles={threeUploads} {...uploa
 
 describe('Upload List', () => {
   test('No upload list table if no uploads', () => {
-    expect(shallowEmptyList.hasClass('noListItems')).toBeTruthy();
+    expect(shallowEmptyList.find('.noListItems')).toHaveLength(1);
     expect(shallowEmptyList.find('table').exists()).toBe(false);
   });
 

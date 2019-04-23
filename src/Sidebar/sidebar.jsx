@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import actions from '../UploadPage/uploadActions';
 
 /**
  * Renders the gloabl sidebar.
@@ -13,6 +14,8 @@ import { connect } from 'react-redux';
 export function Sidebar({
   isAuthenticated = false,
   profile,
+  clearForm,
+  resetDepth,
 }) {
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
 
@@ -42,13 +45,13 @@ export function Sidebar({
         </h6>
         <ul className="nav flex-column mb-2">
           <li className="nav-item">
-            <Link to="/analysis/animal" className="nav-link">
+            <Link to="/analysis/animal" onClick={resetDepth} className="nav-link">
               <span className="icon-Animal nav-link-icon" />
                 Animal
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/analysis/human" className="nav-link">
+            <Link to="/analysis/human" onClick={resetDepth} className="nav-link">
               <span className="icon-Human nav-link-icon" />
                 Human
             </Link>
@@ -66,7 +69,7 @@ export function Sidebar({
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/upload" className="nav-link">
+            <Link to="/upload" onClick={clearForm} className="nav-link">
               <span className="oi oi-cloud-upload nav-link-icon" />
                 Upload Data
             </Link>
@@ -83,4 +86,11 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps)(Sidebar);
+// Need to clear the upload form values and recently uploaded files
+// if user navigates away from and returns to the upload page
+const mapDispatchToProps = dispatch => ({
+  clearForm: () => dispatch(actions.clearForm()),
+  resetDepth: () => dispatch({ type: 'RESET_DEPTH' }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

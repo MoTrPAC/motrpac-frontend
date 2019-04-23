@@ -14,9 +14,18 @@ Enzyme.configure({ adapter: new Adapter() });
 const testPreviousUploads = require('../../testData/testPreviousUploads');
 const testUser = require('../../testData/testUser');
 
+const buttonActions = {
+  clearForm: jest.fn(),
+};
+
 describe('Shallow Dashboard', () => {
   const shallowDash = shallow(
-    <Dashboard isAuthenticated profile={testUser} previousUploads={testPreviousUploads} />,
+    <Dashboard
+      isAuthenticated
+      profile={testUser}
+      previousUploads={testPreviousUploads}
+      {...buttonActions}
+    />,
   );
   const loggedInRootState = {
     ...defaultRootState,

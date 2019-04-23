@@ -27,7 +27,7 @@ const analysisTypes = [
         title: 'Animal Phenotype Data',
         icon: chartbarIcon,
         inactiveIcon: MAGeneIconInactive,
-        shortName: 'PD_AT',
+        shortName: 'APD',
         input: 'Distance, Gender, Weight and Fat',
         description: 'Displays a number of visualizations in analyzing various animal phenotype data.',
         active: true,

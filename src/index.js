@@ -1,8 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { initializeReactGA } from './GoogleAnalytics/googleAnalytics';
 import App from './App/App';
 import * as serviceWorker from './serviceWorker';
 import './main.css';
+
+// Initialize Google Analytics
+initializeReactGA();
 
 render(<App />, document.getElementById('root'));
 

@@ -1,32 +1,28 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { Contact } from '../contact';
+import { ErrorPage } from '../error';
 import { Navbar } from '../../Navbar/navbar';
 import { Footer } from '../../Footer/footer';
 
 const testUser = require('../../testData/testUser');
 
-const navAction = {
-  logout: action('logging out'),
-};
-
-const footerAction = {
+const loginAction = {
   login: action('logging in'),
 };
 
-storiesOf('Contact Us Page', module)
+storiesOf('Error Page', module)
   .addDecorator(story => (
     <React.Fragment>
       <div className="App">
         <header>
-          <Navbar isAuthenticated {...navAction} profile={testUser} />
+          <Navbar {...loginAction} profile={testUser} />
         </header>
         <div className="row justify-content-center">
           {story()}
         </div>
       </div>
-      <Footer isAuthenticated profile={testUser} {...footerAction} />
+      <Footer profile={testUser} {...loginAction} />
     </React.Fragment>
   ))
-  .add('Default', () => <Contact />);
+  .add('Default', () => <ErrorPage />);
