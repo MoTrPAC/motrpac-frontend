@@ -61,21 +61,18 @@ export function Navbar({
 
   // Function to render test interface alert
   const TestInterfaceAlert = () => {
-    const isTestInterface = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
     return (
       <div className="test-interface-alert w-100">
-        {isTestInterface && (
-          <div className="alert alert-dismissible fade show" role="alert">
-            <strong>Important: </strong>
-            <span>
-              This is a test version of the site. Any data entered will not be
-              preserved between releases.
-            </span>
-            <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        )}
+        <div className="alert alert-dismissible fade show" role="alert">
+          <strong>Important: </strong>
+          <span>
+            This is a test version of the site. Any data entered will not be
+            preserved between releases.
+          </span>
+          <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
       </div>
     );
   };
