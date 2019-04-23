@@ -8,7 +8,8 @@ const testUploads = require('../testData/testAllUploads');
 const testPreviousUploads = require('../testData/testPreviousUploads');
 
 // loads test data if in development or testing
-const loadTestData = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
+// const loadTestData = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
+const loadTestData = true; // always load test data prior to production release
 
 const testDownloadState = {
   ...defaultDownloadState,
