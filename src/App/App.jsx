@@ -23,14 +23,10 @@ import { withTracker } from '../GoogleAnalytics/googleAnalytics';
 const store = configureStore();
 
 function App({ history = History }) {
-  // Temp config to show/hide test interface visuals
-  const urlParams = new URLSearchParams(window.location.search);
-  const isAlpha = urlParams.has('version') && urlParams.get('version') === 'alpha';
-
   return (
     <Provider store={store}>
       <Router history={history}>
-        <div className={`App container-fluid ${isAlpha ? 'test-version' : ''}`}>
+        <div className="App container-fluid">
           <header>
             <NavbarConnected />
           </header>

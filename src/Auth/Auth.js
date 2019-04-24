@@ -42,6 +42,11 @@ class Auth {
     // Clear all local storage items upon logging out
     localStorage.clear();
     clearTimeout(this.tokenRenewalTimeout);
+    // Clear Auth0 session cookie to prevent Auth0 SSO from automatically
+    // authenticating users of 'Username-Password-Authentication' connection
+    this.auth0.logout({
+      returnTo: window.location.origin
+    });
   }
 
   setSession(authResult) {
