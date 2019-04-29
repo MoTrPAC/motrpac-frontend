@@ -18,12 +18,12 @@ describe('Animal Phenotype Data Plot', () => {
     expect(shallowAnimalPhenotypeData.find('svg')).toHaveLength(1);
   });
 
-  test('Has 3 plot buttons', () => {
-    expect(shallowAnimalPhenotypeData.find('.btn-group').children()).toHaveLength(3);
+  test('Has 4 plot buttons', () => {
+    expect(shallowAnimalPhenotypeData.find('.graph-buttons').children()).toHaveLength(4);
   });
 
-  test('Clicking the Scatterplot button updates plot title', () => {
-    shallowAnimalPhenotypeData.find('.btn-group').children().last().simulate('click', clickEvent);
-    expect(shallowAnimalPhenotypeData.find('.card-title').text()).toMatch('Weight vs. Fat');
+  test('Clicking the Weight versus Fat button updates plot title', () => {
+    shallowAnimalPhenotypeData.find('.graph-buttons').children().last().simulate('click', clickEvent);
+    expect(shallowAnimalPhenotypeData.find('.card-title').text()).toMatch('Weight versus Fat');
   });
 });
