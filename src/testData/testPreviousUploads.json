@@ -45,7 +45,7 @@
     "biospecimenBarcode": "1212347000",
     "subject": "Animal",
     "phase": "1A",
-    "dataType": "RRBS",
+    "dataType": "RNA-seq (PolyA)",
     "date": "09/25/2018",
     "availability": "Pending Q.C.",
     "site": "MSSM",
@@ -63,61 +63,61 @@
     "biospecimenBarcode": "1212348000",
     "subject": "Animal",
     "phase": "1A",
-    "dataType": "Untargeted RP",
+    "dataType": "ATAC-seq",
     "date": "10/05/2018",
     "availability": "Pending Q.C.",
     "lastUpdated": 1540241116820,
-    "site": "UM"
+    "site": "MSSM"
   },
   {
     "biospecimenBarcode": "1212349000",
     "subject": "Animal",
     "phase": "1A",
-    "dataType": "Untargeted HILIC-positive",
+    "dataType": "RNA-seq (PolyA)",
     "date": "11/05/2018",
     "availability": "Publicly Available",
     "lastUpdated": 1540241116820,
-    "site": "Broad"
+    "site": "Stanford"
   },
   {
     "biospecimenBarcode": "1212350000",
     "subject": "Animal",
     "phase": "1A",
-    "dataType": "Untargeted Lipidomics",
+    "dataType": "ATAC-seq",
     "date": "11/10/2018",
     "availability": "Internally Available",
     "lastUpdated": 1540241116820,
-    "site": "GT"
+    "site": "MSSM"
   },
   {
     "biospecimenBarcode": "1212350001",
     "subject": "Animal",
     "phase": "1A",
-    "dataType": "Targeted Acyl-CoA",
+    "dataType": "RNA-seq (PolyA)",
     "date": "11/15/2018",
     "availability": "Publicly Available",
     "lastUpdated": 1540241116820,
-    "site": "Duke"
+    "site": "Stanford"
   },
   {
     "biospecimenBarcode": "1212352000",
     "subject": "Animal",
     "phase": "1A",
-    "dataType": "Targeted Oxylipins",
+    "dataType": "Global Proteomics",
     "date": "11/25/2018",
-    "availability": "Pending Q.C.",
+    "availability": "Internally Available",
     "lastUpdated": 1540241156820,
-    "site": "Emory"
+    "site": "Broad"
   },
   {
     "biospecimenBarcode": "1212353000",
     "subject": "Animal",
     "phase": "1A",
-    "dataType": "Targeted Amines",
+    "dataType": "Global Proteomics",
     "date": "12/05/2018",
     "availability": "Pending Q.C.",
     "lastUpdated": 1540241126820,
-    "site": "Mayo"
+    "site": "UM"
   },
   {
     "biospecimenBarcode": "1212354000",
@@ -138,5 +138,15 @@
     "availability": "Publicly Available",
     "lastUpdated": 1540241016820,
     "site": "Stanford"
+  },
+  {
+    "biospecimenBarcode": "1212355000",
+    "subject": "Animal",
+    "phase": "1A",
+    "dataType": "ATAC-seq",
+    "date": "12/11/2018",
+    "availability": "Publicly Available",
+    "lastUpdated": 1540241016820,
+    "site": "MSSM"
   }
 ]
