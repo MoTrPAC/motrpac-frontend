@@ -1,11 +1,14 @@
-const assayList = [
+const assays = [
   'WGS',
-  'RNA-Seq',
-  'Methylome',
-  'ATAC-Seq',
+  'RNA-seq (PolyA)',
+  'RNA-seq (all)',
+  'miRNA-seq',
+  'RRBS',
+  'Methyl-seq',
+  'ATAC-seq',
   'Untargeted RP',
   'Untargeted HILIC-positive',
-  'Untargeted HILIC -negative',
+  'Untargeted HILIC-negative',
   'Untargeted Lipidomics',
   'Targeted Acyl-CoA',
   'Targeted Acylcarnitines',
@@ -13,11 +16,11 @@ const assayList = [
   'Targeted Organic Acids',
   'Targeted Eicosanoids',
   'Targeted Nucleotides',
-  'Targeted oxylipins',
+  'Targeted Ceramides',
+  'Targeted Oxylipins',
   'Targeted Amines',
   'Targeted Steroids',
   'TCA Cycle',
-  'Targeted Ceramides',
   'Global Proteomics',
   'Global Phospho-proteomics',
   'Redox proteome',
@@ -25,4 +28,6 @@ const assayList = [
   'SomaLogic',
 ];
 
-export default assayList.sort();
+const assayList = assays.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
+export default assayList;
