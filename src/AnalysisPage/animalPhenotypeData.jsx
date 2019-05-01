@@ -526,6 +526,11 @@ function AnimalPhenotypeData() {
 
   return (
     <div className="animal-phenotype-data">
+      <div className="text-danger warning-note">
+        <span className="oi oi-warning" />
+        &nbsp;The visualizations below showcase only a representation of the MoTrPAC
+        data. They are not representing the complete phenotype dataset.
+      </div>
       <div className="card">
         <h5 className="card-header">Phenotypic Data</h5>
         <div className="card-body d-flex justify-content-start align-items-start">
