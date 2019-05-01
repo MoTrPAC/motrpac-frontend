@@ -42,8 +42,19 @@ function UploadForm({
     <div className="form-group">
       <label htmlFor="collection-date">
         Collection Date *
-        <input type="text" onBlur={validateOnBlur} pattern="\d{1,2}\/\d{1,2}\/\d{4}" onChange={handleFormChange} value={formValues.collectionDate} className="form-control" id="collectionDate" placeholder="MM/DD/YYYY" required disabled={submitted} />
-        <div className="invalid-feedback">Collection Date required and must be in format MM/DD/YYYY</div>
+        <input
+          type="text"
+          onBlur={validateOnBlur}
+          pattern="^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$"
+          onChange={handleFormChange}
+          value={formValues.collectionDate}
+          className="form-control"
+          id="collectionDate"
+          placeholder="MM/DD/YYYY"
+          required
+          disabled={submitted}
+        />
+        <div className="invalid-feedback">Collection date is invalid</div>
       </label>
     </div>
   );
@@ -52,11 +63,14 @@ function UploadForm({
       <div className="form-group">
         <div className="invalid-feedback">Field Required</div>
         <label htmlFor="data-type">
-          Data Type *
+          Assay Type *
           <select type="text" onChange={handleFormChange} value={formValues.dataType} className="form-control" id="dataType" required disabled={submitted}>
             {assayList.map(assay => <option key={assay} value={assay}>{assay}</option>)}
           </select>
-
+          <div className="text-danger warning-note">
+            <span className="oi oi-warning" />
+            &nbsp;Assays are not restricted to any site in the Alpha release
+          </div>
         </label>
       </div>
 
