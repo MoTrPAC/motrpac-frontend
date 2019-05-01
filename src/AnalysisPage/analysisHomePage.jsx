@@ -110,7 +110,7 @@ export function AnalysisHomePage({
   };
   // Button to return 1 depth level
   function BackButton() {
-    return <button className="backButton btn btn-sm btn-primary" onClick={goBack} type="button"><span className="oi oi-arrow-thick-left" /></button>;
+    return <button className="backButton" onClick={goBack} type="button"><span className="oi oi-arrow-thick-left" /></button>;
   }
 
   const analyses = analysisTypes
@@ -154,13 +154,9 @@ export function AnalysisHomePage({
     <div className="analysisPage col-md-9 ml-sm-auto col-lg-10 px-4">
       <div className="page-title pt-3 pb-2 border-bottom">
         <h3>
+          {(depth > 0) ? <BackButton /> : ''}
           {`${subjectType} Data Analysis`}
         </h3>
-      </div>
-      <div className="row">
-        <div className="col">
-          {(depth > 0) ? <BackButton /> : ''}
-        </div>
       </div>
       {(depth === 2) ? selectedDataAnalysis : ''}
       {(depth === 1) ? selectSubAnalyses : ''}
