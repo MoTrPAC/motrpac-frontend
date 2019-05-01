@@ -86,7 +86,7 @@ function DownloadRow({
           {` ID: ${upload.identifier} `}
         </h4>
         <p>
-          <span className="heavy">Data Type: </span>
+          <span className="heavy">Assay Type: </span>
           {upload.type}
         </p>
         <p className="endP">
