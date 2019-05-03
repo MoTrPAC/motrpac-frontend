@@ -184,7 +184,7 @@ export function PreviousUploadsTable({ previousUploads, expandRow, onViewMoreHis
         <div className="col-2">BID</div>
         <div className="col-2">Subject</div>
         <div className="col-2">Phase</div>
-        <div className="col-2">Type</div>
+        <div className="col-2">Assay</div>
         <div className="col-2">Updated</div>
         <div className="col-1">Status</div>
       </div>

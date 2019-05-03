@@ -10,15 +10,15 @@ const dataFamiliarization = require('../data/testAnimalFamiliarization');
  */
 const plot = {
   distribution: {
-    distance: 'Distribution of Distances',
-    fat: 'Distribution of Body Fat',
-    weight: 'Distribution of Body Weight',
+    distance: 'Distance Distribution',
+    fat: 'Fat Distribution',
+    weight: 'Weight Distribution',
   },
   median: {
-    distanceBySex: 'Males vs. Females in Distances',
+    distanceBySex: 'Distance by Gender',
   },
   correlation: {
-    weightVsFat: 'Weight vs. Fat',
+    weightVsFat: 'Weight versus Fat',
   },
 };
 
@@ -30,10 +30,14 @@ const plot = {
  */
 function AnimalPhenotypeData() {
   // Local states
-  const [graph, setGraph] = useState('histogram');
-  const [graphTitle, setGraphTitle] = useState('Distribution of Distances');
-  const [btnStates, setBtnStates] = useState({ histogram: 'active', boxplot: '', scatterplot: '' });
-  const [historgramData, setHistogramData] = useState('Distance');
+  const [graph, setGraph] = useState('distanceDistribution');
+  const [graphTitle, setGraphTitle] = useState('Distance Distribution');
+  const [btnStates, setBtnStates] = useState({
+    distanceDistribution: 'active',
+    weightDistribution: '',
+    median: '',
+    correlation: '',
+  });
 
   const ref = useRef(null);
 
@@ -52,16 +56,16 @@ function AnimalPhenotypeData() {
   }
 
   // Function to render histogram/distribution
-  function renderHistogram() {
+  function renderHistogram(target) {
     const data = [];
 
     // extract data into new array (e.g. distance, fat, weight)
     dataAcuteTest.forEach((obj) => {
-      if (historgramData === 'Distance') {
+      if (target === 'Distance') {
         if (obj.distance && obj.distance.length) {
           data.push(+obj.distance);
         }
-      } else if (historgramData === 'Weight') {
+      } else if (target === 'Weight') {
         if (obj.weight && obj.weight.length) {
           data.push(+obj.weight);
         }
@@ -117,7 +121,7 @@ function AnimalPhenotypeData() {
     group.append('text')
       .attr('transform', `translate(${width / 2}, ${height + margin.top + 5})`)
       .style('text-anchor', 'middle')
-      .text(historgramData === 'Distance' ? `${historgramData} (m)` : `${historgramData} (gm)`);
+      .text(target === 'Distance' ? `${target} (m)` : `${target} (gm)`);
 
     // add y axis
     group.append('g')
@@ -307,7 +311,7 @@ function AnimalPhenotypeData() {
     group.append('text')
       .attr('transform', `translate(${width / 2}, ${height + margin.top + 5})`)
       .style('text-anchor', 'middle')
-      .text('Males vs. Females');
+      .text('Gender');
 
     // add y axis
     group.append('g')
@@ -462,12 +466,14 @@ function AnimalPhenotypeData() {
   useEffect(
     () => {
       switch (graph) {
-        case 'boxplot':
+        case 'weightDistribution':
+          return renderHistogram('Weight');
+        case 'genderDistanceMedian':
           return renderBoxplot();
-        case 'scatterplot':
+        case 'weightFatCorrelation':
           return renderScatterplot();
         default:
-          return renderHistogram();
+          return renderHistogram('Distance');
       }
     },
   );
@@ -476,100 +482,100 @@ function AnimalPhenotypeData() {
   function handleClick(arg, e) {
     e.preventDefault(); e.stopPropagation();
     switch (arg) {
-      case 'boxplot':
+      case 'weightDistribution':
+        setGraph(arg);
+        setGraphTitle(plot.distribution.weight);
+        setBtnStates({
+          distanceDistribution: '',
+          weightDistribution: 'active',
+          median: '',
+          correlation: '',
+        });
+        return;
+      case 'genderDistanceMedian':
         setGraph(arg);
         setGraphTitle(plot.median.distanceBySex);
-        setBtnStates({ histogram: '', boxplot: 'active', scatterplot: '' });
+        setBtnStates({
+          distanceDistribution: '',
+          weightDistribution: '',
+          median: 'active',
+          correlation: '',
+        });
         return;
-      case 'scatterplot':
+      case 'weightFatCorrelation':
         setGraph(arg);
         setGraphTitle(plot.correlation.weightVsFat);
-        setBtnStates({ histogram: '', boxplot: '', scatterplot: 'active' });
+        setBtnStates({
+          distanceDistribution: '',
+          weightDistribution: '',
+          median: '',
+          correlation: 'active',
+        });
         return;
       default:
-        setGraph('histogram');
+        setGraph('distanceDistribution');
         setGraphTitle(plot.distribution.distance);
-        setBtnStates({ histogram: 'active', boxplot: '', scatterplot: '' });
-    }
-  }
-
-  // Function to handle button click event
-  // for switching between distance and weight distribution
-  function handleDataChange(arg, e) {
-    e.preventDefault(); e.stopPropagation();
-    switch (arg) {
-      case 'Weight':
-        setHistogramData(arg);
-        setGraphTitle(plot.distribution.weight);
-        return;
-      default:
-        setHistogramData('Distance');
-        setGraphTitle(plot.distribution.distance);
+        setBtnStates({
+          distanceDistribution: 'active',
+          weightDistribution: '',
+          median: '',
+          correlation: '',
+        });
     }
   }
 
   return (
     <div className="animal-phenotype-data">
+      <div className="text-danger warning-note">
+        <span className="oi oi-warning" />
+        &nbsp;The visualizations below showcase only a representation of the MoTrPAC
+        data. They are not representing the complete phenotype dataset.
+      </div>
       <div className="card">
         <h5 className="card-header">Phenotypic Data</h5>
-        <div className="card-body">
-          <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+        <div className="card-body d-flex justify-content-start align-items-start">
+          <div className="graph-content">
             <div className="graph-title">
               <h5 className="card-title">{graphTitle}</h5>
             </div>
-            <div className="btn-toolbar">
-              <div className="btn-group">
-                <button
-                  className={`btn btn-sm btn-outline-primary ${btnStates.histogram}`}
-                  type="button"
-                  onClick={handleClick.bind(this, 'histogram')}
-                >
-                    Histogram
-                </button>
-                <button
-                  className={`btn btn-sm btn-outline-primary ${btnStates.boxplot}`}
-                  type="button"
-                  onClick={handleClick.bind(this, 'boxplot')}
-                >
-                  Boxplot
-                </button>
-                <button
-                  className={`btn btn-sm btn-outline-primary ${btnStates.scatterplot}`}
-                  type="button"
-                  onClick={handleClick.bind(this, 'scatterplot')}
-                >
-                  Scatterplot
-                </button>
-              </div>
+            <div className="graph-svg-container" id="graph-svg-container">
+              <svg className="graph-svg-content" width="960" height="530">
+                <g
+                  ref={ref}
+                  transform={`translate(${margin.left}, ${margin.top})`}
+                />
+              </svg>
             </div>
           </div>
-          <div className="graph-svg-container d-flex align-items-center" id="graph-svg-container">
-            <svg className="graph-svg-content flex-grow-1" width="960" height="530">
-              <g
-                ref={ref}
-                transform={`translate(${margin.left}, ${margin.top})`}
-              />
-            </svg>
-            {graph === 'histogram' && (
-              <div className="histogram-options">
-                <div className="btn-group-vertical">
-                  <button
-                    className="btn btn-sm btn-outline-primary"
-                    type="button"
-                    onClick={handleDataChange.bind(this, 'Distance')}
-                  >
-                    Distance
-                  </button>
-                  <button
-                    className="btn btn-sm btn-outline-primary"
-                    type="button"
-                    onClick={handleDataChange.bind(this, 'Weight')}
-                  >
-                    Weight
-                  </button>
-                </div>
-              </div>
-            )}
+          <div className="graph-buttons">
+            <button
+              className={`btn btn-sm btn-outline-primary btn-block ${btnStates.distanceDistribution}`}
+              type="button"
+              onClick={handleClick.bind(this, 'distanceDistribution')}
+            >
+              Distance Distribution
+            </button>
+            <button
+              className={`btn btn-sm btn-outline-primary btn-block ${btnStates.weightDistribution}`}
+              type="button"
+              onClick={handleClick.bind(this, 'weightDistribution')}
+            >
+              Weight Distribution
+            </button>
+            <button
+              className={`btn btn-sm btn-outline-primary btn-block ${btnStates.median}`}
+              type="button"
+              onClick={handleClick.bind(this, 'genderDistanceMedian')}
+            >
+              Distance by Gender
+            </button>
+            <button
+              className={`btn btn-sm btn-outline-primary btn-block ${btnStates.correlation}`}
+              type="button"
+              onClick={handleClick.bind(this, 'weightFatCorrelation')}
+            >
+              Weight versus Fat
+            </button>
           </div>
         </div>
       </div>

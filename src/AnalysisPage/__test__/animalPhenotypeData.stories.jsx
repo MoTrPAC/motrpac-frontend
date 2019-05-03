@@ -4,6 +4,6 @@ import AnimalPhenotypeData from '../animalPhenotypeData';
 
 storiesOf('Animal Data Analysis', module)
   .addDecorator(story => (
-    <div className="container">{story()}</div>
+    <div className="container-fluid">{story()}</div>
   ))
   .add('Phenotype Data Plots', () => <AnimalPhenotypeData />);

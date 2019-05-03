@@ -3,10 +3,10 @@
     "biospecimenBarcode": "1212345000",
     "subject": "Animal",
     "phase": "1A",
-    "dataType": "ATAC-Seq",
+    "dataType": "ATAC-seq",
     "date": "09/03/2018",
     "availability": "Publicly Available",
-    "site": "Stanford CAS",
+    "site": "Stanford",
     "lastUpdated": 1547241116820,
     "history": [
       {
@@ -25,12 +25,12 @@
   },
   {
     "biospecimenBarcode": "1212346000",
-    "subject": "Human",
+    "subject": "Animal",
     "phase": "1A",
-    "dataType": "RNA-Seq",
+    "dataType": "RNA-seq (PolyA)",
     "date": "09/15/2018",
     "availability": "Internally Available",
-    "site": "Stanford CAS",
+    "site": "Stanford",
     "lastUpdated": 1547241116820,
     "history": [
       {
@@ -43,12 +43,12 @@
   },
   {
     "biospecimenBarcode": "1212347000",
-    "subject": "Human",
+    "subject": "Animal",
     "phase": "1A",
-    "dataType": "WGS",
+    "dataType": "RNA-seq (PolyA)",
     "date": "09/25/2018",
     "availability": "Pending Q.C.",
-    "site": "Stanford CAS",
+    "site": "MSSM",
     "lastUpdated": 1540241116820,
     "history": [
       {
@@ -61,82 +61,92 @@
   },
   {
     "biospecimenBarcode": "1212348000",
-    "subject": "Human",
+    "subject": "Animal",
     "phase": "1A",
-    "dataType": "RNA-Seq",
+    "dataType": "ATAC-seq",
     "date": "10/05/2018",
     "availability": "Pending Q.C.",
     "lastUpdated": 1540241116820,
-    "site": "Stanford CAS"
+    "site": "MSSM"
   },
   {
     "biospecimenBarcode": "1212349000",
-    "subject": "Human",
+    "subject": "Animal",
     "phase": "1A",
-    "dataType": "RNA-Seq",
+    "dataType": "RNA-seq (PolyA)",
     "date": "11/05/2018",
     "availability": "Publicly Available",
     "lastUpdated": 1540241116820,
-    "site": "Stanford CAS"
+    "site": "Stanford"
   },
   {
     "biospecimenBarcode": "1212350000",
-    "subject": "Human",
+    "subject": "Animal",
     "phase": "1A",
-    "dataType": "ATAC-Seq",
+    "dataType": "ATAC-seq",
     "date": "11/10/2018",
     "availability": "Internally Available",
     "lastUpdated": 1540241116820,
-    "site": "Stanford CAS"
+    "site": "MSSM"
   },
   {
     "biospecimenBarcode": "1212350001",
-    "subject": "Human",
+    "subject": "Animal",
     "phase": "1A",
-    "dataType": "ATAC-Seq",
+    "dataType": "RNA-seq (PolyA)",
     "date": "11/15/2018",
     "availability": "Publicly Available",
     "lastUpdated": 1540241116820,
-    "site": "Stanford CAS"
+    "site": "Stanford"
   },
   {
     "biospecimenBarcode": "1212352000",
-    "subject": "Human",
+    "subject": "Animal",
     "phase": "1A",
-    "dataType": "ATAC-Seq",
+    "dataType": "Global Proteomics",
     "date": "11/25/2018",
-    "availability": "Pending Q.C.",
+    "availability": "Internally Available",
     "lastUpdated": 1540241156820,
-    "site": "Stanford CAS"
+    "site": "Broad"
   },
   {
     "biospecimenBarcode": "1212353000",
     "subject": "Animal",
     "phase": "1A",
-    "dataType": "ATAC-Seq",
+    "dataType": "Global Proteomics",
     "date": "12/05/2018",
     "availability": "Pending Q.C.",
     "lastUpdated": 1540241126820,
-    "site": "Stanford CAS"
+    "site": "UM"
   },
   {
     "biospecimenBarcode": "1212354000",
-    "subject": "Human",
+    "subject": "Animal",
     "phase": "1A",
-    "dataType": "ATAC-Seq",
+    "dataType": "Global Proteomics",
     "date": "12/11/2018",
     "availability": "Publicly Available",
     "lastUpdated": 1540241056820,
-    "site": "Stanford CAS"
+    "site": "Broad"
   },
   {
     "biospecimenBarcode": "1212355000",
     "subject": "Animal",
     "phase": "1A",
-    "dataType": "ATAC-Seq",
+    "dataType": "RNA-seq (PolyA)",
     "date": "12/11/2018",
     "availability": "Publicly Available",
     "lastUpdated": 1540241016820,
-    "site": "Stanford CAS"
+    "site": "Stanford"
+  },
+  {
+    "biospecimenBarcode": "1212355000",
+    "subject": "Animal",
+    "phase": "1A",
+    "dataType": "ATAC-seq",
+    "date": "12/11/2018",
+    "availability": "Publicly Available",
+    "lastUpdated": 1540241016820,
+    "site": "MSSM"
   }
 ]
