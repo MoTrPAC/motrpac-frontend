@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -16,6 +16,8 @@ import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Hear
  * @returns {object} JSX representation of the landing page.
  */
 export function LandingPage({ isAuthenticated, profile }) {
+  // Local state for managing particle animation
+  const [visibility, setVisibility] = useState(true);
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
 
   if (isAuthenticated && hasAccess) {
@@ -31,6 +33,43 @@ export function LandingPage({ isAuthenticated, profile }) {
   };
 
   window.addEventListener('scroll', scrollFunction, true);
+
+  // Pause particles movement when page is not active to reduce CPU resource consumption
+  let hidden;
+  let visibilityChange;
+  // Set the name of the hidden property and the change event for visibility
+  if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
+    hidden = 'hidden';
+    visibilityChange = 'visibilitychange';
+  } else if (typeof document.msHidden !== 'undefined') {
+    hidden = 'msHidden';
+    visibilityChange = 'msvisibilitychange';
+  } else if (typeof document.webkitHidden !== 'undefined') {
+    hidden = 'webkitHidden';
+    visibilityChange = 'webkitvisibilitychange';
+  }
+
+  // Handle state change depending whether page is hidden
+  function handleVisibilityChange() {
+    if (document[hidden]) {
+      setVisibility(false);
+    } else {
+      setVisibility(true);
+    }
+  }
+
+  if (typeof document.addEventListener === 'undefined' || hidden === undefined) {
+    // Warn if the browser doesn't support addEventListener or the Page Visibility API
+    console.warn('This browser does not support Page Visibility API');
+  } else {
+    // Handle page visibility change
+    document.addEventListener(visibilityChange, handleVisibilityChange, false);
+  }
+
+  // Play or stop the particles animation
+  function playStopParticles() {
+    setVisibility(!visibility);
+  }
 
   return (
     <div className="row marketing">
@@ -66,7 +105,10 @@ export function LandingPage({ isAuthenticated, profile }) {
                   opacity: 0.7,
                   width: 2,
                 },
-                move: { speed: 5 },
+                move: {
+                  speed: 5,
+                  enable: visibility,
+                },
               },
               interactivity: {
                 events: {
@@ -80,6 +122,9 @@ export function LandingPage({ isAuthenticated, profile }) {
               },
             }}
           />
+          <button type="button" className="btn btn-dark btn-sm particle-media-control" onClick={playStopParticles}>
+            {visibility ? <span className="oi oi-media-stop" /> : <span className="oi oi-media-play" />}
+          </button>
           <div className="container featurette h-100">
             <div className="row featurette-wrapper h-100">
               <div className="content col-12">

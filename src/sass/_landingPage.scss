@@ -64,9 +64,16 @@ section {
   .about-motrpac {
     background-color: #2094E8;
     height: 486px;
+    position: relative;
 
     .particles-wrapper {
       width: 100%;
+    }
+
+    .particle-media-control {
+      position: absolute;
+      right: 0.75rem;
+      bottom: 0.75rem;
     }
 
     .content {
@@ -326,6 +333,10 @@ section {
 
   section {
     .about-motrpac {
+      .particle-media-control {
+        display: none;
+      }
+
       .featurette-wrapper {
         .content {
           text-align: center;
