@@ -37,11 +37,20 @@
 
 .cancelBtn {
     .oi-circle-x {
-        color: $accent-red;
+        /* color: $accent-red; */
+        // temporarily disabling cancel button
+        color: $gray-semi-transparent;
+        margin-right: 0;
     }
 
     background-color:transparent;
-    border: 1px solid $accent-red;
+    /* border: 1px solid $accent-red; */
+    // temporarily disabling cancel button
+    border: 1px solid $gray-semi-transparent;
+
+    &.disabled {
+        cursor: not-allowed;
+    }
 }
 
 .cancelUploadConfirm {
@@ -83,6 +92,7 @@
     color: $accent-red;
     background-color: transparent;
     border: none;
+    padding-left: 0;
     text-decoration: underline;
 }
 
