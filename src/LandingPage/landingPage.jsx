@@ -133,7 +133,7 @@ export function LandingPage({ isAuthenticated, profile }) {
               },
             }}
           />
-          <button type="button" className="btn btn-dark btn-sm particle-media-control" onClick={playStopParticles}>
+          <button type="button" className="btn btn-dark btn-sm particle-media-control" onClick={playStopParticles} title="play|stop">
             {visibility ? <span className="oi oi-media-stop" /> : <span className="oi oi-media-play" />}
           </button>
           <div className="container featurette h-100">
