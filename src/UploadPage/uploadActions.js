@@ -124,7 +124,7 @@ function formSubmitSuccessUploads(e) {
     dispatch(formSubmit(e));
     return setTimeout(() => {
       dispatch(setSuccess());
-    }, 5000);
+    }, 2000);
   };
 }
 
