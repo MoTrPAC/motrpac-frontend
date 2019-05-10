@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Particles from 'react-particles-js';
+import { useSpring, animated } from 'react-spring';
 import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-yellow_pipelineball_left.gif';
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Heart.png';
+
+// react-spring mouse parallax config
+const calc = (x, y) => [x - window.innerWidth / 2, y - window.innerHeight / 2];
+const trans3d = (x, y) => `translate3d(${x / 6}px,${y / 16}px,0)`;
 
 /**
  * Renders the landing page in unauthenticated state.
@@ -16,7 +21,15 @@ import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Hear
  * @returns {object} JSX representation of the landing page.
  */
 export function LandingPage({ isAuthenticated, profile }) {
+  // Local state for managing particle animation
+  const [visibility, setVisibility] = useState(true);
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+  // react-spring set animation values
+  const [values, set] = useSpring(() => ({
+    xy: [0, 0],
+    config: { mass: 10, tension: 550, friction: 140 },
+  }));
+  const { xy } = values;
 
   if (isAuthenticated && hasAccess) {
     return <Redirect to="/dashboard" />;
@@ -31,6 +44,43 @@ export function LandingPage({ isAuthenticated, profile }) {
   };
 
   window.addEventListener('scroll', scrollFunction, true);
+
+  // Pause particles movement when page is not active to reduce CPU resource consumption
+  let hidden;
+  let visibilityChange;
+  // Set the name of the hidden property and the change event for visibility
+  if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
+    hidden = 'hidden';
+    visibilityChange = 'visibilitychange';
+  } else if (typeof document.msHidden !== 'undefined') {
+    hidden = 'msHidden';
+    visibilityChange = 'msvisibilitychange';
+  } else if (typeof document.webkitHidden !== 'undefined') {
+    hidden = 'webkitHidden';
+    visibilityChange = 'webkitvisibilitychange';
+  }
+
+  // Handle state change depending whether page is hidden
+  function handleVisibilityChange() {
+    if (document[hidden]) {
+      setVisibility(false);
+    } else {
+      setVisibility(true);
+    }
+  }
+
+  if (typeof document.addEventListener === 'undefined' || hidden === undefined) {
+    // Warn if the browser doesn't support addEventListener or the Page Visibility API
+    console.warn('This browser does not support Page Visibility API');
+  } else {
+    // Handle page visibility change
+    document.addEventListener(visibilityChange, handleVisibilityChange, false);
+  }
+
+  // Play or stop the particles animation
+  function playStopParticles() {
+    setVisibility(!visibility);
+  }
 
   return (
     <div className="row marketing">
@@ -66,7 +116,10 @@ export function LandingPage({ isAuthenticated, profile }) {
                   opacity: 0.7,
                   width: 2,
                 },
-                move: { speed: 5 },
+                move: {
+                  speed: 5,
+                  enable: visibility,
+                },
               },
               interactivity: {
                 events: {
@@ -80,6 +133,9 @@ export function LandingPage({ isAuthenticated, profile }) {
               },
             }}
           />
+          <button type="button" className="btn btn-dark btn-sm particle-media-control" onClick={playStopParticles} title="play|stop">
+            {visibility ? <span className="oi oi-media-stop" /> : <span className="oi oi-media-play" />}
+          </button>
           <div className="container featurette h-100">
             <div className="row featurette-wrapper h-100">
               <div className="content col-12">
@@ -100,8 +156,10 @@ export function LandingPage({ isAuthenticated, profile }) {
       <section>
         <div className="container featurette multi-omics" id="multi-omics">
           <div className="row featurette-wrapper h-100">
-            <div className="feature-image col-12 col-md-6 mx-auto">
-              <img src={LayerRunner} className="img-fluid" alt="Data Layer Runner" />
+            <div className="feature-image col-12 col-md-6 mx-auto" onMouseMove={({ clientX: x, clientY: y }) => set({ xy: calc(x, y) })}>
+              <animated.div className="animated-image-container" style={{ transform: xy.interpolate(trans3d) }}>
+                <img src={LayerRunner} className="img-fluid data-layer-runner" alt="Data Layer Runner" />
+              </animated.div>
             </div>
             <div className="content col-12 col-md-6">
               <h3>Multi-Omics</h3>

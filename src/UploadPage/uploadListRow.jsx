@@ -65,11 +65,17 @@ function UploadListRow({ uploadItem, cancelUpload }) {
 
   return (
     <tr className="uploadItem">
-      <td>{uploadItem.file.name}{uploadItem.addition ? <span className="badge badge-success">NEW</span> : null}</td>
-      <td className="centered">{icon}{message}</td>
+      <td>
+        {uploadItem.file.name}
+        {uploadItem.addition ? <span className="badge badge-success">NEW</span> : null}
+      </td>
+      <td className="centered">
+        {icon}
+        {message}
+      </td>
       {uploadItem.status === 'UPLOADING' ? (
         <td className="centered">
-          <button type="button" className="btn cancelBtn" data-toggle="modal" data-target={`#cancelUpload${strID}`}>
+          <button type="button" className="btn cancelBtn disabled" data-toggle="modal" data-target={`#cancelUpload${strID}`}>
             <span className="oi oi-circle-x" />
           </button>
           <ConfirmCancel />
