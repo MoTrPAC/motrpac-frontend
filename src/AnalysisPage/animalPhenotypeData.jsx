@@ -47,7 +47,7 @@ function AnimalPhenotypeData() {
     left: 30,
     right: 40,
   };
-  const width = 960;
+  let width = 960; // Plot width can be customized in render functions
   const height = 500;
 
   // Utility function to erform a numeric sort on an array
@@ -143,6 +143,7 @@ function AnimalPhenotypeData() {
     const groupDistanceData = { Male: [], Female: [] };
     const distanceRangeData = [];
     const boxWidth = 100;
+    width = 480; // Custom plot width for this demo
 
     function boxQuartiles(d) {
       return [
@@ -199,14 +200,26 @@ function AnimalPhenotypeData() {
     const boxPlotData = [];
     Object.entries(groupDistanceData).forEach(([key, distance]) => {
       let record = {};
-      const localMin = d3.min(distance);
-      const localMax = d3.max(distance);
+      const localQuartile = boxQuartiles(distance);
+      const iqr = localQuartile[2] - localQuartile[0];
+      const localMin = Math.max(d3.min(distance), localQuartile[0] - iqr * 1.5);
+      const localMax = Math.min(d3.max(distance), localQuartile[2] + iqr * 1.5);
+
+      const outliersValues = distance.filter(d => d < localMin || d > localMax);
+      const outliersList = [];
+      if (outliersValues.length) {
+        outliersValues.forEach((value) => {
+          const obj = { x: key, y: value };
+          outliersList.push(obj);
+        });
+      }
 
       record = {
         key,
         counts: distance,
-        quartile: boxQuartiles(distance),
+        quartile: localQuartile,
         whiskers: [localMin, localMax],
+        outliers: outliersList,
         color: colorScale(key),
       };
 
@@ -223,7 +236,7 @@ function AnimalPhenotypeData() {
     const min = d3.min(distanceRangeData);
     const max = d3.max(distanceRangeData);
     const y = d3.scaleLinear()
-      .domain([min, max])
+      .domain([min - 10, max]) // Negative scale for showing outlier value of zero's
       .range([height - margin.bottom, margin.top]);
 
     // select DOM element to draw graph
@@ -234,11 +247,13 @@ function AnimalPhenotypeData() {
     const verticalLinesData = group.selectAll('.verticalLines').data(boxPlotData);
     const rectsData = group.selectAll('rect').data(boxPlotData);
     const whiskersData = group.selectAll('.whiskers').data(boxPlotData);
+    const outliersData = group.selectAll('g.outlier').data(boxPlotData);
 
     // clean up
     verticalLinesData.exit().remove();
     rectsData.exit().remove();
     whiskersData.exit().remove();
+    outliersData.exit().remove();
 
     // draw boxplot vertical lines
     verticalLinesData
@@ -263,6 +278,20 @@ function AnimalPhenotypeData() {
       .attr('fill', d => d.color)
       .attr('stroke', '#000')
       .attr('stroke-width', 1);
+
+    // Draw groups of circles for the outliers of the box plot
+    outliersData
+      .enter()
+      .append('g')
+      .attr('fill', 'none')
+      .attr('stroke', '#000')
+      .selectAll('circle')
+      .data(d => d.outliers)
+      .join('circle')
+      .attr('class', 'outlier')
+      .attr('r', 4)
+      .attr('cx', d => x(d.x))
+      .attr('cy', d => y(d.y));
 
     // Now render all the horizontal lines at once - the whiskers and the median
     const horizontalLineConfigs = [
