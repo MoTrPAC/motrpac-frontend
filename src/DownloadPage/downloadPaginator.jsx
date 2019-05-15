@@ -25,7 +25,8 @@ function DownloadPaginator({
   function FirstLastBtn() {
     return (
       <div className="firstLastBtn">
-        {currentPage !== 1 && (
+        {/* TODO: fix */}
+        {/* {currentPage !== 1 && (
           <button type="button" className="btn" onClick={() => onChangePage(maxRows, 1)}>
             1
           </button>
@@ -35,7 +36,7 @@ function DownloadPaginator({
             {lastPage}
           </button>
         )
-        }
+        } */}
       </div>
     );
   }
