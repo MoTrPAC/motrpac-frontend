@@ -16,6 +16,8 @@ import MannyImg from '../assets/teamMemberPhotos/Manny.jpg';
 import RobImg from '../assets/teamMemberPhotos/Rob.jpg';
 import TrevorImg from '../assets/teamMemberPhotos/Trevor.jpg';
 import KellyImg from '../assets/teamMemberPhotos/Kelly.jpg';
+import JonImg from '../assets/teamMemberPhotos/Jon.jpg';
+import LizImg from '../assets/teamMemberPhotos/Liz.jpg';
 import YoungImg from '../assets/teamMemberPhotos/Young.jpg';
 
 const teamInfo = {
@@ -53,11 +55,6 @@ const teamInfo = {
       image: KarenImg,
     },
     {
-      name: 'Samir Akre',
-      title: 'Software & Pipeline Developer',
-      image: SamirImg,
-    },
-    {
       name: 'Jimmy Zhen',
       title: 'Software Developer',
       image: JimmyImg,
@@ -67,6 +64,7 @@ const teamInfo = {
       title: 'Software Developer',
       image: YoungImg,
     },
+
     {
       name: 'Shruti Marwaha, Ph.D.',
       title: 'Research Engineer',
@@ -79,13 +77,18 @@ const teamInfo = {
     },
     {
       name: 'David Amar, Ph.D.',
-      title: 'Computational Biologist',
+      title: 'Biostatistician',
       image: DavidAImg,
     },
     {
       name: 'Archana Raja, M.S.',
       title: 'Computational Biologist',
       image: ArchanaImg,
+    },
+    {
+      name: 'Elizabeth Chin',
+      title: 'Graduate Student, Biostatistics',
+      image: LizImg,
     },
     {
       name: 'Terra Coakley',
@@ -119,7 +122,20 @@ const teamInfo = {
       title: 'Co-Investigator',
       image: KellyImg,
     },
+    {
+      name: 'Jonathan N. Myers, Ph.D.',
+      title: 'Advisor',
+      image: JonImg,
+    },  
   ],
+  Alumni: [
+    {
+      name: 'Samir Akre',
+      title: 'Alumni',
+      //title: 'Alumni Software & Pipeline Developer',      
+      image: SamirImg,
+    },    
+  ],  
 };
 
 export default teamInfo;
