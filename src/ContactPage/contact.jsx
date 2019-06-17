@@ -40,6 +40,17 @@ export function Contact({ isAuthenticated }) {
             </div>
           </div>
         </div>
+        <div className="card-deck contact-content-container">
+          <div className="card mb-4 shadow-sm">
+            <h5 className="card-header">Questions and Inquiries</h5>
+            <div className="card-body">
+              <p className="card-text">
+                For general inquiries about MoTrPAC Data Pub, please contact the bioinformatic center helpdesk at &nbsp;
+                <a href="mailto:motrpac-helpdesk@lists.stanford.edu" target="_new">motrpac-helpdesk@lists.stanford.edu</a>
+              </p>
+            </div>
+          </div>
+        </div>        
       </div>
     </div>
   );
