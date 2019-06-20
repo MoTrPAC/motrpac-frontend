@@ -29,23 +29,21 @@ export function Contact({ isAuthenticated }) {
             </div>
           </div>
           <div className="card mb-4 shadow-sm">
-            <h5 className="card-header">Uploading Data From Study Sites</h5>
+            <h5 className="card-header">Uploading Study Data</h5>
             <div className="card-body">
               <p className="card-text">
-                If you are a member of one of the sites involved with MoTrPAC, please log in using
-                your provided ID at the link on the bottom right of this website. If you have issues
-                logging in, please contact the bioinformatic center helpdesk at&nbsp;
+                If you are a member of one of the sites involved with MoTrPAC, please sign in using your
+                login credentials via the &quot;Submitter Login&quot; link at the top and bottom right of this website. If you have issues
+                logging in, please contact the MoTrPAC bioinformatic center helpdesk at&nbsp;
                 <a href="mailto:motrpac-helpdesk@lists.stanford.edu" target="_new">motrpac-helpdesk@lists.stanford.edu</a>
               </p>
             </div>
           </div>
-        </div>
-        <div className="card-deck contact-content-container">
           <div className="card mb-4 shadow-sm">
             <h5 className="card-header">Questions and Inquiries</h5>
             <div className="card-body">
               <p className="card-text">
-                For general inquiries about MoTrPAC Data Pub, please contact the bioinformatic center helpdesk at &nbsp;
+                For general inquiries about the MoTrPAC Data Hub, please contact the MoTrPAC Bioinformatics center at&nbsp;
                 <a href="mailto:motrpac-helpdesk@lists.stanford.edu" target="_new">motrpac-helpdesk@lists.stanford.edu</a>
               </p>
             </div>
