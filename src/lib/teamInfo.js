@@ -132,7 +132,6 @@ const teamInfo = {
     {
       name: 'Samir Akre',
       title: 'Alumni',
-      //title: 'Alumni Software & Pipeline Developer',      
       image: SamirImg,
     },    
   ],  
