@@ -19,12 +19,15 @@ export function TeamPage({ isAuthenticated }) {
     .map(member => <TeamMemberCard key={member.name} memberInfo={member} />);
   const CoIs = teamInfo.CoIs
     .map(coi => <TeamMemberCard key={coi.name} memberInfo={coi} />);
-  return (
+  const Alumni = teamInfo.Alumni
+    .map(alumni => <TeamMemberCard key={alumni.name} memberInfo={alumni} />);
+  
+    return (
     <div className={`teamPage col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4`}>
       <div className={`${!isAuthenticated ? 'container' : ''}`}>
         <div className="page-title pt-3 pb-2 border-bottom">
           <h3>
-            The Bioinformatics Center Team
+            MoTrPAC Bioinformatics Center Team
           </h3>
         </div>
         <div className="row d-flex justify-content-center">
@@ -36,6 +39,9 @@ export function TeamPage({ isAuthenticated }) {
         <div className="row">
           {CoIs}
         </div>
+        <div className="row pt-3 pb-2 border-top">
+          {Alumni}
+        </div>        
       </div>
     </div>
   );

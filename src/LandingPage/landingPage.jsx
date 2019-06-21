@@ -93,7 +93,7 @@ export function LandingPage({ isAuthenticated, profile }) {
             <div className="content col-12 col-md-4 motrpac-tag-line">
               <h3>
                 <em>Understanding</em>
-                at the molecular level how activity makes us healthier
+                at the molecular level how physical activity makes us healthier
               </h3>
             </div>
           </div>
@@ -142,8 +142,7 @@ export function LandingPage({ isAuthenticated, profile }) {
                 <h3>About MoTrPAC</h3>
                 <p>
                   Molecular Transducers of Physical Activity Consortium is a national
-                  research consortium designed to discover and perform preliminary
-                  characterization of the range of molecular transducers
+                  research consortium designed to discover and characterize the range of molecular transducers
                   (the "molecular map") that underlie the effects of physical activity
                   in humans.
                 </p>

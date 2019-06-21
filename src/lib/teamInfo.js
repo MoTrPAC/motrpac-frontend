@@ -16,6 +16,9 @@ import MannyImg from '../assets/teamMemberPhotos/Manny.jpg';
 import RobImg from '../assets/teamMemberPhotos/Rob.jpg';
 import TrevorImg from '../assets/teamMemberPhotos/Trevor.jpg';
 import KellyImg from '../assets/teamMemberPhotos/Kelly.jpg';
+import JonImg from '../assets/teamMemberPhotos/Jon.jpg';
+import LizImg from '../assets/teamMemberPhotos/Liz.jpg';
+import YoungImg from '../assets/teamMemberPhotos/Young.jpg';
 
 const teamInfo = {
   PIs: [
@@ -52,15 +55,16 @@ const teamInfo = {
       image: KarenImg,
     },
     {
-      name: 'Samir Akre',
-      title: 'Software & Pipeline Developer',
-      image: SamirImg,
-    },
-    {
       name: 'Jimmy Zhen',
       title: 'Software Developer',
       image: JimmyImg,
     },
+    {
+      name: 'Young Kim',
+      title: 'Software Developer',
+      image: YoungImg,
+    },
+
     {
       name: 'Shruti Marwaha, Ph.D.',
       title: 'Research Engineer',
@@ -73,13 +77,18 @@ const teamInfo = {
     },
     {
       name: 'David Amar, Ph.D.',
-      title: 'Computational Biologist',
+      title: 'Biostatistician',
       image: DavidAImg,
     },
     {
       name: 'Archana Raja, M.S.',
       title: 'Computational Biologist',
       image: ArchanaImg,
+    },
+    {
+      name: 'Elizabeth Chin',
+      title: 'Graduate Student, Biostatistics',
+      image: LizImg,
     },
     {
       name: 'Terra Coakley',
@@ -94,26 +103,38 @@ const teamInfo = {
   ],
   CoIs: [
     {
-      name: 'Manuel A. Rivas, Assistant Professor',
+      name: 'Manuel A. Rivas, Ph.D.',
       title: 'Co-Investigator',
       image: MannyImg,
     },
     {
-      name: 'Rob Tibshirani, Professor, Ph.D.',
+      name: 'Rob Tibshirani, Ph.D.',
       title: 'Co-Investigator',
       image: RobImg,
     },
     {
-      name: 'Trevor Hastie, Professor, Ph.D.',
+      name: 'Trevor Hastie, Ph.D.',
       title: 'Co-Investigator',
       image: TrevorImg,
     },
     {
-      name: 'Kelly E. Ormond, MS, CGC',
+      name: 'Kelly E. Ormond, M.S., CGC',
       title: 'Co-Investigator',
       image: KellyImg,
     },
+    {
+      name: 'Jonathan N. Myers, Ph.D.',
+      title: 'Advisor',
+      image: JonImg,
+    },  
   ],
+  Alumni: [
+    {
+      name: 'Samir Akre',
+      title: 'Alumni',
+      image: SamirImg,
+    },    
+  ],  
 };
 
 export default teamInfo;
