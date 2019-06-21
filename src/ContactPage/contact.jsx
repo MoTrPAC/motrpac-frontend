@@ -23,7 +23,7 @@ export function Contact({ isAuthenticated }) {
             <div className="card-body">
               <p className="card-text">
                 Data generated to date is not yet publicly accessible. For updates when publicly
-                accessible data are available, please contact us at&nbsp;
+                accessible data are available, please contact the MoTrPAC Bioinformatics Center at&nbsp;
                 <a href="mailto:motrpac-data-requests@lists.stanford.edu" target="_new">motrpac-data-requests@lists.stanford.edu</a>
               </p>
             </div>
@@ -34,7 +34,7 @@ export function Contact({ isAuthenticated }) {
               <p className="card-text">
                 If you are a member of one of the sites involved with MoTrPAC, please sign in using your
                 login credentials via the &quot;Submitter Login&quot; link at the top and bottom right of this website. If you have issues
-                logging in, please contact the MoTrPAC bioinformatic center helpdesk at&nbsp;
+                logging in, please contact the MoTrPAC Bioinformatics Center helpdesk at&nbsp;
                 <a href="mailto:motrpac-helpdesk@lists.stanford.edu" target="_new">motrpac-helpdesk@lists.stanford.edu</a>
               </p>
             </div>
@@ -43,7 +43,7 @@ export function Contact({ isAuthenticated }) {
             <h5 className="card-header">Questions and Inquiries</h5>
             <div className="card-body">
               <p className="card-text">
-                For general inquiries about the MoTrPAC Data Hub, please contact the MoTrPAC Bioinformatics center at&nbsp;
+                For general inquiries about the MoTrPAC Data Hub, please contact the MoTrPAC Bioinformatics Center at&nbsp;
                 <a href="mailto:motrpac-helpdesk@lists.stanford.edu" target="_new">motrpac-helpdesk@lists.stanford.edu</a>
               </p>
             </div>
