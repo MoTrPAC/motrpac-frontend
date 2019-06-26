@@ -1,0 +1,41 @@
+.quick-search-box-container {
+  margin-right: 0.5rem;
+  position: relative;
+
+  .quick-search-box-icon {
+    color: lighten($gray, 10%);
+    position: absolute;
+    top: 0.5rem;
+    left: 0.55rem;
+  }
+
+  .quick-search-box {
+    background-color: #f1f3f4;
+    border: none;
+    padding: 0.325rem 5.35rem 0.325rem 2.35rem;
+    transition-property: background-color, width;
+    transition-duration: 0.2s, 1.0s;
+    transition-timing-function: ease-in;
+
+    &::placeholder {
+      color: lighten($gray, 10%);
+    }
+
+    &:hover {
+      background-color: #e8eaed;
+    }
+
+    /* expected behavior: search box extends */
+    /* its width toward the left on focus */
+    &:focus {
+      box-shadow: none;
+      width: 30rem;
+    }
+  }
+
+  .quick-search-box-link {
+    font-size: 0.875rem;
+    position: absolute;
+    right: 0.75rem;
+  }
+}
