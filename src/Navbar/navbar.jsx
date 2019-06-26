@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import actions from '../Auth/authActions';
 import LoginButton from '../lib/loginButton';
+import QuickSearchBox from '../Search/quickSearchBox';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
 
 /**
@@ -105,6 +106,7 @@ export function Navbar({
                 <LogoutButton />
               </li>
             </ul>
+            {isAuthenticated && hasAccess ? <QuickSearchBox /> : null}
           </div>
         </div>
       </nav>
