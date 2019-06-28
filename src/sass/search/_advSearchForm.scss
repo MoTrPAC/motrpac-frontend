@@ -1,11 +1,37 @@
-.advancedSearchForm {
-  .body-weight-separator {
-    margin: 0 0.25rem;
+.searchPage {
+  .adv-search-example-searches {
+    .example-search-link:not(:first-child)::before {
+      content: ', ';
+    }
   }
 
-  .search-button-group {
-    .btn {
-      margin-left: 0.25rem;
+  .advanced-search-form-container {
+    .param-list {
+      list-style: none;
+      padding-inline-start: 0;
+
+      .param-item {
+        .btn-param-add, .btn-param-remove {
+          border: none;
+          width: 32px;
+          height: 32px;
+          border-radius: 100%;
+          line-height: 100%;
+          padding: 0 0.265rem;
+    
+          .material-icons {
+            font-weight: $bold-weight;
+          }
+        }
+    
+        .param-operator-filler {
+          width: 5.67rem;
+        }
+    
+        .param-btn-filler {
+          width: 41px;
+        }
+      }
     }
   }
 }
