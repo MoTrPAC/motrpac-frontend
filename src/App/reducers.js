@@ -3,6 +3,7 @@ import uploadReducer, { defaultUploadState } from '../UploadPage/uploadReducer';
 import authReducer, { defaultAuthState } from '../Auth/authReducer';
 import analysisReducer, { defaultAnalysisState } from '../AnalysisPage/analysisReducer';
 import downloadReducer, { defaultDownloadState } from '../DownloadPage/downloadReducer';
+import searchReducer, { defaultSearchState } from '../Search/searchReducer';
 
 const testUploads = require('../testData/testAllUploads');
 const testPreviousUploads = require('../testData/testPreviousUploads');
@@ -28,6 +29,7 @@ export default combineReducers({
   auth: authReducer,
   analysis: analysisReducer,
   download: downloadReducer,
+  search: searchReducer,
 });
 
 export const defaultRootState = {
@@ -35,4 +37,5 @@ export const defaultRootState = {
   auth: defaultAuthState,
   analysis: defaultAnalysisState,
   download: loadTestData ? testDownloadState : defaultDownloadState,
+  search: defaultSearchState,
 };
