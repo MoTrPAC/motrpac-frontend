@@ -11,6 +11,11 @@ function SearchTermRow({
   addSearchParam,
   removeSearchParam,
 }) {
+  const handleChange = (field, e) => {
+    e.preventDefault();
+    handleSearchFormChange(idx, field, e);
+  };
+
   return (
     <React.Fragment>
       {advSearchParams.length > 1 && idx > 0
@@ -20,19 +25,19 @@ function SearchTermRow({
             id={`${termId}-operator`}
             value={item.operator}
             className="form-control param-operator col-1 mr-3"
-            onChange={handleSearchFormChange.bind(this, idx, 'operator')}
+            onChange={handleChange.bind(this, 'operator')}
           >
-            <option value="and">And</option>
-            <option value="or">Or</option>
+            <option value="AND">And</option>
+            <option value="OR">Or</option>
           </select>
         )
-        : <span className="param-operator-filler mr-3" />}
+        : <span className="param-operator-filler col-1 mr-3" />}
       <select
         name={termId}
         id={termId}
         value={item.term}
         className="form-control param-list col-2 mr-3"
-        onChange={handleSearchFormChange.bind(this, idx, 'term')}
+        onChange={handleChange.bind(this, 'term')}
       >
         <option value="all">All</option>
         <option value="assay">Assay</option>
@@ -49,7 +54,7 @@ function SearchTermRow({
         id={valueId}
         value={item.value}
         className="form-control param-value col-4 mr-3"
-        onChange={handleSearchFormChange.bind(this, idx, 'value')}
+        onChange={handleChange.bind(this, 'value')}
       />
       {advSearchParams.length > 1
         ? (

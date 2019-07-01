@@ -1,65 +1,82 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
+import history from '../App/history';
 import SearchForm from './searchForm';
-import actions from '../UploadPage/uploadActions';
+import SearchActions from './searchActions';
+import SearchResults from './searchResults';
 
+/**
+ * Conditionally renders the search page with different UIs
+ * 1. the advanced search form by default
+ * 2. the search results if the request has a response
+ * 3. an error message if the request fails for some reason
+ *
+ * @returns {object} JSX representation of search page elements.
+ */
 export function SearchPage({
+  advSearchParams,
+  payload,
+  queryString,
+  message,
+  isFetching,
+  handleSearchFormChange,
+  addSearchParam,
+  removeSearchParam,
   handleSearchFormSubmit,
+  resetSearchForm,
   isAuthenticated,
 }) {
-  const [advSearchParams, setAdvSearchParams] = useState([{ term: 'all', value: '', operator: 'and' }]);
-  const [searchQueries, setSearchQueries] = useState(null);
-
+  // Send users back to homepage if not authenticated
   if (!isAuthenticated) {
     return (<Redirect to="/" />);
   }
 
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.entries().length) {
-    console.log(urlParams);
-    setSearchQueries(urlParams);
+  // Update window location with query string
+  if (queryString && queryString.length) {
+    history.push(`/search?q=${queryString}`);
   }
 
-  // Hanlder to add a search term
-  const addSearchParam = () => {
-    setAdvSearchParams([
-      ...advSearchParams,
-      { term: 'all', value: '', operator: 'and' },
-    ]);
-  };
+  // Render error message if there is one
+  if (!isFetching && message && message.length) {
+    return (
+      <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
+        <div className="page-title pt-3 pb-2 border-bottom">
+          <h3>Error</h3>
+        </div>
+        <div className="advanced-search-content-container mt-3">
+          <div className="adv-search-example-searches">
+            <p className="text-left">
+              Please&nbsp;
+              <Link to="/search" className="search-link">try</Link>
+              &nbsp;again.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-  // Handler to remove a search term
-  const removeSearchParam = (idx) => {
-    const newParamList = [...advSearchParams];
-    newParamList.splice(idx, 1);
-    setAdvSearchParams(newParamList);
-  };
+  // Render search results if response is returned
+  if (!isFetching && payload && Object.keys(payload).length) {
+    return (
+      <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
+        <div className="page-title pt-3 pb-2 border-bottom">
+          <h3>Search Results</h3>
+        </div>
+        <div className="advanced-search-content-container mt-3">
+          <SearchResults results={payload} />
+        </div>
+      </div>
+    );
+  }
 
-  // Handler to update array state upon form changes
-  const handleSearchFormChange = (idx, field, e) => {
-    e.preventDefault();
-    const newParamList = [...advSearchParams];
-    if (field === 'term') {
-      newParamList[idx].term = e.target.value;
-    } else if (field === 'value') {
-      newParamList[idx].value = e.target.value;
-    } else if (field === 'operator') {
-      newParamList[idx].operator = e.target.value;
-    }
-    setAdvSearchParams(newParamList);
-  };
-
-  // Handler to reset form
-  const resetSearchForm = () => {
-    setAdvSearchParams([{ term: 'all', value: '', operator: 'and' }]);
-  };
-
+  // Render advanced search form by default
   return (
     <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
       <div className="page-title pt-3 pb-2 border-bottom">
-        <h3>{searchQueries && searchQueries.length ? 'Search Results' : 'Advanced Search'}</h3>
+        <h3>Advanced Search</h3>
       </div>
       <div className="advanced-search-content-container mt-3">
         <div className="adv-search-example-searches">
@@ -84,32 +101,43 @@ export function SearchPage({
 }
 
 SearchPage.propTypes = {
-  formValues: PropTypes.shape({
-    gene: PropTypes.string,
-    biospecimenId: PropTypes.string,
-    site: PropTypes.string,
+  advSearchParams: PropTypes.arrayOf(PropTypes.shape({
+    term: PropTypes.string,
+    value: PropTypes.string,
+    operator: PropTypes.string,
+  })).isRequired,
+  payload: PropTypes.shape({
+    data: PropTypes.object,
   }),
+  queryString: PropTypes.string,
+  message: PropTypes.string,
+  isFetching: PropTypes.bool,
+  handleSearchFormChange: PropTypes.func.isRequired,
+  addSearchParam: PropTypes.func.isRequired,
+  removeSearchParam: PropTypes.func.isRequired,
   handleSearchFormSubmit: PropTypes.func.isRequired,
-  clearForm: PropTypes.func.isRequired,
+  resetSearchForm: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
 };
 
 SearchPage.defaultProps = {
-  formValues: {
-    gene: '',
-    biospecimenId: '',
-    site: '',
-  },
+  payload: {},
+  queryString: '',
+  message: '',
+  isFetching: false,
 };
 
 const mapStateToProps = state => ({
-  ...(state.upload),
+  ...(state.search),
   isAuthenticated: state.auth.isAuthenticated,
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleSearchFormSubmit: e => dispatch(actions.formSubmit(e)),
-  clearForm: () => dispatch(actions.clearForm()),
+  handleSearchFormChange: (index, field, e) => dispatch(SearchActions.searchFormChange(index, field, e)),
+  addSearchParam: () => dispatch(SearchActions.searchFormAddParam()),
+  removeSearchParam: index => dispatch(SearchActions.searchFormRemoveParam(index)),
+  handleSearchFormSubmit: () => dispatch(SearchActions.handleSearchFormSubmit()),
+  resetSearchForm: () => dispatch(SearchActions.searchFormReset()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
