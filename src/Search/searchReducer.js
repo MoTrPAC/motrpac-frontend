@@ -10,9 +10,9 @@ import {
 } from './searchActions';
 
 export const defaultSearchState = {
-  payload: {},
-  message: '',
-  queryString: '',
+  searchPayload: {},
+  searchError: '',
+  searchQueryString: '',
   advSearchParams: [
     {
       term: 'all',
@@ -20,7 +20,7 @@ export const defaultSearchState = {
       operator: '',
     },
   ],
-  isFetching: false,
+  isSearchFetching: false,
 };
 
 // Reducer to handle actions sent from components related to advanced search form
@@ -79,8 +79,8 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
 
       return {
         ...state,
-        queryString: query,
-        isFetching: true,
+        searchQueryString: query,
+        isSearchFetching: true,
       };
     }
 
@@ -88,16 +88,16 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
     case SEARCH_FORM_SUBMIT_FAILURE:
       return {
         ...state,
-        message: action.message,
-        isFetching: false,
+        searchError: action.searchError,
+        isSearchFetching: false,
       };
 
     // Hanlde query response
     case SEARCH_FORM_SUBMIT_SUCCESS:
       return {
         ...state,
-        payload: action.payload,
-        isFetching: false,
+        searchPayload: action.searchPayload,
+        isSearchFetching: false,
       };
 
     // Revert form values to default
@@ -110,8 +110,8 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
     case GET_SEARCH_FORM:
       return {
         ...state,
-        payload: {},
-        queryString: '',
+        searchPayload: {},
+        searchQueryString: '',
       };
 
     default:

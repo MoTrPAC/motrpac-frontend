@@ -39,17 +39,17 @@ function searchFormSubmit(params) {
   };
 }
 
-function searchFormSubmitFailure(message = '') {
+function searchFormSubmitFailure(searchError = '') {
   return {
     type: SEARCH_FORM_SUBMIT_FAILURE,
-    message,
+    searchError,
   };
 }
 
-function searchFormSubmitSuccess(payload) {
+function searchFormSubmitSuccess(searchPayload) {
   return {
     type: SEARCH_FORM_SUBMIT_SUCCESS,
-    payload,
+    searchPayload,
   };
 }
 
