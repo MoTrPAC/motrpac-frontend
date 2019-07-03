@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
-import history from '../App/history';
 import SearchForm from './searchForm';
 import SearchActions from './searchActions';
 import SearchResults from './searchResults';
@@ -31,11 +30,6 @@ export function SearchPage({
   // Send users back to homepage if not authenticated
   if (!isAuthenticated) {
     return (<Redirect to="/" />);
-  }
-
-  // Update window location with query string
-  if (queryString && queryString.length) {
-    history.push(`/search?q=${queryString}`);
   }
 
   // Render error message if there is one
@@ -89,6 +83,7 @@ export function SearchPage({
         </div>
         <SearchForm
           advSearchParams={advSearchParams}
+          queryString={queryString}
           handleSearchFormChange={handleSearchFormChange}
           addSearchParam={addSearchParam}
           removeSearchParam={removeSearchParam}
@@ -136,7 +131,7 @@ const mapDispatchToProps = dispatch => ({
   handleSearchFormChange: (index, field, e) => dispatch(SearchActions.searchFormChange(index, field, e)),
   addSearchParam: () => dispatch(SearchActions.searchFormAddParam()),
   removeSearchParam: index => dispatch(SearchActions.searchFormRemoveParam(index)),
-  handleSearchFormSubmit: () => dispatch(SearchActions.handleSearchFormSubmit()),
+  handleSearchFormSubmit: params => dispatch(SearchActions.handleSearchFormSubmit(params)),
   resetSearchForm: () => dispatch(SearchActions.searchFormReset()),
 });
 
