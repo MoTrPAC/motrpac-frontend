@@ -6,6 +6,7 @@ import {
   SEARCH_FORM_SUBMIT_FAILURE,
   SEARCH_FORM_SUBMIT_SUCCESS,
   SEARCH_FORM_RESET,
+  GET_SEARCH_FORM,
 } from './searchActions';
 
 export const defaultSearchState = {
@@ -70,7 +71,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
 
     // Handle form submit event
     case SEARCH_FORM_SUBMIT: {
-      const paramsList = [...state.advSearchParams];
+      const paramsList = [...action.params];
       const query = paramsList.map((item) => {
         const operator = item.operator && item.operator.length ? item.operator : '';
         return `${operator} (${item.term}:${encodeURI(item.value)})`;
@@ -103,6 +104,14 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
     case SEARCH_FORM_RESET:
       return {
         ...defaultSearchState,
+      };
+
+    // Handle 'Advanced' search link click event
+    case GET_SEARCH_FORM:
+      return {
+        ...state,
+        payload: {},
+        queryString: '',
       };
 
     default:
