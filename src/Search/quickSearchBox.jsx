@@ -1,28 +1,33 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import history from '../App/history';
+import QuickSearchBoxActions from './quickSearchBoxActions';
+import SearchActions from './searchActions';
 
 /**
  * Renders the quick search input field
  *
  * @returns {object} JSX representation of search input element.
  */
-function QuickSearchBox() {
-  const [quickSearchTerm, setQuickSearchTerm] = useState('');
+function QuickSearchBox({
+  quickSearchTerm,
+  handleQuickSearchInputChange,
+  handleQuickSearchRequestSubmit,
+  resetQuickSearch,
+  getSearchForm,
+}) {
   const quickSearchInput = useRef(null);
 
-  // Handler for quick search box value change
-  const handleInputChange = (e) => {
+  const handleQuickSearchFormSubmit = (e) => {
     e.preventDefault();
-    const searchTerm = quickSearchInput.current.value;
-    setQuickSearchTerm(searchTerm);
+    handleQuickSearchRequestSubmit(quickSearchTerm);
+    quickSearchInput.current.blur();
   };
 
-  // Handler for quick search form submission
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    quickSearchInput.current.blur();
-    history.push(`/search?q=${encodeURI(quickSearchTerm)}`);
+  const getAdvancedSearchForm = () => {
+    resetQuickSearch();
+    getSearchForm();
   };
 
   return (
@@ -30,22 +35,45 @@ function QuickSearchBox() {
       <div className="quick-search-box-icon">
         <i className="material-icons">search</i>
       </div>
-      <form className="form-inline quick-search-box-form" onSubmit={handleFormSubmit}>
+      <form className="form-inline quick-search-box-form" onSubmit={handleQuickSearchFormSubmit}>
         <input
           ref={quickSearchInput}
           type="text"
           value={quickSearchTerm}
           className="form-control quick-search-box"
-          onChange={handleInputChange}
           placeholder="Search"
           aria-label="Search"
+          onChange={(e) => { e.preventDefault(); handleQuickSearchInputChange(e); }}
         />
       </form>
       <div className="quick-search-box-link">
-        <Link to="/search" className="adv-search-link">Advanced</Link>
+        <Link to="/search" className="adv-search-link" onClick={getAdvancedSearchForm}>Advanced</Link>
       </div>
     </div>
   );
 }
 
-export default QuickSearchBox;
+QuickSearchBox.propTypes = {
+  quickSearchTerm: PropTypes.string,
+  handleQuickSearchInputChange: PropTypes.func.isRequired,
+  handleQuickSearchRequestSubmit: PropTypes.func.isRequired,
+  resetQuickSearch: PropTypes.func.isRequired,
+  getSearchForm: PropTypes.func.isRequired,
+};
+
+QuickSearchBox.defaultProps = {
+  quickSearchTerm: '',
+};
+
+const mapStateToProps = state => ({
+  ...(state.quickSearch),
+});
+
+const mapDispatchToProps = dispatch => ({
+  handleQuickSearchInputChange: e => dispatch(QuickSearchBoxActions.quickSearchInputChange(e)),
+  handleQuickSearchRequestSubmit: searchTerm => dispatch(QuickSearchBoxActions.handleQuickSearchRequestSubmit(searchTerm)),
+  resetQuickSearch: () => dispatch(QuickSearchBoxActions.quickSearchReset()),
+  getSearchForm: () => dispatch(SearchActions.getSearchForm()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuickSearchBox);
