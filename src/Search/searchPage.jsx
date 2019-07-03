@@ -16,10 +16,13 @@ import SearchResults from './searchResults';
  */
 export function SearchPage({
   advSearchParams,
-  payload,
-  queryString,
-  message,
-  isFetching,
+  searchPayload,
+  searchQueryString,
+  searchError,
+  isSearchFetching,
+  quickSearchPayload,
+  quickSearchError,
+  isQuickSearchFetching,
   handleSearchFormChange,
   addSearchParam,
   removeSearchParam,
@@ -32,8 +35,22 @@ export function SearchPage({
     return (<Redirect to="/" />);
   }
 
+  const isFetching = isSearchFetching || isQuickSearchFetching;
+  let errMsg;
+  let payload;
+  if (searchError && searchError.length) {
+    errMsg = searchError;
+  } else if (quickSearchError && quickSearchError.length) {
+    errMsg = quickSearchError;
+  }
+  if (searchPayload && Object.keys(searchPayload).length) {
+    payload = searchPayload;
+  } else if (quickSearchPayload && Object.keys(quickSearchPayload).length) {
+    payload = quickSearchPayload;
+  }
+
   // Render error message if there is one
-  if (!isFetching && message && message.length) {
+  if (!isFetching && errMsg && errMsg.length) {
     return (
       <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
         <div className="page-title pt-3 pb-2 border-bottom">
@@ -83,7 +100,7 @@ export function SearchPage({
         </div>
         <SearchForm
           advSearchParams={advSearchParams}
-          queryString={queryString}
+          queryString={searchQueryString}
           handleSearchFormChange={handleSearchFormChange}
           addSearchParam={addSearchParam}
           removeSearchParam={removeSearchParam}
@@ -101,12 +118,17 @@ SearchPage.propTypes = {
     value: PropTypes.string,
     operator: PropTypes.string,
   })).isRequired,
-  payload: PropTypes.shape({
+  searchPayload: PropTypes.shape({
     data: PropTypes.object,
   }),
-  queryString: PropTypes.string,
-  message: PropTypes.string,
-  isFetching: PropTypes.bool,
+  searchQueryString: PropTypes.string,
+  searchError: PropTypes.string,
+  isSearchFetching: PropTypes.bool,
+  quickSearchPayload: PropTypes.shape({
+    data: PropTypes.object,
+  }),
+  quickSearchError: PropTypes.string,
+  isQuickSearchFetching: PropTypes.bool,
   handleSearchFormChange: PropTypes.func.isRequired,
   addSearchParam: PropTypes.func.isRequired,
   removeSearchParam: PropTypes.func.isRequired,
@@ -116,14 +138,18 @@ SearchPage.propTypes = {
 };
 
 SearchPage.defaultProps = {
-  payload: {},
-  queryString: '',
-  message: '',
-  isFetching: false,
+  searchPayload: {},
+  searchQueryString: '',
+  searchError: '',
+  isSearchFetching: false,
+  quickSearchPayload: {},
+  quickSearchError: '',
+  isQuickSearchFetching: false,
 };
 
 const mapStateToProps = state => ({
   ...(state.search),
+  ...(state.quickSearch),
   isAuthenticated: state.auth.isAuthenticated,
 });
 
