@@ -31,7 +31,7 @@ function SearchForm({
             <button
               type="button"
               className="btn btn-primary adv-search-submit ml-3"
-              onClick={(e) => { e.preventDefault(); handleSearchFormSubmit(); }}
+              onClick={(e) => { e.preventDefault(); handleSearchFormSubmit(advSearchParams); }}
             >
               Search
             </button>
