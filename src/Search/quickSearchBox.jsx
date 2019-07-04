@@ -1,9 +1,6 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import QuickSearchBoxActions from './quickSearchBoxActions';
-import SearchActions from './searchActions';
 
 /**
  * Renders the quick search input field
@@ -65,15 +62,4 @@ QuickSearchBox.defaultProps = {
   quickSearchTerm: '',
 };
 
-const mapStateToProps = state => ({
-  ...(state.quickSearch),
-});
-
-const mapDispatchToProps = dispatch => ({
-  handleQuickSearchInputChange: e => dispatch(QuickSearchBoxActions.quickSearchInputChange(e)),
-  handleQuickSearchRequestSubmit: searchTerm => dispatch(QuickSearchBoxActions.handleQuickSearchRequestSubmit(searchTerm)),
-  resetQuickSearch: () => dispatch(QuickSearchBoxActions.quickSearchReset()),
-  getSearchForm: () => dispatch(SearchActions.getSearchForm()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(QuickSearchBox);
+export default QuickSearchBox;
