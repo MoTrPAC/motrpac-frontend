@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import actions from '../Auth/authActions';
 import LoginButton from '../lib/loginButton';
-import QuickSearchBoxConnected from '../Search/quickSearchBox';
+import QuickSearchBox from '../Search/quickSearchBox';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
+import QuickSearchBoxActions from '../Search/quickSearchBoxActions';
+import SearchActions from '../Search/searchActions';
 
 /**
  * Renders the global header nav bar.
@@ -22,6 +24,11 @@ export function Navbar({
   profile,
   login,
   logout,
+  quickSearchTerm,
+  handleQuickSearchInputChange,
+  handleQuickSearchRequestSubmit,
+  resetQuickSearch,
+  getSearchForm,
 }) {
   const handleLogout = () => {
     logout();
@@ -106,7 +113,17 @@ export function Navbar({
                 <LogoutButton />
               </li>
             </ul>
-            {isAuthenticated && hasAccess ? <QuickSearchBoxConnected /> : null}
+            {isAuthenticated && hasAccess
+              ? (
+                <QuickSearchBox
+                  quickSearchTerm={quickSearchTerm}
+                  handleQuickSearchInputChange={handleQuickSearchInputChange}
+                  handleQuickSearchRequestSubmit={handleQuickSearchRequestSubmit}
+                  resetQuickSearch={resetQuickSearch}
+                  getSearchForm={getSearchForm}
+                />
+              )
+              : null}
           </div>
         </div>
       </nav>
@@ -124,6 +141,11 @@ Navbar.propTypes = {
   isAuthenticated: PropTypes.bool,
   login: PropTypes.func,
   logout: PropTypes.func,
+  quickSearchTerm: PropTypes.string,
+  handleQuickSearchInputChange: PropTypes.func.isRequired,
+  handleQuickSearchRequestSubmit: PropTypes.func.isRequired,
+  resetQuickSearch: PropTypes.func.isRequired,
+  getSearchForm: PropTypes.func.isRequired,
 };
 
 Navbar.defaultProps = {
@@ -131,9 +153,11 @@ Navbar.defaultProps = {
   isAuthenticated: false,
   login: null,
   logout: null,
+  quickSearchTerm: '',
 };
 
 const mapStateToProps = state => ({
+  ...(state.quickSearch),
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
 });
@@ -141,6 +165,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   login: () => dispatch(actions.login()),
   logout: () => dispatch(actions.logout()),
+  handleQuickSearchInputChange: e => dispatch(QuickSearchBoxActions.quickSearchInputChange(e)),
+  handleQuickSearchRequestSubmit: searchTerm => dispatch(QuickSearchBoxActions.handleQuickSearchRequestSubmit(searchTerm)),
+  resetQuickSearch: () => dispatch(QuickSearchBoxActions.quickSearchReset()),
+  getSearchForm: () => dispatch(SearchActions.getSearchForm()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
