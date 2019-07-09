@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import MOTRLogo from '../assets/logo-motrpac.png';
+import MOTRLogo from '../assets/MoTrPAC_horizontal.png';
 import NIHLogo from '../assets/ExternalLogos/NIHCommonFund.png';
 import ENCODELogo from '../assets/ExternalLogos/ENCODE.png';
 import MWLogo from '../assets/ExternalLogos/MetabolomicsWorkbench.jpeg';
