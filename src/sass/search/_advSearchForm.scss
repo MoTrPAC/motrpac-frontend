@@ -16,8 +16,8 @@
           width: 32px;
           height: 32px;
           border-radius: 100%;
-          line-height: 100%;
-          padding: 0 0.265rem;
+          line-height: 0;
+          padding: 0 0.15rem;
     
           .material-icons {
             font-weight: $bold-weight;
@@ -26,6 +26,26 @@
     
         .param-btn-filler {
           width: 32px;
+        }
+      }
+    }
+
+    .param-list-visual-context {
+      h6 {
+        margin-bottom: 0;
+        margin-right: 0.5rem;
+      }
+
+      .alert {
+        margin-bottom: 0;
+        margin-right: 0.5rem;
+        padding: 0.4rem 0.6rem;
+
+        img {
+          margin-right: 0.5rem;
+          width: auto;
+          height: 1.25rem;
+          opacity: 0.75;
         }
       }
     }
