@@ -5,6 +5,7 @@ import { Redirect, Link } from 'react-router-dom';
 import SearchForm from './searchForm';
 import SearchActions from './searchActions';
 import SearchResults from './searchResults';
+import history from '../App/history';
 
 /**
  * Conditionally renders the search page with different UIs
@@ -35,6 +36,8 @@ export function SearchPage({
     return (<Redirect to="/" />);
   }
 
+  const urlSearchParams = new URLSearchParams(window.location.search);
+
   const isFetching = isSearchFetching || isQuickSearchFetching;
   let errMsg;
   let payload;
@@ -47,6 +50,19 @@ export function SearchPage({
     payload = searchPayload;
   } else if (quickSearchPayload && Object.keys(quickSearchPayload).length) {
     payload = quickSearchPayload;
+  }
+
+  function goBack() {
+    history.goBack();
+  }
+
+  // Button to return to previous page
+  function SearchBackButton() {
+    return (
+      <button className="backButton d-inline-flex" onClick={goBack} type="button">
+        <span className="material-icons align-self-center">arrow_back</span>
+      </button>
+    );
   }
 
   // Render error message if there is one
@@ -73,11 +89,41 @@ export function SearchPage({
   if (!isFetching && payload && Object.keys(payload).length) {
     return (
       <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
-        <div className="page-title pt-3 pb-2 border-bottom">
-          <h3>Search Results</h3>
+        <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
+          <SearchBackButton />
+          <div className="page-title">
+            <h3>Search Results</h3>
+          </div>
         </div>
         <div className="advanced-search-content-container mt-3">
           <SearchResults results={payload} />
+        </div>
+      </div>
+    );
+  }
+
+  // Render results if request comes from tissue analysis table
+  if (urlSearchParams && urlSearchParams.has('action') && urlSearchParams.get('action') === 'samples') {
+    // Convert params array to object
+    const urlSearchParamsObj = {
+      action: urlSearchParams.get('action'),
+      tissue: urlSearchParams.get('tissue'),
+      phase: urlSearchParams.get('phase'),
+      study: urlSearchParams.get('study'),
+      experiment: urlSearchParams.get('experiment'),
+      site: urlSearchParams.get('site'),
+    };
+
+    return (
+      <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
+        <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
+          <SearchBackButton />
+          <div className="page-title">
+            <h3>Tissue Sample Results</h3>
+          </div>
+        </div>
+        <div className="advanced-search-content-container mt-3">
+          <SearchResults urlSearchParamsObj={urlSearchParamsObj} />
         </div>
       </div>
     );
