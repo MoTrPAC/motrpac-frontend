@@ -30,4 +30,32 @@
       }
     }
   }
+
+  .page-heading {
+    .page-title {
+      h3 {
+        margin-bottom: 0;
+      }
+    }
+    
+    .backButton {
+      background-color: #fff;
+      border: none;
+      color: $primary-blue;
+      font-size: 1.0rem;
+      margin-top: 0;
+      margin-bottom: 0;
+      padding: 0 0.75rem 0 0;
+      vertical-align: middle;
+  
+      &:hover, &:focus, &:active, &.active {
+        background-color: #fff;
+        color: $primary-blue;
+      }
+  
+      &:focus {
+        outline: none;
+      }
+    }
+  }
 }
