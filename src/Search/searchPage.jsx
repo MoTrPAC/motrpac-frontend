@@ -29,6 +29,7 @@ export function SearchPage({
   removeSearchParam,
   handleSearchFormSubmit,
   resetSearchForm,
+  getSearchForm,
   isAuthenticated,
 }) {
   // Send users back to homepage if not authenticated
@@ -52,14 +53,26 @@ export function SearchPage({
     payload = quickSearchPayload;
   }
 
-  function goBack() {
+  function backToSearch() {
+    getSearchForm();
+  }
+  // Button to return to previous page
+  function SearchBackButton() {
+    return (
+      <button className="backButton d-inline-flex" onClick={backToSearch} type="button">
+        <span className="material-icons align-self-center">arrow_back</span>
+      </button>
+    );
+  }
+
+  function backToSummary() {
     history.goBack();
   }
 
   // Button to return to previous page
-  function SearchBackButton() {
+  function SummaryBackButton() {
     return (
-      <button className="backButton d-inline-flex" onClick={goBack} type="button">
+      <button className="backButton d-inline-flex" onClick={backToSummary} type="button">
         <span className="material-icons align-self-center">arrow_back</span>
       </button>
     );
@@ -69,8 +82,10 @@ export function SearchPage({
   if (!isFetching && errMsg && errMsg.length) {
     return (
       <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
-        <div className="page-title pt-3 pb-2 border-bottom">
-          <h3>Error</h3>
+        <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
+          <div className="page-title">
+            <h3>Error</h3>
+          </div>
         </div>
         <div className="advanced-search-content-container mt-3">
           <div className="adv-search-example-searches">
@@ -117,7 +132,7 @@ export function SearchPage({
     return (
       <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
         <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
-          <SearchBackButton />
+          <SummaryBackButton />
           <div className="page-title">
             <h3>Tissue Sample Results</h3>
           </div>
@@ -132,8 +147,10 @@ export function SearchPage({
   // Render advanced search form by default
   return (
     <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
-      <div className="page-title pt-3 pb-2 border-bottom">
-        <h3>Advanced Search</h3>
+      <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
+        <div className="page-title">
+          <h3>Advanced Search</h3>
+        </div>
       </div>
       <div className="advanced-search-content-container mt-3">
         <div className="adv-search-example-searches">
@@ -180,6 +197,7 @@ SearchPage.propTypes = {
   removeSearchParam: PropTypes.func.isRequired,
   handleSearchFormSubmit: PropTypes.func.isRequired,
   resetSearchForm: PropTypes.func.isRequired,
+  getSearchForm: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
 };
 
@@ -205,6 +223,7 @@ const mapDispatchToProps = dispatch => ({
   removeSearchParam: index => dispatch(SearchActions.searchFormRemoveParam(index)),
   handleSearchFormSubmit: params => dispatch(SearchActions.handleSearchFormSubmit(params)),
   resetSearchForm: () => dispatch(SearchActions.searchFormReset()),
+  getSearchForm: () => dispatch(SearchActions.getSearchForm()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
