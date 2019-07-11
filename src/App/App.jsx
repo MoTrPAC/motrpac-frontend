@@ -17,6 +17,7 @@ import TeamPageConnected from '../TeamPage/teamPage';
 import ContactConnected from '../ContactPage/contact';
 import ErrorPageConnected from '../ErrorPage/error';
 import SearchPageConnected from '../Search/searchPage';
+import DataSummaryPageConnected from '../DataSummaryPage/dataSummaryPage';
 import CallbackConnected from '../Auth/callback';
 import SidebarConnected from '../Sidebar/sidebar';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
@@ -46,6 +47,7 @@ function App({ history = History }) {
               <Route path="/contact" component={withTracker(ContactConnected)} />
               <Route path="/error" component={withTracker(ErrorPageConnected)} />
               <Route path="/search" component={withTracker(SearchPageConnected)} />
+              <Route path="/summary" component={withTracker(DataSummaryPageConnected)} />
             </Switch>
           </div>
         </div>
