@@ -110,7 +110,11 @@ export function AnalysisHomePage({
   };
   // Button to return 1 depth level
   function BackButton() {
-    return <button className="backButton" onClick={goBack} type="button"><span className="oi oi-arrow-thick-left" /></button>;
+    return (
+      <button className="backButton" onClick={goBack} type="button">
+        <span className="material-icons">arrow_back</span>
+      </button>
+    );
   }
 
   const analyses = analysisTypes
