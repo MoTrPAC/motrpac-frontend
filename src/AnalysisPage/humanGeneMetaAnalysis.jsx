@@ -111,15 +111,21 @@ function HumanGeneMetaAnalysis() {
     if (geneAanlysisDataArray && geneAanlysisDataArray.length) {
       return (
         <div className="meta-analysis-data-content d-flex align-items-start">
-          <div className="table-responsive col meta-analysis-data-table-wrapper">
-            <table className="table table-sm table-striped metaAnalysisAcuteMuscleGeneTable">
-              <thead className="thead-dark">
-                {renderMetaAnalysisTableHead()}
-              </thead>
-              <tbody>
-                {renderMetaAnalysisTableRows(geneAanlysisDataArray)}
-              </tbody>
-            </table>
+          <div className="col meta-analysis-data-gene-acute-muscle">
+            <div className="table-responsive meta-analysis-data-table-wrapper">
+              <table className="table table-sm table-striped metaAnalysisAcuteMuscleGeneTable">
+                <thead className="thead-dark">
+                  {renderMetaAnalysisTableHead()}
+                </thead>
+                <tbody>
+                  {renderMetaAnalysisTableRows(geneAanlysisDataArray)}
+                </tbody>
+              </table>
+            </div>
+            <div className="note-comment d-flex align-items-center text-secondary">
+              <span className="material-icons">info</span>
+              <span>A cohort can have more than a single data point in a time window.</span>
+            </div>
           </div>
           <div className="col meta-analysis-forest-plot">
             <img src={plotMapping[gene.toUpperCase()]} alt={gene.toUpperCase()} />

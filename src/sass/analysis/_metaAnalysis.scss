@@ -51,10 +51,24 @@
         }
       }
 
+      .meta-analysis-data-gene-acute-muscle {
+        margin-bottom: 1.0rem;
+        padding: 0;
+
+        .note-comment {
+          font-size: 0.85rem;
+          margin: 0.45rem 0;
+
+          .material-icons {
+            line-height: 0;
+            margin-right: 0.25rem;
+          }
+        }
+      }
+
       .meta-analysis-data-table-wrapper {
         border: 1px solid #dee2e6;
         border-radius: 4px;
-        margin-bottom: 1.0rem;
         padding: 0;
       }
 
