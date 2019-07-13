@@ -39,6 +39,35 @@
       }
   
       .table-head {
+        th {
+          &.phase-study-heading {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+
+            &.PASS-GET-1A {
+              background-color: lighten($accent-yellow-shade-light, 11%);
+            }
+
+            &.PASS-GET-1B {
+              background-color: lighten($accent-green-shade-light, 11%);
+            }
+
+            &.PASS-Metabolomics-1A {
+              background-color: lighten($primary-blue-shade-light, 13%);
+            }
+
+            &.PASS-Proteomics-1A {
+              background-color: lighten($accent-red-shade-light, 16%);
+            }
+          }
+
+          img {
+            margin-right: 0.35rem;
+            width: auto;
+            height: 1.15rem;
+            opacity: 0.75;
+          }
+        }
         .assay-type {
           .experiment-name {
             display: block;
@@ -91,7 +120,7 @@
         }
       }
   
-      .PASS-GET-1A, .PASS-Metabolomics-1A {
+      .PASS-GET-1A {
         background-color: lighten($accent-yellow-shade-light, 25%);
   
         &.received {
@@ -105,7 +134,7 @@
         }
       }
   
-      .PASS-GET-1B, .PASS-Proteomics-1A {
+      .PASS-GET-1B {
         background-color: lighten($accent-green-shade-light, 25%);
   
         &.received {
@@ -116,6 +145,42 @@
           &:hover {
             background-color: lighten($accent-green-shade-light, 12%);
           }
+        }
+      }
+
+      .PASS-Metabolomics-1A {
+        background-color: lighten($primary-blue-shade-light, 25%);
+  
+        &.received {
+          background-color: lighten($primary-blue-shade-light, 20%);
+          transition-property: background-color;
+          transition-duration: 0.5s;
+  
+          &:hover {
+            background-color: lighten($primary-blue-shade-light, 14%);
+          }
+        }
+      }
+
+      .PASS-Proteomics-1A {
+        background-color: lighten($accent-red-shade-light, 30%);
+  
+        &.received {
+          background-color: lighten($accent-red-shade-light, 24%);
+          transition-property: background-color;
+          transition-duration: 0.5s;
+  
+          &:hover {
+            background-color: lighten($accent-red-shade-light, 14%);
+          }
+        }
+      }
+
+      .total-samples {
+        vertical-align: middle;
+
+        .progress {
+          height: 0.75rem;
         }
       }
   
@@ -129,7 +194,9 @@
   
         &.flagged {
           .badge {
-            background-color: $accent-red;
+            background-color: lighten($accent-green-shade-light, 18%);
+            border: 1px solid $accent-green;
+            color: darken($accent-green, 35%);
           }
         }
       }
@@ -137,9 +204,38 @@
       tfoot {
         text-align: left;
   
-        p {
-          font-size: 0.75rem;
-          margin: 0.25rem 0;
+        .footnote {
+          p {
+            font-size: 0.75rem;
+            line-height: normal;
+            margin: 0.25rem 0 1.0rem;
+
+            .legend {
+              margin-right: 1.25rem;
+
+              .legend-label {
+                display: inline-block;
+                width: 0.65rem;
+                height: 0.65rem;
+                border-radius: 100%;
+                margin-right: 0.25rem;
+    
+                &.expected {
+                  background-color: #000;
+                }
+    
+                &.received {
+                  background-color: $accent-green;
+                }
+    
+                &.unexpected {
+                  background-color: lighten($accent-green-shade-light, 18%);
+                  border: 1px solid $accent-green;
+                  color: $accent-green;
+                }
+              }
+            }
+          }
         }
       }
     }
