@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import tissueList from '../lib/tissueList';
 
 const sinaiPass1aRNAseqMetadata = require('../data/sinai_pass1a_get_rna_seq_metadata');
@@ -27,10 +28,14 @@ function SampleSearchResultTable({ params }) {
   }
 
   const sampleSubset = data.filter((item) => {
-    const tissueName = tissueObj.name.toLowerCase();
-    const tissueAlias = tissueObj.alias ? tissueObj.alias.toLowerCase() : null;
-    const tissueLabel = item.Tissue.toLowerCase();
-    return tissueAlias ? tissueLabel.indexOf(tissueAlias) > -1 : tissueLabel.indexOf(tissueName) > -1;
+    if (tissueObj && Object.keys(tissueObj).length) {
+      const tissueName = tissueObj.name.toLowerCase();
+      const tissueAlias = tissueObj.alias ? tissueObj.alias.toLowerCase() : null;
+      const tissueLabel = item.Tissue.toLowerCase();
+      return tissueAlias ? tissueLabel.indexOf(tissueAlias) > -1 : tissueLabel.indexOf(tissueName) > -1;
+    }
+    // No tissue given for filtering samples. Simply returns all samples.
+    return item;
   });
 
   // Renders individual cells of tissue samples
@@ -39,9 +44,32 @@ function SampleSearchResultTable({ params }) {
     let cells;
     if (keys && keys.length) {
       cells = keys.map((key) => {
+        let cellContent;
+        if (sample[key] && sample[key].length) {
+          if (key === 'vial_label') {
+            cellContent = (
+              <Link to={`/sample/${sample[key]}`}>
+                <span>{sample[key]}</span>
+              </Link>
+            );
+          } else if (key === 'BID') {
+            cellContent = (
+              <Link to={`/search?action=samples&biospecimenid=${sample[key]}`}>
+                <span>{sample[key]}</span>
+              </Link>
+            );
+          } else {
+            cellContent = (
+              <span>{sample[key]}</span>
+            );
+          }
+        } else {
+          cellContent = '';
+        }
+
         return (
           <td key={`${key}-${sample[key]}`} className="sample-metadata-value text-nowrap">
-            {sample[key] && sample[key].length ? <span>{sample[key]}</span> : ''}
+            {cellContent}
           </td>
         );
       });
@@ -96,7 +124,7 @@ function SampleSearchResultTable({ params }) {
         <div className="card-header">
           <div className="d-flex align-items-center justify-content-between">
             <h5>
-              {`PASS${params.phase} ${tissueObj.name} samples for ${params.experiment}`}
+              {`PASS${params.phase} ${tissueObj ? tissueObj.name : ''} samples for ${params.experiment}`}
               <span className={`badge badge-${params.site.toLowerCase()} site-label`}>{params.site}</span>
             </h5>
             <JsonDownloadButton />
