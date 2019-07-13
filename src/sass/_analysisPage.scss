@@ -110,7 +110,7 @@
     }
 
     // Temporarily suppressing the display of phenotype data for human
-    &.Human {
+    &.Human:first-child {
       display: none;
     }
   }
