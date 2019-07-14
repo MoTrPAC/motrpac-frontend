@@ -2,10 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
+import lunr from 'lunr';
 import SearchForm from './searchForm';
 import SearchActions from './searchActions';
 import SearchResults from './searchResults';
 import history from '../App/history';
+
+const sinaiPass1aRNAseqMetadata = require('../data/sinai_pass1a_get_rna_seq_metadata');
+const sinaiPass1aMethylomeMetadata = require('../data/sinai_pass1a_get_methylome_metadata');
+const stanfordPass1aRNAseqMetadata = require('../data/stanford_pass1a_get_rna_seq_metadata');
+
+const searchDocuments = [
+  ...sinaiPass1aRNAseqMetadata,
+  ...sinaiPass1aMethylomeMetadata,
+  ...stanfordPass1aRNAseqMetadata,
+];
 
 /**
  * Conditionally renders the search page with different UIs
@@ -102,6 +113,48 @@ export function SearchPage({
 
   // Render search results if response is returned
   if (!isFetching && payload && Object.keys(payload).length) {
+    // Temp implementation to mock searches
+    // using 'lunr' for client-side indexing
+    /**
+     * lunr implementation begins
+     */
+    const idx = lunr(function () {
+      this.ref('vial_label');
+      this.field('Species');
+      this.field('Tissue');
+      this.field('GET_site');
+      this.field('BID');
+
+      searchDocuments.forEach((doc) => {
+        this.add(doc);
+      }, this)
+    });
+
+    let query = '';
+    const fieldMapping ={
+      species: 'Species',
+      tissue: 'Tissue',
+      site: 'GET_site',
+      biospecimenid: 'BID',
+    };
+    advSearchParams.forEach((param) => {
+      const logical = param.operator && param.operator === 'AND' ? '+' : '';
+      const field = fieldMapping[param.term];
+      const value = `${param.value}*`;
+      const search = `${logical}${field}:${value}`;
+      query += `${search} `;
+    });
+
+    const lunrSearches = idx.search(query.trim());
+
+    const lunrResutls = lunrSearches.map(match => ({
+      ref: match.ref,
+      item: searchDocuments.find(item => item.vial_label === match.ref),
+    }));
+    /**
+     * lunr implementation ends
+     */
+
     return (
       <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
         <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
@@ -111,7 +164,7 @@ export function SearchPage({
           </div>
         </div>
         <div className="advanced-search-content-container mt-3">
-          <SearchResults results={payload} />
+          <SearchResults results={payload} lunrResutls={lunrResutls} advSearchParams={advSearchParams} />
         </div>
       </div>
     );
