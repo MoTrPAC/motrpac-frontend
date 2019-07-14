@@ -13,7 +13,9 @@ export function AnalysisHomePage({
   isAuthenticated,
   depth,
   currentAnalysis,
+  currentAnalysisTitle,
   currentSubAnalysis,
+  currentSubAnalysisTitle,
   onPickAnalysis,
   onPickSubAnalysis,
   goBack,
@@ -28,7 +30,15 @@ export function AnalysisHomePage({
   function AnalysisTypeButton({ analysisType }) {
     if (analysisType.active) {
       return (
-        <div id={analysisType.shortName} onClick={onPickAnalysis} onKeyPress={onPickAnalysis} tabIndex={0} role="button" className={`col-5 col-sm-3 m-3 analysisType analysisTypeActive ${subjectType}`}>
+        <div
+          id={analysisType.shortName}
+          onClick={onPickAnalysis}
+          onKeyPress={onPickAnalysis}
+          tabIndex={0}
+          role="button"
+          className={`col-5 col-sm-3 m-3 analysisType analysisTypeActive ${subjectType}`}
+          title={analysisType.title}
+        >
           <p className="centered">{analysisType.title}</p>
           <img src={analysisType.icon} className="align-self-end" alt={`${analysisType.title} Icon`} />
         </div>
@@ -59,7 +69,15 @@ export function AnalysisHomePage({
   function SubAnalysisButton({ subAnalysis }) {
     if (subAnalysis.active) {
       return (
-        <div className="row subAnalysisRow justify-content-center m-1 m-sm-4" onClick={onPickSubAnalysis} onKeyPress={onPickSubAnalysis} tabIndex={0} role="button" id={subAnalysis.shortName}>
+        <div
+          className="row subAnalysisRow justify-content-center m-1 m-sm-4"
+          onClick={onPickSubAnalysis}
+          onKeyPress={onPickSubAnalysis}
+          tabIndex={0}
+          role="button"
+          id={subAnalysis.shortName}
+          title={subAnalysis.title}
+        >
           <div className="col-11 col-md-5 m-1 my-2 align-self-center imgCont">
             <img src={subAnalysis.icon} className="align-self-end" alt={`${subAnalysis.title} Icon`} />
           </div>
@@ -110,7 +128,11 @@ export function AnalysisHomePage({
   };
   // Button to return 1 depth level
   function BackButton() {
-    return <button className="backButton" onClick={goBack} type="button"><span className="oi oi-arrow-thick-left" /></button>;
+    return (
+      <button className="backButton" onClick={goBack} type="button">
+        <span className="material-icons">arrow_back</span>
+      </button>
+    );
   }
 
   const analyses = analysisTypes
@@ -150,12 +172,19 @@ export function AnalysisHomePage({
     );
   }
 
+  // Render header title
+  const renderHeaderTitle = () => {
+    if (depth === 0) return `${subjectType} Data Analysis`;
+    if (depth === 1) return `${currentAnalysisTitle} (${subjectType})`;
+    if (depth === 2) return `${currentSubAnalysisTitle} (${subjectType})`;
+  };
+
   return (
     <div className="analysisPage col-md-9 ml-sm-auto col-lg-10 px-4">
       <div className="page-title pt-3 pb-2 border-bottom">
         <h3>
           {(depth > 0) ? <BackButton /> : ''}
-          {`${subjectType} Data Analysis`}
+          {renderHeaderTitle()}
         </h3>
       </div>
       {(depth === 2) ? selectedDataAnalysis : ''}
@@ -181,7 +210,9 @@ AnalysisHomePage.propTypes = {
   depth: PropTypes.number.isRequired,
   isAuthenticated: PropTypes.bool,
   currentAnalysis: PropTypes.string.isRequired,
+  currentAnalysisTitle: PropTypes.string.isRequired,
   currentSubAnalysis: PropTypes.string.isRequired,
+  currentSubAnalysisTitle: PropTypes.string.isRequired,
   goBack: PropTypes.func.isRequired,
   onPickAnalysis: PropTypes.func.isRequired,
   onPickSubAnalysis: PropTypes.func.isRequired,
@@ -199,7 +230,9 @@ AnalysisHomePage.defaultProps = {
 const mapStateToProps = state => ({
   depth: state.analysis.depth,
   currentAnalysis: state.analysis.currentAnalysis,
+  currentAnalysisTitle: state.analysis.currentAnalysisTitle,
   currentSubAnalysis: state.analysis.currentSubAnalysis,
+  currentSubAnalysisTitle: state.analysis.currentSubAnalysisTitle,
   isAuthenticated: state.auth.isAuthenticated,
 });
 
@@ -207,6 +240,7 @@ const mapDispatchToProps = dispatch => ({
   onPickAnalysis: e => dispatch({
     type: 'ANALYSIS_SELECT',
     analysis: e.currentTarget.id,
+    analysisTitle: e.currentTarget.title,
   }),
   goBack: () => dispatch({
     type: 'GO_BACK',
@@ -214,6 +248,7 @@ const mapDispatchToProps = dispatch => ({
   onPickSubAnalysis: e => dispatch({
     type: 'SUBANALYSIS_SELECT',
     subAnalysis: e.currentTarget.id,
+    subAnalysisTitle: e.currentTarget.title,
   }),
 });
 

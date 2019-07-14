@@ -39,16 +39,16 @@ const analysisTypes = [
     shortName: 'PDMA',
     icon: globeIcon,
     inactiveIcon: globeIconInactive,
-    active: false,
+    active: true,
     subAnalyses: [
       {
-        title: 'Meta-Analysis of a Gene',
+        title: 'Meta-Analysis of Public Data',
         icon: MAGeneIcon,
         inactiveIcon: MAGeneIconInactive,
         shortName: 'MA_G',
         input: 'Specific Tissue(s), Gene, and Time Window',
         description: 'Displays up and down regulations. Gene lists are detected for interpretation',
-        active: false,
+        active: true,
       },
       {
         title: 'Gene Time Course Clustering',

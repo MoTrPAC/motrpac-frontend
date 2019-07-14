@@ -27,50 +27,56 @@ export function Sidebar({
       <div className="sidebar-sticky">
         <ul className="nav flex-column mt-1">
           <li className="nav-item">
-            <Link to="/dashboard" className="nav-link active">
-              <span className="oi oi-home nav-link-icon" />
+            <Link to="/dashboard" className="nav-link d-inline-flex align-items-center">
+              <i className="material-icons nav-link-icon">home</i>
                 Dashboard
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/methods" className="nav-link">
-              <span className="oi oi-excerpt nav-link-icon" />
+            <Link to="/methods" className="nav-link d-inline-flex align-items-center">
+              <i className="material-icons nav-link-icon">description</i>
                 Methods
             </Link>
           </li>
         </ul>
 
-        <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+        <h6 className="sidebar-heading px-3 mt-4 mb-1 text-muted">
           <span>Analysis</span>
         </h6>
         <ul className="nav flex-column mb-2">
           <li className="nav-item">
-            <Link to="/analysis/animal" onClick={resetDepth} className="nav-link">
+            <Link to="/analysis/animal" onClick={resetDepth} className="nav-link d-inline-flex align-items-center">
               <span className="icon-Animal nav-link-icon" />
                 Animal
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/analysis/human" onClick={resetDepth} className="nav-link">
-              <span className="icon-Human nav-link-icon" />
+            <Link to="/analysis/human" onClick={resetDepth} className="nav-link d-inline-flex align-items-center">
+              <i className="material-icons nav-link-icon">person</i>
                 Human
             </Link>
           </li>
         </ul>
 
-        <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+        <h6 className="sidebar-heading px-3 mt-4 mb-1 text-muted">
           <span>Data</span>
         </h6>
         <ul className="nav flex-column mb-2">
           <li className="nav-item">
-            <Link to="/download" className="nav-link">
-              <span className="oi oi-data-transfer-download nav-link-icon" />
-                Download/View Data
+            <Link to="/download" className="nav-link d-inline-flex align-items-center">
+              <i className="material-icons nav-link-icon">view_list</i>
+                Browse Data
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/upload" onClick={clearForm} className="nav-link">
-              <span className="oi oi-cloud-upload nav-link-icon" />
+            <Link to="/summary" className="nav-link d-inline-flex align-items-center">
+              <i className="material-icons nav-link-icon">assessment</i>
+                Summary
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/upload" onClick={clearForm} className="nav-link d-inline-flex align-items-center">
+              <i className="material-icons nav-link-icon">cloud_upload</i>
                 Upload Data
             </Link>
           </li>
