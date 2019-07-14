@@ -6,11 +6,13 @@ import IconClinic from '../assets/searchIcons/clinic.png';
 import IconDNA from '../assets/searchIcons/dna.png';
 import IconFlask from '../assets/searchIcons/flask.png';
 import IconGender from '../assets/searchIcons/gender.png';
+import IconGlobe from '../assets/searchIcons/globe.png';
 import IconHeart from '../assets/searchIcons/heart.png';
 import IconRat from '../assets/searchIcons/rat.png';
 import IconVial from '../assets/searchIcons/vial.png';
 
 const searchIconMapping = {
+  all: IconGlobe,
   assay: IconFlask,
   biospecimenid: IconVial,
   gene: IconDNA,
@@ -54,15 +56,10 @@ function SearchTermList({
     const valueId = `value-${idx}`;
     return (
       <div key={`${termId}-${valueId}`} className="param-visual alert alert-info" role="alert">
-        {item.term === 'all' ?
-          <div><span>All</span></div>
-          : (
-            <div className="d-flex align-items-center">
-              <img src={searchIconMapping[item.term]} alt={item.term} />
-              <span>{item.value}</span>
-            </div>
-          )
-        }
+        <div className="d-flex align-items-center">
+          <img src={searchIconMapping[item.term]} alt={item.term} />
+          {item.term === 'all' ? <span>{item.value ? item.value : 'All'}</span> : <span>{item.value}</span>}
+        </div>
       </div>
     );
   });
