@@ -5,7 +5,9 @@ export const defaultAnalysisState = {
     },
   },
   currentAnalysis: '',
+  currentAnalysisTitle: '',
   currentSubAnalysis: '',
+  currentSubAnalysisTitle: '',
   depth: 0,
   analysisSelected: false,
   subAnalysisSelected: false,
@@ -17,6 +19,7 @@ export default function AnalysisReducer(state = { ...defaultAnalysisState }, act
       return {
         ...state,
         currentAnalysis: action.analysis,
+        currentAnalysisTitle: action.analysisTitle,
         analysisSelected: true,
         depth: 1,
       };
@@ -24,6 +27,7 @@ export default function AnalysisReducer(state = { ...defaultAnalysisState }, act
       return {
         ...state,
         currentSubAnalysis: action.subAnalysis,
+        currentSubAnalysisTitle: action.subAnalysisTitle,
         subAnalysisSelected: true,
         depth: 2,
       };
@@ -36,7 +40,9 @@ export default function AnalysisReducer(state = { ...defaultAnalysisState }, act
       return {
         ...state,
         currentAnalysis: '',
+        currentAnalysisTitle: '',
         currentSubAnalysis: '',
+        currentSubAnalysisTitle: '',
         depth: 0,
         analysisSelected: false,
         subAnalysisSelected: false,

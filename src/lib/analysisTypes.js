@@ -42,7 +42,7 @@ const analysisTypes = [
     active: true,
     subAnalyses: [
       {
-        title: 'Meta-Analysis of a Gene',
+        title: 'Meta-Analysis of Public Data',
         icon: MAGeneIcon,
         inactiveIcon: MAGeneIconInactive,
         shortName: 'MA_G',
