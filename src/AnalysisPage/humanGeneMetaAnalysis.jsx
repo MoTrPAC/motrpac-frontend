@@ -54,7 +54,7 @@ function HumanGeneMetaAnalysis() {
                 return (
                   <tr>
                     <th scope="row">{`${key}:`}</th>
-                    <td>{parseFloat(value) ? classificationMathRound(Number(value), 2) : value}</td>
+                    <td>{!Number.isNaN(classificationMathRound(Number(value), 2)) ? classificationMathRound(Number(value), 2) : value}</td>
                   </tr>
                 );
               })}
