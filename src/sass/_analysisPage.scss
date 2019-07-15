@@ -110,7 +110,12 @@
     }
 
     // Temporarily suppressing the display of phenotype data for human
-    &.Human:first-child {
+    &.Human#PD {
+      display: none;
+    }
+
+    // Temporarily suppressing the display of published meta-analysis for animal
+    &.Animal#PDMA {
       display: none;
     }
   }
