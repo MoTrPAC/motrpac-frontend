@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import tissueList from '../lib/tissueList';
 import passSamples from '../lib/passSamples';
+import ProgressBar from '../lib/ui/progressbar';
 
 import IconDNA from '../assets/searchIcons/dna.png';
 import IconMetabolite from '../assets/searchIcons/metabolite.png';
@@ -110,25 +111,11 @@ function TissueAnalysisPlanTable() {
     }
     const totalExpectedNum = totalExpectedSamples.reduce(reducer);
     const totalReceivedNum = totalReceivedSamples.reduce(reducer);
-    const valueNow = parseFloat(totalReceivedNum / totalExpectedNum) * 100;
-    const widthStyle = { width: `${Math.round(valueNow)}%` };
     return (
-      <div className="progress-bar-wrapper">
-        <div className="progress">
-          <div
-            className="progress-bar bg-success"
-            role="progressbar"
-            style={widthStyle}
-            aria-valuenow={Math.round(valueNow)}
-            aria-valuemin="0"
-            aria-valuemax="100"
-          />
-        </div>
-        <div className="tooltip-content">
-          {`${Math.round(valueNow)}%: ${totalExpectedNum} expected; ${totalReceivedNum} received`}
-          <i />
-        </div>
-      </div>
+      <ProgressBar
+        currentValue={totalReceivedNum}
+        expectedValue={totalExpectedNum}
+      />
     );
   };
 
