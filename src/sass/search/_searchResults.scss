@@ -1,4 +1,8 @@
 .searchPage {
+  .data-loading-indicator {
+    text-align: center;
+  }
+
   .search-results-container {
     .search-result-filters-container {
       padding-left: 0;
@@ -21,9 +25,7 @@
         }
       }
     }
-  }
 
-  .search-results-container {
     .search-results-content-container {
       padding-right: 0;
 
