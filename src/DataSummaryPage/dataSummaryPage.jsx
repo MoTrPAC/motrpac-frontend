@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
-import TissueAnalysisPlanTable from '../Widgets/tissueAnalysisPlanTable';
+import TissueAnalysisPlanTable from './tissueAnalysisPlanTable';
 
 /**
  * Renders the data summary page
