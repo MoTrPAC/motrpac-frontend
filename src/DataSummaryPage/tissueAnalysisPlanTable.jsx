@@ -3,16 +3,7 @@ import { Link } from 'react-router-dom';
 import tissueList from '../lib/tissueList';
 import passSamples from '../lib/passSamples';
 import ProgressBar from '../lib/ui/progressbar';
-
-import IconDNA from '../assets/searchIcons/dna.png';
-import IconMetabolite from '../assets/searchIcons/metabolite.png';
-import IconProtein from '../assets/searchIcons/protein.png';
-
-const searchIconMapping = {
-  gene: IconDNA,
-  metabolism: IconMetabolite,
-  protein: IconProtein,
-};
+import IconSet from '../lib/iconSet';
 
 /**
  * Renders the data analysis plan & tracking status table
@@ -140,25 +131,25 @@ function TissueAnalysisPlanTable() {
             <th scope="col" rowSpan="3">Total Samples</th>
             <th colSpan="4" className="PASS-GET-1A phase-study-heading">
               <div className="d-flex align-items-center justify-content-center">
-                <img src={searchIconMapping.gene} alt="Genomic" />
+                <img src={IconSet.DNA} alt="Genomic" />
                 <span>GET - Phase 1A assays/site</span>
               </div>
             </th>
             <th colSpan="4" className="PASS-GET-1B phase-study-heading">
               <div className="d-flex align-items-center justify-content-center">
-                <img src={searchIconMapping.gene} alt="Genomic" />
+                <img src={IconSet.DNA} alt="Genomic" />
                 <span>GET - Phase 1B assays/site</span>
               </div>
             </th>
             <th colSpan="19" className="PASS-Metabolomics-1A phase-study-heading">
               <div className="d-flex align-items-center justify-content-center">
-                <img src={searchIconMapping.metabolism} alt="Metabolomic" />
+                <img src={IconSet.Metabolite} alt="Metabolomic" />
                 <span>Metabolomics - Combined assays/site</span>
               </div>
             </th>
             <th colSpan="6" className="PASS-Proteomics-1A phase-study-heading">
               <div className="d-flex align-items-center justify-content-center">
-                <img src={searchIconMapping.protein} alt="Proteomic" />
+                <img src={IconSet.Protein} alt="Proteomic" />
                 <span>Proteomics - Combined assays/site</span>
               </div>
             </th>
