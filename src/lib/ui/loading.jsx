@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconLoading from '../../assets/loading.svg';
+import IconSet from '../iconSet';
 
 /**
  * Renders the animated loading SVG icon
@@ -14,7 +14,7 @@ function AnimatedLoadingIcon({ isFetching }) {
 
   return (
     <div className="col w-100 mt-5 pt-5 text-center animated-loading-icon">
-      <img src={IconLoading} className="loading-icon" alt="Loading..." />
+      <img src={IconSet.Loading} className="loading-icon" alt="Loading..." />
     </div>
   );
 }
