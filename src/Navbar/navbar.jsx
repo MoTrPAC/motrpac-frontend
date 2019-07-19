@@ -142,10 +142,10 @@ Navbar.propTypes = {
   login: PropTypes.func,
   logout: PropTypes.func,
   quickSearchTerm: PropTypes.string,
-  handleQuickSearchInputChange: PropTypes.func.isRequired,
-  handleQuickSearchRequestSubmit: PropTypes.func.isRequired,
-  resetQuickSearch: PropTypes.func.isRequired,
-  getSearchForm: PropTypes.func.isRequired,
+  handleQuickSearchInputChange: PropTypes.func,
+  handleQuickSearchRequestSubmit: PropTypes.func,
+  resetQuickSearch: PropTypes.func,
+  getSearchForm: PropTypes.func,
 };
 
 Navbar.defaultProps = {
@@ -154,6 +154,10 @@ Navbar.defaultProps = {
   login: null,
   logout: null,
   quickSearchTerm: '',
+  handleQuickSearchInputChange: null,
+  handleQuickSearchRequestSubmit: null,
+  resetQuickSearch: null,
+  getSearchForm: null,
 };
 
 const mapStateToProps = state => ({
