@@ -7,7 +7,7 @@ import SearchForm from './searchForm';
 import SearchActions from './searchActions';
 import SearchResults from './searchResults';
 import history from '../App/history';
-import AnimatedLoadingWidget from '../Widgets/animatedLoadingWidget';
+import AnimatedLoadingIcon from '../lib/ui/loading';
 
 const sinaiPass1aRNAseqMetadata = require('../data/sinai_pass1a_get_rna_seq_metadata');
 const sinaiPass1aMethylomeMetadata = require('../data/sinai_pass1a_get_methylome_metadata');
@@ -225,7 +225,7 @@ export function SearchPage({
           </div>
         </div>
         <div className="advanced-search-content-container mt-3">
-          <AnimatedLoadingWidget isFetching={isFetching} />
+          <AnimatedLoadingIcon isFetching={isFetching} />
         </div>
       </div>
     );
