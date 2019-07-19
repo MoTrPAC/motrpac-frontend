@@ -99,7 +99,7 @@ function SearchResults({
                   <li key={result.ref} className="list-group-item d-flex justify-content-between align-items-start search-result-list-item">
                     <div>
                       <h5>
-                        <img src={IconRat} alt="Species" />
+                        <img src={IconSet.Rat} alt="Species" />
                         <span className="vial-label">
                           Vial:&nbsp;
                           <a href={`/sample/${result.item.vial_label}`}>{result.item.vial_label}</a>
