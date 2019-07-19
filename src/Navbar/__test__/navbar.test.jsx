@@ -4,12 +4,15 @@ import { Router } from 'react-router-dom';
 import { Navbar } from '../navbar';
 import History from '../../App/history';
 
-
 const testUser = require('../../testData/testUser');
 
 const navbarActions = {
   login: jest.fn(),
   logout: jest.fn(),
+  handleQuickSearchInputChange: jest.fn(),
+  handleQuickSearchRequestSubmit: jest.fn(),
+  resetQuickSearch: jest.fn(),
+  getSearchForm: jest.fn(),
 };
 
 const defaultMountNav = mount(
@@ -17,6 +20,7 @@ const defaultMountNav = mount(
     <Navbar />
   </Router>,
 );
+
 const loggedInMountNav = mount(
   <Router history={History}>
     <Navbar profile={testUser} isAuthenticated {...navbarActions} />
@@ -33,5 +37,10 @@ describe('Navbar', () => {
     expect(loggedInMountNav.find('Navbar').first().props().isAuthenticated).toBeTruthy();
     expect(loggedInMountNav.find('.user-display-name').text()).toEqual(`${testUser.user_metadata.name}, ${testUser.user_metadata.siteName}`);
     expect(loggedInMountNav.find('.logOutBtn').text()).toMatch('Log out');
+  });
+
+  test('Displays quick search box if logged in', () => {
+    expect(loggedInMountNav.find('Navbar').first().props().isAuthenticated).toBeTruthy();
+    expect(loggedInMountNav.find('.quick-search-box-container')).toHaveLength(1);
   });
 });
