@@ -7,7 +7,7 @@ import TissueAnalysisPlanTable from './tissueAnalysisPlanTable';
 /**
  * Renders the data summary page
  *
- * @param {Boolean}   isAuthenticated Redux state for user's authentication status
+ * @param {Boolean} isAuthenticated Redux state for user's authentication status
  *
  * @returns {object} JSX representation of the data summary page
  */
@@ -55,11 +55,5 @@ DataSummaryPage.defaultProps = {
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
-
-/*
-const mapDispatchToProps = dispatch => ({
-  clearForm: () => dispatch(actions.clearForm()),
-});
-*/
 
 export default connect(mapStateToProps)(DataSummaryPage);
