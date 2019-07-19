@@ -7,6 +7,7 @@ import SearchForm from './searchForm';
 import SearchActions from './searchActions';
 import SearchResults from './searchResults';
 import history from '../App/history';
+import AnimatedLoadingWidget from '../Widgets/animatedLoadingWidget';
 
 const sinaiPass1aRNAseqMetadata = require('../data/sinai_pass1a_get_rna_seq_metadata');
 const sinaiPass1aMethylomeMetadata = require('../data/sinai_pass1a_get_methylome_metadata');
@@ -64,6 +65,11 @@ export function SearchPage({
     payload = quickSearchPayload;
   }
 
+  const getAdvancedSearchForm = () => {
+    resetSearchForm();
+    getSearchForm();
+  };
+
   function backToSearch() {
     getSearchForm();
   }
@@ -102,7 +108,7 @@ export function SearchPage({
           <div className="adv-search-example-searches">
             <p className="text-left">
               Please&nbsp;
-              <Link to="/search" className="search-link">try</Link>
+              <Link to="/search" className="search-link" onClick={getAdvancedSearchForm}>try</Link>
               &nbsp;again.
             </p>
           </div>
@@ -164,7 +170,18 @@ export function SearchPage({
           </div>
         </div>
         <div className="advanced-search-content-container mt-3">
-          <SearchResults results={payload} lunrResutls={lunrResutls} advSearchParams={advSearchParams} />
+          {lunrResutls.length
+            ? (
+              <SearchResults results={payload} lunrResutls={lunrResutls} advSearchParams={advSearchParams} />
+            )
+            : (
+              <p className="text-left">
+                No matches found. Please&nbsp;
+                <Link to="/search" className="search-link" onClick={getAdvancedSearchForm}>try</Link>
+                &nbsp;again.
+              </p>
+            )
+          }
         </div>
       </div>
     );
@@ -192,6 +209,23 @@ export function SearchPage({
         </div>
         <div className="advanced-search-content-container mt-3">
           <SearchResults urlSearchParamsObj={urlSearchParamsObj} />
+        </div>
+      </div>
+    );
+  }
+
+  // Render animated loading widget if data fetching is in progress
+  if (isFetching && searchQueryString.length) {
+    return (
+      <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
+        <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
+          <SearchBackButton />
+          <div className="page-title">
+            <h3>Search Results</h3>
+          </div>
+        </div>
+        <div className="advanced-search-content-container mt-3">
+          <AnimatedLoadingWidget isFetching={isFetching} />
         </div>
       </div>
     );
