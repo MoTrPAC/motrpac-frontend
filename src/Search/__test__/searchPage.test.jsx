@@ -3,10 +3,12 @@ import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow, mount } from 'enzyme';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
 import thunkMiddleWare from 'redux-thunk';
 import { defaultSearchState } from '../searchReducer';
 import rootReducer, { defaultRootState } from '../../App/reducers';
 import SearchPageConnected, { SearchPage } from '../searchPage';
+import History from '../../App/history';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -16,7 +18,16 @@ const params = [
   { term: 'site', value: 'stanford', operator: 'AND' },
 ];
 
+const loggedInRootState = {
+  ...defaultRootState,
+  auth: {
+    ...defaultRootState.auth,
+    isAuthenticated: true,
+  },
+};
+
 const searchFormState = {
+  ...defaultRootState,
   auth: {
     ...defaultRootState.auth,
     isAuthenticated: true,
@@ -27,7 +38,7 @@ const searchFormState = {
   },
 };
 
-const screenActions = {
+const searchActions = {
   handleSearchFormChange: jest.fn(),
   addSearchParam: jest.fn(),
   removeSearchParam: jest.fn(),
@@ -37,74 +48,78 @@ const screenActions = {
 };
 
 describe('Default Advanced Search Page', () => {
-  test('Renders required componenents', () => {
-    const shallowScreen = shallow(
-      <SearchPage {...defaultSearchState} isAuthenticated {...screenActions} />,
+  test('Renders required componenents without crashing', () => {
+    const shallowSearchPage = shallow(
+      <SearchPage {...defaultSearchState} isAuthenticated {...searchActions} />,
     );
-    expect(shallowScreen.find('SearchForm')).toHaveLength(1);
-    expect(shallowScreen.find('SearchResults')).toHaveLength(1);
+    expect(shallowSearchPage.find('SearchForm')).toHaveLength(1);
   });
 });
 
-const loggedInRootState = {
-  ...defaultRootState,
-  auth: {
-    ...defaultRootState.auth,
-    isAuthenticated: true,
-  },
-};
+// Default logged-in state for comnected search page
+const connectedSearchPageDefaultState = (
+  <Provider store={createStore(rootReducer, loggedInRootState, applyMiddleware(thunkMiddleWare))}>
+    <Router history={History}>
+      <SearchPageConnected {...searchActions} />
+    </Router>
+  </Provider>
+);
+
+// Changed state for comnected search page
+const connectedSearchPageChangedState = (
+  <Provider store={createStore(rootReducer, searchFormState, applyMiddleware(thunkMiddleWare))}>
+    <Router history={History}>
+      <SearchPageConnected {...searchActions} />
+    </Router>
+  </Provider>
+);
 
 describe('Connected Advanced Search Page', () => {
-  let mountedUploadScreen = mount((
-    <Provider store={createStore(rootReducer, loggedInRootState, applyMiddleware(thunkMiddleWare))}>
-      <SearchPageConnected />
-    </Provider>
-  ));
+  let mountedSearchPage = mount(connectedSearchPageDefaultState);
+
   beforeAll(() => {
-    mountedUploadScreen = mount((
-      <Provider store={createStore(rootReducer, loggedInRootState, applyMiddleware(thunkMiddleWare))}>
-        <SearchPageConnected />
-      </Provider>
-    ));
+    mountedSearchPage = mount(connectedSearchPageDefaultState);
   });
   afterAll(() => {
-    mountedUploadScreen.unmount();
+    mountedSearchPage.unmount();
   });
 
   test('Renders Required Components in correct state', () => {
-    expect(mountedUploadScreen.find('SearchForm')).toHaveLength(1);
-    expect(mountedUploadScreen.find('SearchResults')).toHaveLength(1);
-    expect(mountedUploadScreen.find('SearchForm').find('.adv-search-submit')).toHaveLength(1);
-    expect(mountedUploadScreen.find('SearchForm').find('.adv-search-reset')).toHaveLength(1);
-    expect(mountedUploadScreen.find('SearchForm').find('SearchTermList')).toHaveLength(1);
-    expect(mountedUploadScreen.find('SearchForm').find('SearchTermList').find('SearchTermRow')).toHaveLength(1);
+    expect(mountedSearchPage.find('SearchForm')).toHaveLength(1);
+    expect(mountedSearchPage.find('SearchForm').find('.adv-search-submit')).toHaveLength(1);
+    expect(mountedSearchPage.find('SearchForm').find('.adv-search-reset')).toHaveLength(1);
+    expect(mountedSearchPage.find('SearchForm').find('SearchTermList')).toHaveLength(1);
+    expect(mountedSearchPage.find('SearchForm').find('SearchTermList').find('SearchTermRow')).toHaveLength(1);
   });
 
-  test('Clear Form, makes form empty and available to enter again', () => {
-    mountedUploadScreen = mount((
-      <Provider store={createStore(rootReducer, searchFormState, applyMiddleware(thunkMiddleWare))}>
-        <SearchPageConnected />
-      </Provider>
-    ));
+  test('Renders a new row of operator/term/value search params upon clicking Add button', () => {
+    mountedSearchPage.find('SearchForm').find('.btn-param-add').simulate('click');
 
-    mountedUploadScreen.find('SearchForm').find('.adv-search-reset').simulate('click');
-    mountedUploadScreen.update();
-    /*
-    expect(mountedUploadScreen.find('SearchForm').find('select').forEach((formComponent) => {
-      expect(formComponent.prop('disabled')).toBeFalsy();
-      expect(formComponent.prop('value')).toEqual(defaultUploadState.formValues[formComponent.prop('id')]);
-    }));
-    expect(mountedUploadScreen.find('SearchForm').find('input').forEach((formComponent) => {
-      if (formComponent.prop('type') !== 'submit') {
-        expect(formComponent.prop('disabled')).toBeFalsy();
-        if (formComponent.prop('type') === 'text') {
-          expect(formComponent.prop('value')).toEqual(defaultUploadState.formValues[formComponent.prop('id')]);
-        }
-        if (formComponent.prop('type') === 'checkbox') {
-          expect(formComponent.prop('checked')).toEqual(defaultUploadState.formValues[formComponent.prop('id')]);
-        }
-      }
-    }));
-    */
+    expect(mountedSearchPage.find('SearchForm').find('.param-list').length).toBeGreaterThan(1);
+    expect(mountedSearchPage.find('SearchForm').find('.param-value').length).toBeGreaterThan(1);
+    expect(mountedSearchPage.find('SearchForm').find('.btn-param-remove').length).toBeGreaterThanOrEqual(1);
   });
+
+  test('Removes a row of operator/term/value search params upon clicking Remove button', () => {
+    mountedSearchPage = mount(connectedSearchPageChangedState);
+
+    mountedSearchPage.find('SearchForm').find('.btn-param-remove').at(2).simulate('click');
+
+    expect(mountedSearchPage.find('SearchForm').find('.param-list').length).toBeGreaterThan(0);
+    expect(mountedSearchPage.find('SearchForm').find('.param-value').length).toBeGreaterThan(0);
+    expect(mountedSearchPage.find('SearchForm').find('.btn-param-remove').length).toBeGreaterThan(0);
+  });
+
+  test('Resets advanced search form upon clicking Reset button', () => {
+    mountedSearchPage = mount(connectedSearchPageChangedState);
+
+    mountedSearchPage.find('SearchForm').find('.adv-search-reset').simulate('click');
+
+    expect(mountedSearchPage.find('SearchForm').find('select')).toHaveLength(1);
+    expect(mountedSearchPage.find('SearchForm').find('select').props().value).toBe('all');
+    expect(mountedSearchPage.find('SearchForm').find('input')).toHaveLength(1);
+    expect(mountedSearchPage.find('SearchForm').find('input').props().value).toBe('');
+  });
+
+  // TODO: Assertion for 'Search' button click event
 });
