@@ -19,15 +19,19 @@ export function ReleasePage({ isAuthenticated }) {
   // Render advanced search form by default
   return (
     <div className="col-md-9 ml-sm-auto col-lg-10 px-4 dataReleasePage">
-      <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <div className="page-title">
           <h3>Data Releases</h3>
         </div>
+        <div className="btn-toolbar">
+          <div className="btn-group">
+            <Link className="browseDataBtn btn btn-sm btn-outline-primary" to="/download">Browse Data</Link>
+            <Link className="advSearchBtn btn btn-sm btn-outline-primary" to="/search">Search Data</Link>
+          </div>
+        </div>
       </div>
       <div className="data-release-content-container mt-3">
-        <div className="adv-search-example-searches">
 
-        </div>
       </div>
     </div>
   );
