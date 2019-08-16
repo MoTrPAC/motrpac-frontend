@@ -4,5 +4,71 @@
       margin-bottom: 0;
     }
   }
+
+  .material-icons {
+    margin-right: 0.2rem;
+  }
+
+  .release-timeline {
+    ul {
+      padding-left: 0;
+    }
+
+    li {
+      color: $stanford-cardinal-red;
+      font-size: 0.85rem;
+
+      .material-icons {
+        font-size: 0.95rem;
+      }
+    }
+  }
+
+  .release-main-section {
+    border-left: 2px solid #e1e4e8;
+    padding-right: 0;
+
+    .release-header {
+      color: $stanford-cardinal-red;
+    }
+
+    i.material-icons.download-checkbox {
+      cursor: pointer;
+    }
+
+    p {
+      margin-bottom: 0.5rem;
+    }
+
+    table {
+      font-size: 0.85rem;
+      margin-bottom: 0;
+
+      th, td {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+
+      .col-files {
+        width: 19%;
+      }
+
+      .col-type {
+        width: 8%;
+      }
+
+      .col-filetype {
+        width: 8%;
+      }
+
+      .col-description {
+        width: 17%;
+      }
+
+      .col-locations {
+        width: 48%;
+      }
+    }
+  }
 }
 
