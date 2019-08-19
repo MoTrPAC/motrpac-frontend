@@ -2,13 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
-import elasticsearch from 'elasticsearch';
 import ReleaseEntry from './releaseEntry';
-
-const client = new elasticsearch.Client({
-  host: 'http://localhost:9200',
-  log: 'trace',
-});
 
 /**
  * Renders the data release UIs
@@ -22,17 +16,6 @@ export function ReleasePage({ isAuthenticated }) {
   if (!isAuthenticated) {
     return (<Redirect to="/" />);
   }
-
-  client.ping({
-    // ping usually has a 3000ms timeout
-    requestTimeout: 1000,
-  }, (error) => {
-    if (error) {
-      console.trace('elasticsearch cluster is down!');
-    } else {
-      console.log('All is well');
-    }
-  });
 
   // Render advanced search form by default
   return (
