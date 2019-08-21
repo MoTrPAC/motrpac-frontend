@@ -127,6 +127,7 @@ function ReleaseEntry() {
                       <span>Download experiment metadata and QC results</span>
                     </a>
                   </p>
+                  <h5 className="additional-release-download-header">Additional Downloads</h5>
                   <div className="raw-files-download-section">
                     <p className="d-block mb-2 d-flex align-items-center justify-content-start raw-files-download-option">
                       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
