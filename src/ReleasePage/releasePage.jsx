@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import ReleaseEntry from './releaseEntry';
-
-import IconDataReleaseInternal from '../assets/icons/data-release-internal.png';
+import IconSet from '../lib/iconSet';
 
 /**
  * Renders the data release UIs
@@ -23,7 +22,7 @@ export function ReleasePage({ isAuthenticated }) {
   return (
     <div className="col-md-9 ml-sm-auto col-lg-10 px-4 dataReleasePage">
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 border-bottom">
-        <div className="page-title" style={{ backgroundImage: `url(${IconDataReleaseInternal})` }}>
+        <div className="page-title" style={{ backgroundImage: `url(${IconSet.InternalDataRelease})` }}>
           <h3>Data Releases</h3>
         </div>
         <div className="btn-toolbar">
