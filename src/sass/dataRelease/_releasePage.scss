@@ -1,5 +1,9 @@
 .dataReleasePage {
   .page-title {
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding-left: 60px;
+
     h3 {
       margin-bottom: 0;
     }
@@ -38,6 +42,13 @@
 
     p {
       margin-bottom: 0.5rem;
+    }
+
+    .additional-release-download-header {
+      color: $gray;
+      border-bottom: solid 1px #e1e4e8;
+      margin: 1.5rem 0 0.75rem 0;
+      padding-bottom: 0.25rem;
     }
 
     table {
