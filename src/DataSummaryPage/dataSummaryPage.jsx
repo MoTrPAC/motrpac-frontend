@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
-import TissueAnalysisPlanTable from '../Widgets/tissueAnalysisPlanTable';
+import TissueAnalysisPlanTable from './tissueAnalysisPlanTable';
 
 /**
  * Renders the data summary page
  *
- * @param {Boolean}   isAuthenticated Redux state for user's authentication status
+ * @param {Boolean} isAuthenticated Redux state for user's authentication status
  *
  * @returns {object} JSX representation of the data summary page
  */
@@ -55,11 +55,5 @@ DataSummaryPage.defaultProps = {
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
-
-/*
-const mapDispatchToProps = dispatch => ({
-  clearForm: () => dispatch(actions.clearForm()),
-});
-*/
 
 export default connect(mapStateToProps)(DataSummaryPage);
