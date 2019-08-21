@@ -1,0 +1,11 @@
+/**
+ * Progress Bar Styles
+ */
+.progress-bar-wrapper {
+  position: relative;
+}
+
+.progress-bar-wrapper:hover .tooltip-on-top {
+  visibility: visible;
+  opacity: 1;
+}

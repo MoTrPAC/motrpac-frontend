@@ -2,25 +2,17 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import SearchResultFilters from './searchResultFilters';
 import SampleSearchResultTable from './sampleSearchResultTable';
-
-import IconClinic from '../assets/searchIcons/clinic.png';
-import IconDNA from '../assets/searchIcons/dna.png';
-import IconFlask from '../assets/searchIcons/flask.png';
-import IconGender from '../assets/searchIcons/gender.png';
-import IconGlobe from '../assets/searchIcons/globe.png';
-import IconHeart from '../assets/searchIcons/heart.png';
-import IconRat from '../assets/searchIcons/rat.png';
-import IconVial from '../assets/searchIcons/vial.png';
+import IconSet from '../lib/iconSet';
 
 const searchIconMapping = {
-  all: IconGlobe,
-  assay: IconFlask,
-  biospecimenid: IconVial,
-  gene: IconDNA,
-  sex: IconGender,
-  site: IconClinic,
-  species: IconRat,
-  tissue: IconHeart,
+  all: IconSet.Globe,
+  assay: IconSet.Flask,
+  biospecimenid: IconSet.Vial,
+  gene: IconSet.DNA,
+  sex: IconSet.Gender,
+  site: IconSet.Clinic,
+  species: IconSet.Rat,
+  tissue: IconSet.Heart,
 };
 
 /**
@@ -107,7 +99,7 @@ function SearchResults({
                   <li key={result.ref} className="list-group-item d-flex justify-content-between align-items-start search-result-list-item">
                     <div>
                       <h5>
-                        <img src={IconRat} alt="Species" />
+                        <img src={IconSet.Rat} alt="Species" />
                         <span className="vial-label">
                           Vial:&nbsp;
                           <a href={`/sample/${result.item.vial_label}`}>{result.item.vial_label}</a>
