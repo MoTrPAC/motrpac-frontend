@@ -171,9 +171,12 @@ function TissueAnalysisPlanTable() {
             </th>
             <th className="assay-type PASS-GET-1A">
               <span className="experiment-name text-nowrap">ATAC-seq</span>
+              <span className="badge badge-stanford">Stanford</span>
+              {/* temp suppression of link for internal release
               <Link to="/search?action=samples&phase=1A&study=GET&experiment=ATAC-seq&site=Stanford">
                 <span className="badge badge-stanford">Stanford</span>
               </Link>
+              */}
             </th>
             <th className="assay-type PASS-GET-1A">
               <span className="experiment-name text-nowrap">Methylome</span>
