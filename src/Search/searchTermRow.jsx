@@ -42,8 +42,10 @@ function SearchTermRow({
         <option value="all">All</option>
         <option value="assay">Assay</option>
         <option value="biospecimenid">Biospecimen ID</option>
+        {/* temp suppression due to unavailable data
         <option value="gene">Gene ID/Symbol</option>
         <option value="sex">Sex</option>
+        */}
         <option value="site">Site</option>
         <option value="species">Species</option>
         <option value="tissue">Tissue</option>
