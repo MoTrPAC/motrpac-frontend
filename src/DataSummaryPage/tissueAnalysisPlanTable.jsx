@@ -114,7 +114,7 @@ function TissueAnalysisPlanTable() {
   const sampleTableRows = tissueList
     .map(tissue => (
       <tr key={tissue.label} className={tissue.label}>
-        <th scope="row" className="text-left tissue-name text-nowrap">{tissue.name}</th>
+        <th scope="row" className="text-left tissue-name text-nowrap">{tissue.display_name}</th>
         <td className="total-samples">
           {renderProgressBar(tissue.label)}
         </td>
