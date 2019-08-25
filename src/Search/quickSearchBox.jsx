@@ -13,11 +13,13 @@ function QuickSearchBox({
   handleQuickSearchRequestSubmit,
   resetQuickSearch,
   getSearchForm,
+  resetAdvSearch,
 }) {
   const quickSearchInput = useRef(null);
 
   const handleQuickSearchFormSubmit = (e) => {
     e.preventDefault();
+    resetAdvSearch();
     handleQuickSearchRequestSubmit(quickSearchTerm);
     quickSearchInput.current.blur();
   };
@@ -56,6 +58,7 @@ QuickSearchBox.propTypes = {
   handleQuickSearchRequestSubmit: PropTypes.func.isRequired,
   resetQuickSearch: PropTypes.func.isRequired,
   getSearchForm: PropTypes.func.isRequired,
+  resetAdvSearch: PropTypes.func.isRequired,
 };
 
 QuickSearchBox.defaultProps = {
