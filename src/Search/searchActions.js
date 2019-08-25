@@ -4,6 +4,7 @@ import history from '../App/history';
 export const SEARCH_FORM_CHANGE = 'SEARCH_FORM_CHANGE';
 export const SEARCH_FORM_ADD_PARAM = 'SEARCH_FORM_ADD_PARAM';
 export const SEARCH_FORM_REMOVE_PARAM = 'SEARCH_FORM_REMOVE_PARAM';
+export const SEARCH_FORM_UPDATE_PARAM = 'SEARCH_FORM_UPDATE_PARAM';
 export const SEARCH_FORM_SUBMIT = 'SEARCH_FORM_SUBMIT';
 export const SEARCH_FORM_SUBMIT_FAILURE = 'SEARCH_FORM_SUBMIT_FAILURE';
 export const SEARCH_FORM_SUBMIT_SUCCESS = 'SEARCH_FORM_SUBMIT_SUCCESS';
@@ -29,6 +30,13 @@ function searchFormRemoveParam(index) {
   return {
     type: SEARCH_FORM_REMOVE_PARAM,
     index,
+  };
+}
+
+function searchFormUpdateParam(params) {
+  return {
+    type: SEARCH_FORM_UPDATE_PARAM,
+    params,
   };
 }
 
@@ -94,8 +102,29 @@ function handleSearchFormSubmit(params) {
   };
 }
 
+// Handler for predefined searches
+function handlePredefinedSearch(params) {
+  return (dispatch) => {
+    dispatch(searchFormUpdateParam(params));
+    dispatch(searchFormSubmit(params));
+    return axios.get('https://api.github.com/search/repositories', {
+      params: {
+        q: 'reactjs',
+        sort: 'stars',
+        order: 'desc',
+      },
+    }).then((response) => {
+      dispatch(searchFormSubmitSuccess(response));
+      pushHistoryWithQuery(params);
+    }).catch((err) => {
+      dispatch(searchFormSubmitFailure(`${err.error}: ${err.errorDescription}`));
+    });
+  };
+}
+
 const SearchActions = {
   handleSearchFormSubmit,
+  handlePredefinedSearch,
   searchFormChange,
   searchFormAddParam,
   searchFormRemoveParam,
