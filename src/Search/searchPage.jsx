@@ -9,15 +9,9 @@ import SearchResults from './searchResults';
 import history from '../App/history';
 import AnimatedLoadingIcon from '../lib/ui/loading';
 
-const sinaiPass1aRNAseqMetadata = require('../data/sinai_pass1a_get_rna_seq_metadata');
-const sinaiPass1aMethylomeMetadata = require('../data/sinai_pass1a_get_methylome_metadata');
-const stanfordPass1aRNAseqMetadata = require('../data/stanford_pass1a_get_rna_seq_metadata');
+const mergedPass1aGetMetadata = require('../data/merged_pass1a_get_metadata');
 
-const searchDocuments = [
-  ...sinaiPass1aRNAseqMetadata,
-  ...sinaiPass1aMethylomeMetadata,
-  ...stanfordPass1aRNAseqMetadata,
-];
+const searchDocuments = [...mergedPass1aGetMetadata];
 
 /**
  * Conditionally renders the search page with different UIs
@@ -34,12 +28,14 @@ export function SearchPage({
   searchError,
   isSearchFetching,
   quickSearchPayload,
+  quickSearchQueryString,
   quickSearchError,
   isQuickSearchFetching,
   handleSearchFormChange,
   addSearchParam,
   removeSearchParam,
   handleSearchFormSubmit,
+  handlePredefinedSearch,
   resetSearchForm,
   getSearchForm,
   isAuthenticated,
@@ -130,6 +126,7 @@ export function SearchPage({
       this.field('Tissue');
       this.field('GET_site');
       this.field('BID');
+      this.field('Assay');
 
       searchDocuments.forEach((doc) => {
         this.add(doc);
@@ -137,19 +134,26 @@ export function SearchPage({
     });
 
     let query = '';
-    const fieldMapping ={
+    const fieldMapping = {
+      all: '',
       species: 'Species',
       tissue: 'Tissue',
       site: 'GET_site',
       biospecimenid: 'BID',
+      assay: 'Assay',
     };
-    advSearchParams.forEach((param) => {
-      const logical = param.operator && param.operator === 'AND' ? '+' : '';
-      const field = fieldMapping[param.term];
-      const value = `${param.value}*`;
-      const search = `${logical}${field}:${value}`;
-      query += `${search} `;
-    });
+
+    if (!Object.keys(searchPayload).length && Object.keys(quickSearchPayload).length) {
+      query = `${decodeURIComponent(quickSearchQueryString)}*`;
+    } else if (Object.keys(searchPayload).length && !Object.keys(quickSearchPayload).length) {
+      advSearchParams.forEach((param) => {
+        const logical = param.operator && param.operator === 'AND' ? '+' : '';
+        const field = fieldMapping[param.term];
+        const value = `${decodeURIComponent(param.value)}*`;
+        const search = !field ? `${logical}${value}` : `${logical}${field}:${value}`;
+        query += `${search} `;
+      });
+    }
 
     const lunrSearches = idx.search(query.trim());
 
@@ -164,7 +168,7 @@ export function SearchPage({
     return (
       <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
         <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
-          <SearchBackButton />
+          {!quickSearchQueryString ? <SearchBackButton /> : null}
           <div className="page-title">
             <h3>Search Results</h3>
           </div>
@@ -172,7 +176,7 @@ export function SearchPage({
         <div className="advanced-search-content-container mt-3">
           {lunrResutls.length
             ? (
-              <SearchResults results={payload} lunrResutls={lunrResutls} advSearchParams={advSearchParams} />
+              <SearchResults lunrResutls={lunrResutls} advSearchParams={advSearchParams} quickSearchQueryString={quickSearchQueryString} />
             )
             : (
               <p className="text-left">
@@ -215,7 +219,7 @@ export function SearchPage({
   }
 
   // Render animated loading widget if data fetching is in progress
-  if (isFetching && searchQueryString.length) {
+  if (isFetching && (searchQueryString.length || quickSearchQueryString.length)) {
     return (
       <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
         <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
@@ -243,9 +247,27 @@ export function SearchPage({
         <div className="adv-search-example-searches">
           <p className="text-left">
             Example searches:&nbsp;
-            <Link to="/search?assay=rna-seq" className="example-search-link">rna-seq</Link>
-            <Link to="/search?tissue=liver" className="example-search-link">liver</Link>
-            <Link to="/search?species=rat" className="example-search-link">rat</Link>
+            <Link
+              to="/search?q=(assay:rna-seq)"
+              className="example-search-link"
+              onClick={(e) => { e.preventDefault(); handlePredefinedSearch([{ term: 'assay', value: 'rna-seq', operator: '' }]); }}
+            >
+              rna-seq
+            </Link>
+            <Link
+              to="/search?q=(tissue:liver)"
+              className="example-search-link"
+              onClick={(e) => { e.preventDefault(); handlePredefinedSearch([{ term: 'tissue', value: 'liver', operator: '' }]); }}
+            >
+              liver
+            </Link>
+            <Link
+              to="/search?q=(species:rat)"
+              className="example-search-link"
+              onClick={(e) => { e.preventDefault(); handlePredefinedSearch([{ term: 'species', value: 'rat', operator: '' }]); }}
+            >
+              rat
+            </Link>
           </p>
         </div>
         <SearchForm
@@ -277,12 +299,14 @@ SearchPage.propTypes = {
   quickSearchPayload: PropTypes.shape({
     data: PropTypes.object,
   }),
+  quickSearchQueryString: PropTypes.string,
   quickSearchError: PropTypes.string,
   isQuickSearchFetching: PropTypes.bool,
   handleSearchFormChange: PropTypes.func.isRequired,
   addSearchParam: PropTypes.func.isRequired,
   removeSearchParam: PropTypes.func.isRequired,
   handleSearchFormSubmit: PropTypes.func.isRequired,
+  handlePredefinedSearch: PropTypes.func.isRequired,
   resetSearchForm: PropTypes.func.isRequired,
   getSearchForm: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
@@ -294,6 +318,7 @@ SearchPage.defaultProps = {
   searchError: '',
   isSearchFetching: false,
   quickSearchPayload: {},
+  quickSearchQueryString: '',
   quickSearchError: '',
   isQuickSearchFetching: false,
 };
@@ -309,6 +334,7 @@ const mapDispatchToProps = dispatch => ({
   addSearchParam: () => dispatch(SearchActions.searchFormAddParam()),
   removeSearchParam: index => dispatch(SearchActions.searchFormRemoveParam(index)),
   handleSearchFormSubmit: params => dispatch(SearchActions.handleSearchFormSubmit(params)),
+  handlePredefinedSearch: params => dispatch(SearchActions.handlePredefinedSearch(params)),
   resetSearchForm: () => dispatch(SearchActions.searchFormReset()),
   getSearchForm: () => dispatch(SearchActions.getSearchForm()),
 });
