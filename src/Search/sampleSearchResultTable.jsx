@@ -19,7 +19,7 @@ function SampleSearchResultTable({ params }) {
   let data;
   if (params.site === 'Stanford' && params.phase === '1A') {
     if (params.experiment === 'RNA-seq') {
-      data = sinaiPass1aMethylomeMetadata;
+      data = stanfordPass1aRNAseqMetadata;
     } else {
       return null;
     }
@@ -135,7 +135,7 @@ function SampleSearchResultTable({ params }) {
         <div className="card-header">
           <div className="d-flex align-items-center justify-content-between">
             <h5>
-              {`PASS${params.phase} ${tissueObj ? tissueObj.name : ''} samples for ${params.experiment}`}
+              {`PASS${params.phase} ${tissueObj ? tissueObj.display_name : ''} samples for ${params.experiment}`}
               <span className={`badge badge-${params.site.toLowerCase()} site-label`}>{params.site}</span>
             </h5>
             <JsonDownloadButton />
