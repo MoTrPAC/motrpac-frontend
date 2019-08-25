@@ -29,6 +29,7 @@ export function Navbar({
   handleQuickSearchRequestSubmit,
   resetQuickSearch,
   getSearchForm,
+  resetAdvSearch,
 }) {
   const handleLogout = () => {
     logout();
@@ -121,6 +122,7 @@ export function Navbar({
                   handleQuickSearchRequestSubmit={handleQuickSearchRequestSubmit}
                   resetQuickSearch={resetQuickSearch}
                   getSearchForm={getSearchForm}
+                  resetAdvSearch={resetAdvSearch}
                 />
               )
               : null}
@@ -173,6 +175,7 @@ const mapDispatchToProps = dispatch => ({
   handleQuickSearchRequestSubmit: searchTerm => dispatch(QuickSearchBoxActions.handleQuickSearchRequestSubmit(searchTerm)),
   resetQuickSearch: () => dispatch(QuickSearchBoxActions.quickSearchReset()),
   getSearchForm: () => dispatch(SearchActions.getSearchForm()),
+  resetAdvSearch: () => dispatch(SearchActions.searchFormReset()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
