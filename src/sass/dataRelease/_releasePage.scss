@@ -37,18 +37,49 @@
     }
 
     i.material-icons.download-checkbox {
+      color: $gray;
       cursor: pointer;
+      font-size: 1.15rem;
     }
 
-    p {
-      margin-bottom: 0.5rem;
+    .release-content {
+      .card {
+        border-color: $gray-semi-transparent;
+      }
+    }
+
+    .release-description {
+      margin-bottom: 0.75rem;
+    }
+
+    .release-links {
+      a {
+        font-size: 0.85rem;
+        margin: 0.3rem 0;
+      }
     }
 
     .additional-release-download-header {
       color: $gray;
       border-bottom: solid 1px #e1e4e8;
-      margin: 1.5rem 0 0.75rem 0;
+      margin: 2.0rem 0 0.75rem 0;
       padding-bottom: 0.25rem;
+    }
+
+    .raw-files-download-section,
+    .intermediate-files-download-section {
+      p a {
+        display: inline-flex;
+
+        .material-icons {
+          font-size: 1.15rem;
+          margin: 0 0 0 0.15rem;
+        }
+      }
+
+      code {
+        margin-left: 0.5rem;
+      }
     }
 
     table {
