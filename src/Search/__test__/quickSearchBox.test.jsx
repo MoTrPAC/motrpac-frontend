@@ -12,6 +12,7 @@ const quickSearchActions = {
   handleQuickSearchRequestSubmit: jest.fn(),
   resetQuickSearch: jest.fn(),
   getSearchForm: jest.fn(),
+  resetAdvSearch: jest.fn(),
 };
 
 const mountQuickSearchBox = mount((
