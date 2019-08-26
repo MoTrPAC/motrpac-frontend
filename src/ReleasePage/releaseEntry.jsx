@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { TrackEvent } from '../GoogleAnalytics/googleAnalytics';
 
 const releases = require('./releases');
 
@@ -163,6 +164,7 @@ function ReleaseEntry() {
                         <a
                           href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
                           className="d-block d-flex align-items-center justify-content-start release-data-download-link"
+                          onClick={() => TrackEvent('Release 1 Data', 'Download', 'RNA-seq')}
                           download
                         >
                           <i className="material-icons release-data-download-icon">save_alt</i>
@@ -171,6 +173,7 @@ function ReleaseEntry() {
                         <a
                           href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
                           className="d-block d-flex align-items-center justify-content-start release-data-download-link"
+                          onClick={() => TrackEvent('Release 1 Data', 'Download', 'RRBS')}
                           download
                         >
                           <i className="material-icons release-data-download-icon">save_alt</i>
@@ -179,6 +182,7 @@ function ReleaseEntry() {
                         <a
                           href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
                           className="d-block d-flex align-items-center justify-content-start release-data-download-link"
+                          onClick={() => TrackEvent('Release 1 Data', 'Download', 'Global Phospho-proteomics')}
                           download
                         >
                           <i className="material-icons release-data-download-icon">save_alt</i>
@@ -187,6 +191,7 @@ function ReleaseEntry() {
                         <a
                           href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
                           className="d-block d-flex align-items-center justify-content-start release-data-download-link"
+                          onClick={() => TrackEvent('Release 1 Data', 'Download', 'Phenotypic data')}
                           download
                         >
                           <i className="material-icons release-data-download-icon">save_alt</i>
@@ -195,10 +200,11 @@ function ReleaseEntry() {
                         <a
                           href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
                           className="d-block d-flex align-items-center justify-content-start release-data-download-link"
+                          onClick={() => TrackEvent('Release 1 Data', 'Download', 'All data')}
                           download
                         >
                           <i className="material-icons release-data-download-icon">save_alt</i>
-                          <span>All experiment metadata, QC results and PASS1A 6-Month acute phenotypic data</span>
+                          <span>All of the assays and phenotypic data</span>
                         </a>
                       </div>
                     </div>
