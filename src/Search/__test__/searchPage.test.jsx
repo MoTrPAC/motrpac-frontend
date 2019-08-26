@@ -43,6 +43,7 @@ const searchActions = {
   addSearchParam: jest.fn(),
   removeSearchParam: jest.fn(),
   handleSearchFormSubmit: jest.fn(),
+  handlePredefinedSearch: jest.fn(),
   resetSearchForm: jest.fn(),
   getSearchForm: jest.fn(),
 };
