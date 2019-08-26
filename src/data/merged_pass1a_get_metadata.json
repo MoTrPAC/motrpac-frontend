@@ -1,0 +1,10 @@
+[
+  {
+    "vial_label": "1234567890",
+    "Assay": "RNA-seq",
+    "Species": "rat",
+    "BID": "12345",
+    "Tissue": "Gastrocnemius Powder",
+    "GET_site": "MSSM"
+  }
+]
