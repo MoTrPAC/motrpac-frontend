@@ -5,6 +5,21 @@
     }
   }
 
+  .warning-note {
+    font-size: 0.85rem;
+    margin: 0 0 1.0rem 0;
+    padding: 0.5rem 0.6rem;
+
+    .material-icons {
+      line-height: 0;
+      margin-right: 0.25rem;
+    }
+
+    .close {
+      padding: 0.43rem 0.75rem;
+    }
+  }
+
   .advanced-search-form-container {
     .param-list {
       list-style: none;
