@@ -64,13 +64,13 @@
 
           th {
             border: 1px solid #343a40;
-            padding: 0.45rem 0.75rem;
+            padding: 0.55rem 0.75rem;
             vertical-align: middle;
           }
 
           td {
             border: 1px solid #dee2e6;
-            padding: 0.45rem 0.75rem;
+            padding: 0.55rem 0.75rem;
             vertical-align: middle;
 
             img {
@@ -92,6 +92,8 @@
                 }
 
                 .tooltip-on-top {
+                  background-color: #dadfcf;
+                  color: #000;
                   font-size: 0.75rem;
                   line-height: 100%;
                   padding: 0.65rem;
@@ -101,12 +103,40 @@
                     font-size: 0.8rem;
                     margin-bottom: 0.5rem;
                   }
+
+                  i::after {
+                    background-color: #dadfcf;
+                  }
                 }
 
                 &:hover .tooltip-on-top {
                   visibility: visible;
                   opacity: 1;
                 }
+              }
+
+              .btn-data-download {
+                background-color: #fff;
+                border: none;
+                color: $primary-blue;
+                font-size: 1.0rem;
+                margin: 0 0.2rem 0 0;
+                padding: 0;
+                vertical-align: middle;
+
+                &:hover, &:focus, &:active, &.active {
+                  background-color: #fff;
+                  color: $primary-blue;
+                }
+
+                &:focus {
+                  outline: none;
+                }
+              }
+
+              .file-size {
+                position: relative;
+                top: 2px;
               }
             }
           }
@@ -148,36 +178,11 @@
         margin-bottom: 0.5rem;
       }
     }
+  }
 
-    table {
-      font-size: 0.85rem;
-      margin-bottom: 0;
-
-      th, td {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-      }
-
-      .col-files {
-        width: 19%;
-      }
-
-      .col-type {
-        width: 8%;
-      }
-
-      .col-filetype {
-        width: 8%;
-      }
-
-      .col-description {
-        width: 17%;
-      }
-
-      .col-locations {
-        width: 48%;
-      }
+  .modal {
+    .modal-title {
+      color: $stanford-cardinal-red;
     }
   }
 }
-
