@@ -47,15 +47,15 @@ function ReleaseEntry() {
           </p>
           <p className="card-text">
             Raw data files of genomics, epigenomics and transcriptomic:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-raw-get/* .</code>
+            <code>gsutil -m cp -r gs://motrpac-internal-release1-raw-get/ .</code>
           </p>
           <p className="card-text">
             Raw data files of metabolomics:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-raw-metabolomics/* .</code>
+            <code>gsutil -m cp -r gs://motrpac-internal-release1-raw-metabolomics/ .</code>
           </p>
           <p className="card-text">
             Raw data files of proteomics:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-raw-proteomics/* .</code>
+            <code>gsutil -m cp -r gs://motrpac-internal-release1-raw-proteomics/ .</code>
           </p>
         </div>
       </div>
@@ -85,15 +85,15 @@ function ReleaseEntry() {
           </p>
           <p className="card-text">
             Intermediate files of genomics, epigenomics and transcriptomic:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-intermediate-get/* .</code>
+            <code>gsutil -m cp -r gs://motrpac-internal-release1-intermediate-get/ .</code>
           </p>
           <p className="card-text">
             Intermediate files of metabolomics:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-intermediate-metabolomics/* .</code>
+            <code>gsutil -m cp -r gs://motrpac-internal-release1-intermediate-metabolomics/ .</code>
           </p>
           <p className="card-text">
             Intermediate files of proteomics:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-intermediate-proteomics/* .</code>
+            <code>gsutil -m cp -r gs://motrpac-internal-release1-intermediate-proteomics/ .</code>
           </p>
         </div>
       </div>
@@ -150,7 +150,10 @@ function ReleaseEntry() {
               </div>
               {/* release content */}
               <div className="col-12 col-md-9 col-lg-10 pl-md-3 py-md-4 release-main-section float-left">
-                <h2 className="release-header"><span role="img" aria-label="rocket">🚀</span> {release.label}</h2>
+                <h2 className="release-header">
+                  <span role="img" aria-label="rocket">🚀 </span>
+                  {release.label}
+                </h2>
                 <div className="release-content mb-3">
                   <div className="card mb-3">
                     <div className="card-body">
@@ -197,23 +200,26 @@ function ReleaseEntry() {
                                   role="button"
                                   tabIndex="-1"
                                   className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/rna-seq/* .', 'data-rna-seq')}
+                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/rna-seq/ .', 'data-rna-seq')}
                                 >
                                   <i className="material-icons release-data-download-icon">file_copy</i>
                                 </span>
                                 <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/rna-seq/* .', 'data-rna-seq')}
+                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/rna-seq/ .', 'data-rna-seq')}
                                 />
                               </div>
                             </td>
                             <td className="release-data-download-link">
-                              <a
-                                href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
-                                onClick={() => TrackEvent('Release 1 Data', 'Download', 'RNA-seq')}
-                                download
-                              >
-                                <i className="material-icons release-data-download-icon">save_alt</i>
-                              </a>
+                              <div className="d-flex align-items-center justify-content-center">
+                                <a
+                                  href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
+                                  onClick={() => TrackEvent('Release 1 Data', 'Download', 'RNA-seq')}
+                                  download
+                                >
+                                  <i className="material-icons release-data-download-icon">save_alt</i>
+                                </a>
+                                (4.0 GB)
+                              </div>
                             </td>
                           </tr>
                           <tr>
@@ -230,12 +236,12 @@ function ReleaseEntry() {
                                   role="button"
                                   tabIndex="-1"
                                   className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/rrbs/* .', 'data-rrbs')}
+                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/rrbs/ .', 'data-rrbs')}
                                 >
                                   <i className="material-icons release-data-download-icon">file_copy</i>
                                 </span>
                                 <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/rrbs/* .', 'data-rrbs')}
+                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/rrbs/ .', 'data-rrbs')}
                                 />
                               </div>
                             </td>
@@ -255,23 +261,26 @@ function ReleaseEntry() {
                                   role="button"
                                   tabIndex="-1"
                                   className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/metabolomics/* .', 'data-metabolomics')}
+                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/metabolomics/ .', 'data-metabolomics')}
                                 >
                                   <i className="material-icons release-data-download-icon">file_copy</i>
                                 </span>
                                 <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/metabolomics/* .', 'data-metabolomics')}
+                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/metabolomics/ .', 'data-metabolomics')}
                                 />
                               </div>
                             </td>
                             <td className="release-data-download-link">
-                              <a
-                                href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
-                                onClick={() => TrackEvent('Release 1 Data', 'Download', 'Metabolomics')}
-                                download
-                              >
-                                <i className="material-icons release-data-download-icon">save_alt</i>
-                              </a>
+                              <div className="d-flex align-items-center justify-content-center">
+                                <a
+                                  href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
+                                  onClick={() => TrackEvent('Release 1 Data', 'Download', 'Metabolomics')}
+                                  download
+                                >
+                                  <i className="material-icons release-data-download-icon">save_alt</i>
+                                </a>
+                                (3.0 GB)
+                              </div>
                             </td>
                           </tr>
                           <tr>
@@ -288,23 +297,26 @@ function ReleaseEntry() {
                                   role="button"
                                   tabIndex="-1"
                                   className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/proteomics/* .', 'data-proteomics')}
+                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/proteomics/ .', 'data-proteomics')}
                                 >
                                   <i className="material-icons release-data-download-icon">file_copy</i>
                                 </span>
                                 <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/proteomics/* .', 'data-proteomics')}
+                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/proteomics/ .', 'data-proteomics')}
                                 />
                               </div>
                             </td>
                             <td className="release-data-download-link">
-                              <a
-                                href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
-                                onClick={() => TrackEvent('Release 1 Data', 'Download', 'Proteomics')}
-                                download
-                              >
-                                <i className="material-icons release-data-download-icon">save_alt</i>
-                              </a>
+                              <div className="d-flex align-items-center justify-content-center">
+                                <a
+                                  href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
+                                  onClick={() => TrackEvent('Release 1 Data', 'Download', 'Proteomics')}
+                                  download
+                                >
+                                  <i className="material-icons release-data-download-icon">save_alt</i>
+                                </a>
+                                (2.0 GB)
+                              </div>
                             </td>
                           </tr>
                           <tr>
@@ -321,23 +333,26 @@ function ReleaseEntry() {
                                   role="button"
                                   tabIndex="-1"
                                   className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/phenotype/* .', 'data-phenotypic')}
+                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/phenotype/ .', 'data-phenotypic')}
                                 >
                                   <i className="material-icons release-data-download-icon">file_copy</i>
                                 </span>
                                 <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/phenotype/* .', 'data-phenotypic')}
+                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/phenotype/ .', 'data-phenotypic')}
                                 />
                               </div>
                             </td>
                             <td className="release-data-download-link">
-                              <a
-                                href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
-                                onClick={() => TrackEvent('Release 1 Data', 'Download', 'Phenotypic data')}
-                                download
-                              >
-                                <i className="material-icons release-data-download-icon">save_alt</i>
-                              </a>
+                              <div className="d-flex align-items-center justify-content-center">
+                                <a
+                                  href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
+                                  onClick={() => TrackEvent('Release 1 Data', 'Download', 'Phenotypic data')}
+                                  download
+                                >
+                                  <i className="material-icons release-data-download-icon">save_alt</i>
+                                </a>
+                                (1.0 GB)
+                              </div>
                             </td>
                           </tr>
                           <tr>
@@ -354,12 +369,12 @@ function ReleaseEntry() {
                                   role="button"
                                   tabIndex="-1"
                                   className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/* .', 'data-all')}
+                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/ .', 'data-all')}
                                 >
                                   <i className="material-icons release-data-download-icon">file_copy</i>
                                 </span>
                                 <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/* .', 'data-all')}
+                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/ .', 'data-all')}
                                 />
                               </div>
                             </td>
@@ -413,6 +428,17 @@ function ReleaseEntry() {
                         <i className="material-icons external-linkout-icon">open_in_new</i>
                       </a>
                       &nbsp;(login required)
+                    </p>
+                    <p>
+                      <a
+                        href="https://www.motrpac.org/actDocumentDownload.cfm?docGUID=A31CDD1F-8A59-41D9-BABA-125B37A39BF5"
+                        className="inline-link-with-icon"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Protocols for Preclinical Animal Study Sites
+                        <i className="material-icons external-linkout-icon">open_in_new</i>
+                      </a>
                     </p>
                   </div>
                 </div>
