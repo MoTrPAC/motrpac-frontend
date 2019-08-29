@@ -13,6 +13,7 @@ const navbarActions = {
   handleQuickSearchRequestSubmit: jest.fn(),
   resetQuickSearch: jest.fn(),
   getSearchForm: jest.fn(),
+  resetAdvSearch: jest.fn(),
 };
 
 const defaultMountNav = mount(
