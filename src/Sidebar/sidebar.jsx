@@ -27,13 +27,13 @@ export function Sidebar({
       <div className="sidebar-sticky">
         <ul className="nav flex-column mt-1">
           <li className="nav-item">
-            <Link to="/dashboard" className="nav-link d-inline-flex align-items-center">
+            <Link to="/dashboard" className="nav-link d-inline-flex align-items-center disabled-link">
               <i className="material-icons nav-link-icon">home</i>
                 Dashboard
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/methods" className="nav-link d-inline-flex align-items-center">
+            <Link to="/methods" className="nav-link d-inline-flex align-items-center disabled-link">
               <i className="material-icons nav-link-icon">description</i>
                 Methods
             </Link>
@@ -63,7 +63,7 @@ export function Sidebar({
         </h6>
         <ul className="nav flex-column mb-2">
           <li className="nav-item">
-            <Link to="/download" className="nav-link d-inline-flex align-items-center">
+            <Link to="/download" className="nav-link d-inline-flex align-items-center disabled-link">
               <i className="material-icons nav-link-icon">view_list</i>
                 Browse Data
             </Link>
@@ -81,7 +81,7 @@ export function Sidebar({
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/upload" onClick={clearForm} className="nav-link d-inline-flex align-items-center">
+            <Link to="/upload" onClick={clearForm} className="nav-link d-inline-flex align-items-center disabled-link">
               <i className="material-icons nav-link-icon">cloud_upload</i>
                 Upload Data
             </Link>
