@@ -18,6 +18,11 @@ function SampleSearchResultTable({ params }) {
 
   let data;
   if (params.site === 'Stanford' && params.phase === '1A') {
+    if (params.experiment === 'RNA-seq') {
+      data = stanfordPass1aRNAseqMetadata;
+    } else {
+      return null;
+    }
     data = stanfordPass1aRNAseqMetadata;
   } else if (params.site === 'MSSM' && params.phase === '1A') {
     if (params.experiment === 'Methylome') {
@@ -47,16 +52,22 @@ function SampleSearchResultTable({ params }) {
         let cellContent;
         if (sample[key] && sample[key].length) {
           if (key === 'vial_label') {
+            /* temp suppression of links for internal release
+            <Link to={`/sample/${sample[key]}`}>
+              <span>{sample[key]}</span>
+            </Link>
+            */
             cellContent = (
-              <Link to={`/sample/${sample[key]}`}>
-                <span>{sample[key]}</span>
-              </Link>
+              <span>{sample[key]}</span>
             );
           } else if (key === 'BID') {
+            /* temp suppression of links for internal release
+            <Link to={`/search?action=samples&biospecimenid=${sample[key]}`}>
+              <span>{sample[key]}</span>
+            </Link>
+            */
             cellContent = (
-              <Link to={`/search?action=samples&biospecimenid=${sample[key]}`}>
-                <span>{sample[key]}</span>
-              </Link>
+              <span>{sample[key]}</span>
             );
           } else {
             cellContent = (
@@ -124,7 +135,7 @@ function SampleSearchResultTable({ params }) {
         <div className="card-header">
           <div className="d-flex align-items-center justify-content-between">
             <h5>
-              {`PASS${params.phase} ${tissueObj ? tissueObj.name : ''} samples for ${params.experiment}`}
+              {`PASS${params.phase} ${tissueObj ? tissueObj.display_name : ''} samples for ${params.experiment}`}
               <span className={`badge badge-${params.site.toLowerCase()} site-label`}>{params.site}</span>
             </h5>
             <JsonDownloadButton />

@@ -63,3 +63,17 @@ export const withTracker = (WrappedComponent, options = {}) => {
 
   return HOC;
 };
+
+/**
+ * TrackEvent - Add custom tracking event.
+ * @param {string} category
+ * @param {string} action
+ * @param {string} label
+ */
+export const TrackEvent = (category, action, label) => {
+  ReactGA.event({
+    category,
+    action,
+    label,
+  });
+};

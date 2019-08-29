@@ -598,6 +598,7 @@ function AnimalPhenotypeData() {
             >
               Distance by Gender
             </button>
+            {/* suppressed due to official release animal familiarization not having fat data
             <button
               className={`btn btn-sm btn-outline-primary btn-block ${btnStates.correlation}`}
               type="button"
@@ -605,6 +606,7 @@ function AnimalPhenotypeData() {
             >
               Weight versus Fat
             </button>
+            */}
           </div>
         </div>
       </div>

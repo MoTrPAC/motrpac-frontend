@@ -21,10 +21,10 @@ const searchIconMapping = {
  * @returns {object} JSX representation of search result content.
  */
 function SearchResults({
-  results,
   urlSearchParamsObj,
   lunrResutls,
   advSearchParams,
+  quickSearchQueryString,
 }) {
   const [visibleResults, setVisibleResults] = useState(50);
 
@@ -83,7 +83,7 @@ function SearchResults({
       <div className="col search-results-content-container">
         <div className="param-list-visual-context d-flex align-items-center mb-3">
           <h5>Search criteria:</h5>
-          {advSearchParamVisualContext}
+          {quickSearchQueryString ? `"${decodeURIComponent(quickSearchQueryString)}"` : advSearchParamVisualContext}
         </div>
         <div className="search-results-panel">
           <div className="card mb-3">
@@ -102,7 +102,10 @@ function SearchResults({
                         <img src={IconSet.Rat} alt="Species" />
                         <span className="vial-label">
                           Vial:&nbsp;
+                          {result.item.vial_label}
+                          {/* temp suppression due to internal release
                           <a href={`/sample/${result.item.vial_label}`}>{result.item.vial_label}</a>
+                          */}
                         </span>
                       </h5>
                       <p>
@@ -114,14 +117,18 @@ function SearchResults({
                         {result.item.BID}
                       </p>
                       <p>
+                        <span className="font-weight-bold">Assay: </span>
+                        {result.item.Assay}
+                      </p>
+                      <p>
                         <span className="font-weight-bold">Site: </span>
                         {result.item.GET_site}
                       </p>
                     </div>
                     <div>
                       <div className="status-wrapper">
-                        <span className="oi oi-clock dgray" />
-                        <span className="status-label">Pending Q.C.</span>
+                        <span className="oi oi-loop-square dblue" />
+                        <span className="status-label">Internally Available</span>
                       </div>
                     </div>
                   </li>
@@ -141,9 +148,6 @@ function SearchResults({
 }
 
 SearchResults.propTypes = {
-  results: PropTypes.shape({
-    data: PropTypes.object,
-  }),
   urlSearchParamsObj: PropTypes.shape({
     action: PropTypes.string,
     tissue: PropTypes.string,
@@ -161,13 +165,14 @@ SearchResults.propTypes = {
     value: PropTypes.string,
     operator: PropTypes.string,
   })),
+  quickSearchQueryString: PropTypes.string,
 };
 
 SearchResults.defaultProps = {
-  results: {},
   urlSearchParamsObj: {},
   lunrResutls: [],
   advSearchParams: [{ term: 'all', value: '', operator: 'and' }],
+  quickSearchQueryString: '',
 };
 
 export default SearchResults;

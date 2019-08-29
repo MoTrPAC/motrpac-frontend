@@ -41,14 +41,28 @@ function TissueAnalysisPlanTable() {
           sampleNum = (
             <div className="sample-number-content d-inline-flex align-items-center">
               <div>{item.expected_samples}</div>
-              <div>{samplesLink}</div>
+              {/* Temporarily suppressing links for other sites */}
+              {item.site.match(/MSSM|Stanford/i)
+                ? (
+                  <div>{samplesLink}</div>
+                )
+                : (
+                  <div><span className="badge badge-success">{item.received_samples}</span></div>
+                )
+              }
             </div>
           );
         } else if (!item.expected_samples && item.received_samples) {
           // No samples expected per PASS-TAP but samples were received
           sampleNum = (
             <div className="sample-number-content d-inline-flex align-items-center flagged">
-              {samplesLink}
+              {/* Temporarily suppressing links for other sites */}
+              {item.site.match(/MSSM|Stanford/i)
+                ? samplesLink
+                : (
+                  <span className="badge badge-success">{item.received_samples}</span>
+                )
+              }
             </div>
           );
         }
@@ -114,7 +128,7 @@ function TissueAnalysisPlanTable() {
   const sampleTableRows = tissueList
     .map(tissue => (
       <tr key={tissue.label} className={tissue.label}>
-        <th scope="row" className="text-left tissue-name text-nowrap">{tissue.name}</th>
+        <th scope="row" className="text-left tissue-name text-nowrap">{tissue.display_name}</th>
         <td className="total-samples">
           {renderProgressBar(tissue.label)}
         </td>
@@ -171,9 +185,12 @@ function TissueAnalysisPlanTable() {
             </th>
             <th className="assay-type PASS-GET-1A">
               <span className="experiment-name text-nowrap">ATAC-seq</span>
+              <span className="badge badge-stanford">Stanford</span>
+              {/* temp suppression of link for internal release
               <Link to="/search?action=samples&phase=1A&study=GET&experiment=ATAC-seq&site=Stanford">
                 <span className="badge badge-stanford">Stanford</span>
               </Link>
+              */}
             </th>
             <th className="assay-type PASS-GET-1A">
               <span className="experiment-name text-nowrap">Methylome</span>

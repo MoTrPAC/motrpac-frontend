@@ -17,11 +17,11 @@ function SearchResultFilters({ results }) {
             </li>
             <li className="list-group-item d-flex justify-content-between align-items-center">
               <span className="category-item">Pending Q.C.</span>
-              <span className="badge badge-secondary badge-pill">{results.length}</span>
+              <span className="badge badge-secondary badge-pill">0</span>
             </li>
             <li className="list-group-item d-flex justify-content-between align-items-center">
               <span className="category-item">Internally Avaialble</span>
-              <span className="badge badge-primary badge-pill">0</span>
+              <span className="badge badge-primary badge-pill">{results.length}</span>
             </li>
             <li className="list-group-item d-flex justify-content-between align-items-center">
               <span className="category-item">Publicly Avaialble</span>

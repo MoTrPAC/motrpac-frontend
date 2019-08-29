@@ -2,6 +2,7 @@ import {
   SEARCH_FORM_CHANGE,
   SEARCH_FORM_ADD_PARAM,
   SEARCH_FORM_REMOVE_PARAM,
+  SEARCH_FORM_UPDATE_PARAM,
   SEARCH_FORM_SUBMIT,
   SEARCH_FORM_SUBMIT_FAILURE,
   SEARCH_FORM_SUBMIT_SUCCESS,
@@ -51,6 +52,16 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         ...state.advSearchParams,
         { term: 'all', value: '', operator: 'AND' },
       ];
+
+      return {
+        ...state,
+        advSearchParams: newParamList,
+      };
+    }
+
+    // Handle search param(s) replacement
+    case SEARCH_FORM_UPDATE_PARAM: {
+      const newParamList = [...action.params];
 
       return {
         ...state,

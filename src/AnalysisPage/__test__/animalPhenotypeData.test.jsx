@@ -19,11 +19,11 @@ describe('Animal Phenotype Data Plot', () => {
   });
 
   test('Has 4 plot buttons', () => {
-    expect(shallowAnimalPhenotypeData.find('.graph-buttons').children()).toHaveLength(4);
+    expect(shallowAnimalPhenotypeData.find('.graph-buttons').children()).toHaveLength(3);
   });
 
-  test('Clicking the Weight versus Fat button updates plot title', () => {
+  test('Clicking the Distance by Gender button updates plot title', () => {
     shallowAnimalPhenotypeData.find('.graph-buttons').children().last().simulate('click', clickEvent);
-    expect(shallowAnimalPhenotypeData.find('.card-title').text()).toMatch('Weight versus Fat');
+    expect(shallowAnimalPhenotypeData.find('.card-title').text()).toMatch('Distance by Gender');
   });
 });

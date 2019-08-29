@@ -35,7 +35,7 @@ export function DownloadPage({
     <div className="downloadPage col-md-9 ml-sm-auto col-lg-10 px-4">
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <div className="page-title">
-          <h3>Download Data</h3>
+          <h3>Browse Data</h3>
         </div>
         <div className="btn-toolbar">
           <button className={`viewCart ml-1 mr-sm-4 btn btn-sm btn-primary ${viewCart ? 'active' : ''}`} type="button" onClick={onViewCart}>

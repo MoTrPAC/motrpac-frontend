@@ -75,6 +75,12 @@ export function Sidebar({
             </Link>
           </li>
           <li className="nav-item">
+            <Link to="/release" className="nav-link d-inline-flex align-items-center">
+              <i className="material-icons nav-link-icon">open_with</i>
+                Releases
+            </Link>
+          </li>
+          <li className="nav-item">
             <Link to="/upload" onClick={clearForm} className="nav-link d-inline-flex align-items-center">
               <i className="material-icons nav-link-icon">cloud_upload</i>
                 Upload Data

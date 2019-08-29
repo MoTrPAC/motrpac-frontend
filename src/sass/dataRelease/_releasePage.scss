@@ -1,0 +1,116 @@
+.dataReleasePage {
+  .page-title {
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding-left: 60px;
+
+    h3 {
+      margin-bottom: 0;
+    }
+  }
+
+  .material-icons {
+    margin-right: 0.2rem;
+  }
+
+  .release-timeline {
+    ul {
+      padding-left: 0;
+    }
+
+    li {
+      color: $stanford-cardinal-red;
+      font-size: 0.85rem;
+
+      .material-icons {
+        font-size: 0.95rem;
+      }
+    }
+  }
+
+  .release-main-section {
+    border-left: 2px solid #e1e4e8;
+    padding-right: 0;
+
+    .release-header {
+      color: $stanford-cardinal-red;
+    }
+
+    i.material-icons.download-checkbox {
+      color: $gray;
+      cursor: pointer;
+      font-size: 1.15rem;
+    }
+
+    .release-content {
+      .card {
+        border-color: $gray-semi-transparent;
+      }
+    }
+
+    .release-description {
+      margin-bottom: 0.75rem;
+    }
+
+    .release-links {
+      a {
+        font-size: 0.85rem;
+        margin: 0.3rem 0;
+      }
+    }
+
+    .additional-release-download-header {
+      color: $gray;
+      border-bottom: solid 1px #e1e4e8;
+      margin: 2.0rem 0 0.75rem 0;
+      padding-bottom: 0.25rem;
+    }
+
+    .raw-files-download-section,
+    .intermediate-files-download-section {
+      p a {
+        display: inline-flex;
+
+        .material-icons {
+          font-size: 1.15rem;
+          margin: 0 0 0 0.15rem;
+        }
+      }
+
+      code {
+        margin-left: 0.5rem;
+      }
+    }
+
+    table {
+      font-size: 0.85rem;
+      margin-bottom: 0;
+
+      th, td {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+
+      .col-files {
+        width: 19%;
+      }
+
+      .col-type {
+        width: 8%;
+      }
+
+      .col-filetype {
+        width: 8%;
+      }
+
+      .col-description {
+        width: 17%;
+      }
+
+      .col-locations {
+        width: 48%;
+      }
+    }
+  }
+}
+
