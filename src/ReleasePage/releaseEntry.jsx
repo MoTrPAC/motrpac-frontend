@@ -51,15 +51,15 @@ function ReleaseEntry({ profile }) {
           </p>
           <p className="card-text">
             Raw data files of genomics, epigenomics and transcriptomic:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-raw-get/ .</code>
+            <code>gsutil -m cp -r gs://motrpac-internal-release1-raw-get/* .</code>
           </p>
           <p className="card-text">
             Raw data files of metabolomics:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-raw-metabolomics/ .</code>
+            <code>gsutil -m cp -r gs://motrpac-internal-release1-raw-metabolomics/* .</code>
           </p>
           <p className="card-text">
             Raw data files of proteomics:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-raw-proteomics/ .</code>
+            <code>gsutil -m cp -r gs://motrpac-internal-release1-raw-proteomics/* .</code>
           </p>
         </div>
       </div>
@@ -89,15 +89,15 @@ function ReleaseEntry({ profile }) {
           </p>
           <p className="card-text">
             Intermediate files of genomics, epigenomics and transcriptomic:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-intermediate-get/ .</code>
+            <code>gsutil -m cp -r gs://motrpac-internal-release1-intermediate-get/* .</code>
           </p>
           <p className="card-text">
             Intermediate files of metabolomics:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-intermediate-metabolomics/ .</code>
+            <code>gsutil -m cp -r gs://motrpac-internal-release1-intermediate-metabolomics/* .</code>
           </p>
           <p className="card-text">
             Intermediate files of proteomics:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-intermediate-proteomics/ .</code>
+            <code>gsutil -m cp -r gs://motrpac-internal-release1-intermediate-proteomics/* .</code>
           </p>
         </div>
       </div>
@@ -246,12 +246,12 @@ function ReleaseEntry({ profile }) {
                                   role="button"
                                   tabIndex="-1"
                                   className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/rna-seq/ .', 'data-rna-seq')}
+                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/rna-seq/* .', 'data-rna-seq')}
                                 >
                                   <i className="material-icons release-data-download-icon">file_copy</i>
                                 </span>
                                 <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/rna-seq/ .', 'data-rna-seq')}
+                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/rna-seq/* .', 'data-rna-seq')}
                                 />
                               </div>
                             </td>
@@ -293,12 +293,12 @@ function ReleaseEntry({ profile }) {
                                   role="button"
                                   tabIndex="-1"
                                   className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/rrbs/ .', 'data-rrbs')}
+                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/rrbs/* .', 'data-rrbs')}
                                 >
                                   <i className="material-icons release-data-download-icon">file_copy</i>
                                 </span>
                                 <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/rrbs/ .', 'data-rrbs')}
+                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/rrbs/* .', 'data-rrbs')}
                                 />
                               </div>
                             </td>
@@ -318,12 +318,12 @@ function ReleaseEntry({ profile }) {
                                   role="button"
                                   tabIndex="-1"
                                   className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/metabolomics/ .', 'data-metabolomics')}
+                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/metabolomics/* .', 'data-metabolomics')}
                                 >
                                   <i className="material-icons release-data-download-icon">file_copy</i>
                                 </span>
                                 <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/metabolomics/ .', 'data-metabolomics')}
+                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/metabolomics/* .', 'data-metabolomics')}
                                 />
                               </div>
                             </td>
@@ -365,12 +365,12 @@ function ReleaseEntry({ profile }) {
                                   role="button"
                                   tabIndex="-1"
                                   className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/proteomics/ .', 'data-proteomics')}
+                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/proteomics/* .', 'data-proteomics')}
                                 >
                                   <i className="material-icons release-data-download-icon">file_copy</i>
                                 </span>
                                 <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/proteomics/ .', 'data-proteomics')}
+                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/proteomics/* .', 'data-proteomics')}
                                 />
                               </div>
                             </td>
@@ -413,12 +413,12 @@ function ReleaseEntry({ profile }) {
                                   role="button"
                                   tabIndex="-1"
                                   className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/phenotype/ .', 'data-phenotypic')}
+                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/phenotype/* .', 'data-phenotypic')}
                                 >
                                   <i className="material-icons release-data-download-icon">file_copy</i>
                                 </span>
                                 <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/phenotype/ .', 'data-phenotypic')}
+                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/phenotype/* .', 'data-phenotypic')}
                                 />
                               </div>
                             </td>
@@ -461,12 +461,12 @@ function ReleaseEntry({ profile }) {
                                   role="button"
                                   tabIndex="-1"
                                   className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/ .', 'data-all')}
+                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/* .', 'data-all')}
                                 >
                                   <i className="material-icons release-data-download-icon">file_copy</i>
                                 </span>
                                 <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/ .', 'data-all')}
+                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/* .', 'data-all')}
                                 />
                               </div>
                             </td>
