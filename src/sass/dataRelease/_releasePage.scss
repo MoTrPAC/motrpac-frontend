@@ -34,6 +34,16 @@
 
     .release-header {
       color: $stanford-cardinal-red;
+      font-weight: 400;
+    }
+
+    .inline-link-with-icon {
+      display: inline-flex;
+
+      .material-icons {
+        font-size: 1.15rem;
+        margin: 0 0 0 0.15rem;
+      }
     }
 
     i.material-icons.download-checkbox {
@@ -45,17 +55,77 @@
     .release-content {
       .card {
         border-color: $gray-semi-transparent;
-      }
-    }
 
-    .release-description {
-      margin-bottom: 0.75rem;
+        table.release-data-links-table {
+          border-collapse: collapse;
+          font-size: 0.85rem;
+          margin-bottom: 0;
+          text-align: center;
+
+          th {
+            border: 1px solid #343a40;
+            padding: 0.45rem 0.75rem;
+            vertical-align: middle;
+          }
+
+          td {
+            border: 1px solid #dee2e6;
+            padding: 0.45rem 0.75rem;
+            vertical-align: middle;
+
+            img {
+              margin-right: 0.35rem;
+              width: auto;
+              height: 1.0rem;
+              opacity: 0.75;
+            }
+
+            &.release-data-download-link {
+              line-height: 0;
+
+              .copy-to-clipboard-wrapper {
+                position: relative;
+
+                .copy-to-clipboard-button {
+                  color: $primary-blue;
+                  cursor: pointer;
+                }
+
+                .tooltip-on-top {
+                  font-size: 0.75rem;
+                  line-height: 100%;
+                  padding: 0.65rem;
+
+                  code {
+                    display: block;
+                    font-size: 0.8rem;
+                    margin-bottom: 0.5rem;
+                  }
+                }
+
+                &:hover .tooltip-on-top {
+                  visibility: visible;
+                  opacity: 1;
+                }
+              }
+            }
+          }
+
+          th:first-child, td:first-child {
+            text-align: left;
+          }
+
+          tbody tr:first-child td {
+            border-top: 0;
+          }
+        }
+      }
     }
 
     .release-links {
       a {
         font-size: 0.85rem;
-        margin: 0.3rem 0;
+        margin: 0.75rem 0;
       }
     }
 
@@ -68,17 +138,14 @@
 
     .raw-files-download-section,
     .intermediate-files-download-section {
-      p a {
-        display: inline-flex;
-
-        .material-icons {
-          font-size: 1.15rem;
-          margin: 0 0 0 0.15rem;
-        }
-      }
-
       code {
         margin-left: 0.5rem;
+      }
+    }
+
+    .release-documentation-section {
+      p {
+        margin-bottom: 0.5rem;
       }
     }
 
