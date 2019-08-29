@@ -270,6 +270,15 @@ export function SearchPage({
             </Link>
           </p>
         </div>
+        <div className="alert alert-warning alert-dismissible fade show warning-note d-flex align-items-center" role="alert">
+          <span className="material-icons">info</span>
+          <span className="warning-note-text">
+            Only the GET data is available for searching in this release.
+          </span>
+          <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
         <SearchForm
           advSearchParams={advSearchParams}
           queryString={searchQueryString}
