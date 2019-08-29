@@ -24,43 +24,6 @@ function ReleaseEntry() {
     }
   }
 
-  // Render each set of experiment data
-  function renderExperimentSet(item) {
-    return (
-      <div className="card mb-3">
-        <h5 className="card-header">{item.name}</h5>
-        <div className="card-body">
-          <div className="table-responsive">
-            <table className="table table-sm table-striped release-1-rrbs-table">
-              <thead className="thead-dark">
-                <tr className="table-head">
-                  <th scope="col" className="col-files">Files</th>
-                  <th scope="col" className="col-type">Type</th>
-                  <th scope="col" className="col-filetype">Filetype</th>
-                  <th scope="col" className="col-description">Description</th>
-                  <th scope="col" className="col-locations">Locations</th>
-                </tr>
-              </thead>
-              <tbody>
-                {item.objects.map((object) => {
-                  return (
-                    <tr>
-                      <td><code>{object.files}</code></td>
-                      <td>{object.type}</td>
-                      <td>{object.filetype}</td>
-                      <td>{object.definition}</td>
-                      <td><code>{object.locations.join(', ')}</code></td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   // Render raw files download section content
   function renderRawFilesDownloadSectionContent() {
     if (!rawSelected) return null;
@@ -453,7 +416,6 @@ function ReleaseEntry() {
                     </p>
                   </div>
                 </div>
-                {/* release.experiments.map(item => renderExperimentSet(item)) */}
               </div>
             </div>
           </div>
