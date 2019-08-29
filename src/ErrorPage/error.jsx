@@ -12,7 +12,7 @@ export function ErrorPage({ isAuthenticated, profile }) {
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
 
   if (isAuthenticated && hasAccess) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to="/releases" />;
   }
 
   return (
