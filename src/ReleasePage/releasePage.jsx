@@ -12,10 +12,34 @@ import IconSet from '../lib/iconSet';
  *
  * @returns {object} JSX representation of data release page elements.
  */
-export function ReleasePage({ isAuthenticated, profile }) {
+export function ReleasePage({
+  isPending,
+  isAuthenticated,
+  profile,
+}) {
+  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+
+  // FIXME: temp workaround to handle callback redirect
+  if (isPending) {
+    const pendingMsg = 'Authenticating...';
+
+    return (
+      <div className="authLoading">
+        <span className="oi oi-shield" />
+        <h3>{pendingMsg}</h3>
+      </div>
+    );
+  }
+
   // Send users back to homepage if not authenticated
   if (!isAuthenticated) {
     return (<Redirect to="/" />);
+  }
+
+  if (isAuthenticated) {
+    if (!hasAccess) {
+      return (<Redirect to="/error" />);
+    }
   }
 
   // Render advanced search form by default
@@ -38,6 +62,7 @@ export function ReleasePage({ isAuthenticated, profile }) {
 }
 
 ReleasePage.propTypes = {
+  isPending: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   profile: PropTypes.shape({
     name: PropTypes.string,
@@ -46,6 +71,7 @@ ReleasePage.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  isPending: state.auth.isPending,
   isAuthenticated: state.auth.isAuthenticated,
   profile: state.auth.profile,
 });
