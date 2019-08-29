@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import axios from 'axios';
 import { TrackEvent } from '../GoogleAnalytics/googleAnalytics';
 import IconSet from '../lib/iconSet';
 import ToolTip from '../lib/ui/tooltip';
@@ -10,9 +12,11 @@ const releases = require('./releases');
  *
  * @returns {object} JSX representation of each data release item.
  */
-function ReleaseEntry() {
+// FIXME: This component needs to be refactored and broken up into smaller modules
+function ReleaseEntry({ profile }) {
   const [rawSelected, setRawSelected] = useState(false);
   const [intermediateSelected, setIntermediateSelected] = useState(false);
+  const [fileUrl, setFileUrl] = useState('');
 
   // Event handler for select/deselect checkboxes
   function handleCheckboxEvent(target) {
@@ -110,6 +114,7 @@ function ReleaseEntry() {
     );
   }
 
+  // Handle 'copy to clipboard' click event
   function handleCopyClick(path, data) {
     const command = document.querySelector(`#${data}`).innerHTML;
     const tempInput = document.createElement('INPUT');
@@ -118,6 +123,47 @@ function ReleaseEntry() {
     tempInput.select();
     document.execCommand('copy');
     document.body.removeChild(tempInput);
+  }
+
+  // Fetch file url from Google Storage API
+  function fetchFile(datatype) {
+    return axios.get(`https://jsonplaceholder.typicode.com/todos/1/?${datatype}`)
+      .then((response) => {
+        setFileUrl(response.data.title);
+      }).catch((err) => {
+        setFileUrl((`${err.error}: ${err.errorDescription}`));
+      });
+  }
+
+  // Handle modal download button click event
+  function handleDownload() {
+    window.location = fileUrl;
+    TrackEvent('Release 1 Downloads', fileUrl, profile.user_metadata.name);
+  }
+
+  // Render modal
+  function renderModal() {
+    return (
+      <div className="modal fade data-download-modal" id="dataDownloadModal" tabIndex="-1" role="dialog" aria-labelledby="dataDownloadModalLabel" aria-hidden="true">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">File Download</h5>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              {fileUrl ? `${fileUrl}, ${profile.user_metadata.name}` : 'No data'}
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={handleDownload}>Download</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   // Render individual release entry
@@ -210,6 +256,7 @@ function ReleaseEntry() {
                               </div>
                             </td>
                             <td className="release-data-download-link">
+                              {/*
                               <div className="d-flex align-items-center justify-content-center">
                                 <a
                                   href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
@@ -218,8 +265,18 @@ function ReleaseEntry() {
                                 >
                                   <i className="material-icons release-data-download-icon">save_alt</i>
                                 </a>
-                                (4.0 GB)
                               </div>
+                              */}
+                              <button
+                                type="button"
+                                className="btn-data-download"
+                                data-toggle="modal"
+                                data-target=".data-download-modal"
+                                onClick={fetchFile.bind(this, 'rna-seq')}
+                              >
+                                <i className="material-icons release-data-download-icon">save_alt</i>
+                              </button>
+                              <span className="file-size">(4.0 GB)</span>
                             </td>
                           </tr>
                           <tr>
@@ -271,6 +328,7 @@ function ReleaseEntry() {
                               </div>
                             </td>
                             <td className="release-data-download-link">
+                              {/*
                               <div className="d-flex align-items-center justify-content-center">
                                 <a
                                   href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
@@ -279,8 +337,18 @@ function ReleaseEntry() {
                                 >
                                   <i className="material-icons release-data-download-icon">save_alt</i>
                                 </a>
-                                (3.0 GB)
                               </div>
+                              */}
+                              <button
+                                type="button"
+                                className="btn-data-download"
+                                data-toggle="modal"
+                                data-target=".data-download-modal"
+                                onClick={fetchFile.bind(this, 'metabolomics')}
+                              >
+                                <i className="material-icons release-data-download-icon">save_alt</i>
+                              </button>
+                              <span className="file-size">(3.0 GB)</span>
                             </td>
                           </tr>
                           <tr>
@@ -307,6 +375,7 @@ function ReleaseEntry() {
                               </div>
                             </td>
                             <td className="release-data-download-link">
+                              {/*
                               <div className="d-flex align-items-center justify-content-center">
                                 <a
                                   href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
@@ -317,6 +386,17 @@ function ReleaseEntry() {
                                 </a>
                                 (2.0 GB)
                               </div>
+                              */}
+                              <button
+                                type="button"
+                                className="btn-data-download"
+                                data-toggle="modal"
+                                data-target=".data-download-modal"
+                                onClick={fetchFile.bind(this, 'proteomics')}
+                              >
+                                <i className="material-icons release-data-download-icon">save_alt</i>
+                              </button>
+                              <span className="file-size">(2.0 GB)</span>
                             </td>
                           </tr>
                           <tr>
@@ -343,6 +423,7 @@ function ReleaseEntry() {
                               </div>
                             </td>
                             <td className="release-data-download-link">
+                              {/*
                               <div className="d-flex align-items-center justify-content-center">
                                 <a
                                   href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
@@ -353,6 +434,17 @@ function ReleaseEntry() {
                                 </a>
                                 (1.0 GB)
                               </div>
+                              */}
+                              <button
+                                type="button"
+                                className="btn-data-download"
+                                data-toggle="modal"
+                                data-target=".data-download-modal"
+                                onClick={fetchFile.bind(this, 'phenotypic')}
+                              >
+                                <i className="material-icons release-data-download-icon">save_alt</i>
+                              </button>
+                              <span className="file-size">(1.0 GB)</span>
                             </td>
                           </tr>
                           <tr>
@@ -382,6 +474,7 @@ function ReleaseEntry() {
                           </tr>
                         </tbody>
                       </table>
+                      {renderModal()}
                     </div>
                   </div>
                   <h6 className="additional-release-download-header">Additional Downloads</h6>
@@ -458,5 +551,12 @@ function ReleaseEntry() {
     </div>
   );
 }
+
+ReleaseEntry.propTypes = {
+  profile: PropTypes.shape({
+    name: PropTypes.string,
+    user_metadata: PropTypes.object,
+  }).isRequired,
+};
 
 export default ReleaseEntry;
