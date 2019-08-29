@@ -32,7 +32,7 @@ export function LandingPage({ isAuthenticated, profile }) {
   const { xy } = values;
 
   if (isAuthenticated && hasAccess) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to="/releases" />;
   }
 
   const scrollFunction = () => {
