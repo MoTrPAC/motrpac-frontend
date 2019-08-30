@@ -18,6 +18,10 @@ function ReleaseEntry({ profile }) {
   const [intermediateSelected, setIntermediateSelected] = useState(false);
   const [fileUrl, setFileUrl] = useState('');
   const [fetching, setFetching] = useState(true);
+  const [modalStatus, setModalStatus] = useState({
+    status: null,
+    message: '',
+  });
 
   // Event handler for select/deselect checkboxes
   function handleCheckboxEvent(target) {
@@ -128,12 +132,20 @@ function ReleaseEntry({ profile }) {
 
   // Fetch file url from Google Storage API
   function fetchFile(datatype) {
-    return axios.get(`https://data-link-access.motrpac-data.org/motrpac-internal-release1-results/phenotype.tar.gz`)
+    return axios.get(`https://data-link-access.motrpac-data.org/motrpac-internal-release1-results/${datatype}.tar.gz`)
       .then((response) => {
-        setFileUrl(response.data.title);
+        setFileUrl(response.data.url);
+        setModalStatus({
+          status: 'success',
+          message: 'Click this link to download the requested file.',
+        });
         setFetching(false);
       }).catch((err) => {
         console.log(`${err.error}: ${err.errorDescription}`);
+        setModalStatus({
+          status: 'error',
+          message: 'Error occurred. Please close the dialog box and try again.',
+        });
         setFetching(false);
       });
   }
@@ -153,18 +165,21 @@ function ReleaseEntry({ profile }) {
   */
 
   // Handle modal download button click event
-  function handleDownload() {
-    window.location = fileUrl;
+  function handleGAEvent() {
     TrackEvent('Release 1 Downloads', fileUrl, profile.user_metadata.name);
   }
 
   // Render modal message
   function renderModalMessage() {
-    if (fileUrl && fileUrl.length) {
-      return <span className="modal-message">The requested file is ready to be downloaded.</span>;
+    if (modalStatus.status !== 'success') {
+      return <span className="modal-message">{modalStatus.message}</span>;
     }
 
-    return <span className="modal-message">Error occurred. Please close the dialog box and try again.</span>;
+    return (
+      <span className="modal-message">
+        <a href={fileUrl} download onClick={handleGAEvent}>{modalStatus.message}</a>
+      </span>
+    );
   }
 
   // Render modal
@@ -186,7 +201,9 @@ function ReleaseEntry({ profile }) {
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+              {/*
               <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={handleDownload}>Download</button>
+              */}
             </div>
           </div>
         </div>
@@ -304,7 +321,7 @@ function ReleaseEntry({ profile }) {
                               >
                                 <i className="material-icons release-data-download-icon">save_alt</i>
                               </button>
-                              <span className="file-size">(X.X GB)</span>
+                              <span className="file-size">(230 MB)</span>
                             </td>
                           </tr>
                           <tr>
@@ -376,7 +393,7 @@ function ReleaseEntry({ profile }) {
                               >
                                 <i className="material-icons release-data-download-icon">save_alt</i>
                               </button>
-                              <span className="file-size">(X.X GB)</span>
+                              <span className="file-size">(72 MB)</span>
                             </td>
                           </tr>
                           <tr>
@@ -468,7 +485,7 @@ function ReleaseEntry({ profile }) {
                                 className="btn-data-download"
                                 data-toggle="modal"
                                 data-target=".data-download-modal"
-                                onClick={fetchFile.bind(this, 'phenotypic')}
+                                onClick={fetchFile.bind(this, 'phenotype')}
                               >
                                 <i className="material-icons release-data-download-icon">save_alt</i>
                               </button>
@@ -508,7 +525,7 @@ function ReleaseEntry({ profile }) {
                               >
                                 <i className="material-icons release-data-download-icon">save_alt</i>
                               </button>
-                              <span className="file-size">(X.X GB)</span>
+                              <span className="file-size">(494 MB)</span>
                             </td>
                           </tr>
                         </tbody>
