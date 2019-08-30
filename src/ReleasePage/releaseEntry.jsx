@@ -17,6 +17,7 @@ function ReleaseEntry({ profile }) {
   const [rawSelected, setRawSelected] = useState(false);
   const [intermediateSelected, setIntermediateSelected] = useState(false);
   const [fileUrl, setFileUrl] = useState('');
+  const [fetching, setFetching] = useState(true);
 
   // Event handler for select/deselect checkboxes
   function handleCheckboxEvent(target) {
@@ -130,8 +131,10 @@ function ReleaseEntry({ profile }) {
     return axios.get(`http://34.83.236.133:5000/kd-test-112918/test.txt`)
       .then((response) => {
         setFileUrl(response.data.title);
+        setFetching(false);
       }).catch((err) => {
-        setFileUrl((`${err.error}: ${err.errorDescription}`));
+        console.log(`${err.error}: ${err.errorDescription}`);
+        setFetching(false);
       });
   }
 
@@ -139,6 +142,15 @@ function ReleaseEntry({ profile }) {
   function handleDownload() {
     window.location = fileUrl;
     TrackEvent('Release 1 Downloads', fileUrl, profile.user_metadata.name);
+  }
+
+  // Render modal message
+  function renderModalMessage() {
+    if (fileUrl && fileUrl.length) {
+      return <span className="modal-message">The requested file is ready to be downloaded.</span>;
+    }
+
+    return <span className="modal-message">Error occurred. Please close the dialog box and try again.</span>;
   }
 
   // Render modal
@@ -154,7 +166,9 @@ function ReleaseEntry({ profile }) {
               </button>
             </div>
             <div className="modal-body">
-              {fileUrl ? `${fileUrl}, ${profile.user_metadata.name}` : 'No data'}
+              {!fetching
+                ? renderModalMessage() : <div className="loading-spinner"><img src={IconSet.Spinner} alt="" /></div>
+              }
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -232,42 +246,6 @@ function ReleaseEntry({ profile }) {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>
-                              <div className="d-flex align-items-center justify-content-start">
-                                <img src={IconSet.PDF} alt="Genomic" />
-                                <span>GET QC Report</span>
-                              </div>
-                            </td>
-                            <td className="release-data-download-link">
-                              <div className="copy-to-clipboard-wrapper">
-                                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-                                <span
-                                  role="button"
-                                  tabIndex="-1"
-                                  className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/GET_release1_qc_report.pdf .', 'data-get-qc-report')}
-                                >
-                                  <i className="material-icons release-data-download-icon">file_copy</i>
-                                </span>
-                                <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/GET_release1_qc_report.pdf .', 'data-get-qc-report')}
-                                />
-                              </div>
-                            </td>
-                            <td className="release-data-download-link">
-                              <button
-                                type="button"
-                                className="btn-data-download"
-                                data-toggle="modal"
-                                data-target=".data-download-modal"
-                                onClick={fetchFile.bind(this, 'get-qc-report')}
-                              >
-                                <i className="material-icons release-data-download-icon">save_alt</i>
-                              </button>
-                              <span className="file-size">(4.0 MB)</span>
-                            </td>
-                          </tr>
                           <tr>
                             <td>
                               <div className="d-flex align-items-center justify-content-start">
