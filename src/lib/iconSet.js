@@ -9,6 +9,7 @@ import Metabolite from '../assets/icons/metabolite.png';
 import Protein from '../assets/icons/protein.png';
 import Rat from '../assets/icons/rat.png';
 import Vial from '../assets/icons/vial.png';
+import PDF from '../assets/icons/pdf.png';
 import InternalDataRelease from '../assets/icons/data-release-internal.png';
 
 const IconSet = {
@@ -23,6 +24,7 @@ const IconSet = {
   Protein,
   Rat,
   Vial,
+  PDF,
   InternalDataRelease,
 };
 
