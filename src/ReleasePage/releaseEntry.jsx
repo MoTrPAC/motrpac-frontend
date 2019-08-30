@@ -128,7 +128,7 @@ function ReleaseEntry({ profile }) {
 
   // Fetch file url from Google Storage API
   function fetchFile(datatype) {
-    return axios.get(`http://34.83.236.133:5000/kd-test-112918/test.txt`)
+    return axios.get(`https://data-link-access.motrpac-data.org/motrpac-internal-release1-results/phenotype.tar.gz`)
       .then((response) => {
         setFileUrl(response.data.title);
         setFetching(false);
@@ -137,6 +137,20 @@ function ReleaseEntry({ profile }) {
         setFetching(false);
       });
   }
+
+  /*
+  function closeModal() {
+    const docBody = document.querySelector('body');
+    if (docBody.classList.contains('modal-open')) {
+      docBody.classList.remove('modal-open');
+    }
+    const modal = document.querySelector('.data-download-modal');
+    if (modal && modal.classList.contains('show')) {
+      modal.classList.remove('show');
+      modal.setAttribute('style', 'display: none;');
+    }
+  }
+  */
 
   // Handle modal download button click event
   function handleDownload() {
@@ -157,7 +171,7 @@ function ReleaseEntry({ profile }) {
   function renderModal() {
     return (
       <div className="modal fade data-download-modal" id="dataDownloadModal" tabIndex="-1" role="dialog" aria-labelledby="dataDownloadModalLabel" aria-hidden="true">
-        <div className="modal-dialog" role="document">
+        <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">File Download</h5>
