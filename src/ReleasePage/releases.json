@@ -3,7 +3,7 @@
     "label": "Release 1.0",
     "version": 1,
     "date": "August 30, 2019",
-    "description": "The early internal release consists of acute exercise data from 6-month old rats (the PASS1A project). Web download is not available to RRBS due to its large sizes of result files. You may choose to download different bundled assay quantitative results and the phenotypic data separately, or all of them together using command-line.",
+    "description": "The early internal release consists of acute exercise data from 6-month old rats. Web download is not available to RRBS due to large file sizes. You may choose to download different bundled assay quantitative results and the phenotypic data separately, or all of them together using command-line.",
     "result_files": {
       "bucket_name": "motrpac-internal-release1-results",
       "object_path": {
