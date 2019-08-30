@@ -127,7 +127,7 @@ function ReleaseEntry({ profile }) {
 
   // Fetch file url from Google Storage API
   function fetchFile(datatype) {
-    return axios.get(`https://jsonplaceholder.typicode.com/todos/1/?${datatype}`)
+    return axios.get(`http://34.83.236.133:5000/kd-test-112918/test.txt`)
       .then((response) => {
         setFileUrl(response.data.title);
       }).catch((err) => {
@@ -235,8 +235,44 @@ function ReleaseEntry({ profile }) {
                           <tr>
                             <td>
                               <div className="d-flex align-items-center justify-content-start">
+                                <img src={IconSet.PDF} alt="Genomic" />
+                                <span>GET QC Report</span>
+                              </div>
+                            </td>
+                            <td className="release-data-download-link">
+                              <div className="copy-to-clipboard-wrapper">
+                                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+                                <span
+                                  role="button"
+                                  tabIndex="-1"
+                                  className="copy-to-clipboard-button"
+                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/GET_release1_qc_report.pdf .', 'data-get-qc-report')}
+                                >
+                                  <i className="material-icons release-data-download-icon">file_copy</i>
+                                </span>
+                                <ToolTip
+                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/GET_release1_qc_report.pdf .', 'data-get-qc-report')}
+                                />
+                              </div>
+                            </td>
+                            <td className="release-data-download-link">
+                              <button
+                                type="button"
+                                className="btn-data-download"
+                                data-toggle="modal"
+                                data-target=".data-download-modal"
+                                onClick={fetchFile.bind(this, 'get-qc-report')}
+                              >
+                                <i className="material-icons release-data-download-icon">save_alt</i>
+                              </button>
+                              <span className="file-size">(4.0 MB)</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div className="d-flex align-items-center justify-content-start">
                                 <img src={IconSet.DNA} alt="Genomic" />
-                                <span>RNA-seq data (metadata, QC and results)</span>
+                                <span>RNA-seq data (metadata, QC and quantitative results)</span>
                               </div>
                             </td>
                             <td className="release-data-download-link">
@@ -276,14 +312,14 @@ function ReleaseEntry({ profile }) {
                               >
                                 <i className="material-icons release-data-download-icon">save_alt</i>
                               </button>
-                              <span className="file-size">(4.0 GB)</span>
+                              <span className="file-size">(X.X GB)</span>
                             </td>
                           </tr>
                           <tr>
                             <td>
                               <div className="d-flex align-items-center justify-content-start">
                                 <img src={IconSet.DNA} alt="Genomic" />
-                                <span>RRBS data (metadata, QC and results)</span>
+                                <span>RRBS data (metadata, QC and quantitative results)</span>
                               </div>
                             </td>
                             <td className="release-data-download-link">
@@ -308,7 +344,7 @@ function ReleaseEntry({ profile }) {
                             <td>
                               <div className="d-flex align-items-center justify-content-start">
                                 <img src={IconSet.Metabolite} alt="Genomic" />
-                                <span>Metabolomics data (metadata, QC and results)</span>
+                                <span>Metabolomics data (metadata, QC and quantitative results)</span>
                               </div>
                             </td>
                             <td className="release-data-download-link">
@@ -348,14 +384,14 @@ function ReleaseEntry({ profile }) {
                               >
                                 <i className="material-icons release-data-download-icon">save_alt</i>
                               </button>
-                              <span className="file-size">(3.0 GB)</span>
+                              <span className="file-size">(X.X GB)</span>
                             </td>
                           </tr>
                           <tr>
                             <td>
                               <div className="d-flex align-items-center justify-content-start">
                                 <img src={IconSet.Protein} alt="Genomic" />
-                                <span>Proteomics data (metadata, QC and results)</span>
+                                <span>Proteomics data (metadata, QC and quantitative results)</span>
                               </div>
                             </td>
                             <td className="release-data-download-link">
@@ -396,7 +432,7 @@ function ReleaseEntry({ profile }) {
                               >
                                 <i className="material-icons release-data-download-icon">save_alt</i>
                               </button>
-                              <span className="file-size">(2.0 GB)</span>
+                              <span className="file-size">(218 MB)</span>
                             </td>
                           </tr>
                           <tr>
@@ -444,14 +480,14 @@ function ReleaseEntry({ profile }) {
                               >
                                 <i className="material-icons release-data-download-icon">save_alt</i>
                               </button>
-                              <span className="file-size">(1.0 GB)</span>
+                              <span className="file-size">(266 KB)</span>
                             </td>
                           </tr>
                           <tr>
                             <td>
                               <div className="d-flex align-items-center justify-content-start">
                                 <img src={IconSet.Globe} alt="Genomic" />
-                                <span>All of the omics and phenotypic data</span>
+                                <span>All of the omics (without RRBS) and phenotypic data</span>
                               </div>
                             </td>
                             <td className="release-data-download-link">
@@ -470,7 +506,18 @@ function ReleaseEntry({ profile }) {
                                 />
                               </div>
                             </td>
-                            <td><span>Not available</span></td>
+                            <td className="release-data-download-link">
+                              <button
+                                type="button"
+                                className="btn-data-download"
+                                data-toggle="modal"
+                                data-target=".data-download-modal"
+                                onClick={fetchFile.bind(this, 'all')}
+                              >
+                                <i className="material-icons release-data-download-icon">save_alt</i>
+                              </button>
+                              <span className="file-size">(X.X GB)</span>
+                            </td>
                           </tr>
                         </tbody>
                       </table>
