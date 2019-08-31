@@ -20,6 +20,7 @@ function ReleaseEntry({ profile }) {
   const [fetching, setFetching] = useState(true);
   const [modalStatus, setModalStatus] = useState({
     status: null,
+    file: null,
     message: '',
   });
 
@@ -137,6 +138,7 @@ function ReleaseEntry({ profile }) {
         setFileUrl(response.data.url);
         setModalStatus({
           status: 'success',
+          file: `${datatype}.tar.gz`,
           message: 'Click this link to download the requested file.',
         });
         setFetching(false);
@@ -144,6 +146,7 @@ function ReleaseEntry({ profile }) {
         console.log(`${err.error}: ${err.errorDescription}`);
         setModalStatus({
           status: 'error',
+          file: `${datatype}.tar.gz`,
           message: 'Error occurred. Please close the dialog box and try again.',
         });
         setFetching(false);
@@ -166,7 +169,7 @@ function ReleaseEntry({ profile }) {
 
   // Handle modal download button click event
   function handleGAEvent() {
-    TrackEvent('Release 1 Downloads', fileUrl, profile.user_metadata.name);
+    TrackEvent('Release 1 Downloads', modalStatus.file, profile.user_metadata.name);
   }
 
   // Render modal message
