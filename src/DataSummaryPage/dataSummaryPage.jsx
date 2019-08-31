@@ -27,7 +27,7 @@ export function DataSummaryPage({
         </div>
         <div className="btn-toolbar">
           <div className="btn-group">
-            <Link className="browseDataBtn btn btn-sm btn-outline-primary" to="/download">Browse Data</Link>
+            {/* <Link className="browseDataBtn btn btn-sm btn-outline-primary" to="/download">Browse Data</Link> */}
             <Link className="advSearchBtn btn btn-sm btn-outline-primary" to="/search">Search Data</Link>
           </div>
         </div>

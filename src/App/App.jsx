@@ -49,7 +49,7 @@ function App({ history = History }) {
               <Route path="/error" component={withTracker(ErrorPageConnected)} />
               <Route path="/search" component={withTracker(SearchPageConnected)} />
               <Route path="/summary" component={withTracker(DataSummaryPageConnected)} />
-              <Route path="/release" component={withTracker(ReleasePageConnected)} />
+              <Route path="/releases" component={withTracker(ReleasePageConnected)} />
             </Switch>
           </div>
         </div>

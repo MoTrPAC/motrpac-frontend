@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import tissueList from '../lib/tissueList';
+// import { Link } from 'react-router-dom';
 
 const sinaiPass1aRNAseqMetadata = require('../data/sinai_pass1a_get_rna_seq_metadata');
 const sinaiPass1aMethylomeMetadata = require('../data/sinai_pass1a_get_methylome_metadata');

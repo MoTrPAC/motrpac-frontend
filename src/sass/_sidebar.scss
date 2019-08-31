@@ -24,4 +24,9 @@
   .nav-link-icon {
     margin-right: 0.65rem;
   }
+
+  .disabled-link {
+    color: $gray-semi-transparent;
+    pointer-events: none;
+  }
 }

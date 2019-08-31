@@ -15,7 +15,7 @@ export function Callback({
   // Handle authentication if expected values are in the URL.
   if (/access_token|id_token|error/.test(location.hash)) {
     handleAuthCallback();
-    return <Redirect to="/dashboard" />
+    return <Redirect to="/releases" />
   }
 
   const callbackMsg = message || 'Authenticating...';

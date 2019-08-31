@@ -68,29 +68,8 @@ export function Navbar({
     return <LoginButton login={login} />;
   };
 
-  // Function to render test interface alert
-  const TestInterfaceAlert = () => {
-    return (
-      <div className="test-interface-alert w-100">
-        <div className="alert alert-dismissible fade show" role="alert">
-          <strong>Important: </strong>
-          <span>
-            This is a test version of the site. Any data entered will not be
-            preserved between releases.
-          </span>
-          <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      </div>
-    );
-  };
-
   const navbar = (
     <div className="header-navbar-container fixed-top">
-      {window.location.pathname === '/' && (
-        <TestInterfaceAlert />
-      )}
       <nav className="navbar navbar-expand-lg navbar-light flex-md-nowrap p-0 shadow-sm bg-white">
         <div className={`${isAuthenticated && hasAccess ? 'container-fluid' : 'container'} header-navbar-items`}>
           <Link to="/" className={`navbar-brand header-logo ${isAuthenticated && hasAccess ? 'resized' : ''}`}>

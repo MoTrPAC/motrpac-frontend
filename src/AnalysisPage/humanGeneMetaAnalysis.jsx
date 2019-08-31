@@ -143,7 +143,9 @@ function HumanGeneMetaAnalysis() {
         <span className="material-icons">info</span>
         <span className="warning-note-text">
           The following analyses use existing published data sets. They
-          do not represent the complete meta-analysis data set.
+          do not represent the complete meta-analysis data set. Only
+          5 genes (FOXO1, ID1, PPARGC1A, SMAD3, VEGFA) are available for
+          searching in this release.
         </span>
         <button type="button" className="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
