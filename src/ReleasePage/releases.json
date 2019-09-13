@@ -3,7 +3,7 @@
     "label": "Release 1.1",
     "emoji": "sparkles",
     "version": "1.1",
-    "date": "September 20, 2019",
+    "date": "September 13, 2019",
     "description": "This is an internal patch release containing updated metabolomics and proteomics data from 6-month old rats. Web download is not available to RRBS due to large file sizes. You may choose to download different bundled assay quantitative results and the phenotypic data separately, or all of them together using command-line.",
     "readme_file_location": "https://docs.google.com/document/d/1t0mZvhMwd2zYxGN84qg7H_8ORQTFoLTqIwYIjWOOdBY",
     "result_files": {
