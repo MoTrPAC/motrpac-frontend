@@ -93,7 +93,7 @@
         "bucket_name": "motrpac-internal-release1-intermediate-proteomics"
       }
     },
-    "documentation": false
+    "documentation": true
   },
   {
     "label": "Release 1.0 (Outdated)",
@@ -189,6 +189,6 @@
         "bucket_name": "motrpac-internal-release1-intermediate-proteomics"
       }
     },
-    "documentation": true
+    "documentation": false
   }
 ]
