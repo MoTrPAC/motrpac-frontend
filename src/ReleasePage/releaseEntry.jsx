@@ -7,6 +7,11 @@ import ToolTip from '../lib/ui/tooltip';
 
 const releases = require('./releases');
 
+const emojiMap = {
+  rocket: '🚀',
+  sparkles: '✨',
+};
+
 /**
  * Renders UIs for individual release items
  *
@@ -14,8 +19,6 @@ const releases = require('./releases');
  */
 // FIXME: This component needs to be refactored and broken up into smaller modules
 function ReleaseEntry({ profile }) {
-  const [rawSelected, setRawSelected] = useState(false);
-  const [intermediateSelected, setIntermediateSelected] = useState(false);
   const [fileUrl, setFileUrl] = useState('');
   const [fetching, setFetching] = useState(true);
   const [modalStatus, setModalStatus] = useState({
@@ -23,21 +26,28 @@ function ReleaseEntry({ profile }) {
     file: null,
     message: '',
   });
+  const [visibleReleases, setVisibleReleases] = useState(1);
+
+  // Event handler for "Show prior releases" button
+  const toggleViewReleaseLength = (e) => {
+    e.preventDefault();
+    setVisibleReleases(visibleReleases === 1 ? releases.length : 1);
+  };
 
   // Event handler for select/deselect checkboxes
   function handleCheckboxEvent(target) {
-    if (target === 'raw') {
-      setRawSelected(!rawSelected);
-    }
-    if (target === 'intermediate') {
-      setIntermediateSelected(!intermediateSelected);
+    const el = document.querySelector(`#${target}`);
+    if (el.classList.contains('active')) {
+      el.classList.remove('active');
+      el.innerHTML = 'check_box_outline_blank';
+    } else {
+      el.classList.add('active');
+      el.innerHTML = 'check_box';
     }
   }
 
   // Render raw files download section content
-  function renderRawFilesDownloadSectionContent() {
-    if (!rawSelected) return null;
-
+  function renderRawFilesDownloadSectionContent(files) {
     return (
       <div className="card mb-3">
         <div className="card-body">
@@ -57,15 +67,15 @@ function ReleaseEntry({ profile }) {
           </p>
           <p className="card-text">
             Raw data files of genomics, epigenomics and transcriptomic:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-raw-get/* .</code>
+            <code>{`gsutil -m cp -r gs://${files.get.bucket_name}/* .`}</code>
           </p>
           <p className="card-text">
             Raw data files of metabolomics:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-raw-metabolomics/* .</code>
+            <code>{`gsutil -m cp -r gs://${files.metabolomics.bucket_name}/* .`}</code>
           </p>
           <p className="card-text">
             Raw data files of proteomics:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-raw-proteomics/* .</code>
+            <code>{`gsutil -m cp -r gs://${files.proteomics.bucket_name}/* .`}</code>
           </p>
         </div>
       </div>
@@ -73,9 +83,7 @@ function ReleaseEntry({ profile }) {
   }
 
   // Render intermediate files download section content
-  function renderIntermediateFilesDownloadSectionContent() {
-    if (!intermediateSelected) return null;
-
+  function renderIntermediateFilesDownloadSectionContent(files) {
     return (
       <div className="card mb-3">
         <div className="card-body">
@@ -95,15 +103,15 @@ function ReleaseEntry({ profile }) {
           </p>
           <p className="card-text">
             Intermediate files of genomics, epigenomics and transcriptomic:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-intermediate-get/* .</code>
+            <code>{`gsutil -m cp -r gs://${files.get.bucket_name}/* .`}</code>
           </p>
           <p className="card-text">
             Intermediate files of metabolomics:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-intermediate-metabolomics/* .</code>
+            <code>{`gsutil -m cp -r gs://${files.metabolomics.bucket_name}/* .`}</code>
           </p>
           <p className="card-text">
             Intermediate files of proteomics:
-            <code>gsutil -m cp -r gs://motrpac-internal-release1-intermediate-proteomics/* .</code>
+            <code>{`gsutil -m cp -r gs://${files.proteomics.bucket_name}/* .`}</code>
           </p>
         </div>
       </div>
@@ -111,10 +119,10 @@ function ReleaseEntry({ profile }) {
   }
 
   // Render tooltip content on copy-to-clipboard hover
-  function renderTooltipContent(path, data) {
+  function renderTooltipContent(objectPath, data) {
     return (
       <div>
-        <code id={data}>{`gsutil -m cp -r ${path}`}</code>
+        <code id={data}>{`gsutil -m cp -r ${objectPath}`}</code>
         <span>Copy to clipboard</span>
       </div>
     );
@@ -132,8 +140,8 @@ function ReleaseEntry({ profile }) {
   }
 
   // Fetch file url from Google Storage API
-  function fetchFile(datatype) {
-    return axios.get(`https://data-link-access.motrpac-data.org/motrpac-internal-release1-results/${datatype}.tar.gz`)
+  function fetchFile(bucket, datatype) {
+    return axios.get(`https://data-link-access.motrpac-data.org/${bucket}/${datatype}.tar.gz`)
       .then((response) => {
         setFileUrl(response.data.url);
         setModalStatus({
@@ -152,20 +160,6 @@ function ReleaseEntry({ profile }) {
         setFetching(false);
       });
   }
-
-  /*
-  function closeModal() {
-    const docBody = document.querySelector('body');
-    if (docBody.classList.contains('modal-open')) {
-      docBody.classList.remove('modal-open');
-    }
-    const modal = document.querySelector('.data-download-modal');
-    if (modal && modal.classList.contains('show')) {
-      modal.classList.remove('show');
-      modal.setAttribute('style', 'display: none;');
-    }
-  }
-  */
 
   // Handle modal download button click event
   function handleGAEvent() {
@@ -204,9 +198,6 @@ function ReleaseEntry({ profile }) {
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-              {/*
-              <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={handleDownload}>Download</button>
-              */}
             </div>
           </div>
         </div>
@@ -214,11 +205,61 @@ function ReleaseEntry({ profile }) {
     );
   }
 
+  // Render data type row
+  function renderDataTypeRow(bucket, item, version) {
+    const objectPath = `gs://${bucket}${item.object_path}/* .`;
+    return (
+      <tr key={`${item.type}-${version}`}>
+        <td>
+          <div className="d-flex align-items-center justify-content-start">
+            <img src={IconSet[item.icon]} alt={item.icon_alt} />
+            <span>{item.title}</span>
+          </div>
+        </td>
+        <td className="release-data-download-link">
+          <div className="copy-to-clipboard-wrapper">
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+            <span
+              role="button"
+              tabIndex="-1"
+              className="copy-to-clipboard-button"
+              onClick={handleCopyClick.bind(this, objectPath, item.tooltip_id)}
+            >
+              <i className="material-icons release-data-download-icon">file_copy</i>
+            </span>
+            <ToolTip
+              content={renderTooltipContent(objectPath, item.tooltip_id)}
+            />
+          </div>
+        </td>
+        {item.object_zipfile_path && item.object_zipfile_path.length
+          ? (
+            <td className="release-data-download-link">
+              <button
+                type="button"
+                className="btn-data-download"
+                data-toggle="modal"
+                data-target=".data-download-modal"
+                onClick={fetchFile.bind(this, bucket, item.type)}
+              >
+                <i className="material-icons release-data-download-icon">save_alt</i>
+              </button>
+              <span className="file-size">{`(${item.object_zipfile_size})`}</span>
+            </td>
+          )
+          : (
+            <td><span>Not available</span></td>
+          )
+        }
+      </tr>
+    );
+  }
+
   // Render individual release entry
   function renderReleaseEntry() {
     let entries;
     if (releases && releases.length) {
-      entries = releases.map((release, idx) => {
+      entries = releases.slice(0, visibleReleases).map((release, idx) => {
         return (
           <div key={release.version} className="release-entry-container">
             <div className="release-entry-item pt-2 pt-md-0 pb-3 pb-md-0 clearfix label-latest">
@@ -245,7 +286,11 @@ function ReleaseEntry({ profile }) {
               {/* release content */}
               <div className="col-12 col-md-9 col-lg-10 pl-md-3 py-md-4 release-main-section float-left">
                 <h2 className="release-header">
-                  <span role="img" aria-label="rocket">🚀 </span>
+                  {release.emoji
+                    ? (
+                      <span role="img" aria-label={release.emoji}>{`${emojiMap[release.emoji]} `}</span>
+                    )
+                    : null}
                   {release.label}
                 </h2>
                 <div className="release-content mb-3">
@@ -255,7 +300,7 @@ function ReleaseEntry({ profile }) {
                       <p className="release-description">
                         A&nbsp;
                         <a
-                          href="https://docs.google.com/document/d/1l-RtUNQr-FtC0aYe6rUXgJb_i5ZeWQiLp9nEjCl0QOk/"
+                          href={release.readme_file_location}
                           className="inline-link-with-icon"
                           target="_blank"
                           rel="noopener noreferrer"
@@ -280,257 +325,7 @@ function ReleaseEntry({ profile }) {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>
-                              <div className="d-flex align-items-center justify-content-start">
-                                <img src={IconSet.DNA} alt="Genomic" />
-                                <span>RNA-seq data (metadata, QC and quantitative results)</span>
-                              </div>
-                            </td>
-                            <td className="release-data-download-link">
-                              <div className="copy-to-clipboard-wrapper">
-                                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-                                <span
-                                  role="button"
-                                  tabIndex="-1"
-                                  className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/rna-seq/* .', 'data-rna-seq')}
-                                >
-                                  <i className="material-icons release-data-download-icon">file_copy</i>
-                                </span>
-                                <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/rna-seq/* .', 'data-rna-seq')}
-                                />
-                              </div>
-                            </td>
-                            <td className="release-data-download-link">
-                              {/*
-                              <div className="d-flex align-items-center justify-content-center">
-                                <a
-                                  href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
-                                  onClick={() => TrackEvent('Release 1 Data', 'Download', 'RNA-seq')}
-                                  download
-                                >
-                                  <i className="material-icons release-data-download-icon">save_alt</i>
-                                </a>
-                              </div>
-                              */}
-                              <button
-                                type="button"
-                                className="btn-data-download"
-                                data-toggle="modal"
-                                data-target=".data-download-modal"
-                                onClick={fetchFile.bind(this, 'rna-seq')}
-                              >
-                                <i className="material-icons release-data-download-icon">save_alt</i>
-                              </button>
-                              <span className="file-size">(230 MB)</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="d-flex align-items-center justify-content-start">
-                                <img src={IconSet.DNA} alt="Genomic" />
-                                <span>RRBS data (metadata, QC and quantitative results)</span>
-                              </div>
-                            </td>
-                            <td className="release-data-download-link">
-                              <div className="copy-to-clipboard-wrapper">
-                                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-                                <span
-                                  role="button"
-                                  tabIndex="-1"
-                                  className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/rrbs/* .', 'data-rrbs')}
-                                >
-                                  <i className="material-icons release-data-download-icon">file_copy</i>
-                                </span>
-                                <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/rrbs/* .', 'data-rrbs')}
-                                />
-                              </div>
-                            </td>
-                            <td><span>Not available</span></td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="d-flex align-items-center justify-content-start">
-                                <img src={IconSet.Metabolite} alt="Genomic" />
-                                <span>Metabolomics data (metadata, QC and quantitative results)</span>
-                              </div>
-                            </td>
-                            <td className="release-data-download-link">
-                              <div className="copy-to-clipboard-wrapper">
-                                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-                                <span
-                                  role="button"
-                                  tabIndex="-1"
-                                  className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/metabolomics/* .', 'data-metabolomics')}
-                                >
-                                  <i className="material-icons release-data-download-icon">file_copy</i>
-                                </span>
-                                <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/metabolomics/* .', 'data-metabolomics')}
-                                />
-                              </div>
-                            </td>
-                            <td className="release-data-download-link">
-                              {/*
-                              <div className="d-flex align-items-center justify-content-center">
-                                <a
-                                  href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
-                                  onClick={() => TrackEvent('Release 1 Data', 'Download', 'Metabolomics')}
-                                  download
-                                >
-                                  <i className="material-icons release-data-download-icon">save_alt</i>
-                                </a>
-                              </div>
-                              */}
-                              <button
-                                type="button"
-                                className="btn-data-download"
-                                data-toggle="modal"
-                                data-target=".data-download-modal"
-                                onClick={fetchFile.bind(this, 'metabolomics')}
-                              >
-                                <i className="material-icons release-data-download-icon">save_alt</i>
-                              </button>
-                              <span className="file-size">(72 MB)</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="d-flex align-items-center justify-content-start">
-                                <img src={IconSet.Protein} alt="Genomic" />
-                                <span>Proteomics data (metadata, QC and quantitative results)</span>
-                              </div>
-                            </td>
-                            <td className="release-data-download-link">
-                              <div className="copy-to-clipboard-wrapper">
-                                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-                                <span
-                                  role="button"
-                                  tabIndex="-1"
-                                  className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/proteomics/* .', 'data-proteomics')}
-                                >
-                                  <i className="material-icons release-data-download-icon">file_copy</i>
-                                </span>
-                                <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/proteomics/* .', 'data-proteomics')}
-                                />
-                              </div>
-                            </td>
-                            <td className="release-data-download-link">
-                              {/*
-                              <div className="d-flex align-items-center justify-content-center">
-                                <a
-                                  href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
-                                  onClick={() => TrackEvent('Release 1 Data', 'Download', 'Proteomics')}
-                                  download
-                                >
-                                  <i className="material-icons release-data-download-icon">save_alt</i>
-                                </a>
-                                (2.0 GB)
-                              </div>
-                              */}
-                              <button
-                                type="button"
-                                className="btn-data-download"
-                                data-toggle="modal"
-                                data-target=".data-download-modal"
-                                onClick={fetchFile.bind(this, 'proteomics')}
-                              >
-                                <i className="material-icons release-data-download-icon">save_alt</i>
-                              </button>
-                              <span className="file-size">(218 MB)</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="d-flex align-items-center justify-content-start">
-                                <img src={IconSet.Gender} alt="Genomic" />
-                                <span>Phenotypic data</span>
-                              </div>
-                            </td>
-                            <td className="release-data-download-link">
-                              <div className="copy-to-clipboard-wrapper">
-                                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-                                <span
-                                  role="button"
-                                  tabIndex="-1"
-                                  className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/phenotype/* .', 'data-phenotypic')}
-                                >
-                                  <i className="material-icons release-data-download-icon">file_copy</i>
-                                </span>
-                                <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/phenotype/* .', 'data-phenotypic')}
-                                />
-                              </div>
-                            </td>
-                            <td className="release-data-download-link">
-                              {/*
-                              <div className="d-flex align-items-center justify-content-center">
-                                <a
-                                  href={`http://storage.googleapis.com/${release.bucket_name}${release.object_path}`}
-                                  onClick={() => TrackEvent('Release 1 Data', 'Download', 'Phenotypic data')}
-                                  download
-                                >
-                                  <i className="material-icons release-data-download-icon">save_alt</i>
-                                </a>
-                                (1.0 GB)
-                              </div>
-                              */}
-                              <button
-                                type="button"
-                                className="btn-data-download"
-                                data-toggle="modal"
-                                data-target=".data-download-modal"
-                                onClick={fetchFile.bind(this, 'phenotype')}
-                              >
-                                <i className="material-icons release-data-download-icon">save_alt</i>
-                              </button>
-                              <span className="file-size">(266 KB)</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="d-flex align-items-center justify-content-start">
-                                <img src={IconSet.Globe} alt="Genomic" />
-                                <span>All of the omics (without RRBS) and phenotypic data</span>
-                              </div>
-                            </td>
-                            <td className="release-data-download-link">
-                              <div className="copy-to-clipboard-wrapper">
-                                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-                                <span
-                                  role="button"
-                                  tabIndex="-1"
-                                  className="copy-to-clipboard-button"
-                                  onClick={handleCopyClick.bind(this, 'gs://motrpac-internal-release1-results/* .', 'data-all')}
-                                >
-                                  <i className="material-icons release-data-download-icon">file_copy</i>
-                                </span>
-                                <ToolTip
-                                  content={renderTooltipContent('gs://motrpac-internal-release1-results/* .', 'data-all')}
-                                />
-                              </div>
-                            </td>
-                            <td className="release-data-download-link">
-                              <button
-                                type="button"
-                                className="btn-data-download"
-                                data-toggle="modal"
-                                data-target=".data-download-modal"
-                                onClick={fetchFile.bind(this, 'all')}
-                              >
-                                <i className="material-icons release-data-download-icon">save_alt</i>
-                              </button>
-                              <span className="file-size">(494 MB)</span>
-                            </td>
-                          </tr>
+                          {release.result_files.data_types.map(item => renderDataTypeRow(release.result_files.bucket_name, item, release.version))}
                         </tbody>
                       </table>
                       {renderModal()}
@@ -544,13 +339,20 @@ function ReleaseEntry({ profile }) {
                         role="button"
                         tabIndex="-1"
                         className="material-icons download-checkbox"
-                        onClick={handleCheckboxEvent.bind(this, 'raw')}
+                        data-toggle="collapse"
+                        data-target={`#raw-files-release-${idx}`}
+                        aria-expanded="false"
+                        aria-controls={`raw-files-release-${idx}`}
+                        id={`raw-files-release-${idx}-checkbox`}
+                        onClick={handleCheckboxEvent.bind(this, `raw-files-release-${idx}-checkbox`)}
                       >
-                        {rawSelected ? 'check_box' : 'check_box_outline_blank'}
+                        check_box_outline_blank
                       </i>
                       <span>Raw files downloads</span>
                     </p>
-                    {renderRawFilesDownloadSectionContent()}
+                    <div className="collapse" id={`raw-files-release-${idx}`}>
+                      {renderRawFilesDownloadSectionContent(release.raw_files)}
+                    </div>
                   </div>
                   <div className="intermediate-files-download-section">
                     <p className="d-block mb-2 d-flex align-items-center justify-content-start intermediate-files-download-option">
@@ -559,40 +361,53 @@ function ReleaseEntry({ profile }) {
                         role="button"
                         tabIndex="-1"
                         className="material-icons download-checkbox"
-                        onClick={handleCheckboxEvent.bind(this, 'intermediate')}
+                        data-toggle="collapse"
+                        data-target={`#intermediate-files-release-${idx}`}
+                        aria-expanded="false"
+                        aria-controls={`intermediate-files-release-${idx}`}
+                        id={`intermediate-files-release-${idx}-checkbox`}
+                        onClick={handleCheckboxEvent.bind(this, `intermediate-files-release-${idx}-checkbox`)}
                       >
-                        {intermediateSelected ? 'check_box' : 'check_box_outline_blank'}
+                        check_box_outline_blank
                       </i>
                       <span>Intermediate files downloads</span>
                     </p>
-                    {renderIntermediateFilesDownloadSectionContent()}
+                    <div className="collapse" id={`intermediate-files-release-${idx}`}>
+                      {renderIntermediateFilesDownloadSectionContent(release.intermediate_files)}
+                    </div>
                   </div>
-                  <h6 className="additional-release-download-header">Documentation</h6>
-                  <div className="release-documentation-section">
-                    <p>
-                      <a
-                        href="https://www.motrpac.org/secure/documents/dspList.cfm?documentFolderCurrent=BEC8E9C5-C740-4D8F-91F2-5977E98CF6A0"
-                        className="inline-link-with-icon"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Manuals of Procedures for Preclinical Animal Study Sites
-                        <i className="material-icons external-linkout-icon">open_in_new</i>
-                      </a>
-                      &nbsp;(login required)
-                    </p>
-                    <p>
-                      <a
-                        href="https://www.motrpac.org/actDocumentDownload.cfm?docGUID=A31CDD1F-8A59-41D9-BABA-125B37A39BF5"
-                        className="inline-link-with-icon"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Protocols for Preclinical Animal Study Sites
-                        <i className="material-icons external-linkout-icon">open_in_new</i>
-                      </a>
-                    </p>
-                  </div>
+                  {release.documentation
+                    ? (
+                      <React.Fragment>
+                        <h6 className="additional-release-download-header">Documentation</h6>
+                        <div className="release-documentation-section">
+                          <p>
+                            <a
+                              href="https://www.motrpac.org/secure/documents/dspList.cfm?documentFolderCurrent=BEC8E9C5-C740-4D8F-91F2-5977E98CF6A0"
+                              className="inline-link-with-icon"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Manuals of Procedures for Preclinical Animal Study Sites
+                              <i className="material-icons external-linkout-icon">open_in_new</i>
+                            </a>
+                            &nbsp;(login required)
+                          </p>
+                          <p>
+                            <a
+                              href="https://www.motrpac.org/actDocumentDownload.cfm?docGUID=A31CDD1F-8A59-41D9-BABA-125B37A39BF5"
+                              className="inline-link-with-icon"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Protocols for Preclinical Animal Study Sites
+                              <i className="material-icons external-linkout-icon">open_in_new</i>
+                            </a>
+                          </p>
+                        </div>
+                      </React.Fragment>
+                    )
+                    : null}
                 </div>
               </div>
             </div>
@@ -601,7 +416,25 @@ function ReleaseEntry({ profile }) {
       });
     }
 
-    return entries;
+    return (
+      <React.Fragment>
+        {entries}
+        <div className="view-more-button-container pt-2 pt-md-0 pb-3 pb-md-0 clearfix">
+          <div className="d-none d-md-block col-12 col-md-3 col-lg-2 px-md-3 pb-1 pb-md-4 pt-md-4 float-left">
+            <span>&nbsp;</span>
+          </div>
+          <div className="view-more-button-wrapper mb-4 col-12 col-md-9 col-lg-10 float-left">
+            <button
+              type="button"
+              className={visibleReleases === 1 ? 'btn btn-secondary btn-sm' : 'btn btn-danger btn-sm'}
+              onClick={toggleViewReleaseLength}
+            >
+              {visibleReleases === 1 ? 'Show prior releases' : 'Back to latest release'}
+            </button>
+          </div>
+        </div>
+      </React.Fragment>
+    );
   }
 
   return (
