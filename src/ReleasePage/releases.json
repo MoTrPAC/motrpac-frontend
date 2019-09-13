@@ -17,7 +17,7 @@
           "tooltip_id": "data-rna-seq-1-1",
           "object_path": "/rna-seq",
           "object_zipfile_path": "/rna-seq.tar.gz",
-          "object_zipfile_size": "230 MB"
+          "object_zipfile_size": "203 MB"
         },
         {
           "type": "rrbs",
@@ -37,7 +37,7 @@
           "tooltip_id": "data-metabolomics-1-1",
           "object_path": "/metabolomics",
           "object_zipfile_path": "/metabolomics.tar.gz",
-          "object_zipfile_size": "72 MB"
+          "object_zipfile_size": "94 MB"
         },
         {
           "type": "proteomics",
@@ -47,7 +47,7 @@
           "tooltip_id": "data-proteomics-1-1",
           "object_path": "/proteomics",
           "object_zipfile_path": "/proteomics.tar.gz",
-          "object_zipfile_size": "218 MB"
+          "object_zipfile_size": "274 MB"
         },
         {
           "type": "phenotype",
@@ -67,7 +67,7 @@
           "tooltip_id": "data-all-1-1",
           "object_path": "",
           "object_zipfile_path": "/all.tar.gz",
-          "object_zipfile_size": "494 MB"
+          "object_zipfile_size": "572 MB"
         }
       ]
     },
@@ -113,7 +113,7 @@
           "tooltip_id": "data-rna-seq-1-0",
           "object_path": "/rna-seq",
           "object_zipfile_path": "/rna-seq.tar.gz",
-          "object_zipfile_size": "230 MB"
+          "object_zipfile_size": "203 MB"
         },
         {
           "type": "rrbs",
