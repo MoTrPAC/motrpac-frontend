@@ -32,6 +32,15 @@ export function DataSummaryPage({
           </div>
         </div>
       </div>
+      <div className="alert alert-warning warning-note d-flex align-items-center" role="alert">
+        <span className="warning-note-text">
+          <strong>Disclaimer:</strong>
+          &nbsp;The planned analysis projections listed in this table are based on the most current
+          animal tissue analysis plan for MoTrPAC. Please note that this plan is subject to
+          change, for example due to sample and data quality concerns or updated assay
+          specifications.
+        </span>
+      </div>
       <div className="pass-tissue-analysis-status-panel">
         <div className="card mb-3">
           <h5 className="card-header">PASS Tissue Analysis Status</h5>
