@@ -41,6 +41,15 @@ export function DataSummaryPage({
           specifications.
         </span>
       </div>
+      <div className="alert alert-info alert-dismissible fade show warning-note d-flex align-items-center" role="alert">
+        <span className="material-icons">info</span>
+        <span className="warning-note-text">
+          &nbsp;Data submissions or corrections made after August 16, 2019 are not reflected in this table.
+        </span>
+        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
       <div className="pass-tissue-analysis-status-panel">
         <div className="card mb-3">
           <h5 className="card-header">PASS Tissue Analysis Status</h5>
