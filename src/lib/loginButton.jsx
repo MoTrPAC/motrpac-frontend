@@ -12,7 +12,7 @@ function LoginButton({ login }) {
   return (
     <span className="user-login-button">
       <button type="button" onClick={login} className="logInBtn btn btn-primary">
-        Submitter Login
+        Login
       </button>
     </span>
   );
