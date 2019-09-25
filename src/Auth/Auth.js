@@ -1,5 +1,5 @@
 import auth0 from 'auth0-js';
-import { AUTH0_CONFIG } from './auth0-variables';
+import AUTH0_CONFIG from './auth0-variables';
 
 /**
  * A class for Auth0 authentication.
