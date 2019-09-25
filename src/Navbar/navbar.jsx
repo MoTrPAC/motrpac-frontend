@@ -85,9 +85,10 @@ export function Navbar({
                 <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   <Link to="/external-links" className="dropdown-item">Useful Links</Link>
                   <Link to="/team" className="dropdown-item">Who we are</Link>
+                  <Link to="/contact" className="dropdown-item">Contact Us</Link>
                 </div>
               </li>
-              <li className="nav-item navItem"><Link to="/contact" className="nav-link">Contact Us</Link></li>
+              <li className="nav-item navItem"><Link to="/data-access" className="nav-link">Data Access</Link></li>
               <li className="nav-item navItem">
                 <LogoutButton />
               </li>
