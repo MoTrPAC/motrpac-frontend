@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import Particles from 'react-particles-js';
 import { useSpring, animated } from 'react-spring';
 import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-yellow_pipelineball_left.gif';
@@ -87,6 +87,18 @@ export function LandingPage({ isAuthenticated, profile }) {
       <main>
         <div className="container hero h-100">
           <div className="row hero-wrapper h-100">
+            <div className="alert alert-primary alert-dismissible fade show data-access-announce d-flex align-items-center justify-content-between w-100" role="alert">
+              <span className="data-access-announce-content">
+                <strong>
+                  MoTrPAC data release 1.0 is here! Visit the&nbsp;
+                  <Link to="/data-access" className="inline-link">Data Access</Link>
+                  &nbsp;page to learn more and register for accessing the data.
+                </strong>
+              </span>
+              <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
             <div className="hero-image col-12 col-md-8 mx-auto">
               <img src={LogoAnimation} className="img-fluid" alt="Data Layer Runner" />
             </div>
