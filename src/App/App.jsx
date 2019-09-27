@@ -19,6 +19,7 @@ import ErrorPageConnected from '../ErrorPage/error';
 import SearchPageConnected from '../Search/searchPage';
 import ReleasePageConnected from '../ReleasePage/releasePage';
 import DataSummaryPageConnected from '../DataSummaryPage/dataSummaryPage';
+import DataAccessPage from '../DataAccess/dataAccessPage';
 import CallbackConnected from '../Auth/callback';
 import SidebarConnected from '../Sidebar/sidebar';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
@@ -50,6 +51,7 @@ function App({ history = History }) {
               <Route path="/search" component={withTracker(SearchPageConnected)} />
               <Route path="/summary" component={withTracker(DataSummaryPageConnected)} />
               <Route path="/releases" component={withTracker(ReleasePageConnected)} />
+              <Route path="/data-access" component={withTracker(DataAccessPage)} />
             </Switch>
           </div>
         </div>
