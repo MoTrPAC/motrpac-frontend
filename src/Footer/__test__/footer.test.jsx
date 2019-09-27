@@ -20,7 +20,7 @@ describe('Footer', () => {
   test('Has submitter login button by default', () => {
     expect(defaultMountFooter.props().isAuthenticated).toBeFalsy();
     expect(defaultMountFooter.find('.logInBtn').text()).toBe(
-      'Submitter Login',
+      'Login',
     );
   });
 
