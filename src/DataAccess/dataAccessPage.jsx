@@ -300,7 +300,7 @@ export function DataAccessPage({ isAuthenticated }) {
                 </div>
                 <div className="reCAPTCHA-container">
                   <ReCAPTCHA
-                    sitekey="6Lf8oboUAAAAAB6SoflqfgfHvwHrV62gaPaL2-BL"
+                    sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
                     onChange={handleReCAPTCHA}
                   />
                 </div>
