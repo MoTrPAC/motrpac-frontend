@@ -1,0 +1,99 @@
+.dataAccessPage {
+  margin-bottom: 1.25rem;
+
+  .page-title {
+    margin-top: 1.0rem;
+    margin-bottom: 1.5rem;
+
+    h3 {
+      margin-bottom: 0;
+    }
+  }
+
+  p {
+    line-height: 1.5;
+  }
+
+  .inline-link-with-icon {
+    display: inline-flex;
+
+    .material-icons {
+      font-size: 1.15rem;
+      margin: 0 0 0 0.15rem;
+    }
+  }
+
+  .card {
+    margin-top: 2.25rem;
+
+    .card-title {
+      color: $stanford-cardinal-red;
+    }
+
+    &.e-signature {
+      margin-top: 1.0rem;
+
+      .card-body {
+        padding-top: 0.45rem;
+
+        .e-signature-label {
+          font-weight: $semibold-weight;
+        }
+
+        .e-signature-input {
+          border: none;
+          border-bottom: 1px solid $gray-semi-transparent;
+          border-radius: 0;
+          margin-top: 0.5rem;
+
+          &::placeholder {
+            color: $gray-semi-transparent;
+          }
+        }
+      }
+    }
+  }
+
+  .data-use-agreement-container {
+    label {
+      color: #2e2d29;
+      font-size: 0.85rem;
+    }
+
+    ul, ol {
+      margin-top: 0.45rem;
+      margin-bottom: 0;
+    }
+  }
+
+  .registration-form-container {
+    h5 {
+      margin-bottom: 1.25rem;
+    }
+
+    .personal-info-content,
+    .affiliation-info-content {
+      label {
+        color: #2e2d29;
+        font-size: 0.85rem;
+
+        &.required-field {
+          &:after {
+            content: ' *';
+            color: $stanford-bright-red;
+          }
+        }
+      }
+
+      .required-flag {
+        font-size: 0.85rem;
+        margin-left: 0.5rem;
+
+        .required-flag-text {
+          color: $stanford-bright-red;
+          margin: 0 0.15rem;
+        }
+      }
+    }
+  }
+}
