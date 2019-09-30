@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
+import RegistrationResponse from './response';
 
 /**
  * Renders the data access page
@@ -14,6 +15,21 @@ import ReCAPTCHA from 'react-google-recaptcha';
 export function DataAccessPage({ isAuthenticated }) {
   const [principalInvestigator, setPrincipalInvestigator] = useState(false);
   const [reCaptcha, setReCaptcha] = useState();
+  const [auth0Status, setAuth0Status] = useState('error');
+
+  if (isAuthenticated) {
+    return <Redirect to="/releases" />;
+  }
+
+  if (auth0Status && auth0Status.length) {
+    return (
+      <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 dataAccessPage`}>
+        <div className={`${!isAuthenticated ? 'container' : ''}`}>
+          <RegistrationResponse status={auth0Status} />
+        </div>
+      </div>
+    );
+  }
 
   // Handler for 'isPrincipalInvestigator' checkbox click event
   function handlePIClick() {
@@ -295,29 +311,36 @@ export function DataAccessPage({ isAuthenticated }) {
                           </label>
                         </div>
                       </div>
+                      <div className="form-group col-md-6 px-lg-5">
+                        <label htmlFor="dataUseIntent">Intent of data use (optional)</label>
+                        <textarea className="form-control" id="dataUseIntent" row="3" />
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="reCAPTCHA-container">
-                  <ReCAPTCHA
-                    sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
-                    onChange={handleReCAPTCHA}
-                  />
-                </div>
-                <div className="registration-button-group d-flex justify-content-end">
-                  <button
-                    type="button"
-                    className="btn btn-outline-primary registration-reset"
-                  >
-                    Reset
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary registration-submit ml-3"
-                    onClick={(e) => { e.preventDefault(); }}
-                  >
-                    Submit
-                  </button>
+                <div className="mt-3 d-flex justify-content-between align-items-end">
+                  <div className="reCAPTCHA-container">
+                    <ReCAPTCHA
+                      sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                      onChange={handleReCAPTCHA}
+                    />
+                  </div>
+                  <div className="registration-button-group">
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary registration-reset"
+                    >
+                      Reset
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary registration-submit ml-3"
+                      onClick={(e) => { e.preventDefault(); }}
+                      disabled={!reCaptcha || (reCaptcha && !reCaptcha.length)}
+                    >
+                      Submit
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
