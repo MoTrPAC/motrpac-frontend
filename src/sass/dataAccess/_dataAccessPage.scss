@@ -96,4 +96,10 @@
       }
     }
   }
+
+  button.registration-submit {
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
 }
