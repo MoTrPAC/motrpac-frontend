@@ -1,9 +1,102 @@
 [
   {
+    "label": "Release 1.0",
+    "emoji": "rocket",
+    "version": "1.0",
+    "date": "October 15, 2019",
+    "target": "external",
+    "description": "The external release consists of acute exercise data from 6-month old rats. You may choose to download different bundled assay quantitative results and the phenotypic data separately, or all of them together.",
+    "readme_file_location": "https://docs.google.com/document/d/1t0mZvhMwd2zYxGN84qg7H_8ORQTFoLTqIwYIjWOOdBY",
+    "result_files": {
+      "bucket_name": "motrpac-external-release1-results",
+      "data_types": [
+        {
+          "type": "rna-seq",
+          "title": "RNA-seq data (metadata, QC and quantitative results)",
+          "icon": "DNA",
+          "icon_alt": "Genomic",
+          "tooltip_id": "data-rna-seq-1",
+          "object_path": "/rna-seq",
+          "object_zipfile_path": "/rna-seq.tar.gz",
+          "object_zipfile_size": "203 MB"
+        },
+        {
+          "type": "rrbs",
+          "title": "RRBS data (metadata, QC and quantitative results)",
+          "icon": "DNA",
+          "icon_alt": "Genomic",
+          "tooltip_id": "data-rrbs-1",
+          "object_path": "/rrbs",
+          "object_zipfile_path": null,
+          "object_zipfile_size": null
+        },
+        {
+          "type": "metabolomics",
+          "title": "Metabolomics data (metadata, QC and quantitative results)",
+          "icon": "Metabolite",
+          "icon_alt": "Metabolomic",
+          "tooltip_id": "data-metabolomics-1",
+          "object_path": "/metabolomics",
+          "object_zipfile_path": "/metabolomics.tar.gz",
+          "object_zipfile_size": "94 MB"
+        },
+        {
+          "type": "proteomics",
+          "title": "Proteomics data (metadata, QC and quantitative results)",
+          "icon": "Protein",
+          "icon_alt": "Proteomic",
+          "tooltip_id": "data-proteomics-1",
+          "object_path": "/proteomics",
+          "object_zipfile_path": "/proteomics.tar.gz",
+          "object_zipfile_size": "274 MB"
+        },
+        {
+          "type": "phenotype",
+          "title": "Phenotypic data",
+          "icon": "Gender",
+          "icon_alt": "Phenotypic",
+          "tooltip_id": "data-phenotype-1",
+          "object_path": "/phenotype",
+          "object_zipfile_path": "/phenotype.tar.gz",
+          "object_zipfile_size": "266 KB"
+        },
+        {
+          "type": "all",
+          "title": "All of the omics (without RRBS) and phenotypic data",
+          "icon": "Globe",
+          "icon_alt": "All omics",
+          "tooltip_id": "data-all-1",
+          "object_path": "",
+          "object_zipfile_path": "/all.tar.gz",
+          "object_zipfile_size": "572 MB"
+        }
+      ]
+    },
+    "raw_files": {
+      "epigenomics": {
+        "bucket_name": "motrpac-external-release1-raw-epigenomics"
+      },
+      "transcriptomics": {
+        "bucket_name": "motrpac-external-release1-raw-transcriptomics"
+      },
+      "metabolomics-targeted": {
+        "bucket_name": "motrpac-external-release1-raw-metabolomics-targeted"
+      },
+      "metabolomics-untargeted": {
+        "bucket_name": "motrpac-external-release1-raw-metabolomics-untargeted"
+      },
+      "proteomics": {
+        "bucket_name": "motrpac-external-release1-raw-proteomics"
+      }
+    },
+    "documentation": true
+  },
+  {
     "label": "Release 1.1",
     "emoji": "sparkles",
     "version": "1.1",
     "date": "September 13, 2019",
+    "target": "internal",
     "description": "This is an internal patch release containing updated metabolomics and proteomics data from 6-month old rats. Web download is not available to RRBS due to large file sizes. You may choose to download different bundled assay quantitative results and the phenotypic data separately, or all of them together using command-line.",
     "readme_file_location": "https://docs.google.com/document/d/1t0mZvhMwd2zYxGN84qg7H_8ORQTFoLTqIwYIjWOOdBY",
     "result_files": {
@@ -100,6 +193,7 @@
     "emoji": null,
     "version": "1.0",
     "date": "August 30, 2019",
+    "target": "internal",
     "description": "The early internal release consists of acute exercise data from 6-month old rats. Web download is not available to RRBS due to large file sizes. You may choose to download different bundled assay quantitative results and the phenotypic data separately, or all of them together using command-line.",
     "readme_file_location": "https://docs.google.com/document/d/1l-RtUNQr-FtC0aYe6rUXgJb_i5ZeWQiLp9nEjCl0QOk/",
     "result_files": {
