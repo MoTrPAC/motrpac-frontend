@@ -3,11 +3,27 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { Sidebar } from '../sidebar';
 
-const testUser = require('../../testData/testUser');
+const internalUser = require('../../testData/testUser');
 
-const loggedInState = {
+const externalUser = {
+  ...internalUser,
+  user_metadata: {
+    name: 'Test User',
+    givenName: 'TestUser',
+    siteName: 'Stanford',
+    hasAccess: true,
+    userType: 'external',
+  },
+};
+
+const internalLoggedInState = {
   isAuthenticated: true,
-  profile: testUser,
+  profile: internalUser,
+};
+
+const externalLoggedInState = {
+  isAuthenticated: true,
+  profile: externalUser,
 };
 
 const sidebarActions = {
@@ -16,5 +32,6 @@ const sidebarActions = {
 };
 
 storiesOf('Sidebar', module)
-  .add('default', () => <Sidebar profile={testUser} />)
-  .add('Logged in', () => <Sidebar {...loggedInState} {...sidebarActions} />);
+  .add('Default', () => <Sidebar profile={internalUser} />)
+  .add('Internal user logged-in', () => <Sidebar {...internalLoggedInState} {...sidebarActions} />)
+  .add('External user logged-in', () => <Sidebar {...externalLoggedInState} {...sidebarActions} />);
