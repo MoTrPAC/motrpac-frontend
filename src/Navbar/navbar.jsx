@@ -38,6 +38,7 @@ export function Navbar({
   };
 
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+  const userType = profile.user_metadata && profile.user_metadata.userType;
 
   if (isAuthenticated && hasAccess) {
     document.querySelector('body').classList.add('authenticated');
@@ -88,12 +89,14 @@ export function Navbar({
                   <Link to="/contact" className="dropdown-item">Contact Us</Link>
                 </div>
               </li>
-              <li className="nav-item navItem"><Link to="/data-access" className="nav-link">Data Access</Link></li>
+              {!isAuthenticated && !hasAccess
+                ? (<li className="nav-item navItem"><Link to="/data-access" className="nav-link">Data Access</Link></li>)
+                : null}
               <li className="nav-item navItem">
                 <LogoutButton />
               </li>
             </ul>
-            {isAuthenticated && hasAccess
+            {isAuthenticated && hasAccess && userType === 'internal'
               ? (
                 <QuickSearchBox
                   quickSearchTerm={quickSearchTerm}
