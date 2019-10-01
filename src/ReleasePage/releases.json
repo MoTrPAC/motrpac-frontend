@@ -27,8 +27,8 @@
           "icon_alt": "Genomic",
           "tooltip_id": "data-rrbs-1",
           "object_path": "/rrbs",
-          "object_zipfile_path": null,
-          "object_zipfile_size": null
+          "object_zipfile_path": "/rrbs.tar.gz",
+          "object_zipfile_size": "4 GB"
         },
         {
           "type": "metabolomics",
@@ -62,13 +62,13 @@
         },
         {
           "type": "all",
-          "title": "All of the omics (without RRBS) and phenotypic data",
+          "title": "All of the omics and phenotypic data",
           "icon": "Globe",
           "icon_alt": "All omics",
           "tooltip_id": "data-all-1",
           "object_path": "",
           "object_zipfile_path": "/all.tar.gz",
-          "object_zipfile_size": "572 MB"
+          "object_zipfile_size": "4.6 GB"
         }
       ]
     },
