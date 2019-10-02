@@ -96,6 +96,29 @@ export function DataAccessPage({ isAuthenticated, profile }) {
     setReCaptcha(value);
   }
 
+  // Handler to validate form values on blur event
+  function validateOnBlur(e) {
+    const regex = new RegExp(e.target.pattern);
+    if (regex.test(e.target.value)) {
+      e.target.classList.remove('is-invalid');
+      e.target.classList.add('is-valid');
+    } else {
+      e.target.classList.remove('is-valid');
+      e.target.classList.add('is-invalid');
+    }
+  }
+
+  // Handler to validate email on blur event
+  function validateEmailOnBlur(e) {
+    if (e.target.validity.valid) {
+      e.target.classList.remove('is-invalid');
+      e.target.classList.add('is-valid');
+    } else {
+      e.target.classList.remove('is-valid');
+      e.target.classList.add('is-invalid');
+    }
+  }
+
   return (
     <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 dataAccessPage`}>
       <div className={`${!isAuthenticated ? 'container' : ''}`}>
@@ -327,7 +350,12 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                       required
                       onChange={e => handleFormChange(e.currentTarget.value, e)}
                       value={formValues.eSignature}
+                      pattern="^[A-Za-z]{2,60}$"
+                      onBlur={validateOnBlur}
                     />
+                    <div className="invalid-feedback">
+                      A valid e-Signature is required
+                    </div>
                   </div>
                 </div>
               </div>
@@ -357,9 +385,11 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           required
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.lastName}
+                          pattern="^[A-Za-z]{2,30}$"
+                          onBlur={validateOnBlur}
                         />
                         <div className="invalid-feedback">
-                          Please provide last name.
+                          A valid last name is required
                         </div>
                       </div>
                       <div className="form-group col-md-6 px-lg-5">
@@ -371,9 +401,11 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           required
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.firstName}
+                          pattern="^[A-Za-z]{2,30}$"
+                          onBlur={validateOnBlur}
                         />
                         <div className="invalid-feedback">
-                          Please provide first name.
+                          A valid first name is required
                         </div>
                       </div>
                     </div>
@@ -381,15 +413,16 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                       <div className="form-group col-md-6 px-lg-5">
                         <label htmlFor="emailAddress" className="required-field">Email Address</label>
                         <input
-                          type="text"
+                          type="email"
                           className="form-control"
                           id="emailAddress"
                           required
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.emailAddress}
+                          onBlur={validateEmailOnBlur}
                         />
                         <div className="invalid-feedback">
-                          Please provide a valid email address.
+                          A valid email address is required
                         </div>
                       </div>
                     </div>
@@ -415,9 +448,11 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           required
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.institution}
+                          pattern="^[A-Za-z]{2,50}$"
+                          onBlur={validateOnBlur}
                         />
                         <div className="invalid-feedback">
-                          Please provide an institution name.
+                          A valid institution name is required
                         </div>
                       </div>
                       <div className="form-group col-md-6 px-lg-5">
