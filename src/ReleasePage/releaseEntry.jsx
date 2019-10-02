@@ -10,6 +10,8 @@ const releaseData = require('./releases');
 const emojiMap = {
   rocket: '🚀',
   sparkles: '✨',
+  zap: '⚡️',
+  tada: '🎉',
 };
 
 /**
@@ -307,8 +309,8 @@ function ReleaseEntry({ profile, currentView }) {
                         ? (
                           <p className="release-description">
                             To request for accessing the raw files of the different omics data, please contact&nbsp;
-                            <a href="mailto:motrpac-helpdesk@lists.stanford.edu" className="inline-link-with-icon">
-                              motrpac-helpdesk@lists.stanford.edu
+                            <a href="mailto:motrpac-data-requests@lists.stanford.edu" className="inline-link-with-icon">
+                              motrpac-data-requests@lists.stanford.edu
                               <i className="material-icons email-icon">mail</i>
                             </a>
                             &nbsp;and specify the omics, tissues, and assays you are interested in.
