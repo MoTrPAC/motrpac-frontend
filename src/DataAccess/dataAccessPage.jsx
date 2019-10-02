@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
@@ -8,19 +8,60 @@ import RegistrationResponse from './response';
 /**
  * Renders the data access page
  *
- * @param {Boolean} isAuthenticated Redux state for user's authentication status
+ * @param {Boolean} isAuthenticated Redux state for user's authentication status.
+ * @param {Object}  profile         Redux state for authenticated user's info.
  *
  * @returns {object} JSX representation of the data access page
  */
-export function DataAccessPage({ isAuthenticated }) {
+export function DataAccessPage({ isAuthenticated, profile }) {
   const [principalInvestigator, setPrincipalInvestigator] = useState(false);
-  const [reCaptcha, setReCaptcha] = useState();
-  const [auth0Status, setAuth0Status] = useState('error');
+  const [reCaptcha, setReCaptcha] = useState('');
+  const [auth0Status, setAuth0Status] = useState();
+  const [formValidated, setFormValidated] = useState(false);
+  const [formValues, setFormValues] = useState({
+    dataUseAgreement1: false,
+    dataUseAgreement2: false,
+    dataUseAgreement3: false,
+    dataUseAgreement4: false,
+    dataUseAgreement5: false,
+    dataUseAgreement6: false,
+    eSignature: '',
+    lastName: '',
+    firstName: '',
+    emailAddress: '',
+    institution: '',
+  });
 
-  if (isAuthenticated) {
+  useEffect(() => {
+    // validate form values by subscribing to changes
+    // in the 'formValues' and 'reCaptcha' states
+    // and determine whether user can submit registration form
+    const newObj = { ...formValues };
+    newObj.reCaptcha = reCaptcha;
+    const invalidValues = [];
+    Object.entries(newObj).forEach(([key, value]) => {
+      if ((typeof value === 'string' && !value.length) || (typeof value === 'boolean' && value === false)) {
+        invalidValues.push(key);
+      }
+    });
+    if (invalidValues.length) {
+      setFormValidated(false);
+    } else {
+      setFormValidated(true);
+    }
+    return () => {
+      setFormValidated(false);
+    };
+  }, [formValues, reCaptcha]);
+
+  // Route user to release page if authenticated and has access to data
+  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+
+  if (isAuthenticated && hasAccess) {
     return <Redirect to="/releases" />;
   }
 
+  // Render registration response view if auth0 post request is successful
   if (auth0Status && auth0Status.length) {
     return (
       <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 dataAccessPage`}>
@@ -29,6 +70,20 @@ export function DataAccessPage({ isAuthenticated }) {
         </div>
       </div>
     );
+  }
+
+  // Handler for checkbox click events
+  function handleCheckboxClick(checked, e) {
+    const cloneFormValues = { ...formValues };
+    cloneFormValues[e.target.id] = !!checked;
+    setFormValues(cloneFormValues);
+  }
+
+  // Handler for form field change events
+  function handleFormChange(value, e) {
+    const cloneFormValues = { ...formValues };
+    cloneFormValues[e.target.id] = value;
+    setFormValues(cloneFormValues);
   }
 
   // Handler for 'isPrincipalInvestigator' checkbox click event
@@ -132,8 +187,14 @@ export function DataAccessPage({ isAuthenticated }) {
                 <div className="form-row user-agreement-item">
                   <div className="form-group col-md-12">
                     <div className="form-check">
-                      <input className="form-check-input" type="checkbox" id="userAgreement1" />
-                      <label className="form-check-label" htmlFor="userAgreement1">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="dataUseAgreement1"
+                        onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
+                        checked={formValues.dataUseAgreement1}
+                      />
+                      <label className="form-check-label" htmlFor="dataUseAgreement1">
                         Data <strong>CANNOT</strong> be used for <strong>submission</strong> of
                         abstracts, manuscripts, preprints or presentations before the embargo deadline.
                       </label>
@@ -143,8 +204,14 @@ export function DataAccessPage({ isAuthenticated }) {
                 <div className="form-row user-agreement-item">
                   <div className="form-group col-md-12">
                     <div className="form-check">
-                      <input className="form-check-input" type="checkbox" id="userAgreement2" />
-                      <label className="form-check-label" htmlFor="userAgreement2">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="dataUseAgreement2"
+                        onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
+                        checked={formValues.dataUseAgreement2}
+                      />
+                      <label className="form-check-label" htmlFor="dataUseAgreement2">
                         Data <strong>CANNOT</strong> be publicly hosted or disseminated before the embargo deadline.
                       </label>
                     </div>
@@ -153,8 +220,14 @@ export function DataAccessPage({ isAuthenticated }) {
                 <div className="form-row user-agreement-item">
                   <div className="form-group col-md-12">
                     <div className="form-check">
-                      <input className="form-check-input" type="checkbox" id="userAgreement3" />
-                      <label className="form-check-label" htmlFor="userAgreement3">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="dataUseAgreement3"
+                        onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
+                        checked={formValues.dataUseAgreement3}
+                      />
+                      <label className="form-check-label" htmlFor="dataUseAgreement3">
                         The embargo period for any type of publication of MoTrPAC external release 1 data is 15
                         months after external release 1: <strong>January 15, 2021</strong>.
                       </label>
@@ -164,8 +237,14 @@ export function DataAccessPage({ isAuthenticated }) {
                 <div className="form-row user-agreement-item">
                   <div className="form-group col-md-12">
                     <div className="form-check">
-                      <input className="form-check-input" type="checkbox" id="userAgreement4" />
-                      <label className="form-check-label" htmlFor="userAgreement4">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="dataUseAgreement4"
+                        onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
+                        checked={formValues.dataUseAgreement4}
+                      />
+                      <label className="form-check-label" htmlFor="dataUseAgreement4">
                         Data <strong>CAN</strong> be used for analyses supporting grant submissions prior to the embargo deadline.
                       </label>
                     </div>
@@ -174,8 +253,14 @@ export function DataAccessPage({ isAuthenticated }) {
                 <div className="form-row user-agreement-item">
                   <div className="form-group col-md-12">
                     <div className="form-check">
-                      <input className="form-check-input" type="checkbox" id="userAgreement5" />
-                      <label className="form-check-label" htmlFor="userAgreement5">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="dataUseAgreement5"
+                        onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
+                        checked={formValues.dataUseAgreement5}
+                      />
+                      <label className="form-check-label" htmlFor="dataUseAgreement5">
                         After the embargo period, Recipients and their Agents agree that in publications using&nbsp;
                         <strong>any</strong> data from MoTrPAC public use data sets they will acknowledge MoTrPAC as the source
                         of data, including the version number of the data sets used.
@@ -193,8 +278,14 @@ export function DataAccessPage({ isAuthenticated }) {
                 <div className="form-row user-agreement-item">
                   <div className="form-group col-md-12">
                     <div className="form-check">
-                      <input className="form-check-input" type="checkbox" id="userAgreement6" />
-                      <label className="form-check-label" htmlFor="userAgreement6">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="dataUseAgreement6"
+                        onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
+                        checked={formValues.dataUseAgreement6}
+                      />
+                      <label className="form-check-label" htmlFor="dataUseAgreement6">
                         Recipients agree to notify MoTrPAC of articles published using MoTrPAC data so that
                         publications can be tracked and referenced on the MoTrPAC public website. Please
                         contact MoTrPAC at&nbsp;
@@ -207,14 +298,10 @@ export function DataAccessPage({ isAuthenticated }) {
                   </div>
                 </div>
                 <p className="card-text">
-                  Citing MoTrPAC data in publications:
-                  <ol>
-                    <li>
-                      The Molecular Transducers of Physical Activity Consortium (MoTrPAC). External
-                      Data Release X.X. MoTrPAC DataHub. MoTrPAC Bioinformatics Center. Version
-                      release date. Version number. motrpac-data.org/releases/ [###path.html]
-                    </li>
-                  </ol>
+                  <span className="subhead">Citing MoTrPAC data in publications:</span>
+                  The Molecular Transducers of Physical Activity Consortium (MoTrPAC). External
+                  Data Release X.X. MoTrPAC DataHub. MoTrPAC Bioinformatics Center. Version
+                  release date. Version number. motrpac-data.org/releases/ [###path.html]
                 </p>
                 <p className="card-text">
                   <em>Optional:</em>
@@ -229,10 +316,18 @@ export function DataAccessPage({ isAuthenticated }) {
                     <i className="material-icons email-icon">mail</i>
                   </a>
                 </p>
-                <div className="card mb-2 w-50 e-signature">
+                <div className="card mb-4 w-50 e-signature">
                   <div className="card-body">
                     <label htmlFor="eSignature" className="e-signature-label">E-Signature:</label>
-                    <input type="text" className="form-control e-signature-input" id="eSignature" placeholder="Type full name here" required />
+                    <input
+                      type="text"
+                      className="form-control e-signature-input"
+                      id="eSignature"
+                      placeholder="Type full name here"
+                      required
+                      onChange={e => handleFormChange(e.currentTarget.value, e)}
+                      value={formValues.eSignature}
+                    />
                   </div>
                 </div>
               </div>
@@ -255,14 +350,28 @@ export function DataAccessPage({ isAuthenticated }) {
                     <div className="form-row mx-lg-n5">
                       <div className="form-group col-md-6 px-lg-5">
                         <label htmlFor="lastName" className="required-field">Last Name</label>
-                        <input type="text" className="form-control" id="lastName" required />
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="lastName"
+                          required
+                          onChange={e => handleFormChange(e.currentTarget.value, e)}
+                          value={formValues.lastName}
+                        />
                         <div className="invalid-feedback">
                           Please provide last name.
                         </div>
                       </div>
                       <div className="form-group col-md-6 px-lg-5">
                         <label htmlFor="firstName" className="required-field">First Name</label>
-                        <input type="text" className="form-control" id="firstName" required />
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="firstName"
+                          required
+                          onChange={e => handleFormChange(e.currentTarget.value, e)}
+                          value={formValues.firstName}
+                        />
                         <div className="invalid-feedback">
                           Please provide first name.
                         </div>
@@ -271,7 +380,14 @@ export function DataAccessPage({ isAuthenticated }) {
                     <div className="form-row mx-lg-n5">
                       <div className="form-group col-md-6 px-lg-5">
                         <label htmlFor="emailAddress" className="required-field">Email Address</label>
-                        <input type="text" className="form-control" id="emailAddress" required />
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="emailAddress"
+                          required
+                          onChange={e => handleFormChange(e.currentTarget.value, e)}
+                          value={formValues.emailAddress}
+                        />
                         <div className="invalid-feedback">
                           Please provide a valid email address.
                         </div>
@@ -292,7 +408,14 @@ export function DataAccessPage({ isAuthenticated }) {
                     <div className="form-row mx-lg-n5">
                       <div className="form-group col-md-6 px-lg-5">
                         <label htmlFor="institution" className="required-field">Institution</label>
-                        <input type="text" className="form-control" id="institution" required />
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="institution"
+                          required
+                          onChange={e => handleFormChange(e.currentTarget.value, e)}
+                          value={formValues.institution}
+                        />
                         <div className="invalid-feedback">
                           Please provide an institution name.
                         </div>
@@ -336,7 +459,7 @@ export function DataAccessPage({ isAuthenticated }) {
                       type="button"
                       className="btn btn-primary registration-submit ml-3"
                       onClick={(e) => { e.preventDefault(); }}
-                      disabled={!reCaptcha || (reCaptcha && !reCaptcha.length)}
+                      disabled={!formValidated}
                     >
                       Submit
                     </button>
@@ -352,14 +475,19 @@ export function DataAccessPage({ isAuthenticated }) {
 }
 
 DataAccessPage.propTypes = {
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.object,
+  }),
   isAuthenticated: PropTypes.bool,
 };
 
 DataAccessPage.defaultProps = {
+  profile: {},
   isAuthenticated: false,
 };
 
 const mapStateToProps = state => ({
+  profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
 });
 
