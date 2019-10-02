@@ -303,6 +303,18 @@ function ReleaseEntry({ profile, currentView }) {
                   <div className="card mb-3">
                     <div className="card-body">
                       <p className="release-description">{release.description}</p>
+                      {currentView === 'external'
+                        ? (
+                          <p className="release-description">
+                            To request for accessing the raw files of the different omics data, please contact&nbsp;
+                            <a href="mailto:motrpac-helpdesk@lists.stanford.edu" className="inline-link-with-icon">
+                              motrpac-helpdesk@lists.stanford.edu
+                              <i className="material-icons email-icon">mail</i>
+                            </a>
+                            &nbsp;and specify the omics, tissues, and assays you are interested in.
+                          </p>
+                        )
+                        : null}
                       <p className="release-description">
                         A&nbsp;
                         <a
