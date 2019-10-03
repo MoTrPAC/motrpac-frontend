@@ -1,8 +1,8 @@
 const url = new URL(window.location.href);
 
 const AUTH0_CONFIG = {
-  domain: process.env.REACT_APP_AUTH0_DOMAIN,
-  clientId: process.env.REACT_APP_AUTH0_CLIENT_ID,
+  domain: 'motrpac-project.auth0.com',
+  clientId: '4dUo4JxLlZvCtFVCw21Nh0ZRKyznluAZ',
   callbackUrl: `${url.origin}/callback`,
 };
 

@@ -479,7 +479,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                 <div className="mt-3 d-flex justify-content-between align-items-end">
                   <div className="reCAPTCHA-container">
                     <ReCAPTCHA
-                      sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                      sitekey="6Lf8oboUAAAAAB6SoflqfgfHvwHrV62gaPaL2-BL"
                       onChange={handleReCAPTCHA}
                     />
                   </div>
