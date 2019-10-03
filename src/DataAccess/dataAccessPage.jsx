@@ -463,7 +463,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                     <div className="form-row mx-lg-n5">
                       <div className="form-group col-md-6 px-lg-5">
                         <div className="form-check">
-                          <input className="form-check-input" type="checkbox" id="isPrincipalInvestigator" onClick={handlePIClick.bind(this)} />
+                          <input className="form-check-input" type="checkbox" id="isPrincipalInvestigator" onChange={handlePIClick} />
                           <label className="form-check-label" htmlFor="isPrincipalInvestigator">
                             I am a principal investigator
                           </label>
