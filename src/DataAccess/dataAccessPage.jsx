@@ -124,7 +124,17 @@ export function DataAccessPage({ isAuthenticated, profile }) {
       <div className={`${!isAuthenticated ? 'container' : ''}`}>
         <form id="dataAccessRegistration" name="dataAccessRegistration" noValidate>
           <div className="page-title pt-3 pb-2 border-bottom">
-            <h3>MoTrPAC Data External Release 1.0</h3>
+            <h3>MoTrPAC Data External Release</h3>
+          </div>
+          <div className="alert alert-dark alert-consortia-members-access" role="alert">
+            MoTrPAC consortium members are not required to fill out the following data use agreement
+            and registration. Consortium members who already have registered accounts may access the
+            released data upon login. Consortium members who don't have registered accounts and wish
+            to access the released, please contact&nbsp;
+            <a href="mailto:motrpac-helpdesk@lists.stanford.edu" className="inline-link-with-icon">
+              motrpac-helpdesk@lists.stanford.edu
+              <i className="material-icons email-icon">mail</i>
+            </a>
           </div>
           <div className="data-access-content">
             <p>
@@ -157,20 +167,6 @@ export function DataAccessPage({ isAuthenticated, profile }) {
               ullamco laboris nsi ut aliquip ex ea comepmodo consetquat. Duis aute irure dolor in
               reprehenderit in voluptate velit esse cfgillum dolore eutpe fugiat nulla pariatur. Excepteur
               sint occaecat cupidatat non proident, sunt inpeku culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-          </div>
-          <div className="data-access-content">
-            <p>
-              <strong>
-                MoTrPAC consortium members are not required to fill out the following data use agreement
-                and registration. Consortium members who already have registered accounts may access the
-                released data upon login. Consortium members who don't have registered accounts and wish
-                to access the released, please contact&nbsp;
-                <a href="mailto:motrpac-helpdesk@lists.stanford.edu" className="inline-link-with-icon">
-                  motrpac-helpdesk@lists.stanford.edu
-                  <i className="material-icons email-icon">mail</i>
-                </a>
-              </strong>
             </p>
           </div>
           <div className="card mb-3">
