@@ -5,6 +5,23 @@ import { Redirect, Link } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
 import RegistrationResponse from './response';
 
+const defaultFormValues = {
+  dataUseAgreement1: false,
+  dataUseAgreement2: false,
+  dataUseAgreement3: false,
+  dataUseAgreement4: false,
+  dataUseAgreement5: false,
+  dataUseAgreement6: false,
+  eSignature: '',
+  lastName: '',
+  firstName: '',
+  emailAddress: '',
+  institution: '',
+  isPrincipalInvestigator: false,
+  PIName: '',
+  dataUseIntent: '',
+};
+
 /**
  * Renders the data access page
  *
@@ -14,32 +31,26 @@ import RegistrationResponse from './response';
  * @returns {object} JSX representation of the data access page
  */
 export function DataAccessPage({ isAuthenticated, profile }) {
-  const [principalInvestigator, setPrincipalInvestigator] = useState(false);
   const [reCaptcha, setReCaptcha] = useState('');
   const [auth0Status, setAuth0Status] = useState();
   const [formValidated, setFormValidated] = useState(false);
   const [checkboxAlert, setCheckboxAlert] = useState(false);
-  const [formValues, setFormValues] = useState({
-    dataUseAgreement1: false,
-    dataUseAgreement2: false,
-    dataUseAgreement3: false,
-    dataUseAgreement4: false,
-    dataUseAgreement5: false,
-    dataUseAgreement6: false,
-    eSignature: '',
-    lastName: '',
-    firstName: '',
-    emailAddress: '',
-    institution: '',
-  });
+  const [formValues, setFormValues] = useState(defaultFormValues);
 
   useEffect(() => {
-    // validate form values by subscribing to changes
+    // validate REQUIRED form values by subscribing to changes
     // in the 'formValues' and 'reCaptcha' states
     // and determine whether user can submit registration form
     const newObj = { ...formValues };
+    // delete non-required keys from object
+    delete newObj.isPrincipalInvestigator;
+    delete newObj.PIName;
+    delete newObj.dataUseIntent;
+    // append REQUIRED reCAPTCHA key to object
     newObj.reCaptcha = reCaptcha;
+    // invalidate form if this array is non-zero
     const invalidValues = [];
+
     Object.entries(newObj).forEach(([key, value]) => {
       if ((typeof value === 'string' && !value.length) || (typeof value === 'boolean' && value === false)) {
         invalidValues.push(key);
@@ -85,11 +96,6 @@ export function DataAccessPage({ isAuthenticated, profile }) {
     const cloneFormValues = { ...formValues };
     cloneFormValues[e.target.id] = value;
     setFormValues(cloneFormValues);
-  }
-
-  // Handler for 'isPrincipalInvestigator' checkbox click event
-  function handlePIClick() {
-    setPrincipalInvestigator(!principalInvestigator);
   }
 
   // Handler for reCAPTCHA click event
@@ -139,6 +145,49 @@ export function DataAccessPage({ isAuthenticated, profile }) {
     } else {
       setCheckboxAlert(false);
     }
+  }
+
+  // Handler to reset form
+  function handleReset() {
+    const fields = [
+      'eSignature',
+      'lastName',
+      'firstName',
+      'emailAddress',
+      'institution',
+    ];
+    setFormValues(defaultFormValues);
+    setCheckboxAlert(false);
+    setFormValidated(false);
+    fields.forEach((field) => {
+      document.querySelector(`#${field}`).classList.remove('is-valid', 'is-invalid');
+    });
+  }
+
+  // Handler to submit form
+  function handleSubmit() {
+    const userObj = {
+      email: formValues.emailAddress,
+      given_name: formValues.firstName,
+      family_name: formValues.lastName,
+      name: `${formValues.firstName} ${formValues.lastName}`,
+      nickname: formValues.firstName,
+      username: formValues.emailAddress.slice(0, formValues.emailAddress.indexOf('@')),
+      email_verified: false,
+      verify_email: true,
+      connection: 'Username-Password-Authentication',
+      password: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+      user_metadata: {
+        name: `${formValues.firstName} ${formValues.lastName}`,
+        email: formValues.emailAddress,
+        givenName: formValues.firstName,
+        familyName: formValues.lastName,
+        institution: formValues.institution,
+        hasAccess: true,
+        userType: 'external',
+      },
+    };
+    console.log('Payload === ' + JSON.stringify(userObj));
   }
 
   return (
@@ -375,6 +424,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                       className="form-control e-signature-input"
                       id="eSignature"
                       placeholder="Type full name here"
+                      autoComplete="off"
                       required
                       onChange={e => handleFormChange(e.currentTarget.value, e)}
                       value={formValues.eSignature}
@@ -411,6 +461,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           type="text"
                           className="form-control"
                           id="firstName"
+                          autoComplete="off"
                           required
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.firstName}
@@ -427,6 +478,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           type="text"
                           className="form-control"
                           id="lastName"
+                          autoComplete="off"
                           required
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.lastName}
@@ -445,6 +497,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           type="email"
                           className="form-control"
                           id="emailAddress"
+                          autoComplete="off"
                           required
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.emailAddress}
@@ -474,6 +527,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           type="text"
                           className="form-control"
                           id="institution"
+                          autoComplete="off"
                           required
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.institution}
@@ -486,13 +540,28 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                       </div>
                       <div className="form-group col-md-6 px-lg-5">
                         <label htmlFor="PIName">Name of PI</label>
-                        <input type="text" className="form-control" id="PIName" disabled={principalInvestigator} />
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="PIName"
+                          autoComplete="off"
+                          onChange={e => handleFormChange(e.currentTarget.value, e)}
+                          value={formValues.PIName}
+                          pattern="^[A-Za-z\s]{2,60}$"
+                          disabled={formValues.isPrincipalInvestigator}
+                        />
                       </div>
                     </div>
                     <div className="form-row mx-lg-n5">
                       <div className="form-group col-md-6 px-lg-5">
                         <div className="form-check">
-                          <input className="form-check-input" type="checkbox" id="isPrincipalInvestigator" onChange={handlePIClick} />
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="isPrincipalInvestigator"
+                            onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
+                            checked={formValues.isPrincipalInvestigator}
+                          />
                           <label className="form-check-label" htmlFor="isPrincipalInvestigator">
                             I am a principal investigator
                           </label>
@@ -500,7 +569,13 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                       </div>
                       <div className="form-group col-md-6 px-lg-5">
                         <label htmlFor="dataUseIntent">Intent of data use (optional)</label>
-                        <textarea className="form-control" id="dataUseIntent" row="3" />
+                        <textarea
+                          className="form-control"
+                          id="dataUseIntent"
+                          row="3"
+                          onChange={e => handleFormChange(e.currentTarget.value, e)}
+                          value={formValues.dataUseIntent}
+                        />
                       </div>
                     </div>
                   </div>
@@ -516,13 +591,14 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                     <button
                       type="button"
                       className="btn btn-outline-primary registration-reset"
+                      onClick={handleReset}
                     >
                       Reset
                     </button>
                     <button
                       type="button"
                       className="btn btn-primary registration-submit ml-3"
-                      onClick={(e) => { e.preventDefault(); }}
+                      onClick={(e) => { e.preventDefault(); handleSubmit(); }}
                       disabled={!formValidated}
                     >
                       Submit
