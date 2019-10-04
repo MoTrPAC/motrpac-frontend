@@ -406,22 +406,6 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                     </div>
                     <div className="form-row mx-lg-n5">
                       <div className="form-group col-md-6 px-lg-5">
-                        <label htmlFor="lastName" className="required-field">Last Name</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="lastName"
-                          required
-                          onChange={e => handleFormChange(e.currentTarget.value, e)}
-                          value={formValues.lastName}
-                          pattern="^[A-Za-z\s]{2,30}$"
-                          onBlur={validateOnBlur}
-                        />
-                        <div className="invalid-feedback">
-                          A valid last name is required
-                        </div>
-                      </div>
-                      <div className="form-group col-md-6 px-lg-5">
                         <label htmlFor="firstName" className="required-field">First Name</label>
                         <input
                           type="text"
@@ -435,6 +419,22 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         />
                         <div className="invalid-feedback">
                           A valid first name is required
+                        </div>
+                      </div>
+                      <div className="form-group col-md-6 px-lg-5">
+                        <label htmlFor="lastName" className="required-field">Last Name</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="lastName"
+                          required
+                          onChange={e => handleFormChange(e.currentTarget.value, e)}
+                          value={formValues.lastName}
+                          pattern="^[A-Za-z\s]{2,30}$"
+                          onBlur={validateOnBlur}
+                        />
+                        <div className="invalid-feedback">
+                          A valid last name is required
                         </div>
                       </div>
                     </div>
