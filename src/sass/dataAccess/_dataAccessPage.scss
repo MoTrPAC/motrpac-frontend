@@ -33,6 +33,21 @@
     }
   }
 
+  .alert-missing-checkbox {
+    font-size: 0.85rem;
+    visibility: hidden;
+
+    &.visible {
+      visibility: visible;
+    }
+
+    .material-icons {
+      font-size: 1.15rem;
+      line-height: 0;
+      margin-right: 0.15rem;
+    }
+  }
+
   .card {
     margin-top: 2.25rem;
 
@@ -41,7 +56,7 @@
     }
 
     &.e-signature {
-      margin-top: 1.0rem;
+      margin-top: 0.35rem;
 
       .card-body {
         padding-top: 0.45rem;

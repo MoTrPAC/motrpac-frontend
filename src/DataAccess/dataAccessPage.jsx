@@ -18,6 +18,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
   const [reCaptcha, setReCaptcha] = useState('');
   const [auth0Status, setAuth0Status] = useState();
   const [formValidated, setFormValidated] = useState(false);
+  const [checkboxAlert, setCheckboxAlert] = useState(false);
   const [formValues, setFormValues] = useState({
     dataUseAgreement1: false,
     dataUseAgreement2: false,
@@ -119,6 +120,27 @@ export function DataAccessPage({ isAuthenticated, profile }) {
     }
   }
 
+  // Handler to validate all embargo agreement checkboxes selected
+  function validateAgreementTerms() {
+    const checkboxes = [
+      'dataUseAgreement1',
+      'dataUseAgreement2',
+      'dataUseAgreement3',
+      'dataUseAgreement4',
+      'dataUseAgreement5',
+      'dataUseAgreement6',
+    ];
+    const uncheckboxes = checkboxes.filter((checkbox) => {
+      const checkboxEl = document.querySelector(`#${checkbox}`);
+      if (!checkboxEl.checked) return checkbox;
+    });
+    if (uncheckboxes.length) {
+      setCheckboxAlert(true);
+    } else {
+      setCheckboxAlert(false);
+    }
+  }
+
   return (
     <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 dataAccessPage`}>
       <div className={`${!isAuthenticated ? 'container' : ''}`}>
@@ -176,7 +198,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
               <h5 className="card-title pt-1 pb-2">Data Use Agreement</h5>
               <div className="data-access-content data-use-agreement-container">
                 <p className="card-text">
-                  Use of MotrPAC external release data is subject to the terms specified in this
+                  Use of MoTrPAC external release data is subject to the terms specified in this
                   Data Use Agreement. The terms establish and maintain an appropriate balance
                   between the interests data users have in rapid access to data and needs that
                   data producers have to publish and receive recognition for their work.
@@ -210,6 +232,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         className="form-check-input"
                         type="checkbox"
                         id="dataUseAgreement1"
+                        required
                         onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
                         checked={formValues.dataUseAgreement1}
                       />
@@ -227,6 +250,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         className="form-check-input"
                         type="checkbox"
                         id="dataUseAgreement2"
+                        required
                         onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
                         checked={formValues.dataUseAgreement2}
                       />
@@ -243,6 +267,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         className="form-check-input"
                         type="checkbox"
                         id="dataUseAgreement3"
+                        required
                         onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
                         checked={formValues.dataUseAgreement3}
                       />
@@ -260,6 +285,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         className="form-check-input"
                         type="checkbox"
                         id="dataUseAgreement4"
+                        required
                         onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
                         checked={formValues.dataUseAgreement4}
                       />
@@ -276,6 +302,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         className="form-check-input"
                         type="checkbox"
                         id="dataUseAgreement5"
+                        required
                         onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
                         checked={formValues.dataUseAgreement5}
                       />
@@ -301,6 +328,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         className="form-check-input"
                         type="checkbox"
                         id="dataUseAgreement6"
+                        required
                         onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
                         checked={formValues.dataUseAgreement6}
                       />
@@ -335,6 +363,10 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                     <i className="material-icons email-icon">mail</i>
                   </a>
                 </p>
+                <div className={`d-flex align-items-center alert-missing-checkbox text-danger ${checkboxAlert ? 'visible' : ''}`}>
+                  <i className="material-icons error-icon">error</i>
+                  <span>Please indicate that you agree to all terms above.</span>
+                </div>
                 <div className="card mb-4 w-50 e-signature">
                   <div className="card-body">
                     <label htmlFor="eSignature" className="e-signature-label">E-Signature:</label>
@@ -348,6 +380,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                       value={formValues.eSignature}
                       pattern="^[A-Za-z\s]{2,60}$"
                       onBlur={validateOnBlur}
+                      onFocus={validateAgreementTerms}
                     />
                     <div className="invalid-feedback">
                       A valid e-Signature is required
