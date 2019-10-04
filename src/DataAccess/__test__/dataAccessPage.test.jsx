@@ -62,6 +62,6 @@ describe('Data access page with embargo agreement and registration form', () => 
 
   test('Selecting the I am a principal investigator checkbox disables #PIName input field', () => {
     wrapper.find('#isPrincipalInvestigator').simulate('change');
-    expect(wrapper.find('#PIName[disabled=true]')).toHaveLength(1);
+    expect(wrapper.find('#PIName[disabled]')).toBeTruthy();
   });
 });
