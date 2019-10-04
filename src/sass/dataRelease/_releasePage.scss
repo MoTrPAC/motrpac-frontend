@@ -197,3 +197,14 @@
     }
   }
 }
+
+/* specificity for external release view */
+.release-entry-container {
+  &.external {
+    .release-timeline {
+      li {
+        color: $stanford-cool-grey;
+      }
+    }
+  }
+}
