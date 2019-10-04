@@ -89,11 +89,11 @@ export function LandingPage({ isAuthenticated, profile }) {
           <div className="row hero-wrapper h-100">
             <div className="alert alert-primary alert-dismissible fade show data-access-announce d-flex align-items-center justify-content-between w-100" role="alert">
               <span className="data-access-announce-content">
-                <strong>
+                <h5>
                   MoTrPAC data release 1.0 is here! Visit the&nbsp;
                   <Link to="/data-access" className="inline-link">Data Access</Link>
-                  &nbsp;page to learn more and register for accessing the data.
-                </strong>
+                  &nbsp;page to learn more.
+                </h5>
               </span>
               <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
