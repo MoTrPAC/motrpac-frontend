@@ -8,7 +8,8 @@ import IconSet from '../lib/iconSet';
 /**
  * Renders the data release UIs
  *
- * @param {Boolean} isAuthenticated   Redux state for user's authentication status.
+ * @param {Boolean} isAuthenticated Redux state for user's authentication status.
+ * @param {Object}  profile         Redux state for authenticated user's info.
  *
  * @returns {object} JSX representation of data release page elements.
  */
@@ -55,7 +56,7 @@ export function ReleasePage({
   // Render external release view if user type is 'external'
   if (userType === 'external') {
     return (
-      <div className="col-md-9 ml-sm-auto col-lg-10 px-4 dataReleasePage">
+      <div className="col-md-9 ml-sm-auto col-lg-10 px-4 dataReleasePage external">
         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 border-bottom">
           <div className="page-title" style={{ backgroundImage: `url(${IconSet.InternalDataRelease})` }}>
             <h3>Data Releases</h3>
@@ -68,7 +69,7 @@ export function ReleasePage({
 
   // Render internal release view by default
   return (
-    <div className="col-md-9 ml-sm-auto col-lg-10 px-4 dataReleasePage">
+    <div className="col-md-9 ml-sm-auto col-lg-10 px-4 dataReleasePage internal">
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 border-bottom">
         <div className="page-title" style={{ backgroundImage: `url(${IconSet.InternalDataRelease})` }}>
           <h3>Data Releases</h3>
@@ -80,18 +81,29 @@ export function ReleasePage({
               className={`btn btn-sm btn-outline-primary ${currentView === 'internal' ? 'active' : ''}`}
               onClick={handleViewChange.bind(this, 'internal')}
             >
-              Internal Release
+              <span className="d-flex align-items-center">
+                <i className="material-icons internal-icon">person</i>
+                Internal Release
+              </span>
             </button>
             <button
               type="button"
               className={`btn btn-sm btn-outline-primary ${currentView === 'external' ? 'active' : ''}`}
               onClick={handleViewChange.bind(this, 'external')}
             >
-              External Release
+              <span className="d-flex align-items-center">
+                <i className="material-icons external-icon">people_alt</i>
+                External Release
+              </span>
             </button>
           </div>
           <div className="btn-group" role="group" aria-label="Search button group">
-            <Link className="advSearchBtn btn btn-sm btn-outline-primary" to="/search">Search Data</Link>
+            <Link className="advSearchBtn btn btn-sm btn-outline-primary" to="/search">
+              <span className="d-flex align-items-center">
+                <i className="material-icons search-icon">search</i>
+                Search Data
+              </span>
+            </Link>
           </div>
         </div>
       </div>
