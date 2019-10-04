@@ -346,7 +346,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                       required
                       onChange={e => handleFormChange(e.currentTarget.value, e)}
                       value={formValues.eSignature}
-                      pattern="^[A-Za-z]{2,60}$"
+                      pattern="^[A-Za-z\s]{2,60}$"
                       onBlur={validateOnBlur}
                     />
                     <div className="invalid-feedback">
@@ -381,7 +381,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           required
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.lastName}
-                          pattern="^[A-Za-z]{2,30}$"
+                          pattern="^[A-Za-z\s]{2,30}$"
                           onBlur={validateOnBlur}
                         />
                         <div className="invalid-feedback">
@@ -397,7 +397,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           required
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.firstName}
-                          pattern="^[A-Za-z]{2,30}$"
+                          pattern="^[A-Za-z\s]{2,30}$"
                           onBlur={validateOnBlur}
                         />
                         <div className="invalid-feedback">
@@ -444,7 +444,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           required
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.institution}
-                          pattern="^[A-Za-z]{2,50}$"
+                          pattern="^[A-Za-z\s]{2,50}$"
                           onBlur={validateOnBlur}
                         />
                         <div className="invalid-feedback">
