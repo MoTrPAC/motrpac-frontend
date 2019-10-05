@@ -17,6 +17,9 @@ const emojiMap = {
 /**
  * Renders UIs for individual release items
  *
+ * @param {Object} profile      Redux state for authenticated user's info.
+ * @param {String} currentView  Prop to flag internal or external release view.
+ *
  * @returns {object} JSX representation of each data release item.
  */
 // FIXME: This component needs to be refactored and broken up into smaller modules
@@ -31,6 +34,7 @@ function ReleaseEntry({ profile, currentView }) {
   const [visibleReleases, setVisibleReleases] = useState(1);
 
   const releases = releaseData.filter(release => release.target === currentView);
+  const userType = profile.user_metadata && profile.user_metadata.userType;
 
   // Event handler for "Show prior releases" button
   const toggleViewReleaseLength = (e) => {
@@ -269,14 +273,14 @@ function ReleaseEntry({ profile, currentView }) {
     if (releases && releases.length) {
       entries = releases.slice(0, visibleReleases).map((release, idx) => {
         return (
-          <div key={release.version} className="release-entry-container">
+          <div key={release.version} className={`release-entry-container ${currentView}`}>
             <div className="release-entry-item pt-2 pt-md-0 pb-3 pb-md-0 clearfix label-latest">
               {/* release timeline marker */}
               <div className="d-none d-md-block flex-wrap flex-items-center col-12 col-md-3 col-lg-2 px-md-3 pb-1 pb-md-4 pt-md-4 float-left text-md-right v-align-top release-timeline">
                 {idx < 1
                   ? (
                     <div className="flex-auto flex-self-start">
-                      <span className="badge badge-success">Latest release</span>
+                      <span className={`badge ${currentView === 'internal' ? 'badge-success' : 'badge-warning'}`}>Latest release</span>
                     </div>
                   )
                   : null}
@@ -285,6 +289,14 @@ function ReleaseEntry({ profile, currentView }) {
                     <i className="material-icons release-version-marker-icon">local_offer</i>
                     <span className="release-version-marker">{`v${release.version}`}</span>
                   </li>
+                  {userType === 'internal'
+                    ? (
+                      <li className="d-block mb-1 d-flex align-items-center justify-content-end">
+                        <i className="material-icons release-version-marker-icon">local_offer</i>
+                        <span className="release-view">{currentView}</span>
+                      </li>
+                    )
+                    : null}
                   <li className="d-block mb-1 d-flex align-items-center justify-content-end">
                     <i className="material-icons release-date-marker-icon">calendar_today</i>
                     <span className="release-date">{release.date}</span>
