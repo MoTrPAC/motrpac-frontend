@@ -183,7 +183,10 @@ export function DataAccessPage({ isAuthenticated, profile }) {
         givenName: formValues.firstName,
         familyName: formValues.lastName,
         institution: formValues.institution,
+        isPrincipalInvestigator: formValues.isPrincipalInvestigator,
+        PIName: formValues.PIName,
         hasAccess: true,
+        hasConsented: true,
         userType: 'external',
       },
     };
