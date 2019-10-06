@@ -108,7 +108,7 @@
     "date": "October 15, 2019",
     "target": "internal",
     "description": "This is an internal patch release containing the complete set of phenotype data released to the BIC by DMAQC. Web download is not available to RRBS due to large file sizes. You may choose to download different bundled assay quantitative results and the phenotypic data separately, or all of them together using command-line.",
-    "readme_file_location": "https://docs.google.com/document/d/1t0mZvhMwd2zYxGN84qg7H_8ORQTFoLTqIwYIjWOOdBY",
+    "readme_file_location": "https://docs.google.com/document/d/1ExXyt_HiscTOgF9eDq-KrdcE6V2jAqTEKDfQdfHJPlU",
     "result_files": {
       "bucket_name": "motrpac-internal-release1-2-results",
       "data_types": [
@@ -160,7 +160,7 @@
           "tooltip_id": "data-phenotype-1-2",
           "object_path": "/phenotype",
           "object_zipfile_path": "/phenotype.tar.gz",
-          "object_zipfile_size": "266 KB"
+          "object_zipfile_size": "2 MB"
         },
         {
           "type": "all",
@@ -170,7 +170,7 @@
           "tooltip_id": "data-all-1-2",
           "object_path": "",
           "object_zipfile_path": "/all.tar.gz",
-          "object_zipfile_size": "572 MB"
+          "object_zipfile_size": "574 MB"
         }
       ]
     },
