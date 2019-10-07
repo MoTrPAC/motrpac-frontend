@@ -90,9 +90,10 @@ export function LandingPage({ isAuthenticated, profile }) {
             <div className="alert alert-primary alert-dismissible fade show data-access-announce d-flex align-items-center justify-content-between w-100" role="alert">
               <span className="data-access-announce-content">
                 <h5>
-                  MoTrPAC data release 1.0 is here! Visit the&nbsp;
+                  MoTrPAC data release 1.0 is now available! There is data from 5 different
+                  tissues following an acute exercise bout in rats. Visit the&nbsp;
                   <Link to="/data-access" className="inline-link">Data Access</Link>
-                  &nbsp;page to learn more.
+                  &nbsp;page to learn more and register for access.
                 </h5>
               </span>
               <button type="button" className="close" data-dismiss="alert" aria-label="Close">
