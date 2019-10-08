@@ -198,7 +198,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
       <div className={`${!isAuthenticated ? 'container' : ''}`}>
         <form id="dataAccessRegistration" name="dataAccessRegistration" noValidate>
           <div className="page-title pt-3 pb-2 border-bottom">
-            <h3>MoTrPAC Data External Release</h3>
+            <h3>MoTrPAC External Data Release</h3>
           </div>
           <div className="alert alert-dark alert-consortia-members-access" role="alert">
             MoTrPAC consortium members are not required to fill out the following data use agreement
@@ -212,35 +212,64 @@ export function DataAccessPage({ isAuthenticated, profile }) {
           </div>
           <div className="data-access-content">
             <p>
-              Some language about the MoTrPAC data in principal and methodologies in producing these data.
-              ut labore et dolore magna aliqua. Ut enim ad minim veniam, quiepakis nostrud exercitation
-              ullamco laboris nsi ut aliquip ex ea comepmodo consetquat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cfgillum dolore eutpe fugiat nulla pariatur. Excepteur
-              sint occaecat cupidatat non proident, sunt inpeku culpa qui officia deserunt mollit anim id est laborum.
+              MoTrPAC (
+              <a href="https://commonfund.nih.gov/moleculartransducers" target="_blank" rel="noopener noreferrer">
+                Molecular Transducers of Physical Activity Consortium
+              </a>
+              ) is national research
+              consortium funded by the&nbsp;
+              <a href="https://commonfund.nih.gov" target="_blank" rel="noopener noreferrer">NIH Common Fund</a>
+              . MoTrPAC is designed to discover and perform
+              preliminary characterization of the range of molecular transducers
+              (the "molecular map") that underlie the effects of physical activity. The study
+              consists of acute and long-term exercise interventions in humans and rats, where
+              multiple tissues are collected at multiple time points.
             </p>
+            <h5>MoTrPAC study documents</h5>
+            <table className="table table-bordered table-sm document-list">
+              <thead>
+                <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope="row">
+                    <a href="">PASS Protocol Proposal for MoTrPAC Steering Committee</a>
+                  </td>
+                  <td>TBD</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <div className="section-title mt-4 mb-2">
             <h5>Accessing the MoTrPAC data</h5>
           </div>
           <div className="data-access-content">
             <p>
-              Some language describing the process of obtaining the MoTrPAC data through the data hub portal, such
-              as starting with the registration and signing the user agreement, etc. ut labore et dolore magna.
-              ullamco laboris nsi ut aliquip ex ea comepmodo consetquat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cfgillum dolore eutpe fugiat nulla pariatur. Excepteur
-              sint occaecat cupidatat non proident, sunt inpeku culpa qui officia deserunt mollit anim id est laborum.
+            To access MoTrPAC data, please register and fill out the data use agreement here
+            (see below). Assay-specific results and associated metadata, QC reports and animal
+            phenotype data can be downloaded as separate files or as a combined file from the
+            MoTrPAC Data Hub. Please note that during the embargo period, until January 15th
+            2021, data can only be used for analyses supporting grant submissions, and not be
+            used in abstracts, manuscripts, preprints or presentations.
             </p>
           </div>
           <div className="section-title mt-4 mb-2">
-            <h5>Data included in the release</h5>
+            <h5>Data included in the releases</h5>
           </div>
           <div className="data-access-content">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-              ut labore et dolore magna aliqua. Ut enim ad minim veniam, quiepakis nostrud exercitation
-              ullamco laboris nsi ut aliquip ex ea comepmodo consetquat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cfgillum dolore eutpe fugiat nulla pariatur. Excepteur
-              sint occaecat cupidatat non proident, sunt inpeku culpa qui officia deserunt mollit anim id est laborum.
+              <span className="subhead">Release 1.0:</span>
+              This release contains data from 6-month old rats that performed an acute bout
+              of endurance exercise. For a full description of this study, see the PASS phase
+              1A study documentation. There is data from 5 different tissues collected at
+              multiple different time points after exercise. Untrained control animals from
+              2 time points are also included. The data includes phenotypic and -omic data
+              from multiple assays, including RNA sequencing, Reduced Representation
+              Bisulfite Sequencing (RRBS), proteomics, phosphoproteomics, acetylproteomics,
+              and targeted and untargeted metabolomics.
             </p>
           </div>
           <div className="card mb-3">

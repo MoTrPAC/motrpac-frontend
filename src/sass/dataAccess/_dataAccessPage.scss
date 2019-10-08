@@ -24,6 +24,15 @@
     }
   }
 
+  table.document-list {
+    font-size: 0.85rem;
+
+    th, td {
+      padding: 0.45rem 0.65rem;
+      vertical-align: middle;
+    }
+  }
+
   .inline-link-with-icon {
     display: inline-flex;
 
