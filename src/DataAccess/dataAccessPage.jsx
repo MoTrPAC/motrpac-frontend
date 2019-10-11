@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
+import axios from 'axios';
 import RegistrationResponse from './response';
+import IconSet from '../lib/iconSet';
+import StudyDocuments from './studyDocuments';
 
 const defaultFormValues = {
   dataUseAgreement1: false,
@@ -81,6 +84,21 @@ export function DataAccessPage({ isAuthenticated, profile }) {
           <RegistrationResponse status={auth0Status} />
         </div>
       </div>
+    );
+  }
+
+  // Handler to render study documents table rows
+  function renderStudyDocumentsTableRow(item) {
+    return (
+      <tr key={item.title} className="document-list-item">
+        <td>
+          <div className="d-flex align-items-center justify-content-start">
+            <img src={IconSet.PDF} alt="PDF" />
+            <a href={item.location} download>{item.title}</a>
+          </div>
+        </td>
+        <td>{item.description}</td>
+      </tr>
     );
   }
 
@@ -168,29 +186,20 @@ export function DataAccessPage({ isAuthenticated, profile }) {
   function handleSubmit() {
     const userObj = {
       email: formValues.emailAddress,
-      given_name: formValues.firstName,
-      family_name: formValues.lastName,
-      name: `${formValues.firstName} ${formValues.lastName}`,
-      nickname: formValues.firstName,
-      username: formValues.emailAddress.slice(0, formValues.emailAddress.indexOf('@')),
-      email_verified: false,
-      verify_email: true,
-      connection: 'Username-Password-Authentication',
-      password: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
-      user_metadata: {
-        name: `${formValues.firstName} ${formValues.lastName}`,
-        email: formValues.emailAddress,
-        givenName: formValues.firstName,
-        familyName: formValues.lastName,
-        institution: formValues.institution,
-        isPrincipalInvestigator: formValues.isPrincipalInvestigator,
-        PIName: formValues.PIName,
-        hasAccess: true,
-        hasConsented: true,
-        userType: 'external',
-      },
+      firstName: formValues.firstName,
+      lastName: formValues.lastName,
+      institution: formValues.institution,
+      isPrincipalInvestigator: formValues.isPrincipalInvestigator,
+      principalInvestigatorName: formValues.PIName,
+      dataUseIntent: formValues.dataUseIntent,
     };
-    console.log('Payload === ' + JSON.stringify(userObj));
+
+    return axios.post('https://my.api/user', userObj).then((response) => {
+      setAuth0Status(response.status);
+    }).catch((err) => {
+      setAuth0Status('internal-error');
+      console.log(`${err.error}: ${err.errorDescription}`);
+    });
   }
 
   return (
@@ -204,7 +213,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
             MoTrPAC consortium members are not required to fill out the following data use agreement
             and registration. Consortium members who already have registered accounts may access the
             released data upon login. Consortium members who don't have registered accounts and wish
-            to access the released, please contact&nbsp;
+            to access the data, please contact&nbsp;
             <a href="mailto:motrpac-helpdesk@lists.stanford.edu" className="inline-link-with-icon">
               motrpac-helpdesk@lists.stanford.edu
               <i className="material-icons email-icon">mail</i>
@@ -213,38 +222,25 @@ export function DataAccessPage({ isAuthenticated, profile }) {
           <div className="data-access-content">
             <p>
               MoTrPAC (
-              <a href="https://commonfund.nih.gov/moleculartransducers" target="_blank" rel="noopener noreferrer">
+              <a href="https://commonfund.nih.gov/moleculartransducers" className="inline-link-with-icon" target="_blank" rel="noopener noreferrer">
                 Molecular Transducers of Physical Activity Consortium
+                <i className="material-icons external-linkout-icon">open_in_new</i>
               </a>
               ) is national research
               consortium funded by the&nbsp;
-              <a href="https://commonfund.nih.gov" target="_blank" rel="noopener noreferrer">NIH Common Fund</a>
+              <a href="https://commonfund.nih.gov" className="inline-link-with-icon" target="_blank" rel="noopener noreferrer">
+                NIH Common Fund
+                <i className="material-icons external-linkout-icon">open_in_new</i>
+              </a>
               . MoTrPAC is designed to discover and perform
               preliminary characterization of the range of molecular transducers
               (the "molecular map") that underlie the effects of physical activity. The study
               consists of acute and long-term exercise interventions in humans and rats, where
               multiple tissues are collected at multiple time points.
             </p>
-            <h5>MoTrPAC study documents</h5>
-            <table className="table table-bordered table-sm document-list">
-              <thead>
-                <tr>
-                  <th scope="col">Title</th>
-                  <th scope="col">Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td scope="row">
-                    <a href="">PASS Protocol Proposal for MoTrPAC Steering Committee</a>
-                  </td>
-                  <td>TBD</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
           <div className="section-title mt-4 mb-2">
-            <h5>Accessing the MoTrPAC data</h5>
+            <h5 className="mt-4">Accessing the MoTrPAC data</h5>
           </div>
           <div className="data-access-content">
             <p>
@@ -257,23 +253,39 @@ export function DataAccessPage({ isAuthenticated, profile }) {
             </p>
           </div>
           <div className="section-title mt-4 mb-2">
-            <h5>Data included in the releases</h5>
+            <h5 className="mt-4">Data included in the releases</h5>
           </div>
           <div className="data-access-content">
             <p>
               <span className="subhead">Release 1.0:</span>
               This release contains data from 6-month old rats that performed an acute bout
-              of endurance exercise. For a full description of this study, see the PASS phase
-              1A study documentation. There is data from 5 different tissues collected at
-              multiple different time points after exercise. Untrained control animals from
-              2 time points are also included. The data includes phenotypic and -omic data
-              from multiple assays, including RNA sequencing, Reduced Representation
+              of endurance exercise. For a full description of this study, see the animal
+              protocol (Phase 1A) study documentation. There is data from 5 different tissues
+              collected at multiple different time points after exercise. Untrained control
+              animals from 2 time points are also included. The data includes phenotypic
+              and -omic data from multiple assays, including RNA sequencing, Reduced Representation
               Bisulfite Sequencing (RRBS), proteomics, phosphoproteomics, acetylproteomics,
               and targeted and untargeted metabolomics.
             </p>
           </div>
-          <div className="card mb-3">
-            <div className="card-header">Data Use Agreement and Registration</div>
+          <div className="card mb-3 border-secondary motrpac-study-documents">
+            <div className="card-header bg-secondary text-light">MoTrPAC study documents</div>
+            <div className="card-body">
+              <table className="table table-striped table-sm document-list">
+                <thead>
+                  <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {StudyDocuments.map(item => renderStudyDocumentsTableRow(item))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div className="card mb-3 border-secondary">
+            <div className="card-header bg-secondary text-light">Data Use Agreement and Registration</div>
             <div className="card-body">
               {/* Data use agreement section */}
               <h5 className="card-title pt-1 pb-2">Data Use Agreement</h5>
