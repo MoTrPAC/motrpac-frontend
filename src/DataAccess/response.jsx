@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
  */
 function RegistrationResponse({ status }) {
   // Render error message if the Auth0 post request fails
-  if (status === 'error') {
+  if (status === 'error' || status === 'internal-error') {
     return (
       <React.Fragment>
         <div className="page-title pt-3 pb-2 border-bottom">
