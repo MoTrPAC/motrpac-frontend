@@ -18,7 +18,7 @@
           "tooltip_id": "data-epigenomics-1-0",
           "object_path": "/epigenomics",
           "object_zipfile_path": "/epigenomics.tar.gz",
-          "object_zipfile_size": "203 MB"
+          "object_zipfile_size": "658 KB"
         },
         {
           "type": "transcriptomics",
@@ -28,7 +28,7 @@
           "tooltip_id": "data-transcriptomics-1-0",
           "object_path": "/transcriptomics",
           "object_zipfile_path": "/transcriptomics.tar.gz",
-          "object_zipfile_size": "4 GB"
+          "object_zipfile_size": "50 MB"
         },
         {
           "type": "metabolomics_targeted",
@@ -38,7 +38,7 @@
           "tooltip_id": "data-metabolomics_targeted-1-0",
           "object_path": "/metabolomics_targeted",
           "object_zipfile_path": "/metabolomics_targeted.tar.gz",
-          "object_zipfile_size": "94 MB"
+          "object_zipfile_size": "658 KB"
         },
         {
           "type": "metabolomics_untargeted",
@@ -48,7 +48,7 @@
           "tooltip_id": "data-metabolomics_untargeted-1-0",
           "object_path": "/metabolomics_untargeted",
           "object_zipfile_path": "/metabolomics_untargeted.tar.gz",
-          "object_zipfile_size": "94 MB"
+          "object_zipfile_size": "73 MB"
         },
         {
           "type": "proteomics",
@@ -58,7 +58,7 @@
           "tooltip_id": "data-proteomics-1-0",
           "object_path": "/proteomics",
           "object_zipfile_path": "/proteomics.tar.gz",
-          "object_zipfile_size": "274 MB"
+          "object_zipfile_size": "268 MB"
         },
         {
           "type": "phenotype",
@@ -68,7 +68,7 @@
           "tooltip_id": "data-phenotype-1-0",
           "object_path": "/phenotype",
           "object_zipfile_path": "/phenotype.tar.gz",
-          "object_zipfile_size": "266 KB"
+          "object_zipfile_size": "269 KB"
         },
         {
           "type": "all",
