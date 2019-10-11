@@ -154,10 +154,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
       'dataUseAgreement5',
       'dataUseAgreement6',
     ];
-    const uncheckboxes = checkboxes.filter((checkbox) => {
-      const checkboxEl = document.querySelector(`#${checkbox}`);
-      if (!checkboxEl.checked) return checkbox;
-    });
+    const uncheckboxes = checkboxes.filter(checkbox => !formValues[checkbox]);
     if (uncheckboxes.length) {
       setCheckboxAlert(true);
     } else {
