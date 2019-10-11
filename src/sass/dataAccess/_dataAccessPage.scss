@@ -24,12 +24,31 @@
     }
   }
 
-  table.document-list {
-    font-size: 0.85rem;
+  .motrpac-study-documents {
+    .card-body {
+      padding: 0;
+    }
 
-    th, td {
-      padding: 0.45rem 0.65rem;
-      vertical-align: middle;
+    table.document-list {
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-bottom: 0;
+  
+      th, td {
+        padding: 0.45rem 0.65rem;
+        vertical-align: middle;
+      }
+  
+      img {
+        margin-right: 0.35rem;
+        width: auto;
+        height: 1.0rem;
+        opacity: 0.75;
+      }
+  
+      a {
+        white-space: nowrap;
+      }
     }
   }
 
