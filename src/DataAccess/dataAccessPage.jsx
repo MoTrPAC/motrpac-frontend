@@ -191,7 +191,11 @@ export function DataAccessPage({ isAuthenticated, profile }) {
       dataUseIntent: formValues.dataUseIntent,
     };
 
-    return axios.post('https://my.api/user', userObj).then((response) => {
+    // post request configs
+    const serviceUrl = 'https://my.api/user';
+    const timeOutConfig = { timeout: 5000 };
+
+    return axios.post(serviceUrl, userObj, timeOutConfig).then((response) => {
       setAuth0Status(response.status);
     }).catch((err) => {
       setAuth0Status('internal-error');
