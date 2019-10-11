@@ -8,7 +8,7 @@ const StudyDocuments = [
   },
   {
     title: 'Case report forms',
-    location: `${baseUrl}/Case_Report_Forms.tar.gz`,
+    location: `${baseUrl}/Animal_Case_Report_Forms.tar.gz`,
     description: 'The forms for metadata collected for each animal.',
   },
   {
@@ -18,42 +18,37 @@ const StudyDocuments = [
   },
   {
     title: 'GET MOP',
-    location: `${baseUrl}/GET_MOP.pdf`,
+    location: `${baseUrl}/Animal_GET_MOP.pdf`,
     description: 'The procedures for the different molecular assays are described in the manual of procedures (MOPs). This one is for genomic, transcriptomic and epigenomic (GET) assays.',
   },
   {
     title: 'Proteomics MOP',
-    location: '',
+    location: `${baseUrl}/Animal_Proteomics_MOP.pdf`,
     description: 'Describes the procedures for the proteomics assays.',
   },
   {
     title: 'Metabolomics MOP',
-    location: `${baseUrl}/Metabolomics_MOP.pdf`,
+    location: `${baseUrl}/Animal_Metabolomics_MOP.pdf`,
     description: 'Describes the procedures for the metabolomics assays.',
   },
   {
-    title: 'Metabolomics data dictionary',
-    location: '',
-    description: 'Data dictionary used to label all identified compounds.',
-  },
-  {
     title: 'GET QC SOP',
-    location: `${baseUrl}/GET_QC_SOP.pdf`,
+    location: `${baseUrl}/Animal_GET_QC_SOP.pdf`,
     description: 'Describes the standard operating procedures (SOP) for the primary quality control of GET data.',
   },
   {
     title: 'Proteomics QC SOP',
-    location: `${baseUrl}/Proteomics_QC_SOP.pdf`,
+    location: `${baseUrl}/Animal_Proteomics_QC_SOP.pdf`,
     description: 'Describes the SOP for the primary quality control of proteomics data.',
   },
   {
     title: 'Metabolomics QC SOP',
-    location: '',
+    location: `${baseUrl}/Animal_Metabolomics_QC_SOP.pdf`,
     description: 'Describes the SOP for the primary quality control of metabolomics data.',
   },
   {
     title: 'Data use agreement',
-    location: `${baseUrl}/MoTrPAC_Data_Use_Agreement.pdf`,
+    location: `${baseUrl}/External_Release_1_MoTrPAC_Data_Use_Agreement.pdf`,
     description: 'Specifies the embargo period and describes the terms for using MoTrPAC data during this period.',
   },
 ];
