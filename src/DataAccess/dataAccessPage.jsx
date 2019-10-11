@@ -39,6 +39,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
   const [formValidated, setFormValidated] = useState(false);
   const [checkboxAlert, setCheckboxAlert] = useState(false);
   const [formValues, setFormValues] = useState(defaultFormValues);
+  const [requestPending, setRequestPending] = useState(false);
 
   useEffect(() => {
     // validate REQUIRED form values by subscribing to changes
@@ -181,6 +182,10 @@ export function DataAccessPage({ isAuthenticated, profile }) {
 
   // Handler to submit form
   function handleSubmit() {
+    // activate spinner UI in submit button
+    // while submit button is disabled
+    setRequestPending(true);
+
     const userObj = {
       email: formValues.emailAddress,
       firstName: formValues.firstName,
@@ -197,8 +202,12 @@ export function DataAccessPage({ isAuthenticated, profile }) {
 
     return axios.post(serviceUrl, userObj, timeOutConfig).then((response) => {
       setAuth0Status(response.status);
+      // revert submit button to default state
+      setRequestPending(false);
     }).catch((err) => {
       setAuth0Status('internal-error');
+      // revert submit button to default state
+      setRequestPending(false);
       console.log(`${err.error}: ${err.errorDescription}`);
     });
   }
@@ -644,9 +653,13 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                       type="button"
                       className="btn btn-primary registration-submit ml-3"
                       onClick={(e) => { e.preventDefault(); handleSubmit(); }}
-                      disabled={!formValidated}
+                      disabled={!formValidated || requestPending}
                     >
-                      Submit
+                      {requestPending
+                        ? (
+                          <img src={IconSet.Sync} className="in-progress-spinner" alt="Request in progress" />
+                        )
+                        : 'Submit'}
                     </button>
                   </div>
                 </div>
