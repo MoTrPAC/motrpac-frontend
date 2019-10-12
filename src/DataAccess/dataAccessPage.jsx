@@ -328,6 +328,11 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                     <i className="material-icons email-icon">mail</i>
                   </a>
                 </p>
+                <p className="card-text">
+                  MoTrPAC data is available for exploration by external researchers
+                  agreeing to the terms of this DUA. The terms for use of MoTrPAC
+                  data include:
+                </p>
                 <div className="form-row user-agreement-item">
                   <div className="form-group col-md-12">
                     <div className="form-check">
@@ -340,8 +345,12 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         checked={formValues.dataUseAgreement1}
                       />
                       <label className="form-check-label" htmlFor="dataUseAgreement1">
-                        Data <strong>CANNOT</strong> be used for <strong>submission</strong> of
-                        abstracts, manuscripts, preprints or presentations before the embargo deadline.
+                        Data&nbsp;
+                        <strong>CANNOT</strong>
+                        &nbsp;be used for&nbsp;
+                        <strong>submission</strong>
+                        &nbsp;of abstracts, manuscripts, preprints or
+                        presentations before the embargo deadline.
                       </label>
                     </div>
                   </div>
@@ -358,7 +367,9 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         checked={formValues.dataUseAgreement2}
                       />
                       <label className="form-check-label" htmlFor="dataUseAgreement2">
-                        Data <strong>CANNOT</strong> be publicly hosted or disseminated before the embargo deadline.
+                        Data&nbs;
+                        <strong>CANNOT</strong>
+                        &nbs;be publicly hosted or disseminated before the embargo deadline.
                       </label>
                     </div>
                   </div>
@@ -375,8 +386,10 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         checked={formValues.dataUseAgreement3}
                       />
                       <label className="form-check-label" htmlFor="dataUseAgreement3">
-                        The embargo period for any type of publication of MoTrPAC external release 1 data is 15
-                        months after external release 1: <strong>January 15, 2021</strong>.
+                        The embargo period for any type of publication of MoTrPAC
+                        External Release 1 data is 15 months after external release 1: through&nbsp;
+                        <strong>January 15, 2021</strong>
+                        .
                       </label>
                     </div>
                   </div>
@@ -393,7 +406,10 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         checked={formValues.dataUseAgreement4}
                       />
                       <label className="form-check-label" htmlFor="dataUseAgreement4">
-                        Data <strong>CAN</strong> be used for analyses supporting grant submissions prior to the embargo deadline.
+                        Data&nbsp;
+                        <strong>CAN</strong>
+                        &nbsp;be used for analyses supporting grant submissions prior
+                        to the embargo deadline.
                       </label>
                     </div>
                   </div>
@@ -410,16 +426,21 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         checked={formValues.dataUseAgreement5}
                       />
                       <label className="form-check-label" htmlFor="dataUseAgreement5">
-                        After the embargo period, Recipients and their Agents agree that in publications using&nbsp;
-                        <strong>any</strong> data from MoTrPAC public use data sets they will acknowledge MoTrPAC as the source
-                        of data, including the version number of the data sets used.
-                          <ul>
-                            <li>
-                              Data used in the preparation of this article were obtained from the Molecular Transducers
-                              of Physical Activity Consortium (MoTrPAC) database, which is available for public access
-                              at motrpac-datahub.org. Specific datasets usedare [version numbers].
-                            </li>
-                          </ul>
+                        After the embargo period, Recipients and their Agents agree
+                        that in publications using&nbsp;
+                        <strong>any</strong>
+                        &nbsp;data from MoTrPAC public use data sets they will
+                        acknowledge MoTrPAC as the source of data, including the
+                        version number of the data sets used.
+                        <ul>
+                          <li>
+                            Data used in the preparation of this article were
+                            obtained from the Molecular Transducers of Physical
+                            Activity Consortium (MoTrPAC) database, which is
+                            available for public access at motrpac-data.org. Specific
+                            datasets used are [version numbers].
+                          </li>
+                        </ul>
                       </label>
                     </div>
                   </div>
@@ -436,8 +457,9 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         checked={formValues.dataUseAgreement6}
                       />
                       <label className="form-check-label" htmlFor="dataUseAgreement6">
-                        Recipients agree to notify MoTrPAC of articles published using MoTrPAC data so that
-                        publications can be tracked and referenced on the MoTrPAC public website. Please
+                        Recipients agree to notify MoTrPAC of articles published
+                        using MoTrPAC data so that publications can be tracked
+                        and referenced on the MoTrPAC public website. Please
                         contact MoTrPAC at&nbsp;
                         <a href="mailto:MoTrPAC-ACC@aging.ufl.edu" className="inline-link-with-icon">
                           MoTrPAC-ACC@aging.ufl.edu
@@ -448,16 +470,18 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                   </div>
                 </div>
                 <p className="card-text">
-                  <span className="subhead">Citing MoTrPAC data in publications:</span>
+                  <span className="subhead">Citing MoTrPAC data in publications example:</span>
                   The Molecular Transducers of Physical Activity Consortium (MoTrPAC). External
-                  Data Release X.X. MoTrPAC DataHub. MoTrPAC Bioinformatics Center. Version
-                  release date. Version number. motrpac-data.org/releases/ [###path.html]
+                  Data Release.&nbsp;
+                  <em>MoTrPAC Data Hub</em>
+                  . MoTrPAC Bioinformatics Center. October 15, 2019. Version 1.0.&nbsp;
+                  motrpac-data.org/data-access
                 </p>
                 <p className="card-text">
                   <em>Optional:</em>
-                  &nbsp;MoTrPAC investigators welcome collaboration with external investigators. To be
-                  able to identify common analysis interests, please provide an outline of your
-                  plans for the data.
+                  &nbsp;MoTrPAC investigators welcome collaboration with external
+                  investigators. To be able to identify common analysis interests,
+                  please provide an outline of your plans for the data.
                 </p>
                 <p className="card-text">
                   If you have questions, please contact&nbsp;
