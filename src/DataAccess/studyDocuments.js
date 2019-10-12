@@ -13,7 +13,7 @@ const StudyDocuments = [
   },
   {
     title: 'Sample tracking',
-    location: '',
+    location: `${baseUrl}/Animal_Sample_Tracking.pdf`,
     description: 'Describes the sample tracking and shipping system.Here you can find the basics of the sample labelling system, how the samples are shipped to the MotrPAC biorepository, and then to the chemical analysis sites for specific assays. This document also describes how the molecular data is transferred to the bioinformatics center of MoTrPAC.',
   },
   {
