@@ -52,7 +52,7 @@ function HumanGeneMetaAnalysis() {
             <tbody>
               {Object.entries(geneObjClone).map(([key, value]) => {
                 return (
-                  <tr>
+                  <tr key={key}>
                     <th scope="row">{`${key}:`}</th>
                     <td>{!Number.isNaN(classificationMathRound(Number(value), 2)) ? classificationMathRound(Number(value), 2) : value}</td>
                   </tr>
