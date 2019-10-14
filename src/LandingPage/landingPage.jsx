@@ -176,9 +176,8 @@ export function LandingPage({ isAuthenticated, profile }) {
             <div className="content col-12 col-md-6">
               <h3>Multi-Omics</h3>
               <p>
-                MoTrPAC encourages investigators to develop ancillary studies (AS) in
-                conjunction with the MoTrPAC study and to involve other investigators, within
-                and outside of MoTrPAC.
+                MoTrPAC integrates multi-omics data (genomics, proteomics, metabolomics, and
+                more) to reveal a comprehensive map of molecular transducers of physical activity.
               </p>
               <a href="https://motrpac.org/ancillarystudyguidelines.cfm" className="btn btn-primary" role="button" target="_new">READ MORE</a>
             </div>
