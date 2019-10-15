@@ -8,7 +8,36 @@ import PropTypes from 'prop-types';
  *
  * @returns {object} JSX representation of the registration response page
  */
-function RegistrationResponse({ status }) {
+function RegistrationResponse({ status, errMsg }) {
+  // Render Auth0-specific 'user already exists' message
+  function renderAuth0Error() {
+    return (
+      <p>
+        User already exists. Please contact&nbsp;
+        <a href="mailto:motrpac-helpdesk@lists.stanford.edu" className="inline-link-with-icon">
+          motrpac-helpdesk@lists.stanford.edu
+          <i className="material-icons email-icon">mail</i>
+        </a>
+        &nbsp;if you believe this is incorrect.
+      </p>
+    );
+  }
+
+  // Render generic message
+  function renderGenericError() {
+    return (
+      <p>
+        An error occurred in the registration process.
+        Please contact&nbsp;
+        <a href="mailto:motrpac-helpdesk@lists.stanford.edu" className="inline-link-with-icon">
+          motrpac-helpdesk@lists.stanford.edu
+          <i className="material-icons email-icon">mail</i>
+        </a>
+        &nbsp;to report this problem.
+      </p>
+    );
+  }
+
   // Render error message if the Auth0 post request fails
   if (status === 'error' || status === 'internal-error') {
     return (
@@ -17,15 +46,7 @@ function RegistrationResponse({ status }) {
           <h3>Registration Incomplete</h3>
         </div>
         <div className="data-access-content">
-          <p>
-            An error occurred in the registration process.
-            Please contact&nbsp;
-            <a href="mailto:motrpac-helpdesk@lists.stanford.edu" className="inline-link-with-icon">
-              motrpac-helpdesk@lists.stanford.edu
-              <i className="material-icons email-icon">mail</i>
-            </a>
-            &nbsp;to report this problem.
-          </p>
+          {errMsg && errMsg === 'user already exists' ? renderAuth0Error() : renderGenericError()}
         </div>
       </React.Fragment>
     );
@@ -56,10 +77,12 @@ function RegistrationResponse({ status }) {
 
 RegistrationResponse.propTypes = {
   status: PropTypes.string,
+  errMsg: PropTypes.string,
 };
 
 RegistrationResponse.defaultProps = {
   status: null,
+  errMsg: null,
 };
 
 export default RegistrationResponse;

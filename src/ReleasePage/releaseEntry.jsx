@@ -4,6 +4,7 @@ import axios from 'axios';
 import { TrackEvent } from '../GoogleAnalytics/googleAnalytics';
 import IconSet from '../lib/iconSet';
 import ToolTip from '../lib/ui/tooltip';
+import StudyDocumentsTable from '../lib/studyDocumentsTable';
 
 const releaseData = require('./releases');
 
@@ -421,29 +422,22 @@ function ReleaseEntry({ profile, currentView }) {
                       <React.Fragment>
                         <h6 className="additional-release-download-header">Documentation</h6>
                         <div className="release-documentation-section">
-                          <p>
-                            <a
-                              href="https://www.motrpac.org/secure/documents/dspList.cfm?documentFolderCurrent=BEC8E9C5-C740-4D8F-91F2-5977E98CF6A0"
-                              className="inline-link-with-icon"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              Manuals of Procedures for Preclinical Animal Study Sites
-                              <i className="material-icons external-linkout-icon">open_in_new</i>
-                            </a>
-                            &nbsp;(login required)
-                          </p>
-                          <p>
-                            <a
-                              href="https://www.motrpac.org/actDocumentDownload.cfm?docGUID=A31CDD1F-8A59-41D9-BABA-125B37A39BF5"
-                              className="inline-link-with-icon"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              Protocols for Preclinical Animal Study Sites
-                              <i className="material-icons external-linkout-icon">open_in_new</i>
-                            </a>
-                          </p>
+                          <StudyDocumentsTable />
+                          {currentView === 'internal'
+                            ? (
+                              <p>
+                                <a
+                                  href="https://www.motrpac.org/secure/documents/dspList.cfm?documentFolderCurrent=BEC8E9C5-C740-4D8F-91F2-5977E98CF6A0"
+                                  className="inline-link-with-icon"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  Manuals of Procedures for Preclinical Animal Study Sites
+                                  <i className="material-icons external-linkout-icon">open_in_new</i>
+                                </a>
+                                &nbsp;(login required)
+                              </p>
+                            ) : null}
                         </div>
                       </React.Fragment>
                     )
