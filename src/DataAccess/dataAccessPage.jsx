@@ -7,7 +7,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import axios from 'axios';
 import RegistrationResponse from './response';
 import IconSet from '../lib/iconSet';
-import StudyDocuments from './studyDocuments';
+import StudyDocumentsTable from '../lib/studyDocumentsTable';
 
 const defaultFormValues = {
   dataUseAgreement1: false,
@@ -87,21 +87,6 @@ export function DataAccessPage({ isAuthenticated, profile }) {
           <RegistrationResponse status={auth0Status} errMsg={auth0Error} />
         </div>
       </div>
-    );
-  }
-
-  // Handler to render study documents table rows
-  function renderStudyDocumentsTableRow(item) {
-    return (
-      <tr key={item.title} className="document-list-item">
-        <td>
-          <div className="d-flex align-items-center justify-content-start">
-            <img src={IconSet.PDF} alt="PDF" />
-            <a href={item.location} download target="_blank" rel="noopener noreferrer">{item.title}</a>
-          </div>
-        </td>
-        <td>{item.description}</td>
-      </tr>
     );
   }
 
@@ -289,22 +274,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
               and targeted and untargeted metabolomics.
             </p>
           </div>
-          <div className="card mb-3 border-secondary motrpac-study-documents">
-            <div className="card-header bg-secondary text-light">MoTrPAC study documents</div>
-            <div className="card-body">
-              <table className="table table-striped table-sm document-list">
-                <thead>
-                  <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {StudyDocuments.map(item => renderStudyDocumentsTableRow(item))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <StudyDocumentsTable />
           <div className="card mb-3 border-secondary">
             <div className="card-header bg-secondary text-light">Data Use Agreement and Registration</div>
             <div className="card-body">
