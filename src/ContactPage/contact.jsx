@@ -22,8 +22,8 @@ export function Contact({ isAuthenticated }) {
             <h5 className="card-header">Accessing Data</h5>
             <div className="card-body">
               <p className="card-text">
-                The first MoTrPAC public data release is now available. Please consent to
-                the embargo agreement and register for an account on the&nbsp;
+                The first MoTrPAC public data release is now available. Please agree to
+                the data use agreement and register for an account on the&nbsp;
                 <a href="/data-access" className="inline-link">Data Access</a>
                 &nbsp;page if you are interested in obtaining access to the data. For updates when
                 subsequent publicly accessible data become available, please contact

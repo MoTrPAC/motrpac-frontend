@@ -208,8 +208,8 @@ export function LandingPage({ isAuthenticated, profile }) {
           <div className="row">
             <div className="p-2 col-12 col-md-6 access-data-info">
               <h5>Accessing Data: </h5>
-              The first MoTrPAC public data release is now available. Please consent to
-              the embargo agreement and register for an account on the&nbsp;
+              The first MoTrPAC public data release is now available. Please agree to
+              the data use agreement and register for an account on the&nbsp;
               <a href="/data-access" className="inline-link">Data Access</a>
               &nbsp;page if you are interested in obtaining access to the data. For updates when
               subsequent publicly accessible data become available, please contact
