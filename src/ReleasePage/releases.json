@@ -179,10 +179,10 @@
         "bucket_name": "motrpac-internal-release1-raw-get"
       },
       "metabolomics": {
-        "bucket_name": "motrpac-internal-release1-2-raw-metabolomics"
+        "bucket_name": "motrpac-external-release1-raw-metabolomics-[targeted|untargeted]"
       },
       "proteomics": {
-        "bucket_name": "motrpac-internal-release1-2-raw-proteomics"
+        "bucket_name": "motrpac-external-release1-raw-proteomics"
       }
     },
     "intermediate_files": {
