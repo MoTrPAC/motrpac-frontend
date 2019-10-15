@@ -19,6 +19,7 @@
     "react-chartjs-2": "^2.7.4",
     "react-dom": "16.8.1",
     "react-ga": "^2.5.7",
+    "react-google-recaptcha": "^2.0.1",
     "react-particles-js": "^2.4.2",
     "react-redux": "6.0.0",
     "react-router-dom": "^4.3.1",

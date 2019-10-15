@@ -1,9 +1,209 @@
 [
   {
+    "label": "Release 1.0",
+    "emoji": "tada",
+    "version": "1.0",
+    "date": "October 15, 2019",
+    "target": "external",
+    "description": "This release contains data from 6-month old rats that performed an acute bout of endurance exercise. There is data from 5 different tissues collected at multiple different time points after exercise. Untrained control animals from 2 time points are also included. The data includes phenotypic and -omic data from multiple assays, including RNA sequencing, Reduced Representation Bisulfite Sequencing (RRBS), proteomics, phosphoproteomics, acetylproteomics, and targeted and untargeted metabolomics. You may choose to download different bundled assay quantitative results and the phenotypic data separately, or all of them together.",
+    "readme_file_location": "http://study-docs.motrpac-data.org/MoTrPAC_External_Data_Release_ReadMe.pdf",
+    "result_files": {
+      "bucket_name": "motrpac-external-release1-results",
+      "data_types": [
+        {
+          "type": "epigenomics",
+          "title": "Epigenomics data (metadata, QC and quantitative results)",
+          "icon": "DNA",
+          "icon_alt": "Epigenomics",
+          "tooltip_id": "data-epigenomics-1-0",
+          "object_path": "/epigenomics",
+          "object_zipfile_path": "/epigenomics.tar.gz",
+          "object_zipfile_size": "8 GB"
+        },
+        {
+          "type": "transcriptomics",
+          "title": "Transcriptomics data (metadata, QC and quantitative results)",
+          "icon": "DNA",
+          "icon_alt": "Transcriptomics",
+          "tooltip_id": "data-transcriptomics-1-0",
+          "object_path": "/transcriptomics",
+          "object_zipfile_path": "/transcriptomics.tar.gz",
+          "object_zipfile_size": "50 MB"
+        },
+        {
+          "type": "metabolomics_targeted",
+          "title": "Metabolomics Targeted data (metadata, QC and quantitative results)",
+          "icon": "Metabolite",
+          "icon_alt": "Metabolomics Targeted",
+          "tooltip_id": "data-metabolomics_targeted-1-0",
+          "object_path": "/metabolomics_targeted",
+          "object_zipfile_path": "/metabolomics_targeted.tar.gz",
+          "object_zipfile_size": "22 MB"
+        },
+        {
+          "type": "metabolomics_untargeted",
+          "title": "Metabolomics Untargeted data (metadata, QC and quantitative results)",
+          "icon": "Metabolite",
+          "icon_alt": "Metabolomics Untargeted",
+          "tooltip_id": "data-metabolomics_untargeted-1-0",
+          "object_path": "/metabolomics_untargeted",
+          "object_zipfile_path": "/metabolomics_untargeted.tar.gz",
+          "object_zipfile_size": "96 MB"
+        },
+        {
+          "type": "proteomics",
+          "title": "Proteomics data (metadata, QC and quantitative results)",
+          "icon": "Protein",
+          "icon_alt": "Proteomic",
+          "tooltip_id": "data-proteomics-1-0",
+          "object_path": "/proteomics",
+          "object_zipfile_path": "/proteomics.tar.gz",
+          "object_zipfile_size": "284 MB"
+        },
+        {
+          "type": "phenotype",
+          "title": "Phenotypic data",
+          "icon": "Gender",
+          "icon_alt": "Phenotypic",
+          "tooltip_id": "data-phenotype-1-0",
+          "object_path": "/phenotype",
+          "object_zipfile_path": "/phenotype.tar.gz",
+          "object_zipfile_size": "498 KB"
+        },
+        {
+          "type": "all",
+          "title": "All of the omics and phenotypic data",
+          "icon": "Globe",
+          "icon_alt": "All omics",
+          "tooltip_id": "data-all-1-0",
+          "object_path": "",
+          "object_zipfile_path": "/all.tar.gz",
+          "object_zipfile_size": "9 GB"
+        }
+      ]
+    },
+    "raw_files": {
+      "epigenomics": {
+        "bucket_name": "motrpac-external-release1-raw-epigenomics"
+      },
+      "transcriptomics": {
+        "bucket_name": "motrpac-external-release1-raw-transcriptomics"
+      },
+      "metabolomics-targeted": {
+        "bucket_name": "motrpac-external-release1-raw-metabolomics-targeted"
+      },
+      "metabolomics-untargeted": {
+        "bucket_name": "motrpac-external-release1-raw-metabolomics-untargeted"
+      },
+      "proteomics": {
+        "bucket_name": "motrpac-external-release1-raw-proteomics"
+      }
+    },
+    "documentation": false
+  },
+  {
+    "label": "Release 1.2",
+    "emoji": "zap",
+    "version": "1.2",
+    "date": "October 15, 2019",
+    "target": "internal",
+    "description": "This is an internal patch release containing the complete set of phenotype data released to the BIC by DMAQC. Web download is not available to RRBS due to large file sizes. You may choose to download different bundled assay quantitative results and the phenotypic data separately, or all of them together using command-line.",
+    "readme_file_location": "https://docs.google.com/document/d/1ExXyt_HiscTOgF9eDq-KrdcE6V2jAqTEKDfQdfHJPlU",
+    "result_files": {
+      "bucket_name": "motrpac-internal-release1-2-results",
+      "data_types": [
+        {
+          "type": "rna-seq",
+          "title": "RNA-seq data (metadata, QC and quantitative results)",
+          "icon": "DNA",
+          "icon_alt": "Genomic",
+          "tooltip_id": "data-rna-seq-1-2",
+          "object_path": "/rna-seq",
+          "object_zipfile_path": "/rna-seq.tar.gz",
+          "object_zipfile_size": "203 MB"
+        },
+        {
+          "type": "rrbs",
+          "title": "RRBS data (metadata, QC and quantitative results)",
+          "icon": "DNA",
+          "icon_alt": "Genomic",
+          "tooltip_id": "data-rrbs-1-2",
+          "object_path": "/rrbs",
+          "object_zipfile_path": null,
+          "object_zipfile_size": null
+        },
+        {
+          "type": "metabolomics",
+          "title": "Metabolomics data (metadata, QC and quantitative results)",
+          "icon": "Metabolite",
+          "icon_alt": "Metabolomic",
+          "tooltip_id": "data-metabolomics-1-2",
+          "object_path": "/metabolomics",
+          "object_zipfile_path": "/metabolomics.tar.gz",
+          "object_zipfile_size": "94 MB"
+        },
+        {
+          "type": "proteomics",
+          "title": "Proteomics data (metadata, QC and quantitative results)",
+          "icon": "Protein",
+          "icon_alt": "Proteomic",
+          "tooltip_id": "data-proteomics-1-2",
+          "object_path": "/proteomics",
+          "object_zipfile_path": "/proteomics.tar.gz",
+          "object_zipfile_size": "274 MB"
+        },
+        {
+          "type": "phenotype",
+          "title": "Phenotypic data",
+          "icon": "Gender",
+          "icon_alt": "Phenotypic",
+          "tooltip_id": "data-phenotype-1-2",
+          "object_path": "/phenotype",
+          "object_zipfile_path": "/phenotype.tar.gz",
+          "object_zipfile_size": "2 MB"
+        },
+        {
+          "type": "all",
+          "title": "All of the omics (without RRBS) and phenotypic data",
+          "icon": "Globe",
+          "icon_alt": "All omics",
+          "tooltip_id": "data-all-1-2",
+          "object_path": "",
+          "object_zipfile_path": "/all.tar.gz",
+          "object_zipfile_size": "574 MB"
+        }
+      ]
+    },
+    "raw_files": {
+      "get": {
+        "bucket_name": "motrpac-internal-release1-raw-get"
+      },
+      "metabolomics": {
+        "bucket_name": "motrpac-internal-release1-2-raw-metabolomics"
+      },
+      "proteomics": {
+        "bucket_name": "motrpac-internal-release1-2-raw-proteomics"
+      }
+    },
+    "intermediate_files": {
+      "get": {
+        "bucket_name": "motrpac-internal-release1-intermediate-get"
+      },
+      "metabolomics": {
+        "bucket_name": "motrpac-internal-release1-intermediate-metabolomics"
+      },
+      "proteomics": {
+        "bucket_name": "motrpac-internal-release1-intermediate-proteomics"
+      }
+    },
+    "documentation": true
+  },
+  {
     "label": "Release 1.1",
     "emoji": "sparkles",
     "version": "1.1",
     "date": "September 13, 2019",
+    "target": "internal",
     "description": "This is an internal patch release containing updated metabolomics and proteomics data from 6-month old rats. Web download is not available to RRBS due to large file sizes. You may choose to download different bundled assay quantitative results and the phenotypic data separately, or all of them together using command-line.",
     "readme_file_location": "https://docs.google.com/document/d/1t0mZvhMwd2zYxGN84qg7H_8ORQTFoLTqIwYIjWOOdBY",
     "result_files": {
@@ -93,13 +293,14 @@
         "bucket_name": "motrpac-internal-release1-intermediate-proteomics"
       }
     },
-    "documentation": true
+    "documentation": false
   },
   {
     "label": "Release 1.0 (Outdated)",
     "emoji": null,
     "version": "1.0",
     "date": "August 30, 2019",
+    "target": "internal",
     "description": "The early internal release consists of acute exercise data from 6-month old rats. Web download is not available to RRBS due to large file sizes. You may choose to download different bundled assay quantitative results and the phenotypic data separately, or all of them together using command-line.",
     "readme_file_location": "https://docs.google.com/document/d/1l-RtUNQr-FtC0aYe6rUXgJb_i5ZeWQiLp9nEjCl0QOk/",
     "result_files": {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import Particles from 'react-particles-js';
 import { useSpring, animated } from 'react-spring';
 import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-yellow_pipelineball_left.gif';
@@ -87,6 +87,19 @@ export function LandingPage({ isAuthenticated, profile }) {
       <main>
         <div className="container hero h-100">
           <div className="row hero-wrapper h-100">
+            <div className="alert alert-primary alert-dismissible fade show data-access-announce d-flex align-items-center justify-content-between w-100" role="alert">
+              <span className="data-access-announce-content">
+                <h5>
+                  MoTrPAC data release 1.0 is now available! There is data from 5 different
+                  tissues following an acute exercise bout in rats. Visit the&nbsp;
+                  <Link to="/data-access" className="inline-link">Data Access</Link>
+                  &nbsp;page to learn more and register for access.
+                </h5>
+              </span>
+              <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
             <div className="hero-image col-12 col-md-8 mx-auto">
               <img src={LogoAnimation} className="img-fluid" alt="Data Layer Runner" />
             </div>
@@ -163,9 +176,8 @@ export function LandingPage({ isAuthenticated, profile }) {
             <div className="content col-12 col-md-6">
               <h3>Multi-Omics</h3>
               <p>
-                MoTrPAC encourages investigators to develop ancillary studies (AS) in
-                conjunction with the MoTrPAC study and to involve other investigators, within
-                and outside of MoTrPAC.
+                MoTrPAC integrates multi-omics data (genomics, proteomics, metabolomics, and
+                more) to reveal a comprehensive map of molecular transducers of physical activity.
               </p>
               <a href="https://motrpac.org/ancillarystudyguidelines.cfm" className="btn btn-primary" role="button" target="_new">READ MORE</a>
             </div>

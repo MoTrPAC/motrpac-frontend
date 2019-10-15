@@ -18,6 +18,7 @@ export function Sidebar({
   resetDepth,
 }) {
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+  const userType = profile.user_metadata && profile.user_metadata.userType;
 
   if (!(isAuthenticated && hasAccess)) {
     return '';
@@ -45,13 +46,21 @@ export function Sidebar({
         </h6>
         <ul className="nav flex-column mb-2">
           <li className="nav-item">
-            <Link to="/analysis/animal" onClick={resetDepth} className="nav-link d-inline-flex align-items-center">
+            <Link
+              to="/analysis/animal"
+              onClick={resetDepth}
+              className={`nav-link d-inline-flex align-items-center ${userType === 'external' ? 'disabled-link' : ''}`}
+            >
               <span className="icon-Animal nav-link-icon" />
                 Animal
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/analysis/human" onClick={resetDepth} className="nav-link d-inline-flex align-items-center">
+            <Link
+              to="/analysis/human"
+              onClick={resetDepth}
+              className={`nav-link d-inline-flex align-items-center ${userType === 'external' ? 'disabled-link' : ''}`}
+            >
               <i className="material-icons nav-link-icon">person</i>
                 Human
             </Link>
@@ -69,7 +78,10 @@ export function Sidebar({
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/summary" className="nav-link d-inline-flex align-items-center">
+            <Link
+              to="/summary"
+              className={`nav-link d-inline-flex align-items-center ${userType === 'external' ? 'disabled-link' : ''}`}
+            >
               <i className="material-icons nav-link-icon">assessment</i>
                 Summary
             </Link>

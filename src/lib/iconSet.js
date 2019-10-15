@@ -11,6 +11,7 @@ import Rat from '../assets/icons/rat.png';
 import Vial from '../assets/icons/vial.png';
 import PDF from '../assets/icons/pdf.png';
 import Spinner from '../assets/icons/spinner.gif';
+import Sync from '../assets/icons/sync.png';
 import InternalDataRelease from '../assets/icons/data-release-internal.png';
 
 const IconSet = {
@@ -27,6 +28,7 @@ const IconSet = {
   Vial,
   PDF,
   Spinner,
+  Sync,
   InternalDataRelease,
 };
 

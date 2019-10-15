@@ -5,20 +5,25 @@ import { TrackEvent } from '../GoogleAnalytics/googleAnalytics';
 import IconSet from '../lib/iconSet';
 import ToolTip from '../lib/ui/tooltip';
 
-const releases = require('./releases');
+const releaseData = require('./releases');
 
 const emojiMap = {
   rocket: '🚀',
   sparkles: '✨',
+  zap: '⚡️',
+  tada: '🎉',
 };
 
 /**
  * Renders UIs for individual release items
  *
+ * @param {Object} profile      Redux state for authenticated user's info.
+ * @param {String} currentView  Prop to flag internal or external release view.
+ *
  * @returns {object} JSX representation of each data release item.
  */
 // FIXME: This component needs to be refactored and broken up into smaller modules
-function ReleaseEntry({ profile }) {
+function ReleaseEntry({ profile, currentView }) {
   const [fileUrl, setFileUrl] = useState('');
   const [fetching, setFetching] = useState(true);
   const [modalStatus, setModalStatus] = useState({
@@ -27,6 +32,9 @@ function ReleaseEntry({ profile }) {
     message: '',
   });
   const [visibleReleases, setVisibleReleases] = useState(1);
+
+  const releases = releaseData.filter(release => release.target === currentView);
+  const userType = profile.user_metadata && profile.user_metadata.userType;
 
   // Event handler for "Show prior releases" button
   const toggleViewReleaseLength = (e) => {
@@ -162,25 +170,25 @@ function ReleaseEntry({ profile }) {
   }
 
   // Handle modal download button click event
-  function handleGAEvent() {
-    TrackEvent('Release 1 Downloads', modalStatus.file, profile.user_metadata.name);
+  function handleGAEvent(releaseVersion) {
+    TrackEvent(`Release ${releaseVersion} Downloads (${currentView})`, modalStatus.file, profile.user_metadata.name);
   }
 
   // Render modal message
-  function renderModalMessage() {
+  function renderModalMessage(releaseVersion) {
     if (modalStatus.status !== 'success') {
       return <span className="modal-message">{modalStatus.message}</span>;
     }
 
     return (
       <span className="modal-message">
-        <a href={fileUrl} download onClick={handleGAEvent}>{modalStatus.message}</a>
+        <a href={fileUrl} download onClick={handleGAEvent(releaseVersion)}>{modalStatus.message}</a>
       </span>
     );
   }
 
   // Render modal
-  function renderModal() {
+  function renderModal(releaseVersion) {
     return (
       <div className="modal fade data-download-modal" id="dataDownloadModal" tabIndex="-1" role="dialog" aria-labelledby="dataDownloadModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered" role="document">
@@ -193,7 +201,7 @@ function ReleaseEntry({ profile }) {
             </div>
             <div className="modal-body">
               {!fetching
-                ? renderModalMessage() : <div className="loading-spinner"><img src={IconSet.Spinner} alt="" /></div>
+                ? renderModalMessage(releaseVersion) : <div className="loading-spinner"><img src={IconSet.Spinner} alt="" /></div>
               }
             </div>
             <div className="modal-footer">
@@ -216,22 +224,26 @@ function ReleaseEntry({ profile }) {
             <span>{item.title}</span>
           </div>
         </td>
-        <td className="release-data-download-link">
-          <div className="copy-to-clipboard-wrapper">
-            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-            <span
-              role="button"
-              tabIndex="-1"
-              className="copy-to-clipboard-button"
-              onClick={handleCopyClick.bind(this, objectPath, item.tooltip_id)}
-            >
-              <i className="material-icons release-data-download-icon">file_copy</i>
-            </span>
-            <ToolTip
-              content={renderTooltipContent(objectPath, item.tooltip_id)}
-            />
-          </div>
-        </td>
+        {currentView === 'internal'
+          ? (
+            <td className="release-data-download-link">
+              <div className="copy-to-clipboard-wrapper">
+                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+                <span
+                  role="button"
+                  tabIndex="-1"
+                  className="copy-to-clipboard-button"
+                  onClick={handleCopyClick.bind(this, objectPath, item.tooltip_id)}
+                >
+                  <i className="material-icons release-data-download-icon">file_copy</i>
+                </span>
+                <ToolTip
+                  content={renderTooltipContent(objectPath, item.tooltip_id)}
+                />
+              </div>
+            </td>
+          )
+          : null}
         {item.object_zipfile_path && item.object_zipfile_path.length
           ? (
             <td className="release-data-download-link">
@@ -261,14 +273,14 @@ function ReleaseEntry({ profile }) {
     if (releases && releases.length) {
       entries = releases.slice(0, visibleReleases).map((release, idx) => {
         return (
-          <div key={release.version} className="release-entry-container">
+          <div key={release.version} className={`release-entry-container ${currentView}`}>
             <div className="release-entry-item pt-2 pt-md-0 pb-3 pb-md-0 clearfix label-latest">
               {/* release timeline marker */}
               <div className="d-none d-md-block flex-wrap flex-items-center col-12 col-md-3 col-lg-2 px-md-3 pb-1 pb-md-4 pt-md-4 float-left text-md-right v-align-top release-timeline">
                 {idx < 1
                   ? (
                     <div className="flex-auto flex-self-start">
-                      <span className="badge badge-success">Latest release</span>
+                      <span className={`badge ${currentView === 'internal' ? 'badge-success' : 'badge-warning'}`}>Latest release</span>
                     </div>
                   )
                   : null}
@@ -277,6 +289,14 @@ function ReleaseEntry({ profile }) {
                     <i className="material-icons release-version-marker-icon">local_offer</i>
                     <span className="release-version-marker">{`v${release.version}`}</span>
                   </li>
+                  {userType === 'internal'
+                    ? (
+                      <li className="d-block mb-1 d-flex align-items-center justify-content-end">
+                        <i className="material-icons release-version-marker-icon">local_offer</i>
+                        <span className="release-view">{currentView}</span>
+                      </li>
+                    )
+                    : null}
                   <li className="d-block mb-1 d-flex align-items-center justify-content-end">
                     <i className="material-icons release-date-marker-icon">calendar_today</i>
                     <span className="release-date">{release.date}</span>
@@ -297,6 +317,18 @@ function ReleaseEntry({ profile }) {
                   <div className="card mb-3">
                     <div className="card-body">
                       <p className="release-description">{release.description}</p>
+                      {currentView === 'external'
+                        ? (
+                          <p className="release-description">
+                            To request for accessing the raw files of the different omics data, please contact&nbsp;
+                            <a href="mailto:motrpac-data-requests@lists.stanford.edu" className="inline-link-with-icon">
+                              motrpac-data-requests@lists.stanford.edu
+                              <i className="material-icons email-icon">mail</i>
+                            </a>
+                            &nbsp;and specify the omics, tissues, and assays you are interested in.
+                          </p>
+                        )
+                        : null}
                       <p className="release-description">
                         A&nbsp;
                         <a
@@ -320,7 +352,9 @@ function ReleaseEntry({ profile }) {
                         <thead className="thead-dark">
                           <tr className="table-head">
                             <th>Data type</th>
-                            <th>Command-line download</th>
+                            {currentView === 'internal'
+                              ? (<th>Command-line download</th>)
+                              : null}
                             <th>Web download</th>
                           </tr>
                         </thead>
@@ -328,54 +362,60 @@ function ReleaseEntry({ profile }) {
                           {release.result_files.data_types.map(item => renderDataTypeRow(release.result_files.bucket_name, item, release.version))}
                         </tbody>
                       </table>
-                      {renderModal()}
+                      {renderModal(release.version)}
                     </div>
                   </div>
-                  <h6 className="additional-release-download-header">Additional Downloads</h6>
-                  <div className="raw-files-download-section">
-                    <p className="d-block mb-2 d-flex align-items-center justify-content-start raw-files-download-option">
-                      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-                      <i
-                        role="button"
-                        tabIndex="-1"
-                        className="material-icons download-checkbox"
-                        data-toggle="collapse"
-                        data-target={`#raw-files-release-${idx}`}
-                        aria-expanded="false"
-                        aria-controls={`raw-files-release-${idx}`}
-                        id={`raw-files-release-${idx}-checkbox`}
-                        onClick={handleCheckboxEvent.bind(this, `raw-files-release-${idx}-checkbox`)}
-                      >
-                        check_box_outline_blank
-                      </i>
-                      <span>Raw files downloads</span>
-                    </p>
-                    <div className="collapse" id={`raw-files-release-${idx}`}>
-                      {renderRawFilesDownloadSectionContent(release.raw_files)}
-                    </div>
-                  </div>
-                  <div className="intermediate-files-download-section">
-                    <p className="d-block mb-2 d-flex align-items-center justify-content-start intermediate-files-download-option">
-                      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-                      <i
-                        role="button"
-                        tabIndex="-1"
-                        className="material-icons download-checkbox"
-                        data-toggle="collapse"
-                        data-target={`#intermediate-files-release-${idx}`}
-                        aria-expanded="false"
-                        aria-controls={`intermediate-files-release-${idx}`}
-                        id={`intermediate-files-release-${idx}-checkbox`}
-                        onClick={handleCheckboxEvent.bind(this, `intermediate-files-release-${idx}-checkbox`)}
-                      >
-                        check_box_outline_blank
-                      </i>
-                      <span>Intermediate files downloads</span>
-                    </p>
-                    <div className="collapse" id={`intermediate-files-release-${idx}`}>
-                      {renderIntermediateFilesDownloadSectionContent(release.intermediate_files)}
-                    </div>
-                  </div>
+                  {currentView === 'internal'
+                    ? (
+                      <React.Fragment>
+                        <h6 className="additional-release-download-header">Additional Downloads</h6>
+                        <div className="raw-files-download-section">
+                          <p className="d-block mb-2 d-flex align-items-center justify-content-start raw-files-download-option">
+                            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+                            <i
+                              role="button"
+                              tabIndex="-1"
+                              className="material-icons download-checkbox"
+                              data-toggle="collapse"
+                              data-target={`#raw-files-release-${idx}`}
+                              aria-expanded="false"
+                              aria-controls={`raw-files-release-${idx}`}
+                              id={`raw-files-release-${idx}-checkbox`}
+                              onClick={handleCheckboxEvent.bind(this, `raw-files-release-${idx}-checkbox`)}
+                            >
+                              check_box_outline_blank
+                            </i>
+                            <span>Raw files downloads</span>
+                          </p>
+                          <div className="collapse" id={`raw-files-release-${idx}`}>
+                            {renderRawFilesDownloadSectionContent(release.raw_files)}
+                          </div>
+                        </div>
+                        <div className="intermediate-files-download-section">
+                          <p className="d-block mb-2 d-flex align-items-center justify-content-start intermediate-files-download-option">
+                            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+                            <i
+                              role="button"
+                              tabIndex="-1"
+                              className="material-icons download-checkbox"
+                              data-toggle="collapse"
+                              data-target={`#intermediate-files-release-${idx}`}
+                              aria-expanded="false"
+                              aria-controls={`intermediate-files-release-${idx}`}
+                              id={`intermediate-files-release-${idx}-checkbox`}
+                              onClick={handleCheckboxEvent.bind(this, `intermediate-files-release-${idx}-checkbox`)}
+                            >
+                              check_box_outline_blank
+                            </i>
+                            <span>Intermediate files downloads</span>
+                          </p>
+                          <div className="collapse" id={`intermediate-files-release-${idx}`}>
+                            {renderIntermediateFilesDownloadSectionContent(release.intermediate_files)}
+                          </div>
+                        </div>
+                      </React.Fragment>
+                    )
+                    : null}
                   {release.documentation
                     ? (
                       <React.Fragment>
@@ -419,20 +459,24 @@ function ReleaseEntry({ profile }) {
     return (
       <React.Fragment>
         {entries}
-        <div className="view-more-button-container pt-2 pt-md-0 pb-3 pb-md-0 clearfix">
-          <div className="d-none d-md-block col-12 col-md-3 col-lg-2 px-md-3 pb-1 pb-md-4 pt-md-4 float-left">
-            <span>&nbsp;</span>
-          </div>
-          <div className="view-more-button-wrapper mb-4 col-12 col-md-9 col-lg-10 float-left">
-            <button
-              type="button"
-              className={visibleReleases === 1 ? 'btn btn-secondary btn-sm' : 'btn btn-danger btn-sm'}
-              onClick={toggleViewReleaseLength}
-            >
-              {visibleReleases === 1 ? 'Show prior releases' : 'Back to latest release'}
-            </button>
-          </div>
-        </div>
+        {releases.length > 1
+          ? (
+            <div className="view-more-button-container pt-2 pt-md-0 pb-3 pb-md-0 clearfix">
+              <div className="d-none d-md-block col-12 col-md-3 col-lg-2 px-md-3 pb-1 pb-md-4 pt-md-4 float-left">
+                <span>&nbsp;</span>
+              </div>
+              <div className="view-more-button-wrapper mb-4 col-12 col-md-9 col-lg-10 float-left">
+                <button
+                  type="button"
+                  className={visibleReleases === 1 ? 'btn btn-secondary btn-sm' : 'btn btn-danger btn-sm'}
+                  onClick={toggleViewReleaseLength}
+                >
+                  {visibleReleases === 1 ? 'Show prior releases' : 'Back to latest release'}
+                </button>
+              </div>
+            </div>
+          )
+          : null}
       </React.Fragment>
     );
   }
@@ -449,6 +493,7 @@ ReleaseEntry.propTypes = {
     name: PropTypes.string,
     user_metadata: PropTypes.object,
   }).isRequired,
+  currentView: PropTypes.string.isRequired,
 };
 
 export default ReleaseEntry;

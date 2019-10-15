@@ -3,15 +3,31 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { Navbar } from '../navbar';
 
-const testUser = require('../../testData/testUser');
+const internalUser = require('../../testData/testUser');
+
+const externalUser = {
+  ...internalUser,
+  user_metadata: {
+    name: 'Test User',
+    givenName: 'TestUser',
+    siteName: 'Stanford',
+    hasAccess: true,
+    userType: 'external',
+  },
+};
 
 const loggedOutState = {
   isAuthenticated: false,
 };
 
-const loggedInState = {
+const internalLoggedInState = {
   isAuthenticated: true,
-  profile: testUser,
+  profile: internalUser,
+};
+
+const externalLoggedInState = {
+  isAuthenticated: true,
+  profile: externalUser,
 };
 
 const actions = {
@@ -23,5 +39,6 @@ const actions = {
 };
 
 storiesOf('Navbar', module)
-  .add('default', () => <Navbar {...loggedOutState} />)
-  .add('Logged in', () => <Navbar {...loggedInState} {...actions} />);
+  .add('Default', () => <Navbar {...loggedOutState} />)
+  .add('Internal user logged-in', () => <Navbar {...internalLoggedInState} {...actions} />)
+  .add('External user logged-in', () => <Navbar {...externalLoggedInState} {...actions} />);

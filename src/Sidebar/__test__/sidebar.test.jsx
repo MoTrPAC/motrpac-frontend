@@ -1,25 +1,51 @@
 import React from 'react';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import { Sidebar } from '../sidebar';
 
-Enzyme.configure({ adapter: new Adapter() });
+const internalUser = require('../../testData/testUser');
 
-const testUser = require('../../testData/testUser');
+const externalUser = {
+  ...internalUser,
+  user_metadata: {
+    name: 'Test User',
+    givenName: 'TestUser',
+    siteName: 'Stanford',
+    hasAccess: true,
+    userType: 'external',
+  },
+};
 
 const sidebarActions = {
   clearForm: jest.fn(),
   resetDepth: jest.fn(),
 };
 
-const shallowDefaultSidebar = shallow(<Sidebar profile={testUser} {...sidebarActions} />);
+const internalUserLoggedInSidebar = shallow(<Sidebar profile={internalUser} {...sidebarActions} />);
 
-const navItems = ['Dashboard', 'Analysis', 'Methods', 'Data'];
+const externalUserLoggedInSidebar = shallow(<Sidebar profile={externalUser} {...sidebarActions} />);
+
+const defaultNavItems = ['Dashboard', 'Methods', 'Animal', 'Human', 'Browse Data', 'Summary', 'Releases', 'Upload Data'];
+
+const internalUserDisabledNavItems = ['Dashboard', 'Methods', 'Browse Data', 'Upload Data'];
+
+const externalUserDisabledNavItems = ['Dashboard', 'Methods', 'Animal', 'Human', 'Browse Data', 'Summary', 'Upload Data'];
 
 describe('Sidebar', () => {
-  test('Logged In sidebar has expected elements', () => {
-    shallowDefaultSidebar.find('.navLink').forEach((navLink) => {
-      expect(navItems.indexOf(navLink.text())).not.toBe(-1);
+  test('Logged In sidebar has expected nav links', () => {
+    internalUserLoggedInSidebar.find('.navLink').forEach((navLink) => {
+      expect(defaultNavItems.indexOf(navLink.text())).not.toBe(-1);
+    });
+  });
+
+  test('Internal user logged-in sidebar has expected disabled nav links', () => {
+    internalUserLoggedInSidebar.find('.disabled-link').forEach((navLink) => {
+      expect(internalUserDisabledNavItems.indexOf(navLink.text())).not.toBe(-1);
+    });
+  });
+
+  test('External user logged-in sidebar has expected disabled nav links', () => {
+    externalUserLoggedInSidebar.find('.disabled-link').forEach((navLink) => {
+      expect(externalUserDisabledNavItems.indexOf(navLink.text())).not.toBe(-1);
     });
   });
 });

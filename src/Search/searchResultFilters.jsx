@@ -20,12 +20,12 @@ function SearchResultFilters({ results }) {
               <span className="badge badge-secondary badge-pill">0</span>
             </li>
             <li className="list-group-item d-flex justify-content-between align-items-center">
-              <span className="category-item">Internally Avaialble</span>
+              <span className="category-item">Internally Available</span>
               <span className="badge badge-primary badge-pill">{results.length}</span>
             </li>
             <li className="list-group-item d-flex justify-content-between align-items-center">
-              <span className="category-item">Publicly Avaialble</span>
-              <span className="badge badge-success badge-pill">0</span>
+              <span className="category-item">Publicly Available</span>
+              <span className="badge badge-success badge-pill">{results.length}</span>
             </li>
           </ul>
         </div>
