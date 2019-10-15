@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import dayjs from 'dayjs';
 import ReCAPTCHA from 'react-google-recaptcha';
 import axios from 'axios';
 import RegistrationResponse from './response';
@@ -36,6 +37,7 @@ const defaultFormValues = {
 export function DataAccessPage({ isAuthenticated, profile }) {
   const [reCaptcha, setReCaptcha] = useState('');
   const [auth0Status, setAuth0Status] = useState();
+  const [auth0Error, setAuth0Error] = useState();
   const [formValidated, setFormValidated] = useState(false);
   const [checkboxAlert, setCheckboxAlert] = useState(false);
   const [formValues, setFormValues] = useState(defaultFormValues);
@@ -82,7 +84,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
     return (
       <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 dataAccessPage`}>
         <div className={`${!isAuthenticated ? 'container' : ''}`}>
-          <RegistrationResponse status={auth0Status} />
+          <RegistrationResponse status={auth0Status} errMsg={auth0Error} />
         </div>
       </div>
     );
@@ -95,7 +97,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
         <td>
           <div className="d-flex align-items-center justify-content-start">
             <img src={IconSet.PDF} alt="PDF" />
-            <a href={item.location} download>{item.title}</a>
+            <a href={item.location} download target="_blank" rel="noopener noreferrer">{item.title}</a>
           </div>
         </td>
         <td>{item.description}</td>
@@ -186,6 +188,8 @@ export function DataAccessPage({ isAuthenticated, profile }) {
     // while submit button is disabled
     setRequestPending(true);
 
+    const timeFormat = 'MMM D, YYYY'; // Oct 15, 2019
+
     const userObj = {
       email: formValues.emailAddress,
       firstName: formValues.firstName,
@@ -194,6 +198,9 @@ export function DataAccessPage({ isAuthenticated, profile }) {
       isPrincipalInvestigator: formValues.isPrincipalInvestigator,
       principalInvestigatorName: formValues.PIName,
       dataUseIntent: formValues.dataUseIntent,
+      eSignature: formValues.eSignature,
+      embargoAgreementVersion: 'E1.0',
+      embargoAgreementDate: dayjs().format(timeFormat),
     };
 
     // post request configs
@@ -202,6 +209,10 @@ export function DataAccessPage({ isAuthenticated, profile }) {
 
     return axios.post(serviceUrl, userObj, timeOutConfig).then((response) => {
       setAuth0Status(response.data.status);
+      // handle default Auth0 error returned by backend service
+      if (response.data.auth0) {
+        setAuth0Error(response.data.auth0);
+      }
       // revert submit button to default state
       setRequestPending(false);
     }).catch((err) => {
@@ -506,7 +517,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                       required
                       onChange={e => handleFormChange(e.currentTarget.value, e)}
                       value={formValues.eSignature}
-                      pattern="^[A-Za-z\s]{2,60}$"
+                      pattern="^[A-Za-z\,\.\'\- ]{2,80}$"
                       onBlur={validateOnBlur}
                       onFocus={validateAgreementTerms}
                     />
@@ -543,7 +554,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           required
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.firstName}
-                          pattern="^[A-Za-z\s]{2,30}$"
+                          pattern="^[A-Za-z\,\.\'\- ]{2,30}$"
                           onBlur={validateOnBlur}
                         />
                         <div className="invalid-feedback">
@@ -560,7 +571,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           required
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.lastName}
-                          pattern="^[A-Za-z\s]{2,30}$"
+                          pattern="^[A-Za-z\,\.\'\- ]{2,30}$"
                           onBlur={validateOnBlur}
                         />
                         <div className="invalid-feedback">
@@ -609,7 +620,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           required
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.institution}
-                          pattern="^[A-Za-z\s]{2,50}$"
+                          pattern="^[A-Za-z\,\.\'\- ]{2,80}$"
                           onBlur={validateOnBlur}
                         />
                         <div className="invalid-feedback">
@@ -625,7 +636,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           autoComplete="off"
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.PIName}
-                          pattern="^[A-Za-z\s]{2,60}$"
+                          pattern="^[A-Za-z\,\.\'\- ]{2,80}$"
                           disabled={formValues.isPrincipalInvestigator}
                         />
                       </div>
