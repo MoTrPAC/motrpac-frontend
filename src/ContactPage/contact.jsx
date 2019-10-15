@@ -22,9 +22,15 @@ export function Contact({ isAuthenticated }) {
             <h5 className="card-header">Accessing Data</h5>
             <div className="card-body">
               <p className="card-text">
-                Data generated to date is not yet publicly accessible. For updates when publicly
-                accessible data are available, please contact the MoTrPAC Bioinformatics Center at&nbsp;
-                <a href="mailto:motrpac-data-requests@lists.stanford.edu" target="_new">motrpac-data-requests@lists.stanford.edu</a>
+                The first MoTrPAC public data release is now available. Please consent to
+                the embargo agreement and register for an account on the&nbsp;
+                <a href="/data-access" className="inline-link">Data Access</a>
+                &nbsp;page if you are interested in obtaining access to the data. For updates when
+                subsequent publicly accessible data become available, please contact
+                the MoTrPAC Bioinformatics Center at&nbsp;
+                <a href="mailto:motrpac-helpdesk@lists.stanford.edu" target="_new">
+                  motrpac-helpdesk@lists.stanford.edu
+                </a>
               </p>
             </div>
           </div>
@@ -43,12 +49,15 @@ export function Contact({ isAuthenticated }) {
             <h5 className="card-header">Questions and Inquiries</h5>
             <div className="card-body">
               <p className="card-text">
-                For general inquiries about the MoTrPAC Data Hub, please contact the MoTrPAC Bioinformatics Center at&nbsp;
-                <a href="mailto:motrpac-helpdesk@lists.stanford.edu" target="_new">motrpac-helpdesk@lists.stanford.edu</a>
+                For general inquiries about the MoTrPAC Data Hub, please contact
+                the MoTrPAC Bioinformatics Center at&nbsp;
+                <a href="mailto:motrpac-helpdesk@lists.stanford.edu" target="_new">
+                  motrpac-helpdesk@lists.stanford.edu
+                </a>
               </p>
             </div>
           </div>
-        </div>        
+        </div>
       </div>
     </div>
   );
