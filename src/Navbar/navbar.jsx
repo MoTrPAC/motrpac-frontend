@@ -89,9 +89,9 @@ export function Navbar({
                   <Link to="/contact" className="dropdown-item">Contact Us</Link>
                 </div>
               </li>
-              <li className="nav-item navItem">
-                <Link to="/data-access" className="nav-link">Data Access</Link>
-              </li>
+              {!isAuthenticated && !hasAccess
+                ? (<li className="nav-item navItem"><Link to="/data-access" className="nav-link">Data Access</Link></li>)
+                : null}
               <li className="nav-item navItem">
                 <LogoutButton />
               </li>
