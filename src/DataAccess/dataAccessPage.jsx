@@ -197,11 +197,11 @@ export function DataAccessPage({ isAuthenticated, profile }) {
     };
 
     // post request configs
-    const serviceUrl = 'https://my.api/user';
+    const serviceUrl = 'https://service-apis.motrpac-data.org/new_user';
     const timeOutConfig = { timeout: 5000 };
 
     return axios.post(serviceUrl, userObj, timeOutConfig).then((response) => {
-      setAuth0Status(response.status);
+      setAuth0Status(response.data.status);
       // revert submit button to default state
       setRequestPending(false);
     }).catch((err) => {
@@ -367,9 +367,9 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         checked={formValues.dataUseAgreement2}
                       />
                       <label className="form-check-label" htmlFor="dataUseAgreement2">
-                        Data&nbs;
+                        Data&nbsp;
                         <strong>CANNOT</strong>
-                        &nbs;be publicly hosted or disseminated before the embargo deadline.
+                        &nbsp;be publicly hosted or disseminated before the embargo deadline.
                       </label>
                     </div>
                   </div>

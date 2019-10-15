@@ -39,10 +39,10 @@ function RegistrationResponse({ status }) {
       </div>
       <div className="data-access-content">
         <p>
-          Thank you for registering! A verification email has been sent to you from
-          Auth0, our authentication service provider. Upon the verification, a
-          password reset email will be sent to you from Auth0. You will then be
-          able to access the released MoTrPAC data after completing these step.
+          Thank you for registering! An email has been sent to you from MoTrPAC
+          requesting you to set up your password. You will also be receiving
+          a confirmation email with the data use terms you consented to. You will
+          be able to access the released MoTrPAC data upon setting up your password.
           If you have further questions regarding the registration, please contact&nbsp;
           <a href="mailto:motrpac-helpdesk@lists.stanford.edu" className="inline-link-with-icon">
             motrpac-helpdesk@lists.stanford.edu
