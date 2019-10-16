@@ -232,7 +232,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                 Molecular Transducers of Physical Activity Consortium
                 <i className="material-icons external-linkout-icon">open_in_new</i>
               </a>
-              ) is national research
+              ) is a national research
               consortium funded by the&nbsp;
               <a href="https://commonfund.nih.gov" className="inline-link-with-icon" target="_blank" rel="noopener noreferrer">
                 NIH Common Fund
