@@ -130,10 +130,6 @@ function SearchResults({
                         <span className="oi oi-loop-square dblue" />
                         <span className="status-label">Internally Available</span>
                       </div>
-                      <div className="status-wrapper">
-                        <span className="oi oi-circle-check green" />
-                        <span className="status-label">Publicly Available</span>
-                      </div>
                     </div>
                   </li>
                 ))}

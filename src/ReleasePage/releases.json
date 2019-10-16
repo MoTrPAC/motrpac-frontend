@@ -140,7 +140,7 @@
           "tooltip_id": "data-metabolomics-1-2",
           "object_path": "/metabolomics",
           "object_zipfile_path": "/metabolomics.tar.gz",
-          "object_zipfile_size": "99 MB"
+          "object_zipfile_size": "124 MB"
         },
         {
           "type": "proteomics",
@@ -150,7 +150,7 @@
           "tooltip_id": "data-proteomics-1-2",
           "object_path": "/proteomics",
           "object_zipfile_path": "/proteomics.tar.gz",
-          "object_zipfile_size": "288 MB"
+          "object_zipfile_size": "298 MB"
         },
         {
           "type": "phenotype",
@@ -170,7 +170,7 @@
           "tooltip_id": "data-all-1-2",
           "object_path": "",
           "object_zipfile_path": "/all.tar.gz",
-          "object_zipfile_size": "602 MB"
+          "object_zipfile_size": "636 MB"
         }
       ]
     },

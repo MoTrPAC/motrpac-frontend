@@ -208,9 +208,15 @@ export function LandingPage({ isAuthenticated, profile }) {
           <div className="row">
             <div className="p-2 col-12 col-md-6 access-data-info">
               <h5>Accessing Data: </h5>
-              Data generated to date is not yet publicly accessible. For updates when publicly
-              accessible data are available, please contact us at&nbsp;
-              <a href="mailto:motrpac-data-requests@lists.stanford.edu" target="_new">motrpac-data-requests@lists.stanford.edu</a>
+              The first MoTrPAC public data release is now available. Please agree to
+              the data use agreement and register for an account on the&nbsp;
+              <a href="/data-access" className="inline-link">Data Access</a>
+              &nbsp;page if you are interested in obtaining access to the data. For updates when
+              subsequent publicly accessible data become available, please contact
+              the MoTrPAC Bioinformatics Center at&nbsp;
+              <a href="mailto:motrpac-helpdesk@lists.stanford.edu" target="_new">
+                motrpac-helpdesk@lists.stanford.edu
+              </a>
             </div>
             <div className="p-2 col-12 col-md-6 upload-data-info">
               <h5>Uploading Data From Study Sites:</h5>

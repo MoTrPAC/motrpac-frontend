@@ -25,7 +25,6 @@ function SearchResultFilters({ results }) {
             </li>
             <li className="list-group-item d-flex justify-content-between align-items-center">
               <span className="category-item">Publicly Available</span>
-              <span className="badge badge-success badge-pill">{results.length}</span>
             </li>
           </ul>
         </div>
