@@ -321,12 +321,12 @@ function ReleaseEntry({ profile, currentView }) {
                       {currentView === 'external'
                         ? (
                           <p className="release-description">
-                            To request access to raw files of the different omics data, please contact&nbsp;
+                            <span>To request access to raw files of the different omics data, please contact </span>
                             <a href="mailto:motrpac-data-requests@lists.stanford.edu" className="inline-link-with-icon">
                               motrpac-data-requests@lists.stanford.edu
                               <i className="material-icons email-icon">mail</i>
                             </a>
-                            &nbsp;and specify the omics, tissues, and assays in which you are interested.
+                            <span> and specify the omics, tissues, and assays in which you are interested.</span>
                           </p>
                         )
                         : null}
