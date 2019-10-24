@@ -183,3 +183,17 @@
     }
   }
 }
+
+/* Medium devices (tablets, less than 992px) */
+@include media-breakpoint-down(md) {
+  .dataAccessPage {
+    .form-footer {
+      align-items: start;
+      flex-direction: column;
+    }
+
+    .registration-button-group {
+      margin-top: 1.25rem;
+    }
+  }
+}
