@@ -9,7 +9,7 @@ const StudyDocuments = [
   {
     title: 'Case report forms',
     location: `${baseUrl}/Animal_Case_Report_Forms.tar.gz`,
-    description: 'The forms for metadata collected for each animal.',
+    description: 'The forms for metadata collected for each animal (5 forms in a single downloadable zipped file).',
   },
   {
     title: 'Sample tracking',
