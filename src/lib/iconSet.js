@@ -12,6 +12,7 @@ import Vial from '../assets/icons/vial.png';
 import PDF from '../assets/icons/pdf.png';
 import Spinner from '../assets/icons/spinner.gif';
 import Sync from '../assets/icons/sync.png';
+import Archive from '../assets/icons/archive.png';
 import InternalDataRelease from '../assets/icons/data-release-internal.png';
 
 const IconSet = {
@@ -29,6 +30,7 @@ const IconSet = {
   PDF,
   Spinner,
   Sync,
+  Archive,
   InternalDataRelease,
 };
 
