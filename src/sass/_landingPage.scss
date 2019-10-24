@@ -188,6 +188,11 @@ section {
       padding-top: 1.50rem;
       text-align: center;
     }
+
+    .alert {
+      margin-top: 1.0rem;
+      order: -2;
+    }
   }
 }
 
@@ -213,7 +218,7 @@ section {
   
     .content {
       align-items: start;
-      align-self: center;
+      align-self: end;
       flex: 0 0 auto;
       max-width: 100%;
       order: -1;
