@@ -7,6 +7,8 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import axios from 'axios';
 import RegistrationResponse from './response';
 import IconSet from '../lib/iconSet';
+import EmailLink from '../lib/ui/emailLink';
+import ExternalLink from '../lib/ui/externalLink';
 import StudyDocumentsTable from '../lib/studyDocumentsTable';
 
 const defaultFormValues = {
@@ -216,28 +218,20 @@ export function DataAccessPage({ isAuthenticated, profile }) {
             <h3>MoTrPAC External Data Release</h3>
           </div>
           <div className="alert alert-dark alert-consortia-members-access" role="alert">
-            MoTrPAC consortium members are not required to fill out the following data use agreement
-            and registration. Consortium members who already have registered accounts may access the
-            released data upon login. Consortium members who don't have registered accounts and wish
-            to access the data, please contact&nbsp;
-            <a href="mailto:motrpac-helpdesk@lists.stanford.edu" className="inline-link-with-icon">
-              motrpac-helpdesk@lists.stanford.edu
-              <i className="material-icons email-icon">mail</i>
-            </a>
+            MoTrPAC consortium members are not required to fill out the following data use
+            agreement and registration. Consortium members who already have registered
+            accounts may access the released data upon login. Consortium members who don't
+            have registered accounts and wish to access the data, please contact
+            {' '}
+            <EmailLink mailto="motrpac-helpdesk@lists.stanford.edu" />
           </div>
           <div className="data-access-content">
             <p>
               MoTrPAC (
-              <a href="https://commonfund.nih.gov/moleculartransducers" className="inline-link-with-icon" target="_blank" rel="noopener noreferrer">
-                Molecular Transducers of Physical Activity Consortium
-                <i className="material-icons external-linkout-icon">open_in_new</i>
-              </a>
-              ) is a national research
-              consortium funded by the&nbsp;
-              <a href="https://commonfund.nih.gov" className="inline-link-with-icon" target="_blank" rel="noopener noreferrer">
-                NIH Common Fund
-                <i className="material-icons external-linkout-icon">open_in_new</i>
-              </a>
+              <ExternalLink to="https://commonfund.nih.gov/moleculartransducers" label="Molecular Transducers of Physical Activity Consortium" />
+              ) is a national research consortium funded by the
+              {' '}
+              <ExternalLink to="https://commonfund.nih.gov" label="NIH Common Fund" />
               . MoTrPAC is designed to discover and perform
               preliminary characterization of the range of molecular transducers
               (the "molecular map") that underlie the effects of physical activity. The study
@@ -250,12 +244,16 @@ export function DataAccessPage({ isAuthenticated, profile }) {
           </div>
           <div className="data-access-content">
             <p>
-            To access MoTrPAC data, please register and fill out the data use agreement here
-            (see below). Assay-specific results and associated metadata, QC reports and animal
-            phenotype data can be downloaded as separate files or as a combined file from the
-            MoTrPAC Data Hub. Please note that during the embargo period, until January 15th
-            2021, data can only be used for analyses supporting grant submissions, and not be
-            used in abstracts, manuscripts, preprints or presentations.
+              To access MoTrPAC data, please register and fill out the data use agreement here
+              (see below). Assay-specific results and associated metadata, QC reports and animal
+              phenotype data can be downloaded as separate files or as a combined file from the
+              MoTrPAC Data Hub.
+              {' '}
+              <strong>
+                Please note that during the embargo period, until January 15th 2021, data can
+                only be used for analyses supporting grant submissions, and not be used in
+                abstracts, manuscripts, preprints or presentations.
+              </strong>
             </p>
           </div>
           <div className="section-title mt-4 mb-2">
@@ -293,21 +291,13 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                   members have plans for several publications and to avoid duplicate efforts and
                   promote collaborations between MoTrPAC internal and external investigators, external
                   researchers are encouraged to coordinate their independent efforts with the
-                  MoTrPAC publication schedule.This may be done by contacting MoTrPAC through&nbsp;
-                  <a
-                    href="https://www.motrpac.org/ancillarystudyguidelines.cfm"
-                    className="inline-link-with-icon"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    https://www.motrpac.org/ancillarystudyguidelines.cfm
-                    <i className="material-icons external-linkout-icon">open_in_new</i>
-                  </a>
-                  &nbsp;or&nbsp;
-                  <a href="mailto:MoTrPAC-ACC@aging.ufl.edu" className="inline-link-with-icon">
-                    MoTrPAC-ACC@aging.ufl.edu
-                    <i className="material-icons email-icon">mail</i>
-                  </a>
+                  MoTrPAC publication schedule.This may be done by contacting MoTrPAC through
+                  {' '}
+                  <ExternalLink to="https://www.motrpac.org/ancillarystudyguidelines.cfm" />
+                  {' '}
+                  or
+                  {' '}
+                  <EmailLink mailto="MoTrPAC-ACC@aging.ufl.edu" />
                 </p>
                 <p className="card-text">
                   MoTrPAC data is available for exploration by external researchers
@@ -441,11 +431,9 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         Recipients agree to notify MoTrPAC of articles published
                         using MoTrPAC data so that publications can be tracked
                         and referenced on the MoTrPAC public website. Please
-                        contact MoTrPAC at&nbsp;
-                        <a href="mailto:MoTrPAC-ACC@aging.ufl.edu" className="inline-link-with-icon">
-                          MoTrPAC-ACC@aging.ufl.edu
-                          <i className="material-icons email-icon">mail</i>
-                        </a>
+                        contact MoTrPAC at
+                        {' '}
+                        <EmailLink mailto="MoTrPAC-ACC@aging.ufl.edu" />
                       </label>
                     </div>
                   </div>
@@ -465,11 +453,9 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                   please provide an outline of your plans for the data.
                 </p>
                 <p className="card-text">
-                  If you have questions, please contact&nbsp;
-                  <a href="mailto:motrpac-helpdesk@lists.stanford.edu" className="inline-link-with-icon">
-                    motrpac-helpdesk@lists.stanford.edu
-                    <i className="material-icons email-icon">mail</i>
-                  </a>
+                  If you have questions, please contact
+                  {' '}
+                  <EmailLink mailto="motrpac-helpdesk@lists.stanford.edu" />
                 </p>
                 <div className={`d-flex align-items-center alert-missing-checkbox text-danger ${checkboxAlert ? 'visible' : ''}`}>
                   <i className="material-icons error-icon">error</i>
@@ -639,7 +625,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                     </div>
                   </div>
                 </div>
-                <div className="mt-3 d-flex justify-content-between align-items-end">
+                <div className="mt-3 d-flex justify-content-between align-items-end form-footer">
                   <div className="reCAPTCHA-container">
                     <ReCAPTCHA
                       sitekey="6Lf8oboUAAAAAB6SoflqfgfHvwHrV62gaPaL2-BL"
