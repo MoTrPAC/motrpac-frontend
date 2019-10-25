@@ -4,6 +4,8 @@ import axios from 'axios';
 import { TrackEvent } from '../GoogleAnalytics/googleAnalytics';
 import IconSet from '../lib/iconSet';
 import ToolTip from '../lib/ui/tooltip';
+import EmailLink from '../lib/ui/emailLink';
+import ExternalLink from '../lib/ui/externalLink';
 import StudyDocumentsTable from '../lib/studyDocumentsTable';
 
 const releaseData = require('./releases');
@@ -62,16 +64,9 @@ function ReleaseEntry({ profile, currentView }) {
         <div className="card-body">
           <p className="card-text">
             Due to the large sizes of raw data files, we recommend users
-            who wish to download raw data files using the&nbsp;
-            <a
-              href="https://cloud.google.com/storage/docs/quickstart-gsutil"
-              className="inline-link-with-icon"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              gsutil command
-              <i className="material-icons external-linkout-icon">open_in_new</i>
-            </a>
+            who wish to download raw data files using the
+            {' '}
+            <ExternalLink to="https://cloud.google.com/storage/docs/quickstart-gsutil" label="gsutil command" />
             . Below are example commands for downloading raw data files of different omics.
           </p>
           <p className="card-text">
@@ -98,16 +93,9 @@ function ReleaseEntry({ profile, currentView }) {
         <div className="card-body">
           <p className="card-text">
             Due to the large sizes of intermediate data files, we recommend users
-            who wish to download intermediate files using the&nbsp;
-            <a
-              href="https://cloud.google.com/storage/docs/quickstart-gsutil"
-              className="inline-link-with-icon"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              gsutil command
-              <i className="material-icons external-linkout-icon">open_in_new</i>
-            </a>
+            who wish to download intermediate files using the
+            {' '}
+            <ExternalLink to="https://cloud.google.com/storage/docs/quickstart-gsutil" label="gsutil command" />
             . Below are example commands for downloading intermediate files of different omics.
           </p>
           <p className="card-text">
@@ -321,17 +309,17 @@ function ReleaseEntry({ profile, currentView }) {
                       {currentView === 'external'
                         ? (
                           <p className="release-description">
-                            <span>To request access to raw files of the different omics data, please contact </span>
-                            <a href="mailto:motrpac-data-requests@lists.stanford.edu" className="inline-link-with-icon">
-                              motrpac-data-requests@lists.stanford.edu
-                              <i className="material-icons email-icon">mail</i>
-                            </a>
-                            <span> and specify the omics, tissues, and assays in which you are interested.</span>
+                            To request access to raw files of the different omics data, please contact
+                            {' '}
+                            <EmailLink mailto="motrpac-data-requests@lists.stanford.edu" />
+                            {' '}
+                            and specify the omics, tissues, and assays in which you are interested.
                           </p>
                         )
                         : null}
                       <p className="release-description">
-                        A&nbsp;
+                        A
+                        {' '}
                         <a
                           href={release.readme_file_location}
                           className="inline-link-with-icon"
@@ -341,13 +329,12 @@ function ReleaseEntry({ profile, currentView }) {
                           README
                           <i className="material-icons readme-file-icon">description</i>
                         </a>
-                        &nbsp;document has been provided detailing the different data types available
+                        {' '}
+                        document has been provided detailing the different data types available
                         in this release in addition to how to access them. For any technical
-                        issues, please contact us at&nbsp;
-                        <a href="mailto:motrpac-helpdesk@lists.stanford.edu" className="inline-link-with-icon">
-                          motrpac-helpdesk@lists.stanford.edu
-                          <i className="material-icons email-icon">mail</i>
-                        </a>
+                        issues, please contact us at
+                        {' '}
+                        <EmailLink mailto="motrpac-helpdesk@lists.stanford.edu" />
                       </p>
                       <table className="table table-sm release-data-links-table">
                         <thead className="thead-dark">
@@ -426,16 +413,12 @@ function ReleaseEntry({ profile, currentView }) {
                           {currentView === 'internal'
                             ? (
                               <p>
-                                <a
-                                  href="https://www.motrpac.org/secure/documents/dspList.cfm?documentFolderCurrent=BEC8E9C5-C740-4D8F-91F2-5977E98CF6A0"
-                                  className="inline-link-with-icon"
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  Manuals of Procedures for Preclinical Animal Study Sites
-                                  <i className="material-icons external-linkout-icon">open_in_new</i>
-                                </a>
-                                &nbsp;(login required)
+                                <ExternalLink
+                                  to="https://www.motrpac.org/secure/documents/dspList.cfm?documentFolderCurrent=BEC8E9C5-C740-4D8F-91F2-5977E98CF6A0"
+                                  label="Manuals of Procedures for Preclinical Animal Study Sites"
+                                />
+                                {' '}
+                                (login required)
                               </p>
                             ) : null}
                         </div>
