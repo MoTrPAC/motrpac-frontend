@@ -9,7 +9,7 @@ function StudyDocumentsTable() {
       <tr key={item.title} className="document-list-item">
         <td>
           <div className="d-flex align-items-center justify-content-start">
-            <img src={item.location.indexOf('.tar.gz') > 0 ? IconSet.Archive : IconSet.PDF} alt={item.title} />
+            <img src={item.location.indexOf('.tar.gz') > -1 ? IconSet.Archive : IconSet.PDF} alt={item.title} />
             <a href={item.location} download target="_blank" rel="noopener noreferrer">{item.title}</a>
           </div>
         </td>

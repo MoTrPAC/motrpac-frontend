@@ -204,7 +204,7 @@ function ReleaseEntry({ profile, currentView }) {
 
   // Render data type row
   function renderDataTypeRow(bucket, item, version) {
-    const objectPath = item.object_path.indexOf('.tar.gz') > 0 ? `gs://${bucket}${item.object_path} .` : `gs://${bucket}${item.object_path}/* .`;
+    const objectPath = item.object_path.indexOf('.tar.gz') > -1 ? `gs://${bucket}${item.object_path} .` : `gs://${bucket}${item.object_path}/* .`;
     return (
       <tr key={`${item.type}-${version}`}>
         <td>
