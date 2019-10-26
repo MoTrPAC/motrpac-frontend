@@ -7,6 +7,9 @@ import PropTypes from 'prop-types';
  * @returns {object} JSX representation of search result content.
  */
 function SearchResultFilters({ results }) {
+  const internalAvail = results.filter(result => result.item.internal_avail === true);
+  const externalAvail = results.filter(result => result.item.external_avail === true);
+
   return (
     <div className="card search-result-filters">
       <div className="card-body">
@@ -21,10 +24,11 @@ function SearchResultFilters({ results }) {
             </li>
             <li className="list-group-item d-flex justify-content-between align-items-center">
               <span className="category-item">Internally Available</span>
-              <span className="badge badge-primary badge-pill">{results.length}</span>
+              <span className="badge badge-primary badge-pill">{internalAvail.length}</span>
             </li>
             <li className="list-group-item d-flex justify-content-between align-items-center">
               <span className="category-item">Publicly Available</span>
+              <span className="badge badge-success badge-pill">{externalAvail.length}</span>
             </li>
           </ul>
         </div>
