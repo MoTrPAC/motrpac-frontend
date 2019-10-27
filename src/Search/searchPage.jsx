@@ -128,9 +128,7 @@ export function SearchPage({
       this.field('BID');
       this.field('Assay');
 
-      searchDocuments.forEach((doc) => {
-        this.add(doc);
-      }, this)
+      searchDocuments.forEach(doc => this.add(doc), this);
     });
 
     let query = '';
