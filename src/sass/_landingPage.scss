@@ -419,9 +419,22 @@ section {
 
 /* Ultra small devices (portrait phones, less than 417px) */
 @media (max-width: 416.98px) {
+  .marketing.row {
+    justify-content: center;
+  }
+
+  main {
+    max-width: 98%;
+  }
+
   section {
     .about-motrpac {
       height: auto;
+
+      .container.featurette {
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
 
       .featurette-wrapper {
         .content {
@@ -431,9 +444,7 @@ section {
       }
     }
   }
-}
 
-@media (max-width: 398.98px) {
   footer {
     .footer-nav {
       .row {
@@ -447,11 +458,109 @@ section {
         .footer-nav-items {
           padding-left: 0;
 
+          ul {
+            padding-left: 20px;
+            padding-right: 20px;
+          }
+
           .nav-item {
             button {
+              margin-top: 10px;
               margin-left: 0;
             }
           }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 398.98px) {
+  .marketing.row {
+    justify-content: center;
+  }
+
+  main {
+    .hero-wrapper .content h3 em {
+      font-size: 2.35rem;
+    }
+  }
+
+  section {
+    .about-motrpac {
+      height: auto;
+
+      .featurette-wrapper {
+        .content {
+          padding-top: 20px;
+          padding-bottom: 20px;
+        }
+      }
+    }
+  }
+
+  footer {
+    .footer-nav {
+      .row {
+        .footer-nav-items {
+          ul {
+            padding-left: 0;
+            padding-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  main {
+    max-width: 92%;
+
+    .hero-wrapper .content h3 {
+      font-size: 1.65rem;
+
+      em {
+        font-size: 2.0rem;
+      }
+    }
+  }
+
+  section {
+    .about-motrpac {
+      height: auto;
+
+      .featurette-wrapper.row {
+        max-width: 92%;
+        margin-left: auto;
+        margin-right: auto;
+
+        .content {
+          padding-top: 20px;
+          padding-bottom: 20px;
+        }
+      }
+    }
+    
+    .interrelated-components {
+      .featurette-wrapper {
+        max-width: 94%;
+        margin-left: auto;
+        margin-right: auto;
+
+        .content h3 {
+          font-size: 2.25rem;
+        }
+      }
+    }
+  }
+
+  footer {
+    .footer-nav {
+      .row {
+        .footer-logo img{
+          width: 260px;
+          height: auto;
         }
       }
     }
