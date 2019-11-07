@@ -43,9 +43,6 @@ nav {
 
   @include media-breakpoint-down(xs) {
     .navbar-brand {
-      padding-top: 0.75rem;
-      padding-bottom: 0.75rem;
-
       img {
         width: 250px;
         height: 29px;
@@ -55,6 +52,15 @@ nav {
     .header-navbar-items.container {
       padding-left: 15px;
       padding-right: 15px;
+    }
+  }
+
+  @media (max-width: 320px) {
+    .navbar-brand {
+      img {
+        width: 210px;
+        height: auto;
+      }
     }
   }
 
