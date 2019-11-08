@@ -223,13 +223,14 @@ export function DataAccessPage({ isAuthenticated, profile }) {
             accounts may access the released data upon login. Consortium members who don't
             have registered accounts and wish to access the data, please contact
             {' '}
-            <EmailLink mailto="motrpac-helpdesk@lists.stanford.edu" />
+            <EmailLink mailto="motrpac-helpdesk@lists.stanford.edu" label="MoTrPAC Helpdesk" />
           </div>
           <div className="data-access-content">
             <p>
-              MoTrPAC (
-              <ExternalLink to="https://commonfund.nih.gov/moleculartransducers" label="Molecular Transducers of Physical Activity Consortium" />
-              ) is a national research consortium funded by the
+              <ExternalLink to="https://commonfund.nih.gov/moleculartransducers" label="MoTrPAC" />
+              {' '}
+              (Molecular Transducers of Physical Activity Consortium) is a national research
+              consortium funded by the
               {' '}
               <ExternalLink to="https://commonfund.nih.gov" label="NIH Common Fund" />
               . MoTrPAC is designed to discover and perform
@@ -293,11 +294,13 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                   researchers are encouraged to coordinate their independent efforts with the
                   MoTrPAC publication schedule.This may be done by contacting MoTrPAC through
                   {' '}
-                  <ExternalLink to="https://www.motrpac.org/ancillarystudyguidelines.cfm" />
+                  <ExternalLink to="https://www.motrpac.org/ancillarystudyguidelines.cfm" label="submitting a proposal" />
                   {' '}
                   or
                   {' '}
-                  <EmailLink mailto="MoTrPAC-ACC@aging.ufl.edu" />
+                  <EmailLink mailto="MoTrPAC-ACC@aging.ufl.edu" label="MoTrPAC ACC" />
+                  {' '}
+                  (Administrative Coordinating Center).
                 </p>
                 <p className="card-text">
                   MoTrPAC data is available for exploration by external researchers
@@ -455,7 +458,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                 <p className="card-text">
                   If you have questions, please contact
                   {' '}
-                  <EmailLink mailto="motrpac-helpdesk@lists.stanford.edu" />
+                  <EmailLink mailto="motrpac-helpdesk@lists.stanford.edu" label="MoTrPAC Helpdesk" />
                 </p>
                 <div className={`d-flex align-items-center alert-missing-checkbox text-danger ${checkboxAlert ? 'visible' : ''}`}>
                   <i className="material-icons error-icon">error</i>
