@@ -197,3 +197,72 @@
     }
   }
 }
+
+@media (max-width: 416.98px) {
+  .dataAccessPage {
+    .motrpac-study-documents {
+      table.document-list {
+        th, td {
+          padding: 0.45rem 0.45rem;
+        }
+
+        img {
+          display: none;
+        }
+
+        a {
+          white-space: normal;
+
+          &::after {
+            content: ' (PDF)';
+          }
+
+          &.zip::after {
+            content: ' (ZIP)';
+          }
+        }
+      }
+    }
+
+    .card.e-signature {
+      width: 100% !important;
+    }
+
+    .form-footer {
+      align-items: start !important;
+
+      .reCAPTCHA-container>div>div>div {
+        transform:scale(0.94);
+        -webkit-transform:scale(0.94);
+        transform-origin:0 0;
+        -webkit-transform-origin:0 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 398.98px) {
+  .dataAccessPage {
+    .form-footer {
+      .reCAPTCHA-container>div>div>div {
+        transform:scale(0.82);
+        -webkit-transform:scale(0.82);
+        transform-origin:0 0;
+        -webkit-transform-origin:0 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .dataAccessPage {
+    .form-footer {
+      .reCAPTCHA-container>div>div>div {
+        transform:scale(0.64);
+        -webkit-transform:scale(0.64);
+        transform-origin:0 0;
+        -webkit-transform-origin:0 0;
+      }
+    }
+  }
+}
