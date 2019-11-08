@@ -10,11 +10,6 @@ nav {
       height: 51px;
       transition: all 0.3s ease;
     }
-
-    /* temp flag UI for alpha or beta releases */
-    .badge {
-      margin-left: 0.55rem;
-    }
   }
 
   @include media-breakpoint-up(lg) {
@@ -30,6 +25,11 @@ nav {
   }
 
   @include media-breakpoint-down(md) {
+    &.navbar>.container-fluid {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
     .navbar-brand {
       padding-top: 0.75rem;
       padding-bottom: 0.75rem;
@@ -162,6 +162,18 @@ nav {
             margin-top: 0.75rem;
             margin-bottom: 0.75rem;
           }
+        }
+      }
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    .navbar-nav {
+      padding-bottom: 0.5rem;
+
+      .navItem:last-child {
+        .user-logout-button {
+          margin-left: 0;
         }
       }
     }

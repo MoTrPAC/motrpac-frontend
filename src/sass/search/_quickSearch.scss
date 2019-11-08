@@ -39,3 +39,12 @@
     right: 0.75rem;
   }
 }
+
+/* responsive styling */
+
+/* Large devices (desktops, less than 1200px) */
+@include media-breakpoint-down(lg) {
+  .quick-search-box-container {
+    display: none !important;
+  }
+}
