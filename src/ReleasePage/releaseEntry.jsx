@@ -311,7 +311,7 @@ function ReleaseEntry({ profile, currentView }) {
                           <p className="release-description">
                             To request access to raw files of the different omics data, please contact
                             {' '}
-                            <EmailLink mailto="motrpac-data-requests@lists.stanford.edu" />
+                            <EmailLink mailto="motrpac-data-requests@lists.stanford.edu" label="MoTrPAC Data Requests" />
                             {' '}
                             and specify the omics, tissues, and assays in which you are interested.
                           </p>
@@ -334,22 +334,24 @@ function ReleaseEntry({ profile, currentView }) {
                         in this release in addition to how to access them. For any technical
                         issues, please contact us at
                         {' '}
-                        <EmailLink mailto="motrpac-helpdesk@lists.stanford.edu" />
+                        <EmailLink mailto="motrpac-helpdesk@lists.stanford.edu" label="MoTrPAC Helpdesk" />
                       </p>
-                      <table className="table table-sm release-data-links-table">
-                        <thead className="thead-dark">
-                          <tr className="table-head">
-                            <th>Data type</th>
-                            {currentView === 'internal'
-                              ? (<th>Command-line download</th>)
-                              : null}
-                            <th>Web download</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {release.result_files.data_types.map(item => renderDataTypeRow(release.result_files.bucket_name, item, release.version))}
-                        </tbody>
-                      </table>
+                      <div className="table-responsive">
+                        <table className="table table-sm release-data-links-table">
+                          <thead className="thead-dark">
+                            <tr className="table-head">
+                              <th>Data type</th>
+                              {currentView === 'internal'
+                                ? (<th>Command-line download</th>)
+                                : null}
+                              <th>Web download</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {release.result_files.data_types.map(item => renderDataTypeRow(release.result_files.bucket_name, item, release.version))}
+                          </tbody>
+                        </table>
+                      </div>
                       {renderModal(release.version)}
                     </div>
                   </div>
