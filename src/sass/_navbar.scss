@@ -12,58 +12,6 @@ nav {
     }
   }
 
-  @include media-breakpoint-up(lg) {
-    .navbar-brand.resized {
-      padding-top: 0.75rem;
-      padding-bottom: 0.75rem;
-
-      img {
-        width: 305px;
-        height: 36px;
-      }
-    }
-  }
-
-  @include media-breakpoint-down(md) {
-    &.navbar>.container-fluid {
-      padding-left: 15px;
-      padding-right: 15px;
-    }
-
-    .navbar-brand {
-      padding-top: 0.75rem;
-      padding-bottom: 0.75rem;
-
-      img {
-        width: 305px;
-        height: 36px;
-      }
-    }
-  }
-
-  @include media-breakpoint-down(xs) {
-    .navbar-brand {
-      img {
-        width: 250px;
-        height: 29px;
-      }
-    }
-
-    .header-navbar-items.container {
-      padding-left: 15px;
-      padding-right: 15px;
-    }
-  }
-
-  @media (max-width: 320px) {
-    .navbar-brand {
-      img {
-        width: 210px;
-        height: auto;
-      }
-    }
-  }
-
   .navbar-nav {
     .navItem {
       font-weight: $semibold-weight;
@@ -166,14 +114,85 @@ nav {
       }
     }
   }
+}
 
-  @include media-breakpoint-down(md) {
+@include media-breakpoint-up(lg) {
+  nav {
+    .navbar-brand.resized {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+  
+      img {
+        width: 305px;
+        height: 36px;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(md) {
+  nav {
+    &.navbar>.container-fluid {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  
+    .navbar-brand {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+  
+      img {
+        width: 305px;
+        height: 36px;
+      }
+    }
+  
     .navbar-nav {
       padding-bottom: 0.5rem;
-
+  
       .navItem:last-child {
         .user-logout-button {
           margin-left: 0;
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  nav {
+    .navbar-brand {
+      img {
+        width: 250px;
+        height: 29px;
+      }
+    }
+  
+    .header-navbar-items.container {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  nav {
+    .navbar-brand {
+      img {
+        width: 210px;
+        height: auto;
+      }
+    }
+
+    .navbar-nav {
+      .navItem:last-child {
+        .user-logout-button {
+          font-size: 90%;
+        }
+
+        .logOutBtn {
+          font-size: 90%;
+          margin-left: 0.15rem;
         }
       }
     }
