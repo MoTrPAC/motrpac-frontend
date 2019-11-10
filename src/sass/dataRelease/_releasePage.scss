@@ -94,6 +94,7 @@
                 .tooltip-on-top {
                   background-color: #dadfcf;
                   color: #000;
+                  display: none;
                   font-size: 0.75rem;
                   line-height: 100%;
                   padding: 0.65rem;
@@ -110,6 +111,7 @@
                 }
 
                 &:hover .tooltip-on-top {
+                  display: block;
                   visibility: visible;
                   opacity: 1;
                 }
@@ -236,3 +238,124 @@
     }
   }
 }
+
+/* responsive styling */
+
+/* Large devices (desktops, less than 1200px) */
+@include media-breakpoint-down(lg) {
+  .dataReleasePage {
+    .release-entry-item {
+      display: flex;
+      flex-direction: column;
+
+      .release-timeline {
+        max-width: 100%;
+        padding-bottom: 0 !important;
+      }
+
+      .release-main-section {
+        border-left: none;
+        max-width: 100%;
+        padding-left: 0 !important;
+        padding-top: 0 !important;
+      }
+    }
+
+    .view-more-button-container {
+      .d-none {
+        display: none !important;
+      }
+
+      .view-more-button-wrapper {
+        border-left: none;
+        padding-left: 0 !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .dataReleasePage {
+    flex: 0 0 80% !important;
+    max-width: 80% !important;
+
+    &>div {
+      flex-direction: column;
+      
+      .btn-toolbar {
+        margin-top: 15px;
+      }
+    }
+
+    .release-data-links-table {
+      .release-data-download-link {
+        font-size: 0.8rem;
+        padding-left: 0.25rem !important;
+        padding-right: 0.25rem !important;
+
+        .btn-data-download {
+          margin-right: 0 !important;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .dataReleasePage {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+
+    &>div {
+      .btn-toolbar {
+        .btn-group:first-child {
+          margin-right: 0 !important;
+        }
+
+        .btn-group:last-child {
+          display: none;
+        }
+      }
+    }
+
+    .release-entry-item {
+      .release-timeline {
+        display: block !important;
+        float: right !important;
+
+        &>div {
+          text-align: right;
+        }
+
+        ul {
+          display: block !important;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 398.98px) {
+  .btn-toolbar {
+    .btn {
+      font-size: 85%;
+
+      .material-icons {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .btn-toolbar {
+    .btn {
+      font-size: 70%;
+
+      .material-icons {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
