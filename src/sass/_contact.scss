@@ -13,3 +13,11 @@
     line-height: 1.5;
   }
 }
+
+@media (min-width: 576px) and (max-width: 1000px) {
+  .contactPage {
+    .card-deck .card {
+      min-width: 250px;
+    }
+  }
+}
