@@ -198,36 +198,16 @@
   }
 }
 
-@media (max-width: 416.98px) {
+@media (max-width: 600px) {
   .dataAccessPage {
-    .motrpac-study-documents {
-      table.document-list {
-        th, td {
-          padding: 0.45rem 0.45rem;
-        }
-
-        img {
-          display: none;
-        }
-
-        a {
-          white-space: normal;
-
-          &::after {
-            content: ' (PDF)';
-          }
-
-          &.zip::after {
-            content: ' (ZIP)';
-          }
-        }
-      }
-    }
-
     .card.e-signature {
       width: 100% !important;
     }
+  }
+}
 
+@media (max-width: 416.98px) {
+  .dataAccessPage {
     .form-footer {
       align-items: start !important;
 
@@ -244,6 +224,10 @@
 @media (max-width: 398.98px) {
   .dataAccessPage {
     .form-footer {
+      .reCAPTCHA-container {
+        width: 82%;
+      }
+
       .reCAPTCHA-container>div>div>div {
         transform:scale(0.82);
         -webkit-transform:scale(0.82);
@@ -256,7 +240,19 @@
 
 @media (max-width: 320px) {
   .dataAccessPage {
+    .card.e-signature {
+      .e-signature-input {
+        &::placeholder {
+          font-size: 90%;
+        }
+      }
+    }
+
     .form-footer {
+      .reCAPTCHA-container {
+        width: 64%;
+      }
+
       .reCAPTCHA-container>div>div>div {
         transform:scale(0.64);
         -webkit-transform:scale(0.64);
