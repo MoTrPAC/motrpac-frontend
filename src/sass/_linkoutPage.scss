@@ -59,3 +59,13 @@
     }
   }
 }
+
+@media (min-width: 576px) and (max-width: 800px) {
+  .linkoutPage {
+    .externalLinks {
+      .card-deck .card {
+        min-width: 200px;
+      }
+    }
+  }
+}
