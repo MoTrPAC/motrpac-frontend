@@ -70,6 +70,16 @@ export function ReleasePage({
   // Render internal release view by default
   return (
     <div className="col-md-9 ml-sm-auto col-lg-10 px-4 dataReleasePage internal">
+      <p className="alert alert-info alert-dismissible fade show warning-note d-flex align-items-center" role="alert">
+        <span className="material-icons">info</span>
+        <span className="warning-note-text">
+          {' '}
+          Some features are unavailable to smaller mobile device screens.
+        </span>
+        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </p>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 border-bottom">
         <div className="page-title" style={{ backgroundImage: `url(${IconSet.InternalDataRelease})` }}>
           <h3>Data Releases</h3>
