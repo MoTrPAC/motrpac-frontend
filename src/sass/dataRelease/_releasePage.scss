@@ -1,4 +1,9 @@
 .dataReleasePage {
+  .warning-note {
+    display: none !important;
+    margin-bottom: 0;
+  }
+
   .page-title {
     background-size: contain;
     background-repeat: no-repeat;
@@ -318,6 +323,12 @@
       }
     }
 
+    .warning-note {
+      display: flex !important;
+      font-size: 80%;
+      justify-content: start;
+    }
+
     .release-entry-item {
       .release-timeline {
         display: block !important;
@@ -329,6 +340,27 @@
 
         ul {
           display: block !important;
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .dataReleasePage {
+    .release-data-links-table-container {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+
+      .tooltip-on-top {
+        width: 220px;
+
+        code {
+          white-space: pre-wrap;
+          font-size: 0.8rem;
+          margin-bottom: 0.5rem;
         }
       }
     }
