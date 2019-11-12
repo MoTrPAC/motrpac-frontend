@@ -92,3 +92,21 @@
     }
   }
 }
+
+@include media-breakpoint-down(md) {
+  .searchPage {
+    .search-result-filters-content {
+      .list-group-item {
+        flex-direction: column;
+        justify-content: start !important;
+      }
+    }
+
+    .search-result-list-item {
+      &>div .status-wrapper {
+        font-size: 0.9rem;
+        width: max-content;
+      }
+    }
+  }
+}
