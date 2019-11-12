@@ -176,3 +176,13 @@
     display: none;
   }
 }
+
+@media (max-width: 1480px) {
+  .analysisPage {
+    .animal-phenotype-data {
+      .card-body {
+        overflow-x: auto;
+      }
+    }
+  }
+}
