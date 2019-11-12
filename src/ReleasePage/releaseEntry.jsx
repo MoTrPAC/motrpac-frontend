@@ -336,7 +336,7 @@ function ReleaseEntry({ profile, currentView }) {
                         {' '}
                         <EmailLink mailto="motrpac-helpdesk@lists.stanford.edu" label="MoTrPAC Helpdesk" />
                       </p>
-                      <div className="table-responsive">
+                      <div className="release-data-links-table-container">
                         <table className="table table-sm release-data-links-table">
                           <thead className="thead-dark">
                             <tr className="table-head">
