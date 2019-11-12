@@ -94,3 +94,23 @@
     }
   }
 }
+
+@include media-breakpoint-down(md) {
+  .searchPage {
+    .param-item {
+      select {
+        font-size: 0.9rem;
+        
+        &.param-operator {
+          flex: 0 0 13%;
+          max-width: 13%;
+        }
+      }
+
+      .param-operator-filler {
+        flex: 0 0 13%;
+        max-width: 13%;
+      }
+    }
+  }
+}
