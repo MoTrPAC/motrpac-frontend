@@ -208,6 +208,12 @@
 
 @media (max-width: 416.98px) {
   .dataAccessPage {
+    .motrpac-study-documents {
+      table.document-list {
+        min-width: 420px;
+      }
+    }
+
     .form-footer {
       align-items: start !important;
 
