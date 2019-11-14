@@ -183,3 +183,88 @@
     }
   }
 }
+
+/* Medium devices (tablets, less than 992px) */
+@include media-breakpoint-down(md) {
+  .dataAccessPage {
+    .form-footer {
+      align-items: start;
+      flex-direction: column;
+    }
+
+    .registration-button-group {
+      margin-top: 1.25rem;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .dataAccessPage {
+    .card.e-signature {
+      width: 100% !important;
+    }
+  }
+}
+
+@media (max-width: 416.98px) {
+  .dataAccessPage {
+    .motrpac-study-documents {
+      table.document-list {
+        min-width: 420px;
+      }
+    }
+
+    .form-footer {
+      align-items: start !important;
+
+      .reCAPTCHA-container>div>div>div {
+        transform:scale(0.94);
+        -webkit-transform:scale(0.94);
+        transform-origin:0 0;
+        -webkit-transform-origin:0 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 398.98px) {
+  .dataAccessPage {
+    .form-footer {
+      .reCAPTCHA-container {
+        width: 82%;
+      }
+
+      .reCAPTCHA-container>div>div>div {
+        transform:scale(0.82);
+        -webkit-transform:scale(0.82);
+        transform-origin:0 0;
+        -webkit-transform-origin:0 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .dataAccessPage {
+    .card.e-signature {
+      .e-signature-input {
+        &::placeholder {
+          font-size: 90%;
+        }
+      }
+    }
+
+    .form-footer {
+      .reCAPTCHA-container {
+        width: 64%;
+      }
+
+      .reCAPTCHA-container>div>div>div {
+        transform:scale(0.64);
+        -webkit-transform:scale(0.64);
+        transform-origin:0 0;
+        -webkit-transform-origin:0 0;
+      }
+    }
+  }
+}

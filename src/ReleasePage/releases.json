@@ -15,9 +15,9 @@
           "title": "Epigenomics data (metadata, QC and quantitative results)",
           "icon": "DNA",
           "icon_alt": "Epigenomics",
-          "tooltip_id": "data-epigenomics-1-0",
+          "tooltip_id": "data-epigenomics-ext-1-0",
           "object_path": "/epigenomics",
-          "object_zipfile_path": "/epigenomics.tar.gz",
+          "object_zipfile_path": "/epigenomics-ext-1.0.tar.gz",
           "object_zipfile_size": "9 GB"
         },
         {
@@ -25,9 +25,9 @@
           "title": "Transcriptomics data (metadata, QC and quantitative results)",
           "icon": "DNA",
           "icon_alt": "Transcriptomics",
-          "tooltip_id": "data-transcriptomics-1-0",
+          "tooltip_id": "data-transcriptomics-ext-1-0",
           "object_path": "/transcriptomics",
-          "object_zipfile_path": "/transcriptomics.tar.gz",
+          "object_zipfile_path": "/transcriptomics-ext-1.0.tar.gz",
           "object_zipfile_size": "53 MB"
         },
         {
@@ -35,9 +35,9 @@
           "title": "Metabolomics Targeted data (metadata, QC and quantitative results)",
           "icon": "Metabolite",
           "icon_alt": "Metabolomics Targeted",
-          "tooltip_id": "data-metabolomics_targeted-1-0",
+          "tooltip_id": "data-metabolomics_targeted-ext-1-0",
           "object_path": "/metabolomics_targeted",
-          "object_zipfile_path": "/metabolomics_targeted.tar.gz",
+          "object_zipfile_path": "/metabolomics_targeted-ext-1.0.tar.gz",
           "object_zipfile_size": "23 MB"
         },
         {
@@ -45,9 +45,9 @@
           "title": "Metabolomics Untargeted data (metadata, QC and quantitative results)",
           "icon": "Metabolite",
           "icon_alt": "Metabolomics Untargeted",
-          "tooltip_id": "data-metabolomics_untargeted-1-0",
+          "tooltip_id": "data-metabolomics_untargeted-ext-1-0",
           "object_path": "/metabolomics_untargeted",
-          "object_zipfile_path": "/metabolomics_untargeted.tar.gz",
+          "object_zipfile_path": "/metabolomics_untargeted-ext-1.0.tar.gz",
           "object_zipfile_size": "101 MB"
         },
         {
@@ -55,9 +55,9 @@
           "title": "Proteomics data (metadata, QC and quantitative results)",
           "icon": "Protein",
           "icon_alt": "Proteomic",
-          "tooltip_id": "data-proteomics-1-0",
+          "tooltip_id": "data-proteomics-ext-1-0",
           "object_path": "/proteomics",
-          "object_zipfile_path": "/proteomics.tar.gz",
+          "object_zipfile_path": "/proteomics-ext-1.0.tar.gz",
           "object_zipfile_size": "298 MB"
         },
         {
@@ -65,9 +65,9 @@
           "title": "Phenotypic data",
           "icon": "Gender",
           "icon_alt": "Phenotypic",
-          "tooltip_id": "data-phenotype-1-0",
+          "tooltip_id": "data-phenotype-ext-1-0",
           "object_path": "/phenotype",
-          "object_zipfile_path": "/phenotype.tar.gz",
+          "object_zipfile_path": "/phenotype-ext-1.0.tar.gz",
           "object_zipfile_size": "526 KB"
         },
         {
@@ -75,9 +75,9 @@
           "title": "All of the omics and phenotypic data",
           "icon": "Globe",
           "icon_alt": "All omics",
-          "tooltip_id": "data-all-1-0",
-          "object_path": "",
-          "object_zipfile_path": "/all.tar.gz",
+          "tooltip_id": "data-all-ext-1-0",
+          "object_path": "/all-ext-1.0.tar.gz",
+          "object_zipfile_path": "/all-ext-1.0.tar.gz",
           "object_zipfile_size": "9 GB"
         }
       ]
@@ -117,9 +117,9 @@
           "title": "RNA-seq data (metadata, QC and quantitative results)",
           "icon": "DNA",
           "icon_alt": "Genomic",
-          "tooltip_id": "data-rna-seq-1-2",
+          "tooltip_id": "data-rna-seq-int-1-2",
           "object_path": "/rna-seq",
-          "object_zipfile_path": "/rna-seq.tar.gz",
+          "object_zipfile_path": "/rna-seq-int-1.2.tar.gz",
           "object_zipfile_size": "213 MB"
         },
         {
@@ -127,7 +127,7 @@
           "title": "RRBS data (metadata, QC and quantitative results)",
           "icon": "DNA",
           "icon_alt": "Genomic",
-          "tooltip_id": "data-rrbs-1-2",
+          "tooltip_id": "data-rrbs-int-1-2",
           "object_path": "/rrbs",
           "object_zipfile_path": null,
           "object_zipfile_size": null
@@ -137,9 +137,9 @@
           "title": "Metabolomics data (metadata, QC and quantitative results)",
           "icon": "Metabolite",
           "icon_alt": "Metabolomic",
-          "tooltip_id": "data-metabolomics-1-2",
+          "tooltip_id": "data-metabolomics-int-1-2",
           "object_path": "/metabolomics",
-          "object_zipfile_path": "/metabolomics.tar.gz",
+          "object_zipfile_path": "/metabolomics-int-1.2.tar.gz",
           "object_zipfile_size": "124 MB"
         },
         {
@@ -147,9 +147,9 @@
           "title": "Proteomics data (metadata, QC and quantitative results)",
           "icon": "Protein",
           "icon_alt": "Proteomic",
-          "tooltip_id": "data-proteomics-1-2",
+          "tooltip_id": "data-proteomics-int-1-2",
           "object_path": "/proteomics",
-          "object_zipfile_path": "/proteomics.tar.gz",
+          "object_zipfile_path": "/proteomics-int-1.2.tar.gz",
           "object_zipfile_size": "298 MB"
         },
         {
@@ -157,9 +157,9 @@
           "title": "Phenotypic data",
           "icon": "Gender",
           "icon_alt": "Phenotypic",
-          "tooltip_id": "data-phenotype-1-2",
+          "tooltip_id": "data-phenotype-int-1-2",
           "object_path": "/phenotype",
-          "object_zipfile_path": "/phenotype.tar.gz",
+          "object_zipfile_path": "/phenotype-int-1.2.tar.gz",
           "object_zipfile_size": "2 MB"
         },
         {
@@ -167,9 +167,9 @@
           "title": "All of the omics (without RRBS) and phenotypic data",
           "icon": "Globe",
           "icon_alt": "All omics",
-          "tooltip_id": "data-all-1-2",
-          "object_path": "",
-          "object_zipfile_path": "/all.tar.gz",
+          "tooltip_id": "data-all-int-1-2",
+          "object_path": "/all-int-1.2.tar.gz",
+          "object_zipfile_path": "/all-int-1.2.tar.gz",
           "object_zipfile_size": "636 MB"
         }
       ]
@@ -214,9 +214,9 @@
           "title": "RNA-seq data (metadata, QC and quantitative results)",
           "icon": "DNA",
           "icon_alt": "Genomic",
-          "tooltip_id": "data-rna-seq-1-1",
+          "tooltip_id": "data-rna-seq-int-1-1",
           "object_path": "/rna-seq",
-          "object_zipfile_path": "/rna-seq.tar.gz",
+          "object_zipfile_path": "/rna-seq-int-1.1.tar.gz",
           "object_zipfile_size": "213 MB"
         },
         {
@@ -224,7 +224,7 @@
           "title": "RRBS data (metadata, QC and quantitative results)",
           "icon": "DNA",
           "icon_alt": "Genomic",
-          "tooltip_id": "data-rrbs-1-1",
+          "tooltip_id": "data-rrbs-int-1-1",
           "object_path": "/rrbs",
           "object_zipfile_path": null,
           "object_zipfile_size": null
@@ -234,9 +234,9 @@
           "title": "Metabolomics data (metadata, QC and quantitative results)",
           "icon": "Metabolite",
           "icon_alt": "Metabolomic",
-          "tooltip_id": "data-metabolomics-1-1",
+          "tooltip_id": "data-metabolomics-int-1-1",
           "object_path": "/metabolomics",
-          "object_zipfile_path": "/metabolomics.tar.gz",
+          "object_zipfile_path": "/metabolomics-int-1.1.tar.gz",
           "object_zipfile_size": "99 MB"
         },
         {
@@ -244,9 +244,9 @@
           "title": "Proteomics data (metadata, QC and quantitative results)",
           "icon": "Protein",
           "icon_alt": "Proteomic",
-          "tooltip_id": "data-proteomics-1-1",
+          "tooltip_id": "data-proteomics-int-1-1",
           "object_path": "/proteomics",
-          "object_zipfile_path": "/proteomics.tar.gz",
+          "object_zipfile_path": "/proteomics-int-1.1.tar.gz",
           "object_zipfile_size": "288 MB"
         },
         {
@@ -254,9 +254,9 @@
           "title": "Phenotypic data",
           "icon": "Gender",
           "icon_alt": "Phenotypic",
-          "tooltip_id": "data-phenotype-1-1",
+          "tooltip_id": "data-phenotype-int-1-1",
           "object_path": "/phenotype",
-          "object_zipfile_path": "/phenotype.tar.gz",
+          "object_zipfile_path": "/phenotype-int-1.1.tar.gz",
           "object_zipfile_size": "273 KB"
         },
         {
@@ -264,9 +264,9 @@
           "title": "All of the omics (without RRBS) and phenotypic data",
           "icon": "Globe",
           "icon_alt": "All omics",
-          "tooltip_id": "data-all-1-1",
-          "object_path": "",
-          "object_zipfile_path": "/all.tar.gz",
+          "tooltip_id": "data-all-int-1-1",
+          "object_path": "/all-int-1.1.tar.gz",
+          "object_zipfile_path": "/all-int-1.1.tar.gz",
           "object_zipfile_size": "600 MB"
         }
       ]
@@ -311,9 +311,9 @@
           "title": "RNA-seq data (metadata, QC and quantitative results)",
           "icon": "DNA",
           "icon_alt": "Genomic",
-          "tooltip_id": "data-rna-seq-1-0",
+          "tooltip_id": "data-rna-seq-int-1-0",
           "object_path": "/rna-seq",
-          "object_zipfile_path": "/rna-seq.tar.gz",
+          "object_zipfile_path": "/rna-seq-int-1.0.tar.gz",
           "object_zipfile_size": "213 MB"
         },
         {
@@ -321,7 +321,7 @@
           "title": "RRBS data (metadata, QC and quantitative results)",
           "icon": "DNA",
           "icon_alt": "Genomic",
-          "tooltip_id": "data-rrbs-1-0",
+          "tooltip_id": "data-rrbs-int-1-0",
           "object_path": "/rrbs",
           "object_zipfile_path": null,
           "object_zipfile_size": null
@@ -331,9 +331,9 @@
           "title": "Metabolomics data (metadata, QC and quantitative results)",
           "icon": "Metabolite",
           "icon_alt": "Metabolomic",
-          "tooltip_id": "data-metabolomics-1-0",
+          "tooltip_id": "data-metabolomics-int-1-0",
           "object_path": "/metabolomics",
-          "object_zipfile_path": "/metabolomics.tar.gz",
+          "object_zipfile_path": "/metabolomics-int-1.0.tar.gz",
           "object_zipfile_size": "76 MB"
         },
         {
@@ -341,9 +341,9 @@
           "title": "Proteomics data (metadata, QC and quantitative results)",
           "icon": "Protein",
           "icon_alt": "Proteomic",
-          "tooltip_id": "data-proteomics-1-0",
+          "tooltip_id": "data-proteomics-int-1-0",
           "object_path": "/proteomics",
-          "object_zipfile_path": "/proteomics.tar.gz",
+          "object_zipfile_path": "/proteomics-int-1.0.tar.gz",
           "object_zipfile_size": "229 MB"
         },
         {
@@ -351,9 +351,9 @@
           "title": "Phenotypic data",
           "icon": "Gender",
           "icon_alt": "Phenotypic",
-          "tooltip_id": "data-phenotype-1-0",
+          "tooltip_id": "data-phenotype-int-1-0",
           "object_path": "/phenotype",
-          "object_zipfile_path": "/phenotype.tar.gz",
+          "object_zipfile_path": "/phenotype-int-1.0.tar.gz",
           "object_zipfile_size": "273 KB"
         },
         {
@@ -361,9 +361,9 @@
           "title": "All of the omics (without RRBS) and phenotypic data",
           "icon": "Globe",
           "icon_alt": "All omics",
-          "tooltip_id": "data-all-1-0",
-          "object_path": "",
-          "object_zipfile_path": "/all.tar.gz",
+          "tooltip_id": "data-all-int-1-0",
+          "object_path": "/all-int-1.0.tar.gz",
+          "object_zipfile_path": "/all-int-1.0.tar.gz",
           "object_zipfile_size": "518 MB"
         }
       ]

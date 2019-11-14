@@ -91,9 +91,11 @@ export function LandingPage({ isAuthenticated, profile }) {
               <span className="data-access-announce-content">
                 <h5>
                   MoTrPAC data release 1.0 is now available! There is data from 5 different
-                  tissues following an acute exercise bout in rats. Visit the&nbsp;
+                  tissues following an acute exercise bout in rats. Visit the
+                  {' '}
                   <Link to="/data-access" className="inline-link">Data Access</Link>
-                  &nbsp;page to learn more and register for access.
+                  {' '}
+                  page to learn more and register for access.
                 </h5>
               </span>
               <button type="button" className="close" data-dismiss="alert" aria-label="Close">

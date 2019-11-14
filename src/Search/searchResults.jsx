@@ -126,10 +126,20 @@ function SearchResults({
                       </p>
                     </div>
                     <div>
-                      <div className="status-wrapper">
-                        <span className="oi oi-loop-square dblue" />
-                        <span className="status-label">Internally Available</span>
-                      </div>
+                      {result.item.internal_avail
+                        ? (
+                          <div className="status-wrapper">
+                            <span className="oi oi-loop-square dblue" />
+                            <span className="status-label">Internally Available</span>
+                          </div>
+                        ) : null}
+                      {result.item.external_avail
+                        ? (
+                          <div className="status-wrapper">
+                            <span className="oi oi-circle-check green" />
+                            <span className="status-label">Publicly Available</span>
+                          </div>
+                        ) : null}
                     </div>
                   </li>
                 ))}

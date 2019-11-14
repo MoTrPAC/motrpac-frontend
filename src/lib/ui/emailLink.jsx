@@ -1,0 +1,31 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+/**
+ * Renders an email link
+ * Requires Google Material Icons
+ *
+ * @param {String} mailto  Email address
+ * @param {String} label   Email link text
+ *
+ * @returns {Object} JSX representation of an email link.
+ */
+function EmailLink({ mailto, label }) {
+  return (
+    <a href={`mailto:${mailto}`} className="inline-link-with-icon">
+      {label && label.length ? label : mailto}
+      <i className="material-icons email-icon">mail</i>
+    </a>
+  );
+}
+
+EmailLink.propTypes = {
+  mailto: PropTypes.string.isRequired,
+  label: PropTypes.string,
+};
+
+EmailLink.defaultProps = {
+  label: null,
+};
+
+export default EmailLink;

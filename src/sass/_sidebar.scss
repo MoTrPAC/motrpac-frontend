@@ -30,3 +30,9 @@
     pointer-events: none;
   }
 }
+
+@media (max-width: 800px) {
+  nav.sidebar {
+    max-width: 20% !important;
+  }
+}

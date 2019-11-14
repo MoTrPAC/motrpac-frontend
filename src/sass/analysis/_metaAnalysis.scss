@@ -110,3 +110,31 @@
   }
 }
 
+@include media-breakpoint-down(md) {
+  .human-gene-meta-analysis {
+    .meta-analysis-content-container {
+      flex-direction: column;
+      justify-content: start !important;
+
+      .gene-search-container {
+        flex: 0 0 100%;
+        max-width: 100%;
+      }
+
+      .meta-analysis-data-container {
+        padding-left: 0;
+        padding-right: 0;
+
+        .meta-analysis-forest-plot {
+          margin-left: 0;
+          margin-bottom: 1.0rem;
+        }
+      }
+
+      .meta-analysis-data-content {
+        flex-direction: column;
+        justify-content: start !important;
+      }
+    }
+  }
+}
