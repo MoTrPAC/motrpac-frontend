@@ -326,7 +326,7 @@
     .warning-note {
       display: flex !important;
       font-size: 80%;
-      justify-content: start;
+      justify-content: flex-start;
     }
 
     .release-entry-item {
@@ -349,6 +349,9 @@
 @include media-breakpoint-down(sm) {
   .dataReleasePage {
     .release-data-links-table-container {
+      border: 0;
+      box-shadow: inset 0 0 0 1px #dee2e6;
+      box-sizing: border-box;
       display: block;
       width: 100%;
       overflow-x: auto;
@@ -360,8 +363,15 @@
         code {
           white-space: pre-wrap;
           font-size: 0.8rem;
+          line-height: 120%;
           margin-bottom: 0.5rem;
         }
+      }
+    }
+
+    .motrpac-study-documents {
+      table.document-list {
+        min-width: 420px;
       }
     }
   }
