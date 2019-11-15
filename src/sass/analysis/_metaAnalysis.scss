@@ -110,7 +110,7 @@
   }
 }
 
-@include media-breakpoint-down(md) {
+@include media-breakpoint-down(lg) {
   .human-gene-meta-analysis {
     .meta-analysis-content-container {
       flex-direction: column;
