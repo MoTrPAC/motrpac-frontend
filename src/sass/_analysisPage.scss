@@ -186,3 +186,12 @@
     }
   }
 }
+
+@media (max-width: 992px) {
+  .analysisPage {
+    .analysisType {
+      flex: 0 0 35%;
+      max-width: 35%;
+    }
+  }
+}
