@@ -1,6 +1,5 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
 import SampleSearchResultTable from '../sampleSearchResultTable';
 
 const urlSearchParamsObj = {
@@ -14,7 +13,7 @@ const urlSearchParamsObj = {
 
 storiesOf('Sample Results Table', module)
   // Padding added to indicate it is a component
-  .addDecorator(story => (
+  .addDecorator((story) => (
     <div className="searchPage container-fluid">
       <div className="advanced-search-form-container">
         {story()}
