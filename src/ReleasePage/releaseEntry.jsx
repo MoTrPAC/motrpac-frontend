@@ -36,7 +36,7 @@ function ReleaseEntry({ profile, currentView }) {
   });
   const [visibleReleases, setVisibleReleases] = useState(1);
 
-  const releases = releaseData.filter(release => release.target === currentView);
+  const releases = releaseData.filter((release) => release.target === currentView);
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
   // Event handler for "Show prior releases" button
@@ -148,6 +148,7 @@ function ReleaseEntry({ profile, currentView }) {
         });
         setFetching(false);
       }).catch((err) => {
+        // eslint-disable-next-line no-console
         console.log(`${err.error}: ${err.errorDescription}`);
         setModalStatus({
           status: 'error',
@@ -190,8 +191,7 @@ function ReleaseEntry({ profile, currentView }) {
             </div>
             <div className="modal-body">
               {!fetching
-                ? renderModalMessage(releaseVersion) : <div className="loading-spinner"><img src={IconSet.Spinner} alt="" /></div>
-              }
+                ? renderModalMessage(releaseVersion) : <div className="loading-spinner"><img src={IconSet.Spinner} alt="" /></div>}
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -250,8 +250,7 @@ function ReleaseEntry({ profile, currentView }) {
           )
           : (
             <td><span>Not available</span></td>
-          )
-        }
+          )}
       </tr>
     );
   }
@@ -260,6 +259,7 @@ function ReleaseEntry({ profile, currentView }) {
   function renderReleaseEntry() {
     let entries;
     if (releases && releases.length) {
+      // eslint-disable-next-line arrow-body-style
       entries = releases.slice(0, visibleReleases).map((release, idx) => {
         return (
           <div key={release.version} className={`release-entry-container ${currentView}`}>
@@ -309,7 +309,8 @@ function ReleaseEntry({ profile, currentView }) {
                       {currentView === 'external'
                         ? (
                           <p className="release-description">
-                            To request access to raw files of the different omics data, please contact
+                            To request access to raw files of the different omics
+                            data, please contact
                             {' '}
                             <EmailLink mailto="motrpac-data-requests@lists.stanford.edu" label="MoTrPAC Data Requests" />
                             {' '}
@@ -348,7 +349,11 @@ function ReleaseEntry({ profile, currentView }) {
                             </tr>
                           </thead>
                           <tbody>
-                            {release.result_files.data_types.map(item => renderDataTypeRow(release.result_files.bucket_name, item, release.version))}
+                            {release.result_files.data_types.map((item) => renderDataTypeRow(
+                              release.result_files.bucket_name,
+                              item,
+                              release.version,
+                            ))}
                           </tbody>
                         </table>
                       </div>
@@ -357,7 +362,7 @@ function ReleaseEntry({ profile, currentView }) {
                   </div>
                   {currentView === 'internal'
                     ? (
-                      <React.Fragment>
+                      <>
                         <h6 className="additional-release-download-header">Additional Downloads</h6>
                         <div className="raw-files-download-section">
                           <p className="d-block mb-2 d-flex align-items-center justify-content-start raw-files-download-option">
@@ -400,15 +405,17 @@ function ReleaseEntry({ profile, currentView }) {
                             <span>Intermediate files downloads</span>
                           </p>
                           <div className="collapse" id={`intermediate-files-release-${idx}`}>
-                            {renderIntermediateFilesDownloadSectionContent(release.intermediate_files)}
+                            {renderIntermediateFilesDownloadSectionContent(
+                              release.intermediate_files,
+                            )}
                           </div>
                         </div>
-                      </React.Fragment>
+                      </>
                     )
                     : null}
                   {release.documentation
                     ? (
-                      <React.Fragment>
+                      <>
                         <h6 className="additional-release-download-header">Documentation</h6>
                         <div className="release-documentation-section">
                           <StudyDocumentsTable />
@@ -424,7 +431,7 @@ function ReleaseEntry({ profile, currentView }) {
                               </p>
                             ) : null}
                         </div>
-                      </React.Fragment>
+                      </>
                     )
                     : null}
                 </div>
@@ -436,7 +443,7 @@ function ReleaseEntry({ profile, currentView }) {
     }
 
     return (
-      <React.Fragment>
+      <>
         {entries}
         {releases.length > 1
           ? (
@@ -456,7 +463,7 @@ function ReleaseEntry({ profile, currentView }) {
             </div>
           )
           : null}
-      </React.Fragment>
+      </>
     );
   }
 
