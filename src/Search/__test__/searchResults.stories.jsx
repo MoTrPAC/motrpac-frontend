@@ -1,6 +1,5 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
 import SearchResults from '../searchResults';
 
 const stanfordPass1aRNAseqMetadata = require('../../data/stanford_pass1a_get_rna_seq_metadata');
@@ -31,7 +30,7 @@ stanfordPass1aRNAseqMetadata.forEach((entry) => {
 
 storiesOf('Search Results', module)
   // Padding added to indicate it is a component
-  .addDecorator(story => (
+  .addDecorator((story) => (
     <div className="searchPage container-fluid">
       <div className="advanced-search-form-container">
         {story()}
