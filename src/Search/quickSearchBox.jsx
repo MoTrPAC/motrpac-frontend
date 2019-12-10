@@ -54,15 +54,20 @@ function QuickSearchBox({
 
 QuickSearchBox.propTypes = {
   quickSearchTerm: PropTypes.string,
-  handleQuickSearchInputChange: PropTypes.func.isRequired,
-  handleQuickSearchRequestSubmit: PropTypes.func.isRequired,
-  resetQuickSearch: PropTypes.func.isRequired,
-  getSearchForm: PropTypes.func.isRequired,
-  resetAdvSearch: PropTypes.func.isRequired,
+  handleQuickSearchInputChange: PropTypes.func,
+  handleQuickSearchRequestSubmit: PropTypes.func,
+  resetQuickSearch: PropTypes.func,
+  getSearchForm: PropTypes.func,
+  resetAdvSearch: PropTypes.func,
 };
 
 QuickSearchBox.defaultProps = {
   quickSearchTerm: '',
+  handleQuickSearchInputChange: null,
+  handleQuickSearchRequestSubmit: null,
+  resetQuickSearch: null,
+  getSearchForm: null,
+  resetAdvSearch: null,
 };
 
 export default QuickSearchBox;
