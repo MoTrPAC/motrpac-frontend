@@ -58,21 +58,23 @@ const depth2StateAnimal = {
   currentSubAnalysis: 'APD',
 };
 storiesOf('Analysis Page', module)
-  .addDecorator(story => (
-    <div className="App">
-      <header>
-        <Navbar isAuthenticated {...navbarAction} profile={testUser} />
-      </header>
-      <div className="componentHolder">
-        <div className="container-fluid">
-          <div className="row">
-            <Sidebar isAuthenticated profile={testUser} {...sidebarActions} />
-            {story()}
+  .addDecorator((story) => (
+    <>
+      <div className="App">
+        <header>
+          <Navbar isAuthenticated {...navbarAction} profile={testUser} />
+        </header>
+        <div className="componentHolder">
+          <div className="container-fluid">
+            <div className="row">
+              <Sidebar isAuthenticated profile={testUser} {...sidebarActions} />
+              {story()}
+            </div>
           </div>
         </div>
       </div>
       <Footer isAuthenticated profile={testUser} {...footerAction} />
-    </div>
+    </>
   ))
   .add('Animal', () => <AnalysisHomePage isAuthenticated {...defaultAnalysisState} match={animalMatch} {...AnalysisActions} />)
   .add('Animal Depth 1', () => <AnalysisHomePage isAuthenticated {...depth1StateAnimal} {...AnalysisActions} />)
