@@ -7,6 +7,7 @@ import { useSpring, animated } from 'react-spring';
 import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-yellow_pipelineball_left.gif';
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Heart.png';
+import ContactHelpdesk from '../lib/ui/contactHelpdesk';
 
 // react-spring mouse parallax config
 const calc = (x, y) => [x - window.innerWidth / 2, y - window.innerHeight / 2];
@@ -214,18 +215,17 @@ export function LandingPage({ isAuthenticated, profile }) {
               the data use agreement and register for an account on the&nbsp;
               <a href="/data-access" className="inline-link">Data Access</a>
               &nbsp;page if you are interested in obtaining access to the data. For updates when
-              subsequent publicly accessible data become available, please contact
-              the MoTrPAC Bioinformatics Center at&nbsp;
-              <a href="mailto:motrpac-helpdesk@lists.stanford.edu" target="_new">
-                motrpac-helpdesk@lists.stanford.edu
-              </a>
+              subsequent publicly accessible data become available, please
+              {' '}
+              <ContactHelpdesk />
             </div>
             <div className="p-2 col-12 col-md-6 upload-data-info">
               <h5>Uploading Data From Study Sites:</h5>
               If you are a member of one of the sites involved with MoTrPAC, please log in using
               your provided ID at the link on the bottom right of this website. If you have issues
-              logging in, please contact the bioinformatic center helpdesk at&nbsp;
-              <a href="mailto:motrpac-helpdesk@lists.stanford.edu" target="_new">motrpac-helpdesk@lists.stanford.edu</a>
+              logging in, please
+              {' '}
+              <ContactHelpdesk />
             </div>
           </div>
         </div>

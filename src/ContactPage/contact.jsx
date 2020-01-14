@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import ContactHelpdesk from '../lib/ui/contactHelpdesk';
 
 /**
  * Renders the Contact Us page in both
@@ -26,11 +27,9 @@ export function Contact({ isAuthenticated }) {
                 the data use agreement and register for an account on the&nbsp;
                 <a href="/data-access" className="inline-link">Data Access</a>
                 &nbsp;page if you are interested in obtaining access to the data. For updates when
-                subsequent publicly accessible data become available, please contact
-                the MoTrPAC Bioinformatics Center at&nbsp;
-                <a href="mailto:motrpac-helpdesk@lists.stanford.edu" target="_new">
-                  motrpac-helpdesk@lists.stanford.edu
-                </a>
+                subsequent publicly accessible data become available, please
+                {' '}
+                <ContactHelpdesk />
               </p>
             </div>
           </div>
@@ -40,8 +39,9 @@ export function Contact({ isAuthenticated }) {
               <p className="card-text">
                 If you are a member of one of the sites involved with MoTrPAC, please sign in using your
                 login credentials via the &quot;Submitter Login&quot; link at the top and bottom right of this website. If you have issues
-                logging in, please contact the MoTrPAC Bioinformatics Center helpdesk at&nbsp;
-                <a href="mailto:motrpac-helpdesk@lists.stanford.edu" target="_new">motrpac-helpdesk@lists.stanford.edu</a>
+                logging in, please
+                {' '}
+                <ContactHelpdesk />
               </p>
             </div>
           </div>
@@ -49,11 +49,9 @@ export function Contact({ isAuthenticated }) {
             <h5 className="card-header">Questions and Inquiries</h5>
             <div className="card-body">
               <p className="card-text">
-                For general inquiries about the MoTrPAC Data Hub, please contact
-                the MoTrPAC Bioinformatics Center at&nbsp;
-                <a href="mailto:motrpac-helpdesk@lists.stanford.edu" target="_new">
-                  motrpac-helpdesk@lists.stanford.edu
-                </a>
+                For general inquiries about the MoTrPAC Data Hub, please
+                {' '}
+                <ContactHelpdesk />
               </p>
             </div>
           </div>

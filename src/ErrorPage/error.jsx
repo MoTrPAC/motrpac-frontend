@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import ContactHelpdesk from '../lib/ui/contactHelpdesk';
 
 /**
  * Renders the Error page.
@@ -24,9 +25,11 @@ export function ErrorPage({ isAuthenticated, profile }) {
         <div className="contact-content-container">
           <p className="alert alert-warning">
             At this time, access to the MoTrPAC Data Hub data resources is limited
-            to Consortia members only. Please contact the MoTrPAC Helpdesk at&nbsp;
-            <a href="mailto:motrpac-helpdesk@lists.stanford.edu" target="_new">motrpac-helpdesk@lists.stanford.edu</a>
-            &nbsp;and request access to the portal.
+            to Consortia members only. Please
+            {' '}
+            <ContactHelpdesk />
+            {' '}
+            and request access to the portal.
           </p>
         </div>
       </div>
