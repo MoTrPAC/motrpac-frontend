@@ -6,15 +6,17 @@ function StudyDocumentsTable() {
   // Handler to render study documents table rows
   function renderStudyDocumentsTableRow(item) {
     return (
-      <tr key={item.title} className="document-list-item">
-        <td>
+      <div key={item.title} className="table-row-document-list">
+        <div className="table-cell-document-list column-file">
           <div className="d-flex align-items-center justify-content-start">
             <img src={item.filetype === 'zip' ? IconSet.Archive : IconSet.PDF} alt={item.title} />
             <a href={item.location} download target="_blank" rel="noopener noreferrer" className={item.filetype}>{item.title}</a>
           </div>
-        </td>
-        <td>{item.description}</td>
-      </tr>
+        </div>
+        <div className="table-cell-document-list column-description">
+          {item.description}
+        </div>
+      </div>
     );
   }
 
@@ -23,17 +25,13 @@ function StudyDocumentsTable() {
       <div className="card-header bg-secondary text-light">MoTrPAC study documents</div>
       <div className="card-body">
         <div className="table-responsive">
-          <table className="table table-striped table-sm document-list">
-            <thead>
-              <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {StudyDocuments.map(item => renderStudyDocumentsTableRow(item))}
-            </tbody>
-          </table>
+          <div className="table table-document-list">
+            <div className="table-header-document-list">
+              <div className="table-cell-document-list">Title</div>
+              <div className="table-cell-document-list">Description</div>
+            </div>
+            {StudyDocuments.map((item) => renderStudyDocumentsTableRow(item))}
+          </div>
         </div>
       </div>
     </div>
