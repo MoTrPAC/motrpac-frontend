@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "auth0-js": "9.11.3",
+    "auth0-js": "9.12.2",
     "axios": "^0.19.0",
     "bootstrap": "4.4.1",
     "chart.js": "^2.9.3",
     "d3": "^5.14.2",
-    "dayjs": "1.8.17",
+    "dayjs": "1.8.19",
     "history": "^4.10.1",
     "jquery": "^3.3.1",
     "lodash": "^4.17.11",
@@ -25,8 +25,7 @@
     "react-scripts": "3.3.0",
     "react-spring": "^8.0.20",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0",
-    "tinycolor2": "^1.4.1"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -47,19 +46,19 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@storybook/addon-actions": "5.2.8",
-    "@storybook/addon-links": "5.2.8",
-    "@storybook/addon-storyshots": "5.2.8",
-    "@storybook/addons": "5.2.8",
-    "@storybook/react": "5.2.8",
-    "enzyme": "3.10.0",
-    "enzyme-adapter-react-16": "1.15.1",
+    "@storybook/addon-actions": "5.3.3",
+    "@storybook/addon-links": "5.3.3",
+    "@storybook/addon-storyshots": "5.3.3",
+    "@storybook/addons": "5.3.3",
+    "@storybook/react": "5.3.3",
+    "enzyme": "3.11.0",
+    "enzyme-adapter-react-16": "1.15.2",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-react-hooks": "^2.3.0",
     "jest-canvas-mock": "^2.2.0",
-    "sass": "1.23.7",
+    "sass": "1.24.4",
     "storybook-react-router": "1.0.8",
-    "stylelint": "^12.0.0",
+    "stylelint": "13.0.0",
     "stylelint-config-recommended": "^3.0.0"
   }
 }
