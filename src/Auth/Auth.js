@@ -31,7 +31,7 @@ class Auth {
     this.isAuthenticated = this.isAuthenticated.bind(this);
     this.setSession = this.setSession.bind(this);
     this.getProfile = this.getProfile.bind(this);
-    this.scheduleRenewal();
+    this.scheduleLogout();
   }
 
   login() {
@@ -59,8 +59,8 @@ class Auth {
     localStorage.setItem('id_token_payload', JSON.stringify(authResult.idTokenPayload));
     localStorage.setItem('expires_at', this.expiresAt);
 
-    // schedule a token renewal
-    this.scheduleRenewal();
+    // schedule logout
+    this.scheduleLogout();
   }
 
   handleAuthentication(cb) {
@@ -109,23 +109,12 @@ class Auth {
     cb(null, profile);
   }
 
-  renewSession() {
-    this.auth0.checkSession({}, (err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult);
-      } else if (err) {
-        this.logout();
-        console.log(`Could not get a new token (${err.error}: ${err.error_description}).`);
-      }
-    });
-  }
-
-  scheduleRenewal() {
+  scheduleLogout() {
     this.expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     const timeout = this.expiresAt - Date.now();
     if (timeout > 0) {
       this.tokenRenewalTimeout = setTimeout(() => {
-        this.renewSession();
+        this.logout();
       }, timeout);
     }
   }
