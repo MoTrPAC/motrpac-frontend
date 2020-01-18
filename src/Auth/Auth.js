@@ -120,7 +120,7 @@ class Auth {
 
   // check periodically to log out if access token expires
   checkExpirationInterval() {
-    if (this.expiresAt != undefined && this.expiresAt != null) {
+    if (this.expiresAt !== undefined && this.expiresAt !== null) {
       this.expirationCheckInterval = setInterval(() => {
         this.endSession();
       }, this.intervalLength);
