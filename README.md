@@ -1,6 +1,9 @@
-# motrpac-frontend
+[![MoTrPAC Data Hub](/src/assets/logo-motrpac.png)](https://motrpac-data.org)
+
 **User interface and Frontend for MoTrPAC Bioinformatics Center**
 ---
+[![CircleCI](https://circleci.com/gh/AshleyLab/motrpac-frontend.svg?style=svg)](https://circleci.com/gh/AshleyLab/motrpac-frontend)
+[![Sauce Test Status](https://saucelabs.com/buildstatus/motrpac-developers)](https://app.saucelabs.com/u/motrpac-developers)
 
 ### Directory Layout and Setup
 
@@ -107,3 +110,7 @@
   - Make sure you upload ALL custom icons to icomoon so that previously created icons are still accessible
 
 ---
+
+Cross-browser Testing Platform and Open Source ❤️ provided by [Sauce Labs][homepage]
+
+[homepage]: https://saucelabs.com
