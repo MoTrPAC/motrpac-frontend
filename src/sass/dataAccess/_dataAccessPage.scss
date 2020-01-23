@@ -24,43 +24,6 @@
     }
   }
 
-  .motrpac-study-documents {
-    .card-body {
-      padding: 0;
-    }
-
-    table.document-list {
-      border-collapse: collapse;
-      font-size: 0.85rem;
-      margin-bottom: 0;
-  
-      th, td {
-        padding: 0.45rem 0.65rem;
-        vertical-align: middle;
-      }
-  
-      img {
-        margin-right: 0.35rem;
-        width: auto;
-        height: 1.0rem;
-        opacity: 0.75;
-      }
-  
-      a {
-        white-space: nowrap;
-      }
-    }
-  }
-
-  .inline-link-with-icon {
-    display: inline-flex;
-
-    .material-icons {
-      font-size: 1.15rem;
-      margin: 0 0 0 0.15rem;
-    }
-  }
-
   .alert-missing-checkbox {
     font-size: 0.85rem;
     visibility: hidden;
@@ -208,12 +171,6 @@
 
 @media (max-width: 416.98px) {
   .dataAccessPage {
-    .motrpac-study-documents {
-      table.document-list {
-        min-width: 420px;
-      }
-    }
-
     .form-footer {
       align-items: start !important;
 

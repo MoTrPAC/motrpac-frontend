@@ -5,13 +5,14 @@ import AUTH0_CONFIG from './auth0-variables';
  * A class for Auth0 authentication.
  * @class
  * 
- * @property expiresAt            A timestamp string parsed from localStorage.
- * @property tokenRenewalTimeout  A reference to the setTimeout call.
+ * @property expiresAt                A timestamp string parsed from localStorage.
+ * @property expirationCheckInterval  A reference to the setInterval call.
  * 
  */
 class Auth {
   expiresAt;
-  tokenRenewalTimeout;
+  expirationCheckInterval;
+  intervalLength = 2 * 60 * 60 * 1000;
 
   /**
    * @constructor
@@ -31,7 +32,7 @@ class Auth {
     this.isAuthenticated = this.isAuthenticated.bind(this);
     this.setSession = this.setSession.bind(this);
     this.getProfile = this.getProfile.bind(this);
-    this.scheduleRenewal();
+    this.checkExpirationInterval();
   }
 
   login() {
@@ -41,7 +42,7 @@ class Auth {
   logout() {
     // Clear all local storage items upon logging out
     localStorage.clear();
-    clearTimeout(this.tokenRenewalTimeout);
+    clearInterval(this.expirationCheckInterval);
     // Clear Auth0 session cookie to prevent Auth0 SSO from automatically
     // authenticating users of 'Username-Password-Authentication' connection
     this.auth0.logout({
@@ -59,8 +60,8 @@ class Auth {
     localStorage.setItem('id_token_payload', JSON.stringify(authResult.idTokenPayload));
     localStorage.setItem('expires_at', this.expiresAt);
 
-    // schedule a token renewal
-    this.scheduleRenewal();
+    // schedule expiration check interval
+    this.checkExpirationInterval();
   }
 
   handleAuthentication(cb) {
@@ -109,24 +110,20 @@ class Auth {
     cb(null, profile);
   }
 
-  renewSession() {
-    this.auth0.checkSession({}, (err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult);
-      } else if (err) {
-        this.logout();
-        console.log(`Could not get a new token (${err.error}: ${err.error_description}).`);
-      }
-    });
-  }
-
-  scheduleRenewal() {
+  endSession() {
     this.expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     const timeout = this.expiresAt - Date.now();
-    if (timeout > 0) {
-      this.tokenRenewalTimeout = setTimeout(() => {
-        this.renewSession();
-      }, timeout);
+    if (timeout <= 0) {
+      this.logout();
+    }
+  }
+
+  // check periodically to log out if access token expires
+  checkExpirationInterval() {
+    if (this.expiresAt !== undefined && this.expiresAt !== null) {
+      this.expirationCheckInterval = setInterval(() => {
+        this.endSession();
+      }, this.intervalLength);
     }
   }
 }
