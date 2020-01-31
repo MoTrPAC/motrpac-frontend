@@ -8,6 +8,7 @@ import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Heart.png';
 import ContactHelpdesk from '../lib/ui/contactHelpdesk';
+import ExternalLink from '../lib/ui/externalLink';
 
 // react-spring mouse parallax config
 const calc = (x, y) => [x - window.innerWidth / 2, y - window.innerHeight / 2];
@@ -83,26 +84,55 @@ export function LandingPage({ isAuthenticated, profile }) {
     setVisibility(!visibility);
   }
 
+  // Function to render webinar notice
+  const WebinarNotice = () => {
+    return (
+      <div className="alert alert-primary webinar-announce d-flex align-items-center justify-content-between w-100" role="alert">
+        <span className="webinar-announce-content">
+          <h6>
+            The Common Fund Molecular Transducers of Physical Activity (MoTrPAC) Program, through
+            its MoTrPAC Bioinformatics Center (BIC) will conduct a pre-application data Webinar
+            regarding Funding Opportunity Announcement (FOA) RFA-RM-20-009 on Thursday, February
+            13th at 1pm Eastern Standard Time. The webinar will provide background information
+            on MoTrPAC data that is available to the research community through its data
+            hub. Visit this
+            {' '}
+            <ExternalLink to="https://stanford.zoom.us/j/808358038" label="Zoom link" />
+            {' '}
+            to join the webinar.
+          </h6>
+        </span>
+      </div>
+    );
+  };
+
+  // Function to render external data release notice
+  const ExternalDataReleaseNotice = () => {
+    return (
+      <div className="alert alert-primary alert-dismissible fade show data-access-announce d-flex align-items-center justify-content-between w-100" role="alert">
+        <span className="data-access-announce-content">
+          <h5>
+            MoTrPAC data release 1.0 is now available! There is data from 5 different
+            tissues following an acute exercise bout in rats. Visit the
+            {' '}
+            <Link to="/data-access" className="inline-link">Data Access</Link>
+            {' '}
+            page to learn more and register for access.
+          </h5>
+        </span>
+        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    );
+  };
+
   return (
     <div className="row marketing">
       <main>
         <div className="container hero h-100">
           <div className="row hero-wrapper h-100">
-            <div className="alert alert-primary alert-dismissible fade show data-access-announce d-flex align-items-center justify-content-between w-100" role="alert">
-              <span className="data-access-announce-content">
-                <h5>
-                  MoTrPAC data release 1.0 is now available! There is data from 5 different
-                  tissues following an acute exercise bout in rats. Visit the
-                  {' '}
-                  <Link to="/data-access" className="inline-link">Data Access</Link>
-                  {' '}
-                  page to learn more and register for access.
-                </h5>
-              </span>
-              <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
+            <WebinarNotice />
             <div className="hero-image col-12 col-md-8 mx-auto">
               <img src={LogoAnimation} className="img-fluid" alt="Data Layer Runner" />
             </div>
