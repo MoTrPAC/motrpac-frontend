@@ -1,0 +1,18 @@
+.errorPage {
+  .alert-warning {
+    p {
+      color: #856404;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .internal-icon,
+      .external-icon {
+        position: relative;
+        margin-right: 4px;
+        top: 5px;
+      }
+    }
+  }
+}
