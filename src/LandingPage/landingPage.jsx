@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Particles from 'react-particles-js';
 import { useSpring, animated } from 'react-spring';
 import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-yellow_pipelineball_left.gif';
@@ -102,27 +102,6 @@ export function LandingPage({ isAuthenticated, profile }) {
             to join the webinar.
           </h6>
         </span>
-      </div>
-    );
-  };
-
-  // Function to render external data release notice
-  const ExternalDataReleaseNotice = () => {
-    return (
-      <div className="alert alert-primary alert-dismissible fade show data-access-announce d-flex align-items-center justify-content-between w-100" role="alert">
-        <span className="data-access-announce-content">
-          <h5>
-            MoTrPAC data release 1.0 is now available! There is data from 5 different
-            tissues following an acute exercise bout in rats. Visit the
-            {' '}
-            <Link to="/data-access" className="inline-link">Data Access</Link>
-            {' '}
-            page to learn more and register for access.
-          </h5>
-        </span>
-        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
     );
   };
