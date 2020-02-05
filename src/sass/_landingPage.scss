@@ -43,6 +43,23 @@ main {
         }
       }
     }
+
+    .webinar-announce {
+      margin-bottom: 0;
+
+      .webinar-announce-content {
+        h6 {
+          font-weight: 600;
+          line-height: 1.6;
+          margin-top: 0.25rem;
+          margin-bottom: 0.25rem;
+
+          .inline-link-with-icon .material-icons {
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
   }
 }
 
