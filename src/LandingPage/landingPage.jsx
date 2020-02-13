@@ -88,8 +88,10 @@ export function LandingPage({ isAuthenticated, profile }) {
   const WebinarNotice = () => {
     return (
       <div className="alert alert-primary webinar-announce d-flex align-items-center justify-content-between w-100" role="alert">
-        <span className="webinar-announce-content">
-          <h6>
+        <div className="webinar-announce-content">
+          <p>
+            <strong>Funding opportunity webinar:</strong>
+            {' '}
             The Common Fund Molecular Transducers of Physical Activity (MoTrPAC) Program, through
             its MoTrPAC Bioinformatics Center (BIC) will conduct a pre-application data Webinar
             regarding Funding Opportunity Announcement (FOA) RFA-RM-20-009 on Thursday, February
@@ -100,8 +102,17 @@ export function LandingPage({ isAuthenticated, profile }) {
             <ExternalLink to="https://stanford.zoom.us/j/808358038" label="Zoom link" />
             {' '}
             to join the webinar.
-          </h6>
-        </span>
+          </p>
+          <p>
+            <strong>Please note:</strong>
+            {' '}
+            The currently available animal dataset (Release 1.0) is not final. Specifically, data
+            from more tissues will be added; and the current control dataset is limited in its
+            coverage of fasting times and sacrifice time of day, which can confound the results
+            when comparing to the exercised rats. Additional data will be made available in
+            future releases.
+          </p>
+        </div>
       </div>
     );
   };
