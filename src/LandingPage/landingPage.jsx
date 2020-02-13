@@ -95,13 +95,15 @@ export function LandingPage({ isAuthenticated, profile }) {
           {' '}
           page to learn more and register for access.
         </h6>
-        <h6>
-          Additional control time point data will be released soon.
+        <p>
+          <strong>Please note:</strong>
           {' '}
-          <Link to="/news" className="inline-link">Read more</Link>
-          {' '}
-          about it.
-        </h6>
+          The currently available animal dataset (Release 1.0) is not final. Specifically, data
+          from more tissues will be added; and the current control dataset is limited in its
+          coverage of fasting times and sacrifice time of day, which can confound the results
+          when comparing to the exercised rats. Additional data will be made available in
+          future releases.
+        </p>
       </span>
       <button type="button" className="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
