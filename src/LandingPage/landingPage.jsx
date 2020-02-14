@@ -8,6 +8,7 @@ import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Heart.png';
 import ContactHelpdesk from '../lib/ui/contactHelpdesk';
+import ExternalLink from '../lib/ui/externalLink';
 
 // react-spring mouse parallax config
 const calc = (x, y) => [x - window.innerWidth / 2, y - window.innerHeight / 2];
@@ -95,15 +96,15 @@ export function LandingPage({ isAuthenticated, profile }) {
           {' '}
           page to learn more and register for access.
         </h6>
-        <p>
-          <strong>Please note:</strong>
+        <h6>
+          <Link to="/announcements" className="inline-link">Find out more</Link>
           {' '}
-          The currently available animal dataset (Release 1.0) is not final. Specifically, data
-          from more tissues will be added; and the current control dataset is limited in its
-          coverage of fasting times and sacrifice time of day, which can confound the results
-          when comparing to the exercised rats. Additional data will be made available in
-          future releases.
-        </p>
+          about MoTrPAC's recent Pre-Application Webinar regarding a current
+          {' '}
+          <ExternalLink to="https://grants.nih.gov/grants/guide/rfa-files/RFA-RM-20-009.html" label="Funding Opportunity Announcement" />
+          {' '}
+          and updates on known issues with the initial dataset.
+        </h6>
       </span>
       <button type="button" className="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
