@@ -84,6 +84,7 @@ export function Navbar({
               <li className="nav-item navItem dropdown">
                 <div className="nav-link dropdown-toggle" role="button" id="navbarDropdownMenuLink" data-toggle="dropdown">About Us</div>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <Link to="/announcements" className="dropdown-item">Announcements</Link>
                   <Link to="/external-links" className="dropdown-item">Useful Links</Link>
                   <Link to="/team" className="dropdown-item">Who we are</Link>
                   <Link to="/contact" className="dropdown-item">Contact Us</Link>
