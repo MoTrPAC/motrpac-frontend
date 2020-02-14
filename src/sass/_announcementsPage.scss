@@ -28,11 +28,11 @@
       color: $accent-green;
     }
 
-    &.control-data {
+    &.dataset {
       color: $accent-yellow;
     }
 
-    &.data-release {
+    &.release {
       color: $stanford-bright-red;
     }
   }
@@ -54,9 +54,20 @@
 
   .announcement-content {
     line-height: 1.6;
+  }
 
-    .inline-link-with-icon .material-icons {
-      margin-top: 0.125rem;
+  .announcement-links {
+    font-size: 0.85rem;
+    list-style: none;
+    margin: 0 0 1.0rem 0;
+    padding: 0;
+
+    .announcement-link-item {
+      line-height: 1.6;
+
+      .inline-link-with-icon .material-icons {
+        margin-top: 0.125rem;
+      }
     }
   }
 }
