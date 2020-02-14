@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import ExternalLink from '../lib/ui/externalLink';
 
-const announcements = require('./announcements');
+const announcementData = require('./announcements');
+// Pre-sort array in reverse order to workaround Storybook issue
+const announcements = announcementData.reverse();
 
 /**
  * Renders the Announcements page in both
@@ -24,7 +26,7 @@ export function AnnouncementsPage({ isAuthenticated }) {
         </div>
         <div className="news-item-list">
           {
-            announcements.reverse().map((entry) => <AnnouncementEntry entry={entry} />)
+            announcements.map((entry) => <AnnouncementEntry entry={entry} />)
           }
         </div>
       </div>
