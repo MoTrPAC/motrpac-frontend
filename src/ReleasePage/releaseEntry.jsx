@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { TrackEvent } from '../GoogleAnalytics/googleAnalytics';
 import IconSet from '../lib/iconSet';
@@ -344,8 +345,11 @@ function ReleaseEntry({ profile, currentView }) {
                         </a>
                         {' '}
                         document has been provided detailing the different data types available
-                        in this release in addition to how to access them. For any technical
-                        issues, please contact us at
+                        in this release in addition to how to access them. For updates on known
+                        issues with the initial dataset, please see our
+                        {' '}
+                        <Link to="/announcements" className="inline-link">recent announcement</Link>
+                        . For any technical issues, please contact us at
                         {' '}
                         <EmailLink mailto="motrpac-helpdesk@lists.stanford.edu" label="MoTrPAC Helpdesk" />
                       </p>
