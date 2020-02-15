@@ -1,0 +1,62 @@
+[
+    {
+        "aid": 1,
+        "posted_date": "2019-10-15",
+        "title": "MoTrPAC data release 1.0 is here!",
+        "content": "The initial MoTrPAC dataset has become available to the community. There is data from 5 different tissues following an acute exercise bout in rats. Visit our Data Access page to learn more and register for access",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "release"
+            ],
+            "icon": "whatshot"
+        },
+        "links": [
+            {
+                "label": "Data Access",
+                "url": "/data-access"
+            }
+        ]
+    },
+    {
+        "aid": 2,
+        "posted_date": "2020-02-12",
+        "title": "Known issues with initial dataset",
+        "content": "The currently available animal dataset (Release 1.0) is not final. Specifically, data from more tissues will be added; and the current control dataset is limited in its coverage of fasting times and sacrifice time of day, which can confound the results when comparing to the exercised rats. Additional data will be made available in future releases.",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "dataset"
+            ],
+            "icon": "announcement"
+        },
+        "links": []
+    },
+    {
+        "aid": 3,
+        "posted_date": "2020-02-14",
+        "title": "Webinar regarding NIH funding opportunity announcement",
+        "content": "The Common Fund Molecular Transducers of Physical Activity (MoTrPAC) Program, through its MoTrPAC Bioinformatics Center (BIC) conducted a Pre-Application Webinar regarding a current Funding Opportunity Announcement (FOA) RFA-RM-20-009 on February 13, 2020. The webinar provided background information on MoTrPAC data that is available to the research community through its data hub. The presentation slides and recorded webinar are now available.",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "webinar"
+            ],
+            "icon": "movie"
+        },
+        "links": [
+            {
+                "label": "NIH Funding Opportunity Announcement",
+                "url": "https://grants.nih.gov/grants/guide/rfa-files/RFA-RM-20-009.html"
+            },
+            {
+                "label": "Webinar presentation slides",
+                "url": "http://study-docs.motrpac-data.org/MoTrPAC_BIC_Data_hub_webinar_slides.pdf"
+            },
+            {
+                "label": "Recorded webinar",
+                "url": "http://study-docs.motrpac-data.org/MoTrPAC_BIC_Data_hub_recorded_webinar.mp4"
+            }
+        ]
+    }
+]

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import Particles from 'react-particles-js';
 import { useSpring, animated } from 'react-spring';
 import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-yellow_pipelineball_left.gif';
@@ -84,45 +84,40 @@ export function LandingPage({ isAuthenticated, profile }) {
     setVisibility(!visibility);
   }
 
-  // Function to render webinar notice
-  const WebinarNotice = () => {
-    return (
-      <div className="alert alert-primary webinar-announce d-flex align-items-center justify-content-between w-100" role="alert">
-        <div className="webinar-announce-content">
-          <p>
-            <strong>Funding opportunity webinar:</strong>
-            {' '}
-            The Common Fund Molecular Transducers of Physical Activity (MoTrPAC) Program, through
-            its MoTrPAC Bioinformatics Center (BIC) will conduct a pre-application data Webinar
-            regarding Funding Opportunity Announcement (FOA) RFA-RM-20-009 on Thursday, February
-            13th at 1pm Eastern Standard Time. The webinar will provide background information
-            on MoTrPAC data that is available to the research community through its data
-            hub. Visit this
-            {' '}
-            <ExternalLink to="https://stanford.zoom.us/j/808358038" label="Zoom link" />
-            {' '}
-            to join the webinar.
-          </p>
-          <p>
-            <strong>Please note:</strong>
-            {' '}
-            The currently available animal dataset (Release 1.0) is not final. Specifically, data
-            from more tissues will be added; and the current control dataset is limited in its
-            coverage of fasting times and sacrifice time of day, which can confound the results
-            when comparing to the exercised rats. Additional data will be made available in
-            future releases.
-          </p>
-        </div>
-      </div>
-    );
-  };
+  // Function to render external data release notice
+  const ExternalDataReleaseNotice = () => (
+    <div className="alert alert-primary alert-dismissible fade show data-access-announce d-flex align-items-center justify-content-between w-100" role="alert">
+      <span className="data-access-announce-content">
+        <h6>
+          MoTrPAC data release 1.0 is now available! There is data from 5 different
+          tissues following an acute exercise bout in rats. Visit the
+          {' '}
+          <Link to="/data-access" className="inline-link">Data Access</Link>
+          {' '}
+          page to learn more and register for access.
+        </h6>
+        <h6>
+          <Link to="/announcements" className="inline-link">Find out more</Link>
+          {' '}
+          about MoTrPAC's recent Pre-Application Webinar regarding a current
+          {' '}
+          <ExternalLink to="https://grants.nih.gov/grants/guide/rfa-files/RFA-RM-20-009.html" label="Funding Opportunity Announcement" />
+          {' '}
+          and updates on known issues with the initial dataset.
+        </h6>
+      </span>
+      <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  );
 
   return (
     <div className="row marketing">
       <main>
         <div className="container hero h-100">
           <div className="row hero-wrapper h-100">
-            <WebinarNotice />
+            <ExternalDataReleaseNotice />
             <div className="hero-image col-12 col-md-8 mx-auto">
               <img src={LogoAnimation} className="img-fluid" alt="Data Layer Runner" />
             </div>

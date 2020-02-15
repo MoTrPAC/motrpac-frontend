@@ -20,6 +20,7 @@ import SearchPageConnected from '../Search/searchPage';
 import ReleasePageConnected from '../ReleasePage/releasePage';
 import DataSummaryPageConnected from '../DataSummaryPage/dataSummaryPage';
 import DataAccessPageConnected from '../DataAccess/dataAccessPage';
+import AnnouncementsPageConnected from '../AnnouncementsPage/announcementsPage';
 import CallbackConnected from '../Auth/callback';
 import SidebarConnected from '../Sidebar/sidebar';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
@@ -47,6 +48,7 @@ function App({ history = History }) {
               <Route path="/methods" component={withTracker(MethodsConnected)} />
               <Route path="/team" component={withTracker(TeamPageConnected)} />
               <Route path="/contact" component={withTracker(ContactConnected)} />
+              <Route path="/announcements" component={withTracker(AnnouncementsPageConnected)} />
               <Route path="/error" component={withTracker(ErrorPageConnected)} />
               <Route path="/search" component={withTracker(SearchPageConnected)} />
               <Route path="/summary" component={withTracker(DataSummaryPageConnected)} />

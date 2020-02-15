@@ -1,0 +1,74 @@
+.announcementsPage {
+  .page-title {
+    margin-bottom: 1.5rem;
+
+    h3 {
+      margin-bottom: 0;
+    }
+  }
+
+  .announcement-item {
+    border-top: 1px solid $gray-transparent;
+    margin-top: 0.65rem;
+    padding-top: 1.5rem;
+
+    &:first-child {
+      border-top: none;
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+
+  .announcement-icon {
+    font-size: 72px;
+    margin-left: 36px;
+    margin-right: 64px;
+
+    &.webinar {
+      color: $accent-green;
+    }
+
+    &.dataset {
+      color: $accent-yellow;
+    }
+
+    &.release {
+      color: $stanford-bright-red;
+    }
+  }
+
+  .announcement-header {
+    margin-bottom: 0.5rem;
+  }
+
+  .announcement-title {
+    margin-bottom: 0;
+  }
+
+  .announcement-date {
+    color: $gray-semi-transparent;
+    font-size: 0.85rem;
+    min-width: 125px;
+    text-align: right;
+  }
+
+  .announcement-content {
+    line-height: 1.6;
+  }
+
+  .announcement-links {
+    font-size: 0.85rem;
+    list-style: none;
+    margin: 0 0 1.0rem 0;
+    padding: 0;
+
+    .announcement-link-item {
+      line-height: 1.6;
+
+      .inline-link-with-icon .material-icons {
+        margin-top: 0.125rem;
+      }
+    }
+  }
+}
+
