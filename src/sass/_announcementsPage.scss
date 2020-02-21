@@ -11,6 +11,8 @@
     border-top: 1px solid $gray-transparent;
     margin-top: 0.65rem;
     padding-top: 1.5rem;
+    align-items: start;
+    justify-content: start;
 
     &:first-child {
       border-top: none;
@@ -20,9 +22,8 @@
   }
 
   .announcement-icon {
-    font-size: 72px;
-    margin-left: 36px;
-    margin-right: 64px;
+    font-size: 5.0rem;
+    margin: 0 2.5rem;
 
     &.webinar {
       color: $accent-green;
@@ -38,6 +39,8 @@
   }
 
   .announcement-header {
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 0.5rem;
   }
 
@@ -72,3 +75,41 @@
   }
 }
 
+/* responsive styling */
+
+/* Large devices (desktops, less than 1200px) */
+@include media-breakpoint-down(lg) {
+  .announcementsPage {
+    .announcement-header {
+      flex-direction: column;
+      align-items: start;
+      justify-content: start;
+
+      .announcement-date {
+        margin-top: 0.5rem;
+        text-align: left;
+      }
+    }
+  }
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@include media-breakpoint-down(xs) {
+  .announcementsPage {
+    .announcement-item {
+      flex-direction: column;
+      align-items: start;
+      justify-content: start;
+    }
+
+    .announcement-item-icon {
+      flex-grow: 1;
+      margin: 0 auto !important;
+    }
+
+    .announcement-icon {
+      font-size: 5.5rem;
+      margin: 0 0 0.75rem 0;
+    }
+  }
+}
