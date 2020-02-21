@@ -37,12 +37,12 @@ export function AnnouncementsPage({ isAuthenticated }) {
 // Render individual announcement entry
 function AnnouncementEntry({ entry }) {
   return (
-    <div key={entry.aid} className="d-flex align-items-start justify-content-start announcement-item">
+    <div key={entry.aid} className="d-flex announcement-item">
       <div className="announcement-item-icon">
         <i className={`material-icons announcement-icon ${entry.metadata.tags[0]}`}>{entry.metadata.icon}</i>
       </div>
       <div className="flex-grow-1">
-        <div className="d-flex align-items-center justify-content-between announcement-header">
+        <div className="d-flex announcement-header">
           <h5 className="announcement-title">{entry.title}</h5>
           <div className="announcement-date">{dayjs(entry.posted_date).format('MMMM D, YYYY')}</div>
         </div>
