@@ -1,23 +1,23 @@
 [
   {
-    "label": "Release 1.3",
+    "label": "Release 1.2.1",
     "emoji": "dna",
-    "version": "1.3",
-    "date": "April 27, 2020",
+    "version": "1.2.1",
+    "date": "April 28, 2020",
     "target": "internal",
-    "description": "This is an internal minor release containing only the phenotypic data released to the BIC by DMAQC.",
-    "readme_file_location": "http://study-docs.motrpac-data.org/MoTrPAC_External_Data_Release_ReadMe.pdf",
+    "description": "This is an interim internal release containing the PASS1A and PASS1B phenotypic data.",
+    "readme_file_location": "https://docs.google.com/document/d/1ExXyt_HiscTOgF9eDq-KrdcE6V2jAqTEKDfQdfHJPlU",
     "result_files": {
-      "bucket_name": "mmotrpac-internal-release1-3-results",
+      "bucket_name": "mmotrpac-internal-release1-2-results",
       "data_types": [
         {
           "type": "phenotype",
           "title": "Phenotypic data",
           "icon": "Gender",
           "icon_alt": "Phenotypic",
-          "tooltip_id": "data-phenotype-int-1-3",
-          "object_path": "/phenotype",
-          "object_zipfile_path": "/phenotype-int-1.3.tar.gz",
+          "tooltip_id": "data-phenotype-int-1-2-1",
+          "object_path": "/phenotype-1.2.1",
+          "object_zipfile_path": "/phenotype-int-1.2.1.tar.gz",
           "object_zipfile_size": "526 KB"
         }
       ]
