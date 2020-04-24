@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { TrackEvent } from '../GoogleAnalytics/googleAnalytics';
 import IconSet from '../lib/iconSet';
 import ToolTip from '../lib/ui/tooltip';
-import EmailLink from '../lib/ui/emailLink';
 import ExternalLink from '../lib/ui/externalLink';
 import StudyDocumentsTable from '../lib/studyDocumentsTable';
+import ReleaseDescFileExtract from './releaseDescFileExtract';
+import ReleaseDescReadme from './releaseDescReadme';
 
 const releaseData = require('./releases');
 
@@ -308,53 +308,11 @@ function ReleaseEntry({ profile, currentView }) {
                   <div className="card mb-3">
                     <div className="card-body">
                       <p className="release-description">{release.description}</p>
-                      <p className="release-description file-extraction-instruction">
-                        All bundled datasets are compressed (*.tar.gz) and need to be extracted upon
-                        downloading. For Mac users, double-clicking a downloaded *.tar.gz file will
-                        extract it. For Windows users, use
-                        {' '}
-                        <ExternalLink to="https://www.winzip.com" label="WinZip" />
-                        {' '}
-                        or
-                        {' '}
-                        <ExternalLink to="https://www.7-zip.org" label="7-Zip" />
-                        {' '}
-                        to extract the compressed file.
-                      </p>
-                      {currentView === 'external'
-                        ? (
-                          <p className="release-description">
-                            To request access to raw files of the different omics
-                            data, please contact
-                            {' '}
-                            <EmailLink mailto="motrpac-data-requests@lists.stanford.edu" label="MoTrPAC Data Requests" />
-                            {' '}
-                            and specify the omics, tissues, and assays in which you are interested.
-                          </p>
-                        )
-                        : null}
-                      <p className="release-description">
-                        A
-                        {' '}
-                        <a
-                          href={release.readme_file_location}
-                          className="inline-link-with-icon"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          README
-                          <i className="material-icons readme-file-icon">description</i>
-                        </a>
-                        {' '}
-                        document has been provided detailing the different data types available
-                        in this release in addition to how to access them. For updates on known
-                        issues with the initial dataset, please see our
-                        {' '}
-                        <Link to="/announcements" className="inline-link">recent announcement</Link>
-                        . For any technical issues, please contact us at
-                        {' '}
-                        <EmailLink mailto="motrpac-helpdesk@lists.stanford.edu" label="MoTrPAC Helpdesk" />
-                      </p>
+                      <ReleaseDescFileExtract currentView={currentView} />
+                      <ReleaseDescReadme
+                        releaseVersion={release.version}
+                        fileLocation={release.readme_file_location}
+                      />
                       <div className="release-data-links-table-container">
                         <table className="table table-sm release-data-links-table">
                           <thead className="thead-dark">
