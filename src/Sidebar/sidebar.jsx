@@ -30,13 +30,13 @@ export function Sidebar({
           <li className="nav-item">
             <Link to="/dashboard" className="nav-link d-inline-flex align-items-center disabled-link">
               <i className="material-icons nav-link-icon">home</i>
-                Dashboard
+              Dashboard
             </Link>
           </li>
           <li className="nav-item">
             <Link to="/methods" className="nav-link d-inline-flex align-items-center disabled-link">
               <i className="material-icons nav-link-icon">description</i>
-                Methods
+              Methods
             </Link>
           </li>
         </ul>
@@ -52,7 +52,7 @@ export function Sidebar({
               className={`nav-link d-inline-flex align-items-center ${userType === 'external' ? 'disabled-link' : ''}`}
             >
               <span className="icon-Animal nav-link-icon" />
-                Animal
+              Animal
             </Link>
           </li>
           <li className="nav-item">
@@ -62,7 +62,7 @@ export function Sidebar({
               className={`nav-link d-inline-flex align-items-center ${userType === 'external' ? 'disabled-link' : ''}`}
             >
               <i className="material-icons nav-link-icon">person</i>
-                Human
+              Human
             </Link>
           </li>
         </ul>
@@ -74,7 +74,7 @@ export function Sidebar({
           <li className="nav-item">
             <Link to="/download" className="nav-link d-inline-flex align-items-center disabled-link">
               <i className="material-icons nav-link-icon">view_list</i>
-                Browse Data
+              Browse Data
             </Link>
           </li>
           <li className="nav-item">
@@ -83,19 +83,28 @@ export function Sidebar({
               className={`nav-link d-inline-flex align-items-center ${userType === 'external' ? 'disabled-link' : ''}`}
             >
               <i className="material-icons nav-link-icon">assessment</i>
-                Summary
+              Summary
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              to="/data-status"
+              className={`nav-link d-inline-flex align-items-center ${userType === 'external' ? 'disabled-link' : ''}`}
+            >
+              <i className="material-icons nav-link-icon">table_chart</i>
+              Data QC Status
             </Link>
           </li>
           <li className="nav-item">
             <Link to="/releases" className="nav-link d-inline-flex align-items-center">
               <i className="material-icons nav-link-icon">open_with</i>
-                Releases
+              Releases
             </Link>
           </li>
           <li className="nav-item">
             <Link to="/upload" onClick={clearForm} className="nav-link d-inline-flex align-items-center disabled-link">
               <i className="material-icons nav-link-icon">cloud_upload</i>
-                Upload Data
+              Upload Data
             </Link>
           </li>
         </ul>
@@ -105,14 +114,14 @@ export function Sidebar({
 
   return sidebar;
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
 });
 
 // Need to clear the upload form values and recently uploaded files
 // if user navigates away from and returns to the upload page
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   clearForm: () => dispatch(actions.clearForm()),
   resetDepth: () => dispatch({ type: 'RESET_DEPTH' }),
 });
