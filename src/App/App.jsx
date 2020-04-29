@@ -19,6 +19,7 @@ import ErrorPageConnected from '../ErrorPage/error';
 import SearchPageConnected from '../Search/searchPage';
 import ReleasePageConnected from '../ReleasePage/releasePage';
 import DataSummaryPageConnected from '../DataSummaryPage/dataSummaryPage';
+import DataStatusPageConnected from '../DataStatusPage/dataStatusPage';
 import DataAccessPageConnected from '../DataAccess/dataAccessPage';
 import AnnouncementsPageConnected from '../AnnouncementsPage/announcementsPage';
 import CallbackConnected from '../Auth/callback';
@@ -52,6 +53,7 @@ function App({ history = History }) {
               <Route path="/error" component={withTracker(ErrorPageConnected)} />
               <Route path="/search" component={withTracker(SearchPageConnected)} />
               <Route path="/summary" component={withTracker(DataSummaryPageConnected)} />
+              <Route path="/data-status" component={withTracker(DataStatusPageConnected)} />
               <Route path="/releases" component={withTracker(ReleasePageConnected)} />
               <Route path="/data-access" component={withTracker(DataAccessPageConnected)} />
             </Switch>
