@@ -1,0 +1,14 @@
+[
+    {
+        "cas": "stanford",
+        "phase": "PASS1A-06",
+        "tissue": "T58",
+        "t_name": "Heart Powder",
+        "seq_flowcell_lane": "3",
+        "assay": "atac-seq",
+        "version": "atac-seq",
+        "sample_category": "ref",
+        "sample_count": "2",
+        "dmaqc_valid": "PASS"
+    }
+]
