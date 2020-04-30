@@ -3,10 +3,10 @@
     "label": "Release 1.2.1",
     "emoji": "dna",
     "version": "1.2.1",
-    "date": "April 28, 2020",
+    "date": "May 1, 2020",
     "target": "internal",
     "description": "This is an interim internal release containing the PASS1A and PASS1B phenotypic data.",
-    "readme_file_location": "https://docs.google.com/document/d/1ExXyt_HiscTOgF9eDq-KrdcE6V2jAqTEKDfQdfHJPlU",
+    "readme_file_location": "https://docs.google.com/document/d/1JjVlHeTg1ahzR06H72kxlbP1ZMaJEsqRkswVh9JweyM",
     "result_files": {
       "bucket_name": "mmotrpac-internal-release1-2-results",
       "data_types": [
@@ -18,7 +18,7 @@
           "tooltip_id": "data-phenotype-int-1-2-1",
           "object_path": "/phenotype-1.2.1",
           "object_zipfile_path": "/phenotype-int-1.2.1.tar.gz",
-          "object_zipfile_size": "526 KB"
+          "object_zipfile_size": "3 MB"
         }
       ]
     },
