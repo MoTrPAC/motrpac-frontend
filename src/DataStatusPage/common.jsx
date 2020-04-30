@@ -2,6 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /**
+ * props common to rna-seq, rrbs, and atac-seq
+ * data qc status reports
+*/
+const statusReportPropType = {
+  cas: PropTypes.string,
+  phase: PropTypes.string,
+  tissue: PropTypes.string,
+  t_name: PropTypes.string,
+  seq_flowcell_lane: PropTypes.string,
+  version: PropTypes.string,
+  sample_category: PropTypes.string,
+  sample_count: PropTypes.string,
+  dmaqc_valid: PropTypes.string,
+};
+
+export default statusReportPropType;
+
+/**
  * column headers common to rna-seq, rrbs, and atac-seq
  * data qc status reports
 */
@@ -45,6 +63,40 @@ export const tableColumns = [
 ];
 
 /**
+ * Global filter rendering function
+ * common to all data qc status reports
+ */
+export const GlobalFilter = ({
+  preGlobalFilteredRows,
+  globalFilter,
+  setGlobalFilter,
+}) => {
+  const count = preGlobalFilteredRows.length;
+
+  return (
+    <div className="form-group d-flex align-items-center justify-content-end">
+      <label htmlFor="searchFilterInput">Search:</label>
+      <input
+        type="text"
+        className="form-control"
+        id="searchFilterInput"
+        value={globalFilter || ''}
+        onChange={(e) => {
+          setGlobalFilter(e.target.value || undefined);
+        }}
+        placeholder={`${count} entries`}
+      />
+    </div>
+  );
+};
+
+GlobalFilter.propTypes = {
+  preGlobalFilteredRows: PropTypes.arrayOf(PropTypes.shape({ ...statusReportPropType })).isRequired,
+  globalFilter: PropTypes.string.isRequired,
+  setGlobalFilter: PropTypes.func.isRequired,
+};
+
+/**
  * page count and page index rendering function
  * common to all data qc status reports
 */
@@ -72,7 +124,7 @@ PageIndex.propTypes = {
  * page size control rendering function
  * common to all data qc status reports
 */
-export const PageSize = ({ pageSize, setPageSize }) => (
+export const PageSize = ({ pageSize, setPageSize, pageSizeOptions }) => (
   <div className="pagination-page-size d-flex align-items-center justify-content-start">
     <label htmlFor="pageSizeSelect">Show:</label>
     <select
@@ -83,7 +135,7 @@ export const PageSize = ({ pageSize, setPageSize }) => (
         setPageSize(Number(e.target.value));
       }}
     >
-      {[10, 20, 30, 40, 50, 60, 70].map((size) => (
+      {pageSizeOptions.map((size) => (
         <option key={size} value={size}>
           {size}
         </option>
@@ -96,6 +148,7 @@ export const PageSize = ({ pageSize, setPageSize }) => (
 PageSize.propTypes = {
   pageSize: PropTypes.number.isRequired,
   setPageSize: PropTypes.func.isRequired,
+  pageSizeOptions: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 /**
@@ -157,21 +210,3 @@ PageNavigationControl.propTypes = {
   gotoPage: PropTypes.func.isRequired,
   pageCount: PropTypes.number.isRequired,
 };
-
-/**
- * props common to rna-seq, rrbs, and atac-seq
- * data qc status reports
-*/
-const statusReportPropType = {
-  cas: PropTypes.string,
-  phase: PropTypes.string,
-  tissue: PropTypes.string,
-  t_name: PropTypes.string,
-  seq_flowcell_lane: PropTypes.string,
-  version: PropTypes.string,
-  sample_category: PropTypes.string,
-  sample_count: PropTypes.string,
-  dmaqc_valid: PropTypes.string,
-};
-
-export default statusReportPropType;
