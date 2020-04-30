@@ -36,7 +36,7 @@ function ReleaseEntry({ profile, currentView }) {
     file: null,
     message: '',
   });
-  const [visibleReleases, setVisibleReleases] = useState(1);
+  const [visibleReleases, setVisibleReleases] = useState(2);
 
   const releases = releaseData.filter((release) => release.target === currentView);
   const userType = profile.user_metadata && profile.user_metadata.userType;
@@ -44,7 +44,7 @@ function ReleaseEntry({ profile, currentView }) {
   // Event handler for "Show prior releases" button
   const toggleViewReleaseLength = (e) => {
     e.preventDefault();
-    setVisibleReleases(visibleReleases === 1 ? releases.length : 1);
+    setVisibleReleases(visibleReleases === 2 ? releases.length : 2);
   };
 
   // Event handler for select/deselect checkboxes
@@ -430,10 +430,10 @@ function ReleaseEntry({ profile, currentView }) {
               <div className="view-more-button-wrapper mb-4 col-12 col-md-9 col-lg-10 float-left">
                 <button
                   type="button"
-                  className={visibleReleases === 1 ? 'btn btn-secondary btn-sm' : 'btn btn-danger btn-sm'}
+                  className={visibleReleases === 2 ? 'btn btn-secondary btn-sm' : 'btn btn-danger btn-sm'}
                   onClick={toggleViewReleaseLength}
                 >
-                  {visibleReleases === 1 ? 'Show prior releases' : 'Back to latest release'}
+                  {visibleReleases === 2 ? 'Show prior releases' : 'Back to recent releases'}
                 </button>
               </div>
             </div>
