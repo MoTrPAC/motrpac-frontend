@@ -7,7 +7,13 @@ import {
   useSortBy,
   usePagination,
 } from 'react-table';
-import statusReportPropType, { tableColumns } from './Common';
+import statusReportPropType, {
+  tableColumns,
+  PageIndex,
+  PageSize,
+  PageNavigationControl,
+  GlobalFilter,
+} from './common';
 
 const rawData = require('../data/qc_report_rnaseq');
 
@@ -22,33 +28,6 @@ function StatusReportRNASeq() {
   const data = useMemo(() => rawData, []);
 
   return <DataTable columns={columns} data={data} />;
-}
-
-/**
- * Renders global filter UI
- */
-function GlobalFilter({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
-}) {
-  const count = preGlobalFilteredRows.length;
-
-  return (
-    <div className="form-group d-flex align-items-center justify-content-end">
-      <label htmlFor="searchFilterInput">Search:</label>
-      <input
-        type="text"
-        className="form-control"
-        id="searchFilterInput"
-        value={globalFilter || ''}
-        onChange={(e) => {
-          setGlobalFilter(e.target.value || undefined);
-        }}
-        placeholder={`${count} entries`}
-      />
-    </div>
-  );
 }
 
 /**
@@ -110,39 +89,20 @@ function DataTable({ columns, data }) {
     canNextPage,
   } = instance;
 
+  // default page size options given the length of entries in the data
+  const range = (start, stop, step = 10) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
+
   // Render the UI for your table
   // react-table doesn't have UI, it's headless. We just need to put the react-table
   // props from the Hooks, and it will do its magic automatically
   return (
     <>
       <div className="d-flex align-items-center justify-content-between">
-        <div className="pagination-page-count d-flex align-items-center justify-content-start">
-          <span className="page-index">
-            Page
-            {' '}
-            {pageIndex + 1}
-            {' '}
-            of
-            {' '}
-            {pageOptions.length}
-            {' '}
-          </span>
-          <select
-            className="form-control"
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50, 60, 70, 80].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                Show
-                {' '}
-                {pageSize}
-              </option>
-            ))}
-          </select>
-        </div>
+        <PageSize
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          pageSizeOptions={range(10, preGlobalFilteredRows.length)}
+        />
         <GlobalFilter
           preGlobalFilteredRows={preGlobalFilteredRows}
           globalFilter={globalFilter}
@@ -187,52 +147,20 @@ function DataTable({ columns, data }) {
           </div>
         </div>
       </div>
-      <div className="btn-group pagination-control d-flex align-items-center justify-content-end" role="group">
-        <button
-          type="button"
-          className="btn btn-sm btn-outline-primary"
-          onClick={() => gotoPage(0)}
-          disabled={!canPreviousPage}
-        >
-          First
-        </button>
-        {' '}
-        <button
-          type="button"
-          className="btn btn-sm btn-outline-primary"
-          onClick={() => previousPage()}
-          disabled={!canPreviousPage}
-        >
-          Previous
-        </button>
-        {' '}
-        <button
-          type="button"
-          className="btn btn-sm btn-outline-primary"
-          onClick={() => nextPage()}
-          disabled={!canNextPage}
-        >
-          Next
-        </button>
-        {' '}
-        <button
-          type="button"
-          className="btn btn-sm btn-outline-primary"
-          onClick={() => gotoPage(pageCount - 1)}
-          disabled={!canNextPage}
-        >
-          Last
-        </button>
+      <div className="pagination-footer d-flex align-items-center justify-content-between">
+        <PageIndex pageIndex={pageIndex} pageOptions={pageOptions} />
+        <PageNavigationControl
+          canPreviousPage={canPreviousPage}
+          canNextPage={canNextPage}
+          previousPage={previousPage}
+          nextPage={nextPage}
+          gotoPage={gotoPage}
+          pageCount={pageCount}
+        />
       </div>
     </>
   );
 }
-
-GlobalFilter.propTypes = {
-  preGlobalFilteredRows: PropTypes.arrayOf(PropTypes.shape({ ...statusReportPropType })).isRequired,
-  globalFilter: PropTypes.string.isRequired,
-  setGlobalFilter: PropTypes.func.isRequired,
-};
 
 DataTable.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.shape({

@@ -7,6 +7,7 @@ import {
   useSortBy,
   usePagination,
 } from 'react-table';
+import { PageIndex, PageSize, PageNavigationControl } from './common';
 
 const rawData = require('../data/qc_report_metabolomics');
 
@@ -44,8 +45,6 @@ const transformData = () => {
       item.results_n,
       item.results_u,
     ]);
-    // eslint-disable-next-line no-param-reassign
-    item.tissue = `${item.tissue} ${item.t_name}`;
   });
   return tranformArray;
 };
@@ -97,6 +96,10 @@ function StatusReportMetabolomics() {
       {
         Header: 'Tissue',
         accessor: 'tissue',
+      },
+      {
+        Header: 'Tissue Name',
+        accessor: 't_name',
       },
       {
         Header: 'Assay',
@@ -198,39 +201,20 @@ function DataTable({ columns, data }) {
     canNextPage,
   } = instance;
 
+  // default page size options given the length of entries in the data
+  const range = (start, stop, step = 10) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
+
   // Render the UI for your table
   // react-table doesn't have UI, it's headless. We just need to put the react-table
   // props from the Hooks, and it will do its magic automatically
   return (
     <>
       <div className="d-flex align-items-center justify-content-between">
-        <div className="pagination-page-count d-flex align-items-center justify-content-start">
-          <span className="page-index">
-            Page
-            {' '}
-            {pageIndex + 1}
-            {' '}
-            of
-            {' '}
-            {pageOptions.length}
-            {' '}
-          </span>
-          <select
-            className="form-control"
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50, 60, 70].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                Show
-                {' '}
-                {pageSize}
-              </option>
-            ))}
-          </select>
-        </div>
+        <PageSize
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          pageSizeOptions={range(10, preGlobalFilteredRows.length)}
+        />
         <GlobalFilter
           preGlobalFilteredRows={preGlobalFilteredRows}
           globalFilter={globalFilter}
@@ -275,42 +259,16 @@ function DataTable({ columns, data }) {
           </div>
         </div>
       </div>
-      <div className="btn-group pagination-control d-flex align-items-center justify-content-end" role="group">
-        <button
-          type="button"
-          className="btn btn-sm btn-outline-primary"
-          onClick={() => gotoPage(0)}
-          disabled={!canPreviousPage}
-        >
-          First
-        </button>
-        {' '}
-        <button
-          type="button"
-          className="btn btn-sm btn-outline-primary"
-          onClick={() => previousPage()}
-          disabled={!canPreviousPage}
-        >
-          Previous
-        </button>
-        {' '}
-        <button
-          type="button"
-          className="btn btn-sm btn-outline-primary"
-          onClick={() => nextPage()}
-          disabled={!canNextPage}
-        >
-          Next
-        </button>
-        {' '}
-        <button
-          type="button"
-          className="btn btn-sm btn-outline-primary"
-          onClick={() => gotoPage(pageCount - 1)}
-          disabled={!canNextPage}
-        >
-          Last
-        </button>
+      <div className="pagination-footer d-flex align-items-center justify-content-between">
+        <PageIndex pageIndex={pageIndex} pageOptions={pageOptions} />
+        <PageNavigationControl
+          canPreviousPage={canPreviousPage}
+          canNextPage={canNextPage}
+          previousPage={previousPage}
+          nextPage={nextPage}
+          gotoPage={gotoPage}
+          pageCount={pageCount}
+        />
       </div>
     </>
   );
@@ -318,17 +276,18 @@ function DataTable({ columns, data }) {
 
 GlobalFilter.propTypes = {
   preGlobalFilteredRows: PropTypes.arrayOf(PropTypes.shape({
-    cas: PropTypes.string.isRequired,
-    phase: PropTypes.string.isRequired,
-    tissue: PropTypes.string.isRequired,
-    assay: PropTypes.string.isRequired,
-    version: PropTypes.string.isRequired,
-    vial_label: PropTypes.string.isRequired,
-    qc_samples: PropTypes.string.isRequired,
-    issues: PropTypes.string.isRequired,
-    dmaqc_valid: PropTypes.string.isRequired,
-    raw_manifest: PropTypes.string.isRequired,
-    qc_date: PropTypes.string.isRequired,
+    cas: PropTypes.string,
+    phase: PropTypes.string,
+    tissue: PropTypes.string,
+    t_name: PropTypes.string,
+    assay: PropTypes.string,
+    version: PropTypes.string,
+    vial_label: PropTypes.string,
+    qc_samples: PropTypes.string,
+    issues: PropTypes.string,
+    dmaqc_valid: PropTypes.string,
+    raw_manifest: PropTypes.string,
+    qc_date: PropTypes.string,
   })).isRequired,
   globalFilter: PropTypes.string.isRequired,
   setGlobalFilter: PropTypes.func.isRequired,
@@ -336,21 +295,22 @@ GlobalFilter.propTypes = {
 
 DataTable.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.shape({
-    Header: PropTypes.string.isRequired,
-    accessor: PropTypes.string.isRequired,
+    Header: PropTypes.string,
+    accessor: PropTypes.string,
   })).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({
-    cas: PropTypes.string.isRequired,
-    phase: PropTypes.string.isRequired,
-    tissue: PropTypes.string.isRequired,
-    assay: PropTypes.string.isRequired,
-    version: PropTypes.string.isRequired,
-    vial_label: PropTypes.string.isRequired,
-    qc_samples: PropTypes.string.isRequired,
-    issues: PropTypes.string.isRequired,
-    dmaqc_valid: PropTypes.string.isRequired,
-    raw_manifest: PropTypes.string.isRequired,
-    qc_date: PropTypes.string.isRequired,
+    cas: PropTypes.string,
+    phase: PropTypes.string,
+    tissue: PropTypes.string,
+    t_name: PropTypes.string,
+    assay: PropTypes.string,
+    version: PropTypes.string,
+    vial_label: PropTypes.string,
+    qc_samples: PropTypes.string,
+    issues: PropTypes.string,
+    dmaqc_valid: PropTypes.string,
+    raw_manifest: PropTypes.string,
+    qc_date: PropTypes.string,
   })).isRequired,
 };
 
