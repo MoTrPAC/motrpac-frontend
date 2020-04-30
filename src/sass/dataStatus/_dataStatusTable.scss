@@ -16,18 +16,26 @@
     width: 240px;
   }
 
-  .pagination-page-count {
+  .pagination-page-size {
     margin-bottom: 1rem;
     
     select {
-      margin-left: 0.65rem;
-      max-width: 100px;
+      margin-right: 0.65rem;
+      max-width: 50px;
     }
   }
 
-  .pagination-control .btn {
-    min-width: 60px;
-    max-width: 80px;
+  .pagination-footer {
+    margin-bottom: 1.0rem;
+
+    .btn {
+      min-width: 60px;
+      max-width: 80px;
+
+      &.disabled-btn {
+        pointer-events: none;
+      }
+    }
   }
 }
 
