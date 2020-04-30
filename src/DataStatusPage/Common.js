@@ -1,5 +1,10 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * column headers common to rna-seq, rrbs, and atac-seq
+ * data qc status reports
+*/
 export const tableColumns = [
   {
     Header: 'CAS',
@@ -39,6 +44,35 @@ export const tableColumns = [
   },
 ];
 
+/**
+ * page count and page index rendering function
+ * common to rna-seq, rrbs, and atac-seq
+ * data qc status reports
+*/
+export const PageIndex = ({ pageIndex, pageOptions }) => (
+  <span className="page-index">
+    Showing Page
+    {' '}
+    {pageIndex + 1}
+    {' '}
+    of
+    {' '}
+    {pageOptions.length}
+    {' '}
+  </span>
+);
+
+PageIndex.propTypes = {
+  pageIndex: PropTypes.number.isRequired,
+  pageOptions: PropTypes.shape({
+    length: PropTypes.number,
+  }).isRequired,
+};
+
+/**
+ * props common to rna-seq, rrbs, and atac-seq
+ * data qc status reports
+*/
 const statusReportPropType = {
   cas: PropTypes.string,
   phase: PropTypes.string,
