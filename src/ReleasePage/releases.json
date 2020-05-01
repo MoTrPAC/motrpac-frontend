@@ -5,7 +5,7 @@
     "version": "1.2.1",
     "date": "May 1, 2020",
     "target": "internal",
-    "description": "This is an interim internal release containing the PASS1A and PASS1B phenotypic data.",
+    "description": "This is an interim internal release of the PASS1B 6M phenotypic data. The previous PASS1A 6M phenotypic data is available for download as part of the Release 1.2  data below.",
     "readme_file_location": "https://docs.google.com/document/d/1JjVlHeTg1ahzR06H72kxlbP1ZMaJEsqRkswVh9JweyM",
     "result_files": {
       "bucket_name": "motrpac-internal-release1-2-results",
