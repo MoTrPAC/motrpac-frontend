@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { TrackEvent } from '../GoogleAnalytics/googleAnalytics';
 import IconSet from '../lib/iconSet';
 import ToolTip from '../lib/ui/tooltip';
-import EmailLink from '../lib/ui/emailLink';
 import ExternalLink from '../lib/ui/externalLink';
 import StudyDocumentsTable from '../lib/studyDocumentsTable';
+import ReleaseDescFileExtract from './releaseDescFileExtract';
+import ReleaseDescReadme from './releaseDescReadme';
 
 const releaseData = require('./releases');
 
@@ -16,6 +16,7 @@ const emojiMap = {
   sparkles: '✨',
   zap: '⚡️',
   tada: '🎉',
+  dna: '🧬',
 };
 
 /**
@@ -35,7 +36,7 @@ function ReleaseEntry({ profile, currentView }) {
     file: null,
     message: '',
   });
-  const [visibleReleases, setVisibleReleases] = useState(1);
+  const [visibleReleases, setVisibleReleases] = useState(2);
 
   const releases = releaseData.filter((release) => release.target === currentView);
   const userType = profile.user_metadata && profile.user_metadata.userType;
@@ -43,7 +44,7 @@ function ReleaseEntry({ profile, currentView }) {
   // Event handler for "Show prior releases" button
   const toggleViewReleaseLength = (e) => {
     e.preventDefault();
-    setVisibleReleases(visibleReleases === 1 ? releases.length : 1);
+    setVisibleReleases(visibleReleases === 2 ? releases.length : 2);
   };
 
   // Event handler for select/deselect checkboxes
@@ -138,13 +139,14 @@ function ReleaseEntry({ profile, currentView }) {
   }
 
   // Fetch file url from Google Storage API
-  function fetchFile(bucket, datatype) {
-    return axios.get(`https://data-link-access.motrpac-data.org/${bucket}/${datatype}.tar.gz`)
+  function fetchFile(bucket, object) {
+    const objectname = object.indexOf('.tar.gz') > -1 ? object.substring(1, object.indexOf('.')) : object.substring(1);
+    return axios.get(`https://data-link-access.motrpac-data.org/${bucket}/${objectname}.tar.gz`)
       .then((response) => {
         setFileUrl(response.data.url);
         setModalStatus({
           status: 'success',
-          file: `${datatype}.tar.gz`,
+          file: `${objectname}.tar.gz`,
           message: 'Click this link to download the requested file.',
         });
         setFetching(false);
@@ -153,7 +155,7 @@ function ReleaseEntry({ profile, currentView }) {
         console.log(`${err.error}: ${err.errorDescription}`);
         setModalStatus({
           status: 'error',
-          file: `${datatype}.tar.gz`,
+          file: `${objectname}.tar.gz`,
           message: 'Error occurred. Please close the dialog box and try again.',
         });
         setFetching(false);
@@ -242,7 +244,7 @@ function ReleaseEntry({ profile, currentView }) {
                 className="btn-data-download"
                 data-toggle="modal"
                 data-target=".data-download-modal"
-                onClick={fetchFile.bind(this, bucket, item.type)}
+                onClick={fetchFile.bind(this, bucket, item.object_path)}
               >
                 <i className="material-icons release-data-download-icon">save_alt</i>
               </button>
@@ -307,52 +309,11 @@ function ReleaseEntry({ profile, currentView }) {
                   <div className="card mb-3">
                     <div className="card-body">
                       <p className="release-description">{release.description}</p>
-                      <p className="release-description file-extraction-instruction">
-                        All bundled datasets are compressed (*.tar.gz) and need to be extracted upon downloading. For Mac
-                        users, double-clicking a downloaded *.tar.gz file will extract it. For Windows users, use
-                        {' '}
-                        <ExternalLink to="https://www.winzip.com" label="WinZip" />
-                        {' '}
-                        or
-                        {' '}
-                        <ExternalLink to="https://www.7-zip.org" label="7-Zip" />
-                        {' '}
-                        to extract the compressed file.
-                      </p>
-                      {currentView === 'external'
-                        ? (
-                          <p className="release-description">
-                            To request access to raw files of the different omics
-                            data, please contact
-                            {' '}
-                            <EmailLink mailto="motrpac-data-requests@lists.stanford.edu" label="MoTrPAC Data Requests" />
-                            {' '}
-                            and specify the omics, tissues, and assays in which you are interested.
-                          </p>
-                        )
-                        : null}
-                      <p className="release-description">
-                        A
-                        {' '}
-                        <a
-                          href={release.readme_file_location}
-                          className="inline-link-with-icon"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          README
-                          <i className="material-icons readme-file-icon">description</i>
-                        </a>
-                        {' '}
-                        document has been provided detailing the different data types available
-                        in this release in addition to how to access them. For updates on known
-                        issues with the initial dataset, please see our
-                        {' '}
-                        <Link to="/announcements" className="inline-link">recent announcement</Link>
-                        . For any technical issues, please contact us at
-                        {' '}
-                        <EmailLink mailto="motrpac-helpdesk@lists.stanford.edu" label="MoTrPAC Helpdesk" />
-                      </p>
+                      <ReleaseDescFileExtract currentView={currentView} />
+                      <ReleaseDescReadme
+                        releaseVersion={release.version}
+                        fileLocation={release.readme_file_location}
+                      />
                       <div className="release-data-links-table-container">
                         <table className="table table-sm release-data-links-table">
                           <thead className="thead-dark">
@@ -376,7 +337,7 @@ function ReleaseEntry({ profile, currentView }) {
                       {renderModal(release.version)}
                     </div>
                   </div>
-                  {currentView === 'internal'
+                  {currentView === 'internal' && release.raw_files
                     ? (
                       <>
                         <h6 className="additional-release-download-header">Additional Downloads</h6>
@@ -470,10 +431,10 @@ function ReleaseEntry({ profile, currentView }) {
               <div className="view-more-button-wrapper mb-4 col-12 col-md-9 col-lg-10 float-left">
                 <button
                   type="button"
-                  className={visibleReleases === 1 ? 'btn btn-secondary btn-sm' : 'btn btn-danger btn-sm'}
+                  className={visibleReleases === 2 ? 'btn btn-secondary btn-sm' : 'btn btn-danger btn-sm'}
                   onClick={toggleViewReleaseLength}
                 >
-                  {visibleReleases === 1 ? 'Show prior releases' : 'Back to latest release'}
+                  {visibleReleases === 2 ? 'Show prior releases' : 'Back to recent releases'}
                 </button>
               </div>
             </div>
