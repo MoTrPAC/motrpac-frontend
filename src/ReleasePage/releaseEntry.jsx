@@ -139,13 +139,14 @@ function ReleaseEntry({ profile, currentView }) {
   }
 
   // Fetch file url from Google Storage API
-  function fetchFile(bucket, datatype) {
-    return axios.get(`https://data-link-access.motrpac-data.org/${bucket}/${datatype}.tar.gz`)
+  function fetchFile(bucket, object) {
+    const objectname = object.indexOf('.tar.gz') > -1 ? object.substring(1, object.indexOf('.')) : object.substring(1);
+    return axios.get(`https://data-link-access.motrpac-data.org/${bucket}/${objectname}.tar.gz`)
       .then((response) => {
         setFileUrl(response.data.url);
         setModalStatus({
           status: 'success',
-          file: `${datatype}.tar.gz`,
+          file: `${objectname}.tar.gz`,
           message: 'Click this link to download the requested file.',
         });
         setFetching(false);
@@ -154,7 +155,7 @@ function ReleaseEntry({ profile, currentView }) {
         console.log(`${err.error}: ${err.errorDescription}`);
         setModalStatus({
           status: 'error',
-          file: `${datatype}.tar.gz`,
+          file: `${objectname}.tar.gz`,
           message: 'Error occurred. Please close the dialog box and try again.',
         });
         setFetching(false);
@@ -243,7 +244,7 @@ function ReleaseEntry({ profile, currentView }) {
                 className="btn-data-download"
                 data-toggle="modal"
                 data-target=".data-download-modal"
-                onClick={fetchFile.bind(this, bucket, item.type)}
+                onClick={fetchFile.bind(this, bucket, item.object_path)}
               >
                 <i className="material-icons release-data-download-icon">save_alt</i>
               </button>
