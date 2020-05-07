@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   useTable,
@@ -7,9 +7,9 @@ import {
   useSortBy,
   usePagination,
 } from 'react-table';
+import axios from 'axios';
+import GOOGLEAPIS_STORAGE_URL from './googleapis_storage_config';
 import { PageIndex, PageSize, PageNavigationControl } from './common';
-
-const rawData = require('../data/qc_report_metabolomics');
 
 /**
  * Utility function to return the sum of all issues
@@ -28,8 +28,8 @@ const toSum = (list) => {
 /**
  * Utility function to tranform each object in raw qc data array
  */
-const transformData = () => {
-  const cloneArray = [...rawData];
+const transformData = (arr) => {
+  const cloneArray = [...arr];
   // Replace instances of 'OK' string to 'PASS'
   const newArray = JSON.stringify(cloneArray).replace(/OK/g, 'PASS');
   const tranformArray = JSON.parse(newArray);
@@ -82,6 +82,18 @@ function GlobalFilter({
  * @returns {object} The data qc status table component
  */
 function StatusReportMetabolomics() {
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    const fetchStorageData = async () => {
+      const result = await axios(
+        `${GOOGLEAPIS_STORAGE_URL}/data/qc_report_metabolomics.json`,
+      );
+      setList(result.data);
+    };
+    fetchStorageData();
+  }, []);
+
   // Define table column headers
   const columns = useMemo(
     () => [
@@ -137,7 +149,7 @@ function StatusReportMetabolomics() {
     [],
   );
 
-  const data = useMemo(() => transformData(), []);
+  const data = useMemo(() => transformData(list), [list]);
 
   return <DataTable columns={columns} data={data} />;
 }
