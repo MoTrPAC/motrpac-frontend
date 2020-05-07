@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -6,6 +6,7 @@ import StatusReportMetabolomics from './statusReportMetabolomics';
 import StatusReportRNASeq from './statusReportRNASeq';
 import StatusReportRRBS from './statusReportRRBS';
 import StatusReportATACSeq from './statusReportATACSeq';
+import DataStatusActions from './dataStatusActions';
 
 /**
  * Renders the data qc status page
@@ -16,9 +17,9 @@ import StatusReportATACSeq from './statusReportATACSeq';
  */
 export function DataStatusPage({
   isAuthenticated,
+  dataStatusView,
+  dataStatusViewChange,
 }) {
-  const [currentView, setCurrentView] = useState('metabolomic');
-
   // Send users back to homepage if not authenticated
   if (!isAuthenticated) {
     return (<Redirect to="/" />);
@@ -26,7 +27,7 @@ export function DataStatusPage({
 
   // Render different tables given the button selection
   function renderView() {
-    switch (currentView) {
+    switch (dataStatusView) {
       case 'metabolomics':
         return <StatusReportMetabolomics />;
       case 'rna-seq':
@@ -50,36 +51,36 @@ export function DataStatusPage({
           <div className="btn-group omics-selection" role="group" aria-label="Release button group">
             <button
               type="button"
-              className={`btn btn-sm btn-outline-primary ${currentView === 'metabolomic' ? 'active' : ''}`}
-              onClick={() => setCurrentView('metabolomic')}
+              className={`btn btn-sm btn-outline-primary ${dataStatusView === 'metabolomics' ? 'active' : ''}`}
+              onClick={() => dataStatusViewChange('metabolomics')}
             >
               Metabolomics
             </button>
             <button
               type="button"
-              className={`btn btn-sm btn-outline-primary ${currentView === 'rna-seq' ? 'active' : ''}`}
-              onClick={() => setCurrentView('rna-seq')}
+              className={`btn btn-sm btn-outline-primary ${dataStatusView === 'rnaseq' ? 'active' : ''}`}
+              onClick={() => dataStatusViewChange('rnaseq')}
             >
               RNA-Seq
             </button>
             <button
               type="button"
-              className={`btn btn-sm btn-outline-primary ${currentView === 'rrbs' ? 'active' : ''}`}
-              onClick={() => setCurrentView('rrbs')}
+              className={`btn btn-sm btn-outline-primary ${dataStatusView === 'rrbs' ? 'active' : ''}`}
+              onClick={() => dataStatusViewChange('rrbs')}
             >
               RRBS
             </button>
             <button
               type="button"
-              className={`btn btn-sm btn-outline-primary ${currentView === 'atac-seq' ? 'active' : ''}`}
-              onClick={() => setCurrentView('atac-seq')}
+              className={`btn btn-sm btn-outline-primary ${dataStatusView === 'atacseq' ? 'active' : ''}`}
+              onClick={() => dataStatusViewChange('atacseq')}
             >
               ATAC-Seq
             </button>
             <button
               type="button"
-              className={`btn btn-sm btn-outline-primary ${currentView === 'help' ? 'active' : ''}`}
-              onClick={() => setCurrentView('help')}
+              className={`btn btn-sm btn-outline-primary ${dataStatusView === 'help' ? 'active' : ''}`}
+              onClick={() => dataStatusViewChange('help')}
             >
               Help
             </button>
@@ -95,6 +96,8 @@ export function DataStatusPage({
 
 DataStatusPage.propTypes = {
   isAuthenticated: PropTypes.bool,
+  dataStatusView: PropTypes.string.isRequired,
+  dataStatusViewChange: PropTypes.func.isRequired,
 };
 
 DataStatusPage.defaultProps = {
@@ -102,7 +105,12 @@ DataStatusPage.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({
+  ...(state.dataStatus),
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps)(DataStatusPage);
+const mapDispatchToProps = (dispatch) => ({
+  dataStatusViewChange: (value) => dispatch(DataStatusActions.dataStatusViewChange(value)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DataStatusPage);
