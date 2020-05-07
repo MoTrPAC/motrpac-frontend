@@ -5,6 +5,7 @@ import analysisReducer, { defaultAnalysisState } from '../AnalysisPage/analysisR
 import downloadReducer, { defaultDownloadState } from '../DownloadPage/downloadReducer';
 import searchReducer, { defaultSearchState } from '../Search/searchReducer';
 import quickSearchBoxReducer, { defaultQuickSearchState } from '../Search/quickSearchBoxReducer';
+import dataStatusReducer, { defaultDataStatusState } from '../DataStatusPage/dataStatusReducer';
 
 const testUploads = require('../testData/testAllUploads');
 const testPreviousUploads = require('../testData/testPreviousUploads');
@@ -32,6 +33,7 @@ export default combineReducers({
   download: downloadReducer,
   search: searchReducer,
   quickSearch: quickSearchBoxReducer,
+  dataStatus: dataStatusReducer,
 });
 
 export const defaultRootState = {
@@ -41,4 +43,5 @@ export const defaultRootState = {
   download: loadTestData ? testDownloadState : defaultDownloadState,
   search: defaultSearchState,
   quickSearch: defaultQuickSearchState,
+  dataStatus: defaultDataStatusState,
 };
