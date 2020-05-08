@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import dayjs from 'dayjs';
 import StatusReportMetabolomics from './statusReportMetabolomics';
 import StatusReportRNASeq from './statusReportRNASeq';
 import StatusReportRRBS from './statusReportRRBS';
@@ -18,8 +19,20 @@ import DataStatusActions from './dataStatusActions';
 export function DataStatusPage({
   isAuthenticated,
   dataStatusView,
+  qcData,
+  isFetchingQcData,
+  errMsg,
   dataStatusViewChange,
+  fetchData,
 }) {
+  useEffect(() => {
+    const lastUpdate = qcData.lastModified;
+    const today = dayjs();
+    if (lastUpdate && (!lastUpdate.length || (lastUpdate.length && today.isAfter(lastUpdate)))) {
+      fetchData();
+    }
+  }, [fetchData, qcData.lastModified]);
+
   // Send users back to homepage if not authenticated
   if (!isAuthenticated) {
     return (<Redirect to="/" />);
@@ -97,11 +110,30 @@ export function DataStatusPage({
 DataStatusPage.propTypes = {
   isAuthenticated: PropTypes.bool,
   dataStatusView: PropTypes.string.isRequired,
+  qcData: PropTypes.shape({
+    metabolomics: PropTypes.arrayOf(PropTypes.object),
+    rnaseq: PropTypes.arrayOf(PropTypes.object),
+    rrbs: PropTypes.arrayOf(PropTypes.object),
+    atacseq: PropTypes.arrayOf(PropTypes.object),
+    lastModified: PropTypes.string,
+  }),
+  isFetchingQcData: PropTypes.bool,
+  errMsg: PropTypes.string,
   dataStatusViewChange: PropTypes.func.isRequired,
+  fetchData: PropTypes.func.isRequired,
 };
 
 DataStatusPage.defaultProps = {
   isAuthenticated: false,
+  qcData: {
+    metabolomics: [],
+    rnaseq: [],
+    rrbs: [],
+    atacseq: [],
+    lastModified: '',
+  },
+  isFetchingQcData: false,
+  errMsg: '',
 };
 
 const mapStateToProps = (state) => ({
@@ -111,6 +143,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   dataStatusViewChange: (value) => dispatch(DataStatusActions.dataStatusViewChange(value)),
+  fetchData: () => dispatch(DataStatusActions.fetchData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataStatusPage);
