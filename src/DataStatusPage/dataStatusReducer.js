@@ -12,6 +12,7 @@ export const defaultDataStatusState = {
     rnaseq: [],
     rrbs: [],
     atacseq: [],
+    lastModified: '',
   },
   errMsg: '',
   isFetchingQcData: false,
