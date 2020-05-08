@@ -1,4 +1,5 @@
 import axios from 'axios';
+import dayjs from 'dayjs';
 import GOOGLEAPIS_STORAGE_URL from './googleapis_storage_config';
 
 export const DATA_STATUS_VIEW_CHANGE = 'DATA_STATUS_VIEW_CHANGE';
@@ -34,12 +35,24 @@ function dataFetchFailure(errMsg = '') {
 }
 
 // Handler for predefined searches
-function handleQcDataFetch() {
+function fetchData() {
   return (dispatch) => {
     dispatch(dataFetchRequest());
-    return axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc_report_atacseq.json`).then((response) => {
-      dispatch(dataFetchSuccess(response));
-    }).catch((err) => {
+    return axios.all([
+      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc_report_metabolomics.json`),
+      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc_report_rnaseq.json`),
+      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc_report_rrbs.json`),
+      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc_report_atacseq.json`),
+    ]).then(axios.spread((metabolomics, rnaseq, rrbs, atacseq) => {
+      const payload = {
+        metabolomics: metabolomics.data,
+        rnaseq: rnaseq.data,
+        rrbs: rrbs.data,
+        atacseq: atacseq.data,
+        lastModified: dayjs(),
+      };
+      dispatch(dataFetchSuccess(payload));
+    })).catch((err) => {
       dispatch(dataFetchFailure(`${err.error}: ${err.errorDescription}`));
     });
   };
@@ -47,7 +60,7 @@ function handleQcDataFetch() {
 
 const DataStatusActions = {
   dataStatusViewChange,
-  handleQcDataFetch,
+  fetchData,
 };
 
 export default DataStatusActions;
