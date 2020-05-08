@@ -1,5 +1,8 @@
 import {
   DATA_STATUS_VIEW_CHANGE,
+  QC_DATA_FETCH_REQUEST,
+  QC_DATA_FETCH_SUCCESS,
+  QC_DATA_FETCH_FAILURE,
 } from './dataStatusActions';
 
 export const defaultDataStatusState = {
@@ -10,21 +13,41 @@ export const defaultDataStatusState = {
     rrbs: [],
     atacseq: [],
   },
-  errorMsg: '',
+  errMsg: '',
   isFetchingQcData: false,
 };
 
-// Reducer to handle actions sent from components related to advanced search form
+// Reducer to handle actions sent from components pertinent to data QC status page
 export function DataStatusReducer(state = { ...defaultDataStatusState }, action) {
   // Handle states given the action types
   switch (action.type) {
     // Handle different data QC views toggle
-    case DATA_STATUS_VIEW_CHANGE: {
+    case DATA_STATUS_VIEW_CHANGE:
       return {
         ...state,
         dataStatusView: action.value,
       };
-    }
+
+    case QC_DATA_FETCH_REQUEST:
+      return {
+        ...state,
+        isFetchingQcData: true,
+      };
+
+    case QC_DATA_FETCH_SUCCESS:
+      return {
+        ...state,
+        qcData: action.payload,
+        isFetchingQcData: false,
+      };
+
+    // Handle data fetch error
+    case QC_DATA_FETCH_FAILURE:
+      return {
+        ...state,
+        errMsg: action.errMsg,
+        isFetchingQcData: false,
+      };
 
     default:
       return state;
