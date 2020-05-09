@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import dayjs from 'dayjs';
 import actions from '../UploadPage/uploadActions';
+import DataStatusActions from '../DataStatusPage/dataStatusActions';
 
 /**
  * Renders the gloabl sidebar.
@@ -16,6 +18,8 @@ export function Sidebar({
   profile,
   clearForm,
   resetDepth,
+  fetchData,
+  qcData,
 }) {
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   const userType = profile.user_metadata && profile.user_metadata.userType;
@@ -23,6 +27,17 @@ export function Sidebar({
   if (!(isAuthenticated && hasAccess)) {
     return '';
   }
+
+  // Call to invoke Redux action to fetch data
+  // if timestamp is empty or older than 24 hours
+  const handleQcDataFetch = () => {
+    const lastUpdate = qcData.lastModified;
+    // Convert timestamp string back to dayjs() object to calculate time difference
+    if (!lastUpdate.length || (lastUpdate.length && dayjs().diff(dayjs(lastUpdate), 'hour') >= 24)) {
+      fetchData();
+    }
+  };
+
   const sidebar = (
     <nav className="col-md-2 d-none d-md-block bg-light sidebar">
       <div className="sidebar-sticky">
@@ -89,6 +104,7 @@ export function Sidebar({
           <li className="nav-item">
             <Link
               to="/data-status"
+              onClick={handleQcDataFetch}
               className={`nav-link d-inline-flex align-items-center ${userType === 'external' ? 'disabled-link' : ''}`}
             >
               <i className="material-icons nav-link-icon">table_chart</i>
@@ -117,6 +133,7 @@ export function Sidebar({
 const mapStateToProps = (state) => ({
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
+  qcData: state.dataStatus.qcData,
 });
 
 // Need to clear the upload form values and recently uploaded files
@@ -124,6 +141,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   clearForm: () => dispatch(actions.clearForm()),
   resetDepth: () => dispatch({ type: 'RESET_DEPTH' }),
+  fetchData: () => dispatch(DataStatusActions.fetchData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
