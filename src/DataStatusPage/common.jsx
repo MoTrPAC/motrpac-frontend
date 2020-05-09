@@ -91,9 +91,14 @@ export const GlobalFilter = ({
 };
 
 GlobalFilter.propTypes = {
-  preGlobalFilteredRows: PropTypes.arrayOf(PropTypes.shape({ ...statusReportPropType })).isRequired,
-  globalFilter: PropTypes.string.isRequired,
+  preGlobalFilteredRows: PropTypes.arrayOf(PropTypes.shape({ ...statusReportPropType })),
+  globalFilter: PropTypes.string,
   setGlobalFilter: PropTypes.func.isRequired,
+};
+
+GlobalFilter.defaultProps = {
+  globalFilter: '',
+  preGlobalFilteredRows: [],
 };
 
 /**
@@ -114,10 +119,13 @@ export const PageIndex = ({ pageIndex, pageOptions }) => (
 );
 
 PageIndex.propTypes = {
-  pageIndex: PropTypes.number.isRequired,
-  pageOptions: PropTypes.shape({
-    length: PropTypes.number,
-  }).isRequired,
+  pageIndex: PropTypes.number,
+  pageOptions: PropTypes.arrayOf(PropTypes.number),
+};
+
+PageIndex.defaultProps = {
+  pageIndex: 0,
+  pageOptions: [],
 };
 
 /**
