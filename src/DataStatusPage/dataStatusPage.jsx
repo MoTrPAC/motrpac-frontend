@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import dayjs from 'dayjs';
 import StatusReportMetabolomics from './statusReportMetabolomics';
 import StatusReportRNASeq from './statusReportRNASeq';
 import StatusReportRRBS from './statusReportRRBS';
@@ -23,16 +22,7 @@ export function DataStatusPage({
   isFetchingQcData,
   errMsg,
   dataStatusViewChange,
-  fetchData,
 }) {
-  useEffect(() => {
-    const lastUpdate = qcData.lastModified;
-    const today = dayjs();
-    if (lastUpdate && (!lastUpdate.length || (lastUpdate.length && today.isAfter(lastUpdate)))) {
-      fetchData();
-    }
-  }, [fetchData, qcData.lastModified]);
-
   // Send users back to homepage if not authenticated
   if (!isAuthenticated) {
     return (<Redirect to="/" />);
@@ -42,15 +32,15 @@ export function DataStatusPage({
   function renderView() {
     switch (dataStatusView) {
       case 'metabolomics':
-        return <StatusReportMetabolomics />;
-      case 'rna-seq':
-        return <StatusReportRNASeq />;
+        return <StatusReportMetabolomics metabolomicsData={qcData.metabolomics} />;
+      case 'rnaseq':
+        return <StatusReportRNASeq rnaseqData={qcData.rnaseq} />;
       case 'rrbs':
-        return <StatusReportRRBS />;
-      case 'atac-seq':
-        return <StatusReportATACSeq />;
+        return <StatusReportRRBS rrbsData={qcData.rrbs} />;
+      case 'atacseq':
+        return <StatusReportATACSeq atacseqData={qcData.atacseq} />;
       default:
-        return <StatusReportMetabolomics />;
+        return <StatusReportMetabolomics metabolomicsData={qcData.metabolomics} />;
     }
   }
 
@@ -120,7 +110,6 @@ DataStatusPage.propTypes = {
   isFetchingQcData: PropTypes.bool,
   errMsg: PropTypes.string,
   dataStatusViewChange: PropTypes.func.isRequired,
-  fetchData: PropTypes.func.isRequired,
 };
 
 DataStatusPage.defaultProps = {
@@ -143,7 +132,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   dataStatusViewChange: (value) => dispatch(DataStatusActions.dataStatusViewChange(value)),
-  fetchData: () => dispatch(DataStatusActions.fetchData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataStatusPage);
