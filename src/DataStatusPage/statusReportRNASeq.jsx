@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
   useTable,
@@ -7,8 +7,6 @@ import {
   useSortBy,
   usePagination,
 } from 'react-table';
-import axios from 'axios';
-import GOOGLEAPIS_STORAGE_URL from './googleapis_storage_config';
 import statusReportPropType, {
   tableColumns,
   PageIndex,
@@ -22,23 +20,10 @@ import statusReportPropType, {
  *
  * @returns {object} The data qc status table component
  */
-function StatusReportRNASeq() {
-  const [list, setList] = useState([]);
-
-  useEffect(() => {
-    const fetchStorageData = async () => {
-      const result = await axios(
-        `${GOOGLEAPIS_STORAGE_URL}/data/qc_report_rnaseq.json`,
-      );
-      setList(result.data);
-    };
-    fetchStorageData();
-  }, []);
-
+function StatusReportRNASeq({ rnaseqData }) {
   // Define table column headers
   const columns = useMemo(() => tableColumns, []);
-  const data = useMemo(() => list, [list]);
-
+  const data = useMemo(() => rnaseqData, [rnaseqData]);
   return <DataTable columns={columns} data={data} />;
 }
 
@@ -173,6 +158,10 @@ function DataTable({ columns, data }) {
     </>
   );
 }
+
+StatusReportRNASeq.propTypes = {
+  rnaseqData: PropTypes.arrayOf(PropTypes.shape({ ...statusReportPropType })).isRequired,
+};
 
 DataTable.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.shape({

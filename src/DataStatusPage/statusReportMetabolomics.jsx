@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
   useTable,
@@ -7,8 +7,6 @@ import {
   useSortBy,
   usePagination,
 } from 'react-table';
-import axios from 'axios';
-import GOOGLEAPIS_STORAGE_URL from './googleapis_storage_config';
 import { PageIndex, PageSize, PageNavigationControl } from './common';
 
 /**
@@ -81,19 +79,7 @@ function GlobalFilter({
  *
  * @returns {object} The data qc status table component
  */
-function StatusReportMetabolomics() {
-  const [list, setList] = useState([]);
-
-  useEffect(() => {
-    const fetchStorageData = async () => {
-      const result = await axios(
-        `${GOOGLEAPIS_STORAGE_URL}/data/qc_report_metabolomics.json`,
-      );
-      setList(result.data);
-    };
-    fetchStorageData();
-  }, []);
-
+function StatusReportMetabolomics({ metabolomicsData }) {
   // Define table column headers
   const columns = useMemo(
     () => [
@@ -149,8 +135,7 @@ function StatusReportMetabolomics() {
     [],
   );
 
-  const data = useMemo(() => transformData(list), [list]);
-
+  const data = useMemo(() => transformData(metabolomicsData), [metabolomicsData]);
   return <DataTable columns={columns} data={data} />;
 }
 
@@ -286,23 +271,36 @@ function DataTable({ columns, data }) {
   );
 }
 
+const metabolomicsStatusReportPropType = {
+  cas: PropTypes.string,
+  phase: PropTypes.string,
+  tissue: PropTypes.string,
+  t_name: PropTypes.string,
+  assay: PropTypes.string,
+  version: PropTypes.string,
+  vial_label: PropTypes.string,
+  qc_samples: PropTypes.string,
+  issues: PropTypes.number,
+  dmaqc_valid: PropTypes.string,
+  raw_manifest: PropTypes.string,
+  qc_date: PropTypes.string,
+};
+
+StatusReportMetabolomics.propTypes = {
+  metabolomicsData: PropTypes.arrayOf(PropTypes.shape({ ...metabolomicsStatusReportPropType })).isRequired,
+};
+
 GlobalFilter.propTypes = {
   preGlobalFilteredRows: PropTypes.arrayOf(PropTypes.shape({
-    cas: PropTypes.string,
-    phase: PropTypes.string,
-    tissue: PropTypes.string,
-    t_name: PropTypes.string,
-    assay: PropTypes.string,
-    version: PropTypes.string,
-    vial_label: PropTypes.string,
-    qc_samples: PropTypes.string,
-    issues: PropTypes.string,
-    dmaqc_valid: PropTypes.string,
-    raw_manifest: PropTypes.string,
-    qc_date: PropTypes.string,
-  })).isRequired,
-  globalFilter: PropTypes.string.isRequired,
+    ...metabolomicsStatusReportPropType,
+  })),
+  globalFilter: PropTypes.string,
   setGlobalFilter: PropTypes.func.isRequired,
+};
+
+GlobalFilter.defaultProps = {
+  globalFilter: '',
+  preGlobalFilteredRows: [],
 };
 
 DataTable.propTypes = {
@@ -310,20 +308,7 @@ DataTable.propTypes = {
     Header: PropTypes.string,
     accessor: PropTypes.string,
   })).isRequired,
-  data: PropTypes.arrayOf(PropTypes.shape({
-    cas: PropTypes.string,
-    phase: PropTypes.string,
-    tissue: PropTypes.string,
-    t_name: PropTypes.string,
-    assay: PropTypes.string,
-    version: PropTypes.string,
-    vial_label: PropTypes.string,
-    qc_samples: PropTypes.string,
-    issues: PropTypes.string,
-    dmaqc_valid: PropTypes.string,
-    raw_manifest: PropTypes.string,
-    qc_date: PropTypes.string,
-  })).isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape({ ...metabolomicsStatusReportPropType })).isRequired,
 };
 
 export default StatusReportMetabolomics;
