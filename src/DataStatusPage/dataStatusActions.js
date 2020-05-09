@@ -49,7 +49,7 @@ function fetchData() {
         rnaseq: rnaseq.data,
         rrbs: rrbs.data,
         atacseq: atacseq.data,
-        lastModified: dayjs(),
+        lastModified: dayjs().format(),
       };
       dispatch(dataFetchSuccess(payload));
     })).catch((err) => {
