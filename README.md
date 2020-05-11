@@ -2,7 +2,7 @@
 
 **User interface and Frontend for MoTrPAC Bioinformatics Center**
 ---
-[![CircleCI](https://circleci.com/gh/AshleyLab/motrpac-frontend.svg?style=svg)](https://circleci.com/gh/AshleyLab/motrpac-frontend)
+[![CircleCI](https://circleci.com/gh/MoTrPAC/motrpac-frontend.svg?style=svg)](https://circleci.com/gh/MoTrPAC/motrpac-frontend)
 [![Sauce Test Status](https://saucelabs.com/buildstatus/motrpac-developers)](https://app.saucelabs.com/u/motrpac-developers)
 
 ### Directory Layout and Setup
