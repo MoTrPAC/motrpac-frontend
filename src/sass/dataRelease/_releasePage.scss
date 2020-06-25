@@ -53,16 +53,22 @@
         border-color: $gray-semi-transparent;
 
         table.additional-download-table {
+          border-collapse: collapse;
           font-size: 0.85rem;
           margin-bottom: 0;
 
           td {
-            padding: 0.55rem 0.75rem 0.55rem 0;
+            border: 1px solid #dee2e6;
+            padding: 0.55rem 0.75rem;
+            vertical-align: middle;
           }
         }
 
-        .release-data-links-table-container {
+        .release-data-links-table-container,
+        .additional-download-table-container {
           h6 {
+            color: #343a40;
+            font-weight: 600;
             margin-top: 1.25rem;
           }
         }
