@@ -32,24 +32,33 @@ main {
       }
     }
 
-    .data-access-announce {
+    .marker-paper-announce {
+      border-radius: 0.35rem;
       margin-bottom: 0;
+      background: rgb(15,133,218);
+      background: linear-gradient(360deg, rgba(15,133,218,1) 0%, rgba(73,166,233,1) 100%);
 
-      .data-access-announce-content {
-        h6 {
+      .marker-paper-announce-content {
+        h5 {
+          color: #fff;
           font-weight: 600;
           line-height: 1.6;
           margin-top: 0.25rem;
-          margin-bottom: 0.6rem;
+          margin-bottom: 0.4rem;
+
+          a {
+            color: $accent-yellow;
+          
+            &:hover {
+              color: $accent-yellow-shade-medium;
+              text-decoration: none;
+            }
+          }
 
           .inline-link-with-icon .material-icons {
-            font-size: 1.25rem;
+            font-size: 1.6rem;
             margin-top: 0.2rem;
           }
-        }
-
-        h6:last-child {
-          margin-bottom: 0.25rem;
         }
       }
     }
