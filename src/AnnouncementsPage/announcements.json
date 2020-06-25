@@ -58,5 +58,28 @@
                 "url": "http://study-docs.motrpac-data.org/MoTrPAC_BIC_Data_hub_recorded_webinar.mp4"
             }
         ]
+    },
+    {
+        "aid": 1,
+        "posted_date": "2020-06-25",
+        "title": "First MoTrPAC paper published in the Cell journal",
+        "content": "The first MoTrPAC paper is now published in the Cell journal. This publication describes the entire MoTrPAC study. It includes the human endurance and resistance training interventions, and the extensive animal study protocols. It lists all the tissues collected and the analysis plan for those tissues. It also provides information on data dissemination, that will be done through the MoTrPAC data hub. Check it out so you know what is coming!",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "marker-paper"
+            ],
+            "icon": "menu_book"
+        },
+        "links": [
+            {
+                "label": "Cell journal publication",
+                "url": "https://grants.nih.gov/grants/guide/rfa-files/RFA-RM-20-009.html"
+            },
+            {
+                "label": "NIH press release",
+                "url": "http://study-docs.motrpac-data.org/MoTrPAC_BIC_Data_hub_webinar_slides.pdf"
+            }
+        ]
     }
 ]
