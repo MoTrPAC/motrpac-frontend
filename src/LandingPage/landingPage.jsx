@@ -98,7 +98,7 @@ export function LandingPage({ isAuthenticated, profile }) {
           <i>Cell</i>
           . Read the
           {' '}
-          <ExternalLink to="https://commonfund.nih.gov/moleculartransducers" label="NIH press release" />
+          <ExternalLink to="https://www.nih.gov/news-events/news-releases/nih-funded-study-recruit-thousands-participants-reveal-exercise-impact-molecular-level" label="NIH press release" />
           {' '}
           for further information about this publication.
         </h5>
