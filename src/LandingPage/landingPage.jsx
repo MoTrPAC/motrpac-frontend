@@ -91,7 +91,7 @@ export function LandingPage({ isAuthenticated, profile }) {
         <h5>
           The
           {' '}
-          <ExternalLink to="https://www.cell.com/cell/home" label="first MoTrPAC paper" />
+          <ExternalLink to="https://www.cell.com/cell/fulltext/S0092-8674(20)30691-7" label="first MoTrPAC paper" />
           {' '}
           is now published in the journal
           {' '}
