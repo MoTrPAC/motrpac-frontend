@@ -29,7 +29,7 @@
             "tooltip_id": "data-pass1a-06-epigenomics-int-2-0",
             "object_path": "/pass1a-06/epigenomics",
             "object_zipfile_path": "/pass1a-06/epigenomics.tar.gz",
-            "object_zipfile_size": "4.8 GB"
+            "object_zipfile_size": "412 MB"
           },
           {
             "type": "metabolomics-targeted",
@@ -101,7 +101,7 @@
             "tooltip_id": "data-pass1b-06-epigenomics-int-2-0",
             "object_path": "/pass1b-06/epigenomics",
             "object_zipfile_path": "/pass1b-06/epigenomics.tar.gz",
-            "object_zipfile_size": "2.31 GB"
+            "object_zipfile_size": "14 MB"
           },
           {
             "type": "metabolomics-targeted",
