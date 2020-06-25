@@ -52,6 +52,21 @@
       .card {
         border-color: $gray-semi-transparent;
 
+        table.additional-download-table {
+          font-size: 0.85rem;
+          margin-bottom: 0;
+
+          td {
+            padding: 0.55rem 0.75rem 0.55rem 0;
+          }
+        }
+
+        .release-data-links-table-container {
+          h6 {
+            margin-top: 1.25rem;
+          }
+        }
+
         table.release-data-links-table {
           border-collapse: collapse;
           font-size: 0.85rem;
@@ -62,6 +77,15 @@
             border: 1px solid #343a40;
             padding: 0.55rem 0.75rem;
             vertical-align: middle;
+
+            &.col-data-type {
+              width: 60%,
+            }
+
+            &.col-command-line-download,
+            &.col-web-download {
+              width: 20%,
+            }
           }
 
           td {
@@ -311,7 +335,8 @@
 
 @include media-breakpoint-down(sm) {
   .dataReleasePage {
-    .release-data-links-table-container {
+    .release-data-links-table-container,
+    .additional-download-table-container {
       border: 0;
       box-shadow: inset 0 0 0 1px #dee2e6;
       box-sizing: border-box;
