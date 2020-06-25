@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Particles from 'react-particles-js';
 import { useSpring, animated } from 'react-spring';
 import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-yellow_pipelineball_left.gif';
@@ -84,27 +84,24 @@ export function LandingPage({ isAuthenticated, profile }) {
     setVisibility(!visibility);
   }
 
-  // Function to render external data release notice
-  const ExternalDataReleaseNotice = () => (
-    <div className="alert alert-primary alert-dismissible fade show data-access-announce d-flex align-items-center justify-content-between w-100" role="alert">
-      <span className="data-access-announce-content">
-        <h6>
-          MoTrPAC data release 1.0 is now available! There is data from 5 different
-          tissues following an acute exercise bout in rats. Visit the
+  // Function to render marker paper announcement
+  const MarkerPaperNotice = () => (
+    <div className="alert alert-primary alert-dismissible fade show marker-paper-announce d-flex align-items-center justify-content-between w-100" role="alert">
+      <span className="marker-paper-announce-content">
+        <h5>
+          The
           {' '}
-          <Link to="/data-access" className="inline-link">Data Access</Link>
+          <ExternalLink to="https://www.cell.com/cell/home" label="first MoTrPAC paper" />
           {' '}
-          page to learn more and register for access.
-        </h6>
-        <h6>
-          <Link to="/announcements" className="inline-link">Find out more</Link>
+          is now published in the journal
           {' '}
-          about MoTrPAC's recent Pre-Application Webinar regarding a current
+          <i>Cell</i>
+          . Read the
           {' '}
-          <ExternalLink to="https://grants.nih.gov/grants/guide/rfa-files/RFA-RM-20-009.html" label="Funding Opportunity Announcement" />
+          <ExternalLink to="https://commonfund.nih.gov/moleculartransducers" label="NIH press release" />
           {' '}
-          and updates on known issues with the initial dataset.
-        </h6>
+          for further information about this publication.
+        </h5>
       </span>
       <button type="button" className="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -117,7 +114,7 @@ export function LandingPage({ isAuthenticated, profile }) {
       <main>
         <div className="container hero h-100">
           <div className="row hero-wrapper h-100">
-            <ExternalDataReleaseNotice />
+            <MarkerPaperNotice />
             <div className="hero-image col-12 col-md-8 mx-auto">
               <img src={LogoAnimation} className="img-fluid" alt="Data Layer Runner" />
             </div>
