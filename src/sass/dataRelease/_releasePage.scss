@@ -110,7 +110,9 @@
               line-height: 0;
 
               .copy-to-clipboard-wrapper {
+                margin: 0 auto;
                 position: relative;
+                width: 30px;
 
                 .copy-to-clipboard-button {
                   color: $primary-blue;
