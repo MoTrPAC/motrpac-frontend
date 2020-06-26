@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import ExternalLink from '../lib/ui/externalLink';
+import { TrackEvent } from '../GoogleAnalytics/googleAnalytics';
 
 const announcementData = require('./announcements');
 // Pre-sort array in reverse order to workaround Storybook issue
@@ -54,7 +54,16 @@ function AnnouncementEntry({ entry }) {
                 <li key={link.url} className="announcement-link-item">
                   {
                     link.url.indexOf('http') > -1 ? (
-                      <ExternalLink to={link.url} label={link.label} />
+                      <a
+                        href={link.url}
+                        className="inline-link-with-icon"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={TrackEvent.bind(this, link.gaEventCategory, link.gaEventAction, 'Announcement Page')}
+                      >
+                        {link.label}
+                        <i className="material-icons external-linkout-icon">open_in_new</i>
+                      </a>
                     ) : (
                       <Link to={link.url} className="inline-link inline-link-with-icon">
                         {link.label}
@@ -75,6 +84,8 @@ function AnnouncementEntry({ entry }) {
 const linksPropType = {
   label: PropTypes.string,
   url: PropTypes.string,
+  gaEventCategory: PropTypes.string,
+  gaEventAction: PropTypes.string,
 };
 
 AnnouncementEntry.propTypes = {
