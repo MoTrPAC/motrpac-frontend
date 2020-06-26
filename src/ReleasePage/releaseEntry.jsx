@@ -219,7 +219,7 @@ function ReleaseEntry({ profile, currentView }) {
                 className="btn-data-download"
                 data-toggle="modal"
                 data-target=".data-download-modal"
-                onClick={fetchFile.bind(this, bucket, item.object_path)}
+                onClick={fetchFile.bind(this, bucket, item.object_zipfile_path)}
               >
                 <i className="material-icons release-data-download-icon">save_alt</i>
               </button>
