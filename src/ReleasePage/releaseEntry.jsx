@@ -120,7 +120,7 @@ function ReleaseEntry({ profile, currentView }) {
         setFileUrl(response.data.url);
         setModalStatus({
           status: 'success',
-          file: `${objectname}.tar.gz`,
+          file: object,
           message: 'Click this link to download the requested file.',
         });
         setFetching(false);
@@ -129,7 +129,7 @@ function ReleaseEntry({ profile, currentView }) {
         console.log(`${err.error}: ${err.errorDescription}`);
         setModalStatus({
           status: 'error',
-          file: `${objectname}.tar.gz`,
+          file: object,
           message: 'Error occurred. Please close the dialog box and try again.',
         });
         setFetching(false);
