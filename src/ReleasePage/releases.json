@@ -18,7 +18,7 @@
             "icon_alt": "Transcriptomics",
             "tooltip_id": "data-pass1a-06-transcriptomics-int-2-0",
             "object_path": "/pass1a-06/transcriptomics",
-            "object_zipfile_path": "/pass1a-06/transcriptomics.tar.gz",
+            "object_zipfile_path": "/motrpac_pass1a-06_transcriptomics.tar.gz",
             "object_zipfile_size": "250 MB"
           },
           {
@@ -28,7 +28,7 @@
             "icon_alt": "Epigenomics",
             "tooltip_id": "data-pass1a-06-epigenomics-int-2-0",
             "object_path": "/pass1a-06/epigenomics",
-            "object_zipfile_path": "/pass1a-06/epigenomics.tar.gz",
+            "object_zipfile_path": "/motrpac_pass1a-06_epigenomics.tar.gz",
             "object_zipfile_size": "412 MB"
           },
           {
@@ -38,7 +38,7 @@
             "icon_alt": "Metabolomics Targeted",
             "tooltip_id": "data-pass1a-06-metabolomics-targeted-int-2-0",
             "object_path": "/pass1a-06/metabolomics-targeted",
-            "object_zipfile_path": "/pass1a-06/metabolomics-targeted.tar.gz",
+            "object_zipfile_path": "/motrpac_pass1a-06_metabolomics-targeted.tar.gz",
             "object_zipfile_size": "14.45 MB"
           },
           {
@@ -48,7 +48,7 @@
             "icon_alt": "Metabolomics Untargeted",
             "tooltip_id": "data-pass1a-06-metabolomics-untargeted-int-2-0",
             "object_path": "/pass1a-06/metabolomics-untargeted",
-            "object_zipfile_path": "/pass1a-06/metabolomics-untargeted.tar.gz",
+            "object_zipfile_path": "/motrpac_pass1a-06_metabolomics-untargeted.tar.gz",
             "object_zipfile_size": "199 MB"
           },
           {
@@ -58,7 +58,7 @@
             "icon_alt": "Proteomic",
             "tooltip_id": "data-pass1a-06-proteomics-int-2-0",
             "object_path": "/pass1a-06/proteomics",
-            "object_zipfile_path": "/pass1a-06/proteomics.tar.gz",
+            "object_zipfile_path": "/motrpac_pass1a-06_proteomics.tar.gz",
             "object_zipfile_size": "288 MB"
           },
           {
@@ -68,7 +68,7 @@
             "icon_alt": "Phenotypic",
             "tooltip_id": "data-pass1a-06-phenotype-int-2-0",
             "object_path": "/pass1a-06/phenotype",
-            "object_zipfile_path": "/pass1a-06/phenotype.tar.gz",
+            "object_zipfile_path": "/motrpac_pass1a-06_phenotype.tar.gz",
             "object_zipfile_size": "? MB"
           },
           {
@@ -78,7 +78,7 @@
             "icon_alt": "All omics",
             "tooltip_id": "data-pass1a-06-all-int-2-0",
             "object_path": "/pass1a-06/all.tar.gz",
-            "object_zipfile_path": "/pass1a-06/all.tar.gz",
+            "object_zipfile_path": "/motrpac_pass1a-06_all.tar.gz",
             "object_zipfile_size": "? GB"
           }
         ],
@@ -90,7 +90,7 @@
             "icon_alt": "Transcriptomics",
             "tooltip_id": "data-pass1b-06-transcriptomics-int-2-0",
             "object_path": "/pass1b-06/transcriptomics",
-            "object_zipfile_path": "/pass1b-06/transcriptomics.tar.gz",
+            "object_zipfile_path": "/motrpac_pass1b-06_transcriptomics.tar.gz",
             "object_zipfile_size": "162.55 MB"
           },
           {
@@ -100,7 +100,7 @@
             "icon_alt": "Epigenomics",
             "tooltip_id": "data-pass1b-06-epigenomics-int-2-0",
             "object_path": "/pass1b-06/epigenomics",
-            "object_zipfile_path": "/pass1b-06/epigenomics.tar.gz",
+            "object_zipfile_path": "/motrpac_pass1b-06_epigenomics.tar.gz",
             "object_zipfile_size": "14 MB"
           },
           {
@@ -110,7 +110,7 @@
             "icon_alt": "Metabolomics Targeted",
             "tooltip_id": "data-pass1b-06-metabolomics-targeted-int-2-0",
             "object_path": "/pass1b-06/metabolomics-targeted",
-            "object_zipfile_path": "/pass1b-06/metabolomics-targeted.tar.gz",
+            "object_zipfile_path": "/motrpac_pass1b-06_metabolomics-targeted.tar.gz",
             "object_zipfile_size": "1.5 MB"
           },
           {
@@ -120,7 +120,7 @@
             "icon_alt": "Metabolomics Untargeted",
             "tooltip_id": "data-pass1b-06-metabolomics-untargeted-int-2-0",
             "object_path": "/pass1b-06/metabolomics-untargeted",
-            "object_zipfile_path": "/pass1b-06/metabolomics-untargeted.tar.gz",
+            "object_zipfile_path": "/motrpac_pass1b-06_metabolomics-untargeted.tar.gz",
             "object_zipfile_size": "246.8 MB"
           },
           {
@@ -130,7 +130,7 @@
             "icon_alt": "Proteomic",
             "tooltip_id": "data-pass1b-06-proteomics-int-2-0",
             "object_path": "/pass1b-06/proteomics",
-            "object_zipfile_path": "/pass1b-06/proteomics.tar.gz",
+            "object_zipfile_path": "/motrpac_pass1b-06_proteomics.tar.gz",
             "object_zipfile_size": "278.8 MB"
           },
           {
@@ -140,7 +140,7 @@
             "icon_alt": "Phenotypic",
             "tooltip_id": "data-pass1b-06-phenotype-int-2-0",
             "object_path": "/pass1b-06/phenotype",
-            "object_zipfile_path": "/pass1b-06/phenotype.tar.gz",
+            "object_zipfile_path": "/motrpac_pass1b-06_phenotype.tar.gz",
             "object_zipfile_size": "? MB"
           },
           {
@@ -150,7 +150,7 @@
             "icon_alt": "All omics",
             "tooltip_id": "data-pass1b-06-all-int-2-0",
             "object_path": "/pass1b-06/all.tar.gz",
-            "object_zipfile_path": "/pass1b-06/all.tar.gz",
+            "object_zipfile_path": "/motrpac_pass1b-06_all.tar.gz",
             "object_zipfile_size": "? GB"
           }
         ]
