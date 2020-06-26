@@ -58,5 +58,28 @@
                 "url": "http://study-docs.motrpac-data.org/MoTrPAC_BIC_Data_hub_recorded_webinar.mp4"
             }
         ]
+    },
+    {
+        "aid": 4,
+        "posted_date": "2020-06-25",
+        "title": "First MoTrPAC paper published in the Cell journal",
+        "content": "The first MoTrPAC paper is now published in the Cell journal. This publication describes the entire MoTrPAC study. It includes the human endurance and resistance training interventions, and the extensive animal study protocols. It lists all the tissues collected and the analysis plan for those tissues. It also provides information on data dissemination, that will be done through the MoTrPAC data hub. Check it out so you know what is coming!",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "marker-paper"
+            ],
+            "icon": "menu_book"
+        },
+        "links": [
+            {
+                "label": "Molecular Transducers of Physical Activity Consortium (MoTrPAC): Mapping the Dynamic Responses to Exercise",
+                "url": "https://www.cell.com/cell/fulltext/S0092-8674(20)30691-7"
+            },
+            {
+                "label": "NIH-funded study to recruit thousands of participants to reveal exercise impact at the molecular level",
+                "url": "https://www.nih.gov/news-events/news-releases/nih-funded-study-recruit-thousands-participants-reveal-exercise-impact-molecular-level"
+            }
+        ]
     }
 ]

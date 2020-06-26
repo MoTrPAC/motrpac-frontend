@@ -8,6 +8,10 @@ import ExternalLink from '../lib/ui/externalLink';
 import StudyDocumentsTable from '../lib/studyDocumentsTable';
 import ReleaseDescFileExtract from './releaseDescFileExtract';
 import ReleaseDescReadme from './releaseDescReadme';
+import ReleaseRawFilesDownload from './releaseRawFilesDownload';
+import ReleaseDataTableInternalByPhase from './ReleaseDataTables/releaseDataTableInternalByPhase';
+import ReleaseDataTableInternal from './ReleaseDataTables/releaseDataTableInternal';
+import ReleaseDataTableExternal from './ReleaseDataTables/releaseDataTableExternal';
 
 const releaseData = require('./releases');
 
@@ -57,35 +61,6 @@ function ReleaseEntry({ profile, currentView }) {
       el.classList.add('active');
       el.innerHTML = 'check_box';
     }
-  }
-
-  // Render raw files download section content
-  function renderRawFilesDownloadSectionContent(files) {
-    return (
-      <div className="card mb-3">
-        <div className="card-body">
-          <p className="card-text">
-            Due to the large sizes of raw data files, we recommend users
-            who wish to download raw data files using the
-            {' '}
-            <ExternalLink to="https://cloud.google.com/storage/docs/quickstart-gsutil" label="gsutil command" />
-            . Below are example commands for downloading raw data files of different omics.
-          </p>
-          <p className="card-text">
-            Raw data files of genomics, epigenomics and transcriptomic:
-            <code>{`gsutil -m cp -r gs://${files.get.bucket_name}/* .`}</code>
-          </p>
-          <p className="card-text">
-            Raw data files of metabolomics:
-            <code>{`gsutil -m cp -r gs://${files.metabolomics.bucket_name}/* .`}</code>
-          </p>
-          <p className="card-text">
-            Raw data files of proteomics:
-            <code>{`gsutil -m cp -r gs://${files.proteomics.bucket_name}/* .`}</code>
-          </p>
-        </div>
-      </div>
-    );
   }
 
   // Render intermediate files download section content
@@ -314,26 +289,24 @@ function ReleaseEntry({ profile, currentView }) {
                         releaseVersion={release.version}
                         fileLocation={release.readme_file_location}
                       />
-                      <div className="release-data-links-table-container">
-                        <table className="table table-sm release-data-links-table">
-                          <thead className="thead-dark">
-                            <tr className="table-head">
-                              <th>Data type</th>
-                              {currentView === 'internal'
-                                ? (<th>Command-line download</th>)
-                                : null}
-                              <th>Web download</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {release.result_files.data_types.map((item) => renderDataTypeRow(
-                              release.result_files.bucket_name,
-                              item,
-                              release.version,
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
+                      {currentView === 'internal' && release.version === '2.0' ? (
+                        <ReleaseDataTableInternalByPhase
+                          release={release}
+                          renderDataTypeRow={renderDataTypeRow}
+                        />
+                      ) : null}
+                      {currentView === 'internal' && release.version.match(/1.0|1.1|1.2|1.2.1/g) ? (
+                        <ReleaseDataTableInternal
+                          release={release}
+                          renderDataTypeRow={renderDataTypeRow}
+                        />
+                      ) : null}
+                      {currentView === 'external' && release.version === '1.0' ? (
+                        <ReleaseDataTableExternal
+                          release={release}
+                          renderDataTypeRow={renderDataTypeRow}
+                        />
+                      ) : null}
                       {renderModal(release.version)}
                     </div>
                   </div>
@@ -357,36 +330,46 @@ function ReleaseEntry({ profile, currentView }) {
                             >
                               check_box_outline_blank
                             </i>
-                            <span>Raw files downloads</span>
+                            <span>
+                              Raw
+                              {release.version.match(/1.0|1.1|1.2|1.2.1/g) ? null : ' and intermediate'}
+                              {' '}
+                              files downloads
+                            </span>
                           </p>
                           <div className="collapse" id={`raw-files-release-${idx}`}>
-                            {renderRawFilesDownloadSectionContent(release.raw_files)}
+                            <ReleaseRawFilesDownload
+                              releaseVersion={release.version}
+                              files={release.raw_files}
+                            />
                           </div>
                         </div>
-                        <div className="intermediate-files-download-section">
-                          <p className="d-block mb-2 d-flex align-items-center justify-content-start intermediate-files-download-option">
-                            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-                            <i
-                              role="button"
-                              tabIndex="-1"
-                              className="material-icons download-checkbox"
-                              data-toggle="collapse"
-                              data-target={`#intermediate-files-release-${idx}`}
-                              aria-expanded="false"
-                              aria-controls={`intermediate-files-release-${idx}`}
-                              id={`intermediate-files-release-${idx}-checkbox`}
-                              onClick={handleCheckboxEvent.bind(this, `intermediate-files-release-${idx}-checkbox`)}
-                            >
-                              check_box_outline_blank
-                            </i>
-                            <span>Intermediate files downloads</span>
-                          </p>
-                          <div className="collapse" id={`intermediate-files-release-${idx}`}>
-                            {renderIntermediateFilesDownloadSectionContent(
-                              release.intermediate_files,
-                            )}
+                        {release.version.match(/1.0|1.1|1.2|1.2.1/g) && (
+                          <div className="intermediate-files-download-section">
+                            <p className="d-block mb-2 d-flex align-items-center justify-content-start intermediate-files-download-option">
+                              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+                              <i
+                                role="button"
+                                tabIndex="-1"
+                                className="material-icons download-checkbox"
+                                data-toggle="collapse"
+                                data-target={`#intermediate-files-release-${idx}`}
+                                aria-expanded="false"
+                                aria-controls={`intermediate-files-release-${idx}`}
+                                id={`intermediate-files-release-${idx}-checkbox`}
+                                onClick={handleCheckboxEvent.bind(this, `intermediate-files-release-${idx}-checkbox`)}
+                              >
+                                check_box_outline_blank
+                              </i>
+                              <span>Intermediate files downloads</span>
+                            </p>
+                            <div className="collapse" id={`intermediate-files-release-${idx}`}>
+                              {renderIntermediateFilesDownloadSectionContent(
+                                release.intermediate_files,
+                              )}
+                            </div>
                           </div>
-                        </div>
+                        )}
                       </>
                     )
                     : null}

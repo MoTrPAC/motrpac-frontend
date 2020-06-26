@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import EmailLink from '../lib/ui/emailLink';
 
 function ReleaseDescReadme({ releaseVersion, fileLocation }) {
-  if (releaseVersion === '1.2.1') {
+  if (releaseVersion === '1.2.1' || releaseVersion === '2.0') {
     return (
       <p className="release-description">
         A
