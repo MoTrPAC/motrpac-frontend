@@ -115,8 +115,7 @@ function ReleaseEntry({ profile, currentView }) {
 
   // Fetch file url from Google Storage API
   function fetchFile(bucket, object) {
-    const objectname = object.indexOf('.tar.gz') > -1 ? object.substring(1, object.indexOf('.')) : object.substring(1);
-    return axios.get(`https://data-link-access.motrpac-data.org/${bucket}/${objectname}.tar.gz`)
+    return axios.get(`https://data-link-access.motrpac-data.org/${bucket}/${object}`)
       .then((response) => {
         setFileUrl(response.data.url);
         setModalStatus({
