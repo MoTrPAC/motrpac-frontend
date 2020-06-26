@@ -47,15 +47,21 @@
         "links": [
             {
                 "label": "NIH Funding Opportunity Announcement",
-                "url": "https://grants.nih.gov/grants/guide/rfa-files/RFA-RM-20-009.html"
+                "url": "https://grants.nih.gov/grants/guide/rfa-files/RFA-RM-20-009.html",
+                "gaEventCategory": "NIH Funding Opportunity Webinar",
+                "gaEventAction": "NIH Announcement"
             },
             {
                 "label": "Webinar presentation slides",
-                "url": "http://study-docs.motrpac-data.org/MoTrPAC_BIC_Data_hub_webinar_slides.pdf"
+                "url": "http://study-docs.motrpac-data.org/MoTrPAC_BIC_Data_hub_webinar_slides.pdf",
+                "gaEventCategory": "NIH Funding Opportunity Webinar",
+                "gaEventAction": "Webinar Presentation Slides"
             },
             {
                 "label": "Recorded webinar",
-                "url": "http://study-docs.motrpac-data.org/MoTrPAC_BIC_Data_hub_recorded_webinar.mp4"
+                "url": "http://study-docs.motrpac-data.org/MoTrPAC_BIC_Data_hub_recorded_webinar.mp4",
+                "gaEventCategory": "NIH Funding Opportunity Webinar",
+                "gaEventAction": "Webinar Recorded Video"
             }
         ]
     },
@@ -74,11 +80,15 @@
         "links": [
             {
                 "label": "Molecular Transducers of Physical Activity Consortium (MoTrPAC): Mapping the Dynamic Responses to Exercise",
-                "url": "https://www.cell.com/cell/fulltext/S0092-8674(20)30691-7"
+                "url": "https://www.cell.com/cell/fulltext/S0092-8674(20)30691-7",
+                "gaEventCategory": "MoTrPAC Marker Paper",
+                "gaEventAction": "Cell Publication"
             },
             {
                 "label": "NIH-funded study to recruit thousands of participants to reveal exercise impact at the molecular level",
-                "url": "https://www.nih.gov/news-events/news-releases/nih-funded-study-recruit-thousands-participants-reveal-exercise-impact-molecular-level"
+                "url": "https://www.nih.gov/news-events/news-releases/nih-funded-study-recruit-thousands-participants-reveal-exercise-impact-molecular-level",
+                "gaEventCategory": "MoTrPAC Marker Paper",
+                "gaEventAction": "NIH Press Release"
             }
         ]
     }
