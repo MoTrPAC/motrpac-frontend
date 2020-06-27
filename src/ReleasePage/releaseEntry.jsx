@@ -114,14 +114,13 @@ function ReleaseEntry({ profile, currentView }) {
   }
 
   // Fetch file url from Google Storage API
-  function fetchFile(bucket, object) {
-    const objectname = object.indexOf('.tar.gz') > -1 ? object.substring(1, object.indexOf('.')) : object.substring(1);
-    return axios.get(`https://data-link-access.motrpac-data.org/${bucket}/${objectname}.tar.gz`)
+  function fetchFile(bucket, filename) {
+    return axios.get(`https://data-link-access.motrpac-data.org/${bucket}/${filename}`)
       .then((response) => {
         setFileUrl(response.data.url);
         setModalStatus({
           status: 'success',
-          file: `${objectname}.tar.gz`,
+          file: filename,
           message: 'Click this link to download the requested file.',
         });
         setFetching(false);
@@ -130,7 +129,7 @@ function ReleaseEntry({ profile, currentView }) {
         console.log(`${err.error}: ${err.errorDescription}`);
         setModalStatus({
           status: 'error',
-          file: `${objectname}.tar.gz`,
+          file: filename,
           message: 'Error occurred. Please close the dialog box and try again.',
         });
         setFetching(false);
@@ -211,7 +210,7 @@ function ReleaseEntry({ profile, currentView }) {
             </td>
           )
           : null}
-        {item.object_zipfile_path && item.object_zipfile_path.length
+        {item.object_zipfile && item.object_zipfile.length
           ? (
             <td className="release-data-download-link">
               <button
@@ -219,7 +218,7 @@ function ReleaseEntry({ profile, currentView }) {
                 className="btn-data-download"
                 data-toggle="modal"
                 data-target=".data-download-modal"
-                onClick={fetchFile.bind(this, bucket, item.object_path)}
+                onClick={fetchFile.bind(this, bucket, item.object_zipfile)}
               >
                 <i className="material-icons release-data-download-icon">save_alt</i>
               </button>
