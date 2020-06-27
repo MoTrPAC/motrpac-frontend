@@ -52,6 +52,16 @@
             "object_zipfile_size": "199 MB"
           },
           {
+            "type": "metabolomics-named-merged",
+            "title": "Metabolomics merged data (named)",
+            "icon": "Metabolite",
+            "icon_alt": "Metabolomics Merged Data (named)",
+            "tooltip_id": "data-pass1a-06-metabolomics-named-merged-int-2-0",
+            "object_path": "/pass1a-06/metabolomics-named-merged",
+            "object_zipfile": "motrpac_pass1a-06_metabolomics-named-merged.tar.gz",
+            "object_zipfile_size": "199 MB"
+          },
+          {
             "type": "proteomics",
             "title": "Proteomics data (metadata, QC and quantitative results)",
             "icon": "Protein",
@@ -77,7 +87,7 @@
             "icon": "Globe",
             "icon_alt": "All omics",
             "tooltip_id": "data-pass1a-06-all-int-2-0",
-            "object_path": "/pass1a-06/all.tar.gz",
+            "object_path": null,
             "object_zipfile": "motrpac_pass1a-06_all.tar.gz",
             "object_zipfile_size": "? GB"
           }
@@ -124,6 +134,16 @@
             "object_zipfile_size": "246.8 MB"
           },
           {
+            "type": "metabolomics-named-merged",
+            "title": "Metabolomics merged data (named)",
+            "icon": "Metabolite",
+            "icon_alt": "Metabolomics Merged Data (named)",
+            "tooltip_id": "data-pass1b-06-metabolomics-named-merged-int-2-0",
+            "object_path": "/pass1b-06/metabolomics-named-merged",
+            "object_zipfile": "motrpac_pass1b-06_metabolomics-named-merged.tar.gz",
+            "object_zipfile_size": "199 MB"
+          },
+          {
             "type": "proteomics",
             "title": "Proteomics data (metadata, QC and quantitative results)",
             "icon": "Protein",
@@ -149,7 +169,7 @@
             "icon": "Globe",
             "icon_alt": "All omics",
             "tooltip_id": "data-pass1b-06-all-int-2-0",
-            "object_path": "/pass1b-06/all.tar.gz",
+            "object_path": null,
             "object_zipfile": "motrpac_pass1b-06_all.tar.gz",
             "object_zipfile_size": "? GB"
           }
@@ -277,7 +297,7 @@
           "icon": "Globe",
           "icon_alt": "All omics",
           "tooltip_id": "data-all-ext-1-0",
-          "object_path": "/all.tar.gz",
+          "object_path": null,
           "object_zipfile": "all.tar.gz",
           "object_zipfile_size": "9 GB"
         }
@@ -369,7 +389,7 @@
           "icon": "Globe",
           "icon_alt": "All omics",
           "tooltip_id": "data-all-int-1-2",
-          "object_path": "/all.tar.gz",
+          "object_path": null,
           "object_zipfile": "all.tar.gz",
           "object_zipfile_size": "636 MB"
         }
@@ -466,7 +486,7 @@
           "icon": "Globe",
           "icon_alt": "All omics",
           "tooltip_id": "data-all-int-1-1",
-          "object_path": "/all.tar.gz",
+          "object_path": null,
           "object_zipfile": "all.tar.gz",
           "object_zipfile_size": "600 MB"
         }
@@ -563,7 +583,7 @@
           "icon": "Globe",
           "icon_alt": "All omics",
           "tooltip_id": "data-all-int-1-0",
-          "object_path": "/all.tar.gz",
+          "object_path": null,
           "object_zipfile": "all.tar.gz",
           "object_zipfile_size": "518 MB"
         }
