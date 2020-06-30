@@ -74,28 +74,25 @@ export function Sidebar({
           <li className="nav-item">
             <Link to="/download" className="nav-link d-inline-flex align-items-center disabled-link">
               <i className="material-icons nav-link-icon">view_list</i>
-                Browse Data
+              Browse Data
             </Link>
           </li>
           <li className="nav-item">
-            <Link
-              to="/summary"
-              className={`nav-link d-inline-flex align-items-center ${userType === 'external' ? 'disabled-link' : ''}`}
-            >
+            <Link to="/summary" className="nav-link d-inline-flex align-items-center disabled-link">
               <i className="material-icons nav-link-icon">assessment</i>
-                Summary
+              Summary
             </Link>
           </li>
           <li className="nav-item">
             <Link to="/releases" className="nav-link d-inline-flex align-items-center">
               <i className="material-icons nav-link-icon">open_with</i>
-                Releases
+              Releases
             </Link>
           </li>
           <li className="nav-item">
             <Link to="/upload" onClick={clearForm} className="nav-link d-inline-flex align-items-center disabled-link">
               <i className="material-icons nav-link-icon">cloud_upload</i>
-                Upload Data
+              Upload Data
             </Link>
           </li>
         </ul>
