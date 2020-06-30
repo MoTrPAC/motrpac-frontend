@@ -1,8 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import IconSet from './iconSet';
 import StudyDocuments from '../DataAccess/studyDocuments';
 
-function StudyDocumentsTable() {
+function StudyDocumentsTable({ currentView }) {
+  const newArray = [...StudyDocuments];
+  if (currentView === 'internal') {
+    newArray.pop();
+  }
   // Handler to render study documents table rows
   function renderStudyDocumentsTableRow(item) {
     return (
@@ -30,12 +35,16 @@ function StudyDocumentsTable() {
               <div className="table-cell-document-list">Title</div>
               <div className="table-cell-document-list">Description</div>
             </div>
-            {StudyDocuments.map((item) => renderStudyDocumentsTableRow(item))}
+            {newArray.map((item) => renderStudyDocumentsTableRow(item))}
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+StudyDocumentsTable.propTypes = {
+  currentView: PropTypes.string.isRequired,
+};
 
 export default StudyDocumentsTable;
