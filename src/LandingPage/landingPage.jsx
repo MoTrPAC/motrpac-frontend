@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Particles from 'react-particles-js';
 import { useSpring, animated } from 'react-spring';
+import { TrackEvent } from '../GoogleAnalytics/googleAnalytics';
 import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-yellow_pipelineball_left.gif';
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Heart.png';
 import ContactHelpdesk from '../lib/ui/contactHelpdesk';
-import ExternalLink from '../lib/ui/externalLink';
 
 // react-spring mouse parallax config
 const calc = (x, y) => [x - window.innerWidth / 2, y - window.innerHeight / 2];
@@ -91,14 +91,32 @@ export function LandingPage({ isAuthenticated, profile }) {
         <h5>
           The
           {' '}
-          <ExternalLink to="https://www.cell.com/cell/fulltext/S0092-8674(20)30691-7" label="first MoTrPAC paper" />
+          <a
+            href="https://www.cell.com/cell/fulltext/S0092-8674(20)30691-7"
+            className="inline-link-with-icon"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={TrackEvent.bind(this, 'MoTrPAC Marker Paper', 'Cell Publication', 'Landing Page')}
+          >
+            first MoTrPAC paper
+            <i className="material-icons external-linkout-icon">open_in_new</i>
+          </a>
           {' '}
           is now published in the journal
           {' '}
           <i>Cell</i>
           . Read the
           {' '}
-          <ExternalLink to="https://www.nih.gov/news-events/news-releases/nih-funded-study-recruit-thousands-participants-reveal-exercise-impact-molecular-level" label="NIH press release" />
+          <a
+            href="https://www.nih.gov/news-events/news-releases/nih-funded-study-recruit-thousands-participants-reveal-exercise-impact-molecular-level"
+            className="inline-link-with-icon"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={TrackEvent.bind(this, 'MoTrPAC Marker Paper', 'NIH Press Release', 'Landing Page')}
+          >
+            NIH press release
+            <i className="material-icons external-linkout-icon">open_in_new</i>
+          </a>
           {' '}
           for further information about this publication.
         </h5>
@@ -258,7 +276,7 @@ LandingPage.defaultProps = {
   isAuthenticated: false,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
 });
