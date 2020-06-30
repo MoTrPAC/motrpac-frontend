@@ -377,7 +377,7 @@ function ReleaseEntry({ profile, currentView }) {
                       <>
                         <h6 className="additional-release-download-header">Documentation</h6>
                         <div className="release-documentation-section">
-                          <StudyDocumentsTable />
+                          <StudyDocumentsTable currentView={currentView} />
                           {currentView === 'internal'
                             ? (
                               <p>
