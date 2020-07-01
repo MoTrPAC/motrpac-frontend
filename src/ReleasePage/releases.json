@@ -69,7 +69,7 @@
             "tooltip_id": "data-pass1a-06-proteomics-int-2-0",
             "object_path": "/pass1a-06/proteomics",
             "object_zipfile": "motrpac_pass1a-06_proteomics.tar.gz",
-            "object_zipfile_size": "335.87 MB"
+            "object_zipfile_size": "364.57 MB"
           },
           {
             "type": "phenotype",
@@ -89,7 +89,7 @@
             "tooltip_id": "data-pass1a-06-all-int-2-0",
             "object_path": null,
             "object_zipfile": "motrpac_pass1a-06_all.tar.gz",
-            "object_zipfile_size": "1.62 GB"
+            "object_zipfile_size": "1.65 GB"
           }
         ],
         "pass1b_06": [
@@ -151,7 +151,7 @@
             "tooltip_id": "data-pass1b-06-proteomics-int-2-0",
             "object_path": "/pass1b-06/proteomics",
             "object_zipfile": "motrpac_pass1b-06_proteomics.tar.gz",
-            "object_zipfile_size": "314.19 MB"
+            "object_zipfile_size": "349.67 MB"
           },
           {
             "type": "phenotype",
@@ -171,7 +171,7 @@
             "tooltip_id": "data-pass1b-06-all-int-2-0",
             "object_path": null,
             "object_zipfile": "motrpac_pass1b-06_all.tar.gz",
-            "object_zipfile_size": "1.04 GB"
+            "object_zipfile_size": "1.07 GB"
           }
         ]
       }
