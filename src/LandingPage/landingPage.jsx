@@ -9,6 +9,7 @@ import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Heart.png';
 import ContactHelpdesk from '../lib/ui/contactHelpdesk';
+import onVisibilityChange from '../lib/utils/pageVisibility';
 
 // react-spring mouse parallax config
 const calc = (x, y) => [x - window.innerWidth / 2, y - window.innerHeight / 2];
@@ -47,37 +48,16 @@ export function LandingPage({ isAuthenticated, profile }) {
 
   window.addEventListener('scroll', scrollFunction, true);
 
-  // Pause particles movement when page is not active to reduce CPU resource consumption
-  let hidden;
-  let visibilityChange;
-  // Set the name of the hidden property and the change event for visibility
-  if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
-    hidden = 'hidden';
-    visibilityChange = 'visibilitychange';
-  } else if (typeof document.msHidden !== 'undefined') {
-    hidden = 'msHidden';
-    visibilityChange = 'msvisibilitychange';
-  } else if (typeof document.webkitHidden !== 'undefined') {
-    hidden = 'webkitHidden';
-    visibilityChange = 'webkitvisibilitychange';
+  // Pause particle animation when window is hidden
+  function handlePageVisible() {
+    setVisibility(true);
   }
 
-  // Handle state change depending whether page is hidden
-  function handleVisibilityChange() {
-    if (document[hidden]) {
-      setVisibility(false);
-    } else {
-      setVisibility(true);
-    }
+  function handlePageHidden() {
+    setVisibility(false);
   }
 
-  if (typeof document.addEventListener === 'undefined' || hidden === undefined) {
-    // Warn if the browser doesn't support addEventListener or the Page Visibility API
-    console.warn('This browser does not support Page Visibility API');
-  } else {
-    // Handle page visibility change
-    document.addEventListener(visibilityChange, handleVisibilityChange, false);
-  }
+  onVisibilityChange(handlePageVisible, handlePageHidden);
 
   // Play or stop the particles animation
   function playStopParticles() {
