@@ -8,6 +8,7 @@ import QuickSearchBox from '../Search/quickSearchBox';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
 import QuickSearchBoxActions from '../Search/quickSearchBoxActions';
 import SearchActions from '../Search/searchActions';
+import onVisibilityChange from '../lib/utils/pageVisibility';
 
 /**
  * Renders the global header nav bar.
@@ -68,6 +69,22 @@ export function Navbar({
 
     return <LoginButton login={login} />;
   };
+
+  // Checking session when window is visible
+  function handlePageVisible() {
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    const timeout = expiresAt - Date.now();
+    console.log('Checked timeout ===' + timeout);
+    if (timeout <= 0 && isAuthenticated) {
+      handleLogout();
+    }
+  }
+
+  function handlePageHidden() {
+    console.log('Window is now hidden');
+  }
+
+  onVisibilityChange(handlePageVisible, handlePageHidden);
 
   const navbar = (
     <div className="header-navbar-container fixed-top">
