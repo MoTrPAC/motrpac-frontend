@@ -113,6 +113,7 @@ class Auth {
   endSession() {
     this.expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     const timeout = this.expiresAt - Date.now();
+    console.log('checkExpirationInterval() is logged at ' + timeout + ' remaining');
     if (timeout <= 0) {
       this.logout();
     }

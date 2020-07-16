@@ -74,7 +74,7 @@ export function Navbar({
   function handlePageVisible() {
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     const timeout = expiresAt - Date.now();
-    console.log('Checked timeout ===' + timeout);
+    console.log('Will log out in ' + timeout + ' milliseconds');
     if (timeout <= 0 && isAuthenticated) {
       handleLogout();
     }
