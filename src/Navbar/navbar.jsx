@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
@@ -70,20 +70,34 @@ export function Navbar({
     return <LoginButton login={login} />;
   };
 
-  // Checking session when window is visible
-  function handlePageVisible() {
+  // Function to check expiration and determine logout is needed
+  function handleExpiration(msg) {
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     const timeout = expiresAt - Date.now();
-    console.log('Will log out in ' + timeout + ' milliseconds');
+    if (timeout > 0 && isAuthenticated) {
+      console.log(`${msg} Will log out in ${timeout} milliseconds.`);
+    }
     if (timeout <= 0 && isAuthenticated) {
       handleLogout();
     }
   }
 
-  function handlePageHidden() {
-    console.log('Window is now hidden');
+  // Checking expiration when component mounts
+  useEffect(() => {
+    handleExpiration('Component mounted.');
+  });
+
+  // Checking expiration when window becomes visible
+  function handlePageVisible() {
+    handleExpiration('Window becomes visible.');
   }
 
+  // Do nothing but log when window is not visible
+  function handlePageHidden() {
+    console.log('Window becomes hidden.');
+  }
+
+  // Invoke function calls when window visibility changes
   onVisibilityChange(handlePageVisible, handlePageHidden);
 
   const navbar = (
