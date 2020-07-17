@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
@@ -71,25 +71,23 @@ export function Navbar({
   };
 
   // Function to check expiration and determine logout is needed
-  function handleExpiration(msg) {
+  function handleExpiration() {
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     const timeout = expiresAt - Date.now();
     if (timeout > 0 && isAuthenticated) {
-      console.log(`${msg} Will log out in ${timeout} milliseconds.`);
+      console.log(`Will log out in ${timeout} milliseconds.`);
     }
     if (timeout <= 0 && isAuthenticated) {
       handleLogout();
     }
   }
 
-  // Checking expiration when component mounts
-  useEffect(() => {
-    handleExpiration('Component mounted.');
-  });
+  // Checking expiration when page loads
+  window.addEventListener('load', handleExpiration, false);
 
   // Checking expiration when window becomes visible
   function handlePageVisible() {
-    handleExpiration('Window becomes visible.');
+    handleExpiration();
   }
 
   // Do nothing but log when window is not visible
