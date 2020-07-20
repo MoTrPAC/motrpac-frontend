@@ -98,6 +98,9 @@ export function Navbar({
   // Invoke function calls when window visibility changes
   onVisibilityChange(handlePageVisible, handlePageHidden);
 
+  // Terminate session if tab/window is closed
+  window.addEventListener('unload', logout, false);
+
   const navbar = (
     <div className="header-navbar-container fixed-top">
       <nav className="navbar navbar-expand-lg navbar-light flex-md-nowrap p-0 shadow-sm bg-white">
