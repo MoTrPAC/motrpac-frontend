@@ -74,20 +74,9 @@ export function Navbar({
   function handleExpiration() {
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     const timeout = expiresAt - Date.now();
-    if (timeout > 0 && isAuthenticated) {
-      console.log(`Will log out in ${timeout} milliseconds.`);
-    }
-    if (timeout <= 0 && isAuthenticated) {
+    if (isAuthenticated && timeout <= 0) {
       handleLogout();
     }
-  }
-
-  // Checking expiration when page loads
-  window.addEventListener('load', handleExpiration, false);
-
-  // Checking expiration when window becomes visible
-  function handlePageVisible() {
-    handleExpiration();
   }
 
   // Do nothing but log when window is not visible
@@ -95,11 +84,10 @@ export function Navbar({
     console.log('Window becomes hidden.');
   }
 
+  // Checking expiration when page loads
+  window.addEventListener('load', handleExpiration, false);
   // Invoke function calls when window visibility changes
-  onVisibilityChange(handlePageVisible, handlePageHidden);
-
-  // Terminate session if tab/window is closed
-  window.addEventListener('unload', logout, false);
+  onVisibilityChange(handleExpiration, handlePageHidden);
 
   const navbar = (
     <div className="header-navbar-container fixed-top">
@@ -177,17 +165,17 @@ Navbar.defaultProps = {
   getSearchForm: null,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ...(state.quickSearch),
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   login: () => dispatch(actions.login()),
   logout: () => dispatch(actions.logout()),
-  handleQuickSearchInputChange: e => dispatch(QuickSearchBoxActions.quickSearchInputChange(e)),
-  handleQuickSearchRequestSubmit: searchTerm => dispatch(QuickSearchBoxActions.handleQuickSearchRequestSubmit(searchTerm)),
+  handleQuickSearchInputChange: (e) => dispatch(QuickSearchBoxActions.quickSearchInputChange(e)),
+  handleQuickSearchRequestSubmit: (searchTerm) => dispatch(QuickSearchBoxActions.handleQuickSearchRequestSubmit(searchTerm)),
   resetQuickSearch: () => dispatch(QuickSearchBoxActions.quickSearchReset()),
   getSearchForm: () => dispatch(SearchActions.getSearchForm()),
   resetAdvSearch: () => dispatch(SearchActions.searchFormReset()),
