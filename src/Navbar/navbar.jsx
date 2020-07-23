@@ -88,6 +88,14 @@ export function Navbar({
   window.addEventListener('load', handleExpiration, false);
   // Invoke function calls when window visibility changes
   onVisibilityChange(handleExpiration, handlePageHidden);
+  // Log out all tabs/windows signed in by the user
+  // if the user has signed out from any given tab
+  window.addEventListener('storage', () => {
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    if (!expiresAt) {
+      handleLogout();
+    }
+  });
 
   const navbar = (
     <div className="header-navbar-container fixed-top">
