@@ -51,7 +51,7 @@ const searchActions = {
 describe('Default Advanced Search Page', () => {
   test('Renders required componenents without crashing', () => {
     const shallowSearchPage = shallow(
-      <SearchPage {...defaultSearchState} isAuthenticated {...searchActions} />,
+      <SearchPage {...defaultSearchState} {...searchActions} />,
     );
     expect(shallowSearchPage.find('SearchForm')).toHaveLength(1);
   });

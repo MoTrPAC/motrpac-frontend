@@ -59,7 +59,7 @@ const screenActions = {
 describe('Pure Upload Screen', () => {
   test('Renders required componenents', () => {
     const shallowScreen = shallow(
-      <UploadScreen {...defaultUploadState} isAuthenticated {...screenActions} />,
+      <UploadScreen {...defaultUploadState} {...screenActions} />,
     );
     expect(shallowScreen.find('UploadAreaDnD')).toHaveLength(1);
     expect(shallowScreen.find('UploadList')).toHaveLength(1);

@@ -21,8 +21,6 @@ const buttonActions = {
 describe('Shallow Dashboard', () => {
   const shallowDash = shallow(
     <Dashboard
-      isAuthenticated
-      profile={testUser}
       previousUploads={testPreviousUploads}
       {...buttonActions}
     />,
