@@ -1,26 +1,24 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ReleaseEntry from './releaseEntry';
 import IconSet from '../lib/iconSet';
 
 /**
  * Renders the data release UIs
  *
- * @param {Boolean} isAuthenticated Redux state for user's authentication status.
- * @param {Object}  profile         Redux state for authenticated user's info.
+ * @param {Boolean} isPending   Redux state for user's authentication status.
+ * @param {Object}  profile     Redux state for authenticated user's info.
  *
  * @returns {object} JSX representation of data release page elements.
  */
 export function ReleasePage({
   isPending,
-  isAuthenticated,
   profile,
 }) {
   const [currentView, setCurrentView] = useState('internal');
 
-  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
   // Handler to set current view to either internal or external releases
@@ -38,19 +36,6 @@ export function ReleasePage({
         <h3>{pendingMsg}</h3>
       </div>
     );
-  }
-
-  // Route users back to homepage if not authenticated
-  if (!isAuthenticated) {
-    return (<Redirect to="/" />);
-  }
-
-  // Route users to error page if registered users are
-  // not allowed to have data access
-  if (isAuthenticated) {
-    if (!hasAccess) {
-      return (<Redirect to="/error" />);
-    }
   }
 
   // Render external release view if user type is 'external'
@@ -124,16 +109,14 @@ export function ReleasePage({
 
 ReleasePage.propTypes = {
   isPending: PropTypes.bool.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
   profile: PropTypes.shape({
     name: PropTypes.string,
     user_metadata: PropTypes.object,
   }).isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isPending: state.auth.isPending,
-  isAuthenticated: state.auth.isAuthenticated,
   profile: state.auth.profile,
 });
 

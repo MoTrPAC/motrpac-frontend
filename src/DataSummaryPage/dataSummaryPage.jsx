@@ -1,24 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import TissueAnalysisPlanTable from './tissueAnalysisPlanTable';
 
 /**
  * Renders the data summary page
  *
- * @param {Boolean} isAuthenticated Redux state for user's authentication status
- *
  * @returns {object} JSX representation of the data summary page
  */
-export function DataSummaryPage({
-  isAuthenticated,
-}) {
-  // Send users back to homepage if not authenticated
-  if (!isAuthenticated) {
-    return (<Redirect to="/" />);
-  }
-
+function DataSummaryPage() {
   return (
     <div className="col-md-9 ml-sm-auto col-lg-10 px-4 dataSummaryPage">
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -62,16 +51,4 @@ export function DataSummaryPage({
   );
 }
 
-DataSummaryPage.propTypes = {
-  isAuthenticated: PropTypes.bool,
-};
-
-DataSummaryPage.defaultProps = {
-  isAuthenticated: false,
-};
-
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
-
-export default connect(mapStateToProps)(DataSummaryPage);
+export default DataSummaryPage;

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import lunr from 'lunr';
 import SearchForm from './searchForm';
 import SearchActions from './searchActions';
@@ -38,13 +38,7 @@ export function SearchPage({
   handlePredefinedSearch,
   resetSearchForm,
   getSearchForm,
-  isAuthenticated,
 }) {
-  // Send users back to homepage if not authenticated
-  if (!isAuthenticated) {
-    return (<Redirect to="/" />);
-  }
-
   const urlSearchParams = new URLSearchParams(window.location.search);
 
   const isFetching = isSearchFetching || isQuickSearchFetching;
@@ -128,7 +122,7 @@ export function SearchPage({
       this.field('BID');
       this.field('Assay');
 
-      searchDocuments.forEach(doc => this.add(doc), this);
+      searchDocuments.forEach((doc) => this.add(doc), this);
     });
 
     let query = '';
@@ -155,9 +149,9 @@ export function SearchPage({
 
     const lunrSearches = idx.search(query.trim());
 
-    const lunrResutls = lunrSearches.map(match => ({
+    const lunrResutls = lunrSearches.map((match) => ({
       ref: match.ref,
-      item: searchDocuments.find(item => item.vial_label === match.ref),
+      item: searchDocuments.find((item) => item.vial_label === match.ref),
     }));
     /**
      * lunr implementation ends
@@ -316,7 +310,6 @@ SearchPage.propTypes = {
   handlePredefinedSearch: PropTypes.func.isRequired,
   resetSearchForm: PropTypes.func.isRequired,
   getSearchForm: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 SearchPage.defaultProps = {
@@ -330,18 +323,17 @@ SearchPage.defaultProps = {
   isQuickSearchFetching: false,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ...(state.search),
   ...(state.quickSearch),
-  isAuthenticated: state.auth.isAuthenticated,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   handleSearchFormChange: (index, field, e) => dispatch(SearchActions.searchFormChange(index, field, e)),
   addSearchParam: () => dispatch(SearchActions.searchFormAddParam()),
-  removeSearchParam: index => dispatch(SearchActions.searchFormRemoveParam(index)),
-  handleSearchFormSubmit: params => dispatch(SearchActions.handleSearchFormSubmit(params)),
-  handlePredefinedSearch: params => dispatch(SearchActions.handlePredefinedSearch(params)),
+  removeSearchParam: (index) => dispatch(SearchActions.searchFormRemoveParam(index)),
+  handleSearchFormSubmit: (params) => dispatch(SearchActions.handleSearchFormSubmit(params)),
+  handlePredefinedSearch: (params) => dispatch(SearchActions.handlePredefinedSearch(params)),
   resetSearchForm: () => dispatch(SearchActions.searchFormReset()),
   getSearchForm: () => dispatch(SearchActions.getSearchForm()),
 });
