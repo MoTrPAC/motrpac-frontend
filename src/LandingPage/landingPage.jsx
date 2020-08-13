@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -23,10 +23,40 @@ const trans3d = (x, y) => `translate3d(${x / 6}px,${y / 16}px,0)`;
  *
  * @returns {object} JSX representation of the landing page.
  */
-export function LandingPage({ isAuthenticated, profile }) {
+export function LandingPage({ isPending, isAuthenticated, profile }) {
   // Local state for managing particle animation
   const [visibility, setVisibility] = useState(true);
-  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+
+  useEffect(() => {
+    const scrollFunction = () => {
+      if (document.body.scrollTop >= 30 || document.documentElement.scrollTop >= 30) {
+        document.querySelector('.navbar-brand').classList.add('resized');
+      } else {
+        document.querySelector('.navbar-brand').classList.remove('resized');
+      }
+    };
+    window.addEventListener('scroll', scrollFunction, true);
+    return () => {
+      window.removeEventListener('scroll', scrollFunction, true);
+    };
+  });
+
+  useEffect(() => {
+    // Pause particle animation when window is hidden
+    const { hidden, visibilityChange } = onVisibilityChange();
+    const handleVisibilityChange = () => {
+      if (!document[hidden]) {
+        setVisibility(true);
+      } else {
+        setVisibility(false);
+      }
+    };
+    document.addEventListener(visibilityChange, handleVisibilityChange, false);
+    return () => {
+      document.removeEventListener(visibilityChange, handleVisibilityChange, false);
+    };
+  });
+
   // react-spring set animation values
   const [values, set] = useSpring(() => ({
     xy: [0, 0],
@@ -34,30 +64,21 @@ export function LandingPage({ isAuthenticated, profile }) {
   }));
   const { xy } = values;
 
+  // FIXME: temp workaround to handle callback redirect
+  if (isPending) {
+    return (
+      <div className="authLoading">
+        <span className="oi oi-shield" />
+        <h3>Authenticating...</h3>
+      </div>
+    );
+  }
+
+  // Redirect authenticated users to protected route
+  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   if (isAuthenticated && hasAccess) {
     return <Redirect to="/releases" />;
   }
-
-  const scrollFunction = () => {
-    if (document.body.scrollTop >= 30 || document.documentElement.scrollTop >= 30) {
-      document.querySelector('.navbar-brand').classList.add('resized');
-    } else {
-      document.querySelector('.navbar-brand').classList.remove('resized');
-    }
-  };
-
-  window.addEventListener('scroll', scrollFunction, true);
-
-  // Pause particle animation when window is hidden
-  function handlePageVisible() {
-    setVisibility(true);
-  }
-
-  function handlePageHidden() {
-    setVisibility(false);
-  }
-
-  onVisibilityChange(handlePageVisible, handlePageHidden);
 
   // Play or stop the particles animation
   function playStopParticles() {
@@ -249,16 +270,19 @@ LandingPage.propTypes = {
     user_metadata: PropTypes.object,
   }),
   isAuthenticated: PropTypes.bool,
+  isPending: PropTypes.bool,
 };
 
 LandingPage.defaultProps = {
   profile: {},
   isAuthenticated: false,
+  isPending: false,
 };
 
 const mapStateToProps = (state) => ({
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
+  isPending: state.auth.isPending,
 });
 
 export default connect(mapStateToProps)(LandingPage);
