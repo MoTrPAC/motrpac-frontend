@@ -8,15 +8,11 @@ import IconSet from '../lib/iconSet';
 /**
  * Renders the data release UIs
  *
- * @param {Boolean} isPending   Redux state for user's authentication status.
- * @param {Object}  profile     Redux state for authenticated user's info.
+ * @param {Object}  profile Redux state for authenticated user's info.
  *
  * @returns {object} JSX representation of data release page elements.
  */
-export function ReleasePage({
-  isPending,
-  profile,
-}) {
+export function ReleasePage({ profile }) {
   const [currentView, setCurrentView] = useState('internal');
 
   const userType = profile.user_metadata && profile.user_metadata.userType;
@@ -24,18 +20,6 @@ export function ReleasePage({
   // Handler to set current view to either internal or external releases
   function handleViewChange(releaseView) {
     setCurrentView(releaseView);
-  }
-
-  // FIXME: temp workaround to handle callback redirect
-  if (isPending) {
-    const pendingMsg = 'Authenticating...';
-
-    return (
-      <div className="authLoading">
-        <span className="oi oi-shield" />
-        <h3>{pendingMsg}</h3>
-      </div>
-    );
   }
 
   // Render external release view if user type is 'external'
@@ -108,7 +92,6 @@ export function ReleasePage({
 }
 
 ReleasePage.propTypes = {
-  isPending: PropTypes.bool.isRequired,
   profile: PropTypes.shape({
     name: PropTypes.string,
     user_metadata: PropTypes.object,
@@ -116,7 +99,6 @@ ReleasePage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isPending: state.auth.isPending,
   profile: state.auth.profile,
 });
 
