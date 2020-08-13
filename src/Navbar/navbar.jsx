@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
@@ -32,6 +32,54 @@ export function Navbar({
   getSearchForm,
   resetAdvSearch,
 }) {
+  useEffect(() => {
+    /* Handle logout for various use cases */
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    let expirationCheckInterval;
+    const intervalLength = 2 * 60 * 60 * 1000;
+
+    // Check expiration and determine whether logout is needed
+    const handleExpiration = () => {
+      if (isAuthenticated && expiresAt <= new Date().getTime()) {
+        logout();
+        clearInterval(expirationCheckInterval);
+      }
+    };
+
+    // Check periodically to logout user if expiration is due
+    const checkExpirationInterval = () => {
+      if (isAuthenticated && expiresAt !== undefined && expiresAt !== null) {
+        expirationCheckInterval = setInterval(() => { handleExpiration(); }, intervalLength);
+      }
+    };
+
+    // Check local storage item and log out if absent
+    const handleStorageChange = () => {
+      if (isAuthenticated && !localStorage.getItem('expires_at')) logout();
+    };
+
+    const { hidden, visibilityChange } = onVisibilityChange();
+    const handleVisibilityChange = () => {
+      if (!document[hidden]) {
+        handleExpiration();
+      }
+    };
+
+    // Use case 1: schedule expiration check interval
+    checkExpirationInterval();
+    // Use case 2: check expiration when window/tab becomes visibile
+    document.addEventListener(visibilityChange, handleVisibilityChange, false);
+    // Use case 3: log out all windows/tabs in which user had been authenticated
+    // if the user has signed out from any one of the windows/tabs
+    window.addEventListener('storage', handleStorageChange, false);
+    return () => {
+      // Clean up when component unmounts
+      clearInterval(expirationCheckInterval);
+      document.removeEventListener(visibilityChange, handleVisibilityChange, false);
+      window.removeEventListener('storage', handleStorageChange, false);
+    };
+  });
+
   const handleLogout = () => {
     logout();
     // FIXME: Redirect to landing page not working
@@ -69,33 +117,6 @@ export function Navbar({
 
     return <LoginButton login={login} />;
   };
-
-  // Function to check expiration and determine logout is needed
-  function handleExpiration() {
-    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-    const timeout = expiresAt - Date.now();
-    if (isAuthenticated && timeout <= 0) {
-      handleLogout();
-    }
-  }
-
-  // Do nothing but log when window is not visible
-  function handlePageHidden() {
-    console.log('Window becomes hidden.');
-  }
-
-  // Checking expiration when page loads
-  window.addEventListener('load', handleExpiration, false);
-  // Invoke function calls when window visibility changes
-  onVisibilityChange(handleExpiration, handlePageHidden);
-  // Log out all tabs/windows signed in by the user
-  // if the user has signed out from any given tab
-  window.addEventListener('storage', () => {
-    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-    if (!expiresAt) {
-      handleLogout();
-    }
-  });
 
   const navbar = (
     <div className="header-navbar-container fixed-top">
