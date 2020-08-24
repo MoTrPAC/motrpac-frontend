@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import PreviousUploadsTableConnected, { PreviousUploadsTable } from '../Widgets/previousUploadsTable';
+import PreviousUploadsTableConnected, {
+  PreviousUploadsTable,
+} from '../Widgets/previousUploadsTable';
 import PreviousUploadsGraph from '../Widgets/previousUploadsGraph';
 import AllUploadsDoughnut from '../Widgets/allUploadsDoughnut';
 import AllUploadStats from '../Widgets/allUploadStats';
@@ -27,10 +29,13 @@ export function Dashboard({
   previousUploads,
   disconnectComponents,
   clearForm,
+  expanded,
 }) {
   const editBtn = (
     <div className="col-auto">
-      <Link className="editBtn btn btn-light disabled" to="/edit-dashboard">Edit Dashboard</Link>
+      <Link className="editBtn btn btn-light disabled" to="/edit-dashboard">
+        Edit Dashboard
+      </Link>
     </div>
   );
 
@@ -50,46 +55,57 @@ export function Dashboard({
 
   if (isAuthenticated) {
     if (!hasAccess) {
-      return (<Redirect to="/error" />);
+      return <Redirect to="/error" />;
     }
 
     return (
-      <div className="col-md-9 ml-sm-auto col-lg-10 px-4 Dashboard">
-        <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <div className="page-title">
-            <h3>Dashboard</h3>
+      <div className="loggedInContentContainer d-flex w-100">
+        <div
+          className={`d-none d-md-block sidebarLayoutBlock ${
+            expanded ? 'sidebar-expanded' : 'sidebar-collapsed'
+          }`}
+        />
+        <div
+          className={`ml-sm-auto px-4 Dashboard ${
+            expanded ? 'sidebar-expanded' : 'sidebar-collapsed'
+          }`}
+        >
+          <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <div className="page-title">
+              <h3>Dashboard</h3>
+            </div>
+            <div className="btn-toolbar">
+              <div className="btn-group">
+                <Link className="uploadBtn btn btn-sm btn-outline-primary" to="/upload" onClick={clearForm}>Upload Data</Link>
+                <Link className="downloadBtn btn btn-sm btn-outline-primary" to="/download">Download/View Data</Link>
+              </div>
+            </div>
+            {featureAvailable.dashboardEditable ? editBtn : ''}
           </div>
-          <div className="btn-toolbar">
-            <div className="btn-group">
-              <Link className="uploadBtn btn btn-sm btn-outline-primary" to="/upload" onClick={clearForm}>Upload Data</Link>
-              <Link className="downloadBtn btn btn-sm btn-outline-primary" to="/download">Download/View Data</Link>
+          <div className="previous-uploads-table">
+            <div className="card">
+              <h5 className="card-header">Uploads</h5>
+              <div className="card-body">
+                { disconnectComponents ? <PreviousUploadsTable previousUploads={previousUploads} /> : <PreviousUploadsTableConnected /> }
+              </div>
             </div>
           </div>
-          {featureAvailable.dashboardEditable ? editBtn : ''}
-        </div>
-        <div className="previous-uploads-table">
-          <div className="card">
-            <h5 className="card-header">Uploads</h5>
-            <div className="card-body">
-              { disconnectComponents ? <PreviousUploadsTable previousUploads={previousUploads} /> : <PreviousUploadsTableConnected /> }
+          <div className="previous-uploads-graph">
+            <div className="card">
+              <h5 className="card-header">Assay Categories</h5>
+              <div className="card-body">
+                <PreviousUploadsGraph previousUploads={previousUploads} />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="previous-uploads-graph">
-          <div className="card">
-            <h5 className="card-header">Assay Categories</h5>
-            <div className="card-body">
-              <PreviousUploadsGraph previousUploads={previousUploads} />
-            </div>
-          </div>
-        </div>
-        <div className="total-uploads-graph">
-          <div className="card">
-            <h5 className="card-header">Total Uploads By All Sites</h5>
-            <div className="card-body">
-              <div className="row justify-content-center">
-                <AllUploadsDoughnut allUploads={allUploads} />
-                <AllUploadStats />
+          <div className="total-uploads-graph">
+            <div className="card">
+              <h5 className="card-header">Total Uploads By All Sites</h5>
+              <div className="card-body">
+                <div className="row justify-content-center">
+                  <AllUploadsDoughnut allUploads={allUploads} />
+                  <AllUploadStats />
+                </div>
               </div>
             </div>
           </div>
@@ -98,7 +114,7 @@ export function Dashboard({
     );
   }
 
-  return (<Redirect to="/" />);
+  return <Redirect to="/" />;
 }
 
 Dashboard.propTypes = {
@@ -115,6 +131,7 @@ Dashboard.propTypes = {
   })).isRequired,
   disconnectComponents: PropTypes.bool,
   clearForm: PropTypes.func.isRequired,
+  expanded: PropTypes.bool,
 };
 
 Dashboard.defaultProps = {
@@ -125,18 +142,20 @@ Dashboard.defaultProps = {
     dashboardEditable: false,
   },
   disconnectComponents: false,
+  expanded: false,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
   isPending: state.auth.isPending,
   previousUploads: state.upload.previousUploads,
+  expanded: state.sidebar.expanded,
 });
 
 // Need to clear the upload form values and recently uploaded files
 // if user navigates away from and returns to the upload page
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   clearForm: () => dispatch(actions.clearForm()),
 });
 

@@ -19,6 +19,7 @@ export function AnalysisHomePage({
   onPickAnalysis,
   onPickSubAnalysis,
   goBack,
+  expanded,
 }) {
   let subjectType = match.params.subjectType.slice(0).toLowerCase();
 
@@ -180,21 +181,32 @@ export function AnalysisHomePage({
   };
 
   return (
-    <div className="analysisPage col-md-9 ml-sm-auto col-lg-10 px-4">
-      <div className="page-title pt-3 pb-2 border-bottom">
-        <h3>
-          {(depth > 0) ? <BackButton /> : ''}
-          {renderHeaderTitle()}
-        </h3>
-      </div>
-      {(depth === 2) ? selectedDataAnalysis : ''}
-      {(depth === 1) ? selectSubAnalyses : ''}
-      {(depth === 0) ? selectAnalysis : ''}
-      <div className="row breadcrumbs justify-content-center">
-        <div className="col centered">
-          <span className={`oi oi-media-record ${depth === 0 ? 'active' : ''}`} />
-          <span className={`oi oi-media-record ${depth === 1 ? 'active' : ''}`} />
-          <span className={`oi oi-media-record ${depth === 2 ? 'active' : ''}`} />
+    <div className="loggedInContentContainer d-flex w-100">
+      <div
+        className={`d-none d-md-block sidebarLayoutBlock ${
+          expanded ? 'sidebar-expanded' : 'sidebar-collapsed'
+        }`}
+      />
+      <div
+        className={`ml-sm-auto px-4 analysisPage ${
+          expanded ? 'sidebar-expanded' : 'sidebar-collapsed'
+        }`}
+      >
+        <div className="page-title pt-3 pb-2 border-bottom">
+          <h3>
+            {(depth > 0) ? <BackButton /> : ''}
+            {renderHeaderTitle()}
+          </h3>
+        </div>
+        {(depth === 2) ? selectedDataAnalysis : ''}
+        {(depth === 1) ? selectSubAnalyses : ''}
+        {(depth === 0) ? selectAnalysis : ''}
+        <div className="row breadcrumbs justify-content-center">
+          <div className="col centered">
+            <span className={`oi oi-media-record ${depth === 0 ? 'active' : ''}`} />
+            <span className={`oi oi-media-record ${depth === 1 ? 'active' : ''}`} />
+            <span className={`oi oi-media-record ${depth === 2 ? 'active' : ''}`} />
+          </div>
         </div>
       </div>
     </div>
@@ -216,6 +228,7 @@ AnalysisHomePage.propTypes = {
   goBack: PropTypes.func.isRequired,
   onPickAnalysis: PropTypes.func.isRequired,
   onPickSubAnalysis: PropTypes.func.isRequired,
+  expanded: PropTypes.bool,
 };
 
 AnalysisHomePage.defaultProps = {
@@ -225,31 +238,36 @@ AnalysisHomePage.defaultProps = {
     },
   },
   isAuthenticated: false,
+  expanded: false,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   depth: state.analysis.depth,
   currentAnalysis: state.analysis.currentAnalysis,
   currentAnalysisTitle: state.analysis.currentAnalysisTitle,
   currentSubAnalysis: state.analysis.currentSubAnalysis,
   currentSubAnalysisTitle: state.analysis.currentSubAnalysisTitle,
   isAuthenticated: state.auth.isAuthenticated,
+  expanded: state.sidebar.expanded,
 });
 
-const mapDispatchToProps = dispatch => ({
-  onPickAnalysis: e => dispatch({
-    type: 'ANALYSIS_SELECT',
-    analysis: e.currentTarget.id,
-    analysisTitle: e.currentTarget.title,
-  }),
-  goBack: () => dispatch({
-    type: 'GO_BACK',
-  }),
-  onPickSubAnalysis: e => dispatch({
-    type: 'SUBANALYSIS_SELECT',
-    subAnalysis: e.currentTarget.id,
-    subAnalysisTitle: e.currentTarget.title,
-  }),
+const mapDispatchToProps = (dispatch) => ({
+  onPickAnalysis: (e) =>
+    dispatch({
+      type: 'ANALYSIS_SELECT',
+      analysis: e.currentTarget.id,
+      analysisTitle: e.currentTarget.title,
+    }),
+  goBack: () =>
+    dispatch({
+      type: 'GO_BACK',
+    }),
+  onPickSubAnalysis: (e) =>
+    dispatch({
+      type: 'SUBANALYSIS_SELECT',
+      subAnalysis: e.currentTarget.id,
+      subAnalysisTitle: e.currentTarget.title,
+    }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnalysisHomePage);
