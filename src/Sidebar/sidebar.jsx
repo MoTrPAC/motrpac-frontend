@@ -1,6 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 import actions from '../UploadPage/uploadActions';
 
 /**
@@ -14,8 +16,10 @@ import actions from '../UploadPage/uploadActions';
 export function Sidebar({
   isAuthenticated = false,
   profile,
+  expanded,
   clearForm,
   resetDepth,
+  toggleSidebar,
 }) {
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   const userType = profile.user_metadata && profile.user_metadata.userType;
@@ -23,95 +27,144 @@ export function Sidebar({
   if (!(isAuthenticated && hasAccess)) {
     return '';
   }
+
+  const renderTooltip = (label, id) => (
+    <Tooltip id={`sidebar-navlink-${id}`}>{label}</Tooltip>
+  );
+
+  function renderNavLink(route, label, icon, disabled, handler) {
+    // Omit tooltip if sidebar is expanded
+    // due to the presence of navlink labels
+    if (expanded) {
+      return (
+        <NavLink
+          to={`/${route}`}
+          onClick={handler}
+          className={`nav-link d-inline-flex align-items-center w-100 ${
+            disabled ? 'disabled-link' : ''
+          }`}
+        >
+          <i className="material-icons nav-link-icon">{icon}</i>
+          <span className="nav-link-label">{label}</span>
+        </NavLink>
+      );
+    }
+
+    // Show tooltip if sidebar is collapsed
+    return (
+      <OverlayTrigger placement="right" overlay={renderTooltip(label, route)}>
+        <NavLink
+          to={`/${route}`}
+          onClick={handler}
+          className={`nav-link d-inline-flex align-items-center w-100 ${
+            disabled ? 'disabled-link' : ''
+          }`}
+        >
+          <i className="material-icons nav-link-icon">{icon}</i>
+          <span className="nav-link-label">{label}</span>
+        </NavLink>
+      </OverlayTrigger>
+    );
+  }
+
   const sidebar = (
-    <nav className="col-md-2 d-none d-md-block bg-light sidebar">
-      <div className="sidebar-sticky">
-        <ul className="nav flex-column mt-1">
-          <li className="nav-item">
-            <Link to="/dashboard" className="nav-link d-inline-flex align-items-center disabled-link">
-              <i className="material-icons nav-link-icon">home</i>
-                Dashboard
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/methods" className="nav-link d-inline-flex align-items-center disabled-link">
-              <i className="material-icons nav-link-icon">description</i>
-                Methods
-            </Link>
-          </li>
-        </ul>
+    <nav
+      id="sidebarMenu"
+      className={`sidebar d-none d-md-block position-fixed bg-light ${
+        expanded ? 'expanded' : 'collapsed'
+      }`}
+    >
+      <div className="sidebar-sticky h-100 w-100">
+        <OverlayTrigger
+          placement="right"
+          overlay={renderTooltip(expanded ? 'Collpase' : 'Expand', 'toggle')}
+        >
+          <button
+            className="sidebar-btn-toggle btn btn-light"
+            type="button"
+            onClick={toggleSidebar}
+          >
+            <i className="material-icons nav-sidebar-btn-icon">
+              {expanded ? 'close' : 'menu'}
+            </i>
+          </button>
+        </OverlayTrigger>
+        <div className="sidebar-panel h-100 w-100">
+          <ul className="nav flex-column">
+            <li className="nav-item">
+              {renderNavLink('dashboard', 'Dashboard', 'home', false)}
+            </li>
+            <li className="nav-item">
+              {renderNavLink('methods', 'Methods', 'description', true)}
+            </li>
+          </ul>
 
-        <h6 className="sidebar-heading px-3 mt-4 mb-1 text-muted">
-          <span>Analysis</span>
-        </h6>
-        <ul className="nav flex-column mb-2">
-          <li className="nav-item">
-            <Link
-              to="/analysis/animal"
-              onClick={resetDepth}
-              className={`nav-link d-inline-flex align-items-center ${userType === 'external' ? 'disabled-link' : ''}`}
-            >
-              <span className="icon-Animal nav-link-icon" />
-                Animal
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              to="/analysis/human"
-              onClick={resetDepth}
-              className={`nav-link d-inline-flex align-items-center ${userType === 'external' ? 'disabled-link' : ''}`}
-            >
-              <i className="material-icons nav-link-icon">person</i>
-                Human
-            </Link>
-          </li>
-        </ul>
+          <h6 className="sidebar-heading px-3 mt-3 mb-2 text-muted">
+            <span>Analysis</span>
+          </h6>
+          <ul className="nav flex-column">
+            <li className="nav-item">
+              {renderNavLink(
+                'analysis/animal',
+                'Animal',
+                'pest_control_rodent',
+                userType === 'external',
+                resetDepth
+              )}
+            </li>
+            <li className="nav-item">
+              {renderNavLink(
+                'analysis/human',
+                'Human',
+                'people_alt',
+                userType === 'external',
+                resetDepth
+              )}
+            </li>
+          </ul>
 
-        <h6 className="sidebar-heading px-3 mt-4 mb-1 text-muted">
-          <span>Data</span>
-        </h6>
-        <ul className="nav flex-column mb-2">
-          <li className="nav-item">
-            <Link to="/download" className="nav-link d-inline-flex align-items-center disabled-link">
-              <i className="material-icons nav-link-icon">view_list</i>
-              Browse Data
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/summary" className="nav-link d-inline-flex align-items-center disabled-link">
-              <i className="material-icons nav-link-icon">assessment</i>
-              Summary
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/releases" className="nav-link d-inline-flex align-items-center">
-              <i className="material-icons nav-link-icon">open_with</i>
-              Releases
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/upload" onClick={clearForm} className="nav-link d-inline-flex align-items-center disabled-link">
-              <i className="material-icons nav-link-icon">cloud_upload</i>
-              Upload Data
-            </Link>
-          </li>
-        </ul>
+          <h6 className="sidebar-heading px-3 mt-3 mb-2 text-muted">
+            <span>Data</span>
+          </h6>
+          <ul className="nav flex-column">
+            <li className="nav-item">
+              {renderNavLink('releases', 'Releases', 'insights', false)}
+            </li>
+            <li className="nav-item">
+              {renderNavLink('summary', 'Summary', 'assessment', true)}
+            </li>
+            <li className="nav-item">
+              {renderNavLink('download', 'Browse Data', 'view_list', true)}
+            </li>
+            <li className="nav-item">
+              {renderNavLink(
+                'upload',
+                'Upload Data',
+                'cloud_upload',
+                true,
+                clearForm
+              )}
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
   );
 
   return sidebar;
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
+  expanded: state.sidebar.expanded,
 });
 
 // Need to clear the upload form values and recently uploaded files
 // if user navigates away from and returns to the upload page
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   clearForm: () => dispatch(actions.clearForm()),
   resetDepth: () => dispatch({ type: 'RESET_DEPTH' }),
+  toggleSidebar: () => dispatch({ type: 'SIDEBAR_TOGGLED' }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
