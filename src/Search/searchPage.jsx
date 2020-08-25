@@ -8,6 +8,7 @@ import SearchActions from './searchActions';
 import SearchResults from './searchResults';
 import history from '../App/history';
 import AnimatedLoadingIcon from '../lib/ui/loading';
+import AuthContentContainer from '../lib/ui/authContentContainer';
 
 const mergedPass1aGetMetadata = require('../data/merged_pass1a_get_metadata');
 
@@ -39,6 +40,7 @@ export function SearchPage({
   resetSearchForm,
   getSearchForm,
   isAuthenticated,
+  expanded,
 }) {
   // Send users back to homepage if not authenticated
   if (!isAuthenticated) {
@@ -102,7 +104,7 @@ export function SearchPage({
   // Render error message if there is one
   if (!isFetching && errMsg && errMsg.length) {
     return (
-      <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
+      <AuthContentContainer classes="searchPage" expanded={expanded}>
         <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
           <div className="page-title">
             <h3>Error</h3>
@@ -123,7 +125,7 @@ export function SearchPage({
             </p>
           </div>
         </div>
-      </div>
+      </AuthContentContainer>
     );
   }
 
@@ -186,7 +188,7 @@ export function SearchPage({
      */
 
     return (
-      <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
+      <AuthContentContainer classes="searchPage" expanded={expanded}>
         <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
           {!quickSearchQueryString ? <SearchBackButton /> : null}
           <div className="page-title">
@@ -214,7 +216,7 @@ export function SearchPage({
             </p>
           )}
         </div>
-      </div>
+      </AuthContentContainer>
     );
   }
 
@@ -235,7 +237,7 @@ export function SearchPage({
     };
 
     return (
-      <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
+      <AuthContentContainer classes="searchPage" expanded={expanded}>
         <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
           <SummaryBackButton />
           <div className="page-title">
@@ -245,7 +247,7 @@ export function SearchPage({
         <div className="advanced-search-content-container mt-3">
           <SearchResults urlSearchParamsObj={urlSearchParamsObj} />
         </div>
-      </div>
+      </AuthContentContainer>
     );
   }
 
@@ -255,7 +257,7 @@ export function SearchPage({
     (searchQueryString.length || quickSearchQueryString.length)
   ) {
     return (
-      <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
+      <AuthContentContainer classes="searchPage" expanded={expanded}>
         <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
           <SearchBackButton />
           <div className="page-title">
@@ -265,13 +267,13 @@ export function SearchPage({
         <div className="advanced-search-content-container mt-3">
           <AnimatedLoadingIcon isFetching={isFetching} />
         </div>
-      </div>
+      </AuthContentContainer>
     );
   }
 
   // Render advanced search form by default
   return (
-    <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
+    <AuthContentContainer classes="searchPage" expanded={expanded}>
       <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
         <div className="page-title">
           <h3>Advanced Search</h3>
@@ -346,7 +348,7 @@ export function SearchPage({
           handleSearchFormSubmit={handleSearchFormSubmit}
         />
       </div>
-    </div>
+    </AuthContentContainer>
   );
 }
 
@@ -378,6 +380,7 @@ SearchPage.propTypes = {
   resetSearchForm: PropTypes.func.isRequired,
   getSearchForm: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  expanded: PropTypes.bool.isRequired,
 };
 
 SearchPage.defaultProps = {
@@ -395,6 +398,7 @@ const mapStateToProps = (state) => ({
   ...state.search,
   ...state.quickSearch,
   isAuthenticated: state.auth.isAuthenticated,
+  expanded: state.sidebar.expanded,
 });
 
 const mapDispatchToProps = (dispatch) => ({

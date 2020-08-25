@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import analysisTypes from '../lib/analysisTypes';
 import AnimalDataAnalysis from './animalDataAnalysis';
 import HumanDataAnalysis from './humanDataAnalysis';
+import AuthContentContainer from '../lib/ui/authContentContainer';
 
 // TODO: Add animation of transitions potentially with CSSTransitions package
 
@@ -24,7 +25,10 @@ export function AnalysisHomePage({
   let subjectType = match.params.subjectType.slice(0).toLowerCase();
 
   // Redirects to dashboard if incorrect url
-  if (!(subjectType === 'animal' || subjectType === 'human') || !isAuthenticated) {
+  if (
+    !(subjectType === 'animal' || subjectType === 'human') ||
+    !isAuthenticated
+  ) {
     return <Redirect to="/dashboard" />;
   }
   // Button to select inital analysis category
@@ -136,13 +140,12 @@ export function AnalysisHomePage({
     );
   }
 
-  const analyses = analysisTypes
-    .map(analysisType => (
-      <AnalysisTypeButton
-        key={analysisType.shortName}
-        analysisType={analysisType}
-      />
-    ));
+  const analyses = analysisTypes.map((analysisType) => (
+    <AnalysisTypeButton
+      key={analysisType.shortName}
+      analysisType={analysisType}
+    />
+  ));
 
   let selectedAnalysis;
   let selectSubAnalyses;
@@ -153,9 +156,7 @@ export function AnalysisHomePage({
   }
 
   const selectAnalysis = (
-    <div className="row justify-content-center">
-      {analyses}
-    </div>
+    <div className="row justify-content-center">{analyses}</div>
   );
 
   // Sets subject type to title case
@@ -170,7 +171,7 @@ export function AnalysisHomePage({
       subjectType.toLowerCase() === 'animal'
         ? <AnimalDataAnalysis analysis={currentAnalysis} subAnalysis={currentSubAnalysis} />
         : <HumanDataAnalysis analysis={currentAnalysis} subAnalysis={currentSubAnalysis} />
-    );
+      );
   }
 
   // Render header title
@@ -181,35 +182,30 @@ export function AnalysisHomePage({
   };
 
   return (
-    <div className="loggedInContentContainer d-flex w-100">
-      <div
-        className={`d-none d-md-block sidebarLayoutBlock ${
-          expanded ? 'sidebar-expanded' : 'sidebar-collapsed'
-        }`}
-      />
-      <div
-        className={`ml-sm-auto px-4 analysisPage ${
-          expanded ? 'sidebar-expanded' : 'sidebar-collapsed'
-        }`}
-      >
-        <div className="page-title pt-3 pb-2 border-bottom">
-          <h3>
-            {(depth > 0) ? <BackButton /> : ''}
-            {renderHeaderTitle()}
-          </h3>
-        </div>
-        {(depth === 2) ? selectedDataAnalysis : ''}
-        {(depth === 1) ? selectSubAnalyses : ''}
-        {(depth === 0) ? selectAnalysis : ''}
-        <div className="row breadcrumbs justify-content-center">
-          <div className="col centered">
-            <span className={`oi oi-media-record ${depth === 0 ? 'active' : ''}`} />
-            <span className={`oi oi-media-record ${depth === 1 ? 'active' : ''}`} />
-            <span className={`oi oi-media-record ${depth === 2 ? 'active' : ''}`} />
-          </div>
+    <AuthContentContainer classes="analysisPage" expanded={expanded}>
+      <div className="page-title pt-3 pb-2 border-bottom">
+        <h3>
+          {depth > 0 ? <BackButton /> : ''}
+          {renderHeaderTitle()}
+        </h3>
+      </div>
+      {depth === 2 ? selectedDataAnalysis : ''}
+      {depth === 1 ? selectSubAnalyses : ''}
+      {depth === 0 ? selectAnalysis : ''}
+      <div className="row breadcrumbs justify-content-center">
+        <div className="col centered">
+          <span
+            className={`oi oi-media-record ${depth === 0 ? 'active' : ''}`}
+          />
+          <span
+            className={`oi oi-media-record ${depth === 1 ? 'active' : ''}`}
+          />
+          <span
+            className={`oi oi-media-record ${depth === 2 ? 'active' : ''}`}
+          />
         </div>
       </div>
-    </div>
+    </AuthContentContainer>
   );
 }
 

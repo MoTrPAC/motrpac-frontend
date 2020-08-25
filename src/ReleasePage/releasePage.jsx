@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import ReleaseEntry from './releaseEntry';
 import IconSet from '../lib/iconSet';
+import AuthContentContainer from '../lib/ui/authContentContainer';
 
 /**
  * Renders the data release UIs
@@ -79,78 +80,85 @@ export function ReleasePage({ isPending, isAuthenticated, profile, expanded }) {
 
   // Render internal release view by default
   return (
-    <div className="loggedInContentContainer d-flex w-100">
-      <div
-        className={`d-none d-md-block sidebarLayoutBlock ${
-          expanded ? 'sidebar-expanded' : 'sidebar-collapsed'
-        }`}
-      />
-      <div
-        className={`ml-sm-auto px-4 dataReleasePage internal ${
-          expanded ? 'sidebar-expanded' : 'sidebar-collapsed'
-        }`}
+    <AuthContentContainer
+      classes="dataReleasePage internal"
+      expanded={expanded}
+    >
+      <p
+        className="alert alert-info alert-dismissible fade show warning-note d-flex align-items-center"
+        role="alert"
       >
-        <p
-          className="alert alert-info alert-dismissible fade show warning-note d-flex align-items-center"
-          role="alert"
+        <span className="material-icons">info</span>
+        <span className="warning-note-text">
+          {' '}
+          Some features are unavailable to smaller mobile device screens.
+        </span>
+        <button
+          type="button"
+          className="close"
+          data-dismiss="alert"
+          aria-label="Close"
         >
-          <span className="material-icons">info</span>
-          <span className="warning-note-text">
-            {' '}
-            Some features are unavailable to smaller mobile device screens.
-          </span>
-          <button
-            type="button"
-            className="close"
-            data-dismiss="alert"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </p>
-        <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 border-bottom">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </p>
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 border-bottom">
+        <div
+          className="page-title"
+          style={{ backgroundImage: `url(${IconSet.InternalDataRelease})` }}
+        >
+          <h3>Data Releases</h3>
+        </div>
+        <div className="btn-toolbar">
           <div
-            className="page-title"
-            style={{ backgroundImage: `url(${IconSet.InternalDataRelease})` }}
+            className="btn-group mr-2"
+            role="group"
+            aria-label="Release button group"
           >
-            <h3>Data Releases</h3>
+            <button
+              type="button"
+              className={`btn btn-sm btn-outline-primary ${
+                currentView === 'internal' ? 'active' : ''
+              }`}
+              onClick={handleViewChange.bind(this, 'internal')}
+            >
+              <span className="d-flex align-items-center">
+                <i className="material-icons internal-icon">person</i>
+                Internal Release
+              </span>
+            </button>
+            <button
+              type="button"
+              className={`btn btn-sm btn-outline-primary ${
+                currentView === 'external' ? 'active' : ''
+              }`}
+              onClick={handleViewChange.bind(this, 'external')}
+            >
+              <span className="d-flex align-items-center">
+                <i className="material-icons external-icon">people_alt</i>
+                External Release
+              </span>
+            </button>
           </div>
-          <div className="btn-toolbar">
-            <div className="btn-group mr-2" role="group" aria-label="Release button group">
-              <button
-                type="button"
-                className={`btn btn-sm btn-outline-primary ${currentView === 'internal' ? 'active' : ''}`}
-                onClick={handleViewChange.bind(this, 'internal')}
-              >
-                <span className="d-flex align-items-center">
-                  <i className="material-icons internal-icon">person</i>
-                  Internal Release
-                </span>
-              </button>
-              <button
-                type="button"
-                className={`btn btn-sm btn-outline-primary ${currentView === 'external' ? 'active' : ''}`}
-                onClick={handleViewChange.bind(this, 'external')}
-              >
-                <span className="d-flex align-items-center">
-                  <i className="material-icons external-icon">people_alt</i>
-                  External Release
-                </span>
-              </button>
-            </div>
-            <div className="btn-group" role="group" aria-label="Search button group">
-              <Link className="advSearchBtn btn btn-sm btn-outline-primary" to="/search">
-                <span className="d-flex align-items-center">
-                  <i className="material-icons search-icon">search</i>
-                  Search Data
-                </span>
-              </Link>
-            </div>
+          <div
+            className="btn-group"
+            role="group"
+            aria-label="Search button group"
+          >
+            <Link
+              className="advSearchBtn btn btn-sm btn-outline-primary"
+              to="/search"
+            >
+              <span className="d-flex align-items-center">
+                <i className="material-icons search-icon">search</i>
+                Search Data
+              </span>
+            </Link>
           </div>
         </div>
-        <ReleaseEntry profile={profile} currentView={currentView} />
       </div>
-    </div>
+      <ReleaseEntry profile={profile} currentView={currentView} />
+    </AuthContentContainer>
   );
 }
 

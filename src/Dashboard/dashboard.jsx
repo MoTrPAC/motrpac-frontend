@@ -9,6 +9,7 @@ import PreviousUploadsGraph from '../Widgets/previousUploadsGraph';
 import AllUploadsDoughnut from '../Widgets/allUploadsDoughnut';
 import AllUploadStats from '../Widgets/allUploadStats';
 import actions from '../UploadPage/uploadActions';
+import AuthContentContainer from '../lib/ui/authContentContainer';
 
 const allUploads = require('../testData/testAllUploads');
 
@@ -59,58 +60,62 @@ export function Dashboard({
     }
 
     return (
-      <div className="loggedInContentContainer d-flex w-100">
-        <div
-          className={`d-none d-md-block sidebarLayoutBlock ${
-            expanded ? 'sidebar-expanded' : 'sidebar-collapsed'
-          }`}
-        />
-        <div
-          className={`ml-sm-auto px-4 Dashboard ${
-            expanded ? 'sidebar-expanded' : 'sidebar-collapsed'
-          }`}
-        >
-          <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <div className="page-title">
-              <h3>Dashboard</h3>
-            </div>
-            <div className="btn-toolbar">
-              <div className="btn-group">
-                <Link className="uploadBtn btn btn-sm btn-outline-primary" to="/upload" onClick={clearForm}>Upload Data</Link>
-                <Link className="downloadBtn btn btn-sm btn-outline-primary" to="/download">Download/View Data</Link>
-              </div>
-            </div>
-            {featureAvailable.dashboardEditable ? editBtn : ''}
+      <AuthContentContainer classes="Dashboard" expanded={expanded}>
+        <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <div className="page-title">
+            <h3>Dashboard</h3>
           </div>
-          <div className="previous-uploads-table">
-            <div className="card">
-              <h5 className="card-header">Uploads</h5>
-              <div className="card-body">
-                { disconnectComponents ? <PreviousUploadsTable previousUploads={previousUploads} /> : <PreviousUploadsTableConnected /> }
-              </div>
+          <div className="btn-toolbar">
+            <div className="btn-group">
+              <Link
+                className="uploadBtn btn btn-sm btn-outline-primary"
+                to="/upload"
+                onClick={clearForm}
+              >
+                Upload Data
+              </Link>
+              <Link
+                className="downloadBtn btn btn-sm btn-outline-primary"
+                to="/download"
+              >
+                Download/View Data
+              </Link>
             </div>
           </div>
-          <div className="previous-uploads-graph">
-            <div className="card">
-              <h5 className="card-header">Assay Categories</h5>
-              <div className="card-body">
-                <PreviousUploadsGraph previousUploads={previousUploads} />
-              </div>
+          {featureAvailable.dashboardEditable ? editBtn : ''}
+        </div>
+        <div className="previous-uploads-table">
+          <div className="card">
+            <h5 className="card-header">Uploads</h5>
+            <div className="card-body">
+              {disconnectComponents ? (
+                <PreviousUploadsTable previousUploads={previousUploads} />
+              ) : (
+                <PreviousUploadsTableConnected />
+              )}
             </div>
           </div>
-          <div className="total-uploads-graph">
-            <div className="card">
-              <h5 className="card-header">Total Uploads By All Sites</h5>
-              <div className="card-body">
-                <div className="row justify-content-center">
-                  <AllUploadsDoughnut allUploads={allUploads} />
-                  <AllUploadStats />
-                </div>
+        </div>
+        <div className="previous-uploads-graph">
+          <div className="card">
+            <h5 className="card-header">Assay Categories</h5>
+            <div className="card-body">
+              <PreviousUploadsGraph previousUploads={previousUploads} />
+            </div>
+          </div>
+        </div>
+        <div className="total-uploads-graph">
+          <div className="card">
+            <h5 className="card-header">Total Uploads By All Sites</h5>
+            <div className="card-body">
+              <div className="row justify-content-center">
+                <AllUploadsDoughnut allUploads={allUploads} />
+                <AllUploadStats />
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </AuthContentContainer>
     );
   }
 
@@ -126,9 +131,11 @@ Dashboard.propTypes = {
   featureAvailable: PropTypes.shape({
     dashboardEditable: PropTypes.bool,
   }),
-  previousUploads: PropTypes.arrayOf(PropTypes.shape({
-    identifier: PropTypes.string,
-  })).isRequired,
+  previousUploads: PropTypes.arrayOf(
+    PropTypes.shape({
+      identifier: PropTypes.string,
+    })
+  ).isRequired,
   disconnectComponents: PropTypes.bool,
   clearForm: PropTypes.func.isRequired,
   expanded: PropTypes.bool,
