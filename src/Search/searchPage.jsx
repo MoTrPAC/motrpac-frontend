@@ -380,7 +380,7 @@ SearchPage.propTypes = {
   resetSearchForm: PropTypes.func.isRequired,
   getSearchForm: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  expanded: PropTypes.bool.isRequired,
+  expanded: PropTypes.bool,
 };
 
 SearchPage.defaultProps = {
@@ -392,6 +392,7 @@ SearchPage.defaultProps = {
   quickSearchQueryString: '',
   quickSearchError: '',
   isQuickSearchFetching: false,
+  expanded: false,
 };
 
 const mapStateToProps = (state) => ({
