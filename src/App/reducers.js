@@ -12,6 +12,9 @@ import quickSearchBoxReducer, {
   defaultQuickSearchState,
 } from '../Search/quickSearchBoxReducer';
 import sidebarReducer, { defaultSidebarState } from '../Sidebar/sidebarReducer';
+import dashboardReducer, {
+  defaultDashboardState,
+} from '../Dashboard/dashboardReducer';
 
 const testUploads = require('../testData/testAllUploads');
 const testPreviousUploads = require('../testData/testPreviousUploads');
@@ -40,6 +43,7 @@ export default combineReducers({
   search: searchReducer,
   quickSearch: quickSearchBoxReducer,
   sidebar: sidebarReducer,
+  dashboard: dashboardReducer,
 });
 
 export const defaultRootState = {
@@ -50,4 +54,5 @@ export const defaultRootState = {
   search: defaultSearchState,
   quickSearch: defaultQuickSearchState,
   sidebar: defaultSidebarState,
+  dashboard: defaultDashboardState,
 };
