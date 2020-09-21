@@ -53,28 +53,20 @@ export function ReleasePage({ isPending, isAuthenticated, profile, expanded }) {
   // Render external release view if user type is 'external'
   if (userType === 'external') {
     return (
-      <div className="loggedInContentContainer d-flex w-100">
-        <div
-          className={`d-none d-md-block sidebarLayoutBlock ${
-            expanded ? 'sidebar-expanded' : 'sidebar-collapsed'
-          }`}
-        />
-        <div
-          className={`ml-sm-auto px-4 dataReleasePage external ${
-            expanded ? 'sidebar-expanded' : 'sidebar-collapsed'
-          }`}
-        >
-          <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 border-bottom">
-            <div
-              className="page-title"
-              style={{ backgroundImage: `url(${IconSet.InternalDataRelease})` }}
-            >
-              <h3>Data Releases</h3>
-            </div>
+      <AuthContentContainer
+        classes="dataReleasePage external"
+        expanded={expanded}
+      >
+        <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 border-bottom">
+          <div
+            className="page-title"
+            style={{ backgroundImage: `url(${IconSet.InternalDataRelease})` }}
+          >
+            <h3>Data Releases</h3>
           </div>
-          <ReleaseEntry profile={profile} currentView={userType} />
         </div>
-      </div>
+        <ReleaseEntry profile={profile} currentView={userType} />
+      </AuthContentContainer>
     );
   }
 
