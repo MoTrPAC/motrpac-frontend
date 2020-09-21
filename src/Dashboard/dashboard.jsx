@@ -1,17 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import PreviousUploadsTableConnected, {
-  PreviousUploadsTable,
-} from '../Widgets/previousUploadsTable';
-import PreviousUploadsGraph from '../Widgets/previousUploadsGraph';
-import AllUploadsDoughnut from '../Widgets/allUploadsDoughnut';
-import AllUploadStats from '../Widgets/allUploadStats';
-import actions from '../UploadPage/uploadActions';
 import AuthContentContainer from '../lib/ui/authContentContainer';
+import ReleasedSampleTable from '../Widgets/releasedSampleTable';
+import ReleasedSamplePlot from '../Widgets/releasedSamplePlot';
+import ReleasedSampleHighlight from '../Widgets/releasedSampleHighlight';
+import ReleasedSampleSummary from '../Widgets/releasedSampleSummary';
+import PlotControls from '../Widgets/plotControls';
+import TableControls from '../Widgets/tableControls';
+import dashboardActions from './dashboardActions';
 
-const allUploads = require('../testData/testAllUploads');
+const animalReleaseSamples = require('../data/animal_release_samples');
 
 /**
  * Renders the Dashboard page.
@@ -26,21 +26,30 @@ export function Dashboard({
   profile,
   isAuthenticated,
   isPending,
-  featureAvailable,
-  previousUploads,
-  disconnectComponents,
-  clearForm,
   expanded,
+  release,
+  phase,
+  plot,
+  sort,
+  toggleRelease,
+  togglePhase,
+  togglePlot,
+  toggleSort,
 }) {
-  const editBtn = (
-    <div className="col-auto">
-      <Link className="editBtn btn btn-light disabled" to="/edit-dashboard">
-        Edit Dashboard
-      </Link>
-    </div>
-  );
-
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+  const userType = profile.user_metadata && profile.user_metadata.userType;
+
+  const sampleData = () => {
+    let data = animalReleaseSamples.internal.pass1a_06;
+    if (release === 'internal' && phase === 'pass1a_06') {
+      data = animalReleaseSamples.internal.pass1a_06;
+    } else if (release === 'internal' && phase === 'pass1b_06') {
+      data = animalReleaseSamples.internal.pass1b_06;
+    } else if (release === 'external' && phase === 'pass1a_06') {
+      data = animalReleaseSamples.external.pass1a_06;
+    }
+    return data;
+  };
 
   // FIXME: temp workaround to handle callback redirect
   if (isPending) {
@@ -63,54 +72,115 @@ export function Dashboard({
       <AuthContentContainer classes="Dashboard" expanded={expanded}>
         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <div className="page-title">
-            <h3>Dashboard</h3>
+            <h3>Summary of Animal Study Samples</h3>
           </div>
-          <div className="btn-toolbar">
-            <div className="btn-group">
-              <Link
-                className="uploadBtn btn btn-sm btn-outline-primary"
-                to="/upload"
-                onClick={clearForm}
-              >
-                Upload Data
-              </Link>
-              <Link
-                className="downloadBtn btn btn-sm btn-outline-primary"
-                to="/download"
-              >
-                Download/View Data
-              </Link>
+          {userType === 'internal' && (
+            <div className="btn-toolbar">
+              <div className="btn-group">
+                <button
+                  type="button"
+                  className={`btn btn-sm btn-outline-primary ${
+                    release === 'internal' ? 'active' : ''
+                  }`}
+                  onClick={toggleRelease.bind(this, 'internal')}
+                >
+                  Internal Release
+                </button>
+                <button
+                  type="button"
+                  className={`btn btn-sm btn-outline-primary ${
+                    release === 'external' ? 'active' : ''
+                  }`}
+                  onClick={toggleRelease.bind(this, 'external')}
+                  disabled={phase === 'pass1b_06'}
+                >
+                  External Release
+                </button>
+              </div>
+              <div className="btn-group ml-2">
+                <button
+                  type="button"
+                  className={`btn btn-sm btn-outline-primary ${
+                    phase === 'pass1a_06' ? 'active' : ''
+                  }`}
+                  onClick={togglePhase.bind(this, 'pass1a_06')}
+                >
+                  PASS1A 6-Month
+                </button>
+                <button
+                  type="button"
+                  className={`btn btn-sm btn-outline-primary ${
+                    phase === 'pass1b_06' ? 'active' : ''
+                  }`}
+                  onClick={togglePhase.bind(this, 'pass1b_06')}
+                  disabled={release === 'external'}
+                >
+                  PASS1B 6-Month
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+        <ReleasedSampleHighlight data={sampleData()} />
+        <div className="card-container-release-samples row mb-2">
+          <div className="d-flex col-lg-9">
+            <div className="flex-fill w-100 card shadow-sm">
+              <h5 className="card-header">
+                {userType === 'internal' && (
+                  <div className="internal-user-labels float-right">
+                    {release === 'internal' && (
+                      <span className="badge badge-success ml-3">
+                        Internal Release
+                      </span>
+                    )}
+                    {release === 'external' && (
+                      <span className="badge badge-warning ml-3">
+                        External Release
+                      </span>
+                    )}
+                    {phase === 'pass1a_06' && (
+                      <span className="badge badge-secondary ml-2">
+                        PASS1A 6-Month
+                      </span>
+                    )}
+                    {phase === 'pass1b_06' && (
+                      <span className="badge badge-secondary ml-2">
+                        PASS1B 6-Month
+                      </span>
+                    )}
+                  </div>
+                )}
+                {userType === 'external' && (
+                  <div className="external-user-labels float-right">
+                    <span className="badge badge-secondary">
+                      PASS1A 6-Month
+                    </span>
+                  </div>
+                )}
+                <div className="card-title mb-0">Overview</div>
+              </h5>
+              <div className="card-body pt-1">
+                <div className="release-sample-plot border-bottom pb-4 mb-4">
+                  <PlotControls togglePlot={togglePlot} plot={plot} />
+                  <ReleasedSamplePlot data={sampleData()} plot={plot} />
+                </div>
+                <div className="release-sample-table">
+                  <TableControls toggleSort={toggleSort} sort={sort} />
+                  <ReleasedSampleTable data={sampleData()} sort={sort} />
+                </div>
+              </div>
             </div>
           </div>
-          {featureAvailable.dashboardEditable ? editBtn : ''}
-        </div>
-        <div className="previous-uploads-table">
-          <div className="card">
-            <h5 className="card-header">Uploads</h5>
-            <div className="card-body">
-              {disconnectComponents ? (
-                <PreviousUploadsTable previousUploads={previousUploads} />
-              ) : (
-                <PreviousUploadsTableConnected />
-              )}
-            </div>
-          </div>
-        </div>
-        <div className="previous-uploads-graph">
-          <div className="card">
-            <h5 className="card-header">Assay Categories</h5>
-            <div className="card-body">
-              <PreviousUploadsGraph previousUploads={previousUploads} />
-            </div>
-          </div>
-        </div>
-        <div className="total-uploads-graph">
-          <div className="card">
-            <h5 className="card-header">Total Uploads By All Sites</h5>
-            <div className="card-body">
-              <div className="row justify-content-center">
-                <AllUploadsDoughnut allUploads={allUploads} />
-                <AllUploadStats />
+          <div className="d-flex col-lg-3">
+            <div className="flex-fill w-100 card shadow-sm">
+              <h5 className="card-header">
+                <div className="card-title mb-0">Total Samples</div>
+              </h5>
+              <div className="card-body">
+                <ReleasedSampleSummary
+                  data={animalReleaseSamples}
+                  release={release}
+                />
               </div>
             </div>
           </div>
@@ -128,42 +198,41 @@ Dashboard.propTypes = {
   }),
   isAuthenticated: PropTypes.bool,
   isPending: PropTypes.bool,
-  featureAvailable: PropTypes.shape({
-    dashboardEditable: PropTypes.bool,
-  }),
-  previousUploads: PropTypes.arrayOf(
-    PropTypes.shape({
-      identifier: PropTypes.string,
-    })
-  ).isRequired,
-  disconnectComponents: PropTypes.bool,
-  clearForm: PropTypes.func.isRequired,
   expanded: PropTypes.bool,
+  release: PropTypes.string,
+  phase: PropTypes.string,
+  plot: PropTypes.string,
+  sort: PropTypes.string,
+  toggleRelease: PropTypes.func.isRequired,
+  togglePhase: PropTypes.func.isRequired,
+  togglePlot: PropTypes.func.isRequired,
+  toggleSort: PropTypes.func.isRequired,
 };
 
 Dashboard.defaultProps = {
   profile: {},
   isAuthenticated: false,
   isPending: false,
-  featureAvailable: {
-    dashboardEditable: false,
-  },
-  disconnectComponents: false,
   expanded: false,
+  release: 'internal',
+  phase: 'pass1a_06',
+  plot: 'tissue_name',
+  sort: 'default',
 };
 
 const mapStateToProps = (state) => ({
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
   isPending: state.auth.isPending,
-  previousUploads: state.upload.previousUploads,
   expanded: state.sidebar.expanded,
+  ...state.dashboard,
 });
 
-// Need to clear the upload form values and recently uploaded files
-// if user navigates away from and returns to the upload page
 const mapDispatchToProps = (dispatch) => ({
-  clearForm: () => dispatch(actions.clearForm()),
+  toggleRelease: (release) => dispatch(dashboardActions.toggleRelease(release)),
+  togglePhase: (phase) => dispatch(dashboardActions.togglePhase(phase)),
+  togglePlot: (plot) => dispatch(dashboardActions.togglePlot(plot)),
+  toggleSort: (sort) => dispatch(dashboardActions.toggleSort(sort)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

@@ -14,5 +14,116 @@
     //border-color: $gray;
     border: 1px dashed $gray-semi-transparent;
   }
-}
 
+  /* release/phase button group */
+  .btn-outline-primary:disabled {
+    border-color: $gray-semi-transparent;
+    color: $gray-semi-transparent;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  /* highlighted card items at top */
+  .dashboard-highlights {
+    .media {
+      img {
+        width: 3.25em;
+        height: auto;
+      }
+    }
+  }
+
+  /* main plot/table container */
+  .card-container-release-samples {
+    .card-header {
+      padding: 1.05rem 1.25rem;
+      margin-bottom: 0;
+      background-color: #fff;
+      border-bottom: 0 solid transparent;
+    }
+
+    .badge {
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.35em 0.4em;
+    }
+
+    /* chart.js plot */
+    .release-sample-plot {
+      .releasedSamplePlot {
+        min-height: 65vh;
+      }
+    }
+
+    /* data table */
+    .releasedSampleTable {
+      table {
+        thead th {
+          border: none;
+          color: $gray;
+          font-size: 0.8rem;
+          height: 250px;
+          text-align: left;
+          white-space: nowrap;
+          vertical-align: bottom;
+
+          &:first-child {
+            padding-left: 8px;
+          }
+
+          &:not(:first-child) {
+            padding-bottom: 0;
+          }
+
+          .header-content-container {
+            width: 30px;
+
+            /* anlge positioning for table header items */
+            .header-assay {
+              padding: 8px 4px 8px 0;
+              transform-origin: bottom right;
+              transform: translateX(-20px) rotate(45deg);
+              float: right;
+
+              /* angle header text alignment for short list of assays */
+              &.short-list {
+                transform: translateX(-2px) rotate(45deg);
+              }
+            }
+          }
+        }
+
+        tbody td {
+          font-size: 0.85rem;
+          text-align: center;
+          white-space: nowrap;
+          vertical-align: middle;
+
+          &:first-child {
+            font-weight: 600;
+            padding-left: 8px;
+            text-align: left;
+            min-width: 11.5rem;
+          }
+        }
+      }
+    }
+
+    /* dropdown menus for plot and table */
+    .controlPanel {
+      .controlRow {
+        .controlLabel {
+          font-weight: 600;
+          font-size: 0.85rem;
+          margin-right: 0.45rem;
+          white-space: nowrap;
+        }
+
+        .btn.dropdown-toggle,
+        button.dropdown-item {
+          font-size: 0.85rem;
+        }
+      }
+    }
+  }
+}
