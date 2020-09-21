@@ -1,8 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
 import actions from '../UploadPage/uploadActions';
 
 /**
@@ -28,31 +26,11 @@ export function Sidebar({
     return '';
   }
 
-  const renderTooltip = (label, id) => (
-    <Tooltip id={`sidebar-navlink-${id}`}>{label}</Tooltip>
-  );
-
-  function renderNavLink(route, label, icon, disabled, handler) {
-    // Omit tooltip if sidebar is expanded
+  function renderNavLink(route, label, id, icon, disabled, handler) {
+    // Don't show tooltip if sidebar is expanded
     // due to the presence of navlink labels
-    if (expanded) {
-      return (
-        <NavLink
-          to={`/${route}`}
-          onClick={handler}
-          className={`nav-link d-inline-flex align-items-center w-100 ${
-            disabled ? 'disabled-link' : ''
-          }`}
-        >
-          <i className="material-icons nav-link-icon">{icon}</i>
-          <span className="nav-link-label">{label}</span>
-        </NavLink>
-      );
-    }
-
-    // Show tooltip if sidebar is collapsed
     return (
-      <OverlayTrigger placement="right" overlay={renderTooltip(label, route)}>
+      <div className="sidebar-nav-link-wrapper">
         <NavLink
           to={`/${route}`}
           onClick={handler}
@@ -63,7 +41,13 @@ export function Sidebar({
           <i className="material-icons nav-link-icon">{icon}</i>
           <span className="nav-link-label">{label}</span>
         </NavLink>
-      </OverlayTrigger>
+        {!expanded && !disabled && (
+          <div className="tooltip-on-right" id={id}>
+            {label}
+            <i />
+          </div>
+        )}
+      </div>
     );
   }
 
@@ -75,10 +59,7 @@ export function Sidebar({
       }`}
     >
       <div className="sidebar-sticky h-100 w-100">
-        <OverlayTrigger
-          placement="right"
-          overlay={renderTooltip(expanded ? 'Collpase' : 'Expand', 'toggle')}
-        >
+        <div className="sidebar-toggle-btn-wrapper">
           <button
             className="sidebar-btn-toggle btn btn-light"
             type="button"
@@ -88,14 +69,30 @@ export function Sidebar({
               {expanded ? 'close' : 'menu'}
             </i>
           </button>
-        </OverlayTrigger>
+          <div className="tooltip-on-right" id="sidebar-toggle">
+            {expanded ? 'Collpase' : 'Expand'}
+            <i />
+          </div>
+        </div>
         <div className="sidebar-panel h-100 w-100">
           <ul className="nav flex-column">
             <li className="nav-item">
-              {renderNavLink('dashboard', 'Dashboard', 'home', false)}
+              {renderNavLink(
+                'dashboard',
+                'Dashboard',
+                'dashboard',
+                'home',
+                false
+              )}
             </li>
             <li className="nav-item">
-              {renderNavLink('methods', 'Methods', 'description', true)}
+              {renderNavLink(
+                'methods',
+                'Methods',
+                'methods',
+                'description',
+                true
+              )}
             </li>
           </ul>
 
@@ -107,6 +104,7 @@ export function Sidebar({
               {renderNavLink(
                 'analysis/animal',
                 'Animal',
+                'animal-analysis',
                 'pest_control_rodent',
                 userType === 'external',
                 resetDepth
@@ -116,6 +114,7 @@ export function Sidebar({
               {renderNavLink(
                 'analysis/human',
                 'Human',
+                'human-analysis',
                 'people_alt',
                 userType === 'external',
                 resetDepth
@@ -128,18 +127,37 @@ export function Sidebar({
           </h6>
           <ul className="nav flex-column">
             <li className="nav-item">
-              {renderNavLink('releases', 'Releases', 'insights', false)}
+              {renderNavLink(
+                'releases',
+                'Releases',
+                'releases',
+                'insights',
+                false
+              )}
             </li>
             <li className="nav-item">
-              {renderNavLink('summary', 'Summary', 'assessment', true)}
+              {renderNavLink(
+                'summary',
+                'Summary',
+                'summary',
+                'assessment',
+                true
+              )}
             </li>
             <li className="nav-item">
-              {renderNavLink('download', 'Browse Data', 'view_list', true)}
+              {renderNavLink(
+                'download',
+                'Browse Data',
+                'download',
+                'view_list',
+                true
+              )}
             </li>
             <li className="nav-item">
               {renderNavLink(
                 'upload',
                 'Upload Data',
+                'upload',
                 'cloud_upload',
                 true,
                 clearForm

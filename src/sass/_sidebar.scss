@@ -94,9 +94,20 @@
   }
 }
 
-.tooltip.bs-tooltip-right {
-  background-color: transparent;
-  border: none;
+/**
+ * Progress Bar Styles
+ */
+.sidebar-nav-link-wrapper,
+.sidebar-toggle-btn-wrapper {
+  position: relative;
+}
+
+.sidebar-nav-link-wrapper:hover,
+.sidebar-toggle-btn-wrapper:hover {
+  .tooltip-on-right {
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 @media (max-width: 800px) {
