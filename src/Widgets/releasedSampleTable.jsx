@@ -79,7 +79,7 @@ function ReleasedSampleTable({ data, sort }) {
         return (
           <tr key={tissue.tissue_code}>
             <td>
-              <div className="column-tissue-name">{tissue.tissue_name}</div>
+              <div className="column-tissue-name">{`${tissue.tissue_code} ${tissue.tissue_name}`}</div>
             </td>
             {tissue.sample_data.map((row) => {
               return (

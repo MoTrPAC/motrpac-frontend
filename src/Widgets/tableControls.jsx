@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const tableSortLabels = {
-  default: 'Default',
+  default: 'Tissue code',
   ascending: 'Tissue name ascending',
   descending: 'Tissue name descending',
 };
@@ -38,7 +38,7 @@ function TableControls({ sort, toggleSort }) {
                 type="button"
                 onClick={toggleSort.bind(this, 'default')}
               >
-                Default
+                Tissue code
               </button>
               <button
                 className="dropdown-item"
