@@ -73,7 +73,7 @@
           },
           {
             "type": "phenotype",
-            "title": "Phenotypic data",
+            "title": "Phenotypic data (including 18-month physiological data)",
             "icon": "Gender",
             "icon_alt": "Phenotypic",
             "tooltip_id": "data-pass1a-06-phenotype-int-2-0",
@@ -155,7 +155,7 @@
           },
           {
             "type": "phenotype",
-            "title": "Phenotypic data",
+            "title": "Phenotypic data (including 18-month physiological data)",
             "icon": "Gender",
             "icon_alt": "Phenotypic",
             "tooltip_id": "data-pass1b-06-phenotype-int-2-0",
