@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import lunr from 'lunr';
 import SearchForm from './searchForm';
 import SearchActions from './searchActions';
@@ -39,14 +39,8 @@ export function SearchPage({
   handlePredefinedSearch,
   resetSearchForm,
   getSearchForm,
-  isAuthenticated,
   expanded,
 }) {
-  // Send users back to homepage if not authenticated
-  if (!isAuthenticated) {
-    return <Redirect to="/" />;
-  }
-
   const urlSearchParams = new URLSearchParams(window.location.search);
 
   const isFetching = isSearchFetching || isQuickSearchFetching;
@@ -379,7 +373,6 @@ SearchPage.propTypes = {
   handlePredefinedSearch: PropTypes.func.isRequired,
   resetSearchForm: PropTypes.func.isRequired,
   getSearchForm: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
   expanded: PropTypes.bool,
 };
 
@@ -398,7 +391,6 @@ SearchPage.defaultProps = {
 const mapStateToProps = (state) => ({
   ...state.search,
   ...state.quickSearch,
-  isAuthenticated: state.auth.isAuthenticated,
   expanded: state.sidebar.expanded,
 });
 

@@ -8,10 +8,10 @@ export function Callback({
   location,
   message,
   handleAuthCallback,
-  loginPending,
+  loginInProgress,
 }) {
   // FIXME: Workaround to make the <Redirect /> to work
-  loginPending();
+  loginInProgress();
   // Handle authentication if expected values are in the URL.
   if (/access_token|id_token|error/.test(location.hash)) {
     handleAuthCallback();
@@ -29,19 +29,28 @@ export function Callback({
 }
 
 Callback.propTypes = {
-  location: PropTypes.object,
+  location: PropTypes.shape({
+    hash: PropTypes.string,
+  }),
   message: PropTypes.string,
   handleAuthCallback: PropTypes.func.isRequired,
-  loginPending: PropTypes.func.isRequired,
+  loginInProgress: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  message: state.auth.message
+Callback.defaultProps = {
+  location: {
+    hash: '',
+  },
+  message: '',
+};
+
+const mapStateToProps = (state) => ({
+  message: state.auth.message,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   handleAuthCallback: () => dispatch(actions.handleAuthCallback()),
-  loginPending: () => dispatch(loginPending()),
+  loginInProgress: () => dispatch(loginPending()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Callback);

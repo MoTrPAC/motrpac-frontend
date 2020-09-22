@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import UploadForm from './uploadForm';
 import UploadList from './uploadList';
@@ -27,12 +26,7 @@ export function UploadScreen({
   cancelUpload,
   handleFormChange,
   clearForm,
-  uploadSuccess,
-  isAuthenticated,
 }) {
-  if (!isAuthenticated) {
-    return (<Redirect to="/" />);
-  }
   const showFileUploadValidation = (validated && (stagedFiles.length === 0) && !submitted);
   const screen = (
     <div className="col-md-9 ml-sm-auto col-lg-10 px-4 uploadScreen upload">
@@ -55,10 +49,10 @@ export function UploadScreen({
               <UploadAreaDnD
                 dragging={dragging}
                 files={stagedFiles}
-                fileAdded={e => onFileAdded(e)}
+                fileAdded={(e) => onFileAdded(e)}
                 dragEnter={() => onDragEnter()}
                 dragLeave={() => onDragLeave()}
-                dragDrop={e => onDragDrop(e)}
+                dragDrop={(e) => onDragDrop(e)}
                 removeFile={onRemoveFile}
                 showValidation={showFileUploadValidation}
               />
@@ -115,26 +109,23 @@ UploadScreen.propTypes = {
   onRemoveFile: PropTypes.func.isRequired,
   cancelUpload: PropTypes.func.isRequired,
   clearForm: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ...(state.upload),
-  isAuthenticated: state.auth.isAuthenticated,
 });
 
 // Maps required functions to specific actions handled by reducer in src/reducers.js
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   onDragEnter: () => dispatch(actions.dragEnter()),
   onDragLeave: () => dispatch(actions.dragLeave()),
-  onDragDrop: e => dispatch(actions.stageFiles(e.dataTransfer.files)),
-  onFileAdded: e => dispatch(actions.stageFiles(e.target.files)),
-  onRemoveFile: fileName => dispatch(actions.removeFile(fileName)),
-  onFormSubmit: e => dispatch(actions.formSubmit(e)),
-  cancelUpload: ident => dispatch(actions.cancelUpload(ident)),
-  handleFormChange: e => dispatch(actions.formChange(e)),
+  onDragDrop: (e) => dispatch(actions.stageFiles(e.dataTransfer.files)),
+  onFileAdded: (e) => dispatch(actions.stageFiles(e.target.files)),
+  onRemoveFile: (fileName) => dispatch(actions.removeFile(fileName)),
+  onFormSubmit: (e) => dispatch(actions.formSubmit(e)),
+  cancelUpload: (ident) => dispatch(actions.cancelUpload(ident)),
+  handleFormChange: (e) => dispatch(actions.formChange(e)),
   clearForm: () => dispatch(actions.clearForm()),
-  uploadSuccess: upload => dispatch(actions.uploadSuccess(upload)),
 });
 
 // exports screen using redux method to allow for interaction between individual components
