@@ -39,29 +39,18 @@ const downloadActions = {
   getUpdatedList: jest.fn(),
 };
 
-
 describe('Pure Download Page', () => {
-  test('Redirects to home if not logged in', () => {
-    const shallowDownload = shallow(
-      <DownloadPage
-        {...defaultDownloadState}
-        {...downloadActions}
-        allUploads={testAllUploads}
-      />,
-    );
-    expect(shallowDownload.find('Redirect'))
-      .toHaveLength(1);
-  });
   test('Has required components', () => {
     const shallowDownload = shallow(
       <DownloadPage
         {...defaultDownloadState}
         {...downloadActions}
         allUploads={testAllUploads}
-        isAuthenticated
         profile={testUser}
       />,
     );
+    expect(shallowDownload.find('DownloadFilter'))
+      .toHaveLength(1);
     expect(shallowDownload.find('DownloadDataTable'))
       .toHaveLength(1);
     expect(shallowDownload.find('DownloadFilter'))

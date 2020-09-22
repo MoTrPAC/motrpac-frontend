@@ -273,7 +273,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
               and targeted and untargeted metabolomics.
             </p>
           </div>
-          <StudyDocumentsTable />
+          <StudyDocumentsTable currentView="external" />
           <div className="card mb-3 border-secondary">
             <div className="card-header bg-secondary text-light">Data Use Agreement and Registration</div>
             <div className="card-body">

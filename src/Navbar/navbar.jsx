@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
@@ -8,6 +8,7 @@ import QuickSearchBox from '../Search/quickSearchBox';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
 import QuickSearchBoxActions from '../Search/quickSearchBoxActions';
 import SearchActions from '../Search/searchActions';
+import onVisibilityChange from '../lib/utils/pageVisibility';
 
 /**
  * Renders the global header nav bar.
@@ -31,6 +32,54 @@ export function Navbar({
   getSearchForm,
   resetAdvSearch,
 }) {
+  useEffect(() => {
+    /* Handle logout for various use cases */
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    let expirationCheckInterval;
+    const intervalLength = 2 * 60 * 60 * 1000;
+
+    // Check expiration and determine whether logout is needed
+    const handleExpiration = () => {
+      if (isAuthenticated && expiresAt <= new Date().getTime()) {
+        logout();
+        clearInterval(expirationCheckInterval);
+      }
+    };
+
+    // Check periodically to logout user if expiration is due
+    const checkExpirationInterval = () => {
+      if (isAuthenticated && expiresAt !== undefined && expiresAt !== null) {
+        expirationCheckInterval = setInterval(() => { handleExpiration(); }, intervalLength);
+      }
+    };
+
+    // Check local storage item and log out if absent
+    const handleStorageChange = () => {
+      if (isAuthenticated && !localStorage.getItem('expires_at')) logout();
+    };
+
+    const { hidden, visibilityChange } = onVisibilityChange();
+    const handleVisibilityChange = () => {
+      if (!document[hidden]) {
+        handleExpiration();
+      }
+    };
+
+    // Use case 1: schedule expiration check interval
+    checkExpirationInterval();
+    // Use case 2: check expiration when window/tab becomes visibile
+    document.addEventListener(visibilityChange, handleVisibilityChange, false);
+    // Use case 3: log out all windows/tabs in which user had been authenticated
+    // if the user has signed out from any one of the windows/tabs
+    window.addEventListener('storage', handleStorageChange, false);
+    return () => {
+      // Clean up when component unmounts
+      clearInterval(expirationCheckInterval);
+      document.removeEventListener(visibilityChange, handleVisibilityChange, false);
+      window.removeEventListener('storage', handleStorageChange, false);
+    };
+  });
+
   const handleLogout = () => {
     logout();
     // FIXME: Redirect to landing page not working
@@ -145,17 +194,17 @@ Navbar.defaultProps = {
   getSearchForm: null,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ...(state.quickSearch),
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   login: () => dispatch(actions.login()),
   logout: () => dispatch(actions.logout()),
-  handleQuickSearchInputChange: e => dispatch(QuickSearchBoxActions.quickSearchInputChange(e)),
-  handleQuickSearchRequestSubmit: searchTerm => dispatch(QuickSearchBoxActions.handleQuickSearchRequestSubmit(searchTerm)),
+  handleQuickSearchInputChange: (e) => dispatch(QuickSearchBoxActions.quickSearchInputChange(e)),
+  handleQuickSearchRequestSubmit: (searchTerm) => dispatch(QuickSearchBoxActions.handleQuickSearchRequestSubmit(searchTerm)),
   resetQuickSearch: () => dispatch(QuickSearchBoxActions.quickSearchReset()),
   getSearchForm: () => dispatch(SearchActions.getSearchForm()),
   resetAdvSearch: () => dispatch(SearchActions.searchFormReset()),
