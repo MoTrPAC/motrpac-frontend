@@ -27,7 +27,7 @@ export function AnnouncementsPage({ isAuthenticated, expanded }) {
       </div>
       <div className="news-item-list">
         {announcements.map((entry) => (
-          <AnnouncementEntry entry={entry} />
+          <AnnouncementEntry entry={entry} key={entry.aid} />
         ))}
       </div>
     </>
