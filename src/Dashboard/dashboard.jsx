@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AuthContentContainer from '../lib/ui/authContentContainer';
 import ReleasedSampleTable from '../Widgets/releasedSampleTable';
@@ -34,7 +33,6 @@ export function Dashboard({
   togglePlot,
   toggleSort,
 }) {
-  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
   const sampleData = () => {
@@ -133,9 +131,7 @@ export function Dashboard({
               )}
               {userType === 'external' && (
                 <div className="external-user-labels float-right">
-                  <span className="badge badge-secondary">
-                    PASS1A 6-Month
-                  </span>
+                  <span className="badge badge-secondary">PASS1A 6-Month</span>
                 </div>
               )}
               <div className="card-title mb-0">Overview</div>
