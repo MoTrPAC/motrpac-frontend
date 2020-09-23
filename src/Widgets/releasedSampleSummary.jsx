@@ -10,7 +10,7 @@ import { Pie } from 'react-chartjs-2';
  *
  * @returns {object} JSX representation of the dashboard sample count plots
  */
-function ReleasedSampleSummary({ data, release }) {
+function ReleasedSampleSummary({ data, release, userType }) {
   // Utility function to get total count of
   // a given omic from each tissue
   function countSamples(tissueList, omic) {
@@ -161,7 +161,7 @@ function ReleasedSampleSummary({ data, release }) {
     return countObject;
   }
 
-  const summary = computeCounts(release);
+  const summary = computeCounts(userType === 'external' ? 'external' : release);
 
   const omicsData = {
     labels: [
@@ -249,6 +249,7 @@ ReleasedSampleSummary.propTypes = {
     }),
   }).isRequired,
   release: PropTypes.string.isRequired,
+  userType: PropTypes.string.isRequired,
 };
 
 export default ReleasedSampleSummary;
