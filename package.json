@@ -37,6 +37,7 @@
     "sass": "node_modules/sass/sass.js src/sass/main.scss src/main.css",
     "sass-watch": "node_modules/sass/sass.js --watch src/sass/main.scss src/main.css",
     "sass-lint": "stylelint --config=stylelint.config.js '**/*.scss'",
+    "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
     "inspect-branch": "yarn && yarn sass && yarn start"
   },
   "browserslist": [
@@ -55,8 +56,11 @@
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.2",
     "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react-hooks": "^4.0.8",
     "jest-canvas-mock": "^2.2.0",
+    "prettier": "2.0.5",
     "sass": "^1.25.0",
     "storybook-react-router": "1.0.8",
     "stylelint": "^13.2.0",

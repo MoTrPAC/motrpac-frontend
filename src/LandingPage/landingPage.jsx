@@ -29,7 +29,10 @@ export function LandingPage({ isPending, isAuthenticated, profile }) {
 
   useEffect(() => {
     const scrollFunction = () => {
-      if (document.body.scrollTop >= 30 || document.documentElement.scrollTop >= 30) {
+      if (
+        document.body.scrollTop >= 30 ||
+        document.documentElement.scrollTop >= 30
+      ) {
         document.querySelector('.navbar-brand').classList.add('resized');
       } else {
         document.querySelector('.navbar-brand').classList.remove('resized');
@@ -53,7 +56,11 @@ export function LandingPage({ isPending, isAuthenticated, profile }) {
     };
     document.addEventListener(visibilityChange, handleVisibilityChange, false);
     return () => {
-      document.removeEventListener(visibilityChange, handleVisibilityChange, false);
+      document.removeEventListener(
+        visibilityChange,
+        handleVisibilityChange,
+        false
+      );
     };
   });
 
@@ -77,7 +84,7 @@ export function LandingPage({ isPending, isAuthenticated, profile }) {
   // Redirect authenticated users to protected route
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   if (isAuthenticated && hasAccess) {
-    return <Redirect to="/releases" />;
+    return <Redirect to="/dashboard" />;
   }
 
   // Play or stop the particles animation
@@ -87,7 +94,10 @@ export function LandingPage({ isPending, isAuthenticated, profile }) {
 
   // Function to render marker paper announcement
   const MarkerPaperNotice = () => (
-    <div className="alert alert-primary alert-dismissible fade show marker-paper-announce d-flex align-items-center justify-content-between w-100" role="alert">
+    <div
+      className="alert alert-primary alert-dismissible fade show marker-paper-announce d-flex align-items-center justify-content-between w-100"
+      role="alert"
+    >
       <span className="marker-paper-announce-content">
         <h5>
           The
@@ -97,7 +107,12 @@ export function LandingPage({ isPending, isAuthenticated, profile }) {
             className="inline-link-with-icon"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={TrackEvent.bind(this, 'MoTrPAC Marker Paper', 'Cell Publication', 'Landing Page')}
+            onClick={TrackEvent.bind(
+              this,
+              'MoTrPAC Marker Paper',
+              'Cell Publication',
+              'Landing Page'
+            )}
           >
             first MoTrPAC paper
             <i className="material-icons external-linkout-icon">open_in_new</i>
@@ -113,7 +128,12 @@ export function LandingPage({ isPending, isAuthenticated, profile }) {
             className="inline-link-with-icon"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={TrackEvent.bind(this, 'MoTrPAC Marker Paper', 'NIH Press Release', 'Landing Page')}
+            onClick={TrackEvent.bind(
+              this,
+              'MoTrPAC Marker Paper',
+              'NIH Press Release',
+              'Landing Page'
+            )}
           >
             NIH press release
             <i className="material-icons external-linkout-icon">open_in_new</i>
@@ -122,7 +142,12 @@ export function LandingPage({ isPending, isAuthenticated, profile }) {
           for further information about this publication.
         </h5>
       </span>
-      <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+      <button
+        type="button"
+        className="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -135,7 +160,11 @@ export function LandingPage({ isPending, isAuthenticated, profile }) {
           <div className="row hero-wrapper h-100">
             <MarkerPaperNotice />
             <div className="hero-image col-12 col-md-8 mx-auto">
-              <img src={LogoAnimation} className="img-fluid" alt="Data Layer Runner" />
+              <img
+                src={LogoAnimation}
+                className="img-fluid"
+                alt="Data Layer Runner"
+              />
             </div>
             <div className="content col-12 col-md-4 motrpac-tag-line">
               <h3>
@@ -154,7 +183,10 @@ export function LandingPage({ isPending, isAuthenticated, profile }) {
             className="position-absolute particles-wrapper"
             params={{
               particles: {
-                number: { value: 40, density: { enable: true, value_area: 500 } },
+                number: {
+                  value: 40,
+                  density: { enable: true, value_area: 500 },
+                },
                 color: { value: '#000000' },
                 size: { value: 7.5 },
                 line_linked: {
@@ -180,8 +212,17 @@ export function LandingPage({ isPending, isAuthenticated, profile }) {
               },
             }}
           />
-          <button type="button" className="btn btn-dark btn-sm particle-media-control" onClick={playStopParticles} title="play|stop">
-            {visibility ? <span className="oi oi-media-stop" /> : <span className="oi oi-media-play" />}
+          <button
+            type="button"
+            className="btn btn-dark btn-sm particle-media-control"
+            onClick={playStopParticles}
+            title="play|stop"
+          >
+            {visibility ? (
+              <span className="oi oi-media-stop" />
+            ) : (
+              <span className="oi oi-media-play" />
+            )}
           </button>
           <div className="container featurette h-100">
             <div className="row featurette-wrapper h-100">
@@ -189,11 +230,18 @@ export function LandingPage({ isPending, isAuthenticated, profile }) {
                 <h3>About MoTrPAC</h3>
                 <p>
                   Molecular Transducers of Physical Activity Consortium is a national
-                  research consortium designed to discover and characterize the range of molecular transducers
-                  (the "molecular map") that underlie the effects of physical activity
-                  in humans.
+                  research consortium designed to discover and characterize the range
+                  of molecular transducers (the "molecular map") that underlie the
+                  effects of physical activity in humans.
                 </p>
-                <a href="https://motrpac.org/" className="btn btn-dark" role="button" target="_new">READ MORE</a>
+                <a
+                  href="https://motrpac.org/"
+                  className="btn btn-dark"
+                  role="button"
+                  target="_new"
+                >
+                  READ MORE
+                </a>
               </div>
             </div>
           </div>
@@ -202,9 +250,19 @@ export function LandingPage({ isPending, isAuthenticated, profile }) {
       <section>
         <div className="container featurette multi-omics" id="multi-omics">
           <div className="row featurette-wrapper h-100">
-            <div className="feature-image col-12 col-md-6 mx-auto" onMouseMove={({ clientX: x, clientY: y }) => set({ xy: calc(x, y) })}>
-              <animated.div className="animated-image-container" style={{ transform: xy.interpolate(trans3d) }}>
-                <img src={LayerRunner} className="img-fluid data-layer-runner" alt="Data Layer Runner" />
+            <div
+              className="feature-image col-12 col-md-6 mx-auto"
+              onMouseMove={({ clientX: x, clientY: y }) => set({ xy: calc(x, y) })}
+            >
+              <animated.div
+                className="animated-image-container"
+                style={{ transform: xy.interpolate(trans3d) }}
+              >
+                <img
+                  src={LayerRunner}
+                  className="img-fluid data-layer-runner"
+                  alt="Data Layer Runner"
+                />
               </animated.div>
             </div>
             <div className="content col-12 col-md-6">
@@ -213,7 +271,14 @@ export function LandingPage({ isPending, isAuthenticated, profile }) {
                 MoTrPAC integrates multi-omics data (genomics, proteomics, metabolomics, and
                 more) to reveal a comprehensive map of molecular transducers of physical activity.
               </p>
-              <a href="https://motrpac.org/ancillarystudyguidelines.cfm" className="btn btn-primary" role="button" target="_new">READ MORE</a>
+              <a
+                href="https://motrpac.org/ancillarystudyguidelines.cfm"
+                className="btn btn-primary"
+                role="button"
+                target="_new"
+              >
+                READ MORE
+              </a>
             </div>
           </div>
         </div>
@@ -225,13 +290,25 @@ export function LandingPage({ isPending, isAuthenticated, profile }) {
               <div className="content col-12 col-md-6">
                 <h3>Interrelated Components</h3>
                 <p>
-                  Consisting of Clinical Centers, Preclinical Animal Study Sites, Chemical Analysis
-                  Sites, Bioinformatics Center, Consortium Coordinating Center.
+                  Consisting of Clinical Centers, Preclinical Animal Study
+                  Sites, Chemical Analysis Sites, Bioinformatics
+                  Center, Consortium Coordinating Center.
                 </p>
-                <a href="https://commonfund.nih.gov/MolecularTransducers/overview#ClinicalCenter" className="btn btn-success" role="button" target="_new">READ MORE</a>
+                <a
+                  href="https://commonfund.nih.gov/MolecularTransducers/overview#ClinicalCenter"
+                  className="btn btn-success"
+                  role="button"
+                  target="_new"
+                >
+                  READ MORE
+                </a>
               </div>
               <div className="feature-image col-12 col-md-6 mx-auto">
-                <img src={HealthyHeart} className="img-fluid" alt="Healthy Heart" />
+                <img
+                  src={HealthyHeart}
+                  className="img-fluid"
+                  alt="Healthy Heart"
+                />
               </div>
             </div>
           </div>

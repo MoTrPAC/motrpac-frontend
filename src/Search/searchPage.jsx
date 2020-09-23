@@ -8,6 +8,7 @@ import SearchActions from './searchActions';
 import SearchResults from './searchResults';
 import history from '../App/history';
 import AnimatedLoadingIcon from '../lib/ui/loading';
+import AuthContentContainer from '../lib/ui/authContentContainer';
 
 const mergedPass1aGetMetadata = require('../data/merged_pass1a_get_metadata');
 
@@ -38,6 +39,7 @@ export function SearchPage({
   handlePredefinedSearch,
   resetSearchForm,
   getSearchForm,
+  expanded,
 }) {
   const urlSearchParams = new URLSearchParams(window.location.search);
 
@@ -66,7 +68,11 @@ export function SearchPage({
   // Button to return to previous page
   function SearchBackButton() {
     return (
-      <button className="backButton d-inline-flex" onClick={backToSearch} type="button">
+      <button
+        className="backButton d-inline-flex"
+        onClick={backToSearch}
+        type="button"
+      >
         <span className="material-icons align-self-center">arrow_back</span>
       </button>
     );
@@ -79,7 +85,11 @@ export function SearchPage({
   // Button to return to previous page
   function SummaryBackButton() {
     return (
-      <button className="backButton d-inline-flex" onClick={backToSummary} type="button">
+      <button
+        className="backButton d-inline-flex"
+        onClick={backToSummary}
+        type="button"
+      >
         <span className="material-icons align-self-center">arrow_back</span>
       </button>
     );
@@ -88,7 +98,7 @@ export function SearchPage({
   // Render error message if there is one
   if (!isFetching && errMsg && errMsg.length) {
     return (
-      <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
+      <AuthContentContainer classes="searchPage" expanded={expanded}>
         <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
           <div className="page-title">
             <h3>Error</h3>
@@ -98,12 +108,18 @@ export function SearchPage({
           <div className="adv-search-example-searches">
             <p className="text-left">
               Please&nbsp;
-              <Link to="/search" className="search-link" onClick={getAdvancedSearchForm}>try</Link>
+              <Link
+                to="/search"
+                className="search-link"
+                onClick={getAdvancedSearchForm}
+              >
+                try
+              </Link>
               &nbsp;again.
             </p>
           </div>
         </div>
-      </div>
+      </AuthContentContainer>
     );
   }
 
@@ -135,14 +151,22 @@ export function SearchPage({
       assay: 'Assay',
     };
 
-    if (!Object.keys(searchPayload).length && Object.keys(quickSearchPayload).length) {
+    if (
+      !Object.keys(searchPayload).length &&
+      Object.keys(quickSearchPayload).length
+    ) {
       query = `${decodeURIComponent(quickSearchQueryString)}*`;
-    } else if (Object.keys(searchPayload).length && !Object.keys(quickSearchPayload).length) {
+    } else if (
+      Object.keys(searchPayload).length &&
+      !Object.keys(quickSearchPayload).length
+    ) {
       advSearchParams.forEach((param) => {
         const logical = param.operator && param.operator === 'AND' ? '+' : '';
         const field = fieldMapping[param.term];
         const value = `${decodeURIComponent(param.value)}*`;
-        const search = !field ? `${logical}${value}` : `${logical}${field}:${value}`;
+        const search = !field
+          ? `${logical}${value}`
+          : `${logical}${field}:${value}`;
         query += `${search} `;
       });
     }
@@ -158,7 +182,7 @@ export function SearchPage({
      */
 
     return (
-      <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
+      <AuthContentContainer classes="searchPage" expanded={expanded}>
         <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
           {!quickSearchQueryString ? <SearchBackButton /> : null}
           <div className="page-title">
@@ -166,25 +190,36 @@ export function SearchPage({
           </div>
         </div>
         <div className="advanced-search-content-container mt-3">
-          {lunrResutls.length
-            ? (
-              <SearchResults lunrResutls={lunrResutls} advSearchParams={advSearchParams} quickSearchQueryString={quickSearchQueryString} />
-            )
-            : (
-              <p className="text-left">
-                No matches found. Please&nbsp;
-                <Link to="/search" className="search-link" onClick={getAdvancedSearchForm}>try</Link>
-                &nbsp;again.
-              </p>
-            )
-          }
+          {lunrResutls.length ? (
+            <SearchResults
+              lunrResutls={lunrResutls}
+              advSearchParams={advSearchParams}
+              quickSearchQueryString={quickSearchQueryString}
+            />
+          ) : (
+            <p className="text-left">
+              No matches found. Please&nbsp;
+              <Link
+                to="/search"
+                className="search-link"
+                onClick={getAdvancedSearchForm}
+              >
+                try
+              </Link>
+              &nbsp;again.
+            </p>
+          )}
         </div>
-      </div>
+      </AuthContentContainer>
     );
   }
 
   // Render results if request comes from tissue analysis table
-  if (urlSearchParams && urlSearchParams.has('action') && urlSearchParams.get('action') === 'samples') {
+  if (
+    urlSearchParams &&
+    urlSearchParams.has('action') &&
+    urlSearchParams.get('action') === 'samples'
+  ) {
     // Convert params array to object
     const urlSearchParamsObj = {
       action: urlSearchParams.get('action'),
@@ -196,7 +231,7 @@ export function SearchPage({
     };
 
     return (
-      <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
+      <AuthContentContainer classes="searchPage" expanded={expanded}>
         <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
           <SummaryBackButton />
           <div className="page-title">
@@ -206,14 +241,17 @@ export function SearchPage({
         <div className="advanced-search-content-container mt-3">
           <SearchResults urlSearchParamsObj={urlSearchParamsObj} />
         </div>
-      </div>
+      </AuthContentContainer>
     );
   }
 
   // Render animated loading widget if data fetching is in progress
-  if (isFetching && (searchQueryString.length || quickSearchQueryString.length)) {
+  if (
+    isFetching &&
+    (searchQueryString.length || quickSearchQueryString.length)
+  ) {
     return (
-      <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
+      <AuthContentContainer classes="searchPage" expanded={expanded}>
         <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
           <SearchBackButton />
           <div className="page-title">
@@ -223,13 +261,13 @@ export function SearchPage({
         <div className="advanced-search-content-container mt-3">
           <AnimatedLoadingIcon isFetching={isFetching} />
         </div>
-      </div>
+      </AuthContentContainer>
     );
   }
 
   // Render advanced search form by default
   return (
-    <div className="col-md-9 ml-sm-auto col-lg-10 px-4 searchPage">
+    <AuthContentContainer classes="searchPage" expanded={expanded}>
       <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
         <div className="page-title">
           <h3>Advanced Search</h3>
@@ -242,32 +280,55 @@ export function SearchPage({
             <Link
               to="/search?q=(assay:rna-seq)"
               className="example-search-link"
-              onClick={(e) => { e.preventDefault(); handlePredefinedSearch([{ term: 'assay', value: 'rna-seq', operator: '' }]); }}
+              onClick={(e) => {
+                e.preventDefault();
+                handlePredefinedSearch([
+                  { term: 'assay', value: 'rna-seq', operator: '' },
+                ]);
+              }}
             >
               rna-seq
             </Link>
             <Link
               to="/search?q=(tissue:liver)"
               className="example-search-link"
-              onClick={(e) => { e.preventDefault(); handlePredefinedSearch([{ term: 'tissue', value: 'liver', operator: '' }]); }}
+              onClick={(e) => {
+                e.preventDefault();
+                handlePredefinedSearch([
+                  { term: 'tissue', value: 'liver', operator: '' },
+                ]);
+              }}
             >
               liver
             </Link>
             <Link
               to="/search?q=(species:rat)"
               className="example-search-link"
-              onClick={(e) => { e.preventDefault(); handlePredefinedSearch([{ term: 'species', value: 'rat', operator: '' }]); }}
+              onClick={(e) => {
+                e.preventDefault();
+                handlePredefinedSearch([
+                  { term: 'species', value: 'rat', operator: '' },
+                ]);
+              }}
             >
               rat
             </Link>
           </p>
         </div>
-        <div className="alert alert-warning alert-dismissible fade show warning-note d-flex align-items-center" role="alert">
+        <div
+          className="alert alert-warning alert-dismissible fade show warning-note d-flex align-items-center"
+          role="alert"
+        >
           <span className="material-icons">info</span>
           <span className="warning-note-text">
             Only the GET data is available for searching in this release.
           </span>
-          <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+          <button
+            type="button"
+            className="close"
+            data-dismiss="alert"
+            aria-label="Close"
+          >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -281,16 +342,18 @@ export function SearchPage({
           handleSearchFormSubmit={handleSearchFormSubmit}
         />
       </div>
-    </div>
+    </AuthContentContainer>
   );
 }
 
 SearchPage.propTypes = {
-  advSearchParams: PropTypes.arrayOf(PropTypes.shape({
-    term: PropTypes.string,
-    value: PropTypes.string,
-    operator: PropTypes.string,
-  })).isRequired,
+  advSearchParams: PropTypes.arrayOf(
+    PropTypes.shape({
+      term: PropTypes.string,
+      value: PropTypes.string,
+      operator: PropTypes.string,
+    })
+  ).isRequired,
   searchPayload: PropTypes.shape({
     data: PropTypes.object,
   }),
@@ -310,6 +373,7 @@ SearchPage.propTypes = {
   handlePredefinedSearch: PropTypes.func.isRequired,
   resetSearchForm: PropTypes.func.isRequired,
   getSearchForm: PropTypes.func.isRequired,
+  expanded: PropTypes.bool,
 };
 
 SearchPage.defaultProps = {
@@ -321,19 +385,25 @@ SearchPage.defaultProps = {
   quickSearchQueryString: '',
   quickSearchError: '',
   isQuickSearchFetching: false,
+  expanded: false,
 };
 
 const mapStateToProps = (state) => ({
-  ...(state.search),
-  ...(state.quickSearch),
+  ...state.search,
+  ...state.quickSearch,
+  expanded: state.sidebar.expanded,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSearchFormChange: (index, field, e) => dispatch(SearchActions.searchFormChange(index, field, e)),
+  handleSearchFormChange: (index, field, e) =>
+    dispatch(SearchActions.searchFormChange(index, field, e)),
   addSearchParam: () => dispatch(SearchActions.searchFormAddParam()),
-  removeSearchParam: (index) => dispatch(SearchActions.searchFormRemoveParam(index)),
-  handleSearchFormSubmit: (params) => dispatch(SearchActions.handleSearchFormSubmit(params)),
-  handlePredefinedSearch: (params) => dispatch(SearchActions.handlePredefinedSearch(params)),
+  removeSearchParam: (index) =>
+    dispatch(SearchActions.searchFormRemoveParam(index)),
+  handleSearchFormSubmit: (params) =>
+    dispatch(SearchActions.handleSearchFormSubmit(params)),
+  handlePredefinedSearch: (params) =>
+    dispatch(SearchActions.handlePredefinedSearch(params)),
   resetSearchForm: () => dispatch(SearchActions.searchFormReset()),
   getSearchForm: () => dispatch(SearchActions.getSearchForm()),
 });
