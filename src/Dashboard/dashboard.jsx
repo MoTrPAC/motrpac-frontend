@@ -36,14 +36,21 @@ export function Dashboard({
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
   const sampleData = () => {
-    let data = animalReleaseSamples.internal.pass1a_06;
-    if (release === 'internal' && phase === 'pass1a_06') {
-      data = animalReleaseSamples.internal.pass1a_06;
-    } else if (release === 'internal' && phase === 'pass1b_06') {
-      data = animalReleaseSamples.internal.pass1b_06;
-    } else if (release === 'external' && phase === 'pass1a_06') {
-      data = animalReleaseSamples.external.pass1a_06;
+    let data =
+      userType === 'external'
+        ? animalReleaseSamples.external.pass1a_06
+        : animalReleaseSamples.internal.pass1a_06;
+
+    if (userType === 'internal') {
+      if (release === 'internal' && phase === 'pass1a_06') {
+        data = animalReleaseSamples.internal.pass1a_06;
+      } else if (release === 'internal' && phase === 'pass1b_06') {
+        data = animalReleaseSamples.internal.pass1b_06;
+      } else if (release === 'external' && phase === 'pass1a_06') {
+        data = animalReleaseSamples.external.pass1a_06;
+      }
     }
+
     return data;
   };
 
@@ -157,6 +164,7 @@ export function Dashboard({
               <ReleasedSampleSummary
                 data={animalReleaseSamples}
                 release={release}
+                userType={userType}
               />
             </div>
           </div>

@@ -63,7 +63,7 @@ function ReleasedSampleHighlight({ data }) {
     },
     {
       metric: 'get',
-      label: 'GET Samples',
+      label: 'Genomics Samples',
       count: getCount('get'),
       icon: getIcon,
     },
