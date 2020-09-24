@@ -70,7 +70,7 @@ export function Sidebar({
             </i>
           </button>
           <div className="tooltip-on-right" id="sidebar-toggle">
-            {expanded ? 'Collpase' : 'Expand'}
+            {expanded ? 'Collapse' : 'Expand'}
             <i />
           </div>
         </div>
