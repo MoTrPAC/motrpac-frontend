@@ -82,20 +82,18 @@ function ReleasedSampleHighlight({ data }) {
   ];
 
   return (
-    <div className="dashboard-highlights row">
+    <div className="dashboard-highlights card-deck">
       {highlightItems.map((item) => {
         return (
-          <div className="col-md-6 col-xl" key={item.metric}>
-            <div className="flex-fill card shadow-sm">
-              <div className="py-3 card-body">
-                <div className="media">
-                  <div className="d-inline-block mt-2 mr-3 icon">
-                    <img src={item.icon} alt={item.label} />
-                  </div>
-                  <div className="media-body">
-                    <h3 className="mb-2 count">{item.count}</h3>
-                    <div className="mb-0 label">{item.label}</div>
-                  </div>
+          <div className="card shadow-sm" key={item.metric}>
+            <div className="py-3 card-body">
+              <div className="media">
+                <div className="d-inline-block mt-2 mr-3 icon">
+                  <img src={item.icon} alt={item.label} />
+                </div>
+                <div className="media-body">
+                  <h3 className="mb-2 count">{item.count}</h3>
+                  <div className="mb-0 label">{item.label}</div>
                 </div>
               </div>
             </div>
