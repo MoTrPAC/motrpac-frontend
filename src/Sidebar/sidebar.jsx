@@ -131,7 +131,7 @@ export function Sidebar({
                 'releases',
                 'Releases',
                 'releases',
-                'insights',
+                'cloud_done',
                 false
               )}
             </li>
