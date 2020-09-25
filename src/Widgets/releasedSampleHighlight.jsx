@@ -57,25 +57,25 @@ function ReleasedSampleHighlight({ data }) {
     },
     {
       metric: 'assay',
-      label: 'Assays',
+      label: 'Platforms',
       count: getCount('assay'),
       icon: assayIcon,
     },
     {
       metric: 'get',
-      label: 'Genomics Samples',
+      label: 'Genomics Assays',
       count: getCount('get'),
       icon: getIcon,
     },
     {
       metric: 'metabolomic',
-      label: 'Metabolomics Samples',
+      label: 'Metabolomics Assays',
       count: getCount('metabolomics'),
       icon: metabolomicsIcon,
     },
     {
       metric: 'proteomic',
-      label: 'Proteomics Samples',
+      label: 'Proteomics Assays',
       count: getCount('proteomics'),
       icon: proteomicsIcon,
     },
@@ -89,12 +89,12 @@ function ReleasedSampleHighlight({ data }) {
             <div className="flex-fill card shadow-sm">
               <div className="py-3 card-body">
                 <div className="media">
-                  <div className="d-inline-block mt-2 mr-3">
+                  <div className="d-inline-block mt-2 mr-3 icon">
                     <img src={item.icon} alt={item.label} />
                   </div>
                   <div className="media-body">
-                    <h3 className="mb-2">{item.count}</h3>
-                    <div className="mb-0">{item.label}</div>
+                    <h3 className="mb-2 count">{item.count}</h3>
+                    <div className="mb-0 label">{item.label}</div>
                   </div>
                 </div>
               </div>
