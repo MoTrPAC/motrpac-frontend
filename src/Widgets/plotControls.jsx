@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const plotViewLabels = {
-  tissue_name: 'Tissue by name',
-  tissue_count: 'Tissue by count',
-  assay_name: 'Assay by name',
-  assay_count: 'Assay by count',
+  tissue_name: 'Tissues by name',
+  tissue_count: 'Tissues by count',
+  assay_name: 'Platforms by name',
+  assay_count: 'Platforms by count',
 };
 
 /**
@@ -21,7 +21,7 @@ function PlotControls({ plot, togglePlot }) {
     <div className="controlPanelContainer mb-3 mx-3">
       <div className="controlPanel">
         <div className="controlRow d-flex align-items-center">
-          <div className="controlLabel">Samples:</div>
+          <div className="controlLabel">Assays:</div>
           <div className="dropdown">
             <button
               className="btn btn-sm btn-primary dropdown-toggle"
@@ -39,28 +39,28 @@ function PlotControls({ plot, togglePlot }) {
                 type="button"
                 onClick={togglePlot.bind(this, 'tissue_name')}
               >
-                Tissue by name
+                Tissues by name
               </button>
               <button
                 className="dropdown-item"
                 type="button"
                 onClick={togglePlot.bind(this, 'tissue_count')}
               >
-                Tissue by count
+                Tissues by count
               </button>
               <button
                 className="dropdown-item"
                 type="button"
                 onClick={togglePlot.bind(this, 'assay_name')}
               >
-                Assay by name
+                Platforms by name
               </button>
               <button
                 className="dropdown-item"
                 type="button"
                 onClick={togglePlot.bind(this, 'assay_count')}
               >
-                Assay by count
+                Platforms by count
               </button>
             </div>
           </div>

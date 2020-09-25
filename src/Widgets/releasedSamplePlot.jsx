@@ -126,7 +126,7 @@ function ReleasedSamplePlot({ data, plot }) {
           },
           scaleLabel: {
             display: true,
-            labelString: 'Total Sample Count',
+            labelString: 'Total Assay Count',
             fontFamily: "'Open Sans', sans-serif",
             fontSize: 15,
             fontStyle: 'bold',

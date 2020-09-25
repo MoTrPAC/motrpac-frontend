@@ -58,7 +58,7 @@ export function Dashboard({
     <AuthContentContainer classes="Dashboard" expanded={expanded}>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <div className="page-title">
-          <h3>Summary of Animal Study Samples</h3>
+          <h3>Summary of Animal Study Assays</h3>
         </div>
         {userType === 'internal' && (
           <div className="btn-toolbar">
@@ -158,7 +158,7 @@ export function Dashboard({
         <div className="d-flex col-lg-3">
           <div className="flex-fill w-100 card shadow-sm">
             <h5 className="card-header">
-              <div className="card-title mb-0">Total Samples</div>
+              <div className="card-title mb-0">Total Assays</div>
             </h5>
             <div className="card-body">
               <ReleasedSampleSummary
