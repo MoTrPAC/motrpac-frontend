@@ -88,7 +88,7 @@ function ReleasedSampleHighlight({ data }) {
           <div className="card shadow-sm" key={item.metric}>
             <div className="py-3 card-body">
               <div className="media">
-                <div className="d-inline-block mt-2 mr-3 icon">
+                <div className="d-inline-block mt-2 icon">
                   <img src={item.icon} alt={item.label} />
                 </div>
                 <div className="media-body">
