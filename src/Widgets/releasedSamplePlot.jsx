@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Bar } from 'react-chartjs-2';
 import tissues from '../lib/tissueCodes';
@@ -13,6 +13,16 @@ import colors from '../lib/colors';
  * @returns {object} JSX representation of the dashboard sample count plot
  */
 function ReleasedSamplePlot({ data, plot }) {
+  const [width, setWidth] = useState(window.innerWidth);
+  const breakpoint = 620;
+
+  useEffect(() => {
+    const handleWindowResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => window.removeEventListener('resize', handleWindowResize);
+  }, []);
+
   // Create new set mapping counts to tissues
   function datasetByTissue() {
     const sampleCounts = [];
@@ -122,7 +132,7 @@ function ReleasedSamplePlot({ data, plot }) {
             stepSize: 100, // integer only
             beginAtZero: true,
             fontFamily: "'Open Sans', sans-serif",
-            fontSize: 14,
+            fontSize: width < breakpoint ? 12 : 14,
           },
           scaleLabel: {
             display: true,
@@ -138,8 +148,8 @@ function ReleasedSamplePlot({ data, plot }) {
           stacked: false,
           ticks: {
             fontFamily: "'Open Sans', sans-serif",
-            fontSize: 14,
-            fontStyle: 'bold',
+            fontSize: width < breakpoint ? 9 : 14,
+            fontStyle: width < breakpoint ? 'normal' : 'bold',
             padding: 6,
             autoSkip: false,
             maxRotation: 45,
