@@ -115,7 +115,7 @@ function ReleasedSamplePlot({ data, plot }) {
     ),
     datasets: [
       {
-        label: 'Total Sample Count',
+        label: 'Total Assay Count',
         data: sortedDataset(plot).map((item) => item.sample_count),
         borderWidth: 1,
         backgroundColor: colors.graphs.lblue,
