@@ -15,9 +15,18 @@ const animalReleaseSamples = require('../data/animal_release_samples');
 /**
  * Renders the Dashboard page.
  *
- * @param {Array}     previousUploads Redux state for user's historic uploads.
- * @param {Boolean}   isPending       Redux state for authentication status.
- * @param {Function}  clearForm       Redux upload action.
+ * @param {Object} profile          Redux state of authenticated user profile
+ * @param {Boolean} expanded        Redux state of collapsed/expanded sidebar
+ * @param {String} release          Redux state of user-selected release
+ * @param {String} phase            Redux state of user-selected phase
+ * @param {String} plot             Redux state of plot selection
+ * @param {String} sort             Redux state of table sort
+ * @param {Boolean} showQC          Redux state of QC sample visibility
+ * @param {Function} toggleRelease  Redux action to change release state
+ * @param {Function} togglePhase    Redux action to change phase state
+ * @param {Function} togglePlot     Redux action to change plot state
+ * @param {Function} toggleSort     Redux action to change sort state
+ * @param {Function} toggleQC       Redux action to change visibility state
  *
  * @returns {object} JSX representation of the global footer.
  */
@@ -37,6 +46,8 @@ export function Dashboard({
 }) {
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
+  // Returns a subset of the release sample data based on a number of factors:
+  // internal or external, user's selection of release/phase
   const sampleData = () => {
     let data =
       userType === 'external'
