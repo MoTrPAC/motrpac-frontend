@@ -20,6 +20,7 @@ const controlActions = {
   togglePhase: jest.fn(),
   togglePlot: jest.fn(),
   toggleSort: jest.fn(),
+  toggleQC: jest.fn(),
 };
 
 describe('Shallow Dashboard', () => {
