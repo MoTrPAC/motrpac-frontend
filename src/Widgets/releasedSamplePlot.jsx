@@ -27,7 +27,9 @@ function ReleasedSamplePlot({ data, plot }) {
   function datasetByTissue() {
     const sampleCounts = [];
     data.forEach((tissueSample) => {
-      let count = 0;
+      let studyCount = 0;
+      let qcCount = 0;
+      let totalCount = 0;
       // Get new set of tissues from source of truth
       // by mapping to tissues present in the data
       const tissue = tissues.find(
@@ -36,11 +38,15 @@ function ReleasedSamplePlot({ data, plot }) {
       // Get total sample count by combining all assays
       // for each tissue present in the data
       tissueSample.sample_data.forEach((item) => {
-        count += Number(item.count);
+        studyCount += Number(item.count);
+        qcCount += Number(item.qc_count);
+        totalCount = studyCount + qcCount;
       });
       const tissueCount = {
         tissue_name: tissue.bic_tissue_name,
-        sample_count: count,
+        study_count: studyCount,
+        qc_count: qcCount,
+        total_count: totalCount,
       };
       sampleCounts.push(tissueCount);
     });
@@ -70,15 +76,21 @@ function ReleasedSamplePlot({ data, plot }) {
     ];
 
     assays.forEach((assay) => {
-      let count = 0;
+      let studyCount = 0;
+      let qcCount = 0;
+      let totalCount = 0;
       // Get total sample count by combining all tissues
       // for each unqiue assay present in the data
       assaySet(assay).forEach((item) => {
-        count += Number(item.count);
+        studyCount += Number(item.count);
+        qcCount += Number(item.qc_count);
+        totalCount = studyCount + qcCount;
       });
       const assayCount = {
         assay_name: assay,
-        sample_count: count,
+        study_count: studyCount,
+        qc_count: qcCount,
+        total_count: totalCount,
       };
       sampleCounts.push(assayCount);
     });
@@ -94,13 +106,13 @@ function ReleasedSamplePlot({ data, plot }) {
           a.tissue_name.localeCompare(b.tissue_name)
         );
       case 'tissue_count':
-        return datasetOfTissues.sort((a, b) => b.sample_count - a.sample_count);
+        return datasetOfTissues.sort((a, b) => b.total_count - a.total_count);
       case 'assay_name':
         return datasetOfAssays.sort((a, b) =>
           a.assay_name.localeCompare(b.assay_name)
         );
       case 'assay_count':
-        return datasetOfAssays.sort((a, b) => b.sample_count - a.sample_count);
+        return datasetOfAssays.sort((a, b) => b.total_count - a.total_count);
       default:
         return datasetOfTissues.sort((a, b) =>
           a.tissue_name.localeCompare(b.tissue_name)
@@ -115,10 +127,16 @@ function ReleasedSamplePlot({ data, plot }) {
     ),
     datasets: [
       {
-        label: 'Total Assay Count',
-        data: sortedDataset(plot).map((item) => item.sample_count),
+        label: 'Study Assays',
+        data: sortedDataset(plot).map((item) => item.study_count),
         borderWidth: 1,
         backgroundColor: colors.graphs.lblue,
+      },
+      {
+        label: 'Reference Standards',
+        data: sortedDataset(plot).map((item) => item.qc_count),
+        borderWidth: 1,
+        backgroundColor: '#ffde72',
       },
     ],
   };
@@ -128,6 +146,7 @@ function ReleasedSamplePlot({ data, plot }) {
     scales: {
       yAxes: [
         {
+          stacked: true,
           ticks: {
             stepSize: 100, // integer only
             beginAtZero: true,
@@ -145,7 +164,7 @@ function ReleasedSamplePlot({ data, plot }) {
       ],
       xAxes: [
         {
-          stacked: false,
+          stacked: true,
           ticks: {
             fontFamily: "'Open Sans', sans-serif",
             fontSize: width < breakpoint ? 9 : 14,
@@ -160,6 +179,10 @@ function ReleasedSamplePlot({ data, plot }) {
     },
     legend: {
       display: false,
+    },
+    tooltips: {
+      mode: 'index',
+      intersect: false,
     },
     responsive: true,
     maintainAspectRatio: false,
