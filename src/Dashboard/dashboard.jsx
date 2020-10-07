@@ -28,10 +28,12 @@ export function Dashboard({
   phase,
   plot,
   sort,
+  showQC,
   toggleRelease,
   togglePhase,
   togglePlot,
   toggleSort,
+  toggleQC,
 }) {
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
@@ -149,8 +151,17 @@ export function Dashboard({
                 <ReleasedSamplePlot data={sampleData()} plot={plot} />
               </div>
               <div className="release-sample-table">
-                <TableControls toggleSort={toggleSort} sort={sort} />
-                <ReleasedSampleTable data={sampleData()} sort={sort} />
+                <TableControls
+                  toggleSort={toggleSort}
+                  sort={sort}
+                  toggleQC={toggleQC}
+                  showQC={showQC}
+                />
+                <ReleasedSampleTable
+                  data={sampleData()}
+                  sort={sort}
+                  showQC={showQC}
+                />
               </div>
             </div>
           </div>
@@ -183,10 +194,12 @@ Dashboard.propTypes = {
   phase: PropTypes.string,
   plot: PropTypes.string,
   sort: PropTypes.string,
+  showQC: PropTypes.bool,
   toggleRelease: PropTypes.func.isRequired,
   togglePhase: PropTypes.func.isRequired,
   togglePlot: PropTypes.func.isRequired,
   toggleSort: PropTypes.func.isRequired,
+  toggleQC: PropTypes.func.isRequired,
 };
 
 Dashboard.defaultProps = {
@@ -196,6 +209,7 @@ Dashboard.defaultProps = {
   phase: 'pass1a_06',
   plot: 'tissue_name',
   sort: 'default',
+  showQC: true,
 };
 
 const mapStateToProps = (state) => ({
@@ -209,6 +223,7 @@ const mapDispatchToProps = (dispatch) => ({
   togglePhase: (phase) => dispatch(dashboardActions.togglePhase(phase)),
   togglePlot: (plot) => dispatch(dashboardActions.togglePlot(plot)),
   toggleSort: (sort) => dispatch(dashboardActions.toggleSort(sort)),
+  toggleQC: (visible) => dispatch(dashboardActions.toggleQC(visible)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
