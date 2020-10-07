@@ -179,9 +179,6 @@ export function Dashboard({
         </div>
         <div className="d-flex col-lg-3">
           <div className="flex-fill w-100 card shadow-sm">
-            <h5 className="card-header">
-              <div className="card-title mb-0">Total Assays</div>
-            </h5>
             <div className="card-body">
               <ReleasedSampleSummary
                 data={animalReleaseSamples}
