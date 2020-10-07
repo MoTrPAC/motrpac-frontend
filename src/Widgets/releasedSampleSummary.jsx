@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Pie } from 'react-chartjs-2';
+import { Pie, Doughnut } from 'react-chartjs-2';
 
 /**
  * Renders chart.js plots of release sample summary on dashboard
@@ -398,10 +398,10 @@ function ReleasedSampleSummary({ data, release, userType }) {
         Total Reference Standards
       </h5>
       <div>
-        <Pie data={omicsDataQC} options={options} height={350} />
+        <Doughnut data={omicsDataQC} options={options} height={350} />
       </div>
       <div className="mt-3">
-        <Pie data={phaseDataQC} options={options} height={315} />
+        <Doughnut data={phaseDataQC} options={options} height={315} />
       </div>
     </div>
   );
