@@ -2,6 +2,7 @@ export const TOGGLE_RELEASE = 'TOGGLE_RELEASE';
 export const TOGGLE_PHASE = 'TOGGLE_PHASE';
 export const TOGGLE_PLOT = 'TOGGLE_PLOT';
 export const TOGGLE_SORT = 'TOGGLE_SORT';
+export const TOGGLE_QC = 'TOGGLE_QC';
 
 function toggleRelease(release) {
   return {
@@ -31,11 +32,19 @@ function toggleSort(sort) {
   };
 }
 
+function toggleQC(visible) {
+  return {
+    type: TOGGLE_QC,
+    visible,
+  };
+}
+
 const DashboardActions = {
   toggleRelease,
   togglePhase,
   togglePlot,
   toggleSort,
+  toggleQC,
 };
 
 export default DashboardActions;
