@@ -3,6 +3,7 @@ import {
   TOGGLE_PHASE,
   TOGGLE_PLOT,
   TOGGLE_SORT,
+  TOGGLE_QC,
 } from './dashboardActions';
 
 export const defaultDashboardState = {
@@ -10,6 +11,7 @@ export const defaultDashboardState = {
   phase: 'pass1a_06',
   plot: 'tissue_name',
   sort: 'default',
+  showQC: false,
 };
 
 export function DashboardReducer(state = { ...defaultDashboardState }, action) {
@@ -36,6 +38,12 @@ export function DashboardReducer(state = { ...defaultDashboardState }, action) {
       return {
         ...state,
         sort: action.sort,
+      };
+
+    case TOGGLE_QC:
+      return {
+        ...state,
+        showQC: action.visible,
       };
 
     default:

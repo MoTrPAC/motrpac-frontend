@@ -10,7 +10,7 @@ import tissues from '../lib/tissueCodes';
  *
  * @returns {object} JSX representation of the dashboard sample count table
  */
-function ReleasedSampleTable({ data, sort }) {
+function ReleasedSampleTable({ data, sort, showQC }) {
   // Create new set of sorted data
   function datasetWithTissueName() {
     const clonedData = [...data];
@@ -83,8 +83,9 @@ function ReleasedSampleTable({ data, sort }) {
             </td>
             {tissue.sample_data.map((row) => {
               return (
-                <td key={`${row.assay_code}${row.count}`}>
-                  {row.count ? row.count : ' '}
+                <td key={`${tissue.tissue_code}_${row.assay_code}`}>
+                  {!showQC && row.count ? row.count : ' '}
+                  {showQC && row.qc_count ? row.qc_count : ' '}
                 </td>
               );
             })}
@@ -114,6 +115,7 @@ ReleasedSampleTable.propTypes = {
     })
   ).isRequired,
   sort: PropTypes.string.isRequired,
+  showQC: PropTypes.bool.isRequired,
 };
 
 export default ReleasedSampleTable;

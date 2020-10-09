@@ -33,7 +33,10 @@ function PlotControls({ plot, togglePlot }) {
             >
               {plotViewLabels[plot]}
             </button>
-            <div className="dropdown-menu" aria-labelledby="plotViewMenu">
+            <div
+              className="dropdown-menu animate slideIn"
+              aria-labelledby="plotViewMenu"
+            >
               <button
                 className="dropdown-item"
                 type="button"

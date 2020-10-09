@@ -12,13 +12,15 @@ const tableSortLabels = {
  *
  * @param {String} sort           Redux state of table sort
  * @param {Function} toggleSort   Redux action to change sort state
+ * @param {Boolean} showQC        Redux state of QC sample visibility
+ * @param {Function} toggleQC     Redux action to change visibility state
  *
  * @returns {object} JSX representation of the dropdown menu controls
  */
-function TableControls({ sort, toggleSort }) {
+function TableControls({ sort, toggleSort, showQC, toggleQC }) {
   return (
     <div className="controlPanelContainer mb-3 mx-3">
-      <div className="controlPanel">
+      <div className="controlPanel d-flex align-items-center">
         <div className="controlRow d-flex align-items-center">
           <div className="controlLabel">Sort:</div>
           <div className="dropdown">
@@ -32,7 +34,10 @@ function TableControls({ sort, toggleSort }) {
             >
               {tableSortLabels[sort]}
             </button>
-            <div className="dropdown-menu" aria-labelledby="tableSortMenu">
+            <div
+              className="dropdown-menu animate slideIn"
+              aria-labelledby="tableSortMenu"
+            >
               <button
                 className="dropdown-item"
                 type="button"
@@ -57,6 +62,20 @@ function TableControls({ sort, toggleSort }) {
             </div>
           </div>
         </div>
+        <div className="controlRow show-qc-sample-table ml-3">
+          <button
+            className="btn btn-sm shadow-none"
+            type="button"
+            onClick={toggleQC.bind(this, !showQC)}
+          >
+            <span className="d-flex align-items-center justify-content-start">
+              <i className="material-icons show-qc-icon mr-1">
+                {showQC ? 'check_box' : 'check_box_outline_blank'}
+              </i>
+              Reference Standards
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -65,10 +84,13 @@ function TableControls({ sort, toggleSort }) {
 TableControls.propTypes = {
   sort: PropTypes.string,
   toggleSort: PropTypes.func.isRequired,
+  showQC: PropTypes.bool,
+  toggleQC: PropTypes.func.isRequired,
 };
 
 TableControls.defaultProps = {
   sort: 'default',
+  showQC: false,
 };
 
 export default TableControls;

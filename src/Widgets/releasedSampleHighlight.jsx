@@ -17,15 +17,21 @@ function ReleasedSampleHighlight({ data }) {
   // Utility function to get total count of
   // a given omic from each tissue
   function omicSet(omic) {
-    let count = 0;
+    let studyCount = 0;
+    let qcCount = 0;
+    let totalCount = 0;
     data.forEach((tissueSample) => {
       tissueSample.sample_data.forEach((item) => {
         if (item.omics_code === omic && item.count) {
-          count += Number(item.count);
+          studyCount += Number(item.count);
+          if (item.qc_count) {
+            qcCount += Number(item.qc_count);
+          }
+          totalCount = studyCount + qcCount;
         }
       });
     });
-    return count;
+    return totalCount;
   }
 
   // Get count for a given metric

@@ -15,9 +15,18 @@ const animalReleaseSamples = require('../data/animal_release_samples');
 /**
  * Renders the Dashboard page.
  *
- * @param {Array}     previousUploads Redux state for user's historic uploads.
- * @param {Boolean}   isPending       Redux state for authentication status.
- * @param {Function}  clearForm       Redux upload action.
+ * @param {Object} profile          Redux state of authenticated user profile
+ * @param {Boolean} expanded        Redux state of collapsed/expanded sidebar
+ * @param {String} release          Redux state of user-selected release
+ * @param {String} phase            Redux state of user-selected phase
+ * @param {String} plot             Redux state of plot selection
+ * @param {String} sort             Redux state of table sort
+ * @param {Boolean} showQC          Redux state of QC sample visibility
+ * @param {Function} toggleRelease  Redux action to change release state
+ * @param {Function} togglePhase    Redux action to change phase state
+ * @param {Function} togglePlot     Redux action to change plot state
+ * @param {Function} toggleSort     Redux action to change sort state
+ * @param {Function} toggleQC       Redux action to change visibility state
  *
  * @returns {object} JSX representation of the global footer.
  */
@@ -28,13 +37,17 @@ export function Dashboard({
   phase,
   plot,
   sort,
+  showQC,
   toggleRelease,
   togglePhase,
   togglePlot,
   toggleSort,
+  toggleQC,
 }) {
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
+  // Returns a subset of the release sample data based on a number of factors:
+  // internal or external, user's selection of release/phase
   const sampleData = () => {
     let data =
       userType === 'external'
@@ -149,17 +162,23 @@ export function Dashboard({
                 <ReleasedSamplePlot data={sampleData()} plot={plot} />
               </div>
               <div className="release-sample-table">
-                <TableControls toggleSort={toggleSort} sort={sort} />
-                <ReleasedSampleTable data={sampleData()} sort={sort} />
+                <TableControls
+                  toggleSort={toggleSort}
+                  sort={sort}
+                  toggleQC={toggleQC}
+                  showQC={showQC}
+                />
+                <ReleasedSampleTable
+                  data={sampleData()}
+                  sort={sort}
+                  showQC={showQC}
+                />
               </div>
             </div>
           </div>
         </div>
         <div className="d-flex col-lg-3">
           <div className="flex-fill w-100 card shadow-sm">
-            <h5 className="card-header">
-              <div className="card-title mb-0">Total Assays</div>
-            </h5>
             <div className="card-body">
               <ReleasedSampleSummary
                 data={animalReleaseSamples}
@@ -183,10 +202,12 @@ Dashboard.propTypes = {
   phase: PropTypes.string,
   plot: PropTypes.string,
   sort: PropTypes.string,
+  showQC: PropTypes.bool,
   toggleRelease: PropTypes.func.isRequired,
   togglePhase: PropTypes.func.isRequired,
   togglePlot: PropTypes.func.isRequired,
   toggleSort: PropTypes.func.isRequired,
+  toggleQC: PropTypes.func.isRequired,
 };
 
 Dashboard.defaultProps = {
@@ -196,6 +217,7 @@ Dashboard.defaultProps = {
   phase: 'pass1a_06',
   plot: 'tissue_name',
   sort: 'default',
+  showQC: true,
 };
 
 const mapStateToProps = (state) => ({
@@ -209,6 +231,7 @@ const mapDispatchToProps = (dispatch) => ({
   togglePhase: (phase) => dispatch(dashboardActions.togglePhase(phase)),
   togglePlot: (plot) => dispatch(dashboardActions.togglePlot(plot)),
   toggleSort: (sort) => dispatch(dashboardActions.toggleSort(sort)),
+  toggleQC: (visible) => dispatch(dashboardActions.toggleQC(visible)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
