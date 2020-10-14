@@ -28,7 +28,7 @@ const animalReleaseSamples = require('../data/animal_release_samples');
  * @param {Function} toggleSort     Redux action to change sort state
  * @param {Function} toggleQC       Redux action to change visibility state
  *
- * @returns {object} JSX representation of the global footer.
+ * @returns {object} JSX representation of the Dashboard
  */
 export function Dashboard({
   profile,
