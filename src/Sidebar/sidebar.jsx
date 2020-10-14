@@ -91,7 +91,7 @@ export function Sidebar({
                 'Methods',
                 'methods',
                 'description',
-                true
+                false
               )}
             </li>
           </ul>
