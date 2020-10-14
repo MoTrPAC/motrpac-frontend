@@ -193,7 +193,7 @@
         "bucket_name": "motrpac-internal-release2-raw-proteomics"
       }
     },
-    "documentation": true
+    "documentation": false
   },
   {
     "label": "Release 1.2.1",
@@ -320,7 +320,7 @@
         "bucket_name": "motrpac-external-release1-raw-proteomics"
       }
     },
-    "documentation": true
+    "documentation": false
   },
   {
     "label": "Release 1.2",
