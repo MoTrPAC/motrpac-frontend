@@ -6,11 +6,11 @@ import { Navbar } from '../../Navbar/navbar';
 import { Footer } from '../../Footer/footer';
 import { Sidebar } from '../../Sidebar/sidebar';
 
-const internalUser = require('../../testData/testUser');
+const testUser = require('../../testData/testUser');
 
-const internalLoggedInState = {
+const loggedInState = {
   isAuthenticated: true,
-  profile: internalUser,
+  profile: testUser,
 };
 
 const navbarAction = {
@@ -31,23 +31,19 @@ storiesOf('Methods Page', module)
   .addDecorator((story) => (
     <div className="App">
       <header>
-        <Navbar isAuthenticated {...navbarAction} profile={internalUser} />
+        <Navbar isAuthenticated {...navbarAction} profile={testUser} />
       </header>
       <div className="componentHolder">
         <div className="container-fluid">
           <div className="row">
-            <Sidebar
-              isAuthenticated
-              profile={internalUser}
-              {...sidebarActions}
-            />
+            <Sidebar isAuthenticated profile={testUser} {...sidebarActions} />
             {story()}
           </div>
         </div>
       </div>
       <div className="mt-auto">
-        <Footer isAuthenticated {...footerAction} profile={internalUser} />
+        <Footer isAuthenticated {...footerAction} profile={testUser} />
       </div>
     </div>
   ))
-  .add('Default', () => <Methods {...internalLoggedInState} />);
+  .add('Default', () => <Methods {...loggedInState} />);
