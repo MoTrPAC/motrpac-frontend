@@ -5,9 +5,8 @@ import { TeamPage } from '../teamPage';
 import { Navbar } from '../../Navbar/navbar';
 import { Footer } from '../../Footer/footer';
 
-const testUser = require('../../testData/testUser');
-
-const navAction = {
+const navbarAction = {
+  login: action('logging in'),
   logout: action('logging out'),
 };
 
@@ -16,17 +15,13 @@ const footerAction = {
 };
 
 storiesOf('Team Page', module)
-  .addDecorator(story => (
-    <React.Fragment>
-      <div className="App">
-        <header>
-          <Navbar isAuthenticated {...navAction} profile={testUser} />
-        </header>
-        <div className="row justify-content-center">
-          {story()}
-        </div>
-      </div>
-      <Footer isAuthenticated profile={testUser} {...footerAction} />
-    </React.Fragment>
+  .addDecorator((story) => (
+    <div className="App">
+      <header>
+        <Navbar {...navbarAction} />
+      </header>
+      <div className="row justify-content-center mt-3">{story()}</div>
+      <Footer {...footerAction} />
+    </div>
   ))
   .add('Default', () => <TeamPage />);

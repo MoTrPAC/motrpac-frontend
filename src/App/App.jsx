@@ -12,7 +12,7 @@ import UploadScreenConnected from '../UploadPage/uploadScreen';
 import LinkoutPageConnected from '../LinkoutPage/linkoutPage';
 import AnalysisHomePageConnected from '../AnalysisPage/analysisHomePage';
 import DownloadPageConnected from '../DownloadPage/downloadPage';
-import Methods from '../MethodsPage/methods';
+import MethodsConnected from '../MethodsPage/methods';
 import TeamPageConnected from '../TeamPage/teamPage';
 import ContactConnected from '../ContactPage/contact';
 import ErrorPageConnected from '../ErrorPage/error';
@@ -46,7 +46,7 @@ function App({ history = History }) {
               <Route path="/external-links" component={withTracker(LinkoutPageConnected)} />
               <PrivateRoute path="/download" component={withTracker(DownloadPageConnected)} />
               <PrivateRoute path="/analysis/:subjectType" component={withTracker(AnalysisHomePageConnected)} />
-              <PrivateRoute path="/methods" component={withTracker(Methods)} />
+              <PrivateRoute path="/methods" component={withTracker(MethodsConnected)} />
               <Route path="/team" component={withTracker(TeamPageConnected)} />
               <Route path="/contact" component={withTracker(ContactConnected)} />
               <Route path="/announcements" component={withTracker(AnnouncementsPageConnected)} />

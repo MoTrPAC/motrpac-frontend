@@ -57,6 +57,12 @@ describe('Unauthenticated Application routing', () => {
     testCorrectComponentInPath(mountApp, 'LandingPage', '/', history);
   });
 
+  test('loads the methods page at /methods', () => {
+    history.push('/methods');
+    mountApp.update();
+    testCorrectComponentInPath(mountApp, 'LandingPage', '/', history);
+  });
+
   test('loads the landing page at /upload', () => {
     history.push('/upload');
     mountApp.update();
@@ -128,6 +134,13 @@ describe('Authenticated Application routing', () => {
     // Update required to re-render the application
     mountApp.update();
     testCorrectComponentInPath(mountApp, 'Dashboard', '/dashboard', history, true);
+  });
+
+  test('loads the methods page at /methods', () => {
+    history.push('/methods');
+    // Update required to re-render the application
+    mountApp.update();
+    testCorrectComponentInPath(mountApp, 'Methods', '/methods', history, true);
   });
 
   test('loads the download page at /download', () => {

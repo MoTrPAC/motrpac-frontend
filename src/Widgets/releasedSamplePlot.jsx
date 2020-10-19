@@ -133,7 +133,7 @@ function ReleasedSamplePlot({ data, plot }) {
         backgroundColor: colors.graphs.lblue,
       },
       {
-        label: 'Reference Standards',
+        label: 'QC-Reference',
         data: sortedDataset(plot).map((item) => item.qc_count),
         borderWidth: 1,
         backgroundColor: '#ffde72',
