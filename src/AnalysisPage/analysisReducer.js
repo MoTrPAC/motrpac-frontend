@@ -13,7 +13,10 @@ export const defaultAnalysisState = {
   subAnalysisSelected: false,
 };
 
-export default function AnalysisReducer(state = { ...defaultAnalysisState }, action) {
+export default function AnalysisReducer(
+  state = { ...defaultAnalysisState },
+  action
+) {
   switch (action.type) {
     case 'ANALYSIS_SELECT':
       return {
@@ -34,7 +37,7 @@ export default function AnalysisReducer(state = { ...defaultAnalysisState }, act
     case 'GO_BACK':
       return {
         ...state,
-        depth: (state.depth > 0) ? state.depth - 1 : 0,
+        depth: state.depth > 0 ? state.depth - 1 : 0,
       };
     case 'RESET_DEPTH':
       return {
