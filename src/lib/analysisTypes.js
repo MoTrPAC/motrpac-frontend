@@ -19,9 +19,9 @@ const analysisTypes = [
     shortName: 'PHENOTYPE',
     icon: phenotypeIcon,
     inactiveIcon: null,
-    input: 'Distance, Gender, Weight and Fat',
+    input: 'Gender, Weight, Fat, and VO2 Max',
     description:
-      'Displays a number of visualizations in analyzing various animal phenotype data.',
+      'A number of visualizations are presented in the analysis of various phenotype data from the PASS1B 6-month rats.',
     active: true,
     species: ['animal'],
   },
