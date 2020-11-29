@@ -21,7 +21,7 @@ const analysisTypes = [
     inactiveIcon: null,
     input: 'Gender, Weight, Fat, and VO2 Max',
     description:
-      'A number of visualizations are presented in the analysis of various phenotype data from the PASS1B 6-month rats.',
+      'A number of visualizations are presented in the analysis of various phenotype data from the 6-month old rats.',
     active: true,
     species: ['animal'],
   },
@@ -60,13 +60,13 @@ const analysisTypes = [
     ],
   },
   {
-    title: 'Differential Molecules',
+    title: 'Gene-Centric View',
     shortName: 'MOLECULES',
     icon: moleculeIcon,
     inactiveIcon: moleculeIconInactive,
     input: null,
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      'Search by gene symbol and examine the training response of its related molecules (e.g. protein phosphorylation/acetylation, promoter methylation, transcript).',
     active: false,
     species: ['animal', 'human'],
   },
@@ -88,18 +88,18 @@ const analysisTypes = [
     inactiveIcon: networkIconInactive,
     input: null,
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      'Identify modules of highly connected molecules that manifest similar response to training.',
     active: false,
     species: ['animal', 'human'],
   },
   {
-    title: 'Time Course Visualization',
+    title: 'Differential Molecules (Time Course)',
     shortName: 'TIME_COURSE',
     icon: timeIcon,
     inactiveIcon: timeIconInactive,
     input: null,
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      'Visualize the trajectory of a single molecule.',
     active: false,
     species: ['animal', 'human'],
   },
