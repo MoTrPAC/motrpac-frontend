@@ -22,11 +22,16 @@ export function AnalysisHomePage({
   onPickSubAnalysis,
   goBack,
   expanded,
+  profile,
 }) {
   const subjectType = match.params.subjectType.slice(0).toLowerCase();
+  const userType = profile.user_metadata && profile.user_metadata.userType;
 
   // Redirects to dashboard if incorrect url
-  if (!(subjectType === 'animal' || subjectType === 'human')) {
+  if (
+    !(subjectType === 'animal' || subjectType === 'human') ||
+    userType === 'external'
+  ) {
     return <Redirect to="/dashboard" />;
   }
 
@@ -94,7 +99,7 @@ export function AnalysisHomePage({
 
   return (
     <AuthContentContainer classes="analysisPage" expanded={expanded}>
-      <div className="page-title pt-3 pb-2 border-bottom">
+      <div className="page-title pt-3 pb-2 mb-3 border-bottom">
         <h3>
           {depth > 0 ? <BackButton /> : ''}
           {renderHeaderTitle()}
@@ -138,6 +143,9 @@ AnalysisHomePage.propTypes = {
   onPickAnalysis: PropTypes.func.isRequired,
   onPickSubAnalysis: PropTypes.func.isRequired,
   expanded: PropTypes.bool,
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.object,
+  }),
 };
 
 AnalysisHomePage.defaultProps = {
@@ -147,6 +155,7 @@ AnalysisHomePage.defaultProps = {
     },
   },
   expanded: false,
+  profile: {},
 };
 
 const mapStateToProps = (state) => ({
@@ -156,6 +165,7 @@ const mapStateToProps = (state) => ({
   currentSubAnalysis: state.analysis.currentSubAnalysis,
   currentSubAnalysisTitle: state.analysis.currentSubAnalysisTitle,
   expanded: state.sidebar.expanded,
+  profile: state.auth.profile,
 });
 
 const mapDispatchToProps = (dispatch) => ({
