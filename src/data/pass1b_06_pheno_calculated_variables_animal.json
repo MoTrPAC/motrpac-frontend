@@ -1,6 +1,18 @@
 [
   {
-    "pid": "12345678",
-    "wgt_gain_after_train": "-12"
+    "pid": "10012345",
+    "wgt_gain_after_train": "10"
+  },
+  {
+    "pid": "10023456",
+    "wgt_gain_after_train": "11"
+  },
+  {
+    "pid": "10034567",
+    "wgt_gain_after_train": "12"
+  },
+  {
+    "pid": "10045678",
+    "wgt_gain_after_train": "13"
   }
 ]
