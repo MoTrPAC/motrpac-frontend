@@ -395,7 +395,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
         <Pie data={phaseData} options={options} height={315} />
       </div>
       <h5 className="release-sample-summary-plots-title mt-5 mb-4">
-        Total Reference Standards
+        Total QC-Reference
       </h5>
       <div>
         <Doughnut data={omicsDataQC} options={options} height={350} />

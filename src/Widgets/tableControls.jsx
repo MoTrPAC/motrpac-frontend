@@ -72,7 +72,7 @@ function TableControls({ sort, toggleSort, showQC, toggleQC }) {
               <i className="material-icons show-qc-icon mr-1">
                 {showQC ? 'check_box' : 'check_box_outline_blank'}
               </i>
-              Reference Standards
+              QC-Reference
             </span>
           </button>
         </div>

@@ -5,7 +5,6 @@ import { TrackEvent } from '../GoogleAnalytics/googleAnalytics';
 import IconSet from '../lib/iconSet';
 import ToolTip from '../lib/ui/tooltip';
 import ExternalLink from '../lib/ui/externalLink';
-import StudyDocumentsTable from '../lib/studyDocumentsTable';
 import ReleaseDescFileExtract from './releaseDescFileExtract';
 import ReleaseDescReadme from './releaseDescReadme';
 import ReleaseRawFilesDownload from './releaseRawFilesDownload';
@@ -369,27 +368,6 @@ function ReleaseEntry({ profile, currentView }) {
                             </div>
                           </div>
                         )}
-                      </>
-                    )
-                    : null}
-                  {release.documentation
-                    ? (
-                      <>
-                        <h6 className="additional-release-download-header">Documentation</h6>
-                        <div className="release-documentation-section">
-                          <StudyDocumentsTable currentView={currentView} />
-                          {currentView === 'internal'
-                            ? (
-                              <p>
-                                <ExternalLink
-                                  to="https://www.motrpac.org/secure/documents/dspList.cfm?documentFolderCurrent=BEC8E9C5-C740-4D8F-91F2-5977E98CF6A0"
-                                  label="Manuals of Procedures for Preclinical Animal Study Sites"
-                                />
-                                {' '}
-                                (login required)
-                              </p>
-                            ) : null}
-                        </div>
                       </>
                     )
                     : null}
