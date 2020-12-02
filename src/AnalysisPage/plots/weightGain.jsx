@@ -123,7 +123,7 @@ function WeightGainPlot() {
       </VictoryChart>
       <p className="card-text remark">
         A dataset of pre-training weights is created given each of the unique
-        participant IDs from the <em>Animal Registratioin Form</em>. The dataset
+        participant IDs from the <em>Animal Registration Form</em>. The dataset
         of post-training weights is created by calculating the sum of pre-training
         weight and weight change after training for each of the participants.
       </p>
