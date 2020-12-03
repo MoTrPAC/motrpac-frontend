@@ -42,20 +42,20 @@ const depth1StateHuman = {
   ...defaultAnalysisState,
   match: humanMatch,
   depth: 1,
-  currentAnalysis: 'PDMA',
+  currentAnalysis: 'META_ANALYSIS',
+};
+const depth2StateHuman = {
+  ...defaultAnalysisState,
+  match: humanMatch,
+  depth: 2,
+  currentAnalysis: 'META_ANALYSIS',
+  currentSubAnalysis: 'META_ANALYSIS_PUBLIC_DATA',
 };
 const depth1StateAnimal = {
   ...defaultAnalysisState,
   match: animalMatch,
   depth: 1,
-  currentAnalysis: 'PD',
-};
-const depth2StateAnimal = {
-  ...defaultAnalysisState,
-  match: animalMatch,
-  depth: 2,
-  currentAnalysis: 'PD',
-  currentSubAnalysis: 'APD',
+  currentAnalysis: 'PHENOTYPE',
 };
 storiesOf('Analysis Page', module)
   .addDecorator((story) => (
@@ -78,6 +78,6 @@ storiesOf('Analysis Page', module)
   ))
   .add('Animal', () => <AnalysisHomePage isAuthenticated {...defaultAnalysisState} match={animalMatch} {...AnalysisActions} />)
   .add('Animal Depth 1', () => <AnalysisHomePage isAuthenticated {...depth1StateAnimal} {...AnalysisActions} />)
-  .add('Animal Depth 2', () => <AnalysisHomePage isAuthenticated {...depth2StateAnimal} {...AnalysisActions} />)
   .add('Human', () => <AnalysisHomePage isAuthenticated {...defaultAnalysisState} match={humanMatch} {...AnalysisActions} />)
-  .add('Human Depth 1', () => <AnalysisHomePage isAuthenticated {...depth1StateHuman} {...AnalysisActions} />);
+  .add('Human Depth 1', () => <AnalysisHomePage isAuthenticated {...depth1StateHuman} {...AnalysisActions} />)
+  .add('Human Depth 2', () => <AnalysisHomePage isAuthenticated {...depth2StateHuman} {...AnalysisActions} />);

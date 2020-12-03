@@ -25,7 +25,8 @@
     "react-scripts": "3.4.1",
     "react-spring": "^8.0.20",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "victory": "^35.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

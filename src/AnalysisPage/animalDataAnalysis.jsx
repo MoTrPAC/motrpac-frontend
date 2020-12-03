@@ -1,22 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AnimalPhenotypeData from './animalPhenotypeData';
+import Pass1b06PhenotypeAnimal from './pass1b06PhenotypeAnimal';
 
-export default function AnimalDataAnalysis({
-  analysis,
-  subAnalysis,
-}) {
-  if (analysis === 'PD') {
-    switch (subAnalysis) {
-      case 'APD':
-        return <AnimalPhenotypeData />;
-      default:
-        return null;
-    }
+export default function AnimalDataAnalysis({ analysis }) {
+  if (analysis === 'PHENOTYPE') {
+    return <Pass1b06PhenotypeAnimal />;
   }
+
+  return null;
 }
 
 AnimalDataAnalysis.propTypes = {
   analysis: PropTypes.string.isRequired,
-  subAnalysis: PropTypes.string.isRequired,
 };

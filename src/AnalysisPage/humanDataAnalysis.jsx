@@ -2,13 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import HumanGeneMetaAnalysis from './humanGeneMetaAnalysis';
 
-export default function HumanDataAnalysis({
-  analysis,
-  subAnalysis,
-}) {
-  if (analysis === 'PDMA') {
+export default function HumanDataAnalysis({ analysis, subAnalysis }) {
+  if (analysis === 'META_ANALYSIS') {
     switch (subAnalysis) {
-      case 'MA_G':
+      case 'META_ANALYSIS_PUBLIC_DATA':
         return <HumanGeneMetaAnalysis />;
       default:
         return null;
