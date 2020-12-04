@@ -394,6 +394,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
       <div className="mt-3">
         <Pie data={phaseData} options={options} height={315} />
       </div>
+      {/* Suppress temporarily
       <h5 className="release-sample-summary-plots-title mt-5 mb-4">
         Total QC-Reference
       </h5>
@@ -403,6 +404,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
       <div className="mt-3">
         <Doughnut data={phaseDataQC} options={options} height={315} />
       </div>
+      */}
     </div>
   );
 }
