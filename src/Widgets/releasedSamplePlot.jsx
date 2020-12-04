@@ -148,7 +148,7 @@ function ReleasedSamplePlot({ data, plot }) {
         {
           stacked: true,
           ticks: {
-            stepSize: 100, // integer only
+            stepSize: 200, // integer only
             beginAtZero: true,
             fontFamily: "'Open Sans', sans-serif",
             fontSize: width < breakpoint ? 12 : 14,
