@@ -70,6 +70,18 @@ function TableControls({ sort, toggleSort, showQC, toggleQC }) {
           >
             <span className="d-flex align-items-center justify-content-start">
               <i className="material-icons show-qc-icon mr-1">
+                {showQC ? 'check_box_outline_blank' : 'check_box'}
+              </i>
+              Samples
+            </span>
+          </button>
+          <button
+            className="btn btn-sm shadow-none"
+            type="button"
+            onClick={toggleQC.bind(this, !showQC)}
+          >
+            <span className="d-flex align-items-center justify-content-start">
+              <i className="material-icons show-qc-icon mr-1">
                 {showQC ? 'check_box' : 'check_box_outline_blank'}
               </i>
               QC-Reference
