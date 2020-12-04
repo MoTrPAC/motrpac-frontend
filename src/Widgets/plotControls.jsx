@@ -40,13 +40,6 @@ function PlotControls({ plot, togglePlot }) {
               <button
                 className="dropdown-item"
                 type="button"
-                onClick={togglePlot.bind(this, 'tissue_name')}
-              >
-                Tissues by name
-              </button>
-              <button
-                className="dropdown-item"
-                type="button"
                 onClick={togglePlot.bind(this, 'tissue_count')}
               >
                 Tissues by count
@@ -54,9 +47,9 @@ function PlotControls({ plot, togglePlot }) {
               <button
                 className="dropdown-item"
                 type="button"
-                onClick={togglePlot.bind(this, 'assay_name')}
+                onClick={togglePlot.bind(this, 'tissue_name')}
               >
-                Platforms by name
+                Tissues by name
               </button>
               <button
                 className="dropdown-item"
@@ -64,6 +57,13 @@ function PlotControls({ plot, togglePlot }) {
                 onClick={togglePlot.bind(this, 'assay_count')}
               >
                 Platforms by count
+              </button>
+              <button
+                className="dropdown-item"
+                type="button"
+                onClick={togglePlot.bind(this, 'assay_name')}
+              >
+                Platforms by name
               </button>
             </div>
           </div>
@@ -79,7 +79,7 @@ PlotControls.propTypes = {
 };
 
 PlotControls.defaultProps = {
-  plot: 'tissue_name',
+  plot: 'tissue_count',
 };
 
 export default PlotControls;
