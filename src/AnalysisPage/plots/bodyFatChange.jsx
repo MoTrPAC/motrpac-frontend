@@ -113,7 +113,7 @@ function BodyFatChangePlot() {
         />
       </VictoryChart>
       <p className="card-text remark">
-        By matching each of the unique participant IDs from the <em>Animal Registratioin Form</em>, a dataset
+        By matching each of the unique participant IDs from the <em>Animal Registration Form</em>, a dataset
         is created by aggregating the entries from the <em>Animal NMR Testing Form</em>. The resulted
         dataset is further filtered to only retain those participants with two separate visits.
       </p>
