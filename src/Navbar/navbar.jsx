@@ -88,6 +88,8 @@ export function Navbar({
 
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   const userType = profile.user_metadata && profile.user_metadata.userType;
+  // flag to temporarily suppress quick search rendering
+  const inProduction = false;
 
   if (isAuthenticated && hasAccess) {
     document.querySelector('body').classList.add('authenticated');
@@ -146,18 +148,16 @@ export function Navbar({
                 <LogoutButton />
               </li>
             </ul>
-            {isAuthenticated && hasAccess && userType === 'internal'
-              ? (
-                <QuickSearchBox
-                  quickSearchTerm={quickSearchTerm}
-                  handleQuickSearchInputChange={handleQuickSearchInputChange}
-                  handleQuickSearchRequestSubmit={handleQuickSearchRequestSubmit}
-                  resetQuickSearch={resetQuickSearch}
-                  getSearchForm={getSearchForm}
-                  resetAdvSearch={resetAdvSearch}
-                />
-              )
-              : null}
+            {isAuthenticated && hasAccess && userType === 'internal' && inProduction ? (
+              <QuickSearchBox
+                quickSearchTerm={quickSearchTerm}
+                handleQuickSearchInputChange={handleQuickSearchInputChange}
+                handleQuickSearchRequestSubmit={handleQuickSearchRequestSubmit}
+                resetQuickSearch={resetQuickSearch}
+                getSearchForm={getSearchForm}
+                resetAdvSearch={resetAdvSearch}
+              />
+            ) : null}
           </div>
         </div>
       </nav>
