@@ -144,9 +144,12 @@ export function Navbar({
               {!isAuthenticated && !hasAccess
                 ? (<li className="nav-item navItem"><Link to="/data-access" className="nav-link">Data Access</Link></li>)
                 : null}
-              <li className="nav-item navItem">
-                <LogoutButton />
-              </li>
+              {(!isAuthenticated && !hasAccess) ||
+              (isAuthenticated && hasAccess) ? (
+                <li className="nav-item navItem">
+                  <LogoutButton />
+                </li>
+              ) : null}
             </ul>
             {isAuthenticated && hasAccess && userType === 'internal' && inProduction ? (
               <QuickSearchBox

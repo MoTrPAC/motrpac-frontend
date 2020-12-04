@@ -9,13 +9,20 @@ export function Callback({
   message,
   handleAuthCallback,
   loginInProgress,
+  profile
 }) {
   // FIXME: Workaround to make the <Redirect /> to work
   loginInProgress();
   // Handle authentication if expected values are in the URL.
   if (/access_token|id_token|error/.test(location.hash)) {
     handleAuthCallback();
-    return <Redirect to="/dashboard" />
+    const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+    if (hasAccess) {
+      return <Redirect to="/dashboard"></Redirect>
+    }
+    if (!hasAccess) {
+      return <Redirect to="/error" />
+    }
   }
 
   const callbackMsg = message || 'Authenticating...';
@@ -35,6 +42,10 @@ Callback.propTypes = {
   message: PropTypes.string,
   handleAuthCallback: PropTypes.func.isRequired,
   loginInProgress: PropTypes.func.isRequired,
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.object,
+  }),
+  isAuthenticated: PropTypes.bool,
 };
 
 Callback.defaultProps = {
@@ -42,10 +53,14 @@ Callback.defaultProps = {
     hash: '',
   },
   message: '',
+  profile: {},
+  isAuthenticated: false,
 };
 
 const mapStateToProps = (state) => ({
   message: state.auth.message,
+  profile: state.auth.profile,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 const mapDispatchToProps = (dispatch) => ({
