@@ -17,6 +17,8 @@ export function ReleasePage({ profile, expanded }) {
   const [currentView, setCurrentView] = useState('internal');
 
   const userType = profile.user_metadata && profile.user_metadata.userType;
+  // flag to temporarily suppress quick search rendering
+  const inProduction = false;
 
   // Handler to set current view to either internal or external releases
   function handleViewChange(releaseView) {
@@ -105,21 +107,23 @@ export function ReleasePage({ profile, expanded }) {
               </span>
             </button>
           </div>
-          <div
-            className="btn-group"
-            role="group"
-            aria-label="Search button group"
-          >
-            <Link
-              className="advSearchBtn btn btn-sm btn-outline-primary"
-              to="/search"
+          {inProduction && (
+            <div
+              className="btn-group"
+              role="group"
+              aria-label="Search button group"
             >
-              <span className="d-flex align-items-center">
-                <i className="material-icons search-icon">search</i>
-                Search Data
-              </span>
-            </Link>
-          </div>
+              <Link
+                className="advSearchBtn btn btn-sm btn-outline-primary"
+                to="/search"
+              >
+                <span className="d-flex align-items-center">
+                  <i className="material-icons search-icon">search</i>
+                  Search Data
+                </span>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
       <ReleaseEntry profile={profile} currentView={currentView} />
