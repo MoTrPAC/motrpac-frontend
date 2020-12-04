@@ -5,12 +5,37 @@
       margin-bottom: 0;
       background-color: #fff;
       border-bottom: 0 solid transparent;
+
+      .card-title {
+        font-size: 1.20rem;
+      }
     }
 
     .badge {
       font-size: 0.85rem;
       font-weight: 600;
       padding: 0.35em 0.4em;
+
+      &.badge-phase {
+        background-color: #c6c6c6;
+      }
+    }
+
+    /* dropdown menus for plot and table */
+    .controlPanel {
+      .controlRow {
+        .controlLabel {
+          font-weight: 600;
+          font-size: 0.85rem;
+          margin-right: 0.45rem;
+          white-space: nowrap;
+        }
+
+        .btn.dropdown-toggle,
+        button.dropdown-item {
+          font-size: 0.85rem;
+        }
+      }
     }
 
     /* chart.js plot */
@@ -21,6 +46,7 @@
       }
 
       .remark {
+        color: $gray;
         font-size: 1.0rem;
         margin-left: 0.5rem;
         margin-right: 0.5rem;
