@@ -1,3 +1,10 @@
+import {
+  TOGGLE_WEIGHT_PLOT,
+  TOGGLE_BODY_FAT_PLOT,
+  TOGGLE_VO2_PLOT,
+  TOGGLE_LACTATE_PLOT,
+} from './analysisActions';
+
 export const defaultAnalysisState = {
   match: {
     params: {
@@ -11,6 +18,10 @@ export const defaultAnalysisState = {
   depth: 0,
   analysisSelected: false,
   subAnalysisSelected: false,
+  weightPlot: 'one_week_program',
+  bodyFatPlot: 'one_week_program',
+  vo2Plot: 'one_week_program',
+  lactatePlot: 'one_week_program',
 };
 
 export default function AnalysisReducer(
@@ -49,6 +60,26 @@ export default function AnalysisReducer(
         depth: 0,
         analysisSelected: false,
         subAnalysisSelected: false,
+      };
+    case TOGGLE_WEIGHT_PLOT:
+      return {
+        ...state,
+        weightPlot: action.weightPlot,
+      };
+    case TOGGLE_BODY_FAT_PLOT:
+      return {
+        ...state,
+        bodyFatPlot: action.bodyFatPlot,
+      };
+    case TOGGLE_VO2_PLOT:
+      return {
+        ...state,
+        vo2Plot: action.vo2Plot,
+      };
+    case TOGGLE_LACTATE_PLOT:
+      return {
+        ...state,
+        lactatePlot: action.lactatePlot,
       };
     default:
       return state;
