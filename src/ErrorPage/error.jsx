@@ -63,7 +63,7 @@ export function ErrorPage({ isAuthenticated, profile, logout }) {
             onClick={handleLogout}
             className="logOutBtn btn btn-primary"
           >
-            Return to home
+            Return home
           </button>
         </div>
       </div>

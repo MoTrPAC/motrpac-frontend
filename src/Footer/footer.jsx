@@ -31,7 +31,7 @@ export function Footer({
   // TODO: Find out how to best do error handling
   return (
     <footer className="footer">
-      {!(isAuthenticated || hasAccess) && (
+      {!(isAuthenticated && hasAccess) && (
         <div className="container footer-nav">
           <div className="row align-items-end">
             <div className="col-12 col-lg-4 footer-nav-logo">
