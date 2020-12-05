@@ -24,6 +24,26 @@ export function Methods({ profile, expanded }) {
         </div>
       </div>
       <div className="methods-content-container mt-4">
+        <div className="methods-intro-container">
+          <p>
+            The MoTrPAC study is divided into two main parts; human and animal
+            (rats). Preclinical Animal Study Sites (PASSs) conduct the endurance
+            exercise and training intervention in rats, and Human Clinical
+            Exercise Sites conduct the human endurance and resistance training
+            interventions. Multiple biospecimen samples are collected at
+            different time points after acute and chronic exercise. Please see
+            the Animal protocol below for details on the animal training
+            intervention and sample collection. The biospecimen samples are
+            distributed from a central biorepository to various Chemical
+            Analysis Sites (CASs) for molecular ‘omics analysis. Specific
+            methods for the different molecular assays are described in the
+            Manual Of Procedures (MOPs). There is one for the genomic,
+            transcriptomic and epigenomic data (GET), one for proteomics and one
+            for metabolomics. In addition, the assay-specific quality control
+            (QC) procedures are described in the QC Standard Operating
+            Procedures (SOPs) documents.
+          </p>
+        </div>
         {userType === 'internal' && (
           <section className="study-docs-container row">
             <div className="col-xl-8">
