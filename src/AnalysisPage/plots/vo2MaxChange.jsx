@@ -131,6 +131,8 @@ function VO2MaxChangePlot({ plot }) {
       </VictoryChart>
       <p className="card-text remark">
         Datasets used as input: <em>Animal Registration</em>, <em>Animal Key</em>, <em>Animal VO2 Max Test</em>.
+        <br />
+        Data is shown as mean +- SD.
       </p>
     </div>
   );

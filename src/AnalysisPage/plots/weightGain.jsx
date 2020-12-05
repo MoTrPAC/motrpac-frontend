@@ -176,6 +176,8 @@ function WeightGainPlot({ plot }) {
       </VictoryChart>
       <p className="card-text remark">
         Datasets used as input: <em>Animal Registration</em>, <em>Animal Key</em>, <em>Animal NMR Testing</em>.
+        <br />
+        Data is shown as mean +- SD.
       </p>
     </div>
   );

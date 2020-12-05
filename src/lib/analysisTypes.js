@@ -19,7 +19,7 @@ const analysisTypes = [
     shortName: 'PHENOTYPE',
     icon: phenotypeIcon,
     inactiveIcon: null,
-    input: 'Gender, Weight, Fat, and VO2 Max',
+    input: 'Sex, Weight, % Body Fat, and VO2 Max',
     description:
       'A number of visualizations are presented in the analysis of various phenotype data from the 6-month old rats.',
     active: true,
