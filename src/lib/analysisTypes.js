@@ -19,7 +19,7 @@ const analysisTypes = [
     shortName: 'PHENOTYPE',
     icon: phenotypeIcon,
     inactiveIcon: null,
-    input: 'Gender, Weight, Fat, and VO2 Max',
+    input: 'Sex, Weight, % Body Fat, and VO2 Max',
     description:
       'A number of visualizations are presented in the analysis of various phenotype data from the 6-month old rats.',
     active: true,
@@ -77,7 +77,7 @@ const analysisTypes = [
     inactiveIcon: tissueIconInactive,
     input: null,
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      'Examine similarities, differences, and potential time lagged response across tissues.',
     active: false,
     species: ['animal', 'human'],
   },
@@ -110,7 +110,7 @@ const analysisTypes = [
     inactiveIcon: omicsIconInactive,
     input: null,
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      'Explore consistencies across different "omes", focusing on novel discoveries (e.g. novel enhancers that are correlated with transcriptomic response).',
     active: false,
     species: ['animal', 'human'],
   },

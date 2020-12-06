@@ -56,10 +56,10 @@ describe('Navbar', () => {
     expect(internalUserMountNav.find('.user-display-name').text()).toEqual(`${internalUser.user_metadata.name}, ${internalUser.user_metadata.siteName}`);
     expect(internalUserMountNav.find('.logOutBtn').text()).toMatch('Log out');
   });
-
-  test('Displays quick search box if logged in as internal user', () => {
+  // Quick search is temporarily disabled and so updating this assertion
+  test('No quick search box is shown if logged in as internal user', () => {
     expect(internalUserMountNav.find('Navbar').first().props().isAuthenticated).toBeTruthy();
-    expect(internalUserMountNav.find('.quick-search-box-container')).toHaveLength(1);
+    expect(internalUserMountNav.find('.quick-search-box-container')).toHaveLength(0);
   });
 
   test('No quick search box is shown if logged in as external user', () => {

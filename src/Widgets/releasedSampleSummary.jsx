@@ -12,6 +12,9 @@ import { Pie, Doughnut } from 'react-chartjs-2';
  * @returns {object} JSX representation of the dashboard sample count plots
  */
 function ReleasedSampleSummary({ data, release, userType }) {
+  // flag to temporarily suppress quick search rendering
+  const inProduction = false;
+
   // Utility function to get total count of
   // a given omic from each tissue
   function countSamples(tissueList, omic, countType) {
@@ -394,15 +397,19 @@ function ReleasedSampleSummary({ data, release, userType }) {
       <div className="mt-3">
         <Pie data={phaseData} options={options} height={315} />
       </div>
-      <h5 className="release-sample-summary-plots-title mt-5 mb-4">
-        Total QC-Reference
-      </h5>
-      <div>
-        <Doughnut data={omicsDataQC} options={options} height={350} />
-      </div>
-      <div className="mt-3">
-        <Doughnut data={phaseDataQC} options={options} height={315} />
-      </div>
+      {inProduction && (
+        <div>
+          <h5 className="release-sample-summary-plots-title mt-5 mb-4">
+            Total QC-Reference
+          </h5>
+          <div>
+            <Doughnut data={omicsDataQC} options={options} height={350} />
+          </div>
+          <div className="mt-3">
+            <Doughnut data={phaseDataQC} options={options} height={315} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

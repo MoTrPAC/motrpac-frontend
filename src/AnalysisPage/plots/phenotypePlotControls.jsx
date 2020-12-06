@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const plotViewLabels = {
-  tissue_name: 'Tissues by name',
-  tissue_count: 'Tissues by count',
-  assay_name: 'Platforms by name',
-  assay_count: 'Platforms by count',
+  one_week_program: 'One-Week Program',
+  two_week_program: 'Two-Week Program',
+  four_week_program: 'Four-Week Program',
+  eight_week_program: 'Eight-Week Program',
 };
 
 /**
@@ -16,12 +16,11 @@ const plotViewLabels = {
  *
  * @returns {object} JSX representation of the dropdown menu controls
  */
-function PlotControls({ plot, togglePlot }) {
+function PhenotypePlotControls({ plot, togglePlot }) {
   return (
-    <div className="controlPanelContainer mb-3 mx-3">
+    <div className="controlPanelContainer">
       <div className="controlPanel">
-        <div className="controlRow d-flex align-items-center">
-          <div className="controlLabel">Assays:</div>
+        <div className="controlRow">
           <div className="dropdown">
             <button
               className="btn btn-sm btn-primary dropdown-toggle"
@@ -40,30 +39,30 @@ function PlotControls({ plot, togglePlot }) {
               <button
                 className="dropdown-item"
                 type="button"
-                onClick={togglePlot.bind(this, 'tissue_count')}
+                onClick={togglePlot.bind(this, 'one_week_program')}
               >
-                Tissues by count
+                One-Week Program
               </button>
               <button
                 className="dropdown-item"
                 type="button"
-                onClick={togglePlot.bind(this, 'tissue_name')}
+                onClick={togglePlot.bind(this, 'two_week_program')}
               >
-                Tissues by name
+                Two-Week Program
               </button>
               <button
                 className="dropdown-item"
                 type="button"
-                onClick={togglePlot.bind(this, 'assay_count')}
+                onClick={togglePlot.bind(this, 'four_week_program')}
               >
-                Platforms by count
+                Four-Week Program
               </button>
               <button
                 className="dropdown-item"
                 type="button"
-                onClick={togglePlot.bind(this, 'assay_name')}
+                onClick={togglePlot.bind(this, 'eight_week_program')}
               >
-                Platforms by name
+                Eight-Week Program
               </button>
             </div>
           </div>
@@ -73,13 +72,13 @@ function PlotControls({ plot, togglePlot }) {
   );
 }
 
-PlotControls.propTypes = {
+PhenotypePlotControls.propTypes = {
   plot: PropTypes.string,
   togglePlot: PropTypes.func.isRequired,
 };
 
-PlotControls.defaultProps = {
-  plot: 'tissue_count',
+PhenotypePlotControls.defaultProps = {
+  plot: 'one_week_program',
 };
 
-export default PlotControls;
+export default PhenotypePlotControls;

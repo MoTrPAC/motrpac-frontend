@@ -1,0 +1,34 @@
+[
+  {
+    "pid": "10012345",
+    "ANIRandGroup": "Eight-week program"
+  },
+  {
+    "pid": "10023456",
+    "ANIRandGroup": "Eight-week program"
+  },
+  {
+    "pid": "10034567",
+    "ANIRandGroup": "Four-week program"
+  },
+  {
+    "pid": "10045678",
+    "ANIRandGroup": "Four-week program"
+  },
+  {
+    "pid": "10056789",
+    "ANIRandGroup": "Two-week program"
+  },
+  {
+    "pid": "10067890",
+    "ANIRandGroup": "One-week program"
+  },
+  {
+    "pid": "20012345",
+    "ANIRandGroup": "Two-week program"
+  },
+  {
+    "pid": "20023456",
+    "ANIRandGroup": "One-week program"
+  }
+]

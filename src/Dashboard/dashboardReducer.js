@@ -9,7 +9,7 @@ import {
 export const defaultDashboardState = {
   release: 'internal',
   phase: 'pass1a_06',
-  plot: 'tissue_name',
+  plot: 'tissue_count',
   sort: 'default',
   showQC: false,
 };
