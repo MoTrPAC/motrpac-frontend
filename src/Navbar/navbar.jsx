@@ -102,7 +102,7 @@ export function Navbar({
     const siteName = profile.user_metadata && profile.user_metadata.siteName
       ? `, ${profile.user_metadata.siteName}` : '';
 
-    if (isAuthenticated && hasAccess) {
+    if (isAuthenticated) {
       return (
         <span className="user-logout-button">
           <img src={profile.picture} className="user-avatar" alt="avatar" />
