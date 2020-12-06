@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import actions from '../Auth/authActions';
 import ContactHelpdesk from '../lib/ui/contactHelpdesk';
 
 /**
@@ -9,12 +10,17 @@ import ContactHelpdesk from '../lib/ui/contactHelpdesk';
  *
  * @returns {Object} JSX representation of the Error page.
  */
-export function ErrorPage({ isAuthenticated, profile }) {
+export function ErrorPage({ isAuthenticated, profile, logout }) {
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
 
   if (isAuthenticated && hasAccess) {
-    return <Redirect to="/releases" />;
+    return <Redirect to="/dashboard" />;
   }
+
+  const handleLogout = () => {
+    logout();
+    return <Redirect to="/" />;
+  };
 
   return (
     <div className="col-md-9 col-lg-10 px-4 errorPage">
@@ -51,6 +57,15 @@ export function ErrorPage({ isAuthenticated, profile }) {
             </p>
           </div>
         </div>
+        <div className="home-link">
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="logOutBtn btn btn-primary"
+          >
+            Return home
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -61,11 +76,13 @@ ErrorPage.propTypes = {
     user_metadata: PropTypes.object,
   }),
   isAuthenticated: PropTypes.bool,
+  logout: PropTypes.func,
 };
 
 ErrorPage.defaultProps = {
   profile: {},
   isAuthenticated: false,
+  logout: null,
 };
 
 const mapStateToProps = (state) => ({
@@ -73,4 +90,8 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps)(ErrorPage);
+const mapDispatchToProps = (dispatch) => ({
+  logout: () => dispatch(actions.logout()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ErrorPage);
