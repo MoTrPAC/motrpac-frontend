@@ -327,7 +327,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         &nbsp;be used for&nbsp;
                         <strong>submission</strong>
                         &nbsp;of abstracts, manuscripts, preprints or
-                        presentations before the embargo deadline.
+                        presentations before the embargo expires.
                       </label>
                     </div>
                   </div>
