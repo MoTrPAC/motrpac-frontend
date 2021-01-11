@@ -251,9 +251,11 @@ export function DataAccessPage({ isAuthenticated, profile }) {
               MoTrPAC Data Hub.
               {' '}
               <strong>
-                Please note that during the embargo period, until January 15th 2021, data can
-                only be used for analyses supporting grant submissions, and not be used in
-                abstracts, manuscripts, preprints or presentations.
+                Please note that there is a publication embargo on the MoTrPAC data until the
+                release of additional control data necessary to fully control the analysis for
+                molecular changes due to <em>e.g.</em> sampling and fasting time post
+                exercise. Until then, data can only be used for analyses supporting grant
+                submissions, and not be used in abstracts, manuscripts, preprints or presentations.
               </strong>
             </p>
           </div>
