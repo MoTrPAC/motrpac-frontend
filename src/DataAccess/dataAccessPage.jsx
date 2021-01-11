@@ -253,9 +253,10 @@ export function DataAccessPage({ isAuthenticated, profile }) {
               <strong>
                 Please note that there is a publication embargo on the MoTrPAC data until the
                 release of additional control data necessary to fully control the analysis for
-                molecular changes due to <em>e.g.</em> sampling and fasting time post
-                exercise. Until then, data can only be used for analyses supporting grant
-                submissions, and not be used in abstracts, manuscripts, preprints or presentations.
+                non-exercise induced molecular changes in the current dataset (<em>e.g.</em> changes
+                due to sampling and fasting time post exercise). Until then, data can only be used
+                for analyses supporting grant submissions, and cannot be used in abstracts,
+                manuscripts, preprints or presentations.
               </strong>
             </p>
           </div>
@@ -345,7 +346,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                       <label className="form-check-label" htmlFor="dataUseAgreement2">
                         Data&nbsp;
                         <strong>CANNOT</strong>
-                        &nbsp;be publicly hosted or disseminated before the embargo deadline.
+                        &nbsp;be publicly hosted or disseminated before the embargo expires.
                       </label>
                     </div>
                   </div>
@@ -363,9 +364,9 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                       />
                       <label className="form-check-label" htmlFor="dataUseAgreement3">
                         The embargo period for any type of publication of MoTrPAC
-                        External Release 1 data is 15 months after external release 1: through&nbsp;
-                        <strong>January 15, 2021</strong>
-                        .
+                        External Release 1 data is until release of additional control
+                        data necessary for full control of non-exercise induced
+                        molecular effects.
                       </label>
                     </div>
                   </div>
@@ -385,7 +386,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         Data&nbsp;
                         <strong>CAN</strong>
                         &nbsp;be used for analyses supporting grant submissions prior
-                        to the embargo deadline.
+                        to the embargo expiration.
                       </label>
                     </div>
                   </div>
@@ -402,7 +403,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         checked={formValues.dataUseAgreement5}
                       />
                       <label className="form-check-label" htmlFor="dataUseAgreement5">
-                        After the embargo period, Recipients and their Agents agree
+                        After the embargo expires, Recipients and their Agents agree
                         that in publications using&nbsp;
                         <strong>any</strong>
                         &nbsp;data from MoTrPAC public use data sets they will
