@@ -96,7 +96,7 @@
         "aid": 5,
         "posted_date": "2021-01-15",
         "title": "Embargo extension",
-        "content": "Please note that the publication embargo on MoTrPAC data has been extended until release of additional control data necessary to fully control for non-exercise induced molecular changes in the current dataset. The control data has been delayed due to the COVID-19 pandemic and we apologize for any inconvenience caused. Please be sure that the consortium is hard at work to release this data to the scientific community as soon as possible. Until then, data can only be used for analyses supporting grant submissions, and not be used in abstracts, manuscripts, preprints or presentations.",
+        "content": "Please note that the publication embargo on MoTrPAC data has been extended until release of additional control data necessary to fully control for non-exercise induced molecular changes in the current dataset. The control data has been delayed due to the COVID-19 pandemic and we apologize for any inconvenience caused. Please be sure that the consortium is hard at work to release this data to the scientific community as soon as possible. Until then, data can only be used for analyses supporting grant submissions, and cannot be used in abstracts, manuscripts, preprints or presentations.",
         "metadata": {
             "target": "external",
             "tags": [

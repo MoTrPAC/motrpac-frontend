@@ -100,7 +100,7 @@ export function Dashboard({
               inconvenience caused. Please be sure that the consortium is hard at work to
               release this data to the scientific community as soon as possible. Until
               then, data can only be used for analyses supporting grant submissions, and
-              not be used in abstracts, manuscripts, preprints or presentations.
+              cannot be used in abstracts, manuscripts, preprints or presentations.
             </span>
             <button
               type="button"
