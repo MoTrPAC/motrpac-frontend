@@ -32,6 +32,22 @@ export function ReleasePage({ profile, expanded }) {
         classes="dataReleasePage external"
         expanded={expanded}
       >
+        <div className="alert alert-warning alert-dismissible fade show d-flex align-items-center justify-content-between w-100" role="alert">
+          <span>
+            Please note that the publication embargo on MoTrPAC data has been
+            extended until release of additional control data. The control data
+            has been delayed due to the COVID-19 pandemic and we apologize for
+            any inconvenience caused.
+          </span>
+          <button
+            type="button"
+            className="close"
+            data-dismiss="alert"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 border-bottom">
           <div
             className="page-title"
@@ -78,7 +94,7 @@ export function ReleasePage({ profile, expanded }) {
         </div>
         <div className="btn-toolbar">
           <div
-            className="btn-group mr-2"
+            className="btn-group"
             role="group"
             aria-label="Release button group"
           >
