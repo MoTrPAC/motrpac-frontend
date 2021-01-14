@@ -186,7 +186,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
       principalInvestigatorName: formValues.PIName,
       dataUseIntent: formValues.dataUseIntent,
       eSignature: formValues.eSignature,
-      embargoAgreementVersion: 'E1.0',
+      embargoAgreementVersion: 'E1.1',
       embargoAgreementDate: dayjs().format(timeFormat),
     };
 
