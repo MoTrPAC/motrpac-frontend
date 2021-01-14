@@ -450,7 +450,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                   Data Release.&nbsp;
                   <em>MoTrPAC Data Hub</em>
                   . MoTrPAC Bioinformatics Center. October 15, 2019. Version 1.0.&nbsp;
-                  motrpac-data.org
+                  https://motrpac-data.org
                 </p>
                 <p className="card-text">
                   <em>Optional:</em>
