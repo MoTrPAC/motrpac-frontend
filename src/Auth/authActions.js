@@ -75,7 +75,7 @@ export function handleAuthCallbackAsync() {
       }
 
       dispatch(loginSuccess(data));
-      auth.getProfile((err, profile) => {
+      auth.getProfile((error, profile) => {
         return dispatch(receiveProfile(profile));
       });
     });
