@@ -1,6 +1,5 @@
 import React from 'react';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { shallow, mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer, { defaultRootState } from '../../App/reducers';
@@ -9,8 +8,6 @@ import AnalysisHomePageConnected, {
   AnalysisHomePage,
 } from '../analysisHomePage';
 import analysisTypes from '../../lib/analysisTypes';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 // Checks if any of the analyses has been set to true
 //   Used to determine if other tests depending on these to be active should run

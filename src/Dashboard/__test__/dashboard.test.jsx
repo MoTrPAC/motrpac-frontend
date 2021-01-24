@@ -1,6 +1,5 @@
 import React from 'react';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { shallow, mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleWare from 'redux-thunk';
@@ -10,8 +9,6 @@ import { defaultDashboardState } from '../dashboardReducer';
 import { defaultSidebarState } from '../../Sidebar/sidebarReducer';
 import DashboardConnected, { Dashboard } from '../dashboard';
 import History from '../../App/history';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const testUser = require('../../testData/testUser');
 
