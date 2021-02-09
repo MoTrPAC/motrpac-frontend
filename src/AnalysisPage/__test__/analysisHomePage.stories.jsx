@@ -1,20 +1,20 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
+import configureStore from '../../App/configureStore';
 import { AnalysisHomePage } from '../analysisHomePage';
 import { Navbar } from '../../Navbar/navbar';
 import { Footer } from '../../Footer/footer';
 import { Sidebar } from '../../Sidebar/sidebar';
 import { defaultAnalysisState } from '../analysisReducer';
 
+const store = configureStore();
+
 const testUser = require('../../testData/testUser');
 
 const navbarAction = {
   logout: action('logging out'),
-};
-
-const footerAction = {
-  login: action('logging in'),
 };
 
 const sidebarActions = {
@@ -25,7 +25,6 @@ const sidebarActions = {
 const AnalysisActions = {
   goBack: action('Back'),
   onPickAnalysis: action('Pick Analysis'),
-  onPickSubAnalysis: action('Pick SubAnalysis'),
 };
 
 const animalMatch = {
@@ -38,19 +37,6 @@ const humanMatch = {
     subjectType: 'human',
   },
 };
-const depth1StateHuman = {
-  ...defaultAnalysisState,
-  match: humanMatch,
-  depth: 1,
-  currentAnalysis: 'META_ANALYSIS',
-};
-const depth2StateHuman = {
-  ...defaultAnalysisState,
-  match: humanMatch,
-  depth: 2,
-  currentAnalysis: 'META_ANALYSIS',
-  currentSubAnalysis: 'META_ANALYSIS_PUBLIC_DATA',
-};
 const depth1StateAnimal = {
   ...defaultAnalysisState,
   match: animalMatch,
@@ -59,7 +45,7 @@ const depth1StateAnimal = {
 };
 storiesOf('Analysis Page', module)
   .addDecorator((story) => (
-    <>
+    <Provider store={store}>
       <div className="App">
         <header>
           <Navbar isAuthenticated {...navbarAction} profile={testUser} />
@@ -73,11 +59,9 @@ storiesOf('Analysis Page', module)
           </div>
         </div>
       </div>
-      <Footer isAuthenticated profile={testUser} {...footerAction} />
-    </>
+      <Footer isAuthenticated profile={testUser} />
+    </Provider>
   ))
-  .add('Animal', () => <AnalysisHomePage isAuthenticated {...defaultAnalysisState} match={animalMatch} {...AnalysisActions} />)
-  .add('Animal Depth 1', () => <AnalysisHomePage isAuthenticated {...depth1StateAnimal} {...AnalysisActions} />)
-  .add('Human', () => <AnalysisHomePage isAuthenticated {...defaultAnalysisState} match={humanMatch} {...AnalysisActions} />)
-  .add('Human Depth 1', () => <AnalysisHomePage isAuthenticated {...depth1StateHuman} {...AnalysisActions} />)
-  .add('Human Depth 2', () => <AnalysisHomePage isAuthenticated {...depth2StateHuman} {...AnalysisActions} />);
+  .add('Animal', () => <AnalysisHomePage {...defaultAnalysisState} match={animalMatch} {...AnalysisActions} />)
+  .add('Animal Depth 1', () => <AnalysisHomePage {...depth1StateAnimal} {...AnalysisActions} />)
+  .add('Human', () => <AnalysisHomePage {...defaultAnalysisState} match={humanMatch} {...AnalysisActions} />);
