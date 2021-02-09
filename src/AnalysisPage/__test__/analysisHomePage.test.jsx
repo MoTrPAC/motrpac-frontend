@@ -31,7 +31,6 @@ const loggedInRootState = {
 
 const analysisActions = {
   onPickAnalysis: jest.fn(),
-  onPickSubAnalysis: jest.fn(),
   goBack: jest.fn(),
 };
 
@@ -183,34 +182,11 @@ describe('Connected Human AnalysisPage', () => {
     mountedAnalysis.unmount();
   });
 
-  test('Clicking active human analysis displays sub-analyses, and clicking back button returns to analysis entry page', () => {
-    if (anyAnalysisActive) {
-      // Initially shows analysisTypeButton
-      expect(mountedAnalysis.find('AnalysisCard')).not.toHaveLength(0);
-
-      // Click button --> replace analysisTypeButton with SubAnalysisButton
-      mountedAnalysis.find('.activeAnalysis').first().simulate('click');
-      expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(1);
-      mountedAnalysis.update();
-      expect(mountedAnalysis.find('SubAnalysisCard')).not.toHaveLength(0);
-      expect(mountedAnalysis.find('AnalysisCard')).toHaveLength(0);
-      mountedAnalysis.find('.subAnalysis.activeAnalysis').first().simulate('click');
-      expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(2);
-      mountedAnalysis.update();
-      expect(mountedAnalysis.find('HumanDataAnalysis')).not.toHaveLength(0);
-
-      // Click back button --> replace SubAnalysisButton with AnalysisTypeButton
-      mountedAnalysis.find('.backButton').first().simulate('click');
-      expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(1);
-      mountedAnalysis.update();
-      expect(mountedAnalysis.find('HumanDataAnalysis')).toHaveLength(0);
-      mountedAnalysis.find('.backButton').first().simulate('click');
-      expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(0);
-      mountedAnalysis.update();
-      expect(mountedAnalysis.find('SubAnalysisCard')).toHaveLength(0);
-      expect(mountedAnalysis.find('AnalysisCard')).not.toHaveLength(0);
-    } else {
-      expect(mountedAnalysis.find('.activeAnalysis')).toHaveLength(0);
-    }
+  test('There should be no active or clickable human analysis cards', () => {
+    // Initially shows 6 inactive analysisTypeButton
+    expect(mountedAnalysis.find('AnalysisCard')).toHaveLength(6);
+    expect(mountedAnalysis.find('.activeAnalysis')).toHaveLength(0);
+    expect(mountedAnalysis.find('SubAnalysisCard')).toHaveLength(0);
+    expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(0);
   });
 });
