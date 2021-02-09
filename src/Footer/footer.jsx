@@ -107,8 +107,8 @@ Footer.propTypes = {
     user_metadata: PropTypes.object,
   }),
   isAuthenticated: PropTypes.bool,
-  login: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
+  login: PropTypes.func,
+  logout: PropTypes.func,
 };
 
 Footer.defaultProps = {
