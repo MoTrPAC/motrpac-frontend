@@ -4,10 +4,8 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import analysisTypes from '../lib/analysisTypes';
 import AnimalDataAnalysis from './animalDataAnalysis';
-import HumanDataAnalysis from './humanDataAnalysis';
 import AuthContentContainer from '../lib/ui/authContentContainer';
 import AnalysisCard from './analysisCard';
-import SubAnalysisCard from './subAnalysisCard';
 
 // TODO: Add animation of transitions potentially with CSSTransitions package
 
@@ -16,10 +14,7 @@ export function AnalysisHomePage({
   depth,
   currentAnalysis,
   currentAnalysisTitle,
-  currentSubAnalysis,
-  currentSubAnalysisTitle,
   onPickAnalysis,
-  onPickSubAnalysis,
   goBack,
   expanded,
   profile,
@@ -57,28 +52,6 @@ export function AnalysisHomePage({
     />
   ));
 
-  // Return sub-analyses of human meta-analysis of public data
-  let selectSubAnalyses;
-
-  if (depth === 1 && subjectType === 'human' && currentAnalysis) {
-    const selectedAnalysis = analysesBySpecies.filter(
-      (analysis) => analysis.shortName === currentAnalysis
-    );
-    if (
-      selectedAnalysis &&
-      selectedAnalysis.length &&
-      selectedAnalysis[0].subAnalyses.length
-    ) {
-      selectSubAnalyses = selectedAnalysis[0].subAnalyses.map((analysis) => (
-        <SubAnalysisCard
-          key={analysis.shortName}
-          subAnalysis={analysis}
-          onPickSubAnalysis={onPickSubAnalysis}
-        />
-      ));
-    }
-  }
-
   // Sets subject label for title display
   const titleSubjectLabel = subjectType
     .split(' ')
@@ -91,8 +64,6 @@ export function AnalysisHomePage({
     if (depth === 0) headerTitle = `${titleSubjectLabel} Data Analysis`;
     if (depth === 1)
       headerTitle = `${currentAnalysisTitle} (${titleSubjectLabel})`;
-    if (depth === 2)
-      headerTitle = `${currentSubAnalysisTitle} (${titleSubjectLabel})`;
 
     return headerTitle;
   }
@@ -113,17 +84,6 @@ export function AnalysisHomePage({
       {depth === 1 && subjectType === 'animal' && (
         <AnimalDataAnalysis analysis={currentAnalysis} />
       )}
-      {depth === 1 && subjectType === 'human' && (
-        <div className="row row-cols-1 row-cols-lg-2 row-cols-xl-3 mt-4">
-          {selectSubAnalyses}
-        </div>
-      )}
-      {depth === 2 && subjectType === 'human' && (
-        <HumanDataAnalysis
-          analysis={currentAnalysis}
-          subAnalysis={currentSubAnalysis}
-        />
-      )}
     </AuthContentContainer>
   );
 }
@@ -137,11 +97,8 @@ AnalysisHomePage.propTypes = {
   depth: PropTypes.number.isRequired,
   currentAnalysis: PropTypes.string.isRequired,
   currentAnalysisTitle: PropTypes.string.isRequired,
-  currentSubAnalysis: PropTypes.string.isRequired,
-  currentSubAnalysisTitle: PropTypes.string.isRequired,
   goBack: PropTypes.func.isRequired,
   onPickAnalysis: PropTypes.func.isRequired,
-  onPickSubAnalysis: PropTypes.func.isRequired,
   expanded: PropTypes.bool,
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
@@ -162,8 +119,6 @@ const mapStateToProps = (state) => ({
   depth: state.analysis.depth,
   currentAnalysis: state.analysis.currentAnalysis,
   currentAnalysisTitle: state.analysis.currentAnalysisTitle,
-  currentSubAnalysis: state.analysis.currentSubAnalysis,
-  currentSubAnalysisTitle: state.analysis.currentSubAnalysisTitle,
   expanded: state.sidebar.expanded,
   profile: state.auth.profile,
 });
@@ -178,12 +133,6 @@ const mapDispatchToProps = (dispatch) => ({
   goBack: () =>
     dispatch({
       type: 'GO_BACK',
-    }),
-  onPickSubAnalysis: (subAnalysis, subAnalysisTitle) =>
-    dispatch({
-      type: 'SUBANALYSIS_SELECT',
-      subAnalysis,
-      subAnalysisTitle,
     }),
 });
 

@@ -13,11 +13,8 @@ export const defaultAnalysisState = {
   },
   currentAnalysis: '',
   currentAnalysisTitle: '',
-  currentSubAnalysis: '',
-  currentSubAnalysisTitle: '',
   depth: 0,
   analysisSelected: false,
-  subAnalysisSelected: false,
   weightPlot: 'one_week_program',
   bodyFatPlot: 'one_week_program',
   vo2Plot: 'one_week_program',
@@ -37,14 +34,6 @@ export default function AnalysisReducer(
         analysisSelected: true,
         depth: 1,
       };
-    case 'SUBANALYSIS_SELECT':
-      return {
-        ...state,
-        currentSubAnalysis: action.subAnalysis,
-        currentSubAnalysisTitle: action.subAnalysisTitle,
-        subAnalysisSelected: true,
-        depth: 2,
-      };
     case 'GO_BACK':
       return {
         ...state,
@@ -55,11 +44,8 @@ export default function AnalysisReducer(
         ...state,
         currentAnalysis: '',
         currentAnalysisTitle: '',
-        currentSubAnalysis: '',
-        currentSubAnalysisTitle: '',
         depth: 0,
         analysisSelected: false,
-        subAnalysisSelected: false,
       };
     case TOGGLE_WEIGHT_PLOT:
       return {
