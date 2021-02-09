@@ -89,7 +89,7 @@ export function LinkoutPage({ isAuthenticated, expanded }) {
             />
             <div className="card-body">
               <h6 className="card-title">
-                <a href={`${link.protocol}://www.${link.url}`} target="_new">
+                <a href={`${link.protocol}://${link.url}`} target="_new">
                   {link.title}
                   &nbsp;
                   <span className="oi oi-external-link" />
