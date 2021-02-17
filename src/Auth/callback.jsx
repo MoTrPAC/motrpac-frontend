@@ -12,16 +12,18 @@ export function Callback({ location }) {
     dispatch(actions.handleAuthCallback());
   }
 
-  if (isFetching && !isAuthenticated) {
-    return (
-      <div className="authLoading">
-        <span className="oi oi-shield" />
-        <h3>{message || 'Authenticating...'}</h3>
-      </div>
-    );
-  }
-
-  return <Redirect to="/dashboard" />
+  return (
+    <>
+      {isFetching && !isAuthenticated ? (
+        <div className="authLoading">
+          <span className="oi oi-shield" />
+          <h3>{message || 'Authenticating...'}</h3>
+        </div>
+      ) : (
+        <Redirect to="/dashboard" />
+      )}
+    </>
+  );
 }
 
 Callback.propTypes = {
