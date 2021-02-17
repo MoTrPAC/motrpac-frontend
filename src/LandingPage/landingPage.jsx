@@ -23,7 +23,7 @@ const trans3d = (x, y) => `translate3d(${x / 6}px,${y / 16}px,0)`;
  *
  * @returns {object} JSX representation of the landing page.
  */
-export function LandingPage({ isPending, isAuthenticated, profile }) {
+export function LandingPage({ isAuthenticated, profile }) {
   // Local state for managing particle animation
   const [visibility, setVisibility] = useState(true);
 
@@ -70,16 +70,6 @@ export function LandingPage({ isPending, isAuthenticated, profile }) {
     config: { mass: 10, tension: 550, friction: 140 },
   }));
   const { xy } = values;
-
-  // FIXME: temp workaround to handle callback redirect
-  if (isPending) {
-    return (
-      <div className="authLoading">
-        <span className="oi oi-shield" />
-        <h3>Authenticating...</h3>
-      </div>
-    );
-  }
 
   // Redirect authenticated users to protected route
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
@@ -347,19 +337,15 @@ LandingPage.propTypes = {
     user_metadata: PropTypes.object,
   }),
   isAuthenticated: PropTypes.bool,
-  isPending: PropTypes.bool,
 };
 
 LandingPage.defaultProps = {
   profile: {},
   isAuthenticated: false,
-  isPending: false,
 };
 
 const mapStateToProps = (state) => ({
-  profile: state.auth.profile,
-  isAuthenticated: state.auth.isAuthenticated,
-  isPending: state.auth.isPending,
+  ...state.auth,
 });
 
 export default connect(mapStateToProps)(LandingPage);
