@@ -15,13 +15,13 @@ import DownloadPageConnected from '../DownloadPage/downloadPage';
 import MethodsConnected from '../MethodsPage/methods';
 import TeamPageConnected from '../TeamPage/teamPage';
 import ContactConnected from '../ContactPage/contact';
-import ErrorPageConnected from '../ErrorPage/error';
+import ErrorPage from '../ErrorPage/error';
 import SearchPageConnected from '../Search/searchPage';
 import ReleasePageConnected from '../ReleasePage/releasePage';
 import DataSummaryPage from '../DataSummaryPage/dataSummaryPage';
 import DataAccessPageConnected from '../DataAccess/dataAccessPage';
 import AnnouncementsPageConnected from '../AnnouncementsPage/announcementsPage';
-import CallbackConnected from '../Auth/callback';
+import Callback from '../Auth/callback';
 import SidebarConnected from '../Sidebar/sidebar';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
 import PrivateRoute from '../Auth/privateRoute';
@@ -39,7 +39,7 @@ function App({ history = History }) {
           <div className="row justify-content-center">
             <SidebarConnected />
             <Switch>
-              <Route path="/callback" component={withTracker(CallbackConnected)} />
+              <Route path="/callback" component={withTracker(Callback)} />
               <Route path="/" exact component={withTracker(LandingPageConnected)} />
               <PrivateRoute path="/dashboard" component={withTracker(DashboardConnected)} />
               <PrivateRoute path="/upload" component={withTracker(UploadScreenConnected)} />
@@ -50,7 +50,7 @@ function App({ history = History }) {
               <Route path="/team" component={withTracker(TeamPageConnected)} />
               <Route path="/contact" component={withTracker(ContactConnected)} />
               <Route path="/announcements" component={withTracker(AnnouncementsPageConnected)} />
-              <Route path="/error" component={withTracker(ErrorPageConnected)} />
+              <Route path="/error" component={withTracker(ErrorPage)} />
               <PrivateRoute path="/search" component={withTracker(SearchPageConnected)} />
               <PrivateRoute path="/summary" component={withTracker(DataSummaryPage)} />
               <PrivateRoute path="/releases" component={withTracker(ReleasePageConnected)} />
