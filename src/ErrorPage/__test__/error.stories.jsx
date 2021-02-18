@@ -1,9 +1,13 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
+import { Provider } from 'react-redux';
+import configureStore from '../../App/configureStore';
 import { ErrorPage } from '../error';
 import { Navbar } from '../../Navbar/navbar';
 import { Footer } from '../../Footer/footer';
+
+const store = configureStore();
 
 const testUser = require('../../testData/testUser');
 
@@ -13,7 +17,7 @@ const loginAction = {
 
 storiesOf('Error Page', module)
   .addDecorator(story => (
-    <React.Fragment>
+    <Provider store={store}>
       <div className="App">
         <header>
           <Navbar {...loginAction} profile={testUser} />
@@ -23,6 +27,6 @@ storiesOf('Error Page', module)
         </div>
       </div>
       <Footer profile={testUser} {...loginAction} />
-    </React.Fragment>
+    </Provider>
   ))
   .add('Default', () => <ErrorPage />);
