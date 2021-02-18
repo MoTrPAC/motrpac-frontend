@@ -45,7 +45,6 @@ export function Dashboard({
   toggleSort,
   toggleQC,
   isAuthenticated,
-  isFetching,
   isPending,
 }) {
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
@@ -255,7 +254,6 @@ Dashboard.propTypes = {
   toggleSort: PropTypes.func.isRequired,
   toggleQC: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
-  isFetching: PropTypes.bool,
   isPending: PropTypes.bool,
 };
 
@@ -267,8 +265,7 @@ Dashboard.defaultProps = {
   plot: 'tissue_name',
   sort: 'default',
   showQC: true,
-  isAuthentiacted: false,
-  isFetching: false,
+  isAuthenticated: false,
   isPending: false,
 };
 
