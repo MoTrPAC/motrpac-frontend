@@ -115,6 +115,8 @@ Footer.propTypes = {
 Footer.defaultProps = {
   profile: {},
   isAuthenticated: false,
+  login: null,
+  logout: null,
 };
 
 const mapStateToProps = state => ({
