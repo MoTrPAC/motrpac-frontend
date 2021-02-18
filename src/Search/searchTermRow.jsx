@@ -17,7 +17,7 @@ function SearchTermRow({
   };
 
   return (
-    <React.Fragment>
+    <>
       {advSearchParams.length > 1 && idx > 0
         ? (
           <select
@@ -82,7 +82,7 @@ function SearchTermRow({
           </button>
         )
         : <span className="param-btn-filler" />}
-    </React.Fragment>
+    </>
   );
 }
 

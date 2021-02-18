@@ -36,9 +36,9 @@ export function Footer({
   const LogoutButton = () => {
     if (isAuthenticated) {
       return (
-          <button type="button" onClick={handleLogout} className="logOutBtn btn btn-primary">
-            Log out
-          </button>
+        <button type="button" onClick={handleLogout} className="logOutBtn btn btn-primary">
+          Log out
+        </button>
       );
     }
   };
@@ -61,14 +61,15 @@ export function Footer({
                 <li className="nav-item navItem"><a href="/" className="nav-link">Home</a></li>
                 <li className="nav-item navItem"><a href="/team" className="nav-link">About Us</a></li>
                 <li className="nav-item navItem"><a href="/contact" className="nav-link">Contact Us</a></li>
-                {(isAuthenticated && !hasAccess) ?
-                  (<li className="nav-item navItem">
+                {(isAuthenticated && !hasAccess) ? (
+                  <li className="nav-item navItem">
                     <LogoutButton />
-                  </li>) :
-                  (<li className="nav-item navItem">
+                  </li>
+                ) : (
+                  <li className="nav-item navItem">
                     <LoginButton login={login} />
-                  </li>)
-                }
+                  </li>
+                )}
               </ul>
             </div>
           </div>
@@ -114,8 +115,6 @@ Footer.propTypes = {
 Footer.defaultProps = {
   profile: {},
   isAuthenticated: false,
-  login: null,
-  logout: null,
 };
 
 const mapStateToProps = state => ({
