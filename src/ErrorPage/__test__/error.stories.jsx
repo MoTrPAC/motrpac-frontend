@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { Provider } from 'react-redux';
 import configureStore from '../../App/configureStore';
-import { ErrorPage } from '../error';
+import ErrorPage from '../error';
 import { Navbar } from '../../Navbar/navbar';
 import { Footer } from '../../Footer/footer';
 
