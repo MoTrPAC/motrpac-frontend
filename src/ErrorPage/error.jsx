@@ -8,7 +8,7 @@ import ContactHelpdesk from '../lib/ui/contactHelpdesk';
  *
  * @returns {Object} JSX representation of the Error page.
  */
-export function ErrorPage() {
+function ErrorPage() {
   const { isAuthenticated, profile } = useSelector((state) => state.auth);
   const history = useHistory();
 

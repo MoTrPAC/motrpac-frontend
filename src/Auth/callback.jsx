@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import actions from './authActions';
 
-export function Callback({ location }) {
+function Callback({ location }) {
   const { isAuthenticated, isFetching, message } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   // Handle authentication if expected values are in the URL.
