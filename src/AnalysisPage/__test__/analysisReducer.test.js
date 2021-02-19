@@ -2,11 +2,7 @@ import AnalysisReducer, { defaultAnalysisState } from '../analysisReducer';
 
 const analysisSelectAction = {
   type: 'ANALYSIS_SELECT',
-  analysis: 'PDMA',
-};
-const subAnalysisSelectAction = {
-  type: 'SUBANALYSIS_SELECT',
-  analysis: 'MA_G',
+  analysis: 'PHENOTYPE',
 };
 const goBackAction = {
   type: 'GO_BACK',
@@ -19,14 +15,10 @@ describe('Analysis Reducer', () => {
     expect(AnalysisReducer(defaultAnalysisState, analysisSelectAction).currentAnalysis)
       .toEqual(analysisSelectAction.analysis);
   });
-  test('Selecting subanalysis changes current subanalysis', () => {
-    expect(AnalysisReducer(defaultAnalysisState, subAnalysisSelectAction).subAnalysis)
-      .toEqual(subAnalysisSelectAction.subAnalysis);
-  });
   test('Depth decreases by 1', () => {
     const deepState = {
       ...defaultAnalysisState,
-      depth: 3,
+      depth: 2,
     };
     expect(AnalysisReducer(deepState, goBackAction).depth)
       .toEqual(deepState.depth - 1);

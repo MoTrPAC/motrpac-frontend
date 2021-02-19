@@ -16,7 +16,7 @@ storiesOf('Landing Page', module)
       <header>
         <Navbar />
       </header>
-      <div className="componentHolder">
+      <div className="componentHolder mt-5 pt-2">
         {story()}
       </div>
       <Footer {...footerActions} />

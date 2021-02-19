@@ -50,7 +50,7 @@ storiesOf('Release Page', module)
       </header>
       <div className="componentHolder">
         <div className="container-fluid">
-          <div className="row">
+          <div className="row mt-5 pt-1">
             <Sidebar isAuthenticated profile={internalUser} {...sidebarActions} />
             {story()}
           </div>
