@@ -21,7 +21,7 @@ storiesOf('Announcements Page', module)
         <header>
           <Navbar {...navbarAction} />
         </header>
-        <div className="row justify-content-center mt-3">{story()}</div>
+        <div className="row justify-content-center mt-5 pt-4">{story()}</div>
       </div>
       <Footer {...footerAction} />
     </>

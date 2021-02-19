@@ -42,6 +42,7 @@ const depth1StateAnimal = {
   match: animalMatch,
   depth: 1,
   currentAnalysis: 'PHENOTYPE',
+  currentAnalysisTitle: 'Phenotypic Data',
 };
 storiesOf('Analysis Page', module)
   .addDecorator((story) => (
@@ -52,7 +53,7 @@ storiesOf('Analysis Page', module)
         </header>
         <div className="componentHolder">
           <div className="container-fluid">
-            <div className="row">
+            <div className="row mt-5 pt-1">
               <Sidebar isAuthenticated profile={testUser} {...sidebarActions} />
               {story()}
             </div>
