@@ -1,10 +1,8 @@
-import metaAnalysisIcon from '../assets/analysisIcons/MetaAnalysis.svg';
 import moleculeIcon from '../assets/analysisIcons/DifferentialMolecules.svg';
 import tissueIcon from '../assets/analysisIcons/Tissue.svg';
 import networkIcon from '../assets/analysisIcons/NetworkAnalysis.svg';
 import timeIcon from '../assets/analysisIcons/TimeCourse.svg';
 import omicsIcon from '../assets/analysisIcons/OmicsComparison.svg';
-import metaAnalysisGeneIcon from '../assets/analysisIcons/MetaAnalysisGene.svg';
 import phenotypeIcon from '../assets/analysisIcons/PhenotypeData.svg';
 import moleculeIconInactive from '../assets/analysisIcons/DifferentialMolecules_inactive.svg';
 import tissueIconInactive from '../assets/analysisIcons/Tissue_inactive.svg';
@@ -24,40 +22,6 @@ const analysisTypes = [
       'A number of visualizations are presented in the analysis of various phenotype data from the 6-month old rats.',
     active: true,
     species: ['animal'],
-  },
-  {
-    title: 'Published Data Meta-Analysis',
-    shortName: 'META_ANALYSIS',
-    icon: metaAnalysisIcon,
-    inactiveIcon: null,
-    description:
-      'This analysis includes two sub-analyses: the meta-analysis of public data and the gene time course clustering.',
-    active: true,
-    species: ['human'],
-    subAnalyses: [
-      {
-        title: 'Meta-Analysis of Public Data',
-        icon: metaAnalysisGeneIcon,
-        inactiveIcon: null,
-        shortName: 'META_ANALYSIS_PUBLIC_DATA',
-        input: 'Specific Tissue(s), Gene, and Time Window',
-        description:
-          'Displays up and down regulations. Gene lists are detected for interpretation.',
-        active: true,
-        species: ['human'],
-      },
-      {
-        title: 'Gene Time Course Clustering',
-        icon: null,
-        inactiveIcon: geneTimeCourseInactive,
-        shortName: 'GENE_TIME_COURSE',
-        input: 'Differentially Expressed Genes',
-        description:
-          'Genes are clustered by their trajectories. Results are sorted by tissues.',
-        active: false,
-        species: ['human'],
-      },
-    ],
   },
   {
     title: 'Gene-Centric View',
@@ -113,6 +77,17 @@ const analysisTypes = [
       'Explore consistencies across different "omes", focusing on novel discoveries (e.g. novel enhancers that are correlated with transcriptomic response).',
     active: false,
     species: ['animal', 'human'],
+  },
+  {
+    title: 'Gene Time Course Clustering',
+    icon: null,
+    inactiveIcon: geneTimeCourseInactive,
+    shortName: 'GENE_TIME_COURSE',
+    input: 'Differentially Expressed Genes',
+    description:
+      'Genes are clustered by their trajectories. Results are sorted by tissues.',
+    active: false,
+    species: ['human'],
   },
 ];
 

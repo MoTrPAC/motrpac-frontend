@@ -21,7 +21,7 @@ storiesOf('Contact Us Page', module)
         <header>
         <Navbar {...navbarAction} />
         </header>
-        <div className="row justify-content-center mt-3">
+        <div className="row justify-content-center mt-5 pt-4">
           {story()}
         </div>
       </div>

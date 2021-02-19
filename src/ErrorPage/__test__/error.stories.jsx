@@ -22,7 +22,7 @@ storiesOf('Error Page', module)
         <header>
           <Navbar {...loginAction} profile={testUser} />
         </header>
-        <div className="row justify-content-center">
+        <div className="row justify-content-center mt-5">
           {story()}
         </div>
       </div>
