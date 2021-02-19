@@ -18,8 +18,7 @@ function PrivateRoute({ children, ...args }) {
               state: { from: location }
             }}
           />
-        )
-      }
+        )}
     />
   );
 }
