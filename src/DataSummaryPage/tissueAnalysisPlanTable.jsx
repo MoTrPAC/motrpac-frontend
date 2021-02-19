@@ -42,14 +42,11 @@ function TissueAnalysisPlanTable() {
             <div className="sample-number-content d-inline-flex align-items-center">
               <div>{item.expected_samples}</div>
               {/* Temporarily suppressing links for other sites */}
-              {item.site.match(/MSSM|Stanford/i)
-                ? (
-                  <div>{samplesLink}</div>
-                )
-                : (
-                  <div><span className="badge badge-success">{item.received_samples}</span></div>
-                )
-              }
+              {item.site.match(/MSSM|Stanford/i) ? (
+                <div>{samplesLink}</div>
+              ) : (
+                <div><span className="badge badge-success">{item.received_samples}</span></div>
+              )}
             </div>
           );
         } else if (!item.expected_samples && item.received_samples) {
@@ -57,12 +54,9 @@ function TissueAnalysisPlanTable() {
           sampleNum = (
             <div className="sample-number-content d-inline-flex align-items-center flagged">
               {/* Temporarily suppressing links for other sites */}
-              {item.site.match(/MSSM|Stanford/i)
-                ? samplesLink
-                : (
-                  <span className="badge badge-success">{item.received_samples}</span>
-                )
-              }
+              {item.site.match(/MSSM|Stanford/i) ? samplesLink : (
+                <span className="badge badge-success">{item.received_samples}</span>
+              )}
             </div>
           );
         }

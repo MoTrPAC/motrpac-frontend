@@ -1,9 +1,6 @@
 import React from 'react';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { Footer } from '../footer';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const testUser = require('../../testData/testUser');
 

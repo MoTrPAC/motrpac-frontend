@@ -43,7 +43,7 @@ function HumanGeneMetaAnalysis() {
   // Renders found gene stats info in the gene search panel
   const renderGeneInfo = () => {
     if (geneObj && Object.keys(geneObj).length) {
-      const geneObjClone = Object.assign({}, geneObj);
+      const geneObjClone = { ...geneObj };
       delete geneObjClone.Summary;
 
       return (
