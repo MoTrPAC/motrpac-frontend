@@ -22,7 +22,7 @@ storiesOf('New User Registration Response', module)
           <Navbar {...navbarActions} />
         </header>
         <div className="justify-content-center dataAccessPage">
-          <div className="container">
+          <div className="container mt-5 pt-4">
             {story()}
           </div>
         </div>
