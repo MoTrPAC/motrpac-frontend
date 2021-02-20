@@ -1,5 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ContactHelpdesk from '../lib/ui/contactHelpdesk';
 
@@ -8,8 +9,7 @@ import ContactHelpdesk from '../lib/ui/contactHelpdesk';
  *
  * @returns {Object} JSX representation of the Error page.
  */
-function ErrorPage() {
-  const { isAuthenticated, profile } = useSelector((state) => state.auth);
+export function ErrorPage({ isAuthenticated, profile }) {
   const history = useHistory();
 
   if (isAuthenticated && profile.user_metadata) {
@@ -56,4 +56,20 @@ function ErrorPage() {
   );
 }
 
-export default ErrorPage;
+ErrorPage.propTypes = {
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.object,
+  }),
+  isAuthenticated: PropTypes.bool,
+};
+
+ErrorPage.defaultProps = {
+  profile: {},
+  isAuthenticated: false,
+};
+
+const mapStateToProps = (state) => ({
+  ...state.auth,
+});
+
+export default connect(mapStateToProps, null)(ErrorPage);
