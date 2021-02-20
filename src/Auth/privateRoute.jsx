@@ -6,20 +6,13 @@ function PrivateRoute({ children, ...args }) {
   const { isAuthenticated, isFetching, profile } = useSelector((state) => state.auth);
 
   return (
-    <Route
-      {...args}
-      render={({ location }) =>
-        isAuthenticated && !isFetching && profile.user_metadata ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/",
-              state: { from: location }
-            }}
-          />
-        )}
-    />
+    <>
+      {isAuthenticated && !isFetching && profile.user_metadata ? (
+        <Route component={children} {...args} />
+      ) : (
+        <Redirect exact to="/" />
+      )}
+    </>
   );
 }
 
