@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import ContactHelpdesk from '../lib/ui/contactHelpdesk';
 
 /**
@@ -10,10 +10,8 @@ import ContactHelpdesk from '../lib/ui/contactHelpdesk';
  * @returns {Object} JSX representation of the Error page.
  */
 export function ErrorPage({ isAuthenticated, profile }) {
-  const history = useHistory();
-
   if (isAuthenticated && profile.user_metadata) {
-    return history.goBack();
+    return <Redirect to="/dashboard" />
   }
 
   return (
@@ -72,4 +70,4 @@ const mapStateToProps = (state) => ({
   ...state.auth,
 });
 
-export default connect(mapStateToProps, null)(ErrorPage);
+export default connect(mapStateToProps)(ErrorPage);
