@@ -436,7 +436,11 @@ ReleasedSampleSummary.propTypes = {
     }),
   }).isRequired,
   release: PropTypes.string.isRequired,
-  userType: PropTypes.string.isRequired,
+  userType: PropTypes.string,
 };
+
+ReleasedSampleSummary.defaultProps = {
+  userType: '',
+}
 
 export default ReleasedSampleSummary;

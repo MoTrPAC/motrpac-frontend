@@ -1,30 +1,27 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import AnimatedLoadingIcon from '../lib/ui/loading';
 
-function PrivateRoute({ component, ...args }) {
+function PrivateRoute({ children, ...args }) {
+  const { isAuthenticated, isFetching, profile } = useSelector((state) => state.auth);
 
-  const { isAuthenticated, isFetching, isPending, profile } = useSelector((state) => state.auth);
-  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
-
-  // Route users back to homepage if not authenticated
-  if (!isPending && !isFetching && !isAuthenticated) {
-    return <Redirect to="/" />;
-  }
-
-  // Route users to error page if registered users are
-  // not allowed to have data access
-  if (!isPending && !isFetching && isAuthenticated) {
-    if (!hasAccess) {
-      return <Redirect to="/error" />;
+  function handleAccess() {
+    if (!isAuthenticated && !profile.user_metadata) {
+      return <Redirect exact to="/" />;
     }
+
+    return <Route component={children} {...args} />;
   }
 
   return (
-    <Route
-      component={component}
-      {...args}
-    />
+    <>
+      {!isFetching ? handleAccess() : (
+        <div className="mt-5 py-5">
+          <AnimatedLoadingIcon isFetching={isFetching} />
+        </div>
+      )}
+    </>
   );
 }
 

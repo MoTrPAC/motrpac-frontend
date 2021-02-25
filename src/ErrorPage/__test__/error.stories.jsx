@@ -13,16 +13,16 @@ const loginAction = {
 
 storiesOf('Error Page', module)
   .addDecorator(story => (
-    <React.Fragment>
+    <>
       <div className="App">
         <header>
-          <Navbar {...loginAction} profile={testUser} />
+          <Navbar {...loginAction} />
         </header>
         <div className="row justify-content-center mt-5">
           {story()}
         </div>
       </div>
-      <Footer profile={testUser} {...loginAction} />
-    </React.Fragment>
+      <Footer {...loginAction} />
+    </>
   ))
   .add('Default', () => <ErrorPage />);
