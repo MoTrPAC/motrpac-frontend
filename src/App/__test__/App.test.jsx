@@ -5,8 +5,8 @@ import App from '../App';
 
 const testUser = require('../../testData/testUser');
 
-// Mocking ReactGA for Google Analytics
-jest.mock('react-ga');
+// Mocking Google Analytics
+jest.mock('ga-gtag');
 
 describe('<App />', () => {
   let component;
