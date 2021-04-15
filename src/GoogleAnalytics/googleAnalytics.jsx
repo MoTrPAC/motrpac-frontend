@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import ReactGA from 'react-ga';
+import gtag from 'ga-gtag';
 
-export const initializeReactGA = () => {
+const trackingId = () => {
   // available tracking Ids for motrpac apps
   const trackers = {
     'dev.motrpac-data.org': 'UA-137588878-5',
@@ -35,21 +35,12 @@ export const initializeReactGA = () => {
   // use correct tracking Id based on hostname
   const tracker = trackers[analyticsTrackerHostname];
 
-  ReactGA.initialize(tracker, {
-    gaOptions: {
-      cookieDomain: 'none',
-      siteSpeedSampleRate: 100,
-    },
-  });
+  return tracker;
 };
 
-export const withTracker = (WrappedComponent, options = {}) => {
+export const withTracker = (WrappedComponent) => {
   const trackPage = (page) => {
-    ReactGA.set({
-      page,
-      ...options,
-    });
-    ReactGA.pageview(page);
+    gtag('config', trackingId(), {'page_path': page, 'site_speed_sample_rate' : 100});
   };
 
   const HOC = (props) => {
@@ -64,16 +55,11 @@ export const withTracker = (WrappedComponent, options = {}) => {
   return HOC;
 };
 
-/**
- * TrackEvent - Add custom tracking event.
- * @param {string} category
- * @param {string} action
- * @param {string} label
- */
-export const TrackEvent = (category, action, label) => {
-  ReactGA.event({
-    category,
-    action,
-    label,
+export const trackEvent = (category, action, label) => {
+  gtag('event', action, {
+    event_category: category,
+    event_label: label,
   });
 };
+
+export default trackingId;

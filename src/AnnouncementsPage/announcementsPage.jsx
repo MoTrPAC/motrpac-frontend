@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { TrackEvent } from '../GoogleAnalytics/googleAnalytics';
+import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import AuthContentContainer from '../lib/ui/authContentContainer';
 
 const announcementData = require('./announcements');
@@ -77,7 +77,7 @@ function AnnouncementEntry({ entry }) {
                     className="inline-link-with-icon"
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={TrackEvent.bind(
+                    onClick={trackEvent.bind(
                       this,
                       link.gaEventCategory,
                       link.gaEventAction,

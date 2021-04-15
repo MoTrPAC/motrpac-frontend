@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Particles from 'react-particles-js';
 import { useSpring, animated } from 'react-spring';
-import { TrackEvent } from '../GoogleAnalytics/googleAnalytics';
+import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-yellow_pipelineball_left.gif';
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Heart.png';
@@ -97,7 +97,7 @@ export function LandingPage({ isAuthenticated, profile }) {
             className="inline-link-with-icon"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={TrackEvent.bind(
+            onClick={trackEvent.bind(
               this,
               'MoTrPAC Marker Paper',
               'Cell Publication',
@@ -118,7 +118,7 @@ export function LandingPage({ isAuthenticated, profile }) {
             className="inline-link-with-icon"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={TrackEvent.bind(
+            onClick={trackEvent.bind(
               this,
               'MoTrPAC Marker Paper',
               'NIH Press Release',

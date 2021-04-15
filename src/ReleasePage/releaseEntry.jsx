@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { TrackEvent } from '../GoogleAnalytics/googleAnalytics';
+import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import IconSet from '../lib/iconSet';
 import ToolTip from '../lib/ui/tooltip';
 import ExternalLink from '../lib/ui/externalLink';
@@ -38,6 +38,7 @@ function ReleaseEntry({ profile, currentView }) {
     status: null,
     file: null,
     message: '',
+    releaseVersion: null,
   });
   const [visibleReleases, setVisibleReleases] = useState(2);
 
@@ -113,7 +114,7 @@ function ReleaseEntry({ profile, currentView }) {
   }
 
   // Fetch file url from Google Storage API
-  function fetchFile(bucket, filename) {
+  function fetchFile(bucket, filename, version) {
     return axios.get(`https://data-link-access.motrpac-data.org/${bucket}/${filename}`)
       .then((response) => {
         setFileUrl(response.data.url);
@@ -121,6 +122,7 @@ function ReleaseEntry({ profile, currentView }) {
           status: 'success',
           file: filename,
           message: 'Click this link to download the requested file.',
+          releaseVersion: version,
         });
         setFetching(false);
       }).catch((err) => {
@@ -130,31 +132,39 @@ function ReleaseEntry({ profile, currentView }) {
           status: 'error',
           file: filename,
           message: 'Error occurred. Please close the dialog box and try again.',
+          releaseVersion: version,
         });
         setFetching(false);
       });
   }
 
-  // Handle modal download button click event
-  function handleGAEvent(releaseVersion) {
-    TrackEvent(`Release ${releaseVersion} Downloads (${currentView})`, modalStatus.file, profile.user_metadata.name);
-  }
-
   // Render modal message
-  function renderModalMessage(releaseVersion) {
+  function renderModalMessage() {
     if (modalStatus.status !== 'success') {
       return <span className="modal-message">{modalStatus.message}</span>;
     }
 
     return (
       <span className="modal-message">
-        <a href={fileUrl} download onClick={handleGAEvent(releaseVersion)}>{modalStatus.message}</a>
+        <a
+          id={`${currentView}-${modalStatus.releaseVersion}-${modalStatus.file}`}
+          href={fileUrl}
+          download
+          onClick={trackEvent.bind(
+            this,
+            `Release ${modalStatus.releaseVersion} Downloads (${currentView})`,
+            modalStatus.file,
+            profile.user_metadata.name
+          )}
+        >
+          {modalStatus.message}
+        </a>
       </span>
     );
   }
 
   // Render modal
-  function renderModal(releaseVersion) {
+  function renderModal() {
     return (
       <div className="modal fade data-download-modal" id="dataDownloadModal" tabIndex="-1" role="dialog" aria-labelledby="dataDownloadModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered" role="document">
@@ -167,7 +177,7 @@ function ReleaseEntry({ profile, currentView }) {
             </div>
             <div className="modal-body">
               {!fetching
-                ? renderModalMessage(releaseVersion) : <div className="loading-spinner"><img src={IconSet.Spinner} alt="" /></div>}
+                ? renderModalMessage() : <div className="loading-spinner"><img src={IconSet.Spinner} alt="" /></div>}
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -217,7 +227,7 @@ function ReleaseEntry({ profile, currentView }) {
                 className="btn-data-download"
                 data-toggle="modal"
                 data-target=".data-download-modal"
-                onClick={fetchFile.bind(this, bucket, item.object_zipfile)}
+                onClick={fetchFile.bind(this, bucket, item.object_zipfile, version)}
               >
                 <i className="material-icons release-data-download-icon">save_alt</i>
               </button>
@@ -305,7 +315,7 @@ function ReleaseEntry({ profile, currentView }) {
                           renderDataTypeRow={renderDataTypeRow}
                         />
                       ) : null}
-                      {renderModal(release.version)}
+                      {renderModal()}
                     </div>
                   </div>
                   {currentView === 'internal' && release.raw_files
