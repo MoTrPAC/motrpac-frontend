@@ -12,7 +12,12 @@ import PropTypes from 'prop-types';
  */
 function ExternalLink({ to, label }) {
   return (
-    <a href={to} className="inline-link-with-icon" target="_blank" rel="noopener noreferrer">
+    <a
+      href={to}
+      className="inline-link-with-icon"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       {label && label.length ? label : to}
       <i className="material-icons external-linkout-icon">open_in_new</i>
     </a>

@@ -4,9 +4,9 @@ import IconSet from '../iconSet';
 
 /**
  * Renders the animated loading SVG icon
- * 
+ *
  * @param {Boolean} isFetching  Redux state for data fetching status.
- * 
+ *
  * @returns {Object} JSX representation of the animated loading UI.
  */
 function AnimatedLoadingIcon({ isFetching }) {
