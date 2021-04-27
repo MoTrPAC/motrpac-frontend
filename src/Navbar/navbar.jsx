@@ -194,11 +194,18 @@ export function Navbar({
                 </div>
               </li>
               {!isAuthenticated && !hasAccess ? (
-                <li className="nav-item navItem">
-                  <Link to="/data-access" className="nav-link">
-                    Data Access
-                  </Link>
-                </li>
+                <>
+                  <li className="nav-item navItem">
+                    <Link to="/data-access" className="nav-link">
+                      Data Access
+                    </Link>
+                  </li>
+                  <li className="nav-item navItem">
+                    <Link to="/related-studies" className="nav-link">
+                      Related Studies
+                    </Link>
+                  </li>
+                </>
               ) : null}
               <li className="nav-item navItem">
                 <LogoutButton />
