@@ -1,0 +1,61 @@
+.relatedStudyPage {
+  margin-bottom: 1.25rem;
+
+  .container {
+    .page-title {
+      margin-top: 1.0rem;
+      margin-bottom: 1.5rem;
+  
+      h3 {
+        margin-bottom: 0;
+      }
+    }
+  
+    .main-content {
+      margin-top: 1.25rem;
+      margin-bottom: 1.25rem;
+
+      .card-img-top {
+        height: 20vh;
+        width: 95%;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        border-radius: 10px;
+        margin: 1.5em auto;
+      }
+  
+      .card-body {
+        border-top: 1px solid $gray-200;
+
+        h6 {
+          font-size: 1.1rem;
+
+          a {
+            overflow-wrap: break-word;
+          }
+        }
+      }
+    }
+
+    &.heritage-proteomics {
+      .back-button {
+        font-size: 0.85rem;
+      }
+
+      .data-download-container {
+        a {
+          font-size: 0.9rem;
+
+          i {
+            margin-top: 0.1rem;
+          }
+        }
+
+        .file-download-info {
+          color: #999999;
+        }
+      }
+    }
+  }
+}
