@@ -19,9 +19,8 @@ describe('<App />', () => {
     expect(component.length).toBe(1);
   });
 
-
   test('It should contain eight <Route /> children', () => {
-    expect(component.find('Route').length).toBe(8);
+    expect(component.find('Route').length).toBe(10);
   });
 
   test('It should contain eight <PrivateRoute /> children', () => {
@@ -57,7 +56,7 @@ function testCorrectComponentInPath(app, routeTag, componentName, path, history,
 
 describe('Unauthenticated Application routing', () => {
   const history = createBrowserHistory();
-  let mountApp = mount(<App history={history} />);
+  const mountApp = mount(<App history={history} />);
 
   test('loads the landing page component at index', () => {
     history.push('/');
