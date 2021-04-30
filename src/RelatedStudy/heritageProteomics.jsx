@@ -101,7 +101,7 @@ function HeritageProteomics({ isAuthenticated, profile }) {
             <div className="mx-3 d-flex align-items-center">
               <a
                 download
-                href="http://gcp-bucket/file-path"
+                href="http://related-studies.motrpac-data.org/heritage_proteomics/HERITAGE_proteomics_somalogic.xlsx"
                 className="btn btn-outline-primary d-flex align-items-center"
                 role="button"
               >
