@@ -9,7 +9,7 @@ const relatedStudies = [
   {
     url: '/related-studies/heritage-proteomics',
     text:
-      'The HERITGAE Family Study is a multicenter project whose main goal is to study the role of the genotype in the cardiovascular and metabolic responses to aerobic exercise training and the changes brought about by regular exercise for several cardiovascular disease and diabetes risk factors.',
+      'The HERITAGE Family Study is a multicenter project whose main goal is to study the role of the genotype in the cardiovascular and metabolic responses to aerobic exercise training and the changes brought about by regular exercise for several cardiovascular disease and diabetes risk factors.',
     image: HeritageFamilyStudyLogo,
     title: 'HERITAGE Proteomics',
     newWin: false,
