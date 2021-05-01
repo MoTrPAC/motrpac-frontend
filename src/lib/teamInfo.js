@@ -131,15 +131,15 @@ const teamInfo = {
       name: 'Jonathan N. Myers, Ph.D.',
       title: 'Advisor',
       image: JonImg,
-    },  
+    },
   ],
   Alumni: [
     {
       name: 'Samir Akre',
       title: 'Alumni',
       image: SamirImg,
-    },    
-  ],  
+    },
+  ],
 };
 
 export default teamInfo;
