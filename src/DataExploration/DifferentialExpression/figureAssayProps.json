@@ -1,0 +1,56 @@
+{
+  "rna-seq": {
+    "label": "RNA-seq (TRANSCRIPT)",
+    "legendColor": "#FC8D62",
+    "legendShape": "square",
+    "omic": "Transcriptomics"
+  },
+  "rrbs": {
+    "label": "DNA methylation - RRBS (METHYL)",
+    "legendColor": "#FC8D62",
+    "legendShape": "circle",
+    "omic": "Epigenomics"
+  },
+  "atac-seq": {
+    "label": "Chromatin accessibility (ATAC)",
+    "legendColor": "#FC8D62",
+    "legendShape": "triangle",
+    "omic": "Epigenomics"
+  },
+  "prot-pr": {
+    "label": "Global protein expression (PROT)",
+    "legendColor": "#8DA0CB",
+    "legendShape": "circle",
+    "omic": "Proteomics"
+  },
+  "prot-ph": {
+    "label": "Phosphorylation (PHOSPHO)",
+    "legendColor": "#8DA0CB",
+    "legendShape": "triangle",
+    "omic": "Proteomics"
+  },
+  "prot-ac": {
+    "label": "Acetylation (ACETYL)",
+    "legendColor": "#8DA0CB",
+    "legendShape": "square",
+    "omic": "Proteomics"
+  },
+  "prot-ub": {
+    "label": "Ubiquitination (UBIQ)",
+    "legendColor": "#8DA0CB",
+    "legendShape": "pentagon",
+    "omic": "Proteomics"
+  },
+  "metab": {
+    "label": "Metabolites: named (N-METAB) and unnamed (U-METAB)",
+    "legendColor": "#66C2A5",
+    "legendShape": "circle",
+    "omic": "Metabolomics"
+  },
+  "cytokine": {
+    "label": "Cytokine immunoassays",
+    "legendColor": "#E78AC3",
+    "legendShape": "circle",
+    "omic": "Cytokines"
+  }
+}
