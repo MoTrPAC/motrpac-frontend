@@ -1,0 +1,84 @@
+.differentialExpressionPage {
+  .figure-svg-container {
+    svg {
+      max-height: calc(100vh - 350px);
+      max-width: calc(100vw - 350px);
+    }
+
+    g#Labels {
+      rect {
+        cursor: pointer;
+
+        &.hover,
+        &:hover {
+          -webkit-filter: drop-shadow(0 0 2px rgba(32, 149, 232, 0.75));
+          filter: drop-shadow(0 0 2px rgba(032, 149, 232, 0.75));
+        }
+      }
+
+      g path {
+        cursor: pointer;
+      }
+    }
+
+    g#AssayLegends {
+      rect, circle, polygon {
+        cursor: pointer;
+
+        &:hover {
+          -webkit-filter: drop-shadow(0 0 2px rgba(32, 149, 232, 0.75));
+          filter: drop-shadow(0 0 2px rgba(032, 149, 232, 0.75));
+        }
+      }
+    }
+  }
+}
+
+.figure-assay-legends-container {
+  max-width: 360px;
+
+  .legend-symbol {
+    width: auto;
+    height: 0.85rem;
+  }
+
+  .assay-legend-item {
+    line-height: 1.75;
+  }
+}
+
+.results-container {
+  width: 360px;
+}
+
+div.assay-popover {
+  position: absolute;
+  text-align: center;
+  padding: 4px;
+  border: 1px solid #333333;
+  border-radius: 4px;
+}
+
+.modal.fade {
+  display: none;
+
+  &.show {
+    display: block;
+  }
+}
+
+.modal-title {
+  color: #4d4f53;
+}
+
+.heatmap-tooltip {
+  background: #ffffff;
+  border: solid 1px #000000;
+  border-radius: 4px;
+  box-shadow: 0 2px 0 2px #444444;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 5px;
+  position: absolute;
+  text-align: center;
+}
