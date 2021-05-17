@@ -21,6 +21,7 @@ import ReleasePageConnected from '../ReleasePage/releasePage';
 import DataSummaryPage from '../DataSummaryPage/dataSummaryPage';
 import DataAccessPageConnected from '../DataAccess/dataAccessPage';
 import AnnouncementsPageConnected from '../AnnouncementsPage/announcementsPage';
+import DifferentialExpressionConnected from '../DataExploration/DifferentialExpression/differentialExpressionPage';
 import CallbackConnected from '../Auth/callback';
 import SidebarConnected from '../Sidebar/sidebar';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
@@ -55,6 +56,7 @@ function App({ history = History }) {
               <PrivateRoute path="/summary" component={withTracker(DataSummaryPage)} />
               <PrivateRoute path="/releases" component={withTracker(ReleasePageConnected)} />
               <Route path="/data-access" component={withTracker(DataAccessPageConnected)} />
+              <Route path="/data-exploration/differential-expression" exact component={withTracker(DifferentialExpressionConnected)} />
             </Switch>
           </div>
         </div>
