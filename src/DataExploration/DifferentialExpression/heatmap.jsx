@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
+const figureTissueProps = require('./figureTissueProps.json');
+
 const pass1bTissues = [
   'Adrenal',
   'Brown Adipose',
@@ -118,9 +120,9 @@ function Heatmap({ tissue, assay }) {
 
   function renderHeatmap() {
     // set the dimensions and margins of the graph
-    const margin = { top: 15, right: 15, bottom: 75, left: 130 };
+    const margin = { top: 15, right: 25, bottom: 75, left: 130 };
     // calc width by number of pass1b-06 tissues (20) vs each square's pixel width
-    const width = 20 * 44;
+    const width = 20 * 43;
     // calc height by number of top DE genes (50) vs each sqaure's pixel height
     const height = 50 * 15;
 
@@ -148,8 +150,11 @@ function Heatmap({ tissue, assay }) {
       .attr('transform', 'translate(0,' + height + ')')
       .call(d3.axisBottom(x).tickSize(0).tickPadding(5))
       .selectAll('text')
-      .attr('transform', 'translate(-10,10)rotate(-45)')
-      .style('text-anchor', 'end');
+      .attr('transform', 'translate(-5, 10)rotate(-45)')
+      .style('text-anchor', 'end')
+      .style('font-weight', (d) =>
+        d.indexOf(figureTissueProps[tissue].label) > -1 ? '700' : '300'
+      );
 
     svg.call(d3.axisBottom(x).tickSize(0)).select('.domain').remove();
 
@@ -180,8 +185,13 @@ function Heatmap({ tissue, assay }) {
       .attr('class', 'heatmap-tooltip');
 
     // Tooltip functions
-    const mouseover = (d) => {
-      tooltip.transition().duration(300).style('opacity', 1);
+    const mouseover = (event, d) => {
+      const [xPos, yPos] = d3.pointer(event);
+      tooltip
+        .html(d.adj_p_value)
+        .style('top', yPos - y.bandwidth() / 2 + 'px')
+        .style('left', xPos + margin.left + x.bandwidth() - 5 + 'px');
+      tooltip.transition().duration(500).style('opacity', 1);
       d3.select(this).style('opacity', 1);
     };
     const mousemove = (event, d) => {
@@ -215,7 +225,7 @@ function Heatmap({ tissue, assay }) {
       .on('mouseleave', mouseleave);
 
     // Heatmap legend with continuous gradient
-    const legendMargin = { top: 15, bottom: 75, left: 15, right: 20 };
+    const legendMargin = { top: 15, bottom: 75, left: 25, right: 20 };
     const legendWidth = 20;
     const legendHeight = height; // Same as heatmap height
 
@@ -278,6 +288,19 @@ function Heatmap({ tissue, assay }) {
       .attr('gradientTransform', 'rotate(90)');
 
     legend.append('g').call(legendYAxisRight).select('.domain').remove();
+
+    // Draw legend title/label
+    legend
+      .append('text')
+      .attr('class', 'heatmap-legend-title')
+      .attr('x', 0)
+      .attr('y', legendHeight + legendMargin.top + 25)
+      .append('tspan')
+      .text('Adjusted')
+      .append('tspan')
+      .text('p-value')
+      .attr('x', 0)
+      .attr('y', legendHeight + legendMargin.top + 40);
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
