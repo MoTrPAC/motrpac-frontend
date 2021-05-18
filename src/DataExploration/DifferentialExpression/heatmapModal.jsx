@@ -78,14 +78,12 @@ function HeatmapModal({ tissue, assay, dismissModal }) {
 HeatmapModal.propTypes = {
   tissue: PropTypes.string,
   assay: PropTypes.string,
-  showModal: PropTypes.bool,
   dismissModal: PropTypes.func,
 };
 
 HeatmapModal.defaultProps = {
   tissue: '',
   assay: '',
-  showModal: false,
   dismissModal: null,
 };
 
