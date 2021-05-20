@@ -114,7 +114,9 @@ function DifferenrialExpression({ isAuthenticated, expanded }) {
   const pageContent = (
     <>
       <div className="page-title pt-3 pb-2 border-bottom">
-        <h3>Differential Expression</h3>
+        <h3>
+          Assay-level differentially expressed genes in response to training
+        </h3>
       </div>
       <div className="main-content-container d-flex align-items-start">
         <div

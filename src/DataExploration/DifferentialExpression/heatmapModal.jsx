@@ -51,8 +51,8 @@ function HeatmapModal({ tissue, assay, dismissModal }) {
           <div className="modal-content">
             <div className="modal-header">
               <h4 className="modal-title" id="heatmapModalTitle">
-                Top 50 Expressed Genes in{' '}
-                {`${renderAssayLabel()} for ${renderTissueName()}`}
+                Top 50 differentially expressed genes in{' '}
+                {`${renderTissueName()} - ${renderAssayLabel()}`}
               </h4>
               <button
                 type="button"

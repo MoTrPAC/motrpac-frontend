@@ -72,18 +72,21 @@ div.assay-popover {
 }
 
 .heatmap-tooltip {
-  background: #ffffff;
-  border: solid 1px #000000;
+  background: $stanford-black;
   border-radius: 4px;
-  box-shadow: 0 2px 0 2px #444444;
-  font-size: 0.75rem;
+  color: #ffffff;
+  font-size: 0.7rem;
   font-weight: 600;
-  padding: 2px 5px;
+  padding: 9px 13px;
   position: absolute;
-  text-align: center;
+  text-align: left;
 }
 
 .heatmap-legend-title {
-	font-size: 0.65rem;
+	font-size: 0.7rem;
   font-weight: 700;
+}
+
+.legend-y-axis {
+  font-size: 0.7rem;
 }
