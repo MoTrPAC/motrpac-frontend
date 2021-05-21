@@ -10,6 +10,7 @@ import networkIconInactive from '../assets/analysisIcons/NetworkAnalysis_inactiv
 import timeIconInactive from '../assets/analysisIcons/TimeCourse_inactive.svg';
 import omicsIconInactive from '../assets/analysisIcons/OmicsComparison_inactive.svg';
 import geneTimeCourseInactive from '../assets/analysisIcons/GeneTimeCourse_inactive.svg';
+import deaIcon from '../assets/analysisIcons/DifferentialExpressionAnalysis.svg';
 
 const analysisTypes = [
   {
@@ -24,8 +25,21 @@ const analysisTypes = [
     species: ['animal'],
   },
   {
+    title: 'Differential Expression Analysis',
+    preferredTitle:
+      'Assay-level differentially expressed genes in response to training',
+    shortName: 'DEA',
+    icon: deaIcon,
+    inactiveIcon: null,
+    input: null,
+    description:
+      'Explore assay-level differentially expressed genes in response to training by tissue.',
+    active: true,
+    species: ['animal'],
+  },
+  {
     title: 'Gene-Centric View',
-    shortName: 'MOLECULES',
+    shortName: 'GENE_CENTRIC_VIEW',
     icon: moleculeIcon,
     inactiveIcon: moleculeIconInactive,
     input: null,
