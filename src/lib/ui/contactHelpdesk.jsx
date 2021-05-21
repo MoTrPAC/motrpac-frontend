@@ -9,9 +9,11 @@ import EmailLink from './emailLink';
 function ContactHelpdesk() {
   return (
     <span className="motrpac-helpdesk-contact-text">
-      contact the MoTrPAC Bioinformatics Center helpdesk at
-      {' '}
-      <EmailLink mailto="motrpac-helpdesk@lists.stanford.edu" label="MoTrPAC Helpdesk" />
+      contact the MoTrPAC Bioinformatics Center helpdesk at{' '}
+      <EmailLink
+        mailto="motrpac-helpdesk@lists.stanford.edu"
+        label="MoTrPAC Helpdesk"
+      />
     </span>
   );
 }

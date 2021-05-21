@@ -12,7 +12,12 @@ import PropTypes from 'prop-types';
  */
 function EmailLink({ mailto, label }) {
   return (
-    <a href={`mailto:${mailto}`} className="inline-link-with-icon" target="_blank" rel="noopener noreferrer">
+    <a
+      href={`mailto:${mailto}`}
+      className="inline-link-with-icon"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       {label && label.length ? label : mailto}
       <i className="material-icons email-icon">mail</i>
     </a>

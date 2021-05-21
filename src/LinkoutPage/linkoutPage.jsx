@@ -120,42 +120,6 @@ export function LinkoutPage({ isAuthenticated, expanded }) {
       <div className="page-title pt-3 pb-2 border-bottom">
         <h3>Useful Links</h3>
       </div>
-      {/*
-      <div className="row align-items-center justify-content-center motrLink">
-        <div className="col-12 col-md-5 centered">
-          <img src={MOTRLogo} className="img-fluid" alt="MoTrPAC Logo" />
-        </div>
-        <div className="col MoTrLinkInfo h5">
-          <a href="http://MoTrPAC.org">
-            MoTrPAC Main Site
-            {' '}
-            <span className="oi oi-external-link" />
-          </a>
-          <p>
-            Primary entrance point for overarching MoTrPAC study of which the
-            Bioinformatic Datahub is a component.
-          </p>
-        </div>
-      </div>
-      <div className="row align-items-center justify-content-center motrLink">
-        <div className="col-12 col-md-5 centered">
-          <img src={metaAnalysisGeneIcon} className="img-fluid" alt="Meta-analysis" />
-        </div>
-        <div className="col MoTrLinkInfo h5">
-          <a href="https://extrameta.org">
-            Exercise Transcriptome Meta-analysis
-            {' '}
-            <span className="oi oi-external-link" />
-          </a>
-          <p>
-            A database comprising meta-analysis results from 43 publicly
-            available exercise transcriptome datasets from human skeletal
-            muscle and blood, with the results based on 1,724 samples from
-            739 individuals.
-          </p>
-        </div>
-      </div>
-      */}
       <div className="externalLinks">{featuredLinks}</div>
       <div className="externalLinks">{partnerLinks}</div>
     </>

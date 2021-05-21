@@ -5,7 +5,8 @@ function onVisibilityChange() {
   let hidden;
   let visibilityChange;
   // Set the name of the hidden property and the change event for visibility
-  if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
+  // Opera 12.10 and Firefox 18 and later support
+  if (typeof document.hidden !== 'undefined') {
     hidden = 'hidden';
     visibilityChange = 'visibilitychange';
   } else if (typeof document.msHidden !== 'undefined') {
