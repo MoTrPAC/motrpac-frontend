@@ -51,6 +51,7 @@ function DifferenrialExpression({ isAuthenticated, expanded }) {
       })
       .then((figure) => {
         // handle click event on label 'rect'
+        /* >> tissue labels are temporarily non-interactive
         const labelRects = Array.from(
           document.querySelectorAll('#TissueLabels #Labels rect')
         );
@@ -61,7 +62,9 @@ function DifferenrialExpression({ isAuthenticated, expanded }) {
             setAssay('');
           });
         });
+        */
         // handle click event on label text 'path'
+        /* >> tissue labels are temporarily non-interactive
         const labelTextGroups = Array.from(
           document.querySelectorAll('#TissueLabels #Labels g')
         );
@@ -88,6 +91,7 @@ function DifferenrialExpression({ isAuthenticated, expanded }) {
             d3.select(rect).classed('hover', false);
           });
         });
+        */
         // handle click event on assay legend symbols
         const assaySymbols = Array.from(
           document.querySelectorAll(
@@ -96,12 +100,44 @@ function DifferenrialExpression({ isAuthenticated, expanded }) {
         );
         assaySymbols.forEach((symbol) => {
           const selectedAssay = d3.select(symbol);
-          selectedAssay.on('click', (event) => {
-            activateModal(
-              d3.select(event.currentTarget.parentNode).attr('class'),
-              selectedAssay.attr('class')
-            );
-          });
+          if (selectedAssay.attr('class') !== 'metab') {
+            selectedAssay.on('click', (event) => {
+              activateModal(
+                d3.select(event.currentTarget.parentNode).attr('class'),
+                selectedAssay.attr('class')
+              );
+            });
+          } else {
+            // create assay tooltip
+            const assayTooltip = d3
+              .select(ref.current)
+              .append('div')
+              .style('display', 'none')
+              .attr('class', 'assay-symbol-tooltip');
+            // assay tooltip functions
+            const hover = (event, d) => {
+              assayTooltip
+                .html('Data unavailable')
+                .style('top', (event.pageY + 5) + 'px')
+                .style('left', (event.pageX + 5) + 'px');
+              assayTooltip.transition().duration(300).style('display', 'block');
+              d3.select(this).style('display', 'block');
+            };
+            const move = (event, d) => {
+              assayTooltip
+                .html('Data unavailable')
+                .style('top', (event.pageY + 5) + 'px')
+                .style('left', (event.pageX + 5) + 'px');
+            };
+            const mouseout = (d) => {
+              assayTooltip.transition().duration(500).style('display', 'none');
+              d3.select(this).style('display', 'none');
+            };
+            selectedAssay
+              .on('mouseover', hover)
+              .on('mousemove', move)
+              .on('mouseout', mouseout);
+          }
         });
       });
   }

@@ -5,6 +5,7 @@
       max-width: calc(100vw - 350px);
     }
 
+    /* tissue labels are temporarily non-interactive
     g#Labels {
       rect {
         cursor: pointer;
@@ -20,15 +21,21 @@
         cursor: pointer;
       }
     }
+    */
 
     g#AssayLegends {
-      rect, circle, polygon {
+      rect, circle:not(.metab), polygon {
         cursor: pointer;
+        position: relative;
 
         &:hover {
           -webkit-filter: drop-shadow(0 0 2px rgba(32, 149, 232, 0.75));
           filter: drop-shadow(0 0 2px rgba(032, 149, 232, 0.75));
         }
+      }
+
+      circle.metab {
+        position: relative;
       }
     }
   }
@@ -69,6 +76,18 @@ div.assay-popover {
 
 .modal-title {
   color: #4d4f53;
+}
+
+.assay-symbol-tooltip {
+  background: $stanford-black;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  position: absolute;
+  text-align: center;
+  z-index: 99;
 }
 
 .heatmap-tooltip {
