@@ -3862,6 +3862,41 @@
             "omics_code": "proteomics",
             "count": null,
             "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
           }
         ]
       },
@@ -3944,6 +3979,41 @@
             "omics_code": "proteomics",
             "count": null,
             "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": 8
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": 26
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": 18
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": 14
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": 10
           }
         ]
       },
@@ -4025,6 +4095,41 @@
             "assay_name": "Global Proteomics",
             "omics_code": "proteomics",
             "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
+            "count": 30,
             "qc_count": null
           }
         ]
@@ -4108,6 +4213,41 @@
             "omics_code": "proteomics",
             "count": null,
             "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
           }
         ]
       },
@@ -4188,6 +4328,41 @@
             "assay_code": "prot-pr",
             "assay_name": "Global Proteomics",
             "omics_code": "proteomics",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
             "count": null,
             "qc_count": null
           }
@@ -4272,6 +4447,41 @@
             "omics_code": "proteomics",
             "count": 66,
             "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
           }
         ]
       },
@@ -4352,6 +4562,41 @@
             "assay_code": "prot-pr",
             "assay_name": "Global Proteomics",
             "omics_code": "proteomics",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
             "count": null,
             "qc_count": null
           }
@@ -4436,6 +4681,41 @@
             "omics_code": "proteomics",
             "count": null,
             "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
           }
         ]
       },
@@ -4518,6 +4798,41 @@
             "omics_code": "proteomics",
             "count": 66,
             "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
           }
         ]
       },
@@ -4598,6 +4913,41 @@
             "assay_code": "prot-pr",
             "assay_name": "Global Proteomics",
             "omics_code": "proteomics",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
             "count": null,
             "qc_count": null
           }
@@ -4682,6 +5032,41 @@
             "omics_code": "proteomics",
             "count": null,
             "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
           }
         ]
       },
@@ -4762,6 +5147,41 @@
             "assay_code": "prot-pr",
             "assay_name": "Global Proteomics",
             "omics_code": "proteomics",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
             "count": null,
             "qc_count": null
           }
@@ -4846,6 +5266,41 @@
             "omics_code": "proteomics",
             "count": null,
             "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
           }
         ]
       },
@@ -4927,6 +5382,41 @@
             "assay_name": "Global Proteomics",
             "omics_code": "proteomics",
             "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": 15,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": 15,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
+            "count": 15,
             "qc_count": null
           }
         ]
@@ -5010,6 +5500,41 @@
             "omics_code": "proteomics",
             "count": null,
             "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": 15,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": 15,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
+            "count": 15,
+            "qc_count": null
           }
         ]
       },
@@ -5090,6 +5615,41 @@
             "assay_code": "prot-pr",
             "assay_name": "Global Proteomics",
             "omics_code": "proteomics",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
             "count": null,
             "qc_count": null
           }
@@ -5174,6 +5734,41 @@
             "omics_code": "proteomics",
             "count": null,
             "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
           }
         ]
       },
@@ -5254,6 +5849,41 @@
             "assay_code": "prot-pr",
             "assay_name": "Global Proteomics",
             "omics_code": "proteomics",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
             "count": null,
             "qc_count": null
           }
@@ -5338,6 +5968,41 @@
             "omics_code": "proteomics",
             "count": 66,
             "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
+            "count": null,
+            "qc_count": null
           }
         ]
       },
@@ -5418,6 +6083,41 @@
             "assay_code": "prot-pr",
             "assay_name": "Global Proteomics",
             "omics_code": "proteomics",
+            "count": null,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
             "count": null,
             "qc_count": null
           }
@@ -5501,6 +6201,41 @@
             "assay_name": "Global Proteomics",
             "omics_code": "proteomics",
             "count": 66,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-adipokine",
+            "assay_name": "Proteomics Targeted Adipokine",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-mag27plex",
+            "assay_name": "Proteomics Targeted Mag27plex",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-metabolic",
+            "assay_name": "Proteomics Targeted Metabolic",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-myokine",
+            "assay_name": "Proteomics Targeted Myokine",
+            "omics_code": "luminex",
+            "count": 30,
+            "qc_count": null
+          },
+          {
+            "assay_code": "luminex-pituitary",
+            "assay_name": "Proteomics Targeted Pituitary",
+            "omics_code": "luminex",
+            "count": null,
             "qc_count": null
           }
         ]
