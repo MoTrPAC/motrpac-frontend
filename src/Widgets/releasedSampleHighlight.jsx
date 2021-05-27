@@ -48,7 +48,7 @@ function ReleasedSampleHighlight({ data }) {
           omicSet('metabolomics-targeted') + omicSet('metabolomics-untargeted')
         );
       case 'proteomics':
-        return omicSet('proteomics');
+        return omicSet('proteomics') + omicSet('luminex');
       default:
         return data.length;
     }
