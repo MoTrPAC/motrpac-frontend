@@ -1,0 +1,17 @@
+steps:
+#Build the image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/motrpac-frontend-prod:$TAG_NAME', '.']
+
+#Push the image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/motrpac-frontend-prod:$TAG_NAME']
+
+# deploy container image to GKE
+- name: "gcr.io/cloud-builders/gke-deploy"
+  args:
+  - run
+  - --filename=kubernetes/prod/
+  - --image=gcr.io/$PROJECT_ID/motrpac-frontend-prod:$TAG_NAME
+  - --location=us-west1-a
+  - --cluster=motrpac-frontend-prod-cluster
