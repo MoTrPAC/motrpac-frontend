@@ -2,6 +2,8 @@ steps:
 #Build the image
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/$PROJECT_ID/motrpac-frontend-dev:$SHORT_SHA', '.']
+  env:
+  - 'DISABLE_ESLINT_PLUGIN=true'
 
 #Push the image
 - name: 'gcr.io/cloud-builders/docker'
