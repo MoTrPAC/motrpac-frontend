@@ -1,24 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import * as d3 from 'd3';
-import AuthContentContainer from '../../lib/ui/authContentContainer';
 import figureRat from '../../assets/figures/rat-figure-pass1b.svg';
 import FigureAssayLegends from './figureAssayLegends';
 import HeatmapModal from './heatmapModal';
-
-const figureTissueProps = require('./figureTissueProps');
 
 /**
  * Renders the data exploration page in both
  * unauthenticated and authenticated states.
  *
- * @param {Boolean} isAuthenticated Redux state for user's authentication status.
- * @param {Boolean} expanded        Redux state for sidebar
- *
  * @returns {Object} JSX representation of the data exploration page.
  */
-function DifferenrialExpression({ isAuthenticated, expanded }) {
+function DifferenrialExpression() {
   const [tissue, setTissue] = useState();
   const [assay, setAssay] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -108,35 +100,13 @@ function DifferenrialExpression({ isAuthenticated, expanded }) {
               );
             });
           } else {
-            // create assay tooltip
-            const assayTooltip = d3
-              .select(ref.current)
-              .append('div')
-              .style('display', 'none')
-              .attr('class', 'assay-symbol-tooltip');
-            // assay tooltip functions
-            const hover = (event, d) => {
-              assayTooltip
-                .html('Data unavailable')
-                .style('top', (event.pageY + 5) + 'px')
-                .style('left', (event.pageX + 5) + 'px');
-              assayTooltip.transition().duration(300).style('display', 'block');
-              d3.select(this).style('display', 'block');
-            };
-            const move = (event, d) => {
-              assayTooltip
-                .html('Data unavailable')
-                .style('top', (event.pageY + 5) + 'px')
-                .style('left', (event.pageX + 5) + 'px');
-            };
-            const mouseout = (d) => {
-              assayTooltip.transition().duration(500).style('display', 'none');
-              d3.select(this).style('display', 'none');
-            };
-            selectedAssay
-              .on('mouseover', hover)
-              .on('mousemove', move)
-              .on('mouseout', mouseout);
+            const assayTooltip = document.querySelector('.data-status-tooltip');
+            selectedAssay.on('mouseover', () => {
+              assayTooltip.classList.add('show');
+            });
+            selectedAssay.on('mouseout', () => {
+              assayTooltip.classList.remove('show');
+            });
           }
         });
       });
@@ -147,23 +117,22 @@ function DifferenrialExpression({ isAuthenticated, expanded }) {
     renderFigure();
   }, []);
 
-  const pageContent = (
-    <>
-      <div className="page-title pt-3 pb-2 border-bottom">
-        <h3>
-          Assay-level differentially expressed genes in response to training
-        </h3>
-      </div>
-      <div className="main-content-container d-flex align-items-start">
+  return (
+    <div className="differentialExpressionPage">
+      <div className="main-content-container row">
         <div
-          className="figure-svg-container my-3 text-left"
+          className="figure-svg-container my-3 text-center col-9"
           id="figure-svg-container"
           ref={ref}
-        />
-        <FigureAssayLegends />
-        <div className="results-container mt-5 ml-5 p-3 border border-dark rounded">
-          <p>Selected tissue: {tissue}</p>
-          <p>Selected assay: {assay}</p>
+        >
+          <div className="data-status-tooltip">
+            <span className="data-status-tooltip-content">
+              Data unavailable
+            </span>
+          </div>
+        </div>
+        <div className="figure-assay-legends-wrapper my-4 col-3">
+          <FigureAssayLegends />
         </div>
       </div>
       {showModal && (
@@ -174,40 +143,8 @@ function DifferenrialExpression({ isAuthenticated, expanded }) {
           dismissModal={dismissModal}
         />
       )}
-    </>
-  );
-
-  if (!isAuthenticated) {
-    return (
-      <div className="w-100 px-4 differentialExpressionPage">
-        <div className="container-fluid">{pageContent}</div>
-      </div>
-    );
-  }
-
-  return (
-    <AuthContentContainer
-      classes="differentialExpressionPage"
-      expanded={expanded}
-    >
-      <div>{pageContent}</div>
-    </AuthContentContainer>
+    </div>
   );
 }
 
-DifferenrialExpression.propTypes = {
-  isAuthenticated: PropTypes.bool,
-  expanded: PropTypes.bool,
-};
-
-DifferenrialExpression.defaultProps = {
-  isAuthenticated: false,
-  expanded: false,
-};
-
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  expanded: state.sidebar.expanded,
-});
-
-export default connect(mapStateToProps)(DifferenrialExpression);
+export default DifferenrialExpression;
