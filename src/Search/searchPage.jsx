@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import lunr from 'lunr';
 import SearchForm from './searchForm';
 import SearchActions from './searchActions';
 import SearchResults from './searchResults';
@@ -10,7 +9,7 @@ import history from '../App/history';
 import AnimatedLoadingIcon from '../lib/ui/loading';
 import AuthContentContainer from '../lib/ui/authContentContainer';
 
-const mergedPass1aGetMetadata = require('../data/merged_pass1a_get_metadata');
+const mergedPass1aGetMetadata = require('../data/merged_pass1a_get_metadata.json');
 
 const searchDocuments = [...mergedPass1aGetMetadata];
 
@@ -53,7 +52,7 @@ export function SearchPage({
   }
   if (searchPayload && Object.keys(searchPayload).length) {
     payload = searchPayload;
-  } else if (quickSearchPayload && Object.keys(quickSearchPayload).length) {
+  } else if (quickSearchPayload && quickSearchPayload.length) {
     payload = quickSearchPayload;
   }
 
@@ -125,22 +124,6 @@ export function SearchPage({
 
   // Render search results if response is returned
   if (!isFetching && payload && Object.keys(payload).length) {
-    // Temp implementation to mock searches
-    // using 'lunr' for client-side indexing
-    /**
-     * lunr implementation begins
-     */
-    const idx = lunr(function () {
-      this.ref('vial_label');
-      this.field('Species');
-      this.field('Tissue');
-      this.field('GET_site');
-      this.field('BID');
-      this.field('Assay');
-
-      searchDocuments.forEach((doc) => this.add(doc), this);
-    });
-
     let query = '';
     const fieldMapping = {
       all: '',
@@ -153,12 +136,12 @@ export function SearchPage({
 
     if (
       !Object.keys(searchPayload).length &&
-      Object.keys(quickSearchPayload).length
+      quickSearchPayload.length
     ) {
       query = `${decodeURIComponent(quickSearchQueryString)}*`;
     } else if (
       Object.keys(searchPayload).length &&
-      !Object.keys(quickSearchPayload).length
+      !quickSearchPayload.length
     ) {
       advSearchParams.forEach((param) => {
         const logical = param.operator && param.operator === 'AND' ? '+' : '';
@@ -171,7 +154,7 @@ export function SearchPage({
       });
     }
 
-    const lunrSearches = idx.search(query.trim());
+    const lunrSearches = [];
 
     const lunrResutls = lunrSearches.map((match) => ({
       ref: match.ref,
@@ -360,9 +343,7 @@ SearchPage.propTypes = {
   searchQueryString: PropTypes.string,
   searchError: PropTypes.string,
   isSearchFetching: PropTypes.bool,
-  quickSearchPayload: PropTypes.shape({
-    data: PropTypes.object,
-  }),
+  quickSearchPayload: PropTypes.array,
   quickSearchQueryString: PropTypes.string,
   quickSearchError: PropTypes.string,
   isQuickSearchFetching: PropTypes.bool,
@@ -381,7 +362,7 @@ SearchPage.defaultProps = {
   searchQueryString: '',
   searchError: '',
   isSearchFetching: false,
-  quickSearchPayload: {},
+  quickSearchPayload: [],
   quickSearchQueryString: '',
   quickSearchError: '',
   isQuickSearchFetching: false,
