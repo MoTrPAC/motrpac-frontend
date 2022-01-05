@@ -1,8 +1,10 @@
 .differentialExpressionPage {
   .figure-svg-container {
+    position: relative;
+
     svg {
-      max-height: calc(100vh - 350px);
-      max-width: calc(100vw - 350px);
+      max-height: calc(100vh - 300px);
+      max-width: calc(100vw - 300px);
     }
 
     /* tissue labels are temporarily non-interactive
@@ -78,16 +80,26 @@ div.assay-popover {
   color: #4d4f53;
 }
 
-.assay-symbol-tooltip {
+.data-status-tooltip {
   background: $stanford-black;
   border-radius: 4px;
   color: #ffffff;
-  font-size: 0.75rem;
+  font-size: 24px;
   font-weight: 600;
-  padding: 6px 10px;
+  padding: 12px 18px;
   position: absolute;
   text-align: center;
   z-index: 99;
+  top: calc(50% - 65px);
+  left: calc(50% - 115px);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 1s, opacity 1s;
+}
+
+.data-status-tooltip.show {
+  visibility: visible;
+  opacity: 1;
 }
 
 .heatmap-tooltip {
