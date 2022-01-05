@@ -38,14 +38,14 @@ const analysisTypes = [
     species: ['animal'],
   },
   {
-    title: 'Gene-Centric View',
-    shortName: 'GENE_CENTRIC_VIEW',
+    title: 'Gene-Centric Results',
+    shortName: 'GENE_CENTRIC_RESULTS',
     icon: moleculeIcon,
     inactiveIcon: moleculeIconInactive,
     input: null,
     description:
       'Search by gene symbol and examine the training response of its related molecules (e.g. protein phosphorylation/acetylation, promoter methylation, transcript).',
-    active: false,
+    active: true,
     species: ['animal', 'human'],
   },
   {
