@@ -110,7 +110,7 @@ describe('Pure Analysis Home Page', () => {
         />,
       );
       expect(shallowAnalysis.find('h3')).toHaveLength(1);
-      expect(shallowAnalysis.find('AnalysisCard')).toHaveLength(6);
+      expect(shallowAnalysis.find('AnalysisCard')).not.toHaveLength(5);
     });
   });
 });
