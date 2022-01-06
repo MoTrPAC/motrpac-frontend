@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import actions from '../UploadPage/uploadActions';
 
 /**
  * Renders the gloabl sidebar.
@@ -15,7 +14,6 @@ export function Sidebar({
   isAuthenticated = false,
   profile,
   expanded,
-  clearForm,
   resetDepth,
   toggleSidebar,
 }) {
@@ -77,13 +75,7 @@ export function Sidebar({
         <div className="sidebar-panel h-100 w-100">
           <ul className="nav flex-column">
             <li className="nav-item">
-              {renderNavLink(
-                'dashboard',
-                'Dashboard',
-                'dashboard',
-                'home',
-                false
-              )}
+              {renderNavLink('home', 'Home', 'home', 'home', false)}
             </li>
             <li className="nav-item">
               {renderNavLink(
@@ -103,7 +95,7 @@ export function Sidebar({
             <li className="nav-item">
               {renderNavLink(
                 'analysis/animal',
-                'Animal',
+                'Rat',
                 'animal-analysis',
                 'pest_control_rodent',
                 userType === 'external',
@@ -131,7 +123,7 @@ export function Sidebar({
                 'releases',
                 'Releases',
                 'releases',
-                'cloud_done',
+                'rocket_launch',
                 false
               )}
             </li>
@@ -141,26 +133,16 @@ export function Sidebar({
                 'Summary',
                 'summary',
                 'assessment',
-                true
+                false
               )}
             </li>
             <li className="nav-item">
               {renderNavLink(
-                'download',
-                'Browse Data',
-                'download',
-                'view_list',
+                'status',
+                'Data QC Status',
+                'status',
+                'fact_check',
                 true
-              )}
-            </li>
-            <li className="nav-item">
-              {renderNavLink(
-                'upload',
-                'Upload Data',
-                'upload',
-                'cloud_upload',
-                true,
-                clearForm
               )}
             </li>
           </ul>
@@ -177,10 +159,9 @@ const mapStateToProps = (state) => ({
   expanded: state.sidebar.expanded,
 });
 
-// Need to clear the upload form values and recently uploaded files
-// if user navigates away from and returns to the upload page
+// Need to reset depth of views on analysis page
+// if user clicks on either the rat or human analysis links
 const mapDispatchToProps = (dispatch) => ({
-  clearForm: () => dispatch(actions.clearForm()),
   resetDepth: () => dispatch({ type: 'RESET_DEPTH' }),
   toggleSidebar: () => dispatch({ type: 'SIDEBAR_TOGGLED' }),
 });
