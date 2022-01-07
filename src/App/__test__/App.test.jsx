@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import App from '../App';
 
-const testUser = require('../../testData/testUser');
+const testUser = require('../../testData/testUser.json');
 
 // Mocking Google Analytics
 jest.mock('ga-gtag');
@@ -24,7 +24,7 @@ describe('<App />', () => {
   });
 
   test('It should contain eight <PrivateRoute /> children', () => {
-    expect(component.find('PrivateRoute').length).toBe(8);
+    expect(component.find('PrivateRoute').length).toBe(6);
   });
 });
 
@@ -66,24 +66,6 @@ describe('Unauthenticated Application routing', () => {
 
   test('loads the landing page at /dashboard', () => {
     history.push('/dashboard');
-    mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'LandingPage', '/', history);
-  });
-
-  test('loads the methods page at /methods', () => {
-    history.push('/methods');
-    mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'LandingPage', '/', history);
-  });
-
-  test('loads the landing page at /upload', () => {
-    history.push('/upload');
-    mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'LandingPage', '/', history);
-  });
-
-  test('loads the landing page at /download', () => {
-    history.push('/download');
     mountApp.update();
     testCorrectComponentInPath(mountApp, 'PrivateRoute', 'LandingPage', '/', history);
   });
@@ -156,18 +138,10 @@ describe('Authenticated Application routing', () => {
     testCorrectComponentInPath(mountApp, 'PrivateRoute', 'Methods', '/methods', history, true);
   });
 
-  test('loads the download page at /download', () => {
-    history.push('/download');
-    // Update required to re-render the application
+  test('loads the landing page at /summary', () => {
+    history.push('/summary');
     mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'DownloadPage', '/download', history, true);
-  });
-
-  test('loads the upload page at /upload', () => {
-    history.push('/upload');
-    // Update required to re-render the application
-    mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'UploadScreen', '/upload', history, true);
+    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'DataSummaryPage', '/summary', history, true);
   });
 
   test('loads the linkout page at /external-links', () => {
