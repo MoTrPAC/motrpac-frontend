@@ -8,17 +8,15 @@ import NavbarConnected from '../Navbar/navbar';
 import FooterConnected from '../Footer/footer';
 import LandingPageConnected from '../LandingPage/landingPage';
 import DashboardConnected from '../Dashboard/dashboard';
-import UploadScreenConnected from '../UploadPage/uploadScreen';
 import LinkoutPageConnected from '../LinkoutPage/linkoutPage';
 import AnalysisHomePageConnected from '../AnalysisPage/analysisHomePage';
-import DownloadPageConnected from '../DownloadPage/downloadPage';
 import MethodsConnected from '../MethodsPage/methods';
 import TeamPageConnected from '../TeamPage/teamPage';
 import ContactConnected from '../ContactPage/contact';
 import ErrorPageConnected from '../ErrorPage/error';
 import SearchPageConnected from '../Search/searchPage';
 import ReleasePageConnected from '../ReleasePage/releasePage';
-import DataSummaryPage from '../DataSummaryPage/dataSummaryPage';
+import DataSummaryPageConnected from '../DataSummaryPage/dataSummaryPage';
 import DataAccessPageConnected from '../DataAccess/dataAccessPage';
 import RelatedStudyConnected from '../RelatedStudy/relatedStudy';
 import HeritageProteomicsConnected from '../RelatedStudy/heritageProteomics';
@@ -54,17 +52,9 @@ function App({ history = History }) {
                 path="/dashboard"
                 component={withTracker(DashboardConnected)}
               />
-              <PrivateRoute
-                path="/upload"
-                component={withTracker(UploadScreenConnected)}
-              />
               <Route
                 path="/external-links"
                 component={withTracker(LinkoutPageConnected)}
-              />
-              <PrivateRoute
-                path="/download"
-                component={withTracker(DownloadPageConnected)}
               />
               <PrivateRoute
                 path="/analysis/:subjectType"
@@ -93,7 +83,7 @@ function App({ history = History }) {
               />
               <PrivateRoute
                 path="/summary"
-                component={withTracker(DataSummaryPage)}
+                component={withTracker(DataSummaryPageConnected)}
               />
               <PrivateRoute
                 path="/releases"
