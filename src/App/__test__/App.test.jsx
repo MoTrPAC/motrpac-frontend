@@ -24,7 +24,7 @@ describe('<App />', () => {
   });
 
   test('It should contain eight <PrivateRoute /> children', () => {
-    expect(component.find('PrivateRoute').length).toBe(6);
+    expect(component.find('PrivateRoute').length).toBe(5);
   });
 });
 
@@ -64,8 +64,8 @@ describe('Unauthenticated Application routing', () => {
     testCorrectComponentInPath(mountApp, 'Route', 'LandingPage', '/', history);
   });
 
-  test('loads the landing page at /dashboard', () => {
-    history.push('/dashboard');
+  test('loads the landing page at /home', () => {
+    history.push('/home');
     mountApp.update();
     testCorrectComponentInPath(mountApp, 'PrivateRoute', 'LandingPage', '/', history);
   });
@@ -124,11 +124,11 @@ describe('Authenticated Application routing', () => {
     expect(mountApp.find('Provider').props().store.getState().auth.isAuthenticated).toBeTruthy();
   });
 
-  test('loads the dashboard at /dashboard', () => {
-    history.push('/dashboard');
+  test('loads the search page at /home', () => {
+    history.push('/home');
     // Update required to re-render the application
     mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'Dashboard', '/dashboard', history, true);
+    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'SearchPage', '/home', history, true);
   });
 
   test('loads the methods page at /methods', () => {
