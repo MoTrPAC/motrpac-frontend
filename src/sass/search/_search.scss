@@ -1,0 +1,259 @@
+.searchPage {
+  .search-content-container {
+    .es-search-ui-container {
+      form {
+        flex-grow: 1;
+      }
+
+      .sui-search-box {
+        .sui-search-box__text-input {
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.85rem;
+          padding: 0.7em 1.0em;
+        }
+  
+        .sui-search-box__submit {
+          font-family: "Open Sans", sans-serif;
+          font-weight: 600;
+          font-size: 0.85rem;
+          padding: 0.7em 1.0em;
+        }
+      }
+    }
+
+    .gene-search-container {
+      .gene-search-content {
+        background-color: $gray-300;
+
+        form {
+          position: relative;
+        }
+
+        button.submit-gene-search {
+          line-height: 0;
+        }
+
+        .search-error-message {
+          color: $orange;
+          font-size: larger;
+        }
+
+        .recent-search-terms-label {
+          font-size: larger;
+        }
+
+        button.saved-search {
+          cursor: pointer;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .gene-definition-container {
+      font-size: 0.95rem;
+
+      dt, dd {
+        display: table-cell;
+      }
+
+      dt {
+        padding-right: 0.35rem;
+      }
+    }
+
+    label {
+      font-size: inherit;
+      font-weight: 600;
+      line-height: 1;
+      margin-right: 0.5rem;
+      margin-bottom: 0;
+      width: auto;
+
+      &.form-check-label {
+        font-weight: normal;
+      }
+    }
+
+    .form-control.global-filter {
+      font-size: 0.85rem;
+      width: 240px;
+    }
+
+    .form-control.custom-filter {
+      font-size: 0.85rem;
+    }
+
+    input.form-control[type=number] {
+      -webkit-appearance: textfield;
+      -moz-appearance: textfield;
+      appearance: textfield;
+    }
+
+    input.form-control[type=number]::-webkit-inner-spin-button, 
+    input.form-control[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none;
+    }
+  
+    .pagination-page-size {
+      margin-bottom: 1rem;
+      
+      select {
+        margin-right: 0.65rem;
+        max-width: 85px;
+      }
+    }
+  
+    .pagination-footer {
+      margin-bottom: 1.0rem;
+  
+      .btn {
+        min-width: 60px;
+        max-width: 80px;
+  
+        &.disabled-btn {
+          pointer-events: none;
+        }
+      }
+    }
+
+    .card-body.table-ui-wrapper {
+      padding: 0;
+    }
+  }
+}
+
+/* auto-suggest styles */
+.react-autosuggest__container {
+  position: relative;
+}
+
+.react-autosuggest__input {
+  display: inline-block;
+  width: 360px;
+  min-width: 0;
+  height: calc(1.5em + .75rem + 2px);
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  border: 1px solid $dark;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  flex: 1 1 auto;
+  margin-bottom: 0;
+  z-index: 3;
+
+  &::placeholder {
+    color: $gray-500;
+    opacity: 1;
+  }
+}
+
+.react-autosuggest__input--focused {
+  outline: none;
+}
+
+.react-autosuggest__input--open {
+  border-bottom-left-radius: 0;
+}
+
+.react-autosuggest__suggestions-container {
+  display: none;
+}
+
+.react-autosuggest__suggestions-container--open {
+  background-color: #fff;
+  border: 1px solid $dark;
+  border-bottom-left-radius: .25rem;
+  border-bottom-right-radius: .25rem;
+  display: block;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  position: absolute;
+  top: calc(1.5em + .75rem + 1px);
+  width: 360px;
+  max-height: 360px;
+  overflow-y: scroll;
+  z-index: 2;
+}
+
+.react-autosuggest__suggestions-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.react-autosuggest__suggestion {
+  cursor: pointer;
+  padding: .35rem .75rem;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  background-color: $gray-200;
+}
+
+.timewiseDEATable {
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  margin-bottom: 0;
+  text-align: left;
+
+  th, td {
+    border: 1px solid #dee2e6;
+    line-height: 1;
+    padding: 0.65rem 0.5rem;
+  }
+
+  tr:first-child th, tr:first-child td {
+    border-top: 0;
+  }
+
+  tr th:first-child, tr td:first-child {
+    border-left: 0;
+  }
+
+  tr:last-child td {
+    border-bottom: 0;
+  }
+
+  tr th:last-child, tr td:last-child {
+    border-right: 0;
+  }
+
+  thead th {
+    background-color: #dee2e6;
+    padding: 0.5rem;
+
+    .material-icons {
+      color: #888;
+    }
+  }
+
+  tbody {
+    td {
+      padding: 0.75rem 0.5rem;
+    }
+
+    .PASS1A-06 {
+      background-color: lighten($primary-blue-shade-light, 18%);
+    }
+
+    .PASS1B-06 {
+      background-color: lighten($accent-yellow-shade-light, 18%);
+    }
+
+    .PASS {
+      background-color: lighten($accent-green-shade-light, 16%);
+    }
+
+    .FAIL {
+      background-color: lighten($accent-red-shade-light, 21%);
+    }
+  }
+}
