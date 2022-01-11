@@ -7,7 +7,6 @@ import History from './history';
 import NavbarConnected from '../Navbar/navbar';
 import FooterConnected from '../Footer/footer';
 import LandingPageConnected from '../LandingPage/landingPage';
-import DashboardConnected from '../Dashboard/dashboard';
 import LinkoutPageConnected from '../LinkoutPage/linkoutPage';
 import AnalysisHomePageConnected from '../AnalysisPage/analysisHomePage';
 import MethodsConnected from '../MethodsPage/methods';
@@ -49,8 +48,8 @@ function App({ history = History }) {
                 component={withTracker(LandingPageConnected)}
               />
               <PrivateRoute
-                path="/dashboard"
-                component={withTracker(DashboardConnected)}
+                path="/home"
+                component={withTracker(SearchPageConnected)}
               />
               <Route
                 path="/external-links"
@@ -76,10 +75,6 @@ function App({ history = History }) {
               <Route
                 path="/error"
                 component={withTracker(ErrorPageConnected)}
-              />
-              <PrivateRoute
-                path="/search"
-                component={withTracker(SearchPageConnected)}
               />
               <PrivateRoute
                 path="/summary"
