@@ -1,392 +1,219 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import SearchForm from './searchForm';
-import SearchActions from './searchActions';
-import SearchResults from './searchResults';
-import history from '../App/history';
-import AnimatedLoadingIcon from '../lib/ui/loading';
+import {
+  SearchProvider,
+  WithSearch,
+  ErrorBoundary,
+  SearchBox,
+} from '@elastic/react-search-ui';
+import '@elastic/react-search-ui-views/lib/styles/styles.css';
+
+import runRequest from './runRequest';
+import buildState from './buildState';
+import TimewiseResultsTable from './timewiseTable';
+import TrainingResultsTable from './trainingResultsTable';
 import AuthContentContainer from '../lib/ui/authContentContainer';
 
-const mergedPass1aGetMetadata = require('../data/merged_pass1a_get_metadata.json');
+export function SearchPage({ expanded }) {
+  const [searchContext, setSearchContext] = useState('genes');
 
-const searchDocuments = [...mergedPass1aGetMetadata];
-
-/**
- * Conditionally renders the search page with different UIs
- * 1. the advanced search form by default
- * 2. the search results if the request has a response
- * 3. an error message if the request fails for some reason
- *
- * @returns {object} JSX representation of search page elements.
- */
-export function SearchPage({
-  advSearchParams,
-  searchPayload,
-  searchQueryString,
-  searchError,
-  isSearchFetching,
-  quickSearchPayload,
-  quickSearchQueryString,
-  quickSearchError,
-  isQuickSearchFetching,
-  handleSearchFormChange,
-  addSearchParam,
-  removeSearchParam,
-  handleSearchFormSubmit,
-  handlePredefinedSearch,
-  resetSearchForm,
-  getSearchForm,
-  expanded,
-}) {
-  const urlSearchParams = new URLSearchParams(window.location.search);
-
-  const isFetching = isSearchFetching || isQuickSearchFetching;
-  let errMsg;
-  let payload;
-  if (searchError && searchError.length) {
-    errMsg = searchError;
-  } else if (quickSearchError && quickSearchError.length) {
-    errMsg = quickSearchError;
-  }
-  if (searchPayload && Object.keys(searchPayload).length) {
-    payload = searchPayload;
-  } else if (quickSearchPayload && quickSearchPayload.length) {
-    payload = quickSearchPayload;
-  }
-
-  const getAdvancedSearchForm = () => {
-    resetSearchForm();
-    getSearchForm();
+  // Configure the search provider
+  const config = {
+    debug: true,
+    hasA11yNotifications: true,
+    intialState: { searchTerm: 'Brd2', resultsPerPage: 20 },
+    onAutocomplete: async ({ searchTerm }) => {
+      // Not implemented yet
+    },
+    onSearch: async (state) => {
+      const { resultsPerPage } = state;
+      const responseJson = await runRequest(state.searchTerm, searchContext);
+      return buildState(responseJson, resultsPerPage);
+    },
   };
 
-  function backToSearch() {
-    getSearchForm();
-  }
-  // Button to return to previous page
-  function SearchBackButton() {
-    return (
-      <button
-        className="backButton d-inline-flex"
-        onClick={backToSearch}
-        type="button"
-      >
-        <span className="material-icons align-self-center">arrow_back</span>
-      </button>
-    );
-  }
-
-  function backToSummary() {
-    history.goBack();
-  }
-
-  // Button to return to previous page
-  function SummaryBackButton() {
-    return (
-      <button
-        className="backButton d-inline-flex"
-        onClick={backToSummary}
-        type="button"
-      >
-        <span className="material-icons align-self-center">arrow_back</span>
-      </button>
-    );
-  }
-
-  // Render error message if there is one
-  if (!isFetching && errMsg && errMsg.length) {
-    return (
-      <AuthContentContainer classes="searchPage" expanded={expanded}>
-        <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
-          <div className="page-title">
-            <h3>Error</h3>
-          </div>
-        </div>
-        <div className="advanced-search-content-container mt-3">
-          <div className="adv-search-example-searches">
-            <p className="text-left">
-              Please&nbsp;
-              <Link
-                to="/search"
-                className="search-link"
-                onClick={getAdvancedSearchForm}
-              >
-                try
-              </Link>
-              &nbsp;again.
-            </p>
-          </div>
-        </div>
-      </AuthContentContainer>
-    );
-  }
-
-  // Render search results if response is returned
-  if (!isFetching && payload && Object.keys(payload).length) {
-    let query = '';
-    const fieldMapping = {
-      all: '',
-      species: 'Species',
-      tissue: 'Tissue',
-      site: 'GET_site',
-      biospecimenid: 'BID',
-      assay: 'Assay',
-    };
-
-    if (
-      !Object.keys(searchPayload).length &&
-      quickSearchPayload.length
-    ) {
-      query = `${decodeURIComponent(quickSearchQueryString)}*`;
-    } else if (
-      Object.keys(searchPayload).length &&
-      !quickSearchPayload.length
-    ) {
-      advSearchParams.forEach((param) => {
-        const logical = param.operator && param.operator === 'AND' ? '+' : '';
-        const field = fieldMapping[param.term];
-        const value = `${decodeURIComponent(param.value)}*`;
-        const search = !field
-          ? `${logical}${value}`
-          : `${logical}${field}:${value}`;
-        query += `${search} `;
-      });
-    }
-
-    const lunrSearches = [];
-
-    const lunrResutls = lunrSearches.map((match) => ({
-      ref: match.ref,
-      item: searchDocuments.find((item) => item.vial_label === match.ref),
-    }));
-    /**
-     * lunr implementation ends
-     */
-
-    return (
-      <AuthContentContainer classes="searchPage" expanded={expanded}>
-        <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
-          {!quickSearchQueryString ? <SearchBackButton /> : null}
-          <div className="page-title">
-            <h3>Search Results</h3>
-          </div>
-        </div>
-        <div className="advanced-search-content-container mt-3">
-          {lunrResutls.length ? (
-            <SearchResults
-              lunrResutls={lunrResutls}
-              advSearchParams={advSearchParams}
-              quickSearchQueryString={quickSearchQueryString}
-            />
-          ) : (
-            <p className="text-left">
-              No matches found. Please&nbsp;
-              <Link
-                to="/search"
-                className="search-link"
-                onClick={getAdvancedSearchForm}
-              >
-                try
-              </Link>
-              &nbsp;again.
-            </p>
-          )}
-        </div>
-      </AuthContentContainer>
-    );
-  }
-
-  // Render results if request comes from tissue analysis table
-  if (
-    urlSearchParams &&
-    urlSearchParams.has('action') &&
-    urlSearchParams.get('action') === 'samples'
-  ) {
-    // Convert params array to object
-    const urlSearchParamsObj = {
-      action: urlSearchParams.get('action'),
-      tissue: urlSearchParams.get('tissue'),
-      phase: urlSearchParams.get('phase'),
-      study: urlSearchParams.get('study'),
-      experiment: urlSearchParams.get('experiment'),
-      site: urlSearchParams.get('site'),
-    };
-
-    return (
-      <AuthContentContainer classes="searchPage" expanded={expanded}>
-        <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
-          <SummaryBackButton />
-          <div className="page-title">
-            <h3>Tissue Sample Results</h3>
-          </div>
-        </div>
-        <div className="advanced-search-content-container mt-3">
-          <SearchResults urlSearchParamsObj={urlSearchParamsObj} />
-        </div>
-      </AuthContentContainer>
-    );
-  }
-
-  // Render animated loading widget if data fetching is in progress
-  if (
-    isFetching &&
-    (searchQueryString.length || quickSearchQueryString.length)
-  ) {
-    return (
-      <AuthContentContainer classes="searchPage" expanded={expanded}>
-        <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
-          <SearchBackButton />
-          <div className="page-title">
-            <h3>Search Results</h3>
-          </div>
-        </div>
-        <div className="advanced-search-content-container mt-3">
-          <AnimatedLoadingIcon isFetching={isFetching} />
-        </div>
-      </AuthContentContainer>
-    );
-  }
-
-  // Render advanced search form by default
   return (
-    <AuthContentContainer classes="searchPage" expanded={expanded}>
-      <div className="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-heading">
-        <div className="page-title">
-          <h3>Advanced Search</h3>
-        </div>
-      </div>
-      <div className="advanced-search-content-container mt-3">
-        <div className="adv-search-example-searches">
-          <p className="text-left">
-            Example searches:&nbsp;
-            <Link
-              to="/search?q=(assay:rna-seq)"
-              className="example-search-link"
-              onClick={(e) => {
-                e.preventDefault();
-                handlePredefinedSearch([
-                  { term: 'assay', value: 'rna-seq', operator: '' },
-                ]);
-              }}
-            >
-              rna-seq
-            </Link>
-            <Link
-              to="/search?q=(tissue:liver)"
-              className="example-search-link"
-              onClick={(e) => {
-                e.preventDefault();
-                handlePredefinedSearch([
-                  { term: 'tissue', value: 'liver', operator: '' },
-                ]);
-              }}
-            >
-              liver
-            </Link>
-            <Link
-              to="/search?q=(species:rat)"
-              className="example-search-link"
-              onClick={(e) => {
-                e.preventDefault();
-                handlePredefinedSearch([
-                  { term: 'species', value: 'rat', operator: '' },
-                ]);
-              }}
-            >
-              rat
-            </Link>
-          </p>
-        </div>
-        <div
-          className="alert alert-warning alert-dismissible fade show warning-note d-flex align-items-center"
-          role="alert"
-        >
-          <span className="material-icons">info</span>
-          <span className="warning-note-text">
-            Only the GET data is available for searching in this release.
-          </span>
-          <button
-            type="button"
-            className="close"
-            data-dismiss="alert"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <SearchForm
-          advSearchParams={advSearchParams}
-          queryString={searchQueryString}
-          handleSearchFormChange={handleSearchFormChange}
-          addSearchParam={addSearchParam}
-          removeSearchParam={removeSearchParam}
-          resetSearchForm={resetSearchForm}
-          handleSearchFormSubmit={handleSearchFormSubmit}
+    <SearchProvider config={config}>
+      <WithSearch
+        mapContextToProps={({ searchTerm, setSearchTerm, results }) => ({
+          searchTerm,
+          setSearchTerm,
+          results,
+        })}
+      >
+        {({ searchTerm, setSearchTerm, results }) => {
+          const timewiseResults = results.filter(
+            (item) => item.analysis.raw === 'Timewise'
+          );
+          const trainingResults = results.filter(
+            (item) => item.analysis.raw === 'Training'
+          );
+          return (
+            <AuthContentContainer classes="searchPage" expanded={expanded}>
+              <div className="page-heading pt-3 pb-2 mb-3 border-bottom">
+                <div className="page-title">
+                  <h3>Browse and Search</h3>
+                </div>
+              </div>
+              <div className="search-content-container">
+                <h6 className="mt-4 mb-3">
+                  Search by gene symbol, protein ID, or metabolite name to
+                  examine the training response of its related molecules.
+                </h6>
+                <ErrorBoundary>
+                  <div className="es-search-ui-container d-flex align-items-center w-100">
+                    <RadioButton
+                      searchContext={searchContext}
+                      onEvent={(e) => setSearchContext(e.target.value)}
+                    />
+                    <SearchBox
+                      inputProps={{
+                        placeholder: 'Enter a gene symbol (e.g. BRD2), protein ID (e.g. NP_001004217.2), or metabolite name (e.g. Arginine)',
+                      }}
+                    />
+                  </div>
+                  <div className="search-body-container my-4">
+                    {results && results.length ? (
+                      <>
+                        <h5>{`Search Term: ${searchTerm.toUpperCase()}`}</h5>
+                        <div className="tabbed-content mb-4 w-100">
+                          {/* nav tabs */}
+                          <ul
+                            className="nav nav-tabs"
+                            id="dataTab"
+                            role="tablist"
+                          >
+                            <li
+                              className="nav-item font-weight-bold"
+                              role="presentation"
+                            >
+                              <a
+                                className="nav-link active"
+                                id="timewise_dea_tab"
+                                data-toggle="pill"
+                                href="#timewise_dea"
+                                role="tab"
+                                aria-controls="timewise_dea"
+                                aria-selected="true"
+                              >
+                                Timewise
+                              </a>
+                            </li>
+                            <li
+                              className="nav-item font-weight-bold"
+                              role="presentation"
+                            >
+                              <a
+                                className="nav-link"
+                                id="training_dea_tab"
+                                data-toggle="pill"
+                                href="#training_dea"
+                                role="tab"
+                                aria-controls="training_dea"
+                                aria-selected="false"
+                              >
+                                Training
+                              </a>
+                            </li>
+                          </ul>
+                          {/* tab panes */}
+                          <div className="tab-content mt-4">
+                            <div
+                              className="tab-pane fade show active"
+                              id="timewise_dea"
+                              role="tabpanel"
+                              aria-labelledby="timewise_dea_tab"
+                            >
+                              <TimewiseResultsTable
+                                timewiseData={timewiseResults}
+                              />
+                            </div>
+                            <div
+                              className="tab-pane fade"
+                              id="training_dea"
+                              role="tabpanel"
+                              aria-labelledby="training_dea_tab"
+                            >
+                              <TrainingResultsTable
+                                trainingData={trainingResults}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    ) : null}
+                  </div>
+                </ErrorBoundary>
+              </div>
+            </AuthContentContainer>
+          );
+        }}
+      </WithSearch>
+    </SearchProvider>
+  );
+}
+
+// Radio buttons for selecting the search context
+function RadioButton({ searchContext, onEvent }) {
+  return (
+    <div className="search-context">
+      <div className="form-check form-check-inline">
+        <input
+          className="form-check-input"
+          type="radio"
+          name="searchContext"
+          id="inlineRadioGeneSymbol"
+          value="genes"
+          checked={searchContext === 'genes'}
+          onChange={onEvent.bind(this)}
         />
+        <label className="form-check-label" htmlFor="inlineRadioGeneSymbol">
+          Gene
+        </label>
       </div>
-    </AuthContentContainer>
+      <div className="form-check form-check-inline">
+        <input
+          className="form-check-input"
+          type="radio"
+          name="searchContext"
+          id="inlineRadioProteinId"
+          value="proteins"
+          checked={searchContext === 'proteins'}
+          onChange={onEvent.bind(this)}
+        />
+        <label className="form-check-label" htmlFor="inlineRadioProteinId">
+          Protein ID
+        </label>
+      </div>
+      <div className="form-check form-check-inline">
+        <input
+          className="form-check-input"
+          type="radio"
+          name="searchContext"
+          id="inlineRadioMetabolite"
+          value="metabolites"
+          checked={searchContext === 'metabolites'}
+          onChange={onEvent.bind(this)}
+        />
+        <label className="form-check-label" htmlFor="inlineRadioMetabolite">
+          Metabolite
+        </label>
+      </div>
+    </div>
   );
 }
 
 SearchPage.propTypes = {
-  advSearchParams: PropTypes.arrayOf(
-    PropTypes.shape({
-      term: PropTypes.string,
-      value: PropTypes.string,
-      operator: PropTypes.string,
-    })
-  ).isRequired,
-  searchPayload: PropTypes.shape({
-    data: PropTypes.object,
-  }),
-  searchQueryString: PropTypes.string,
-  searchError: PropTypes.string,
-  isSearchFetching: PropTypes.bool,
-  quickSearchPayload: PropTypes.array,
-  quickSearchQueryString: PropTypes.string,
-  quickSearchError: PropTypes.string,
-  isQuickSearchFetching: PropTypes.bool,
-  handleSearchFormChange: PropTypes.func.isRequired,
-  addSearchParam: PropTypes.func.isRequired,
-  removeSearchParam: PropTypes.func.isRequired,
-  handleSearchFormSubmit: PropTypes.func.isRequired,
-  handlePredefinedSearch: PropTypes.func.isRequired,
-  resetSearchForm: PropTypes.func.isRequired,
-  getSearchForm: PropTypes.func.isRequired,
   expanded: PropTypes.bool,
 };
 
 SearchPage.defaultProps = {
-  searchPayload: {},
-  searchQueryString: '',
-  searchError: '',
-  isSearchFetching: false,
-  quickSearchPayload: [],
-  quickSearchQueryString: '',
-  quickSearchError: '',
-  isQuickSearchFetching: false,
   expanded: false,
 };
 
 const mapStateToProps = (state) => ({
-  ...state.search,
-  ...state.quickSearch,
   expanded: state.sidebar.expanded,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  handleSearchFormChange: (index, field, e) =>
-    dispatch(SearchActions.searchFormChange(index, field, e)),
-  addSearchParam: () => dispatch(SearchActions.searchFormAddParam()),
-  removeSearchParam: (index) =>
-    dispatch(SearchActions.searchFormRemoveParam(index)),
-  handleSearchFormSubmit: (params) =>
-    dispatch(SearchActions.handleSearchFormSubmit(params)),
-  handlePredefinedSearch: (params) =>
-    dispatch(SearchActions.handlePredefinedSearch(params)),
-  resetSearchForm: () => dispatch(SearchActions.searchFormReset()),
-  getSearchForm: () => dispatch(SearchActions.getSearchForm()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
+export default connect(mapStateToProps)(SearchPage);
