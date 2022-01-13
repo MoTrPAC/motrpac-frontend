@@ -14,9 +14,13 @@ import buildState from './buildState';
 import TimewiseResultsTable from './timewiseTable';
 import TrainingResultsTable from './trainingResultsTable';
 import AuthContentContainer from '../lib/ui/authContentContainer';
+import EmbargoExtension from '../lib/embargoExtension';
+import SearchDataDisclaimer from '../lib/searchDataDisclaimer';
 
-export function SearchPage({ expanded }) {
+export function SearchPage({ profile, expanded }) {
   const [searchContext, setSearchContext] = useState('genes');
+
+  const userType = profile.user_metadata && profile.user_metadata.userType;
 
   // Configure the search provider
   const config = {
@@ -51,12 +55,14 @@ export function SearchPage({ expanded }) {
           );
           return (
             <AuthContentContainer classes="searchPage" expanded={expanded}>
-              <div className="page-heading pt-3 pb-2 mb-3 border-bottom">
+              {userType === 'external' && <EmbargoExtension />}
+              <div className="page-header pt-3 pb-2 mb-3 border-bottom">
                 <div className="page-title">
-                  <h3>Browse and Search</h3>
+                  <h3 className="mb-0">Browse and Search</h3>
                 </div>
               </div>
               <div className="search-content-container">
+                <SearchDataDisclaimer />
                 <h6 className="mt-4 mb-3">
                   Search by gene symbol, protein ID, or metabolite name to
                   examine the training response of its related molecules.
@@ -205,14 +211,19 @@ function RadioButton({ searchContext, onEvent }) {
 }
 
 SearchPage.propTypes = {
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.object,
+  }),
   expanded: PropTypes.bool,
 };
 
 SearchPage.defaultProps = {
+  profile: {},
   expanded: false,
 };
 
 const mapStateToProps = (state) => ({
+  ...state.auth,
   expanded: state.sidebar.expanded,
 });
 
