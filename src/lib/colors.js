@@ -15,6 +15,16 @@ const colors = {
     dgreen: '#3F8B33',
     lgreen: '#93D689',
   },
+  gender: {
+    female: '#ff6eff',
+    male: '#5555ff',
+  },
+  program: {
+    week1: '#F7FCB9',
+    week2: '#ADDD8E',
+    week4: '#238443',
+    week8: '#002612',
+  },
 };
 
 export default colors;

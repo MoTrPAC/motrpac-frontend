@@ -1,14 +1,13 @@
 import React from 'react';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { shallow, mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer, { defaultRootState } from '../../App/reducers';
 import { defaultAnalysisState } from '../analysisReducer';
-import AnalysisHomePageConnected, { AnalysisHomePage } from '../analysisHomePage';
+import AnalysisHomePageConnected, {
+  AnalysisHomePage,
+} from '../analysisHomePage';
 import analysisTypes from '../../lib/analysisTypes';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 // Checks if any of the analyses has been set to true
 //   Used to determine if other tests depending on these to be active should run
@@ -29,7 +28,6 @@ const loggedInRootState = {
 
 const analysisActions = {
   onPickAnalysis: jest.fn(),
-  onPickSubAnalysis: jest.fn(),
   goBack: jest.fn(),
 };
 
@@ -48,10 +46,7 @@ function constructMatchState(subject) {
 describe('Pure Analysis Home Page', () => {
   test('Redirects to home if not logged in', () => {
     const shallowAnalysis = shallow(
-      <AnalysisHomePage
-        {...defaultAnalysisState}
-        {...analysisActions}
-      />,
+      <AnalysisHomePage {...defaultAnalysisState} {...analysisActions} />
     );
     expect(shallowAnalysis.find('Redirect')).toHaveLength(1);
   });
@@ -61,12 +56,21 @@ describe('Pure Analysis Home Page', () => {
         {...defaultAnalysisState}
         {...analysisActions}
         loggedIn
-      />,
+      />
     );
     expect(shallowAnalysis.find('Redirect')).toHaveLength(1);
   });
 
-  const matchingSubjects = ['human', 'animal', 'HUMAN', 'ANIMAL', 'huMan', 'aNimaL', 'Human', 'Animal'];
+  const matchingSubjects = [
+    'human',
+    'animal',
+    'HUMAN',
+    'ANIMAL',
+    'huMan',
+    'aNimaL',
+    'Human',
+    'Animal',
+  ];
   test('Does not Redirect if url matches', () => {
     let shallowAnalysis;
     matchingSubjects.forEach((match) => {
@@ -74,7 +78,7 @@ describe('Pure Analysis Home Page', () => {
         <AnalysisHomePage
           {...constructMatchState(match)}
           {...analysisActions}
-        />,
+        />
       );
       expect(shallowAnalysis.find('Redirect')).toHaveLength(0);
     });
@@ -90,7 +94,9 @@ describe('Pure Analysis Home Page', () => {
           {...analysisActions}
         />,
       );
-      expect(shallowAnalysis.find('h3').text()).toEqual(expect.stringMatching(expected));
+      expect(shallowAnalysis.find('h3').text()).toEqual(
+        expect.stringMatching(expected)
+      );
     });
   });
 
@@ -104,22 +110,25 @@ describe('Pure Analysis Home Page', () => {
         />,
       );
       expect(shallowAnalysis.find('h3')).toHaveLength(1);
-      expect(shallowAnalysis.find('AnalysisTypeButton')).toHaveLength(7);
-      expect(shallowAnalysis.find('.breadcrumbs')).toHaveLength(1);
+      expect(shallowAnalysis.find('AnalysisCard')).toHaveLength(6);
     });
   });
 });
 
-describe('Connected AnalysisPage', () => {
+describe('Connected Animal AnalysisPage', () => {
   let mountedAnalysis = mount((
     <Provider store={createStore(rootReducer, loggedInRootState)}>
-      <AnalysisHomePageConnected match={{ params: { subjectType: 'animal' } }} />
+      <AnalysisHomePageConnected
+        match={{ params: { subjectType: 'animal' } }}
+      />
     </Provider>
   ));
   beforeAll(() => {
     mountedAnalysis = mount((
       <Provider store={createStore(rootReducer, loggedInRootState)}>
-        <AnalysisHomePageConnected match={{ params: { subjectType: 'animal' } }} />
+        <AnalysisHomePageConnected
+          match={{ params: { subjectType: 'animal' } }}
+        />
       </Provider>
     ));
   });
@@ -127,34 +136,54 @@ describe('Connected AnalysisPage', () => {
     mountedAnalysis.unmount();
   });
 
-  test('Clicking active analysis displays subanalyses, clicking back returns to initial', () => {
+  test('Clicking active animal analysis displays targeted analysis, and clicking back button returns to analysis entry page', () => {
     if (anyAnalysisActive) {
       // Initially shows analysisTypeButton
-      expect(mountedAnalysis.find('AnalysisTypeButton')).not.toHaveLength(0);
+      expect(mountedAnalysis.find('AnalysisCard')).not.toHaveLength(0);
 
       // Click button --> replace analysisTypeButton with SubAnalysisButton
-      mountedAnalysis.find('.analysisTypeActive').first().simulate('click');
+      mountedAnalysis.find('.activeAnalysis').first().simulate('click');
       expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(1);
       mountedAnalysis.update();
-      expect(mountedAnalysis.find('SubAnalysisButton')).not.toHaveLength(0);
-      expect(mountedAnalysis.find('AnalysisTypeButton')).toHaveLength(0);
-      mountedAnalysis.find('.subAnalysisRow').first().simulate('click');
-      expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(2);
-      mountedAnalysis.update();
+      expect(mountedAnalysis.find('AnalysisCard')).toHaveLength(0);
       expect(mountedAnalysis.find('AnimalDataAnalysis')).not.toHaveLength(0);
 
       // Click back button --> replace SubAnalysisButton with AnalysisTypeButton
       mountedAnalysis.find('.backButton').first().simulate('click');
-      expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(1);
-      mountedAnalysis.update();
-      expect(mountedAnalysis.find('AnimalDataAnalysis')).toHaveLength(0);
-      mountedAnalysis.find('.backButton').first().simulate('click');
       expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(0);
       mountedAnalysis.update();
-      expect(mountedAnalysis.find('SubAnalysisButton')).toHaveLength(0);
-      expect(mountedAnalysis.find('AnalysisTypeButton')).not.toHaveLength(0);
+      expect(mountedAnalysis.find('AnimalDataAnalysis')).toHaveLength(0);
+      expect(mountedAnalysis.find('AnalysisCard')).not.toHaveLength(0);
     } else {
-      expect(mountedAnalysis.find('.analysisTypeActive')).toHaveLength(0);
+      expect(mountedAnalysis.find('.activeAnalysis')).toHaveLength(0);
     }
+  });
+});
+
+describe('Connected Human AnalysisPage', () => {
+  let mountedAnalysis = mount((
+    <Provider store={createStore(rootReducer, loggedInRootState)}>
+      <AnalysisHomePageConnected match={{ params: { subjectType: 'human' } }} />
+    </Provider>
+  ));
+  beforeAll(() => {
+    mountedAnalysis = mount((
+      <Provider store={createStore(rootReducer, loggedInRootState)}>
+        <AnalysisHomePageConnected
+          match={{ params: { subjectType: 'human' } }}
+        />
+      </Provider>
+    ));
+  });
+  afterAll(() => {
+    mountedAnalysis.unmount();
+  });
+
+  test('There should be no active or clickable human analysis cards', () => {
+    // Initially shows 6 inactive analysisTypeButton
+    expect(mountedAnalysis.find('AnalysisCard')).toHaveLength(6);
+    expect(mountedAnalysis.find('.activeAnalysis')).toHaveLength(0);
+    expect(mountedAnalysis.find('SubAnalysisCard')).toHaveLength(0);
+    expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(0);
   });
 });

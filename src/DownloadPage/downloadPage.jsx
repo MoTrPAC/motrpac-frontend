@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import DownloadDataTable from './downloadDataTable';
 import DownloadFilter from './downloadFilter';
 import DownloadPaginator from './downloadPaginator';
 import actions from './downloadActions';
 
 export function DownloadPage({
-  isAuthenticated,
   profile,
   filteredUploads,
   cartItems,
@@ -28,9 +26,7 @@ export function DownloadPage({
   changePageRequest,
 }) {
   const siteName = profile.user_metadata && profile.user_metadata.siteName ? profile.user_metadata.siteName : null;
-  if (!isAuthenticated) {
-    return <Redirect to="/" />;
-  }
+
   return (
     <div className="downloadPage col-md-9 ml-sm-auto col-lg-10 px-4">
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -77,13 +73,17 @@ export function DownloadPage({
     </div>
   );
 }
+
 DownloadPage.propTypes = {
   filteredUploads: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   cartItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   sortBy: PropTypes.string,
   uploadCount: PropTypes.number.isRequired,
-  isAuthenticated: PropTypes.bool,
-  profile: PropTypes.object,
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.shape({
+      siteName: PropTypes.string,
+    }),
+  }),
   viewCart: PropTypes.bool.isRequired,
   listUpdating: PropTypes.bool.isRequired,
   activeFilters: DownloadFilter.propTypes.activeFilters.isRequired,
@@ -97,18 +97,17 @@ DownloadPage.propTypes = {
   onAddAllToCart: PropTypes.func.isRequired,
   changePageRequest: PropTypes.func.isRequired,
 };
+
 DownloadPage.defaultProps = {
   sortBy: 'identifier',
-  isAuthenticated: false,
   profile: {},
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   sortBy: state.download.sortBy,
   profile: state.auth.profile,
   filteredUploads: state.download.filteredUploads,
   cartItems: state.download.cartItems,
-  isAuthenticated: state.auth.isAuthenticated,
   activeFilters: state.download.activeFilters,
   currentPage: state.download.currentPage,
   maxRows: state.download.maxRows,
@@ -117,9 +116,9 @@ const mapStateToProps = state => ({
   listUpdating: state.download.listUpdating,
 });
 
-const mapDispatchToProps = dispatch => ({
-  onCartClick: file => dispatch(actions.addToCart(file)),
-  onChangeSort: column => dispatch(actions.sortChange(column)),
+const mapDispatchToProps = (dispatch) => ({
+  onCartClick: (file) => dispatch(actions.addToCart(file)),
+  onChangeSort: (column) => dispatch(actions.sortChange(column)),
   onChangeFilter: (category, filter) => dispatch(actions.changeFilter(category, filter)),
   onViewCart: () => dispatch(actions.viewCart()),
   onEmptyCart: () => dispatch(actions.emptyCart()),

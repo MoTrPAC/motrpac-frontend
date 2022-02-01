@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import actions from '../Auth/authActions';
 import LoginButton from '../lib/loginButton';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
@@ -18,12 +19,28 @@ export function Footer({
   isAuthenticated,
   profile,
   login,
+  logout,
 }) {
   // Function to get current copyright year
   const getCopyrightYear = () => {
     const today = new Date();
     const year = today.getFullYear();
     return year;
+  };
+
+  const handleLogout = () => {
+    logout();
+    return <Redirect to="/" />;
+  };
+
+  const LogoutButton = () => {
+    if (isAuthenticated) {
+      return (
+        <button type="button" onClick={handleLogout} className="logOutBtn btn btn-primary">
+          Log out
+        </button>
+      );
+    }
   };
 
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
@@ -44,9 +61,15 @@ export function Footer({
                 <li className="nav-item navItem"><a href="/" className="nav-link">Home</a></li>
                 <li className="nav-item navItem"><a href="/team" className="nav-link">About Us</a></li>
                 <li className="nav-item navItem"><a href="/contact" className="nav-link">Contact Us</a></li>
-                <li className="nav-item navItem">
-                  <LoginButton login={login} />
-                </li>
+                {(isAuthenticated && !hasAccess) ? (
+                  <li className="nav-item navItem">
+                    <LogoutButton />
+                  </li>
+                ) : (
+                  <li className="nav-item navItem">
+                    <LoginButton login={login} />
+                  </li>
+                )}
               </ul>
             </div>
           </div>
@@ -85,12 +108,15 @@ Footer.propTypes = {
     user_metadata: PropTypes.object,
   }),
   isAuthenticated: PropTypes.bool,
-  login: PropTypes.func.isRequired,
+  login: PropTypes.func,
+  logout: PropTypes.func,
 };
 
 Footer.defaultProps = {
   profile: {},
   isAuthenticated: false,
+  login: null,
+  logout: null,
 };
 
 const mapStateToProps = state => ({
@@ -100,6 +126,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   login: () => dispatch(actions.login()),
+  logout: () => dispatch(actions.logout()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);

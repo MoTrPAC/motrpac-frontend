@@ -5,9 +5,8 @@ import { Contact } from '../contact';
 import { Navbar } from '../../Navbar/navbar';
 import { Footer } from '../../Footer/footer';
 
-const testUser = require('../../testData/testUser');
-
-const navAction = {
+const navbarAction = {
+  login: action('logging in'),
   logout: action('logging out'),
 };
 
@@ -20,13 +19,13 @@ storiesOf('Contact Us Page', module)
     <React.Fragment>
       <div className="App">
         <header>
-          <Navbar isAuthenticated {...navAction} profile={testUser} />
+        <Navbar {...navbarAction} />
         </header>
-        <div className="row justify-content-center">
+        <div className="row justify-content-center mt-5 pt-4">
           {story()}
         </div>
       </div>
-      <Footer isAuthenticated profile={testUser} {...footerAction} />
+      <Footer {...footerAction} />
     </React.Fragment>
   ))
   .add('Default', () => <Contact />);

@@ -1,14 +1,11 @@
 import React from 'react';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { shallow, mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleWare from 'redux-thunk';
 import { defaultUploadState } from '../uploadReducer';
 import rootReducer, { defaultRootState } from '../../App/reducers';
 import UploadScreenConnected, { UploadScreen } from '../uploadScreen';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const testFiles = require('../../testData/testFiles');
 const testUploads = require('../../testData/testUploads');
@@ -59,7 +56,7 @@ const screenActions = {
 describe('Pure Upload Screen', () => {
   test('Renders required componenents', () => {
     const shallowScreen = shallow(
-      <UploadScreen {...defaultUploadState} isAuthenticated {...screenActions} />,
+      <UploadScreen {...defaultUploadState} {...screenActions} />,
     );
     expect(shallowScreen.find('UploadAreaDnD')).toHaveLength(1);
     expect(shallowScreen.find('UploadList')).toHaveLength(1);

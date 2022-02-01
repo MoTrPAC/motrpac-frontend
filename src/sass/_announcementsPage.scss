@@ -36,6 +36,14 @@
     &.release {
       color: $stanford-bright-red;
     }
+
+    &.marker-paper {
+      color: $primary-blue;
+    }
+
+    &.embargo-extension {
+      color: $accent-violet-shade-medium;
+    }
   }
 
   .announcement-header {
@@ -66,10 +74,10 @@
     padding: 0;
 
     .announcement-link-item {
-      line-height: 1.6;
+      line-height: 2.25;
 
       .inline-link-with-icon .material-icons {
-        margin-top: 0.125rem;
+        margin-top: 0.4rem;
       }
     }
   }

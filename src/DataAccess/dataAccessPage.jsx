@@ -186,7 +186,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
       principalInvestigatorName: formValues.PIName,
       dataUseIntent: formValues.dataUseIntent,
       eSignature: formValues.eSignature,
-      embargoAgreementVersion: 'E1.0',
+      embargoAgreementVersion: 'E1.1',
       embargoAgreementDate: dayjs().format(timeFormat),
     };
 
@@ -251,9 +251,12 @@ export function DataAccessPage({ isAuthenticated, profile }) {
               MoTrPAC Data Hub.
               {' '}
               <strong>
-                Please note that during the embargo period, until January 15th 2021, data can
-                only be used for analyses supporting grant submissions, and not be used in
-                abstracts, manuscripts, preprints or presentations.
+                Please note that there is a publication embargo on the MoTrPAC data until the
+                release of additional control data necessary to fully control the analysis for
+                non-exercise induced molecular changes in the current dataset (<em>e.g.</em> changes
+                due to sampling and fasting time post exercise). Until then, data can only be used
+                for analyses supporting grant submissions, and cannot be used in abstracts,
+                manuscripts, preprints or presentations.
               </strong>
             </p>
           </div>
@@ -273,7 +276,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
               and targeted and untargeted metabolomics.
             </p>
           </div>
-          <StudyDocumentsTable />
+          <StudyDocumentsTable currentView="external" />
           <div className="card mb-3 border-secondary">
             <div className="card-header bg-secondary text-light">Data Use Agreement and Registration</div>
             <div className="card-body">
@@ -324,7 +327,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         &nbsp;be used for&nbsp;
                         <strong>submission</strong>
                         &nbsp;of abstracts, manuscripts, preprints or
-                        presentations before the embargo deadline.
+                        presentations before the embargo expires.
                       </label>
                     </div>
                   </div>
@@ -343,7 +346,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                       <label className="form-check-label" htmlFor="dataUseAgreement2">
                         Data&nbsp;
                         <strong>CANNOT</strong>
-                        &nbsp;be publicly hosted or disseminated before the embargo deadline.
+                        &nbsp;be publicly hosted or disseminated before the embargo expires.
                       </label>
                     </div>
                   </div>
@@ -361,9 +364,9 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                       />
                       <label className="form-check-label" htmlFor="dataUseAgreement3">
                         The embargo period for any type of publication of MoTrPAC
-                        External Release 1 data is 15 months after external release 1: through&nbsp;
-                        <strong>January 15, 2021</strong>
-                        .
+                        External Release 1 data is until release of additional control
+                        data necessary for full control of non-exercise induced
+                        molecular effects.
                       </label>
                     </div>
                   </div>
@@ -383,7 +386,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         Data&nbsp;
                         <strong>CAN</strong>
                         &nbsp;be used for analyses supporting grant submissions prior
-                        to the embargo deadline.
+                        to the embargo expiration.
                       </label>
                     </div>
                   </div>
@@ -400,7 +403,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         checked={formValues.dataUseAgreement5}
                       />
                       <label className="form-check-label" htmlFor="dataUseAgreement5">
-                        After the embargo period, Recipients and their Agents agree
+                        After the embargo expires, Recipients and their Agents agree
                         that in publications using&nbsp;
                         <strong>any</strong>
                         &nbsp;data from MoTrPAC public use data sets they will
@@ -447,7 +450,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                   Data Release.&nbsp;
                   <em>MoTrPAC Data Hub</em>
                   . MoTrPAC Bioinformatics Center. October 15, 2019. Version 1.0.&nbsp;
-                  motrpac-data.org/data-access
+                  https://motrpac-data.org
                 </p>
                 <p className="card-text">
                   <em>Optional:</em>

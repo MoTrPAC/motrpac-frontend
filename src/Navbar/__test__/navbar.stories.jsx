@@ -40,5 +40,9 @@ const actions = {
 
 storiesOf('Navbar', module)
   .add('Default', () => <Navbar {...loggedOutState} />)
-  .add('Internal user logged-in', () => <Navbar {...internalLoggedInState} {...actions} />)
-  .add('External user logged-in', () => <Navbar {...externalLoggedInState} {...actions} />);
+  .add('Internal user logged-in', () => (
+    <Navbar {...internalLoggedInState} {...actions} />
+  ))
+  .add('External user logged-in', () => (
+    <Navbar {...externalLoggedInState} {...actions} />
+  ));

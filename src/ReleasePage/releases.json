@@ -1,5 +1,201 @@
 [
   {
+    "label": "Release 2.0",
+    "emoji": "rocket",
+    "version": "2.0",
+    "date": "June 30, 2020",
+    "target": "internal",
+    "description": "The second major internal data release is now available through the MoTrPAC data hub. This release includes the majority of the PASS1A and PASS1B molecular and phenotypic data. Processed data is available for Web download and through the command-line, while raw data is available through the command-line only.",
+    "readme_file_location": "https://docs.google.com/document/d/1bdXcYQLZ65GpJKTjf9XwRxhrfHJSD9NIqCxhG6icL8U",
+    "result_files": {
+      "bucket_name": "motrpac-internal-release2-results",
+      "data_types": {
+        "pass1a_06": [
+          {
+            "type": "transcriptomics",
+            "title": "Transcriptomics data (metadata, QC and quantitative results)",
+            "icon": "DNA",
+            "icon_alt": "Transcriptomics",
+            "tooltip_id": "data-pass1a-06-transcriptomics-int-2-0",
+            "object_path": "/pass1a-06/transcriptomics",
+            "object_zipfile": "motrpac_pass1a-06_transcriptomics.tar.gz",
+            "object_zipfile_size": "265.89 MB"
+          },
+          {
+            "type": "epigenomics",
+            "title": "Epigenomics data (RRBS and ATAC-seq metadata, QC and quantitative results)",
+            "icon": "DNA",
+            "icon_alt": "Epigenomics",
+            "tooltip_id": "data-pass1a-06-epigenomics-int-2-0",
+            "object_path": "/pass1a-06/epigenomics",
+            "object_zipfile": "motrpac_pass1a-06_epigenomics.tar.gz",
+            "object_zipfile_size": "434.50 MB"
+          },
+          {
+            "type": "metabolomics-targeted",
+            "title": "Metabolomics Targeted data (metadata, QC and quantitative results)",
+            "icon": "Metabolite",
+            "icon_alt": "Metabolomics Targeted",
+            "tooltip_id": "data-pass1a-06-metabolomics-targeted-int-2-0",
+            "object_path": "/pass1a-06/metabolomics-targeted",
+            "object_zipfile": "motrpac_pass1a-06_metabolomics-targeted.tar.gz",
+            "object_zipfile_size": "61.35 MB"
+          },
+          {
+            "type": "metabolomics-untargeted",
+            "title": "Metabolomics Untargeted data (metadata, QC and quantitative results)",
+            "icon": "Metabolite",
+            "icon_alt": "Metabolomics Untargeted",
+            "tooltip_id": "data-pass1a-06-metabolomics-untargeted-int-2-0",
+            "object_path": "/pass1a-06/metabolomics-untargeted",
+            "object_zipfile": "motrpac_pass1a-06_metabolomics-untargeted.tar.gz",
+            "object_zipfile_size": "514.59 MB"
+          },
+          {
+            "type": "metabolomics-named-merged",
+            "title": "All named metabolites merged per tissue",
+            "icon": "Metabolite",
+            "icon_alt": "All named metabolites merged per tissue",
+            "tooltip_id": "data-pass1a-06-metabolomics-named-merged-int-2-0",
+            "object_path": "/pass1a-06/metabolomics-named-merged",
+            "object_zipfile": "motrpac_pass1a-06_metabolomics-named-merged.tar.gz",
+            "object_zipfile_size": "9.43 MB"
+          },
+          {
+            "type": "proteomics",
+            "title": "Proteomics data (metadata, QC and quantitative results)",
+            "icon": "Protein",
+            "icon_alt": "Proteomic",
+            "tooltip_id": "data-pass1a-06-proteomics-int-2-0",
+            "object_path": "/pass1a-06/proteomics",
+            "object_zipfile": "motrpac_pass1a-06_proteomics.tar.gz",
+            "object_zipfile_size": "364.57 MB"
+          },
+          {
+            "type": "phenotype",
+            "title": "Phenotypic data (including 18-month physiological data)",
+            "icon": "Gender",
+            "icon_alt": "Phenotypic",
+            "tooltip_id": "data-pass1a-06-phenotype-int-2-0",
+            "object_path": "/pass1a-06/phenotype",
+            "object_zipfile": "motrpac_pass1a-06_phenotype.tar.gz",
+            "object_zipfile_size": "4.69 MB"
+          },
+          {
+            "type": "all",
+            "title": "All of the omics and phenotypic data",
+            "icon": "Globe",
+            "icon_alt": "All omics",
+            "tooltip_id": "data-pass1a-06-all-int-2-0",
+            "object_path": null,
+            "object_zipfile": "motrpac_pass1a-06_all.tar.gz",
+            "object_zipfile_size": "1.65 GB"
+          }
+        ],
+        "pass1b_06": [
+          {
+            "type": "transcriptomics",
+            "title": "Transcriptomics data (metadata, QC and quantitative results)",
+            "icon": "DNA",
+            "icon_alt": "Transcriptomics",
+            "tooltip_id": "data-pass1b-06-transcriptomics-int-2-0",
+            "object_path": "/pass1b-06/transcriptomics",
+            "object_zipfile": "motrpac_pass1b-06_transcriptomics.tar.gz",
+            "object_zipfile_size": "176.34 MB"
+          },
+          {
+            "type": "epigenomics",
+            "title": "Epigenomics data (RRBS and ATAC-seq metadata, QC and quantitative results)",
+            "icon": "DNA",
+            "icon_alt": "Epigenomics",
+            "tooltip_id": "data-pass1b-06-epigenomics-int-2-0",
+            "object_path": "/pass1b-06/epigenomics",
+            "object_zipfile": "motrpac_pass1b-06_epigenomics.tar.gz",
+            "object_zipfile_size": "17.90 MB"
+          },
+          {
+            "type": "metabolomics-targeted",
+            "title": "Metabolomics Targeted data (metadata, QC and quantitative results)",
+            "icon": "Metabolite",
+            "icon_alt": "Metabolomics Targeted",
+            "tooltip_id": "data-pass1b-06-metabolomics-targeted-int-2-0",
+            "object_path": "/pass1b-06/metabolomics-targeted",
+            "object_zipfile": "motrpac_pass1b-06_metabolomics-targeted.tar.gz",
+            "object_zipfile_size": "36.93 MB"
+          },
+          {
+            "type": "metabolomics-untargeted",
+            "title": "Metabolomics Untargeted data (metadata, QC and quantitative results)",
+            "icon": "Metabolite",
+            "icon_alt": "Metabolomics Untargeted",
+            "tooltip_id": "data-pass1b-06-metabolomics-untargeted-int-2-0",
+            "object_path": "/pass1b-06/metabolomics-untargeted",
+            "object_zipfile": "motrpac_pass1b-06_metabolomics-untargeted.tar.gz",
+            "object_zipfile_size": "479.90 MB"
+          },
+          {
+            "type": "metabolomics-named-merged",
+            "title": "All named metabolites merged per tissue",
+            "icon": "Metabolite",
+            "icon_alt": "All named metabolites merged per tissue",
+            "tooltip_id": "data-pass1b-06-metabolomics-named-merged-int-2-0",
+            "object_path": "/pass1b-06/metabolomics-named-merged",
+            "object_zipfile": "motrpac_pass1b-06_metabolomics-named-merged.tar.gz",
+            "object_zipfile_size": "5.83 MB"
+          },
+          {
+            "type": "proteomics",
+            "title": "Proteomics data (metadata, QC and quantitative results)",
+            "icon": "Protein",
+            "icon_alt": "Proteomic",
+            "tooltip_id": "data-pass1b-06-proteomics-int-2-0",
+            "object_path": "/pass1b-06/proteomics",
+            "object_zipfile": "motrpac_pass1b-06_proteomics.tar.gz",
+            "object_zipfile_size": "349.67 MB"
+          },
+          {
+            "type": "phenotype",
+            "title": "Phenotypic data (including 18-month physiological data)",
+            "icon": "Gender",
+            "icon_alt": "Phenotypic",
+            "tooltip_id": "data-pass1b-06-phenotype-int-2-0",
+            "object_path": "/pass1b-06/phenotype",
+            "object_zipfile": "motrpac_pass1b-06_phenotype.tar.gz",
+            "object_zipfile_size": "5.80 MB"
+          },
+          {
+            "type": "all",
+            "title": "All of the omics and phenotypic data",
+            "icon": "Globe",
+            "icon_alt": "All omics",
+            "tooltip_id": "data-pass1b-06-all-int-2-0",
+            "object_path": null,
+            "object_zipfile": "motrpac_pass1b-06_all.tar.gz",
+            "object_zipfile_size": "1.07 GB"
+          }
+        ]
+      }
+    },
+    "raw_files": {
+      "epigenomics": {
+        "bucket_name": "motrpac-internal-release2-raw-epigenomics"
+      },
+      "transcriptomics": {
+        "bucket_name": "motrpac-internal-release2-raw-transcriptomics"
+      },
+      "metabolomics_targeted": {
+        "bucket_name": "motrpac-internal-release2-raw-metabolomics-targeted"
+      },
+      "metabolomics_untargeted": {
+        "bucket_name": "motrpac-internal-release2-raw-metabolomics-untargeted"
+      },
+      "proteomics": {
+        "bucket_name": "motrpac-internal-release2-raw-proteomics"
+      }
+    },
+    "documentation": false
+  },
+  {
     "label": "Release 1.2.1",
     "emoji": "tada",
     "version": "1.2.1",
@@ -17,7 +213,7 @@
           "icon_alt": "Phenotypic",
           "tooltip_id": "data-phenotype-int-1-2-1",
           "object_path": "/phenotype-1.2.1",
-          "object_zipfile_path": "/phenotype-1.2.1.tar.gz",
+          "object_zipfile": "phenotype-1.2.1.tar.gz",
           "object_zipfile_size": "3.4 MB"
         }
       ]
@@ -42,7 +238,7 @@
           "icon_alt": "Epigenomics",
           "tooltip_id": "data-epigenomics-ext-1-0",
           "object_path": "/epigenomics",
-          "object_zipfile_path": "/epigenomics.tar.gz",
+          "object_zipfile": "epigenomics.tar.gz",
           "object_zipfile_size": "9 GB"
         },
         {
@@ -52,7 +248,7 @@
           "icon_alt": "Transcriptomics",
           "tooltip_id": "data-transcriptomics-ext-1-0",
           "object_path": "/transcriptomics",
-          "object_zipfile_path": "/transcriptomics.tar.gz",
+          "object_zipfile": "transcriptomics.tar.gz",
           "object_zipfile_size": "53 MB"
         },
         {
@@ -62,7 +258,7 @@
           "icon_alt": "Metabolomics Targeted",
           "tooltip_id": "data-metabolomics_targeted-ext-1-0",
           "object_path": "/metabolomics_targeted",
-          "object_zipfile_path": "/metabolomics_targeted.tar.gz",
+          "object_zipfile": "metabolomics_targeted.tar.gz",
           "object_zipfile_size": "23 MB"
         },
         {
@@ -72,7 +268,7 @@
           "icon_alt": "Metabolomics Untargeted",
           "tooltip_id": "data-metabolomics_untargeted-ext-1-0",
           "object_path": "/metabolomics_untargeted",
-          "object_zipfile_path": "/metabolomics_untargeted.tar.gz",
+          "object_zipfile": "metabolomics_untargeted.tar.gz",
           "object_zipfile_size": "101 MB"
         },
         {
@@ -82,7 +278,7 @@
           "icon_alt": "Proteomic",
           "tooltip_id": "data-proteomics-ext-1-0",
           "object_path": "/proteomics",
-          "object_zipfile_path": "/proteomics.tar.gz",
+          "object_zipfile": "proteomics.tar.gz",
           "object_zipfile_size": "298 MB"
         },
         {
@@ -92,7 +288,7 @@
           "icon_alt": "Phenotypic",
           "tooltip_id": "data-phenotype-ext-1-0",
           "object_path": "/phenotype",
-          "object_zipfile_path": "/phenotype.tar.gz",
+          "object_zipfile": "phenotype.tar.gz",
           "object_zipfile_size": "526 KB"
         },
         {
@@ -101,8 +297,8 @@
           "icon": "Globe",
           "icon_alt": "All omics",
           "tooltip_id": "data-all-ext-1-0",
-          "object_path": "/all.tar.gz",
-          "object_zipfile_path": "/all.tar.gz",
+          "object_path": null,
+          "object_zipfile": "all.tar.gz",
           "object_zipfile_size": "9 GB"
         }
       ]
@@ -124,7 +320,7 @@
         "bucket_name": "motrpac-external-release1-raw-proteomics"
       }
     },
-    "documentation": true
+    "documentation": false
   },
   {
     "label": "Release 1.2",
@@ -144,7 +340,7 @@
           "icon_alt": "Genomic",
           "tooltip_id": "data-rna-seq-int-1-2",
           "object_path": "/rna-seq",
-          "object_zipfile_path": "/rna-seq.tar.gz",
+          "object_zipfile": "rna-seq.tar.gz",
           "object_zipfile_size": "213 MB"
         },
         {
@@ -154,7 +350,7 @@
           "icon_alt": "Genomic",
           "tooltip_id": "data-rrbs-int-1-2",
           "object_path": "/rrbs",
-          "object_zipfile_path": null,
+          "object_zipfile": null,
           "object_zipfile_size": null
         },
         {
@@ -164,7 +360,7 @@
           "icon_alt": "Metabolomic",
           "tooltip_id": "data-metabolomics-int-1-2",
           "object_path": "/metabolomics",
-          "object_zipfile_path": "/metabolomics.tar.gz",
+          "object_zipfile": "metabolomics.tar.gz",
           "object_zipfile_size": "124 MB"
         },
         {
@@ -174,7 +370,7 @@
           "icon_alt": "Proteomic",
           "tooltip_id": "data-proteomics-int-1-2",
           "object_path": "/proteomics",
-          "object_zipfile_path": "/proteomics.tar.gz",
+          "object_zipfile": "proteomics.tar.gz",
           "object_zipfile_size": "298 MB"
         },
         {
@@ -184,7 +380,7 @@
           "icon_alt": "Phenotypic",
           "tooltip_id": "data-phenotype-int-1-2",
           "object_path": "/phenotype",
-          "object_zipfile_path": "/phenotype.tar.gz",
+          "object_zipfile": "phenotype.tar.gz",
           "object_zipfile_size": "2 MB"
         },
         {
@@ -193,8 +389,8 @@
           "icon": "Globe",
           "icon_alt": "All omics",
           "tooltip_id": "data-all-int-1-2",
-          "object_path": "/all.tar.gz",
-          "object_zipfile_path": "/all.tar.gz",
+          "object_path": null,
+          "object_zipfile": "all.tar.gz",
           "object_zipfile_size": "636 MB"
         }
       ]
@@ -221,7 +417,7 @@
         "bucket_name": "motrpac-internal-release1-intermediate-proteomics"
       }
     },
-    "documentation": true
+    "documentation": false
   },
   {
     "label": "Release 1.1",
@@ -241,7 +437,7 @@
           "icon_alt": "Genomic",
           "tooltip_id": "data-rna-seq-int-1-1",
           "object_path": "/rna-seq",
-          "object_zipfile_path": "/rna-seq.tar.gz",
+          "object_zipfile": "rna-seq.tar.gz",
           "object_zipfile_size": "213 MB"
         },
         {
@@ -251,7 +447,7 @@
           "icon_alt": "Genomic",
           "tooltip_id": "data-rrbs-int-1-1",
           "object_path": "/rrbs",
-          "object_zipfile_path": null,
+          "object_zipfile": null,
           "object_zipfile_size": null
         },
         {
@@ -261,7 +457,7 @@
           "icon_alt": "Metabolomic",
           "tooltip_id": "data-metabolomics-int-1-1",
           "object_path": "/metabolomics",
-          "object_zipfile_path": "/metabolomics.tar.gz",
+          "object_zipfile": "metabolomics.tar.gz",
           "object_zipfile_size": "99 MB"
         },
         {
@@ -271,7 +467,7 @@
           "icon_alt": "Proteomic",
           "tooltip_id": "data-proteomics-int-1-1",
           "object_path": "/proteomics",
-          "object_zipfile_path": "/proteomics.tar.gz",
+          "object_zipfile": "proteomics.tar.gz",
           "object_zipfile_size": "288 MB"
         },
         {
@@ -281,7 +477,7 @@
           "icon_alt": "Phenotypic",
           "tooltip_id": "data-phenotype-int-1-1",
           "object_path": "/phenotype",
-          "object_zipfile_path": "/phenotype.tar.gz",
+          "object_zipfile": "phenotype.tar.gz",
           "object_zipfile_size": "273 KB"
         },
         {
@@ -290,8 +486,8 @@
           "icon": "Globe",
           "icon_alt": "All omics",
           "tooltip_id": "data-all-int-1-1",
-          "object_path": "/all.tar.gz",
-          "object_zipfile_path": "/all.tar.gz",
+          "object_path": null,
+          "object_zipfile": "all.tar.gz",
           "object_zipfile_size": "600 MB"
         }
       ]
@@ -338,7 +534,7 @@
           "icon_alt": "Genomic",
           "tooltip_id": "data-rna-seq-int-1-0",
           "object_path": "/rna-seq",
-          "object_zipfile_path": "/rna-seq.tar.gz",
+          "object_zipfile": "rna-seq.tar.gz",
           "object_zipfile_size": "213 MB"
         },
         {
@@ -348,7 +544,7 @@
           "icon_alt": "Genomic",
           "tooltip_id": "data-rrbs-int-1-0",
           "object_path": "/rrbs",
-          "object_zipfile_path": null,
+          "object_zipfile": null,
           "object_zipfile_size": null
         },
         {
@@ -358,7 +554,7 @@
           "icon_alt": "Metabolomic",
           "tooltip_id": "data-metabolomics-int-1-0",
           "object_path": "/metabolomics",
-          "object_zipfile_path": "/metabolomics.tar.gz",
+          "object_zipfile": "metabolomics.tar.gz",
           "object_zipfile_size": "76 MB"
         },
         {
@@ -368,7 +564,7 @@
           "icon_alt": "Proteomic",
           "tooltip_id": "data-proteomics-int-1-0",
           "object_path": "/proteomics",
-          "object_zipfile_path": "/proteomics.tar.gz",
+          "object_zipfile": "proteomics.tar.gz",
           "object_zipfile_size": "229 MB"
         },
         {
@@ -378,7 +574,7 @@
           "icon_alt": "Phenotypic",
           "tooltip_id": "data-phenotype-int-1-0",
           "object_path": "/phenotype",
-          "object_zipfile_path": "/phenotype.tar.gz",
+          "object_zipfile": "phenotype.tar.gz",
           "object_zipfile_size": "273 KB"
         },
         {
@@ -387,8 +583,8 @@
           "icon": "Globe",
           "icon_alt": "All omics",
           "tooltip_id": "data-all-int-1-0",
-          "object_path": "/all.tar.gz",
-          "object_zipfile_path": "/all.tar.gz",
+          "object_path": null,
+          "object_zipfile": "all.tar.gz",
           "object_zipfile_size": "518 MB"
         }
       ]

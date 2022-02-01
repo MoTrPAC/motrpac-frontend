@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Particles from 'react-particles-js';
 import { useSpring, animated } from 'react-spring';
+import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-yellow_pipelineball_left.gif';
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Heart.png';
 import ContactHelpdesk from '../lib/ui/contactHelpdesk';
-import ExternalLink from '../lib/ui/externalLink';
+import onVisibilityChange from '../lib/utils/pageVisibility';
 
 // react-spring mouse parallax config
 const calc = (x, y) => [x - window.innerWidth / 2, y - window.innerHeight / 2];
@@ -25,7 +26,44 @@ const trans3d = (x, y) => `translate3d(${x / 6}px,${y / 16}px,0)`;
 export function LandingPage({ isAuthenticated, profile }) {
   // Local state for managing particle animation
   const [visibility, setVisibility] = useState(true);
-  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+
+  useEffect(() => {
+    const scrollFunction = () => {
+      if (
+        document.body.scrollTop >= 30 ||
+        document.documentElement.scrollTop >= 30
+      ) {
+        document.querySelector('.navbar-brand').classList.add('resized');
+      } else {
+        document.querySelector('.navbar-brand').classList.remove('resized');
+      }
+    };
+    window.addEventListener('scroll', scrollFunction, true);
+    return () => {
+      window.removeEventListener('scroll', scrollFunction, true);
+    };
+  });
+
+  useEffect(() => {
+    // Pause particle animation when window is hidden
+    const { hidden, visibilityChange } = onVisibilityChange();
+    const handleVisibilityChange = () => {
+      if (!document[hidden]) {
+        setVisibility(true);
+      } else {
+        setVisibility(false);
+      }
+    };
+    document.addEventListener(visibilityChange, handleVisibilityChange, false);
+    return () => {
+      document.removeEventListener(
+        visibilityChange,
+        handleVisibilityChange,
+        false
+      );
+    };
+  });
+
   // react-spring set animation values
   const [values, set] = useSpring(() => ({
     xy: [0, 0],
@@ -33,50 +71,10 @@ export function LandingPage({ isAuthenticated, profile }) {
   }));
   const { xy } = values;
 
+  // Redirect authenticated users to protected route
+  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   if (isAuthenticated && hasAccess) {
-    return <Redirect to="/releases" />;
-  }
-
-  const scrollFunction = () => {
-    if (document.body.scrollTop >= 30 || document.documentElement.scrollTop >= 30) {
-      document.querySelector('.navbar-brand').classList.add('resized');
-    } else {
-      document.querySelector('.navbar-brand').classList.remove('resized');
-    }
-  };
-
-  window.addEventListener('scroll', scrollFunction, true);
-
-  // Pause particles movement when page is not active to reduce CPU resource consumption
-  let hidden;
-  let visibilityChange;
-  // Set the name of the hidden property and the change event for visibility
-  if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
-    hidden = 'hidden';
-    visibilityChange = 'visibilitychange';
-  } else if (typeof document.msHidden !== 'undefined') {
-    hidden = 'msHidden';
-    visibilityChange = 'msvisibilitychange';
-  } else if (typeof document.webkitHidden !== 'undefined') {
-    hidden = 'webkitHidden';
-    visibilityChange = 'webkitvisibilitychange';
-  }
-
-  // Handle state change depending whether page is hidden
-  function handleVisibilityChange() {
-    if (document[hidden]) {
-      setVisibility(false);
-    } else {
-      setVisibility(true);
-    }
-  }
-
-  if (typeof document.addEventListener === 'undefined' || hidden === undefined) {
-    // Warn if the browser doesn't support addEventListener or the Page Visibility API
-    console.warn('This browser does not support Page Visibility API');
-  } else {
-    // Handle page visibility change
-    document.addEventListener(visibilityChange, handleVisibilityChange, false);
+    return <Redirect to="/dashboard" />;
   }
 
   // Play or stop the particles animation
@@ -84,29 +82,62 @@ export function LandingPage({ isAuthenticated, profile }) {
     setVisibility(!visibility);
   }
 
-  // Function to render external data release notice
-  const ExternalDataReleaseNotice = () => (
-    <div className="alert alert-primary alert-dismissible fade show data-access-announce d-flex align-items-center justify-content-between w-100" role="alert">
-      <span className="data-access-announce-content">
-        <h6>
-          MoTrPAC data release 1.0 is now available! There is data from 5 different
-          tissues following an acute exercise bout in rats. Visit the
+  // Function to render marker paper announcement
+  const MarkerPaperNotice = () => (
+    <div
+      className="alert alert-primary alert-dismissible fade show marker-paper-announce d-flex align-items-center justify-content-between w-100"
+      role="alert"
+    >
+      <span className="marker-paper-announce-content">
+        <h5>
+          The
           {' '}
-          <Link to="/data-access" className="inline-link">Data Access</Link>
+          <a
+            href="https://www.cell.com/cell/fulltext/S0092-8674(20)30691-7"
+            className="inline-link-with-icon"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={trackEvent.bind(
+              this,
+              'MoTrPAC Marker Paper',
+              'Cell Publication',
+              'Landing Page'
+            )}
+          >
+            first MoTrPAC paper
+            <i className="material-icons external-linkout-icon">open_in_new</i>
+          </a>
           {' '}
-          page to learn more and register for access.
-        </h6>
-        <h6>
-          <Link to="/announcements" className="inline-link">Find out more</Link>
+          is now published in the journal
           {' '}
-          about MoTrPAC's recent Pre-Application Webinar regarding a current
+          <i>Cell</i>
+          . Read the
           {' '}
-          <ExternalLink to="https://grants.nih.gov/grants/guide/rfa-files/RFA-RM-20-009.html" label="Funding Opportunity Announcement" />
+          <a
+            href="https://www.nih.gov/news-events/news-releases/nih-funded-study-recruit-thousands-participants-reveal-exercise-impact-molecular-level"
+            className="inline-link-with-icon"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={trackEvent.bind(
+              this,
+              'MoTrPAC Marker Paper',
+              'NIH Press Release',
+              'Landing Page'
+            )}
+          >
+            NIH press release
+            <i className="material-icons external-linkout-icon">open_in_new</i>
+          </a>
           {' '}
-          and updates on known issues with the initial dataset.
-        </h6>
+          for further information about this publication.
+        </h5>
       </span>
-      <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+      <button
+        type="button"
+        className="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -117,9 +148,13 @@ export function LandingPage({ isAuthenticated, profile }) {
       <main>
         <div className="container hero h-100">
           <div className="row hero-wrapper h-100">
-            <ExternalDataReleaseNotice />
+            <MarkerPaperNotice />
             <div className="hero-image col-12 col-md-8 mx-auto">
-              <img src={LogoAnimation} className="img-fluid" alt="Data Layer Runner" />
+              <img
+                src={LogoAnimation}
+                className="img-fluid"
+                alt="Data Layer Runner"
+              />
             </div>
             <div className="content col-12 col-md-4 motrpac-tag-line">
               <h3>
@@ -138,7 +173,10 @@ export function LandingPage({ isAuthenticated, profile }) {
             className="position-absolute particles-wrapper"
             params={{
               particles: {
-                number: { value: 40, density: { enable: true, value_area: 500 } },
+                number: {
+                  value: 40,
+                  density: { enable: true, value_area: 500 },
+                },
                 color: { value: '#000000' },
                 size: { value: 7.5 },
                 line_linked: {
@@ -164,8 +202,17 @@ export function LandingPage({ isAuthenticated, profile }) {
               },
             }}
           />
-          <button type="button" className="btn btn-dark btn-sm particle-media-control" onClick={playStopParticles} title="play|stop">
-            {visibility ? <span className="oi oi-media-stop" /> : <span className="oi oi-media-play" />}
+          <button
+            type="button"
+            className="btn btn-dark btn-sm particle-media-control"
+            onClick={playStopParticles}
+            title="play|stop"
+          >
+            {visibility ? (
+              <span className="oi oi-media-stop" />
+            ) : (
+              <span className="oi oi-media-play" />
+            )}
           </button>
           <div className="container featurette h-100">
             <div className="row featurette-wrapper h-100">
@@ -173,11 +220,18 @@ export function LandingPage({ isAuthenticated, profile }) {
                 <h3>About MoTrPAC</h3>
                 <p>
                   Molecular Transducers of Physical Activity Consortium is a national
-                  research consortium designed to discover and characterize the range of molecular transducers
-                  (the "molecular map") that underlie the effects of physical activity
-                  in humans.
+                  research consortium designed to discover and characterize the range
+                  of molecular transducers (the "molecular map") that underlie the
+                  effects of physical activity in humans.
                 </p>
-                <a href="https://motrpac.org/" className="btn btn-dark" role="button" target="_new">READ MORE</a>
+                <a
+                  href="https://motrpac.org/"
+                  className="btn btn-dark"
+                  role="button"
+                  target="_new"
+                >
+                  READ MORE
+                </a>
               </div>
             </div>
           </div>
@@ -186,9 +240,19 @@ export function LandingPage({ isAuthenticated, profile }) {
       <section>
         <div className="container featurette multi-omics" id="multi-omics">
           <div className="row featurette-wrapper h-100">
-            <div className="feature-image col-12 col-md-6 mx-auto" onMouseMove={({ clientX: x, clientY: y }) => set({ xy: calc(x, y) })}>
-              <animated.div className="animated-image-container" style={{ transform: xy.interpolate(trans3d) }}>
-                <img src={LayerRunner} className="img-fluid data-layer-runner" alt="Data Layer Runner" />
+            <div
+              className="feature-image col-12 col-md-6 mx-auto"
+              onMouseMove={({ clientX: x, clientY: y }) => set({ xy: calc(x, y) })}
+            >
+              <animated.div
+                className="animated-image-container"
+                style={{ transform: xy.interpolate(trans3d) }}
+              >
+                <img
+                  src={LayerRunner}
+                  className="img-fluid data-layer-runner"
+                  alt="Data Layer Runner"
+                />
               </animated.div>
             </div>
             <div className="content col-12 col-md-6">
@@ -197,7 +261,14 @@ export function LandingPage({ isAuthenticated, profile }) {
                 MoTrPAC integrates multi-omics data (genomics, proteomics, metabolomics, and
                 more) to reveal a comprehensive map of molecular transducers of physical activity.
               </p>
-              <a href="https://motrpac.org/ancillarystudyguidelines.cfm" className="btn btn-primary" role="button" target="_new">READ MORE</a>
+              <a
+                href="https://motrpac.org/ancillarystudyguidelines.cfm"
+                className="btn btn-primary"
+                role="button"
+                target="_new"
+              >
+                READ MORE
+              </a>
             </div>
           </div>
         </div>
@@ -209,13 +280,25 @@ export function LandingPage({ isAuthenticated, profile }) {
               <div className="content col-12 col-md-6">
                 <h3>Interrelated Components</h3>
                 <p>
-                  Consisting of Clinical Centers, Preclinical Animal Study Sites, Chemical Analysis
-                  Sites, Bioinformatics Center, Consortium Coordinating Center.
+                  Consisting of Clinical Centers, Preclinical Animal Study
+                  Sites, Chemical Analysis Sites, Bioinformatics
+                  Center, Consortium Coordinating Center.
                 </p>
-                <a href="https://commonfund.nih.gov/MolecularTransducers/overview#ClinicalCenter" className="btn btn-success" role="button" target="_new">READ MORE</a>
+                <a
+                  href="https://commonfund.nih.gov/MolecularTransducers/overview#ClinicalCenter"
+                  className="btn btn-success"
+                  role="button"
+                  target="_new"
+                >
+                  READ MORE
+                </a>
               </div>
               <div className="feature-image col-12 col-md-6 mx-auto">
-                <img src={HealthyHeart} className="img-fluid" alt="Healthy Heart" />
+                <img
+                  src={HealthyHeart}
+                  className="img-fluid"
+                  alt="Healthy Heart"
+                />
               </div>
             </div>
           </div>
@@ -261,9 +344,8 @@ LandingPage.defaultProps = {
   isAuthenticated: false,
 };
 
-const mapStateToProps = state => ({
-  profile: state.auth.profile,
-  isAuthenticated: state.auth.isAuthenticated,
+const mapStateToProps = (state) => ({
+  ...state.auth,
 });
 
 export default connect(mapStateToProps)(LandingPage);

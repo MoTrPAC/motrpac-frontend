@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { TrackEvent } from '../GoogleAnalytics/googleAnalytics';
+import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import IconSet from '../lib/iconSet';
 import ToolTip from '../lib/ui/tooltip';
 import ExternalLink from '../lib/ui/externalLink';
-import StudyDocumentsTable from '../lib/studyDocumentsTable';
 import ReleaseDescFileExtract from './releaseDescFileExtract';
 import ReleaseDescReadme from './releaseDescReadme';
+import ReleaseRawFilesDownload from './releaseRawFilesDownload';
+import ReleaseDataTableInternalByPhase from './ReleaseDataTables/releaseDataTableInternalByPhase';
+import ReleaseDataTableInternal from './ReleaseDataTables/releaseDataTableInternal';
+import ReleaseDataTableExternal from './ReleaseDataTables/releaseDataTableExternal';
 
 const releaseData = require('./releases');
 
@@ -35,6 +38,7 @@ function ReleaseEntry({ profile, currentView }) {
     status: null,
     file: null,
     message: '',
+    releaseVersion: null,
   });
   const [visibleReleases, setVisibleReleases] = useState(2);
 
@@ -57,35 +61,6 @@ function ReleaseEntry({ profile, currentView }) {
       el.classList.add('active');
       el.innerHTML = 'check_box';
     }
-  }
-
-  // Render raw files download section content
-  function renderRawFilesDownloadSectionContent(files) {
-    return (
-      <div className="card mb-3">
-        <div className="card-body">
-          <p className="card-text">
-            Due to the large sizes of raw data files, we recommend users
-            who wish to download raw data files using the
-            {' '}
-            <ExternalLink to="https://cloud.google.com/storage/docs/quickstart-gsutil" label="gsutil command" />
-            . Below are example commands for downloading raw data files of different omics.
-          </p>
-          <p className="card-text">
-            Raw data files of genomics, epigenomics and transcriptomic:
-            <code>{`gsutil -m cp -r gs://${files.get.bucket_name}/* .`}</code>
-          </p>
-          <p className="card-text">
-            Raw data files of metabolomics:
-            <code>{`gsutil -m cp -r gs://${files.metabolomics.bucket_name}/* .`}</code>
-          </p>
-          <p className="card-text">
-            Raw data files of proteomics:
-            <code>{`gsutil -m cp -r gs://${files.proteomics.bucket_name}/* .`}</code>
-          </p>
-        </div>
-      </div>
-    );
   }
 
   // Render intermediate files download section content
@@ -139,15 +114,15 @@ function ReleaseEntry({ profile, currentView }) {
   }
 
   // Fetch file url from Google Storage API
-  function fetchFile(bucket, object) {
-    const objectname = object.indexOf('.tar.gz') > -1 ? object.substring(1, object.indexOf('.')) : object.substring(1);
-    return axios.get(`https://data-link-access.motrpac-data.org/${bucket}/${objectname}.tar.gz`)
+  function fetchFile(bucket, filename, version) {
+    return axios.get(`https://data-link-access.motrpac-data.org/${bucket}/${filename}`)
       .then((response) => {
         setFileUrl(response.data.url);
         setModalStatus({
           status: 'success',
-          file: `${objectname}.tar.gz`,
+          file: filename,
           message: 'Click this link to download the requested file.',
+          releaseVersion: version,
         });
         setFetching(false);
       }).catch((err) => {
@@ -155,33 +130,41 @@ function ReleaseEntry({ profile, currentView }) {
         console.log(`${err.error}: ${err.errorDescription}`);
         setModalStatus({
           status: 'error',
-          file: `${objectname}.tar.gz`,
+          file: filename,
           message: 'Error occurred. Please close the dialog box and try again.',
+          releaseVersion: version,
         });
         setFetching(false);
       });
   }
 
-  // Handle modal download button click event
-  function handleGAEvent(releaseVersion) {
-    TrackEvent(`Release ${releaseVersion} Downloads (${currentView})`, modalStatus.file, profile.user_metadata.name);
-  }
-
   // Render modal message
-  function renderModalMessage(releaseVersion) {
+  function renderModalMessage() {
     if (modalStatus.status !== 'success') {
       return <span className="modal-message">{modalStatus.message}</span>;
     }
 
     return (
       <span className="modal-message">
-        <a href={fileUrl} download onClick={handleGAEvent(releaseVersion)}>{modalStatus.message}</a>
+        <a
+          id={`${currentView}-${modalStatus.releaseVersion}-${modalStatus.file}`}
+          href={fileUrl}
+          download
+          onClick={trackEvent.bind(
+            this,
+            `Release ${modalStatus.releaseVersion} Downloads (${currentView})`,
+            modalStatus.file,
+            profile.user_metadata.name
+          )}
+        >
+          {modalStatus.message}
+        </a>
       </span>
     );
   }
 
   // Render modal
-  function renderModal(releaseVersion) {
+  function renderModal() {
     return (
       <div className="modal fade data-download-modal" id="dataDownloadModal" tabIndex="-1" role="dialog" aria-labelledby="dataDownloadModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered" role="document">
@@ -194,7 +177,7 @@ function ReleaseEntry({ profile, currentView }) {
             </div>
             <div className="modal-body">
               {!fetching
-                ? renderModalMessage(releaseVersion) : <div className="loading-spinner"><img src={IconSet.Spinner} alt="" /></div>}
+                ? renderModalMessage() : <div className="loading-spinner"><img src={IconSet.Spinner} alt="" /></div>}
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -207,7 +190,7 @@ function ReleaseEntry({ profile, currentView }) {
 
   // Render data type row
   function renderDataTypeRow(bucket, item, version) {
-    const objectPath = item.object_path.indexOf('.tar.gz') > -1 ? `gs://${bucket}${item.object_path} .` : `gs://${bucket}${item.object_path}/* .`;
+    const objectPath = item.type === 'all' ? `gs://${bucket}/${item.object_zipfile} .` : `gs://${bucket}${item.object_path}/* .`;
     return (
       <tr key={`${item.type}-${version}`}>
         <td>
@@ -236,7 +219,7 @@ function ReleaseEntry({ profile, currentView }) {
             </td>
           )
           : null}
-        {item.object_zipfile_path && item.object_zipfile_path.length
+        {item.object_zipfile && item.object_zipfile.length
           ? (
             <td className="release-data-download-link">
               <button
@@ -244,7 +227,7 @@ function ReleaseEntry({ profile, currentView }) {
                 className="btn-data-download"
                 data-toggle="modal"
                 data-target=".data-download-modal"
-                onClick={fetchFile.bind(this, bucket, item.object_path)}
+                onClick={fetchFile.bind(this, bucket, item.object_zipfile, version)}
               >
                 <i className="material-icons release-data-download-icon">save_alt</i>
               </button>
@@ -314,27 +297,25 @@ function ReleaseEntry({ profile, currentView }) {
                         releaseVersion={release.version}
                         fileLocation={release.readme_file_location}
                       />
-                      <div className="release-data-links-table-container">
-                        <table className="table table-sm release-data-links-table">
-                          <thead className="thead-dark">
-                            <tr className="table-head">
-                              <th>Data type</th>
-                              {currentView === 'internal'
-                                ? (<th>Command-line download</th>)
-                                : null}
-                              <th>Web download</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {release.result_files.data_types.map((item) => renderDataTypeRow(
-                              release.result_files.bucket_name,
-                              item,
-                              release.version,
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                      {renderModal(release.version)}
+                      {currentView === 'internal' && release.version === '2.0' ? (
+                        <ReleaseDataTableInternalByPhase
+                          release={release}
+                          renderDataTypeRow={renderDataTypeRow}
+                        />
+                      ) : null}
+                      {currentView === 'internal' && release.version.match(/1.0|1.1|1.2|1.2.1/g) ? (
+                        <ReleaseDataTableInternal
+                          release={release}
+                          renderDataTypeRow={renderDataTypeRow}
+                        />
+                      ) : null}
+                      {currentView === 'external' && release.version === '1.0' ? (
+                        <ReleaseDataTableExternal
+                          release={release}
+                          renderDataTypeRow={renderDataTypeRow}
+                        />
+                      ) : null}
+                      {renderModal()}
                     </div>
                   </div>
                   {currentView === 'internal' && release.raw_files
@@ -357,57 +338,46 @@ function ReleaseEntry({ profile, currentView }) {
                             >
                               check_box_outline_blank
                             </i>
-                            <span>Raw files downloads</span>
+                            <span>
+                              Raw
+                              {release.version.match(/1.0|1.1|1.2|1.2.1/g) ? null : ' and intermediate'}
+                              {' '}
+                              files downloads
+                            </span>
                           </p>
                           <div className="collapse" id={`raw-files-release-${idx}`}>
-                            {renderRawFilesDownloadSectionContent(release.raw_files)}
+                            <ReleaseRawFilesDownload
+                              releaseVersion={release.version}
+                              files={release.raw_files}
+                            />
                           </div>
                         </div>
-                        <div className="intermediate-files-download-section">
-                          <p className="d-block mb-2 d-flex align-items-center justify-content-start intermediate-files-download-option">
-                            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-                            <i
-                              role="button"
-                              tabIndex="-1"
-                              className="material-icons download-checkbox"
-                              data-toggle="collapse"
-                              data-target={`#intermediate-files-release-${idx}`}
-                              aria-expanded="false"
-                              aria-controls={`intermediate-files-release-${idx}`}
-                              id={`intermediate-files-release-${idx}-checkbox`}
-                              onClick={handleCheckboxEvent.bind(this, `intermediate-files-release-${idx}-checkbox`)}
-                            >
-                              check_box_outline_blank
-                            </i>
-                            <span>Intermediate files downloads</span>
-                          </p>
-                          <div className="collapse" id={`intermediate-files-release-${idx}`}>
-                            {renderIntermediateFilesDownloadSectionContent(
-                              release.intermediate_files,
-                            )}
+                        {release.version.match(/1.0|1.1|1.2|1.2.1/g) && (
+                          <div className="intermediate-files-download-section">
+                            <p className="d-block mb-2 d-flex align-items-center justify-content-start intermediate-files-download-option">
+                              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+                              <i
+                                role="button"
+                                tabIndex="-1"
+                                className="material-icons download-checkbox"
+                                data-toggle="collapse"
+                                data-target={`#intermediate-files-release-${idx}`}
+                                aria-expanded="false"
+                                aria-controls={`intermediate-files-release-${idx}`}
+                                id={`intermediate-files-release-${idx}-checkbox`}
+                                onClick={handleCheckboxEvent.bind(this, `intermediate-files-release-${idx}-checkbox`)}
+                              >
+                                check_box_outline_blank
+                              </i>
+                              <span>Intermediate files downloads</span>
+                            </p>
+                            <div className="collapse" id={`intermediate-files-release-${idx}`}>
+                              {renderIntermediateFilesDownloadSectionContent(
+                                release.intermediate_files,
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      </>
-                    )
-                    : null}
-                  {release.documentation
-                    ? (
-                      <>
-                        <h6 className="additional-release-download-header">Documentation</h6>
-                        <div className="release-documentation-section">
-                          <StudyDocumentsTable />
-                          {currentView === 'internal'
-                            ? (
-                              <p>
-                                <ExternalLink
-                                  to="https://www.motrpac.org/secure/documents/dspList.cfm?documentFolderCurrent=BEC8E9C5-C740-4D8F-91F2-5977E98CF6A0"
-                                  label="Manuals of Procedures for Preclinical Animal Study Sites"
-                                />
-                                {' '}
-                                (login required)
-                              </p>
-                            ) : null}
-                        </div>
+                        )}
                       </>
                     )
                     : null}

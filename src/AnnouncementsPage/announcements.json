@@ -47,16 +47,63 @@
         "links": [
             {
                 "label": "NIH Funding Opportunity Announcement",
-                "url": "https://grants.nih.gov/grants/guide/rfa-files/RFA-RM-20-009.html"
+                "url": "https://grants.nih.gov/grants/guide/rfa-files/RFA-RM-20-009.html",
+                "gaEventCategory": "NIH Funding Opportunity Webinar",
+                "gaEventAction": "NIH Announcement"
             },
             {
                 "label": "Webinar presentation slides",
-                "url": "http://study-docs.motrpac-data.org/MoTrPAC_BIC_Data_hub_webinar_slides.pdf"
+                "url": "http://study-docs.motrpac-data.org/MoTrPAC_BIC_Data_hub_webinar_slides.pdf",
+                "gaEventCategory": "NIH Funding Opportunity Webinar",
+                "gaEventAction": "Webinar Presentation Slides"
             },
             {
                 "label": "Recorded webinar",
-                "url": "http://study-docs.motrpac-data.org/MoTrPAC_BIC_Data_hub_recorded_webinar.mp4"
+                "url": "http://study-docs.motrpac-data.org/MoTrPAC_BIC_Data_hub_recorded_webinar.mp4",
+                "gaEventCategory": "NIH Funding Opportunity Webinar",
+                "gaEventAction": "Webinar Recorded Video"
             }
         ]
+    },
+    {
+        "aid": 4,
+        "posted_date": "2020-06-25",
+        "title": "First MoTrPAC paper published in the Cell journal",
+        "content": "The first MoTrPAC paper is now published in the Cell journal. This publication describes the entire MoTrPAC study. It includes the human endurance and resistance training interventions, and the extensive animal study protocols. It lists all the tissues collected and the analysis plan for those tissues. It also provides information on data dissemination, that will be done through the MoTrPAC data hub. Check it out so you know what is coming!",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "marker-paper"
+            ],
+            "icon": "menu_book"
+        },
+        "links": [
+            {
+                "label": "Molecular Transducers of Physical Activity Consortium (MoTrPAC): Mapping the Dynamic Responses to Exercise",
+                "url": "https://www.cell.com/cell/fulltext/S0092-8674(20)30691-7",
+                "gaEventCategory": "MoTrPAC Marker Paper",
+                "gaEventAction": "Cell Publication"
+            },
+            {
+                "label": "NIH-funded study to recruit thousands of participants to reveal exercise impact at the molecular level",
+                "url": "https://www.nih.gov/news-events/news-releases/nih-funded-study-recruit-thousands-participants-reveal-exercise-impact-molecular-level",
+                "gaEventCategory": "MoTrPAC Marker Paper",
+                "gaEventAction": "NIH Press Release"
+            }
+        ]
+    },
+    {
+        "aid": 5,
+        "posted_date": "2021-01-15",
+        "title": "Embargo extension",
+        "content": "Please note that the publication embargo on MoTrPAC data has been extended until release of additional control data necessary to fully control for non-exercise induced molecular changes in the current dataset. The control data has been delayed due to the COVID-19 pandemic and we apologize for any inconvenience caused. Please be sure that the consortium is hard at work to release this data to the scientific community as soon as possible. Until then, data can only be used for analyses supporting grant submissions, and cannot be used in abstracts, manuscripts, preprints or presentations.",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "embargo-extension"
+            ],
+            "icon": "date_range"
+        },
+        "links": []
     }
 ]

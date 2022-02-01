@@ -1,100 +1,93 @@
-import globeIcon from '../assets/analysisIcons/Globe.svg';
-import moleculeIcon from '../assets/analysisIcons/Molecule.svg';
-import lungIcon from '../assets/analysisIcons/Lungs.svg';
-import networkIcon from '../assets/analysisIcons/Network.svg';
-import timeIcon from '../assets/analysisIcons/TimeSeries.svg';
-import omicsIcon from '../assets/analysisIcons/Omics.svg';
-import MAGeneIcon from '../assets/analysisIcons/MA_gene.svg';
-import MATimeIcon from '../assets/analysisIcons/MA_time.svg';
-import chartbarIcon from '../assets/analysisIcons/ChartBar.svg';
-import globeIconInactive from '../assets/analysisIcons/Globe_inactive.svg';
-import moleculeIconInactive from '../assets/analysisIcons/Molecule_inactive.svg';
-import lungIconInactive from '../assets/analysisIcons/Lungs_inactive.svg';
-import networkIconInactive from '../assets/analysisIcons/Network_inactive.svg';
-import timeIconInactive from '../assets/analysisIcons/TimeSeries_inactive.svg';
-import omicsIconInactive from '../assets/analysisIcons/Omics_inactive.svg';
-import MAGeneIconInactive from '../assets/analysisIcons/MA_gene_inactive.svg';
-import MATimeIconInactive from '../assets/analysisIcons/MA_time_inactive.svg';
+import moleculeIcon from '../assets/analysisIcons/DifferentialMolecules.svg';
+import tissueIcon from '../assets/analysisIcons/Tissue.svg';
+import networkIcon from '../assets/analysisIcons/NetworkAnalysis.svg';
+import timeIcon from '../assets/analysisIcons/TimeCourse.svg';
+import omicsIcon from '../assets/analysisIcons/OmicsComparison.svg';
+import phenotypeIcon from '../assets/analysisIcons/PhenotypeData.svg';
+import moleculeIconInactive from '../assets/analysisIcons/DifferentialMolecules_inactive.svg';
+import tissueIconInactive from '../assets/analysisIcons/Tissue_inactive.svg';
+import networkIconInactive from '../assets/analysisIcons/NetworkAnalysis_inactive.svg';
+import timeIconInactive from '../assets/analysisIcons/TimeCourse_inactive.svg';
+import omicsIconInactive from '../assets/analysisIcons/OmicsComparison_inactive.svg';
+import geneTimeCourseInactive from '../assets/analysisIcons/GeneTimeCourse_inactive.svg';
 
 const analysisTypes = [
   {
     title: 'Phenotypic Data',
-    shortName: 'PD',
-    icon: chartbarIcon,
+    shortName: 'PHENOTYPE',
+    icon: phenotypeIcon,
+    inactiveIcon: null,
+    input: 'Sex, Weight, % Body Fat, and VO2 Max',
+    description:
+      'A number of visualizations are presented in the analysis of various phenotype data from the 6-month old rats.',
     active: true,
-    subAnalyses: [
-      {
-        title: 'Animal Phenotype Data',
-        icon: chartbarIcon,
-        inactiveIcon: MAGeneIconInactive,
-        shortName: 'APD',
-        input: 'Distance, Gender, Weight and Fat',
-        description: 'Displays a number of visualizations in analyzing various animal phenotype data.',
-        active: true,
-      },
-    ],
+    species: ['animal'],
   },
   {
-    title: 'Published Data Meta-Analysis',
-    shortName: 'PDMA',
-    icon: globeIcon,
-    inactiveIcon: globeIconInactive,
-    active: true,
-    subAnalyses: [
-      {
-        title: 'Meta-Analysis of Public Data',
-        icon: MAGeneIcon,
-        inactiveIcon: MAGeneIconInactive,
-        shortName: 'MA_G',
-        input: 'Specific Tissue(s), Gene, and Time Window',
-        description: 'Displays up and down regulations. Gene lists are detected for interpretation',
-        active: true,
-      },
-      {
-        title: 'Gene Time Course Clustering',
-        icon: MATimeIcon,
-        inactiveIcon: MATimeIconInactive,
-        shortName: 'MA_GTCC',
-        input: 'Differentially Expressed Genes',
-        description: 'Genes are clustered by their trajectories. Results sorted by tissue',
-        active: false,
-      },
-    ],
-  },
-  {
-    title: 'Differential Molecules',
-    shortName: 'DM',
+    title: 'Gene-Centric View',
+    shortName: 'MOLECULES',
     icon: moleculeIcon,
     inactiveIcon: moleculeIconInactive,
+    input: null,
+    description:
+      'Search by gene symbol and examine the training response of its related molecules (e.g. protein phosphorylation/acetylation, promoter methylation, transcript).',
     active: false,
+    species: ['animal', 'human'],
   },
   {
     title: 'Tissue Comparison',
-    shortName: 'TC',
-    icon: lungIcon,
-    inactiveIcon: lungIconInactive,
+    shortName: 'TISSUE',
+    icon: tissueIcon,
+    inactiveIcon: tissueIconInactive,
+    input: null,
+    description:
+      'Examine similarities, differences, and potential time lagged response across tissues.',
     active: false,
+    species: ['animal', 'human'],
   },
   {
     title: 'Network Analysis',
-    shortName: 'NA',
+    shortName: 'NETWORK',
     icon: networkIcon,
     inactiveIcon: networkIconInactive,
+    input: null,
+    description:
+      'Identify modules of highly connected molecules that manifest similar response to training.',
     active: false,
+    species: ['animal', 'human'],
   },
   {
-    title: 'Time Course Visualization',
-    shortName: 'TCV',
+    title: 'Differential Molecules (Time Course)',
+    shortName: 'TIME_COURSE',
     icon: timeIcon,
     inactiveIcon: timeIconInactive,
+    input: null,
+    description:
+      'Visualize the trajectory of a single molecule.',
     active: false,
+    species: ['animal', 'human'],
   },
   {
     title: 'Omics Comparison',
-    shortName: 'OC',
+    shortName: 'OMICS',
     icon: omicsIcon,
     inactiveIcon: omicsIconInactive,
+    input: null,
+    description:
+      'Explore consistencies across different "omes", focusing on novel discoveries (e.g. novel enhancers that are correlated with transcriptomic response).',
     active: false,
+    species: ['animal', 'human'],
+  },
+  {
+    title: 'Gene Time Course Clustering',
+    icon: null,
+    inactiveIcon: geneTimeCourseInactive,
+    shortName: 'GENE_TIME_COURSE',
+    input: 'Differentially Expressed Genes',
+    description:
+      'Genes are clustered by their trajectories. Results are sorted by tissues.',
+    active: false,
+    species: ['human'],
   },
 ];
 

@@ -30,40 +30,54 @@ const navbarActions = {
 const defaultMountNav = mount(
   <Router history={History}>
     <Navbar />
-  </Router>,
+  </Router>
 );
 
 const internalUserMountNav = mount(
   <Router history={History}>
     <Navbar profile={internalUser} isAuthenticated {...navbarActions} />
-  </Router>,
+  </Router>
 );
 
 const externalUserMountNav = mount(
   <Router history={History}>
     <Navbar profile={externalUser} isAuthenticated {...navbarActions} />
-  </Router>,
+  </Router>
 );
 
 describe('Navbar', () => {
   test('Has no submitter logout button by default', () => {
-    expect(defaultMountNav.find('Navbar').first().props().isAuthenticated).toBeFalsy();
+    expect(
+      defaultMountNav.find('Navbar').first().props().isAuthenticated
+    ).toBeFalsy();
     expect(defaultMountNav.find('.logOutBtn')).not.toHaveLength(1);
   });
 
   test('Displays [username, sitename] and logout button if logged in', () => {
-    expect(internalUserMountNav.find('Navbar').first().props().isAuthenticated).toBeTruthy();
-    expect(internalUserMountNav.find('.user-display-name').text()).toEqual(`${internalUser.user_metadata.name}, ${internalUser.user_metadata.siteName}`);
+    expect(
+      internalUserMountNav.find('Navbar').first().props().isAuthenticated
+    ).toBeTruthy();
+    expect(internalUserMountNav.find('.user-display-name').text()).toEqual(
+      `${internalUser.user_metadata.name}, ${internalUser.user_metadata.siteName}`
+    );
     expect(internalUserMountNav.find('.logOutBtn').text()).toMatch('Log out');
   });
-
-  test('Displays quick search box if logged in as internal user', () => {
-    expect(internalUserMountNav.find('Navbar').first().props().isAuthenticated).toBeTruthy();
-    expect(internalUserMountNav.find('.quick-search-box-container')).toHaveLength(1);
+  // Quick search is temporarily disabled and so updating this assertion
+  test('No quick search box is shown if logged in as internal user', () => {
+    expect(
+      internalUserMountNav.find('Navbar').first().props().isAuthenticated
+    ).toBeTruthy();
+    expect(
+      internalUserMountNav.find('.quick-search-box-container')
+    ).toHaveLength(0);
   });
 
   test('No quick search box is shown if logged in as external user', () => {
-    expect(externalUserMountNav.find('Navbar').first().props().isAuthenticated).toBeTruthy();
-    expect(externalUserMountNav.find('.quick-search-box-container')).toHaveLength(0);
+    expect(
+      externalUserMountNav.find('Navbar').first().props().isAuthenticated
+    ).toBeTruthy();
+    expect(
+      externalUserMountNav.find('.quick-search-box-container')
+    ).toHaveLength(0);
   });
 });

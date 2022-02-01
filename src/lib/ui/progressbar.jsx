@@ -4,16 +4,13 @@ import ToolTip from './tooltip';
 
 /**
  * Renders the progress bar UI
- * 
+ *
  * @param {Number} currentValue   Value of current progress
  * @param {Number} expectedValue  Value of expected total
- * 
+ *
  * @returns {Object} JSX representation of the progress bar
  */
-function ProgressBar({
-  currentValue,
-  expectedValue,
-}) {
+function ProgressBar({ currentValue, expectedValue }) {
   const valueNow = parseFloat(currentValue / expectedValue) * 100;
   const widthStyle = { width: `${Math.round(valueNow)}%` };
 
@@ -30,7 +27,9 @@ function ProgressBar({
         />
       </div>
       <ToolTip
-        content={`${Math.round(valueNow)}%: ${expectedValue} expected; ${currentValue} received`}
+        content={`${Math.round(
+          valueNow
+        )}%: ${expectedValue} expected; ${currentValue} received`}
       />
     </div>
   );

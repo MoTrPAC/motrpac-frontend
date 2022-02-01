@@ -1,14 +1,14 @@
 import EuanImg from '../assets/teamMemberPhotos/Euan.jpg';
 import MattImg from '../assets/teamMemberPhotos/Matt.jpg';
-import SteveImg from '../assets/teamMemberPhotos/Steve.jpg';
+import SteveImg from '../assets/teamMemberPhotos/Steve.png';
 import MaleneImg from '../assets/teamMemberPhotos/Malene.jpg';
-import KarenImg from '../assets/teamMemberPhotos/Karen.jpg';
+import KarenImg from '../assets/teamMemberPhotos/Karen.png';
 import JimmyImg from '../assets/teamMemberPhotos/Jimmy.jpg';
-import DavidJMImg from '../assets/teamMemberPhotos/DavidJM.jpg';
+import DavidJMImg from '../assets/teamMemberPhotos/DavidJM.png';
 import ShrutiImg from '../assets/teamMemberPhotos/Shruti.jpg';
 import DavidAImg from '../assets/teamMemberPhotos/DavidA.jpg';
 import ArchanaImg from '../assets/teamMemberPhotos/Archana.png';
-import SamirImg from '../assets/teamMemberPhotos/Samir.jpg';
+import SamirImg from '../assets/teamMemberPhotos/Samir.png';
 import JeffImg from '../assets/teamMemberPhotos/Jeff.jpg';
 import TerraImg from '../assets/teamMemberPhotos/Terra.jpg';
 import BrookeImg from '../assets/teamMemberPhotos/Brooke.jpg';
@@ -18,7 +18,8 @@ import TrevorImg from '../assets/teamMemberPhotos/Trevor.jpg';
 import KellyImg from '../assets/teamMemberPhotos/Kelly.jpg';
 import JonImg from '../assets/teamMemberPhotos/Jon.jpg';
 import LizImg from '../assets/teamMemberPhotos/Liz.jpg';
-import YoungImg from '../assets/teamMemberPhotos/Young.jpg';
+import YoungImg from '../assets/teamMemberPhotos/Young.png';
+import ChrisImg from '../assets/teamMemberPhotos/Chris.png';
 
 const teamInfo = {
   PIs: [
@@ -64,7 +65,6 @@ const teamInfo = {
       title: 'Software Developer',
       image: YoungImg,
     },
-
     {
       name: 'Shruti Marwaha, Ph.D.',
       title: 'Research Engineer',
@@ -100,6 +100,11 @@ const teamInfo = {
       title: 'Administrative Associate',
       image: BrookeImg,
     },
+    {
+      name: 'Chris Teng',
+      title: 'Software Developer',
+      image: ChrisImg,
+    },
   ],
   CoIs: [
     {
@@ -126,15 +131,15 @@ const teamInfo = {
       name: 'Jonathan N. Myers, Ph.D.',
       title: 'Advisor',
       image: JonImg,
-    },  
+    },
   ],
   Alumni: [
     {
       name: 'Samir Akre',
       title: 'Alumni',
       image: SamirImg,
-    },    
-  ],  
+    },
+  ],
 };
 
 export default teamInfo;

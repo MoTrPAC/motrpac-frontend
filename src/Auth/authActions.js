@@ -4,7 +4,6 @@ const auth = new Auth();
 
 // Possible states for login and logout
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_PENDING = 'LOGIN_PENDING';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
@@ -13,12 +12,6 @@ export const PROFILE_RECEIVE = 'PROFILE_RECEIVE';
 export function requestLogin() {
   return {
     type: LOGIN_REQUEST,
-  };
-}
-
-export function loginPending() {
-  return {
-    type: LOGIN_PENDING,
   };
 }
 
@@ -69,13 +62,14 @@ export function logoutAsync() {
 
 export function handleAuthCallbackAsync() {
   return (dispatch) => {
+    dispatch(requestLogin());
     auth.handleAuthentication((err, data) => {
       if (err) {
         return dispatch(loginError(`${err.error}: ${err.errorDescription}`));
       }
 
       dispatch(loginSuccess(data));
-      auth.getProfile((err, profile) => {
+      auth.getProfile((error, profile) => {
         return dispatch(receiveProfile(profile));
       });
     });
@@ -88,5 +82,4 @@ export default {
   loginError,
   loginSuccess,
   logout: logoutAsync,
-  loginPending,
 };

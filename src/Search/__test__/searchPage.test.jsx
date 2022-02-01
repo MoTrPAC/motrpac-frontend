@@ -1,6 +1,5 @@
 import React from 'react';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { shallow, mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
@@ -9,8 +8,6 @@ import { defaultSearchState } from '../searchReducer';
 import rootReducer, { defaultRootState } from '../../App/reducers';
 import SearchPageConnected, { SearchPage } from '../searchPage';
 import History from '../../App/history';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const params = [
   { term: 'biospecimenid', value: '901', operator: '' },
@@ -51,7 +48,7 @@ const searchActions = {
 describe('Default Advanced Search Page', () => {
   test('Renders required componenents without crashing', () => {
     const shallowSearchPage = shallow(
-      <SearchPage {...defaultSearchState} isAuthenticated {...searchActions} />,
+      <SearchPage {...defaultSearchState} {...searchActions} />,
     );
     expect(shallowSearchPage.find('SearchForm')).toHaveLength(1);
   });

@@ -1,12 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { initializeReactGA } from './GoogleAnalytics/googleAnalytics';
+import { install } from 'ga-gtag';
+import trackingId from './GoogleAnalytics/googleAnalytics';
 import App from './App/App';
 import * as serviceWorker from './serviceWorker';
 import './main.css';
 
-// Initialize Google Analytics
-initializeReactGA();
+install(trackingId());
 
 render(<App />, document.getElementById('root'));
 

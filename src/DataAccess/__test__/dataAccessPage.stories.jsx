@@ -20,7 +20,7 @@ storiesOf('Data Access Page', module)
       <header>
         <Navbar {...navbarActions} />
       </header>
-      <div className="row justify-content-center">
+      <div className="row justify-content-center mt-5 pt-4">
         {story()}
       </div>
       <Footer {...footerActions} />
