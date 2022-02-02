@@ -64,8 +64,8 @@ function TrainingDataTable({ columns, data }) {
       filterTypes,
       initialState: {
         pageIndex: 0,
-        pageSize: 10,
-        pageCount: 15,
+        pageSize: 20,
+        pageCount: 10,
       },
     },
     useFilters,
@@ -96,7 +96,7 @@ function TrainingDataTable({ columns, data }) {
   } = instance;
 
   // default page size options given the length of entries in the data
-  const range = (start, stop, step = 10) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
+  const range = (start, stop, step = 20) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
 
   const handleCheckboxChange = () => {
     // handle events on multiple checkboxes
@@ -125,6 +125,37 @@ function TrainingDataTable({ columns, data }) {
     setFilter('assay_name.raw', filterTimepoints);
   };
 
+  // handle events on omics checkboxes
+  const handleOmicsCheckboxChange = () => {
+    const checkboxes = document.querySelectorAll(
+      'input[type=checkbox][name=omics]'
+    );
+    let filterOmics = [];
+    filterOmics = Array.from(checkboxes)
+      .filter((i) => i.checked)
+      .map((i) => i.value);
+    setFilter('omic.raw', filterOmics);
+  };
+
+  // render checkboxes for omics
+  function renderOmicCheckbox(value, id, label) {
+    return (
+      <div className="form-check">
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value={value}
+          id={id}
+          name="omics"
+          onChange={handleOmicsCheckboxChange.bind(this)}
+        />
+        <label className="form-check-label" htmlFor={id}>
+          {label}
+        </label>
+      </div>
+    );
+  }
+
   // Render the UI for your table
   // react-table doesn't have UI, it's headless. We just need to put the react-table
   // props from the Hooks, and it will do its magic automatically
@@ -134,6 +165,40 @@ function TrainingDataTable({ columns, data }) {
         <div className="card">
           <div className="card-header font-weight-bold">Filter results:</div>
           <div className="card-body">
+            {/* Omics filter */}
+            <div className="filter-omic form-group">
+              <label htmlFor="formControlCheckboxes">Omic:</label>
+              {renderOmicCheckbox(
+                'Epigenomic',
+                'filterOmicEpigenomics',
+                'Epigenomics'
+              )}
+              {renderOmicCheckbox(
+                'Immunoassay',
+                'filterOmicImmunoassay',
+                'Immunoassay'
+              )}
+              {renderOmicCheckbox(
+                'Metabolomic-Targeted',
+                'filterOmicMetabolomicsTargeted',
+                'Metabolomics-Targeted'
+              )}
+              {renderOmicCheckbox(
+                'Metabolomic-Untargeted',
+                'filterOmicMetabolomicsUntargeted',
+                'Metabolomics-Untargeted'
+              )}
+              {renderOmicCheckbox(
+                'Proteomic',
+                'filterOmicProteomics',
+                'Proteomics'
+              )}
+              {renderOmicCheckbox(
+                'Transcriptomic',
+                'filterOmicTranscriptomics',
+                'Transcriptomics'
+              )}
+            </div>
             {/* Tissue filter */}
             <div className="filter-tissue form-group">
               <label htmlFor="formControlTissue">Tissue:</label>
@@ -254,7 +319,7 @@ function TrainingDataTable({ columns, data }) {
           <PageSize
             pageSize={pageSize}
             setPageSize={setPageSize}
-            pageSizeOptions={range(10, preGlobalFilteredRows.length)}
+            pageSizeOptions={range(20, preGlobalFilteredRows.length)}
           />
           <TrainingGlobalFilter
             preGlobalFilteredRows={preGlobalFilteredRows}
