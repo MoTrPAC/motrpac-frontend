@@ -8,6 +8,7 @@ import {
   usePagination,
 } from 'react-table';
 import {
+  tissueList,
   timewiseResultsTablePropType,
   timewiseTableColumns,
   PageIndex,
@@ -63,7 +64,7 @@ function DataTable({ columns, data }) {
       filterTypes,
       initialState: {
         pageIndex: 0,
-        pageSize: 10,
+        pageSize: 20,
         pageCount: 15,
       },
     },
@@ -96,7 +97,7 @@ function DataTable({ columns, data }) {
   } = instance;
 
   // default page size options given the length of entries in the data
-  const range = (start, stop, step = 10) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
+  const range = (start, stop, step = 20) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
 
   const handleCheckboxChange = () => {
     // handle events on multiple checkboxes
@@ -125,6 +126,56 @@ function DataTable({ columns, data }) {
     setFilter('comparison_group.raw', filterTimepoints);
   };
 
+  // handle events on omics checkboxes
+  const handleOmicsCheckboxChange = () => {
+    const checkboxes = document.querySelectorAll(
+      'input[type=checkbox][name=omics]'
+    );
+    let filterOmics = [];
+    filterOmics = Array.from(checkboxes)
+      .filter((i) => i.checked)
+      .map((i) => i.value);
+    setFilter('omic.raw', filterOmics);
+  };
+
+  // render checkboxes for omics
+  function renderOmicCheckbox(value, id, label) {
+    return (
+      <div className="form-check">
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value={value}
+          id={id}
+          name="omics"
+          onChange={handleOmicsCheckboxChange.bind(this)}
+        />
+        <label className="form-check-label" htmlFor={id}>
+          {label}
+        </label>
+      </div>
+    );
+  }
+
+  // render checkboxes for timepoints
+  function renderTimepointCheckbox(value, id, label) {
+    return (
+      <div className="form-check">
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value={value}
+          id={id}
+          name="timepoint"
+          onChange={handleCheckboxChange.bind(this)}
+        />
+        <label className="form-check-label" htmlFor={id}>
+          {label}
+        </label>
+      </div>
+    );
+  }
+
   // Render the UI for your table
   // react-table doesn't have UI, it's headless. We just need to put the react-table
   // props from the Hooks, and it will do its magic automatically
@@ -134,8 +185,63 @@ function DataTable({ columns, data }) {
         <div className="card">
           <div className="card-header font-weight-bold">Filter results:</div>
           <div className="card-body">
+            {/* Omics filter */}
+            <div className="filter-omic form-group">
+              <label htmlFor="formControlCheckboxes">Omic:</label>
+              {renderOmicCheckbox(
+                'Epigenomic',
+                'filterOmicEpigenomics',
+                'Epigenomics'
+              )}
+              {renderOmicCheckbox(
+                'Immunoassay',
+                'filterOmicImmunoassay',
+                'Immunoassay'
+              )}
+              {renderOmicCheckbox(
+                'Metabolomic-Targeted',
+                'filterOmicMetabolomicsTargeted',
+                'Metabolomics-Targeted'
+              )}
+              {renderOmicCheckbox(
+                'Metabolomic-Untargeted',
+                'filterOmicMetabolomicsUntargeted',
+                'Metabolomics-Untargeted'
+              )}
+              {renderOmicCheckbox(
+                'Proteomic',
+                'filterOmicProteomics',
+                'Proteomics'
+              )}
+              {renderOmicCheckbox(
+                'Transcriptomic',
+                'filterOmicTranscriptomics',
+                'Transcriptomics'
+              )}
+            </div>
+            {/* Tissue filter */}
+            <div className="filter-tissue form-group">
+              <label htmlFor="formControlTissue">Tissue:</label>
+              <select
+                className="form-control custom-filter mt-1"
+                id="formControlTissue"
+                value={filterValue}
+                onChange={(e) => {
+                  setFilter('tissue_name.raw', e.target.value || undefined);
+                }}
+              >
+                <option value="">All</option>
+                {tissueList.map((tissue) => {
+                  return (
+                    <option key={tissue} value={tissue}>
+                      {tissue}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
             {/* Sex filter */}
-            <div className="filter-sex form-group">
+            <div className="filter-sex form-group mt-3">
               <label htmlFor="formControlSex">Sex:</label>
               <select
                 className="form-control custom-filter mt-1"
@@ -156,70 +262,10 @@ function DataTable({ columns, data }) {
             {/* Timepoint filter */}
             <div className="filter-timepoint form-group mt-3">
               <label htmlFor="formControlCheckboxes">Timepoint:</label>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="1w"
-                  id="filterTimepointWeek1"
-                  name="timepoint"
-                  onChange={handleCheckboxChange.bind(this)}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="filterTimepointWeek1"
-                >
-                  Week 1
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="2w"
-                  id="filterTimepointWeek2"
-                  name="timepoint"
-                  onChange={handleCheckboxChange.bind(this)}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="filterTimepointWeek2"
-                >
-                  Week 2
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="4w"
-                  id="filterTimepointWeek3"
-                  name="timepoint"
-                  onChange={handleCheckboxChange.bind(this)}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="filterTimepointWeek3"
-                >
-                  Week 4
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="8w"
-                  id="filterTimepointWeek4"
-                  name="timepoint"
-                  onChange={handleCheckboxChange.bind(this)}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="filterTimepointWeek4"
-                >
-                  Week 8
-                </label>
-              </div>
+              {renderTimepointCheckbox('1w', 'filterTimepointWeek1', 'Week 1')}
+              {renderTimepointCheckbox('2w', 'filterTimepointWeek2', 'Week 2')}
+              {renderTimepointCheckbox('4w', 'filterTimepointWeek4', 'Week 4')}
+              {renderTimepointCheckbox('8w', 'filterTimepointWeek8', 'Week 8')}
             </div>
             {/* zScore filter */}
             <div className="filter-p-value form-group mt-3">
@@ -274,7 +320,7 @@ function DataTable({ columns, data }) {
           <PageSize
             pageSize={pageSize}
             setPageSize={setPageSize}
-            pageSizeOptions={range(10, preGlobalFilteredRows.length)}
+            pageSizeOptions={range(20, preGlobalFilteredRows.length)}
           />
           <TimewiseGlobalFilter
             preGlobalFilteredRows={preGlobalFilteredRows}
