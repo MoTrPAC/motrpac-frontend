@@ -49,25 +49,13 @@ export const timewiseResultsTablePropType = {
   comparison_group: PropTypes.shape({
     raw: PropTypes.string,
   }),
-  covariates: PropTypes.shape({
-    raw: PropTypes.string,
-  }),
   logfc: PropTypes.shape({
-    raw: PropTypes.string,
-  }),
-  logfc_se: PropTypes.shape({
     raw: PropTypes.string,
   }),
   p_value: PropTypes.shape({
     raw: PropTypes.string,
   }),
   adj_p_value: PropTypes.shape({
-    raw: PropTypes.string,
-  }),
-  comparison_average_intensity: PropTypes.shape({
-    raw: PropTypes.string,
-  }),
-  reference_average_intensity: PropTypes.shape({
     raw: PropTypes.string,
   }),
   selection_fdr: PropTypes.shape({
@@ -125,6 +113,7 @@ export const timewiseTableColumns = [
   {
     Header: 'Omic',
     accessor: 'omic.raw',
+    filter: multipleSelectFilter,
   },
   {
     Header: 'Assay',
@@ -134,7 +123,7 @@ export const timewiseTableColumns = [
   {
     Header: 'Tissue',
     accessor: 'tissue_name.raw',
-    filter: 'includes',
+    filter: 'exactText',
   },
   {
     Header: 'Sex',
@@ -147,16 +136,8 @@ export const timewiseTableColumns = [
     filter: multipleSelectFilter,
   },
   {
-    Header: 'Covariates',
-    accessor: 'covariates.raw',
-  },
-  {
     Header: 'logFC',
     accessor: 'logfc.raw',
-  },
-  {
-    Header: 'logFC se',
-    accessor: 'logfc_se.raw',
   },
   {
     Header: 'P-Value',
@@ -167,14 +148,6 @@ export const timewiseTableColumns = [
     Header: 'Adj P-Value',
     accessor: 'adj_p_value.raw',
     filter: 'between',
-  },
-  {
-    Header: 'Comparison Average Intensity',
-    accessor: 'comparison_average_intensity.raw',
-  },
-  {
-    Header: 'Reference Average Intensity',
-    accessor: 'reference_average_intensity.raw',
   },
 
   {
@@ -195,6 +168,7 @@ export const trainingTableColumns = [
   {
     Header: 'Omic',
     accessor: 'omic.raw',
+    filter: multipleSelectFilter,
   },
   {
     Header: 'Assay',
