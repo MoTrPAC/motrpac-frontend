@@ -14,6 +14,10 @@ export default async function runRequest(searchTerm, searchContext) {
           }, [])
         : [];
 
+    if (!featureIds.length) {
+      console.log('No matching results found for search term: ', searchTerm);
+      return null;
+    }
     // set up requests for each unique feature_id
     const requests = featureIds.map((featureId) =>
       axios.get(`/api/dea/${featureId}`)
