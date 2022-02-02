@@ -19,6 +19,7 @@ import SearchDataDisclaimer from '../lib/searchDataDisclaimer';
 
 export function SearchPage({ profile, expanded }) {
   const [searchContext, setSearchContext] = useState('genes');
+  const [matchingResults, setMatchingResults] = useState(true);
 
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
@@ -33,6 +34,12 @@ export function SearchPage({ profile, expanded }) {
     onSearch: async (state) => {
       const { resultsPerPage } = state;
       const responseJson = await runRequest(state.searchTerm, searchContext);
+      console.log('responseJson is null:' + JSON.stringify(responseJson));
+      if (responseJson === null) {
+        setMatchingResults(false);
+        return false;
+      }
+      setMatchingResults(true);
       return buildState(responseJson, resultsPerPage);
     },
   };
@@ -80,6 +87,11 @@ export function SearchPage({ profile, expanded }) {
                     />
                   </div>
                   <div className="search-body-container my-4">
+                    {!matchingResults ? (
+                      <div className="alert alert-warning">
+                        No results found.
+                      </div>
+                    ) : null}
                     {results && results.length ? (
                       <>
                         <h5>{`Search Term: ${searchTerm.toUpperCase()}`}</h5>
