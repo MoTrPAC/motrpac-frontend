@@ -92,7 +92,7 @@ export function SearchPage({ profile, expanded }) {
                         No results found.
                       </div>
                     ) : null}
-                    {results && results.length ? (
+                    {matchingResults && results && results.length ? (
                       <>
                         <h5>{`Search Term: ${searchTerm.toUpperCase()}`}</h5>
                         <div className="tabbed-content mb-4 w-100">
