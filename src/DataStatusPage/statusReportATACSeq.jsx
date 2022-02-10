@@ -20,10 +20,10 @@ import statusReportPropType, {
  *
  * @returns {object} The data qc status table component
  */
-function StatusReportATACSeq({ atacseqData }) {
+function StatusReportATACSeq({ atacSeqData }) {
   // Define table column headers
   const columns = useMemo(() => tableColumns, []);
-  const data = useMemo(() => atacseqData, [atacseqData]);
+  const data = useMemo(() => atacSeqData, [atacSeqData]);
   return <DataTable columns={columns} data={data} />;
 }
 
@@ -57,8 +57,8 @@ function DataTable({ columns, data }) {
       filterTypes,
       initialState: {
         pageIndex: 0,
-        pageSize: 10,
-        pageCount: 7,
+        pageSize: 20,
+        pageCount: 3,
       },
     },
     useFilters,
@@ -135,7 +135,7 @@ function DataTable({ columns, data }) {
                   prepareRow(row);
                   return (
                     <tr {...row.getRowProps()}>
-                      {row.cells.map((cell) => <td {...cell.getCellProps()} className={cell.value}>{cell.render('Cell')}</td>)}
+                      {row.cells.map((cell) => <td {...cell.getCellProps()} className={cell.value}><span>{cell.render('Cell')}</span></td>)}
                     </tr>
                   );
                 })}
@@ -160,7 +160,7 @@ function DataTable({ columns, data }) {
 }
 
 StatusReportATACSeq.propTypes = {
-  atacseqData: PropTypes.arrayOf(PropTypes.shape({ ...statusReportPropType })).isRequired,
+  atacSeqData: PropTypes.arrayOf(PropTypes.shape({ ...statusReportPropType })).isRequired,
 };
 
 DataTable.propTypes = {

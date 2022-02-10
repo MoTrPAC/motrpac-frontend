@@ -120,7 +120,7 @@ function StatusReportMetabolomics({ metabolomicsData }) {
         accessor: 'issues',
       },
       {
-        Header: 'DMAQC',
+        Header: 'DMAQC Valid',
         accessor: 'dmaqc_valid',
       },
       {
@@ -169,8 +169,8 @@ function DataTable({ columns, data }) {
       filterTypes,
       initialState: {
         pageIndex: 0,
-        pageSize: 10,
-        pageCount: 7,
+        pageSize: 20,
+        pageCount: 15,
       },
     },
     useFilters,
@@ -247,7 +247,7 @@ function DataTable({ columns, data }) {
                   prepareRow(row);
                   return (
                     <tr {...row.getRowProps()}>
-                      {row.cells.map((cell) => <td {...cell.getCellProps()} className={cell.value}>{cell.render('Cell')}</td>)}
+                      {row.cells.map((cell) => <td {...cell.getCellProps()} className={cell.value}><span>{cell.render('Cell')}</span></td>)}
                     </tr>
                   );
                 })}
