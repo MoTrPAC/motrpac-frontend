@@ -21,14 +21,17 @@ export const defaultDataStatusState = {
 };
 
 // Reducer to handle actions sent from components pertinent to data QC status page
-export function DataStatusReducer(state = { ...defaultDataStatusState }, action) {
+export function DataStatusReducer(
+  state = { ...defaultDataStatusState },
+  action
+) {
   // Handle states given the action types
   switch (action.type) {
     // Handle different data QC views toggle
     case QC_REPORT_VIEW_CHANGE:
       return {
         ...state,
-        dataStatusView: action.value,
+        qcReportView: action.value,
       };
 
     case QC_DATA_FETCH_REQUEST:
