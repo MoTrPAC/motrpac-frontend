@@ -11,6 +11,7 @@ import StatusReportAtacSeq from './statusReportATACSeq';
 import StatusReportImmunoAssay from './statusReportImmunoAssay';
 import DataStatusActions from './dataStatusActions';
 import qcReportButtonList from './sharelib/qcReportButtonList';
+import AnimatedLoadingIcon from '../lib/ui/loading';
 
 /**
  * Renders the data qc status page
@@ -94,7 +95,15 @@ export function DataStatusPage({
         </div>
         {renderButtonGroup()}
       </div>
-      <div className="data-qc-status-panel">{renderReport()}</div>
+      {isFetchingQcData && (
+        <AnimatedLoadingIcon isFetching={isFetchingQcData} />
+      )}
+      {!isFetchingQcData && !errMsg && (
+        <div className="data-qc-status-panel">{renderReport()}</div>
+      )}
+      {!isFetchingQcData && errMsg && (
+        <div className="data-qc-status-panel">{errMsg}</div>
+      )}
     </AuthContentContainer>
   );
 }
