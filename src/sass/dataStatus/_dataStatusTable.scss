@@ -127,3 +127,41 @@
     }
   }
 }
+
+.QcReportHelp {
+  h6 {
+    font-style: italic;
+  }
+
+  .terms-definitions {
+    font-size: 0.85rem;
+
+    .term {
+      font-weight: bold;
+    }
+
+    .untargeted {
+      background-color: #eafea2;
+    }
+
+    .targeted {
+      background-color: #feeca2;
+    }
+
+    .prot-pr {
+      background-color: #eafea2;
+    }
+
+    .prot-ph {
+      background-color: #b3ecff;
+    }
+
+    .prot-ac {
+      background-color: #ffa500;
+    }
+
+    .prot-ub {
+      background-color: #ff66ff;
+    }
+  }
+}
