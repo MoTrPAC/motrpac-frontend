@@ -1,5 +1,5 @@
 import {
-  DATA_STATUS_VIEW_CHANGE,
+  QC_REPORT_VIEW_CHANGE,
   QC_DATA_FETCH_REQUEST,
   QC_DATA_FETCH_SUCCESS,
   QC_DATA_FETCH_FAILURE,
@@ -25,7 +25,7 @@ export function DataStatusReducer(state = { ...defaultDataStatusState }, action)
   // Handle states given the action types
   switch (action.type) {
     // Handle different data QC views toggle
-    case DATA_STATUS_VIEW_CHANGE:
+    case QC_REPORT_VIEW_CHANGE:
       return {
         ...state,
         dataStatusView: action.value,
