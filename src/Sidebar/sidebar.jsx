@@ -145,7 +145,7 @@ export function Sidebar({
                 'releases',
                 'Releases',
                 'releases',
-                'cloud_done',
+                'rocket_launch',
                 false
               )}
             </li>
