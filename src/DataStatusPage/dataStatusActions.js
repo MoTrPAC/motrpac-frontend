@@ -34,21 +34,29 @@ function dataFetchFailure(errMsg = '') {
   };
 }
 
+function useNull() {
+  return null;
+}
+
 // Handler for predefined searches
 function fetchData() {
   return (dispatch) => {
     dispatch(dataFetchRequest());
     return axios.all([
-      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc_report_metabolomics.json`),
-      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc_report_rnaseq.json`),
-      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc_report_rrbs.json`),
-      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc_report_atacseq.json`),
-    ]).then(axios.spread((metabolomics, rnaseq, rrbs, atacseq) => {
+      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc-reports/metabolomics.json`).catch(useNull),
+      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc-reports/proteomics.json`).catch(useNull),
+      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc-reports/immunoassay.json`).catch(useNull),
+      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc-reports/rna_seq.json`).catch(useNull),
+      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc-reports/rrbs.json`).catch(useNull),
+      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc-reports/atac_seq.json`).catch(useNull),
+    ]).then(axios.spread((metabolomics, proteomics, immunoAssay, rnaSeq, rrbs, atacSeq) => {
       const payload = {
         metabolomics: metabolomics.data,
-        rnaseq: rnaseq.data,
+        proteomics: proteomics.data,
+        immunoAssay: immunoAssay.data,
+        rnaSeq: rnaSeq.data,
         rrbs: rrbs.data,
-        atacseq: atacseq.data,
+        atacSeq: atacSeq.data,
         lastModified: dayjs().format(),
       };
       dispatch(dataFetchSuccess(payload));
