@@ -7,7 +7,7 @@ export const QC_DATA_FETCH_REQUEST = 'QC_DATA_FETCH_REQUEST';
 export const QC_DATA_FETCH_SUCCESS = 'QC_DATA_FETCH_SUCCESS';
 export const QC_DATA_FETCH_FAILURE = 'QC_DATA_FETCH_FAILURE';
 
-function dataStatusViewChange(value) {
+function qcReportViewChange(value) {
   return {
     type: QC_REPORT_VIEW_CHANGE,
     value,
@@ -73,7 +73,7 @@ function fetchData() {
 }
 
 const DataStatusActions = {
-  dataStatusViewChange,
+  qcReportViewChange,
   fetchData,
 };
 
