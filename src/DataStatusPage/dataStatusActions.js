@@ -2,14 +2,14 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import GOOGLEAPIS_STORAGE_URL from './googleapis_storage_config';
 
-export const DATA_STATUS_VIEW_CHANGE = 'DATA_STATUS_VIEW_CHANGE';
+export const QC_REPORT_VIEW_CHANGE = 'DATA_STATUS_VIEW_CHANGE';
 export const QC_DATA_FETCH_REQUEST = 'QC_DATA_FETCH_REQUEST';
 export const QC_DATA_FETCH_SUCCESS = 'QC_DATA_FETCH_SUCCESS';
 export const QC_DATA_FETCH_FAILURE = 'QC_DATA_FETCH_FAILURE';
 
 function dataStatusViewChange(value) {
   return {
-    type: DATA_STATUS_VIEW_CHANGE,
+    type: QC_REPORT_VIEW_CHANGE,
     value,
   };
 }
