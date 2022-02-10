@@ -49,20 +49,26 @@ function fetchData() {
       axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc-reports/rna_seq.json`).catch(useNull),
       axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc-reports/rrbs.json`).catch(useNull),
       axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc-reports/atac_seq.json`).catch(useNull),
-    ]).then(axios.spread((metabolomics, proteomics, immunoAssay, rnaSeq, rrbs, atacSeq) => {
-      const payload = {
-        metabolomics: metabolomics.data,
-        proteomics: proteomics.data,
-        immunoAssay: immunoAssay.data,
-        rnaSeq: rnaSeq.data,
-        rrbs: rrbs.data,
-        atacSeq: atacSeq.data,
-        lastModified: dayjs().format(),
-      };
-      dispatch(dataFetchSuccess(payload));
-    })).catch((err) => {
-      dispatch(dataFetchFailure(`${err.error}: ${err.errorDescription}`));
-    });
+      ])
+      .then(
+        axios.spread(
+          (metabolomics, proteomics, immunoAssay, rnaSeq, rrbs, atacSeq) => {
+            const payload = {
+              metabolomics: metabolomics.data,
+              proteomics: proteomics.data,
+              immunoAssay: immunoAssay.data,
+              rnaSeq: rnaSeq.data,
+              rrbs: rrbs.data,
+              atacSeq: atacSeq.data,
+              lastModified: dayjs().format(),
+            };
+            dispatch(dataFetchSuccess(payload));
+          }
+        )
+      )
+      .catch((err) => {
+        dispatch(dataFetchFailure(`${err.error}: ${err.errorDescription}`));
+      });
   };
 }
 
