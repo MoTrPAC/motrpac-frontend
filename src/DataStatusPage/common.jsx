@@ -11,6 +11,7 @@ const statusReportPropType = {
   tissue: PropTypes.string,
   t_name: PropTypes.string,
   seq_flowcell_lane: PropTypes.string,
+  assay: PropTypes.string,
   version: PropTypes.string,
   sample_category: PropTypes.string,
   sample_count: PropTypes.string,
@@ -45,6 +46,10 @@ export const tableColumns = [
     accessor: 'seq_flowcell_lane',
   },
   {
+    Header: 'Assay',
+    accessor: 'assay',
+  },
+  {
     Header: 'Version',
     accessor: 'version',
   },
@@ -57,7 +62,7 @@ export const tableColumns = [
     accessor: 'sample_count',
   },
   {
-    Header: 'DMAQC',
+    Header: 'DMAQC Valid',
     accessor: 'dmaqc_valid',
   },
 ];
