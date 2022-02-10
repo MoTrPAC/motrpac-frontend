@@ -21,7 +21,7 @@
     
     select {
       margin-right: 0.65rem;
-      max-width: 50px;
+      max-width: 65px;
     }
   }
 
@@ -84,23 +84,46 @@
 
   tbody {
     td {
-      padding: 0.75rem 0.5rem;
+      padding: 0.65rem 0.5rem;
+      vertical-align: middle;
     }
 
     .PASS1A-06 {
-      background-color: lighten($primary-blue-shade-light, 18%);
+      background-color: lighten($primary-blue-shade-light, 22%);
     }
 
     .PASS1B-06 {
-      background-color: lighten($accent-yellow-shade-light, 18%);
+      background-color: lighten($accent-yellow-shade-light, 22%);
+    }
+
+    .PASS, .FAIL {
+      text-align: center;
+
+      span {
+        color: #fff;
+        display: inline-block;
+        padding: .4em .75em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25rem;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+      }
     }
 
     .PASS {
-      background-color: lighten($accent-green-shade-light, 16%);
+      span {
+        background-color: #28a745;
+      }
     }
 
     .FAIL {
-      background-color: lighten($accent-red-shade-light, 21%);
+      span {
+        background-color: #dc3545;
+      }
     }
   }
 }
