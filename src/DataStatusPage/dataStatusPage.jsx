@@ -2,136 +2,148 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import AuthContentContainer from '../lib/ui/authContentContainer';
 import StatusReportMetabolomics from './statusReportMetabolomics';
-import StatusReportRNASeq from './statusReportRNASeq';
+import StatusReportProteomics from './statusReportProteomics';
+import StatusReportRnaSeq from './statusReportRNASeq';
 import StatusReportRRBS from './statusReportRRBS';
-import StatusReportATACSeq from './statusReportATACSeq';
+import StatusReportAtacSeq from './statusReportATACSeq';
+import StatusReportImmunoAssay from './statusReportImmunoAssay';
 import DataStatusActions from './dataStatusActions';
+import qcReportButtonList from './sharelib/qcReportButtonList';
 
 /**
  * Renders the data qc status page
  *
- * @param {Boolean} isAuthenticated Redux state for user's authentication status
+ * @param {Object} profile Redux state for user's profile
  *
  * @returns {object} JSX representation of the data qc status page
  */
 export function DataStatusPage({
-  isAuthenticated,
   dataStatusView,
   qcData,
   isFetchingQcData,
   errMsg,
   dataStatusViewChange,
+  expanded,
+  profile,
 }) {
-  // Send users back to homepage if not authenticated
-  if (!isAuthenticated) {
-    return (<Redirect to="/" />);
+  // Send users to default page if they are not consortium members
+  const userType = profile.user_metadata && profile.user_metadata.userType;
+  if (userType === 'external') {
+    return <Redirect to="/dashboard" />;
+  }
+
+  // Render button group
+  function renderButtonGroup() {
+    return (
+      <div className="btn-toolbar">
+        <div
+          className="btn-group omics-selection"
+          role="group"
+          aria-label="QCReport button group"
+        >
+          {qcReportButtonList.map((item) => {
+            return (
+              <button
+                key={item.qcReport}
+                type="button"
+                className={`btn btn-sm btn-outline-primary ${
+                  dataStatusView === item.qcReport ? 'active' : ''
+                }`}
+                onClick={() => dataStatusViewChange(item.qcReport)}
+              >
+                {item.buttonLabel}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
   }
 
   // Render different tables given the button selection
-  function renderView() {
+  function renderReport() {
     switch (dataStatusView) {
       case 'metabolomics':
-        return <StatusReportMetabolomics metabolomicsData={qcData.metabolomics} />;
+        return (
+          <StatusReportMetabolomics metabolomicsData={qcData.metabolomics} />
+        );
+      case 'proteomics':
+        return <StatusReportProteomics proteomicsData={qcData.proteomics} />;
       case 'rnaseq':
-        return <StatusReportRNASeq rnaseqData={qcData.rnaseq} />;
+        return <StatusReportRnaSeq rnaSeqData={qcData.rnaSeq} />;
       case 'rrbs':
         return <StatusReportRRBS rrbsData={qcData.rrbs} />;
       case 'atacseq':
-        return <StatusReportATACSeq atacseqData={qcData.atacseq} />;
+        return <StatusReportAtacSeq atacSeqData={qcData.atacSeq} />;
+      case 'immunoassay':
+        return <StatusReportImmunoAssay immunoAssayData={qcData.immunoAssay} />;
       default:
-        return <StatusReportMetabolomics metabolomicsData={qcData.metabolomics} />;
+        return (
+          <StatusReportMetabolomics metabolomicsData={qcData.metabolomics} />
+        );
     }
   }
 
   return (
-    <div className="col-md-9 ml-sm-auto col-lg-10 px-4 dataStatusPage">
+    <AuthContentContainer classes="dataStatusPage" expanded={expanded}>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <div className="page-title">
-          <h3>Submitted Data QC Status</h3>
+          <h3 className="mb-0">Data QC Reports</h3>
         </div>
-        <div className="btn-toolbar">
-          <div className="btn-group omics-selection" role="group" aria-label="Release button group">
-            <button
-              type="button"
-              className={`btn btn-sm btn-outline-primary ${dataStatusView === 'metabolomics' ? 'active' : ''}`}
-              onClick={() => dataStatusViewChange('metabolomics')}
-            >
-              Metabolomics
-            </button>
-            <button
-              type="button"
-              className={`btn btn-sm btn-outline-primary ${dataStatusView === 'rnaseq' ? 'active' : ''}`}
-              onClick={() => dataStatusViewChange('rnaseq')}
-            >
-              RNA-Seq
-            </button>
-            <button
-              type="button"
-              className={`btn btn-sm btn-outline-primary ${dataStatusView === 'rrbs' ? 'active' : ''}`}
-              onClick={() => dataStatusViewChange('rrbs')}
-            >
-              RRBS
-            </button>
-            <button
-              type="button"
-              className={`btn btn-sm btn-outline-primary ${dataStatusView === 'atacseq' ? 'active' : ''}`}
-              onClick={() => dataStatusViewChange('atacseq')}
-            >
-              ATAC-Seq
-            </button>
-            <button
-              type="button"
-              className={`btn btn-sm btn-outline-primary ${dataStatusView === 'help' ? 'active' : ''}`}
-              onClick={() => dataStatusViewChange('help')}
-            >
-              Help
-            </button>
-          </div>
-        </div>
+        {renderButtonGroup()}
       </div>
-      <div className="data-qc-status-panel">
-        {renderView()}
-      </div>
-    </div>
+      <div className="data-qc-status-panel">{renderReport()}</div>
+    </AuthContentContainer>
   );
 }
 
 DataStatusPage.propTypes = {
-  isAuthenticated: PropTypes.bool,
   dataStatusView: PropTypes.string.isRequired,
   qcData: PropTypes.shape({
+    atacSeq: PropTypes.arrayOf(PropTypes.object),
+    immunoAssay: PropTypes.arrayOf(PropTypes.object),
     metabolomics: PropTypes.arrayOf(PropTypes.object),
-    rnaseq: PropTypes.arrayOf(PropTypes.object),
+    proteomics: PropTypes.arrayOf(PropTypes.object),
+    rnaSeq: PropTypes.arrayOf(PropTypes.object),
     rrbs: PropTypes.arrayOf(PropTypes.object),
-    atacseq: PropTypes.arrayOf(PropTypes.object),
     lastModified: PropTypes.string,
   }),
   isFetchingQcData: PropTypes.bool,
   errMsg: PropTypes.string,
   dataStatusViewChange: PropTypes.func.isRequired,
+  expanded: PropTypes.bool,
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.object,
+  }),
 };
 
 DataStatusPage.defaultProps = {
-  isAuthenticated: false,
   qcData: {
+    atacSeq: [],
+    immunoAssay: [],
     metabolomics: [],
-    rnaseq: [],
+    proteomics: [],
+    rnaSeq: [],
     rrbs: [],
-    atacseq: [],
     lastModified: '',
   },
   isFetchingQcData: false,
   errMsg: '',
+  expanded: false,
+  profile: {},
 };
 
 const mapStateToProps = (state) => ({
-  ...(state.dataStatus),
-  isAuthenticated: state.auth.isAuthenticated,
+  ...state.dataStatus,
+  expanded: state.sidebar.expanded,
+  profile: state.auth.profile,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dataStatusViewChange: (value) => dispatch(DataStatusActions.dataStatusViewChange(value)),
+  dataStatusViewChange: (value) =>
+    dispatch(DataStatusActions.dataStatusViewChange(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataStatusPage);
