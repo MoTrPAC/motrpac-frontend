@@ -20,11 +20,11 @@ import qcReportButtonList from './sharelib/qcReportButtonList';
  * @returns {object} JSX representation of the data qc status page
  */
 export function DataStatusPage({
-  dataStatusView,
+  qcReportView,
   qcData,
   isFetchingQcData,
   errMsg,
-  dataStatusViewChange,
+  qcReportViewChange,
   expanded,
   profile,
 }) {
@@ -49,9 +49,9 @@ export function DataStatusPage({
                 key={item.qcReport}
                 type="button"
                 className={`btn btn-sm btn-outline-primary ${
-                  dataStatusView === item.qcReport ? 'active' : ''
+                  qcReportView === item.qcReport ? 'active' : ''
                 }`}
-                onClick={() => dataStatusViewChange(item.qcReport)}
+                onClick={() => qcReportViewChange(item.qcReport)}
               >
                 {item.buttonLabel}
               </button>
@@ -64,7 +64,7 @@ export function DataStatusPage({
 
   // Render different tables given the button selection
   function renderReport() {
-    switch (dataStatusView) {
+    switch (qcReportView) {
       case 'metabolomics':
         return (
           <StatusReportMetabolomics metabolomicsData={qcData.metabolomics} />
@@ -100,7 +100,7 @@ export function DataStatusPage({
 }
 
 DataStatusPage.propTypes = {
-  dataStatusView: PropTypes.string.isRequired,
+  qcReportView: PropTypes.string.isRequired,
   qcData: PropTypes.shape({
     atacSeq: PropTypes.arrayOf(PropTypes.object),
     immunoAssay: PropTypes.arrayOf(PropTypes.object),
@@ -112,7 +112,7 @@ DataStatusPage.propTypes = {
   }),
   isFetchingQcData: PropTypes.bool,
   errMsg: PropTypes.string,
-  dataStatusViewChange: PropTypes.func.isRequired,
+  qcReportViewChange: PropTypes.func.isRequired,
   expanded: PropTypes.bool,
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
@@ -142,8 +142,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dataStatusViewChange: (value) =>
-    dispatch(DataStatusActions.dataStatusViewChange(value)),
+  qcReportViewChange: (value) =>
+    dispatch(DataStatusActions.qcReportViewChange(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataStatusPage);
