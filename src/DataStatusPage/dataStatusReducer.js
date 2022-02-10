@@ -6,7 +6,7 @@ import {
 } from './dataStatusActions';
 
 export const defaultDataStatusState = {
-  dataStatusView: 'metabolomics',
+  qcReportView: 'metabolomics',
   qcData: {
     atacSeq: [],
     immunoAssay: [],
