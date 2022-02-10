@@ -8,10 +8,12 @@ import {
 export const defaultDataStatusState = {
   dataStatusView: 'metabolomics',
   qcData: {
+    atacSeq: [],
+    immunoAssay: [],
     metabolomics: [],
-    rnaseq: [],
+    proteomics: [],
+    rnaSeq: [],
     rrbs: [],
-    atacseq: [],
     lastModified: '',
   },
   errMsg: '',
