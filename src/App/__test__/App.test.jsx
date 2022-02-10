@@ -24,7 +24,7 @@ describe('<App />', () => {
   });
 
   test('It should contain eight <PrivateRoute /> children', () => {
-    expect(component.find('PrivateRoute').length).toBe(8);
+    expect(component.find('PrivateRoute').length).toBe(9);
   });
 });
 
