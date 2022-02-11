@@ -1,6 +1,5 @@
 import axios from 'axios';
 import dayjs from 'dayjs';
-import GOOGLEAPIS_STORAGE_URL from './googleapis_storage_config';
 
 export const QC_REPORT_VIEW_CHANGE = 'DATA_STATUS_VIEW_CHANGE';
 export const QC_DATA_FETCH_REQUEST = 'QC_DATA_FETCH_REQUEST';
@@ -42,13 +41,34 @@ function useNull() {
 function fetchData() {
   return (dispatch) => {
     dispatch(dataFetchRequest());
-    return axios.all([
-      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc-reports/metabolomics.json`).catch(useNull),
-      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc-reports/proteomics.json`).catch(useNull),
-      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc-reports/immunoassay.json`).catch(useNull),
-      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc-reports/rna_seq.json`).catch(useNull),
-      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc-reports/rrbs.json`).catch(useNull),
-      axios.get(`${GOOGLEAPIS_STORAGE_URL}/data/qc-reports/atac_seq.json`).catch(useNull),
+    return axios
+      .all([
+        axios
+          .get(
+            `${process.env.REACT_APP_DATA_URL}/data/qc-reports/metabolomics.json`
+          )
+          .catch(useNull),
+        axios
+          .get(
+            `${process.env.REACT_APP_DATA_URL}/data/qc-reports/proteomics.json`
+          )
+          .catch(useNull),
+        axios
+          .get(
+            `${process.env.REACT_APP_DATA_URL}/data/qc-reports/immunoassay.json`
+          )
+          .catch(useNull),
+        axios
+          .get(`${process.env.REACT_APP_DATA_URL}/data/qc-reports/rna_seq.json`)
+          .catch(useNull),
+        axios
+          .get(`${process.env.REACT_APP_DATA_URL}/data/qc-reports/rrbs.json`)
+          .catch(useNull),
+        axios
+          .get(
+            `${process.env.REACT_APP_DATA_URL}/data/qc-reports/atac_seq.json`
+          )
+          .catch(useNull),
       ])
       .then(
         axios.spread(
