@@ -43,32 +43,12 @@ function fetchData() {
     dispatch(dataFetchRequest());
     return axios
       .all([
-        axios
-          .get(
-            `${process.env.REACT_APP_DATA_URL}/data/qc-reports/metabolomics.json`
-          )
-          .catch(useNull),
-        axios
-          .get(
-            `${process.env.REACT_APP_DATA_URL}/data/qc-reports/proteomics.json`
-          )
-          .catch(useNull),
-        axios
-          .get(
-            `${process.env.REACT_APP_DATA_URL}/data/qc-reports/immunoassay.json`
-          )
-          .catch(useNull),
-        axios
-          .get(`${process.env.REACT_APP_DATA_URL}/data/qc-reports/rna_seq.json`)
-          .catch(useNull),
-        axios
-          .get(`${process.env.REACT_APP_DATA_URL}/data/qc-reports/rrbs.json`)
-          .catch(useNull),
-        axios
-          .get(
-            `${process.env.REACT_APP_DATA_URL}/data/qc-reports/atac_seq.json`
-          )
-          .catch(useNull),
+        axios.get(`/static-assets/qc-reports/metabolomics.json`).catch(useNull),
+        axios.get(`/static-assets/qc-reports/proteomics.json`).catch(useNull),
+        axios.get(`/static-assets/qc-reports/immunoassay.json`).catch(useNull),
+        axios.get(`/static-assets/qc-reports/rna_seq.json`).catch(useNull),
+        axios.get(`/static-assets/qc-reports/rrbs.json`).catch(useNull),
+        axios.get(`/static-assets/qc-reports/atac_seq.json`).catch(useNull),
       ])
       .then(
         axios.spread(
