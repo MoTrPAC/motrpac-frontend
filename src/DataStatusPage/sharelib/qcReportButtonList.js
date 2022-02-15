@@ -24,6 +24,10 @@ const qcReportButtonList = [
     buttonLabel: 'Immunoassay',
   },
   {
+    qcReport: 'phase',
+    buttonLabel: 'Phase',
+  },
+  {
     qcReport: 'help',
     buttonLabel: 'Help',
   },
