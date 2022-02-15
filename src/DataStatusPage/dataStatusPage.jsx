@@ -9,6 +9,7 @@ import StatusReportRnaSeq from './statusReportRNASeq';
 import StatusReportRRBS from './statusReportRRBS';
 import StatusReportAtacSeq from './statusReportATACSeq';
 import StatusReportImmunoAssay from './statusReportImmunoAssay';
+import QcReportByPhase from './qcReportByPhase.jsx';
 import QcReportHelp from './qcReportHelp';
 import DataStatusActions from './dataStatusActions';
 import qcReportButtonList from './sharelib/qcReportButtonList';
@@ -81,6 +82,8 @@ export function DataStatusPage({
         return <StatusReportAtacSeq atacSeqData={qcData.atacSeq} />;
       case 'immunoassay':
         return <StatusReportImmunoAssay immunoAssayData={qcData.immunoAssay} />;
+      case 'phase':
+        return <QcReportByPhase phaseData={qcData} />;
       case 'help':
         return <QcReportHelp />;
       default:
