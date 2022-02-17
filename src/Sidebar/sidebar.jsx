@@ -35,7 +35,11 @@ export function Sidebar({
   const handleQcDataFetch = () => {
     const lastUpdate = qcData.lastModified;
     // Convert timestamp string back to dayjs() object to calculate time difference
-    if (!lastUpdate.length || (lastUpdate.length && dayjs().diff(dayjs(lastUpdate), 'hour') >= 24)) {
+    if (
+      !lastUpdate ||
+      !lastUpdate.length ||
+      (lastUpdate.length && dayjs().diff(dayjs(lastUpdate), 'hour') >= 24)
+    ) {
       fetchData();
     }
   };
