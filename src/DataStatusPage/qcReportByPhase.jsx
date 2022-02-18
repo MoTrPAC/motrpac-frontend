@@ -52,7 +52,6 @@ function QcReportByPhase({ phaseData }) {
               <QCReportByPhaseTabContent
                 data={phaseData}
                 phases={item.phases}
-                tabHeaderLabel={item.navLinkLabel}
               />
             </div>
           );
