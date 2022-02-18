@@ -294,7 +294,7 @@ function QcReportHelp() {
             <span className="term">dmaqc_valid</span>:
             <ul>
               <li>
-                <span className="term">OK</span>: all <em>vial_label</em>{' '}
+                <span className="term">PASS</span>: all <em>vial_label</em>{' '}
                 shipped to the CAS successfully reported (some of them could
                 have failed but reported on the <em>failedsample.txt</em> file).
               </li>
