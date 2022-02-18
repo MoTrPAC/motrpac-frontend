@@ -9,13 +9,13 @@ import PropTypes from 'prop-types';
  *
  * @returns {object} JSX representation of QC report samples by phase page content
  */
-function qcReportByPhaseTabContent({ data, phase }) {
+function qcReportByPhaseTabContent({ data, phases, tabHeaderLabel }) {
   // FIXME: current implementation needs to be refactored to reduce the number of
   //       functions and variables for parsing and transforming data
   //       to be more readable and maintainable
 
   // pool all data and filter a subset of it by phase
-  function getDataByPhase() {
+  function getDataByPhase(phase) {
     // delete 'lastModified' key from data
     delete data.lastModified;
     const newData = {};
@@ -32,8 +32,8 @@ function qcReportByPhaseTabContent({ data, phase }) {
 
   // concatenate all data of different omics/assays for a given phase
   // 'ref' sample_category is omitted in the concatenated data
-  function concatData() {
-    const dataObj = getDataByPhase();
+  function concatData(phase) {
+    const dataObj = getDataByPhase(phase);
     const mergedData = [];
     let newSampleObj = {};
     Object.keys(dataObj[phase]).forEach((key) => {
@@ -61,8 +61,8 @@ function qcReportByPhaseTabContent({ data, phase }) {
 
   // create a list of unique tissue codes from
   // processed concatenated data in a given phase
-  function getUnqiueTissues() {
-    const mergedData = concatData();
+  function getUnqiueTissues(phase) {
+    const mergedData = concatData(phase);
     const uniqueTissues = [];
     mergedData.forEach((item) => {
       if (uniqueTissues.indexOf(item.tissue) === -1) {
@@ -78,9 +78,9 @@ function qcReportByPhaseTabContent({ data, phase }) {
   }
 
   // group concatenated data by tissue in a given phase
-  function groupSamplesByTissue() {
-    const mergedData = concatData();
-    const tissueCodes = getUnqiueTissues();
+  function groupSamplesByTissue(phase) {
+    const mergedData = concatData(phase);
+    const tissueCodes = getUnqiueTissues(phase);
     const groupedSamplesObj = {};
     tissueCodes.forEach((tissueCode) => {
       const filteredData = mergedData.filter(
@@ -109,8 +109,8 @@ function qcReportByPhaseTabContent({ data, phase }) {
   }
 
   // construct unique x-axis labels composed of omic, cas, assay
-  function getLabelsByOmicSiteAssay() {
-    const samplesByTissue = groupSamplesByTissue();
+  function getLabelsByOmicSiteAssay(phase) {
+    const samplesByTissue = groupSamplesByTissue(phase);
     const labels = [];
     Object.keys(samplesByTissue).forEach((key) => {
       samplesByTissue[key].forEach((item) => {
@@ -140,9 +140,9 @@ function qcReportByPhaseTabContent({ data, phase }) {
   }
 
   // render table body
-  function renderGridBody() {
-    const samplesByTissue = groupSamplesByTissue();
-    const labels = getLabelsByOmicSiteAssay();
+  function renderGridBody(phase) {
+    const samplesByTissue = groupSamplesByTissue(phase);
+    const labels = getLabelsByOmicSiteAssay(phase);
     return (
       <tbody>
         {Object.keys(samplesByTissue).map((key) => {
@@ -181,11 +181,11 @@ function qcReportByPhaseTabContent({ data, phase }) {
   }
 
   // render table footer
-  function renderGridFooter() {
+  function renderGridFooter(phase) {
     return (
       <tfoot>
         <tr>
-          {getLabelsByOmicSiteAssay().map((label) => {
+          {getLabelsByOmicSiteAssay(phase).map((label) => {
             return (
               <th key={label}>
                 <div className="footer-content-container">
@@ -202,14 +202,22 @@ function qcReportByPhaseTabContent({ data, phase }) {
 
   return (
     <div className="QCReportByPhaseTabPane content-wrapper col-12 mb-4">
-      <h5 className="text-muted mb-2">{`${
-        phase.toUpperCase() === 'HUMAN' ? phase : phase + '-06'
-      } Tissue Submitted by CAS/Assay`}</h5>
       <div className="table-responsive">
-        <table className={`table table-sm ${phase}`}>
-          {renderGridBody()}
-          {renderGridFooter()}
-        </table>
+        {phases.map((phase) => {
+          return (
+            <div>
+              <h5 className="text-muted mb-2">{`${
+                phase.toUpperCase() === 'HUMAN'
+                  ? phase.toUpperCase()
+                  : phase.toUpperCase() + ' 6-Month'
+              } Tissue Submitted by CAS/Assay`}</h5>
+              <table key={phase} className={`table table-sm ${tabHeaderLabel}`}>
+                {renderGridBody(phase)}
+                {renderGridFooter(phase)}
+              </table>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -217,12 +225,14 @@ function qcReportByPhaseTabContent({ data, phase }) {
 
 qcReportByPhaseTabContent.propTypes = {
   data: PropTypes.object,
-  phase: PropTypes.string,
+  phases: PropTypes.arrayOf(PropTypes.string),
+  tabHeaderLabel: PropTypes.string,
 };
 
 qcReportByPhaseTabContent.defaultProps = {
   data: {},
-  phase: '',
+  phases: [],
+  tabHeaderLabel: '',
 };
 
 export default qcReportByPhaseTabContent;
