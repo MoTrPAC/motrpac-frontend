@@ -1,5 +1,9 @@
 const qcReportButtonList = [
   {
+    qcReport: 'phase',
+    buttonLabel: 'Phase',
+  },
+  {
     qcReport: 'metabolomics',
     buttonLabel: 'Metabolomics',
   },
@@ -22,10 +26,6 @@ const qcReportButtonList = [
   {
     qcReport: 'immunoassay',
     buttonLabel: 'Immunoassay',
-  },
-  {
-    qcReport: 'phase',
-    buttonLabel: 'Phase',
   },
   {
     qcReport: 'help',
