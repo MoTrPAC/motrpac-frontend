@@ -14,6 +14,7 @@ import QcReportHelp from './qcReportHelp';
 import DataStatusActions from './dataStatusActions';
 import qcReportButtonList from './sharelib/qcReportButtonList';
 import AnimatedLoadingIcon from '../lib/ui/loading';
+import QcReportHelpLink from './sharelib/qcReportHelpLink';
 
 /**
  * Renders the data qc status page
@@ -72,18 +73,46 @@ export function DataStatusPage({
         return <QcReportByPhase phaseData={qcData} />;
       case 'metabolomics':
         return (
-          <StatusReportMetabolomics metabolomicsData={qcData.metabolomics} />
+          <>
+            <StatusReportMetabolomics metabolomicsData={qcData.metabolomics} />
+            <QcReportHelpLink qcReportViewChange={qcReportViewChange} />
+          </>
         );
       case 'proteomics':
-        return <StatusReportProteomics proteomicsData={qcData.proteomics} />;
+        return (
+          <>
+            <StatusReportProteomics proteomicsData={qcData.proteomics} />
+            <QcReportHelpLink qcReportViewChange={qcReportViewChange} />
+          </>
+        );
       case 'rnaseq':
-        return <StatusReportRnaSeq rnaSeqData={qcData.rnaSeq} />;
+        return (
+          <>
+            <StatusReportRnaSeq rnaSeqData={qcData.rnaSeq} />
+            <QcReportHelpLink qcReportViewChange={qcReportViewChange} />
+          </>
+        );
       case 'rrbs':
-        return <StatusReportRRBS rrbsData={qcData.rrbs} />;
+        return (
+          <>
+            <StatusReportRRBS rrbsData={qcData.rrbs} />
+            <QcReportHelpLink qcReportViewChange={qcReportViewChange} />
+          </>
+        );
       case 'atacseq':
-        return <StatusReportAtacSeq atacSeqData={qcData.atacSeq} />;
+        return (
+          <>
+            <StatusReportAtacSeq atacSeqData={qcData.atacSeq} />
+            <QcReportHelpLink qcReportViewChange={qcReportViewChange} />
+          </>
+        );
       case 'immunoassay':
-        return <StatusReportImmunoAssay immunoAssayData={qcData.immunoAssay} />;
+        return (
+          <>
+            <StatusReportImmunoAssay immunoAssayData={qcData.immunoAssay} />
+            <QcReportHelpLink qcReportViewChange={qcReportViewChange} />
+          </>
+        );
       case 'help':
         return <QcReportHelp />;
       default:
