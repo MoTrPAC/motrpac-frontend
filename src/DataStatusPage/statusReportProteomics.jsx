@@ -29,7 +29,10 @@ const toSum = (list) => {
 const transformData = (arr) => {
   const cloneArray = [...arr];
   // Replace instances of 'OK' string to 'PASS'
-  const newArray = JSON.stringify(cloneArray).replace(/OK/g, 'PASS');
+  // Replace instances of 'NOT_AVAILABLE' string to 'NOT AVAILABLE'
+  const newArray = JSON.stringify(cloneArray)
+    .replace(/OK/g, 'PASS')
+    .replace(/NOT_AVAILABLE/g, 'NOT AVAILABLE');
   const tranformArray = JSON.parse(newArray);
   // Add new 'issues' property
   tranformArray.forEach((item) => {
