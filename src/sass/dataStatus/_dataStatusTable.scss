@@ -43,6 +43,24 @@
   .card-body {
     padding: 0;
   }
+
+  .help-page-link {
+    .material-icons {
+      color: #007bff;
+    }
+
+    .btn-link {
+      color: #007bff;
+      font-size: 0.9rem;
+      margin: 0;
+      padding: 0;
+
+      &:hover {
+        color: #0056b3;
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 .dataStatusTable {
@@ -273,7 +291,7 @@
     }
   }
 
-  table.Human {
+  table.HUMAN {
     tfoot th {
       .footer-content-container {
         width: 80px;
@@ -283,6 +301,20 @@
           transform: translateX(160px) rotate(45deg);
         }
       }
+    }
+  }
+
+  .legend-item {
+    font-size: 0.85rem;
+
+    .legend-item-color.submitted {
+      background-color: $accent-yellow;
+      padding: 0.4rem;
+    }
+
+    .legend-item-color.not-submitted {
+      background-color: $dblue;
+      padding: 0.4rem;
     }
   }
 }
