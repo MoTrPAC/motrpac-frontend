@@ -68,6 +68,8 @@ export function DataStatusPage({
   // Render different tables given the button selection
   function renderReport() {
     switch (qcReportView) {
+      case 'phase':
+        return <QcReportByPhase phaseData={qcData} />;
       case 'metabolomics':
         return (
           <StatusReportMetabolomics metabolomicsData={qcData.metabolomics} />
@@ -82,14 +84,10 @@ export function DataStatusPage({
         return <StatusReportAtacSeq atacSeqData={qcData.atacSeq} />;
       case 'immunoassay':
         return <StatusReportImmunoAssay immunoAssayData={qcData.immunoAssay} />;
-      case 'phase':
-        return <QcReportByPhase phaseData={qcData} />;
       case 'help':
         return <QcReportHelp />;
       default:
-        return (
-          <StatusReportMetabolomics metabolomicsData={qcData.metabolomics} />
-        );
+        return <QcReportByPhase phaseData={qcData} />;
     }
   }
 
