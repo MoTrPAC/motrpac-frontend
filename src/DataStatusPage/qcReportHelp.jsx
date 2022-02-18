@@ -157,6 +157,10 @@ function QcReportHelp() {
                 <em>vial_label</em> not found in results and not available in{' '}
                 <em>failedsample.txt</em> file
               </li>
+              <li>
+                <span className="term">NOT AVAILABLE</span>: data not provided
+                yet by DMAQC.
+              </li>
             </ul>
           </li>
           <li>
@@ -243,6 +247,10 @@ function QcReportHelp() {
                 <em>vial_label</em> not found in results and not available in{' '}
                 <em>failedsample.txt</em> file
               </li>
+              <li>
+                <span className="term">NOT AVAILABLE</span>: data not provided
+                yet by DMAQC.
+              </li>
             </ul>
           </li>
           <li>
@@ -302,6 +310,10 @@ function QcReportHelp() {
                 <span className="term">FAIL</span>: one or many{' '}
                 <em>vial_label</em> not found in results and not available in{' '}
                 <em>failedsample.txt</em> file
+              </li>
+              <li>
+                <span className="term">NOT AVAILABLE</span>: data not provided
+                yet by DMAQC.
               </li>
             </ul>
           </li>
