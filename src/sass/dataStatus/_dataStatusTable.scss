@@ -122,7 +122,7 @@
       background-color: lighten($accent-red-shade-light, 25%);
     }
 
-    .PASS, .FAIL {
+    .PASS, .FAIL, .NOT.AVAILABLE {
       text-align: center;
 
       span {
@@ -149,6 +149,12 @@
     .FAIL {
       span {
         background-color: #dc3545;
+      }
+    }
+
+    .NOT.AVAILABLE {
+      span {
+        background-color: $gray-semi-transparent;
       }
     }
   }
