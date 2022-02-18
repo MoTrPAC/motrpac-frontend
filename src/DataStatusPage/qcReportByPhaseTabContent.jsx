@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
  *
  * @returns {object} JSX representation of QC report samples by phase page content
  */
-function qcReportByPhaseTabContent({ data, phases, tabHeaderLabel }) {
+function qcReportByPhaseTabContent({ data, phases }) {
   // FIXME: current implementation needs to be refactored to reduce the number of
   //       functions and variables for parsing and transforming data
   //       to be more readable and maintainable
@@ -206,12 +206,33 @@ function qcReportByPhaseTabContent({ data, phases, tabHeaderLabel }) {
         {phases.map((phase) => {
           return (
             <div>
-              <h5 className="text-muted mb-2">{`${
-                phase.toUpperCase() === 'HUMAN'
-                  ? phase.toUpperCase()
-                  : phase.toUpperCase() + ' 6-Month'
-              } Tissue Submitted by CAS/Assay`}</h5>
-              <table key={phase} className={`table table-sm ${tabHeaderLabel}`}>
+              <div className="d-flex align-items-center mb-2">
+                <h5 className="text-muted mb-0 mr-4">{`${
+                  phase.toUpperCase() === 'HUMAN'
+                    ? phase.toUpperCase()
+                    : phase.toUpperCase() + ' 6-Month'
+                } Tissue Submitted by CAS/Assay`}</h5>
+                <div className="ml-4">
+                  <ul className="d-flex align-items-center list-unstyle list-inline mb-0">
+                    <li className="d-flex align-items-center legend-item list-inline-item">
+                      <div className="legend-item-color submitted" />
+                      <span className="legend-item-label ml-1">
+                        Samples submitted
+                      </span>
+                    </li>
+                    <li className="d-flex align-items-center legend-item list-inline-item ml-3">
+                      <div className="legend-item-color not-submitted" />
+                      <span className="legend-item-label ml-1">
+                        No sample submitted
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <table
+                key={phase}
+                className={`table table-sm ${phase.toUpperCase()}`}
+              >
                 {renderGridBody(phase)}
                 {renderGridFooter(phase)}
               </table>
@@ -226,13 +247,11 @@ function qcReportByPhaseTabContent({ data, phases, tabHeaderLabel }) {
 qcReportByPhaseTabContent.propTypes = {
   data: PropTypes.object,
   phases: PropTypes.arrayOf(PropTypes.string),
-  tabHeaderLabel: PropTypes.string,
 };
 
 qcReportByPhaseTabContent.defaultProps = {
   data: {},
   phases: [],
-  tabHeaderLabel: '',
 };
 
 export default qcReportByPhaseTabContent;
