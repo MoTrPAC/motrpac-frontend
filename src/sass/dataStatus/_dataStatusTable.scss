@@ -213,7 +213,7 @@
       border: none;
       color: $gray;
       font-size: 0.8rem;
-      height: 190px;
+      height: 150px;
       text-align: left;
       white-space: nowrap;
       vertical-align: top;
@@ -234,7 +234,7 @@
         .footer-label {
           padding: 2px;
           transform-origin: top left;
-          transform: translateX(40px) rotate(45deg);
+          transform: translateX(35px) rotate(45deg);
           float: left;
         }
       }
@@ -271,32 +271,6 @@
     }
   }
 
-  table.PASS1B {
-    tfoot th {
-      .footer-content-container {
-        width: 30px;
-
-        /* anlge positioning for table header items */
-        .footer-label {
-          transform: translateX(30px) rotate(45deg);
-        }
-      }
-    }
-  }
-
-  table.PASS1C {
-    tfoot th {
-      .footer-content-container {
-        width: 50px;
-
-        /* anlge positioning for table header items */
-        .footer-label {
-          transform: translateX(50px) rotate(45deg);
-        }
-      }
-    }
-  }
-
   table.HUMAN {
     tfoot th {
       .footer-content-container {
@@ -304,7 +278,7 @@
 
         /* anlge positioning for table header items */
         .footer-label {
-          transform: translateX(160px) rotate(45deg);
+          transform: translateX(180px) rotate(45deg);
         }
       }
     }
@@ -322,5 +296,9 @@
       background-color: $stanford-cool-grey;
       padding: 0.4rem;
     }
+  }
+
+  .PASS1C-table-wrapper {
+    margin-top: 2.5em;
   }
 }
