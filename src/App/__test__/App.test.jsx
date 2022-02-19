@@ -153,7 +153,7 @@ describe('Authenticated Application routing', () => {
     history.push('/qc-reports');
     // Update required to re-render the application
     mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'DataStatusPage', '/qc-reports', history, true);
+    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'DataStatusPage', '/qc-data-monitor', history, true);
   });
 
   test('loads the methods page at /methods', () => {

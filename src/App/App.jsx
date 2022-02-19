@@ -101,7 +101,7 @@ function App({ history = History }) {
                 component={withTracker(ReleasePageConnected)}
               />
               <PrivateRoute
-                path="/qc-reports"
+                path="/qc-data-monitor"
                 component={withTracker(DataStatusPageConnected)}
               />
               <Route

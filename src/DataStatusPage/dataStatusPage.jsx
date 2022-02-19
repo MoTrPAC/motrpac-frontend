@@ -124,7 +124,7 @@ export function DataStatusPage({
     <AuthContentContainer classes="dataStatusPage" expanded={expanded}>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <div className="page-title">
-          <h3 className="mb-0">Data QC Reports</h3>
+          <h3 className="mb-0">QC Data Monitor</h3>
         </div>
         {renderButtonGroup()}
       </div>

@@ -155,9 +155,9 @@ export function Sidebar({
             </li>
             <li className="nav-item">
               {renderNavLink(
-                'qc-reports',
-                'QC Reports',
-                'qc-reports',
+                'qc-data-monitor',
+                'QC Data Monitor',
+                'qc-data-monitor',
                 'fact_check',
                 userType === 'external',
                 handleQcDataFetch
