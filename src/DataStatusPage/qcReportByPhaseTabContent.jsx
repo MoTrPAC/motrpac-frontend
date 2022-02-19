@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import selectOmicPrefix from './sharelib/qcReportByPhaseOmicPrefix';
 
 /**
  * Renders the tabbed QC report samples by phase page content
  *
  * @param {Object} data QC reports data
- * @param {string} phase QC report phase
+ * @param {string} phases QC report phases
  *
  * @returns {object} JSX representation of QC report samples by phase page content
  */
@@ -59,120 +60,97 @@ function qcReportByPhaseTabContent({ data, phases }) {
     return mergedData;
   }
 
-  // create a list of unique tissue codes from
+  // create a list of unique tissue codes/names from
   // processed concatenated data in a given phase
   function getUnqiueTissues(phase) {
     const mergedData = concatData(phase);
     const uniqueTissues = [];
     mergedData.forEach((item) => {
-      if (uniqueTissues.indexOf(item.tissue) === -1) {
-        uniqueTissues.push(item.tissue);
+      const tissueStr = `${item.tissue} - ${item.t_name}`;
+      if (uniqueTissues.indexOf(tissueStr) === -1) {
+        uniqueTissues.push(tissueStr);
       }
     });
     if (uniqueTissues.length > 1) {
       uniqueTissues.sort(
-        (a, b) => Number(a.substring(1)) - Number(b.substring(1))
+        (a, b) => Number(a.slice(1, 3)) - Number(b.slice(1, 3))
       );
     }
     return uniqueTissues;
   }
 
-  // group concatenated data by tissue in a given phase
-  function groupSamplesByTissue(phase) {
+  // construct unique y-axis CAS labels composed of omic/cas/assay
+  function getUniqueCasByOmicSiteAssay(phase) {
     const mergedData = concatData(phase);
-    const tissueCodes = getUnqiueTissues(phase);
-    const groupedSamplesObj = {};
-    tissueCodes.forEach((tissueCode) => {
-      const filteredData = mergedData.filter(
-        (item) => item.tissue === tissueCode
-      );
-      groupedSamplesObj[tissueCode] = filteredData;
-    });
-    return groupedSamplesObj;
-  }
-
-  // select x-axis label prefix (GET, METAB, PROT)
-  function renderOmicPrefix(assay) {
-    let omicPrefix = 'METAB';
-    const patternGet = /rna-seq|rrbs|atac-seq/;
-    if (assay.toLowerCase().match(patternGet)) {
-      omicPrefix = 'GET';
-    }
-    const patternImmuno = /rat-adipokine|rat-mag27plex|rat-metabolic|rat-myokine|rat-pituitary/;
-    if (assay.toLowerCase().match(patternImmuno)) {
-      omicPrefix = 'IMMUNO';
-    }
-    if (assay.toLowerCase().indexOf('prot') > -1) {
-      omicPrefix = 'PROT';
-    }
-    return omicPrefix;
-  }
-
-  // construct unique x-axis labels composed of omic, cas, assay
-  function getLabelsByOmicSiteAssay(phase) {
-    const samplesByTissue = groupSamplesByTissue(phase);
     const labels = [];
-    Object.keys(samplesByTissue).forEach((key) => {
-      samplesByTissue[key].forEach((item) => {
-        const labelStr = `${renderOmicPrefix(
-          item.assay
-        )}-${item.cas.toUpperCase()}-${item.assay.toUpperCase()}`;
-        if (labels.indexOf(labelStr) === -1) {
-          labels.push(labelStr);
-        }
-      });
+    mergedData.forEach((item) => {
+      const labelStr = `${selectOmicPrefix(
+        item.assay
+      )}-${item.cas.toUpperCase()}-${item.assay.toUpperCase()}`;
+      if (labels.indexOf(labelStr) === -1) {
+        labels.push(labelStr);
+      }
     });
     return labels.sort();
   }
 
-  // get sample count for each x-axis label vs tissue
-  function getSampleCount(tisseSamples, label) {
+  /// group concatenated data by CAS in a given phase
+  function groupSamplesByCas(phase) {
+    const mergedData = concatData(phase);
+    const CasLabels = getUniqueCasByOmicSiteAssay(phase);
+    const groupedSamplesObj = {};
+    CasLabels.forEach((label) => {
+      const filteredData = mergedData.filter(
+        (item) =>
+          `${selectOmicPrefix(
+            item.assay
+          )}-${item.cas.toUpperCase()}-${item.assay.toUpperCase()}` === label
+      );
+      groupedSamplesObj[label] = filteredData;
+    });
+    return groupedSamplesObj;
+  }
+
+  /// get sample count for each x-axis tissue vs. y-axis CAS
+  function getSampleCount(siteSamples, tissue) {
     let sampleCount = 0;
-    tisseSamples.forEach((item) => {
-      const labelStr = `${renderOmicPrefix(
-        item.assay
-      )}-${item.cas.toUpperCase()}-${item.assay.toUpperCase()}`;
-      if (labelStr === label) {
+    siteSamples.forEach((item) => {
+      const tissueStr = `${item.tissue} - ${item.t_name}`;
+      if (tissueStr === tissue) {
         sampleCount = item.sample_count;
       }
     });
     return sampleCount;
   }
 
-  // render table body
+  /// render table body
   function renderGridBody(phase) {
-    const samplesByTissue = groupSamplesByTissue(phase);
-    const labels = getLabelsByOmicSiteAssay(phase);
+    const samplesByCas = groupSamplesByCas(phase);
+    const tissues = getUnqiueTissues(phase);
     return (
       <tbody>
-        {Object.keys(samplesByTissue).map((key) => {
+        {Object.keys(samplesByCas).map((key) => {
           return (
             <tr key={key}>
-              {labels.map((label) => {
+              {tissues.map((tissue) => {
                 return (
                   <td
-                    key={`${key}-${label}`}
+                    key={`${key}-${tissue}`}
                     className="sample-submission-status border border-dark"
                   >
-                    {getSampleCount(samplesByTissue[key], label) < 1 ? (
+                    {getSampleCount(samplesByCas[key], tissue) < 1 ? (
                       <div className="no-sample-submission w-100 h-100">
-                        <span>
-                          {getSampleCount(samplesByTissue[key], label)}
-                        </span>
+                        <span>{getSampleCount(samplesByCas[key], tissue)}</span>
                       </div>
                     ) : (
                       <div className="sample-submission-count w-100 h-100">
-                        <span>
-                          {getSampleCount(samplesByTissue[key], label)}
-                        </span>
+                        <span>{getSampleCount(samplesByCas[key], tissue)}</span>
                       </div>
                     )}
                   </td>
                 );
               })}
-              <td className="submitted-tissues">
-                {`${key} - ${samplesByTissue[key][0].t_name}`}
-              </td>
+              <td className="submitted-tissues">{key}</td>
             </tr>
           );
         })}
@@ -180,21 +158,21 @@ function qcReportByPhaseTabContent({ data, phases }) {
     );
   }
 
-  // render table footer
+  /// render table footer
   function renderGridFooter(phase) {
     return (
       <tfoot>
         <tr>
-          {getLabelsByOmicSiteAssay(phase).map((label) => {
+          {getUnqiueTissues(phase).map((tissue) => {
             return (
-              <th key={label}>
+              <th key={tissue}>
                 <div className="footer-content-container">
-                  <div className="footer-label">{label}</div>
+                  <div className="footer-label">{tissue}</div>
                 </div>
               </th>
             );
           })}
-          <th>Tissue</th>
+          <th>CAS</th>
         </tr>
       </tfoot>
     );
@@ -205,7 +183,7 @@ function qcReportByPhaseTabContent({ data, phases }) {
       <div className="table-responsive">
         {phases.map((phase) => {
           return (
-            <div>
+            <div key={phase} className={`${phase.toUpperCase()}-table-wrapper`}>
               <div className="d-flex align-items-center mb-2">
                 <h5 className="text-muted mb-0 mr-4">{`${
                   phase.toUpperCase() === 'HUMAN'
@@ -229,10 +207,7 @@ function qcReportByPhaseTabContent({ data, phases }) {
                   </ul>
                 </div>
               </div>
-              <table
-                key={phase}
-                className={`table table-sm ${phase.toUpperCase()}`}
-              >
+              <table className={`table table-sm ${phase.toUpperCase()}`}>
                 {renderGridBody(phase)}
                 {renderGridFooter(phase)}
               </table>
