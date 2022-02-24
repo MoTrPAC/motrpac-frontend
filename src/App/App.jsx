@@ -18,6 +18,7 @@ import ContactConnected from '../ContactPage/contact';
 import ErrorPageConnected from '../ErrorPage/error';
 import SearchPageConnected from '../Search/searchPage';
 import ReleasePageConnected from '../ReleasePage/releasePage';
+import DataStatusPageConnected from '../DataStatusPage/dataStatusPage';
 import DataSummaryPage from '../DataSummaryPage/dataSummaryPage';
 import DataAccessPageConnected from '../DataAccess/dataAccessPage';
 import RelatedStudyConnected from '../RelatedStudy/relatedStudy';
@@ -98,6 +99,10 @@ function App({ history = History }) {
               <PrivateRoute
                 path="/releases"
                 component={withTracker(ReleasePageConnected)}
+              />
+              <PrivateRoute
+                path="/qc-data-monitor"
+                component={withTracker(DataStatusPageConnected)}
               />
               <Route
                 path="/data-access"
