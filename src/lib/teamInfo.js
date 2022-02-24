@@ -51,7 +51,7 @@ const teamInfo = {
     },
     {
       name: 'Malene Lindholm, Ph.D.',
-      title: 'Postdoctoral Scholar',
+      title: 'Instructor',
       image: MaleneImg,
     },
     {
