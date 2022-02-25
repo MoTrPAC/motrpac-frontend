@@ -24,6 +24,7 @@ import MihirImg from '../assets/teamMemberPhotos/Mihir.jpg';
 import SamiyaImg from '../assets/teamMemberPhotos/Samiya.jpg';
 import AdityaImg from '../assets/teamMemberPhotos/Aditya.jpg';
 import LaurensImg from '../assets/teamMemberPhotos/Laurens.jpg';
+import ChelseaImg from '../assets/teamMemberPhotos/Chelsea.jpg';
 
 const teamInfo = {
   PIs: [
@@ -83,6 +84,11 @@ const teamInfo = {
       name: 'Samiya Shimly',
       title: 'Postdoctoral Scholar',
       image: SamiyaImg,
+    },
+    {
+      name: 'Chelsea Harris',
+      title: 'Visiting Research Scholar',
+      image: ChelseaImg,
     },
     {
       name: 'Laurens van de Wiel, Ph.D.',
