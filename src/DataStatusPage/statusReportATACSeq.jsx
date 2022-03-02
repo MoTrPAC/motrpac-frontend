@@ -59,6 +59,7 @@ function DataTable({ columns, data }) {
         pageIndex: 0,
         pageSize: 20,
         pageCount: 3,
+        sortBy: [{ id: 'cas', desc: false }],
       },
     },
     useFilters,
