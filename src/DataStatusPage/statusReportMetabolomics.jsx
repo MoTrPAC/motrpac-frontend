@@ -174,6 +174,7 @@ function DataTable({ columns, data }) {
         pageIndex: 0,
         pageSize: 20,
         pageCount: 15,
+        sortBy: [{ id: 'qc_date', desc: true }],
       },
     },
     useFilters,
