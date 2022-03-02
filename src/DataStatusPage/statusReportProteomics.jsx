@@ -242,7 +242,14 @@ function DataTable({ columns, data }) {
                   prepareRow(row);
                   return (
                     <tr {...row.getRowProps()}>
-                      {row.cells.map((cell) => <td {...cell.getCellProps()} className={cell.value}><span>{cell.render('Cell')}</span></td>)}
+                      {row.cells.map((cell) => (
+                        <td
+                          {...cell.getCellProps()}
+                          className={`${cell.column.id} ${cell.column.id}-${cell.value} ${cell.value}`}
+                        >
+                          <span>{cell.render('Cell')}</span>
+                        </td>
+                      ))}
                     </tr>
                   );
                 })}
