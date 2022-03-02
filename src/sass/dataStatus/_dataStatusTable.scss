@@ -106,19 +106,23 @@
       vertical-align: middle;
     }
 
-    .PASS1A-06 {
+    .phase {
+      background-color: lighten($accent-green-shade-light, 22%);
+    }
+
+    .phase.PASS1A-06 {
       background-color: lighten($primary-blue-shade-light, 22%);
     }
 
-    .PASS1B-06 {
+    .phase.PASS1B-06 {
       background-color: lighten($accent-yellow-shade-light, 22%);
     }
 
-    .PASS1C-06 {
+    .phase.PASS1C-06 {
       background-color: lighten($accent-violet-shade-light, 45%);
     }
 
-    .HUMAN {
+    .phase.HUMAN {
       background-color: lighten($accent-red-shade-light, 25%);
     }
 
@@ -156,6 +160,30 @@
       span {
         background-color: $gray-semi-transparent;
       }
+    }
+
+    .issues-1, .raw_manifest-1 {
+      background-color: lighten($accent-red-shade-light, 25%);
+    }
+
+    .issues-2, .raw_manifest-2 {
+      background-color: lighten($accent-red-shade-light, 20%);
+    }
+
+    .issues-3, .raw_manifest-3 {
+      background-color: lighten($accent-red-shade-light, 15%);
+    }
+
+    .issues-4, .raw_manifest-4 {
+      background-color: lighten($accent-red-shade-light, 10%);
+    }
+
+    .issues-5, .raw_manifest-5 {
+      background-color: lighten($accent-red-shade-light, 5%);
+    }
+
+    .issues-6, .raw_manifest-6, .raw_manifest-7 {
+      background-color: lighten($accent-red-shade-light, 0%);
     }
   }
 }
