@@ -20,6 +20,11 @@ import JonImg from '../assets/teamMemberPhotos/Jon.jpg';
 import LizImg from '../assets/teamMemberPhotos/Liz.jpg';
 import YoungImg from '../assets/teamMemberPhotos/Young.png';
 import ChrisImg from '../assets/teamMemberPhotos/Chris.png';
+import MihirImg from '../assets/teamMemberPhotos/Mihir.jpg';
+import SamiyaImg from '../assets/teamMemberPhotos/Samiya.jpg';
+import AdityaImg from '../assets/teamMemberPhotos/Aditya.jpg';
+import LaurensImg from '../assets/teamMemberPhotos/Laurens.jpg';
+import ChelseaImg from '../assets/teamMemberPhotos/Chelsea.jpg';
 
 const teamInfo = {
   PIs: [
@@ -37,7 +42,7 @@ const teamInfo = {
   Staff: [
     {
       name: 'Jeff Christle, Ph.D.',
-      title: 'Clinical exercise physiologist',
+      title: 'Clinical Exercise Physiologist',
       image: JeffImg,
     },
     {
@@ -47,13 +52,53 @@ const teamInfo = {
     },
     {
       name: 'Malene Lindholm, Ph.D.',
-      title: 'Postdoctoral Scholar',
+      title: 'Instructor',
       image: MaleneImg,
     },
     {
-      name: 'Karen Dalton',
-      title: 'Software Developer',
-      image: KarenImg,
+      name: 'David Jimenez-Morales, Ph.D.',
+      title: 'Senior Research Engineer',
+      image: DavidJMImg,
+    },
+    {
+      name: 'Archana Raja, M.S.',
+      title: 'Computational Biologist',
+      image: ArchanaImg,
+    },
+    {
+      name: 'Shruti Marwaha, Ph.D.',
+      title: 'Research Engineer',
+      image: ShrutiImg,
+    },
+    {
+      name: 'David Amar, Ph.D.',
+      title: 'Biostatistician',
+      image: DavidAImg,
+    },
+    {
+      name: 'Mihir Samdarshi',
+      title: 'Bioinformatics/Software Engineer',
+      image: MihirImg,
+    },
+    {
+      name: 'Samiya Shimly',
+      title: 'Postdoctoral Scholar',
+      image: SamiyaImg,
+    },
+    {
+      name: 'Chelsea Harris',
+      title: 'Visiting Research Scholar',
+      image: ChelseaImg,
+    },
+    {
+      name: 'Laurens van de Wiel, Ph.D.',
+      title: 'Postdoctoral Scholar',
+      image: LaurensImg,
+    },
+    {
+      name: 'Aditya Singh, Ph.D.',
+      title: 'Postdoctoral Scholar',
+      image: AdityaImg,
     },
     {
       name: 'Jimmy Zhen',
@@ -66,29 +111,9 @@ const teamInfo = {
       image: YoungImg,
     },
     {
-      name: 'Shruti Marwaha, Ph.D.',
-      title: 'Research Engineer',
-      image: ShrutiImg,
-    },
-    {
-      name: 'David Jimenez-Morales, Ph.D.',
-      title: 'Computational Biologist',
-      image: DavidJMImg,
-    },
-    {
-      name: 'David Amar, Ph.D.',
-      title: 'Biostatistician',
-      image: DavidAImg,
-    },
-    {
-      name: 'Archana Raja, M.S.',
-      title: 'Computational Biologist',
-      image: ArchanaImg,
-    },
-    {
-      name: 'Elizabeth Chin',
-      title: 'Graduate Student, Biostatistics',
-      image: LizImg,
+      name: 'Chris Teng',
+      title: 'Software Developer',
+      image: ChrisImg,
     },
     {
       name: 'Terra Coakley',
@@ -100,18 +125,8 @@ const teamInfo = {
       title: 'Administrative Associate',
       image: BrookeImg,
     },
-    {
-      name: 'Chris Teng',
-      title: 'Software Developer',
-      image: ChrisImg,
-    },
   ],
   CoIs: [
-    {
-      name: 'Manuel A. Rivas, Ph.D.',
-      title: 'Co-Investigator',
-      image: MannyImg,
-    },
     {
       name: 'Rob Tibshirani, Ph.D.',
       title: 'Co-Investigator',
@@ -123,17 +138,32 @@ const teamInfo = {
       image: TrevorImg,
     },
     {
-      name: 'Kelly E. Ormond, M.S., CGC',
-      title: 'Co-Investigator',
-      image: KellyImg,
-    },
-    {
       name: 'Jonathan N. Myers, Ph.D.',
       title: 'Advisor',
       image: JonImg,
     },
   ],
   Alumni: [
+    {
+      name: 'Manuel A. Rivas, Ph.D.',
+      title: 'Alumni',
+      image: MannyImg,
+    },
+    {
+      name: 'Kelly E. Ormond, M.S., CGC',
+      title: 'Alumni',
+      image: KellyImg,
+    },
+    {
+      name: 'Elizabeth Chin',
+      title: 'Alumni',
+      image: LizImg,
+    },
+    {
+      name: 'Karen Dalton',
+      title: 'Alumni',
+      image: KarenImg,
+    },
     {
       name: 'Samir Akre',
       title: 'Alumni',

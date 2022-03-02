@@ -52,7 +52,7 @@ export function TeamPage({ isAuthenticated, expanded }) {
       <div className="row d-flex justify-content-center">{PIs}</div>
       <div className="row">{staff}</div>
       <div className="row">{CoIs}</div>
-      <div className="row pt-3 pb-2 border-top">{Alumni}</div>
+      <div className="row pt-5 pb-0 border-top">{Alumni}</div>
     </>
   );
 
