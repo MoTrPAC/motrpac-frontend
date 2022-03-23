@@ -4,6 +4,7 @@ import axios from 'axios';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import IconSet from '../lib/iconSet';
 import ToolTip from '../lib/ui/tooltip';
+import EmailLink from '../lib/ui/emailLink';
 import ExternalLink from '../lib/ui/externalLink';
 import ReleaseDescFileExtract from './releaseDescFileExtract';
 import ReleaseDescReadme from './releaseDescReadme';
@@ -12,7 +13,7 @@ import ReleaseDataTableInternalByPhase from './ReleaseDataTables/releaseDataTabl
 import ReleaseDataTableInternal from './ReleaseDataTables/releaseDataTableInternal';
 import ReleaseDataTableExternal from './ReleaseDataTables/releaseDataTableExternal';
 
-const releaseData = require('./releases');
+const releaseData = require('./releases.json');
 
 const emojiMap = {
   rocket: '🚀',
@@ -42,7 +43,9 @@ function ReleaseEntry({ profile, currentView }) {
   });
   const [visibleReleases, setVisibleReleases] = useState(2);
 
-  const releases = releaseData.filter((release) => release.target === currentView);
+  const releases = releaseData.filter(
+    (release) => release.target === currentView
+  );
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
   // Event handler for "Show prior releases" button
@@ -190,7 +193,10 @@ function ReleaseEntry({ profile, currentView }) {
 
   // Render data type row
   function renderDataTypeRow(bucket, item, version) {
-    const objectPath = item.type === 'all' ? `gs://${bucket}/${item.object_zipfile} .` : `gs://${bucket}${item.object_path}/* .`;
+    const objectPath =
+      item.type === 'all'
+        ? `gs://${bucket}/${item.object_zipfile} .`
+        : `gs://${bucket}${item.object_path}/* .`;
     return (
       <tr key={`${item.type}-${version}`}>
         <td>
@@ -199,44 +205,68 @@ function ReleaseEntry({ profile, currentView }) {
             <span>{item.title}</span>
           </div>
         </td>
-        {currentView === 'internal'
-          ? (
-            <td className="release-data-download-link">
-              <div className="copy-to-clipboard-wrapper">
-                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-                <span
-                  role="button"
-                  tabIndex="-1"
-                  className="copy-to-clipboard-button"
-                  onClick={handleCopyClick.bind(this, objectPath, item.tooltip_id)}
-                >
-                  <i className="material-icons release-data-download-icon">file_copy</i>
-                </span>
-                <ToolTip
-                  content={renderTooltipContent(objectPath, item.tooltip_id)}
-                />
-              </div>
-            </td>
-          )
-          : null}
-        {item.object_zipfile && item.object_zipfile.length
-          ? (
-            <td className="release-data-download-link">
+        {currentView === 'internal' && version === '2.0' ? (
+          <td className="release-data-download-link">
+            <div className="copy-to-clipboard-wrapper">
+              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+              <span
+                role="button"
+                tabIndex="-1"
+                className="copy-to-clipboard-button"
+                onClick={handleCopyClick.bind(
+                  this,
+                  objectPath,
+                  item.tooltip_id
+                )}
+              >
+                <i className="material-icons release-data-download-icon">
+                  file_copy
+                </i>
+              </span>
+              <ToolTip
+                content={renderTooltipContent(objectPath, item.tooltip_id)}
+              />
+            </div>
+          </td>
+        ) : null}
+        {item.object_zipfile && item.object_zipfile.length ? (
+          <td className="release-data-download-link">
+            {(currentView === 'internal' && version === '2.0') ||
+            currentView === 'external' ? (
               <button
                 type="button"
                 className="btn-data-download"
                 data-toggle="modal"
                 data-target=".data-download-modal"
-                onClick={fetchFile.bind(this, bucket, item.object_zipfile, version)}
+                onClick={fetchFile.bind(
+                  this,
+                  bucket,
+                  item.object_zipfile,
+                  version
+                )}
               >
-                <i className="material-icons release-data-download-icon">save_alt</i>
+                <i className="material-icons release-data-download-icon">
+                  save_alt
+                </i>
               </button>
-              <span className="file-size">{`(${item.object_zipfile_size})`}</span>
-            </td>
-          )
-          : (
-            <td><span>Not available</span></td>
-          )}
+            ) : (
+              <button
+                type="button"
+                className="btn-data-download disabled"
+                disabled
+              >
+                <i className="material-icons release-data-download-icon">
+                  save_alt
+                </i>
+              </button>
+            )}
+            <span className="file-size">{`(${item.object_zipfile_size})`}</span>
+          </td>
+        ) : (
+          <td>
+            <span>Not available</span>
+          </td>
+        )}
       </tr>
     );
   }
@@ -291,96 +321,97 @@ function ReleaseEntry({ profile, currentView }) {
                 <div className="release-content mb-3">
                   <div className="card mb-3">
                     <div className="card-body">
-                      <p className="release-description">{release.description}</p>
-                      <ReleaseDescFileExtract currentView={currentView} />
+                      {currentView === 'internal' &&
+                      release.version.match(/1.0|1.1|1.2|1.2.1/g) ? (
+                        <p className="font-weight-bold">
+                          Note: The data in this release is no longer available
+                          for download from the Data Hub portal. Please contact{' '}
+                          <EmailLink
+                            mailto="motrpac-data-requests@lists.stanford.edu"
+                            label="MoTrPAC Data Requests"
+                          />{' '}
+                          if you need access to the data.
+                        </p>
+                      ) : null}
+                      <p className="release-description">
+                        {release.description}
+                      </p>
+                      <ReleaseDescFileExtract
+                        currentView={currentView}
+                        releaseVersion={release.version}
+                      />
                       <ReleaseDescReadme
+                        currentView={currentView}
                         releaseVersion={release.version}
                         fileLocation={release.readme_file_location}
                       />
-                      {currentView === 'internal' && release.version === '2.0' ? (
+                      {currentView === 'internal' &&
+                      release.version === '2.0' ? (
                         <ReleaseDataTableInternalByPhase
                           release={release}
+                          // eslint-disable-next-line react/jsx-no-bind
                           renderDataTypeRow={renderDataTypeRow}
                         />
                       ) : null}
-                      {currentView === 'internal' && release.version.match(/1.0|1.1|1.2|1.2.1/g) ? (
+                      {currentView === 'internal' &&
+                      release.version.match(/1.0|1.1|1.2|1.2.1/g) ? (
                         <ReleaseDataTableInternal
                           release={release}
+                          // eslint-disable-next-line react/jsx-no-bind
                           renderDataTypeRow={renderDataTypeRow}
                         />
                       ) : null}
-                      {currentView === 'external' && release.version === '1.0' ? (
+                      {currentView === 'external' &&
+                      release.version === '1.0' ? (
                         <ReleaseDataTableExternal
                           release={release}
+                          // eslint-disable-next-line react/jsx-no-bind
                           renderDataTypeRow={renderDataTypeRow}
                         />
                       ) : null}
                       {renderModal()}
                     </div>
                   </div>
-                  {currentView === 'internal' && release.raw_files
-                    ? (
-                      <>
-                        <h6 className="additional-release-download-header">Additional Downloads</h6>
-                        <div className="raw-files-download-section">
-                          <p className="d-block mb-2 d-flex align-items-center justify-content-start raw-files-download-option">
-                            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-                            <i
-                              role="button"
-                              tabIndex="-1"
-                              className="material-icons download-checkbox"
-                              data-toggle="collapse"
-                              data-target={`#raw-files-release-${idx}`}
-                              aria-expanded="false"
-                              aria-controls={`raw-files-release-${idx}`}
-                              id={`raw-files-release-${idx}-checkbox`}
-                              onClick={handleCheckboxEvent.bind(this, `raw-files-release-${idx}-checkbox`)}
-                            >
-                              check_box_outline_blank
-                            </i>
-                            <span>
-                              Raw
-                              {release.version.match(/1.0|1.1|1.2|1.2.1/g) ? null : ' and intermediate'}
-                              {' '}
-                              files downloads
-                            </span>
-                          </p>
-                          <div className="collapse" id={`raw-files-release-${idx}`}>
-                            <ReleaseRawFilesDownload
-                              releaseVersion={release.version}
-                              files={release.raw_files}
-                            />
-                          </div>
+                  {currentView === 'internal' &&
+                  release.raw_files &&
+                  release.version === '2.0' ? (
+                    <>
+                      <h6 className="additional-release-download-header">
+                        Additional Downloads
+                      </h6>
+                      <div className="raw-files-download-section">
+                        <p className="d-block mb-2 d-flex align-items-center justify-content-start raw-files-download-option">
+                          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+                          <i
+                            role="button"
+                            tabIndex="-1"
+                            className="material-icons download-checkbox"
+                            data-toggle="collapse"
+                            data-target={`#raw-files-release-${idx}`}
+                            aria-expanded="false"
+                            aria-controls={`raw-files-release-${idx}`}
+                            id={`raw-files-release-${idx}-checkbox`}
+                            onClick={handleCheckboxEvent.bind(
+                              this,
+                              `raw-files-release-${idx}-checkbox`
+                            )}
+                          >
+                            check_box_outline_blank
+                          </i>
+                          <span>Raw and intermediate files downloads</span>
+                        </p>
+                        <div
+                          className="collapse"
+                          id={`raw-files-release-${idx}`}
+                        >
+                          <ReleaseRawFilesDownload
+                            releaseVersion={release.version}
+                            files={release.raw_files}
+                          />
                         </div>
-                        {release.version.match(/1.0|1.1|1.2|1.2.1/g) && (
-                          <div className="intermediate-files-download-section">
-                            <p className="d-block mb-2 d-flex align-items-center justify-content-start intermediate-files-download-option">
-                              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-                              <i
-                                role="button"
-                                tabIndex="-1"
-                                className="material-icons download-checkbox"
-                                data-toggle="collapse"
-                                data-target={`#intermediate-files-release-${idx}`}
-                                aria-expanded="false"
-                                aria-controls={`intermediate-files-release-${idx}`}
-                                id={`intermediate-files-release-${idx}-checkbox`}
-                                onClick={handleCheckboxEvent.bind(this, `intermediate-files-release-${idx}-checkbox`)}
-                              >
-                                check_box_outline_blank
-                              </i>
-                              <span>Intermediate files downloads</span>
-                            </p>
-                            <div className="collapse" id={`intermediate-files-release-${idx}`}>
-                              {renderIntermediateFilesDownloadSectionContent(
-                                release.intermediate_files,
-                              )}
-                            </div>
-                          </div>
-                        )}
-                      </>
-                    )
-                    : null}
+                      </div>
+                    </>
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -392,32 +423,34 @@ function ReleaseEntry({ profile, currentView }) {
     return (
       <>
         {entries}
-        {releases.length > 1
-          ? (
-            <div className="view-more-button-container pt-2 pt-md-0 pb-3 pb-md-0 clearfix">
-              <div className="d-none d-md-block col-12 col-md-3 col-lg-2 px-md-3 pb-1 pb-md-4 pt-md-4 float-left">
-                <span>&nbsp;</span>
-              </div>
-              <div className="view-more-button-wrapper mb-4 col-12 col-md-9 col-lg-10 float-left">
-                <button
-                  type="button"
-                  className={visibleReleases === 2 ? 'btn btn-secondary btn-sm' : 'btn btn-danger btn-sm'}
-                  onClick={toggleViewReleaseLength}
-                >
-                  {visibleReleases === 2 ? 'Show prior releases' : 'Back to recent releases'}
-                </button>
-              </div>
+        {releases.length > 1 ? (
+          <div className="view-more-button-container pt-2 pt-md-0 pb-3 pb-md-0 clearfix">
+            <div className="d-none d-md-block col-12 col-md-3 col-lg-2 px-md-3 pb-1 pb-md-4 pt-md-4 float-left">
+              <span>&nbsp;</span>
             </div>
-          )
-          : null}
+            <div className="view-more-button-wrapper mb-4 col-12 col-md-9 col-lg-10 float-left">
+              <button
+                type="button"
+                className={
+                  visibleReleases === 2
+                    ? 'btn btn-secondary btn-sm'
+                    : 'btn btn-danger btn-sm'
+                }
+                onClick={toggleViewReleaseLength}
+              >
+                {visibleReleases === 2
+                  ? 'Show prior releases'
+                  : 'Back to recent releases'}
+              </button>
+            </div>
+          </div>
+        ) : null}
       </>
     );
   }
 
   return (
-    <div className="data-release-content-container">
-      {renderReleaseEntry()}
-    </div>
+    <div className="data-release-content-container">{renderReleaseEntry()}</div>
   );
 }
 
