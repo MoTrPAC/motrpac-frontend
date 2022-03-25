@@ -325,12 +325,15 @@ function ReleaseEntry({ profile, currentView }) {
                       release.version.match(/1.0|1.1|1.2|1.2.1/g) ? (
                         <p className="font-weight-bold">
                           Note: The data in this release is no longer available
-                          for download from the Data Hub portal. Please contact{' '}
+                          for download from the Data Hub portal, but available
+                          as part of the latest release (v2.0) which includes
+                          all the raw data and most updated results. Please
+                          contact{' '}
                           <EmailLink
                             mailto="motrpac-data-requests@lists.stanford.edu"
                             label="MoTrPAC Data Requests"
                           />{' '}
-                          if you need access to the data.
+                          if you need access to the data in this release.
                         </p>
                       ) : null}
                       <p className="release-description">
