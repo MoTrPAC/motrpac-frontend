@@ -328,7 +328,7 @@
     "version": "1.2",
     "date": "October 15, 2019",
     "target": "internal",
-    "description": "This is an internal patch release containing the complete set of phenotype data released to the BIC by DMAQC. The data files available in this release include metadata, QC and quantitative results, phenotypic data, raw and intermediate files of genomics, epigenomics, transcriptomics, metabolomics and proteomics.",
+    "description": "This is an internal patch release containing the complete set of PASS1A 6M phenotype data released to the BIC by DMAQC. The data files available in this release include metadata, QC and quantitative results, phenotypic data, raw and intermediate files of genomics, epigenomics, transcriptomics, metabolomics and proteomics.",
     "readme_file_location": "https://docs.google.com/document/d/1ExXyt_HiscTOgF9eDq-KrdcE6V2jAqTEKDfQdfHJPlU",
     "result_files": {
       "bucket_name": "motrpac-internal-release1-2-results",
@@ -425,7 +425,7 @@
     "version": "1.1",
     "date": "September 13, 2019",
     "target": "internal",
-    "description": "This is an internal patch release containing updated metabolomics and proteomics data from 6-month old rats. The data files available in this release include metadata, QC and quantitative results, phenotypic data, raw and intermediate files of genomics, epigenomics, transcriptomics, metabolomics and proteomics.",
+    "description": "This is an internal patch release containing updated PASS1A metabolomics and proteomics data from 6-month old rats. The data files available in this release include metadata, QC and quantitative results, phenotypic data, raw and intermediate files of genomics, epigenomics, transcriptomics, metabolomics and proteomics.",
     "readme_file_location": "https://docs.google.com/document/d/1t0mZvhMwd2zYxGN84qg7H_8ORQTFoLTqIwYIjWOOdBY",
     "result_files": {
       "bucket_name": "motrpac-internal-release1-1-results",
@@ -522,7 +522,7 @@
     "version": "1.0",
     "date": "August 30, 2019",
     "target": "internal",
-    "description": "This early internal release consists of acute exercise data from 6-month old rats. The data files available in this release include metadata, QC and quantitative results, phenotypic data, raw and intermediate files of genomics, epigenomics, transcriptomics, metabolomics and proteomics.",
+    "description": "This early internal release consists of PASS1A acute exercise data from 6-month old rats. The data files available in this release include metadata, QC and quantitative results, phenotypic data, raw and intermediate files of genomics, epigenomics, transcriptomics, metabolomics and proteomics.",
     "readme_file_location": "https://docs.google.com/document/d/1l-RtUNQr-FtC0aYe6rUXgJb_i5ZeWQiLp9nEjCl0QOk/",
     "result_files": {
       "bucket_name": "motrpac-internal-release1-results",
