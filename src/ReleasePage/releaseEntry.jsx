@@ -426,7 +426,7 @@ function ReleaseEntry({ profile, currentView }) {
     return (
       <>
         {entries}
-        {releases.length > 0 ? (
+        {releases.length > 0 && currentView === 'internal' ? (
           <div className="view-more-button-container pt-2 pt-md-0 pb-3 pb-md-0 clearfix">
             <div className="d-none d-md-block col-12 col-md-3 col-lg-2 px-md-3 pb-1 pb-md-4 pt-md-4 float-left">
               <span>&nbsp;</span>
