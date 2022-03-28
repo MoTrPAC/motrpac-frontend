@@ -244,6 +244,7 @@ function ReleaseEntry({ profile, currentView }) {
                   item.object_zipfile,
                   version
                 )}
+                disabled
               >
                 <i className="material-icons release-data-download-icon">
                   save_alt
