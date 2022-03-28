@@ -68,7 +68,7 @@ export function ReleasePage({ profile, expanded }) {
       expanded={expanded}
     >
       <div className="alert alert-danger">
-        User registration is temporarily unavailable. We are working to restore
+        Data download is temporarily unavailable. We are working to restore
         it as soon as we can. In the meantime, please contact the{' '}
         <a href="mailto:motrpac-helpdesk@lists.stanford.edu">
           MoTrPAC Helpdesk
