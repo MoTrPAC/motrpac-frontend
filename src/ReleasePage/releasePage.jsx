@@ -67,6 +67,14 @@ export function ReleasePage({ profile, expanded }) {
       classes="dataReleasePage internal"
       expanded={expanded}
     >
+      <div className="alert alert-danger">
+        Data download is temporarily unavailable. We are working to restore
+        it as soon as we can. In the meantime, please contact the{' '}
+        <a href="mailto:motrpac-helpdesk@lists.stanford.edu">
+          MoTrPAC Helpdesk
+        </a>{' '}
+        for questions.
+      </div>
       <p
         className="alert alert-info alert-dismissible fade show warning-note d-flex align-items-center"
         role="alert"
