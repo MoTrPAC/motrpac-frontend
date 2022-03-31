@@ -191,7 +191,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
     };
 
     // post request configs
-    const serviceUrl = 'https://service-apis.motrpac-data.org/new_user';
+    const serviceUrl = `${process.env.REACT_APP_API_SERVICE_ADDRESS}${process.env.REACT_APP_USER_REGISTRATION_ENDPOINT}?key=${process.env.REACT_APP_API_SERVICE_KEY}`;
     const timeOutConfig = { timeout: 5000 };
 
     return axios.post(serviceUrl, userObj, timeOutConfig).then((response) => {
@@ -492,15 +492,6 @@ export function DataAccessPage({ isAuthenticated, profile }) {
               <hr />
               {/* Registration form section */}
               <h5 className="card-title pt-1 pb-2">Data Access Registration</h5>
-              <div className="alert alert-danger">
-                User registration is temporarily unavailable. We are working to
-                restore it as soon as we can. In the meantime, please contact
-                the{' '}
-                <a href="mailto:motrpac-helpdesk@lists.stanford.edu">
-                  MoTrPAC Helpdesk
-                </a>{' '}
-                for questions.
-              </div>
               <div className="data-access-content">
                 <div className="registration-form-container">
                   <div className="personal-info-content">
@@ -527,7 +518,6 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           value={formValues.firstName}
                           pattern="^[A-Za-z\,\.\'\- ]{2,30}$"
                           onBlur={validateOnBlur}
-                          disabled
                         />
                         <div className="invalid-feedback">
                           A valid first name is required
@@ -545,7 +535,6 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           value={formValues.lastName}
                           pattern="^[A-Za-z\,\.\'\- ]{2,30}$"
                           onBlur={validateOnBlur}
-                          disabled
                         />
                         <div className="invalid-feedback">
                           A valid last name is required
@@ -564,7 +553,6 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.emailAddress}
                           onBlur={validateEmailOnBlur}
-                          disabled
                         />
                         <div className="invalid-feedback">
                           A valid email address is required
@@ -596,7 +584,6 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           value={formValues.institution}
                           pattern="^[A-Za-z\,\.\'\- ]{2,80}$"
                           onBlur={validateOnBlur}
-                          disabled
                         />
                         <div className="invalid-feedback">
                           A valid institution name is required
@@ -612,7 +599,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.PIName}
                           pattern="^[A-Za-z\,\.\'\- ]{2,80}$"
-                          disabled
+                          disabled={formValues.isPrincipalInvestigator}
                         />
                       </div>
                     </div>
@@ -625,7 +612,6 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                             id="isPrincipalInvestigator"
                             onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
                             checked={formValues.isPrincipalInvestigator}
-                            disabled
                           />
                           <label className="form-check-label" htmlFor="isPrincipalInvestigator">
                             I am a principal investigator
@@ -640,7 +626,6 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                           row="3"
                           onChange={e => handleFormChange(e.currentTarget.value, e)}
                           value={formValues.dataUseIntent}
-                          disabled
                         />
                       </div>
                     </div>
@@ -665,7 +650,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                       type="button"
                       className="btn btn-primary registration-submit ml-3"
                       onClick={(e) => { e.preventDefault(); handleSubmit(); }}
-                      disabled
+                      disabled={!formValidated || requestPending}
                     >
                       {requestPending
                         ? (

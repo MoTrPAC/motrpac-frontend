@@ -118,7 +118,10 @@ function ReleaseEntry({ profile, currentView }) {
 
   // Fetch file url from Google Storage API
   function fetchFile(bucket, filename, version) {
-    return axios.get(`https://data-link-access.motrpac-data.org/${bucket}/${filename}`)
+    return axios
+      .get(
+        `${process.env.REACT_APP_API_SERVICE_ADDRESS}${process.env.REACT_APP_SIGNED_URL_ENDPOINT}?bucket=${bucket}&object=${filename}&key=${process.env.REACT_APP_API_SERVICE_KEY}`
+      )
       .then((response) => {
         setFileUrl(response.data.url);
         setModalStatus({
@@ -128,7 +131,8 @@ function ReleaseEntry({ profile, currentView }) {
           releaseVersion: version,
         });
         setFetching(false);
-      }).catch((err) => {
+      })
+      .catch((err) => {
         // eslint-disable-next-line no-console
         console.log(`${err.error}: ${err.errorDescription}`);
         setModalStatus({
@@ -244,7 +248,6 @@ function ReleaseEntry({ profile, currentView }) {
                   item.object_zipfile,
                   version
                 )}
-                disabled
               >
                 <i className="material-icons release-data-download-icon">
                   save_alt
