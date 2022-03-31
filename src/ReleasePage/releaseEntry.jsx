@@ -123,7 +123,7 @@ function ReleaseEntry({ profile, currentView }) {
         `${process.env.REACT_APP_API_SERVICE_ADDRESS}${process.env.REACT_APP_SIGNED_URL_ENDPOINT}?bucket=${bucket}&object=${filename}&key=${process.env.REACT_APP_API_SERVICE_KEY}`
       )
       .then((response) => {
-        setFileUrl(response.url);
+        setFileUrl(response.data.url);
         setModalStatus({
           status: 'success',
           file: filename,
