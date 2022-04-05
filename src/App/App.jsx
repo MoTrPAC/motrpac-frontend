@@ -20,6 +20,7 @@ import DataAccessPageConnected from '../DataAccess/dataAccessPage';
 import RelatedStudyConnected from '../RelatedStudy/relatedStudy';
 import HeritageProteomicsConnected from '../RelatedStudy/heritageProteomics';
 import AnnouncementsPageConnected from '../AnnouncementsPage/announcementsPage';
+import BrowseDataPageConnected from '../BrowseDataPage/browseDataPage';
 import HomePageConnected from '../Home/HomePage';
 import CallbackConnected from '../Auth/callback';
 import SidebarConnected from '../Sidebar/sidebar';
@@ -88,6 +89,10 @@ function App({ history = History }) {
               <PrivateRoute
                 path="/qc-data-monitor"
                 component={withTracker(DataStatusPageConnected)}
+              />
+              <PrivateRoute
+                path="/browse-data"
+                component={withTracker(BrowseDataPageConnected)}
               />
               <Route
                 path="/data-access"
