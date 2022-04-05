@@ -147,6 +147,15 @@ export function Sidebar({
             </li>
             <li className="nav-item">
               {renderNavLink(
+                'download',
+                'Browse Data',
+                'download',
+                'view_list',
+                userType === 'external'
+              )}
+            </li>
+            <li className="nav-item">
+              {renderNavLink(
                 'qc-data-monitor',
                 'QC Data Monitor',
                 'qc-data-monitor',
@@ -162,15 +171,6 @@ export function Sidebar({
                 'summary',
                 'assessment',
                 false
-              )}
-            </li>
-            <li className="nav-item">
-              {renderNavLink(
-                'status',
-                'Data QC Status',
-                'status',
-                'fact_check',
-                true
               )}
             </li>
           </ul>
