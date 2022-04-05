@@ -16,7 +16,7 @@ import ErrorPageConnected from '../ErrorPage/error';
 import SearchPageConnected from '../Search/searchPage';
 import ReleasePageConnected from '../ReleasePage/releasePage';
 import DataStatusPageConnected from '../DataStatusPage/dataStatusPage';
-import DataSummaryPage from '../DataSummaryPage/dataSummaryPage';
+import DataSummaryPageConnected from '../DataSummaryPage/dataSummaryPage';
 import DataAccessPageConnected from '../DataAccess/dataAccessPage';
 import RelatedStudyConnected from '../RelatedStudy/relatedStudy';
 import HeritageProteomicsConnected from '../RelatedStudy/heritageProteomics';
@@ -79,7 +79,7 @@ function App({ history = History }) {
               />
               <PrivateRoute
                 path="/summary"
-                component={withTracker(DataSummaryPage)}
+                component={withTracker(DataSummaryPageConnected)}
               />
               <PrivateRoute
                 path="/releases"
