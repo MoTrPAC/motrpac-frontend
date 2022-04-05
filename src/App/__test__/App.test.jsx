@@ -24,7 +24,7 @@ describe('<App />', () => {
   });
 
   test('It should contain eight <PrivateRoute /> children', () => {
-    expect(component.find('PrivateRoute').length).toBe(9);
+    expect(component.find('PrivateRoute').length).toBe(7);
   });
 });
 
@@ -128,7 +128,7 @@ describe('Authenticated Application routing', () => {
     history.push('/home');
     // Update required to re-render the application
     mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'SearchPage', '/home', history, true);
+    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'HomePage', '/home', history, true);
   });
 
   test('loads the QC reports at /qc-reports', () => {
@@ -145,10 +145,16 @@ describe('Authenticated Application routing', () => {
     testCorrectComponentInPath(mountApp, 'PrivateRoute', 'Methods', '/methods', history, true);
   });
 
-  test('loads the landing page at /summary', () => {
+  test('loads the sample summary page at /summary', () => {
     history.push('/summary');
     mountApp.update();
     testCorrectComponentInPath(mountApp, 'PrivateRoute', 'DataSummaryPage', '/summary', history, true);
+  });
+
+  test('loads the browse data page at /browse-data', () => {
+    history.push('/browse-data');
+    mountApp.update();
+    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'BrowseDataPage', '/browse-data', history, true);
   });
 
   test('loads the linkout page at /external-links', () => {
