@@ -11,6 +11,12 @@ import sidebarReducer, { defaultSidebarState } from '../Sidebar/sidebarReducer';
 import dataSummaryPageReducer, {
   defaultDataSummaryState,
 } from '../DataSummaryPage/dataSummaryPageReducer';
+import dashboardReducer, {
+  defaultDashboardState,
+} from '../Dashboard/dashboardReducer';
+import dataStatusReducer, {
+  defaultDataStatusState,
+} from '../DataStatusPage/dataStatusReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -19,6 +25,8 @@ export default combineReducers({
   quickSearch: quickSearchBoxReducer,
   sidebar: sidebarReducer,
   dataSummary: dataSummaryPageReducer,
+  dashboard: dashboardReducer,
+  dataStatus: dataStatusReducer,
 });
 
 export const defaultRootState = {
@@ -28,4 +36,6 @@ export const defaultRootState = {
   quickSearch: defaultQuickSearchState,
   sidebar: defaultSidebarState,
   dataSummary: defaultDataSummaryState,
+  dashboard: defaultDashboardState,
+  dataStatus: defaultDataStatusState,
 };

@@ -90,12 +90,19 @@ function HeritageProteomics({ isAuthenticated, profile }) {
           </p>
           <p>
             Robbins et al.{' '}
-            <span className="font-weight-bold font-italic">
+            <span className="font-weight-bold">
               Human plasma proteomic profiles indicative of cardiorespiratory
               fitness.
             </span>{' '}
-            Nature Metabolomics 2021.{' '}
-            <span className="font-italic">In press</span>
+            <a
+              className="font-italic"
+              href="https://www.nature.com/natmetab"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Nature Metabolism
+            </a>{' '}
+            3, 786–797 (2021).
           </p>
           <div className="data-download-container row justify-content-start my-4">
             <div className="mx-3 d-flex align-items-center">

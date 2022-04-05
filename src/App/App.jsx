@@ -15,7 +15,8 @@ import ContactConnected from '../ContactPage/contact';
 import ErrorPageConnected from '../ErrorPage/error';
 import SearchPageConnected from '../Search/searchPage';
 import ReleasePageConnected from '../ReleasePage/releasePage';
-import DataSummaryPageConnected from '../DataSummaryPage/dataSummaryPage';
+import DataStatusPageConnected from '../DataStatusPage/dataStatusPage';
+import DataSummaryPage from '../DataSummaryPage/dataSummaryPage';
 import DataAccessPageConnected from '../DataAccess/dataAccessPage';
 import RelatedStudyConnected from '../RelatedStudy/relatedStudy';
 import HeritageProteomicsConnected from '../RelatedStudy/heritageProteomics';
@@ -78,11 +79,15 @@ function App({ history = History }) {
               />
               <PrivateRoute
                 path="/summary"
-                component={withTracker(DataSummaryPageConnected)}
+                component={withTracker(DataSummaryPage)}
               />
               <PrivateRoute
                 path="/releases"
                 component={withTracker(ReleasePageConnected)}
+              />
+              <PrivateRoute
+                path="/qc-data-monitor"
+                component={withTracker(DataStatusPageConnected)}
               />
               <Route
                 path="/data-access"

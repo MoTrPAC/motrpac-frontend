@@ -191,7 +191,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
     };
 
     // post request configs
-    const serviceUrl = 'https://service-apis.motrpac-data.org/new_user';
+    const serviceUrl = `${process.env.REACT_APP_API_SERVICE_ADDRESS}${process.env.REACT_APP_USER_REGISTRATION_ENDPOINT}?key=${process.env.REACT_APP_API_SERVICE_KEY}`;
     const timeOutConfig = { timeout: 5000 };
 
     return axios.post(serviceUrl, userObj, timeOutConfig).then((response) => {

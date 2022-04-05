@@ -70,6 +70,7 @@
     "eslint-plugin-react-hooks": "^4.0.8",
     "jest-canvas-mock": "^2.2.0",
     "prettier": "2.2.1",
+    "react-error-overlay": "6.0.9",
     "sass": "1.32.8",
     "storybook-react-router": "1.0.8",
     "stylelint": "^13.2.0",

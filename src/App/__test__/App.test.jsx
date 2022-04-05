@@ -24,7 +24,7 @@ describe('<App />', () => {
   });
 
   test('It should contain eight <PrivateRoute /> children', () => {
-    expect(component.find('PrivateRoute').length).toBe(5);
+    expect(component.find('PrivateRoute').length).toBe(9);
   });
 });
 
@@ -129,6 +129,13 @@ describe('Authenticated Application routing', () => {
     // Update required to re-render the application
     mountApp.update();
     testCorrectComponentInPath(mountApp, 'PrivateRoute', 'SearchPage', '/home', history, true);
+  });
+
+  test('loads the QC reports at /qc-reports', () => {
+    history.push('/qc-reports');
+    // Update required to re-render the application
+    mountApp.update();
+    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'DataStatusPage', '/qc-data-monitor', history, true);
   });
 
   test('loads the methods page at /methods', () => {

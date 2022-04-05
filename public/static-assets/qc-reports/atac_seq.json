@@ -1,0 +1,14 @@
+[
+  {
+    "cas": "mssm",
+    "phase": "PASS1C-06",
+    "tissue": "T68",
+    "t_name": "Liver Powder",
+    "seq_flowcell_lane": "4",
+    "assay": "atac-seq",
+    "version": "atac-seq/rat/batch7_20210716/",
+    "sample_category": "ref",
+    "sample_count": "2",
+    "dmaqc_valid": "PASS"
+  }
+]

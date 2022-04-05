@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import dayjs from 'dayjs';
+import DataStatusActions from '../DataStatusPage/dataStatusActions';
 
 /**
  * Renders the gloabl sidebar.
@@ -15,6 +17,8 @@ export function Sidebar({
   profile,
   expanded,
   resetDepth,
+  fetchData,
+  qcData,
   toggleSidebar,
 }) {
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
@@ -23,6 +27,20 @@ export function Sidebar({
   if (!(isAuthenticated && hasAccess)) {
     return '';
   }
+
+  // Call to invoke Redux action to fetch data
+  // if timestamp is empty or older than 24 hours
+  const handleQcDataFetch = () => {
+    const lastUpdate = qcData.lastModified;
+    // Convert timestamp string back to dayjs() object to calculate time difference
+    if (
+      !lastUpdate ||
+      !lastUpdate.length ||
+      (lastUpdate.length && dayjs().diff(dayjs(lastUpdate), 'hour') >= 24)
+    ) {
+      fetchData();
+    }
+  };
 
   function renderNavLink(route, label, id, icon, disabled, handler) {
     // Don't show tooltip if sidebar is expanded
@@ -129,6 +147,16 @@ export function Sidebar({
             </li>
             <li className="nav-item">
               {renderNavLink(
+                'qc-data-monitor',
+                'QC Data Monitor',
+                'qc-data-monitor',
+                'fact_check',
+                userType === 'external',
+                handleQcDataFetch
+              )}
+            </li>
+            <li className="nav-item">
+              {renderNavLink(
                 'summary',
                 'Summary',
                 'summary',
@@ -156,6 +184,7 @@ export function Sidebar({
 const mapStateToProps = (state) => ({
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
+  qcData: state.dataStatus.qcData,
   expanded: state.sidebar.expanded,
 });
 
@@ -163,6 +192,7 @@ const mapStateToProps = (state) => ({
 // if user clicks on either the rat or human analysis links
 const mapDispatchToProps = (dispatch) => ({
   resetDepth: () => dispatch({ type: 'RESET_DEPTH' }),
+  fetchData: () => dispatch(DataStatusActions.fetchData()),
   toggleSidebar: () => dispatch({ type: 'SIDEBAR_TOGGLED' }),
 });
 
