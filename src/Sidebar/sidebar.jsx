@@ -164,15 +164,17 @@ export function Sidebar({
                 handleQcDataFetch
               )}
             </li>
-            <li className="nav-item">
-              {renderNavLink(
-                'summary',
-                'Summary',
-                'summary',
-                'assessment',
-                false
-              )}
-            </li>
+            {userType !== 'external' && (
+              <li className="nav-item">
+                {renderNavLink(
+                  'summary',
+                  'Summary',
+                  'summary',
+                  'assessment',
+                  false
+                )}
+              </li>
+            )}
           </ul>
         </div>
       </div>
