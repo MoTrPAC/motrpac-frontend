@@ -13,7 +13,6 @@ import MethodsConnected from '../MethodsPage/methods';
 import TeamPageConnected from '../TeamPage/teamPage';
 import ContactConnected from '../ContactPage/contact';
 import ErrorPageConnected from '../ErrorPage/error';
-import SearchPageConnected from '../Search/searchPage';
 import ReleasePageConnected from '../ReleasePage/releasePage';
 import DataStatusPageConnected from '../DataStatusPage/dataStatusPage';
 import DataSummaryPageConnected from '../DataSummaryPage/dataSummaryPage';
@@ -21,6 +20,7 @@ import DataAccessPageConnected from '../DataAccess/dataAccessPage';
 import RelatedStudyConnected from '../RelatedStudy/relatedStudy';
 import HeritageProteomicsConnected from '../RelatedStudy/heritageProteomics';
 import AnnouncementsPageConnected from '../AnnouncementsPage/announcementsPage';
+import HomePageConnected from '../Home/HomePage';
 import CallbackConnected from '../Auth/callback';
 import SidebarConnected from '../Sidebar/sidebar';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
@@ -50,7 +50,7 @@ function App({ history = History }) {
               />
               <PrivateRoute
                 path="/home"
-                component={withTracker(SearchPageConnected)}
+                component={withTracker(HomePageConnected)}
               />
               <Route
                 path="/external-links"
