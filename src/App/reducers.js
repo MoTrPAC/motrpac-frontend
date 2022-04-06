@@ -17,6 +17,9 @@ import dashboardReducer, {
 import dataStatusReducer, {
   defaultDataStatusState,
 } from '../DataStatusPage/dataStatusReducer';
+import browseDataReducer, {
+  defaultBrowseDataState,
+} from '../BrowseDataPage/browseDataReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -27,6 +30,7 @@ export default combineReducers({
   dataSummary: dataSummaryPageReducer,
   dashboard: dashboardReducer,
   dataStatus: dataStatusReducer,
+  browseData: browseDataReducer,
 });
 
 export const defaultRootState = {
@@ -38,4 +42,5 @@ export const defaultRootState = {
   dataSummary: defaultDataSummaryState,
   dashboard: defaultDashboardState,
   dataStatus: defaultDataStatusState,
+  browseData: defaultBrowseDataState,
 };
