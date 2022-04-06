@@ -56,7 +56,7 @@ const analysisTypes = [
     input: null,
     description:
       'Examine similarities, differences, and potential time lagged response across tissues.',
-    active: false,
+    active: true,
     species: ['animal', 'human'],
   },
   {
