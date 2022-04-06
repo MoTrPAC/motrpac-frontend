@@ -25,7 +25,8 @@ export default function TissueComparison() {
           style={{
             height: '75vh',
             width: '1px',
-            minWidth: '1400px',
+            minWidth: '1300px',
+            paddingRight: '100px',
             border: 'none',
           }}
           scrolling
