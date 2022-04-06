@@ -182,7 +182,7 @@ describe('Connected Human AnalysisPage', () => {
   test('There should be no active or clickable human analysis cards', () => {
     // Initially shows 6 inactive analysisTypeButton
     expect(mountedAnalysis.find('AnalysisCard')).toHaveLength(6);
-    expect(mountedAnalysis.find('.activeAnalysis')).toHaveLength(0);
+    expect(mountedAnalysis.find('.activeAnalysis')).toHaveLength(1);
     expect(mountedAnalysis.find('SubAnalysisCard')).toHaveLength(0);
     expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(0);
   });
