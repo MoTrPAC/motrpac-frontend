@@ -15,6 +15,7 @@
     "ga-gtag": "^1.0.1",
     "history": "4.10.1",
     "http-proxy-middleware": "^2.0.1",
+    "iframe-resizer-react": "^1.1.0",
     "jquery": "^3.5.1",
     "lodash": "^4.17.11",
     "popper.js": "1.14.3",
