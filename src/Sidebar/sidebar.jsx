@@ -147,9 +147,9 @@ export function Sidebar({
             </li>
             <li className="nav-item">
               {renderNavLink(
-                'download',
+                'browse-data',
                 'Browse Data',
-                'download',
+                'browse-data',
                 'view_list',
                 userType === 'external'
               )}
