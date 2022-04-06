@@ -16,7 +16,7 @@ export default function TissueComparison() {
 
   return (
     <div className="tissueComparisonPage">
-      <div className="main-content-container d-flex align-items-start">
+      <div className="main-content-container">
         <ReportControls tissue={tissue} toggleReport={setTissue} />
         <IframeResizer
           forwardRef={iframeRef}
@@ -25,8 +25,7 @@ export default function TissueComparison() {
           style={{
             height: '75vh',
             width: '1px',
-            minWidth: '1300px',
-            paddingRight: '100px',
+            minWidth: '1200px',
             border: 'none',
           }}
           scrolling
@@ -42,7 +41,7 @@ function ReportControls({ tissue, toggleReport }) {
   const tissueKeys = Object.keys(reportTissues);
 
   return (
-    <div className="controlPanelContainer mr-5 mt-3">
+    <div className="controlPanelContainer mt-3 ml-3">
       <div className="controlPanel">
         <div className="controlRow d-flex align-items-center">
           <div className="controlLabel mr-2">Tissues:</div>
