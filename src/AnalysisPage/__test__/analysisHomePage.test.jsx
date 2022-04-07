@@ -143,14 +143,18 @@ describe('Connected Animal AnalysisPage', () => {
 
       // Click button --> replace analysisTypeButton with SubAnalysisButton
       mountedAnalysis.find('.activeAnalysis').first().simulate('click');
-      expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(1);
+      expect(
+        mountedAnalysis.find('Provider').props().store.getState().analysis.depth
+      ).toEqual(1);
       mountedAnalysis.update();
       expect(mountedAnalysis.find('AnalysisCard')).toHaveLength(0);
       expect(mountedAnalysis.find('AnimalDataAnalysis')).not.toHaveLength(0);
 
       // Click back button --> replace SubAnalysisButton with AnalysisTypeButton
       mountedAnalysis.find('.backButton').first().simulate('click');
-      expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(0);
+      expect(
+        mountedAnalysis.find('Provider').props().store.getState().analysis.depth
+      ).toEqual(0);
       mountedAnalysis.update();
       expect(mountedAnalysis.find('AnimalDataAnalysis')).toHaveLength(0);
       expect(mountedAnalysis.find('AnalysisCard')).not.toHaveLength(0);
@@ -182,8 +186,10 @@ describe('Connected Human AnalysisPage', () => {
   test('There should be no active or clickable human analysis cards', () => {
     // Initially shows 6 inactive analysisTypeButton
     expect(mountedAnalysis.find('AnalysisCard')).toHaveLength(6);
-    expect(mountedAnalysis.find('.activeAnalysis')).toHaveLength(1);
+    expect(mountedAnalysis.find('.activeAnalysis')).toHaveLength(0);
     expect(mountedAnalysis.find('SubAnalysisCard')).toHaveLength(0);
-    expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(0);
+    expect(
+      mountedAnalysis.find('Provider').props().store.getState().analysis.depth
+    ).toEqual(0);
   });
 });
