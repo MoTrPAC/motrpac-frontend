@@ -23,7 +23,7 @@ export default function GraphicalClustering() {
           heightCalculationMethod="max"
           src={`/static-assets/graphical-analysis-reports/graphical-analysis-results_${tissue}.html`}
           style={{
-            height: '75vh',
+            height: '72vh',
             width: '1px',
             minWidth: '1200px',
             border: 'none',
