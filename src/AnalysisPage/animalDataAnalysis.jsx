@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Pass1b06PhenotypeAnimalConnected from './pass1b06PhenotypeAnimal';
 import DifferenrialExpressionConnected from '../DataExploration/DifferentialExpression/differentialExpressionPage';
-import TissueComparison from './TissueComparison/tissueComparisonPage';
+import GraphicalClustering from './TissueComparison/tissueComparisonPage';
 
 export default function AnimalDataAnalysis({ analysis }) {
   switch (analysis) {
@@ -10,8 +10,8 @@ export default function AnimalDataAnalysis({ analysis }) {
       return <Pass1b06PhenotypeAnimalConnected />;
     case 'DEA':
       return <DifferenrialExpressionConnected />;
-    case 'TISSUE':
-      return <TissueComparison />;
+    case 'GRAPHICAL_CLUSTERING':
+      return <GraphicalClustering />;
     default:
       return null;
   }
