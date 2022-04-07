@@ -10,7 +10,7 @@ const reportTissues = {
   BLOOD: 'Whole Blood',
 };
 
-export default function TissueComparison() {
+export default function GraphicalClustering() {
   const iframeRef = useRef(null);
   const [tissue, setTissue] = useState('HYPOTH');
 
