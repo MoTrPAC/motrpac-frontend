@@ -25,6 +25,17 @@ const analysisTypes = [
     species: ['animal'],
   },
   {
+    title: 'Differential Analysis: Graphical Clustering',
+    shortName: 'GRAPHICAL_CLUSTERING',
+    icon: tissueIcon,
+    inactiveIcon: tissueIconInactive,
+    input: null,
+    description:
+      'Examine similarities, differences, and potential time lagged response across tissues.',
+    active: true,
+    species: ['animal'],
+  },
+  {
     title: 'Differential Expression Analysis',
     preferredTitle:
       'Assay-level differentially expressed genes in response to training',
@@ -56,8 +67,8 @@ const analysisTypes = [
     input: null,
     description:
       'Examine similarities, differences, and potential time lagged response across tissues.',
-    active: true,
-    species: ['animal', 'human'],
+    active: false,
+    species: ['human'],
   },
   {
     title: 'Network Analysis',
