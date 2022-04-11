@@ -1,19 +1,25 @@
+import axios from 'axios';
+
 const CHANGE_FILTER = 'CHANGE_FILTER';
-const VIEW_CART = 'VIEW_CART';
 const SORT_CHANGE = 'SORT_CHANGE';
-const CHANGE_PAGE = 'CHANGE_PAGE';
 const RECIEVE_UPDATE_LIST = 'RECIEVE_UPDATE_LIST';
 const REQUEST_UPDATE_LIST = 'REQUEST_UPDATE_LIST';
 const APPLY_FILTERS = 'APPLY_FILTERS';
+const RESET_FILTERS = 'RESET_FILTERS';
+const URL_FETCH_START = 'URL_FETCH_START';
+const URL_FETCH_SUCCESS = 'URL_FETCH_SUCCESS';
+const URL_FETCH_FAILURE = 'URL_FETCH_FAILURE';
 
 export const types = {
   CHANGE_FILTER,
-  VIEW_CART,
   SORT_CHANGE,
-  CHANGE_PAGE,
   RECIEVE_UPDATE_LIST,
   REQUEST_UPDATE_LIST,
   APPLY_FILTERS,
+  RESET_FILTERS,
+  URL_FETCH_START,
+  URL_FETCH_SUCCESS,
+  URL_FETCH_FAILURE,
 };
 
 function changeFilter(category, filter) {
@@ -24,30 +30,17 @@ function changeFilter(category, filter) {
   };
 }
 
-function changePage(page) {
-  return {
-    type: CHANGE_PAGE,
-    page,
-  };
-}
-
 function requestUpdateList() {
   return {
     type: REQUEST_UPDATE_LIST,
   };
 }
 
-function recieveUpdateList(uploadCount, uploads) {
+function recieveUpdateList(fileCount, files) {
   return {
     type: RECIEVE_UPDATE_LIST,
-    uploads,
-    uploadCount,
-  };
-}
-
-function viewCart() {
-  return {
-    type: VIEW_CART,
+    files,
+    fileCount,
   };
 }
 
@@ -64,18 +57,44 @@ function applyFilters() {
   };
 }
 
-// Mock Async Getting List
-const uploads = [];
+function resetFilters() {
+  return {
+    type: RESET_FILTERS,
+  };
+}
 
-const uploadCount = uploads.length;
+function urlFetchStart() {
+  return {
+    type: URL_FETCH_START,
+  };
+}
+
+function urlFetchSuccess(results, selectedFiles) {
+  return {
+    type: URL_FETCH_SUCCESS,
+    results,
+    selectedFiles,
+  };
+}
+
+function urlFetchFailure(error = '') {
+  return {
+    type: URL_FETCH_FAILURE,
+    error,
+  };
+}
+
+// Mock Async Getting List
+const files = [];
+
+const fileCount = files.length;
 
 function changePageRequest(maxRows, page) {
   return (dispatch) => {
     dispatch(requestUpdateList());
-    dispatch(changePage(page));
     return setTimeout(() => {
       // assumes database returned relevant uploads and total count
-      dispatch(recieveUpdateList(uploadCount, uploads.slice(maxRows * (page - 1), maxRows * page)));
+      dispatch(recieveUpdateList(fileCount, files.slice(maxRows * (page - 1), maxRows * page)));
       dispatch(applyFilters());
     }, 1000);
   };
@@ -94,14 +113,44 @@ function changeFilterRequest(maxRows, category, filters) {
 }
 */
 
+function useNull() {
+  return null;
+}
+
+function handleUrlFetch(selectedFiles) {
+  if (selectedFiles.length === 0) {
+    return false;
+  }
+
+  const bucket = process.env.REACT_APP_DATA_FILE_BUCKET;
+  const api = process.env.REACT_APP_API_SERVICE_ADDRESS;
+  const endpoint = process.env.REACT_APP_SIGNED_URL_ENDPOINT;
+  const key = process.env.REACT_APP_API_SERVICE_KEY;
+  const fileUrls = selectedFiles.map(
+    (file) =>
+      `${api}${endpoint}?bucket=${bucket}&object=${file.original.object}&key=${key}`
+  );
+
+  return (dispatch) => {
+    dispatch(urlFetchStart());
+    return Promise.all(fileUrls.map((url) => axios.get(url).catch(useNull)))
+      .then((results) => {
+        dispatch(urlFetchSuccess(results, selectedFiles));
+      })
+      .catch((err) => {
+        dispatch(urlFetchFailure(`${err.error}: ${err.errorDescription}`));
+      });
+  };
+}
+
 const actions = {
   changeFilter,
-  changePage,
+  resetFilters,
   requestUpdateList,
   recieveUpdateList,
-  viewCart,
   sortChange,
   changePageRequest,
+  handleUrlFetch,
 };
 
 export default actions;
