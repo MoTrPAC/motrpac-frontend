@@ -12,12 +12,54 @@
     width: 240px;
   }
 
-  .pagination-page-size {
-    margin-bottom: 1rem;
+  .pagination-page-size,
+  .file-download-button {
+    margin-bottom: 0.85rem;
     
     select {
       margin-right: 0.65rem;
       max-width: 65px;
+    }
+  }
+
+  .file-download-button {
+    .btn {
+      &:disabled {
+        cursor: not-allowed;
+
+        &:hover {
+          background-color: #007bff;
+        }
+      }
+    }
+  }
+
+  .data-download-modal {
+    .loading-spinner {
+      text-align: center;
+    }
+
+    .modal-body {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .file-download-list {
+      margin-bottom: 0;
+    }
+
+    .file-download-list-item {
+      font-size: 0.85rem;
+
+      td {
+        vertical-align: middle;
+      }
+
+      &:first-child {
+        td {
+          border-top: none;
+        }
+      }
     }
   }
 
@@ -41,6 +83,16 @@
   }
 
   .browse-data-filter-group {
+    .browse-data-filter-group-header {
+      font-size: 0.85rem;
+
+      button {
+        color: #007bff;
+        font-size: inherit;
+        padding: 0;
+      }
+    }
+
     .filter-module {
       .card-header {
         font-size: 0.9rem;
