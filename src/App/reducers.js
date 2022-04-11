@@ -27,6 +27,7 @@ const dataFiles = require('../data/motrpac-data-files.json');
 const browseDataState = {
   ...defaultBrowseDataState,
   allFiles: dataFiles,
+  filteredFiles: dataFiles.slice(0, dataFiles.length),
   fileCount: dataFiles.length,
 };
 
