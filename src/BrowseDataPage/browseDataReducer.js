@@ -1,17 +1,22 @@
 import { types } from './browseDataActions';
 
 export const defaultBrowseDataState = {
-  sortBy: 'identifier',
-  maxRows: 10,
-  currentPage: 1,
+  sortBy: 'tissue_name',
+  allFiles: [],
+  filteredFiles: [],
+  fileCount: 0,
   activeFilters: {
-    type: [],
-    subject: [],
-    availability: [],
+    assay: [],
+    omics: [],
+    tissue_name: [],
+    category: [],
   },
   listUpdating: false,
   requireUpdate: false,
-  siteName: '',
+  selectedFileUrls: [],
+  selectedFileNames: [],
+  fetching: false,
+  error: '',
 };
 
 function createSorter(sortBy) {
@@ -46,13 +51,13 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
           action.category
         ].filter((filter) => !(filter === action.filter));
       }
-      let filtUploads = state.allUploads;
+      let filtered = state.allFiles;
 
       // if any filters placed filters appropriately
       Object.keys(state.activeFilters).forEach((cat) => {
         if (newActiveFilters[cat].length) {
-          filtUploads = filtUploads.filter(
-            (upload) => !(newActiveFilters[cat].indexOf(upload[cat]) === -1)
+          filtered = filtered.filter(
+            (file) => !(newActiveFilters[cat].indexOf(file[cat]) === -1)
           );
         }
       });
@@ -60,34 +65,29 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
       return {
         ...state,
         activeFilters: newActiveFilters,
-        filteredUploads: filtUploads,
+        filteredFiles: filtered,
         requireUpdate: true,
       };
     }
     case types.APPLY_FILTERS: {
-      let filtUploads = state.allUploads;
+      let filtered = state.allUFiles;
       Object.keys(state.activeFilters).forEach((cat) => {
         if (state.activeFilters[cat].length) {
-          filtUploads = filtUploads.filter(
-            (upload) => !(state.activeFilters[cat].indexOf(upload[cat]) === -1)
+          filtered = filtered.filter(
+            (file) => !(state.activeFilters[cat].indexOf(file[cat.toLowerCase()]) === -1)
           );
         }
       });
       return {
         ...state,
-        filteredUploads: filtUploads,
+        filteredFiles: filtered,
       };
     }
     case types.SORT_CHANGE:
       return {
         ...state,
         sortBy: action.column,
-        allUploads: state.allUploads.sort(createSorter(action.column)),
-      };
-    case types.CHANGE_PAGE:
-      return {
-        ...state,
-        currentPage: action.page,
+        allFiles: state.allFiles.sort(createSorter(action.column)),
       };
     case types.REQUEST_UPDATE_LIST:
       return {
@@ -97,10 +97,47 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
     case types.RECIEVE_UPDATE_LIST:
       return {
         ...state,
-        allUploads: action.uploads.sort(createSorter(state.sortBy)),
+        allFiles: action.files.sort(createSorter(state.sortBy)),
         listUpdating: false,
         requireUpdate: false,
-        uploadCount: action.uploadCount,
+        fileCount: action.fileCount,
+      };
+    case types.URL_FETCH_START:
+      return {
+        ...state,
+        fetching: true,
+      };
+    case types.URL_FETCH_SUCCESS:
+      return {
+        ...state,
+        selectedFileUrls: action.results.map((item) => item.data.url),
+        selectedFileNames: action.selectedFiles.map((item) => {
+          return {
+            file: item.original.filename,
+            size: item.original.object_size,
+          };
+        }),
+        fetching: false,
+      };
+    case types.URL_FETCH_FAILURE:
+      return {
+        ...state,
+        error: action.error,
+        fetching: false,
+      };
+    case types.RESET_FILTERS:
+      return {
+        ...state,
+        activeFilters: {
+          assay: [],
+          omics: [],
+          tissue_name: [],
+          category: [],
+        },
+        selectedFileUrls: [],
+        selectedFileNames: [],
+        filteredFiles: state.allFiles,
+        requireUpdate: true,
       };
     default:
       return state;
