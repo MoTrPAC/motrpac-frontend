@@ -1,11 +1,37 @@
 import assayList from './assayList';
-import tissueList from './tissueList';
+
+const tissues = [
+  'Adrenal',
+  'Brown Adipose',
+  'Colon',
+  'Cortex',
+  'Gastrocnemius',
+  'Heart',
+  'Hippocampus',
+  'Hypothalamus',
+  'Kidney',
+  'Liver',
+  'Lung',
+  'Ovary',
+  'Plasma',
+  'Small Intestine',
+  'Spleen',
+  'Testis',
+  'Vastus Lateralis',
+  'Vena Cava',
+  'White Adipose',
+  'Whole Blood',
+];
+
+const tissueList = tissues.sort((a, b) =>
+  a.toLowerCase().localeCompare(b.toLowerCase())
+);
 
 const browseDataFilters = [
   {
-    keyName: 'tissue',
+    keyName: 'tissue_name',
     name: 'Tissue',
-    filters: tissueList.map((obj) => obj.name),
+    filters: tissueList,
   },
   {
     keyName: 'assay',
@@ -17,17 +43,17 @@ const browseDataFilters = [
     name: 'Omics',
     filters: [
       'Epigenomics',
-      'Metabolomics-targted',
-      'Metabolomics-untargted',
-      'Proteomics-targeted',
-      'Proteomics-untargeted',
+      'Metabolomics Targeted',
+      'Metabolomics Untargeted',
+      'Proteomics Targeted',
+      'Proteomics Untargeted',
       'Transcriptomics',
     ],
   },
   {
     keyName: 'category',
     name: 'Category',
-    filters: ['Analysis', 'Quantitative Results'],
+    filters: ['Analysis', 'Results'],
   },
 ];
 
