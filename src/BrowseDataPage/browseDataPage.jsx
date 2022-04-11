@@ -1,27 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import AuthContentContainer from '../lib/ui/authContentContainer';
+import BrowseDataTable from './browseDataTable';
 import actions from './browseDataActions';
 import BrowseDataFilter from './browseDataFilter';
 
 export function BrowseDataPage({
   profile,
   expanded,
-  filteredUploads,
-  sortBy,
+  filteredFiles,
+  selectedFileUrls,
+  selectedFileNames,
+  fetching,
+  error,
   activeFilters,
-  currentPage,
-  maxRows,
-  listUpdating,
-  onChangeSort,
   onChangeFilter,
-  changePageRequest,
+  handleUrlFetch,
+  onResetFilters,
 }) {
-  const siteName =
-    profile.user_metadata && profile.user_metadata.siteName
-      ? profile.user_metadata.siteName
-      : null;
+  // Send users to default page if they are not consortium members
+  const userType = profile.user_metadata && profile.user_metadata.userType;
+  if (userType === 'external') {
+    return <Redirect to="/home" />;
+  }
 
   return (
     <AuthContentContainer classes="browseDataPage" expanded={expanded}>
@@ -30,48 +33,62 @@ export function BrowseDataPage({
           <h3 className="mb-0">Browse Data</h3>
         </div>
       </div>
+      <div className="browse-data-container row">
+        <BrowseDataFilter
+          activeFilters={activeFilters}
+          onChangeFilter={onChangeFilter}
+          onResetFilters={onResetFilters}
+        />
+        <BrowseDataTable
+          filteredFiles={filteredFiles}
+          handleUrlFetch={handleUrlFetch}
+          selectedFileUrls={selectedFileUrls}
+          selectedFileNames={selectedFileNames}
+          fetching={fetching}
+          error={error}
+        />
+      </div>
     </AuthContentContainer>
   );
 }
 
 BrowseDataPage.propTypes = {
-  sortBy: PropTypes.string,
+  filteredFiles: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  selectedFileUrls: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedFileNames: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  fetching: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
   profile: PropTypes.shape({
     user_metadata: PropTypes.shape({
       siteName: PropTypes.string,
     }),
   }),
   expanded: PropTypes.bool,
-  listUpdating: PropTypes.bool.isRequired,
   activeFilters: BrowseDataFilter.propTypes.activeFilters.isRequired,
-  maxRows: PropTypes.number.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  onChangeSort: PropTypes.func.isRequired,
   onChangeFilter: PropTypes.func.isRequired,
-  changePageRequest: PropTypes.func.isRequired,
+  handleUrlFetch: PropTypes.func.isRequired,
+  onResetFilters: PropTypes.func.isRequired,
 };
 
 BrowseDataPage.defaultProps = {
-  sortBy: 'identifier',
   profile: {},
   expanded: false,
 };
 
 const mapStateToProps = (state) => ({
-  sortBy: state.browseData.sortBy,
+  ...state.browseData,
   profile: state.auth.profile,
-  filteredUploads: state.browseData.filteredUploads,
-  activeFilters: state.browseData.activeFilters,
-  currentPage: state.browseData.currentPage,
-  maxRows: state.browseData.maxRows,
-  listUpdating: state.browseData.listUpdating,
   expanded: state.sidebar.expanded,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onChangeSort: (column) => dispatch(actions.sortChange(column)),
-  onChangeFilter: (category, filter) => dispatch(actions.changeFilter(category, filter)),
+  onChangeFilter: (category, filter) =>
+    dispatch(actions.changeFilter(category, filter)),
+  onResetFilters: () => dispatch(actions.resetFilters()),
   changePageRequest: (maxRows, page) => dispatch(actions.changePageRequest(maxRows, page)),
+  handleUrlFetch: (selectedFiles) =>
+    dispatch(actions.handleUrlFetch(selectedFiles)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BrowseDataPage);
