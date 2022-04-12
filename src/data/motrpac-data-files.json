@@ -9,6 +9,6 @@
         "tissue_name": "Gastrocnemius",
         "tissue_code": "T55",
         "category": "Analysis",
-        "sub_category": "DEA",
-    },
+        "sub_category": "DEA"
+    }
 ]
