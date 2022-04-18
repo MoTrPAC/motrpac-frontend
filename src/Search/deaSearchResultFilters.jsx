@@ -108,7 +108,7 @@ function SearchResultFilters({
   ));
 
   return (
-    <div className="search-result-filter-group">
+    <div className="search-result-filter-group mb-4">
       <div className="search-result-filter-group-header d-flex justify-content-between align-items-center mb-2">
         <div className="font-weight-bold">
           Narrow results using filters below.
