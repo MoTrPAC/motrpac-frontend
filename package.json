@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@elastic/react-search-ui": "^1.7.0",
-    "@elastic/react-search-ui-views": "1.7.0",
-    "@elastic/search-ui": "1.7.0",
     "auth0-js": "9.15.0",
     "axios": "^0.21.1",
     "bootstrap": "4.6.0",
