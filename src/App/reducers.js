@@ -4,9 +4,6 @@ import analysisReducer, {
   defaultAnalysisState,
 } from '../AnalysisPage/analysisReducer';
 import searchReducer, { defaultSearchState } from '../Search/searchReducer';
-import quickSearchBoxReducer, {
-  defaultQuickSearchState,
-} from '../Search/quickSearchBoxReducer';
 import sidebarReducer, { defaultSidebarState } from '../Sidebar/sidebarReducer';
 import dataSummaryPageReducer, {
   defaultDataSummaryState,
@@ -35,7 +32,6 @@ export default combineReducers({
   auth: authReducer,
   analysis: analysisReducer,
   search: searchReducer,
-  quickSearch: quickSearchBoxReducer,
   sidebar: sidebarReducer,
   dataSummary: dataSummaryPageReducer,
   dashboard: dashboardReducer,
@@ -47,7 +43,6 @@ export const defaultRootState = {
   auth: defaultAuthState,
   analysis: defaultAnalysisState,
   search: defaultSearchState,
-  quickSearch: defaultQuickSearchState,
   sidebar: defaultSidebarState,
   dataSummary: defaultDataSummaryState,
   dashboard: defaultDashboardState,
