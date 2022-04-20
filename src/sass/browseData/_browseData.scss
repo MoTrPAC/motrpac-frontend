@@ -175,6 +175,15 @@
       &.omics.not-available {
         background-color: #f3f3f3;
       }
+
+      &.file-download-link-item {
+        position: relative;
+
+        a {
+          position: relative;
+          top: 4px;
+        }
+      }
     }
   }
 }
