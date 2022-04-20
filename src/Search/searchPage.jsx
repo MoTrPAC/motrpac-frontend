@@ -110,20 +110,13 @@ export function SearchPage({
             {!searching && searchError ? (
               <div className="alert alert-danger">{searchError}</div>
             ) : null}
-            {!searching &&
-            (!searchResults ||
-              (searchResults.errors && searchResults.errors.length) ||
-              (searchResults && searchResults.total === 0)) ? (
+            {!searching && !searchResults.result && searchResults.message ? (
               <div className="alert alert-warning">
-                No results found. Please <strong>reset</strong> your search
-                parameters and try again.
+                {searchResults.message} Please <strong>reset</strong> your
+                search parameters and try again.
               </div>
             ) : null}
-            {!searching &&
-            searchResults &&
-            searchResults.result &&
-            !searchResults.errors &&
-            Object.keys(searchResults).length ? (
+            {!searching && searchResults.result && !searchResults.message ? (
               <div className="search-results-wrapper-container row">
                 <div className="search-sidebar-container col-md-3">
                   <SearchResultFilters
