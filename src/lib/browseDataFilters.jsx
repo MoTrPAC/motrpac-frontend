@@ -2,6 +2,7 @@ import assayList from './assayList';
 
 const tissues = [
   'Adrenal',
+  'Blood RNA',
   'Brown Adipose',
   'Colon',
   'Cortex',
@@ -12,15 +13,13 @@ const tissues = [
   'Kidney',
   'Liver',
   'Lung',
-  'Ovary',
+  'Ovaries',
   'Plasma',
   'Small Intestine',
   'Spleen',
-  'Testis',
+  'Testes',
   'Vastus Lateralis',
-  'Vena Cava',
   'White Adipose',
-  'Whole Blood',
 ];
 
 const tissueList = tissues.sort((a, b) =>
@@ -53,7 +52,7 @@ const browseDataFilters = [
   {
     keyName: 'category',
     name: 'Category',
-    filters: ['Analysis', 'Results'],
+    filters: ['Analysis', 'Results', 'Phenotype'],
   },
 ];
 
