@@ -216,6 +216,17 @@ export const transformData = (arr) => {
     // Extract file name from object
     const splits = item.object.split('/');
     item.filename = splits.pop();
+    // Transform metabolomics assay value
+    if (item.assay !== null && item.assay !== undefined) {
+      let newMetabAssayVal = item.assay;
+      if (
+        newMetabAssayVal.indexOf('Targeted') !== -1 &&
+        newMetabAssayVal.indexOf('Untargeted') !== -1
+      ) {
+        newMetabAssayVal = 'Merged';
+        item.assay = newMetabAssayVal;
+      }
+    }
     // Convert bytes to MB
     // const size = item.object_size;
     // item.object_size = (Number(size) / 1024 / 1024).toFixed(2) + ' MB';
