@@ -163,6 +163,18 @@
     td {
       padding: 0.65rem 0.5rem;
       vertical-align: middle;
+
+      &.tissue_name.not-available {
+        background-color: #f3f3f3;
+      }
+
+      &.assay.not-available {
+        background-color: #f3f3f3;
+      }
+
+      &.omics.not-available {
+        background-color: #f3f3f3;
+      }
     }
   }
 }
