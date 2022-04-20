@@ -2,12 +2,23 @@ import React, { useRef, useState } from 'react';
 import IframeResizer from 'iframe-resizer-react';
 
 const reportTissues = {
-  HYPOTH: 'Hypothalamus',
-  HIPPOC: 'Hippocampus',
+  ADRNL: 'Adrenal',
+  BLOOD: 'Blood RNA',
+  BAT: 'Brown Adipose',
+  COLON: 'Colon',
+  CORTEX: 'Cortex',
   SKM_GN: 'Gastrocnemius',
+  HEART: 'Heart',
+  HIPPOC: 'Hippocampus',
+  HYPOTH: 'Hypothalamus',
   KIDNEY: 'Kidney',
-  PLASMA: 'Blood Plasma',
-  BLOOD: 'Whole Blood',
+  LIVER: 'Liver',
+  LUNG: 'Lung',
+  PLASMA: 'Plasma',
+  SMLINT: 'Small Intestine',
+  SPLEEN: 'Spleen',
+  SKM_VL: 'Vastus Lateralis',
+  WAT_SC: 'White Adipose',
 };
 
 export default function GraphicalClustering() {
