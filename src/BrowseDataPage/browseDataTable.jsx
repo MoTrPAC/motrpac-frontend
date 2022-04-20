@@ -102,7 +102,7 @@ function DataTable({
       initialState: {
         pageIndex: 0,
         pageSize: 50,
-        pageCount: 24,
+        pageCount: 59,
         sortBy: [{ id: 'tissue_name', desc: false }],
       },
     },
@@ -193,7 +193,7 @@ function DataTable({
                       <td>
                         <a
                           id={matched.file}
-                          href={url}
+                          href={`${url}&response-content-disposition=attachment`}
                           download
                           className="file-download-list-item-link"
                         >
@@ -317,7 +317,12 @@ function DataTable({
                   return (
                     <tr {...row.getRowProps()}>
                       {row.cells.map((cell) => (
-                        <td {...cell.getCellProps()} className={cell.value}>
+                        <td
+                          {...cell.getCellProps()}
+                          className={`${cell.column.id} ${
+                            cell.value ? cell.value : 'not-available'
+                          }`}
+                        >
                           <span>{cell.render('Cell')}</span>
                         </td>
                       ))}
