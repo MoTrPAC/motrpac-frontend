@@ -57,7 +57,10 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
       Object.keys(state.activeFilters).forEach((cat) => {
         if (newActiveFilters[cat].length) {
           filtered = filtered.filter(
-            (file) => !(newActiveFilters[cat].indexOf(file[cat]) === -1)
+            (file) =>
+              newActiveFilters[cat].findIndex((el) =>
+                el.includes(file[cat])
+              ) !== -1 || file[cat] === 'Merged'
           );
         }
       });
