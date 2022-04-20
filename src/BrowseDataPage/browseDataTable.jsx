@@ -190,7 +190,7 @@ function DataTable({
                     <tr key={url} className="file-download-list-item">
                       <td>{matched.file}</td>
                       <td>{bytesToSize(matched.size)}</td>
-                      <td>
+                      <td className="file-download-link-item">
                         <a
                           id={matched.file}
                           href={`${url}&response-content-disposition=attachment`}
