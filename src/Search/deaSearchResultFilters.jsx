@@ -7,6 +7,7 @@ function SearchResultFilters({
   searchParams,
   changeResultFilter,
   handleSearch,
+  resetSearch,
 }) {
   const commonSearchResultFilters = commonSearchFilters.map((item) => (
     <div key={item.name} className="card filter-module mb-4">
@@ -110,9 +111,14 @@ function SearchResultFilters({
   return (
     <div className="search-result-filter-group mb-4">
       <div className="search-result-filter-group-header d-flex justify-content-between align-items-center mb-2">
-        <div className="font-weight-bold">
-          Narrow results using filters below.
-        </div>
+        <div>Narrow results using filters below.</div>
+        <button
+          type="button"
+          className="btn btn-link"
+          onClick={() => resetSearch('filters')}
+        >
+          Reset filters
+        </button>
       </div>
       {commonSearchResultFilters}
       {rangeSearchResultFilters}
@@ -122,7 +128,7 @@ function SearchResultFilters({
           className="btn btn-sm btn-primary"
           onClick={(e) => {
             e.preventDefault();
-            handleSearch(searchParams);
+            handleSearch(searchParams, 'filters');
           }}
         >
           Update results
@@ -136,6 +142,7 @@ SearchResultFilters.propTypes = {
   searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
   changeResultFilter: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
+  resetSearch: PropTypes.func.isRequired,
 };
 
 export default SearchResultFilters;
