@@ -35,6 +35,7 @@ const analysisTypes = [
     active: true,
     species: ['animal'],
   },
+  /*
   {
     title: 'Differential Expression Analysis',
     preferredTitle:
@@ -48,6 +49,7 @@ const analysisTypes = [
     active: true,
     species: ['animal'],
   },
+  */
   {
     title: 'Gene-Centric View',
     shortName: 'MOLECULES',
