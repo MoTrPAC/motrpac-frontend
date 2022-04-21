@@ -24,10 +24,11 @@ function changeParam(field, paramValue) {
   };
 }
 
-function searchSubmit(params) {
+function searchSubmit(params, scope) {
   return {
     type: SEARCH_SUBMIT,
     params,
+    scope,
   };
 }
 
@@ -45,15 +46,16 @@ function searchSuccess(searchResults) {
   };
 }
 
-function searchReset() {
+function searchReset(scope) {
   return {
     type: SEARCH_RESET,
+    scope,
   };
 }
 
-function handleSearch(params) {
+function handleSearch(params, scope) {
   return (dispatch) => {
-    dispatch(searchSubmit(params));
+    dispatch(searchSubmit(params, scope));
     return axios
       .post(`${process.env.REACT_APP_ES_PROXY_HOST}/search/api`, params)
       .then((response) => {
