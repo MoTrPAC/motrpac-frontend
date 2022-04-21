@@ -14,6 +14,7 @@ export function SearchPage({
   profile,
   expanded,
   searchResults,
+  scope,
   searching,
   searchError,
   searchParams,
@@ -90,7 +91,7 @@ export function SearchPage({
                   className="btn btn-primary search-submit"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleSearch(searchParams);
+                    handleSearch(searchParams, 'all');
                   }}
                 >
                   Search
@@ -98,7 +99,7 @@ export function SearchPage({
                 <button
                   type="button"
                   className="btn btn-secondary search-reset ml-2"
-                  onClick={resetSearch}
+                  onClick={() => resetSearch('all')}
                 >
                   Reset
                 </button>
@@ -110,19 +111,25 @@ export function SearchPage({
             {!searching && searchError ? (
               <div className="alert alert-danger">{searchError}</div>
             ) : null}
-            {!searching && !searchResults.result && searchResults.message ? (
+            {!searching &&
+            !searchResults.result &&
+            searchResults.errors &&
+            scope === 'all' ? (
               <div className="alert alert-warning">
-                {searchResults.message} Please <strong>reset</strong> your
-                search parameters and try again.
+                No results found. Please <strong>reset</strong> your search
+                parameters and try again.
               </div>
             ) : null}
-            {!searching && searchResults.result && !searchResults.message ? (
+            {!searching &&
+            (searchResults.result ||
+              (searchResults.errors && scope === 'filters')) ? (
               <div className="search-results-wrapper-container row">
                 <div className="search-sidebar-container col-md-3">
                   <SearchResultFilters
                     searchParams={searchParams}
                     changeResultFilter={changeResultFilter}
                     handleSearch={handleSearch}
+                    resetSearch={resetSearch}
                   />
                 </div>
                 <div className="tabbed-content col-md-9">
@@ -177,7 +184,11 @@ export function SearchPage({
                           handleSearch={handleSearch}
                           downloadPath={searchResults.path}
                         />
-                      ) : null}
+                      ) : (
+                        scope === 'filters' && (
+                          <p className="mt-4">No results found.</p>
+                        )
+                      )}
                     </div>
                     <div
                       className="tab-pane fade"
@@ -193,7 +204,11 @@ export function SearchPage({
                           handleSearch={handleSearch}
                           downloadPath={searchResults.path}
                         />
-                      ) : null}
+                      ) : (
+                        scope === 'filters' && (
+                          <p className="mt-4">No results found.</p>
+                        )
+                      )}
                     </div>
                   </div>
                 </div>
@@ -311,6 +326,7 @@ SearchPage.propTypes = {
   searchResults: PropTypes.shape({
     data: PropTypes.object,
   }),
+  scope: PropTypes.string,
   searching: PropTypes.bool,
   searchError: PropTypes.string,
   searchParams: PropTypes.shape({ ...searchParamsPropType }),
@@ -324,6 +340,7 @@ SearchPage.defaultProps = {
   profile: {},
   expanded: true,
   searchResults: {},
+  scope: 'all',
   searching: false,
   searchError: '',
   searchParams: { ...searchParamsDefaultProps },
@@ -340,8 +357,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(SearchActions.changeParam(field, value)),
   changeResultFilter: (field, value, bound) =>
     dispatch(SearchActions.changeResultFilter(field, value, bound)),
-  handleSearch: (params) => dispatch(SearchActions.handleSearch(params)),
-  resetSearch: () => dispatch(SearchActions.searchReset()),
+  handleSearch: (params, scope) =>
+    dispatch(SearchActions.handleSearch(params, scope)),
+  resetSearch: (scope) => dispatch(SearchActions.searchReset(scope)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
