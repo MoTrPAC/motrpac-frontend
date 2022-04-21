@@ -1,6 +1,5 @@
 export const tissueList = [
   { filter_value: 'adrenal', filter_label: 'Adrenal' },
-  { filter_value: 'aorta', filter_label: 'Aorta' },
   { filter_value: 'blood rna', filter_label: 'Blood RNA' },
   { filter_value: 'brown adipose', filter_label: 'Brown Adipose' },
   { filter_value: 'colon', filter_label: 'Colon' },
@@ -17,7 +16,6 @@ export const tissueList = [
   { filter_value: 'small intestine', filter_label: 'Small Intestine' },
   { filter_value: 'spleen', filter_label: 'Spleen' },
   { filter_value: 'testes', filter_label: 'Testes' },
-  { filter_value: 'vena cava', filter_label: 'Vena Cava' },
   { filter_value: 'vastus lateralis', filter_label: 'Vastus Lateralis' },
   { filter_value: 'white adipose', filter_label: 'White Adipose' },
 ];
