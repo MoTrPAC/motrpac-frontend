@@ -99,7 +99,11 @@ GlobalFilter.defaultProps = {
  */
 export const PageIndex = ({ pageIndex, pageOptions }) => (
   <span className="page-index">
-    Showing Page {pageIndex + 1} of {pageOptions.length}
+    {pageOptions.length > 0 ? (
+      <span>{`Showing Page ${pageIndex + 1} of ${pageOptions.length}`}</span>
+    ) : (
+      <span>Showing 0 Pages</span>
+    )}
   </span>
 );
 
@@ -126,6 +130,7 @@ export const PageSize = ({ pageSize, setPageSize, pageSizeOptions }) => (
       onChange={(e) => {
         setPageSize(Number(e.target.value));
       }}
+      disabled={pageSizeOptions.length === 0}
     >
       {pageSizeOptions.map((size) => (
         <option key={size} value={size}>
