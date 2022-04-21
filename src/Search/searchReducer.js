@@ -134,10 +134,11 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       return {
         ...state,
         searchResults:
-          action.searchResults.errors ||
-          action.searchResults.message ||
-          action.searchResults.messgae
-            ? { errors: 'No results found.' }
+          action.searchResults.message || action.searchResults.errors
+            ? {
+                errors:
+                  action.searchResults.message || action.searchResults.errors,
+              }
             : action.searchResults,
         searching: false,
       };

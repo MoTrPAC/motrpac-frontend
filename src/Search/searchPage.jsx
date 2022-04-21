@@ -117,7 +117,7 @@ export function SearchPage({
             searchResults.errors &&
             scope === 'all' ? (
               <div className="alert alert-warning">
-                No results found. Please <strong>reset</strong> your search
+                {searchResults.errors} Please <strong>reset</strong> your search
                 parameters and try again.
               </div>
             ) : null}
@@ -187,7 +187,7 @@ export function SearchPage({
                         />
                       ) : (
                         scope === 'filters' && (
-                          <p className="mt-4">No results found.</p>
+                          <p className="mt-4">{searchResults.errors}</p>
                         )
                       )}
                     </div>
@@ -207,7 +207,7 @@ export function SearchPage({
                         />
                       ) : (
                         scope === 'filters' && (
-                          <p className="mt-4">No results found.</p>
+                          <p className="mt-4">{searchResults.errors}</p>
                         )
                       )}
                     </div>
