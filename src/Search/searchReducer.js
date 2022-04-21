@@ -25,6 +25,7 @@ export const defaultSearchState = {
     debug: true,
     save: true,
   },
+  scope: 'all',
   searching: false,
   searchError: '',
 };
@@ -115,6 +116,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
           debug: true,
           save: true,
         },
+        scope: action.scope,
         searching: true,
       };
     }
@@ -131,17 +133,40 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
     case SEARCH_SUCCESS:
       return {
         ...state,
-        searchResults: !Object.keys(action.searchResults).length
-          ? { errors: 'No results found.' }
-          : action.searchResults,
+        searchResults:
+          action.searchResults.errors ||
+          action.searchResults.message ||
+          action.searchResults.messgae
+            ? { errors: 'No results found.' }
+            : action.searchResults,
         searching: false,
       };
 
-    // Revert form values to default
-    case SEARCH_RESET:
+    // Revert param/filter values to default
+    case SEARCH_RESET: {
+      if (action.scope === 'filters') {
+        const params = { ...state.searchParams };
+
+        params.filters = {
+          tissue: '',
+          assay: '',
+          sex: '',
+          comparison_group: '',
+          adj_p_value: [],
+          logFC: [],
+          p_value: [],
+        };
+
+        return {
+          ...state,
+          searchParams: params,
+        };
+      }
+
       return {
         ...defaultSearchState,
       };
+    }
 
     default:
       return state;
