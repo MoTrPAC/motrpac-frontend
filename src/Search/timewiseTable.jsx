@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
   useTable,
@@ -46,10 +46,6 @@ function TimewiseResultsTable({ timewiseData, searchParams, downloadPath }) {
  * @returns {object} JSX representation of table on data qc status
  */
 function DataTable({ columns, data, downloadPath }) {
-  const [filterMinMaxValues, setFilterMinMaxValues] = useState({
-    min: null,
-    max: null,
-  });
   const filterTypes = React.useMemo(
     () => ({
       text: (rows, id, filterValue) =>
