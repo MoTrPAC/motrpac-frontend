@@ -151,8 +151,13 @@
 
   .search-result-filter-group {
     .search-result-filter-group-header {
-      color: #888;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+
+      button {
+        color: #007bff;
+        font-size: inherit;
+        padding: 0;
+      }
     }
 
     .filter-module {
