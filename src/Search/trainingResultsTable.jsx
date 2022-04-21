@@ -78,7 +78,7 @@ function TrainingDataTable({ columns, data, downloadPath }) {
       initialState: {
         pageIndex: 0,
         pageSize: 40,
-        pageCount: 10,
+        pageCount: Math.ceil(data / 40),
       },
     },
     useFilters,
