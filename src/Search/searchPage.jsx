@@ -67,7 +67,8 @@ export function SearchPage({
         <div className="search-content-container">
           <h6 className="mt-4 mb-3">
             Search by genes, protein IDs, or metabolite names to examine the
-            training response of its related molecules in PASS1B 6-month data.
+            training response of its related molecules in PASS1B 6-month data
+            (excluding RRBS and ATAC-seq).
           </h6>
           <div className="es-search-ui-container d-flex align-items-center w-100">
             <RadioButton changeParam={changeParam} ktype={searchParams.ktype} />
