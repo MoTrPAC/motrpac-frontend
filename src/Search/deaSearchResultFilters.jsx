@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { commonSearchFilters, rangeSearchFilters } from '../lib/searchFilters';
+import {
+  commonSearchFilters,
+  rangeSearchFilters,
+  tissueList,
+  assayList,
+} from '../lib/searchFilters';
 import { searchParamsPropType } from './sharedlib';
 
 function SearchResultFilters({
@@ -9,6 +14,54 @@ function SearchResultFilters({
   handleSearch,
   resetSearch,
 }) {
+  // FIXME - this is a hack to get the search filters such as tissue and assay
+  // to render accordingly to the ktype (gene, protein, metabolite)
+  function customizeTissueList() {
+    if (searchParams.ktype === 'protein') {
+      return tissueList.filter((t) =>
+        t.filter_value.match(
+          /^(cortex|gastrconemius|heart|kidney|lung|liver|white adipose)$/
+        )
+      );
+    }
+    if (searchParams.ktype === 'metab') {
+      return tissueList.filter((t) => t.filter_value !== 'blood rna');
+    }
+    return tissueList;
+  }
+
+  function customizeAssayList() {
+    if (searchParams.ktype === 'gene') {
+      return assayList.filter((t) =>
+        t.filter_value.match(
+          /^(transcript-rna-seq|immunoassay|prot-pr|prot-ph|prot-ac|prot-ub)$/
+        )
+      );
+    }
+    if (searchParams.ktype === 'protein') {
+      return assayList.filter((t) =>
+        t.filter_value.match(/^(prot-pr|prot-ph|prot-ac|prot-ub)$/)
+      );
+    }
+    if (searchParams.ktype === 'metab') {
+      return assayList.filter(
+        (t) =>
+          !t.filter_value.match(
+            /^(transcript-rna-seq|immunoassay|prot-pr|prot-ph|prot-ac|prot-ub)$/
+          )
+      );
+    }
+    return assayList;
+  }
+
+  commonSearchFilters.find(
+    (f) => f.keyName === 'tissue'
+  ).filters = customizeTissueList();
+
+  commonSearchFilters.find(
+    (f) => f.keyName === 'assay'
+  ).filters = customizeAssayList();
+
   const commonSearchResultFilters = commonSearchFilters.map((item) => (
     <div key={item.name} className="card filter-module mb-4">
       <div className="card-header font-weight-bold d-flex align-item-center justify-content-between">
