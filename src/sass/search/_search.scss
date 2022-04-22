@@ -262,3 +262,54 @@
     }
   }
 }
+
+.feature-links-container {
+  .card {
+    &:hover {
+      border: 1px solid $primary-blue;
+      background-color: lighten($blue-transparent, 15%);
+      cursor: pointer;
+      transition: .2s;
+      transform: translateY(-1px);
+      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.25) !important;
+    }
+
+    .material-icons {
+      font-size: 5.0rem;
+    }
+
+    &.qc-data-monitor {
+      .material-icons {
+        color: $accent-green;
+      }
+    }
+
+    &.releases {
+      .material-icons {
+        color: $stanford-cardinal-red;
+      }
+    }
+
+    &.summary {
+      .material-icons {
+        color: $accent-violet;
+      }
+    }
+  }
+}
+
+@media (min-width: 948px) and (max-width: 1199.98px) {
+  .feature-links-container {
+    .card-deck .card {
+      min-width: 300px;
+    }
+  }
+}
+
+@media (min-width: 576px) and (max-width: 947.98px) {
+  .feature-links-container {
+    .card-deck .card {
+      min-width: 200px;
+    }
+  }
+}
