@@ -9,6 +9,7 @@ import SearchActions from './searchActions';
 import SearchResultFilters from './deaSearchResultFilters';
 import AnimatedLoadingIcon from '../lib/ui/loading';
 import { searchParamsDefaultProps, searchParamsPropType } from './sharedlib';
+import FeatureLinks from './featureLinks';
 
 export function SearchPage({
   profile,
@@ -78,7 +79,7 @@ export function SearchPage({
                 id="keys"
                 name="keys"
                 className="form-control search-input-kype flex-grow-1"
-                placeholder="Separate multiple search terms by commas (e.g. BRD2, SMAD3, ID1)"
+                placeholder="Multiple search terms must be separated by comma and space (e.g. BRD2, SMAD3, ID1)"
                 value={searchParams.keys}
                 onChange={(e) => changeParam('keys', e.target.value)}
               />
@@ -107,6 +108,10 @@ export function SearchPage({
               </div>
             </div>
           </div>
+          {!searching &&
+            !searchError &&
+            !searchResults.result &&
+            !searchResults.errors && <FeatureLinks />}
           <div className="search-body-container mt-4 mb-2">
             {searching && <AnimatedLoadingIcon isFetching={searching} />}
             {!searching && searchError ? (
@@ -117,8 +122,8 @@ export function SearchPage({
             searchResults.errors &&
             scope === 'all' ? (
               <div className="alert alert-warning">
-                {searchResults.errors} Please <strong>reset</strong> your search
-                parameters and try again.
+                {searchResults.errors} Please modify your search parameters and
+                try again.
               </div>
             ) : null}
             {!searching &&
