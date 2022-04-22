@@ -136,6 +136,17 @@ export function Sidebar({
             <span>Data</span>
           </h6>
           <ul className="nav flex-column">
+            {userType !== 'external' && (
+              <li className="nav-item">
+                {renderNavLink(
+                  'summary',
+                  'Summary',
+                  'summary',
+                  'assessment',
+                  false
+                )}
+              </li>
+            )}
             <li className="nav-item">
               {renderNavLink(
                 'releases',
@@ -164,17 +175,6 @@ export function Sidebar({
                 handleQcDataFetch
               )}
             </li>
-            {userType !== 'external' && (
-              <li className="nav-item">
-                {renderNavLink(
-                  'summary',
-                  'Summary',
-                  'summary',
-                  'assessment',
-                  false
-                )}
-              </li>
-            )}
           </ul>
         </div>
       </div>
