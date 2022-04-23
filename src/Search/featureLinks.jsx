@@ -8,12 +8,14 @@ const features = [
     icon: 'rocket_launch',
     title: 'Data Releases',
   },
+  /*
   {
     route: 'browse-data',
     description: 'Browse and download data by tissue, assay, or omics.',
     icon: 'view_list',
     title: 'Browse Data',
   },
+  */
   {
     route: 'qc-data-monitor',
     description: 'Track submitted samples and their QC statuses.',
@@ -40,15 +42,15 @@ function FeatureLinks() {
         {features.map((item) => (
           <div
             key={item.route}
-            className={`card mb-3 px-4 py-1 shadow-sm ${item.route}`}
+            className={`card mb-3 p-3 shadow-sm ${item.route}`}
           >
             <Link to={`/${item.route}`}>
-              <div className="row no-gutters h-100">
-                <div className="col-md-3 d-flex align-items-center">
-                  <span className="material-icons w-100">{item.icon}</span>
-                </div>
-                <div className="col-md-9">
-                  <div className="card-body">
+              <div className="card-body">
+                <div className="h-100 d-flex align-items-start">
+                  <div className="feature-icon mr-3">
+                    <span className="material-icons">{item.icon}</span>
+                  </div>
+                  <div className="feature-summary">
                     <h5 className="card-title">{item.title}</h5>
                     <p className="card-text">{item.description}</p>
                   </div>
