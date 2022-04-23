@@ -33,6 +33,14 @@ export function BrowseDataPage({
           <h3 className="mb-0">Browse Data</h3>
         </div>
       </div>
+      <div className="my-4">
+        Browse and download PASS1B 6-month analysis and results data by tissue,
+        assay, or omics. Please contact{' '}
+        <a href="mailto:motrpac-data-requests@lists.stanford.edu">
+          MoTrPAC Data Requests
+        </a>{' '}
+        if you need access to the raw data.
+      </div>
       <div className="browse-data-container row">
         <BrowseDataFilter
           activeFilters={activeFilters}
