@@ -1,33 +1,29 @@
 const assays = [
-  'WGS',
-  'RNA-seq (PolyA)',
-  'RNA-seq (all)',
-  'miRNA-seq',
+  'RNA-seq',
   'RRBS',
-  'Methyl-seq',
   'ATAC-seq',
-  'Untargeted RP',
-  'Untargeted HILIC-positive',
-  'Untargeted HILIC-negative',
-  'Untargeted Lipidomics',
+  'Immunoassay',
   'Targeted Acyl-CoA',
-  'Targeted Acylcarnitines',
-  'Targeted Ketoacids',
-  'Targeted Organic Acids',
-  'Targeted Eicosanoids',
-  'Targeted Nucleotides',
-  'Targeted Ceramides',
-  'Targeted Oxylipins',
   'Targeted Amines',
-  'Targeted Steroids',
-  'TCA Cycle',
+  'Targeted Ethanolamides',
+  'Targeted Keto Acids',
+  'Targeted Nucleotides',
+  'Targeted Oxylipins',
+  'Targeted Tricarboxylic Acid Cycle',
+  'Untargeted HILIC-Positive',
+  'Untargeted Ion-Pair Negative',
+  'Untargeted Lipidomics Reversed-Phase Negative',
+  'Untargeted Lipidomics Reversed-Phase Positive',
+  'Untargeted Reversed-Phase Negative',
+  'Untargeted Reversed-Phase Positive',
   'Global Proteomics',
-  'Global Phospho-proteomics',
-  'Redox proteome',
-  'Acyl/Acetyl proteome',
-  'SomaLogic',
+  'Phophoproteomics',
+  'Acetyl Proteomics',
+  'Protein Ubiquitination',
 ];
 
-const assayList = assays.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+const assayList = assays.sort((a, b) =>
+  a.toLowerCase().localeCompare(b.toLowerCase())
+);
 
 export default assayList;

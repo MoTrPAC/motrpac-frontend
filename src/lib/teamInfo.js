@@ -81,7 +81,7 @@ const teamInfo = {
       image: MihirImg,
     },
     {
-      name: 'Samiya Shimly',
+      name: 'Samiya Shimly, Ph.D.',
       title: 'Postdoctoral Scholar',
       image: SamiyaImg,
     },

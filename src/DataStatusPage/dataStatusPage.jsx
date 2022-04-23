@@ -35,7 +35,7 @@ export function DataStatusPage({
   // Send users to default page if they are not consortium members
   const userType = profile.user_metadata && profile.user_metadata.userType;
   if (userType === 'external') {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to="/home" />;
   }
 
   // Render button group

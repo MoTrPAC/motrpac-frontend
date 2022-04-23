@@ -7,23 +7,21 @@ import History from './history';
 import NavbarConnected from '../Navbar/navbar';
 import FooterConnected from '../Footer/footer';
 import LandingPageConnected from '../LandingPage/landingPage';
-import DashboardConnected from '../Dashboard/dashboard';
-import UploadScreenConnected from '../UploadPage/uploadScreen';
 import LinkoutPageConnected from '../LinkoutPage/linkoutPage';
 import AnalysisHomePageConnected from '../AnalysisPage/analysisHomePage';
-import DownloadPageConnected from '../DownloadPage/downloadPage';
 import MethodsConnected from '../MethodsPage/methods';
 import TeamPageConnected from '../TeamPage/teamPage';
 import ContactConnected from '../ContactPage/contact';
 import ErrorPageConnected from '../ErrorPage/error';
-import SearchPageConnected from '../Search/searchPage';
 import ReleasePageConnected from '../ReleasePage/releasePage';
 import DataStatusPageConnected from '../DataStatusPage/dataStatusPage';
-import DataSummaryPage from '../DataSummaryPage/dataSummaryPage';
+import DataSummaryPageConnected from '../DataSummaryPage/dataSummaryPage';
 import DataAccessPageConnected from '../DataAccess/dataAccessPage';
 import RelatedStudyConnected from '../RelatedStudy/relatedStudy';
 import HeritageProteomicsConnected from '../RelatedStudy/heritageProteomics';
 import AnnouncementsPageConnected from '../AnnouncementsPage/announcementsPage';
+import BrowseDataPageConnected from '../BrowseDataPage/browseDataPage';
+import HomePageConnected from '../Home/HomePage';
 import CallbackConnected from '../Auth/callback';
 import SidebarConnected from '../Sidebar/sidebar';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
@@ -52,20 +50,12 @@ function App({ history = History }) {
                 component={withTracker(LandingPageConnected)}
               />
               <PrivateRoute
-                path="/dashboard"
-                component={withTracker(DashboardConnected)}
-              />
-              <PrivateRoute
-                path="/upload"
-                component={withTracker(UploadScreenConnected)}
+                path="/home"
+                component={withTracker(HomePageConnected)}
               />
               <Route
                 path="/external-links"
                 component={withTracker(LinkoutPageConnected)}
-              />
-              <PrivateRoute
-                path="/download"
-                component={withTracker(DownloadPageConnected)}
               />
               <PrivateRoute
                 path="/analysis/:subjectType"
@@ -89,12 +79,8 @@ function App({ history = History }) {
                 component={withTracker(ErrorPageConnected)}
               />
               <PrivateRoute
-                path="/search"
-                component={withTracker(SearchPageConnected)}
-              />
-              <PrivateRoute
                 path="/summary"
-                component={withTracker(DataSummaryPage)}
+                component={withTracker(DataSummaryPageConnected)}
               />
               <PrivateRoute
                 path="/releases"
@@ -103,6 +89,10 @@ function App({ history = History }) {
               <PrivateRoute
                 path="/qc-data-monitor"
                 component={withTracker(DataStatusPageConnected)}
+              />
+              <PrivateRoute
+                path="/browse-data"
+                component={withTracker(BrowseDataPageConnected)}
               />
               <Route
                 path="/data-access"

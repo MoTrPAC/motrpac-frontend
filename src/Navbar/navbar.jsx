@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect, Link, useLocation } from 'react-router-dom';
 import actions from '../Auth/authActions';
 import LoginButton from '../lib/loginButton';
 import QuickSearchBox from '../Search/quickSearchBox';
@@ -32,6 +32,8 @@ export function Navbar({
   getSearchForm,
   resetAdvSearch,
 }) {
+  const location = useLocation();
+
   useEffect(() => {
     /* Handle logout for various use cases */
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
@@ -133,6 +135,21 @@ export function Navbar({
 
     return <LoginButton login={login} />;
   };
+
+  function setClass() {
+    let classValues;
+    if (isAuthenticated && hasAccess) {
+      classValues = 'container-fluid';
+    } else if (
+      location.pathname === '/data-exploration/differential-expression'
+    ) {
+      classValues = 'container-fluid px-4';
+    } else {
+      classValues = 'container';
+    }
+
+    return classValues;
+  }
 
   const navbar = (
     <div className="header-navbar-container fixed-top">

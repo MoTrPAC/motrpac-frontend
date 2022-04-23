@@ -1,135 +1,80 @@
 import axios from 'axios';
-import history from '../App/history';
 
-export const SEARCH_FORM_CHANGE = 'SEARCH_FORM_CHANGE';
-export const SEARCH_FORM_ADD_PARAM = 'SEARCH_FORM_ADD_PARAM';
-export const SEARCH_FORM_REMOVE_PARAM = 'SEARCH_FORM_REMOVE_PARAM';
-export const SEARCH_FORM_UPDATE_PARAM = 'SEARCH_FORM_UPDATE_PARAM';
-export const SEARCH_FORM_SUBMIT = 'SEARCH_FORM_SUBMIT';
-export const SEARCH_FORM_SUBMIT_FAILURE = 'SEARCH_FORM_SUBMIT_FAILURE';
-export const SEARCH_FORM_SUBMIT_SUCCESS = 'SEARCH_FORM_SUBMIT_SUCCESS';
-export const SEARCH_FORM_RESET = 'SEARCH_FORM_RESET';
-export const GET_SEARCH_FORM = 'GET_SEARCH_FORM';
+export const CHANGE_RESULT_FILTER = 'CHANGE_RESULT_FILTER';
+export const CHANGE_PARAM = 'CHANGE_PARAM';
+export const SEARCH_SUBMIT = 'SEARCH_SUBMIT';
+export const SEARCH_FAILURE = 'SEARCH_FAILURE';
+export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
+export const SEARCH_RESET = 'SEARCH_RESET';
 
-function searchFormChange(index, field, e) {
+function changeResultFilter(field, filterValue, bound) {
   return {
-    type: SEARCH_FORM_CHANGE,
-    index,
+    type: CHANGE_RESULT_FILTER,
     field,
-    inputValue: e.target.value,
+    filterValue,
+    bound,
   };
 }
 
-function searchFormAddParam() {
+function changeParam(field, paramValue) {
   return {
-    type: SEARCH_FORM_ADD_PARAM,
+    type: CHANGE_PARAM,
+    field,
+    paramValue,
   };
 }
 
-function searchFormRemoveParam(index) {
+function searchSubmit(params, scope) {
   return {
-    type: SEARCH_FORM_REMOVE_PARAM,
-    index,
-  };
-}
-
-function searchFormUpdateParam(params) {
-  return {
-    type: SEARCH_FORM_UPDATE_PARAM,
+    type: SEARCH_SUBMIT,
     params,
+    scope,
   };
 }
 
-function searchFormSubmit(params) {
+function searchFailure(searchError = '') {
   return {
-    type: SEARCH_FORM_SUBMIT,
-    params,
-  };
-}
-
-function searchFormSubmitFailure(searchError = '') {
-  return {
-    type: SEARCH_FORM_SUBMIT_FAILURE,
+    type: SEARCH_FAILURE,
     searchError,
   };
 }
 
-function searchFormSubmitSuccess(searchPayload) {
+function searchSuccess(searchResults) {
   return {
-    type: SEARCH_FORM_SUBMIT_SUCCESS,
-    searchPayload,
+    type: SEARCH_SUCCESS,
+    searchResults,
   };
 }
 
-function searchFormReset() {
+function searchReset(scope) {
   return {
-    type: SEARCH_FORM_RESET,
+    type: SEARCH_RESET,
+    scope,
   };
 }
 
-function getSearchForm() {
-  return {
-    type: GET_SEARCH_FORM,
-  };
-}
-
-// Append search query to URL
-function pushHistoryWithQuery(params) {
-  const query = params.map((item) => {
-    const operator = item.operator && item.operator.length ? item.operator : '';
-    return `${operator} (${item.term}:${encodeURI(item.value)})`;
-  }).join(' ');
-
-  history.push(`/search?q=${query}`);
-}
-
-// FIXME: This function is not yet properly implemented
-function handleSearchFormSubmit(params) {
+function handleSearch(params, scope) {
   return (dispatch) => {
-    dispatch(searchFormSubmit(params));
-    return axios.get('https://api.github.com/search/repositories', {
-      params: {
-        q: 'reactjs',
-        sort: 'stars',
-        order: 'desc',
-      },
-    }).then((response) => {
-      dispatch(searchFormSubmitSuccess(response));
-      pushHistoryWithQuery(params);
-    }).catch((err) => {
-      dispatch(searchFormSubmitFailure(`${err.error}: ${err.errorDescription}`));
-    });
-  };
-}
-
-// Handler for predefined searches
-function handlePredefinedSearch(params) {
-  return (dispatch) => {
-    dispatch(searchFormUpdateParam(params));
-    dispatch(searchFormSubmit(params));
-    return axios.get('https://api.github.com/search/repositories', {
-      params: {
-        q: 'reactjs',
-        sort: 'stars',
-        order: 'desc',
-      },
-    }).then((response) => {
-      dispatch(searchFormSubmitSuccess(response));
-      pushHistoryWithQuery(params);
-    }).catch((err) => {
-      dispatch(searchFormSubmitFailure(`${err.error}: ${err.errorDescription}`));
-    });
+    dispatch(searchSubmit(params, scope));
+    return axios
+      .post(`${process.env.REACT_APP_ES_PROXY_HOST}/search/api`, params)
+      .then((response) => {
+        if (response.data.error) {
+          dispatch(searchFailure(response.data.error));
+        }
+        dispatch(searchSuccess(response.data));
+      })
+      .catch((err) => {
+        dispatch(searchFailure(`${err.name}: ${err.message}`));
+      });
   };
 }
 
 const SearchActions = {
-  handleSearchFormSubmit,
-  handlePredefinedSearch,
-  searchFormChange,
-  searchFormAddParam,
-  searchFormRemoveParam,
-  searchFormReset,
-  getSearchForm,
+  changeParam,
+  handleSearch,
+  searchReset,
+  changeResultFilter,
 };
 
 export default SearchActions;
