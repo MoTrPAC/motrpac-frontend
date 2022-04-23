@@ -47,10 +47,10 @@ export const searchParamsPropType = {
  * and metabolomic timewise dea results
  */
 export const timewiseResultsTablePropType = {
-  gene_symbol: PropTypes.string,
+  gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   metabolite: PropTypes.string,
   dataset: PropTypes.string,
-  feature_ID: PropTypes.string,
+  feature_ID: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tissue: PropTypes.string,
   assay: PropTypes.string,
   sex: PropTypes.string,
@@ -66,10 +66,10 @@ export const timewiseResultsTablePropType = {
  * and metabolomic training dea results
  */
 export const trainingResultsTablePropType = {
-  gene_symbol: PropTypes.string,
+  gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   metabolite: PropTypes.string,
   dataset: PropTypes.string,
-  feature_ID: PropTypes.string,
+  feature_ID: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tissue: PropTypes.string,
   assay_name: PropTypes.string,
   p_value: PropTypes.string,
@@ -79,11 +79,13 @@ export const trainingResultsTablePropType = {
 };
 
 // react-table function to filter multiple values in one column
+/*
 function multipleSelectFilter(rows, id, filterValue) {
   return filterValue.length === 0
     ? rows
     : rows.filter((row) => filterValue.includes(row.values[id]));
 }
+*/
 
 /**
  * column headers common to transcriptomics, proteomics,
@@ -360,14 +362,7 @@ TrainingGlobalFilter.defaultProps = {
  */
 export const PageIndex = ({ pageIndex, pageOptions }) => (
   <span className="page-index">
-    Showing Page
-    {' '}
-    {pageIndex + 1}
-    {' '}
-    of
-    {' '}
-    {pageOptions.length}
-    {' '}
+    Showing Page {pageIndex + 1} of {pageOptions.length}
   </span>
 );
 
@@ -427,34 +422,39 @@ export const PageNavigationControl = ({
   <div className="btn-group pagination-navigation-control" role="group">
     <button
       type="button"
-      className={`btn btn-sm btn-outline-primary ${!canPreviousPage ? 'disabled-btn' : ''}`}
+      className={`btn btn-sm btn-outline-primary ${
+        !canPreviousPage ? 'disabled-btn' : ''
+      }`}
       onClick={() => gotoPage(0)}
       disabled={!canPreviousPage}
     >
       First
-    </button>
-    {' '}
+    </button>{' '}
     <button
       type="button"
-      className={`btn btn-sm btn-outline-primary ${!canPreviousPage ? 'disabled-btn' : ''}`}
+      className={`btn btn-sm btn-outline-primary ${
+        !canPreviousPage ? 'disabled-btn' : ''
+      }`}
       onClick={() => previousPage()}
       disabled={!canPreviousPage}
     >
       Previous
-    </button>
-    {' '}
+    </button>{' '}
     <button
       type="button"
-      className={`btn btn-sm btn-outline-primary ${!canNextPage ? 'disabled-btn' : ''}`}
+      className={`btn btn-sm btn-outline-primary ${
+        !canNextPage ? 'disabled-btn' : ''
+      }`}
       onClick={() => nextPage()}
       disabled={!canNextPage}
     >
       Next
-    </button>
-    {' '}
+    </button>{' '}
     <button
       type="button"
-      className={`btn btn-sm btn-outline-primary ${!canNextPage ? 'disabled-btn' : ''}`}
+      className={`btn btn-sm btn-outline-primary ${
+        !canNextPage ? 'disabled-btn' : ''
+      }`}
       onClick={() => gotoPage(pageCount - 1)}
       disabled={!canNextPage}
     >
@@ -482,7 +482,39 @@ export const transformData = (arr) => {
     // Transform gene values
     if (item.gene_symbol !== null && item.gene_symbol !== undefined) {
       const newGeneVal = item.gene_symbol;
-      item.gene_symbol = newGeneVal.toUpperCase();
+      item.gene_symbol = (
+        <a
+          href={`https://www.ncbi.nlm.nih.gov/gene/?term=${newGeneVal.toLowerCase()}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {newGeneVal.toUpperCase()}
+        </a>
+      );
+    }
+    // Transform protein id values
+    if (item.assay.match(/protein|proteomics|prot-/i)) {
+      const newProteinVal = item.feature_ID;
+      item.feature_ID = (
+        <a
+          href={`https://www.ncbi.nlm.nih.gov/protein/${newProteinVal}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {newProteinVal}
+        </a>
+      );
+    } else if (item.assay.match(/transcript-rna-seq/i)) {
+      const newFidVal = item.feature_ID;
+      item.feature_ID = (
+        <a
+          href={`http://uswest.ensembl.org/Rattus_norvegicus/Gene/Idhistory?g=${newFidVal}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {newFidVal}
+        </a>
+      );
     }
     // Transform metabolomics dataset (aka assay) values
     if (item.dataset !== null && item.dataset !== undefined) {
