@@ -66,11 +66,13 @@ export function SearchPage({
           </div>
         </div>
         <div className="search-content-container">
-          <h6 className="mt-4 mb-3">
+          <div className="mt-4 mb-4">
             Search by genes, protein IDs, or metabolite names to examine the
             training response of its related molecules in PASS1B 6-month data
-            (excluding RRBS and ATAC-seq).
-          </h6>
+            (excluding RRBS and ATAC-seq). Multiple search terms must be
+            separated by comma and space. Examples: "NP_001000006.1,
+            NP_001001508.2, NP_001005898.3" or "8,9-EpETrE, C18:1 LPC plasmalogen B".
+          </div>
           <div className="es-search-ui-container d-flex align-items-center w-100">
             <RadioButton changeParam={changeParam} ktype={searchParams.ktype} />
             <div className="search-box-input-group d-flex align-items-center flex-grow-1">
@@ -79,7 +81,7 @@ export function SearchPage({
                 id="keys"
                 name="keys"
                 className="form-control search-input-kype flex-grow-1"
-                placeholder="Multiple search terms must be separated by comma and space (e.g. BRD2, SMAD3, ID1)"
+                placeholder="Example: BRD2, SMAD3, ID1"
                 value={searchParams.keys}
                 onChange={(e) => changeParam('keys', e.target.value)}
               />
@@ -89,7 +91,7 @@ export function SearchPage({
               />
               <div className="search-button-group d-flex justify-content-end ml-4">
                 <button
-                  type="button"
+                  type="submit"
                   className="btn btn-primary search-submit"
                   onClick={(e) => {
                     e.preventDefault();
