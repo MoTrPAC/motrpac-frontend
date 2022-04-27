@@ -493,6 +493,7 @@ export const transformData = (arr) => {
       );
     }
     // Transform protein id values
+    /*
     if (item.assay.match(/protein|proteomics|prot-/i)) {
       const newProteinVal = item.feature_ID;
       item.feature_ID = (
@@ -516,6 +517,7 @@ export const transformData = (arr) => {
         </a>
       );
     }
+    */
     // Transform metabolomics dataset (aka assay) values
     if (item.dataset !== null && item.dataset !== undefined) {
       const matchedDataset = assayList.find(
