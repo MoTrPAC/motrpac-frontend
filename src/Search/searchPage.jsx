@@ -191,6 +191,7 @@ export function SearchPage({
                           changeResultFilter={changeResultFilter}
                           handleSearch={handleSearch}
                           downloadPath={searchResults.path}
+                          profile={profile}
                         />
                       ) : (
                         scope === 'filters' && (
@@ -211,6 +212,7 @@ export function SearchPage({
                           changeResultFilter={changeResultFilter}
                           handleSearch={handleSearch}
                           downloadPath={searchResults.path}
+                          profile={profile}
                         />
                       ) : (
                         scope === 'filters' && (
