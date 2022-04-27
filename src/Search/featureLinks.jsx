@@ -8,14 +8,12 @@ const features = [
     icon: 'rocket_launch',
     title: 'Data Releases',
   },
-  /*
   {
     route: 'browse-data',
     description: 'Browse and download data by tissue, assay, or omics.',
     icon: 'view_list',
     title: 'Browse Data',
   },
-  */
   {
     route: 'qc-data-monitor',
     description: 'Track submitted samples and their QC statuses.',
