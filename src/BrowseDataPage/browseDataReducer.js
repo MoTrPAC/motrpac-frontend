@@ -118,6 +118,7 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
           return {
             file: item.original.filename,
             size: item.original.object_size,
+            object: item.original.object,
           };
         }),
         fetching: false,
