@@ -170,6 +170,46 @@ function DataTable({
     return `${(bytes / (1024 ** i)).toFixed(1)} ${sizes[i]}`;
   }
 
+  // Render file manifest download link
+  function renderManifestDownloadLink() {
+    if (error && error.length) {
+      return false;
+    }
+
+    // Create array of selected object paths
+    const objects = [];
+    selectedFileNames.forEach((item) => objects.push(item.object));
+    const sortedObjects = objects.sort((a, b) =>
+      a.toLowerCase().localeCompare(b.toLowerCase())
+    );
+    // Convert array to csv
+    const manifestContent = sortedObjects.join('\r\n');
+
+    // Create a blob
+    const blob = new Blob([manifestContent], {
+      type: 'text/csv;charset=utf-8;',
+    });
+    const fileManifestUrl = URL.createObjectURL(blob);
+
+    return (
+      <tr className="file-download-list-item manifest-file">
+        <td colSpan="2" className="font-weight-bold">
+          List of selected files with file structure paths
+        </td>
+        <td className="file-download-link-item">
+          <a
+            id="file-manifest-download"
+            href={fileManifestUrl}
+            download="file_manifest.csv"
+            className="file-download-list-item-link"
+          >
+            <span className="material-icons">file_download</span>
+          </a>
+        </td>
+      </tr>
+    );
+  }
+
   // Render modal message
   function renderFileDownloadLinks() {
     if (error && error.length) {
@@ -203,6 +243,7 @@ function DataTable({
                     </tr>
                   );
                 })}
+                {renderManifestDownloadLink()}
               </tbody>
             </table>
           </div>
