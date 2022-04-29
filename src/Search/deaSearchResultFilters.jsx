@@ -34,7 +34,7 @@ function SearchResultFilters({
     if (searchParams.ktype === 'gene') {
       return assayList.filter((t) =>
         t.filter_value.match(
-          /^(transcript-rna-seq|immunoassay|prot-pr|prot-ph|prot-ac|prot-ub)$/
+          /^(transcript-rna-seq|epigen-rrbs|epigen-atac-seq|immunoassay|prot-pr|prot-ph|prot-ac|prot-ub)$/
         )
       );
     }
@@ -47,7 +47,7 @@ function SearchResultFilters({
       return assayList.filter(
         (t) =>
           !t.filter_value.match(
-            /^(transcript-rna-seq|immunoassay|prot-pr|prot-ph|prot-ac|prot-ub)$/
+            /^(transcript-rna-seq|epigen-rrbs|epigen-atac-seq|immunoassay|prot-pr|prot-ph|prot-ac|prot-ub)$/
           )
       );
     }
