@@ -68,10 +68,12 @@ export function SearchPage({
         <div className="search-content-container">
           <div className="mt-4 mb-4">
             Search by genes, protein IDs, or metabolite names to examine the
-            training response of its related molecules in PASS1B 6-month data
-            (excluding RRBS and ATAC-seq). Multiple search terms must be
-            separated by comma and space. Examples: "NP_001000006.1,
-            NP_001001508.2, NP_001005898.3" or "8,9-EpETrE, C18:1 LPC plasmalogen B".
+            training response of its related molecules in PASS1B 6-month data.{' '}
+            <span className="font-weight-bolder">
+              Multiple search terms MUST be separated by comma and space.
+              Examples: "NP_001000006.1, NP_001001508.2, NP_001005898.3" or
+              "8,9-EpETrE, C18:1 LPC plasmalogen B".
+            </span>
           </div>
           <div className="es-search-ui-container d-flex align-items-center w-100">
             <RadioButton changeParam={changeParam} ktype={searchParams.ktype} />
@@ -284,6 +286,7 @@ function RadioButton({ changeParam, ktype }) {
 function PrimaryOmicsFilter({ omics, toggleOmics }) {
   const omicsDictionary = {
     all: 'All omics',
+    epigenomics: 'Epigenomics',
     metabolomics: 'Metabolomics',
     proteomics: 'Proteomics',
     transcriptomics: 'Transcriptomics',
