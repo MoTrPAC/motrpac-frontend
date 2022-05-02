@@ -55,7 +55,7 @@ export const timewiseResultsTablePropType = {
   assay: PropTypes.string,
   sex: PropTypes.string,
   comparison_group: PropTypes.string,
-  logFC: PropTypes.string,
+  logFC: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   p_value: PropTypes.string,
   adj_p_value: PropTypes.string,
   selection_fdr: PropTypes.string,
