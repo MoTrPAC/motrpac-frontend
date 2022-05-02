@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -7,9 +7,12 @@ import BrowseDataTable from './browseDataTable';
 import actions from './browseDataActions';
 import BrowseDataFilter from './browseDataFilter';
 
+const dataFiles = require('../data/motrpac-data-files.json');
+
 export function BrowseDataPage({
   profile,
   expanded,
+  allFiles,
   filteredFiles,
   selectedFileUrls,
   selectedFileNames,
@@ -19,12 +22,21 @@ export function BrowseDataPage({
   onChangeFilter,
   handleUrlFetch,
   onResetFilters,
+  loadDataObjects,
 }) {
   // Send users to default page if they are not consortium members
   const userType = profile.user_metadata && profile.user_metadata.userType;
   if (userType === 'external') {
     return <Redirect to="/home" />;
   }
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    // load static data
+    if (allFiles.length === 0) {
+      loadDataObjects(dataFiles);
+    }
+  }, [loadDataObjects, allFiles]);
 
   return (
     <AuthContentContainer classes="browseDataPage" expanded={expanded}>
@@ -63,6 +75,7 @@ export function BrowseDataPage({
 }
 
 BrowseDataPage.propTypes = {
+  allFiles: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   filteredFiles: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   selectedFileUrls: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectedFileNames: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
@@ -78,6 +91,7 @@ BrowseDataPage.propTypes = {
   onChangeFilter: PropTypes.func.isRequired,
   handleUrlFetch: PropTypes.func.isRequired,
   onResetFilters: PropTypes.func.isRequired,
+  loadDataObjects: PropTypes.func.isRequired,
 };
 
 BrowseDataPage.defaultProps = {
@@ -99,6 +113,7 @@ const mapDispatchToProps = (dispatch) => ({
   changePageRequest: (maxRows, page) => dispatch(actions.changePageRequest(maxRows, page)),
   handleUrlFetch: (selectedFiles) =>
     dispatch(actions.handleUrlFetch(selectedFiles)),
+  loadDataObjects: (files) => dispatch(actions.loadDataObjects(files)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BrowseDataPage);
