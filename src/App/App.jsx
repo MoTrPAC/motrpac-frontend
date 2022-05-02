@@ -1,6 +1,7 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import configureStore from './configureStore';
 import 'bootstrap';
 import History from './history';
@@ -27,92 +28,94 @@ import SidebarConnected from '../Sidebar/sidebar';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
 import PrivateRoute from '../Auth/privateRoute';
 
-const store = configureStore();
+const { store, persistor } = configureStore();
 
 function App({ history = History }) {
   return (
     <Provider store={store}>
-      <Router history={history}>
-        <div className="App container-fluid">
-          <header>
-            <NavbarConnected />
-          </header>
-          <div className="row justify-content-center">
-            <SidebarConnected />
-            <Switch>
-              <Route
-                path="/callback"
-                component={withTracker(CallbackConnected)}
-              />
-              <Route
-                path="/"
-                exact
-                component={withTracker(LandingPageConnected)}
-              />
-              <PrivateRoute
-                path="/home"
-                component={withTracker(HomePageConnected)}
-              />
-              <Route
-                path="/external-links"
-                component={withTracker(LinkoutPageConnected)}
-              />
-              <PrivateRoute
-                path="/analysis/:subjectType"
-                component={withTracker(AnalysisHomePageConnected)}
-              />
-              <PrivateRoute
-                path="/methods"
-                component={withTracker(MethodsConnected)}
-              />
-              <Route path="/team" component={withTracker(TeamPageConnected)} />
-              <Route
-                path="/contact"
-                component={withTracker(ContactConnected)}
-              />
-              <Route
-                path="/announcements"
-                component={withTracker(AnnouncementsPageConnected)}
-              />
-              <Route
-                path="/error"
-                component={withTracker(ErrorPageConnected)}
-              />
-              <PrivateRoute
-                path="/summary"
-                component={withTracker(DataSummaryPageConnected)}
-              />
-              <PrivateRoute
-                path="/releases"
-                component={withTracker(ReleasePageConnected)}
-              />
-              <PrivateRoute
-                path="/qc-data-monitor"
-                component={withTracker(DataStatusPageConnected)}
-              />
-              <PrivateRoute
-                path="/browse-data"
-                component={withTracker(BrowseDataPageConnected)}
-              />
-              <Route
-                path="/data-access"
-                component={withTracker(DataAccessPageConnected)}
-              />
-              <Route
-                path="/related-studies"
-                exact
-                component={withTracker(RelatedStudyConnected)}
-              />
-              <Route
-                path="/related-studies/heritage-proteomics"
-                exact
-                component={withTracker(HeritageProteomicsConnected)}
-              />
-            </Switch>
+      <PersistGate loading={null} persistor={persistor}>
+        <Router history={history}>
+          <div className="App container-fluid">
+            <header>
+              <NavbarConnected />
+            </header>
+            <div className="row justify-content-center">
+              <SidebarConnected />
+              <Switch>
+                <Route
+                  path="/callback"
+                  component={withTracker(CallbackConnected)}
+                />
+                <Route
+                  path="/"
+                  exact
+                  component={withTracker(LandingPageConnected)}
+                />
+                <PrivateRoute
+                  path="/home"
+                  component={withTracker(HomePageConnected)}
+                />
+                <Route
+                  path="/external-links"
+                  component={withTracker(LinkoutPageConnected)}
+                />
+                <PrivateRoute
+                  path="/analysis/:subjectType"
+                  component={withTracker(AnalysisHomePageConnected)}
+                />
+                <PrivateRoute
+                  path="/methods"
+                  component={withTracker(MethodsConnected)}
+                />
+                <Route path="/team" component={withTracker(TeamPageConnected)} />
+                <Route
+                  path="/contact"
+                  component={withTracker(ContactConnected)}
+                />
+                <Route
+                  path="/announcements"
+                  component={withTracker(AnnouncementsPageConnected)}
+                />
+                <Route
+                  path="/error"
+                  component={withTracker(ErrorPageConnected)}
+                />
+                <PrivateRoute
+                  path="/summary"
+                  component={withTracker(DataSummaryPageConnected)}
+                />
+                <PrivateRoute
+                  path="/releases"
+                  component={withTracker(ReleasePageConnected)}
+                />
+                <PrivateRoute
+                  path="/qc-data-monitor"
+                  component={withTracker(DataStatusPageConnected)}
+                />
+                <PrivateRoute
+                  path="/browse-data"
+                  component={withTracker(BrowseDataPageConnected)}
+                />
+                <Route
+                  path="/data-access"
+                  component={withTracker(DataAccessPageConnected)}
+                />
+                <Route
+                  path="/related-studies"
+                  exact
+                  component={withTracker(RelatedStudyConnected)}
+                />
+                <Route
+                  path="/related-studies/heritage-proteomics"
+                  exact
+                  component={withTracker(HeritageProteomicsConnected)}
+                />
+              </Switch>
+            </div>
           </div>
-        </div>
-      </Router>
-      <FooterConnected />
+        </Router>
+        <FooterConnected />
+      </PersistGate>
     </Provider>
   );
 }
