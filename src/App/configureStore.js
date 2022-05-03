@@ -1,8 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleWare from 'redux-thunk';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import throttle from 'lodash/throttle';
 import rootReducer from './reducers';
+import { loadState, saveState } from './localStorage';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const enhancer = composeEnhancers(applyMiddleware(thunkMiddleWare));
@@ -14,13 +14,15 @@ const enhancer = composeEnhancers(applyMiddleware(thunkMiddleWare));
  * @return {Object} Returns a redux store configured for the application
  */
 export default function configureStore() {
-  const persistConfig = {
-    key: 'root',
-    storage,
-    blacklist: ['auth', 'search', 'browseData'],
-  };
-  const persistedReducer = persistReducer(persistConfig, rootReducer);
-  const store = createStore(persistedReducer, enhancer);
-  const persistor = persistStore(store);
-  return { store, persistor };
+  const persistedState = loadState(); // Gets state from localStorage
+  const store = createStore(rootReducer, persistedState, enhancer);
+
+  // Saves state on state change to localStorage
+  store.subscribe(
+    throttle(() => {
+      saveState(store.getState());
+    }, 1000)
+  );
+
+  return store;
 }
