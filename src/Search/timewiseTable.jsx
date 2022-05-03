@@ -136,7 +136,8 @@ function DataTable({ columns, data, profile, downloadPath }) {
             className="btn btn-sm btn-primary d-flex align-items-center"
             role="button"
             download
-            onClick={trackEvent(
+            onClick={trackEvent.bind(
+              this,
               'Search results download',
               resultDownloadFilePath,
               profile.user_metadata.name
