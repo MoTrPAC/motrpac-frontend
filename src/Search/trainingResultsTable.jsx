@@ -187,7 +187,10 @@ function TrainingDataTable({ columns, data, profile, downloadPath }) {
                   return (
                     <tr {...row.getRowProps()}>
                       {row.cells.map((cell) => (
-                        <td {...cell.getCellProps()} className={cell.value}>
+                        <td
+                          {...cell.getCellProps()}
+                          className={cell.value ? cell.value : ''}
+                        >
                           {cell.render('Cell')}
                         </td>
                       ))}
