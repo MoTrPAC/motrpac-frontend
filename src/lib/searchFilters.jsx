@@ -58,7 +58,7 @@ const assays = [
     filter_label: 'Untargeted Reversed-Phase Positive',
   },
   { filter_value: 'prot-pr', filter_label: 'Global Proteomics' },
-  { filter_value: 'prot-ph', filter_label: 'Phophoproteomics' },
+  { filter_value: 'prot-ph', filter_label: 'Phosphoproteomics' },
   { filter_value: 'prot-ac', filter_label: 'Acetyl Proteomics' },
   { filter_value: 'prot-ub', filter_label: 'Protein Ubiquitination' },
 ];

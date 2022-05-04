@@ -55,10 +55,10 @@ export const timewiseResultsTablePropType = {
   assay: PropTypes.string,
   sex: PropTypes.string,
   comparison_group: PropTypes.string,
-  logFC: PropTypes.string,
-  p_value: PropTypes.string,
-  adj_p_value: PropTypes.string,
-  selection_fdr: PropTypes.string,
+  logFC: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  adj_p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  selection_fdr: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 /**
@@ -72,10 +72,10 @@ export const trainingResultsTablePropType = {
   feature_ID: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tissue: PropTypes.string,
   assay_name: PropTypes.string,
-  p_value: PropTypes.string,
-  adj_p_value: PropTypes.string,
-  p_value_male: PropTypes.string,
-  p_value_female: PropTypes.string,
+  p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  adj_p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  p_value_male: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  p_value_female: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 // react-table function to filter multiple values in one column
@@ -131,20 +131,42 @@ export const timewiseTableColumns = [
   {
     Header: 'logFC',
     accessor: 'logFC',
+    sortType: 'basic',
   },
   {
-    Header: 'P-Value',
+    Header: () => (
+      <div className="d-flex align-items-center timewise-p-value-col-header">
+        <span>P-value</span>
+        <span className="material-icons col-header-info">info</span>
+        <span className="tooltip-on-bottom" id="timewise-p-value-tooltip">
+          The p-value of the presented log fold change
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'p_value',
+    sortType: 'basic',
     // filter: 'between',
   },
   {
-    Header: 'Adj P-Value',
+    Header: () => (
+      <div className="d-flex align-items-center timewise-adj-p-value-col-header">
+        <span>Adj p-value</span>
+        <span className="material-icons col-header-info">info</span>
+        <span className="tooltip-on-bottom" id="timewise-adj-p-value-tooltip">
+          The FDR adjusted p-value of the presented log-fold change
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'adj_p_value',
+    sortType: 'basic',
     // filter: 'between',
   },
   {
     Header: 'Selection FDR',
     accessor: 'selection_fdr',
+    sortType: 'basic',
   },
 ];
 
@@ -176,18 +198,40 @@ export const metabTimewiseTableColumns = [
   {
     Header: 'logFC',
     accessor: 'logFC',
+    sortType: 'basic',
   },
   {
-    Header: 'P-Value',
+    Header: () => (
+      <div className="d-flex align-items-center timewise-p-value-col-header">
+        <span>P-value</span>
+        <span className="material-icons col-header-info">info</span>
+        <span className="tooltip-on-bottom" id="timewise-p-value-tooltip">
+          The p-value of the presented log fold change
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'p_value',
+    sortType: 'basic',
   },
   {
-    Header: 'Adj P-Value',
+    Header: () => (
+      <div className="d-flex align-items-center timewise-adj-p-value-col-header">
+        <span>Adj p-value</span>
+        <span className="material-icons col-header-info">info</span>
+        <span className="tooltip-on-bottom" id="timewise-adj-p-value-tooltip">
+          The FDR adjusted p-value of the presented log-fold change
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'adj_p_value',
+    sortType: 'basic',
   },
   {
     Header: 'Selection FDR',
     accessor: 'selection_fdr',
+    sortType: 'basic',
   },
 ];
 
@@ -222,19 +266,19 @@ export const trainingTableColumns = [
     // filter: multipleSelectFilter,
   },
   {
-    Header: 'P-Value',
+    Header: 'P-value',
     accessor: 'p_value',
   },
   {
-    Header: 'Adj P-Value',
+    Header: 'Adj p-value',
     accessor: 'adj_p_value',
   },
   {
-    Header: 'Male P-Value',
+    Header: 'Male p-value',
     accessor: 'p_value_male',
   },
   {
-    Header: 'Female P-Value',
+    Header: 'Female p-value',
     accessor: 'p_value_female',
   },
 ];
@@ -257,19 +301,19 @@ export const metabTrainingTableColumns = [
     accessor: 'dataset',
   },
   {
-    Header: 'P-Value',
+    Header: 'P-value',
     accessor: 'p_value',
   },
   {
-    Header: 'Adj P-Value',
+    Header: 'Adj p-value',
     accessor: 'adj_p_value',
   },
   {
-    Header: 'Male P-Value',
+    Header: 'Male p-value',
     accessor: 'p_value_male',
   },
   {
-    Header: 'Female P-Value',
+    Header: 'Female p-value',
     accessor: 'p_value_female',
   },
 ];
@@ -493,6 +537,7 @@ export const transformData = (arr) => {
       );
     }
     // Transform protein id values
+    /*
     if (item.assay.match(/protein|proteomics|prot-/i)) {
       const newProteinVal = item.feature_ID;
       item.feature_ID = (
@@ -516,6 +561,7 @@ export const transformData = (arr) => {
         </a>
       );
     }
+    */
     // Transform metabolomics dataset (aka assay) values
     if (item.dataset !== null && item.dataset !== undefined) {
       const matchedDataset = assayList.find(
@@ -554,27 +600,27 @@ export const transformData = (arr) => {
     // Round values
     if (item.p_value !== null && item.p_value !== undefined) {
       const newPVal = roundNumbers(item.p_value, 4);
-      item.p_value = newPVal && newPVal.toString();
+      item.p_value = newPVal;
     }
     if (item.adj_p_value !== null && item.adj_p_value !== undefined) {
       const newAdjPVal = roundNumbers(item.adj_p_value, 4);
-      item.adj_p_value = newAdjPVal && newAdjPVal.toString();
+      item.adj_p_value = newAdjPVal;
     }
     if (item.logFC !== null && item.logFC !== undefined) {
       const logFCVal = roundNumbers(item.logFC, 4);
-      item.logFC = logFCVal && logFCVal.toString();
+      item.logFC = logFCVal;
     }
     if (item.selection_fdr !== null && item.selection_fdr !== undefined) {
       const newSelFdrVal = roundNumbers(item.selection_fdr, 4);
-      item.selection_fdr = newSelFdrVal && newSelFdrVal.toString();
+      item.selection_fdr = newSelFdrVal;
     }
     if (item.p_value_male !== null && item.p_value_male !== undefined) {
       const newPValMale = roundNumbers(item.p_value_male, 4);
-      item.p_value_male = newPValMale && newPValMale.toString();
+      item.p_value_male = newPValMale;
     }
     if (item.p_value_female !== null && item.p_value_female !== undefined) {
       const newPValFemale = roundNumbers(item.p_value_female, 4);
-      item.p_value_female = newPValFemale && newPValFemale.toString();
+      item.p_value_female = newPValFemale;
     }
   });
   return tranformArray;

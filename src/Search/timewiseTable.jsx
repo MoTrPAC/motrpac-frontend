@@ -17,13 +17,19 @@ import {
   PageNavigationControl,
   transformData,
 } from './sharedlib';
+import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
 /**
  * Sets up table column headers and renders the table component
  *
  * @returns {object} The data qc status table component
  */
-function TimewiseResultsTable({ timewiseData, searchParams, downloadPath }) {
+function TimewiseResultsTable({
+  timewiseData,
+  searchParams,
+  profile,
+  downloadPath,
+}) {
   // Define table column headers
   const columns = useMemo(
     () =>
@@ -34,7 +40,12 @@ function TimewiseResultsTable({ timewiseData, searchParams, downloadPath }) {
   );
   const data = useMemo(() => transformData(timewiseData), [timewiseData]);
   return (
-    <DataTable columns={columns} data={data} downloadPath={downloadPath} />
+    <DataTable
+      columns={columns}
+      data={data}
+      profile={profile}
+      downloadPath={downloadPath}
+    />
   );
 }
 
@@ -45,7 +56,7 @@ function TimewiseResultsTable({ timewiseData, searchParams, downloadPath }) {
  *
  * @returns {object} JSX representation of table on data qc status
  */
-function DataTable({ columns, data, downloadPath }) {
+function DataTable({ columns, data, profile, downloadPath }) {
   const filterTypes = React.useMemo(
     () => ({
       text: (rows, id, filterValue) =>
@@ -125,6 +136,12 @@ function DataTable({ columns, data, downloadPath }) {
             className="btn btn-sm btn-primary d-flex align-items-center"
             role="button"
             download
+            onClick={trackEvent.bind(
+              this,
+              'Search results download',
+              resultDownloadFilePath,
+              profile.user_metadata.name
+            )}
           >
             <span className="material-icons">file_download</span>
             <span>Download results</span>
@@ -147,7 +164,7 @@ function DataTable({ columns, data, downloadPath }) {
                     {headerGroup.headers.map((column) => (
                       <th
                         {...column.getHeaderProps(
-                          column.getSortByToggleProps()
+                          column.getSortByToggleProps({ title: '' })
                         )}
                       >
                         <div className="d-flex align-items-center justify-content-between">
@@ -171,7 +188,10 @@ function DataTable({ columns, data, downloadPath }) {
                   return (
                     <tr {...row.getRowProps()}>
                       {row.cells.map((cell) => (
-                        <td {...cell.getCellProps()} className={cell.value}>
+                        <td
+                          {...cell.getCellProps()}
+                          className={cell.value ? cell.value : ''}
+                        >
                           {cell.render('Cell')}
                         </td>
                       ))}
@@ -203,10 +223,14 @@ TimewiseResultsTable.propTypes = {
     PropTypes.shape({ ...timewiseResultsTablePropType })
   ).isRequired,
   searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.object,
+  }),
   downloadPath: PropTypes.string,
 };
 
 TimewiseResultsTable.defaultProps = {
+  profile: {},
   downloadPath: '',
 };
 
@@ -219,9 +243,12 @@ DataTable.propTypes = {
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({ ...timewiseResultsTablePropType }))
     .isRequired,
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.object,
+  }),
   downloadPath: PropTypes.string,
 };
 
-DataTable.defaultProps = { downloadPath: '' };
+DataTable.defaultProps = { profile: {}, downloadPath: '' };
 
 export default TimewiseResultsTable;

@@ -53,6 +53,16 @@
 
       td {
         vertical-align: middle;
+
+        &.file-download-link-item {
+          position: relative;
+          text-align: center;
+    
+          a span {
+            position: relative;
+            top: 4px;
+          }
+        }
       }
 
       &:first-child {
@@ -174,15 +184,6 @@
 
       &.omics.not-available {
         background-color: #f3f3f3;
-      }
-
-      &.file-download-link-item {
-        position: relative;
-
-        a {
-          position: relative;
-          top: 4px;
-        }
       }
     }
   }

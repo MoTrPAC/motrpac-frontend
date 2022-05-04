@@ -9,6 +9,7 @@ const RESET_FILTERS = 'RESET_FILTERS';
 const URL_FETCH_START = 'URL_FETCH_START';
 const URL_FETCH_SUCCESS = 'URL_FETCH_SUCCESS';
 const URL_FETCH_FAILURE = 'URL_FETCH_FAILURE';
+const LOAD_DATA_OBJECTS = 'LOAD_DATA_OBJECTS';
 
 export const types = {
   CHANGE_FILTER,
@@ -20,6 +21,7 @@ export const types = {
   URL_FETCH_START,
   URL_FETCH_SUCCESS,
   URL_FETCH_FAILURE,
+  LOAD_DATA_OBJECTS,
 };
 
 function changeFilter(category, filter) {
@@ -81,6 +83,13 @@ function urlFetchFailure(error = '') {
   return {
     type: URL_FETCH_FAILURE,
     error,
+  };
+}
+
+function loadDataObjects(files) {
+  return {
+    type: LOAD_DATA_OBJECTS,
+    files,
   };
 }
 
@@ -151,6 +160,7 @@ const actions = {
   sortChange,
   changePageRequest,
   handleUrlFetch,
+  loadDataObjects,
 };
 
 export default actions;

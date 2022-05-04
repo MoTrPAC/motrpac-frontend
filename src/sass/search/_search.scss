@@ -237,6 +237,11 @@
 
     .material-icons {
       color: #888;
+
+      &.col-header-info {
+        font-size: 1.0rem;
+        margin-left: 0.25rem;
+      }
     }
   }
 
@@ -315,5 +320,19 @@
     .card-deck .card {
       min-width: 200px;
     }
+  }
+}
+
+.timewise-p-value-col-header,
+.timewise-adj-p-value-col-header {
+  position: relative;
+}
+
+.timewise-p-value-col-header:hover,
+.timewise-adj-p-value-col-header:hover {
+  .tooltip-on-bottom {
+    display: block;
+    visibility: visible;
+    opacity: 1;
   }
 }

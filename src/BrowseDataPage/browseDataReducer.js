@@ -118,6 +118,7 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
           return {
             file: item.original.filename,
             size: item.original.object_size,
+            object: item.original.object,
           };
         }),
         fetching: false,
@@ -142,6 +143,15 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
         filteredFiles: state.allFiles,
         requireUpdate: true,
       };
+    case types.LOAD_DATA_OBJECTS: {
+      const { files } = action;
+      return {
+        ...state,
+        allFiles: files,
+        filteredFiles: files.slice(0, files.length),
+        fileCount: files.length,
+      };
+    }
     default:
       return state;
   }

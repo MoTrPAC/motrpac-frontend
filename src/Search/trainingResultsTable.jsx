@@ -17,13 +17,19 @@ import {
   PageNavigationControl,
   transformData,
 } from './sharedlib';
+import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
 /**
  * Sets up table column headers and renders the table component
  *
  * @returns {object} The data qc status table component
  */
-function TrainingResultsTable({ trainingData, searchParams, downloadPath }) {
+function TrainingResultsTable({
+  trainingData,
+  searchParams,
+  profile,
+  downloadPath,
+}) {
   // Define table column headers
   const columns = useMemo(
     () =>
@@ -37,6 +43,7 @@ function TrainingResultsTable({ trainingData, searchParams, downloadPath }) {
     <TrainingDataTable
       columns={columns}
       data={data}
+      profile={profile}
       downloadPath={downloadPath}
     />
   );
@@ -49,7 +56,7 @@ function TrainingResultsTable({ trainingData, searchParams, downloadPath }) {
  *
  * @returns {object} JSX representation of table on data qc status
  */
-function TrainingDataTable({ columns, data, downloadPath }) {
+function TrainingDataTable({ columns, data, profile, downloadPath }) {
   const filterTypes = React.useMemo(
     () => ({
       text: (rows, id, filterValue) =>
@@ -128,6 +135,12 @@ function TrainingDataTable({ columns, data, downloadPath }) {
             className="btn btn-sm btn-primary d-flex align-items-center"
             rolw="button"
             download
+            onClick={trackEvent.bind(
+              this,
+              'Search results download',
+              resultDownloadFilePath,
+              profile.user_metadata.name
+            )}
           >
             <span className="material-icons">file_download</span>
             <span>Download results</span>
@@ -150,7 +163,7 @@ function TrainingDataTable({ columns, data, downloadPath }) {
                     {headerGroup.headers.map((column) => (
                       <th
                         {...column.getHeaderProps(
-                          column.getSortByToggleProps()
+                          column.getSortByToggleProps({ title: '' })
                         )}
                       >
                         <div className="d-flex align-items-center justify-content-between">
@@ -174,7 +187,10 @@ function TrainingDataTable({ columns, data, downloadPath }) {
                   return (
                     <tr {...row.getRowProps()}>
                       {row.cells.map((cell) => (
-                        <td {...cell.getCellProps()} className={cell.value}>
+                        <td
+                          {...cell.getCellProps()}
+                          className={cell.value ? cell.value : ''}
+                        >
                           {cell.render('Cell')}
                         </td>
                       ))}
@@ -206,10 +222,14 @@ TrainingResultsTable.propTypes = {
     PropTypes.shape({ ...trainingResultsTablePropType })
   ).isRequired,
   searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.object,
+  }),
   downloadPath: PropTypes.string,
 };
 
 TrainingResultsTable.defaultProps = {
+  profile: {},
   downloadPath: '',
 };
 
@@ -222,10 +242,14 @@ TrainingDataTable.propTypes = {
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({ ...trainingResultsTablePropType }))
     .isRequired,
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.object,
+  }),
   downloadPath: PropTypes.string,
 };
 
 TrainingDataTable.defaultProps = {
+  profile: {},
   downloadPath: '',
 };
 

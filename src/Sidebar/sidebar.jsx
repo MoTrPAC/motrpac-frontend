@@ -156,7 +156,6 @@ export function Sidebar({
                 false
               )}
             </li>
-            {/*
             <li className="nav-item">
               {renderNavLink(
                 'browse-data',
@@ -166,7 +165,6 @@ export function Sidebar({
                 userType === 'external'
               )}
             </li>
-            */}
             <li className="nav-item">
               {renderNavLink(
                 'qc-data-monitor',

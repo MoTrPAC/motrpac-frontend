@@ -15,16 +15,14 @@ const enhancer = composeEnhancers(applyMiddleware(thunkMiddleWare));
  */
 export default function configureStore() {
   const persistedState = loadState(); // Gets state from localStorage
-  const store = createStore(
-    rootReducer,
-    persistedState,
-    enhancer,
-  );
+  const store = createStore(rootReducer, persistedState, enhancer);
 
   // Saves state on state change to localStorage
-  store.subscribe(throttle(() => {
-    saveState(store.getState());
-  }, 1000));
+  store.subscribe(
+    throttle(() => {
+      saveState(store.getState());
+    }, 1000)
+  );
 
   return store;
 }

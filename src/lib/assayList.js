@@ -17,7 +17,7 @@ const assays = [
   'Untargeted Reversed-Phase Negative',
   'Untargeted Reversed-Phase Positive',
   'Global Proteomics',
-  'Phophoproteomics',
+  'Phosphoproteomics',
   'Acetyl Proteomics',
   'Protein Ubiquitination',
 ];

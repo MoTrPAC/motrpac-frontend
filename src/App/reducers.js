@@ -18,16 +18,6 @@ import browseDataReducer, {
   defaultBrowseDataState,
 } from '../BrowseDataPage/browseDataReducer';
 
-// load static data
-const dataFiles = require('../data/motrpac-data-files.json');
-
-const browseDataState = {
-  ...defaultBrowseDataState,
-  allFiles: dataFiles,
-  filteredFiles: dataFiles.slice(0, dataFiles.length),
-  fileCount: dataFiles.length,
-};
-
 export default combineReducers({
   auth: authReducer,
   analysis: analysisReducer,
@@ -47,5 +37,5 @@ export const defaultRootState = {
   dataSummary: defaultDataSummaryState,
   dashboard: defaultDashboardState,
   dataStatus: defaultDataStatusState,
-  browseData: browseDataState,
+  browseData: defaultBrowseDataState,
 };
