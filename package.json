@@ -9,6 +9,7 @@
     "chart.js": "^2.9.3",
     "d3": "6.7.0",
     "dayjs": "1.8.25",
+    "from-exponential": "^1.1.1",
     "ga-gtag": "^1.0.1",
     "history": "4.10.1",
     "http-proxy-middleware": "^2.0.1",
