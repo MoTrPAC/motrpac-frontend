@@ -164,7 +164,7 @@ function DataTable({ columns, data, profile, downloadPath }) {
                     {headerGroup.headers.map((column) => (
                       <th
                         {...column.getHeaderProps(
-                          column.getSortByToggleProps()
+                          column.getSortByToggleProps({ title: '' })
                         )}
                       >
                         <div className="d-flex align-items-center justify-content-between">

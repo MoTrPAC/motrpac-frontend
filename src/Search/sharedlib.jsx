@@ -134,13 +134,31 @@ export const timewiseTableColumns = [
     sortType: 'basic',
   },
   {
-    Header: 'P-Value',
+    Header: () => (
+      <div className="d-flex align-items-center timewise-p-value-col-header">
+        <span>P-value</span>
+        <span className="material-icons col-header-info">info</span>
+        <span className="tooltip-on-bottom" id="timewise-p-value-tooltip">
+          The p-value of the presented log fold change
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'p_value',
     sortType: 'basic',
     // filter: 'between',
   },
   {
-    Header: 'Adj P-Value',
+    Header: () => (
+      <div className="d-flex align-items-center timewise-adj-p-value-col-header">
+        <span>Adj p-value</span>
+        <span className="material-icons col-header-info">info</span>
+        <span className="tooltip-on-bottom" id="timewise-adj-p-value-tooltip">
+          The FDR adjusted p-value of the presented log-fold change
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'adj_p_value',
     sortType: 'basic',
     // filter: 'between',
@@ -183,12 +201,30 @@ export const metabTimewiseTableColumns = [
     sortType: 'basic',
   },
   {
-    Header: 'P-Value',
+    Header: () => (
+      <div className="d-flex align-items-center timewise-p-value-col-header">
+        <span>P-value</span>
+        <span className="material-icons col-header-info">info</span>
+        <span className="tooltip-on-bottom" id="timewise-p-value-tooltip">
+          The p-value of the presented log fold change
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'p_value',
     sortType: 'basic',
   },
   {
-    Header: 'Adj P-Value',
+    Header: () => (
+      <div className="d-flex align-items-center timewise-adj-p-value-col-header">
+        <span>Adj p-value</span>
+        <span className="material-icons col-header-info">info</span>
+        <span className="tooltip-on-bottom" id="timewise-adj-p-value-tooltip">
+          The FDR adjusted p-value of the presented log-fold change
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'adj_p_value',
     sortType: 'basic',
   },
@@ -230,19 +266,19 @@ export const trainingTableColumns = [
     // filter: multipleSelectFilter,
   },
   {
-    Header: 'P-Value',
+    Header: 'P-value',
     accessor: 'p_value',
   },
   {
-    Header: 'Adj P-Value',
+    Header: 'Adj p-value',
     accessor: 'adj_p_value',
   },
   {
-    Header: 'Male P-Value',
+    Header: 'Male p-value',
     accessor: 'p_value_male',
   },
   {
-    Header: 'Female P-Value',
+    Header: 'Female p-value',
     accessor: 'p_value_female',
   },
 ];
@@ -265,19 +301,19 @@ export const metabTrainingTableColumns = [
     accessor: 'dataset',
   },
   {
-    Header: 'P-Value',
+    Header: 'P-value',
     accessor: 'p_value',
   },
   {
-    Header: 'Adj P-Value',
+    Header: 'Adj p-value',
     accessor: 'adj_p_value',
   },
   {
-    Header: 'Male P-Value',
+    Header: 'Male p-value',
     accessor: 'p_value_male',
   },
   {
-    Header: 'Female P-Value',
+    Header: 'Female p-value',
     accessor: 'p_value_female',
   },
 ];
