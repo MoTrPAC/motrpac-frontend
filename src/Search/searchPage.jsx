@@ -287,6 +287,7 @@ function RadioButton({ changeParam, ktype }) {
 function PrimaryOmicsFilter({ omics, toggleOmics }) {
   const omicsDictionary = {
     all: 'All omics',
+    epigenomics: 'Epigenomics',
     metabolomics: 'Metabolomics',
     proteomics: 'Proteomics',
     transcriptomics: 'Transcriptomics',
