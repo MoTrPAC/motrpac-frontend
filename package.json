@@ -5,7 +5,7 @@
   "dependencies": {
     "auth0-js": "9.19.0",
     "axios": "^0.27.2",
-    "bootstrap": "4.6.0",
+    "bootstrap": "4.6.1",
     "chart.js": "^2.9.3",
     "d3": "6.7.0",
     "dayjs": "1.11.1",
@@ -74,5 +74,8 @@
     "storybook-react-router": "1.0.8",
     "stylelint": "^14.8.2",
     "stylelint-config-recommended": "7.0.0"
+  },
+  "resolutions": {
+    "autoprefixer": "10.4.5"
   }
 }
