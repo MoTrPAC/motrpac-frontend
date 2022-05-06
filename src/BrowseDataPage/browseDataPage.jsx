@@ -48,8 +48,8 @@ export function BrowseDataPage({
       <div className="my-4">
         Browse and download the PASS1B 6-month processed data by tissue, assay,
         or omics. The available files include molecular and phenotypic data.
-        While raw data is not available for download through the data hub porta,
-        it can be accessed through command-line. Please contact{' '}
+        While raw data is not available for download through the data hub
+        portal, it can be accessed through command-line. Please contact{' '}
         <a href="mailto:motrpac-data-requests@lists.stanford.edu">
           MoTrPAC Data Requests
         </a>{' '}
