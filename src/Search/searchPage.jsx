@@ -23,6 +23,10 @@ export function SearchPage({
   changeResultFilter,
   handleSearch,
   resetSearch,
+  downloadResults,
+  downloading,
+  downloadError,
+  handleSearchDownload,
 }) {
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
@@ -191,9 +195,10 @@ export function SearchPage({
                         <TimewiseResultsTable
                           timewiseData={timewiseResults}
                           searchParams={searchParams}
-                          changeResultFilter={changeResultFilter}
-                          handleSearch={handleSearch}
-                          downloadPath={searchResults.path}
+                          downloadPath={downloadResults.path}
+                          handleSearchDownload={handleSearchDownload}
+                          downloading={downloading}
+                          downloadError={downloadError}
                           profile={profile}
                         />
                       ) : (
@@ -212,9 +217,10 @@ export function SearchPage({
                         <TrainingResultsTable
                           trainingData={trainingResults}
                           searchParams={searchParams}
-                          changeResultFilter={changeResultFilter}
-                          handleSearch={handleSearch}
-                          downloadPath={searchResults.path}
+                          downloadPath={downloadResults.path}
+                          handleSearchDownload={handleSearchDownload}
+                          downloading={downloading}
+                          downloadError={downloadError}
                           profile={profile}
                         />
                       ) : (
@@ -338,7 +344,8 @@ SearchPage.propTypes = {
   }),
   expanded: PropTypes.bool,
   searchResults: PropTypes.shape({
-    data: PropTypes.object,
+    result: PropTypes.object,
+    total: PropTypes.number,
   }),
   scope: PropTypes.string,
   searching: PropTypes.bool,
@@ -348,6 +355,13 @@ SearchPage.propTypes = {
   changeResultFilter: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
   resetSearch: PropTypes.func.isRequired,
+  downloadResults: PropTypes.shape({
+    result: PropTypes.object,
+    total: PropTypes.number,
+  }),
+  downloading: PropTypes.bool,
+  downloadError: PropTypes.string,
+  handleSearchDownload: PropTypes.func.isRequired,
 };
 
 SearchPage.defaultProps = {
@@ -358,6 +372,9 @@ SearchPage.defaultProps = {
   searching: false,
   searchError: '',
   searchParams: { ...searchParamsDefaultProps },
+  downloadResults: {},
+  downloading: false,
+  downloadError: '',
 };
 
 const mapStateToProps = (state) => ({
@@ -374,6 +391,8 @@ const mapDispatchToProps = (dispatch) => ({
   handleSearch: (params, scope) =>
     dispatch(SearchActions.handleSearch(params, scope)),
   resetSearch: (scope) => dispatch(SearchActions.searchReset(scope)),
+  handleSearchDownload: (params) =>
+    dispatch(SearchActions.handleSearchDownload(params)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
