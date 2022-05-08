@@ -95,9 +95,10 @@ function handleSearch(params, scope) {
 }
 
 // Handle download search results event
-function handleSearchDownload(params) {
+function handleSearchDownload(params, analysis) {
   params.fields = [];
   params.save = true;
+  params.analysis = analysis;
   return (dispatch) => {
     dispatch(downloadSubmit());
     return axios
