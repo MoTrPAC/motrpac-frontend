@@ -1,8 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleWare from 'redux-thunk';
-import throttle from 'lodash/throttle';
-import rootReducer from './reducers';
-import { loadState, saveState } from './localStorage';
+import rootReducer, { defaultRootState } from './reducers';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const enhancer = composeEnhancers(applyMiddleware(thunkMiddleWare));
@@ -14,15 +12,7 @@ const enhancer = composeEnhancers(applyMiddleware(thunkMiddleWare));
  * @return {Object} Returns a redux store configured for the application
  */
 export default function configureStore() {
-  const persistedState = loadState(); // Gets state from localStorage
-  const store = createStore(rootReducer, persistedState, enhancer);
-
-  // Saves state on state change to localStorage
-  store.subscribe(
-    throttle(() => {
-      saveState(store.getState());
-    }, 1000)
-  );
+  const store = createStore(rootReducer, defaultRootState, enhancer);
 
   return store;
 }
