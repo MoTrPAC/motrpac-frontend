@@ -524,7 +524,7 @@ export const transformData = (arr) => {
 
   tranformArray.forEach((item) => {
     // Transform gene values
-    if (item.gene_symbol !== null && item.gene_symbol !== undefined) {
+    if (item.gene_symbol && item.gene_symbol.length) {
       const newGeneVal = item.gene_symbol;
       item.gene_symbol = (
         <a
@@ -563,62 +563,62 @@ export const transformData = (arr) => {
     }
     */
     // Transform metabolomics dataset (aka assay) values
-    if (item.dataset !== null && item.dataset !== undefined) {
+    if (item.dataset && item.dataset.length) {
       const matchedDataset = assayList.find(
         (filter) => filter.filter_value === item.dataset
       );
       item.dataset = matchedDataset && matchedDataset.filter_label;
     }
     // Transform tissue values
-    if (item.tissue !== null && item.tissue !== undefined) {
+    if (item.tissue && item.tissue.length) {
       const matchedTissue = tissueList.find(
         (filter) => filter.filter_value === item.tissue
       );
       item.tissue = matchedTissue && matchedTissue.filter_label;
     }
     // Transform assay values
-    if (item.assay !== null && item.assay !== undefined) {
+    if (item.assay && item.assay.length) {
       const matchedAssay = assayList.find(
         (filter) => filter.filter_value === item.assay
       );
       item.assay = matchedAssay && matchedAssay.filter_label;
     }
     // Transform sex values
-    if (item.sex !== null && item.sex !== undefined) {
+    if (item.sex && item.sex.length) {
       const matchedSex = sexList.find(
         (filter) => filter.filter_value.toLowerCase() === item.sex
       );
-      item.sex = matchedSex.filter_label;
+      item.sex = matchedSex && matchedSex.filter_label;
     }
     // Transform timepoint values
-    if (item.comparison_group !== null && item.comparison_group !== undefined) {
+    if (item.comparison_group && item.comparison_group.length) {
       const matchedTimepoint = timepointList.find(
         (filter) => filter.filter_value === item.comparison_group
       );
-      item.comparison_group = matchedTimepoint.filter_label;
+      item.comparison_group = matchedTimepoint && matchedTimepoint.filter_label;
     }
     // Round values
-    if (item.p_value !== null && item.p_value !== undefined) {
+    if (item.p_value && item.p_value.length) {
       const newPVal = roundNumbers(item.p_value, 4);
       item.p_value = newPVal;
     }
-    if (item.adj_p_value !== null && item.adj_p_value !== undefined) {
+    if (item.adj_p_value && item.adj_p_value.length) {
       const newAdjPVal = roundNumbers(item.adj_p_value, 4);
       item.adj_p_value = newAdjPVal;
     }
-    if (item.logFC !== null && item.logFC !== undefined) {
+    if (item.logFC && item.logFC.length) {
       const logFCVal = roundNumbers(item.logFC, 4);
       item.logFC = logFCVal;
     }
-    if (item.selection_fdr !== null && item.selection_fdr !== undefined) {
+    if (item.selection_fdr && item.selection_fdr.length) {
       const newSelFdrVal = roundNumbers(item.selection_fdr, 4);
       item.selection_fdr = newSelFdrVal;
     }
-    if (item.p_value_male !== null && item.p_value_male !== undefined) {
+    if (item.p_value_male && item.p_value_male.length) {
       const newPValMale = roundNumbers(item.p_value_male, 4);
       item.p_value_male = newPValMale;
     }
-    if (item.p_value_female !== null && item.p_value_female !== undefined) {
+    if (item.p_value_female && item.p_value_female.length) {
       const newPValFemale = roundNumbers(item.p_value_female, 4);
       item.p_value_female = newPValFemale;
     }
