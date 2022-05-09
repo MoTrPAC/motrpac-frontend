@@ -96,13 +96,17 @@ function handleSearch(params, scope) {
 
 // Handle download search results event
 function handleSearchDownload(params, analysis) {
-  params.fields = [];
-  params.save = true;
-  params.analysis = analysis;
+  const downloadSearchParams = { ...params };
+  downloadSearchParams.fields = [];
+  downloadSearchParams.save = true;
+  downloadSearchParams.analysis = analysis;
   return (dispatch) => {
     dispatch(downloadSubmit());
     return axios
-      .post(`${process.env.REACT_APP_ES_PROXY_HOST}/search/api`, params)
+      .post(
+        `${process.env.REACT_APP_ES_PROXY_HOST}/search/api`,
+        downloadSearchParams
+      )
       .then((response) => {
         if (response.data.error) {
           dispatch(downloadFailure(response.data.error));
