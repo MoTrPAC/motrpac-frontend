@@ -17,7 +17,6 @@ import {
   PageNavigationControl,
   transformData,
 } from './sharedlib';
-import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
 /**
  * Sets up table column headers and renders the table component
@@ -27,8 +26,7 @@ import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 function TrainingResultsTable({
   trainingData,
   searchParams,
-  profile,
-  downloadPath,
+  handleSearchDownload,
 }) {
   // Define table column headers
   const columns = useMemo(
@@ -43,8 +41,8 @@ function TrainingResultsTable({
     <TrainingDataTable
       columns={columns}
       data={data}
-      profile={profile}
-      downloadPath={downloadPath}
+      searchParams={searchParams}
+      handleSearchDownload={handleSearchDownload}
     />
   );
 }
@@ -56,7 +54,12 @@ function TrainingResultsTable({
  *
  * @returns {object} JSX representation of table on data qc status
  */
-function TrainingDataTable({ columns, data, profile, downloadPath }) {
+function TrainingDataTable({
+  columns,
+  data,
+  searchParams,
+  handleSearchDownload,
+}) {
   const filterTypes = React.useMemo(
     () => ({
       text: (rows, id, filterValue) =>
@@ -114,10 +117,6 @@ function TrainingDataTable({ columns, data, profile, downloadPath }) {
   // default page size options given the length of entries in the data
   const range = (start, stop, step = 20) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
 
-  const resultDownloadFilePath = downloadPath.substring(
-    downloadPath.indexOf('search_results')
-  );
-
   // Render the UI for your table
   // react-table doesn't have UI, it's headless. We just need to put the react-table
   // props from the Hooks, and it will do its magic automatically
@@ -130,21 +129,19 @@ function TrainingDataTable({ columns, data, profile, downloadPath }) {
           pageSizeOptions={range(20, preGlobalFilteredRows.length)}
         />
         <div className="file-download-button">
-          <a
-            href={`${process.env.REACT_APP_ES_PROXY_HOST}/${resultDownloadFilePath}`}
+          <button
+            type="button"
             className="btn btn-sm btn-primary d-flex align-items-center"
-            rolw="button"
-            download
-            onClick={trackEvent.bind(
-              this,
-              'Search results download',
-              resultDownloadFilePath,
-              profile.user_metadata.name
-            )}
+            data-toggle="modal"
+            data-target=".data-download-modal"
+            onClick={(e) => {
+              e.preventDefault();
+              handleSearchDownload(searchParams, 'training');
+            }}
           >
             <span className="material-icons">file_download</span>
             <span>Download results</span>
-          </a>
+          </button>
         </div>
       </div>
       <div className="card mb-3">
@@ -222,15 +219,7 @@ TrainingResultsTable.propTypes = {
     PropTypes.shape({ ...trainingResultsTablePropType })
   ).isRequired,
   searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
-  profile: PropTypes.shape({
-    user_metadata: PropTypes.object,
-  }),
-  downloadPath: PropTypes.string,
-};
-
-TrainingResultsTable.defaultProps = {
-  profile: {},
-  downloadPath: '',
+  handleSearchDownload: PropTypes.func.isRequired,
 };
 
 TrainingDataTable.propTypes = {
@@ -243,15 +232,8 @@ TrainingDataTable.propTypes = {
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({ ...trainingResultsTablePropType }))
     .isRequired,
-  profile: PropTypes.shape({
-    user_metadata: PropTypes.object,
-  }),
-  downloadPath: PropTypes.string,
-};
-
-TrainingDataTable.defaultProps = {
-  profile: {},
-  downloadPath: '',
+  searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
+  handleSearchDownload: PropTypes.func.isRequired,
 };
 
 export default TrainingResultsTable;
