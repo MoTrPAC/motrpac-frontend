@@ -16,6 +16,7 @@ export const defaultSearchState = {
     ktype: 'gene',
     keys: '',
     omics: 'all',
+    analysis: 'all',
     filters: {
       tissue: '',
       assay: '',
@@ -128,7 +129,15 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
 
     // Handle form submit event
     case SEARCH_SUBMIT: {
-      const { ktype, keys, omics, filters, fields, size } = action.params;
+      const {
+        ktype,
+        keys,
+        omics,
+        analysis,
+        filters,
+        fields,
+        size,
+      } = action.params;
       return {
         ...state,
         searchResults: {},
@@ -136,6 +145,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
           ktype,
           keys,
           omics,
+          analysis,
           filters,
           fields,
           size,
