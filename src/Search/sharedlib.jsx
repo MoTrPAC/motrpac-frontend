@@ -164,7 +164,16 @@ export const timewiseTableColumns = [
     // filter: 'between',
   },
   {
-    Header: 'Selection FDR',
+    Header: () => (
+      <div className="d-flex align-items-center timewise-selection-fdr-col-header">
+        <span>Selection FDR</span>
+        <span className="material-icons col-header-info">info</span>
+        <span className="tooltip-on-bottom" id="timewise-selection-fdr-tooltip">
+          Cross-tissue, IHW FDR adjusted p-value
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'selection_fdr',
     sortType: 'basic',
   },
@@ -229,7 +238,16 @@ export const metabTimewiseTableColumns = [
     sortType: 'basic',
   },
   {
-    Header: 'Selection FDR',
+    Header: () => (
+      <div className="d-flex align-items-center timewise-selection-fdr-col-header">
+        <span>Selection FDR</span>
+        <span className="material-icons col-header-info">info</span>
+        <span className="tooltip-on-bottom" id="timewise-selection-fdr-tooltip">
+          Cross-tissue, IHW FDR adjusted p-value
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'selection_fdr',
     sortType: 'basic',
   },
@@ -266,20 +284,63 @@ export const trainingTableColumns = [
     // filter: multipleSelectFilter,
   },
   {
-    Header: 'P-value',
+    Header: () => (
+      <div className="d-flex align-items-center training-p-value-col-header">
+        <span>P-value</span>
+        <span className="material-icons col-header-info">info</span>
+        <span className="tooltip-on-bottom" id="training-p-value-tooltip">
+          Combined p-value (males and females)
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'p_value',
+    sortType: 'basic',
   },
   {
-    Header: 'Adj p-value',
+    Header: () => (
+      <div className="d-flex align-items-center training-adj-p-value-col-header">
+        <span>Adj p-value</span>
+        <span className="material-icons col-header-info">info</span>
+        <span className="tooltip-on-bottom" id="training-adj-p-value-tooltip">
+          FDR-adjusted combined p-value
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'adj_p_value',
+    sortType: 'basic',
   },
   {
-    Header: 'Male p-value',
+    Header: () => (
+      <div className="d-flex align-items-center training-male-p-value-col-header">
+        <span>Male p-value</span>
+        <span className="material-icons col-header-info">info</span>
+        <span className="tooltip-on-bottom" id="training-male-p-value-tooltip">
+          Overall training effect p-value, regression model of male data
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'p_value_male',
+    sortType: 'basic',
   },
   {
-    Header: 'Female p-value',
+    Header: () => (
+      <div className="d-flex align-items-center training-female-p-value-col-header">
+        <span>Female p-value</span>
+        <span className="material-icons col-header-info">info</span>
+        <span
+          className="tooltip-on-bottom"
+          id="training-female-p-value-tooltip"
+        >
+          Overall training effect p-value, regression model of female data
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'p_value_female',
+    sortType: 'basic',
   },
 ];
 
@@ -301,20 +362,63 @@ export const metabTrainingTableColumns = [
     accessor: 'dataset',
   },
   {
-    Header: 'P-value',
+    Header: () => (
+      <div className="d-flex align-items-center training-p-value-col-header">
+        <span>P-value</span>
+        <span className="material-icons col-header-info">info</span>
+        <span className="tooltip-on-bottom" id="training-p-value-tooltip">
+          Combined p-value (males and females)
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'p_value',
+    sortType: 'basic',
   },
   {
-    Header: 'Adj p-value',
+    Header: () => (
+      <div className="d-flex align-items-center training-adj-p-value-col-header">
+        <span>Adj p-value</span>
+        <span className="material-icons col-header-info">info</span>
+        <span className="tooltip-on-bottom" id="training-adj-p-value-tooltip">
+          FDR-adjusted combined p-value
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'adj_p_value',
+    sortType: 'basic',
   },
   {
-    Header: 'Male p-value',
+    Header: () => (
+      <div className="d-flex align-items-center training-male-p-value-col-header">
+        <span>Male p-value</span>
+        <span className="material-icons col-header-info">info</span>
+        <span className="tooltip-on-bottom" id="training-male-p-value-tooltip">
+          Overall training effect p-value, regression model of male data
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'p_value_male',
+    sortType: 'basic',
   },
   {
-    Header: 'Female p-value',
+    Header: () => (
+      <div className="d-flex align-items-center training-female-p-value-col-header">
+        <span>Female p-value</span>
+        <span className="material-icons col-header-info">info</span>
+        <span
+          className="tooltip-on-bottom"
+          id="training-female-p-value-tooltip"
+        >
+          Overall training effect p-value, regression model of female data
+          <i />
+        </span>
+      </div>
+    ),
     accessor: 'p_value_female',
+    sortType: 'basic',
   },
 ];
 
