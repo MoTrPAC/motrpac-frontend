@@ -317,7 +317,7 @@ export const trainingTableColumns = [
         <span>Male p-value</span>
         <span className="material-icons col-header-info">info</span>
         <span className="tooltip-on-bottom" id="training-male-p-value-tooltip">
-          Overall training effect p-value, regression model of male data
+          Training effect p-value, male data
           <i />
         </span>
       </div>
@@ -334,7 +334,7 @@ export const trainingTableColumns = [
           className="tooltip-on-bottom"
           id="training-female-p-value-tooltip"
         >
-          Overall training effect p-value, regression model of female data
+          Training effect p-value, female data
           <i />
         </span>
       </div>
@@ -395,7 +395,7 @@ export const metabTrainingTableColumns = [
         <span>Male p-value</span>
         <span className="material-icons col-header-info">info</span>
         <span className="tooltip-on-bottom" id="training-male-p-value-tooltip">
-          Overall training effect p-value, regression model of male data
+          Training effect p-value, male data
           <i />
         </span>
       </div>
@@ -412,7 +412,7 @@ export const metabTrainingTableColumns = [
           className="tooltip-on-bottom"
           id="training-female-p-value-tooltip"
         >
-          Overall training effect p-value, regression model of female data
+          Training effect p-value, female data
           <i />
         </span>
       </div>
