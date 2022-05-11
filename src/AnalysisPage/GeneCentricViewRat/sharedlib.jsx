@@ -7,6 +7,7 @@ export const geneSearchParamsPropType = {
   ktype: PropTypes.string,
   keys: PropTypes.string,
   omics: PropTypes.string,
+  index: PropTypes.string,
   filters: PropTypes.shape({
     assay: PropTypes.string,
     tissue: PropTypes.string,

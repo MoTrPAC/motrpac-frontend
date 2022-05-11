@@ -81,7 +81,8 @@ function geneSearchChangeFilter(field, filterValue) {
 }
 
 // Handle gene-centric search
-function handleGeneCentricSearch(params) {
+function handleGeneCentricSearch(params, geneInputValue) {
+  params.keys = geneInputValue;
   return (dispatch) => {
     dispatch(geneSearchSubmit());
     return axios

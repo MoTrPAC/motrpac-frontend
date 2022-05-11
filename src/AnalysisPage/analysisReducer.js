@@ -53,6 +53,7 @@ export const defaultAnalysisState = {
   bodyFatPlot: 'one_week_program',
   vo2Plot: 'one_week_program',
   lactatePlot: 'one_week_program',
+  geneSearchInputValue: '',
   geneSearchResults: {},
   geneSearchParams: defaultGeneSearchParams,
   geneSearching: false,
@@ -107,20 +108,21 @@ export default function AnalysisReducer(
       };
     // Handle form input change event
     case GENE_SEARCH_INPUT_CHANGE: {
-      const params = { ...state.geneSearchParams };
       const { inputValue } = action;
-      params.keys = inputValue;
       return {
         ...state,
-        geneSearchParams: params,
+        geneSearchInputValue: inputValue,
         geneSearchError: '',
       };
     }
     // Handle form submit event
     case GENE_SEARCH_SUBMIT: {
+      const params = { ...state.geneSearchParams };
+      params.keys = state.geneSearchInputValue;
       return {
         ...state,
         geneSearchResults: {},
+        geneSearchParams: params,
         geneSearching: true,
       };
     }
@@ -149,6 +151,7 @@ export default function AnalysisReducer(
     case GENE_SEARCH_RESET: {
       return {
         ...state,
+        geneSearchInputValue: '',
         geneSearchResults: {},
         geneSearchParams: defaultGeneSearchParams,
         geneSearching: false,

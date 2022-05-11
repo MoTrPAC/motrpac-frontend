@@ -8,6 +8,7 @@ import GeneCentricSearchResultFilters from './geneCentricSearchResultFilters';
 import AnimatedLoadingIcon from '../../lib/ui/loading';
 
 function GeneCentricView({
+  geneSearchInputValue,
   geneSearchResults,
   geneSearchParams,
   geneSearching,
@@ -68,7 +69,7 @@ function GeneCentricView({
                 pattern="[a-zA-Z0-9]+"
                 className="form-control search-input-kype flex-grow-1"
                 placeholder="Enter a gene symbol (Example: SMAD3)"
-                value={geneSearchParams.keys}
+                value={geneSearchInputValue}
                 onChange={(e) => geneSearchInputChange(e.target.value)}
               />
               <div className="search-button-group d-flex justify-content-end ml-4">
@@ -77,7 +78,10 @@ function GeneCentricView({
                   className="btn btn-primary search-submit"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleGeneCentricSearch(geneSearchParams);
+                    handleGeneCentricSearch(
+                      geneSearchParams,
+                      geneSearchInputValue
+                    );
                   }}
                 >
                   Search
@@ -133,6 +137,7 @@ function GeneCentricView({
 }
 
 GeneCentricView.propTypes = {
+  geneSearchInputValue: PropTypes.string,
   geneSearchResults: PropTypes.shape({
     result: PropTypes.object,
     total: PropTypes.number,
@@ -157,6 +162,7 @@ GeneCentricView.propTypes = {
 };
 
 GeneCentricView.defaultProps = {
+  geneSearchInputValue: '',
   geneSearchResults: {},
   geneSearching: false,
   genSearchError: '',
@@ -170,8 +176,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   geneSearchInputChange: (geneInputValue) =>
     dispatch(AnalysisActions.geneSearchInputChange(geneInputValue)),
-  handleGeneCentricSearch: (params) =>
-    dispatch(AnalysisActions.handleGeneCentricSearch(params)),
+  handleGeneCentricSearch: (params, geneInputValue) =>
+    dispatch(AnalysisActions.handleGeneCentricSearch(params, geneInputValue)),
   geneSearchReset: () => dispatch(AnalysisActions.geneSearchReset()),
   geneSearchChangeFilter: (field, value) =>
     dispatch(AnalysisActions.geneSearchChangeFilter(field, value)),
