@@ -52,14 +52,25 @@ const analysisTypes = [
   */
   {
     title: 'Gene-Centric View',
-    shortName: 'MOLECULES',
+    shortName: 'GENE_CENTRIC_RAT',
+    icon: moleculeIcon,
+    inactiveIcon: moleculeIconInactive,
+    input: null,
+    description:
+      'Search by gene symbol and examine the training response of its related molecules (e.g. protein phosphorylation/acetylation, promoter methylation, transcript).',
+    active: true,
+    species: ['animal'],
+  },
+  {
+    title: 'Gene-Centric View',
+    shortName: 'GENE_CENTRIC_HUMAN',
     icon: moleculeIcon,
     inactiveIcon: moleculeIconInactive,
     input: null,
     description:
       'Search by gene symbol and examine the training response of its related molecules (e.g. protein phosphorylation/acetylation, promoter methylation, transcript).',
     active: false,
-    species: ['animal', 'human'],
+    species: ['human'],
   },
   {
     title: 'Tissue Comparison',
