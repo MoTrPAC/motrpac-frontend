@@ -11,6 +11,7 @@ function GeneCentricSearchResultFilters({
   geneSearchParams,
   handleGeneCentricSearch,
   geneSearchChangeFilter,
+  geneSearchInputValue,
 }) {
   // FIXME - this is a hack to get the search filters such as tissue and assay
   // to render accordingly to the ktype (gene)
@@ -79,7 +80,7 @@ function GeneCentricSearchResultFilters({
           className="btn btn-sm btn-primary"
           onClick={(e) => {
             e.preventDefault();
-            handleGeneCentricSearch(geneSearchParams);
+            handleGeneCentricSearch(geneSearchParams, geneSearchInputValue);
           }}
         >
           Update results
@@ -93,6 +94,7 @@ GeneCentricSearchResultFilters.propTypes = {
   geneSearchParams: PropTypes.shape({ ...geneSearchParamsPropType }).isRequired,
   handleGeneCentricSearch: PropTypes.func.isRequired,
   geneSearchChangeFilter: PropTypes.func.isRequired,
+  geneSearchInputValue: PropTypes.string.isRequired,
 };
 
 export default GeneCentricSearchResultFilters;

@@ -118,6 +118,7 @@ function GeneCentricView({
                     geneSearchParams={geneSearchParams}
                     handleGeneCentricSearch={handleGeneCentricSearch}
                     geneSearchChangeFilter={geneSearchChangeFilter}
+                    geneSearchInputValue={geneSearchInputValue}
                   />
                 </div>
                 <div className="search-results-content-container col-md-9">
