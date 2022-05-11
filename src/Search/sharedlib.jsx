@@ -12,6 +12,7 @@ export const searchParamsDefaultProps = {
   ktype: 'gene',
   keys: '',
   omics: 'all',
+  analysis: 'all',
   filters: {
     tissue: '',
     assay: '',
@@ -21,14 +22,32 @@ export const searchParamsDefaultProps = {
     adj_p_value: [],
     logFC: [],
   },
+  fields: [
+    'gene_symbol',
+    'metabolite',
+    'dataset',
+    'feature_ID',
+    'tissue',
+    'assay',
+    'sex',
+    'comparison_group',
+    'logFC',
+    'p_value',
+    'adj_p_value',
+    'selection_fdr',
+    'p_value_male',
+    'p_value_female',
+  ],
+  size: 25000,
   debug: true,
-  save: true,
+  save: false,
 };
 
 export const searchParamsPropType = {
   ktype: PropTypes.string,
   keys: PropTypes.string,
   omics: PropTypes.string,
+  analysis: PropTypes.string,
   filters: PropTypes.shape({
     tissue: PropTypes.string,
     assay: PropTypes.string,
@@ -38,6 +57,8 @@ export const searchParamsPropType = {
     adj_p_value: PropTypes.arrayOf(PropTypes.string),
     logFC: PropTypes.arrayOf(PropTypes.string),
   }),
+  fields: PropTypes.arrayOf(PropTypes.string),
+  size: PropTypes.number,
   debug: PropTypes.bool,
   save: PropTypes.bool,
 };
