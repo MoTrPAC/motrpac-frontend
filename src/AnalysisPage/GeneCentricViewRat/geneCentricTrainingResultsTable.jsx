@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, forwardRef, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   useTable,
@@ -6,43 +6,54 @@ import {
   useGlobalFilter,
   useSortBy,
   usePagination,
+  useRowSelect,
 } from 'react-table';
 import {
-  searchParamsPropType,
-  trainingResultsTablePropType,
-  trainingTableColumns,
-  metabTrainingTableColumns,
+  geneSearchTrainingResultsTablePropType,
+  geneSearchTimewisePlotPropType,
+  geneSearchTrainingTableColumns,
   PageIndex,
   PageSize,
   PageNavigationControl,
   transformData,
 } from './sharedlib';
+import TimeSeriesPlots from './timeSeriesPlots';
+
+// React-Table row selection setup
+const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
+  const defaultRef = useRef();
+  const resolvedRef = ref || defaultRef;
+
+  useEffect(() => {
+    resolvedRef.current.indeterminate = indeterminate;
+  }, [resolvedRef, indeterminate]);
+
+  return (
+    <>
+      <input type="checkbox" ref={resolvedRef} {...rest} />
+    </>
+  );
+});
 
 /**
  * Sets up table column headers and renders the table component
  *
  * @returns {object} The data qc status table component
  */
-function TrainingResultsTable({
+function GeneCentricTrainingResultsTable({
   trainingData,
-  searchParams,
-  handleSearchDownload,
+  timewiseData,
+  geneSymbol,
 }) {
   // Define table column headers
-  const columns = useMemo(
-    () =>
-      searchParams.ktype === 'metab'
-        ? metabTrainingTableColumns
-        : trainingTableColumns,
-    []
-  );
+  const columns = useMemo(() => geneSearchTrainingTableColumns, []);
   const data = useMemo(() => transformData(trainingData), [trainingData]);
   return (
     <TrainingDataTable
       columns={columns}
       data={data}
-      searchParams={searchParams}
-      handleSearchDownload={handleSearchDownload}
+      plotData={timewiseData}
+      geneSymbol={geneSymbol}
     />
   );
 }
@@ -54,12 +65,9 @@ function TrainingResultsTable({
  *
  * @returns {object} JSX representation of table on data qc status
  */
-function TrainingDataTable({
-  columns,
-  data,
-  searchParams,
-  handleSearchDownload,
-}) {
+function TrainingDataTable({ columns, data, plotData, geneSymbol }) {
+  const [selectedFeatures, setSelectedFeatures] = useState([]);
+
   const filterTypes = React.useMemo(
     () => ({
       text: (rows, id, filterValue) =>
@@ -90,7 +98,31 @@ function TrainingDataTable({
     useFilters,
     useGlobalFilter,
     useSortBy,
-    usePagination
+    usePagination,
+    useRowSelect,
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => [
+        // Let's make a column for selection
+        {
+          id: 'selection',
+          // The header can use the table's getToggleAllRowsSelectedProps method
+          // to render a checkbox
+          Header: ({ getToggleAllPageRowsSelectedProps }) => (
+            <div>
+              <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
+            </div>
+          ),
+          // The cell can use the individual row's getToggleRowSelectedProps method
+          // to the render a checkbox
+          Cell: ({ row }) => (
+            <div>
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        ...columns,
+      ]);
+    }
   );
   // Use the state and functions returned from useTable to build your UI
   const {
@@ -105,7 +137,8 @@ function TrainingDataTable({
     pageOptions,
     pageCount,
     page,
-    state: { pageIndex, pageSize, globalFilter },
+    selectedFlatRows,
+    state: { pageIndex, pageSize, selectedRowIds, globalFilter },
     gotoPage,
     previousPage,
     nextPage,
@@ -116,6 +149,61 @@ function TrainingDataTable({
 
   // default page size options given the length of entries in the data
   const range = (start, stop, step = 20) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
+
+  // Render modal
+  function renderModal() {
+    return (
+      <div
+        className="modal fade time-series-plot-modal"
+        id="timeSeriesPlotModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="timeSeriesPlotModalTitle"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="timeSeriesPlotModalTitle">
+                Time Series Plots
+              </h5>
+              <button
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <TimeSeriesPlots
+                plotData={plotData}
+                selectedFeatures={selectedFeatures}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  /* End: Download modal */
+
+  function handleViewPlots(selectedFiles) {
+    if (selectedFiles.length === 0) {
+      return false;
+    }
+    const features = selectedFiles.map((item) => {
+      return {
+        featureId: item.original.feature_ID,
+        tissue: item.original.tissue,
+        assay: item.original.assay,
+        gene_symbol: geneSymbol,
+        p_value: item.original.p_value,
+      };
+    });
+    setSelectedFeatures(features);
+  }
 
   // Render the UI for your table
   // react-table doesn't have UI, it's headless. We just need to put the react-table
@@ -128,20 +216,24 @@ function TrainingDataTable({
           setPageSize={setPageSize}
           pageSizeOptions={range(20, preGlobalFilteredRows.length)}
         />
-        <div className="file-download-button">
+        <div className="search-results-usage-instructions font-weight-bold">
+          Select up to 5 features to view time series plots
+        </div>
+        <div className="view-plots-button">
           <button
             type="button"
             className="btn btn-sm btn-primary d-flex align-items-center"
+            disabled={Object.keys(selectedRowIds).length === 0}
             data-toggle="modal"
-            data-target=".data-download-modal"
-            onClick={(e) => {
-              e.preventDefault();
-              handleSearchDownload(searchParams, 'training');
+            data-target=".time-series-plot-modal"
+            onClick={() => {
+              handleViewPlots(selectedFlatRows);
             }}
           >
-            <span className="material-icons">file_download</span>
-            <span>Download results</span>
+            <span className="material-icons mr-1">equalizer</span>
+            <span>View time series plots</span>
           </button>
+          {Object.keys(selectedRowIds).length > 0 ? renderModal() : null}
         </div>
       </div>
       <div className="card mb-3">
@@ -214,12 +306,14 @@ function TrainingDataTable({
   );
 }
 
-TrainingResultsTable.propTypes = {
+GeneCentricTrainingResultsTable.propTypes = {
   trainingData: PropTypes.arrayOf(
-    PropTypes.shape({ ...trainingResultsTablePropType })
+    PropTypes.shape({ ...geneSearchTrainingResultsTablePropType })
   ).isRequired,
-  searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
-  handleSearchDownload: PropTypes.func.isRequired,
+  timewiseData: PropTypes.arrayOf(
+    PropTypes.shape({ ...geneSearchTimewisePlotPropType })
+  ).isRequired,
+  geneSymbol: PropTypes.string.isRequired,
 };
 
 TrainingDataTable.propTypes = {
@@ -230,10 +324,13 @@ TrainingDataTable.propTypes = {
       accessor: PropTypes.string.isRequired,
     })
   ).isRequired,
-  data: PropTypes.arrayOf(PropTypes.shape({ ...trainingResultsTablePropType }))
-    .isRequired,
-  searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
-  handleSearchDownload: PropTypes.func.isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({ ...geneSearchTrainingResultsTablePropType })
+  ).isRequired,
+  plotData: PropTypes.arrayOf(
+    PropTypes.shape({ ...geneSearchTimewisePlotPropType })
+  ).isRequired,
+  geneSymbol: PropTypes.string.isRequired,
 };
 
-export default TrainingResultsTable;
+export default GeneCentricTrainingResultsTable;

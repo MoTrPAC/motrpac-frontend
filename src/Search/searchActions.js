@@ -6,6 +6,9 @@ export const SEARCH_SUBMIT = 'SEARCH_SUBMIT';
 export const SEARCH_FAILURE = 'SEARCH_FAILURE';
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
 export const SEARCH_RESET = 'SEARCH_RESET';
+export const DOWNLOAD_SUBMIT = 'DOWNLOAD_SUBMIT';
+export const DOWNLOAD_FAILURE = 'DOWNLOAD_FAILURE';
+export const DOWNLOAD_SUCCESS = 'DOWNLOAD_SUCCESS';
 
 function changeResultFilter(field, filterValue, bound) {
   return {
@@ -53,6 +56,27 @@ function searchReset(scope) {
   };
 }
 
+function downloadSubmit() {
+  return {
+    type: DOWNLOAD_SUBMIT,
+  };
+}
+
+function downloadFailure(downloadError = '') {
+  return {
+    type: DOWNLOAD_FAILURE,
+    downloadError,
+  };
+}
+
+function downloadSuccess(downloadResults) {
+  return {
+    type: DOWNLOAD_SUCCESS,
+    downloadResults,
+  };
+}
+
+// Handle search and results filtering events
 function handleSearch(params, scope) {
   return (dispatch) => {
     dispatch(searchSubmit(params, scope));
@@ -70,9 +94,35 @@ function handleSearch(params, scope) {
   };
 }
 
+// Handle download search results event
+function handleSearchDownload(params, analysis) {
+  const downloadSearchParams = { ...params };
+  downloadSearchParams.fields = [];
+  downloadSearchParams.save = true;
+  downloadSearchParams.analysis = analysis;
+  return (dispatch) => {
+    dispatch(downloadSubmit());
+    return axios
+      .post(
+        `${process.env.REACT_APP_ES_PROXY_HOST}/search/api`,
+        downloadSearchParams
+      )
+      .then((response) => {
+        if (response.data.error) {
+          dispatch(downloadFailure(response.data.error));
+        }
+        dispatch(downloadSuccess(response.data));
+      })
+      .catch((err) => {
+        dispatch(downloadFailure(`${err.name}: ${err.message}`));
+      });
+  };
+}
+
 const SearchActions = {
   changeParam,
   handleSearch,
+  handleSearchDownload,
   searchReset,
   changeResultFilter,
 };

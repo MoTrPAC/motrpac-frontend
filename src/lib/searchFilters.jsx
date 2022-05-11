@@ -22,6 +22,8 @@ export const tissueList = [
 
 const assays = [
   { filter_value: 'transcript-rna-seq', filter_label: 'RNA-seq' },
+  { filter_value: 'epigen-atac-seq', filter_label: 'ATAC-seq' },
+  { filter_value: 'epigen-rrbs', filter_label: 'RRBS' },
   { filter_value: 'immunoassay', filter_label: 'Immunoassay' },
   { filter_value: 'metab-t-acoa', filter_label: 'Targeted Acyl-CoA' },
   { filter_value: 'metab-t-amines', filter_label: 'Targeted Amines' },
@@ -61,6 +63,10 @@ const assays = [
   { filter_value: 'prot-ph', filter_label: 'Phosphoproteomics' },
   { filter_value: 'prot-ac', filter_label: 'Acetyl Proteomics' },
   { filter_value: 'prot-ub', filter_label: 'Protein Ubiquitination' },
+  {
+    filter_value: 'prot-ub-protein-corrected',
+    filter_label: 'Protein Ubiquitination',
+  },
 ];
 
 export const assayList = assays.sort((a, b) =>
@@ -122,5 +128,18 @@ export const rangeSearchFilters = [
     keyName: 'adj_p_value',
     name: 'Adj P-value',
     filters: rangeList,
+  },
+];
+
+export const geneCentricSearchFilters = [
+  {
+    keyName: 'tissue',
+    name: 'Tissue',
+    filters: tissueList,
+  },
+  {
+    keyName: 'assay',
+    name: 'Assay',
+    filters: assayList,
   },
 ];

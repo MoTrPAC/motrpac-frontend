@@ -5,6 +5,9 @@ import {
   SEARCH_FAILURE,
   SEARCH_SUCCESS,
   SEARCH_RESET,
+  DOWNLOAD_SUBMIT,
+  DOWNLOAD_FAILURE,
+  DOWNLOAD_SUCCESS,
 } from './searchActions';
 
 export const defaultSearchState = {
@@ -13,6 +16,7 @@ export const defaultSearchState = {
     ktype: 'gene',
     keys: '',
     omics: 'all',
+    analysis: 'all',
     filters: {
       tissue: '',
       assay: '',
@@ -22,12 +26,32 @@ export const defaultSearchState = {
       logFC: [],
       p_value: [],
     },
+    fields: [
+      'gene_symbol',
+      'metabolite',
+      'dataset',
+      'feature_ID',
+      'tissue',
+      'assay',
+      'sex',
+      'comparison_group',
+      'logFC',
+      'p_value',
+      'adj_p_value',
+      'selection_fdr',
+      'p_value_male',
+      'p_value_female',
+    ],
+    size: 25000,
     debug: true,
-    save: true,
+    save: false,
   },
   scope: 'all',
   searching: false,
   searchError: '',
+  downloadResults: {},
+  downloading: false,
+  downloadError: '',
 };
 
 // Reducer to handle actions sent from components related to advanced search form
@@ -105,16 +129,28 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
 
     // Handle form submit event
     case SEARCH_SUBMIT: {
-      const { ktype, keys, omics, filters } = action.params;
+      const {
+        ktype,
+        keys,
+        omics,
+        analysis,
+        filters,
+        fields,
+        size,
+      } = action.params;
       return {
         ...state,
+        searchResults: {},
         searchParams: {
           ktype,
           keys,
           omics,
+          analysis,
           filters,
+          fields,
+          size,
           debug: true,
-          save: true,
+          save: false,
         },
         scope: action.scope,
         searching: true,
@@ -168,6 +204,37 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         ...defaultSearchState,
       };
     }
+
+    // Handle download submit event
+    case DOWNLOAD_SUBMIT:
+      return {
+        ...state,
+        downloadResults: {},
+        downloading: true,
+      };
+
+    // Handle download request error
+    case DOWNLOAD_FAILURE:
+      return {
+        ...state,
+        downloadError: action.downloadError,
+        downloading: false,
+      };
+
+    // Hanlde download query response
+    case DOWNLOAD_SUCCESS:
+      return {
+        ...state,
+        downloadResults:
+          action.downloadResults.message || action.downloadResults.errors
+            ? {
+                errors:
+                  action.downloadResults.message ||
+                  action.downloadResults.errors,
+              }
+            : action.downloadResults,
+        downloading: false,
+      };
 
     default:
       return state;

@@ -17,7 +17,6 @@ import {
   PageNavigationControl,
   transformData,
 } from './sharedlib';
-import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
 /**
  * Sets up table column headers and renders the table component
@@ -27,8 +26,7 @@ import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 function TimewiseResultsTable({
   timewiseData,
   searchParams,
-  profile,
-  downloadPath,
+  handleSearchDownload,
 }) {
   // Define table column headers
   const columns = useMemo(
@@ -43,8 +41,8 @@ function TimewiseResultsTable({
     <DataTable
       columns={columns}
       data={data}
-      profile={profile}
-      downloadPath={downloadPath}
+      searchParams={searchParams}
+      handleSearchDownload={handleSearchDownload}
     />
   );
 }
@@ -56,7 +54,7 @@ function TimewiseResultsTable({
  *
  * @returns {object} JSX representation of table on data qc status
  */
-function DataTable({ columns, data, profile, downloadPath }) {
+function DataTable({ columns, data, searchParams, handleSearchDownload }) {
   const filterTypes = React.useMemo(
     () => ({
       text: (rows, id, filterValue) =>
@@ -115,10 +113,6 @@ function DataTable({ columns, data, profile, downloadPath }) {
   // default page size options given the length of entries in the data
   const range = (start, stop, step = 20) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
 
-  const resultDownloadFilePath = downloadPath.substring(
-    downloadPath.indexOf('search_results')
-  );
-
   // Render the UI for your table
   // react-table doesn't have UI, it's headless. We just need to put the react-table
   // props from the Hooks, and it will do its magic automatically
@@ -131,21 +125,19 @@ function DataTable({ columns, data, profile, downloadPath }) {
           pageSizeOptions={range(20, preGlobalFilteredRows.length)}
         />
         <div className="file-download-button">
-          <a
-            href={`${process.env.REACT_APP_ES_PROXY_HOST}/${resultDownloadFilePath}`}
+          <button
+            type="button"
             className="btn btn-sm btn-primary d-flex align-items-center"
-            role="button"
-            download
-            onClick={trackEvent.bind(
-              this,
-              'Search results download',
-              resultDownloadFilePath,
-              profile.user_metadata.name
-            )}
+            data-toggle="modal"
+            data-target=".data-download-modal"
+            onClick={(e) => {
+              e.preventDefault();
+              handleSearchDownload(searchParams, 'timewise');
+            }}
           >
             <span className="material-icons">file_download</span>
             <span>Download results</span>
-          </a>
+          </button>
         </div>
       </div>
       <div className="card mb-3">
@@ -223,32 +215,21 @@ TimewiseResultsTable.propTypes = {
     PropTypes.shape({ ...timewiseResultsTablePropType })
   ).isRequired,
   searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
-  profile: PropTypes.shape({
-    user_metadata: PropTypes.object,
-  }),
-  downloadPath: PropTypes.string,
-};
-
-TimewiseResultsTable.defaultProps = {
-  profile: {},
-  downloadPath: '',
+  handleSearchDownload: PropTypes.func.isRequired,
 };
 
 DataTable.propTypes = {
   columns: PropTypes.arrayOf(
     PropTypes.shape({
-      Header: PropTypes.string.isRequired,
+      Header: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+        .isRequired,
       accessor: PropTypes.string.isRequired,
     })
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({ ...timewiseResultsTablePropType }))
     .isRequired,
-  profile: PropTypes.shape({
-    user_metadata: PropTypes.object,
-  }),
-  downloadPath: PropTypes.string,
+  searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
+  handleSearchDownload: PropTypes.func.isRequired,
 };
-
-DataTable.defaultProps = { profile: {}, downloadPath: '' };
 
 export default TimewiseResultsTable;

@@ -10,6 +10,8 @@ import SearchResultFilters from './deaSearchResultFilters';
 import AnimatedLoadingIcon from '../lib/ui/loading';
 import { searchParamsDefaultProps, searchParamsPropType } from './sharedlib';
 import FeatureLinks from './featureLinks';
+import IconSet from '../lib/iconSet';
+import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
 export function SearchPage({
   profile,
@@ -23,6 +25,10 @@ export function SearchPage({
   changeResultFilter,
   handleSearch,
   resetSearch,
+  downloadResults,
+  downloading,
+  downloadError,
+  handleSearchDownload,
 }) {
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
@@ -68,8 +74,7 @@ export function SearchPage({
         <div className="search-content-container">
           <div className="mt-4 mb-4">
             Search by genes, protein IDs, or metabolite names to examine the
-            training response of its related molecules in PASS1B 6-month data
-            (excluding RRBS and ATAC-seq).{' '}
+            training response of its related molecules in PASS1B 6-month data.{' '}
             <span className="font-weight-bolder">
               Multiple search terms MUST be separated by comma and space.
               Examples: "NP_001000006.1, NP_001001508.2, NP_001005898.3" or
@@ -191,10 +196,7 @@ export function SearchPage({
                         <TimewiseResultsTable
                           timewiseData={timewiseResults}
                           searchParams={searchParams}
-                          changeResultFilter={changeResultFilter}
-                          handleSearch={handleSearch}
-                          downloadPath={searchResults.path}
-                          profile={profile}
+                          handleSearchDownload={handleSearchDownload}
                         />
                       ) : (
                         scope === 'filters' && (
@@ -212,10 +214,7 @@ export function SearchPage({
                         <TrainingResultsTable
                           trainingData={trainingResults}
                           searchParams={searchParams}
-                          changeResultFilter={changeResultFilter}
-                          handleSearch={handleSearch}
-                          downloadPath={searchResults.path}
-                          profile={profile}
+                          handleSearchDownload={handleSearchDownload}
                         />
                       ) : (
                         scope === 'filters' && (
@@ -224,6 +223,12 @@ export function SearchPage({
                       )}
                     </div>
                   </div>
+                  <ResultsDownloadModal
+                    downloadPath={downloadResults.path}
+                    downloadError={downloadError}
+                    downloading={downloading}
+                    profile={profile}
+                  />
                 </div>
               </div>
             ) : null}
@@ -287,6 +292,7 @@ function RadioButton({ changeParam, ktype }) {
 function PrimaryOmicsFilter({ omics, toggleOmics }) {
   const omicsDictionary = {
     all: 'All omics',
+    epigenomics: 'Epigenomics',
     metabolomics: 'Metabolomics',
     proteomics: 'Proteomics',
     transcriptomics: 'Transcriptomics',
@@ -331,13 +337,103 @@ function PrimaryOmicsFilter({ omics, toggleOmics }) {
   );
 }
 
+// Render modal message
+function ResultsDownloadLink({ downloadPath, downloadError, profile }) {
+  const resultDownloadFilePath =
+    downloadPath &&
+    downloadPath.substring(downloadPath.indexOf('search_results'));
+
+  if (downloadError && downloadError.length) {
+    return <span className="modal-message">{downloadError}</span>;
+  }
+
+  return (
+    <span className="modal-message">
+      {resultDownloadFilePath ? (
+        <a
+          id={resultDownloadFilePath}
+          href={`${process.env.REACT_APP_ES_PROXY_HOST}/${resultDownloadFilePath}`}
+          download
+          onClick={trackEvent.bind(
+            this,
+            'Search results download',
+            resultDownloadFilePath,
+            profile.user_metadata.name
+          )}
+        >
+          Click this link to download the search results.
+        </a>
+      ) : null}
+    </span>
+  );
+}
+
+// Render modal
+function ResultsDownloadModal({
+  downloadPath,
+  downloadError,
+  downloading,
+  profile,
+}) {
+  return (
+    <div
+      className="modal fade data-download-modal"
+      id="dataDownloadModal"
+      tabIndex="-1"
+      role="dialog"
+      aria-labelledby="dataDownloadModalLabel"
+      aria-hidden="true"
+    >
+      <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Download Results</h5>
+            <button
+              type="button"
+              className="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div className="modal-body">
+            {!downloading ? (
+              <ResultsDownloadLink
+                downloadPath={downloadPath}
+                downloadError={downloadError}
+                profile={profile}
+              />
+            ) : (
+              <div className="loading-spinner w-100 text-center my-3">
+                <img src={IconSet.Spinner} alt="" />
+              </div>
+            )}
+          </div>
+          <div className="modal-footer">
+            <button
+              type="button"
+              className="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+/* End: Download modal */
+
 SearchPage.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
   }),
   expanded: PropTypes.bool,
   searchResults: PropTypes.shape({
-    data: PropTypes.object,
+    result: PropTypes.object,
+    total: PropTypes.number,
   }),
   scope: PropTypes.string,
   searching: PropTypes.bool,
@@ -347,6 +443,14 @@ SearchPage.propTypes = {
   changeResultFilter: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
   resetSearch: PropTypes.func.isRequired,
+  downloadResults: PropTypes.shape({
+    result: PropTypes.object,
+    total: PropTypes.number,
+    path: PropTypes.string,
+  }),
+  downloading: PropTypes.bool,
+  downloadError: PropTypes.string,
+  handleSearchDownload: PropTypes.func.isRequired,
 };
 
 SearchPage.defaultProps = {
@@ -357,6 +461,9 @@ SearchPage.defaultProps = {
   searching: false,
   searchError: '',
   searchParams: { ...searchParamsDefaultProps },
+  downloadResults: {},
+  downloading: false,
+  downloadError: '',
 };
 
 const mapStateToProps = (state) => ({
@@ -373,6 +480,8 @@ const mapDispatchToProps = (dispatch) => ({
   handleSearch: (params, scope) =>
     dispatch(SearchActions.handleSearch(params, scope)),
   resetSearch: (scope) => dispatch(SearchActions.searchReset(scope)),
+  handleSearchDownload: (params, analysis) =>
+    dispatch(SearchActions.handleSearchDownload(params, analysis)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

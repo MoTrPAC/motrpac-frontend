@@ -324,12 +324,22 @@
 }
 
 .timewise-p-value-col-header,
-.timewise-adj-p-value-col-header {
+.timewise-adj-p-value-col-header,
+.timewise-selection-fdr-col-header,
+.training-p-value-col-header,
+.training-adj-p-value-col-header,
+.training-male-p-value-col-header,
+.training-female-p-value-col-header {
   position: relative;
 }
 
 .timewise-p-value-col-header:hover,
-.timewise-adj-p-value-col-header:hover {
+.timewise-adj-p-value-col-header:hover,
+.timewise-selection-fdr-col-header:hover,
+.training-p-value-col-header:hover,
+.training-adj-p-value-col-header:hover,
+.training-male-p-value-col-header:hover,
+.training-female-p-value-col-header:hover {
   .tooltip-on-bottom {
     display: block;
     visibility: visible;
