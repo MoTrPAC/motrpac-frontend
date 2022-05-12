@@ -1,0 +1,123 @@
+.differentialExpressionPage {
+  .figure-svg-container {
+    position: relative;
+
+    svg {
+      max-height: calc(100vh - 300px);
+      max-width: calc(100vw - 300px);
+    }
+
+    /* tissue labels are temporarily non-interactive
+    g#Labels {
+      rect {
+        cursor: pointer;
+
+        &.hover,
+        &:hover {
+          -webkit-filter: drop-shadow(0 0 2px rgba(32, 149, 232, 0.75));
+          filter: drop-shadow(0 0 2px rgba(032, 149, 232, 0.75));
+        }
+      }
+
+      g path {
+        cursor: pointer;
+      }
+    }
+    */
+
+    g#AssayLegends {
+      rect, circle:not(.metab), polygon {
+        cursor: pointer;
+        position: relative;
+
+        &:hover {
+          -webkit-filter: drop-shadow(0 0 2px rgba(32, 149, 232, 0.75));
+          filter: drop-shadow(0 0 2px rgba(032, 149, 232, 0.75));
+        }
+      }
+
+      circle.metab {
+        position: relative;
+      }
+    }
+  }
+}
+
+.figure-assay-legends-container {
+  max-width: 360px;
+
+  .legend-symbol {
+    width: auto;
+    height: 0.85rem;
+  }
+
+  .assay-legend-item {
+    line-height: 1.75;
+  }
+}
+
+.results-container {
+  width: 360px;
+}
+
+div.assay-popover {
+  position: absolute;
+  text-align: center;
+  padding: 4px;
+  border: 1px solid #333333;
+  border-radius: 4px;
+}
+
+.modal.fade {
+  display: none;
+
+  &.show {
+    display: block;
+  }
+}
+
+.modal-title {
+  color: #4d4f53;
+}
+
+.data-status-tooltip {
+  background: $stanford-black;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 600;
+  padding: 12px 18px;
+  position: absolute;
+  text-align: center;
+  z-index: 99;
+  top: calc(50% - 65px);
+  left: calc(50% - 115px);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 1s, opacity 1s;
+}
+
+.data-status-tooltip.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.heatmap-tooltip {
+  background: $stanford-black;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 9px 13px;
+  position: absolute;
+  text-align: left;
+}
+
+.heatmap-legend-title {
+	font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.legend-y-axis {
+  font-size: 0.7rem;
+}

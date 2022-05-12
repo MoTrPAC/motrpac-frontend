@@ -162,6 +162,11 @@
                 &:focus {
                   outline: none;
                 }
+
+                &.disabled {
+                  color: $gray;
+                  cursor: not-allowed;
+                }
               }
 
               .file-size {

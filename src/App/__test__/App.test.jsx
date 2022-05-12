@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import App from '../App';
 
-const testUser = require('../../testData/testUser');
+const testUser = require('../../testData/testUser.json');
 
 // Mocking Google Analytics
 jest.mock('ga-gtag');
@@ -24,7 +24,7 @@ describe('<App />', () => {
   });
 
   test('It should contain eight <PrivateRoute /> children', () => {
-    expect(component.find('PrivateRoute').length).toBe(8);
+    expect(component.find('PrivateRoute').length).toBe(7);
   });
 });
 
@@ -64,26 +64,8 @@ describe('Unauthenticated Application routing', () => {
     testCorrectComponentInPath(mountApp, 'Route', 'LandingPage', '/', history);
   });
 
-  test('loads the landing page at /dashboard', () => {
-    history.push('/dashboard');
-    mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'LandingPage', '/', history);
-  });
-
-  test('loads the methods page at /methods', () => {
-    history.push('/methods');
-    mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'LandingPage', '/', history);
-  });
-
-  test('loads the landing page at /upload', () => {
-    history.push('/upload');
-    mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'LandingPage', '/', history);
-  });
-
-  test('loads the landing page at /download', () => {
-    history.push('/download');
+  test('loads the landing page at /home', () => {
+    history.push('/home');
     mountApp.update();
     testCorrectComponentInPath(mountApp, 'PrivateRoute', 'LandingPage', '/', history);
   });
@@ -142,11 +124,18 @@ describe('Authenticated Application routing', () => {
     expect(mountApp.find('Provider').props().store.getState().auth.isAuthenticated).toBeTruthy();
   });
 
-  test('loads the dashboard at /dashboard', () => {
-    history.push('/dashboard');
+  test('loads the search page at /home', () => {
+    history.push('/home');
     // Update required to re-render the application
     mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'Dashboard', '/dashboard', history, true);
+    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'HomePage', '/home', history, true);
+  });
+
+  test('loads the QC reports at /qc-reports', () => {
+    history.push('/qc-reports');
+    // Update required to re-render the application
+    mountApp.update();
+    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'DataStatusPage', '/qc-data-monitor', history, true);
   });
 
   test('loads the methods page at /methods', () => {
@@ -156,18 +145,16 @@ describe('Authenticated Application routing', () => {
     testCorrectComponentInPath(mountApp, 'PrivateRoute', 'Methods', '/methods', history, true);
   });
 
-  test('loads the download page at /download', () => {
-    history.push('/download');
-    // Update required to re-render the application
+  test('loads the sample summary page at /summary', () => {
+    history.push('/summary');
     mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'DownloadPage', '/download', history, true);
+    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'DataSummaryPage', '/summary', history, true);
   });
 
-  test('loads the upload page at /upload', () => {
-    history.push('/upload');
-    // Update required to re-render the application
+  test('loads the browse data page at /browse-data', () => {
+    history.push('/browse-data');
     mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'UploadScreen', '/upload', history, true);
+    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'BrowseDataPage', '/browse-data', history, true);
   });
 
   test('loads the linkout page at /external-links', () => {

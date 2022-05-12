@@ -24,7 +24,8 @@
 ├── public  
 ├── .storybook: configuration for storybook  
 ├── .eslintrc.js: ESlint configuration  
-├── .stylelint.config.js: StyleLint configurations for Sass Linting . 
+├── .prettierrc.js: Prettier configuration  
+├── .stylelint.config.js: StyleLint configurations for Sass Linting
 
 #### Flow for creating new components
   1. Create \[component\].jsx file in src/\[Component\]
@@ -35,37 +36,43 @@
 
 #### Building and running
 
+ * Preparation:
+   - Set `node` environment to `14.15.x`, or use `nvm` to run `nvm use v14.15.4`
+   - If `node_modules` directory already exist in your local working copy, run `rm -fr node_modules/` and `rm -f yarn.lock`.
+   - Create a `.env` file at the root of the local working copy and add `ESLINT_NO_DEV_ERRORS=true`.
+   - Run `yarn install`.
+
+ * Building CSS: Uses sass in `node_modules/sass/sass.js`
+   - `yarn sass`
+   - Compiles sass from `src/sass/main.scss` to `src/main.css`
+   - `yarn sass-watch`
+   - Compiles sass from `src/sass/main.scss` to `src/main.css` and watches for changes
+
  * Running React App:
    - `yarn start`
-   - runs core React app at localhost:3000
+   - Runs core React app at localhost:3000
 
  * Running Storybook:
    - `yarn run storybook`
-   - runs storybook server at localhost:9009
+   - Runs storybook server at localhost:9009
 
  * Testing:
    - `yarn test`
-   - runs tests and storybook snapshots
+   - Runs tests and storybook snapshots
    - `yarn test --coverage`
-   - runs all tests and returns table illustrating code coverage
-
- * Building CSS: Uses sass in node_modules/sass/sass.js
-   - `yarn sass`
-   - compiles sass from src/sass/main.scss to src/main.css
-   - `yarn sass-watch`
-   - compiles sass from src/sass/main.scss to src/main.css and watches for changes
+   - Runs all tests and returns table illustrating code coverage
 
  * Quickly inspect someone's branch:
    - `yarn inspect-branch`
-   - compiles Scss, rebuilds node_modules if different, and starts react app
+   - Compiles Scss, rebuilds node_modules if different, and starts react app
 
 ### Software versions and styles
 
 #### Software:
 
- * [Node v10](https://github.com/nodejs/Release)
+ * [Node v14](https://github.com/nodejs/Release)
      - Check your version: `node --version`
-     - If the version is not 10, you can `brew install node@10` or use [nvm](https://github.com/creationix/nvm/blob/master/README.md#installation), the Node Version Manager
+     - If the version is not 14, you can `brew install node@14` or use [nvm](https://github.com/creationix/nvm/blob/master/README.md#installation), the Node Version Manager
      
  * [React v16](https://reactjs.org/versions)
      - Storybook used to visualize individual UI components

@@ -7,7 +7,7 @@ import {
 } from './quickSearchBoxActions';
 
 export const defaultQuickSearchState = {
-  quickSearchPayload: {},
+  quickSearchPayload: [],
   quickSearchError: '',
   quickSearchQueryString: '',
   quickSearchTerm: '',

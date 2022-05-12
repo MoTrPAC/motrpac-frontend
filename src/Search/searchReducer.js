@@ -1,128 +1,239 @@
 import {
-  SEARCH_FORM_CHANGE,
-  SEARCH_FORM_ADD_PARAM,
-  SEARCH_FORM_REMOVE_PARAM,
-  SEARCH_FORM_UPDATE_PARAM,
-  SEARCH_FORM_SUBMIT,
-  SEARCH_FORM_SUBMIT_FAILURE,
-  SEARCH_FORM_SUBMIT_SUCCESS,
-  SEARCH_FORM_RESET,
-  GET_SEARCH_FORM,
+  CHANGE_RESULT_FILTER,
+  CHANGE_PARAM,
+  SEARCH_SUBMIT,
+  SEARCH_FAILURE,
+  SEARCH_SUCCESS,
+  SEARCH_RESET,
+  DOWNLOAD_SUBMIT,
+  DOWNLOAD_FAILURE,
+  DOWNLOAD_SUCCESS,
 } from './searchActions';
 
 export const defaultSearchState = {
-  searchPayload: {},
-  searchError: '',
-  searchQueryString: '',
-  advSearchParams: [
-    {
-      term: 'all',
-      value: '',
-      operator: '',
+  searchResults: {},
+  searchParams: {
+    ktype: 'gene',
+    keys: '',
+    omics: 'all',
+    analysis: 'all',
+    filters: {
+      tissue: '',
+      assay: '',
+      sex: '',
+      comparison_group: '',
+      adj_p_value: [],
+      logFC: [],
+      p_value: [],
     },
-  ],
-  isSearchFetching: false,
+    fields: [
+      'gene_symbol',
+      'metabolite',
+      'dataset',
+      'feature_ID',
+      'tissue',
+      'assay',
+      'sex',
+      'comparison_group',
+      'logFC',
+      'p_value',
+      'adj_p_value',
+      'selection_fdr',
+      'p_value_male',
+      'p_value_female',
+    ],
+    size: 25000,
+    debug: true,
+    save: false,
+  },
+  scope: 'all',
+  searching: false,
+  searchError: '',
+  downloadResults: {},
+  downloading: false,
+  downloadError: '',
 };
 
 // Reducer to handle actions sent from components related to advanced search form
 export function SearchReducer(state = { ...defaultSearchState }, action) {
   // Handle states given the action types
   switch (action.type) {
-    // Handle form input change event
-    case SEARCH_FORM_CHANGE: {
-      const newParamList = [...state.advSearchParams];
+    // Handle primary param values: ktype, keys, omics
+    case CHANGE_PARAM: {
+      const updatedParams = { ...state.searchParams };
 
-      if (action.field === 'term') {
-        newParamList[action.index].term = action.inputValue;
-      } else if (action.field === 'value') {
-        newParamList[action.index].value = action.inputValue;
-      } else if (action.field === 'operator') {
-        newParamList[action.index].operator = action.inputValue;
+      updatedParams[action.field] = action.paramValue;
+
+      return {
+        ...state,
+        searchParams: updatedParams,
+      };
+    }
+
+    // Handle secondary filters: tissue, assay, sex, timepoint, etc
+    case CHANGE_RESULT_FILTER: {
+      const params = { ...state.searchParams };
+      const { filters } = params;
+      const isActiveFilter = filters[action.field].indexOf(action.filterValue);
+      const newFilters = { ...filters };
+
+      // Handle selection of a filter value
+      if (action.field.match(/^(tissue|assay|sex|comparison_group)$/)) {
+        let newArr = newFilters[action.field].length
+          ? newFilters[action.field].split(',')
+          : [];
+        if (isActiveFilter === -1) {
+          // Adds filter if new
+          const mergeArr = [...newArr, ...[action.filterValue]];
+          newFilters[action.field] = mergeArr.join();
+        } else {
+          // Removes filter if already exists
+          newArr = newArr.filter((filter) => !(filter === action.filterValue));
+          newFilters[action.field] = newArr.join();
+        }
       }
 
-      return {
-        ...state,
-        advSearchParams: newParamList,
-      };
-    }
+      // Handle range filters
+      if (action.field.match(/^(adj_p_value|logFC|p_value)$/)) {
+        if (action.bound === 'min') {
+          if (!newFilters[action.field].length) {
+            // Empty array: create new array with value
+            newFilters[action.field] = [action.filterValue, ''];
+          } else {
+            newFilters[action.field][0] = action.filterValue;
+          }
+        }
+        if (action.bound === 'max') {
+          if (!newFilters[action.field].length) {
+            // Empty array: create new array with value
+            newFilters[action.field] = ['', action.filterValue];
+          } else {
+            newFilters[action.field][1] = action.filterValue;
+          }
+        }
+        if (
+          newFilters[action.field][0] === '' &&
+          newFilters[action.field][1] === ''
+        ) {
+          newFilters[action.field].length = 0;
+        }
+      }
 
-    // Handle search param addition
-    case SEARCH_FORM_ADD_PARAM: {
-      const newParamList = [
-        ...state.advSearchParams,
-        { term: 'all', value: '', operator: 'AND' },
-      ];
-
-      return {
-        ...state,
-        advSearchParams: newParamList,
-      };
-    }
-
-    // Handle search param(s) replacement
-    case SEARCH_FORM_UPDATE_PARAM: {
-      const newParamList = [...action.params];
-
-      return {
-        ...state,
-        advSearchParams: newParamList,
-      };
-    }
-
-    // Hanlde search param removal
-    case SEARCH_FORM_REMOVE_PARAM: {
-      const newParamList = [...state.advSearchParams];
-      newParamList.splice(action.index, 1);
+      params.filters = newFilters;
 
       return {
         ...state,
-        advSearchParams: newParamList,
+        searchParams: params,
       };
     }
 
     // Handle form submit event
-    case SEARCH_FORM_SUBMIT: {
-      const paramsList = [...action.params];
-      const query = paramsList.map((item) => {
-        const operator = item.operator && item.operator.length ? item.operator : '';
-        return `${operator} (${item.term}:${encodeURI(item.value)})`;
-      }).join(' ');
-
+    case SEARCH_SUBMIT: {
+      const {
+        ktype,
+        keys,
+        omics,
+        analysis,
+        filters,
+        fields,
+        size,
+      } = action.params;
       return {
         ...state,
-        searchQueryString: query,
-        isSearchFetching: true,
+        searchResults: {},
+        searchParams: {
+          ktype,
+          keys,
+          omics,
+          analysis,
+          filters,
+          fields,
+          size,
+          debug: true,
+          save: false,
+        },
+        scope: action.scope,
+        searching: true,
       };
     }
 
     // Handle form submit error
-    case SEARCH_FORM_SUBMIT_FAILURE:
+    case SEARCH_FAILURE:
       return {
         ...state,
         searchError: action.searchError,
-        isSearchFetching: false,
+        searching: false,
       };
 
     // Hanlde query response
-    case SEARCH_FORM_SUBMIT_SUCCESS:
+    case SEARCH_SUCCESS:
       return {
         ...state,
-        searchPayload: action.searchPayload,
-        isSearchFetching: false,
+        searchResults:
+          action.searchResults.message || action.searchResults.errors
+            ? {
+                errors:
+                  action.searchResults.message || action.searchResults.errors,
+              }
+            : action.searchResults,
+        searching: false,
       };
 
-    // Revert form values to default
-    case SEARCH_FORM_RESET:
+    // Revert param/filter values to default
+    case SEARCH_RESET: {
+      if (action.scope === 'filters') {
+        const params = { ...state.searchParams };
+
+        params.filters = {
+          tissue: '',
+          assay: '',
+          sex: '',
+          comparison_group: '',
+          adj_p_value: [],
+          logFC: [],
+          p_value: [],
+        };
+
+        return {
+          ...state,
+          searchParams: params,
+        };
+      }
+
       return {
         ...defaultSearchState,
       };
+    }
 
-    // Handle 'Advanced' search link click event
-    case GET_SEARCH_FORM:
+    // Handle download submit event
+    case DOWNLOAD_SUBMIT:
       return {
         ...state,
-        searchPayload: {},
-        searchQueryString: '',
+        downloadResults: {},
+        downloading: true,
+      };
+
+    // Handle download request error
+    case DOWNLOAD_FAILURE:
+      return {
+        ...state,
+        downloadError: action.downloadError,
+        downloading: false,
+      };
+
+    // Hanlde download query response
+    case DOWNLOAD_SUCCESS:
+      return {
+        ...state,
+        downloadResults:
+          action.downloadResults.message || action.downloadResults.errors
+            ? {
+                errors:
+                  action.downloadResults.message ||
+                  action.downloadResults.errors,
+              }
+            : action.downloadResults,
+        downloading: false,
       };
 
     default:

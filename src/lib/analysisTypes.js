@@ -10,6 +10,7 @@ import networkIconInactive from '../assets/analysisIcons/NetworkAnalysis_inactiv
 import timeIconInactive from '../assets/analysisIcons/TimeCourse_inactive.svg';
 import omicsIconInactive from '../assets/analysisIcons/OmicsComparison_inactive.svg';
 import geneTimeCourseInactive from '../assets/analysisIcons/GeneTimeCourse_inactive.svg';
+import deaIcon from '../assets/analysisIcons/DifferentialExpressionAnalysis.svg';
 
 const analysisTypes = [
   {
@@ -24,15 +25,52 @@ const analysisTypes = [
     species: ['animal'],
   },
   {
+    title: 'Differential Analysis: Graphical Clustering',
+    shortName: 'GRAPHICAL_CLUSTERING',
+    icon: tissueIcon,
+    inactiveIcon: tissueIconInactive,
+    input: null,
+    description:
+      'Examine similarities, differences, and potential time lagged response across tissues.',
+    active: true,
+    species: ['animal'],
+  },
+  /*
+  {
+    title: 'Differential Expression Analysis',
+    preferredTitle:
+      'Assay-level differentially expressed genes in response to training',
+    shortName: 'DEA',
+    icon: deaIcon,
+    inactiveIcon: null,
+    input: null,
+    description:
+      'Explore assay-level differentially expressed genes in response to training by tissue.',
+    active: true,
+    species: ['animal'],
+  },
+  */
+  {
     title: 'Gene-Centric View',
-    shortName: 'MOLECULES',
+    shortName: 'GENE_CENTRIC_RAT',
+    icon: moleculeIcon,
+    inactiveIcon: moleculeIconInactive,
+    input: null,
+    description:
+      'Search by gene symbol and examine the training response of its related molecules (e.g. protein phosphorylation/acetylation, promoter methylation, transcript).',
+    active: true,
+    species: ['animal'],
+  },
+  {
+    title: 'Gene-Centric View',
+    shortName: 'GENE_CENTRIC_HUMAN',
     icon: moleculeIcon,
     inactiveIcon: moleculeIconInactive,
     input: null,
     description:
       'Search by gene symbol and examine the training response of its related molecules (e.g. protein phosphorylation/acetylation, promoter methylation, transcript).',
     active: false,
-    species: ['animal', 'human'],
+    species: ['human'],
   },
   {
     title: 'Tissue Comparison',
@@ -43,7 +81,7 @@ const analysisTypes = [
     description:
       'Examine similarities, differences, and potential time lagged response across tissues.',
     active: false,
-    species: ['animal', 'human'],
+    species: ['human'],
   },
   {
     title: 'Network Analysis',
@@ -62,8 +100,7 @@ const analysisTypes = [
     icon: timeIcon,
     inactiveIcon: timeIconInactive,
     input: null,
-    description:
-      'Visualize the trajectory of a single molecule.',
+    description: 'Visualize the trajectory of a single molecule.',
     active: false,
     species: ['animal', 'human'],
   },

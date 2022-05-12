@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import actions from '../UploadPage/uploadActions';
+import dayjs from 'dayjs';
+import DataStatusActions from '../DataStatusPage/dataStatusActions';
 
 /**
  * Renders the gloabl sidebar.
@@ -15,8 +16,9 @@ export function Sidebar({
   isAuthenticated = false,
   profile,
   expanded,
-  clearForm,
   resetDepth,
+  fetchData,
+  qcData,
   toggleSidebar,
 }) {
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
@@ -25,6 +27,20 @@ export function Sidebar({
   if (!(isAuthenticated && hasAccess)) {
     return '';
   }
+
+  // Call to invoke Redux action to fetch data
+  // if timestamp is empty or older than 24 hours
+  const handleQcDataFetch = () => {
+    const lastUpdate = qcData.lastModified;
+    // Convert timestamp string back to dayjs() object to calculate time difference
+    if (
+      !lastUpdate ||
+      !lastUpdate.length ||
+      (lastUpdate.length && dayjs().diff(dayjs(lastUpdate), 'hour') >= 24)
+    ) {
+      fetchData();
+    }
+  };
 
   function renderNavLink(route, label, id, icon, disabled, handler) {
     // Don't show tooltip if sidebar is expanded
@@ -77,13 +93,7 @@ export function Sidebar({
         <div className="sidebar-panel h-100 w-100">
           <ul className="nav flex-column">
             <li className="nav-item">
-              {renderNavLink(
-                'dashboard',
-                'Dashboard',
-                'dashboard',
-                'home',
-                false
-              )}
+              {renderNavLink('home', 'Home', 'home', 'home', false)}
             </li>
             <li className="nav-item">
               {renderNavLink(
@@ -103,7 +113,7 @@ export function Sidebar({
             <li className="nav-item">
               {renderNavLink(
                 'analysis/animal',
-                'Animal',
+                'Rat',
                 'animal-analysis',
                 'pest_control_rodent',
                 userType === 'external',
@@ -126,41 +136,43 @@ export function Sidebar({
             <span>Data</span>
           </h6>
           <ul className="nav flex-column">
+            {userType !== 'external' && (
+              <li className="nav-item">
+                {renderNavLink(
+                  'summary',
+                  'Summary',
+                  'summary',
+                  'assessment',
+                  false
+                )}
+              </li>
+            )}
             <li className="nav-item">
               {renderNavLink(
                 'releases',
                 'Releases',
                 'releases',
-                'cloud_done',
+                'rocket_launch',
                 false
               )}
             </li>
             <li className="nav-item">
               {renderNavLink(
-                'summary',
-                'Summary',
-                'summary',
-                'assessment',
-                true
-              )}
-            </li>
-            <li className="nav-item">
-              {renderNavLink(
-                'download',
+                'browse-data',
                 'Browse Data',
-                'download',
+                'browse-data',
                 'view_list',
-                true
+                userType === 'external'
               )}
             </li>
             <li className="nav-item">
               {renderNavLink(
-                'upload',
-                'Upload Data',
-                'upload',
-                'cloud_upload',
-                true,
-                clearForm
+                'qc-data-monitor',
+                'QC Data Monitor',
+                'qc-data-monitor',
+                'fact_check',
+                userType === 'external',
+                handleQcDataFetch
               )}
             </li>
           </ul>
@@ -174,14 +186,15 @@ export function Sidebar({
 const mapStateToProps = (state) => ({
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
+  qcData: state.dataStatus.qcData,
   expanded: state.sidebar.expanded,
 });
 
-// Need to clear the upload form values and recently uploaded files
-// if user navigates away from and returns to the upload page
+// Need to reset depth of views on analysis page
+// if user clicks on either the rat or human analysis links
 const mapDispatchToProps = (dispatch) => ({
-  clearForm: () => dispatch(actions.clearForm()),
   resetDepth: () => dispatch({ type: 'RESET_DEPTH' }),
+  fetchData: () => dispatch(DataStatusActions.fetchData()),
   toggleSidebar: () => dispatch({ type: 'SIDEBAR_TOGGLED' }),
 });
 

@@ -1,0 +1,370 @@
+.dataSummaryPage {
+  .page-title {
+    h3 {
+      margin-bottom: 0;
+    }
+  }
+
+  .card {
+    margin-bottom: 1.0rem;
+  }
+
+  .disabled {
+    //background: $gray;
+    //border-color: $gray;
+    border: 1px dashed $gray-semi-transparent;
+  }
+
+  /* release/phase button group */
+  .btn-outline-primary:disabled {
+    border-color: $gray-semi-transparent;
+    color: $gray-semi-transparent;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  /* highlighted card items at top */
+  .release-sample-highlights {
+    .media {
+      .icon {
+        margin-right: 1.0em;
+      }
+
+      img {
+        width: 3.25em;
+        height: auto;
+      }
+    }
+  }
+
+  /* main plot/table container */
+  .card-container-release-samples {
+    .card-header {
+      padding: 1.05rem 1.25rem;
+      margin-bottom: 0;
+      background-color: #fff;
+      border-bottom: 0 solid transparent;
+    }
+
+    .badge {
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.35em 0.4em;
+    }
+
+    /* chart.js plot */
+    .release-sample-plot {
+      .releasedSamplePlot {
+        min-height: 65vh;
+      }
+    }
+
+    /* data table */
+    .releasedSampleTable {
+      table {
+        thead th {
+          border: none;
+          color: $gray;
+          font-size: 0.8rem;
+          height: 250px;
+          text-align: left;
+          white-space: nowrap;
+          vertical-align: bottom;
+
+          &:first-child {
+            padding-left: 8px;
+          }
+
+          &:not(:first-child) {
+            padding-bottom: 0;
+          }
+
+          .header-content-container {
+            width: 30px;
+
+            /* anlge positioning for table header items */
+            .header-assay {
+              padding: 8px 4px 8px 0;
+              transform-origin: bottom right;
+              transform: translateX(-20px) rotate(45deg);
+              float: right;
+
+              /* angle header text alignment for short list of assays */
+              &.short-list {
+                transform: translateX(-2px) rotate(45deg);
+              }
+            }
+          }
+        }
+
+        tbody td {
+          font-size: 0.85rem;
+          text-align: center;
+          white-space: nowrap;
+          vertical-align: middle;
+
+          &:first-child {
+            font-weight: 600;
+            padding-left: 8px;
+            text-align: left;
+            min-width: 12.0rem;
+          }
+        }
+      }
+    }
+
+    /* dropdown menus for plot and table */
+    .controlPanel {
+      .controlRow {
+        .controlLabel {
+          font-weight: 600;
+          font-size: 0.85rem;
+          margin-right: 0.45rem;
+          white-space: nowrap;
+        }
+
+        .btn.dropdown-toggle,
+        button.dropdown-item {
+          font-size: 0.85rem;
+        }
+
+        &.show-qc-sample-table {
+          button.btn {
+            color: $stanford-cool-grey;
+
+            &:hover {
+              color: $stanford-cool-grey;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* responsive styling */
+
+@media (max-width: 1500px) {
+  .dataSummaryPage {
+    .release-sample-highlights {
+      .media {
+        .icon {
+          margin-right: 0.9em;
+        }
+
+        img {
+          width: 3.0em;
+          height: auto;
+        }
+      }
+
+      .media-body {
+        .count {
+          font-size: 1.65rem;
+        }
+
+        .label {
+          font-size: 0.95rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1440px) {
+  .dataSummaryPage {
+    .release-sample-highlights {
+      .media {
+        .icon {
+          margin-right: 0.8em;
+        }
+
+        img {
+          width: 2.75em;
+          height: auto;
+        }
+      }
+
+      .media-body {
+        .count {
+          font-size: 1.55rem;
+        }
+
+        .label {
+          font-size: 0.85rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1380px) {
+  .dataSummaryPage {
+    .release-sample-highlights {
+      .media {
+        .icon {
+          margin-right: 0.7em;
+        }
+
+        img {
+          width: 2.5em;
+          height: auto;
+        }
+      }
+
+      .media-body {
+        .count {
+          font-size: 1.45rem;
+        }
+
+        .label {
+          font-size: 0.75rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1330px) {
+  .dataSummaryPage {
+    .page-header {
+      flex-direction: column;
+
+      .btn-toolbar {
+        margin: 1.25em 0 0.5em;
+      }
+    }
+  }
+}
+
+@media (max-width: 595px) {
+  .page-header {
+    .btn-toolbar {
+      justify-content: center;
+      margin: 0.75em 0 0.15em;
+
+      .btn-group {
+        margin: 0.35em;
+      }
+    }
+  }
+}
+
+@media (min-width: 576px) and (max-width: 1330px) {
+  .dataSummaryPage {
+    .release-sample-highlights {
+      .media {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+
+        &>div {
+          justify-content: center;
+          width: 100%;
+
+          &.media-body {
+            margin-top: 0.85em;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .dataSummaryPage {
+    .page-title {
+      text-align: center;
+    }
+
+    .release-sample-highlights {
+      .media {
+        .icon {
+          margin-right: 1.0em;
+        }
+
+        img {
+          width: 3.25em;
+          height: auto;
+        }
+      }
+
+      .media-body {
+        .count {
+          font-size: 1.75rem;
+        }
+
+        .label {
+          font-size: 1.0rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 468px) {
+  .dataSummaryPage {
+    .card-header {
+      text-align: center;
+
+      .internal-user-labels {
+        float: none !important;
+      }
+
+      .card-title {
+        margin-top: 0.75em;
+      }
+    }
+
+    .releasedSamplePlot {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
+/* Animation settings for plot and table dropdown menus */
+
+@media (min-width: 992px) {
+  .controlPanel .animate {
+    animation-duration: 0.3s;
+    -webkit-animation-duration: 0.3s;
+    animation-fill-mode: both;
+    -webkit-animation-fill-mode: both;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(2.45rem);
+    opacity: 0;
+  }
+  100% {
+    transform:translateY(1.85rem);
+    opacity: 1;
+  }
+  0% {
+    transform: translateY(2.45rem);
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes slideIn {
+  0% {
+    -webkit-transform: translateY(2.45rem);
+    -webkit-opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(1.85rem);
+    -webkit-opacity: 1;
+  }
+  0% {
+    -webkit-transform: translateY(2.45rem);
+    -webkit-opacity: 0;
+  }
+}
+
+.controlPanel .slideIn {
+  -webkit-animation-name: slideIn;
+  animation-name: slideIn;
+}
