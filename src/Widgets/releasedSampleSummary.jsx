@@ -320,8 +320,8 @@ function ReleasedSampleSummary({ data, release, userType }) {
       summary.epigenomics.label,
       summary.metabolomics_targeted.label,
       summary.metabolomics_untargeted.label,
-      summary.immunoassay.label,
-      summary.proteomics.label,
+      userType === 'internal' ? summary.immunoassay.label : '',
+      userType === 'internal' ? summary.proteomics.label : 'Proteomics',
     ],
     datasets: [
       {
@@ -330,7 +330,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
           summary.epigenomics.studyCount,
           summary.metabolomics_targeted.studyCount,
           summary.metabolomics_untargeted.studyCount,
-          summary.immunoassay.studyCount,
+          userType === 'internal' ? summary.immunoassay.studyCount : null,
           summary.proteomics.studyCount,
         ],
         backgroundColor: [
@@ -338,7 +338,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
           '#ffde72',
           '#93D689',
           '#fd6666',
-          '#8b9ead',
+          userType === 'internal' ? '#8b9ead' : 'transparent',
           '#b566ff',
         ],
       },
