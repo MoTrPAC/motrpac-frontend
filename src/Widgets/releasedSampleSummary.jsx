@@ -61,7 +61,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
         studyCount: 0,
         qcCount: 0,
       },
-      luminex: {
+      immunoassay: {
         label: 'Proteomics Targeted',
         studyCount: 0,
         qcCount: 0,
@@ -151,9 +151,9 @@ function ReleasedSampleSummary({ data, release, userType }) {
         data.internal.pass1b_06,
         'proteomics'
       );
-      const internalPass1B06LuminexCount = countSamples(
+      const internalPass1B06ImmunoassayCount = countSamples(
         data.internal.pass1b_06,
-        'luminex'
+        'immunoassay'
       );
       // internal pass1b_06 'QC' samples for each omic
       const internalPass1B06TranscriptCountQC = countSamples(
@@ -181,9 +181,9 @@ function ReleasedSampleSummary({ data, release, userType }) {
         'proteomics',
         'qcCount'
       );
-      const internalPass1B06LuminexCountQC = countSamples(
+      const internalPass1B06ImmunoassayCountQC = countSamples(
         data.internal.pass1b_06,
-        'luminex',
+        'immunoassay',
         'qcCount'
       );
       // assign internal release 'study' sample counts
@@ -197,7 +197,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
         internalPass1A06MetaUntargCount + internalPass1B06MetaUntargCount;
       countObject.proteomics.studyCount =
         internalPass1A06ProtCount + internalPass1B06ProtCount;
-      countObject.luminex.studyCount = internalPass1B06LuminexCount;
+      countObject.immunoassay.studyCount = internalPass1B06ImmunoassayCount;
       countObject.pass1a_06.studyCount =
         internalPass1A06TranscriptCount +
         internalPass1A06EpigenCount +
@@ -210,7 +210,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
         internalPass1B06MetaTargCount +
         internalPass1B06MetaUntargCount +
         internalPass1B06ProtCount +
-        internalPass1B06LuminexCount;
+        internalPass1B06ImmunoassayCount;
       // assign internal release 'QC' sample counts
       countObject.transcriptomics.qcCount =
         internalPass1A06TranscriptCountQC + internalPass1B06TranscriptCountQC;
@@ -222,7 +222,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
         internalPass1A06MetaUntargCountQC + internalPass1B06MetaUntargCountQC;
       countObject.proteomics.qcCount =
         internalPass1A06ProtCountQC + internalPass1B06ProtCountQC;
-      countObject.luminex.qcCount = internalPass1B06LuminexCountQC;
+      countObject.immunoassay.qcCount = internalPass1B06ImmunoassayCountQC;
       countObject.pass1a_06.qcCount =
         internalPass1A06TranscriptCountQC +
         internalPass1A06EpigenCountQC +
@@ -235,7 +235,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
         internalPass1B06MetaTargCountQC +
         internalPass1B06MetaUntargCountQC +
         internalPass1B06ProtCountQC +
-        internalPass1B06LuminexCountQC;
+        internalPass1B06ImmunoassayCountQC;
     } else if (metric === 'external') {
       // external pass1a_06 'study' samples for each omic
       const externalPass1A06TranscriptCount = countSamples(
@@ -320,7 +320,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
       summary.epigenomics.label,
       summary.metabolomics_targeted.label,
       summary.metabolomics_untargeted.label,
-      summary.luminex.label,
+      summary.immunoassay.label,
       summary.proteomics.label,
     ],
     datasets: [
@@ -330,7 +330,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
           summary.epigenomics.studyCount,
           summary.metabolomics_targeted.studyCount,
           summary.metabolomics_untargeted.studyCount,
-          summary.luminex.studyCount,
+          summary.immunoassay.studyCount,
           summary.proteomics.studyCount,
         ],
         backgroundColor: [
@@ -351,7 +351,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
       summary.epigenomics.label,
       summary.metabolomics_targeted.label,
       summary.metabolomics_untargeted.label,
-      summary.luminex.label,
+      summary.immunoassay.label,
       summary.proteomics.label,
     ],
     datasets: [
@@ -361,7 +361,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
           summary.epigenomics.qcCount,
           summary.metabolomics_targeted.qcCount,
           summary.metabolomics_untargeted.qcCount,
-          summary.luminex.qcCount,
+          summary.immunoassay.qcCount,
           summary.proteomics.qcCount,
         ],
         backgroundColor: [
@@ -465,6 +465,6 @@ ReleasedSampleSummary.propTypes = {
 
 ReleasedSampleSummary.defaultProps = {
   userType: '',
-}
+};
 
 export default ReleasedSampleSummary;
