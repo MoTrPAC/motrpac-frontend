@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -6,13 +6,11 @@ import AuthContentContainer from '../lib/ui/authContentContainer';
 import BrowseDataTable from './browseDataTable';
 import actions from './browseDataActions';
 import BrowseDataFilter from './browseDataFilter';
-
-const dataFiles = require('../data/motrpac-data-files.json');
+import AnimatedLoadingIcon from '../lib/ui/loading';
 
 export function BrowseDataPage({
   profile,
   expanded,
-  allFiles,
   filteredFiles,
   selectedFileUrls,
   selectedFileNames,
@@ -22,21 +20,15 @@ export function BrowseDataPage({
   onChangeFilter,
   handleUrlFetch,
   onResetFilters,
-  loadDataObjects,
+  handleDownloadRequest,
+  downloadRequestResponse,
+  waitingForResponse,
 }) {
   // Send users to default page if they are not consortium members
   const userType = profile.user_metadata && profile.user_metadata.userType;
   if (userType === 'external') {
     return <Redirect to="/home" />;
   }
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    // load static data
-    if (allFiles.length === 0) {
-      loadDataObjects(dataFiles);
-    }
-  }, [loadDataObjects, allFiles]);
 
   return (
     <AuthContentContainer classes="browseDataPage" expanded={expanded}>
@@ -61,21 +53,27 @@ export function BrowseDataPage({
           onChangeFilter={onChangeFilter}
           onResetFilters={onResetFilters}
         />
-        <BrowseDataTable
-          filteredFiles={filteredFiles}
-          handleUrlFetch={handleUrlFetch}
-          selectedFileUrls={selectedFileUrls}
-          selectedFileNames={selectedFileNames}
-          fetching={fetching}
-          error={error}
-        />
+        {!fetching ? (
+          <BrowseDataTable
+            filteredFiles={filteredFiles}
+            handleUrlFetch={handleUrlFetch}
+            selectedFileUrls={selectedFileUrls}
+            selectedFileNames={selectedFileNames}
+            handleDownloadRequest={handleDownloadRequest}
+            downloadRequestResponse={downloadRequestResponse}
+            waitingForResponse={waitingForResponse}
+            error={error}
+            profile={profile}
+          />
+        ) : (
+          <AnimatedLoadingIcon isFetching={fetching} />
+        )}
       </div>
     </AuthContentContainer>
   );
 }
 
 BrowseDataPage.propTypes = {
-  allFiles: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   filteredFiles: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   selectedFileUrls: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectedFileNames: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
@@ -83,7 +81,9 @@ BrowseDataPage.propTypes = {
   error: PropTypes.string.isRequired,
   profile: PropTypes.shape({
     user_metadata: PropTypes.shape({
-      siteName: PropTypes.string,
+      userType: PropTypes.string,
+      email: PropTypes.string,
+      name: PropTypes.string,
     }),
   }),
   expanded: PropTypes.bool,
@@ -91,7 +91,9 @@ BrowseDataPage.propTypes = {
   onChangeFilter: PropTypes.func.isRequired,
   handleUrlFetch: PropTypes.func.isRequired,
   onResetFilters: PropTypes.func.isRequired,
-  loadDataObjects: PropTypes.func.isRequired,
+  handleDownloadRequest: PropTypes.func.isRequired,
+  downloadRequestResponse: PropTypes.string.isRequired,
+  waitingForResponse: PropTypes.bool.isRequired,
 };
 
 BrowseDataPage.defaultProps = {
@@ -110,10 +112,13 @@ const mapDispatchToProps = (dispatch) => ({
   onChangeFilter: (category, filter) =>
     dispatch(actions.changeFilter(category, filter)),
   onResetFilters: () => dispatch(actions.resetFilters()),
-  changePageRequest: (maxRows, page) => dispatch(actions.changePageRequest(maxRows, page)),
+  changePageRequest: (maxRows, page) =>
+    dispatch(actions.changePageRequest(maxRows, page)),
   handleUrlFetch: (selectedFiles) =>
     dispatch(actions.handleUrlFetch(selectedFiles)),
   loadDataObjects: (files) => dispatch(actions.loadDataObjects(files)),
+  handleDownloadRequest: (email, name, selectedFiles) =>
+    dispatch(actions.handleDownloadRequest(email, name, selectedFiles)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BrowseDataPage);
