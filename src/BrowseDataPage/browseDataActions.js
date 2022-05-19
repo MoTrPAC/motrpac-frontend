@@ -10,6 +10,12 @@ const URL_FETCH_START = 'URL_FETCH_START';
 const URL_FETCH_SUCCESS = 'URL_FETCH_SUCCESS';
 const URL_FETCH_FAILURE = 'URL_FETCH_FAILURE';
 const LOAD_DATA_OBJECTS = 'LOAD_DATA_OBJECTS';
+const DOWNLOAD_REQUEST_SUBMITTED = 'DOWNLOAD_REQUEST_SUBMITTED';
+const DOWNLOAD_REQUEST_SUCCESS = 'DOWNLOAD_REQUEST_SUCCESS';
+const DOWNLOAD_REQUEST_FAILURE = 'DOWNLOAD_REQUEST_FAILURE';
+const DATA_FETCH_REQUESTED = 'DATA_FETCH_REQUESTED';
+const DATA_FETCH_SUCCESS = 'DATA_FETCH_SUCCESS';
+const DATA_FETCH_FAILURE = 'DATA_FETCH_FAILURE';
 
 export const types = {
   CHANGE_FILTER,
@@ -22,6 +28,12 @@ export const types = {
   URL_FETCH_SUCCESS,
   URL_FETCH_FAILURE,
   LOAD_DATA_OBJECTS,
+  DOWNLOAD_REQUEST_SUBMITTED,
+  DOWNLOAD_REQUEST_SUCCESS,
+  DOWNLOAD_REQUEST_FAILURE,
+  DATA_FETCH_REQUESTED,
+  DATA_FETCH_SUCCESS,
+  DATA_FETCH_FAILURE,
 };
 
 function changeFilter(category, filter) {
@@ -93,6 +105,46 @@ function loadDataObjects(files) {
   };
 }
 
+function downloadRequested() {
+  return {
+    type: DOWNLOAD_REQUEST_SUBMITTED,
+  };
+}
+
+function downloadRequestSuccess(results) {
+  return {
+    type: DOWNLOAD_REQUEST_SUCCESS,
+    results,
+  };
+}
+
+function downloadRequestFailure(error = '') {
+  return {
+    type: DOWNLOAD_REQUEST_FAILURE,
+    error,
+  };
+}
+
+function dataFetchRequested() {
+  return {
+    type: DATA_FETCH_REQUESTED,
+  };
+}
+
+function dataFetchSuccess(results) {
+  return {
+    type: DATA_FETCH_SUCCESS,
+    results,
+  };
+}
+
+function dataFetchFailure(error = '') {
+  return {
+    type: DATA_FETCH_FAILURE,
+    error,
+  };
+}
+
 // Mock Async Getting List
 const files = [];
 
@@ -152,6 +204,67 @@ function handleUrlFetch(selectedFiles) {
   };
 }
 
+// Request to download files
+function handleDownloadRequest(email, name, selectedFiles) {
+  if (!email || !name || selectedFiles.length === 0) {
+    return false;
+  }
+
+  const fileObjects = [];
+  selectedFiles.forEach((file) => {
+    const fileObj = {
+      object: file.original.object,
+      object_size: file.original.object_size,
+      key: file.original.key,
+    };
+    fileObjects.push(fileObj);
+  });
+
+  const requestBody = {
+    email,
+    name,
+    files: fileObjects,
+  };
+
+  return (dispatch) => {
+    dispatch(downloadRequested());
+    return axios
+      .post(
+        `${process.env.REACT_APP_API_SERVICE_ADDRESS_DEV}${process.env.REACT_APP_FILE_DOWNLOAD_ENDPOINT}/?phase=${process.env.REACT_APP_FILE_DOWNLOAD_PHASE}&key=${process.env.REACT_APP_API_SERVICE_KEY_DEV}`,
+        requestBody
+      )
+      .then((response) => {
+        if (response.data.error) {
+          dispatch(downloadRequestFailure(response.data.error));
+        }
+        dispatch(downloadRequestSuccess(response.data));
+      })
+      .catch((err) => {
+        dispatch(downloadRequestFailure(`${err.name}: ${err.message}`));
+      });
+  };
+}
+
+// Fetch Data Objects when page loads
+function handleDataFetch() {
+  return (dispatch) => {
+    dispatch(dataFetchRequested());
+    return axios
+      .get(
+        `${process.env.REACT_APP_API_SERVICE_ADDRESS_DEV}${process.env.REACT_APP_FILE_DOWNLOAD_ENDPOINT}/?phase=${process.env.REACT_APP_FILE_DOWNLOAD_PHASE}&key=${process.env.REACT_APP_API_SERVICE_KEY_DEV}`
+      )
+      .then((response) => {
+        if (response.data.error) {
+          dispatch(dataFetchFailure(response.data.error));
+        }
+        dispatch(dataFetchSuccess(response.data.data));
+      })
+      .catch((err) => {
+        dispatch(dataFetchFailure(`${err.name}: ${err.message}`));
+      });
+  };
+}
+
 const actions = {
   changeFilter,
   resetFilters,
@@ -161,6 +274,8 @@ const actions = {
   changePageRequest,
   handleUrlFetch,
   loadDataObjects,
+  handleDownloadRequest,
+  handleDataFetch,
 };
 
 export default actions;
