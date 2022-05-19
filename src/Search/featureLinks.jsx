@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const features = [
@@ -33,7 +34,13 @@ const features = [
  *
  * @returns {Object} JSX representation of portal feature link card deck.
  */
-function FeatureLinks() {
+function FeatureLinks({ handleDataFetch, allFiles }) {
+  const handleDataObjectFetch = () => {
+    if (allFiles.length === 0) {
+      handleDataFetch();
+    }
+  };
+
   return (
     <div className="feature-links-container pt-2">
       <div className="card-deck mt-5">
@@ -42,7 +49,12 @@ function FeatureLinks() {
             key={item.route}
             className={`card mb-3 p-3 shadow-sm ${item.route}`}
           >
-            <Link to={`/${item.route}`}>
+            <Link
+              to={`/${item.route}`}
+              onClick={
+                item.route === 'browse-data' ? handleDataObjectFetch : null
+              }
+            >
               <div className="card-body">
                 <div className="h-100 d-flex align-items-start">
                   <div className="feature-icon mr-3">
@@ -61,5 +73,14 @@ function FeatureLinks() {
     </div>
   );
 }
+
+FeatureLinks.propTypes = {
+  handleDataFetch: PropTypes.func.isRequired,
+  allFiles: PropTypes.arrayOf(PropTypes.shape({})),
+};
+
+FeatureLinks.defaultProps = {
+  allFiles: [],
+};
 
 export default FeatureLinks;
