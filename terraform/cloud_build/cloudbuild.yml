@@ -1,0 +1,35 @@
+steps:
+  # Build the image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - build
+      - -t
+      - gcr.io/$PROJECT_ID/${_SERVICE_NAME}-${_ENV}:$SHORT_SHA
+      - .
+
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - push
+      - gcr.io/$PROJECT_ID/${_SERVICE_NAME}-${_ENV}:$SHORT_SHA
+
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_SERVICE_NAME}-${_ENV}
+      - --image
+      - gcr.io/$PROJECT_ID/${_SERVICE_NAME}-${_ENV}:$SHORT_SHA
+      - --region
+      - ${_CR_REGION}
+
+images:
+  - "${_GCR_REGION}.gcr.io/$PROJECT_ID/${_SERVICE_NAME}-${_ENV}:$COMMIT_SHA"
+
+substitutions:
+  _CR_REGION: us-central1
+  _AR_REGION: us
+  _SERVICE_NAME: service-name
+  _ENV: prod
