@@ -42,9 +42,12 @@ function BrowseDataTable({
   filteredFiles,
   selectedFileUrls,
   selectedFileNames,
-  fetching,
+  waitingForResponse,
   error,
   handleUrlFetch,
+  handleDownloadRequest,
+  downloadRequestResponse,
+  profile,
 }) {
   // Define table column headers
   const columns = useMemo(() => tableColumns, []);
@@ -56,8 +59,11 @@ function BrowseDataTable({
       handleUrlFetch={handleUrlFetch}
       selectedFileUrls={selectedFileUrls}
       selectedFileNames={selectedFileNames}
-      fetching={fetching}
+      handleDownloadRequest={handleDownloadRequest}
+      downloadRequestResponse={downloadRequestResponse}
+      waitingForResponse={waitingForResponse}
       error={error}
+      profile={profile}
     />
   );
 }
@@ -74,9 +80,12 @@ function DataTable({
   data,
   selectedFileUrls,
   selectedFileNames,
-  fetching,
+  waitingForResponse,
   error,
   handleUrlFetch,
+  handleDownloadRequest,
+  downloadRequestResponse,
+  profile,
 }) {
   const filterTypes = React.useMemo(
     () => ({
@@ -263,10 +272,10 @@ function DataTable({
         aria-labelledby="dataDownloadModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-xl modal-dialog-centered">
+        <div className="modal-dialog modal modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Download Files</h5>
+              <h5 className="modal-title">File Download Request</h5>
               <button
                 type="button"
                 className="close"
@@ -277,8 +286,13 @@ function DataTable({
               </button>
             </div>
             <div className="modal-body">
-              {selectedFileUrls.length > 0 && !fetching ? (
-                renderFileDownloadLinks()
+              {downloadRequestResponse.length > 0 && !waitingForResponse ? (
+                <div className="modal-message my-3">
+                  <span className="file-download-request-response">
+                    Your download request is being processed. We will notify you
+                    by email when the download is ready.
+                  </span>
+                </div>
               ) : (
                 <div className="loading-spinner my-5">
                   <img src={IconSet.Spinner} alt="" />
@@ -320,7 +334,11 @@ function DataTable({
             data-toggle="modal"
             data-target=".data-download-modal"
             onClick={() => {
-              handleUrlFetch(selectedFlatRows);
+              handleDownloadRequest(
+                profile.user_metadata.email,
+                profile.user_metadata.name,
+                selectedFlatRows
+              );
             }}
           >
             <span className="material-icons">file_download</span>
@@ -395,9 +413,17 @@ BrowseDataTable.propTypes = {
     .isRequired,
   selectedFileUrls: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectedFileNames: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  fetching: PropTypes.bool.isRequired,
+  waitingForResponse: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   handleUrlFetch: PropTypes.func.isRequired,
+  handleDownloadRequest: PropTypes.func.isRequired,
+  downloadRequestResponse: PropTypes.string.isRequired,
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.shape({
+      email: PropTypes.string,
+      name: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 DataTable.propTypes = {
@@ -411,9 +437,17 @@ DataTable.propTypes = {
     .isRequired,
   selectedFileUrls: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectedFileNames: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  fetching: PropTypes.bool.isRequired,
+  waitingForResponse: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   handleUrlFetch: PropTypes.func.isRequired,
+  handleDownloadRequest: PropTypes.func.isRequired,
+  downloadRequestResponse: PropTypes.string.isRequired,
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.shape({
+      email: PropTypes.string,
+      name: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 export default BrowseDataTable;

@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
+import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 
 /**
  * Renders the gloabl sidebar.
@@ -18,6 +19,8 @@ export function Sidebar({
   expanded,
   resetDepth,
   fetchData,
+  handleDataFetch,
+  allFiles,
   qcData,
   toggleSidebar,
 }) {
@@ -39,6 +42,12 @@ export function Sidebar({
       (lastUpdate.length && dayjs().diff(dayjs(lastUpdate), 'hour') >= 24)
     ) {
       fetchData();
+    }
+  };
+
+  const handleDataObjectFetch = () => {
+    if (allFiles.length === 0) {
+      handleDataFetch();
     }
   };
 
@@ -162,7 +171,8 @@ export function Sidebar({
                 'Browse Data',
                 'browse-data',
                 'view_list',
-                userType === 'external'
+                userType === 'external',
+                handleDataObjectFetch
               )}
             </li>
             <li className="nav-item">
@@ -188,6 +198,7 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   qcData: state.dataStatus.qcData,
   expanded: state.sidebar.expanded,
+  allFiles: state.browseData.allFiles,
 });
 
 // Need to reset depth of views on analysis page
@@ -195,6 +206,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   resetDepth: () => dispatch({ type: 'RESET_DEPTH' }),
   fetchData: () => dispatch(DataStatusActions.fetchData()),
+  handleDataFetch: () => dispatch(BrowseDataActions.handleDataFetch()),
   toggleSidebar: () => dispatch({ type: 'SIDEBAR_TOGGLED' }),
 });
 

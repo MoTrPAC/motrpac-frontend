@@ -15,6 +15,8 @@ export const defaultBrowseDataState = {
   requireUpdate: false,
   selectedFileUrls: [],
   selectedFileNames: [],
+  downloadRequestResponse: '',
+  waitingForResponse: false,
   fetching: false,
   error: '',
 };
@@ -150,6 +152,56 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
         allFiles: files,
         filteredFiles: files.slice(0, files.length),
         fileCount: files.length,
+      };
+    }
+    // Fetch data objects on page load
+    case types.DATA_FETCH_REQUESTED:
+      return {
+        ...state,
+        allFiles: [],
+        filteredFiles: [],
+        fileCount: 0,
+        selectedFileUrls: [],
+        selectedFileNames: [],
+        fetching: true,
+        error: '',
+      };
+    case types.DATA_FETCH_FAILURE:
+      return {
+        ...state,
+        error: action.error,
+        fetching: false,
+      };
+    case types.DATA_FETCH_SUCCESS: {
+      const { results } = action;
+      return {
+        ...state,
+        allFiles: results,
+        filteredFiles: results.slice(0, results.length),
+        fileCount: results.length,
+        fetching: false,
+        error: '',
+      };
+    }
+    // Request file downloads
+    case types.DOWNLOAD_REQUEST_SUBMITTED:
+      return {
+        ...state,
+        waitingForResponse: true,
+      };
+    case types.DOWNLOAD_REQUEST_FAILURE:
+      return {
+        ...state,
+        error: action.error,
+        waitingForResponse: false,
+      };
+    case types.DOWNLOAD_REQUEST_SUCCESS: {
+      const { results } = action;
+      return {
+        ...state,
+        downloadRequestResponse: results.message,
+        waitingForResponse: false,
+        error: '',
       };
     }
     default:

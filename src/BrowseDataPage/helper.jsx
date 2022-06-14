@@ -15,7 +15,7 @@ const browseDataPropType = {
   object: PropTypes.string,
   category: PropTypes.string,
   sub_category: PropTypes.string,
-  object_size: PropTypes.string,
+  object_size: PropTypes.number,
   external_release: PropTypes.bool,
 };
 

@@ -25,6 +25,7 @@ import SamiyaImg from '../assets/teamMemberPhotos/Samiya.jpg';
 import AdityaImg from '../assets/teamMemberPhotos/Aditya.jpg';
 import LaurensImg from '../assets/teamMemberPhotos/Laurens.jpg';
 import ChelseaImg from '../assets/teamMemberPhotos/Chelsea.jpg';
+import JayImg from '../assets/teamMemberPhotos/Jay.jpg';
 
 const teamInfo = {
   PIs: [
@@ -106,14 +107,14 @@ const teamInfo = {
       image: JimmyImg,
     },
     {
-      name: 'Young Kim',
-      title: 'Software Developer',
-      image: YoungImg,
-    },
-    {
       name: 'Chris Teng',
       title: 'Software Developer',
       image: ChrisImg,
+    },
+    {
+      name: 'Jay Yu',
+      title: 'Software Developer',
+      image: JayImg,
     },
     {
       name: 'Terra Coakley',
@@ -163,6 +164,11 @@ const teamInfo = {
       name: 'Karen Dalton',
       title: 'Alumni',
       image: KarenImg,
+    },
+    {
+      name: 'Young Kim',
+      title: 'Alumni',
+      image: YoungImg,
     },
     {
       name: 'Samir Akre',
