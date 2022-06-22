@@ -76,12 +76,22 @@ function downloadSuccess(downloadResults) {
   };
 }
 
+const headersConfig = {
+  headers: {
+    Authorization: `bearer ${process.env.REACT_APP_ES_ACCESS_TOKEN_DEV}`,
+  },
+};
+
 // Handle search and results filtering events
 function handleSearch(params, scope) {
   return (dispatch) => {
     dispatch(searchSubmit(params, scope));
     return axios
-      .post(`${process.env.REACT_APP_ES_PROXY_HOST}/search/api`, params)
+      .post(
+        `${process.env.REACT_APP_ES_PROXY_HOST_DEV}/search/api`,
+        params,
+        headersConfig
+      )
       .then((response) => {
         if (response.data.error) {
           dispatch(searchFailure(response.data.error));
@@ -104,8 +114,9 @@ function handleSearchDownload(params, analysis) {
     dispatch(downloadSubmit());
     return axios
       .post(
-        `${process.env.REACT_APP_ES_PROXY_HOST}/search/api`,
-        downloadSearchParams
+        `${process.env.REACT_APP_ES_PROXY_HOST_DEV}/search/api`,
+        downloadSearchParams,
+        headersConfig
       )
       .then((response) => {
         if (response.data.error) {
