@@ -84,12 +84,23 @@ const headersConfig = {
 
 // Handle search and results filtering events
 function handleSearch(params, scope) {
+  const searchParams = { ...params };
+  searchParams.filters.adj_p_value = !searchParams.filters.adj_p_value
+    ? Number(searchParams.filters.adj_p_value)
+    : null;
+  searchParams.filters.p_value = !searchParams.filters.p_value
+    ? Number(searchParams.filters.p_value)
+    : null;
+  searchParams.filters.logFC = !searchParams.filters.logFC
+    ? Number(searchParams.filters.logFC)
+    : null;
+
   return (dispatch) => {
     dispatch(searchSubmit(params, scope));
     return axios
       .post(
         `${process.env.REACT_APP_ES_PROXY_HOST_DEV}/search/api`,
-        params,
+        searchParams,
         headersConfig
       )
       .then((response) => {
@@ -110,6 +121,16 @@ function handleSearchDownload(params, analysis) {
   downloadSearchParams.fields = [];
   downloadSearchParams.save = true;
   downloadSearchParams.analysis = analysis;
+  downloadSearchParams.filters.adj_p_value = !downloadSearchParams.filters.adj_p_value
+    ? Number(downloadSearchParams.filters.adj_p_value)
+    : null;
+  downloadSearchParams.filters.p_value = !downloadSearchParams.filters.p_value
+    ? Number(downloadSearchParams.filters.p_value)
+    : null;
+  downloadSearchParams.filters.logFC = !downloadSearchParams.filters.logFC
+    ? Number(downloadSearchParams.filters.logFC)
+    : null;
+
   return (dispatch) => {
     dispatch(downloadSubmit());
     return axios
