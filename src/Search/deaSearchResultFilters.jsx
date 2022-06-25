@@ -126,11 +126,7 @@ function SearchResultFilters({
           <div className="d-flex align-items-center p-1 range-filter-form-controls">
             <input
               className="form-control custom-filter mr-2"
-              value={
-                searchParams.filters[item.keyName].length
-                  ? searchParams.filters[item.keyName][0]
-                  : ''
-              }
+              value={searchParams.filters[item.keyName].min || ''}
               type="number"
               step="0.01"
               min="-5"
@@ -142,11 +138,7 @@ function SearchResultFilters({
             <span>to</span>
             <input
               className="form-control custom-filter ml-2"
-              value={
-                searchParams.filters[item.keyName].length
-                  ? searchParams.filters[item.keyName][1]
-                  : ''
-              }
+              value={searchParams.filters[item.keyName].max || ''}
               type="number"
               step="0.01"
               min="-5"
