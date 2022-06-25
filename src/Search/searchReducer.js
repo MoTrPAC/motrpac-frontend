@@ -22,9 +22,9 @@ export const defaultSearchState = {
       assay: '',
       sex: '',
       comparison_group: '',
-      adj_p_value: [],
-      logFC: [],
-      p_value: [],
+      adj_p_value: { min: '', max: '' },
+      logFC: { min: '', max: '' },
+      p_value: { min: '', max: '' },
     },
     fields: [
       'gene_symbol',
@@ -74,7 +74,9 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
     case CHANGE_RESULT_FILTER: {
       const params = { ...state.searchParams };
       const { filters } = params;
-      const isActiveFilter = filters[action.field].indexOf(action.filterValue);
+      const isActiveFilter =
+        typeof filters[action.field] === 'string' &&
+        filters[action.field].indexOf(action.filterValue);
       const newFilters = { ...filters };
 
       // Handle selection of a filter value
@@ -95,27 +97,8 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
 
       // Handle range filters
       if (action.field.match(/^(adj_p_value|logFC|p_value)$/)) {
-        if (action.bound === 'min') {
-          if (!newFilters[action.field].length) {
-            // Empty array: create new array with value
-            newFilters[action.field] = [action.filterValue, ''];
-          } else {
-            newFilters[action.field][0] = action.filterValue;
-          }
-        }
-        if (action.bound === 'max') {
-          if (!newFilters[action.field].length) {
-            // Empty array: create new array with value
-            newFilters[action.field] = ['', action.filterValue];
-          } else {
-            newFilters[action.field][1] = action.filterValue;
-          }
-        }
-        if (
-          newFilters[action.field][0] === '' &&
-          newFilters[action.field][1] === ''
-        ) {
-          newFilters[action.field].length = 0;
+        if (action.filterValue !== null && action.filterValue !== '') {
+          newFilters[action.field][action.bound] = Number(action.filterValue);
         }
       }
 
@@ -129,15 +112,8 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
 
     // Handle form submit event
     case SEARCH_SUBMIT: {
-      const {
-        ktype,
-        keys,
-        omics,
-        analysis,
-        filters,
-        fields,
-        size,
-      } = action.params;
+      const { ktype, keys, omics, analysis, filters, fields, size } =
+        action.params;
       return {
         ...state,
         searchResults: {},
@@ -189,9 +165,9 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
           assay: '',
           sex: '',
           comparison_group: '',
-          adj_p_value: [],
-          logFC: [],
-          p_value: [],
+          adj_p_value: { min: '', max: '' },
+          logFC: { min: '', max: '' },
+          p_value: { min: '', max: '' },
         };
 
         return {
