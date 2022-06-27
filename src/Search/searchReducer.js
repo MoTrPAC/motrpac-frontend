@@ -158,9 +158,9 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
 
     // Revert param/filter values to default
     case SEARCH_RESET: {
+      // Action to handle secondary filter reset
       if (action.scope === 'filters') {
         const params = { ...state.searchParams };
-
         params.filters = {
           tissue: '',
           assay: '',
@@ -170,15 +170,25 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
           logFC: { min: '', max: '' },
           p_value: { min: '', max: '' },
         };
-
         return {
           ...state,
           searchParams: params,
         };
       }
 
+      const defaultParams = { ...defaultSearchState.searchParams };
+      defaultParams.filters = {
+        tissue: '',
+        assay: '',
+        sex: '',
+        comparison_group: '',
+        adj_p_value: { min: '', max: '' },
+        logFC: { min: '', max: '' },
+        p_value: { min: '', max: '' },
+      };
       return {
         ...defaultSearchState,
+        searchParams: defaultParams,
       };
     }
 
