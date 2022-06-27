@@ -97,8 +97,9 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
 
       // Handle range filters
       if (action.field.match(/^(adj_p_value|logFC|p_value)$/)) {
-        if (action.filterValue !== null && action.filterValue !== '') {
-          newFilters[action.field][action.bound] = Number(action.filterValue);
+        const rangeFilter = newFilters[action.field];
+        if (rangeFilter) {
+          rangeFilter[action.bound] = action.filterValue;
         }
       }
 
