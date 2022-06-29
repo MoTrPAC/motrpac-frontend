@@ -199,6 +199,27 @@
           padding: 0.2rem 0.5rem;
         }
       }
+
+      .range-filter-input.error {
+        border-color: $accent-red;
+      }
+    }
+
+    .submit-search-filters-button {
+      .input-error-notify {
+        color: $accent-red;
+        font-size: 0.85rem;
+      }
+
+      .btn {
+        &:disabled {
+          cursor: not-allowed;
+  
+          &:hover {
+            background-color: #007bff;
+          }
+        }
+      }
     }
   }
 }

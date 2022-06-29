@@ -1,45 +1,67 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-
-const features = [
-  {
-    route: 'releases',
-    description: 'Access data sets from prior data releases.',
-    icon: 'rocket_launch',
-    title: 'Data Releases',
-  },
-  {
-    route: 'browse-data',
-    description: 'Browse and download data by tissue, assay, or omics.',
-    icon: 'view_list',
-    title: 'Browse Data',
-  },
-  {
-    route: 'qc-data-monitor',
-    description: 'Track submitted samples and their QC statuses.',
-    icon: 'fact_check',
-    title: 'QC Data Monitor',
-  },
-  {
-    route: 'summary',
-    description: 'Overview of sample counts by tissue, assay, or omics.',
-    icon: 'assessment',
-    title: 'Sample Summary',
-  },
-];
+import dayjs from 'dayjs';
 
 /**
  * Renders the feature links on  search page
  *
  * @returns {Object} JSX representation of portal feature link card deck.
  */
-function FeatureLinks({ handleDataFetch, allFiles }) {
+function FeatureLinks({
+  handleDataFetch,
+  handleQCDataFetch,
+  allFiles,
+  lastModified,
+}) {
   const handleDataObjectFetch = () => {
     if (allFiles.length === 0) {
       handleDataFetch();
     }
   };
+
+  // Call to invoke Redux action to fetch QC data
+  // if timestamp is empty or older than 24 hours
+  const fecthQCData = () => {
+    if (
+      !lastModified ||
+      !lastModified.length ||
+      (lastModified.length && dayjs().diff(dayjs(lastModified), 'hour') >= 24)
+    ) {
+      handleQCDataFetch();
+    }
+  };
+
+  const features = [
+    {
+      route: 'releases',
+      description: 'Access data sets from prior data releases.',
+      icon: 'rocket_launch',
+      title: 'Data Releases',
+      eventHandler: null,
+    },
+    {
+      route: 'browse-data',
+      description: 'Browse and download data by tissue, assay, or omics.',
+      icon: 'view_list',
+      title: 'Browse Data',
+      eventHandler: handleDataObjectFetch,
+    },
+    {
+      route: 'qc-data-monitor',
+      description: 'Track submitted samples and their QC statuses.',
+      icon: 'fact_check',
+      title: 'QC Data Monitor',
+      eventHandler: fecthQCData,
+    },
+    {
+      route: 'summary',
+      description: 'Overview of sample counts by tissue, assay, or omics.',
+      icon: 'assessment',
+      title: 'Sample Summary',
+      eventHandler: null,
+    },
+  ];
 
   return (
     <div className="feature-links-container pt-2">
@@ -49,12 +71,7 @@ function FeatureLinks({ handleDataFetch, allFiles }) {
             key={item.route}
             className={`card mb-3 p-3 shadow-sm ${item.route}`}
           >
-            <Link
-              to={`/${item.route}`}
-              onClick={
-                item.route === 'browse-data' ? handleDataObjectFetch : null
-              }
-            >
+            <Link to={`/${item.route}`} onClick={item.eventHandler}>
               <div className="card-body">
                 <div className="h-100 d-flex align-items-start">
                   <div className="feature-icon mr-3">
@@ -76,11 +93,14 @@ function FeatureLinks({ handleDataFetch, allFiles }) {
 
 FeatureLinks.propTypes = {
   handleDataFetch: PropTypes.func.isRequired,
+  handleQCDataFetch: PropTypes.func.isRequired,
   allFiles: PropTypes.arrayOf(PropTypes.shape({})),
+  lastModified: PropTypes.string,
 };
 
 FeatureLinks.defaultProps = {
   allFiles: [],
+  lastModified: '',
 };
 
 export default FeatureLinks;

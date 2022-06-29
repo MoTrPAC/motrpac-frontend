@@ -21,6 +21,21 @@ const browseDataPropType = {
 
 export default browseDataPropType;
 
+function formatBytes(bytes, decimals) {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const dm = decimals || 2;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return (
+    <div className="text-right">
+      <span className="text-nowrap">
+        {parseFloat((bytes / k ** i).toFixed(dm)) + ' ' + sizes[i]}
+      </span>
+    </div>
+  );
+}
+
 /**
  * column headers
  */
@@ -51,6 +66,12 @@ export const tableColumns = [
   {
     Header: 'File',
     accessor: 'filename',
+  },
+  {
+    id: 'filesize',
+    Header: 'Size',
+    accessor: 'object_size',
+    Cell: (row) => formatBytes(row.value),
   },
 ];
 
@@ -232,9 +253,6 @@ export const transformData = (arr) => {
         item.assay = newMetabAssayVal;
       }
     }
-    // Convert bytes to MB
-    // const size = item.object_size;
-    // item.object_size = (Number(size) / 1024 / 1024).toFixed(2) + ' MB';
   });
   return tranformArray;
 };

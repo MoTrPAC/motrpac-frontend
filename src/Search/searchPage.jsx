@@ -7,6 +7,7 @@ import AuthContentContainer from '../lib/ui/authContentContainer';
 import EmbargoExtension from '../lib/embargoExtension';
 import SearchActions from './searchActions';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
+import DataStatusActions from '../DataStatusPage/dataStatusActions';
 import SearchResultFilters from './deaSearchResultFilters';
 import AnimatedLoadingIcon from '../lib/ui/loading';
 import { searchParamsDefaultProps, searchParamsPropType } from './sharedlib';
@@ -31,7 +32,9 @@ export function SearchPage({
   downloadError,
   handleSearchDownload,
   handleDataFetch,
+  handleQCDataFetch,
   allFiles,
+  lastModified,
 }) {
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
@@ -127,7 +130,9 @@ export function SearchPage({
             !searchResults.errors && (
               <FeatureLinks
                 handleDataFetch={handleDataFetch}
+                handleQCDataFetch={handleQCDataFetch}
                 allFiles={allFiles}
+                lastModified={lastModified}
               />
             )}
           <div className="search-body-container mt-4 mb-2">
@@ -460,7 +465,9 @@ SearchPage.propTypes = {
   downloadError: PropTypes.string,
   handleSearchDownload: PropTypes.func.isRequired,
   handleDataFetch: PropTypes.func.isRequired,
+  handleQCDataFetch: PropTypes.func.isRequired,
   allFiles: PropTypes.arrayOf(PropTypes.shape({})),
+  lastModified: PropTypes.string,
 };
 
 SearchPage.defaultProps = {
@@ -475,6 +482,7 @@ SearchPage.defaultProps = {
   downloading: false,
   downloadError: '',
   allFiles: [],
+  lastModified: '',
 };
 
 const mapStateToProps = (state) => ({
@@ -482,6 +490,7 @@ const mapStateToProps = (state) => ({
   ...state.search,
   expanded: state.sidebar.expanded,
   allFiles: state.browseData.allFiles,
+  lastModified: state.dataStatus.qcData.lastModified,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -495,6 +504,7 @@ const mapDispatchToProps = (dispatch) => ({
   handleSearchDownload: (params, analysis) =>
     dispatch(SearchActions.handleSearchDownload(params, analysis)),
   handleDataFetch: () => dispatch(BrowseDataActions.handleDataFetch()),
+  handleQCDataFetch: () => dispatch(DataStatusActions.fetchData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

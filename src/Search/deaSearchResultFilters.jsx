@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   commonSearchFilters,
@@ -14,6 +14,7 @@ function SearchResultFilters({
   handleSearch,
   resetSearch,
 }) {
+  const [inputError, setInputError] = useState(false);
   // FIXME - this is a hack to get the search filters such as tissue and assay
   // to render accordingly to the ktype (gene, protein, metabolite)
   function customizeTissueList() {
@@ -104,6 +105,19 @@ function SearchResultFilters({
     </div>
   ));
 
+  // Handler to validate range filter input via onBlur event
+  function handleInputValidation(e) {
+    e.preventDefault();
+    if (e.target.value.length && isNaN(e.target.value)) {
+      e.target.classList.add('error');
+      setInputError(true);
+    } else {
+      if (e.target.classList.contains('error'))
+        e.target.classList.remove('error');
+      setInputError(false);
+    }
+  }
+
   const rangeSearchResultFilters = rangeSearchFilters.map((item) => (
     <div key={item.name} className="card filter-module mb-4">
       {/* filter header content */}
@@ -125,35 +139,25 @@ function SearchResultFilters({
         <div className="card-body">
           <div className="d-flex align-items-center p-1 range-filter-form-controls">
             <input
-              className="form-control custom-filter mr-2"
-              value={
-                searchParams.filters[item.keyName].length
-                  ? searchParams.filters[item.keyName][0]
-                  : ''
-              }
-              type="number"
-              step="0.01"
-              min="-5"
-              max="5"
-              onChange={(e) =>
-                changeResultFilter(item.keyName, e.target.value, 'min')
-              }
+              className={`form-control mr-2 custom-filter range-filter-input ${item.keyName}-min`}
+              value={searchParams.filters[item.keyName].min}
+              type="text"
+              onChange={(e) => {
+                setInputError(false);
+                changeResultFilter(item.keyName, e.target.value, 'min');
+              }}
+              onBlur={(e) => handleInputValidation(e)}
             />
             <span>to</span>
             <input
-              className="form-control custom-filter ml-2"
-              value={
-                searchParams.filters[item.keyName].length
-                  ? searchParams.filters[item.keyName][1]
-                  : ''
-              }
-              type="number"
-              step="0.01"
-              min="-5"
-              max="5"
-              onChange={(e) =>
-                changeResultFilter(item.keyName, e.target.value, 'max')
-              }
+              className={`form-control ml-2 custom-filter range-filter-input ${item.keyName}-max`}
+              value={searchParams.filters[item.keyName].max}
+              type="text"
+              onChange={(e) => {
+                setInputError(false);
+                changeResultFilter(item.keyName, e.target.value, 'max');
+              }}
+              onBlur={(e) => handleInputValidation(e)}
             />
           </div>
         </div>
@@ -176,6 +180,11 @@ function SearchResultFilters({
       {commonSearchResultFilters}
       {rangeSearchResultFilters}
       <div className="submit-search-filters-button text-right">
+        {inputError && (
+          <div className="input-error-notify mb-2">
+            Please correct input values above.
+          </div>
+        )}
         <button
           type="button"
           className="btn btn-sm btn-primary"
@@ -183,6 +192,7 @@ function SearchResultFilters({
             e.preventDefault();
             handleSearch(searchParams, 'filters');
           }}
+          disabled={inputError}
         >
           Update results
         </button>
