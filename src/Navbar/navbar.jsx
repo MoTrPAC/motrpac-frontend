@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import actions from '../Auth/authActions';
 import LoginButton from '../lib/loginButton';
@@ -75,8 +75,6 @@ export function Navbar({ isAuthenticated, profile, login, logout }) {
 
   const handleLogout = () => {
     logout();
-    // FIXME: Redirect to landing page not working
-    return <Redirect to="/" />;
   };
 
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
