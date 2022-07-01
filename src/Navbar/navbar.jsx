@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import actions from '../Auth/authActions';
 import LoginButton from '../lib/loginButton';
 import QuickSearchBox from '../Search/quickSearchBox';
@@ -151,6 +152,22 @@ export function Navbar({
     return classValues;
   }
 
+  const api =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
+      : process.env.REACT_APP_API_SERVICE_ADDRESS;
+  const endpoint = process.env.REACT_APP_USER_REGISTRATION_ENDPOINT;
+  const key =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_API_SERVICE_KEY_DEV
+      : process.env.REACT_APP_API_SERVICE_KEY;
+
+  function checkServiceStatus() {
+    return axios.get(`${api}${endpoint}/info?key=${key}`).then((res) => {
+      console.log(res.status);
+    });
+  }
+
   const navbar = (
     <div className="header-navbar-container fixed-top">
       <nav className="navbar navbar-expand-lg navbar-light flex-md-nowrap p-0 shadow-sm bg-white">
@@ -213,7 +230,11 @@ export function Navbar({
               {!isAuthenticated && !hasAccess ? (
                 <>
                   <li className="nav-item navItem">
-                    <Link to="/data-access" className="nav-link">
+                    <Link
+                      to="/data-access"
+                      className="nav-link"
+                      onClick={checkServiceStatus}
+                    >
                       Data Access
                     </Link>
                   </li>
