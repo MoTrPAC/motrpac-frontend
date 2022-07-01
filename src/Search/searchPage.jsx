@@ -352,6 +352,11 @@ function PrimaryOmicsFilter({ omics, toggleOmics }) {
 
 // Render modal message
 function ResultsDownloadLink({ downloadPath, downloadError, profile }) {
+  const host =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_ES_PROXY_HOST_DEV
+      : process.env.REACT_APP_ES_PROXY_HOST;
+
   const resultDownloadFilePath =
     downloadPath &&
     downloadPath.substring(downloadPath.indexOf('search_results'));
@@ -365,7 +370,7 @@ function ResultsDownloadLink({ downloadPath, downloadError, profile }) {
       {resultDownloadFilePath ? (
         <a
           id={resultDownloadFilePath}
-          href={`${process.env.REACT_APP_ES_PROXY_HOST}/${resultDownloadFilePath}`}
+          href={`${host}/${resultDownloadFilePath}`}
           download
           onClick={trackEvent.bind(
             this,
@@ -457,7 +462,6 @@ SearchPage.propTypes = {
   handleSearch: PropTypes.func.isRequired,
   resetSearch: PropTypes.func.isRequired,
   downloadResults: PropTypes.shape({
-    result: PropTypes.object,
     total: PropTypes.number,
     path: PropTypes.string,
   }),
