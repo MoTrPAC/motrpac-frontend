@@ -191,7 +191,16 @@ export function DataAccessPage({ isAuthenticated, profile }) {
     };
 
     // post request configs
-    const serviceUrl = `${process.env.REACT_APP_API_SERVICE_ADDRESS}${process.env.REACT_APP_USER_REGISTRATION_ENDPOINT}?key=${process.env.REACT_APP_API_SERVICE_KEY}`;
+    const api =
+      process.env.NODE_ENV !== 'production'
+        ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
+        : process.env.REACT_APP_API_SERVICE_ADDRESS;
+    const endpoint = process.env.REACT_APP_USER_REGISTRATION_ENDPOINT;
+    const key =
+      process.env.NODE_ENV !== 'production'
+        ? process.env.REACT_APP_API_SERVICE_KEY_DEV
+        : process.env.REACT_APP_API_SERVICE_KEY;
+    const serviceUrl = `${api}${endpoint}?key=${key}`;
     const timeOutConfig = { timeout: 5000 };
 
     return axios.post(serviceUrl, userObj, timeOutConfig).then((response) => {
