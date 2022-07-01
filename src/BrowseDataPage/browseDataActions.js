@@ -275,6 +275,7 @@ function handleDataFetch() {
     filters: {
       phase: 'PASS1B-06',
     },
+    size: 5000,
   };
   return (dispatch) => {
     dispatch(dataFetchRequested());
