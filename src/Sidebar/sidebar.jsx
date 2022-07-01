@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
+import axios from 'axios';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 
@@ -50,6 +51,22 @@ export function Sidebar({
       handleDataFetch();
     }
   };
+
+  const api =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
+      : process.env.REACT_APP_API_SERVICE_ADDRESS;
+  const endpoint = process.env.REACT_APP_SIGNED_URL_ENDPOINT;
+  const key =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_API_SERVICE_KEY_DEV
+      : process.env.REACT_APP_API_SERVICE_KEY;
+
+  function checkServiceStatus() {
+    return axios.get(`${api}${endpoint}/info?key=${key}`).then((res) => {
+      console.log(res.status);
+    });
+  }
 
   function renderNavLink(route, label, id, icon, disabled, handler) {
     // Don't show tooltip if sidebar is expanded
@@ -162,7 +179,8 @@ export function Sidebar({
                 'Releases',
                 'releases',
                 'rocket_launch',
-                false
+                false,
+                checkServiceStatus
               )}
             </li>
             <li className="nav-item">
