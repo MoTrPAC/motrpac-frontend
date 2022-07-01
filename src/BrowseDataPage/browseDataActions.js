@@ -178,15 +178,39 @@ function useNull() {
   return null;
 }
 
+const bucket = process.env.REACT_APP_DATA_FILE_BUCKET;
+const api =
+  process.env.NODE_ENV !== 'production'
+    ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
+    : process.env.REACT_APP_API_SERVICE_ADDRESS;
+const endpoint = process.env.REACT_APP_SIGNED_URL_ENDPOINT;
+const fileDownloadEndpoint = process.env.REACT_APP_FILE_DOWNLOAD_ENDPOINT;
+const phase = process.env.REACT_APP_FILE_DOWNLOAD_PHASE;
+const key =
+  process.env.NODE_ENV !== 'production'
+    ? process.env.REACT_APP_API_SERVICE_KEY_DEV
+    : process.env.REACT_APP_API_SERVICE_KEY;
+const searchHost =
+  process.env.NODE_ENV !== 'production'
+    ? process.env.REACT_APP_ES_PROXY_HOST_DEV
+    : process.env.REACT_APP_ES_PROXY_HOST;
+const fileSearchEndpoint = process.env.REACT_APP_FILE_SEARCH_ENDPOINT;
+const accessToken =
+  process.env.NODE_ENV !== 'production'
+    ? process.env.REACT_APP_ES_ACCESS_TOKEN_DEV
+    : process.env.REACT_APP_ES_ACCESS_TOKEN;
+
+const headersConfig = {
+  headers: {
+    Authorization: `bearer ${accessToken}`,
+  },
+};
+
 function handleUrlFetch(selectedFiles) {
   if (selectedFiles.length === 0) {
     return false;
   }
 
-  const bucket = process.env.REACT_APP_DATA_FILE_BUCKET;
-  const api = process.env.REACT_APP_API_SERVICE_ADDRESS;
-  const endpoint = process.env.REACT_APP_SIGNED_URL_ENDPOINT;
-  const key = process.env.REACT_APP_API_SERVICE_KEY;
   const fileUrls = selectedFiles.map(
     (file) =>
       `${api}${endpoint}?bucket=${bucket}&object=${file.original.object}&key=${key}`
@@ -230,7 +254,7 @@ function handleDownloadRequest(email, name, selectedFiles) {
     dispatch(downloadRequested());
     return axios
       .post(
-        `${process.env.REACT_APP_API_SERVICE_ADDRESS_DEV}${process.env.REACT_APP_FILE_DOWNLOAD_ENDPOINT}/?phase=${process.env.REACT_APP_FILE_DOWNLOAD_PHASE}&key=${process.env.REACT_APP_API_SERVICE_KEY_DEV}`,
+        `${api}${fileDownloadEndpoint}/?phase=${phase}&key=${key}`,
         requestBody
       )
       .then((response) => {
@@ -247,17 +271,20 @@ function handleDownloadRequest(email, name, selectedFiles) {
 
 // Fetch Data Objects when page loads
 function handleDataFetch() {
+  const requestBody = {
+    filters: {
+      phase: 'PASS1B-06',
+    },
+  };
   return (dispatch) => {
     dispatch(dataFetchRequested());
     return axios
-      .get(
-        `${process.env.REACT_APP_API_SERVICE_ADDRESS_DEV}${process.env.REACT_APP_FILE_DOWNLOAD_ENDPOINT}/?phase=${process.env.REACT_APP_FILE_DOWNLOAD_PHASE}&key=${process.env.REACT_APP_API_SERVICE_KEY_DEV}`
-      )
+      .post(`${searchHost}${fileSearchEndpoint}`, requestBody, headersConfig)
       .then((response) => {
         if (response.data.error) {
           dispatch(dataFetchFailure(response.data.error));
         }
-        dispatch(dataFetchSuccess(response.data.data));
+        dispatch(dataFetchSuccess(response.data.result));
       })
       .catch((err) => {
         dispatch(dataFetchFailure(`${err.name}: ${err.message}`));

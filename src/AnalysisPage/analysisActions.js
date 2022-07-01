@@ -80,13 +80,29 @@ function geneSearchChangeFilter(field, filterValue) {
   };
 }
 
+const accessToken =
+  process.env.NODE_ENV !== 'production'
+    ? process.env.REACT_APP_ES_ACCESS_TOKEN_DEV
+    : process.env.REACT_APP_ES_ACCESS_TOKEN;
+const host =
+  process.env.NODE_ENV !== 'production'
+    ? process.env.REACT_APP_ES_PROXY_HOST_DEV
+    : process.env.REACT_APP_ES_PROXY_HOST;
+const endpoint = process.env.REACT_APP_ES_ENDPOINT;
+
+const headersConfig = {
+  headers: {
+    Authorization: `bearer ${accessToken}`,
+  },
+};
+
 // Handle gene-centric search
 function handleGeneCentricSearch(params, geneInputValue) {
   params.keys = geneInputValue;
   return (dispatch) => {
     dispatch(geneSearchSubmit());
     return axios
-      .post(`${process.env.REACT_APP_ES_PROXY_HOST}/search/api`, params)
+      .post(`${host}${endpoint}`, params, headersConfig)
       .then((response) => {
         if (response.data.error) {
           dispatch(geneSearchFailure(response.data.error));

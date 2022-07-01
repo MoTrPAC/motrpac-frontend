@@ -76,9 +76,19 @@ function downloadSuccess(downloadResults) {
   };
 }
 
+const accessToken =
+  process.env.NODE_ENV !== 'production'
+    ? process.env.REACT_APP_ES_ACCESS_TOKEN_DEV
+    : process.env.REACT_APP_ES_ACCESS_TOKEN;
+const host =
+  process.env.NODE_ENV !== 'production'
+    ? process.env.REACT_APP_ES_PROXY_HOST_DEV
+    : process.env.REACT_APP_ES_PROXY_HOST;
+const endpoint = process.env.REACT_APP_ES_ENDPOINT;
+
 const headersConfig = {
   headers: {
-    Authorization: `bearer ${process.env.REACT_APP_ES_ACCESS_TOKEN_DEV}`,
+    Authorization: `bearer ${accessToken}`,
   },
 };
 
@@ -87,11 +97,7 @@ function handleSearch(params, scope) {
   return (dispatch) => {
     dispatch(searchSubmit(params, scope));
     return axios
-      .post(
-        `${process.env.REACT_APP_ES_PROXY_HOST_DEV}/search/api`,
-        params,
-        headersConfig
-      )
+      .post(`${host}${endpoint}`, params, headersConfig)
       .then((response) => {
         if (response.data.error) {
           dispatch(searchFailure(response.data.error));
@@ -110,14 +116,11 @@ function handleSearchDownload(params, analysis) {
   downloadSearchParams.fields = [];
   downloadSearchParams.save = true;
   downloadSearchParams.analysis = analysis;
+  downloadSearchParams.size = 0;
   return (dispatch) => {
     dispatch(downloadSubmit());
     return axios
-      .post(
-        `${process.env.REACT_APP_ES_PROXY_HOST_DEV}/search/api`,
-        downloadSearchParams,
-        headersConfig
-      )
+      .post(`${host}${endpoint}`, downloadSearchParams, headersConfig)
       .then((response) => {
         if (response.data.error) {
           dispatch(downloadFailure(response.data.error));

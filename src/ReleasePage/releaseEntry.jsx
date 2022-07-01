@@ -118,10 +118,17 @@ function ReleaseEntry({ profile, currentView }) {
 
   // Fetch file url from Google Storage API
   function fetchFile(bucket, filename, version) {
+    const api =
+      process.env.NODE_ENV !== 'production'
+        ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
+        : process.env.REACT_APP_API_SERVICE_ADDRESS;
+    const endpoint = process.env.REACT_APP_SIGNED_URL_ENDPOINT;
+    const key =
+      process.env.NODE_ENV !== 'production'
+        ? process.env.REACT_APP_API_SERVICE_KEY_DEV
+        : process.env.REACT_APP_API_SERVICE_KEY;
     return axios
-      .get(
-        `${process.env.REACT_APP_API_SERVICE_ADDRESS}${process.env.REACT_APP_SIGNED_URL_ENDPOINT}?bucket=${bucket}&object=${filename}&key=${process.env.REACT_APP_API_SERVICE_KEY}`
-      )
+      .get(`${api}${endpoint}?bucket=${bucket}&object=${filename}&key=${key}`)
       .then((response) => {
         setFileUrl(response.data.url);
         setModalStatus({
