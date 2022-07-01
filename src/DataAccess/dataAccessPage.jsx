@@ -45,6 +45,17 @@ export function DataAccessPage({ isAuthenticated, profile }) {
   const [formValues, setFormValues] = useState(defaultFormValues);
   const [requestPending, setRequestPending] = useState(false);
 
+  const api =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
+      : process.env.REACT_APP_API_SERVICE_ADDRESS;
+  const endpoint = process.env.REACT_APP_USER_REGISTRATION_ENDPOINT;
+  const key =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_API_SERVICE_KEY_DEV
+      : process.env.REACT_APP_API_SERVICE_KEY;
+  const recaptchaKey = process.env.REACT_APP_reCAPTCHA_SITE_KEY;
+
   useEffect(() => {
     // validate REQUIRED form values by subscribing to changes
     // in the 'formValues' and 'reCaptcha' states
@@ -191,15 +202,6 @@ export function DataAccessPage({ isAuthenticated, profile }) {
     };
 
     // post request configs
-    const api =
-      process.env.NODE_ENV !== 'production'
-        ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
-        : process.env.REACT_APP_API_SERVICE_ADDRESS;
-    const endpoint = process.env.REACT_APP_USER_REGISTRATION_ENDPOINT;
-    const key =
-      process.env.NODE_ENV !== 'production'
-        ? process.env.REACT_APP_API_SERVICE_KEY_DEV
-        : process.env.REACT_APP_API_SERVICE_KEY;
     const serviceUrl = `${api}${endpoint}?key=${key}`;
     const timeOutConfig = { timeout: 5000 };
 
@@ -643,7 +645,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                 <div className="mt-3 d-flex justify-content-between align-items-end form-footer">
                   <div className="reCAPTCHA-container">
                     <ReCAPTCHA
-                      sitekey="6Lf8oboUAAAAAB6SoflqfgfHvwHrV62gaPaL2-BL"
+                      sitekey={recaptchaKey}
                       onChange={handleReCAPTCHA}
                     />
                   </div>
