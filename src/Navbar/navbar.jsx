@@ -1,14 +1,11 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, Link, useLocation } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 import actions from '../Auth/authActions';
 import LoginButton from '../lib/loginButton';
-import QuickSearchBox from '../Search/quickSearchBox';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
-import QuickSearchBoxActions from '../Search/quickSearchBoxActions';
-import SearchActions from '../Search/searchActions';
 import onVisibilityChange from '../lib/utils/pageVisibility';
 
 /**
@@ -21,20 +18,7 @@ import onVisibilityChange from '../lib/utils/pageVisibility';
  *
  * @returns {Object} JSX representation of the global header nav bar.
  */
-export function Navbar({
-  isAuthenticated,
-  profile,
-  login,
-  logout,
-  quickSearchTerm,
-  handleQuickSearchInputChange,
-  handleQuickSearchRequestSubmit,
-  resetQuickSearch,
-  getSearchForm,
-  resetAdvSearch,
-}) {
-  const location = useLocation();
-
+export function Navbar({ isAuthenticated, profile, login, logout }) {
   useEffect(() => {
     /* Handle logout for various use cases */
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
@@ -96,60 +80,9 @@ export function Navbar({
   };
 
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
-  const userType = profile.user_metadata && profile.user_metadata.userType;
-  // flag to temporarily suppress quick search rendering
-  const inProduction = false;
 
   if (isAuthenticated && hasAccess) {
     document.querySelector('body').classList.add('authenticated');
-  }
-
-  // Function to render login button
-  const LogoutButton = () => {
-    const userDisplayName =
-      profile.user_metadata && profile.user_metadata.name
-        ? profile.user_metadata.name
-        : profile.name;
-    const siteName =
-      profile.user_metadata && profile.user_metadata.siteName
-        ? `, ${profile.user_metadata.siteName}`
-        : '';
-
-    if (isAuthenticated) {
-      return (
-        <span className="user-logout-button">
-          <img src={profile.picture} className="user-avatar" alt="avatar" />
-          <span className="user-display-name">
-            {userDisplayName}
-            {siteName}
-          </span>
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="logOutBtn btn btn-primary"
-          >
-            Log out
-          </button>
-        </span>
-      );
-    }
-
-    return <LoginButton login={login} />;
-  };
-
-  function setClass() {
-    let classValues;
-    if (isAuthenticated && hasAccess) {
-      classValues = 'container-fluid';
-    } else if (
-      location.pathname === '/data-exploration/differential-expression'
-    ) {
-      classValues = 'container-fluid px-4';
-    } else {
-      classValues = 'container';
-    }
-
-    return classValues;
   }
 
   const api =
@@ -246,22 +179,14 @@ export function Navbar({
                 </>
               ) : null}
               <li className="nav-item navItem">
-                <LogoutButton />
+                <LogoutButton
+                  isAuthenticated={isAuthenticated}
+                  profile={profile}
+                  handleLogout={handleLogout}
+                  login={login}
+                />
               </li>
             </ul>
-            {isAuthenticated &&
-            hasAccess &&
-            userType === 'internal' &&
-            inProduction ? (
-              <QuickSearchBox
-                quickSearchTerm={quickSearchTerm}
-                handleQuickSearchInputChange={handleQuickSearchInputChange}
-                handleQuickSearchRequestSubmit={handleQuickSearchRequestSubmit}
-                resetQuickSearch={resetQuickSearch}
-                getSearchForm={getSearchForm}
-                resetAdvSearch={resetAdvSearch}
-              />
-            ) : null}
           </div>
         </div>
       </nav>
@@ -275,7 +200,6 @@ Navbar.propTypes = {
     name: PropTypes.string,
     picture: PropTypes.string,
     user_metadata: PropTypes.shape({
-      userType: PropTypes.string,
       hasAccess: PropTypes.bool,
       name: PropTypes.string,
       siteName: PropTypes.string,
@@ -284,11 +208,6 @@ Navbar.propTypes = {
   isAuthenticated: PropTypes.bool,
   login: PropTypes.func,
   logout: PropTypes.func,
-  quickSearchTerm: PropTypes.string,
-  handleQuickSearchInputChange: PropTypes.func,
-  handleQuickSearchRequestSubmit: PropTypes.func,
-  resetQuickSearch: PropTypes.func,
-  getSearchForm: PropTypes.func,
 };
 
 Navbar.defaultProps = {
@@ -296,11 +215,6 @@ Navbar.defaultProps = {
   isAuthenticated: false,
   login: null,
   logout: null,
-  quickSearchTerm: '',
-  handleQuickSearchInputChange: null,
-  handleQuickSearchRequestSubmit: null,
-  resetQuickSearch: null,
-  getSearchForm: null,
 };
 
 const mapStateToProps = (state) => ({
@@ -312,13 +226,39 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   login: () => dispatch(actions.login()),
   logout: () => dispatch(actions.logout()),
-  handleQuickSearchInputChange: (e) =>
-    dispatch(QuickSearchBoxActions.quickSearchInputChange(e)),
-  handleQuickSearchRequestSubmit: (searchTerm) =>
-    dispatch(QuickSearchBoxActions.handleQuickSearchRequestSubmit(searchTerm)),
-  resetQuickSearch: () => dispatch(QuickSearchBoxActions.quickSearchReset()),
-  getSearchForm: () => dispatch(SearchActions.getSearchForm()),
-  resetAdvSearch: () => dispatch(SearchActions.searchFormReset()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+
+// Function to render login button
+function LogoutButton({ profile, isAuthenticated, handleLogout, login }) {
+  const userDisplayName =
+    profile.user_metadata && profile.user_metadata.name
+      ? profile.user_metadata.name
+      : profile.name;
+  const siteName =
+    profile.user_metadata && profile.user_metadata.siteName
+      ? `, ${profile.user_metadata.siteName}`
+      : '';
+
+  if (isAuthenticated) {
+    return (
+      <span className="user-logout-button">
+        <img src={profile.picture} className="user-avatar" alt="avatar" />
+        <span className="user-display-name">
+          {userDisplayName}
+          {siteName}
+        </span>
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="logOutBtn btn btn-primary"
+        >
+          Log out
+        </button>
+      </span>
+    );
+  }
+
+  return <LoginButton login={login} />;
+}
