@@ -35,6 +35,7 @@ export const defaultGeneSearchParams = {
     'p_value_male',
     'p_value_female',
   ],
+  size: 25000,
   debug: false,
   save: false,
 };
