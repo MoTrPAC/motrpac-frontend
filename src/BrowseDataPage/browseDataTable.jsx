@@ -149,6 +149,7 @@ function DataTable({
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    rows,
     prepareRow,
     preGlobalFilteredRows,
     pageOptions,
@@ -371,7 +372,7 @@ function DataTable({
                 ))}
               </thead>
               <tbody {...getTableBodyProps()}>
-                {page.map((row) => {
+                {rows.slice(0, pageSize).map((row) => {
                   prepareRow(row);
                   return (
                     <tr {...row.getRowProps()}>
