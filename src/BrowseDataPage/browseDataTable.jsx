@@ -290,8 +290,9 @@ function DataTable({
               {downloadRequestResponse.length > 0 && !waitingForResponse ? (
                 <div className="modal-message my-3">
                   <span className="file-download-request-response">
-                    Your download request is being processed. We will notify you
-                    by email when the download is ready.
+                    Your download request has been submitted. Processing time
+                    may vary depending on the total file size. We will notify
+                    you by email when the download is ready.
                   </span>
                 </div>
               ) : (
