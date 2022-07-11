@@ -40,7 +40,6 @@ function BrowseDataTable({
   selectedFileNames,
   waitingForResponse,
   error,
-  handleUrlFetch,
   handleDownloadRequest,
   downloadRequestResponse,
   profile,
@@ -52,7 +51,6 @@ function BrowseDataTable({
     <DataTable
       columns={columns}
       data={data}
-      handleUrlFetch={handleUrlFetch}
       selectedFileUrls={selectedFileUrls}
       selectedFileNames={selectedFileNames}
       handleDownloadRequest={handleDownloadRequest}
@@ -78,7 +76,6 @@ function DataTable({
   selectedFileNames,
   waitingForResponse,
   error,
-  handleUrlFetch,
   handleDownloadRequest,
   downloadRequestResponse,
   profile,
@@ -413,7 +410,6 @@ BrowseDataTable.propTypes = {
   selectedFileNames: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   waitingForResponse: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
-  handleUrlFetch: PropTypes.func.isRequired,
   handleDownloadRequest: PropTypes.func.isRequired,
   downloadRequestResponse: PropTypes.string.isRequired,
   profile: PropTypes.shape({
@@ -437,7 +433,6 @@ DataTable.propTypes = {
   selectedFileNames: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   waitingForResponse: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
-  handleUrlFetch: PropTypes.func.isRequired,
   handleDownloadRequest: PropTypes.func.isRequired,
   downloadRequestResponse: PropTypes.string.isRequired,
   profile: PropTypes.shape({
