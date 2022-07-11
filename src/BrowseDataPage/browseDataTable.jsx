@@ -36,10 +36,7 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
  */
 function BrowseDataTable({
   filteredFiles,
-  selectedFileUrls,
-  selectedFileNames,
   waitingForResponse,
-  error,
   handleDownloadRequest,
   downloadRequestResponse,
   profile,
@@ -51,12 +48,9 @@ function BrowseDataTable({
     <DataTable
       columns={columns}
       data={data}
-      selectedFileUrls={selectedFileUrls}
-      selectedFileNames={selectedFileNames}
       handleDownloadRequest={handleDownloadRequest}
       downloadRequestResponse={downloadRequestResponse}
       waitingForResponse={waitingForResponse}
-      error={error}
       profile={profile}
     />
   );
@@ -72,10 +66,7 @@ function BrowseDataTable({
 function DataTable({
   columns,
   data,
-  selectedFileUrls,
-  selectedFileNames,
   waitingForResponse,
-  error,
   handleDownloadRequest,
   downloadRequestResponse,
   profile,
@@ -315,10 +306,7 @@ function DataTable({
 BrowseDataTable.propTypes = {
   filteredFiles: PropTypes.arrayOf(PropTypes.shape({ ...browseDataPropType }))
     .isRequired,
-  selectedFileUrls: PropTypes.arrayOf(PropTypes.string).isRequired,
-  selectedFileNames: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   waitingForResponse: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired,
   handleDownloadRequest: PropTypes.func.isRequired,
   downloadRequestResponse: PropTypes.string.isRequired,
   profile: PropTypes.shape({
@@ -338,10 +326,7 @@ DataTable.propTypes = {
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({ ...browseDataPropType }))
     .isRequired,
-  selectedFileUrls: PropTypes.arrayOf(PropTypes.string).isRequired,
-  selectedFileNames: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   waitingForResponse: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired,
   handleDownloadRequest: PropTypes.func.isRequired,
   downloadRequestResponse: PropTypes.string.isRequired,
   profile: PropTypes.shape({

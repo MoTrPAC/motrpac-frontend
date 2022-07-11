@@ -12,10 +12,7 @@ export function BrowseDataPage({
   profile,
   expanded,
   filteredFiles,
-  selectedFileUrls,
-  selectedFileNames,
   fetching,
-  error,
   activeFilters,
   onChangeFilter,
   onResetFilters,
@@ -55,12 +52,9 @@ export function BrowseDataPage({
         {!fetching ? (
           <BrowseDataTable
             filteredFiles={filteredFiles}
-            selectedFileUrls={selectedFileUrls}
-            selectedFileNames={selectedFileNames}
             handleDownloadRequest={handleDownloadRequest}
             downloadRequestResponse={downloadRequestResponse}
             waitingForResponse={waitingForResponse}
-            error={error}
             profile={profile}
           />
         ) : (
@@ -73,10 +67,7 @@ export function BrowseDataPage({
 
 BrowseDataPage.propTypes = {
   filteredFiles: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  selectedFileUrls: PropTypes.arrayOf(PropTypes.string).isRequired,
-  selectedFileNames: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   fetching: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired,
   profile: PropTypes.shape({
     user_metadata: PropTypes.shape({
       userType: PropTypes.string,
