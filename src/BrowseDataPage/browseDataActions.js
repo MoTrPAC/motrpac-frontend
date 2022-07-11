@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
 const CHANGE_FILTER = 'CHANGE_FILTER';
 const SORT_CHANGE = 'SORT_CHANGE';
@@ -249,6 +250,9 @@ function handleDownloadRequest(email, name, selectedFiles) {
     name,
     files: fileObjects,
   };
+
+  // Track download request in Google Analytics
+  trackEvent('Data file download', JSON.stringify(fileObjects), name);
 
   return (dispatch) => {
     dispatch(downloadRequested());
