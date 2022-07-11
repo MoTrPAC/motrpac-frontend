@@ -213,48 +213,6 @@ function DataTable({
     );
   }
 
-  // Render modal message
-  function renderFileDownloadLinks() {
-    if (error && error.length) {
-      return <span className="modal-message">{error}</span>;
-    }
-
-    return (
-      <div className="modal-message">
-        {selectedFileUrls.length > 0 && (
-          <div className="table-responsive">
-            <table className="table table-sm file-download-list">
-              <tbody>
-                {selectedFileUrls.map((url) => {
-                  const matched = selectedFileNames.find(
-                    (item) => url.indexOf(item.file) > -1
-                  );
-                  return (
-                    <tr key={url} className="file-download-list-item">
-                      <td>{matched.file}</td>
-                      <td>{bytesToSize(matched.size)}</td>
-                      <td className="file-download-link-item">
-                        <a
-                          id={matched.file}
-                          href={`${url}&response-content-disposition=attachment`}
-                          download
-                          className="file-download-list-item-link"
-                        >
-                          <span className="material-icons">file_download</span>
-                        </a>
-                      </td>
-                    </tr>
-                  );
-                })}
-                {renderManifestDownloadLink()}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-    );
-  }
-
   // Render modal
   function renderModal() {
     return (
