@@ -26,11 +26,7 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
     resolvedRef.current.indeterminate = indeterminate;
   }, [resolvedRef, indeterminate]);
 
-  return (
-    <>
-      <input type="checkbox" ref={resolvedRef} {...rest} />
-    </>
-  );
+  return <input type="checkbox" ref={resolvedRef} {...rest} />;
 });
 
 /**
@@ -40,11 +36,7 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
  */
 function BrowseDataTable({
   filteredFiles,
-  selectedFileUrls,
-  selectedFileNames,
   waitingForResponse,
-  error,
-  handleUrlFetch,
   handleDownloadRequest,
   downloadRequestResponse,
   profile,
@@ -56,13 +48,9 @@ function BrowseDataTable({
     <DataTable
       columns={columns}
       data={data}
-      handleUrlFetch={handleUrlFetch}
-      selectedFileUrls={selectedFileUrls}
-      selectedFileNames={selectedFileNames}
       handleDownloadRequest={handleDownloadRequest}
       downloadRequestResponse={downloadRequestResponse}
       waitingForResponse={waitingForResponse}
-      error={error}
       profile={profile}
     />
   );
@@ -78,11 +66,7 @@ function BrowseDataTable({
 function DataTable({
   columns,
   data,
-  selectedFileUrls,
-  selectedFileNames,
   waitingForResponse,
-  error,
-  handleUrlFetch,
   handleDownloadRequest,
   downloadRequestResponse,
   profile,
@@ -127,9 +111,9 @@ function DataTable({
           id: 'selection',
           // The header can use the table's getToggleAllRowsSelectedProps method
           // to render a checkbox
-          Header: ({ getToggleAllPageRowsSelectedProps }) => (
+          Header: ({ getToggleAllRowsSelectedProps }) => (
             <div>
-              <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
+              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
             </div>
           ),
           // The cell can use the individual row's getToggleRowSelectedProps method
@@ -149,6 +133,7 @@ function DataTable({
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    rows,
     prepareRow,
     preGlobalFilteredRows,
     pageOptions,
@@ -169,97 +154,6 @@ function DataTable({
     Array(Math.ceil(stop / step))
       .fill(start)
       .map((x, y) => x + y * step);
-
-  // function to convert bytes to human readable format
-  function bytesToSize(bytes) {
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    if (bytes === 0) return 'n/a'
-    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
-    if (i === 0) return `${bytes} ${sizes[i]})`;
-    return `${(bytes / (1024 ** i)).toFixed(1)} ${sizes[i]}`;
-  }
-
-  // Render file manifest download link
-  function renderManifestDownloadLink() {
-    if (error && error.length) {
-      return false;
-    }
-
-    // Create array of selected object paths
-    const objects = [];
-    selectedFileNames.forEach((item) => objects.push(item.object));
-    const sortedObjects = objects.sort((a, b) =>
-      a.toLowerCase().localeCompare(b.toLowerCase())
-    );
-    // Convert array to csv
-    const manifestContent = sortedObjects.join('\r\n');
-
-    // Create a blob
-    const blob = new Blob([manifestContent], {
-      type: 'text/csv;charset=utf-8;',
-    });
-    const fileManifestUrl = URL.createObjectURL(blob);
-
-    return (
-      <tr className="file-download-list-item manifest-file">
-        <td colSpan="2" className="font-weight-bold">
-          List of selected files with file structure paths
-        </td>
-        <td className="file-download-link-item">
-          <a
-            id="file-manifest-download"
-            href={fileManifestUrl}
-            download="file_manifest.csv"
-            className="file-download-list-item-link"
-          >
-            <span className="material-icons">file_download</span>
-          </a>
-        </td>
-      </tr>
-    );
-  }
-
-  // Render modal message
-  function renderFileDownloadLinks() {
-    if (error && error.length) {
-      return <span className="modal-message">{error}</span>;
-    }
-
-    return (
-      <div className="modal-message">
-        {selectedFileUrls.length > 0 && (
-          <div className="table-responsive">
-            <table className="table table-sm file-download-list">
-              <tbody>
-                {selectedFileUrls.map((url) => {
-                  const matched = selectedFileNames.find(
-                    (item) => url.indexOf(item.file) > -1
-                  );
-                  return (
-                    <tr key={url} className="file-download-list-item">
-                      <td>{matched.file}</td>
-                      <td>{bytesToSize(matched.size)}</td>
-                      <td className="file-download-link-item">
-                        <a
-                          id={matched.file}
-                          href={`${url}&response-content-disposition=attachment`}
-                          download
-                          className="file-download-list-item-link"
-                        >
-                          <span className="material-icons">file_download</span>
-                        </a>
-                      </td>
-                    </tr>
-                  );
-                })}
-                {renderManifestDownloadLink()}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-    );
-  }
 
   // Render modal
   function renderModal() {
@@ -289,8 +183,9 @@ function DataTable({
               {downloadRequestResponse.length > 0 && !waitingForResponse ? (
                 <div className="modal-message my-3">
                   <span className="file-download-request-response">
-                    Your download request is being processed. We will notify you
-                    by email when the download is ready.
+                    Your download request has been submitted. Processing time
+                    may vary depending on the total file size. We will notify
+                    you by email when the download is ready.
                   </span>
                 </div>
               ) : (
@@ -371,7 +266,7 @@ function DataTable({
                 ))}
               </thead>
               <tbody {...getTableBodyProps()}>
-                {page.map((row) => {
+                {rows.slice(0, pageSize).map((row) => {
                   prepareRow(row);
                   return (
                     <tr {...row.getRowProps()}>
@@ -411,11 +306,7 @@ function DataTable({
 BrowseDataTable.propTypes = {
   filteredFiles: PropTypes.arrayOf(PropTypes.shape({ ...browseDataPropType }))
     .isRequired,
-  selectedFileUrls: PropTypes.arrayOf(PropTypes.string).isRequired,
-  selectedFileNames: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   waitingForResponse: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired,
-  handleUrlFetch: PropTypes.func.isRequired,
   handleDownloadRequest: PropTypes.func.isRequired,
   downloadRequestResponse: PropTypes.string.isRequired,
   profile: PropTypes.shape({
@@ -435,11 +326,7 @@ DataTable.propTypes = {
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({ ...browseDataPropType }))
     .isRequired,
-  selectedFileUrls: PropTypes.arrayOf(PropTypes.string).isRequired,
-  selectedFileNames: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   waitingForResponse: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired,
-  handleUrlFetch: PropTypes.func.isRequired,
   handleDownloadRequest: PropTypes.func.isRequired,
   downloadRequestResponse: PropTypes.string.isRequired,
   profile: PropTypes.shape({

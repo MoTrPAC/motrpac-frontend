@@ -12,13 +12,9 @@ export function BrowseDataPage({
   profile,
   expanded,
   filteredFiles,
-  selectedFileUrls,
-  selectedFileNames,
   fetching,
-  error,
   activeFilters,
   onChangeFilter,
-  handleUrlFetch,
   onResetFilters,
   handleDownloadRequest,
   downloadRequestResponse,
@@ -56,13 +52,9 @@ export function BrowseDataPage({
         {!fetching ? (
           <BrowseDataTable
             filteredFiles={filteredFiles}
-            handleUrlFetch={handleUrlFetch}
-            selectedFileUrls={selectedFileUrls}
-            selectedFileNames={selectedFileNames}
             handleDownloadRequest={handleDownloadRequest}
             downloadRequestResponse={downloadRequestResponse}
             waitingForResponse={waitingForResponse}
-            error={error}
             profile={profile}
           />
         ) : (
@@ -75,10 +67,7 @@ export function BrowseDataPage({
 
 BrowseDataPage.propTypes = {
   filteredFiles: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  selectedFileUrls: PropTypes.arrayOf(PropTypes.string).isRequired,
-  selectedFileNames: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   fetching: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired,
   profile: PropTypes.shape({
     user_metadata: PropTypes.shape({
       userType: PropTypes.string,
@@ -89,7 +78,6 @@ BrowseDataPage.propTypes = {
   expanded: PropTypes.bool,
   activeFilters: BrowseDataFilter.propTypes.activeFilters.isRequired,
   onChangeFilter: PropTypes.func.isRequired,
-  handleUrlFetch: PropTypes.func.isRequired,
   onResetFilters: PropTypes.func.isRequired,
   handleDownloadRequest: PropTypes.func.isRequired,
   downloadRequestResponse: PropTypes.string.isRequired,
@@ -114,8 +102,6 @@ const mapDispatchToProps = (dispatch) => ({
   onResetFilters: () => dispatch(actions.resetFilters()),
   changePageRequest: (maxRows, page) =>
     dispatch(actions.changePageRequest(maxRows, page)),
-  handleUrlFetch: (selectedFiles) =>
-    dispatch(actions.handleUrlFetch(selectedFiles)),
   loadDataObjects: (files) => dispatch(actions.loadDataObjects(files)),
   handleDownloadRequest: (email, name, selectedFiles) =>
     dispatch(actions.handleDownloadRequest(email, name, selectedFiles)),
