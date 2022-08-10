@@ -1,7 +1,7 @@
 [
   {
-    "label": "Release 2.0",
-    "emoji": "rocket",
+    "label": "Release 2.0 (Outdated)",
+    "emoji": null,
     "version": "2.0",
     "date": "June 30, 2020",
     "target": "internal",
