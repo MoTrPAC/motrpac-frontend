@@ -33,11 +33,6 @@ const browseDataFilters = [
     filters: tissueList,
   },
   {
-    keyName: 'assay',
-    name: 'Assay',
-    filters: assayList,
-  },
-  {
     keyName: 'omics',
     name: 'Omics',
     filters: [
@@ -48,6 +43,11 @@ const browseDataFilters = [
       'Proteomics Untargeted',
       'Transcriptomics',
     ],
+  },
+  {
+    keyName: 'assay',
+    name: 'Assay',
+    filters: assayList,
   },
   {
     keyName: 'category',
