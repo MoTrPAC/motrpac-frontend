@@ -1,4 +1,25 @@
 .browseDataPage {
+  .browse-data-summary {
+    font-size: 0.9rem;
+
+    .show-more-link {
+      font-size: 0.9rem;
+      font-weight: normal;
+      color: #007bff;
+      padding: 0;
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      &:focus, &:active {
+        box-shadow: none;
+        outline: none;
+        text-decoration: none;
+      }
+    }
+  }
+
   label {
     font-size: inherit;
     line-height: 1;
