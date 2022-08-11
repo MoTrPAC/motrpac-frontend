@@ -9,7 +9,6 @@ function ReleaseDataTableInternalByPhase({ release, renderDataTypeRow }) {
         <thead className="thead-dark">
           <tr className="table-head">
             <th className="col-data-type">Data type</th>
-            <th className="col-command-line-download">Command-line download</th>
             <th className="col-web-download">Web download</th>
           </tr>
         </thead>
@@ -28,7 +27,6 @@ function ReleaseDataTableInternalByPhase({ release, renderDataTypeRow }) {
         <thead className="thead-dark">
           <tr className="table-head">
             <th className="col-data-type">Data type</th>
-            <th className="col-command-line-download">Command-line download</th>
             <th className="col-web-download">Web download</th>
           </tr>
         </thead>
