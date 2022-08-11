@@ -111,6 +111,12 @@
       .card-header {
         font-size: 0.9rem;
         padding: 0.4rem 0.85rem;
+
+        .data-filter-info-icon {
+          color: $gray;
+          font-size: 1.1rem;
+          cursor: pointer;
+        }
       }
 
       .card-body {
@@ -190,5 +196,20 @@
         background-color: #f3f3f3;
       }
     }
+  }
+}
+
+/**
+  * Category filter group panel header
+  * info icon to show/hide tooltip
+  */
+.data-filter-info-icon-wrapper {
+  position: relative;
+}
+
+.data-filter-info-icon-wrapper:hover {
+  .tooltip-on-right {
+    visibility: visible;
+    opacity: 1;
   }
 }
