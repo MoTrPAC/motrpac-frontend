@@ -7,7 +7,6 @@ import IconSet from '../lib/iconSet';
 import EmailLink from '../lib/ui/emailLink';
 import ReleaseDescFileExtract from './releaseDescFileExtract';
 import ReleaseDescReadme from './releaseDescReadme';
-import ReleaseRawFilesDownload from './releaseRawFilesDownload';
 import ReleaseDataTableInternalByPhase from './ReleaseDataTables/releaseDataTableInternalByPhase';
 import ReleaseDataTableInternal from './ReleaseDataTables/releaseDataTableInternal';
 import ReleaseDataTableExternal from './ReleaseDataTables/releaseDataTableExternal';
@@ -48,18 +47,6 @@ function ReleaseEntry({ profile, currentView }) {
     e.preventDefault();
     setVisibleReleases(visibleReleases === 0 ? releases.length : 0);
   };
-
-  // Event handler for select/deselect checkboxes
-  function handleCheckboxEvent(target) {
-    const el = document.querySelector(`#${target}`);
-    if (el.classList.contains('active')) {
-      el.classList.remove('active');
-      el.innerHTML = 'check_box_outline_blank';
-    } else {
-      el.classList.add('active');
-      el.innerHTML = 'check_box';
-    }
-  }
 
   // Fetch file url from Google Storage API
   function fetchFile(bucket, filename, version) {
