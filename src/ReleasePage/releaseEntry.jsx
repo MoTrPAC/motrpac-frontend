@@ -216,32 +216,45 @@ function ReleaseEntry({ profile, currentView }) {
       // eslint-disable-next-line arrow-body-style
       entries = releases.slice(0, defaultEntries).map((release, idx) => {
         return (
-          <div key={release.version} className={`release-entry-container ${currentView}`}>
+          <div
+            key={release.version}
+            className={`release-entry-container ${currentView}`}
+          >
             <div className="release-entry-item pt-2 pt-md-0 pb-3 pb-md-0 clearfix label-latest">
               {/* release timeline marker */}
               <div className="d-none d-md-block flex-wrap flex-items-center col-12 col-md-3 col-lg-2 px-md-3 pb-1 pb-md-4 pt-md-4 float-left text-md-right v-align-top release-timeline">
-                {idx < 1 && currentView === 'external'
-                  ? (
-                    <div className="flex-auto flex-self-start">
-                      <span className={`badge ${currentView === 'internal' ? 'badge-success' : 'badge-warning'}`}>Latest release</span>
-                    </div>
-                  )
-                  : null}
+                {idx < 1 && currentView === 'external' ? (
+                  <div className="flex-auto flex-self-start">
+                    <span
+                      className={`badge ${
+                        currentView === 'internal'
+                          ? 'badge-success'
+                          : 'badge-warning'
+                      }`}
+                    >
+                      Latest release
+                    </span>
+                  </div>
+                ) : null}
                 <ul className="d-none d-md-block mt-2 list-style-none">
                   <li className="d-block mb-1 d-flex align-items-center justify-content-end">
-                    <i className="material-icons release-version-marker-icon">local_offer</i>
+                    <i className="material-icons release-version-marker-icon">
+                      local_offer
+                    </i>
                     <span className="release-version-marker">{`v${release.version}`}</span>
                   </li>
-                  {userType === 'internal'
-                    ? (
-                      <li className="d-block mb-1 d-flex align-items-center justify-content-end">
-                        <i className="material-icons release-version-marker-icon">local_offer</i>
-                        <span className="release-view">{currentView}</span>
-                      </li>
-                    )
-                    : null}
+                  {userType === 'internal' ? (
+                    <li className="d-block mb-1 d-flex align-items-center justify-content-end">
+                      <i className="material-icons release-version-marker-icon">
+                        local_offer
+                      </i>
+                      <span className="release-view">{currentView}</span>
+                    </li>
+                  ) : null}
                   <li className="d-block mb-1 d-flex align-items-center justify-content-end">
-                    <i className="material-icons release-date-marker-icon">calendar_today</i>
+                    <i className="material-icons release-date-marker-icon">
+                      calendar_today
+                    </i>
                     <span className="release-date">{release.date}</span>
                   </li>
                 </ul>
@@ -249,11 +262,11 @@ function ReleaseEntry({ profile, currentView }) {
               {/* release content */}
               <div className="col-12 col-md-9 col-lg-10 pl-md-3 py-md-4 release-main-section float-left">
                 <h2 className="release-header">
-                  {release.emoji
-                    ? (
-                      <span role="img" aria-label={release.emoji}>{`${emojiMap[release.emoji]} `}</span>
-                    )
-                    : null}
+                  {release.emoji ? (
+                    <span role="img" aria-label={release.emoji}>{`${
+                      emojiMap[release.emoji]
+                    } `}</span>
+                  ) : null}
                   {release.label}
                 </h2>
                 <div className="release-content mb-3">
