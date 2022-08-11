@@ -5,7 +5,7 @@
     "version": "2.0",
     "date": "June 30, 2020",
     "target": "internal",
-    "description": "The second major internal data release is now available through the MoTrPAC data hub. This release includes the majority of the PASS1A and PASS1B molecular and phenotypic data. Processed data is available for Web download and through the command-line, while raw data is available through the command-line only.",
+    "description": "This is the second major internal data release through the MoTrPAC data hub. It includes the majority of the PASS1A and PASS1B molecular and phenotypic data.",
     "readme_file_location": "https://docs.google.com/document/d/1bdXcYQLZ65GpJKTjf9XwRxhrfHJSD9NIqCxhG6icL8U",
     "result_files": {
       "bucket_name": "motrpac-internal-release2-results",
