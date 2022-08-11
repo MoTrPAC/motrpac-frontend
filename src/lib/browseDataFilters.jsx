@@ -52,7 +52,12 @@ const browseDataFilters = [
   {
     keyName: 'category',
     name: 'Category',
-    filters: ['Analysis', 'Results', 'Phenotype'],
+    filters: ['Analysis', 'Results'],
+  },
+  {
+    keyName: 'metadata',
+    name: 'Metadata',
+    filters: ['Phenotype'],
   },
 ];
 
