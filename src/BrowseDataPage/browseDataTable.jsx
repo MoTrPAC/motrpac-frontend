@@ -95,7 +95,7 @@ function DataTable({
       initialState: {
         pageIndex: 0,
         pageSize: 50,
-        pageCount: 59,
+        pageCount: Math.ceil(data / 50),
         sortBy: [{ id: 'tissue_name', desc: false }],
       },
     },
@@ -133,7 +133,6 @@ function DataTable({
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
     preGlobalFilteredRows,
     pageOptions,
@@ -266,7 +265,7 @@ function DataTable({
                 ))}
               </thead>
               <tbody {...getTableBodyProps()}>
-                {rows.slice(0, pageSize).map((row) => {
+                {page.map((row) => {
                   prepareRow(row);
                   return (
                     <tr {...row.getRowProps()}>
