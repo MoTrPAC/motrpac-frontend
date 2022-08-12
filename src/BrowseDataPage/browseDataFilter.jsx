@@ -7,7 +7,7 @@ function BrowseDataFilter({ activeFilters, onChangeFilter, onResetFilters }) {
     <div key={item.name} className="card filter-module mb-4">
       <div className="card-header font-weight-bold d-flex align-items-center">
         <div>{item.name}</div>
-        {item.keyName === 'category' && (
+        {item.keyName === 'category' && item.name === 'Category' && (
           <div className="data-filter-info-icon-wrapper d-flex align-items-center">
             <i className="material-icons data-filter-info-icon ml-1">info</i>
             <span className="tooltip-on-right" id="data-filter-info-tooltip">
