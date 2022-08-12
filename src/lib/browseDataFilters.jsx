@@ -55,7 +55,7 @@ const browseDataFilters = [
     filters: ['Analysis', 'Results'],
   },
   {
-    keyName: 'metadata',
+    keyName: 'category',
     name: 'Metadata',
     filters: ['Phenotype'],
   },
