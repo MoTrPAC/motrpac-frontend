@@ -216,6 +216,14 @@
       &.omics.not-available {
         background-color: #f3f3f3;
       }
+
+      &.category.Phenotype {
+        background-color: #f3f3f3;
+
+        span {
+          display: none;
+        }
+      }
     }
   }
 }
