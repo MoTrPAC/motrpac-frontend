@@ -8,7 +8,8 @@ import {
   usePagination,
   useRowSelect,
 } from 'react-table';
-import browseDataPropType, {
+import {
+  browseDataPropType,
   tableColumns,
   PageIndex,
   PageSize,
