@@ -1,4 +1,25 @@
 .browseDataPage {
+  .browse-data-summary {
+    font-size: 0.9rem;
+
+    .show-more-link {
+      font-size: 0.9rem;
+      font-weight: normal;
+      color: #007bff;
+      padding: 0;
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      &:focus, &:active {
+        box-shadow: none;
+        outline: none;
+        text-decoration: none;
+      }
+    }
+  }
+
   label {
     font-size: inherit;
     line-height: 1;
@@ -111,6 +132,12 @@
       .card-header {
         font-size: 0.9rem;
         padding: 0.4rem 0.85rem;
+
+        .data-filter-info-icon {
+          color: $gray;
+          font-size: 1.1rem;
+          cursor: pointer;
+        }
       }
 
       .card-body {
@@ -189,6 +216,29 @@
       &.omics.not-available {
         background-color: #f3f3f3;
       }
+
+      &.category.Phenotype {
+        background-color: #f3f3f3;
+
+        span {
+          display: none;
+        }
+      }
     }
+  }
+}
+
+/**
+  * Category filter group panel header
+  * info icon to show/hide tooltip
+  */
+.data-filter-info-icon-wrapper {
+  position: relative;
+}
+
+.data-filter-info-icon-wrapper:hover {
+  .tooltip-on-right {
+    visibility: visible;
+    opacity: 1;
   }
 }

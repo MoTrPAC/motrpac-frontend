@@ -5,7 +5,24 @@ import browseDataFilters from '../lib/browseDataFilters';
 function BrowseDataFilter({ activeFilters, onChangeFilter, onResetFilters }) {
   const filters = browseDataFilters.map((item) => (
     <div key={item.name} className="card filter-module mb-4">
-      <div className="card-header font-weight-bold">{item.name}</div>
+      <div className="card-header font-weight-bold d-flex align-items-center">
+        <div>{item.name}</div>
+        {item.keyName === 'category' && item.name === 'Category' && (
+          <div className="data-filter-info-icon-wrapper d-flex align-items-center">
+            <i className="material-icons data-filter-info-icon ml-1">info</i>
+            <span className="tooltip-on-right" id="data-filter-info-tooltip">
+              <span>
+                <strong>Analysis</strong> - Differential analysis and normalized
+                data tables.
+                <br />
+                <strong>Results</strong> - Quantitative results,
+                experimental/sample metadata, and QA/QC reports.
+              </span>
+              <i />
+            </span>
+          </div>
+        )}
+      </div>
       <div className="card-body">
         {item.filters.map((filter) => {
           const isActiveFilter =

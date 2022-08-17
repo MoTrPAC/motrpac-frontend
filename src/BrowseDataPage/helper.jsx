@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 /**
  * BrowseDataTable props
  */
-const browseDataPropType = {
+export const browseDataPropType = {
   tissue_name: PropTypes.string,
   tissue_code: PropTypes.string,
   assay: PropTypes.string,
@@ -18,8 +18,6 @@ const browseDataPropType = {
   object_size: PropTypes.number,
   external_release: PropTypes.bool,
 };
-
-export default browseDataPropType;
 
 function formatBytes(bytes, decimals) {
   if (bytes === 0) return '0 Bytes';

@@ -33,11 +33,6 @@ const browseDataFilters = [
     filters: tissueList,
   },
   {
-    keyName: 'assay',
-    name: 'Assay',
-    filters: assayList,
-  },
-  {
     keyName: 'omics',
     name: 'Omics',
     filters: [
@@ -50,9 +45,19 @@ const browseDataFilters = [
     ],
   },
   {
+    keyName: 'assay',
+    name: 'Assay',
+    filters: assayList,
+  },
+  {
     keyName: 'category',
     name: 'Category',
-    filters: ['Analysis', 'Results', 'Phenotype'],
+    filters: ['Analysis', 'Results'],
+  },
+  {
+    keyName: 'category',
+    name: 'Metadata',
+    filters: ['Phenotype'],
   },
 ];
 

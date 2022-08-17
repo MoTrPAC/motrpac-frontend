@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import IconSet from '../lib/iconSet';
-import ToolTip from '../lib/ui/tooltip';
 import EmailLink from '../lib/ui/emailLink';
-import ExternalLink from '../lib/ui/externalLink';
 import ReleaseDescFileExtract from './releaseDescFileExtract';
 import ReleaseDescReadme from './releaseDescReadme';
-import ReleaseRawFilesDownload from './releaseRawFilesDownload';
 import ReleaseDataTableInternalByPhase from './ReleaseDataTables/releaseDataTableInternalByPhase';
 import ReleaseDataTableInternal from './ReleaseDataTables/releaseDataTableInternal';
 import ReleaseDataTableExternal from './ReleaseDataTables/releaseDataTableExternal';
@@ -16,11 +14,7 @@ import ReleaseDataTableExternal from './ReleaseDataTables/releaseDataTableExtern
 const releaseData = require('./releases.json');
 
 const emojiMap = {
-  rocket: '🚀',
-  sparkles: '✨',
-  zap: '⚡️',
   tada: '🎉',
-  dna: '🧬',
 };
 
 /**
@@ -41,7 +35,7 @@ function ReleaseEntry({ profile, currentView }) {
     message: '',
     releaseVersion: null,
   });
-  const [visibleReleases, setVisibleReleases] = useState(1);
+  const [visibleReleases, setVisibleReleases] = useState(0);
 
   const releases = releaseData.filter(
     (release) => release.target === currentView
@@ -51,70 +45,8 @@ function ReleaseEntry({ profile, currentView }) {
   // Event handler for "Show prior releases" button
   const toggleViewReleaseLength = (e) => {
     e.preventDefault();
-    setVisibleReleases(visibleReleases === 1 ? releases.length : 1);
+    setVisibleReleases(visibleReleases === 0 ? releases.length : 0);
   };
-
-  // Event handler for select/deselect checkboxes
-  function handleCheckboxEvent(target) {
-    const el = document.querySelector(`#${target}`);
-    if (el.classList.contains('active')) {
-      el.classList.remove('active');
-      el.innerHTML = 'check_box_outline_blank';
-    } else {
-      el.classList.add('active');
-      el.innerHTML = 'check_box';
-    }
-  }
-
-  // Render intermediate files download section content
-  function renderIntermediateFilesDownloadSectionContent(files) {
-    return (
-      <div className="card mb-3">
-        <div className="card-body">
-          <p className="card-text">
-            Due to the large sizes of intermediate data files, we recommend users
-            who wish to download intermediate files using the
-            {' '}
-            <ExternalLink to="https://cloud.google.com/storage/docs/quickstart-gsutil" label="gsutil command" />
-            . Below are example commands for downloading intermediate files of different omics.
-          </p>
-          <p className="card-text">
-            Intermediate files of genomics, epigenomics and transcriptomic:
-            <code>{`gsutil -m cp -r gs://${files.get.bucket_name}/* .`}</code>
-          </p>
-          <p className="card-text">
-            Intermediate files of metabolomics:
-            <code>{`gsutil -m cp -r gs://${files.metabolomics.bucket_name}/* .`}</code>
-          </p>
-          <p className="card-text">
-            Intermediate files of proteomics:
-            <code>{`gsutil -m cp -r gs://${files.proteomics.bucket_name}/* .`}</code>
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  // Render tooltip content on copy-to-clipboard hover
-  function renderTooltipContent(objectPath, data) {
-    return (
-      <div>
-        <code id={data}>{`gsutil -m cp -r ${objectPath}`}</code>
-        <span>Copy to clipboard</span>
-      </div>
-    );
-  }
-
-  // Handle 'copy to clipboard' click event
-  function handleCopyClick(path, data) {
-    const command = document.querySelector(`#${data}`).innerHTML;
-    const tempInput = document.createElement('INPUT');
-    document.body.appendChild(tempInput);
-    tempInput.setAttribute('value', command);
-    tempInput.select();
-    document.execCommand('copy');
-    document.body.removeChild(tempInput);
-  }
 
   // Fetch file url from Google Storage API
   function fetchFile(bucket, filename, version) {
@@ -180,21 +112,44 @@ function ReleaseEntry({ profile, currentView }) {
   // Render modal
   function renderModal() {
     return (
-      <div className="modal fade data-download-modal" id="dataDownloadModal" tabIndex="-1" role="dialog" aria-labelledby="dataDownloadModalLabel" aria-hidden="true">
+      <div
+        className="modal fade data-download-modal"
+        id="dataDownloadModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="dataDownloadModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">File Download</h5>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+              <button
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div className="modal-body">
-              {!fetching
-                ? renderModalMessage() : <div className="loading-spinner"><img src={IconSet.Spinner} alt="" /></div>}
+              {!fetching ? (
+                renderModalMessage()
+              ) : (
+                <div className="loading-spinner">
+                  <img src={IconSet.Spinner} alt="" />
+                </div>
+              )}
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>
@@ -204,10 +159,6 @@ function ReleaseEntry({ profile, currentView }) {
 
   // Render data type row
   function renderDataTypeRow(bucket, item, version) {
-    const objectPath =
-      item.type === 'all'
-        ? `gs://${bucket}/${item.object_zipfile} .`
-        : `gs://${bucket}${item.object_path}/* .`;
     return (
       <tr key={`${item.type}-${version}`}>
         <td>
@@ -216,34 +167,9 @@ function ReleaseEntry({ profile, currentView }) {
             <span>{item.title}</span>
           </div>
         </td>
-        {currentView === 'internal' && version === '2.0' ? (
-          <td className="release-data-download-link">
-            <div className="copy-to-clipboard-wrapper">
-              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-              <span
-                role="button"
-                tabIndex="-1"
-                className="copy-to-clipboard-button"
-                onClick={handleCopyClick.bind(
-                  this,
-                  objectPath,
-                  item.tooltip_id
-                )}
-              >
-                <i className="material-icons release-data-download-icon">
-                  file_copy
-                </i>
-              </span>
-              <ToolTip
-                content={renderTooltipContent(objectPath, item.tooltip_id)}
-              />
-            </div>
-          </td>
-        ) : null}
         {item.object_zipfile && item.object_zipfile.length ? (
           <td className="release-data-download-link">
-            {(currentView === 'internal' && version === '2.0') ||
-            currentView === 'external' ? (
+            {currentView === 'external' ? (
               <button
                 type="button"
                 className="btn-data-download"
@@ -285,36 +211,50 @@ function ReleaseEntry({ profile, currentView }) {
   // Render individual release entry
   function renderReleaseEntry() {
     let entries;
+    const defaultEntries = currentView === 'external' ? 1 : visibleReleases;
     if (releases && releases.length) {
       // eslint-disable-next-line arrow-body-style
-      entries = releases.slice(0, visibleReleases).map((release, idx) => {
+      entries = releases.slice(0, defaultEntries).map((release, idx) => {
         return (
-          <div key={release.version} className={`release-entry-container ${currentView}`}>
+          <div
+            key={release.version}
+            className={`release-entry-container ${currentView}`}
+          >
             <div className="release-entry-item pt-2 pt-md-0 pb-3 pb-md-0 clearfix label-latest">
               {/* release timeline marker */}
               <div className="d-none d-md-block flex-wrap flex-items-center col-12 col-md-3 col-lg-2 px-md-3 pb-1 pb-md-4 pt-md-4 float-left text-md-right v-align-top release-timeline">
-                {idx < 1
-                  ? (
-                    <div className="flex-auto flex-self-start">
-                      <span className={`badge ${currentView === 'internal' ? 'badge-success' : 'badge-warning'}`}>Latest release</span>
-                    </div>
-                  )
-                  : null}
+                {idx < 1 && currentView === 'external' ? (
+                  <div className="flex-auto flex-self-start">
+                    <span
+                      className={`badge ${
+                        currentView === 'internal'
+                          ? 'badge-success'
+                          : 'badge-warning'
+                      }`}
+                    >
+                      Latest release
+                    </span>
+                  </div>
+                ) : null}
                 <ul className="d-none d-md-block mt-2 list-style-none">
                   <li className="d-block mb-1 d-flex align-items-center justify-content-end">
-                    <i className="material-icons release-version-marker-icon">local_offer</i>
+                    <i className="material-icons release-version-marker-icon">
+                      local_offer
+                    </i>
                     <span className="release-version-marker">{`v${release.version}`}</span>
                   </li>
-                  {userType === 'internal'
-                    ? (
-                      <li className="d-block mb-1 d-flex align-items-center justify-content-end">
-                        <i className="material-icons release-version-marker-icon">local_offer</i>
-                        <span className="release-view">{currentView}</span>
-                      </li>
-                    )
-                    : null}
+                  {userType === 'internal' ? (
+                    <li className="d-block mb-1 d-flex align-items-center justify-content-end">
+                      <i className="material-icons release-version-marker-icon">
+                        local_offer
+                      </i>
+                      <span className="release-view">{currentView}</span>
+                    </li>
+                  ) : null}
                   <li className="d-block mb-1 d-flex align-items-center justify-content-end">
-                    <i className="material-icons release-date-marker-icon">calendar_today</i>
+                    <i className="material-icons release-date-marker-icon">
+                      calendar_today
+                    </i>
                     <span className="release-date">{release.date}</span>
                   </li>
                 </ul>
@@ -322,24 +262,23 @@ function ReleaseEntry({ profile, currentView }) {
               {/* release content */}
               <div className="col-12 col-md-9 col-lg-10 pl-md-3 py-md-4 release-main-section float-left">
                 <h2 className="release-header">
-                  {release.emoji
-                    ? (
-                      <span role="img" aria-label={release.emoji}>{`${emojiMap[release.emoji]} `}</span>
-                    )
-                    : null}
+                  {release.emoji ? (
+                    <span role="img" aria-label={release.emoji}>{`${
+                      emojiMap[release.emoji]
+                    } `}</span>
+                  ) : null}
                   {release.label}
                 </h2>
                 <div className="release-content mb-3">
                   <div className="card mb-3">
                     <div className="card-body">
-                      {currentView === 'internal' &&
-                      release.version.match(/1.0|1.1|1.2|1.2.1/g) ? (
+                      {currentView === 'internal' ? (
                         <p className="font-weight-bold">
-                          Note: The data in this release is no longer available
-                          for download from the Data Hub portal, but available
-                          as part of the latest release (v2.0) which includes
-                          all the raw data and most updated results. Please
-                          contact{' '}
+                          Note: The data in this release is outdated and no
+                          longer available for download from the Data Hub
+                          portal. Please visit the{' '}
+                          <Link to="/browse-data">Browse Data</Link> page for
+                          the most up-to-date PASS1A and PASS1B data. Contact{' '}
                           <EmailLink
                             mailto="motrpac-data-requests@lists.stanford.edu"
                             label="MoTrPAC Data Requests"
@@ -350,13 +289,11 @@ function ReleaseEntry({ profile, currentView }) {
                       <p className="release-description">
                         {release.description}
                       </p>
-                      <ReleaseDescFileExtract
-                        currentView={currentView}
-                        releaseVersion={release.version}
-                      />
+                      {currentView === 'external' ? (
+                        <ReleaseDescFileExtract />
+                      ) : null}
                       <ReleaseDescReadme
                         currentView={currentView}
-                        releaseVersion={release.version}
                         fileLocation={release.readme_file_location}
                       />
                       {currentView === 'internal' &&
@@ -386,46 +323,6 @@ function ReleaseEntry({ profile, currentView }) {
                       {renderModal()}
                     </div>
                   </div>
-                  {currentView === 'internal' &&
-                  release.raw_files &&
-                  release.version === '2.0' ? (
-                    <>
-                      <h6 className="additional-release-download-header">
-                        Additional Downloads
-                      </h6>
-                      <div className="raw-files-download-section">
-                        <p className="d-block mb-2 d-flex align-items-center justify-content-start raw-files-download-option">
-                          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-                          <i
-                            role="button"
-                            tabIndex="-1"
-                            className="material-icons download-checkbox"
-                            data-toggle="collapse"
-                            data-target={`#raw-files-release-${idx}`}
-                            aria-expanded="false"
-                            aria-controls={`raw-files-release-${idx}`}
-                            id={`raw-files-release-${idx}-checkbox`}
-                            onClick={handleCheckboxEvent.bind(
-                              this,
-                              `raw-files-release-${idx}-checkbox`
-                            )}
-                          >
-                            check_box_outline_blank
-                          </i>
-                          <span>Raw and intermediate files downloads</span>
-                        </p>
-                        <div
-                          className="collapse"
-                          id={`raw-files-release-${idx}`}
-                        >
-                          <ReleaseRawFilesDownload
-                            releaseVersion={release.version}
-                            files={release.raw_files}
-                          />
-                        </div>
-                      </div>
-                    </>
-                  ) : null}
                 </div>
               </div>
             </div>
@@ -436,6 +333,31 @@ function ReleaseEntry({ profile, currentView }) {
 
     return (
       <>
+        {releases.length > 0 && currentView === 'internal' ? (
+          <div className="release-data-status-info-container clearfix">
+            <div className="d-none d-md-block col-12 col-md-3 col-lg-2 px-md-3 pb-1 pb-md-4 pt-md-4 float-left">
+              <span>&nbsp;</span>
+            </div>
+            <div className="release-data-status-info pt-3 pb-4 col-12 col-md-9 col-lg-10 float-left">
+              The data sets included in prior consortium releases on this page
+              are now outdated. Please visit the{' '}
+              <Link to="/browse-data">Browse Data</Link> page to view or
+              download the most up-to-date PASS1B 6-month data. The up-to-date
+              PASS1A/1C 6-month data will be soon made available to the
+              consortium community. To learn more about the prior released data
+              sets, please visit the{' '}
+              <Link to="/announcements" className="inline-link">
+                Announcements
+              </Link>{' '}
+              page. Contact the{' '}
+              <EmailLink
+                mailto="motrpac-helpdesk@lists.stanford.edu"
+                label="MoTrPAC Helpdesk"
+              />{' '}
+              if you have any questions concerning the data in prior releases.
+            </div>
+          </div>
+        ) : null}
         {entries}
         {releases.length > 0 && currentView === 'internal' ? (
           <div className="view-more-button-container pt-2 pt-md-0 pb-3 pb-md-0 clearfix">
@@ -446,13 +368,13 @@ function ReleaseEntry({ profile, currentView }) {
               <button
                 type="button"
                 className={
-                  visibleReleases < 2
+                  visibleReleases < 1
                     ? 'btn btn-secondary btn-sm'
                     : 'btn btn-danger btn-sm'
                 }
                 onClick={toggleViewReleaseLength}
               >
-                {visibleReleases < 2
+                {visibleReleases < 1
                   ? 'Show prior releases'
                   : 'Back to latest release'}
               </button>

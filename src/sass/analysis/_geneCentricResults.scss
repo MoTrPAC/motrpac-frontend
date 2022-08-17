@@ -233,6 +233,11 @@
     .material-icons {
       color: #888;
     }
+
+    &:first-child input {
+      pointer-events: none;
+      cursor: not-allowed;
+    }
   }
 
   tbody {

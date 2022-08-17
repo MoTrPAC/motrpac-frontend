@@ -231,6 +231,14 @@
       padding-right: 0;
     }
   }
+
+  .release-data-status-info-container {
+    .release-data-status-info {
+      border-left: 2px solid #e1e4e8;
+      font-size: 0.9rem;
+      padding-right: 0;
+    }
+  }
 }
 
 /* specificity for external release view */
