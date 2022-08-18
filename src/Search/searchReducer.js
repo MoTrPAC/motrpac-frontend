@@ -18,10 +18,10 @@ export const defaultSearchState = {
     omics: 'all',
     analysis: 'all',
     filters: {
-      tissue: '',
-      assay: '',
-      sex: '',
-      comparison_group: '',
+      tissue: [],
+      assay: [],
+      sex: [],
+      comparison_group: [],
       adj_p_value: { min: '', max: '' },
       logFC: { min: '', max: '' },
       p_value: { min: '', max: '' },
@@ -75,23 +75,21 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       const params = { ...state.searchParams };
       const { filters } = params;
       const isActiveFilter =
-        typeof filters[action.field] === 'string' &&
+        Array.isArray(filters[action.field]) &&
         filters[action.field].indexOf(action.filterValue);
       const newFilters = { ...filters };
 
       // Handle selection of a filter value
       if (action.field.match(/^(tissue|assay|sex|comparison_group)$/)) {
-        let newArr = newFilters[action.field].length
-          ? newFilters[action.field].split(',')
-          : [];
         if (isActiveFilter === -1) {
           // Adds filter if new
-          const mergeArr = [...newArr, ...[action.filterValue]];
-          newFilters[action.field] = mergeArr.join();
+          newFilters[action.field].push(action.filterValue);
         } else {
           // Removes filter if already exists
-          newArr = newArr.filter((filter) => !(filter === action.filterValue));
-          newFilters[action.field] = newArr.join();
+          const newArr = newFilters[action.field].filter(
+            (value) => !(value === action.filterValue)
+          );
+          newFilters[action.field] = newArr;
         }
       }
 
@@ -162,10 +160,10 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       if (action.scope === 'filters') {
         const params = { ...state.searchParams };
         params.filters = {
-          tissue: '',
-          assay: '',
-          sex: '',
-          comparison_group: '',
+          tissue: [],
+          assay: [],
+          sex: [],
+          comparison_group: [],
           adj_p_value: { min: '', max: '' },
           logFC: { min: '', max: '' },
           p_value: { min: '', max: '' },
@@ -178,10 +176,10 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
 
       const defaultParams = { ...defaultSearchState.searchParams };
       defaultParams.filters = {
-        tissue: '',
-        assay: '',
-        sex: '',
-        comparison_group: '',
+        tissue: [],
+        assay: [],
+        sex: [],
+        comparison_group: [],
         adj_p_value: { min: '', max: '' },
         logFC: { min: '', max: '' },
         p_value: { min: '', max: '' },
