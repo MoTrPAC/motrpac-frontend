@@ -43,7 +43,6 @@ export const defaultSearchState = {
       'p_value_female',
     ],
     size: 25000,
-    debug: true,
     save: false,
   },
   scope: 'all',
