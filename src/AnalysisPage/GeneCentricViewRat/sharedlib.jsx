@@ -9,8 +9,8 @@ export const geneSearchParamsPropType = {
   omics: PropTypes.string,
   index: PropTypes.string,
   filters: PropTypes.shape({
-    assay: PropTypes.string,
-    tissue: PropTypes.string,
+    assay: PropTypes.arrayOf(PropTypes.string),
+    tissue: PropTypes.arrayOf(PropTypes.string),
   }),
   fields: PropTypes.arrayOf(PropTypes.string),
   debug: PropTypes.bool,

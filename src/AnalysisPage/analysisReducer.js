@@ -18,8 +18,8 @@ export const defaultGeneSearchParams = {
   index:
     'transcriptomics_training, transcriptomics_timewise, proteomics_untargeted_training, proteomics_untargeted_timewise',
   filters: {
-    assay: '',
-    tissue: '',
+    assay: [],
+    tissue: [],
   },
   fields: [
     'gene_symbol',
@@ -168,17 +168,15 @@ export default function AnalysisReducer(
 
       // Handle selection of a filter value
       if (action.field.match(/^(tissue|assay)$/)) {
-        let newArr = newFilters[action.field].length
-          ? newFilters[action.field].split(',')
-          : [];
         if (isActiveFilter === -1) {
           // Adds filter if new
-          const mergeArr = [...newArr, ...[action.filterValue]];
-          newFilters[action.field] = mergeArr.join();
+          newFilters[action.field].push(action.filterValue);
         } else {
           // Removes filter if already exists
-          newArr = newArr.filter((filter) => !(filter === action.filterValue));
-          newFilters[action.field] = newArr.join();
+          const newArr = newFilters[action.field].filter(
+            (value) => !(value === action.filterValue)
+          );
+          newFilters[action.field] = newArr;
         }
       }
 
