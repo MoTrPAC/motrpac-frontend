@@ -150,7 +150,8 @@ GeneCentricView.propTypes = {
     keys: PropTypes.string,
     omics: PropTypes.string,
     filters: PropTypes.shape({
-      assay: PropTypes.string,
+      assay: PropTypes.arrayOf(PropTypes.string),
+      tissue: PropTypes.arrayOf(PropTypes.string),
     }),
     fields: PropTypes.arrayOf(PropTypes.string),
     debug: PropTypes.bool,
