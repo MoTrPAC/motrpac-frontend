@@ -16,15 +16,14 @@ describe('Search Reducer', () => {
     keys: '',
     omics: 'all',
     filters: {
-      tissue: '',
-      assay: '',
-      sex: '',
-      comparison_group: '',
-      adj_p_value: [],
-      logFC: [],
-      p_value: [],
+      tissue: [],
+      assay: [],
+      sex: [],
+      comparison_group: [],
+      adj_p_value: { min: '', max: '' },
+      logFC: { min: '', max: '' },
+      p_value: { min: '', max: '' },
     },
-    debug: true,
     save: true,
   };
 
@@ -51,7 +50,7 @@ describe('Search Reducer', () => {
     expect(
       SearchReducer(defaultSearchState, searchResultFiltereAction).searchParams
         .filters.tissue
-    ).toEqual(searchResultFiltereAction.filterValue);
+    ).toContain(searchResultFiltereAction.filterValue);
   });
 
   // Search input value for the respective term/param is changed
@@ -125,6 +124,8 @@ describe('Search Reducer', () => {
     const searchResetAction = {
       type: SEARCH_RESET,
     };
-    expect(SearchReducer(newState, searchResetAction)).toEqual(state);
+    expect(
+      SearchReducer(newState, searchResetAction).searchParams.filters.tissue
+    ).toHaveLength(0);
   });
 });
