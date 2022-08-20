@@ -37,18 +37,22 @@ function useNull() {
   return null;
 }
 
+const api = process.env.REACT_APP_API_SERVICE_ADDRESS;
+const endpoint = process.env.REACT_APP_QC_DATA_ENDPOINT;
+const key = process.env.REACT_APP_API_SERVICE_KEY;
+
 // Handler for predefined searches
 function fetchData() {
   return (dispatch) => {
     dispatch(dataFetchRequest());
     return axios
       .all([
-        axios.get(`/static-assets/qc-reports/metabolomics.json`).catch(useNull),
-        axios.get(`/static-assets/qc-reports/proteomics.json`).catch(useNull),
-        axios.get(`/static-assets/qc-reports/immunoassay.json`).catch(useNull),
-        axios.get(`/static-assets/qc-reports/rna_seq.json`).catch(useNull),
-        axios.get(`/static-assets/qc-reports/rrbs.json`).catch(useNull),
-        axios.get(`/static-assets/qc-reports/atac_seq.json`).catch(useNull),
+        axios.get(`${api}${endpoint}/metabolomics?key=${key}`).catch(useNull),
+        axios.get(`${api}${endpoint}/proteomics?key=${key}`).catch(useNull),
+        axios.get(`${api}${endpoint}/immunoassay?key=${key}`).catch(useNull),
+        axios.get(`${api}${endpoint}/rna_seq?key=${key}`).catch(useNull),
+        axios.get(`${api}${endpoint}/rrbs?key=${key}`).catch(useNull),
+        axios.get(`${api}${endpoint}/atac_seq?key=${key}`).catch(useNull),
       ])
       .then(
         axios.spread(
