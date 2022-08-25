@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
+import axios from 'axios';
+import QcReportErrorModal from './sharelib/qcReportErrorModal';
 
 /**
  * props common to rna-seq, rrbs, and atac-seq
  * data qc status reports
-*/
+ */
 const statusReportPropType = {
   cas: PropTypes.string,
   phase: PropTypes.string,
@@ -14,8 +17,10 @@ const statusReportPropType = {
   assay: PropTypes.string,
   version: PropTypes.string,
   sample_category: PropTypes.string,
-  sample_count: PropTypes.string,
+  sample_count: PropTypes.number,
   dmaqc_valid: PropTypes.string,
+  submission_date: PropTypes.string,
+  report: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 export default statusReportPropType;
@@ -23,7 +28,7 @@ export default statusReportPropType;
 /**
  * column headers common to rna-seq, rrbs, and atac-seq
  * data qc status reports
-*/
+ */
 export const tableColumns = [
   {
     Header: 'CAS',
@@ -65,6 +70,14 @@ export const tableColumns = [
     Header: 'DMAQC Valid',
     accessor: 'dmaqc_valid',
   },
+  {
+    Header: 'Submit Date',
+    accessor: 'submission_date',
+  },
+  {
+    Header: 'QC Report',
+    accessor: 'report',
+  },
 ];
 
 /**
@@ -96,7 +109,9 @@ export const GlobalFilter = ({
 };
 
 GlobalFilter.propTypes = {
-  preGlobalFilteredRows: PropTypes.arrayOf(PropTypes.shape({ ...statusReportPropType })),
+  preGlobalFilteredRows: PropTypes.arrayOf(
+    PropTypes.shape({ ...statusReportPropType })
+  ),
   globalFilter: PropTypes.string,
   setGlobalFilter: PropTypes.func.isRequired,
 };
@@ -109,7 +124,7 @@ GlobalFilter.defaultProps = {
 /**
  * page count and page index rendering function
  * common to all data qc status reports
-*/
+ */
 export const PageIndex = ({ pageIndex, pageOptions }) => (
   <span className="page-index">
     Showing Page
@@ -136,7 +151,7 @@ PageIndex.defaultProps = {
 /**
  * page size control rendering function
  * common to all data qc status reports
-*/
+ */
 export const PageSize = ({ pageSize, setPageSize, pageSizeOptions }) => (
   <div className="pagination-page-size d-flex align-items-center justify-content-start">
     <label htmlFor="pageSizeSelect">Show:</label>
@@ -167,7 +182,7 @@ PageSize.propTypes = {
 /**
  * page navigation control rendering function
  * common to all data qc status reports
-*/
+ */
 export const PageNavigationControl = ({
   canPreviousPage,
   canNextPage,
@@ -223,3 +238,54 @@ PageNavigationControl.propTypes = {
   gotoPage: PropTypes.func.isRequired,
   pageCount: PropTypes.number.isRequired,
 };
+
+/**
+ * Utility function to tranform some fields within each object in the array
+ */
+export const transformData = (arr) => {
+  const tranformArray = [...arr];
+
+  tranformArray.forEach((item) => {
+    // Transform submission_date strings to date format
+    if (item.submission_date && item.submission_date.length) {
+      const submissionDateStr = item.submission_date;
+      item.submission_date = dayjs(submissionDateStr).format('YYYY-MM-DD');
+    }
+    // Transform report strings to links
+    if (item.report !== null && item.report.length) {
+      const reportStr = item.report;
+      item.report = (
+        <button
+          type="button"
+          className="btn btn-link btn-sm btn-view-qc-report d-flex align-items-center"
+          onClick={(e) => retrieveReport(e, reportStr)}
+        >
+          <span>View</span>
+          <i className="material-icons">open_in_new</i>
+        </button>
+      );
+    }
+  });
+  return tranformArray;
+};
+
+/**
+ * Function to retrieve QC report from GCS bucket via signed URL
+ */
+export function retrieveReport(e, filename) {
+  e.preventDefault();
+  const api = process.env.REACT_APP_API_SERVICE_ADDRESS;
+  const endpoint = process.env.REACT_APP_SIGNED_URL_ENDPOINT;
+  const key = process.env.REACT_APP_API_SERVICE_KEY;
+  const bucket = process.env.REACT_APP_QC_REPORT_BUCKET;
+  return axios
+    .get(`${api}${endpoint}?bucket=${bucket}&object=${filename}&key=${key}`)
+    .then((response) => {
+      window.open(response.data.url, '_target');
+    })
+    .catch((err) => {
+      // eslint-disable-next-line no-console
+      console.log(`${err.error}: ${err.errorDescription}`);
+      return <QcReportErrorModal />;
+    });
+}
