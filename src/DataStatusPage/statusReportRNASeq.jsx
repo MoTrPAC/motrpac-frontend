@@ -7,13 +7,15 @@ import {
   useSortBy,
   usePagination,
 } from 'react-table';
-import statusReportPropType, {
+import {
   tableColumns,
   PageIndex,
   PageSize,
   PageNavigationControl,
   GlobalFilter,
   transformData,
+  commonReportPropType,
+  getDataReportPropType,
 } from './common';
 
 /**
@@ -187,8 +189,9 @@ function DataTable({ columns, data }) {
 }
 
 StatusReportRNASeq.propTypes = {
-  rnaSeqData: PropTypes.arrayOf(PropTypes.shape({ ...statusReportPropType }))
-    .isRequired,
+  rnaSeqData: PropTypes.arrayOf(
+    PropTypes.shape({ ...commonReportPropType, ...getDataReportPropType })
+  ).isRequired,
 };
 
 DataTable.propTypes = {
@@ -198,8 +201,9 @@ DataTable.propTypes = {
       accessor: PropTypes.string.isRequired,
     })
   ).isRequired,
-  data: PropTypes.arrayOf(PropTypes.shape({ ...statusReportPropType }))
-    .isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({ ...commonReportPropType, ...getDataReportPropType })
+  ).isRequired,
 };
 
 export default StatusReportRNASeq;

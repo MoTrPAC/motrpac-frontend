@@ -13,6 +13,8 @@ import {
   PageSize,
   PageNavigationControl,
   retrieveReport,
+  commonReportPropType,
+  metabProtReportPropType,
 } from './common';
 
 /**
@@ -325,32 +327,17 @@ function DataTable({ columns, data }) {
   );
 }
 
-const proteomicsStatusReportPropType = {
-  cas: PropTypes.string,
-  phase: PropTypes.string,
-  tissue: PropTypes.string,
-  t_name: PropTypes.string,
-  assay: PropTypes.string,
-  version: PropTypes.string,
-  vial_label: PropTypes.number,
-  qc_samples: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  issues: PropTypes.number,
-  dmaqc_valid: PropTypes.string,
-  qc_date: PropTypes.string,
-  submission_date: PropTypes.string,
-  report: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-};
-
 StatusReportProteomics.propTypes = {
   proteomicsData: PropTypes.arrayOf(
-    PropTypes.shape({ ...proteomicsStatusReportPropType })
+    PropTypes.shape({ ...commonReportPropType, ...metabProtReportPropType })
   ).isRequired,
 };
 
 GlobalFilter.propTypes = {
   preGlobalFilteredRows: PropTypes.arrayOf(
     PropTypes.shape({
-      ...proteomicsStatusReportPropType,
+      ...commonReportPropType,
+      ...metabProtReportPropType,
     })
   ),
   globalFilter: PropTypes.string,
@@ -370,7 +357,7 @@ DataTable.propTypes = {
     })
   ).isRequired,
   data: PropTypes.arrayOf(
-    PropTypes.shape({ ...proteomicsStatusReportPropType })
+    PropTypes.shape({ ...commonReportPropType, ...metabProtReportPropType })
   ).isRequired,
 };
 

@@ -5,25 +5,41 @@ import axios from 'axios';
 import QcReportErrorModal from './sharelib/qcReportErrorModal';
 
 /**
- * props common to rna-seq, rrbs, and atac-seq
- * data qc status reports
+ * props common to all QC data reports
  */
-const statusReportPropType = {
+export const commonReportPropType = {
   cas: PropTypes.string,
   phase: PropTypes.string,
   tissue: PropTypes.string,
   t_name: PropTypes.string,
-  seq_flowcell_lane: PropTypes.string,
   assay: PropTypes.string,
   version: PropTypes.string,
-  sample_category: PropTypes.string,
-  sample_count: PropTypes.number,
   dmaqc_valid: PropTypes.string,
   submission_date: PropTypes.string,
   report: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
-export default statusReportPropType;
+/**
+ * props common to rna-seq, rrbs, atac-seq, and immunoassay
+ * QC data reports
+ */
+export const getDataReportPropType = {
+  seq_flowcell_lane: PropTypes.string,
+  sample_category: PropTypes.string,
+  sample_count: PropTypes.number,
+};
+
+/**
+ * props common to metabolomics and proteomics
+ * QC data reports
+ */
+export const metabProtReportPropType = {
+  vial_label: PropTypes.number,
+  qc_samples: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  issues: PropTypes.number,
+  raw_manifest: PropTypes.number,
+  qc_date: PropTypes.string,
+};
 
 /**
  * column headers common to rna-seq, rrbs, and atac-seq
