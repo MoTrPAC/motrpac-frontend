@@ -126,7 +126,7 @@ export const GlobalFilter = ({
 
 GlobalFilter.propTypes = {
   preGlobalFilteredRows: PropTypes.arrayOf(
-    PropTypes.shape({ ...statusReportPropType })
+    PropTypes.shape({ ...commonReportPropType, ...getDataReportPropType })
   ),
   globalFilter: PropTypes.string,
   setGlobalFilter: PropTypes.func.isRequired,
