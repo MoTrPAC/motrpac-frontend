@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
 import {
   useTable,
   useFilters,
@@ -7,7 +8,12 @@ import {
   useSortBy,
   usePagination,
 } from 'react-table';
-import { PageIndex, PageSize, PageNavigationControl } from './common';
+import {
+  PageIndex,
+  PageSize,
+  PageNavigationControl,
+  retrieveReport,
+} from './common';
 
 /**
  * Utility function to return the sum of all issues
@@ -36,11 +42,27 @@ const transformData = (arr) => {
   const tranformArray = JSON.parse(newArray);
   // Add new 'issues' property
   tranformArray.forEach((item) => {
+    // Transform submission_date strings to date format
+    if (item.submission_date && item.submission_date.length) {
+      const submissionDateStr = item.submission_date;
+      item.submission_date = dayjs(submissionDateStr).format('YYYY-MM-DD');
+    }
+    // Transform report strings to links
+    if (item.report !== null && item.report.length) {
+      const reportStr = item.report;
+      item.report = (
+        <button
+          type="button"
+          className="btn btn-link btn-sm btn-view-qc-report d-flex align-items-center"
+          onClick={(e) => retrieveReport(e, reportStr)}
+        >
+          <span>View</span>
+          <i className="material-icons">open_in_new</i>
+        </button>
+      );
+    }
     // eslint-disable-next-line no-param-reassign
-    item.issues = toSum([
-      item.critical_issues,
-      item.vial_meta,
-    ]);
+    item.issues = toSum([item.critical_issues, item.vial_meta]);
   });
   return tranformArray;
 };
@@ -125,8 +147,16 @@ function StatusReportProteomics({ proteomicsData }) {
         Header: 'QC Date',
         accessor: 'qc_date',
       },
+      {
+        Header: 'Submit Date',
+        accessor: 'submission_date',
+      },
+      {
+        Header: 'QC Report',
+        accessor: 'report',
+      },
     ],
-    [],
+    []
   );
 
   const data = useMemo(() => transformData(proteomicsData), [proteomicsData]);
@@ -143,16 +173,17 @@ function StatusReportProteomics({ proteomicsData }) {
 function DataTable({ columns, data }) {
   const filterTypes = React.useMemo(
     () => ({
-      text: (rows, id, filterValue) => rows.filter((row) => {
-        const rowValue = row.values[id];
-        return rowValue !== undefined
-          ? String(rowValue)
-            .toLowerCase()
-            .startsWith(String(filterValue).toLowerCase())
-          : true;
-      }),
+      text: (rows, id, filterValue) =>
+        rows.filter((row) => {
+          const rowValue = row.values[id];
+          return rowValue !== undefined
+            ? String(rowValue)
+                .toLowerCase()
+                .startsWith(String(filterValue).toLowerCase())
+            : true;
+        }),
     }),
-    [],
+    []
   );
 
   // Use the useTable hook to create your table configuration
@@ -164,14 +195,14 @@ function DataTable({ columns, data }) {
       initialState: {
         pageIndex: 0,
         pageSize: 20,
-        pageCount: 2,
-        sortBy: [{ id: 'qc_date', desc: true }],
+        pageCount: Math.ceil(data / 20),
+        sortBy: [{ id: 'submission_date', desc: true }],
       },
     },
     useFilters,
     useGlobalFilter,
     useSortBy,
-    usePagination,
+    usePagination
   );
   // Use the state and functions returned from useTable to build your UI
   const {
@@ -194,7 +225,10 @@ function DataTable({ columns, data }) {
   } = instance;
 
   // default page size options given the length of entries in the data
-  const range = (start, stop, step = 10) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
+  const range = (start, stop, step = 10) =>
+    Array(Math.ceil(stop / step))
+      .fill(start)
+      .map((x, y) => x + y * step);
 
   // Render the UI for your table
   // react-table doesn't have UI, it's headless. We just need to put the react-table
@@ -216,12 +250,22 @@ function DataTable({ columns, data }) {
       <div className="card mb-3">
         <div className="card-body">
           <div className="table-responsive">
-            <table {...getTableProps()} className="table table-sm dataStatusTable">
+            <table
+              {...getTableProps()}
+              className="table table-sm dataStatusTable"
+            >
               <thead>
                 {headerGroups.map((headerGroup) => (
-                  <tr {...headerGroup.getHeaderGroupProps()} className="table-head">
+                  <tr
+                    {...headerGroup.getHeaderGroupProps()}
+                    className="table-head"
+                  >
                     {headerGroup.headers.map((column) => (
-                      <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                      <th
+                        {...column.getHeaderProps(
+                          column.getSortByToggleProps()
+                        )}
+                      >
                         <div className="d-flex align-items-center justify-content-between">
                           {column.render('Header')}
                           <span>
@@ -245,7 +289,15 @@ function DataTable({ columns, data }) {
                       {row.cells.map((cell) => (
                         <td
                           {...cell.getCellProps()}
-                          className={`${cell.column.id} ${cell.column.id}-${cell.value} ${cell.value}`}
+                          className={`${cell.column.id} ${cell.column.id}-${
+                            typeof cell.value === 'string'
+                              ? cell.value
+                              : 'view-qc-report'
+                          } ${
+                            typeof cell.value === 'string'
+                              ? cell.value
+                              : 'view-qc-report'
+                          }`}
                         >
                           <span>{cell.render('Cell')}</span>
                         </td>
@@ -280,21 +332,27 @@ const proteomicsStatusReportPropType = {
   t_name: PropTypes.string,
   assay: PropTypes.string,
   version: PropTypes.string,
-  vial_label: PropTypes.string,
-  qc_samples: PropTypes.string,
+  vial_label: PropTypes.number,
+  qc_samples: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   issues: PropTypes.number,
   dmaqc_valid: PropTypes.string,
   qc_date: PropTypes.string,
+  submission_date: PropTypes.string,
+  report: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 StatusReportProteomics.propTypes = {
-  proteomicsData: PropTypes.arrayOf(PropTypes.shape({ ...proteomicsStatusReportPropType })).isRequired,
+  proteomicsData: PropTypes.arrayOf(
+    PropTypes.shape({ ...proteomicsStatusReportPropType })
+  ).isRequired,
 };
 
 GlobalFilter.propTypes = {
-  preGlobalFilteredRows: PropTypes.arrayOf(PropTypes.shape({
-    ...proteomicsStatusReportPropType,
-  })),
+  preGlobalFilteredRows: PropTypes.arrayOf(
+    PropTypes.shape({
+      ...proteomicsStatusReportPropType,
+    })
+  ),
   globalFilter: PropTypes.string,
   setGlobalFilter: PropTypes.func.isRequired,
 };
@@ -305,11 +363,15 @@ GlobalFilter.defaultProps = {
 };
 
 DataTable.propTypes = {
-  columns: PropTypes.arrayOf(PropTypes.shape({
-    Header: PropTypes.string,
-    accessor: PropTypes.string,
-  })).isRequired,
-  data: PropTypes.arrayOf(PropTypes.shape({ ...proteomicsStatusReportPropType })).isRequired,
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      Header: PropTypes.string,
+      accessor: PropTypes.string,
+    })
+  ).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({ ...proteomicsStatusReportPropType })
+  ).isRequired,
 };
 
 export default StatusReportProteomics;
