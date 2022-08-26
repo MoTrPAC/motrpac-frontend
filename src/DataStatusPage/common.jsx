@@ -45,7 +45,7 @@ export const metabProtReportPropType = {
  * column headers common to rna-seq, rrbs, and atac-seq
  * data qc status reports
  */
-export const tableColumns = [
+export const getDataTableColumns = [
   {
     Header: 'CAS',
     accessor: 'cas',
@@ -93,6 +93,37 @@ export const tableColumns = [
   {
     Header: 'QC Report',
     accessor: 'report',
+  },
+];
+
+export const immunoTableColumns = [
+  {
+    Header: 'CAS',
+    accessor: 'cas',
+  },
+  {
+    Header: 'Phase',
+    accessor: 'phase',
+  },
+  {
+    Header: 'Tissue',
+    accessor: 'tissue',
+  },
+  {
+    Header: 'Tissue Name',
+    accessor: 't_name',
+  },
+  {
+    Header: 'Assay',
+    accessor: 'assay',
+  },
+  {
+    Header: 'Category',
+    accessor: 'sample_category',
+  },
+  {
+    Header: 'Sample Count',
+    accessor: 'sample_count',
   },
 ];
 
