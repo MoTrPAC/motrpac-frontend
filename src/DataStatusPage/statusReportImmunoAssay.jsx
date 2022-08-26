@@ -8,6 +8,7 @@ import {
   usePagination,
 } from 'react-table';
 import {
+  immunoTableColumns,
   PageIndex,
   PageSize,
   PageNavigationControl,
@@ -21,43 +22,10 @@ import {
  *
  * @returns {object} The data qc status table component
  */
-function StatusReportImmunoAssay({ immunoAssayData }) {
+function StatusReportImmunoAssay({ qcData }) {
   // Define table column headers
-  const columns = useMemo(
-    () => [
-      {
-        Header: 'CAS',
-        accessor: 'cas',
-      },
-      {
-        Header: 'Phase',
-        accessor: 'phase',
-      },
-      {
-        Header: 'Tissue',
-        accessor: 'tissue',
-      },
-      {
-        Header: 'Tissue Name',
-        accessor: 't_name',
-      },
-      {
-        Header: 'Assay',
-        accessor: 'assay',
-      },
-      {
-        Header: 'Category',
-        accessor: 'sample_category',
-      },
-      {
-        Header: 'Sample Count',
-        accessor: 'sample_count',
-      },
-    ],
-    []
-  );
-
-  const data = useMemo(() => immunoAssayData, [immunoAssayData]);
+  const columns = useMemo(() => immunoTableColumns, []);
+  const data = useMemo(() => qcData, [qcData]);
   return <DataTable columns={columns} data={data} />;
 }
 
@@ -213,7 +181,7 @@ function DataTable({ columns, data }) {
 }
 
 StatusReportImmunoAssay.propTypes = {
-  immunoAssayData: PropTypes.arrayOf(
+  qcData: PropTypes.arrayOf(
     PropTypes.shape({ ...commonReportPropType, ...getDataReportPropType })
   ).isRequired,
 };
