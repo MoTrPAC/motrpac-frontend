@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import axios from 'axios';
-import QcReportErrorModal from './sharelib/qcReportErrorModal';
 
 /**
  * props common to all QC data reports
@@ -307,7 +306,7 @@ export const transformData = (arr) => {
           className="btn btn-link btn-sm btn-view-qc-report d-flex align-items-center"
           onClick={(e) => retrieveReport(e, reportStr)}
         >
-          <span>View</span>
+          <span>Open</span>
           <i className="material-icons">open_in_new</i>
         </button>
       );
@@ -333,6 +332,9 @@ export function retrieveReport(e, filename) {
     .catch((err) => {
       // eslint-disable-next-line no-console
       console.log(`${err.error}: ${err.errorDescription}`);
-      return <QcReportErrorModal />;
+      // eslint-disable-next-line no-alert
+      alert(
+        'An error has occurred. Please try again later, or contact motrpac-helpdesks@lists.stanford.edu to report this problem.'
+      );
     });
 }
