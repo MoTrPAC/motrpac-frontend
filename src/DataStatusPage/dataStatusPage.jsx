@@ -3,11 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import AuthContentContainer from '../lib/ui/authContentContainer';
-import StatusReportMetabolomics from './statusReportMetabolomics';
-import StatusReportProteomics from './statusReportProteomics';
-import StatusReportRnaSeq from './statusReportRNASeq';
-import StatusReportRRBS from './statusReportRRBS';
-import StatusReportAtacSeq from './statusReportATACSeq';
+import StatusReportMetabProt from './statusReportMetabProt';
+import StatusReportGetData from './statusReportGetData';
 import StatusReportImmunoAssay from './statusReportImmunoAssay';
 import QcReportByPhase from './qcReportByPhase.jsx';
 import QcReportHelp from './qcReportHelp';
@@ -74,42 +71,45 @@ export function DataStatusPage({
       case 'metabolomics':
         return (
           <>
-            <StatusReportMetabolomics metabolomicsData={qcData.metabolomics} />
+            <StatusReportMetabProt
+              qcData={qcData.metabolomics}
+              omicType="metab"
+            />
             <QcReportHelpLink qcReportViewChange={qcReportViewChange} />
           </>
         );
       case 'proteomics':
         return (
           <>
-            <StatusReportProteomics proteomicsData={qcData.proteomics} />
+            <StatusReportMetabProt qcData={qcData.proteomics} omicType="prot" />
             <QcReportHelpLink qcReportViewChange={qcReportViewChange} />
           </>
         );
       case 'rnaseq':
         return (
           <>
-            <StatusReportRnaSeq rnaSeqData={qcData.rnaSeq} />
+            <StatusReportGetData qcData={qcData.rnaSeq} />
             <QcReportHelpLink qcReportViewChange={qcReportViewChange} />
           </>
         );
       case 'rrbs':
         return (
           <>
-            <StatusReportRRBS rrbsData={qcData.rrbs} />
+            <StatusReportGetData qcData={qcData.rrbs} />
             <QcReportHelpLink qcReportViewChange={qcReportViewChange} />
           </>
         );
       case 'atacseq':
         return (
           <>
-            <StatusReportAtacSeq atacSeqData={qcData.atacSeq} />
+            <StatusReportGetData qcData={qcData.atacSeq} />
             <QcReportHelpLink qcReportViewChange={qcReportViewChange} />
           </>
         );
       case 'immunoassay':
         return (
           <>
-            <StatusReportImmunoAssay immunoAssayData={qcData.immunoAssay} />
+            <StatusReportImmunoAssay qcData={qcData.immunoAssay} />
             <QcReportHelpLink qcReportViewChange={qcReportViewChange} />
           </>
         );
