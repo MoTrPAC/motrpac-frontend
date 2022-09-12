@@ -48,6 +48,13 @@ function FeatureLinks({
       eventHandler: handleDataObjectFetch,
     },
     {
+      route: 'phenotype',
+      description: 'Explore and download phenotypic data.',
+      icon: 'bubble_chart',
+      title: 'Phenotype',
+      eventHandler: null,
+    },
+    {
       route: 'qc-data-monitor',
       description: 'Track submitted samples and their QC statuses.',
       icon: 'fact_check',
@@ -69,12 +76,12 @@ function FeatureLinks({
         {features.map((item) => (
           <div
             key={item.route}
-            className={`card mb-3 p-3 shadow-sm ${item.route}`}
+            className={`card mb-3 px-2 py-3 shadow-sm ${item.route}`}
           >
             <Link to={`/${item.route}`} onClick={item.eventHandler}>
               <div className="card-body">
                 <div className="h-100 d-flex align-items-start">
-                  <div className="feature-icon mr-3">
+                  <div className="feature-icon mr-2">
                     <span className="material-icons">{item.icon}</span>
                   </div>
                   <div className="feature-summary">
