@@ -325,6 +325,12 @@
         color: $accent-violet;
       }
     }
+
+    &.phenotype {
+      .material-icons {
+        color: $accent-yellow;
+      }
+    }
   }
 }
 
