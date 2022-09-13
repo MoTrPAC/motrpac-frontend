@@ -21,6 +21,7 @@ import RelatedStudyConnected from '../RelatedStudy/relatedStudy';
 import HeritageProteomicsConnected from '../RelatedStudy/heritageProteomics';
 import AnnouncementsPageConnected from '../AnnouncementsPage/announcementsPage';
 import BrowseDataPageConnected from '../BrowseDataPage/browseDataPage';
+import PhenotypePageConnected from '../PhenotypePage/phenotypePage';
 import HomePageConnected from '../Home/HomePage';
 import CallbackConnected from '../Auth/callback';
 import SidebarConnected from '../Sidebar/sidebar';
@@ -93,6 +94,10 @@ function App({ history = History }) {
               <PrivateRoute
                 path="/browse-data"
                 component={withTracker(BrowseDataPageConnected)}
+              />
+              <PrivateRoute
+                path="/phenotype"
+                component={withTracker(PhenotypePageConnected)}
               />
               <Route
                 path="/data-access"
