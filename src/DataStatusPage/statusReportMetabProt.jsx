@@ -58,7 +58,7 @@ const transformData = (arr) => {
           className="btn btn-link btn-sm btn-view-qc-report d-flex align-items-center"
           onClick={(e) => retrieveReport(e, reportStr)}
         >
-          <span>View</span>
+          <span>Open</span>
           <i className="material-icons">open_in_new</i>
         </button>
       );
