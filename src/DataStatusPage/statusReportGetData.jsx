@@ -8,11 +8,12 @@ import {
   usePagination,
 } from 'react-table';
 import {
-  immunoTableColumns,
+  getDataTableColumns,
   PageIndex,
   PageSize,
   PageNavigationControl,
   GlobalFilter,
+  transformData,
   commonReportPropType,
   getDataReportPropType,
 } from './common';
@@ -22,10 +23,10 @@ import {
  *
  * @returns {object} The data qc status table component
  */
-function StatusReportImmunoAssay({ qcData }) {
+function StatusReportGetData({ qcData }) {
   // Define table column headers
-  const columns = useMemo(() => immunoTableColumns, []);
-  const data = useMemo(() => qcData, [qcData]);
+  const columns = useMemo(() => getDataTableColumns, []);
+  const data = useMemo(() => transformData(qcData), [qcData]);
   return <DataTable columns={columns} data={data} />;
 }
 
@@ -62,7 +63,7 @@ function DataTable({ columns, data }) {
         pageIndex: 0,
         pageSize: 20,
         pageCount: Math.ceil(data / 20),
-        sortBy: [{ id: 'assay', desc: false }],
+        sortBy: [{ id: 'submission_date', desc: true }],
       },
     },
     useFilters,
@@ -153,7 +154,14 @@ function DataTable({ columns, data }) {
                   return (
                     <tr {...row.getRowProps()}>
                       {row.cells.map((cell) => (
-                        <td {...cell.getCellProps()} className={cell.value}>
+                        <td
+                          {...cell.getCellProps()}
+                          className={
+                            typeof cell.value === 'string' || Number(cell.value)
+                              ? cell.value
+                              : 'view-qc-report'
+                          }
+                        >
                           <span>{cell.render('Cell')}</span>
                         </td>
                       ))}
@@ -180,7 +188,7 @@ function DataTable({ columns, data }) {
   );
 }
 
-StatusReportImmunoAssay.propTypes = {
+StatusReportGetData.propTypes = {
   qcData: PropTypes.arrayOf(
     PropTypes.shape({ ...commonReportPropType, ...getDataReportPropType })
   ).isRequired,
@@ -198,4 +206,4 @@ DataTable.propTypes = {
   ).isRequired,
 };
 
-export default StatusReportImmunoAssay;
+export default StatusReportGetData;

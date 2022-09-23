@@ -58,21 +58,28 @@ const transformData = (arr) => {
           className="btn btn-link btn-sm btn-view-qc-report d-flex align-items-center"
           onClick={(e) => retrieveReport(e, reportStr)}
         >
-          <span>View</span>
+          <span>Open</span>
           <i className="material-icons">open_in_new</i>
         </button>
       );
     }
-    // eslint-disable-next-line no-param-reassign
-    item.issues = toSum([
-      item.critical_issues,
-      item.m_metab_n,
-      item.m_metab_u,
-      item.m_sample_n,
-      item.m_sample_u,
-      item.results_n,
-      item.results_u,
-    ]);
+    // Transform metabolomics 'issues' value
+    if (item.assay.indexOf('PROT') === -1) {
+      item.issues = toSum([
+        item.critical_issues,
+        item.m_metab_n,
+        item.m_metab_u,
+        item.m_sample_n,
+        item.m_sample_u,
+        item.results_n,
+        item.results_u,
+      ]);
+    }
+
+    // Transform proteomics 'issues' value
+    if (item.assay.indexOf('PROT') > -1) {
+      item.issues = toSum([item.critical_issues, item.vial_meta]);
+    }
   });
   return tranformArray;
 };
@@ -109,7 +116,7 @@ function GlobalFilter({
  *
  * @returns {object} The data qc status table component
  */
-function StatusReportMetabolomics({ metabolomicsData }) {
+function StatusReportMetabProt({ qcData, omicType }) {
   // Define table column headers
   const columns = useMemo(
     () => [
@@ -153,10 +160,9 @@ function StatusReportMetabolomics({ metabolomicsData }) {
         Header: 'DMAQC Valid',
         accessor: 'dmaqc_valid',
       },
-      {
-        Header: 'Raw Manifest',
-        accessor: 'raw_manifest',
-      },
+      ...(omicType === 'metab'
+        ? [{ Header: 'Raw Manifest', accessor: 'raw_manifest' }]
+        : []),
       {
         Header: 'QC Date',
         accessor: 'qc_date',
@@ -170,13 +176,10 @@ function StatusReportMetabolomics({ metabolomicsData }) {
         accessor: 'report',
       },
     ],
-    []
+    [omicType]
   );
 
-  const data = useMemo(
-    () => transformData(metabolomicsData),
-    [metabolomicsData]
-  );
+  const data = useMemo(() => transformData(qcData), [qcData]);
   return <DataTable columns={columns} data={data} />;
 }
 
@@ -307,11 +310,11 @@ function DataTable({ columns, data }) {
                         <td
                           {...cell.getCellProps()}
                           className={`${cell.column.id} ${cell.column.id}-${
-                            typeof cell.value === 'string'
+                            typeof cell.value === 'string' || Number(cell.value)
                               ? cell.value
                               : 'view-qc-report'
                           } ${
-                            typeof cell.value === 'string'
+                            typeof cell.value === 'string' || Number(cell.value)
                               ? cell.value
                               : 'view-qc-report'
                           }`}
@@ -342,13 +345,14 @@ function DataTable({ columns, data }) {
   );
 }
 
-StatusReportMetabolomics.propTypes = {
-  metabolomicsData: PropTypes.arrayOf(
+StatusReportMetabProt.propTypes = {
+  qcData: PropTypes.arrayOf(
     PropTypes.shape({
       ...commonReportPropType,
       ...metabProtReportPropType,
     })
   ).isRequired,
+  omicType: PropTypes.string.isRequired,
 };
 
 GlobalFilter.propTypes = {
@@ -382,4 +386,4 @@ DataTable.propTypes = {
   ).isRequired,
 };
 
-export default StatusReportMetabolomics;
+export default StatusReportMetabProt;

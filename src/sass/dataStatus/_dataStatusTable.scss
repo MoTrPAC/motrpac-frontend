@@ -185,6 +185,29 @@
     .issues-6, .raw_manifest-6, .raw_manifest-7 {
       background-color: lighten($accent-red-shade-light, 0%);
     }
+
+    .btn-view-qc-report {
+      font-size: 0.8rem;
+      font-weight: normal;
+      color: #007bff;
+      margin: 0 auto;
+      padding: 0;
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      &:focus, &:active {
+        box-shadow: none;
+        outline: none;
+        text-decoration: none;
+      }
+
+      .material-icons {
+        font-size: 0.95rem;
+        margin-left: 0.2rem;
+      }
+    }
   }
 }
 
@@ -306,7 +329,7 @@
 
         /* anlge positioning for table header items */
         .footer-label {
-          transform: translateX(180px) rotate(45deg);
+          transform: translateX(100px) rotate(45deg);
         }
       }
     }

@@ -7,12 +7,15 @@ import {
   useSortBy,
   usePagination,
 } from 'react-table';
-import statusReportPropType, {
+import {
   tableColumns,
   PageIndex,
   PageSize,
   PageNavigationControl,
   GlobalFilter,
+  transformData,
+  commonReportPropType,
+  getDataReportPropType,
 } from './common';
 
 /**
@@ -23,7 +26,7 @@ import statusReportPropType, {
 function StatusReportATACSeq({ atacSeqData }) {
   // Define table column headers
   const columns = useMemo(() => tableColumns, []);
-  const data = useMemo(() => atacSeqData, [atacSeqData]);
+  const data = useMemo(() => transformData(atacSeqData), [atacSeqData]);
   return <DataTable columns={columns} data={data} />;
 }
 
@@ -37,16 +40,17 @@ function StatusReportATACSeq({ atacSeqData }) {
 function DataTable({ columns, data }) {
   const filterTypes = React.useMemo(
     () => ({
-      text: (rows, id, filterValue) => rows.filter((row) => {
-        const rowValue = row.values[id];
-        return rowValue !== undefined
-          ? String(rowValue)
-            .toLowerCase()
-            .startsWith(String(filterValue).toLowerCase())
-          : true;
-      }),
+      text: (rows, id, filterValue) =>
+        rows.filter((row) => {
+          const rowValue = row.values[id];
+          return rowValue !== undefined
+            ? String(rowValue)
+                .toLowerCase()
+                .startsWith(String(filterValue).toLowerCase())
+            : true;
+        }),
     }),
-    [],
+    []
   );
 
   // Use the useTable hook to create your table configuration
@@ -58,14 +62,14 @@ function DataTable({ columns, data }) {
       initialState: {
         pageIndex: 0,
         pageSize: 20,
-        pageCount: 3,
-        sortBy: [{ id: 'cas', desc: false }],
+        pageCount: Math.ceil(data / 20),
+        sortBy: [{ id: 'submission_date', desc: true }],
       },
     },
     useFilters,
     useGlobalFilter,
     useSortBy,
-    usePagination,
+    usePagination
   );
   // Use the state and functions returned from useTable to build your UI
   const {
@@ -88,7 +92,10 @@ function DataTable({ columns, data }) {
   } = instance;
 
   // default page size options given the length of entries in the data
-  const range = (start, stop, step = 10) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
+  const range = (start, stop, step = 10) =>
+    Array(Math.ceil(stop / step))
+      .fill(start)
+      .map((x, y) => x + y * step);
 
   // Render the UI for your table
   // react-table doesn't have UI, it's headless. We just need to put the react-table
@@ -110,12 +117,22 @@ function DataTable({ columns, data }) {
       <div className="card mb-3">
         <div className="card-body">
           <div className="table-responsive">
-            <table {...getTableProps()} className="table table-sm dataStatusTable">
+            <table
+              {...getTableProps()}
+              className="table table-sm dataStatusTable"
+            >
               <thead>
                 {headerGroups.map((headerGroup) => (
-                  <tr {...headerGroup.getHeaderGroupProps()} className="table-head">
+                  <tr
+                    {...headerGroup.getHeaderGroupProps()}
+                    className="table-head"
+                  >
                     {headerGroup.headers.map((column) => (
-                      <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                      <th
+                        {...column.getHeaderProps(
+                          column.getSortByToggleProps()
+                        )}
+                      >
                         <div className="d-flex align-items-center justify-content-between">
                           {column.render('Header')}
                           <span>
@@ -136,7 +153,18 @@ function DataTable({ columns, data }) {
                   prepareRow(row);
                   return (
                     <tr {...row.getRowProps()}>
-                      {row.cells.map((cell) => <td {...cell.getCellProps()} className={cell.value}><span>{cell.render('Cell')}</span></td>)}
+                      {row.cells.map((cell) => (
+                        <td
+                          {...cell.getCellProps()}
+                          className={
+                            typeof cell.value === 'string'
+                              ? cell.value
+                              : 'view-qc-report'
+                          }
+                        >
+                          <span>{cell.render('Cell')}</span>
+                        </td>
+                      ))}
                     </tr>
                   );
                 })}
@@ -161,15 +189,21 @@ function DataTable({ columns, data }) {
 }
 
 StatusReportATACSeq.propTypes = {
-  atacSeqData: PropTypes.arrayOf(PropTypes.shape({ ...statusReportPropType })).isRequired,
+  atacSeqData: PropTypes.arrayOf(
+    PropTypes.shape({ ...commonReportPropType, ...getDataReportPropType })
+  ).isRequired,
 };
 
 DataTable.propTypes = {
-  columns: PropTypes.arrayOf(PropTypes.shape({
-    Header: PropTypes.string.isRequired,
-    accessor: PropTypes.string.isRequired,
-  })).isRequired,
-  data: PropTypes.arrayOf(PropTypes.shape({ ...statusReportPropType })).isRequired,
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      Header: PropTypes.string.isRequired,
+      accessor: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({ ...commonReportPropType, ...getDataReportPropType })
+  ).isRequired,
 };
 
 export default StatusReportATACSeq;
