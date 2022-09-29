@@ -9,6 +9,7 @@ import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Heart.png';
 import ContactHelpdesk from '../lib/ui/contactHelpdesk';
 import onVisibilityChange from '../lib/utils/pageVisibility';
+import AnnouncementBanner from './announcementBanner';
 
 /**
  * Renders the landing page in unauthenticated state.
@@ -70,73 +71,12 @@ export function LandingPage({ isAuthenticated, profile }) {
     setVisibility(!visibility);
   }
 
-  // Function to render marker paper announcement
-  const MarkerPaperNotice = () => (
-    <div
-      className="alert alert-primary alert-dismissible fade show marker-paper-announce d-flex align-items-center justify-content-between w-100"
-      role="alert"
-    >
-      <span className="marker-paper-announce-content">
-        <h5>
-          The
-          {' '}
-          <a
-            href="https://www.cell.com/cell/fulltext/S0092-8674(20)30691-7"
-            className="inline-link-with-icon"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={trackEvent.bind(
-              this,
-              'MoTrPAC Marker Paper',
-              'Cell Publication',
-              'Landing Page'
-            )}
-          >
-            first MoTrPAC paper
-            <i className="material-icons external-linkout-icon">open_in_new</i>
-          </a>
-          {' '}
-          is now published in the journal
-          {' '}
-          <i>Cell</i>
-          . Read the
-          {' '}
-          <a
-            href="https://www.nih.gov/news-events/news-releases/nih-funded-study-recruit-thousands-participants-reveal-exercise-impact-molecular-level"
-            className="inline-link-with-icon"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={trackEvent.bind(
-              this,
-              'MoTrPAC Marker Paper',
-              'NIH Press Release',
-              'Landing Page'
-            )}
-          >
-            NIH press release
-            <i className="material-icons external-linkout-icon">open_in_new</i>
-          </a>
-          {' '}
-          for further information about this publication.
-        </h5>
-      </span>
-      <button
-        type="button"
-        className="close"
-        data-dismiss="alert"
-        aria-label="Close"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  );
-
   return (
     <div className="row marketing">
       <main>
         <div className="container hero h-100">
           <div className="row hero-wrapper h-100">
-            <MarkerPaperNotice />
+            <AnnouncementBanner />
             <div className="hero-image col-12 col-md-8 mx-auto">
               <img
                 src={LogoAnimation}
