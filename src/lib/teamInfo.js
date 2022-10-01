@@ -89,11 +89,6 @@ const teamInfo = {
       image: SamiyaImg,
     },
     {
-      name: 'Chelsea Harris',
-      title: 'Visiting Research Scholar',
-      image: ChelseaImg,
-    },
-    {
       name: 'Laurens van de Wiel, Ph.D.',
       title: 'Postdoctoral Scholar',
       image: LaurensImg,
@@ -166,6 +161,11 @@ const teamInfo = {
       name: 'Steven Hershman, Ph.D.',
       title: 'Alumni',
       image: SteveImg,
+    },
+    {
+      name: 'Chelsea Harris',
+      title: 'Alumni',
+      image: ChelseaImg,
     },
     {
       name: 'Elizabeth Chin',
