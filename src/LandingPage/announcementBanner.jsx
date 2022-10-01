@@ -5,12 +5,11 @@ import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 function AnnouncementBanner() {
   return (
     <div
-      className="alert alert-primary alert-dismissible fade show marker-paper-announce d-flex align-items-center justify-content-between w-100"
+      className="alert alert-primary alert-dismissible fade show announcement-banner d-flex align-items-center justify-content-between w-100"
       role="alert"
     >
-      <span className="marker-paper-announce-content">
+      <span className="announcement-banner-content">
         <h5>
-          The{' '}
           <a
             href="https://www.biorxiv.org/content/10.1101/2022.09.21.508770v1"
             className="inline-link-with-icon"
@@ -23,10 +22,10 @@ function AnnouncementBanner() {
               'Landing Page'
             )}
           >
-            MoTrPAC Landscape Preprint
+            MoTrPAC Endurance Exercise Training Animal Study Landscape preprint
             <i className="material-icons external-linkout-icon">open_in_new</i>
-          </a>{' '}
-          is now online at <i>bioRxiv</i>.{' '}
+          </a>
+          . Read about the{' '}
           <a
             href="https://motrpac.github.io/MotrpacRatTraining6moData/"
             className="inline-link-with-icon"
@@ -39,11 +38,11 @@ function AnnouncementBanner() {
               'Landing Page'
             )}
           >
-            Read
+            R package
             <i className="material-icons external-linkout-icon">open_in_new</i>
           </a>{' '}
-          about R package consisting of the processed data and downstream
-          analysis results presented in this paper.
+          consisting of the processed data and downstream analysis results
+          presented in this preprint.
         </h5>
       </span>
       <button
