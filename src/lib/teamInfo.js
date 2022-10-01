@@ -26,6 +26,8 @@ import AdityaImg from '../assets/teamMemberPhotos/Aditya.jpg';
 import LaurensImg from '../assets/teamMemberPhotos/Laurens.jpg';
 import ChelseaImg from '../assets/teamMemberPhotos/Chelsea.jpg';
 import JayImg from '../assets/teamMemberPhotos/Jay.jpg';
+import SamImg from '../assets/teamMemberPhotos/Sam.jpg';
+import DanImg from '../assets/teamMemberPhotos/Dan.jpg';
 
 const teamInfo = {
   PIs: [
@@ -47,14 +49,14 @@ const teamInfo = {
       image: JeffImg,
     },
     {
-      name: 'Steven Hershman, Ph.D.',
-      title: 'Director of mHealth',
-      image: SteveImg,
-    },
-    {
       name: 'Malene Lindholm, Ph.D.',
       title: 'Instructor',
       image: MaleneImg,
+    },
+    {
+      name: 'Daniel Katz, Ph.D.',
+      title: 'Instructor',
+      image: DanImg,
     },
     {
       name: 'David Jimenez-Morales, Ph.D.',
@@ -100,6 +102,11 @@ const teamInfo = {
       name: 'Aditya Singh, Ph.D.',
       title: 'Postdoctoral Scholar',
       image: AdityaImg,
+    },
+    {
+      name: 'Samuel Montalvo Hernandez, Ph.D.',
+      title: 'Postdoctoral Research Fellow',
+      image: SamImg,
     },
     {
       name: 'Jimmy Zhen',
@@ -154,6 +161,11 @@ const teamInfo = {
       name: 'Kelly E. Ormond, M.S., CGC',
       title: 'Alumni',
       image: KellyImg,
+    },
+    {
+      name: 'Steven Hershman, Ph.D.',
+      title: 'Alumni',
+      image: SteveImg,
     },
     {
       name: 'Elizabeth Chin',
