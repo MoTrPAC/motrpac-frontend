@@ -2348,7 +2348,7 @@
                         "assay_code": "transcript-rna-seq",
                         "assay_name": "RNA-seq",
                         "omics_code": "transcriptomics",
-                        "count": 78,
+                        "count": 39,
                         "qc_count": null
                     },
                     {
@@ -2528,7 +2528,7 @@
                         "assay_code": "transcript-rna-seq",
                         "assay_name": "RNA-seq",
                         "omics_code": "transcriptomics",
-                        "count": 78,
+                        "count": 39,
                         "qc_count": null
                     },
                     {

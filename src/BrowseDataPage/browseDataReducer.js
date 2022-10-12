@@ -55,17 +55,40 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
       }
       let filtered = state.allFiles;
 
-      // if any filters placed filters appropriately
-      Object.keys(state.activeFilters).forEach((cat) => {
-        if (newActiveFilters[cat].length) {
-          filtered = filtered.filter(
-            (file) =>
-              newActiveFilters[cat].findIndex((el) =>
-                el.includes(file[cat])
-              ) !== -1 || file[cat] === 'Merged'
-          );
-        }
-      });
+      // Select a filter in either tissue or assay should
+      // return a subset of matching files
+      // FIXME: need to optimize the workaround to return
+      // merged metabolomics (not assay-specific) files
+      if (
+        action.category === 'assay' &&
+        action.filter.match(/Targeted|Untargeted/)
+      ) {
+        // return all metabolomics files, including merged
+        // (not specific to any one assay) files
+        Object.keys(state.activeFilters).forEach((cat) => {
+          if (newActiveFilters[cat].length) {
+            filtered = filtered.filter(
+              (file) =>
+                newActiveFilters[cat].findIndex((el) =>
+                  el.includes(file[cat])
+                ) !== -1 || file[cat] === 'Merged'
+            );
+          }
+        });
+      } else {
+        // return matching files, excluding metabolomics
+        // merged files
+        Object.keys(state.activeFilters).forEach((cat) => {
+          if (newActiveFilters[cat].length) {
+            filtered = filtered.filter(
+              (file) =>
+                newActiveFilters[cat].findIndex((el) =>
+                  el.includes(file[cat])
+                ) !== -1
+            );
+          }
+        });
+      }
 
       return {
         ...state,
