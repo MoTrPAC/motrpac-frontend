@@ -37,9 +37,9 @@ function useNull() {
   return null;
 }
 
-const api = process.env.REACT_APP_API_SERVICE_ADDRESS;
+const api = process.env.REACT_APP_API_SERVICE_ADDRESS_DEV;
 const endpoint = process.env.REACT_APP_QC_DATA_ENDPOINT;
-const key = process.env.REACT_APP_API_SERVICE_KEY;
+const key = process.env.REACT_APP_API_SERVICE_KEY_DEV;
 
 // Handler for predefined searches
 function fetchData() {
@@ -47,8 +47,18 @@ function fetchData() {
     dispatch(dataFetchRequest());
     return axios
       .all([
-        axios.get(`${api}${endpoint}/metabolomics?key=${key}`).catch(useNull),
-        axios.get(`${api}${endpoint}/proteomics?key=${key}`).catch(useNull),
+        axios
+          .get(`${api}${endpoint}/metabolomics?type=results&key=${key}`)
+          .catch(useNull),
+        axios
+          .get(`${api}${endpoint}/metabolomics?type=raw&key=${key}`)
+          .catch(useNull),
+        axios
+          .get(`${api}${endpoint}/proteomics?type=results&key=${key}`)
+          .catch(useNull),
+        axios
+          .get(`${api}${endpoint}/proteomics?type=raw&key=${key}`)
+          .catch(useNull),
         axios.get(`${api}${endpoint}/immunoassay?key=${key}`).catch(useNull),
         axios.get(`${api}${endpoint}/rna_seq?key=${key}`).catch(useNull),
         axios.get(`${api}${endpoint}/rrbs?key=${key}`).catch(useNull),
@@ -56,10 +66,21 @@ function fetchData() {
       ])
       .then(
         axios.spread(
-          (metabolomics, proteomics, immunoAssay, rnaSeq, rrbs, atacSeq) => {
+          (
+            metabolomics,
+            metabolomicsRaw,
+            proteomics,
+            proteomicsRaw,
+            immunoAssay,
+            rnaSeq,
+            rrbs,
+            atacSeq
+          ) => {
             const payload = {
               metabolomics: metabolomics.data,
+              metabolomicsRaw: metabolomicsRaw.data,
               proteomics: proteomics.data,
+              proteomicsRaw: proteomicsRaw.data,
               immunoAssay: immunoAssay.data,
               rnaSeq: rnaSeq.data,
               rrbs: rrbs.data,
