@@ -239,27 +239,27 @@ export const metabRawDataTableColumns = [
     accessor: 'assay',
   },
   {
-    Header: 'Raw Files FM',
+    Header: 'Raw  in Manifest',
     accessor: 'raw_files_fm',
   },
   {
-    Header: 'Proc Files FM',
+    Header: 'Proc  in Manifest',
     accessor: 'proc_files_fm',
   },
   {
-    Header: 'Extra Files FM',
+    Header: 'Extra  in Manifest',
     accessor: 'extra_files_fm',
   },
   {
-    Header: 'Raw Files Bucket',
+    Header: 'Raw in Bucket',
     accessor: 'raw_files_bucket',
   },
   {
-    Header: 'Proc Files Bucket',
+    Header: 'Proc in Bucket',
     accessor: 'proc_files_bucket',
   },
   {
-    Header: 'Extra Files Bucket',
+    Header: 'Extra in Bucket',
     accessor: 'extra_files_bucket',
   },
   {
@@ -306,27 +306,27 @@ export const protRawDataTableColumns = [
     accessor: 'assay',
   },
   {
-    Header: 'Raw Files FM',
+    Header: 'Raw in Manifest',
     accessor: 'raw_files_fm',
   },
   {
-    Header: 'Proc Files FM',
+    Header: 'Proc in Manifest',
     accessor: 'proc_files_fm',
   },
   {
-    Header: 'Extra Files FM',
+    Header: 'Extra in Manifest',
     accessor: 'extra_files_fm',
   },
   {
-    Header: 'Raw Files Bucket',
+    Header: 'Raw in Bucket',
     accessor: 'raw_files_bucket',
   },
   {
-    Header: 'Proc Files Bucket',
+    Header: 'Proc in Bucket',
     accessor: 'proc_files_bucket',
   },
   {
-    Header: 'Extra Files Bucket',
+    Header: 'Extra in Bucket',
     accessor: 'extra_files_bucket',
   },
   {
@@ -338,11 +338,11 @@ export const protRawDataTableColumns = [
     accessor: 'checksum_mismatch',
   },
   {
-    Header: 'Num Absent',
+    Header: 'Absent Cols',
     accessor: 'num_td_absent_columns',
   },
   {
-    Header: 'Num Invalid',
+    Header: 'Invalid Cols',
     accessor: 'num_td_invalid_columns',
   },
   {
