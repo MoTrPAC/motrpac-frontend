@@ -64,7 +64,7 @@ QcReportProtTabContent.propTypes = {
 };
 
 QcReportProtTabContent.defaultProps = {
-  qcFiles: 'raw',
+  qcFiles: 'processed_by_bic',
 };
 
 export default QcReportProtTabContent;

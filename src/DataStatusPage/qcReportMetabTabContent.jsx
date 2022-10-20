@@ -55,7 +55,7 @@ QcReportMetabTabContent.propTypes = {
 };
 
 QcReportMetabTabContent.defaultProps = {
-  qcFiles: 'raw',
+  qcFiles: 'processed',
 };
 
 export default QcReportMetabTabContent;
