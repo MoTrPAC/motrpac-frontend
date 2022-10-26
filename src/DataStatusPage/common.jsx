@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import axios from 'axios';
+import addNumbers from '../lib/utils/addNumbers';
 
 /**
  * props common to all QC data reports
@@ -37,6 +38,21 @@ export const metabProtReportPropType = {
   qc_samples: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   issues: PropTypes.number,
   raw_manifest: PropTypes.number,
+  qc_date: PropTypes.string,
+};
+
+export const metabProtRawDataReportPropType = {
+  raw_files_fm: PropTypes.number,
+  proc_files_fm: PropTypes.number,
+  extra_files_fm: PropTypes.number,
+  raw_files_bucket: PropTypes.number,
+  proc_files_bucket: PropTypes.number,
+  extra_files_bucket: PropTypes.number,
+  checksum_match: PropTypes.number,
+  checksum_mismatch: PropTypes.number,
+  num_td_absent_columns: PropTypes.number,
+  num_td_invalid_columns: PropTypes.number,
+  manifest_name: PropTypes.string,
   qc_date: PropTypes.string,
 };
 
@@ -95,6 +111,258 @@ export const getDataTableColumns = [
   },
 ];
 
+export const metabProcessedDataTableColumns = [
+  {
+    Header: 'CAS',
+    accessor: 'cas',
+  },
+  {
+    Header: 'Phase',
+    accessor: 'phase',
+  },
+  {
+    Header: 'Tissue',
+    accessor: 'tissue',
+  },
+  {
+    Header: 'Tissue Name',
+    accessor: 't_name',
+  },
+  {
+    Header: 'Assay',
+    accessor: 'assay',
+  },
+  {
+    Header: 'Version',
+    accessor: 'version',
+  },
+  {
+    Header: 'Vials',
+    accessor: 'vial_label',
+  },
+  {
+    Header: 'QC Samples',
+    accessor: 'qc_samples',
+  },
+  {
+    Header: 'Issues',
+    accessor: 'issues',
+  },
+  {
+    Header: 'DMAQC Valid',
+    accessor: 'dmaqc_valid',
+  },
+  {
+    Header: 'Raw Manifest',
+    accessor: 'raw_manifest',
+  },
+  {
+    Header: 'QC Date',
+    accessor: 'qc_date',
+  },
+  {
+    Header: 'Submit Date',
+    accessor: 'submission_date',
+  },
+  {
+    Header: 'QC Report',
+    accessor: 'report',
+  },
+];
+
+export const protProcessedDataTableColumns = [
+  {
+    Header: 'CAS',
+    accessor: 'cas',
+  },
+  {
+    Header: 'Phase',
+    accessor: 'phase',
+  },
+  {
+    Header: 'Tissue',
+    accessor: 'tissue',
+  },
+  {
+    Header: 'Tissue Name',
+    accessor: 't_name',
+  },
+  {
+    Header: 'Assay',
+    accessor: 'assay',
+  },
+  {
+    Header: 'Version',
+    accessor: 'version',
+  },
+  {
+    Header: 'Vials',
+    accessor: 'vial_label',
+  },
+  {
+    Header: 'Issues',
+    accessor: 'issues',
+  },
+  {
+    Header: 'DMAQC Valid',
+    accessor: 'dmaqc_valid',
+  },
+  {
+    Header: 'QC Date',
+    accessor: 'qc_date',
+  },
+  {
+    Header: 'Submit Date',
+    accessor: 'submission_date',
+  },
+  {
+    Header: 'QC Report',
+    accessor: 'report',
+  },
+];
+
+export const metabRawDataTableColumns = [
+  {
+    Header: 'CAS',
+    accessor: 'cas',
+  },
+  {
+    Header: 'Phase',
+    accessor: 'phase',
+  },
+  {
+    Header: 'Tissue',
+    accessor: 'tissue',
+  },
+  {
+    Header: 'Assay',
+    accessor: 'assay',
+  },
+  {
+    Header: 'Raw  in Manifest',
+    accessor: 'raw_files_fm',
+  },
+  {
+    Header: 'Proc  in Manifest',
+    accessor: 'proc_files_fm',
+  },
+  {
+    Header: 'Extra  in Manifest',
+    accessor: 'extra_files_fm',
+  },
+  {
+    Header: 'Raw in Bucket',
+    accessor: 'raw_files_bucket',
+  },
+  {
+    Header: 'Proc in Bucket',
+    accessor: 'proc_files_bucket',
+  },
+  {
+    Header: 'Extra in Bucket',
+    accessor: 'extra_files_bucket',
+  },
+  {
+    Header: 'Checksum Match',
+    accessor: 'checksum_match',
+  },
+  {
+    Header: 'Checksum Mismatch',
+    accessor: 'checksum_mismatch',
+  },
+  {
+    Header: 'Manifest',
+    accessor: 'manifest_name',
+  },
+  {
+    Header: 'QC Date',
+    accessor: 'qc_date',
+  },
+  {
+    Header: 'Submit Date',
+    accessor: 'submission_date',
+  },
+  {
+    Header: 'QC Report',
+    accessor: 'report',
+  },
+];
+
+export const protRawDataTableColumns = [
+  {
+    Header: 'CAS',
+    accessor: 'cas',
+  },
+  {
+    Header: 'Phase',
+    accessor: 'phase',
+  },
+  {
+    Header: 'Tissue',
+    accessor: 'tissue',
+  },
+  {
+    Header: 'Assay',
+    accessor: 'assay',
+  },
+  {
+    Header: 'Raw in Manifest',
+    accessor: 'raw_files_fm',
+  },
+  {
+    Header: 'Proc in Manifest',
+    accessor: 'proc_files_fm',
+  },
+  {
+    Header: 'Extra in Manifest',
+    accessor: 'extra_files_fm',
+  },
+  {
+    Header: 'Raw in Bucket',
+    accessor: 'raw_files_bucket',
+  },
+  {
+    Header: 'Proc in Bucket',
+    accessor: 'proc_files_bucket',
+  },
+  {
+    Header: 'Extra in Bucket',
+    accessor: 'extra_files_bucket',
+  },
+  {
+    Header: 'Checksum Match',
+    accessor: 'checksum_match',
+  },
+  {
+    Header: 'Checksum Mismatch',
+    accessor: 'checksum_mismatch',
+  },
+  {
+    Header: 'Absent Cols',
+    accessor: 'num_td_absent_columns',
+  },
+  {
+    Header: 'Invalid Cols',
+    accessor: 'num_td_invalid_columns',
+  },
+  {
+    Header: 'Manifest',
+    accessor: 'manifest_name',
+  },
+  {
+    Header: 'QC Date',
+    accessor: 'qc_date',
+  },
+  {
+    Header: 'Submit Date',
+    accessor: 'submission_date',
+  },
+  {
+    Header: 'QC Report',
+    accessor: 'report',
+  },
+];
+
 export const immunoTableColumns = [
   {
     Header: 'CAS',
@@ -130,11 +398,11 @@ export const immunoTableColumns = [
  * Global filter rendering function
  * common to all data qc status reports
  */
-export const GlobalFilter = ({
+export function GlobalFilter({
   preGlobalFilteredRows,
   globalFilter,
   setGlobalFilter,
-}) => {
+}) {
   const count = preGlobalFilteredRows.length;
 
   return (
@@ -152,12 +420,10 @@ export const GlobalFilter = ({
       />
     </div>
   );
-};
+}
 
 GlobalFilter.propTypes = {
-  preGlobalFilteredRows: PropTypes.arrayOf(
-    PropTypes.shape({ ...commonReportPropType, ...getDataReportPropType })
-  ),
+  preGlobalFilteredRows: PropTypes.arrayOf(PropTypes.object),
   globalFilter: PropTypes.string,
   setGlobalFilter: PropTypes.func.isRequired,
 };
@@ -288,16 +554,36 @@ PageNavigationControl.propTypes = {
 /**
  * Utility function to tranform some fields within each object in the array
  */
-export const transformData = (arr) => {
-  const tranformArray = [...arr];
+export const transformData = (arr, qcFiles, omicType) => {
+  const cloneArray = [...arr];
+  let tranformArray;
 
+  // Replace instances of 'OK' string to 'PASS'
+  // Replace instances of 'NOT_AVAILABLE' string to 'NOT AVAILABLE'
+  // Applicable to metabolomics and proteomics processed QC data only
+  if (
+    qcFiles === 'processed' &&
+    (omicType === 'metab' || omicType === 'prot')
+  ) {
+    const newArray = JSON.stringify(cloneArray)
+      .replace(/OK/g, 'PASS')
+      .replace(/NOT_AVAILABLE/g, 'NOT AVAILABLE');
+    tranformArray = JSON.parse(newArray);
+  } else {
+    tranformArray = [...cloneArray];
+  }
+
+  // Add new 'issues' property
   tranformArray.forEach((item) => {
     // Transform submission_date strings to date format
+    // Applicable to all QC data
     if (item.submission_date && item.submission_date.length) {
       const submissionDateStr = item.submission_date;
       item.submission_date = dayjs(submissionDateStr).format('YYYY-MM-DD');
     }
+
     // Transform report strings to links
+    // Applicable to all QC data
     if (item.report !== null && item.report.length) {
       const reportStr = item.report;
       item.report = (
@@ -310,6 +596,35 @@ export const transformData = (arr) => {
           <i className="material-icons">open_in_new</i>
         </button>
       );
+    }
+
+    // Transform qc_date strings to date format
+    // Applicable to metabolomics and proteomics QC data only
+    if (omicType !== 'get') {
+      if (item.qc_date && item.qc_date.length) {
+        const submissionDateStr = item.qc_date;
+        item.qc_date = dayjs(submissionDateStr).format('YYYY-MM-DD');
+      }
+    }
+
+    // Transform metabolomics 'issues' value
+    // Applicable to metabolomics QC data only
+    if (qcFiles === 'processed' && omicType === 'metab') {
+      item.issues = addNumbers([
+        item.critical_issues,
+        item.m_metab_n,
+        item.m_metab_u,
+        item.m_sample_n,
+        item.m_sample_u,
+        item.results_n,
+        item.results_u,
+      ]);
+    }
+
+    // Transform proteomics 'issues' value
+    // Applicable to proteomics QC data only
+    if (qcFiles === 'processed' && omicType === 'prot') {
+      item.issues = addNumbers([item.critical_issues, item.vial_meta]);
     }
   });
   return tranformArray;

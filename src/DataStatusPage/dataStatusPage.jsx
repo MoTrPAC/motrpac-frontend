@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import AuthContentContainer from '../lib/ui/authContentContainer';
-import StatusReportMetabProt from './statusReportMetabProt';
 import StatusReportGetData from './statusReportGetData';
 import StatusReportImmunoAssay from './statusReportImmunoAssay';
 import QcReportByPhase from './qcReportByPhase.jsx';
@@ -12,6 +11,8 @@ import DataStatusActions from './dataStatusActions';
 import qcReportButtonList from './sharelib/qcReportButtonList';
 import AnimatedLoadingIcon from '../lib/ui/loading';
 import QcReportHelpLink from './sharelib/qcReportHelpLink';
+import QcReportMetabolomics from './qcReportMetab';
+import QcReportProteomics from './qcReportProt';
 
 /**
  * Renders the data qc status page
@@ -71,9 +72,9 @@ export function DataStatusPage({
       case 'metabolomics':
         return (
           <>
-            <StatusReportMetabProt
+            <QcReportMetabolomics
               qcData={qcData.metabolomics}
-              omicType="metab"
+              qcDataRaw={qcData.metabolomicsRaw}
             />
             <QcReportHelpLink qcReportViewChange={qcReportViewChange} />
           </>
@@ -81,7 +82,10 @@ export function DataStatusPage({
       case 'proteomics':
         return (
           <>
-            <StatusReportMetabProt qcData={qcData.proteomics} omicType="prot" />
+            <QcReportProteomics
+              qcData={qcData.proteomics}
+              qcDataRaw={qcData.proteomicsRaw}
+            />
             <QcReportHelpLink qcReportViewChange={qcReportViewChange} />
           </>
         );
@@ -147,7 +151,9 @@ DataStatusPage.propTypes = {
     atacSeq: PropTypes.arrayOf(PropTypes.object),
     immunoAssay: PropTypes.arrayOf(PropTypes.object),
     metabolomics: PropTypes.arrayOf(PropTypes.object),
+    metabolomicsRaw: PropTypes.arrayOf(PropTypes.object),
     proteomics: PropTypes.arrayOf(PropTypes.object),
+    proteomicsRaw: PropTypes.arrayOf(PropTypes.object),
     rnaSeq: PropTypes.arrayOf(PropTypes.object),
     rrbs: PropTypes.arrayOf(PropTypes.object),
     lastModified: PropTypes.string,
@@ -166,7 +172,9 @@ DataStatusPage.defaultProps = {
     atacSeq: [],
     immunoAssay: [],
     metabolomics: [],
+    metabolomicsRaw: [],
     proteomics: [],
+    proteomicsRaw: [],
     rnaSeq: [],
     rrbs: [],
     lastModified: '',

@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import dayjs from 'dayjs';
 import {
   useTable,
   useFilters,
@@ -12,182 +11,18 @@ import {
   PageIndex,
   PageSize,
   PageNavigationControl,
-  retrieveReport,
-  commonReportPropType,
-  metabProtReportPropType,
-} from './common';
-
-/**
- * Utility function to return the sum of all issues
- */
-const toSum = (list) => {
-  let total = 0;
-  list.forEach((value) => {
-    // eslint-disable-next-line no-restricted-globals
-    if (!isNaN(Number(value))) {
-      total += Number(value);
-    }
-  });
-  return total;
-};
-
-/**
- * Utility function to tranform each object in raw qc data array
- */
-const transformData = (arr) => {
-  const cloneArray = [...arr];
-  // Replace instances of 'OK' string to 'PASS'
-  // Replace instances of 'NOT_AVAILABLE' string to 'NOT AVAILABLE'
-  const newArray = JSON.stringify(cloneArray)
-    .replace(/OK/g, 'PASS')
-    .replace(/NOT_AVAILABLE/g, 'NOT AVAILABLE');
-  const tranformArray = JSON.parse(newArray);
-  // Add new 'issues' property
-  tranformArray.forEach((item) => {
-    // Transform submission_date strings to date format
-    if (item.submission_date && item.submission_date.length) {
-      const submissionDateStr = item.submission_date;
-      item.submission_date = dayjs(submissionDateStr).format('YYYY-MM-DD');
-    }
-    // Transform report strings to links
-    if (item.report !== null && item.report.length) {
-      const reportStr = item.report;
-      item.report = (
-        <button
-          type="button"
-          className="btn btn-link btn-sm btn-view-qc-report d-flex align-items-center"
-          onClick={(e) => retrieveReport(e, reportStr)}
-        >
-          <span>View</span>
-          <i className="material-icons">open_in_new</i>
-        </button>
-      );
-    }
-    // eslint-disable-next-line no-param-reassign
-    item.issues = toSum([
-      item.critical_issues,
-      item.m_metab_n,
-      item.m_metab_u,
-      item.m_sample_n,
-      item.m_sample_u,
-      item.results_n,
-      item.results_u,
-    ]);
-  });
-  return tranformArray;
-};
-
-/**
- * Renders global filter UI
- */
-function GlobalFilter({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
-}) {
-  const count = preGlobalFilteredRows.length;
-
-  return (
-    <div className="form-group d-flex align-items-center justify-content-end">
-      <label htmlFor="searchFilterInput">Search:</label>
-      <input
-        type="text"
-        className="form-control"
-        id="searchFilterInput"
-        value={globalFilter || ''}
-        onChange={(e) => {
-          setGlobalFilter(e.target.value || undefined);
-        }}
-        placeholder={`${count} entries`}
-      />
-    </div>
-  );
-}
-
-/**
- * Sets up table column headers and renders the table component
- *
- * @returns {object} The data qc status table component
- */
-function StatusReportMetabolomics({ metabolomicsData }) {
-  // Define table column headers
-  const columns = useMemo(
-    () => [
-      {
-        Header: 'CAS',
-        accessor: 'cas',
-      },
-      {
-        Header: 'Phase',
-        accessor: 'phase',
-      },
-      {
-        Header: 'Tissue',
-        accessor: 'tissue',
-      },
-      {
-        Header: 'Tissue Name',
-        accessor: 't_name',
-      },
-      {
-        Header: 'Assay',
-        accessor: 'assay',
-      },
-      {
-        Header: 'Version',
-        accessor: 'version',
-      },
-      {
-        Header: 'Vials',
-        accessor: 'vial_label',
-      },
-      {
-        Header: 'QC Samples',
-        accessor: 'qc_samples',
-      },
-      {
-        Header: 'Issues',
-        accessor: 'issues',
-      },
-      {
-        Header: 'DMAQC Valid',
-        accessor: 'dmaqc_valid',
-      },
-      {
-        Header: 'Raw Manifest',
-        accessor: 'raw_manifest',
-      },
-      {
-        Header: 'QC Date',
-        accessor: 'qc_date',
-      },
-      {
-        Header: 'Submit Date',
-        accessor: 'submission_date',
-      },
-      {
-        Header: 'QC Report',
-        accessor: 'report',
-      },
-    ],
-    []
-  );
-
-  const data = useMemo(
-    () => transformData(metabolomicsData),
-    [metabolomicsData]
-  );
-  return <DataTable columns={columns} data={data} />;
-}
+  GlobalFilter,
+} from '../common';
 
 /**
  * Renders the data qc status table
  *
  * @param {Array} columns Array of column header labels and its data source
+ * @param {Array} data Array of QC data objects
  *
  * @returns {object} JSX representation of table on data qc status
  */
-function DataTable({ columns, data }) {
+function QcReportDataTable({ columns, data }) {
   const filterTypes = React.useMemo(
     () => ({
       text: (rows, id, filterValue) =>
@@ -307,11 +142,13 @@ function DataTable({ columns, data }) {
                         <td
                           {...cell.getCellProps()}
                           className={`${cell.column.id} ${cell.column.id}-${
-                            typeof cell.value === 'string'
+                            typeof cell.value === 'string' ||
+                            typeof Number(cell.value) === 'number'
                               ? cell.value
                               : 'view-qc-report'
                           } ${
-                            typeof cell.value === 'string'
+                            typeof cell.value === 'string' ||
+                            typeof Number(cell.value) === 'number'
                               ? cell.value
                               : 'view-qc-report'
                           }`}
@@ -342,44 +179,14 @@ function DataTable({ columns, data }) {
   );
 }
 
-StatusReportMetabolomics.propTypes = {
-  metabolomicsData: PropTypes.arrayOf(
-    PropTypes.shape({
-      ...commonReportPropType,
-      ...metabProtReportPropType,
-    })
-  ).isRequired,
-};
-
-GlobalFilter.propTypes = {
-  preGlobalFilteredRows: PropTypes.arrayOf(
-    PropTypes.shape({
-      ...commonReportPropType,
-      ...metabProtReportPropType,
-    })
-  ),
-  globalFilter: PropTypes.string,
-  setGlobalFilter: PropTypes.func.isRequired,
-};
-
-GlobalFilter.defaultProps = {
-  globalFilter: '',
-  preGlobalFilteredRows: [],
-};
-
-DataTable.propTypes = {
+QcReportDataTable.propTypes = {
   columns: PropTypes.arrayOf(
     PropTypes.shape({
       Header: PropTypes.string,
       accessor: PropTypes.string,
     })
   ).isRequired,
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      ...commonReportPropType,
-      ...metabProtReportPropType,
-    })
-  ).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default StatusReportMetabolomics;
+export default QcReportDataTable;
