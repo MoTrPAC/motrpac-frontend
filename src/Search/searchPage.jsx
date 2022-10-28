@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import TimewiseResultsTable from './timewiseTable';
 import TrainingResultsTable from './trainingResultsTable';
 import AuthContentContainer from '../lib/ui/authContentContainer';
@@ -213,7 +214,20 @@ export function SearchPage({
                         />
                       ) : (
                         scope === 'filters' && (
-                          <p className="mt-4">{searchResults.errors}</p>
+                          <p className="mt-4">
+                            {searchResults.errors &&
+                            searchResults.errors.indexOf('No results found') !==
+                              -1 ? (
+                              <span>
+                                No matches found for the selected filters.
+                                Please refer to the{' '}
+                                <Link to="/summary">Summary Table</Link> for
+                                data that are available.
+                              </span>
+                            ) : (
+                              searchResults.errors
+                            )}
+                          </p>
                         )
                       )}
                     </div>
@@ -231,7 +245,20 @@ export function SearchPage({
                         />
                       ) : (
                         scope === 'filters' && (
-                          <p className="mt-4">{searchResults.errors}</p>
+                          <p className="mt-4">
+                            {searchResults.errors &&
+                            searchResults.errors.indexOf('No results found') !==
+                              -1 ? (
+                              <span>
+                                No matches found for the selected filters.
+                                Please refer to the{' '}
+                                <Link to="/summary">Summary Table</Link> for
+                                data that are available.
+                              </span>
+                            ) : (
+                              searchResults.errors
+                            )}
+                          </p>
                         )
                       )}
                     </div>
