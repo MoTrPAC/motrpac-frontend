@@ -42,6 +42,7 @@ export const defaultSearchState = {
       'p_value_male',
       'p_value_female',
     ],
+    unique_fields: ['tissue', 'assay', 'sex', 'comparison_group'],
     size: 25000,
     save: false,
   },
@@ -110,8 +111,16 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
 
     // Handle form submit event
     case SEARCH_SUBMIT: {
-      const { ktype, keys, omics, analysis, filters, fields, size } =
-        action.params;
+      const {
+        ktype,
+        keys,
+        omics,
+        analysis,
+        filters,
+        fields,
+        unique_fields,
+        size,
+      } = action.params;
       return {
         ...state,
         searchResults: {},
@@ -122,6 +131,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
           analysis,
           filters,
           fields,
+          unique_fields,
           size,
           debug: true,
           save: false,
