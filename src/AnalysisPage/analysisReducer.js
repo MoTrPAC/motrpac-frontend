@@ -58,6 +58,7 @@ export const defaultAnalysisState = {
   geneSearchParams: defaultGeneSearchParams,
   geneSearching: false,
   geneSearchError: '',
+  scope: 'all',
 };
 
 export default function AnalysisReducer(
@@ -124,6 +125,7 @@ export default function AnalysisReducer(
         geneSearchResults: {},
         geneSearchParams: params,
         geneSearching: true,
+        scope: action.scope,
       };
     }
     // Handle form submit error
@@ -161,6 +163,7 @@ export default function AnalysisReducer(
         geneSearchParams: cloneDefaultGeneSearchParams,
         geneSearching: false,
         geneSearchError: '',
+        scope: 'all',
       };
     }
     // Handle secondary filters: tissue, assay

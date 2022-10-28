@@ -27,13 +27,11 @@ function GeneCentricSearchResultFilters({
     );
   }
 
-  geneCentricSearchFilters.find(
-    (f) => f.keyName === 'tissue'
-  ).filters = customizeTissueList();
+  geneCentricSearchFilters.find((f) => f.keyName === 'tissue').filters =
+    customizeTissueList();
 
-  geneCentricSearchFilters.find(
-    (f) => f.keyName === 'assay'
-  ).filters = customizeAssayList();
+  geneCentricSearchFilters.find((f) => f.keyName === 'assay').filters =
+    customizeAssayList();
 
   const commonSearchResultFilters = geneCentricSearchFilters.map((item) => (
     <div key={item.name} className="card filter-module mb-4">
@@ -80,7 +78,11 @@ function GeneCentricSearchResultFilters({
           className="btn btn-sm btn-primary"
           onClick={(e) => {
             e.preventDefault();
-            handleGeneCentricSearch(geneSearchParams, geneSearchInputValue);
+            handleGeneCentricSearch(
+              geneSearchParams,
+              geneSearchInputValue,
+              'filters'
+            );
           }}
         >
           Update results
