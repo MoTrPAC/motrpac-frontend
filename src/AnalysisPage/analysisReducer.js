@@ -149,11 +149,16 @@ export default function AnalysisReducer(
       };
     // Revert param values to default
     case GENE_SEARCH_RESET: {
+      const cloneDefaultGeneSearchParams = { ...defaultGeneSearchParams };
+      cloneDefaultGeneSearchParams.keys = '';
+      cloneDefaultGeneSearchParams.filters.assay = [];
+      cloneDefaultGeneSearchParams.filters.tissue = [];
+
       return {
         ...state,
         geneSearchInputValue: '',
         geneSearchResults: {},
-        geneSearchParams: defaultGeneSearchParams,
+        geneSearchParams: cloneDefaultGeneSearchParams,
         geneSearching: false,
         geneSearchError: '',
       };
