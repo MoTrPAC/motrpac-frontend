@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import AuthContentContainer from '../lib/ui/authContentContainer';
 import BrowseDataTable from './browseDataTable';
 import actions from './browseDataActions';
@@ -119,7 +119,19 @@ export function BrowseDataPage({
           onChangeFilter={onChangeFilter}
           onResetFilters={onResetFilters}
         />
-        {!fetching ? (
+        {fetching && <AnimatedLoadingIcon isFetching={fetching} />}
+        {!fetching && !filteredFiles.length && (
+          <div className="browse-data-table-wrapper col-md-9">
+            <p className="mt-4">
+              <span>
+                No matches found for the selected filters. Please refer to the{' '}
+                <Link to="/summary">Summary Table</Link> for data that are
+                available.
+              </span>
+            </p>
+          </div>
+        )}
+        {!fetching && filteredFiles.length && (
           <BrowseDataTable
             filteredFiles={filteredFiles}
             handleDownloadRequest={handleDownloadRequest}
@@ -127,8 +139,6 @@ export function BrowseDataPage({
             waitingForResponse={waitingForResponse}
             profile={profile}
           />
-        ) : (
-          <AnimatedLoadingIcon isFetching={fetching} />
         )}
       </div>
     </AuthContentContainer>
