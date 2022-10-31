@@ -52,6 +52,7 @@ export const defaultSearchState = {
   downloadResults: {},
   downloading: false,
   downloadError: '',
+  enabledFilters: {},
 };
 
 // Reducer to handle actions sent from components related to advanced search form
@@ -161,6 +162,9 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
               }
             : action.searchResults,
         searching: false,
+        enabledFilters: action.searchResults.uniqs
+          ? action.searchResults.uniqs
+          : state.enabledFilters,
       };
 
     // Revert param/filter values to default
@@ -196,6 +200,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       return {
         ...defaultSearchState,
         searchParams: defaultParams,
+        enabledFilters: {},
       };
     }
 
