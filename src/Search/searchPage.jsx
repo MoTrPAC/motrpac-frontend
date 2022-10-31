@@ -36,6 +36,7 @@ export function SearchPage({
   handleQCDataFetch,
   allFiles,
   lastModified,
+  enabledFilters,
 }) {
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
@@ -89,7 +90,11 @@ export function SearchPage({
             </span>
           </div>
           <div className="es-search-ui-container d-flex align-items-center w-100">
-            <RadioButton changeParam={changeParam} ktype={searchParams.ktype} />
+            <RadioButton
+              changeParam={changeParam}
+              ktype={searchParams.ktype}
+              resetSearch={resetSearch}
+            />
             <div className="search-box-input-group d-flex align-items-center flex-grow-1">
               <input
                 type="text"
@@ -160,6 +165,7 @@ export function SearchPage({
                     changeResultFilter={changeResultFilter}
                     handleSearch={handleSearch}
                     resetSearch={resetSearch}
+                    enabledFilters={enabledFilters}
                   />
                 </div>
                 <div className="tabbed-content col-md-9">
@@ -280,7 +286,7 @@ export function SearchPage({
 }
 
 // Radio buttons for selecting the search context
-function RadioButton({ changeParam, ktype }) {
+function RadioButton({ changeParam, ktype, resetSearch }) {
   return (
     <div className="search-context">
       <div className="form-check form-check-inline">
@@ -291,7 +297,10 @@ function RadioButton({ changeParam, ktype }) {
           id="inlineRadioGene"
           value="gene"
           checked={ktype === 'gene'}
-          onChange={(e) => changeParam('ktype', e.target.value)}
+          onChange={(e) => {
+            resetSearch('all');
+            changeParam('ktype', e.target.value);
+          }}
         />
         <label className="form-check-label" htmlFor="inlineRadioGene">
           Gene
@@ -305,7 +314,10 @@ function RadioButton({ changeParam, ktype }) {
           id="inlineRadioProtein"
           value="protein"
           checked={ktype === 'protein'}
-          onChange={(e) => changeParam('ktype', e.target.value)}
+          onChange={(e) => {
+            resetSearch('all');
+            changeParam('ktype', e.target.value);
+          }}
         />
         <label className="form-check-label" htmlFor="inlineRadioProtein">
           Protein ID
@@ -319,7 +331,10 @@ function RadioButton({ changeParam, ktype }) {
           id="inlineRadioMetab"
           value="metab"
           checked={ktype === 'metab'}
-          onChange={(e) => changeParam('ktype', e.target.value)}
+          onChange={(e) => {
+            resetSearch('all');
+            changeParam('ktype', e.target.value);
+          }}
         />
         <label className="form-check-label" htmlFor="inlineRadioMetabolite">
           Metabolite
@@ -499,6 +514,12 @@ SearchPage.propTypes = {
   handleQCDataFetch: PropTypes.func.isRequired,
   allFiles: PropTypes.arrayOf(PropTypes.shape({})),
   lastModified: PropTypes.string,
+  enabledFilters: PropTypes.shape({
+    assay: PropTypes.object,
+    comparison_group: PropTypes.object,
+    sex: PropTypes.object,
+    tissue: PropTypes.object,
+  }),
 };
 
 SearchPage.defaultProps = {
@@ -514,6 +535,7 @@ SearchPage.defaultProps = {
   downloadError: '',
   allFiles: [],
   lastModified: '',
+  enabledFilters: {},
 };
 
 const mapStateToProps = (state) => ({
