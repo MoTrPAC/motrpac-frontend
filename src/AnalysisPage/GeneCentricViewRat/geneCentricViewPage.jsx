@@ -19,6 +19,7 @@ function GeneCentricView({
   geneSearchReset,
   geneSearchChangeFilter,
   scope,
+  enabledFilters,
 }) {
   // Function to map array of keys to each array of values for each row
   function mapKeyToValue(indexObj) {
@@ -125,6 +126,7 @@ function GeneCentricView({
                     handleGeneCentricSearch={handleGeneCentricSearch}
                     geneSearchChangeFilter={geneSearchChangeFilter}
                     geneSearchInputValue={geneSearchInputValue}
+                    enabledFilters={enabledFilters}
                   />
                 </div>
                 <div className="search-results-content-container col-md-9">
@@ -187,6 +189,10 @@ GeneCentricView.propTypes = {
   geneSearchReset: PropTypes.func.isRequired,
   geneSearchChangeFilter: PropTypes.func.isRequired,
   scope: PropTypes.string,
+  enabledFilters: PropTypes.shape({
+    assay: PropTypes.object,
+    tissue: PropTypes.object,
+  }),
 };
 
 GeneCentricView.defaultProps = {
@@ -196,6 +202,7 @@ GeneCentricView.defaultProps = {
   genSearchError: '',
   geneSearchParams: { ...defaultGeneSearchParams },
   scope: 'all',
+  enabledFilters: {},
 };
 
 const mapStateToProps = (state) => ({
