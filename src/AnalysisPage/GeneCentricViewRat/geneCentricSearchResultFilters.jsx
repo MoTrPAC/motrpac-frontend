@@ -12,6 +12,7 @@ function GeneCentricSearchResultFilters({
   handleGeneCentricSearch,
   geneSearchChangeFilter,
   geneSearchInputValue,
+  enabledFilters,
 }) {
   // FIXME - this is a hack to get the search filters such as tissue and assay
   // to render accordingly to the ktype (gene)
@@ -27,13 +28,11 @@ function GeneCentricSearchResultFilters({
     );
   }
 
-  geneCentricSearchFilters.find(
-    (f) => f.keyName === 'tissue'
-  ).filters = customizeTissueList();
+  geneCentricSearchFilters.find((f) => f.keyName === 'tissue').filters =
+    customizeTissueList();
 
-  geneCentricSearchFilters.find(
-    (f) => f.keyName === 'assay'
-  ).filters = customizeAssayList();
+  geneCentricSearchFilters.find((f) => f.keyName === 'assay').filters =
+    customizeAssayList();
 
   const commonSearchResultFilters = geneCentricSearchFilters.map((item) => (
     <div key={item.name} className="card filter-module mb-4">
@@ -48,6 +47,10 @@ function GeneCentricSearchResultFilters({
               geneSearchParams.filters[item.keyName].indexOf(
                 filter.filter_value
               ) > -1;
+            const isDisabledFilter =
+              enabledFilters[item.keyName] &&
+              Object.keys(enabledFilters[item.keyName]).length &&
+              !enabledFilters[item.keyName][filter.filter_value.toLowerCase()];
             return (
               <button
                 key={filter.filter_label}
@@ -55,9 +58,11 @@ function GeneCentricSearchResultFilters({
                 className={`btn filterBtn ${
                   isActiveFilter ? 'activeFilter' : ''
                 }`}
-                onClick={() =>
-                  geneSearchChangeFilter(item.keyName, filter.filter_value)
-                }
+                onClick={() => {
+                  if (isDisabledFilter) return false;
+                  geneSearchChangeFilter(item.keyName, filter.filter_value);
+                }}
+                disabled={isDisabledFilter}
               >
                 {filter.filter_label}
               </button>
@@ -80,7 +85,11 @@ function GeneCentricSearchResultFilters({
           className="btn btn-sm btn-primary"
           onClick={(e) => {
             e.preventDefault();
-            handleGeneCentricSearch(geneSearchParams, geneSearchInputValue);
+            handleGeneCentricSearch(
+              geneSearchParams,
+              geneSearchInputValue,
+              'filters'
+            );
           }}
         >
           Update results
@@ -95,6 +104,14 @@ GeneCentricSearchResultFilters.propTypes = {
   handleGeneCentricSearch: PropTypes.func.isRequired,
   geneSearchChangeFilter: PropTypes.func.isRequired,
   geneSearchInputValue: PropTypes.string.isRequired,
+  enabledFilters: PropTypes.shape({
+    assay: PropTypes.object,
+    tissue: PropTypes.object,
+  }),
+};
+
+GeneCentricSearchResultFilters.defaultProps = {
+  enabledFilters: {},
 };
 
 export default GeneCentricSearchResultFilters;

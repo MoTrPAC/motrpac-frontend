@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import AnalysisActions from '../analysisActions';
 import { defaultGeneSearchParams } from '../analysisReducer';
 import GeneCentricTrainingResultsTable from './geneCentricTrainingResultsTable';
@@ -17,6 +18,8 @@ function GeneCentricView({
   handleGeneCentricSearch,
   geneSearchReset,
   geneSearchChangeFilter,
+  scope,
+  enabledFilters,
 }) {
   // Function to map array of keys to each array of values for each row
   function mapKeyToValue(indexObj) {
@@ -80,7 +83,8 @@ function GeneCentricView({
                     e.preventDefault();
                     handleGeneCentricSearch(
                       geneSearchParams,
-                      geneSearchInputValue
+                      geneSearchInputValue,
+                      'all'
                     );
                   }}
                 >
@@ -105,13 +109,16 @@ function GeneCentricView({
             ) : null}
             {!geneSearching &&
             !geneSearchResults.result &&
-            geneSearchResults.errors ? (
+            geneSearchResults.errors &&
+            scope === 'all' ? (
               <div className="alert alert-warning">
                 {geneSearchResults.errors} Please modify the gene symbol and try
                 again.
               </div>
             ) : null}
-            {!geneSearching && geneSearchResults.result ? (
+            {!geneSearching &&
+            (geneSearchResults.result ||
+              (geneSearchResults.errors && scope === 'filters')) ? (
               <div className="search-results-wrapper-container row">
                 <div className="search-sidebar-container col-md-3">
                   <GeneCentricSearchResultFilters
@@ -119,14 +126,34 @@ function GeneCentricView({
                     handleGeneCentricSearch={handleGeneCentricSearch}
                     geneSearchChangeFilter={geneSearchChangeFilter}
                     geneSearchInputValue={geneSearchInputValue}
+                    enabledFilters={enabledFilters}
                   />
                 </div>
                 <div className="search-results-content-container col-md-9">
-                  <GeneCentricTrainingResultsTable
-                    trainingData={trainingResults}
-                    timewiseData={timewiseResults}
-                    geneSymbol={geneSearchParams.keys}
-                  />
+                  {trainingResults.length ? (
+                    <GeneCentricTrainingResultsTable
+                      trainingData={trainingResults}
+                      timewiseData={timewiseResults}
+                      geneSymbol={geneSearchParams.keys}
+                    />
+                  ) : (
+                    scope === 'filters' && (
+                      <p className="mt-4">
+                        {geneSearchResults.errors &&
+                        geneSearchResults.errors.indexOf('No results found') !==
+                          -1 ? (
+                          <span>
+                            No matches found for the selected filters. Please
+                            refer to the{' '}
+                            <Link to="/summary">Summary Table</Link> for data
+                            that are available.
+                          </span>
+                        ) : (
+                          geneSearchResults.errors
+                        )}
+                      </p>
+                    )
+                  )}
                 </div>
               </div>
             ) : null}
@@ -161,6 +188,11 @@ GeneCentricView.propTypes = {
   handleGeneCentricSearch: PropTypes.func.isRequired,
   geneSearchReset: PropTypes.func.isRequired,
   geneSearchChangeFilter: PropTypes.func.isRequired,
+  scope: PropTypes.string,
+  enabledFilters: PropTypes.shape({
+    assay: PropTypes.object,
+    tissue: PropTypes.object,
+  }),
 };
 
 GeneCentricView.defaultProps = {
@@ -169,6 +201,8 @@ GeneCentricView.defaultProps = {
   geneSearching: false,
   genSearchError: '',
   geneSearchParams: { ...defaultGeneSearchParams },
+  scope: 'all',
+  enabledFilters: {},
 };
 
 const mapStateToProps = (state) => ({
@@ -178,8 +212,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   geneSearchInputChange: (geneInputValue) =>
     dispatch(AnalysisActions.geneSearchInputChange(geneInputValue)),
-  handleGeneCentricSearch: (params, geneInputValue) =>
-    dispatch(AnalysisActions.handleGeneCentricSearch(params, geneInputValue)),
+  handleGeneCentricSearch: (params, geneInputValue, scope) =>
+    dispatch(
+      AnalysisActions.handleGeneCentricSearch(params, geneInputValue, scope)
+    ),
   geneSearchReset: () => dispatch(AnalysisActions.geneSearchReset()),
   geneSearchChangeFilter: (field, value) =>
     dispatch(AnalysisActions.geneSearchChangeFilter(field, value)),

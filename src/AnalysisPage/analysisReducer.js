@@ -35,6 +35,7 @@ export const defaultGeneSearchParams = {
     'p_value_male',
     'p_value_female',
   ],
+  unique_fields: ['tissue', 'assay'],
   size: 25000,
   save: false,
 };
@@ -58,6 +59,8 @@ export const defaultAnalysisState = {
   geneSearchParams: defaultGeneSearchParams,
   geneSearching: false,
   geneSearchError: '',
+  scope: 'all',
+  enabledFilters: {},
 };
 
 export default function AnalysisReducer(
@@ -124,6 +127,7 @@ export default function AnalysisReducer(
         geneSearchResults: {},
         geneSearchParams: params,
         geneSearching: true,
+        scope: action.scope,
       };
     }
     // Handle form submit error
@@ -146,16 +150,26 @@ export default function AnalysisReducer(
               }
             : action.geneSearchResults,
         geneSearching: false,
+        enabledFilters: action.geneSearchResults.uniqs
+          ? action.geneSearchResults.uniqs
+          : state.enabledFilters,
       };
     // Revert param values to default
     case GENE_SEARCH_RESET: {
+      const cloneDefaultGeneSearchParams = { ...defaultGeneSearchParams };
+      cloneDefaultGeneSearchParams.keys = '';
+      cloneDefaultGeneSearchParams.filters.assay = [];
+      cloneDefaultGeneSearchParams.filters.tissue = [];
+
       return {
         ...state,
         geneSearchInputValue: '',
         geneSearchResults: {},
-        geneSearchParams: defaultGeneSearchParams,
+        geneSearchParams: cloneDefaultGeneSearchParams,
         geneSearching: false,
         geneSearchError: '',
+        scope: 'all',
+        enabledFilters: {},
       };
     }
     // Handle secondary filters: tissue, assay

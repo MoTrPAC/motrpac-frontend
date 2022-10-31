@@ -13,6 +13,7 @@ function SearchResultFilters({
   changeResultFilter,
   handleSearch,
   resetSearch,
+  enabledFilters,
 }) {
   const [inputError, setInputError] = useState(false);
   // FIXME - this is a hack to get the search filters such as tissue and assay
@@ -48,7 +49,7 @@ function SearchResultFilters({
       return assayList.filter(
         (t) =>
           !t.filter_value.match(
-            /^(transcript-rna-seq|epigen-atac-seq|epigen-rrbs|immunoassay|prot-pr|prot-ph|prot-ac|prot-ub)$/
+            /^(transcript-rna-seq|epigen-atac-seq|epigen-rrbs|immunoassay|prot-pr|prot-ph|prot-ac|prot-ub|prot-ub-protein-corrected)$/
           )
       );
     }
@@ -85,6 +86,10 @@ function SearchResultFilters({
               searchParams.filters[item.keyName] &&
               searchParams.filters[item.keyName].indexOf(filter.filter_value) >
                 -1;
+            const isDisabledFilter =
+              enabledFilters[item.keyName] &&
+              Object.keys(enabledFilters[item.keyName]).length &&
+              !enabledFilters[item.keyName][filter.filter_value.toLowerCase()];
             return (
               <button
                 key={filter.filter_label}
@@ -92,9 +97,11 @@ function SearchResultFilters({
                 className={`btn filterBtn ${
                   isActiveFilter ? 'activeFilter' : ''
                 }`}
-                onClick={() =>
-                  changeResultFilter(item.keyName, filter.filter_value, null)
-                }
+                onClick={() => {
+                  if (isDisabledFilter) return false;
+                  changeResultFilter(item.keyName, filter.filter_value, null);
+                }}
+                disabled={isDisabledFilter}
               >
                 {filter.filter_label}
               </button>
@@ -206,6 +213,16 @@ SearchResultFilters.propTypes = {
   changeResultFilter: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
   resetSearch: PropTypes.func.isRequired,
+  enabledFilters: PropTypes.shape({
+    assay: PropTypes.object,
+    comparison_group: PropTypes.object,
+    sex: PropTypes.object,
+    tissue: PropTypes.object,
+  }),
+};
+
+SearchResultFilters.defaultProps = {
+  enabledFilters: {},
 };
 
 export default SearchResultFilters;

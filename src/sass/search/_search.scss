@@ -184,6 +184,11 @@
         margin: 0.3rem;
         padding: .2rem .4rem;
         white-space: normal;
+
+        &:disabled {
+          cursor: not-allowed;
+          opacity: 0.5;
+        }
       }
 
       .activeFilter {
