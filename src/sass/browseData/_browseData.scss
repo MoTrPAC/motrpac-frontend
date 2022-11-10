@@ -1,4 +1,17 @@
 .browseDataPage {
+  .browse-data-summary-container {
+    .card {
+      .card-body {
+        padding: 0.75em;
+      }
+  
+      .material-icons {
+        color: #ff9900;
+        font-size: 5.0rem;
+      }
+    }
+  }
+
   .browse-data-summary {
     font-size: 0.9rem;
 
