@@ -61,29 +61,58 @@ function FeatureLinks({
       title: 'Sample Summary',
       eventHandler: null,
     },
+    {
+      route:
+        'https://github.com/orgs/MoTrPAC/repositories?q=MotrpacRatTraining&type=public&language=r',
+      description:
+        'R packages relevant to the processed data and downstream analysis results presented in the Landscape paper.',
+      icon: 'code',
+      title: 'Code Repository',
+      eventHandler: null,
+    },
   ];
 
   return (
     <div className="feature-links-container pt-2">
-      <div className="card-deck mt-5">
+      <div className="row row-cols-1 row-cols-md-4 mt-5">
         {features.map((item) => (
-          <div
-            key={item.route}
-            className={`card mb-3 p-3 shadow-sm ${item.route}`}
-          >
-            <Link to={`/${item.route}`} onClick={item.eventHandler}>
-              <div className="card-body">
-                <div className="h-100 d-flex align-items-start">
-                  <div className="feature-icon mr-3">
-                    <span className="material-icons">{item.icon}</span>
+          <div key={item.route} className="col mb-4">
+            <div className={`card h-100 mb-3 p-3 shadow-sm ${item.route}`}>
+              {item.route.indexOf('http') !== -1 ? (
+                <a
+                  href={item.route}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="external-link"
+                >
+                  <div className="card-body">
+                    <div className="h-100 d-flex align-items-start">
+                      <div className="feature-icon mr-3">
+                        <span className="material-icons">{item.icon}</span>
+                      </div>
+                      <div className="feature-summary">
+                        <h5 className="card-title">{item.title}</h5>
+                        <p className="card-text">{item.description}</p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="feature-summary">
-                    <h5 className="card-title">{item.title}</h5>
-                    <p className="card-text">{item.description}</p>
+                </a>
+              ) : (
+                <Link to={`/${item.route}`} onClick={item.eventHandler}>
+                  <div className="card-body">
+                    <div className="h-100 d-flex align-items-start">
+                      <div className="feature-icon mr-3">
+                        <span className="material-icons">{item.icon}</span>
+                      </div>
+                      <div className="feature-summary">
+                        <h5 className="card-title">{item.title}</h5>
+                        <p className="card-text">{item.description}</p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </Link>
+                </Link>
+              )}
+            </div>
           </div>
         ))}
       </div>
