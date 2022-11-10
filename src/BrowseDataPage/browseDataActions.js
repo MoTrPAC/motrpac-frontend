@@ -203,7 +203,7 @@ const accessToken =
 
 const headersConfig = {
   headers: {
-    Authorization: `bearer ${accessToken}`,
+    Authorization: `bearer ${process.env.REACT_APP_ES_ACCESS_TOKEN_DEV}`,
   },
 };
 
@@ -258,7 +258,7 @@ function handleDownloadRequest(email, name, selectedFiles) {
     dispatch(downloadRequested());
     return axios
       .post(
-        `${api}${fileDownloadEndpoint}/?phase=${phase}&key=${key}`,
+        `${process.env.REACT_APP_API_SERVICE_ADDRESS_DEV}${fileDownloadEndpoint}/?key=${process.env.REACT_APP_API_SERVICE_KEY_DEV}`,
         requestBody
       )
       .then((response) => {
@@ -281,7 +281,7 @@ function handleDataFetch() {
   return (dispatch) => {
     dispatch(dataFetchRequested());
     return axios
-      .post(`${searchHost}${fileSearchEndpoint}`, requestBody, headersConfig)
+      .post(`${process.env.REACT_APP_ES_PROXY_HOST_DEV}${fileSearchEndpoint}`, requestBody, headersConfig)
       .then((response) => {
         if (response.data.error) {
           dispatch(dataFetchFailure(response.data.error));
