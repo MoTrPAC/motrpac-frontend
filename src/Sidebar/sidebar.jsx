@@ -73,16 +73,30 @@ export function Sidebar({
     // due to the presence of navlink labels
     return (
       <div className="sidebar-nav-link-wrapper">
-        <NavLink
-          to={`/${route}`}
-          onClick={handler}
-          className={`nav-link d-inline-flex align-items-center w-100 ${
-            disabled ? 'disabled-link' : ''
-          }`}
-        >
-          <i className="material-icons nav-link-icon">{icon}</i>
-          <span className="nav-link-label">{label}</span>
-        </NavLink>
+        {route.indexOf('http') !== -1 ? (
+          <a
+            href={route}
+            target="_blank"
+            rel="noreferrer"
+            className={`nav-link d-inline-flex align-items-center w-100 ${
+              disabled ? 'disabled-link' : ''
+            }`}
+          >
+            <i className="material-icons nav-link-icon">{icon}</i>
+            <span className="nav-link-label">{label}</span>
+          </a>
+        ) : (
+          <NavLink
+            to={`/${route}`}
+            onClick={handler}
+            className={`nav-link d-inline-flex align-items-center w-100 ${
+              disabled ? 'disabled-link' : ''
+            }`}
+          >
+            <i className="material-icons nav-link-icon">{icon}</i>
+            <span className="nav-link-label">{label}</span>
+          </NavLink>
+        )}
         {!expanded && !disabled && (
           <div className="tooltip-on-right" id={id}>
             {label}
@@ -162,6 +176,34 @@ export function Sidebar({
             <span>Data</span>
           </h6>
           <ul className="nav flex-column">
+            <li className="nav-item">
+              {renderNavLink(
+                'browse-data',
+                'Browse Data',
+                'browse-data',
+                'view_list',
+                userType === 'external',
+                handleDataObjectFetch
+              )}
+            </li>
+            <li className="nav-item">
+              {renderNavLink(
+                'https://collab.motrpac-data.org/hub/oauth_login?next=%2Fhub%2Fhome',
+                'MoTrPAC Collab',
+                'motrpac-collab',
+                'hub',
+                userType === 'external'
+              )}
+            </li>
+            <li className="nav-item">
+              {renderNavLink(
+                'https://github.com/orgs/MoTrPAC/repositories?q=MotrpacRatTraining&type=public&language=r',
+                'Code Repository',
+                'code-repository',
+                'code',
+                userType === 'external'
+              )}
+            </li>
             {userType !== 'external' && (
               <li className="nav-item">
                 {renderNavLink(
@@ -175,32 +217,22 @@ export function Sidebar({
             )}
             <li className="nav-item">
               {renderNavLink(
-                'releases',
-                'Releases',
-                'releases',
-                'rocket_launch',
-                false,
-                checkServiceStatus
-              )}
-            </li>
-            <li className="nav-item">
-              {renderNavLink(
-                'browse-data',
-                'Browse Data',
-                'browse-data',
-                'view_list',
-                userType === 'external',
-                handleDataObjectFetch
-              )}
-            </li>
-            <li className="nav-item">
-              {renderNavLink(
                 'qc-data-monitor',
                 'QC Data Monitor',
                 'qc-data-monitor',
                 'fact_check',
                 userType === 'external',
                 handleQcDataFetch
+              )}
+            </li>
+            <li className="nav-item">
+              {renderNavLink(
+                'releases',
+                'Releases',
+                'releases',
+                'rocket_launch',
+                false,
+                checkServiceStatus
               )}
             </li>
           </ul>
