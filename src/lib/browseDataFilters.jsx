@@ -2,6 +2,7 @@ import assayList from './assayList';
 
 const tissues = [
   'Adrenal',
+  'Aorta',
   'Blood RNA',
   'Brown Adipose',
   'Colon',
@@ -27,6 +28,11 @@ const tissueList = tissues.sort((a, b) =>
 );
 
 const browseDataFilters = [
+  {
+    keyName: 'phase',
+    name: 'Phase',
+    filters: ['PASS1A-06', 'PASS1B-06'],
+  },
   {
     keyName: 'tissue_name',
     name: 'Tissue',
