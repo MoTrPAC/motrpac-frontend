@@ -276,9 +276,6 @@ function handleDownloadRequest(email, name, selectedFiles) {
 // Fetch Data Objects when page loads
 function handleDataFetch() {
   const requestBody = {
-    filters: {
-      phase: 'PASS1B-06',
-    },
     size: 5000,
   };
   return (dispatch) => {
