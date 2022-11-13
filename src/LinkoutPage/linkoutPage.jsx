@@ -7,6 +7,7 @@ import NIHLogo from '../assets/ExternalLogos/NIHCommonFund.png';
 import ENCODELogo from '../assets/ExternalLogos/ENCODE.png';
 import MWLogo from '../assets/ExternalLogos/MetabolomicsWorkbench.jpeg';
 import GTExLogo from '../assets/ExternalLogos/GTEx.png';
+import CFDELogo from '../assets/ExternalLogos/CFDE.png';
 import AuthContentContainer from '../lib/ui/authContentContainer';
 
 const featured = [
@@ -44,10 +45,10 @@ const partners = [
       },
       {
         protocol: 'https',
-        url: 'ENCODEProject.org',
-        text: 'ENCODE project website',
-        image: ENCODELogo,
-        title: 'ENCODE Project',
+        url: 'www.nih-cfde.org',
+        text: 'Common Fund Data Ecosystem',
+        image: CFDELogo,
+        title: 'CFDE',
       },
       {
         protocol: 'http',
@@ -62,6 +63,13 @@ const partners = [
         text: 'The Genotype-Tissue Expression (GTEx) project',
         image: GTExLogo,
         title: 'GTEx',
+      },
+      {
+        protocol: 'https',
+        url: 'ENCODEProject.org',
+        text: 'ENCODE project website',
+        image: ENCODELogo,
+        title: 'ENCODE Project',
       },
     ],
   },
@@ -107,7 +115,7 @@ export function LinkoutPage({ isAuthenticated, expanded }) {
   const partnerLinks = partners.map((partner) => (
     <div key={partner.name} className="partner-link">
       <h4>{partner.name}</h4>
-      <div className="card-deck">
+      <div className="row row-cols-1 row-cols-md-4">
         {partner.links.map((link) => (
           <UsefulLink key={link.url} link={link} />
         ))}
@@ -142,20 +150,22 @@ export function LinkoutPage({ isAuthenticated, expanded }) {
 
 function UsefulLink({ link }) {
   return (
-    <div className="card mb-4 shadow-sm">
-      <div
-        className="card-img-top"
-        style={{ backgroundImage: `url("${link.image}")` }}
-      />
-      <div className="card-body">
-        <h6 className="card-title">
-          <a href={`${link.protocol}://www.${link.url}`} target="_new">
-            {link.title}
-            &nbsp;
-            <span className="oi oi-external-link" />
-          </a>
-        </h6>
-        <p className="card-text">{link.text}</p>
+    <div className="col mb-4">
+      <div className="card h-100 shadow-sm">
+        <div
+          className="card-img-top"
+          style={{ backgroundImage: `url("${link.image}")` }}
+        />
+        <div className="card-body">
+          <h6 className="card-title">
+            <a href={`${link.protocol}://www.${link.url}`} target="_new">
+              {link.title}
+              &nbsp;
+              <span className="oi oi-external-link" />
+            </a>
+          </h6>
+          <p className="card-text">{link.text}</p>
+        </div>
       </div>
     </div>
   );
