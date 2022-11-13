@@ -186,7 +186,6 @@ const api =
     : process.env.REACT_APP_API_SERVICE_ADDRESS;
 const endpoint = process.env.REACT_APP_SIGNED_URL_ENDPOINT;
 const fileDownloadEndpoint = process.env.REACT_APP_FILE_DOWNLOAD_ENDPOINT;
-const phase = process.env.REACT_APP_FILE_DOWNLOAD_PHASE;
 const key =
   process.env.NODE_ENV !== 'production'
     ? process.env.REACT_APP_API_SERVICE_KEY_DEV
@@ -257,10 +256,7 @@ function handleDownloadRequest(email, name, selectedFiles) {
   return (dispatch) => {
     dispatch(downloadRequested());
     return axios
-      .post(
-        `${api}${fileDownloadEndpoint}/?phase=${phase}&key=${key}`,
-        requestBody
-      )
+      .post(`${api}${fileDownloadEndpoint}/?key=${key}`, requestBody)
       .then((response) => {
         if (response.data.error) {
           dispatch(downloadRequestFailure(response.data.error));
@@ -276,9 +272,6 @@ function handleDownloadRequest(email, name, selectedFiles) {
 // Fetch Data Objects when page loads
 function handleDataFetch() {
   const requestBody = {
-    filters: {
-      phase: 'PASS1B-06',
-    },
     size: 5000,
   };
   return (dispatch) => {

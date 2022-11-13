@@ -6,6 +6,7 @@ export const defaultBrowseDataState = {
   filteredFiles: [],
   fileCount: 0,
   activeFilters: {
+    phase: [],
     assay: [],
     omics: [],
     tissue_name: [],
@@ -158,6 +159,7 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
       return {
         ...state,
         activeFilters: {
+          phase: [],
           assay: [],
           omics: [],
           tissue_name: [],

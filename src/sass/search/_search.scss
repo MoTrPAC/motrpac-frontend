@@ -330,6 +330,12 @@
         color: $accent-violet;
       }
     }
+
+    a.external-link {
+      .material-icons {
+        color: $stanford-cool-grey;
+      }
+    }
   }
 }
 
