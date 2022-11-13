@@ -186,7 +186,6 @@ const api =
     : process.env.REACT_APP_API_SERVICE_ADDRESS;
 const endpoint = process.env.REACT_APP_SIGNED_URL_ENDPOINT;
 const fileDownloadEndpoint = process.env.REACT_APP_FILE_DOWNLOAD_ENDPOINT;
-const phase = process.env.REACT_APP_FILE_DOWNLOAD_PHASE;
 const key =
   process.env.NODE_ENV !== 'production'
     ? process.env.REACT_APP_API_SERVICE_KEY_DEV
@@ -203,7 +202,7 @@ const accessToken =
 
 const headersConfig = {
   headers: {
-    Authorization: `bearer ${process.env.REACT_APP_ES_ACCESS_TOKEN_DEV}`,
+    Authorization: `bearer ${accessToken}`,
   },
 };
 
@@ -257,10 +256,7 @@ function handleDownloadRequest(email, name, selectedFiles) {
   return (dispatch) => {
     dispatch(downloadRequested());
     return axios
-      .post(
-        `${process.env.REACT_APP_API_SERVICE_ADDRESS_DEV}${fileDownloadEndpoint}/?key=${process.env.REACT_APP_API_SERVICE_KEY_DEV}`,
-        requestBody
-      )
+      .post(`${api}${fileDownloadEndpoint}/?key=${key}`, requestBody)
       .then((response) => {
         if (response.data.error) {
           dispatch(downloadRequestFailure(response.data.error));
@@ -281,7 +277,7 @@ function handleDataFetch() {
   return (dispatch) => {
     dispatch(dataFetchRequested());
     return axios
-      .post(`${process.env.REACT_APP_ES_PROXY_HOST_DEV}${fileSearchEndpoint}`, requestBody, headersConfig)
+      .post(`${searchHost}${fileSearchEndpoint}`, requestBody, headersConfig)
       .then((response) => {
         if (response.data.error) {
           dispatch(dataFetchFailure(response.data.error));
