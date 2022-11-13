@@ -45,10 +45,10 @@ export function BrowseDataPage({
         <div className="browse-data-summary pb-3 col-md-8">
           <span className="emphasis font-weight-bold">
             Browse and download the experimental data of 6-month old rats by
-            tissue, assay, or omics. The files accessible and downloadable on
-            this page consist of a variety of data types for the animal phase
-            focusing on defining molecular changes that occur in rats after up
-            to 8 weeksof endurance training (PASS1B):
+            tissue, assay, or omics. The files accessible and downloadable here
+            consist of a variety of data types for the animal's acute exercise
+            (PASS1A) and endurance training (PASS1B) phases focusing on defining
+            molecular changes that occur in rats:
           </span>
           <ul className="mt-1 mb-2">
             <li>Assay-specific differential analysis and normalized data</li>
@@ -64,17 +64,17 @@ export function BrowseDataPage({
           </ul>
           <div className="collapse mb-2" id="collapseSummary">
             <span className="emphasis font-weight-bold">
-              The current version of the 6-month old rat data for endurance
-              training also include:
+              The currently available 6-month old rat data for acute exercise
+              and endurance training also include:
             </span>
             <ul className="mt-1 mb-2">
               <li>
-                All PASS1B 6-month experimental/sample metadata from the very
-                last consortium release
+                All PASS1A and PASS1B 6-month experimental/sample metadata from
+                the very last consortium release
               </li>
               <li>
-                Updated PASS1B 6-month phenotypic data since the very last
-                consortium release
+                Updated PASS1A and PASS1B 6-month phenotypic data since the very
+                last consortium release
               </li>
               <li>
                 Experimental data of additional tissues and assays not available
