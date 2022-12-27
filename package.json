@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "auth0-js": "9.19.0",
+    "auth0-js": "9.20.0",
+    "autoprefixer": "10.4.13",
     "axios": "^0.27.2",
     "bootstrap": "4.6.1",
     "chart.js": "^2.9.3",
-    "d3": "6.7.0",
-    "dayjs": "1.11.1",
+    "d3": "7.8.0",
+    "dayjs": "1.11.7",
     "from-exponential": "^1.1.1",
     "ga-gtag": "^1.0.1",
     "history": "4.10.1",
@@ -24,14 +25,14 @@
     "react-dom": "17.0.1",
     "react-google-recaptcha": "^2.1.0",
     "react-particles-js": "3.5.3",
-    "react-redux": "^7.2.1",
+    "react-redux": "8.0.5",
     "react-router-dom": "^5.1.2",
     "react-scripts": "5.0.1",
     "react-table": "^7.7.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "tsparticles": "1.36.0",
-    "victory": "^35.4.0"
+    "victory": "36.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -53,28 +54,26 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@storybook/addon-actions": "6.1.21",
-    "@storybook/addon-links": "6.1.21",
-    "@storybook/addon-storyshots": "6.1.21",
-    "@storybook/addons": "6.1.21",
-    "@storybook/preset-create-react-app": "^3.1.4",
-    "@storybook/react": "6.1.21",
-    "@wojtekmaj/enzyme-adapter-react-17": "0.6.7",
+    "@storybook/addon-actions": "6.5.15",
+    "@storybook/addon-links": "6.5.15",
+    "@storybook/addons": "6.5.15",
+    "@storybook/preset-create-react-app": "4.1.2",
+    "@storybook/react": "6.5.15",
+    "@wojtekmaj/enzyme-adapter-react-17": "0.8.0",
     "enzyme": "3.11.0",
-    "enzyme-adapter-react-16": "1.15.6",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "8.5.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react-hooks": "^4.0.8",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "jest-canvas-mock": "^2.2.0",
-    "prettier": "2.6.2",
-    "react-error-overlay": "6.0.9",
-    "sass": "1.51.0",
+    "prettier": "2.8.1",
+    "react-error-overlay": "^6.0.11",
+    "sass": "^1.57.1",
     "storybook-react-router": "1.0.8",
-    "stylelint": "^14.8.2",
-    "stylelint-config-recommended": "7.0.0"
+    "stylelint": "^14.16.0",
+    "stylelint-config-recommended": "9.0.0"
   },
   "resolutions": {
-    "autoprefixer": "10.4.5"
+    "autoprefixer": "10.4.13"
   }
 }
