@@ -6,9 +6,9 @@
     "auth0-js": "9.20.0",
     "autoprefixer": "10.4.13",
     "axios": "^0.27.2",
-    "bootstrap": "4.6.2",
+    "bootstrap": "4.6.1",
     "chart.js": "^2.9.3",
-    "d3": "7.8.0",
+    "d3": "6.7.0",
     "dayjs": "1.11.7",
     "from-exponential": "^1.1.1",
     "ga-gtag": "^1.0.1",
@@ -74,6 +74,6 @@
     "stylelint-config-recommended": "9.0.0"
   },
   "resolutions": {
-    "autoprefixer": "10.4.13"
+    "autoprefixer": "10.4.5"
   }
 }
