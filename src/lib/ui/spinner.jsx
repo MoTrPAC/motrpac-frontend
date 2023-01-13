@@ -12,11 +12,8 @@ function BootstrapSpinner({ isFetching }) {
   if (!isFetching) return null;
 
   return (
-    <div className="d-flex justify-content-center">
-      <div
-        className="spinner-border spinner-border-lg text-primary"
-        role="status"
-      >
+    <div className="bootstrap-spinner d-flex justify-content-center py-5">
+      <div className="spinner-border text-secondary" role="status">
         <span className="sr-only">Loading...</span>
       </div>
     </div>
