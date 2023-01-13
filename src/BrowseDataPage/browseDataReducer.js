@@ -229,6 +229,8 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
         error: '',
       };
     }
+    case types.RESET_BROWSE_STATE:
+      return defaultBrowseDataState;
     default:
       return state;
   }
