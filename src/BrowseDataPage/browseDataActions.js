@@ -17,6 +17,7 @@ const DOWNLOAD_REQUEST_FAILURE = 'DOWNLOAD_REQUEST_FAILURE';
 const DATA_FETCH_REQUESTED = 'DATA_FETCH_REQUESTED';
 const DATA_FETCH_SUCCESS = 'DATA_FETCH_SUCCESS';
 const DATA_FETCH_FAILURE = 'DATA_FETCH_FAILURE';
+const RESET_BROWSE_STATE = 'RESET_BROWSE_STATE';
 
 export const types = {
   CHANGE_FILTER,
@@ -35,6 +36,7 @@ export const types = {
   DATA_FETCH_REQUESTED,
   DATA_FETCH_SUCCESS,
   DATA_FETCH_FAILURE,
+  RESET_BROWSE_STATE,
 };
 
 function changeFilter(category, filter) {
@@ -143,6 +145,12 @@ function dataFetchFailure(error = '') {
   return {
     type: DATA_FETCH_FAILURE,
     error,
+  };
+}
+
+function resetBrowseState() {
+  return {
+    type: RESET_BROWSE_STATE,
   };
 }
 
@@ -270,10 +278,18 @@ function handleDownloadRequest(email, name, selectedFiles) {
 }
 
 // Fetch Data Objects when page loads
-function handleDataFetch() {
-  const requestBody = {
-    size: 5000,
+function handleDataFetch(phase) {
+  let requestBody = {
+    size: 8000,
   };
+  if (phase && phase.length) {
+    requestBody = {
+      filters: {
+        phase,
+      },
+      size: 5000,
+    };
+  }
   return (dispatch) => {
     dispatch(dataFetchRequested());
     return axios
@@ -301,6 +317,7 @@ const actions = {
   loadDataObjects,
   handleDownloadRequest,
   handleDataFetch,
+  resetBrowseState,
 };
 
 export default actions;
