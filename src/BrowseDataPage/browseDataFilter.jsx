@@ -2,8 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import browseDataFilters from '../lib/browseDataFilters';
 
-function BrowseDataFilter({ activeFilters, onChangeFilter, onResetFilters }) {
-  const filters = browseDataFilters.map((item) => (
+function BrowseDataFilter({
+  activeFilters,
+  onChangeFilter,
+  onResetFilters,
+  userType,
+}) {
+  const fileFilters = [...browseDataFilters];
+  if (!userType || (userType && userType !== 'internal')) {
+    fileFilters.forEach((item) => {
+      if (item.keyName === 'phase') {
+        item.filters = ['PASS1B-06'];
+      }
+    });
+  }
+  const filters = fileFilters.map((item) => (
     <div key={item.name} className="card filter-module mb-4">
       <div className="card-header font-weight-bold d-flex align-items-center">
         <div>{item.name}</div>
@@ -65,6 +78,7 @@ BrowseDataFilter.propTypes = {
   }),
   onChangeFilter: PropTypes.func.isRequired,
   onResetFilters: PropTypes.func.isRequired,
+  userType: PropTypes.string,
 };
 BrowseDataFilter.defaultProps = {
   activeFilters: {
@@ -73,6 +87,7 @@ BrowseDataFilter.defaultProps = {
     tissue_name: [],
     category: [],
   },
+  userType: null,
 };
 
 export default BrowseDataFilter;
