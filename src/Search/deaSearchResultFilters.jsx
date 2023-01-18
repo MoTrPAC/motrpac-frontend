@@ -68,16 +68,6 @@ function SearchResultFilters({
     <div key={item.name} className="card filter-module mb-4">
       <div className="card-header font-weight-bold d-flex align-item-center justify-content-between">
         <div className="card-header-label">{item.name}</div>
-        <a
-          className="btn btn-link filters-collapsible-btn p-0"
-          data-toggle="collapse"
-          href={`#filters-${item.keyName}`}
-          role="button"
-          aria-expanded="true"
-          aria-controls={`filters-${item.keyName}`}
-        >
-          <span className="material-icons">more_horiz</span>
-        </a>
       </div>
       <div className="collapse show" id={`filters-${item.keyName}`}>
         <div className="card-body">
@@ -130,16 +120,6 @@ function SearchResultFilters({
       {/* filter header content */}
       <div className="card-header font-weight-bold d-flex align-item-center justify-content-between">
         <div className="card-header-label">{item.name}</div>
-        <a
-          className="btn btn-link filters-collapsible-btn p-0"
-          data-toggle="collapse"
-          href={`#filters-${item.keyName}`}
-          role="button"
-          aria-expanded="true"
-          aria-controls={`filters-${item.keyName}`}
-        >
-          <span className="material-icons">more_horiz</span>
-        </a>
       </div>
       {/* filter body content */}
       <div className="collapse show" id={`filters-${item.keyName}`}>
@@ -194,7 +174,7 @@ function SearchResultFilters({
         )}
         <button
           type="button"
-          className="btn btn-sm btn-primary"
+          className="btn btn-primary"
           onClick={(e) => {
             e.preventDefault();
             handleSearch(searchParams, 'filters');
