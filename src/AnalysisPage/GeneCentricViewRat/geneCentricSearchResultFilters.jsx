@@ -82,7 +82,7 @@ function GeneCentricSearchResultFilters({
       <div className="submit-search-filters-button text-right">
         <button
           type="button"
-          className="btn btn-sm btn-primary"
+          className="btn btn-primary"
           onClick={(e) => {
             e.preventDefault();
             handleGeneCentricSearch(
