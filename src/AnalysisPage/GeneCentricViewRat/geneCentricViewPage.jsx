@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PageTitle from '../../lib/ui/pageTitle';
 import AnalysisActions from '../analysisActions';
 import { defaultGeneSearchParams } from '../analysisReducer';
 import GeneCentricTrainingResultsTable from './geneCentricTrainingResultsTable';
@@ -55,13 +56,17 @@ function GeneCentricView({
   }
 
   return (
-    <div className="geneCentricViewPage">
+    <div className="geneCentricViewPage px-3 px-md-4 mb-3">
       <form id="geneCentricSearchForm" name="geneCentricSearchForm">
-        <div className="main-content-container">
-          <div className="mt-4 mb-4">
-            Search by gene symbol and examine the training response of its
-            related molecules (e.g. protein phosphorylation/acetylation,
-            promoter methylation, transcript) in PASS1B 6-month data.
+        <PageTitle title="Gene-centric View" />
+        <div className="gene-centric-view-container">
+          <div className="gene-centric-view-summary-container row mb-4">
+            <div className="lead col-12">
+              Search by gene symbol and examine the training response of its
+              related molecules (e.g. protein phosphorylation/acetylation,
+              promoter methylation, transcript) in the 6-month old rats'
+              endurance training data.
+            </div>
           </div>
           <div className="es-search-ui-container d-flex align-items-center w-100">
             <div className="search-box-input-group d-flex align-items-center flex-grow-1">
