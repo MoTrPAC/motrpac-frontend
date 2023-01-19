@@ -15,30 +15,31 @@ nav {
 
   .navbar-nav {
     .navItem {
-      font-size: 1.15rem;
+      font-size: 1.125rem;
       font-weight: $semibold-weight;
 
       .nav-link {
         color: $stanford-cool-grey;
 
         &:hover {
-          color: $stanford-black;
+          color: #000;
         }
 
         &.show, &.active {
-          color: $stanford-black;
+          color: #000;
         }
       }
 
       &.show {
         .nav-link {
-          color: $stanford-black;
+          color: #000;
         }
       }
 
       .dropdown-menu {
         background-color:transparentize(#fff, .1);
-        border: solid 1px $stanford-cool-grey;
+        border: solid 1px $gray-semi-transparent;
+        box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.1);
         top: 35px;
         left: 8px;
 
@@ -106,8 +107,6 @@ nav {
 
   .user-display-name {
     color: $stanford-cool-grey;
-    font-size: 0.9rem;
-    font-weight: $regular-weight;
     margin-right: 0.5rem;
     vertical-align: middle;
   }
