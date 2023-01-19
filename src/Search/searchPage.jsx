@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PageTitle from '../lib/ui/pageTitle';
 import TimewiseResultsTable from './timewiseTable';
 import TrainingResultsTable from './trainingResultsTable';
-import AuthContentContainer from '../lib/ui/authContentContainer';
 import EmbargoExtension from '../lib/embargoExtension';
 import SearchActions from './searchActions';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
@@ -18,7 +18,6 @@ import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
 export function SearchPage({
   profile,
-  expanded,
   searchResults,
   scope,
   searching,
@@ -70,24 +69,43 @@ export function SearchPage({
     });
   }
 
+  // render feature links
+  function renderFeatureLinks() {
+    if (
+      !searching &&
+      !searchError &&
+      !searchResults.result &&
+      !searchResults.errors
+    ) {
+      return (
+        <FeatureLinks
+          handleDataFetch={handleDataFetch}
+          handleQCDataFetch={handleQCDataFetch}
+          allFiles={allFiles}
+          lastModified={lastModified}
+        />
+      );
+    }
+    return null;
+  }
+
   return (
-    <AuthContentContainer classes="searchPage" expanded={expanded}>
+    <div className="searchPage px-3 px-md-4 mb-3">
       <form id="searchForm" name="searchForm">
-        {userType === 'external' && <EmbargoExtension />}
-        <div className="page-header pt-3 pb-2 mb-3 border-bottom">
-          <div className="page-title">
-            <h3 className="mb-0">Search differential analysis data</h3>
-          </div>
-        </div>
+        {userType && userType === 'external' && <EmbargoExtension />}
+        <PageTitle title="Search differential expression data" />
         <div className="search-content-container">
-          <div className="mt-4 mb-4">
-            Search by genes, protein IDs, or metabolite names to examine the
-            training response of its related molecules in PASS1B 6-month data.{' '}
-            <span className="font-weight-bolder">
-              Multiple search terms MUST be separated by comma and space.
-              Examples: "NP_001000006.1, NP_001001508.2, NP_001005898.3" or
-              "8,9-EpETrE, C18:1 LPC plasmalogen B".
-            </span>
+          <div className="search-summary-container row mb-4">
+            <div className="lead col-12">
+              Search by genes, protein IDs, or metabolite names to examine the
+              training response of its related molecules in 6-month old rats'
+              endurance training (PASS1B) data.{' '}
+              <span className="font-weight-bold">
+                Multiple search terms MUST be separated by comma and space.
+                Examples: "NP_001000006.1, NP_001001508.2, NP_001005898.3" or
+                "8,9-EpETrE, C18:1 LPC plasmalogen B".
+              </span>
+            </div>
           </div>
           <div className="es-search-ui-container d-flex align-items-center w-100">
             <RadioButton
@@ -130,17 +148,7 @@ export function SearchPage({
               </div>
             </div>
           </div>
-          {!searching &&
-            !searchError &&
-            !searchResults.result &&
-            !searchResults.errors && (
-              <FeatureLinks
-                handleDataFetch={handleDataFetch}
-                handleQCDataFetch={handleQCDataFetch}
-                allFiles={allFiles}
-                lastModified={lastModified}
-              />
-            )}
+          {userType && userType === 'internal' && renderFeatureLinks()}
           <div className="search-body-container mt-4 mb-2">
             {searching && <AnimatedLoadingIcon isFetching={searching} />}
             {!searching && searchError ? (
@@ -281,7 +289,7 @@ export function SearchPage({
           </div>
         </div>
       </form>
-    </AuthContentContainer>
+    </div>
   );
 }
 
