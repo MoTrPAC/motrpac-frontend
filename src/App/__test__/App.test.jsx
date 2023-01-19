@@ -20,23 +20,16 @@ describe('<App />', () => {
   });
 
   test('It should contain eight <Route /> children', () => {
-    expect(component.find('Route').length).toBe(10);
+    expect(component.find('Route').length).toBe(14);
   });
 
   test('It should contain eight <PrivateRoute /> children', () => {
-    expect(component.find('PrivateRoute').length).toBe(7);
+    expect(component.find('PrivateRoute').length).toBe(5);
   });
 });
 
 // No other routes render components, and only one component rendered
 function testCorrectComponentInPath(app, routeTag, componentName, path, history, auth = false) {
-  // Checks that sidebar exists if logged-in
-  if (auth) {
-    expect(app.find('Sidebar').first().find('nav')).toHaveLength(1);
-  } else {
-    expect(app.find('Sidebar').first().find('nav')).toHaveLength(0);
-  }
-
   let noPath = true;
   // Checks the right component loaded at path and other components are not
   app.find(routeTag).forEach((route) => {
@@ -64,10 +57,16 @@ describe('Unauthenticated Application routing', () => {
     testCorrectComponentInPath(mountApp, 'Route', 'LandingPage', '/', history);
   });
 
-  test('loads the landing page at /home', () => {
-    history.push('/home');
+  test('loads the landing page at /search', () => {
+    history.push('/search');
     mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'LandingPage', '/', history);
+    testCorrectComponentInPath(mountApp, 'Route', 'SearchPage', '/search', history);
+  });
+
+  test('loads the browse data page at /data-download', () => {
+    history.push('/data-download');
+    mountApp.update();
+    testCorrectComponentInPath(mountApp, 'Route', 'BrowseDataPage', '/data-download', history);
   });
 
   test('loads the linkout page at /external-links', () => {
@@ -124,11 +123,11 @@ describe('Authenticated Application routing', () => {
     expect(mountApp.find('Provider').props().store.getState().auth.isAuthenticated).toBeTruthy();
   });
 
-  test('loads the search page at /home', () => {
-    history.push('/home');
+  test('loads the search page at /search', () => {
+    history.push('/search');
     // Update required to re-render the application
     mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'HomePage', '/home', history, true);
+    testCorrectComponentInPath(mountApp, 'Route', 'SearchPage', '/search', history, true);
   });
 
   test('loads the QC reports at /qc-reports', () => {
@@ -149,12 +148,6 @@ describe('Authenticated Application routing', () => {
     history.push('/summary');
     mountApp.update();
     testCorrectComponentInPath(mountApp, 'PrivateRoute', 'DataSummaryPage', '/summary', history, true);
-  });
-
-  test('loads the browse data page at /browse-data', () => {
-    history.push('/browse-data');
-    mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'BrowseDataPage', '/browse-data', history, true);
   });
 
   test('loads the linkout page at /external-links', () => {
