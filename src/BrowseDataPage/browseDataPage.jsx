@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
-import AuthContentContainer from '../lib/ui/authContentContainer';
+import { Link } from 'react-router-dom';
+import PageTitle from '../lib/ui/pageTitle';
 import BrowseDataTable from './browseDataTable';
 import actions from './browseDataActions';
 import BrowseDataFilter from './browseDataFilter';
-import AnimatedLoadingIcon from '../lib/ui/loading';
+import BootstrapSpinner from '../lib/ui/spinner';
+import OpenAccessBrowseDataSummary from './components/openAccessSummary';
+import AuthAccessBrowseDataSummary from './components/authAccessSummary';
 
 export function BrowseDataPage({
   profile,
-  expanded,
   filteredFiles,
   fetching,
   activeFilters,
@@ -20,146 +21,30 @@ export function BrowseDataPage({
   downloadRequestResponse,
   waitingForResponse,
 }) {
-  const [showMoreSummary, setShowMoreSummary] = useState(false);
-
-  // Send users to default page if they are not consortium members
+  // anonymous user or authenticated user
   const userType = profile.user_metadata && profile.user_metadata.userType;
-  if (userType === 'external') {
-    return <Redirect to="/home" />;
-  }
-
-  // Event handler for "Show prior releases" button
-  const toggleShowMoreSummary = (e) => {
-    e.preventDefault();
-    setShowMoreSummary(!showMoreSummary);
-  };
 
   return (
-    <AuthContentContainer classes="browseDataPage" expanded={expanded}>
-      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <div className="page-title">
-          <h3 className="mb-0">Browse Data</h3>
-        </div>
-      </div>
-      <div className="browse-data-summary-container row mb-2">
-        <div className="browse-data-summary pb-3 col-md-8">
-          <span className="emphasis font-weight-bold">
-            Browse and download the experimental data of 6-month old rats by
-            tissue, assay, or omics. The files accessible and downloadable here
-            consist of a variety of data types for the animal's acute exercise
-            (PASS1A) and endurance training (PASS1B) phases focusing on defining
-            molecular changes that occur in rats:
-          </span>
-          <ul className="mt-1 mb-2">
-            <li>Assay-specific differential analysis and normalized data</li>
-            <li>
-              Assay-specific quantitative results, experiment metadata, and
-              QA/QC reports
-            </li>
-            <li>
-              Cross-platform merged metabolomics data tables for named
-              metabolites
-            </li>
-            <li>Phenotypic data</li>
-          </ul>
-          <div className="collapse mb-2" id="collapseSummary">
-            <span className="emphasis font-weight-bold">
-              The currently available 6-month old rat data for acute exercise
-              and endurance training also include:
-            </span>
-            <ul className="mt-1 mb-2">
-              <li>
-                All PASS1A and PASS1B 6-month experimental/sample metadata from
-                the very last consortium release
-              </li>
-              <li>
-                Updated PASS1A and PASS1B 6-month phenotypic data since the very
-                last consortium release
-              </li>
-              <li>
-                Experimental data of additional tissues and assays not available
-                in the very last consortium release
-              </li>
-            </ul>
-            While the raw files are not available for direct download through
-            the Data Hub portal, they can be accessed through command-line with
-            granted permission. Please contact{' '}
-            <a href="mailto:motrpac-data-requests@lists.stanford.edu">
-              MoTrPAC Data Requests
-            </a>{' '}
-            if you need access to the raw files. A{' '}
-            <a
-              href="https://docs.google.com/document/d/1bdXcYQLZ65GpJKTjf9XwRxhrfHJSD9NIqCxhG6icL8U"
-              className="inline-link-with-icon"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              README
-              <i className="material-icons readme-file-icon">description</i>
-            </a>{' '}
-            document is available for reference on the data included in the very
-            last consortium release.
-          </div>
-          <div className="border-bottom pb-3">
-            <button
-              className="btn btn-link btn-sm show-more-link d-flex align-items-center"
-              type="button"
-              data-toggle="collapse"
-              data-target="#collapseSummary"
-              aria-expanded="false"
-              aria-controls="collapseSummary"
-              onClick={toggleShowMoreSummary}
-            >
-              <span>Show {!showMoreSummary ? 'more' : 'less'}</span>
-              <i className="material-icons">
-                {!showMoreSummary ? 'expand_more' : 'expand_less'}
-              </i>
-            </button>
-          </div>
-        </div>
-        <div className="col-md-4 mt-1">
-          <div className="card p-3 shadow-sm">
-            <div className="card-body">
-              <div className="h-100 d-flex align-items-start">
-                <div className="feature-icon mr-3">
-                  <span className="material-icons">hub</span>
-                </div>
-                <div className="feature-summary">
-                  <h4 className="card-title">
-                    <a
-                      href="https://collab.motrpac-data.org/hub/oauth_login?next=%2Fhub%2Fhome"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      MoTrPAC Collab
-                    </a>
-                  </h4>
-                  <p className="card-text">
-                    A multi-user Jupyter notebook workspace containing a
-                    collection of notebooks and visualizations for in-depth data
-                    exploration. Read the{' '}
-                    <a
-                      href="/static-assets/MoTrPAC_Collab_User_Guide.pdf"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      user guide
-                    </a>{' '}
-                    to learn more.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="browseDataPage px-3 px-md-4 mb-3">
+      <PageTitle title="Download Data" />
+      {!userType || (userType && userType === 'external') ? (
+        <OpenAccessBrowseDataSummary />
+      ) : null}
+      {userType && userType === 'internal' ? (
+        <AuthAccessBrowseDataSummary />
+      ) : null}
       <div className="browse-data-container row">
         <BrowseDataFilter
           activeFilters={activeFilters}
           onChangeFilter={onChangeFilter}
           onResetFilters={onResetFilters}
+          userType={userType}
         />
-        {fetching && <AnimatedLoadingIcon isFetching={fetching} />}
+        {fetching && (
+          <div className="col-md-9">
+            <BootstrapSpinner isFetching={fetching} />
+          </div>
+        )}
         {!fetching && !filteredFiles.length && (
           <div className="browse-data-table-wrapper col-md-9">
             <p className="mt-4">
@@ -181,7 +66,7 @@ export function BrowseDataPage({
           />
         )}
       </div>
-    </AuthContentContainer>
+    </div>
   );
 }
 
@@ -195,7 +80,6 @@ BrowseDataPage.propTypes = {
       name: PropTypes.string,
     }),
   }),
-  expanded: PropTypes.bool,
   activeFilters: BrowseDataFilter.propTypes.activeFilters.isRequired,
   onChangeFilter: PropTypes.func.isRequired,
   onResetFilters: PropTypes.func.isRequired,
@@ -206,13 +90,11 @@ BrowseDataPage.propTypes = {
 
 BrowseDataPage.defaultProps = {
   profile: {},
-  expanded: false,
 };
 
 const mapStateToProps = (state) => ({
   ...state.browseData,
   profile: state.auth.profile,
-  expanded: state.sidebar.expanded,
 });
 
 const mapDispatchToProps = (dispatch) => ({
