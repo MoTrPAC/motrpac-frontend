@@ -91,8 +91,8 @@ function TrainingDataTable({ columns, data, plotData, geneSymbol }) {
       filterTypes,
       initialState: {
         pageIndex: 0,
-        pageSize: 40,
-        pageCount: Math.ceil(data / 40),
+        pageSize: 50,
+        pageCount: Math.ceil(data / 50),
       },
     },
     useFilters,
@@ -148,7 +148,7 @@ function TrainingDataTable({ columns, data, plotData, geneSymbol }) {
   } = instance;
 
   // default page size options given the length of entries in the data
-  const range = (start, stop, step = 20) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
+  const range = (start, stop, step = 50) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
 
   // Render modal
   function renderModal() {
@@ -214,15 +214,15 @@ function TrainingDataTable({ columns, data, plotData, geneSymbol }) {
         <PageSize
           pageSize={pageSize}
           setPageSize={setPageSize}
-          pageSizeOptions={range(20, preGlobalFilteredRows.length)}
+          pageSizeOptions={range(50, preGlobalFilteredRows.length)}
         />
         <div className="search-results-usage-instructions font-weight-bold">
-          Select up to 5 features to view time series plots
+          Select up to 10 features to view time series plots
         </div>
         <div className="view-plots-button">
           <button
             type="button"
-            className="btn btn-sm btn-primary d-flex align-items-center"
+            className="btn btn-primary d-flex align-items-center"
             disabled={Object.keys(selectedRowIds).length === 0}
             data-toggle="modal"
             data-target=".time-series-plot-modal"
