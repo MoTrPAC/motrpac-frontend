@@ -91,7 +91,7 @@ function FeatureLinks({
                         <span className="material-icons">{item.icon}</span>
                       </div>
                       <div className="feature-summary">
-                        <h5 className="card-title">{item.title}</h5>
+                        <h4 className="card-title">{item.title}</h4>
                         <p className="card-text">{item.description}</p>
                       </div>
                     </div>
@@ -105,7 +105,7 @@ function FeatureLinks({
                         <span className="material-icons">{item.icon}</span>
                       </div>
                       <div className="feature-summary">
-                        <h5 className="card-title">{item.title}</h5>
+                        <h4 className="card-title">{item.title}</h4>
                         <p className="card-text">{item.description}</p>
                       </div>
                     </div>
