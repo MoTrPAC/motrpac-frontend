@@ -21,9 +21,10 @@ import RelatedStudyConnected from '../RelatedStudy/relatedStudy';
 import HeritageProteomicsConnected from '../RelatedStudy/heritageProteomics';
 import AnnouncementsPageConnected from '../AnnouncementsPage/announcementsPage';
 import BrowseDataPageConnected from '../BrowseDataPage/browseDataPage';
-import HomePageConnected from '../Home/HomePage';
+import SearchPageConnected from '../Search/searchPage';
+import GeneCentricViewConnected from '../AnalysisPage/GeneCentricViewRat/geneCentricViewPage';
+import GraphicalClustering from '../AnalysisPage/GraphicalClustering/graphicalClusteringPage';
 import CallbackConnected from '../Auth/callback';
-import SidebarConnected from '../Sidebar/sidebar';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
 import PrivateRoute from '../Auth/privateRoute';
 
@@ -38,7 +39,6 @@ function App({ history = History }) {
             <NavbarConnected />
           </header>
           <div className="row justify-content-center">
-            <SidebarConnected />
             <Switch>
               <Route
                 path="/callback"
@@ -48,10 +48,6 @@ function App({ history = History }) {
                 path="/"
                 exact
                 component={withTracker(LandingPageConnected)}
-              />
-              <PrivateRoute
-                path="/home"
-                component={withTracker(HomePageConnected)}
               />
               <Route
                 path="/external-links"
@@ -90,8 +86,8 @@ function App({ history = History }) {
                 path="/qc-data-monitor"
                 component={withTracker(DataStatusPageConnected)}
               />
-              <PrivateRoute
-                path="/browse-data"
+              <Route
+                path="/data-download"
                 component={withTracker(BrowseDataPageConnected)}
               />
               <Route
@@ -107,6 +103,18 @@ function App({ history = History }) {
                 path="/related-studies/heritage-proteomics"
                 exact
                 component={withTracker(HeritageProteomicsConnected)}
+              />
+              <Route
+                path="/search"
+                component={withTracker(SearchPageConnected)}
+              />
+              <Route
+                path="/gene-centric"
+                component={withTracker(GeneCentricViewConnected)}
+              />
+              <Route
+                path="/graphical-clustering"
+                component={withTracker(GraphicalClustering)}
               />
             </Switch>
           </div>
