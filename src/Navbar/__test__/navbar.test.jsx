@@ -44,7 +44,7 @@ describe('Navbar', () => {
       internalUserMountNav.find('Navbar').first().props().isAuthenticated
     ).toBeTruthy();
     expect(internalUserMountNav.find('.user-display-name').text()).toEqual(
-      `${internalUser.user_metadata.name}, ${internalUser.user_metadata.siteName}`
+      `${internalUser.user_metadata.name}`
     );
     expect(internalUserMountNav.find('.logOutBtn').text()).toMatch('Log out');
   });
