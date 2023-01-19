@@ -1,10 +1,6 @@
 .browseDataPage {
   .browse-data-summary-container {
-    .card {
-      .card-body {
-        padding: 0.75em;
-      }
-  
+    .motrpac-collab-linkout {
       .material-icons {
         color: #ff9900;
         font-size: 5.0rem;
@@ -12,43 +8,23 @@
     }
   }
 
-  .browse-data-summary {
-    font-size: 0.9rem;
-
-    .show-more-link {
-      font-size: 0.9rem;
-      font-weight: normal;
-      color: #007bff;
-      padding: 0;
-
-      &:hover {
-        text-decoration: none;
-      }
-
-      &:focus, &:active {
-        box-shadow: none;
-        outline: none;
-        text-decoration: none;
-      }
-    }
-  }
-
   label {
-    font-size: inherit;
-    line-height: 1;
     margin-right: 0.5rem;
     margin-bottom: 0;
     width: auto;
   }
 
   .form-control {
-    font-size: 0.85rem;
     width: 240px;
   }
 
   .pagination-page-size,
   .file-download-button {
     margin-bottom: 0.85rem;
+
+    button {
+      padding-left: 0.5rem;
+    }
     
     select {
       margin-right: 0.65rem;
@@ -73,10 +49,6 @@
       text-align: center;
     }
 
-    .file-download-request-response {
-      font-size: 0.95rem;
-    }
-
     .modal-body {
       padding-top: 0;
       padding-bottom: 0;
@@ -87,8 +59,6 @@
     }
 
     .file-download-list-item {
-      font-size: 0.85rem;
-
       td {
         vertical-align: middle;
 
@@ -132,8 +102,6 @@
 
   .browse-data-filter-group {
     .browse-data-filter-group-header {
-      font-size: 0.85rem;
-
       button {
         color: #007bff;
         font-size: inherit;
@@ -143,7 +111,6 @@
 
     .filter-module {
       .card-header {
-        font-size: 0.9rem;
         padding: 0.4rem 0.85rem;
 
         .data-filter-info-icon {
@@ -161,8 +128,8 @@
         background-color: #fff;
         border: 1px solid $gray-semi-transparent;
         color: $stanford-cool-grey;
-        font-size: .8rem;
-        font-weight: 600;
+        font-size: .9rem;
+        font-weight: 500;
         margin: 0.3rem;
         padding: .2rem .4rem;
         white-space: normal;
@@ -178,7 +145,7 @@
 
 .browseDataTable {
   border-collapse: collapse;
-  font-size: 0.8rem;
+  font-size: .9rem;
   margin-bottom: 0;
   text-align: left;
 
@@ -253,5 +220,27 @@
   .tooltip-on-right {
     visibility: visible;
     opacity: 1;
+  }
+}
+
+/**
+ * Open access bundle data download link
+ */
+.open-access-bundle-data-download-link .btn-data-download {
+  background-color: transparent;
+  border: none;
+  color: $primary-blue;
+  line-height: 0;
+  margin: 0 0.2rem 0 0;
+  padding: 0;
+  vertical-align: middle;
+
+  &:hover, &:focus, &:active, &.active {
+    background-color: #fff;
+    color: $primary-blue;
+  }
+
+  &:focus {
+    outline: none;
   }
 }
