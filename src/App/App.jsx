@@ -17,8 +17,8 @@ import ReleasePageConnected from '../ReleasePage/releasePage';
 import DataStatusPageConnected from '../DataStatusPage/dataStatusPage';
 import DataSummaryPageConnected from '../DataSummaryPage/dataSummaryPage';
 import DataAccessPageConnected from '../DataAccess/dataAccessPage';
-import RelatedStudyConnected from '../RelatedStudy/relatedStudy';
-import HeritageProteomicsConnected from '../RelatedStudy/heritageProteomics';
+import RelatedStudy from '../RelatedStudy/relatedStudy';
+import HeritageProteomics from '../RelatedStudy/heritageProteomics';
 import AnnouncementsPageConnected from '../AnnouncementsPage/announcementsPage';
 import BrowseDataPageConnected from '../BrowseDataPage/browseDataPage';
 import SearchPageConnected from '../Search/searchPage';
@@ -57,7 +57,7 @@ function App({ history = History }) {
                 path="/analysis/:subjectType"
                 component={withTracker(AnalysisHomePageConnected)}
               />
-              <PrivateRoute
+              <Route
                 path="/methods"
                 component={withTracker(MethodsConnected)}
               />
@@ -97,12 +97,12 @@ function App({ history = History }) {
               <Route
                 path="/related-studies"
                 exact
-                component={withTracker(RelatedStudyConnected)}
+                component={withTracker(RelatedStudy)}
               />
               <Route
                 path="/related-studies/heritage-proteomics"
                 exact
-                component={withTracker(HeritageProteomicsConnected)}
+                component={withTracker(HeritageProteomics)}
               />
               <Route
                 path="/search"
