@@ -159,7 +159,7 @@ export function Navbar({
                   className="nav-link"
                   onClick={handleDataObjectFetch}
                 >
-                  Download
+                  Downloads
                 </Link>
               </li>
               <li className="nnav-item navItem dropdown">
@@ -184,6 +184,69 @@ export function Navbar({
                   <Link to="/graphical-clustering" className="dropdown-item">
                     Graphical Clustering
                   </Link>
+                  {isAuthenticated && hasAccess ? (
+                    <>
+                      <a
+                        href="https://collab.motrpac-data.org/hub/oauth_login?next=%2Fhub%2Fhome"
+                        className="dropdown-item"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        MoTrPAC Collab
+                      </a>
+                      <Link to="/methods" className="dropdown-item">
+                        Phenotype
+                      </Link>
+                    </>
+                  ) : null}
+                </div>
+              </li>
+              {isAuthenticated && hasAccess ? (
+                <>
+                  <li className="nav-item navItem">
+                    <Link to="/summary" className="nav-link">
+                      Summary
+                    </Link>
+                  </li>
+                  <li className="nav-item navItem">
+                    <Link to="/qc-data-monitor" className="nav-link">
+                      QC Data Monitor
+                    </Link>
+                  </li>
+                  <li className="nav-item navItem">
+                    <Link to="/releases" className="nav-link">
+                      Releases
+                    </Link>
+                  </li>
+                </>
+              ) : null}
+              <li className="nav-item navItem dropdown">
+                <div
+                  className="nav-link dropdown-toggle"
+                  role="button"
+                  id="aboutNavbarItemMenuLink"
+                  data-toggle="dropdown"
+                >
+                  Resources
+                </div>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="aboutNavbarItemMenuLink"
+                >
+                  <a
+                    href="https://github.com/orgs/MoTrPAC/repositories?q=MotrpacRatTraining&type=public&language=r"
+                    className="dropdown-item"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Code Repository
+                  </a>
+                  <Link to="/methods" className="dropdown-item">
+                    Methods
+                  </Link>
+                  <Link to="/related-studies" className="dropdown-item">
+                    Related Studies
+                  </Link>
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
@@ -204,9 +267,6 @@ export function Navbar({
                   </Link>
                   <Link to="/announcements" className="dropdown-item">
                     Announcements
-                  </Link>
-                  <Link to="/related-studies" className="dropdown-item">
-                    Related Studies
                   </Link>
                   <Link to="/external-links" className="dropdown-item">
                     Useful Links
@@ -291,19 +351,12 @@ function LogoutButton({ profile, isAuthenticated, handleLogout, login }) {
     profile.user_metadata && profile.user_metadata.name
       ? profile.user_metadata.name
       : profile.name;
-  const siteName =
-    profile.user_metadata && profile.user_metadata.siteName
-      ? `, ${profile.user_metadata.siteName}`
-      : '';
 
   if (isAuthenticated) {
     return (
       <span className="user-logout-button">
         <img src={profile.picture} className="user-avatar" alt="avatar" />
-        <span className="user-display-name">
-          {userDisplayName}
-          {siteName}
-        </span>
+        <span className="user-display-name">{userDisplayName}</span>
         <button
           type="button"
           onClick={handleLogout}
