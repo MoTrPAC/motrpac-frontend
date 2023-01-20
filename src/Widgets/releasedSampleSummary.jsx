@@ -412,9 +412,9 @@ function ReleasedSampleSummary({ data, release, userType }) {
 
   return (
     <div className="release-sample-summary-plots">
-      <h5 className="release-sample-summary-plots-title mb-4">
+      <h4 className="release-sample-summary-plots-title mb-4">
         Total Study Assays
-      </h5>
+      </h4>
       <div>
         <Pie data={omicsData} options={options} height={350} />
       </div>
