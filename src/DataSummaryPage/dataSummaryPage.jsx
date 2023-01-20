@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import AuthContentContainer from '../lib/ui/authContentContainer';
 import ReleasedSampleTable from '../Widgets/releasedSampleTable';
 import ReleasedSamplePlot from '../Widgets/releasedSamplePlot';
 import ReleasedSampleHighlight from '../Widgets/releasedSampleHighlight';
@@ -16,7 +15,6 @@ const animalReleaseSamples = require('../data/animal_release_samples.json');
  * Renders the release samples summary page.
  *
  * @param {Object} profile          Redux state of authenticated user profile
- * @param {Boolean} expanded        Redux state of collapsed/expanded sidebar
  * @param {String} release          Redux state of user-selected release
  * @param {String} phase            Redux state of user-selected phase
  * @param {String} plot             Redux state of plot selection
@@ -37,7 +35,6 @@ const animalReleaseSamples = require('../data/animal_release_samples.json');
  */
 export function DataSummaryPage({
   profile,
-  expanded,
   release,
   phase,
   plot,
@@ -73,10 +70,10 @@ export function DataSummaryPage({
   };
 
   return (
-    <AuthContentContainer classes="dataSummaryPage" expanded={expanded}>
-      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-header">
+    <div className="dataSummaryPage px-3 px-md-4 mb-3 w-100">
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 page-header">
         <div className="page-title">
-          <h3>Summary of Rat Study Assays</h3>
+          <h1 className="mb-0">Summary of Rat Study Assays</h1>
         </div>
         {userType === 'internal' && (
           <div className="btn-toolbar">
@@ -129,7 +126,7 @@ export function DataSummaryPage({
       <div className="card-container-release-samples row mb-2">
         <div className="d-flex col-lg-9">
           <div className="flex-fill w-100 card shadow-sm">
-            <h5 className="card-header">
+            <h4 className="card-header">
               {userType === 'internal' && (
                 <div className="internal-user-labels float-right">
                   {release === 'internal' && (
@@ -160,7 +157,7 @@ export function DataSummaryPage({
                 </div>
               )}
               <div className="card-title mb-0">Overview</div>
-            </h5>
+            </h4>
             <div className="card-body pt-1">
               <div className="release-sample-plot border-bottom pb-4 mb-4">
                 <PlotControls togglePlot={togglePlot} plot={plot} />
@@ -194,7 +191,7 @@ export function DataSummaryPage({
           </div>
         </div>
       </div>
-    </AuthContentContainer>
+    </div>
   );
 }
 
@@ -202,7 +199,6 @@ DataSummaryPage.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
   }),
-  expanded: PropTypes.bool,
   release: PropTypes.string,
   phase: PropTypes.string,
   plot: PropTypes.string,
@@ -217,7 +213,6 @@ DataSummaryPage.propTypes = {
 
 DataSummaryPage.defaultProps = {
   profile: {},
-  expanded: false,
   release: 'internal',
   phase: 'pass1a_06',
   plot: 'tissue_name',
@@ -227,7 +222,6 @@ DataSummaryPage.defaultProps = {
 
 const mapStateToProps = (state) => ({
   ...state.auth,
-  expanded: state.sidebar.expanded,
   ...state.dataSummary,
 });
 
