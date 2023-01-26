@@ -23,7 +23,7 @@ const tissues = [
   'White Adipose',
 ];
 
-const tissueList = tissues.sort((a, b) =>
+export const tissueList = tissues.sort((a, b) =>
   a.toLowerCase().localeCompare(b.toLowerCase())
 );
 

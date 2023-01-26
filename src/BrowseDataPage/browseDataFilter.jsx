@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import browseDataFilters from '../lib/browseDataFilters';
+import browseDataFilters, { tissueList } from '../lib/browseDataFilters';
+
+// build list of PASS1B-06 tissues
+const pass1bTissues = tissueList.filter((item) => item !== 'Aorta');
 
 function BrowseDataFilter({
   activeFilters,
@@ -13,6 +16,9 @@ function BrowseDataFilter({
     fileFilters.forEach((item) => {
       if (item.keyName === 'phase') {
         item.filters = ['PASS1B-06'];
+      }
+      if (item.keyName === 'tissue_name') {
+        item.filters = pass1bTissues;
       }
     });
   }
