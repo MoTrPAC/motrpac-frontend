@@ -12,7 +12,6 @@
   }
 
   .form-control {
-    font-size: 0.85rem;
     width: 240px;
   }
 
@@ -51,7 +50,6 @@
 
     .btn-link {
       color: #007bff;
-      font-size: 0.9rem;
       margin: 0;
       padding: 0;
 
@@ -65,14 +63,15 @@
 
 .dataStatusTable {
   border-collapse: collapse;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   margin-bottom: 0;
   text-align: left;
 
   th, td {
     border: 1px solid #dee2e6;
     line-height: 1;
-    padding: 0.65rem 0.5rem;
+    padding: 0.5rem;
+    vertical-align: middle;
   }
 
   tr:first-child th, tr:first-child td {
@@ -93,7 +92,7 @@
 
   thead th {
     background-color: #dee2e6;
-    padding: 0.5rem;
+    vertical-align: middle;
 
     .material-icons {
       color: #888;
@@ -101,11 +100,6 @@
   }
 
   tbody {
-    td {
-      padding: 0.65rem 0.5rem;
-      vertical-align: middle;
-    }
-
     .phase {
       background-color: lighten($accent-green-shade-light, 22%);
     }
@@ -133,7 +127,7 @@
         color: #fff;
         display: inline-block;
         padding: .4em .75em;
-        font-size: 75%;
+        font-size: 80%;
         font-weight: 700;
         line-height: 1;
         text-align: center;
@@ -204,7 +198,7 @@
       }
 
       .material-icons {
-        font-size: 0.95rem;
+        font-size: 1.0rem;
         margin-left: 0.2rem;
       }
     }
@@ -217,8 +211,6 @@
   }
 
   .terms-definitions {
-    font-size: 0.85rem;
-
     .term {
       font-weight: bold;
     }
@@ -336,16 +328,16 @@
   }
 
   .legend-item {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
 
     .legend-item-color.submitted {
       background-color: $primary-blue-shade-medium;
-      padding: 0.4rem;
+      padding: 0.5rem;
     }
 
     .legend-item-color.not-submitted {
       background-color: $stanford-cool-grey;
-      padding: 0.4rem;
+      padding: 0.5rem;
     }
   }
 
