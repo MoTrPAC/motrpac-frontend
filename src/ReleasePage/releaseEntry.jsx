@@ -368,9 +368,7 @@ function ReleaseEntry({ profile, currentView }) {
               <button
                 type="button"
                 className={
-                  visibleReleases < 1
-                    ? 'btn btn-secondary btn-sm'
-                    : 'btn btn-danger btn-sm'
+                  visibleReleases < 1 ? 'btn btn-secondary' : 'btn btn-danger'
                 }
                 onClick={toggleViewReleaseLength}
               >
@@ -386,7 +384,9 @@ function ReleaseEntry({ profile, currentView }) {
   }
 
   return (
-    <div className="data-release-content-container">{renderReleaseEntry()}</div>
+    <div className="data-release-content-container border-top">
+      {renderReleaseEntry()}
+    </div>
   );
 }
 
