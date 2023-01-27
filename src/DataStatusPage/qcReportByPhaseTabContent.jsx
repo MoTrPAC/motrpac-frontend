@@ -23,7 +23,7 @@ function qcReportByPhaseTabContent({ data, phases }) {
     const filteredData = {};
     Object.keys(data).forEach((key) => {
       const filteredList = data[key].filter(
-        (item) => item.phase.toUpperCase().indexOf(phase.toUpperCase()) > -1
+        (item) => item.phase.toUpperCase().indexOf(phase.toUpperCase()) > -1 && !item.raw_files_fm
       );
       filteredData[key] = filteredList;
     });
