@@ -89,6 +89,17 @@ export function SearchPage({
     return null;
   }
 
+  // render placeholder text in primary search input field
+  function renderPlaceholder() {
+    if (searchParams.ktype === 'protein') {
+      return 'Example: NP_001000006.1, NP_001001508.2, NP_001005898.3';
+    }
+    if (searchParams.ktype === 'metab') {
+      return 'Example: 8,9-EpETrE, C18:1 LPC plasmalogen B';
+    }
+    return 'Example: BRD2, SMAD3, ID1';
+  }
+
   return (
     <div className="searchPage px-3 px-md-4 mb-3">
       <form id="searchForm" name="searchForm">
@@ -119,7 +130,7 @@ export function SearchPage({
                 id="keys"
                 name="keys"
                 className="form-control search-input-kype flex-grow-1"
-                placeholder="Example: BRD2, SMAD3, ID1"
+                placeholder={renderPlaceholder()}
                 value={searchParams.keys}
                 onChange={(e) => changeParam('keys', e.target.value)}
               />
