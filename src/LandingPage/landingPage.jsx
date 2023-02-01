@@ -205,7 +205,7 @@ export function LandingPage({ isAuthenticated, profile }) {
                   Center, Consortium Coordinating Center.
                 </p>
                 <a
-                  href="https://commonfund.nih.gov/MolecularTransducers/overview#ClinicalCenter"
+                  href="https://commonfund.nih.gov/MolecularTransducers#ClinicalCenter"
                   className="btn btn-success"
                   role="button"
                   target="_new"
