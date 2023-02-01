@@ -498,7 +498,6 @@ SearchPage.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
   }),
-  expanded: PropTypes.bool,
   searchResults: PropTypes.shape({
     result: PropTypes.object,
     total: PropTypes.number,
@@ -532,7 +531,6 @@ SearchPage.propTypes = {
 
 SearchPage.defaultProps = {
   profile: {},
-  expanded: true,
   searchResults: {},
   scope: 'all',
   searching: false,
@@ -549,7 +547,6 @@ SearchPage.defaultProps = {
 const mapStateToProps = (state) => ({
   ...state.auth,
   ...state.search,
-  expanded: state.sidebar.expanded,
   allFiles: state.browseData.allFiles,
   lastModified: state.dataStatus.qcData.lastModified,
 });
