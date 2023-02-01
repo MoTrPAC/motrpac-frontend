@@ -63,7 +63,7 @@ export function LandingPage({ isAuthenticated, profile }) {
   // Redirect authenticated users to protected route
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   if (isAuthenticated && hasAccess) {
-    return <Redirect to="/home" />;
+    return <Redirect to="/search" />;
   }
 
   // Play or stop the particles animation
