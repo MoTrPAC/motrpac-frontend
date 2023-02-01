@@ -41,10 +41,10 @@ function FeatureLinks({
       eventHandler: null,
     },
     {
-      route: 'browse-data',
+      route: 'data-download',
       description: 'Browse and download data by tissue, assay, or omics.',
       icon: 'view_list',
-      title: 'Browse Data',
+      title: 'Download Data',
       eventHandler: handleDataObjectFetch,
     },
     {
