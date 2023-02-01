@@ -14,8 +14,8 @@ function BrowseDataFilter({
   const fileFilters = [...browseDataFilters];
   if (!userType || (userType && userType !== 'internal')) {
     fileFilters.forEach((item) => {
-      if (item.keyName === 'phase') {
-        item.filters = ['PASS1B-06'];
+      if (item.keyName === 'study') {
+        item.filters = ['Endurance Training'];
       }
       if (item.keyName === 'tissue_name') {
         item.filters = pass1bTissues;

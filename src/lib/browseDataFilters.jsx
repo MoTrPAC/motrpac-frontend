@@ -29,9 +29,9 @@ export const tissueList = tissues.sort((a, b) =>
 
 const browseDataFilters = [
   {
-    keyName: 'phase',
-    name: 'Phase',
-    filters: ['PASS1A-06', 'PASS1B-06'],
+    keyName: 'study',
+    name: 'Study',
+    filters: ['Acute Exercise', 'Endurance Training'],
   },
   {
     keyName: 'tissue_name',
