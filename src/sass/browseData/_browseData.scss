@@ -1,5 +1,10 @@
 .browseDataPage {
   .browse-data-summary-container {
+    .inline-link-with-icon .material-icons {
+      font-size: inherit;
+      line-height: 1.5;
+    }
+
     .motrpac-collab-linkout {
       .material-icons {
         color: #ff9900;
