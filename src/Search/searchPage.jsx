@@ -104,7 +104,7 @@ export function SearchPage({
     <div className="searchPage px-3 px-md-4 mb-3">
       <form id="searchForm" name="searchForm">
         {userType && userType === 'external' && <EmbargoExtension />}
-        <PageTitle title="Search differential expression data" />
+        <PageTitle title="Search differential abundance data" />
         <div className="search-content-container">
           <div className="search-summary-container row mb-4">
             <div className="lead col-12">

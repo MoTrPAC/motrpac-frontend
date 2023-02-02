@@ -176,7 +176,7 @@ export function Navbar({
                   aria-labelledby="exploreNavbarItemMenuLink"
                 >
                   <Link to="/search" className="dropdown-item">
-                    Differential Expression
+                    Differential Abundance
                   </Link>
                   <Link to="/gene-centric" className="dropdown-item">
                     Gene-centric View
