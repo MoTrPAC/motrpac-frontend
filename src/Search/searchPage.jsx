@@ -35,7 +35,7 @@ export function SearchPage({
   handleQCDataFetch,
   allFiles,
   lastModified,
-  enabledFilters,
+  hasResultFilters,
 }) {
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
@@ -184,7 +184,7 @@ export function SearchPage({
                     changeResultFilter={changeResultFilter}
                     handleSearch={handleSearch}
                     resetSearch={resetSearch}
-                    enabledFilters={enabledFilters}
+                    hasResultFilters={hasResultFilters}
                   />
                 </div>
                 <div className="tabbed-content col-md-9">
@@ -532,7 +532,7 @@ SearchPage.propTypes = {
   handleQCDataFetch: PropTypes.func.isRequired,
   allFiles: PropTypes.arrayOf(PropTypes.shape({})),
   lastModified: PropTypes.string,
-  enabledFilters: PropTypes.shape({
+  hasResultFilters: PropTypes.shape({
     assay: PropTypes.object,
     comparison_group: PropTypes.object,
     sex: PropTypes.object,
@@ -552,7 +552,7 @@ SearchPage.defaultProps = {
   downloadError: '',
   allFiles: [],
   lastModified: '',
-  enabledFilters: {},
+  hasResultFilters: {},
 };
 
 const mapStateToProps = (state) => ({

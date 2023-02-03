@@ -13,7 +13,7 @@ function SearchResultFilters({
   changeResultFilter,
   handleSearch,
   resetSearch,
-  enabledFilters,
+  hasResultFilters,
 }) {
   const [inputError, setInputError] = useState(false);
   // FIXME - this is a hack to get the search filters such as tissue and assay
@@ -65,8 +65,8 @@ function SearchResultFilters({
   ).filters = customizeAssayList();
 
   const commonSearchResultFilters = commonSearchFilters.map((item) => (
-    <div key={item.name} className="card filter-module mb-4">
-      <div className="card-header font-weight-bold d-flex align-item-center justify-content-between">
+    <div key={item.name} className="card filter-module mb-3">
+      <div className="card-header font-weight-bold">
         <div className="card-header-label">{item.name}</div>
       </div>
       <div className="collapse show" id={`filters-${item.keyName}`}>
@@ -76,10 +76,10 @@ function SearchResultFilters({
               searchParams.filters[item.keyName] &&
               searchParams.filters[item.keyName].indexOf(filter.filter_value) >
                 -1;
-            const isDisabledFilter =
-              enabledFilters[item.keyName] &&
-              Object.keys(enabledFilters[item.keyName]).length &&
-              !enabledFilters[item.keyName][filter.filter_value.toLowerCase()];
+            const resultCount = hasResultFilters &&
+            hasResultFilters[item.keyName] &&
+              Object.keys(hasResultFilters[item.keyName]).length &&
+              hasResultFilters[item.keyName][filter.filter_value.toLowerCase()];
             return (
               <button
                 key={filter.filter_label}
@@ -88,12 +88,17 @@ function SearchResultFilters({
                   isActiveFilter ? 'activeFilter' : ''
                 }`}
                 onClick={() => {
-                  if (isDisabledFilter) return false;
                   changeResultFilter(item.keyName, filter.filter_value, null);
                 }}
-                disabled={isDisabledFilter}
               >
-                {filter.filter_label}
+                {filter.filter_label}{' '}
+                {resultCount > 0 ? (
+                  <span className="badge badge-pill badge-info">
+                    {resultCount}
+                  </span>
+                ) : (
+                  <span className="badge badge-pill badge-dark">0</span>
+                )}
               </button>
             );
           })}
@@ -193,7 +198,7 @@ SearchResultFilters.propTypes = {
   changeResultFilter: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
   resetSearch: PropTypes.func.isRequired,
-  enabledFilters: PropTypes.shape({
+  hasResultFilters: PropTypes.shape({
     assay: PropTypes.object,
     comparison_group: PropTypes.object,
     sex: PropTypes.object,
@@ -202,7 +207,7 @@ SearchResultFilters.propTypes = {
 };
 
 SearchResultFilters.defaultProps = {
-  enabledFilters: {},
+  hasResultFilters: {},
 };
 
 export default SearchResultFilters;
