@@ -62,10 +62,10 @@ function GeneCentricView({
         <div className="gene-centric-view-container">
           <div className="gene-centric-view-summary-container row mb-4">
             <div className="lead col-12">
-              Search by gene symbol and examine the training response of its
-              related molecules (e.g. protein phosphorylation/acetylation,
-              promoter methylation, transcript) in the 6-month old rats'
-              endurance training data.
+              Search by gene ID to examine and visualize the timewise endurance
+              training response across omes' (e.g. transcript, protein, protein
+              phosphorylation/acetylation and promoter methylation) for that
+              gene over 8 weeks of training in adult rats.
             </div>
           </div>
           <div className="es-search-ui-container d-flex align-items-center w-100">
