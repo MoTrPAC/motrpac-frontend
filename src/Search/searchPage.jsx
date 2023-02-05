@@ -108,9 +108,9 @@ export function SearchPage({
         <div className="search-content-container">
           <div className="search-summary-container row mb-4">
             <div className="lead col-12">
-              Search by genes, protein IDs, or metabolite names to examine the
-              training response of its related molecules in 6-month old rats'
-              endurance training (PASS1B) data.{' '}
+              Search by gene ID, protein ID or metabolite name to examine the
+              timewise endurance training response over 8 weeks of training in
+              adult rats.{' '}
               <span className="font-weight-bold">
                 Multiple search terms MUST be separated by comma and space.
                 Examples: "NP_001000006.1, NP_001001508.2, NP_001005898.3" or
