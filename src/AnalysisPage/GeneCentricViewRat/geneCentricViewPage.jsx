@@ -76,7 +76,7 @@ function GeneCentricView({
                 name="keys"
                 pattern="[a-zA-Z0-9]+"
                 className="form-control search-input-kype flex-grow-1"
-                placeholder="Enter a gene symbol (Example: SMAD3)"
+                placeholder="Example: BRD2, SMAD3, ID1"
                 value={geneSearchInputValue}
                 onChange={(e) => geneSearchInputChange(e.target.value)}
               />
