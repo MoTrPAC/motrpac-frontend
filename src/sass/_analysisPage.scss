@@ -130,6 +130,15 @@
   }
 }
 
+.graphicalClusteringPage {
+  .graphical-clustering-summary-container {
+    .inline-link-with-icon .material-icons {
+      font-size: inherit;
+      line-height: 1.5;
+    }
+  }
+}
+
 @media (max-width: 1480px) {
   .analysisPage {
     .animal-phenotype-data {

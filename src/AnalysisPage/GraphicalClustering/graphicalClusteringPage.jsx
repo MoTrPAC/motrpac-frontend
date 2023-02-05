@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import IframeResizer from 'iframe-resizer-react';
 import PageTitle from '../../lib/ui/pageTitle';
+import ExternalLink from '../../lib/ui/externalLink';
 
 const reportTissues = {
   ADRNL: 'Adrenal',
@@ -36,7 +37,17 @@ function GraphicalClustering() {
             over the training time course per tissue in adult rats. Compare
             responses between male and female rats, identify pathways affected
             in single or multiple omes' and explore what molecules drive those
-            enrichments.
+            enrichments. To learn more, see the{' '}
+            <ExternalLink
+              to="https://www.biorxiv.org/content/10.1101/2022.09.21.508770v1"
+              label="MoTrPAC Endurance Exercise Training Animal Study Landscape Preprint"
+            />{' '}
+            as well as the{' '}
+            <ExternalLink
+              to="https://motrpac.github.io/MotrpacRatTraining6mo/articles/MotrpacRatTraining6mo.html"
+              label="documentation"
+            />
+            .
           </div>
           <div className="graphical-clustering-content-container mt-2">
             <ReportControls tissue={tissue} toggleReport={setTissue} />
