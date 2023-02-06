@@ -8,7 +8,6 @@ import {
   VictoryAxis,
 } from 'victory';
 import { geneSearchTimewisePlotPropType } from './sharedlib';
-import { tissueList, assayList } from '../../lib/searchFilters';
 import roundNumbers from '../../lib/utils/roundNumbers';
 import colors from '../../lib/colors';
 
@@ -19,20 +18,6 @@ import colors from '../../lib/colors';
  * @returns One or more line plots
  */
 function TimeSeriesPlots({ plotData, selectedFeatures }) {
-  // Convert tissue value from raw data to display value
-  function transformTissueName(tissueName) {
-    const match = tissueList.find(
-      (filter) => filter.filter_value === tissueName
-    );
-    return match ? match.filter_label : tissueName;
-  }
-
-  // Convert assay value from raw data to display value
-  function transformAssayName(assayName) {
-    const match = assayList.find((filter) => filter.filter_value === assayName);
-    return match ? match.filter_label : assayName;
-  }
-
   // FIXME: This function needs to be simplified and modularized
   // Renders line plot using timewise data for female and male per gene, tissue, ome
   function getMatchingPlotData(feature) {
@@ -40,9 +25,9 @@ function TimeSeriesPlots({ plotData, selectedFeatures }) {
     const matchedRowsFemale = plotData.filter((row) => {
       return (
         row.feature_ID === feature.featureId &&
-        row.sex === 'female' &&
-        transformTissueName(row.tissue) === feature.tissue &&
-        transformAssayName(row.assay) === feature.assay
+        row.sex === 'Female' &&
+        row.tissue === feature.tissue &&
+        row.assay === feature.assay
       );
     });
 
@@ -50,9 +35,9 @@ function TimeSeriesPlots({ plotData, selectedFeatures }) {
     const matchedRowsMale = plotData.filter((row) => {
       return (
         row.feature_ID === feature.featureId &&
-        row.sex === 'male' &&
-        transformTissueName(row.tissue) === feature.tissue &&
-        transformAssayName(row.assay) === feature.assay
+        row.sex === 'Male' &&
+        row.tissue === feature.tissue &&
+        row.assay === feature.assay
       );
     });
 
@@ -265,7 +250,9 @@ function TimeSeriesPlots({ plotData, selectedFeatures }) {
         <div key={`${feature.featureId}-${feature.tissue}-${feature.assay}`}>
           <div className="d-flex align-items-center justify-content-center">
             <div className="font-weight-bold plot-header">
-              {`${feature.gene_symbol.toUpperCase()}, ${feature.tissue}, ${feature.assay} (P-value: ${feature.p_value})`}
+              {`${feature.gene_symbol.toUpperCase()}, ${feature.tissue}, ${
+                feature.assay
+              } (P-value: ${feature.p_value})`}
             </div>
             <div className="plot-lengend d-flex align-items-center ml-3">
               <span className="material-icons legend-icon female mr-1">
