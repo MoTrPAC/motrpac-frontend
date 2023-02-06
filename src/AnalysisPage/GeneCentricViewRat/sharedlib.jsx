@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import roundNumbers from '../../lib/utils/roundNumbers';
-import { tissueList, assayList } from '../../lib/searchFilters';
 
 export const geneSearchParamsPropType = {
   ktype: PropTypes.string,
@@ -12,7 +10,12 @@ export const geneSearchParamsPropType = {
     assay: PropTypes.arrayOf(PropTypes.string),
     tissue: PropTypes.arrayOf(PropTypes.string),
   }),
-  fields: PropTypes.arrayOf(PropTypes.string),
+  fields: PropTypes.shape({
+    timewise: PropTypes.arrayOf(PropTypes.string),
+    training: PropTypes.arrayOf(PropTypes.string),
+  }),
+  size: PropTypes.number,
+  start: PropTypes.number,
   debug: PropTypes.bool,
   save: PropTypes.bool,
 };
@@ -249,6 +252,7 @@ export const transformData = (arr) => {
   tranformArray.forEach((item) => {
     // Transform gene values
     if (item.gene_symbol && item.gene_symbol.length) {
+      item.gene_symbol_raw = item.gene_symbol;
       const newGeneVal = item.gene_symbol;
       item.gene_symbol = (
         <a
@@ -259,37 +263,6 @@ export const transformData = (arr) => {
           {newGeneVal.toUpperCase()}
         </a>
       );
-    }
-    // Transform tissue values
-    if (item.tissue && item.tissue.length) {
-      const matchedTissue = tissueList.find(
-        (filter) => filter.filter_value === item.tissue
-      );
-      item.tissue = matchedTissue && matchedTissue.filter_label;
-    }
-    // Transform assay values
-    if (item.assay && item.assay.length) {
-      const matchedAssay = assayList.find(
-        (filter) => filter.filter_value === item.assay
-      );
-      item.assay = matchedAssay && matchedAssay.filter_label;
-    }
-    // Round values
-    if (item.p_value && item.p_value.length) {
-      const newPVal = roundNumbers(item.p_value, 4);
-      item.p_value = newPVal;
-    }
-    if (item.adj_p_value && item.adj_p_value.length) {
-      const newAdjPVal = roundNumbers(item.adj_p_value, 4);
-      item.adj_p_value = newAdjPVal;
-    }
-    if (item.p_value_male && item.p_value_male.length) {
-      const newPValMale = roundNumbers(item.p_value_male, 4);
-      item.p_value_male = newPValMale;
-    }
-    if (item.p_value_female && item.p_value_female.length) {
-      const newPValFemale = roundNumbers(item.p_value_female, 4);
-      item.p_value_female = newPValFemale;
     }
   });
   return tranformArray;
