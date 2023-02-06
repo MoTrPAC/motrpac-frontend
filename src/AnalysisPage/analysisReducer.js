@@ -21,22 +21,31 @@ export const defaultGeneSearchParams = {
     assay: [],
     tissue: [],
   },
-  fields: [
-    'gene_symbol',
-    'feature_ID',
-    'tissue',
-    'assay',
-    'sex',
-    'comparison_group',
-    'logFC',
-    'logFC_se',
-    'p_value',
-    'adj_p_value',
-    'p_value_male',
-    'p_value_female',
-  ],
+  fields: {
+    timewise: [
+      'gene_symbol',
+      'feature_ID',
+      'tissue',
+      'assay',
+      'sex',
+      'comparison_group',
+      'logFC',
+      'logFC_se',
+    ],
+    training: [
+      'gene_symbol',
+      'feature_ID',
+      'tissue',
+      'assay',
+      'p_value',
+      'adj_p_value',
+      'p_value_male',
+      'p_value_female',
+    ],
+  },
   unique_fields: ['tissue', 'assay'],
-  size: 25000,
+  size: 10000,
+  start: 0,
   save: false,
 };
 
@@ -60,7 +69,7 @@ export const defaultAnalysisState = {
   geneSearching: false,
   geneSearchError: '',
   scope: 'all',
-  enabledFilters: {},
+  hasResultFilters: {},
 };
 
 export default function AnalysisReducer(
@@ -150,9 +159,10 @@ export default function AnalysisReducer(
               }
             : action.geneSearchResults,
         geneSearching: false,
-        enabledFilters: action.geneSearchResults.uniqs
-          ? action.geneSearchResults.uniqs
-          : state.enabledFilters,
+        hasResultFilters:
+          action.geneSearchResults.uniqs && action.scope === 'all'
+            ? action.geneSearchResults.uniqs
+            : state.hasResultFilters,
       };
     // Revert param values to default
     case GENE_SEARCH_RESET: {
@@ -169,7 +179,7 @@ export default function AnalysisReducer(
         geneSearching: false,
         geneSearchError: '',
         scope: 'all',
-        enabledFilters: {},
+        hasResultFilters: {},
       };
     }
     // Handle secondary filters: tissue, assay
