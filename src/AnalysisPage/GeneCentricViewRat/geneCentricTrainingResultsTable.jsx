@@ -198,7 +198,7 @@ function TrainingDataTable({ columns, data, plotData, geneSymbol }) {
         featureId: item.original.feature_ID,
         tissue: item.original.tissue,
         assay: item.original.assay,
-        gene_symbol: geneSymbol,
+        gene_symbol: item.original.gene_symbol_raw,
         p_value: item.original.p_value,
       };
     });
