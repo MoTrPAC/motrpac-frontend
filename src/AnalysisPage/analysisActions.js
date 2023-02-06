@@ -60,10 +60,11 @@ function geneSearchFailure(geneSearchError = '') {
   };
 }
 
-function geneSearchSuccess(geneSearchResults) {
+function geneSearchSuccess(geneSearchResults, scope) {
   return {
     type: GENE_SEARCH_SUCCESS,
     geneSearchResults,
+    scope,
   };
 }
 
@@ -108,7 +109,7 @@ function handleGeneCentricSearch(params, geneInputValue, scope) {
         if (response.data.error) {
           dispatch(geneSearchFailure(response.data.error));
         }
-        dispatch(geneSearchSuccess(response.data));
+        dispatch(geneSearchSuccess(response.data, scope));
       })
       .catch((err) => {
         dispatch(geneSearchFailure(`${err.name}: ${err.message}`));
