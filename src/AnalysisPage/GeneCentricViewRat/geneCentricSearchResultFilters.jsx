@@ -12,7 +12,7 @@ function GeneCentricSearchResultFilters({
   handleGeneCentricSearch,
   geneSearchChangeFilter,
   geneSearchInputValue,
-  enabledFilters,
+  hasResultFilters,
 }) {
   // FIXME - this is a hack to get the search filters such as tissue and assay
   // to render accordingly to the ktype (gene)
@@ -47,10 +47,11 @@ function GeneCentricSearchResultFilters({
               geneSearchParams.filters[item.keyName].indexOf(
                 filter.filter_value
               ) > -1;
-            const isDisabledFilter =
-              enabledFilters[item.keyName] &&
-              Object.keys(enabledFilters[item.keyName]).length &&
-              !enabledFilters[item.keyName][filter.filter_value.toLowerCase()];
+            const resultCount =
+              hasResultFilters &&
+              hasResultFilters[item.keyName] &&
+              Object.keys(hasResultFilters[item.keyName]).length &&
+              hasResultFilters[item.keyName][filter.filter_value.toLowerCase()];
             return (
               <button
                 key={filter.filter_label}
@@ -58,11 +59,11 @@ function GeneCentricSearchResultFilters({
                 className={`btn filterBtn ${
                   isActiveFilter ? 'activeFilter' : ''
                 }`}
-                onClick={() => {
-                  if (isDisabledFilter) return false;
+                onClick={(e) => {
+                  e.preventDefault();
                   geneSearchChangeFilter(item.keyName, filter.filter_value);
                 }}
-                disabled={isDisabledFilter}
+                disabled={!resultCount}
               >
                 {filter.filter_label}
               </button>
@@ -104,14 +105,14 @@ GeneCentricSearchResultFilters.propTypes = {
   handleGeneCentricSearch: PropTypes.func.isRequired,
   geneSearchChangeFilter: PropTypes.func.isRequired,
   geneSearchInputValue: PropTypes.string.isRequired,
-  enabledFilters: PropTypes.shape({
+  hasResultFilters: PropTypes.shape({
     assay: PropTypes.object,
     tissue: PropTypes.object,
   }),
 };
 
 GeneCentricSearchResultFilters.defaultProps = {
-  enabledFilters: {},
+  hasResultFilters: {},
 };
 
 export default GeneCentricSearchResultFilters;
