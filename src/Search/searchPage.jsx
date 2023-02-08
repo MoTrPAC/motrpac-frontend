@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Typeahead } from 'react-bootstrap-typeahead';
 import PageTitle from '../lib/ui/pageTitle';
 import TimewiseResultsTable from './timewiseTable';
 import TrainingResultsTable from './trainingResultsTable';
@@ -15,6 +16,11 @@ import { searchParamsDefaultProps, searchParamsPropType } from './sharedlib';
 import FeatureLinks from './featureLinks';
 import IconSet from '../lib/iconSet';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
+import { genes } from '../data/genes';
+import { metabolites } from '../data/metabolites';
+
+// Import as a module in your JS
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 export function SearchPage({
   profile,
@@ -37,6 +43,7 @@ export function SearchPage({
   lastModified,
   hasResultFilters,
 }) {
+  const [multiSelections, setMultiSelections] = useState([]);
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
   // Function to map array of keys to each array of values for each row
@@ -100,6 +107,13 @@ export function SearchPage({
     return 'Example: BRD2, SMAD3, ID1';
   }
 
+  // FIXME: transform react-bootstrap-typeahead state from array to string
+  function formatSearchInput() {
+    const newArr = [];
+    multiSelections.forEach((item) => newArr.push(item.id));
+    return newArr.join(', ');
+  }
+
   return (
     <div className="searchPage px-3 px-md-4 mb-3">
       <form id="searchForm" name="searchForm">
@@ -125,6 +139,7 @@ export function SearchPage({
               resetSearch={resetSearch}
             />
             <div className="search-box-input-group d-flex align-items-center flex-grow-1">
+              {/*  
               <input
                 type="text"
                 id="keys"
@@ -134,6 +149,40 @@ export function SearchPage({
                 value={searchParams.keys}
                 onChange={(e) => changeParam('keys', e.target.value)}
               />
+              */}
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text material-icons">
+                    pest_control_rodent
+                  </span>
+                </div>
+                {searchParams.ktype === 'gene' ||
+                searchParams.ktype === 'metab' ? (
+                  <Typeahead
+                    id="dea-search-typeahead-multiple"
+                    labelKey="id"
+                    multiple
+                    onChange={setMultiSelections}
+                    options={
+                      searchParams.ktype === 'gene' ? genes : metabolites
+                    }
+                    placeholder={renderPlaceholder()}
+                    selected={multiSelections}
+                    minLength={2}
+                  />
+                ) : null}
+                {searchParams.ktype === 'protein' && (
+                  <input
+                    type="text"
+                    id="keys"
+                    name="keys"
+                    className="form-control search-input-kype flex-grow-1"
+                    placeholder={renderPlaceholder()}
+                    value={searchParams.keys}
+                    onChange={(e) => changeParam('keys', e.target.value)}
+                  />
+                )}
+              </div>
               <PrimaryOmicsFilter
                 omics={searchParams.omics}
                 toggleOmics={changeParam}
@@ -144,7 +193,7 @@ export function SearchPage({
                   className="btn btn-primary search-submit"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleSearch(searchParams, 'all');
+                    handleSearch(searchParams, multiSelections.length ? formatSearchInput() : searchParams.keys, 'all');
                   }}
                 >
                   Search
@@ -152,7 +201,10 @@ export function SearchPage({
                 <button
                   type="button"
                   className="btn btn-secondary search-reset ml-2"
-                  onClick={() => resetSearch('all')}
+                  onClick={() => {
+                    resetSearch('all');
+                    setMultiSelections([]);
+                  }}
                 >
                   Reset
                 </button>
@@ -567,8 +619,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(SearchActions.changeParam(field, value)),
   changeResultFilter: (field, value, bound) =>
     dispatch(SearchActions.changeResultFilter(field, value, bound)),
-  handleSearch: (params, scope) =>
-    dispatch(SearchActions.handleSearch(params, scope)),
+  handleSearch: (params, geneInputValue, scope) =>
+    dispatch(SearchActions.handleSearch(params, geneInputValue, scope)),
   resetSearch: (scope) => dispatch(SearchActions.searchReset(scope)),
   handleSearchDownload: (params, analysis) =>
     dispatch(SearchActions.handleSearchDownload(params, analysis)),
