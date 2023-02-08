@@ -184,7 +184,7 @@ export function Navbar({
                   <Link to="/graphical-clustering" className="dropdown-item">
                     Graphical Clustering
                   </Link>
-                  {isAuthenticated && hasAccess ? (
+                  {isAuthenticated && hasAccess && userType === 'internal' ? (
                     <>
                       <a
                         href="https://collab.motrpac-data.org/hub/oauth_login?next=%2Fhub%2Fhome"
@@ -194,7 +194,7 @@ export function Navbar({
                       >
                         MoTrPAC Collab
                       </a>
-                      <Link to="/methods" className="dropdown-item">
+                      <Link to="/gene-centric" className="dropdown-item">
                         Phenotype
                       </Link>
                     </>
@@ -209,16 +209,18 @@ export function Navbar({
                     </Link>
                   </li>
                   <li className="nav-item navItem">
-                    <Link to="/qc-data-monitor" className="nav-link">
-                      QC Data Monitor
-                    </Link>
-                  </li>
-                  <li className="nav-item navItem">
                     <Link to="/releases" className="nav-link">
                       Releases
                     </Link>
                   </li>
                 </>
+              ) : null}
+              {isAuthenticated && hasAccess && userType === 'internal' ? (
+                <li className="nav-item navItem">
+                  <Link to="/qc-data-monitor" className="nav-link">
+                    QC Data Monitor
+                  </Link>
+                </li>
               ) : null}
               {!isAuthenticated && !hasAccess ? (
                 <li className="nav-item navItem dropdown">
