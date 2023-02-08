@@ -31,6 +31,19 @@
       }
     }
 
+    .search-box-input-group {
+      .input-group-prepend {
+        .material-icons {
+          color: $stanford-black;
+          font-size: 1.75rem;
+          line-height: 0;
+        }
+      }
+      .rbt {
+        flex-grow: 3;
+      }
+    }
+
     .form-control.global-filter {
       font-size: 0.9rem;
       width: 240px;

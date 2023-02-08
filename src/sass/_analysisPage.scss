@@ -67,6 +67,19 @@
     }
   }
 
+  .search-box-input-group {
+    .input-group-prepend {
+      .material-icons {
+        color: $stanford-black;
+        font-size: 1.75rem;
+        line-height: 0;
+      }
+    }
+    .rbt {
+      flex-grow: 3;
+    }
+  }
+
   .pagination-page-size,
   .search-results-usage-instructions,
   .view-plots-button {
