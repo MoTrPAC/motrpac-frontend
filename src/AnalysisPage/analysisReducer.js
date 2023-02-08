@@ -14,9 +14,7 @@ import {
 export const defaultGeneSearchParams = {
   ktype: 'gene',
   keys: '',
-  omics: 'all',
-  index:
-    'transcriptomics_training, transcriptomics_timewise, proteomics_untargeted_training, proteomics_untargeted_timewise',
+  omics: ['transcriptomics', 'proteomics'],
   filters: {
     assay: [],
     tissue: [],
@@ -130,7 +128,7 @@ export default function AnalysisReducer(
     // Handle form submit event
     case GENE_SEARCH_SUBMIT: {
       const params = { ...state.geneSearchParams };
-      params.keys = state.geneSearchInputValue;
+      params.keys = action.input;
       return {
         ...state,
         geneSearchResults: {},
