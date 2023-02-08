@@ -3,7 +3,7 @@ import React from 'react';
 function EmbargoExtension() {
   return (
     <div
-      className="alert alert-warning alert-dismissible fade show d-flex align-items-center justify-content-between w-100 mt-2 mb-0 alert-embargo-extension"
+      className="alert alert-warning alert-dismissible fade show d-flex align-items-center justify-content-between w-100 mt-2 mb-4 alert-embargo-extension"
       role="alert"
     >
       <span>

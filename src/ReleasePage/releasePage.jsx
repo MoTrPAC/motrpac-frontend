@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReleaseEntry from './releaseEntry';
 import IconSet from '../lib/iconSet';
+import EmbargoExtension from '../lib/embargoExtension';
 
 /**
  * Renders the data release UIs
@@ -26,25 +27,14 @@ export function ReleasePage({ profile }) {
   if (userType && userType === 'external') {
     return (
       <div className="dataReleasePage external px-3 px-md-4 mb-3 w-100">
-        <div
-          className="alert alert-warning alert-dismissible fade show d-flex align-items-center justify-content-between w-100"
-          role="alert"
-        >
-          <span>
-            Please note that the publication embargo on MoTrPAC data has been
-            extended until release of additional control data. The control data
-            has been delayed due to the COVID-19 pandemic and we apologize for
-            any inconvenience caused.
-          </span>
-          <button
-            type="button"
-            className="close"
-            data-dismiss="alert"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
+        <div className="alert alert-info mb-4" role="alert">
+          This is a limited data set from adult rats (6-month old) that
+          performed an acute bout of endurance exercise. Please see the{' '}
+          <Link to="/data-download">data download page</Link> if you are
+          interested in the full experimental data set from endurance trained
+          (1wk, 2wks, 4wks or 8wks) compared to untrained adult rats.
         </div>
+        <EmbargoExtension />
         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 page-header">
           <div
             className="page-title"
