@@ -6,7 +6,6 @@ import { Typeahead } from 'react-bootstrap-typeahead';
 import PageTitle from '../lib/ui/pageTitle';
 import TimewiseResultsTable from './timewiseTable';
 import TrainingResultsTable from './trainingResultsTable';
-import EmbargoExtension from '../lib/embargoExtension';
 import SearchActions from './searchActions';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
@@ -117,7 +116,6 @@ export function SearchPage({
   return (
     <div className="searchPage px-3 px-md-4 mb-3">
       <form id="searchForm" name="searchForm">
-        {userType && userType === 'external' && <EmbargoExtension />}
         <PageTitle title="Search differential abundance data" />
         <div className="search-content-container">
           <div className="search-summary-container row mb-4">
