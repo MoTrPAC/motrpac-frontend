@@ -7,11 +7,11 @@ import History from './history';
 import NavbarConnected from '../Navbar/navbar';
 import FooterConnected from '../Footer/footer';
 import LandingPageConnected from '../LandingPage/landingPage';
-import LinkoutPageConnected from '../LinkoutPage/linkoutPage';
+import LinkoutPage from '../LinkoutPage/linkoutPage';
 import AnalysisHomePageConnected from '../AnalysisPage/analysisHomePage';
 import MethodsConnected from '../MethodsPage/methods';
-import TeamPageConnected from '../TeamPage/teamPage';
-import ContactConnected from '../ContactPage/contact';
+import TeamPage from '../TeamPage/teamPage';
+import Contact from '../ContactPage/contact';
 import ErrorPageConnected from '../ErrorPage/error';
 import ReleasePageConnected from '../ReleasePage/releasePage';
 import DataStatusPageConnected from '../DataStatusPage/dataStatusPage';
@@ -19,7 +19,7 @@ import DataSummaryPageConnected from '../DataSummaryPage/dataSummaryPage';
 import DataAccessPageConnected from '../DataAccess/dataAccessPage';
 import RelatedStudy from '../RelatedStudy/relatedStudy';
 import HeritageProteomics from '../RelatedStudy/heritageProteomics';
-import AnnouncementsPageConnected from '../AnnouncementsPage/announcementsPage';
+import AnnouncementsPage from '../AnnouncementsPage/announcementsPage';
 import BrowseDataPageConnected from '../BrowseDataPage/browseDataPage';
 import SearchPageConnected from '../Search/searchPage';
 import GeneCentricViewConnected from '../AnalysisPage/GeneCentricViewRat/geneCentricViewPage';
@@ -51,7 +51,7 @@ function App({ history = History }) {
               />
               <Route
                 path="/external-links"
-                component={withTracker(LinkoutPageConnected)}
+                component={withTracker(LinkoutPage)}
               />
               <PrivateRoute
                 path="/analysis/:subjectType"
@@ -61,14 +61,11 @@ function App({ history = History }) {
                 path="/methods"
                 component={withTracker(MethodsConnected)}
               />
-              <Route path="/team" component={withTracker(TeamPageConnected)} />
-              <Route
-                path="/contact"
-                component={withTracker(ContactConnected)}
-              />
+              <Route path="/team" component={withTracker(TeamPage)} />
+              <Route path="/contact" component={withTracker(Contact)} />
               <Route
                 path="/announcements"
-                component={withTracker(AnnouncementsPageConnected)}
+                component={withTracker(AnnouncementsPage)}
               />
               <Route
                 path="/error"
