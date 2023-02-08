@@ -22,23 +22,37 @@ export const searchParamsDefaultProps = {
     adj_p_value: { min: '', max: '' },
     logFC: { min: '', max: '' },
   },
-  fields: [
-    'gene_symbol',
-    'metabolite',
-    'dataset',
-    'feature_ID',
-    'tissue',
-    'assay',
-    'sex',
-    'comparison_group',
-    'logFC',
-    'p_value',
-    'adj_p_value',
-    'selection_fdr',
-    'p_value_male',
-    'p_value_female',
-  ],
+  fields: {
+    timewise: [
+      'gene_symbol',
+      'metabolite',
+      'dataset',
+      'feature_ID',
+      'tissue',
+      'assay',
+      'sex',
+      'comparison_group',
+      'logFC',
+      'p_value',
+      'adj_p_value',
+      'selection_fdr',
+    ],
+    training: [
+      'gene_symbol',
+      'metabolite',
+      'dataset',
+      'feature_ID',
+      'tissue',
+      'assay',
+      'p_value',
+      'adj_p_value',
+      'p_value_male',
+      'p_value_female',
+    ],
+  },
+  unique_fields: ['tissue', 'assay', 'sex', 'comparison_group'],
   size: 25000,
+  start: 0,
   debug: true,
   save: false,
 };
@@ -66,8 +80,13 @@ export const searchParamsPropType = {
       max: PropTypes.string,
     }),
   }),
-  fields: PropTypes.arrayOf(PropTypes.string),
+  fields: PropTypes.shape({
+    timewise: PropTypes.arrayOf(PropTypes.string),
+    training: PropTypes.arrayOf(PropTypes.string),
+  }),
+  unique_fields: PropTypes.arrayOf(PropTypes.string),
   size: PropTypes.number,
+  start: PropTypes.number,
   debug: PropTypes.bool,
   save: PropTypes.bool,
 };
@@ -704,34 +723,43 @@ export const transformData = (arr) => {
       item.dataset = matchedDataset && matchedDataset.filter_label;
     }
     // Transform tissue values
+    /*
     if (item.tissue && item.tissue.length) {
       const matchedTissue = tissueList.find(
         (filter) => filter.filter_value === item.tissue
       );
       item.tissue = matchedTissue && matchedTissue.filter_label;
     }
+    */
     // Transform assay values
+    /*
     if (item.assay && item.assay.length) {
       const matchedAssay = assayList.find(
         (filter) => filter.filter_value === item.assay
       );
       item.assay = matchedAssay && matchedAssay.filter_label;
     }
+    */
     // Transform sex values
+    /*
     if (item.sex && item.sex.length) {
       const matchedSex = sexList.find(
         (filter) => filter.filter_value.toLowerCase() === item.sex
       );
       item.sex = matchedSex && matchedSex.filter_label;
     }
+    */
     // Transform timepoint values
+    /*
     if (item.comparison_group && item.comparison_group.length) {
       const matchedTimepoint = timepointList.find(
         (filter) => filter.filter_value === item.comparison_group
       );
       item.comparison_group = matchedTimepoint && matchedTimepoint.filter_label;
     }
+    */
     // Round values
+    /*
     if (item.p_value && item.p_value.length) {
       const newPVal = roundNumbers(item.p_value, 4);
       item.p_value = newPVal;
@@ -756,6 +784,7 @@ export const transformData = (arr) => {
       const newPValFemale = roundNumbers(item.p_value_female, 4);
       item.p_value_female = newPValFemale;
     }
+    */
   });
   return tranformArray;
 };
