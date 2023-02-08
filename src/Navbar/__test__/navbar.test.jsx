@@ -33,9 +33,9 @@ describe('Navbar', () => {
     expect(defaultMountNav.find('.logOutBtn')).not.toHaveLength(1);
   });
 
-  test('Has Data Access nav link by default', () => {
-    expect(defaultMountNav.find('.nav-link').last().text()).toMatch(
-      'Data Access'
+  test('Has Downloads nav link by default', () => {
+    expect(defaultMountNav.find('.nav-link').first().text()).toMatch(
+      'Downloads'
     );
   });
 

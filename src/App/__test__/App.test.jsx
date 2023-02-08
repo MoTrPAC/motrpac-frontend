@@ -19,11 +19,11 @@ describe('<App />', () => {
     expect(component.length).toBe(1);
   });
 
-  test('It should contain eight <Route /> children', () => {
+  test('It should contain fifteen <Route /> children', () => {
     expect(component.find('Route').length).toBe(15);
   });
 
-  test('It should contain eight <PrivateRoute /> children', () => {
+  test('It should contain four <PrivateRoute /> children', () => {
     expect(component.find('PrivateRoute').length).toBe(4);
   });
 });
