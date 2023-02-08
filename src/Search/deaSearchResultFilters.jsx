@@ -22,7 +22,7 @@ function SearchResultFilters({
     if (searchParams.ktype === 'protein') {
       return tissueList.filter((t) =>
         t.filter_value.match(
-          /^(cortex|gastrconemius|heart|kidney|lung|liver|white adipose)$/
+          /^(cortex|gastrocnemius|heart|kidney|lung|liver|white adipose)$/
         )
       );
     }
@@ -76,8 +76,9 @@ function SearchResultFilters({
               searchParams.filters[item.keyName] &&
               searchParams.filters[item.keyName].indexOf(filter.filter_value) >
                 -1;
-            const resultCount = hasResultFilters &&
-            hasResultFilters[item.keyName] &&
+            const resultCount =
+              hasResultFilters &&
+              hasResultFilters[item.keyName] &&
               Object.keys(hasResultFilters[item.keyName]).length &&
               hasResultFilters[item.keyName][filter.filter_value.toLowerCase()];
             return (
@@ -87,18 +88,13 @@ function SearchResultFilters({
                 className={`btn filterBtn ${
                   isActiveFilter ? 'activeFilter' : ''
                 }`}
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   changeResultFilter(item.keyName, filter.filter_value, null);
                 }}
+                disabled={searchParams.ktype !== 'metab' && !resultCount}
               >
-                {filter.filter_label}{' '}
-                {resultCount > 0 ? (
-                  <span className="badge badge-pill badge-info">
-                    {resultCount}
-                  </span>
-                ) : (
-                  <span className="badge badge-pill badge-dark">0</span>
-                )}
+                {filter.filter_label}
               </button>
             );
           })}
@@ -182,7 +178,7 @@ function SearchResultFilters({
           className="btn btn-primary"
           onClick={(e) => {
             e.preventDefault();
-            handleSearch(searchParams, 'filters');
+            handleSearch(searchParams, searchParams.keys, 'filters');
           }}
           disabled={inputError}
         >
