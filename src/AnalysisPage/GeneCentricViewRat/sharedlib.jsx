@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 export const geneSearchParamsPropType = {
   ktype: PropTypes.string,
   keys: PropTypes.string,
-  omics: PropTypes.string,
-  index: PropTypes.string,
+  omics: PropTypes.arrayOf(PropTypes.string),
   filters: PropTypes.shape({
     assay: PropTypes.arrayOf(PropTypes.string),
     tissue: PropTypes.arrayOf(PropTypes.string),
