@@ -40,21 +40,12 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
  *
  * @returns {object} The data qc status table component
  */
-function GeneCentricTrainingResultsTable({
-  trainingData,
-  timewiseData,
-  geneSymbol,
-}) {
+function GeneCentricTrainingResultsTable({ trainingData, timewiseData }) {
   // Define table column headers
   const columns = useMemo(() => geneSearchTrainingTableColumns, []);
   const data = useMemo(() => transformData(trainingData), [trainingData]);
   return (
-    <TrainingDataTable
-      columns={columns}
-      data={data}
-      plotData={timewiseData}
-      geneSymbol={geneSymbol}
-    />
+    <TrainingDataTable columns={columns} data={data} plotData={timewiseData} />
   );
 }
 
@@ -65,7 +56,7 @@ function GeneCentricTrainingResultsTable({
  *
  * @returns {object} JSX representation of table on data qc status
  */
-function TrainingDataTable({ columns, data, plotData, geneSymbol }) {
+function TrainingDataTable({ columns, data, plotData }) {
   const [selectedFeatures, setSelectedFeatures] = useState([]);
 
   const filterTypes = React.useMemo(
@@ -92,7 +83,7 @@ function TrainingDataTable({ columns, data, plotData, geneSymbol }) {
       initialState: {
         pageIndex: 0,
         pageSize: 50,
-        pageCount: Math.ceil(data / 50),
+        pageCount: Math.ceil(data.length / 50),
       },
     },
     useFilters,
@@ -131,14 +122,13 @@ function TrainingDataTable({ columns, data, plotData, geneSymbol }) {
     headerGroups,
     prepareRow,
     preGlobalFilteredRows,
-    setGlobalFilter,
     setFilter,
     filterValue,
     pageOptions,
     pageCount,
     page,
     selectedFlatRows,
-    state: { pageIndex, pageSize, selectedRowIds, globalFilter },
+    state: { pageIndex, pageSize, selectedRowIds },
     gotoPage,
     previousPage,
     nextPage,
@@ -148,7 +138,10 @@ function TrainingDataTable({ columns, data, plotData, geneSymbol }) {
   } = instance;
 
   // default page size options given the length of entries in the data
-  const range = (start, stop, step = 50) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
+  const range = (start, stop, step = 50) =>
+    Array(Math.ceil(stop / step))
+      .fill(start)
+      .map((x, y) => x + y * step);
 
   // Render modal
   function renderModal() {
@@ -313,7 +306,6 @@ GeneCentricTrainingResultsTable.propTypes = {
   timewiseData: PropTypes.arrayOf(
     PropTypes.shape({ ...geneSearchTimewisePlotPropType })
   ).isRequired,
-  geneSymbol: PropTypes.string.isRequired,
 };
 
 TrainingDataTable.propTypes = {
@@ -330,7 +322,6 @@ TrainingDataTable.propTypes = {
   plotData: PropTypes.arrayOf(
     PropTypes.shape({ ...geneSearchTimewisePlotPropType })
   ).isRequired,
-  geneSymbol: PropTypes.string.isRequired,
 };
 
 export default GeneCentricTrainingResultsTable;
