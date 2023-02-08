@@ -135,7 +135,7 @@ export function Navbar({
       <Link to="/" className="navbar-brand header-logo my-0 mr-md-auto py-0">
         <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
       </Link>
-      <nav className="navbar navbar-expand-lg navbar-light my-md-0 mr-md-2 p-0">
+      <nav className="navbar navbar-expand-lg navbar-light my-md-0 mr-md-3 p-0">
         <div className="header-navbar-items">
           <button
             className="navbar-toggler"
@@ -220,6 +220,37 @@ export function Navbar({
                   </li>
                 </>
               ) : null}
+              {!isAuthenticated && !hasAccess ? (
+                <li className="nav-item navItem dropdown">
+                  <div
+                    className="nav-link dropdown-toggle"
+                    role="button"
+                    id="dataAccessNavbarItemMenuLink"
+                    data-toggle="dropdown"
+                  >
+                    Data Access
+                  </div>
+                  <div
+                    className="dropdown-menu"
+                    aria-labelledby="dataAccessNavbarItemMenuLink"
+                  >
+                    <Link
+                      to="/data-download"
+                      className="dropdown-item"
+                      onClick={handleDataObjectFetch}
+                    >
+                      Endurance Training Data
+                    </Link>
+                    <Link
+                      to="/data-access"
+                      className="dropdown-item"
+                      onClick={checkServiceStatus}
+                    >
+                      Limited Acute Exercise Data
+                    </Link>
+                  </div>
+                </li>
+              ) : null}
               <li className="nav-item navItem dropdown">
                 <div
                   className="nav-link dropdown-toggle"
@@ -276,17 +307,6 @@ export function Navbar({
                   </Link>
                 </div>
               </li>
-              {!isAuthenticated && !hasAccess ? (
-                <li className="nav-item navItem">
-                  <Link
-                    to="/data-access"
-                    className="nav-link"
-                    onClick={checkServiceStatus}
-                  >
-                    Data Access
-                  </Link>
-                </li>
-              ) : null}
             </ul>
           </div>
         </div>
