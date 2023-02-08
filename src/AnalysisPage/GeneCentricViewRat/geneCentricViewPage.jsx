@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Typeahead } from 'react-bootstrap-typeahead';
 import PageTitle from '../../lib/ui/pageTitle';
 import AnalysisActions from '../analysisActions';
 import { defaultGeneSearchParams } from '../analysisReducer';
 import GeneCentricTrainingResultsTable from './geneCentricTrainingResultsTable';
 import GeneCentricSearchResultFilters from './geneCentricSearchResultFilters';
 import AnimatedLoadingIcon from '../../lib/ui/loading';
+import { genes } from '../../data/genes';
+
+// Import as a module in your JS
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 function GeneCentricView({
   geneSearchInputValue,
@@ -22,6 +27,7 @@ function GeneCentricView({
   scope,
   hasResultFilters,
 }) {
+  const [multiSelections, setMultiSelections] = useState([]);
   // Function to map array of keys to each array of values for each row
   function mapKeyToValue(indexObj) {
     const newArray = [];
@@ -55,6 +61,14 @@ function GeneCentricView({
     });
   }
 
+  // FIXME: Change 'keys' prop type to array so that it is not needed
+  // to be converted to string
+  function formatSearchInput() {
+    const newArr = [];
+    multiSelections.forEach((item) => newArr.push(item.id));
+    return newArr.join(', ');
+  }
+
   return (
     <div className="geneCentricViewPage px-3 px-md-4 mb-3">
       <form id="geneCentricSearchForm" name="geneCentricSearchForm">
@@ -70,6 +84,7 @@ function GeneCentricView({
           </div>
           <div className="es-search-ui-container d-flex align-items-center w-100">
             <div className="search-box-input-group d-flex align-items-center flex-grow-1">
+              {/*
               <input
                 type="text"
                 id="keys"
@@ -80,6 +95,24 @@ function GeneCentricView({
                 value={geneSearchInputValue}
                 onChange={(e) => geneSearchInputChange(e.target.value)}
               />
+              */}
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text material-icons">
+                    pest_control_rodent
+                  </span>
+                </div>
+                <Typeahead
+                  id="basic-typeahead-multiple"
+                  labelKey="id"
+                  multiple
+                  onChange={setMultiSelections}
+                  options={genes}
+                  placeholder="Example: BRD2, SMAD3, ID1"
+                  selected={multiSelections}
+                  minLength={2}
+                />
+              </div>
               <div className="search-button-group d-flex justify-content-end ml-4">
                 <button
                   type="submit"
@@ -88,7 +121,7 @@ function GeneCentricView({
                     e.preventDefault();
                     handleGeneCentricSearch(
                       geneSearchParams,
-                      geneSearchInputValue,
+                      formatSearchInput(),
                       'all'
                     );
                   }}
@@ -98,7 +131,10 @@ function GeneCentricView({
                 <button
                   type="button"
                   className="btn btn-secondary search-reset ml-2"
-                  onClick={() => geneSearchReset()}
+                  onClick={() => {
+                    geneSearchReset();
+                    setMultiSelections([]);
+                  }}
                 >
                   Reset
                 </button>
@@ -130,7 +166,7 @@ function GeneCentricView({
                     geneSearchParams={geneSearchParams}
                     handleGeneCentricSearch={handleGeneCentricSearch}
                     geneSearchChangeFilter={geneSearchChangeFilter}
-                    geneSearchInputValue={geneSearchInputValue}
+                    geneSearchInputValue={formatSearchInput()}
                     hasResultFilters={hasResultFilters}
                   />
                 </div>
@@ -180,7 +216,7 @@ GeneCentricView.propTypes = {
   geneSearchParams: PropTypes.shape({
     ktype: PropTypes.string,
     keys: PropTypes.string,
-    omics: PropTypes.string,
+    omics: PropTypes.arrayOf(PropTypes.string),
     filters: PropTypes.shape({
       assay: PropTypes.arrayOf(PropTypes.string),
       tissue: PropTypes.arrayOf(PropTypes.string),
