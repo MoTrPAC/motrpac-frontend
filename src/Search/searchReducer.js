@@ -26,24 +26,37 @@ export const defaultSearchState = {
       logFC: { min: '', max: '' },
       p_value: { min: '', max: '' },
     },
-    fields: [
-      'gene_symbol',
-      'metabolite',
-      'dataset',
-      'feature_ID',
-      'tissue',
-      'assay',
-      'sex',
-      'comparison_group',
-      'logFC',
-      'p_value',
-      'adj_p_value',
-      'selection_fdr',
-      'p_value_male',
-      'p_value_female',
-    ],
+    fields: {
+      timewise: [
+        'gene_symbol',
+        'metabolite',
+        'dataset',
+        'feature_ID',
+        'tissue',
+        'assay',
+        'sex',
+        'comparison_group',
+        'logFC',
+        'p_value',
+        'adj_p_value',
+        'selection_fdr',
+      ],
+      training: [
+        'gene_symbol',
+        'metabolite',
+        'dataset',
+        'feature_ID',
+        'tissue',
+        'assay',
+        'p_value',
+        'adj_p_value',
+        'p_value_male',
+        'p_value_female',
+      ],
+    },
     unique_fields: ['tissue', 'assay', 'sex', 'comparison_group'],
     size: 25000,
+    start: 0,
     save: false,
   },
   scope: 'all',
@@ -52,7 +65,7 @@ export const defaultSearchState = {
   downloadResults: {},
   downloading: false,
   downloadError: '',
-  enabledFilters: {},
+  hasResultFilters: {},
 };
 
 // Reducer to handle actions sent from components related to advanced search form
@@ -162,9 +175,10 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
               }
             : action.searchResults,
         searching: false,
-        enabledFilters: action.searchResults.uniqs
-          ? action.searchResults.uniqs
-          : state.enabledFilters,
+        hasResultFilters:
+          action.searchResults.uniqs && action.scope === 'all'
+            ? action.searchResults.uniqs
+            : state.hasResultFilters,
       };
 
     // Revert param/filter values to default
@@ -188,6 +202,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       }
 
       const defaultParams = { ...defaultSearchState.searchParams };
+      defaultParams.keys = '';
       defaultParams.filters = {
         tissue: [],
         assay: [],
@@ -200,7 +215,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       return {
         ...defaultSearchState,
         searchParams: defaultParams,
-        enabledFilters: {},
+        hasResultFilters: {},
       };
     }
 
