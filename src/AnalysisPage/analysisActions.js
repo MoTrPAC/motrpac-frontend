@@ -46,10 +46,11 @@ function geneSearchInputChange(geneInputValue = '') {
   };
 }
 
-function geneSearchSubmit(scope) {
+function geneSearchSubmit(scope, input) {
   return {
     type: GENE_SEARCH_SUBMIT,
     scope,
+    input,
   };
 }
 
@@ -102,7 +103,7 @@ const headersConfig = {
 function handleGeneCentricSearch(params, geneInputValue, scope) {
   params.keys = geneInputValue;
   return (dispatch) => {
-    dispatch(geneSearchSubmit(scope));
+    dispatch(geneSearchSubmit(scope, geneInputValue));
     return axios
       .post(`${host}${endpoint}`, params, headersConfig)
       .then((response) => {
