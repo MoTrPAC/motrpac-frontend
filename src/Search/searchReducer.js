@@ -29,7 +29,6 @@ export const defaultSearchState = {
     fields: [
       'gene_symbol',
       'metabolite',
-      'dataset',
       'feature_ID',
       'tissue',
       'assay',
