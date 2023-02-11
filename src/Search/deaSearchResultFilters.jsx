@@ -92,7 +92,7 @@ function SearchResultFilters({
                   e.preventDefault();
                   changeResultFilter(item.keyName, filter.filter_value, null);
                 }}
-                disabled={searchParams.ktype !== 'metab' && !resultCount}
+                disabled={!resultCount}
               >
                 {filter.filter_label}
               </button>
