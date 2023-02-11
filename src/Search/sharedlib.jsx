@@ -26,7 +26,6 @@ export const searchParamsDefaultProps = {
     timewise: [
       'gene_symbol',
       'metabolite',
-      'dataset',
       'feature_ID',
       'tissue',
       'assay',
@@ -40,7 +39,6 @@ export const searchParamsDefaultProps = {
     training: [
       'gene_symbol',
       'metabolite',
-      'dataset',
       'feature_ID',
       'tissue',
       'assay',
@@ -98,7 +96,6 @@ export const searchParamsPropType = {
 export const timewiseResultsTablePropType = {
   gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   metabolite: PropTypes.string,
-  dataset: PropTypes.string,
   feature_ID: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tissue: PropTypes.string,
   assay: PropTypes.string,
@@ -117,7 +114,6 @@ export const timewiseResultsTablePropType = {
 export const trainingResultsTablePropType = {
   gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   metabolite: PropTypes.string,
-  dataset: PropTypes.string,
   feature_ID: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tissue: PropTypes.string,
   assay_name: PropTypes.string,
@@ -243,7 +239,7 @@ export const metabTimewiseTableColumns = [
   },
   {
     Header: 'Assay',
-    accessor: 'dataset',
+    accessor: 'assay',
   },
   {
     Header: 'Sex',
@@ -408,7 +404,7 @@ export const metabTrainingTableColumns = [
   },
   {
     Header: 'Assay',
-    accessor: 'dataset',
+    accessor: 'assay',
   },
   {
     Header: () => (
@@ -715,13 +711,6 @@ export const transformData = (arr) => {
       );
     }
     */
-    // Transform metabolomics dataset (aka assay) values
-    if (item.dataset && item.dataset.length) {
-      const matchedDataset = assayList.find(
-        (filter) => filter.filter_value === item.dataset
-      );
-      item.dataset = matchedDataset && matchedDataset.filter_label;
-    }
     // Transform tissue values
     /*
     if (item.tissue && item.tissue.length) {
