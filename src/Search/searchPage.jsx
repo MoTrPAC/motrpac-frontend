@@ -135,6 +135,7 @@ export function SearchPage({
               changeParam={changeParam}
               ktype={searchParams.ktype}
               resetSearch={resetSearch}
+              setMultiSelections={setMultiSelections}
             />
             <div className="search-box-input-group d-flex align-items-center flex-grow-1">
               {/*  
@@ -355,7 +356,7 @@ export function SearchPage({
 }
 
 // Radio buttons for selecting the search context
-function RadioButton({ changeParam, ktype, resetSearch }) {
+function RadioButton({ changeParam, ktype, resetSearch, setMultiSelections }) {
   return (
     <div className="search-context">
       <div className="form-check form-check-inline">
@@ -368,6 +369,7 @@ function RadioButton({ changeParam, ktype, resetSearch }) {
           checked={ktype === 'gene'}
           onChange={(e) => {
             resetSearch('all');
+            setMultiSelections([]);
             changeParam('ktype', e.target.value);
           }}
         />
@@ -385,6 +387,7 @@ function RadioButton({ changeParam, ktype, resetSearch }) {
           checked={ktype === 'protein'}
           onChange={(e) => {
             resetSearch('all');
+            setMultiSelections([]);
             changeParam('ktype', e.target.value);
           }}
         />
@@ -402,6 +405,7 @@ function RadioButton({ changeParam, ktype, resetSearch }) {
           checked={ktype === 'metab'}
           onChange={(e) => {
             resetSearch('all');
+            setMultiSelections([]);
             changeParam('ktype', e.target.value);
           }}
         />
