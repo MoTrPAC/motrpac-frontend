@@ -30,7 +30,7 @@ export const tissueList = tissues.sort((a, b) =>
 const browseDataFilters = [
   {
     keyName: 'study',
-    name: 'Study',
+    name: 'Randomized Group/Intervention',
     filters: ['Acute Exercise', 'Endurance Training'],
   },
   {
