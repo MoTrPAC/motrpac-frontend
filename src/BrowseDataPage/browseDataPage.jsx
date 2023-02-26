@@ -26,7 +26,7 @@ export function BrowseDataPage({
 
   return (
     <div className="browseDataPage px-3 px-md-4 mb-3">
-      <PageTitle title="Download Data" />
+      <PageTitle title="Endurance Exercise Training Young Adult Rats (6 months) Data" />
       {!userType || (userType && userType === 'external') ? (
         <OpenAccessBrowseDataSummary />
       ) : null}
