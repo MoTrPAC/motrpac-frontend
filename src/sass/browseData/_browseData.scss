@@ -231,21 +231,70 @@
 /**
  * Open access bundle data download link
  */
-.open-access-bundle-data-download-link .btn-data-download {
-  background-color: transparent;
-  border: none;
-  color: $primary-blue;
-  line-height: 0;
-  margin: 0 0.2rem 0 0;
-  padding: 0;
-  vertical-align: middle;
+.bundle-data-callout-title-container {
+    button {
+      color: #007bff;
+      font-size: 1rem;
+      padding: 0;
 
-  &:hover, &:focus, &:active, &.active {
-    background-color: #fff;
-    color: $primary-blue;
+      &:focus, &:active {
+        outline: none;
+      }
+    }
+}
+.open-access-bundle-data-title-container {
+  .open-access-bundle-data-size {
+    color: #aaa;
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+}
+.open-access-bundle-data-download-container {
+  .btn-bundle-data-download {
+    padding-left: 0.5rem;
+
+    &:focus, &:active {
+      outline: none;
+    }
+  }
+}
+
+#openAccessBundleDataDownloadModal {
+  #openAccessBundleDataDownloadModalLabel {
+    color: $stanford-black;
+    margin-bottom: 0;
   }
 
-  &:focus {
-    outline: none;
+  .modal-close-button {
+    padding-left: 0.5rem;
+
+    .button-text {
+      font-size: larger;
+    }
+  }
+}
+
+.open-access-bundle-data-sets {
+  .card {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+
+    .ready-to-download-link {
+      background-color: #2094e8;
+      border-color: #2094e8;
+      border-radius: 0.25rem;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      padding: 0.375rem 0.75rem;
+      text-align: center;
+      transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+      &:hover, &:focus, &:active {
+        background-color: #1478c1;
+        border-color: #1478c1;
+        text-decoration: none;
+      }
+    }
   }
 }
