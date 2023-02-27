@@ -30,11 +30,10 @@ function Pass1b06PhenotypeAnimal({
       <div className="analysis-phenotype-container">
         <div className="analysis-phenotype-summary-container row mb-4">
           <div className="lead col-12">
-            A number of visualizations have been provided for the analysis of
-            various phenotypic data from the Endurance Exercise Training young
-            adult (6 months) rats.{' '}
-            <span className="font-weight-bold">Input:</span> Sex, Weight, % Body
-            Fat and VO2 Max.
+            Examine the effect of training through a variety of phenotypic data
+            collected from the Endurance Exercise Training young adult (6{' '}
+            months) rats. <span className="font-weight-bold">Input:</span> Sex,
+            Weight, % Body Fat and VO2 Max.
           </div>
         </div>
         <div className="card-container-phenotype-animal row mb-4">
