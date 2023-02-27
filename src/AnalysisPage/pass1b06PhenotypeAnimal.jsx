@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import PageTitle from '../lib/ui/pageTitle';
 import WeightGainPlot from './plots/weightGain';
 import BodyFatChangePlot from './plots/bodyFatChange';
 import VO2MaxChangePlot from './plots/vo2MaxChange';
@@ -24,98 +25,110 @@ function Pass1b06PhenotypeAnimal({
   toggleLactatePlot,
 }) {
   return (
-    <div>
-      <div className="card-container-phenotype-animal row mb-4">
-        <div className="d-flex col-lg-6">
-          <div className="flex-fill w-100 card shadow-sm">
-            <h5 className="card-header">
-              <div className="plot-control-menu float-right">
-                <PhenotypePlotControls
-                  togglePlot={toggleWeightPlot}
-                  plot={weightPlot}
-                />
+    <div className="analysisPhenotypePage px-3 px-md-4 mb-3 w-100">
+      <PageTitle title="Endurance Exercise Training Young Adult Rats Phenotypic Data" />
+      <div className="analysis-phenotype-container">
+        <div className="analysis-phenotype-summary-container row mb-4">
+          <div className="lead col-12">
+            A number of visualizations have been provided for the analysis of
+            various phenotypic data from the Endurance Exercise Training young
+            adult (6 months) rats.{' '}
+            <span className="font-weight-bold">Input:</span> Sex, Weight, % Body
+            Fat and VO2 Max.
+          </div>
+        </div>
+        <div className="card-container-phenotype-animal row mb-4">
+          <div className="d-flex col-lg-6">
+            <div className="flex-fill w-100 card shadow-sm">
+              <h5 className="card-header">
+                <div className="plot-control-menu float-right">
+                  <PhenotypePlotControls
+                    togglePlot={toggleWeightPlot}
+                    plot={weightPlot}
+                  />
+                </div>
+                <div className="card-title mb-0 d-flex align-items-center">
+                  <span>Effect of training on body weight</span>
+                  <span className="badge badge-secondary badge-phase ml-2">
+                    PASS1B 6-Month
+                  </span>
+                </div>
+              </h5>
+              <div className="card-body pt-1">
+                <div className="phenotype-plot">
+                  <WeightGainPlot plot={weightPlot} />
+                </div>
               </div>
-              <div className="card-title mb-0 d-flex align-items-center">
-                <span>Effect of training on body weight</span>
-                <span className="badge badge-secondary badge-phase ml-2">
-                  PASS1B 6-Month
-                </span>
-              </div>
-            </h5>
-            <div className="card-body pt-1">
-              <div className="phenotype-plot">
-                <WeightGainPlot plot={weightPlot} />
+            </div>
+          </div>
+          <div className="d-flex col-lg-6">
+            <div className="flex-fill w-100 card shadow-sm">
+              <h5 className="card-header">
+                <div className="plot-control-menu float-right">
+                  <PhenotypePlotControls
+                    togglePlot={toggleBodyFatPlot}
+                    plot={bodyFatPlot}
+                  />
+                </div>
+                <div className="card-title mb-0 d-flex align-items-center">
+                  <span>Effect of training on body fat</span>
+                  <span className="badge badge-secondary badge-phase ml-2">
+                    PASS1B 6-Month
+                  </span>
+                </div>
+              </h5>
+              <div className="card-body pt-1">
+                <div className="phenotype-plot">
+                  <BodyFatChangePlot plot={bodyFatPlot} />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="d-flex col-lg-6">
-          <div className="flex-fill w-100 card shadow-sm">
-            <h5 className="card-header">
-              <div className="plot-control-menu float-right">
-                <PhenotypePlotControls
-                  togglePlot={toggleBodyFatPlot}
-                  plot={bodyFatPlot}
-                />
-              </div>
-              <div className="card-title mb-0 d-flex align-items-center">
-                <span>Effect of training on body fat</span>
-                <span className="badge badge-secondary badge-phase ml-2">
-                  PASS1B 6-Month
-                </span>
-              </div>
-            </h5>
-            <div className="card-body pt-1">
-              <div className="phenotype-plot">
-                <BodyFatChangePlot plot={bodyFatPlot} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="card-container-phenotype-animal row mb-4">
-        <div className="d-flex col-lg-6">
-          <div className="flex-fill w-100 card shadow-sm">
-            <h5 className="card-header">
-              <div className="plot-control-menu float-right">
-                <PhenotypePlotControls
-                  togglePlot={toggleVo2Plot}
-                  plot={vo2Plot}
-                />
-              </div>
-              <div className="card-title mb-0 d-flex align-items-center">
-                <span>Effect of training on VO2 Max</span>
-                <span className="badge badge-secondary badge-phase ml-2">
-                  PASS1B 6-Month
-                </span>
-              </div>
-            </h5>
-            <div className="card-body pt-1">
-              <div className="phenotype-plot">
-                <VO2MaxChangePlot plot={vo2Plot} />
+        <div className="card-container-phenotype-animal row mb-4">
+          <div className="d-flex col-lg-6">
+            <div className="flex-fill w-100 card shadow-sm">
+              <h5 className="card-header">
+                <div className="plot-control-menu float-right">
+                  <PhenotypePlotControls
+                    togglePlot={toggleVo2Plot}
+                    plot={vo2Plot}
+                  />
+                </div>
+                <div className="card-title mb-0 d-flex align-items-center">
+                  <span>Effect of training on VO2 Max</span>
+                  <span className="badge badge-secondary badge-phase ml-2">
+                    PASS1B 6-Month
+                  </span>
+                </div>
+              </h5>
+              <div className="card-body pt-1">
+                <div className="phenotype-plot">
+                  <VO2MaxChangePlot plot={vo2Plot} />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="d-flex col-lg-6">
-          <div className="flex-fill w-100 card shadow-sm">
-            <h5 className="card-header">
-              <div className="plot-control-menu float-right">
-                <PhenotypePlotControls
-                  togglePlot={toggleLactatePlot}
-                  plot={lactatePlot}
-                />
-              </div>
-              <div className="card-title mb-0 d-flex align-items-center">
-                <span>Effect of training on blood lactate</span>
-                <span className="badge badge-secondary badge-phase ml-2">
-                  PASS1B 6-Month
-                </span>
-              </div>
-            </h5>
-            <div className="card-body pt-1">
-              <div className="phenotype-plot">
-                <LactateChangePlot plot={lactatePlot} />
+          <div className="d-flex col-lg-6">
+            <div className="flex-fill w-100 card shadow-sm">
+              <h5 className="card-header">
+                <div className="plot-control-menu float-right">
+                  <PhenotypePlotControls
+                    togglePlot={toggleLactatePlot}
+                    plot={lactatePlot}
+                  />
+                </div>
+                <div className="card-title mb-0 d-flex align-items-center">
+                  <span>Effect of training on blood lactate</span>
+                  <span className="badge badge-secondary badge-phase ml-2">
+                    PASS1B 6-Month
+                  </span>
+                </div>
+              </h5>
+              <div className="card-body pt-1">
+                <div className="phenotype-plot">
+                  <LactateChangePlot plot={lactatePlot} />
+                </div>
               </div>
             </div>
           </div>
