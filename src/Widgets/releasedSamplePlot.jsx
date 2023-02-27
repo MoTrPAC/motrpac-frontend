@@ -150,13 +150,13 @@ function ReleasedSamplePlot({ data, plot }) {
           ticks: {
             stepSize: 200, // integer only
             beginAtZero: true,
-            fontFamily: "'Open Sans', sans-serif",
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
             fontSize: width < breakpoint ? 12 : 14,
           },
           scaleLabel: {
             display: true,
             labelString: 'Total Assay Count',
-            fontFamily: "'Open Sans', sans-serif",
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
             fontSize: 15,
             fontStyle: 'bold',
           },
@@ -166,7 +166,7 @@ function ReleasedSamplePlot({ data, plot }) {
         {
           stacked: true,
           ticks: {
-            fontFamily: "'Open Sans', sans-serif",
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
             fontSize: width < breakpoint ? 9 : 14,
             fontStyle: width < breakpoint ? 'normal' : 'bold',
             padding: 6,
