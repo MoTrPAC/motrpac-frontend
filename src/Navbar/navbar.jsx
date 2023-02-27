@@ -194,7 +194,7 @@ export function Navbar({
                       >
                         MoTrPAC Collab
                       </a>
-                      <Link to="/gene-centric" className="dropdown-item">
+                      <Link to="/analysis-phenotype" className="dropdown-item">
                         Phenotype
                       </Link>
                     </>
