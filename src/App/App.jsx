@@ -24,6 +24,7 @@ import BrowseDataPageConnected from '../BrowseDataPage/browseDataPage';
 import SearchPageConnected from '../Search/searchPage';
 import GeneCentricViewConnected from '../AnalysisPage/GeneCentricViewRat/geneCentricViewPage';
 import GraphicalClustering from '../AnalysisPage/GraphicalClustering/graphicalClusteringPage';
+import Pass1b06PhenotypeAnimalConnected from '../AnalysisPage/pass1b06PhenotypeAnimal';
 import CallbackConnected from '../Auth/callback';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
 import PrivateRoute from '../Auth/privateRoute';
@@ -112,6 +113,10 @@ function App({ history = History }) {
               <Route
                 path="/graphical-clustering"
                 component={withTracker(GraphicalClustering)}
+              />
+              <PrivateRoute
+                path="/analysis-phenotype"
+                component={withTracker(Pass1b06PhenotypeAnimalConnected)}
               />
             </Switch>
           </div>
