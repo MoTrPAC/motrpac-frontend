@@ -20,6 +20,7 @@ const tissues = [
   'Spleen',
   'Testes',
   'Vastus Lateralis',
+  'Vena Cava',
   'White Adipose',
 ];
 
