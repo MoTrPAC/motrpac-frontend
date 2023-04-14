@@ -174,8 +174,8 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
             : action.searchResults,
         searching: false,
         hasResultFilters:
-          action.searchResults.uniqs && action.scope === 'all'
-            ? action.searchResults.uniqs
+          action.searchResults.aggs && action.scope === 'all'
+            ? action.searchResults.aggs
             : state.hasResultFilters,
       };
 
