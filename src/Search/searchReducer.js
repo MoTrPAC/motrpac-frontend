@@ -30,7 +30,6 @@ export const defaultSearchState = {
       timewise: [
         'gene_symbol',
         'metabolite',
-        'dataset',
         'feature_ID',
         'tissue',
         'assay',
@@ -44,7 +43,6 @@ export const defaultSearchState = {
       training: [
         'gene_symbol',
         'metabolite',
-        'dataset',
         'feature_ID',
         'tissue',
         'assay',
