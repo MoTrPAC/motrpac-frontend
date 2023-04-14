@@ -17,6 +17,7 @@ export const tissueList = [
   { filter_value: 'spleen', filter_label: 'Spleen' },
   { filter_value: 'testes', filter_label: 'Testes' },
   { filter_value: 'vastus lateralis', filter_label: 'Vastus Lateralis' },
+  { filter_value: 'vena cava', filter_label: 'Vena Cava' },
   { filter_value: 'white adipose', filter_label: 'White Adipose' },
 ];
 
