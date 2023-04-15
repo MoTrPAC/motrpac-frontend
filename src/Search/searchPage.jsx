@@ -565,6 +565,7 @@ SearchPage.propTypes = {
   }),
   searchResults: PropTypes.shape({
     result: PropTypes.object,
+    uniqs: PropTypes.object,
     total: PropTypes.number,
   }),
   scope: PropTypes.string,
