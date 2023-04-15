@@ -78,12 +78,9 @@ function SearchResultFilters({
                 -1;
             const resultCount =
               hasResultFilters &&
-              hasResultFilters.timewise &&
-              hasResultFilters.timewise[item.keyName] &&
-              Object.keys(hasResultFilters.timewise[item.keyName]).length &&
-              hasResultFilters.timewise[item.keyName][
-                filter.filter_value.toLowerCase()
-              ];
+              hasResultFilters[item.keyName] &&
+              Object.keys(hasResultFilters[item.keyName]).length &&
+              hasResultFilters[item.keyName][filter.filter_value.toLowerCase()];
             return (
               <button
                 key={filter.filter_label}
@@ -198,16 +195,10 @@ SearchResultFilters.propTypes = {
   handleSearch: PropTypes.func.isRequired,
   resetSearch: PropTypes.func.isRequired,
   hasResultFilters: PropTypes.shape({
-    timewise: PropTypes.shape({
-      assay: PropTypes.object,
-      comparison_group: PropTypes.object,
-      sex: PropTypes.object,
-      tissue: PropTypes.object,
-    }),
-    training: PropTypes.shape({
-      assay: PropTypes.object,
-      tissue: PropTypes.object,
-    }),
+    assay: PropTypes.object,
+    comparison_group: PropTypes.object,
+    sex: PropTypes.object,
+    tissue: PropTypes.object,
   }),
 };
 
