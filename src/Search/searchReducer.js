@@ -26,32 +26,21 @@ export const defaultSearchState = {
       logFC: { min: '', max: '' },
       p_value: { min: '', max: '' },
     },
-    fields: {
-      timewise: [
-        'gene_symbol',
-        'metabolite',
-        'feature_ID',
-        'tissue',
-        'assay',
-        'sex',
-        'comparison_group',
-        'logFC',
-        'p_value',
-        'adj_p_value',
-        'selection_fdr',
-      ],
-      training: [
-        'gene_symbol',
-        'metabolite',
-        'feature_ID',
-        'tissue',
-        'assay',
-        'p_value',
-        'adj_p_value',
-        'p_value_male',
-        'p_value_female',
-      ],
-    },
+    fields: [
+      'gene_symbol',
+      'metabolite',
+      'feature_ID',
+      'tissue',
+      'assay',
+      'sex',
+      'comparison_group',
+      'logFC',
+      'p_value',
+      'adj_p_value',
+      'selection_fdr',
+      'p_value_male',
+      'p_value_female',
+    ],
     unique_fields: ['tissue', 'assay', 'sex', 'comparison_group'],
     size: 25000,
     start: 0,
@@ -174,8 +163,8 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
             : action.searchResults,
         searching: false,
         hasResultFilters:
-          action.searchResults.aggs && action.scope === 'all'
-            ? action.searchResults.aggs
+          action.searchResults.uniqs && action.scope === 'all'
+            ? action.searchResults.uniqs
             : state.hasResultFilters,
       };
 
