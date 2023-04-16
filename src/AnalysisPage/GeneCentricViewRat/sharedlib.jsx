@@ -277,19 +277,31 @@ export const transformData = (arr) => {
       item.assay = matchedAssay && matchedAssay.filter_label;
     }
     // Round values
-    if (item.p_value && item.p_value.length) {
+    if (item.p_value && item.p_value.length && item.p_value !== 'NA') {
       const newPVal = roundNumbers(item.p_value, 4);
       item.p_value = newPVal;
     }
-    if (item.adj_p_value && item.adj_p_value.length) {
+    if (
+      item.adj_p_value &&
+      item.adj_p_value.length &&
+      item.adj_p_value !== 'NA'
+    ) {
       const newAdjPVal = roundNumbers(item.adj_p_value, 4);
       item.adj_p_value = newAdjPVal;
     }
-    if (item.p_value_male && item.p_value_male.length) {
+    if (
+      item.p_value_male &&
+      item.p_value_male.length &&
+      item.p_value_male !== 'NA'
+    ) {
       const newPValMale = roundNumbers(item.p_value_male, 4);
       item.p_value_male = newPValMale;
     }
-    if (item.p_value_female && item.p_value_female.length) {
+    if (
+      item.p_value_female &&
+      item.p_value_female.length &&
+      item.p_value_female !== 'NA'
+    ) {
       const newPValFemale = roundNumbers(item.p_value_female, 4);
       item.p_value_female = newPValFemale;
     }
