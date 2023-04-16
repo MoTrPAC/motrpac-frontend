@@ -221,10 +221,7 @@ GeneCentricView.propTypes = {
       assay: PropTypes.arrayOf(PropTypes.string),
       tissue: PropTypes.arrayOf(PropTypes.string),
     }),
-    fields: PropTypes.shape({
-      timewise: PropTypes.arrayOf(PropTypes.string),
-      training: PropTypes.arrayOf(PropTypes.string),
-    }),
+    fields: PropTypes.arrayOf(PropTypes.string),
     size: PropTypes.number,
     start: PropTypes.number,
     debug: PropTypes.bool,
