@@ -23,7 +23,7 @@ function GeneCentricSearchResultFilters({
   function customizeAssayList() {
     return assayList.filter((t) =>
       t.filter_value.match(
-        /^(transcript-rna-seq|prot-pr|prot-ph|prot-ac|prot-ub)$/
+        /^(transcript-rna-seq|prot-pr|prot-ph|prot-ac|prot-ub|immunoassay)$/
       )
     );
   }
