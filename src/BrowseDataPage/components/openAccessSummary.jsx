@@ -30,7 +30,10 @@ function OpenAccessBrowseDataSummary() {
         <div className="bd-callout bd-callout-info">
           <h4>Data Types</h4>
           <ul className="mt-1 mb-2">
-            <li>Assay-specific differential analysis and normalized data</li>
+            <li>
+              Assay-specific <Link to="/search">differential analysis</Link> and
+              normalized data
+            </li>
             <li>
               Assay-specific quantitative results, experiment metadata, and
               QA/QC reports
