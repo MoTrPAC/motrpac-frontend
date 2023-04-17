@@ -52,9 +52,15 @@ function BrowseDataFilter({
               key={filter}
               type="button"
               className={`btn filterBtn ${
-                isActiveFilter ? 'activeFilter' : ''
+                isActiveFilter ||
+                (filter === 'Endurance Training' && userType !== 'internal')
+                  ? 'activeFilter'
+                  : ''
               }`}
               onClick={() => onChangeFilter(item.keyName, filter)}
+              disabled={
+                filter === 'Endurance Training' && userType !== 'internal'
+              }
             >
               {filter}
             </button>
