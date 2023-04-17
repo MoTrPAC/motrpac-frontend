@@ -18,10 +18,10 @@ function OpenAccessBrowseDataSummary() {
       <div className="lead col-12">
         Browse and download experimental data from endurance trained (1wk, 2wks,
         4wks or 8wks) compared to untrained adult rats (6 months old). The files
-        accessible and downloadable here consist of results and analyses from a
-        variety of data types focusing on defining the molecular changes that
-        occur with training across tissues. Files can be filtered by tissue,
-        omics and assay. To learn more about this study, see the{' '}
+        accessible and downloadable here consist of results and analyses
+        defining the molecular changes that occur with training across tissues.
+        Files can be filtered by tissue, omics and assay. To learn more about
+        this study, see the{' '}
         <ExternalLink
           to="https://www.biorxiv.org/content/10.1101/2022.09.21.508770v1"
           label="MoTrPAC Endurance Exercise Training Animal Study Landscape Preprint"
