@@ -34,7 +34,7 @@ function OpenAccessBrowseDataSummary() {
         />{' '}
         that provides more information on the entire study.
       </div>
-      <div className="browse-data-summary-content col-6 col-md-6">
+      <div className="browse-data-summary-content col-4 col-md-4">
         <div className="bd-callout bd-callout-info">
           <h4>Data Types</h4>
           <ul className="mt-1 mb-2">
@@ -67,7 +67,7 @@ function OpenAccessBrowseDataSummary() {
           </div>
           <div>
             <button
-              className="btn btn-link btn-sm show-more-link d-flex align-items-center"
+              className="btn btn-link btn-sm show-collapse-summary-link d-flex align-items-center"
               type="button"
               data-toggle="collapse"
               data-target="#collapseSummary"
@@ -75,7 +75,7 @@ function OpenAccessBrowseDataSummary() {
               aria-controls="collapseSummary"
               onClick={toggleShowMoreSummary}
             >
-              <span>Show {!showMoreSummary ? 'more' : 'less'}</span>
+              <span>{!showMoreSummary ? 'See' : 'Hide'} additional note</span>
               <i className="material-icons">
                 {!showMoreSummary ? 'expand_more' : 'expand_less'}
               </i>
@@ -83,7 +83,7 @@ function OpenAccessBrowseDataSummary() {
           </div>
         </div>
       </div>
-      <div className="browse-data-summary-content col-6 col-md-6">
+      <div className="browse-data-summary-content col-8 col-md-8">
         <div className="bd-callout bd-callout-warning">
           <h4 className="bundle-data-callout-title-container d-flex align-items-center justify-content-between">
             <div className="bundle-data-callout-title">Bundled Data Sets</div>
