@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import EmailLink from '../../lib/ui/emailLink';
 import ExternalLink from '../../lib/ui/externalLink';
 import OpenAccessBundleDownloads from './openAccessBundleDownloads';
 
 function OpenAccessBrowseDataSummary() {
+  const [showMoreSummary, setShowMoreSummary] = useState(false);
+
+  // Event handler for "Show prior releases" button
+  const toggleShowMoreSummary = (e) => {
+    e.preventDefault();
+    setShowMoreSummary(!showMoreSummary);
+  };
+
   return (
     <div className="browse-data-summary-container row mb-4">
       <div className="lead col-12">
@@ -44,17 +52,35 @@ function OpenAccessBrowseDataSummary() {
             </li>
             <li>Phenotypic data</li>
           </ul>
-          <p>
-            <span className="font-weight-bold">Note:</span> Raw files are not
-            currently available for direct download through the Data Hub portal.
-            Please submit your requests to{' '}
-            <EmailLink
-              mailto="motrpac-data-requests@lists.stanford.edu"
-              label="MoTrPAC Data Requests"
-            />{' '}
-            and specify the relevant tissues/assays if you would like to get
-            access to the raw files.
-          </p>
+          <div className="collapse mb-2" id="collapseSummary">
+            <p>
+              <span className="font-weight-bold">Note:</span> Raw files are not
+              currently available for direct download through the Data Hub
+              portal. Please submit your requests to{' '}
+              <EmailLink
+                mailto="motrpac-data-requests@lists.stanford.edu"
+                label="MoTrPAC Data Requests"
+              />{' '}
+              and specify the relevant tissues/assays if you would like to get
+              access to the raw files.
+            </p>
+          </div>
+          <div>
+            <button
+              className="btn btn-link btn-sm show-more-link d-flex align-items-center"
+              type="button"
+              data-toggle="collapse"
+              data-target="#collapseSummary"
+              aria-expanded="false"
+              aria-controls="collapseSummary"
+              onClick={toggleShowMoreSummary}
+            >
+              <span>Show {!showMoreSummary ? 'more' : 'less'}</span>
+              <i className="material-icons">
+                {!showMoreSummary ? 'expand_more' : 'expand_less'}
+              </i>
+            </button>
+          </div>
         </div>
       </div>
       <div className="browse-data-summary-content col-6 col-md-6">
