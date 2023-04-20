@@ -155,36 +155,36 @@ function SearchResultFilters({
 
   return (
     <div className="search-result-filter-group mb-4">
-      <div className="search-result-filter-group-header d-flex justify-content-between align-items-center mb-2">
-        <div>Narrow results using filters below.</div>
-        <button
-          type="button"
-          className="btn btn-link"
-          onClick={() => resetSearch('filters')}
-        >
-          Reset filters
-        </button>
+      <div className="search-result-filter-group-header d-flex justify-content-between align-items-center mb-3">
+        <div className="font-weight-bold">Filter results:</div>
+        <div className="search-result-filter-submit-buttons">
+          <button
+            type="button"
+            className="btn btn-primary btn-sm mr-2"
+            onClick={(e) => {
+              e.preventDefault();
+              handleSearch(searchParams, searchParams.keys, 'filters');
+            }}
+            disabled={inputError}
+          >
+            Update results
+          </button>
+          <button
+            type="button"
+            className="btn btn-secondary btn-sm"
+            onClick={() => resetSearch('filters')}
+          >
+            Reset filters
+          </button>
+        </div>
       </div>
+      {inputError && (
+        <div className="input-error-notify mb-2">
+          Please correct input values above.
+        </div>
+      )}
       {commonSearchResultFilters}
       {rangeSearchResultFilters}
-      <div className="submit-search-filters-button text-right">
-        {inputError && (
-          <div className="input-error-notify mb-2">
-            Please correct input values above.
-          </div>
-        )}
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={(e) => {
-            e.preventDefault();
-            handleSearch(searchParams, searchParams.keys, 'filters');
-          }}
-          disabled={inputError}
-        >
-          Update results
-        </button>
-      </div>
     </div>
   );
 }
