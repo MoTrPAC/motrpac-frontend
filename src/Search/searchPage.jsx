@@ -130,7 +130,7 @@ export function SearchPage({
               </span>
             </div>
           </div>
-          <div className="es-search-ui-container d-flex align-items-center w-100">
+          <div className="es-search-ui-container d-flex align-items-center w-100 pb-2">
             <RadioButton
               changeParam={changeParam}
               ktype={searchParams.ktype}
