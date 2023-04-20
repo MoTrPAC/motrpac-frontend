@@ -12,6 +12,7 @@ function GeneCentricSearchResultFilters({
   handleGeneCentricSearch,
   geneSearchChangeFilter,
   geneSearchInputValue,
+  geneSearchReset,
   hasResultFilters,
 }) {
   // FIXME - this is a hack to get the search filters such as tissue and assay
@@ -76,26 +77,33 @@ function GeneCentricSearchResultFilters({
 
   return (
     <div className="search-result-filter-group mb-4">
-      <div className="search-result-filter-group-header d-flex justify-content-between align-items-center mb-2">
-        <div>Narrow results using filters below.</div>
+      <div className="search-result-filter-group-header d-flex justify-content-between align-items-center mb-3">
+        <div className="font-weight-bold">Filter results:</div>
+        <div className="submit-search-filters-button text-right">
+          <button
+            type="button"
+            className="btn btn-primary btn-sm mr-2"
+            onClick={(e) => {
+              e.preventDefault();
+              handleGeneCentricSearch(
+                geneSearchParams,
+                geneSearchInputValue,
+                'filters'
+              );
+            }}
+          >
+            Update results
+          </button>
+          <button
+            type="button"
+            className="btn btn-secondary btn-sm"
+            onClick={() => geneSearchReset('filters')}
+          >
+            Reset filters
+          </button>
+        </div>
       </div>
       {commonSearchResultFilters}
-      <div className="submit-search-filters-button text-right">
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={(e) => {
-            e.preventDefault();
-            handleGeneCentricSearch(
-              geneSearchParams,
-              geneSearchInputValue,
-              'filters'
-            );
-          }}
-        >
-          Update results
-        </button>
-      </div>
     </div>
   );
 }
@@ -105,6 +113,7 @@ GeneCentricSearchResultFilters.propTypes = {
   handleGeneCentricSearch: PropTypes.func.isRequired,
   geneSearchChangeFilter: PropTypes.func.isRequired,
   geneSearchInputValue: PropTypes.string.isRequired,
+  geneSearchReset: PropTypes.func.isRequired,
   hasResultFilters: PropTypes.shape({
     assay: PropTypes.object,
     tissue: PropTypes.object,
