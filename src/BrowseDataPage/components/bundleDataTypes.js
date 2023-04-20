@@ -15,7 +15,7 @@ const BundleDataTypes = [
     description:
       'Analyses, sample-level metadata, QC and quantitative results across tissues for RNA-seq.',
     object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_transcriptomics.zip',
-    object_zipfile_size: '539.80 MB',
+    object_zipfile_size: '540.44 MB',
   },
   {
     type: 'metabolomics-targeted',
@@ -25,7 +25,7 @@ const BundleDataTypes = [
       'Analyses, sample-level metadata, QC and quantitative results across tissues for metabolomics-targeted assays.',
     object_zipfile:
       'pass1b-06/bundles/motrpac_pass1b-06_metabolomics-targeted.zip',
-    object_zipfile_size: '21.29 MB',
+    object_zipfile_size: '27.58 MB',
   },
   {
     type: 'metabolomics-untargeted',
@@ -34,7 +34,7 @@ const BundleDataTypes = [
     description:
       'Analyses, sample-level metadata, QC and quantitative results across tissues for metabolomics-untargeted assays.',
     object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_metabolomics-untargeted.zip',
-    object_zipfile_size: '268.75 MB',
+    object_zipfile_size: '272.42 MB',
   },
   {
     type: 'proteomics-untargeted',
@@ -54,7 +54,7 @@ const BundleDataTypes = [
       'Analyses, sample-level metadata, QC and quantitative results across tissues for immunoassay.',
     object_zipfile:
       'pass1b-06/bundles/motrpac_pass1b-06_proteomics-targeted.zip',
-    object_zipfile_size: '11.64 MB',
+    object_zipfile_size: '12.06 MB',
   },
   {
     type: 'tissue-gastrocnemius',
@@ -63,7 +63,7 @@ const BundleDataTypes = [
     description:
       'Analyses, sample-level metadata, QC and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for gastrocnemius.',
     object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_gastrocnemius.zip',
-    object_zipfile_size: '151.10 MB',
+    object_zipfile_size: '151.41 MB',
   },
   {
     type: 'tissue-heart',
@@ -72,7 +72,7 @@ const BundleDataTypes = [
     description:
       'Analyses, sample-level metadata, QC and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for heart.',
     object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_heart.zip',
-    object_zipfile_size: '186.97 MB',
+    object_zipfile_size: '187.387 MB',
   },
   {
     type: 'tissue-liver',
@@ -81,7 +81,7 @@ const BundleDataTypes = [
     description:
       'Analyses, sample-level metadata, QC and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for liver.',
     object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_liver.zip',
-    object_zipfile_size: '213.70 MB',
+    object_zipfile_size: '214.00 MB',
   },
   {
     type: 'tissue-lung',
@@ -90,7 +90,7 @@ const BundleDataTypes = [
     description:
       'Analyses, sample-level metadata, QC and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for lung.',
     object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_lung.zip',
-    object_zipfile_size: '241.91 MB',
+    object_zipfile_size: '242.33 MB',
   },
   {
     type: 'tissue-kidney',
@@ -99,7 +99,7 @@ const BundleDataTypes = [
     description:
       'Analyses, sample-level metadata, QC and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for kidney.',
     object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_kidney.zip',
-    object_zipfile_size: '179.20 MB',
+    object_zipfile_size: '179.62 MB',
   },
   {
     type: 'tissue-brown-adipose',
@@ -108,7 +108,7 @@ const BundleDataTypes = [
     description:
       'Analyses, sample-level metadata, QC and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for brown adipose.',
     object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_brown-adipose.zip',
-    object_zipfile_size: '57.57 MB',
+    object_zipfile_size: '57.99 MB',
   },
   {
     type: 'tissue-white-adipose',
@@ -117,7 +117,7 @@ const BundleDataTypes = [
     description:
       'Analyses, sample-level metadata, QC and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for white adipose.',
     object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_white-adipose.zip',
-    object_zipfile_size: '189.27 MB',
+    object_zipfile_size: '189.69 MB',
   },
   {
     type: 'tissue-blood-rna',
