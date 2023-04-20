@@ -69,9 +69,10 @@ function geneSearchSuccess(geneSearchResults, scope) {
   };
 }
 
-function geneSearchReset() {
+function geneSearchReset(scope) {
   return {
     type: GENE_SEARCH_RESET,
+    scope,
   };
 }
 
