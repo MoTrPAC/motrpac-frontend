@@ -9,6 +9,15 @@ const BundleDataTypes = [
     object_zipfile_size: '617.78 KB',
   },
   {
+    type: 'transcriptomics',
+    phase: 'pass1b-06',
+    title: 'Transcriptomics',
+    description:
+      'Analyses, sample-level metadata, QC and quantitative results across tissues for RNA-seq.',
+    object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_transcriptomics.zip',
+    object_zipfile_size: '539.80 MB',
+  },
+  {
     type: 'metabolomics-targeted',
     phase: 'pass1b-06',
     title: 'Metabolomics-targeted',
@@ -28,16 +37,6 @@ const BundleDataTypes = [
     object_zipfile_size: '268.75 MB',
   },
   {
-    type: 'proteomics-targeted',
-    phase: 'pass1b-06',
-    title: 'Proteomics-targeted',
-    description:
-      'Analyses, sample-level metadata, QC and quantitative results across tissues for immunoassay.',
-    object_zipfile:
-      'pass1b-06/bundles/motrpac_pass1b-06_proteomics-targeted.zip',
-    object_zipfile_size: '11.64 MB',
-  },
-  {
     type: 'proteomics-untargeted',
     phase: 'pass1b-06',
     title: 'Proteomics-untargeted',
@@ -48,22 +47,14 @@ const BundleDataTypes = [
     object_zipfile_size: '975.70 MB',
   },
   {
-    type: 'transcriptomics',
+    type: 'proteomics-targeted',
     phase: 'pass1b-06',
-    title: 'Transcriptomics',
+    title: 'Proteomics-targeted',
     description:
-      'Analyses, sample-level metadata, QC and quantitative results across tissues for RNA-seq.',
-    object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_transcriptomics.zip',
-    object_zipfile_size: '539.80 MB',
-  },
-  {
-    type: 'tissue-brown-adipose',
-    phase: 'pass1b-06',
-    title: 'Brown adipose',
-    description:
-      'Analyses, sample-level metadata, QC and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for brown adipose.',
-    object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_brown-adipose.zip',
-    object_zipfile_size: '57.57 MB',
+      'Analyses, sample-level metadata, QC and quantitative results across tissues for immunoassay.',
+    object_zipfile:
+      'pass1b-06/bundles/motrpac_pass1b-06_proteomics-targeted.zip',
+    object_zipfile_size: '11.64 MB',
   },
   {
     type: 'tissue-gastrocnemius',
@@ -84,15 +75,6 @@ const BundleDataTypes = [
     object_zipfile_size: '186.97 MB',
   },
   {
-    type: 'tissue-kidney',
-    phase: 'pass1b-06',
-    title: 'Kidney',
-    description:
-      'Analyses, sample-level metadata, QC and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for kidney.',
-    object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_kidney.zip',
-    object_zipfile_size: '179.20 MB',
-  },
-  {
     type: 'tissue-liver',
     phase: 'pass1b-06',
     title: 'Liver',
@@ -111,6 +93,24 @@ const BundleDataTypes = [
     object_zipfile_size: '241.91 MB',
   },
   {
+    type: 'tissue-kidney',
+    phase: 'pass1b-06',
+    title: 'Kidney',
+    description:
+      'Analyses, sample-level metadata, QC and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for kidney.',
+    object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_kidney.zip',
+    object_zipfile_size: '179.20 MB',
+  },
+  {
+    type: 'tissue-brown-adipose',
+    phase: 'pass1b-06',
+    title: 'Brown adipose',
+    description:
+      'Analyses, sample-level metadata, QC and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for brown adipose.',
+    object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_brown-adipose.zip',
+    object_zipfile_size: '57.57 MB',
+  },
+  {
     type: 'tissue-white-adipose',
     phase: 'pass1b-06',
     title: 'White adipose',
@@ -118,6 +118,24 @@ const BundleDataTypes = [
       'Analyses, sample-level metadata, QC and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for white adipose.',
     object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_white-adipose.zip',
     object_zipfile_size: '189.27 MB',
+  },
+  {
+    type: 'tissue-blood-rna',
+    phase: 'pass1b-06',
+    title: 'Blood RNA',
+    description:
+      'Analyses, sample-level metadata, QC and quantitative results in RNA-seq for blood RNA.',
+    object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_blood.zip',
+    object_zipfile_size: '17.93 MB',
+  },
+  {
+    type: 'tissue-plasma',
+    phase: 'pass1b-06',
+    title: 'Plasma',
+    description:
+      'Analyses, sample-level metadata, QC and quantitative results in targeted/untargeted metabolomics and immunoassay for plasma.',
+    object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_plasma.zip',
+    object_zipfile_size: '53.58 MB',
   },
 ];
 
