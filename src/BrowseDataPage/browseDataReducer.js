@@ -76,6 +76,43 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
             );
           }
         });
+      } else if (
+        action.category === 'category' &&
+        action.filter === 'Phenotype'
+      ) {
+        // FIXME: need to move phenotype to its own page
+        // (phenotype not specific to any tissue, assay, or ome)
+        newActiveFilters.assay = [];
+        newActiveFilters.tissue_name = [];
+        newActiveFilters.omics = [];
+        Object.keys(state.activeFilters).forEach((cat) => {
+          if (newActiveFilters[cat].length) {
+            filtered = filtered.filter(
+              (file) =>
+                newActiveFilters[cat].findIndex((el) =>
+                  el.includes(file[cat])
+                ) !== -1
+            );
+          }
+        });
+      } else if (action.category.match(/assay|omics|tissue_name/)) {
+        // FIXME: deselect phenotype filter if tissue, assay, or ome is selected
+        if (newActiveFilters.category.indexOf('Phenotype') !== -1) {
+          newActiveFilters.category.splice(
+            newActiveFilters.category.indexOf('Phenotype'),
+            1
+          );
+        }
+        Object.keys(state.activeFilters).forEach((cat) => {
+          if (newActiveFilters[cat].length) {
+            filtered = filtered.filter(
+              (file) =>
+                newActiveFilters[cat].findIndex((el) =>
+                  el.includes(file[cat])
+                ) !== -1
+            );
+          }
+        });
       } else {
         // return matching files, excluding metabolomics
         // merged files
