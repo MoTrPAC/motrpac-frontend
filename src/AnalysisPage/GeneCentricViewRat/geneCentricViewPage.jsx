@@ -82,7 +82,7 @@ function GeneCentricView({
               gene over 8 weeks of training in adult rats.
             </div>
           </div>
-          <div className="es-search-ui-container d-flex align-items-center w-100">
+          <div className="es-search-ui-container d-flex align-items-center w-100 pb-2">
             <div className="search-box-input-group d-flex align-items-center flex-grow-1">
               {/*
               <input
@@ -132,7 +132,7 @@ function GeneCentricView({
                   type="button"
                   className="btn btn-secondary search-reset ml-2"
                   onClick={() => {
-                    geneSearchReset();
+                    geneSearchReset('all');
                     setMultiSelections([]);
                   }}
                 >
@@ -167,6 +167,7 @@ function GeneCentricView({
                     handleGeneCentricSearch={handleGeneCentricSearch}
                     geneSearchChangeFilter={geneSearchChangeFilter}
                     geneSearchInputValue={formatSearchInput()}
+                    geneSearchReset={geneSearchReset}
                     hasResultFilters={hasResultFilters}
                   />
                 </div>
@@ -259,7 +260,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(
       AnalysisActions.handleGeneCentricSearch(params, geneInputValue, scope)
     ),
-  geneSearchReset: () => dispatch(AnalysisActions.geneSearchReset()),
+  geneSearchReset: (scope) => dispatch(AnalysisActions.geneSearchReset(scope)),
   geneSearchChangeFilter: (field, value) =>
     dispatch(AnalysisActions.geneSearchChangeFilter(field, value)),
 });
