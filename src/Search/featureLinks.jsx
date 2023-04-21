@@ -62,12 +62,11 @@ function FeatureLinks({
       eventHandler: null,
     },
     {
-      route:
-        'https://github.com/orgs/MoTrPAC/repositories?q=MotrpacRatTraining&type=public&language=r',
+      route: 'code-repositories',
       description:
-        'R packages relevant to the processed data and downstream analysis results presented in the Landscape paper.',
+        'Code and packages relevant to the processed data and downstream analysis results presented in the Landscape paper.',
       icon: 'code',
-      title: 'Code Repository',
+      title: 'Code Repositories',
       eventHandler: null,
     },
   ];
