@@ -184,20 +184,18 @@ export function Navbar({
                   <Link to="/graphical-clustering" className="dropdown-item">
                     Graphical Clustering
                   </Link>
+                  <a
+                    href="https://data-viz.motrpac-data.org"
+                    className="dropdown-item"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Interactive Data Visualization
+                  </a>
                   {isAuthenticated && hasAccess && userType === 'internal' ? (
-                    <>
-                      <a
-                        href="https://collab.motrpac-data.org/hub/oauth_login?next=%2Fhub%2Fhome"
-                        className="dropdown-item"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        MoTrPAC Collab
-                      </a>
-                      <Link to="/analysis-phenotype" className="dropdown-item">
-                        Phenotype
-                      </Link>
-                    </>
+                    <Link to="/analysis-phenotype" className="dropdown-item">
+                      Phenotype
+                    </Link>
                   ) : null}
                 </div>
               </li>
@@ -266,14 +264,9 @@ export function Navbar({
                   className="dropdown-menu"
                   aria-labelledby="aboutNavbarItemMenuLink"
                 >
-                  <a
-                    href="https://github.com/orgs/MoTrPAC/repositories?q=MotrpacRatTraining&type=public&language=r"
-                    className="dropdown-item"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Code Repository
-                  </a>
+                  <Link to="/code-repositories" className="dropdown-item">
+                    Code Repositories
+                  </Link>
                   <Link to="/methods" className="dropdown-item">
                     Methods
                   </Link>
