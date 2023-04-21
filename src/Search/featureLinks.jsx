@@ -13,6 +13,7 @@ function FeatureLinks({
   handleQCDataFetch,
   allFiles,
   lastModified,
+  userType,
 }) {
   const handleDataObjectFetch = () => {
     if (allFiles.length === 0) {
@@ -34,20 +35,6 @@ function FeatureLinks({
 
   const features = [
     {
-      route: 'releases',
-      description: 'Access data sets from prior data releases.',
-      icon: 'rocket_launch',
-      title: 'Data Releases',
-      eventHandler: null,
-    },
-    {
-      route: 'data-download',
-      description: 'Browse and download data by tissue, assay, or omics.',
-      icon: 'view_list',
-      title: 'Download Data',
-      eventHandler: handleDataObjectFetch,
-    },
-    {
       route: 'qc-data-monitor',
       description: 'Track submitted samples and their QC statuses.',
       icon: 'fact_check',
@@ -62,6 +49,20 @@ function FeatureLinks({
       eventHandler: null,
     },
     {
+      route: 'data-download',
+      description: 'Browse and download data by tissue, assay, or omics.',
+      icon: 'view_list',
+      title: 'Download Data',
+      eventHandler: handleDataObjectFetch,
+    },
+    {
+      route: 'releases',
+      description: 'Access data sets from prior data releases.',
+      icon: 'rocket_launch',
+      title: 'Data Releases',
+      eventHandler: null,
+    },
+    {
       route: 'code-repositories',
       description:
         'Code and packages relevant to the processed data and downstream analysis results presented in the Landscape paper.',
@@ -71,46 +72,32 @@ function FeatureLinks({
     },
   ];
 
+  const featuresToRender =
+    userType === 'internal' ? features : features.slice(2, 5);
+
   return (
     <div className="feature-links-container pt-2">
-      <div className="row row-cols-1 row-cols-md-4 mt-5">
-        {features.map((item) => (
+      <div
+        className={`row row-cols-1 mt-5 ${
+          userType === 'internal' ? 'row-cols-md-4' : 'row-cols-md-3'
+        }`}
+      >
+        {featuresToRender.map((item) => (
           <div key={item.route} className="col mb-4">
             <div className={`card h-100 mb-3 p-3 shadow-sm ${item.route}`}>
-              {item.route.indexOf('http') !== -1 ? (
-                <a
-                  href={item.route}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="external-link"
-                >
-                  <div className="card-body">
-                    <div className="h-100 d-flex align-items-start">
-                      <div className="feature-icon mr-3">
-                        <span className="material-icons">{item.icon}</span>
-                      </div>
-                      <div className="feature-summary">
-                        <h4 className="card-title">{item.title}</h4>
-                        <p className="card-text">{item.description}</p>
-                      </div>
+              <Link to={`/${item.route}`} onClick={item.eventHandler}>
+                <div className="card-body">
+                  <div className="h-100 d-flex align-items-start">
+                    <div className="feature-icon mr-3">
+                      <span className="material-icons">{item.icon}</span>
+                    </div>
+                    <div className="feature-summary">
+                      <h4 className="card-title">{item.title}</h4>
+                      <p className="card-text">{item.description}</p>
                     </div>
                   </div>
-                </a>
-              ) : (
-                <Link to={`/${item.route}`} onClick={item.eventHandler}>
-                  <div className="card-body">
-                    <div className="h-100 d-flex align-items-start">
-                      <div className="feature-icon mr-3">
-                        <span className="material-icons">{item.icon}</span>
-                      </div>
-                      <div className="feature-summary">
-                        <h4 className="card-title">{item.title}</h4>
-                        <p className="card-text">{item.description}</p>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              )}
+                </div>
+              </Link>
             </div>
           </div>
         ))}
@@ -124,11 +111,13 @@ FeatureLinks.propTypes = {
   handleQCDataFetch: PropTypes.func.isRequired,
   allFiles: PropTypes.arrayOf(PropTypes.shape({})),
   lastModified: PropTypes.string,
+  userType: PropTypes.string,
 };
 
 FeatureLinks.defaultProps = {
   allFiles: [],
   lastModified: '',
+  userType: '',
 };
 
 export default FeatureLinks;

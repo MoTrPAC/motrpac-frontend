@@ -89,6 +89,7 @@ export function SearchPage({
           handleQCDataFetch={handleQCDataFetch}
           allFiles={allFiles}
           lastModified={lastModified}
+          userType={userType}
         />
       );
     }
@@ -210,7 +211,7 @@ export function SearchPage({
               </div>
             </div>
           </div>
-          {userType && userType === 'internal' && renderFeatureLinks()}
+          {userType && renderFeatureLinks()}
           <div className="search-body-container mt-4 mb-2">
             {searching && <AnimatedLoadingIcon isFetching={searching} />}
             {!searching && searchError ? (
