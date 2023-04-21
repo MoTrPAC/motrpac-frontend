@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import EmailLink from '../../lib/ui/emailLink';
 import ExternalLink from '../../lib/ui/externalLink';
+import DataTypeInfo from './dataTypeInfo';
 
 function AuthAccessBrowseDataSummary() {
   return (
@@ -9,10 +10,10 @@ function AuthAccessBrowseDataSummary() {
       <div className="lead col-12">
         Browse and download experimental data from endurance trained (1w, 2wks,
         4wks or 8wks) compared to untrained adult rats (6 months old). The files
-        accessible and downloadable here consist of results and analyses from a
-        variety of data types focusing on defining the molecular changes that
-        occur with training and exercise across tissues. Files can be filtered
-        by tissue, omics and assay. To learn more about PASS1B study, see the{' '}
+        accessible and downloadable here consist of results and analyses
+        defining the molecular changes that occur with training and exercise
+        across tissues. Files can be filtered by tissue, omics and assay. To
+        learn more about PASS1B study, see the{' '}
         <ExternalLink
           to="https://www.biorxiv.org/content/10.1101/2022.09.21.508770v1"
           label="MoTrPAC Endurance Exercise Training Animal Study Landscape Preprint"
@@ -25,34 +26,7 @@ function AuthAccessBrowseDataSummary() {
         />{' '}
         that provides more information on the entire study.
       </div>
-      <div className="browse-data-summary-content col-4 col-md-4">
-        <div className="bd-callout bd-callout-info">
-          <h4>Data Types</h4>
-          <ul className="mt-1 mb-2">
-            <li>Assay-specific differential analysis and normalized data</li>
-            <li>
-              Assay-specific quantitative results, experiment metadata, and
-              QA/QC reports
-            </li>
-            <li>
-              Cross-platform merged metabolomics data tables for named
-              metabolites
-            </li>
-            <li>Phenotypic data</li>
-          </ul>
-          <p>
-            <span className="font-weight-bold">Note:</span> Raw files are not
-            currently available for direct download through the Data Hub portal.
-            Please submit your requests to{' '}
-            <EmailLink
-              mailto="motrpac-data-requests@lists.stanford.edu"
-              label="MoTrPAC Data Requests"
-            />{' '}
-            and specify the relevant tissues/assays if you would like to get
-            access to the raw files.
-          </p>
-        </div>
-      </div>
+      <DataTypeInfo />
       <div className="browse-data-summary-content col-4 col-md-4">
         <div className="bd-callout bd-callout-info">
           <h4>Additional Information</h4>
