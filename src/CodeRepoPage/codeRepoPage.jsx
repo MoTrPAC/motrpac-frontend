@@ -33,6 +33,10 @@ const repositories = {
   ],
   analysis: [
     {
+      name: 'MoTrPAC/MotrpacRatTraining6moQCRep',
+      url: 'https://github.com/MoTrPAC/MotrpacRatTraining6moQCRep',
+    },
+    {
       name: 'MoTrPAC/MotrpacRatTraining6mo',
       url: 'https://github.com/MoTrPAC/MotrpacRatTraining6mo',
     },
