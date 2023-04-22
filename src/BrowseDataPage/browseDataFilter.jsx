@@ -71,9 +71,13 @@ function BrowseDataFilter({
   ));
   return (
     <div className="col-md-3 browse-data-filter-group">
-      <div className="browse-data-filter-group-header d-flex justify-content-between align-items-center mb-2">
-        <div>Narrow results using filters below.</div>
-        <button type="button" className="btn btn-link" onClick={onResetFilters}>
+      <div className="browse-data-filter-group-header d-flex justify-content-between align-items-center mb-3">
+        <div className="font-weight-bold">Filter results:</div>
+        <button
+          type="button"
+          className="btn btn-secondary btn-sm"
+          onClick={onResetFilters}
+        >
           Reset filters
         </button>
       </div>
@@ -81,6 +85,7 @@ function BrowseDataFilter({
     </div>
   );
 }
+
 BrowseDataFilter.propTypes = {
   activeFilters: PropTypes.shape({
     tissue_name: PropTypes.arrayOf(PropTypes.string),
