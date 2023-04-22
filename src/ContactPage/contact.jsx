@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PageTitle from '../lib/ui/pageTitle';
 import ContactHelpdesk from '../lib/ui/contactHelpdesk';
 
@@ -20,15 +21,17 @@ function Contact() {
           <h5 className="card-header">Data Access</h5>
           <div className="card-body">
             <p className="card-text">
-              The first MoTrPAC public release of limited acute exercise data is
-              now available. Please agree to the data use agreement and register
-              for an account on the{' '}
-              <a href="/data-access" className="inline-link">
-                Data Access
-              </a>{' '}
-              page if you are interested in obtaining access to the data. For
-              updates when subsequent publicly accessible data become available,
-              please <ContactHelpdesk />
+              The MoTrPAC{' '}
+              <Link to="/data-download">
+                Endurance Exercise Training Animal Study data
+              </Link>{' '}
+              is now available to the public. This is in addition to the Limited
+              Acute Exercise data made available to the public in a prior
+              release. Please agree to the data use agreement and register for
+              an account on the <Link to="/data-access">Data Access</Link> page
+              if you are interested in obtaining access to the Limited Acute
+              Exercise data. For updates when subsequent publicly accessible
+              data become available, please <ContactHelpdesk />
             </p>
           </div>
         </div>
