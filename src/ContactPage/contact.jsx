@@ -33,15 +33,12 @@ function Contact() {
           </div>
         </div>
         <div className="card mb-4 shadow-sm">
-          <h5 className="card-header">Uploading Study Data</h5>
+          <h5 className="card-header">Study Data Submission</h5>
           <div className="card-body">
             <p className="card-text">
-              If you are a member of one of the sites involved with MoTrPAC, please
-              sign in using your login credentials via the &quot;Submitter
-              Login&quot; link at the top and bottom right of this website. If
-              you have issues logging in, please
-              {' '}
-              <ContactHelpdesk />
+              If you are a member of one of the sites involved with MoTrPAC,
+              please <ContactHelpdesk /> about obtaining access to our cloud
+              storage and data submission guidelines.
             </p>
           </div>
         </div>
@@ -49,8 +46,7 @@ function Contact() {
           <h5 className="card-header">Questions and Inquiries</h5>
           <div className="card-body">
             <p className="card-text">
-              For general inquiries about the MoTrPAC Data Hub, please
-              {' '}
+              For general inquiries about the MoTrPAC Data Hub, please{' '}
               <ContactHelpdesk />
             </p>
           </div>
