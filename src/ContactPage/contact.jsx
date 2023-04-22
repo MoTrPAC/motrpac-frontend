@@ -17,18 +17,18 @@ function Contact() {
       <PageTitle title="Contact Us" />
       <div className="card-deck contact-content-container">
         <div className="card mb-4 shadow-sm">
-          <h5 className="card-header">Accessing Data</h5>
+          <h5 className="card-header">Data Access</h5>
           <div className="card-body">
             <p className="card-text">
-              The first MoTrPAC public data release is now available. Please
-              agree to the data use agreement and register for an account on the
-              {' '}
-              <a href="/data-access" className="inline-link">Data Access</a>
-              {' '}
-              page if you are interested in obtaining access to the data. For updates
-              when subsequent publicly accessible data become available, please
-              {' '}
-              <ContactHelpdesk />
+              The first MoTrPAC public release of limited acute exercise data is
+              now available. Please agree to the data use agreement and register
+              for an account on the{' '}
+              <a href="/data-access" className="inline-link">
+                Data Access
+              </a>{' '}
+              page if you are interested in obtaining access to the data. For
+              updates when subsequent publicly accessible data become available,
+              please <ContactHelpdesk />
             </p>
           </div>
         </div>
