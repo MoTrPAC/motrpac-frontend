@@ -90,7 +90,6 @@ function FeatureLinks({
       icon: 'hub',
       title: 'MoTrPAC Collab',
       eventHandler: null,
-      readme: '/static-assets/MoTrPAC_Collab_User_Guide.pdf',
     },
   ];
 
@@ -117,23 +116,7 @@ function FeatureLinks({
                       </div>
                       <div className="feature-summary">
                         <h4 className="card-title">{item.title}</h4>
-                        <p className="card-text">
-                          {item.description}
-                          {item.readme && (
-                            <span>
-                              {' '}
-                              See the{' '}
-                              <a
-                                href={item.readme}
-                                target="_blank"
-                                rel="noreferrer"
-                              >
-                                user guide
-                              </a>
-                              .
-                            </span>
-                          )}
-                        </p>
+                        <p className="card-text">{item.description}</p>
                       </div>
                     </div>
                   </div>
