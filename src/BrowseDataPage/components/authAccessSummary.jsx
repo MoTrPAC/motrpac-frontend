@@ -7,12 +7,12 @@ function AuthAccessBrowseDataSummary() {
   return (
     <div className="browse-data-summary-container row mb-4">
       <div className="lead col-12">
-        Browse and download experimental data from endurance trained (1w, 2wks,
-        4wks or 8wks) compared to untrained adult rats (6 months old). The files
-        accessible and downloadable here consist of results and analyses
-        defining the molecular changes that occur with training and exercise
-        across tissues. Files can be filtered by tissue, omics and assay. To
-        learn more about the studies, see the{' '}
+        Browse and download experimental data from acute exercise and the
+        endurance trained (1w, 2wks, 4wks or 8wks) compared to untrained young
+        adult rats (6 months old). The files accessible and downloadable here
+        consist of results and analyses defining the molecular changes that
+        occur with training and exercise across tissues. Files can be filtered
+        by tissue, omics and assay. To learn more about the studies, see the{' '}
         <ExternalLink
           to="https://www.biorxiv.org/content/10.1101/2022.09.21.508770v1"
           label="MoTrPAC Endurance Exercise Training Animal Study Landscape Preprint"
