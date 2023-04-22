@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import EmailLink from '../../lib/ui/emailLink';
 
-function DataTypeInfo() {
+function DataTypeInfo({ grid }) {
   const [showMoreInfo, setShowMoreInfo] = useState(false);
 
   // Event handler for "Show prior releases" button
@@ -12,7 +13,7 @@ function DataTypeInfo() {
   };
 
   return (
-    <div className="browse-data-summary-content col-4 col-md-4">
+    <div className={`browse-data-summary-content ${grid}`}>
       <div className="bd-callout bd-callout-info">
         <h4>Data Types</h4>
         <ul className="mt-1 mb-2">
@@ -62,5 +63,9 @@ function DataTypeInfo() {
     </div>
   );
 }
+
+DataTypeInfo.propTypes = {
+  grid: PropTypes.string.isRequired,
+};
 
 export default DataTypeInfo;

@@ -26,7 +26,7 @@ function OpenAccessBrowseDataSummary() {
         />{' '}
         that provides more information on the entire study.
       </div>
-      <DataTypeInfo />
+      <DataTypeInfo grid="col-4 col-md-4" />
       <div className="browse-data-summary-content col-8 col-md-8">
         <div className="bd-callout bd-callout-warning">
           <h4 className="bundle-data-callout-title-container d-flex align-items-center justify-content-between">
