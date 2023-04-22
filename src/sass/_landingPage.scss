@@ -181,11 +181,15 @@ section {
     .row {
       margin-left: 0;
       margin-right: 0;
+
+      .access-data-info, .upload-data-info {
+        line-height: 1.55;
+      }
     }
 
     .inline-link-with-icon {
       .material-icons {
-        font-size: 1.45rem;
+        font-size: 1.3rem;
       }
     }
   }
