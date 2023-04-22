@@ -297,21 +297,21 @@
       }
     }
 
-    &.browse-data {
+    &.data-download {
       .material-icons {
-        color: $primary-blue;
+        color: $accent-yellow;
       }
     }
 
     &.summary {
       .material-icons {
-        color: $accent-violet;
+        color: lighten($accent-violet, 12%);
       }
     }
 
     &.code-repositories {
       .material-icons {
-        color: $stanford-cool-grey;
+        color: $gray-semi-transparent;
       }
     }
   }

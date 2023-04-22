@@ -35,69 +35,124 @@ function FeatureLinks({
 
   const features = [
     {
-      route: 'qc-data-monitor',
-      description: 'Track submitted samples and their QC statuses.',
-      icon: 'fact_check',
-      title: 'QC Data Monitor',
-      eventHandler: fecthQCData,
-    },
-    {
-      route: 'summary',
-      description: 'Overview of sample counts by tissue, assay, or omics.',
-      icon: 'assessment',
-      title: 'Sample Summary',
-      eventHandler: null,
-    },
-    {
       route: 'data-download',
-      description: 'Browse and download data by tissue, assay, or omics.',
-      icon: 'view_list',
-      title: 'Download Data',
+      description:
+        'Browse and download the available MoTrPAC study data in young adult rats by tissue, assay, or omics.',
+      icon: 'cloud_download',
+      title: 'Data Downloads',
       eventHandler: handleDataObjectFetch,
     },
     {
-      route: 'releases',
-      description: 'Access data sets from prior data releases.',
-      icon: 'rocket_launch',
-      title: 'Data Releases',
+      route: 'https://data-viz.motrpac-data.org/',
+      description:
+        'An intgeractive data visualization tool for the graphical clustering analysis of endurance training response in young adult rats.',
+      icon: 'data_exploration',
+      title: 'Data Visualization',
       eventHandler: null,
     },
     {
       route: 'code-repositories',
       description:
-        'Code and packages relevant to the processed data and downstream analysis results presented in the Landscape paper.',
+        'Explore the source code essential to the workflow for the young adult rats data in the endurance training study.',
       icon: 'code',
       title: 'Code Repositories',
       eventHandler: null,
     },
+    {
+      route: 'summary',
+      description:
+        'A dashboard to visualize sample counts by tissue, assay, or omics in the young adult rats endurance training and acute exercise studies.',
+      icon: 'assessment',
+      title: 'Sample Summary',
+      eventHandler: null,
+    },
+    {
+      route: 'releases',
+      description:
+        'Access prior versions of the data sets in the young adult rats endurance training and acute exercise studies.',
+      icon: 'rocket_launch',
+      title: 'Data Releases',
+      eventHandler: null,
+    },
+    {
+      route: 'qc-data-monitor',
+      description:
+        'Track and visualize the sample-level data submissions and their QC statuses by omics or assays.',
+      icon: 'fact_check',
+      title: 'QC Data Monitor',
+      eventHandler: fecthQCData,
+    },
+    {
+      route:
+        'https://collab.motrpac-data.org/hub/oauth_login?next=%2Fhub%2Fhome',
+      description:
+        'A multi-user Jupyter notebook workspace containing a collection of notebooks for in-depth data exploration and analysis.',
+      icon: 'hub',
+      title: 'MoTrPAC Collab',
+      eventHandler: null,
+      readme: '/static-assets/MoTrPAC_Collab_User_Guide.pdf',
+    },
   ];
 
   const featuresToRender =
-    userType === 'internal' ? features : features.slice(2, 5);
+    userType === 'internal' ? features : features.slice(0, 4);
 
   return (
     <div className="feature-links-container pt-2">
-      <div
-        className={`row row-cols-1 mt-5 ${
-          userType === 'internal' ? 'row-cols-md-4' : 'row-cols-md-3'
-        }`}
-      >
+      <div className="row row-cols-1 row-cols-md-4 mt-5">
         {featuresToRender.map((item) => (
           <div key={item.route} className="col mb-4">
             <div className={`card h-100 mb-3 p-3 shadow-sm ${item.route}`}>
-              <Link to={`/${item.route}`} onClick={item.eventHandler}>
-                <div className="card-body">
-                  <div className="h-100 d-flex align-items-start">
-                    <div className="feature-icon mr-3">
-                      <span className="material-icons">{item.icon}</span>
-                    </div>
-                    <div className="feature-summary">
-                      <h4 className="card-title">{item.title}</h4>
-                      <p className="card-text">{item.description}</p>
+              {item.route.indexOf('http') !== -1 ? (
+                <a
+                  href={item.route}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="external-link"
+                >
+                  <div className="card-body">
+                    <div className="h-100 d-flex align-items-start">
+                      <div className="feature-icon mr-3">
+                        <span className="material-icons">{item.icon}</span>
+                      </div>
+                      <div className="feature-summary">
+                        <h4 className="card-title">{item.title}</h4>
+                        <p className="card-text">
+                          {item.description}
+                          {item.readme && (
+                            <span>
+                              {' '}
+                              See the{' '}
+                              <a
+                                href={item.readme}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                user guide
+                              </a>
+                              .
+                            </span>
+                          )}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
+                </a>
+              ) : (
+                <Link to={`/${item.route}`} onClick={item.eventHandler}>
+                  <div className="card-body">
+                    <div className="h-100 d-flex align-items-start">
+                      <div className="feature-icon mr-3">
+                        <span className="material-icons">{item.icon}</span>
+                      </div>
+                      <div className="feature-summary">
+                        <h4 className="card-title">{item.title}</h4>
+                        <p className="card-text">{item.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              )}
             </div>
           </div>
         ))}
