@@ -193,7 +193,13 @@ export function SearchPage({
                   className="btn btn-primary search-submit"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleSearch(searchParams, multiSelections.length ? formatSearchInput() : searchParams.keys, 'all');
+                    handleSearch(
+                      searchParams,
+                      multiSelections.length
+                        ? formatSearchInput()
+                        : searchParams.keys,
+                      'all'
+                    );
                   }}
                 >
                   Search
