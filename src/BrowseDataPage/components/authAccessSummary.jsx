@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import EmailLink from '../../lib/ui/emailLink';
 import ExternalLink from '../../lib/ui/externalLink';
 import DataTypeInfo from './dataTypeInfo';
 
@@ -13,7 +12,7 @@ function AuthAccessBrowseDataSummary() {
         accessible and downloadable here consist of results and analyses
         defining the molecular changes that occur with training and exercise
         across tissues. Files can be filtered by tissue, omics and assay. To
-        learn more about PASS1B study, see the{' '}
+        learn more about the studies, see the{' '}
         <ExternalLink
           to="https://www.biorxiv.org/content/10.1101/2022.09.21.508770v1"
           label="MoTrPAC Endurance Exercise Training Animal Study Landscape Preprint"
@@ -26,30 +25,19 @@ function AuthAccessBrowseDataSummary() {
         />{' '}
         that provides more information on the entire study.
       </div>
-      <DataTypeInfo />
-      <div className="browse-data-summary-content col-4 col-md-4">
+      <DataTypeInfo grid="col-6 col-md-6" />
+      <div className="browse-data-summary-content col-6 col-md-6">
         <div className="bd-callout bd-callout-info">
           <h4>Additional Information</h4>
           <p>
-            The currently available 6-month old rat data for acute exercise and
-            endurance training also include:
+            The currently available young adult rats experimental data for acute
+            exercise and endurance training include all tissues and assays from
+            the very last consortium data release, as well as additional tissues
+            and assays made available afterwards. The phenotypic data sets have
+            also been updated since then.
           </p>
-          <ul className="mt-1 mb-2">
-            <li>
-              All PASS1A and PASS1B 6-month experimental/sample metadata from
-              the very last consortium release
-            </li>
-            <li>
-              Updated PASS1A and PASS1B 6-month phenotypic data since the very
-              last consortium release
-            </li>
-            <li>
-              Experimental data of additional tissues and assays not available
-              in the very last consortium release
-            </li>
-          </ul>
           <p>
-            A{' '}
+            Please refer to this{' '}
             <a
               href="https://docs.google.com/document/d/1bdXcYQLZ65GpJKTjf9XwRxhrfHJSD9NIqCxhG6icL8U"
               className="inline-link-with-icon"
@@ -59,42 +47,9 @@ function AuthAccessBrowseDataSummary() {
               README
               <i className="material-icons readme-file-icon">description</i>
             </a>{' '}
-            document is available for reference on the data included in the very
-            last consortium release.
+            document for the data included in the very last consortium data
+            release.
           </p>
-        </div>
-      </div>
-      <div className="browse-data-summary-content col-4 col-md-4">
-        <div className="bd-callout bd-callout-warning">
-          <div className="motrpac-collab-linkout h-100 d-flex align-items-start">
-            <div className="feature-icon mr-3">
-              <span className="material-icons">hub</span>
-            </div>
-            <div className="feature-summary">
-              <h4>
-                <a
-                  href="https://collab.motrpac-data.org/hub/oauth_login?next=%2Fhub%2Fhome"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  MoTrPAC Collab
-                </a>
-              </h4>
-              <p className="card-text">
-                A multi-user Jupyter notebook workspace containing a
-                collection of notebooks and visualizations for in-depth data
-                exploration. Read the{' '}
-                <a
-                  href="/static-assets/MoTrPAC_Collab_User_Guide.pdf"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  user guide
-                </a>{' '}
-                to learn more.
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
