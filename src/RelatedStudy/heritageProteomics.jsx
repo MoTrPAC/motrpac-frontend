@@ -113,6 +113,25 @@ function HeritageProteomics() {
               </div>
             </div>
           </div>
+          <div className="data-download-container row justify-content-start my-4">
+            <div className="mx-3 d-flex align-items-center">
+              <a
+                download
+                href="http://related-studies.motrpac-data.org/heritage_proteomics/HERITAGE_somalogic_analytes.xlsx"
+                className="btn btn-outline-primary d-flex align-items-center"
+                role="button"
+              >
+                <i className="material-icons">file_download</i>
+                <span className="px-1 text-left">
+                  Download HERITAGE Somalogic metadata
+                </span>
+              </a>
+              <div className="file-download-info d-flex align-items-center ml-2">
+                <i className="material-icons">insert_drive_file</i>
+                <span className="ml-1">.xslx - 677 KB</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
