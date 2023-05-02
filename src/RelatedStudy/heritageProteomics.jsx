@@ -38,7 +38,7 @@ function HeritageProteomics() {
           </div>
           <p>
             <ExternalLink
-              to="https://www.pbrc.edu/heritage/index.html"
+              to="https://www.heritagefamilystudy.com/"
               label="The HEalth, RIsk factors, exercise Training And GEnetics (HERITAGE) Family Study"
             />{' '}
             is a completed exercise training study that was designed to study
@@ -86,7 +86,7 @@ function HeritageProteomics() {
             </span>{' '}
             <a
               className="font-italic"
-              href="https://www.nature.com/natmetab"
+              href="https://doi.org/10.1038/s42255-021-00400-z"
               target="_blank"
               rel="noreferrer"
             >
