@@ -1,12 +1,15 @@
 html, body {
+  /**
   color: $stanford-black;
   font-family: $opensans;
+  **/
   height: 100%;
   min-height: 100%;
   margin: 0;
   padding: 0;
 }
 
+/**
 :root {
   font-size: 17px;
 }
@@ -15,6 +18,7 @@ h1, h2, h3, h4, h5 {
   color: $stanford-cool-grey;
   font-weight: $semibold-weight;
 }
+**/
 
 .titleRow {
   margin-top: 1rem;
@@ -32,6 +36,7 @@ h1, h2, h3, h4, h5 {
   font-weight: $bold-weight;
 }
 
+/**
 a {
   color: $primary-blue;
 
@@ -56,6 +61,7 @@ p {
   color: $stanford-black;
   font-size: 0.85rem;
 }
+**/
 
 #root {
   display: flex;
@@ -67,10 +73,11 @@ p {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-
+  /**
   &.test-version {
     background: url(../src/assets/background-img-test-version.gif);
   }
+  **/
 }
 
 @include media-breakpoint-up(lg) {
@@ -126,5 +133,85 @@ p {
     .sidebar-collapsed {
       width: 100%;
     }
+  }
+}
+
+/*
+$primary:       $blue !default;
+$secondary:     $gray-600 !default;
+$success:       $green !default;
+$info:          $cyan !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         $gray-100 !default;
+$dark:          $gray-800 !default;
+ */
+
+.bd-callout {
+  padding: 1.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid #eee;
+  border-left-width: .25rem;
+  border-radius: .25rem;
+  h2,h3,h4,h5 {
+    margin-top: 0;
+    margin-bottom: .75rem
+  }
+  p:last-child {
+    margin-bottom: 0
+  }
+  code {
+    border-radius: .25rem
+  }
+}
+
+.bd-callout-primary{
+  border-left-color: $primary;
+  h2,h3,h4,h5 {
+    color: $primary
+  }
+}
+
+.bd-callout-secondary{
+  border-left-color: $secondary;
+  h2,h3,h4,h5 {
+    color: $secondary
+  }
+}
+.bd-callout-success {
+  border-left-color: $success;
+  h2,h3,h4,h5 {
+    color: $success
+  }
+}
+.bd-callout-info {
+  border-left-color: $info;
+  h2,h3,h4,h5 {
+    color: $info
+  }
+}
+.bd-callout-warning {
+  border-left-color: $warning;
+  h2,h3,h4,h5 {
+    color: $warning
+  }
+}
+.bd-callout-danger {
+  border-left-color:$danger;
+  h2,h3,h4,h5 {
+    color: $danger
+  }
+}
+.bd-callout-light {
+  border-left-color: $light;
+  h2,h3,h4,h5 {
+    color: $light
+  }
+}
+.bd-callout-dark {
+  border-left-color: $dark;
+  h2,h3,h4,h5 {
+    color: $dark
   }
 }

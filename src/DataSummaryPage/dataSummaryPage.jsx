@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import AuthContentContainer from '../lib/ui/authContentContainer';
 import ReleasedSampleTable from '../Widgets/releasedSampleTable';
 import ReleasedSamplePlot from '../Widgets/releasedSamplePlot';
 import ReleasedSampleHighlight from '../Widgets/releasedSampleHighlight';
@@ -16,7 +15,6 @@ const animalReleaseSamples = require('../data/animal_release_samples.json');
  * Renders the release samples summary page.
  *
  * @param {Object} profile          Redux state of authenticated user profile
- * @param {Boolean} expanded        Redux state of collapsed/expanded sidebar
  * @param {String} release          Redux state of user-selected release
  * @param {String} phase            Redux state of user-selected phase
  * @param {String} plot             Redux state of plot selection
@@ -37,7 +35,6 @@ const animalReleaseSamples = require('../data/animal_release_samples.json');
  */
 export function DataSummaryPage({
   profile,
-  expanded,
   release,
   phase,
   plot,
@@ -54,18 +51,23 @@ export function DataSummaryPage({
   // Returns a subset of the release sample data based on a number of factors:
   // internal or external, user's selection of release/phase
   const sampleData = () => {
-    let data =
-      userType === 'external'
-        ? animalReleaseSamples.external.pass1a_06
-        : animalReleaseSamples.internal.pass1a_06;
+    let data = animalReleaseSamples.external.pass1b_06;
 
     if (userType === 'internal') {
       if (release === 'internal' && phase === 'pass1a_06') {
         data = animalReleaseSamples.internal.pass1a_06;
-      } else if (release === 'internal' && phase === 'pass1b_06') {
-        data = animalReleaseSamples.internal.pass1b_06;
       } else if (release === 'external' && phase === 'pass1a_06') {
         data = animalReleaseSamples.external.pass1a_06;
+      } else if (release.match(/internal|external/) && phase === 'pass1b_06') {
+        data = animalReleaseSamples.external.pass1b_06;
+      }
+    }
+
+    if (userType === 'external') {
+      if (phase === 'pass1a_06') {
+        data = animalReleaseSamples.external.pass1a_06;
+      } else if (phase === 'pass1b_06') {
+        data = animalReleaseSamples.external.pass1b_06;
       }
     }
 
@@ -73,13 +75,16 @@ export function DataSummaryPage({
   };
 
   return (
-    <AuthContentContainer classes="dataSummaryPage" expanded={expanded}>
-      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-header">
+    <div className="dataSummaryPage px-3 px-md-4 mb-3 w-100">
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 page-header">
         <div className="page-title">
-          <h3>Summary of Rat Study Assays</h3>
+          <h1 className="mb-0">
+            Summary of Study Assays{' '}
+            <small className="text-muted">Young Adult Rats (6 months)</small>
+          </h1>
         </div>
-        {userType === 'internal' && (
-          <div className="btn-toolbar">
+        <div className="btn-toolbar">
+          {userType === 'internal' && (
             <div className="btn-group">
               <button
                 type="button"
@@ -96,71 +101,62 @@ export function DataSummaryPage({
                   release === 'external' ? 'active' : ''
                 }`}
                 onClick={toggleRelease.bind(this, 'external')}
-                disabled={phase === 'pass1b_06'}
               >
                 External Release
               </button>
             </div>
-            <div className="btn-group ml-2">
-              <button
-                type="button"
-                className={`btn btn-sm btn-outline-primary ${
-                  phase === 'pass1a_06' ? 'active' : ''
-                }`}
-                onClick={togglePhase.bind(this, 'pass1a_06')}
-              >
-                PASS1A 6-Month
-              </button>
-              <button
-                type="button"
-                className={`btn btn-sm btn-outline-primary ${
-                  phase === 'pass1b_06' ? 'active' : ''
-                }`}
-                onClick={togglePhase.bind(this, 'pass1b_06')}
-                disabled={release === 'external'}
-              >
-                PASS1B 6-Month
-              </button>
-            </div>
+          )}
+          <div className="btn-group ml-2">
+            <button
+              type="button"
+              className={`btn btn-sm btn-outline-primary ${
+                phase === 'pass1b_06' ? 'active' : ''
+              }`}
+              onClick={togglePhase.bind(this, 'pass1b_06')}
+            >
+              Endurance Exercise Training
+            </button>
+            <button
+              type="button"
+              className={`btn btn-sm btn-outline-primary ${
+                phase === 'pass1a_06' ? 'active' : ''
+              }`}
+              onClick={togglePhase.bind(this, 'pass1a_06')}
+            >
+              Acute Exercise Training
+            </button>
           </div>
-        )}
+        </div>
       </div>
       <ReleasedSampleHighlight data={sampleData()} />
       <div className="card-container-release-samples row mb-2">
         <div className="d-flex col-lg-9">
           <div className="flex-fill w-100 card shadow-sm">
-            <h5 className="card-header">
-              {userType === 'internal' && (
-                <div className="internal-user-labels float-right">
-                  {release === 'internal' && (
-                    <span className="badge badge-success ml-3">
-                      Internal Release
-                    </span>
-                  )}
-                  {release === 'external' && (
-                    <span className="badge badge-warning ml-3">
-                      External Release
-                    </span>
-                  )}
-                  {phase === 'pass1a_06' && (
-                    <span className="badge badge-secondary ml-2">
-                      PASS1A 6-Month
-                    </span>
-                  )}
-                  {phase === 'pass1b_06' && (
-                    <span className="badge badge-secondary ml-2">
-                      PASS1B 6-Month
-                    </span>
-                  )}
-                </div>
-              )}
-              {userType === 'external' && (
-                <div className="external-user-labels float-right">
-                  <span className="badge badge-secondary">PASS1A 6-Month</span>
-                </div>
-              )}
+            <h4 className="card-header d-flex align-items-center justify-content-between">
               <div className="card-title mb-0">Overview</div>
-            </h5>
+              <div className="user-phase-labels">
+                {release === 'internal' && userType === 'internal' && (
+                  <span className="badge badge-success mr-2">
+                    Internal Release
+                  </span>
+                )}
+                {release === 'external' && userType === 'internal' && (
+                  <span className="badge badge-warning mr-2">
+                    External Release
+                  </span>
+                )}
+                {phase === 'pass1a_06' && (
+                  <span className="badge badge-secondary">
+                    Acute Exercise Training (Limited)
+                  </span>
+                )}
+                {phase === 'pass1b_06' && (
+                  <span className="badge badge-secondary">
+                    Endurance Exercise Training
+                  </span>
+                )}
+              </div>
+            </h4>
             <div className="card-body pt-1">
               <div className="release-sample-plot border-bottom pb-4 mb-4">
                 <PlotControls togglePlot={togglePlot} plot={plot} />
@@ -194,7 +190,7 @@ export function DataSummaryPage({
           </div>
         </div>
       </div>
-    </AuthContentContainer>
+    </div>
   );
 }
 
@@ -202,7 +198,6 @@ DataSummaryPage.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
   }),
-  expanded: PropTypes.bool,
   release: PropTypes.string,
   phase: PropTypes.string,
   plot: PropTypes.string,
@@ -217,9 +212,8 @@ DataSummaryPage.propTypes = {
 
 DataSummaryPage.defaultProps = {
   profile: {},
-  expanded: false,
   release: 'internal',
-  phase: 'pass1a_06',
+  phase: 'pass1b_06',
   plot: 'tissue_name',
   sort: 'default',
   showQC: true,
@@ -227,7 +221,6 @@ DataSummaryPage.defaultProps = {
 
 const mapStateToProps = (state) => ({
   ...state.auth,
-  expanded: state.sidebar.expanded,
   ...state.dataSummary,
 });
 

@@ -6,10 +6,6 @@
 
   .search-content-container {
     .es-search-ui-container {
-      form {
-        flex-grow: 1;
-      }
-
       .btn.dropdown-toggle {
         min-width: 10.0em;
         text-align: left;
@@ -17,49 +13,8 @@
 
       .dropdown-menu {
         .dropdown-item {
-          font-size: 0.95rem;
           padding: 0.2rem 1.0rem;
         }
-      }
-    }
-
-    .gene-search-container {
-      .gene-search-content {
-        background-color: $gray-300;
-
-        form {
-          position: relative;
-        }
-
-        button.submit-gene-search {
-          line-height: 0;
-        }
-
-        .search-error-message {
-          color: $orange;
-          font-size: larger;
-        }
-
-        .recent-search-terms-label {
-          font-size: larger;
-        }
-
-        button.saved-search {
-          cursor: pointer;
-          font-weight: 600;
-        }
-      }
-    }
-
-    .gene-definition-container {
-      font-size: 0.95rem;
-
-      dt, dd {
-        display: table-cell;
-      }
-
-      dt {
-        padding-right: 0.35rem;
       }
     }
 
@@ -72,18 +27,30 @@
       width: auto;
 
       &.form-check-label {
-        font-size: 0.95rem;
         font-weight: normal;
       }
     }
 
+    .search-box-input-group {
+      .input-group-prepend {
+        .material-icons {
+          color: $stanford-black;
+          font-size: 1.75rem;
+          line-height: 0;
+        }
+      }
+      .rbt {
+        flex-grow: 3;
+      }
+    }
+
     .form-control.global-filter {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       width: 240px;
     }
 
     .form-control.custom-filter {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
     }
 
     input.form-control[type=number] {
@@ -111,11 +78,13 @@
 
     .pagination-page-size,
     .file-download-button {
-      font-size: 0.9rem;
       margin-bottom: 0.85rem;
+
+      button {
+        padding-left: 0.5rem;
+      }
       
       select {
-        font-size: 0.9rem;
         margin-right: 0.65rem;
         max-width: 85px;
       }
@@ -123,14 +92,10 @@
   
     .pagination-footer {
       margin-bottom: 1.0rem;
-
-      .page-index {
-        font-size: 0.9rem;
-      }
   
       .btn {
-        min-width: 60px;
-        max-width: 80px;
+        min-width: 80px;
+        max-width: 100px;
   
         &.disabled-btn {
           pointer-events: none;
@@ -145,30 +110,24 @@
 }
 
 .search-sidebar-container {
+  .card-header {
+    background-color: #eee;
+  }
+
   .card-body {
     padding: 0;
   }
 
   .search-result-filter-group {
-    .search-result-filter-group-header {
-      font-size: 0.85rem;
-
-      button {
-        color: #007bff;
-        font-size: inherit;
-        padding: 0;
-      }
-    }
-
     .filter-module {
       .card-header {
-        font-size: 0.9rem;
         padding: 0.4rem 0.85rem;
-
+        /**
         .filters-collapsible-btn {
           color: #888;
           line-height: 0;
         }
+        **/
       }
 
       .card-body {
@@ -179,8 +138,8 @@
         background-color: #fff;
         border: 1px solid $gray-semi-transparent;
         color: $stanford-cool-grey;
-        font-size: .8rem;
-        font-weight: 600;
+        font-size: .9rem;
+        font-weight: 500;
         margin: 0.3rem;
         padding: .2rem .4rem;
         white-space: normal;
@@ -197,8 +156,6 @@
       }
 
       .range-filter-form-controls {
-        font-size: 0.85rem;
-
         input {
           height: 2.25em;
           padding: 0.2rem 0.5rem;
@@ -213,7 +170,6 @@
     .submit-search-filters-button {
       .input-error-notify {
         color: $accent-red;
-        font-size: 0.85rem;
       }
 
       .btn {
@@ -229,9 +185,9 @@
   }
 }
 
-.timewiseDEATable {
+.search-results-container .timewiseDEATable {
   border-collapse: collapse;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   margin-bottom: 0;
   text-align: left;
 
@@ -307,6 +263,22 @@
 
     .card-body {
       padding: 0.75em;
+
+      .feature-summary {
+        h4 {
+          color: $stanford-cool-grey;
+          font-family: 'Open Sans', sans-serif;
+          font-weight: 600;
+        }
+
+        p {
+          color: $stanford-cool-grey;
+        }
+      }
+    }
+
+    a:hover {
+      text-decoration: none;
     }
 
     .material-icons {
@@ -325,15 +297,21 @@
       }
     }
 
-    &.summary {
+    &.data-download {
       .material-icons {
-        color: $accent-violet;
+        color: $accent-yellow;
       }
     }
 
-    a.external-link {
+    &.summary {
       .material-icons {
-        color: $stanford-cool-grey;
+        color: lighten($accent-violet, 12%);
+      }
+    }
+
+    &.code-repositories {
+      .material-icons {
+        color: $gray-semi-transparent;
       }
     }
   }

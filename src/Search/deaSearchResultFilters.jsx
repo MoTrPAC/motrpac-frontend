@@ -13,7 +13,7 @@ function SearchResultFilters({
   changeResultFilter,
   handleSearch,
   resetSearch,
-  enabledFilters,
+  hasResultFilters,
 }) {
   const [inputError, setInputError] = useState(false);
   // FIXME - this is a hack to get the search filters such as tissue and assay
@@ -22,7 +22,7 @@ function SearchResultFilters({
     if (searchParams.ktype === 'protein') {
       return tissueList.filter((t) =>
         t.filter_value.match(
-          /^(cortex|gastrconemius|heart|kidney|lung|liver|white adipose)$/
+          /^(cortex|gastrocnemius|heart|kidney|lung|liver|white adipose)$/
         )
       );
     }
@@ -65,19 +65,9 @@ function SearchResultFilters({
   ).filters = customizeAssayList();
 
   const commonSearchResultFilters = commonSearchFilters.map((item) => (
-    <div key={item.name} className="card filter-module mb-4">
-      <div className="card-header font-weight-bold d-flex align-item-center justify-content-between">
+    <div key={item.name} className="card filter-module mb-3">
+      <div className="card-header font-weight-bold">
         <div className="card-header-label">{item.name}</div>
-        <a
-          className="btn btn-link filters-collapsible-btn p-0"
-          data-toggle="collapse"
-          href={`#filters-${item.keyName}`}
-          role="button"
-          aria-expanded="true"
-          aria-controls={`filters-${item.keyName}`}
-        >
-          <span className="material-icons">more_horiz</span>
-        </a>
       </div>
       <div className="collapse show" id={`filters-${item.keyName}`}>
         <div className="card-body">
@@ -86,10 +76,11 @@ function SearchResultFilters({
               searchParams.filters[item.keyName] &&
               searchParams.filters[item.keyName].indexOf(filter.filter_value) >
                 -1;
-            const isDisabledFilter =
-              enabledFilters[item.keyName] &&
-              Object.keys(enabledFilters[item.keyName]).length &&
-              !enabledFilters[item.keyName][filter.filter_value.toLowerCase()];
+            const resultCount =
+              hasResultFilters &&
+              hasResultFilters[item.keyName] &&
+              Object.keys(hasResultFilters[item.keyName]).length &&
+              hasResultFilters[item.keyName][filter.filter_value.toLowerCase()];
             return (
               <button
                 key={filter.filter_label}
@@ -97,11 +88,11 @@ function SearchResultFilters({
                 className={`btn filterBtn ${
                   isActiveFilter ? 'activeFilter' : ''
                 }`}
-                onClick={() => {
-                  if (isDisabledFilter) return false;
+                onClick={(e) => {
+                  e.preventDefault();
                   changeResultFilter(item.keyName, filter.filter_value, null);
                 }}
-                disabled={isDisabledFilter}
+                disabled={!resultCount}
               >
                 {filter.filter_label}
               </button>
@@ -130,16 +121,6 @@ function SearchResultFilters({
       {/* filter header content */}
       <div className="card-header font-weight-bold d-flex align-item-center justify-content-between">
         <div className="card-header-label">{item.name}</div>
-        <a
-          className="btn btn-link filters-collapsible-btn p-0"
-          data-toggle="collapse"
-          href={`#filters-${item.keyName}`}
-          role="button"
-          aria-expanded="true"
-          aria-controls={`filters-${item.keyName}`}
-        >
-          <span className="material-icons">more_horiz</span>
-        </a>
       </div>
       {/* filter body content */}
       <div className="collapse show" id={`filters-${item.keyName}`}>
@@ -174,36 +155,36 @@ function SearchResultFilters({
 
   return (
     <div className="search-result-filter-group mb-4">
-      <div className="search-result-filter-group-header d-flex justify-content-between align-items-center mb-2">
-        <div>Narrow results using filters below.</div>
-        <button
-          type="button"
-          className="btn btn-link"
-          onClick={() => resetSearch('filters')}
-        >
-          Reset filters
-        </button>
+      <div className="search-result-filter-group-header d-flex justify-content-between align-items-center mb-3">
+        <div className="font-weight-bold">Filter results:</div>
+        <div className="search-result-filter-submit-buttons">
+          <button
+            type="button"
+            className="btn btn-primary btn-sm mr-2"
+            onClick={(e) => {
+              e.preventDefault();
+              handleSearch(searchParams, searchParams.keys, 'filters');
+            }}
+            disabled={inputError}
+          >
+            Update results
+          </button>
+          <button
+            type="button"
+            className="btn btn-secondary btn-sm"
+            onClick={() => resetSearch('filters')}
+          >
+            Reset filters
+          </button>
+        </div>
       </div>
+      {inputError && (
+        <div className="input-error-notify mb-2">
+          Please correct input values above.
+        </div>
+      )}
       {commonSearchResultFilters}
       {rangeSearchResultFilters}
-      <div className="submit-search-filters-button text-right">
-        {inputError && (
-          <div className="input-error-notify mb-2">
-            Please correct input values above.
-          </div>
-        )}
-        <button
-          type="button"
-          className="btn btn-sm btn-primary"
-          onClick={(e) => {
-            e.preventDefault();
-            handleSearch(searchParams, 'filters');
-          }}
-          disabled={inputError}
-        >
-          Update results
-        </button>
-      </div>
     </div>
   );
 }
@@ -213,7 +194,7 @@ SearchResultFilters.propTypes = {
   changeResultFilter: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
   resetSearch: PropTypes.func.isRequired,
-  enabledFilters: PropTypes.shape({
+  hasResultFilters: PropTypes.shape({
     assay: PropTypes.object,
     comparison_group: PropTypes.object,
     sex: PropTypes.object,
@@ -222,7 +203,7 @@ SearchResultFilters.propTypes = {
 };
 
 SearchResultFilters.defaultProps = {
-  enabledFilters: {},
+  hasResultFilters: {},
 };
 
 export default SearchResultFilters;

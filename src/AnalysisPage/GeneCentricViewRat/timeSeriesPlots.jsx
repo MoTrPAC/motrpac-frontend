@@ -261,11 +261,13 @@ function TimeSeriesPlots({ plotData, selectedFeatures }) {
       id="gene-centric-time-series-plots-container"
       className="gene-centric-time-series-plots-container"
     >
-      {selectedFeatures.slice(0, 5).map((feature) => (
+      {selectedFeatures.slice(0, 9).map((feature) => (
         <div key={`${feature.featureId}-${feature.tissue}-${feature.assay}`}>
           <div className="d-flex align-items-center justify-content-center">
             <div className="font-weight-bold plot-header">
-              {`${feature.gene_symbol.toUpperCase()}, ${feature.tissue}, ${feature.assay} (P-value: ${feature.p_value})`}
+              {`${feature.gene_symbol.toUpperCase()}, ${feature.tissue}, ${
+                feature.assay
+              } (P-value: ${feature.p_value})`}
             </div>
             <div className="plot-lengend d-flex align-items-center ml-3">
               <span className="material-icons legend-icon female mr-1">

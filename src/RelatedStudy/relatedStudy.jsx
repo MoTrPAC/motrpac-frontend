@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import PageTitle from '../lib/ui/pageTitle';
 import HeritageFamilyStudyLogo from '../assets/ExternalLogos/HeritageFamilyStudy.png';
 import StanfordMedicineLogo from '../assets/ExternalLogos/StanfordMedicine.png';
 
@@ -24,11 +23,7 @@ const relatedStudies = [
   },
 ];
 
-function RelatedStudy({ isAuthenticated, profile }) {
-  if (isAuthenticated && profile.user_metadata) {
-    return <Redirect to="/dashboard" />;
-  }
-
+function RelatedStudy() {
   // Render related study links
   function relatedStudyLinks() {
     return (
@@ -41,12 +36,12 @@ function RelatedStudy({ isAuthenticated, profile }) {
   }
 
   return (
-    <div className="col-md-9 col-lg-10 px-4 relatedStudyPage">
-      <div className="container related-studies-main">
-        <div className="page-title pt-3 pb-2 border-bottom">
-          <h3>Related Exercise Studies</h3>
+    <div className="relatedStudyPage px-3 px-md-4 mb-3 container">
+      <PageTitle title="Related Exercise Studies" />
+      <div className="related-studies-container my-4">
+        <div className="related-studies-content-container">
+          {relatedStudyLinks()}
         </div>
-        <div className="main-content">{relatedStudyLinks()}</div>
       </div>
     </div>
   );
@@ -60,47 +55,18 @@ function RelatedStudyLink({ study }) {
         style={{ backgroundImage: `url("${study.image}")` }}
       />
       <div className="card-body">
-        <h6 className="card-title">
+        <h5 className="card-title">
           {study.newWin && (
             <a href={study.url} target="_blank" rel="noopener noreferrer">
               {study.title} <span className="oi oi-external-link" />
             </a>
           )}
           {!study.newWin && <Link to={study.url}>{study.title}</Link>}
-        </h6>
+        </h5>
         <p className="card-text">{study.text}</p>
       </div>
     </div>
   );
 }
 
-RelatedStudyLink.propTypes = {
-  study: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    newWin: PropTypes.bool.isRequired,
-  }).isRequired,
-};
-
-RelatedStudy.propTypes = {
-  profile: PropTypes.shape({
-    user_metadata: PropTypes.shape({
-      userType: PropTypes.string,
-      hasAccess: PropTypes.bool,
-    }),
-  }),
-  isAuthenticated: PropTypes.bool,
-};
-
-RelatedStudy.defaultProps = {
-  profile: {},
-  isAuthenticated: false,
-};
-
-const mapStateToProps = (state) => ({
-  ...state.auth,
-});
-
-export default connect(mapStateToProps)(RelatedStudy);
+export default RelatedStudy;

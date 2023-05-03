@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import Particles from 'react-particles-js';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-yellow_pipelineball_left.gif';
@@ -63,7 +63,7 @@ export function LandingPage({ isAuthenticated, profile }) {
   // Redirect authenticated users to protected route
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   if (isAuthenticated && hasAccess) {
-    return <Redirect to="/home" />;
+    return <Redirect to="/search" />;
   }
 
   // Play or stop the particles animation
@@ -205,7 +205,7 @@ export function LandingPage({ isAuthenticated, profile }) {
                   Center, Consortium Coordinating Center.
                 </p>
                 <a
-                  href="https://commonfund.nih.gov/MolecularTransducers/overview#ClinicalCenter"
+                  href="https://commonfund.nih.gov/MolecularTransducers#ClinicalCenter"
                   className="btn btn-success"
                   role="button"
                   target="_new"
@@ -228,22 +228,24 @@ export function LandingPage({ isAuthenticated, profile }) {
         <div className="container featurette data-policies">
           <div className="row">
             <div className="p-2 col-12 col-md-6 access-data-info">
-              <h5>Accessing Data: </h5>
-              The first MoTrPAC public data release is now available. Please agree to
-              the data use agreement and register for an account on the&nbsp;
-              <a href="/data-access" className="inline-link">Data Access</a>
-              &nbsp;page if you are interested in obtaining access to the data. For updates when
-              subsequent publicly accessible data become available, please
-              {' '}
-              <ContactHelpdesk />
+              <h4>Data Access</h4>
+              The MoTrPAC{' '}
+              <Link to="/data-download">
+                Endurance Exercise Training Animal Study data
+              </Link>{' '}
+              is now available to the public. This is in addition to the Limited
+              Acute Exercise data made available to the public in a prior
+              release. Please agree to the data use agreement and register for
+              an account on the <Link to="/data-access">Data Access</Link> page
+              if you are interested in obtaining access to the Limited Acute
+              Exercise data. For updates when subsequent publicly accessible
+              data become available, please <ContactHelpdesk />
             </div>
             <div className="p-2 col-12 col-md-6 upload-data-info">
-              <h5>Uploading Data From Study Sites:</h5>
-              If you are a member of one of the sites involved with MoTrPAC, please log in using
-              your provided ID at the link on the bottom right of this website. If you have issues
-              logging in, please
-              {' '}
-              <ContactHelpdesk />
+              <h4>Study Data Submission</h4>
+              If you are a member of one of the sites involved with MoTrPAC,
+              please <ContactHelpdesk /> about obtaining access to our cloud
+              storage and data submission guidelines.
             </div>
           </div>
         </div>

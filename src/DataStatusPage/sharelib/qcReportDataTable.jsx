@@ -46,8 +46,8 @@ function QcReportDataTable({ columns, data }) {
       filterTypes,
       initialState: {
         pageIndex: 0,
-        pageSize: 20,
-        pageCount: Math.ceil(data / 20),
+        pageSize: 50,
+        pageCount: Math.ceil(data / 50),
         sortBy: [{ id: 'submission_date', desc: true }],
       },
     },
@@ -77,7 +77,7 @@ function QcReportDataTable({ columns, data }) {
   } = instance;
 
   // default page size options given the length of entries in the data
-  const range = (start, stop, step = 10) =>
+  const range = (start, stop, step = 50) =>
     Array(Math.ceil(stop / step))
       .fill(start)
       .map((x, y) => x + y * step);
@@ -91,7 +91,7 @@ function QcReportDataTable({ columns, data }) {
         <PageSize
           pageSize={pageSize}
           setPageSize={setPageSize}
-          pageSizeOptions={range(10, preGlobalFilteredRows.length)}
+          pageSizeOptions={range(50, preGlobalFilteredRows.length)}
         />
         <GlobalFilter
           preGlobalFilteredRows={preGlobalFilteredRows}

@@ -7,13 +7,9 @@ import PropTypes from 'prop-types';
  *
  * @returns {Objcet} JSX representation of a team member
  */
-function TeamMemberCard({ memberInfo, isAuthenticated }) {
+function TeamMemberCard({ memberInfo }) {
   return (
-    <div
-      className={`teamMember col-lg-4 mb-4 text-center ${
-        isAuthenticated ? 'col-xl-3' : ''
-      }`}
-    >
+    <div className="teamMember col-lg-4 mb-4 text-center">
       <div className="col d-flex mb-3 justify-content-center">
         <div
           className="teamMemberImage"
@@ -34,7 +30,6 @@ TeamMemberCard.propTypes = {
     title: PropTypes.string.isRequired,
     backgroundImage: PropTypes.string,
   }).isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 export default TeamMemberCard;

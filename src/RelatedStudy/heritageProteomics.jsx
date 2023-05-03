@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import PageTitle from '../lib/ui/pageTitle';
 import ExternalLink from '../lib/ui/externalLink';
 
 /**
@@ -11,26 +10,17 @@ import ExternalLink from '../lib/ui/externalLink';
  *
  * @returns {Object} JSX representation of the Heritage Family Study page.
  */
-function HeritageProteomics({ isAuthenticated, profile }) {
-  if (isAuthenticated && profile.user_metadata) {
-    return <Redirect to="/dashboard" />;
-  }
-
+function HeritageProteomics() {
   return (
-    <div className="col-md-9 col-lg-10 px-4 relatedStudyPage">
-      <div className="container heritage-proteomics">
-        <div className="back-button mt-3">
+    <div className="relatedStudyPage px-3 px-md-4 mb-3 container">
+      <div className="related-studies-container heritage-proteomics">
+        <div className="back-button my-3">
           <Link to="/related-studies" className="d-flex align-items-center">
             <i className="material-icons">arrow_back</i>
             <span className="px-1">Back to Related Studies</span>
           </Link>
         </div>
-        <div className="page-title pt-3 pb-2 border-bottom">
-          <h3>
-            Human plasma proteomic profiles indicative of cardiorespiratory
-            fitness
-          </h3>
-        </div>
+        <PageTitle title="Human plasma proteomic profiles indicative of cardiorespiratory fitness" />
         <div className="main-content">
           <p>
             Maximal oxygen uptake (VO2max) is a direct measure of
@@ -44,11 +34,11 @@ function HeritageProteomics({ isAuthenticated, profile }) {
             untrained- and training-induced VO2max.
           </p>
           <div className="section-title mt-4 mb-2">
-            <h5 className="mt-4">HERITAGE Family Study</h5>
+            <h4 className="mt-4">HERITAGE Family Study</h4>
           </div>
           <p>
             <ExternalLink
-              to="https://www.pbrc.edu/heritage/index.html"
+              to="https://www.heritagefamilystudy.com/"
               label="The HEalth, RIsk factors, exercise Training And GEnetics (HERITAGE) Family Study"
             />{' '}
             is a completed exercise training study that was designed to study
@@ -69,7 +59,7 @@ function HeritageProteomics({ isAuthenticated, profile }) {
             lean body mass (kg), and body fat percentage.
           </p>
           <div className="section-title mt-4 mb-2">
-            <h5 className="mt-4">Plasma Proteomics Profiling</h5>
+            <h4 className="mt-4">Plasma Proteomics Profiling</h4>
           </div>
           <p>
             Plasma proteomics profiling was performed using a large-scale
@@ -96,7 +86,7 @@ function HeritageProteomics({ isAuthenticated, profile }) {
             </span>{' '}
             <a
               className="font-italic"
-              href="https://www.nature.com/natmetab"
+              href="https://doi.org/10.1038/s42255-021-00400-z"
               target="_blank"
               rel="noreferrer"
             >
@@ -123,29 +113,29 @@ function HeritageProteomics({ isAuthenticated, profile }) {
               </div>
             </div>
           </div>
+          <div className="data-download-container row justify-content-start my-4">
+            <div className="mx-3 d-flex align-items-center">
+              <a
+                download
+                href="http://related-studies.motrpac-data.org/heritage_proteomics/HERITAGE_somalogic_analytes.xlsx"
+                className="btn btn-outline-primary d-flex align-items-center"
+                role="button"
+              >
+                <i className="material-icons">file_download</i>
+                <span className="px-1 text-left">
+                  Download HERITAGE Somalogic metadata
+                </span>
+              </a>
+              <div className="file-download-info d-flex align-items-center ml-2">
+                <i className="material-icons">insert_drive_file</i>
+                <span className="ml-1">.xslx - 677 KB</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-HeritageProteomics.propTypes = {
-  profile: PropTypes.shape({
-    user_metadata: PropTypes.shape({
-      userType: PropTypes.string,
-      hasAccess: PropTypes.bool,
-    }),
-  }),
-  isAuthenticated: PropTypes.bool,
-};
-
-HeritageProteomics.defaultProps = {
-  profile: {},
-  isAuthenticated: false,
-};
-
-const mapStateToProps = (state) => ({
-  ...state.auth,
-});
-
-export default connect(mapStateToProps)(HeritageProteomics);
+export default HeritageProteomics;

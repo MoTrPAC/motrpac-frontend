@@ -1,9 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import browseDataFilters from '../lib/browseDataFilters';
+import browseDataFilters, { tissueList } from '../lib/browseDataFilters';
 
-function BrowseDataFilter({ activeFilters, onChangeFilter, onResetFilters }) {
-  const filters = browseDataFilters.map((item) => (
+// build list of PASS1B-06 tissues
+const pass1bTissues = tissueList.filter((item) => item !== 'Aorta');
+
+function BrowseDataFilter({
+  activeFilters,
+  onChangeFilter,
+  onResetFilters,
+  userType,
+}) {
+  const fileFilters = [...browseDataFilters];
+  if (!userType || (userType && userType !== 'internal')) {
+    fileFilters.forEach((item) => {
+      if (item.keyName === 'study') {
+        item.filters = ['Endurance Training'];
+      }
+      if (item.keyName === 'tissue_name') {
+        item.filters = pass1bTissues;
+      }
+    });
+  }
+  const filters = fileFilters.map((item) => (
     <div key={item.name} className="card filter-module mb-4">
       <div className="card-header font-weight-bold d-flex align-items-center">
         <div>{item.name}</div>
@@ -33,9 +52,15 @@ function BrowseDataFilter({ activeFilters, onChangeFilter, onResetFilters }) {
               key={filter}
               type="button"
               className={`btn filterBtn ${
-                isActiveFilter ? 'activeFilter' : ''
+                isActiveFilter ||
+                (filter === 'Endurance Training' && userType !== 'internal')
+                  ? 'activeFilter'
+                  : ''
               }`}
               onClick={() => onChangeFilter(item.keyName, filter)}
+              disabled={
+                filter === 'Endurance Training' && userType !== 'internal'
+              }
             >
               {filter}
             </button>
@@ -46,9 +71,13 @@ function BrowseDataFilter({ activeFilters, onChangeFilter, onResetFilters }) {
   ));
   return (
     <div className="col-md-3 browse-data-filter-group">
-      <div className="browse-data-filter-group-header d-flex justify-content-between align-items-center mb-2">
-        <div>Narrow results using filters below.</div>
-        <button type="button" className="btn btn-link" onClick={onResetFilters}>
+      <div className="browse-data-filter-group-header d-flex justify-content-between align-items-center mb-3">
+        <div className="font-weight-bold">Filter results:</div>
+        <button
+          type="button"
+          className="btn btn-secondary btn-sm"
+          onClick={onResetFilters}
+        >
           Reset filters
         </button>
       </div>
@@ -56,6 +85,7 @@ function BrowseDataFilter({ activeFilters, onChangeFilter, onResetFilters }) {
     </div>
   );
 }
+
 BrowseDataFilter.propTypes = {
   activeFilters: PropTypes.shape({
     tissue_name: PropTypes.arrayOf(PropTypes.string),
@@ -65,6 +95,7 @@ BrowseDataFilter.propTypes = {
   }),
   onChangeFilter: PropTypes.func.isRequired,
   onResetFilters: PropTypes.func.isRequired,
+  userType: PropTypes.string,
 };
 BrowseDataFilter.defaultProps = {
   activeFilters: {
@@ -73,6 +104,7 @@ BrowseDataFilter.defaultProps = {
     tissue_name: [],
     category: [],
   },
+  userType: null,
 };
 
 export default BrowseDataFilter;

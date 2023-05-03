@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import AuthContentContainer from '../lib/ui/authContentContainer';
 import StatusReportGetData from './statusReportGetData';
 import StatusReportImmunoAssay from './statusReportImmunoAssay';
 import QcReportByPhase from './qcReportByPhase.jsx';
@@ -27,7 +26,6 @@ export function DataStatusPage({
   isFetchingQcData,
   errMsg,
   qcReportViewChange,
-  expanded,
   profile,
 }) {
   // Send users to default page if they are not consortium members
@@ -125,10 +123,10 @@ export function DataStatusPage({
   }
 
   return (
-    <AuthContentContainer classes="dataStatusPage" expanded={expanded}>
-      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <div className="dataStatusPage px-3 px-md-4 mb-3 w-100">
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 page-header">
         <div className="page-title">
-          <h3 className="mb-0">QC Data Monitor</h3>
+          <h1 className="mb-0">QC Data Monitor</h1>
         </div>
         {renderButtonGroup()}
       </div>
@@ -141,7 +139,7 @@ export function DataStatusPage({
       {!isFetchingQcData && errMsg && (
         <div className="data-qc-status-panel">{errMsg}</div>
       )}
-    </AuthContentContainer>
+    </div>
   );
 }
 
@@ -161,7 +159,6 @@ DataStatusPage.propTypes = {
   isFetchingQcData: PropTypes.bool,
   errMsg: PropTypes.string,
   qcReportViewChange: PropTypes.func.isRequired,
-  expanded: PropTypes.bool,
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
   }),
@@ -181,13 +178,11 @@ DataStatusPage.defaultProps = {
   },
   isFetchingQcData: false,
   errMsg: '',
-  expanded: false,
   profile: {},
 };
 
 const mapStateToProps = (state) => ({
   ...state.dataStatus,
-  expanded: state.sidebar.expanded,
   profile: state.auth.profile,
 });
 

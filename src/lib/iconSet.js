@@ -13,6 +13,7 @@ import Spinner from '../assets/icons/spinner.gif';
 import Sync from '../assets/icons/sync.png';
 import Archive from '../assets/icons/archive.png';
 import InternalDataRelease from '../assets/icons/data-release-internal.png';
+import ArrowRightAnimated from '../assets/icons/arrow-right-animated.svg';
 
 const IconSet = {
   Clinic,
@@ -30,6 +31,7 @@ const IconSet = {
   Sync,
   Archive,
   InternalDataRelease,
+  ArrowRightAnimated,
 };
 
 export default IconSet;

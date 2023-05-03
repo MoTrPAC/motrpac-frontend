@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import AuthContentContainer from '../lib/ui/authContentContainer';
+import PageTitle from '../lib/ui/pageTitle';
 import StudyDocumentsTable from '../lib/studyDocumentsTable';
 import ExternalLink from '../lib/ui/externalLink';
 
@@ -13,19 +13,15 @@ import ExternalLink from '../lib/ui/externalLink';
  *
  * @returns {object} JSX representation of the Methods component
  */
-export function Methods({ profile, expanded }) {
+export function Methods({ profile }) {
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
   return (
-    <AuthContentContainer classes="methodsPage" expanded={expanded}>
-      <div className="d-flex align-items-center pt-3 pb-2 mb-3 border-bottom page-header">
-        <div className="page-title">
-          <h3>Methods</h3>
-        </div>
-      </div>
-      <div className="methods-content-container mt-4">
-        <div className="methods-intro-container">
-          <p>
+    <div className="methodsPage px-3 px-md-4 mb-3 container">
+      <PageTitle title="Methods" />
+      <div className="methods-content-container">
+        <div className="methods-summary-container row mb-4">
+          <div className="lead col-12">
             The MoTrPAC study is divided into two main parts; human and animal
             (rats). Preclinical Animal Study Sites (PASSs) conduct the endurance
             exercise and training intervention in rats, and Human Clinical
@@ -42,14 +38,12 @@ export function Methods({ profile, expanded }) {
             for metabolomics. In addition, the assay-specific quality control
             (QC) procedures are described in the QC Standard Operating
             Procedures (SOPs) documents.
-          </p>
+          </div>
         </div>
-        {userType === 'internal' && (
-          <section className="study-docs-container row">
-            <div className="col-xl-8">
-              <StudyDocumentsTable currentView={userType} />
-            </div>
-            <div className="pass-mop-link col-xl-4">
+        {userType && userType === 'internal' ? (
+          <section className="study-docs-container">
+            <StudyDocumentsTable currentView={userType} />
+            <div className="pass-mop-link">
               <ExternalLink
                 to="https://www.motrpac.org/secure/documents/dspList.cfm?documentFolderCurrent=BEC8E9C5-C740-4D8F-91F2-5977E98CF6A0"
                 label="Manuals of Procedures for Preclinical Animal Study Sites"
@@ -57,14 +51,13 @@ export function Methods({ profile, expanded }) {
               <span className="login-required-note ml-1">(login required)</span>
             </div>
           </section>
-        )}
-        {userType === 'external' && (
-          <section className="study-docs-container row">
+        ) : (
+          <section className="study-docs-container">
             <StudyDocumentsTable currentView={userType} />
           </section>
         )}
       </div>
-    </AuthContentContainer>
+    </div>
   );
 }
 
@@ -72,12 +65,10 @@ Methods.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
   }),
-  expanded: PropTypes.bool,
 };
 
 Methods.defaultProps = {
   profile: {},
-  expanded: false,
 };
 
 const mapStateToProps = (state) => ({

@@ -3781,6 +3781,1048 @@
                     }
                 ]
             }
+        ]
+    },
+    "external": {
+        "pass1a_06": [
+            {
+                "tissue_code": "T30",
+                "sample_data": [
+                    {
+                        "assay_code": "transcript-rna-seq",
+                        "assay_name": "RNA-seq",
+                        "omics_code": "transcriptomics",
+                        "count": 78,
+                        "qc_count": 2
+                    },
+                    {
+                        "assay_code": "epigen-rrbs",
+                        "assay_name": "RRBS",
+                        "omics_code": "epigenomics",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-3hib",
+                        "assay_name": "Targeted 3-Hydroxyisobutyric Acid (3-HIB)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-aa",
+                        "assay_name": "Targeted Amino Acids",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-ac-duke",
+                        "assay_name": "Targeted Acylcarnitines",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-acoa",
+                        "assay_name": "Targeted Acyl-CoA",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-amines",
+                        "assay_name": "Targeted Amines",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-baiba",
+                        "assay_name": "Targeted Beta-aminoisobutyric acid (BAIBA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-cer-duke",
+                        "assay_name": "Targeted Ceramide",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-ka",
+                        "assay_name": "Targeted Keto acids (KA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-nuc",
+                        "assay_name": "Targeted Nucleotides",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-oa",
+                        "assay_name": "Targeted Organic acids (OA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-oxylipneg",
+                        "assay_name": "Targeted Oxylipins",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-sphm",
+                        "assay_name": "Targeted Sphingomyelin",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-tca",
+                        "assay_name": "Targeted Tricarboxylic acid (TCA) cycle",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-u-hilicpos",
+                        "assay_name": "Untargeted HILIC-positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-u-ionpneg",
+                        "assay_name": "Untargeted Ion-Pair negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-u-lrpneg",
+                        "assay_name": "Untargeted lipidomics, reversed-phase negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-u-lrppos",
+                        "assay_name": "Untargeted lipidomics, reversed-phase positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-u-rpneg",
+                        "assay_name": "Untargeted Reversed-phase negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-u-rppos",
+                        "assay_name": "Untargeted Reversed-phase positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "prot-ac",
+                        "assay_name": "Acetyl Proteomics",
+                        "omics_code": "proteomics",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "prot-ph",
+                        "assay_name": "Phophoproteomics",
+                        "omics_code": "proteomics",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "prot-pr",
+                        "assay_name": "Global Proteomics",
+                        "omics_code": "proteomics",
+                        "count": null,
+                        "qc_count": null
+                    }
+                ]
+            },
+            {
+                "tissue_code": "T31",
+                "sample_data": [
+                    {
+                        "assay_code": "transcript-rna-seq",
+                        "assay_name": "RNA-seq",
+                        "omics_code": "transcriptomics",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "epigen-rrbs",
+                        "assay_name": "RRBS",
+                        "omics_code": "epigenomics",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-3hib",
+                        "assay_name": "Targeted 3-Hydroxyisobutyric Acid (3-HIB)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-aa",
+                        "assay_name": "Targeted Amino Acids",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-ac-duke",
+                        "assay_name": "Targeted Acylcarnitines",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 156,
+                        "qc_count": 6
+                    },
+                    {
+                        "assay_code": "metab-t-acoa",
+                        "assay_name": "Targeted Acyl-CoA",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-amines",
+                        "assay_name": "Targeted Amines",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": 6
+                    },
+                    {
+                        "assay_code": "metab-t-baiba",
+                        "assay_name": "Targeted Beta-aminoisobutyric acid (BAIBA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-cer-duke",
+                        "assay_name": "Targeted Ceramide",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 156,
+                        "qc_count": 6
+                    },
+                    {
+                        "assay_code": "metab-t-ka",
+                        "assay_name": "Targeted Keto acids (KA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-nuc",
+                        "assay_name": "Targeted Nucleotides",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-oa",
+                        "assay_name": "Targeted Organic acids (OA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-oxylipneg",
+                        "assay_name": "Targeted Oxylipins",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": 26
+                    },
+                    {
+                        "assay_code": "metab-t-sphm",
+                        "assay_name": "Targeted Sphingomyelin",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-tca",
+                        "assay_name": "Targeted Tricarboxylic acid (TCA) cycle",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": 6
+                    },
+                    {
+                        "assay_code": "metab-u-hilicpos",
+                        "assay_name": "Untargeted HILIC-positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 23
+                    },
+                    {
+                        "assay_code": "metab-u-ionpneg",
+                        "assay_name": "Untargeted Ion-Pair negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 33
+                    },
+                    {
+                        "assay_code": "metab-u-lrpneg",
+                        "assay_name": "Untargeted lipidomics, reversed-phase negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 18
+                    },
+                    {
+                        "assay_code": "metab-u-lrppos",
+                        "assay_name": "Untargeted lipidomics, reversed-phase positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 20
+                    },
+                    {
+                        "assay_code": "metab-u-rpneg",
+                        "assay_name": "Untargeted Reversed-phase negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 27
+                    },
+                    {
+                        "assay_code": "metab-u-rppos",
+                        "assay_name": "Untargeted Reversed-phase positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 26
+                    },
+                    {
+                        "assay_code": "prot-ac",
+                        "assay_name": "Acetyl Proteomics",
+                        "omics_code": "proteomics",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "prot-ph",
+                        "assay_name": "Phophoproteomics",
+                        "omics_code": "proteomics",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "prot-pr",
+                        "assay_name": "Global Proteomics",
+                        "omics_code": "proteomics",
+                        "count": null,
+                        "qc_count": null
+                    }
+                ]
+            },
+            {
+                "tissue_code": "T55",
+                "sample_data": [
+                    {
+                        "assay_code": "transcript-rna-seq",
+                        "assay_name": "RNA-seq",
+                        "omics_code": "transcriptomics",
+                        "count": 156,
+                        "qc_count": 6
+                    },
+                    {
+                        "assay_code": "epigen-rrbs",
+                        "assay_name": "RRBS",
+                        "omics_code": "epigenomics",
+                        "count": 78,
+                        "qc_count": 2
+                    },
+                    {
+                        "assay_code": "metab-t-3hib",
+                        "assay_name": "Targeted 3-Hydroxyisobutyric Acid (3-HIB)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-aa",
+                        "assay_name": "Targeted Amino Acids",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-ac-duke",
+                        "assay_name": "Targeted Acylcarnitines",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 234,
+                        "qc_count": 12
+                    },
+                    {
+                        "assay_code": "metab-t-acoa",
+                        "assay_name": "Targeted Acyl-CoA",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-amines",
+                        "assay_name": "Targeted Amines",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 156,
+                        "qc_count": 12
+                    },
+                    {
+                        "assay_code": "metab-t-baiba",
+                        "assay_name": "Targeted Beta-aminoisobutyric acid (BAIBA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-cer-duke",
+                        "assay_name": "Targeted Ceramide",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 234,
+                        "qc_count": 12
+                    },
+                    {
+                        "assay_code": "metab-t-ka",
+                        "assay_name": "Targeted Keto acids (KA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-nuc",
+                        "assay_name": "Targeted Nucleotides",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-oa",
+                        "assay_name": "Targeted Organic acids (OA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-oxylipneg",
+                        "assay_name": "Targeted Oxylipins",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": 27
+                    },
+                    {
+                        "assay_code": "metab-t-sphm",
+                        "assay_name": "Targeted Sphingomyelin",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-tca",
+                        "assay_name": "Targeted Tricarboxylic acid (TCA) cycle",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 156,
+                        "qc_count": 11
+                    },
+                    {
+                        "assay_code": "metab-u-hilicpos",
+                        "assay_name": "Untargeted HILIC-positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 23
+                    },
+                    {
+                        "assay_code": "metab-u-ionpneg",
+                        "assay_name": "Untargeted Ion-Pair negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 38
+                    },
+                    {
+                        "assay_code": "metab-u-lrpneg",
+                        "assay_name": "Untargeted lipidomics, reversed-phase negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 18
+                    },
+                    {
+                        "assay_code": "metab-u-lrppos",
+                        "assay_name": "Untargeted lipidomics, reversed-phase positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 19
+                    },
+                    {
+                        "assay_code": "metab-u-rpneg",
+                        "assay_name": "Untargeted Reversed-phase negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 23
+                    },
+                    {
+                        "assay_code": "metab-u-rppos",
+                        "assay_name": "Untargeted Reversed-phase positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 32
+                    },
+                    {
+                        "assay_code": "prot-ac",
+                        "assay_name": "Acetyl Proteomics",
+                        "omics_code": "proteomics",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "prot-ph",
+                        "assay_name": "Phophoproteomics",
+                        "omics_code": "proteomics",
+                        "count": 66,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "prot-pr",
+                        "assay_name": "Global Proteomics",
+                        "omics_code": "proteomics",
+                        "count": 66,
+                        "qc_count": null
+                    }
+                ]
+            },
+            {
+                "tissue_code": "T58",
+                "sample_data": [
+                    {
+                        "assay_code": "transcript-rna-seq",
+                        "assay_name": "RNA-seq",
+                        "omics_code": "transcriptomics",
+                        "count": 78,
+                        "qc_count": 2
+                    },
+                    {
+                        "assay_code": "epigen-rrbs",
+                        "assay_name": "RRBS",
+                        "omics_code": "epigenomics",
+                        "count": 78,
+                        "qc_count": 2
+                    },
+                    {
+                        "assay_code": "metab-t-3hib",
+                        "assay_name": "Targeted 3-Hydroxyisobutyric Acid (3-HIB)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-aa",
+                        "assay_name": "Targeted Amino Acids",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-ac-duke",
+                        "assay_name": "Targeted Acylcarnitines",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-acoa",
+                        "assay_name": "Targeted Acyl-CoA",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-amines",
+                        "assay_name": "Targeted Amines",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-baiba",
+                        "assay_name": "Targeted Beta-aminoisobutyric acid (BAIBA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-cer-duke",
+                        "assay_name": "Targeted Ceramide",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-ka",
+                        "assay_name": "Targeted Keto acids (KA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-nuc",
+                        "assay_name": "Targeted Nucleotides",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-oa",
+                        "assay_name": "Targeted Organic acids (OA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-oxylipneg",
+                        "assay_name": "Targeted Oxylipins",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-sphm",
+                        "assay_name": "Targeted Sphingomyelin",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-tca",
+                        "assay_name": "Targeted Tricarboxylic acid (TCA) cycle",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-u-hilicpos",
+                        "assay_name": "Untargeted HILIC-positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 18
+                    },
+                    {
+                        "assay_code": "metab-u-ionpneg",
+                        "assay_name": "Untargeted Ion-Pair negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-u-lrpneg",
+                        "assay_name": "Untargeted lipidomics, reversed-phase negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-u-lrppos",
+                        "assay_name": "Untargeted lipidomics, reversed-phase positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-u-rpneg",
+                        "assay_name": "Untargeted Reversed-phase negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-u-rppos",
+                        "assay_name": "Untargeted Reversed-phase positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "prot-ac",
+                        "assay_name": "Acetyl Proteomics",
+                        "omics_code": "proteomics",
+                        "count": 66,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "prot-ph",
+                        "assay_name": "Phophoproteomics",
+                        "omics_code": "proteomics",
+                        "count": 66,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "prot-pr",
+                        "assay_name": "Global Proteomics",
+                        "omics_code": "proteomics",
+                        "count": 66,
+                        "qc_count": null
+                    }
+                ]
+            },
+            {
+                "tissue_code": "T68",
+                "sample_data": [
+                    {
+                        "assay_code": "transcript-rna-seq",
+                        "assay_name": "RNA-seq",
+                        "omics_code": "transcriptomics",
+                        "count": 78,
+                        "qc_count": 2
+                    },
+                    {
+                        "assay_code": "epigen-rrbs",
+                        "assay_name": "RRBS",
+                        "omics_code": "epigenomics",
+                        "count": 78,
+                        "qc_count": 2
+                    },
+                    {
+                        "assay_code": "metab-t-3hib",
+                        "assay_name": "Targeted 3-Hydroxyisobutyric Acid (3-HIB)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-aa",
+                        "assay_name": "Targeted Amino Acids",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-ac-duke",
+                        "assay_name": "Targeted Acylcarnitines",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 234,
+                        "qc_count": 24
+                    },
+                    {
+                        "assay_code": "metab-t-acoa",
+                        "assay_name": "Targeted Acyl-CoA",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-amines",
+                        "assay_name": "Targeted Amines",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 156,
+                        "qc_count": 12
+                    },
+                    {
+                        "assay_code": "metab-t-baiba",
+                        "assay_name": "Targeted Beta-aminoisobutyric acid (BAIBA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-cer-duke",
+                        "assay_name": "Targeted Ceramide",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 234,
+                        "qc_count": 8
+                    },
+                    {
+                        "assay_code": "metab-t-ka",
+                        "assay_name": "Targeted Keto acids (KA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-nuc",
+                        "assay_name": "Targeted Nucleotides",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-oa",
+                        "assay_name": "Targeted Organic acids (OA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-oxylipneg",
+                        "assay_name": "Targeted Oxylipins",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": 27
+                    },
+                    {
+                        "assay_code": "metab-t-sphm",
+                        "assay_name": "Targeted Sphingomyelin",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-tca",
+                        "assay_name": "Targeted Tricarboxylic acid (TCA) cycle",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": 8
+                    },
+                    {
+                        "assay_code": "metab-u-hilicpos",
+                        "assay_name": "Untargeted HILIC-positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 23
+                    },
+                    {
+                        "assay_code": "metab-u-ionpneg",
+                        "assay_name": "Untargeted Ion-Pair negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 39
+                    },
+                    {
+                        "assay_code": "metab-u-lrpneg",
+                        "assay_name": "Untargeted lipidomics, reversed-phase negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 18
+                    },
+                    {
+                        "assay_code": "metab-u-lrppos",
+                        "assay_name": "Untargeted lipidomics, reversed-phase positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 18
+                    },
+                    {
+                        "assay_code": "metab-u-rpneg",
+                        "assay_name": "Untargeted Reversed-phase negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 33
+                    },
+                    {
+                        "assay_code": "metab-u-rppos",
+                        "assay_name": "Untargeted Reversed-phase positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 34
+                    },
+                    {
+                        "assay_code": "prot-ac",
+                        "assay_name": "Acetyl Proteomics",
+                        "omics_code": "proteomics",
+                        "count": 66,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "prot-ph",
+                        "assay_name": "Phophoproteomics",
+                        "omics_code": "proteomics",
+                        "count": 66,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "prot-pr",
+                        "assay_name": "Global Proteomics",
+                        "omics_code": "proteomics",
+                        "count": 66,
+                        "qc_count": null
+                    }
+                ]
+            },
+            {
+                "tissue_code": "T70",
+                "sample_data": [
+                    {
+                        "assay_code": "transcript-rna-seq",
+                        "assay_name": "RNA-seq",
+                        "omics_code": "transcriptomics",
+                        "count": 78,
+                        "qc_count": 2
+                    },
+                    {
+                        "assay_code": "epigen-rrbs",
+                        "assay_name": "RRBS",
+                        "omics_code": "epigenomics",
+                        "count": 78,
+                        "qc_count": 2
+                    },
+                    {
+                        "assay_code": "metab-t-3hib",
+                        "assay_name": "Targeted 3-Hydroxyisobutyric Acid (3-HIB)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-aa",
+                        "assay_name": "Targeted Amino Acids",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-ac-duke",
+                        "assay_name": "Targeted Acylcarnitines",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 234,
+                        "qc_count": 24
+                    },
+                    {
+                        "assay_code": "metab-t-acoa",
+                        "assay_name": "Targeted Acyl-CoA",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-amines",
+                        "assay_name": "Targeted Amines",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 156,
+                        "qc_count": 11
+                    },
+                    {
+                        "assay_code": "metab-t-baiba",
+                        "assay_name": "Targeted Beta-aminoisobutyric acid (BAIBA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-cer-duke",
+                        "assay_name": "Targeted Ceramide",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 234,
+                        "qc_count": 24
+                    },
+                    {
+                        "assay_code": "metab-t-ka",
+                        "assay_name": "Targeted Keto acids (KA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-nuc",
+                        "assay_name": "Targeted Nucleotides",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-oa",
+                        "assay_name": "Targeted Organic acids (OA)",
+                        "omics_code": "metabolomics-targeted",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-oxylipneg",
+                        "assay_name": "Targeted Oxylipins",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": 26
+                    },
+                    {
+                        "assay_code": "metab-t-sphm",
+                        "assay_name": "Targeted Sphingomyelin",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 78,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "metab-t-tca",
+                        "assay_name": "Targeted Tricarboxylic acid (TCA) cycle",
+                        "omics_code": "metabolomics-targeted",
+                        "count": 156,
+                        "qc_count": 8
+                    },
+                    {
+                        "assay_code": "metab-u-hilicpos",
+                        "assay_name": "Untargeted HILIC-positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 23
+                    },
+                    {
+                        "assay_code": "metab-u-ionpneg",
+                        "assay_name": "Untargeted Ion-Pair negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 62,
+                        "qc_count": 31
+                    },
+                    {
+                        "assay_code": "metab-u-lrpneg",
+                        "assay_name": "Untargeted lipidomics, reversed-phase negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 18
+                    },
+                    {
+                        "assay_code": "metab-u-lrppos",
+                        "assay_name": "Untargeted lipidomics, reversed-phase positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 18
+                    },
+                    {
+                        "assay_code": "metab-u-rpneg",
+                        "assay_name": "Untargeted Reversed-phase negative",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 78,
+                        "qc_count": 37
+                    },
+                    {
+                        "assay_code": "metab-u-rppos",
+                        "assay_name": "Untargeted Reversed-phase positive",
+                        "omics_code": "metabolomics-untargeted",
+                        "count": 76,
+                        "qc_count": 36
+                    },
+                    {
+                        "assay_code": "prot-ac",
+                        "assay_name": "Acetyl Proteomics",
+                        "omics_code": "proteomics",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "prot-ph",
+                        "assay_name": "Phophoproteomics",
+                        "omics_code": "proteomics",
+                        "count": 66,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "prot-pr",
+                        "assay_name": "Global Proteomics",
+                        "omics_code": "proteomics",
+                        "count": 66,
+                        "qc_count": null
+                    }
+                ]
+            }
         ],
         "pass1b_06": [
             {
@@ -6304,186 +7346,6 @@
                 ]
             },
             {
-                "tissue_code": "T65",
-                "sample_data": [
-                    {
-                        "assay_code": "transcript-rna-seq",
-                        "assay_name": "RNA-seq",
-                        "omics_code": "transcriptomics",
-                        "count": 50,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "epigen-rrbs",
-                        "assay_name": "RRBS",
-                        "omics_code": "epigenomics",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "epigen-atac-seq",
-                        "assay_name": "ATAC-seq",
-                        "omics_code": "epigenomics",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-acoa",
-                        "assay_name": "Targeted Acyl-CoA",
-                        "count": null,
-                        "omics_code": "metabolomics-targeted",
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-amines",
-                        "assay_name": "Targeted Amines",
-                        "count": null,
-                        "omics_code": "metabolomics-targeted",
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-etamidpos",
-                        "assay_name": "Targeted Ethanolamides",
-                        "count": null,
-                        "omics_code": "metabolomics-targeted",
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-ka",
-                        "assay_name": "Targeted Keto acids",
-                        "count": null,
-                        "omics_code": "metabolomics-targeted",
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-nuc",
-                        "assay_name": "Targeted Nucleotides",
-                        "count": null,
-                        "omics_code": "metabolomics-targeted",
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-oxylipneg",
-                        "assay_name": "Targeted Oxylipins",
-                        "count": null,
-                        "omics_code": "metabolomics-targeted",
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-tca",
-                        "assay_name": "Targeted Tricarboxylic acid (TCA) cycle",
-                        "count": null,
-                        "omics_code": "metabolomics-targeted",
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-u-hilicpos",
-                        "assay_name": "Untargeted HILIC-positive",
-                        "count": 42,
-                        "omics_code": "metabolomics-untargeted",
-                        "qc_count": 16
-                    },
-                    {
-                        "assay_code": "metab-u-ionpneg",
-                        "assay_name": "Untargeted Ion-Pair negative",
-                        "count": null,
-                        "omics_code": "metabolomics-untargeted",
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-u-lrpneg",
-                        "assay_name": "Untargeted Lipidomics, reversed-phase negative",
-                        "count": null,
-                        "omics_code": "metabolomics-untargeted",
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-u-lrppos",
-                        "assay_name": "Untargeted Lipidomics, reversed-phase positive",
-                        "count": null,
-                        "omics_code": "metabolomics-untargeted",
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-u-rpneg",
-                        "assay_name": "Untargeted Reversed-phase negative",
-                        "count": null,
-                        "omics_code": "metabolomics-untargeted",
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-u-rppos",
-                        "assay_name": "Untargeted Reversed-phase positive",
-                        "count": null,
-                        "omics_code": "metabolomics-untargeted",
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "prot-ac",
-                        "assay_name": "Acetyl Proteomics",
-                        "omics_code": "proteomics",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "prot-pr",
-                        "assay_name": "Global Proteomics",
-                        "omics_code": "proteomics",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "prot-ph",
-                        "assay_name": "Phosphoproteomics",
-                        "omics_code": "proteomics",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "prot-ub",
-                        "assay_name": "Protein Ubiquitination",
-                        "omics_code": "proteomics",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "immunoassay-adipokine",
-                        "assay_name": "Proteomics Targeted Adipokine",
-                        "omics_code": "immunoassay",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "immunoassay-mag27plex",
-                        "assay_name": "Proteomics Targeted Mag27plex",
-                        "omics_code": "immunoassay",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "immunoassay-metabolic",
-                        "assay_name": "Proteomics Targeted Metabolic",
-                        "omics_code": "immunoassay",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "immunoassay-myokine",
-                        "assay_name": "Proteomics Targeted Myokine",
-                        "omics_code": "immunoassay",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "immunoassay-pituitary",
-                        "assay_name": "Proteomics Targeted Pituitary",
-                        "omics_code": "immunoassay",
-                        "count": null,
-                        "qc_count": null
-                    }
-                ]
-            },
-            {
                 "tissue_code": "T66",
                 "sample_data": [
                     {
@@ -7382,192 +8244,15 @@
                         "qc_count": null
                     }
                 ]
-            }
-        ]
-    },
-    "external": {
-        "pass1a_06": [
-            {
-                "tissue_code": "T30",
-                "sample_data": [
-                    {
-                        "assay_code": "transcript-rna-seq",
-                        "assay_name": "RNA-seq",
-                        "omics_code": "transcriptomics",
-                        "count": 78,
-                        "qc_count": 2
-                    },
-                    {
-                        "assay_code": "epigen-rrbs",
-                        "assay_name": "RRBS",
-                        "omics_code": "epigenomics",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-3hib",
-                        "assay_name": "Targeted 3-Hydroxyisobutyric Acid (3-HIB)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-aa",
-                        "assay_name": "Targeted Amino Acids",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-ac-duke",
-                        "assay_name": "Targeted Acylcarnitines",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-acoa",
-                        "assay_name": "Targeted Acyl-CoA",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-amines",
-                        "assay_name": "Targeted Amines",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-baiba",
-                        "assay_name": "Targeted Beta-aminoisobutyric acid (BAIBA)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-cer-duke",
-                        "assay_name": "Targeted Ceramide",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-ka",
-                        "assay_name": "Targeted Keto acids (KA)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-nuc",
-                        "assay_name": "Targeted Nucleotides",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-oa",
-                        "assay_name": "Targeted Organic acids (OA)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-oxylipneg",
-                        "assay_name": "Targeted Oxylipins",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-sphm",
-                        "assay_name": "Targeted Sphingomyelin",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-tca",
-                        "assay_name": "Targeted Tricarboxylic acid (TCA) cycle",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-u-hilicpos",
-                        "assay_name": "Untargeted HILIC-positive",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-u-ionpneg",
-                        "assay_name": "Untargeted Ion-Pair negative",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-u-lrpneg",
-                        "assay_name": "Untargeted lipidomics, reversed-phase negative",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-u-lrppos",
-                        "assay_name": "Untargeted lipidomics, reversed-phase positive",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-u-rpneg",
-                        "assay_name": "Untargeted Reversed-phase negative",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-u-rppos",
-                        "assay_name": "Untargeted Reversed-phase positive",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "prot-ac",
-                        "assay_name": "Acetyl Proteomics",
-                        "omics_code": "proteomics",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "prot-ph",
-                        "assay_name": "Phophoproteomics",
-                        "omics_code": "proteomics",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "prot-pr",
-                        "assay_name": "Global Proteomics",
-                        "omics_code": "proteomics",
-                        "count": null,
-                        "qc_count": null
-                    }
-                ]
             },
             {
-                "tissue_code": "T31",
+                "tissue_code": "T99",
                 "sample_data": [
                     {
                         "assay_code": "transcript-rna-seq",
                         "assay_name": "RNA-seq",
                         "omics_code": "transcriptomics",
-                        "count": null,
+                        "count": 50,
                         "qc_count": null
                     },
                     {
@@ -7578,310 +8263,102 @@
                         "qc_count": null
                     },
                     {
-                        "assay_code": "metab-t-3hib",
-                        "assay_name": "Targeted 3-Hydroxyisobutyric Acid (3-HIB)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-aa",
-                        "assay_name": "Targeted Amino Acids",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-ac-duke",
-                        "assay_name": "Targeted Acylcarnitines",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 156,
-                        "qc_count": 6
-                    },
-                    {
-                        "assay_code": "metab-t-acoa",
-                        "assay_name": "Targeted Acyl-CoA",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-amines",
-                        "assay_name": "Targeted Amines",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": 6
-                    },
-                    {
-                        "assay_code": "metab-t-baiba",
-                        "assay_name": "Targeted Beta-aminoisobutyric acid (BAIBA)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-cer-duke",
-                        "assay_name": "Targeted Ceramide",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 156,
-                        "qc_count": 6
-                    },
-                    {
-                        "assay_code": "metab-t-ka",
-                        "assay_name": "Targeted Keto acids (KA)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-nuc",
-                        "assay_name": "Targeted Nucleotides",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-oa",
-                        "assay_name": "Targeted Organic acids (OA)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-oxylipneg",
-                        "assay_name": "Targeted Oxylipins",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": 26
-                    },
-                    {
-                        "assay_code": "metab-t-sphm",
-                        "assay_name": "Targeted Sphingomyelin",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-tca",
-                        "assay_name": "Targeted Tricarboxylic acid (TCA) cycle",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": 6
-                    },
-                    {
-                        "assay_code": "metab-u-hilicpos",
-                        "assay_name": "Untargeted HILIC-positive",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 23
-                    },
-                    {
-                        "assay_code": "metab-u-ionpneg",
-                        "assay_name": "Untargeted Ion-Pair negative",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 33
-                    },
-                    {
-                        "assay_code": "metab-u-lrpneg",
-                        "assay_name": "Untargeted lipidomics, reversed-phase negative",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 18
-                    },
-                    {
-                        "assay_code": "metab-u-lrppos",
-                        "assay_name": "Untargeted lipidomics, reversed-phase positive",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 20
-                    },
-                    {
-                        "assay_code": "metab-u-rpneg",
-                        "assay_name": "Untargeted Reversed-phase negative",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 27
-                    },
-                    {
-                        "assay_code": "metab-u-rppos",
-                        "assay_name": "Untargeted Reversed-phase positive",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 26
-                    },
-                    {
-                        "assay_code": "prot-ac",
-                        "assay_name": "Acetyl Proteomics",
-                        "omics_code": "proteomics",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "prot-ph",
-                        "assay_name": "Phophoproteomics",
-                        "omics_code": "proteomics",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "prot-pr",
-                        "assay_name": "Global Proteomics",
-                        "omics_code": "proteomics",
-                        "count": null,
-                        "qc_count": null
-                    }
-                ]
-            },
-            {
-                "tissue_code": "T55",
-                "sample_data": [
-                    {
-                        "assay_code": "transcript-rna-seq",
-                        "assay_name": "RNA-seq",
-                        "omics_code": "transcriptomics",
-                        "count": 156,
-                        "qc_count": 6
-                    },
-                    {
-                        "assay_code": "epigen-rrbs",
-                        "assay_name": "RRBS",
+                        "assay_code": "epigen-atac-seq",
+                        "assay_name": "ATAC-seq",
                         "omics_code": "epigenomics",
-                        "count": 78,
-                        "qc_count": 2
-                    },
-                    {
-                        "assay_code": "metab-t-3hib",
-                        "assay_name": "Targeted 3-Hydroxyisobutyric Acid (3-HIB)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
+                        "count": null,
                         "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-aa",
-                        "assay_name": "Targeted Amino Acids",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-ac-duke",
-                        "assay_name": "Targeted Acylcarnitines",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 234,
-                        "qc_count": 12
                     },
                     {
                         "assay_code": "metab-t-acoa",
                         "assay_name": "Targeted Acyl-CoA",
+                        "count": null,
                         "omics_code": "metabolomics-targeted",
-                        "count": 78,
                         "qc_count": null
                     },
                     {
                         "assay_code": "metab-t-amines",
                         "assay_name": "Targeted Amines",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 156,
-                        "qc_count": 12
-                    },
-                    {
-                        "assay_code": "metab-t-baiba",
-                        "assay_name": "Targeted Beta-aminoisobutyric acid (BAIBA)",
-                        "omics_code": "metabolomics-targeted",
                         "count": null,
+                        "omics_code": "metabolomics-targeted",
                         "qc_count": null
                     },
                     {
-                        "assay_code": "metab-t-cer-duke",
-                        "assay_name": "Targeted Ceramide",
+                        "assay_code": "metab-t-etamidpos",
+                        "assay_name": "Targeted Ethanolamides",
+                        "count": null,
                         "omics_code": "metabolomics-targeted",
-                        "count": 234,
-                        "qc_count": 12
+                        "qc_count": null
                     },
                     {
                         "assay_code": "metab-t-ka",
-                        "assay_name": "Targeted Keto acids (KA)",
+                        "assay_name": "Targeted Keto acids",
+                        "count": null,
                         "omics_code": "metabolomics-targeted",
-                        "count": 78,
                         "qc_count": null
                     },
                     {
                         "assay_code": "metab-t-nuc",
                         "assay_name": "Targeted Nucleotides",
+                        "count": null,
                         "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-oa",
-                        "assay_name": "Targeted Organic acids (OA)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
                         "qc_count": null
                     },
                     {
                         "assay_code": "metab-t-oxylipneg",
                         "assay_name": "Targeted Oxylipins",
+                        "count": null,
                         "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": 27
-                    },
-                    {
-                        "assay_code": "metab-t-sphm",
-                        "assay_name": "Targeted Sphingomyelin",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
                         "qc_count": null
                     },
                     {
                         "assay_code": "metab-t-tca",
                         "assay_name": "Targeted Tricarboxylic acid (TCA) cycle",
+                        "count": null,
                         "omics_code": "metabolomics-targeted",
-                        "count": 156,
-                        "qc_count": 11
+                        "qc_count": null
                     },
                     {
                         "assay_code": "metab-u-hilicpos",
                         "assay_name": "Untargeted HILIC-positive",
+                        "count": 42,
                         "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 23
+                        "qc_count": 16
                     },
                     {
                         "assay_code": "metab-u-ionpneg",
                         "assay_name": "Untargeted Ion-Pair negative",
+                        "count": null,
                         "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 38
+                        "qc_count": null
                     },
                     {
                         "assay_code": "metab-u-lrpneg",
-                        "assay_name": "Untargeted lipidomics, reversed-phase negative",
+                        "assay_name": "Untargeted Lipidomics, reversed-phase negative",
+                        "count": null,
                         "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 18
+                        "qc_count": null
                     },
                     {
                         "assay_code": "metab-u-lrppos",
-                        "assay_name": "Untargeted lipidomics, reversed-phase positive",
+                        "assay_name": "Untargeted Lipidomics, reversed-phase positive",
+                        "count": null,
                         "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 19
+                        "qc_count": null
                     },
                     {
                         "assay_code": "metab-u-rpneg",
                         "assay_name": "Untargeted Reversed-phase negative",
+                        "count": null,
                         "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 23
+                        "qc_count": null
                     },
                     {
                         "assay_code": "metab-u-rppos",
                         "assay_name": "Untargeted Reversed-phase positive",
+                        "count": null,
                         "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 32
+                        "qc_count": null
                     },
                     {
                         "assay_code": "prot-ac",
@@ -7891,536 +8368,59 @@
                         "qc_count": null
                     },
                     {
-                        "assay_code": "prot-ph",
-                        "assay_name": "Phophoproteomics",
-                        "omics_code": "proteomics",
-                        "count": 66,
-                        "qc_count": null
-                    },
-                    {
                         "assay_code": "prot-pr",
                         "assay_name": "Global Proteomics",
-                        "omics_code": "proteomics",
-                        "count": 66,
-                        "qc_count": null
-                    }
-                ]
-            },
-            {
-                "tissue_code": "T58",
-                "sample_data": [
-                    {
-                        "assay_code": "transcript-rna-seq",
-                        "assay_name": "RNA-seq",
-                        "omics_code": "transcriptomics",
-                        "count": 78,
-                        "qc_count": 2
-                    },
-                    {
-                        "assay_code": "epigen-rrbs",
-                        "assay_name": "RRBS",
-                        "omics_code": "epigenomics",
-                        "count": 78,
-                        "qc_count": 2
-                    },
-                    {
-                        "assay_code": "metab-t-3hib",
-                        "assay_name": "Targeted 3-Hydroxyisobutyric Acid (3-HIB)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-aa",
-                        "assay_name": "Targeted Amino Acids",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-ac-duke",
-                        "assay_name": "Targeted Acylcarnitines",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-acoa",
-                        "assay_name": "Targeted Acyl-CoA",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-amines",
-                        "assay_name": "Targeted Amines",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-baiba",
-                        "assay_name": "Targeted Beta-aminoisobutyric acid (BAIBA)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-cer-duke",
-                        "assay_name": "Targeted Ceramide",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-ka",
-                        "assay_name": "Targeted Keto acids (KA)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-nuc",
-                        "assay_name": "Targeted Nucleotides",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-oa",
-                        "assay_name": "Targeted Organic acids (OA)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-oxylipneg",
-                        "assay_name": "Targeted Oxylipins",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-sphm",
-                        "assay_name": "Targeted Sphingomyelin",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-tca",
-                        "assay_name": "Targeted Tricarboxylic acid (TCA) cycle",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-u-hilicpos",
-                        "assay_name": "Untargeted HILIC-positive",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 18
-                    },
-                    {
-                        "assay_code": "metab-u-ionpneg",
-                        "assay_name": "Untargeted Ion-Pair negative",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-u-lrpneg",
-                        "assay_name": "Untargeted lipidomics, reversed-phase negative",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-u-lrppos",
-                        "assay_name": "Untargeted lipidomics, reversed-phase positive",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-u-rpneg",
-                        "assay_name": "Untargeted Reversed-phase negative",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-u-rppos",
-                        "assay_name": "Untargeted Reversed-phase positive",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "prot-ac",
-                        "assay_name": "Acetyl Proteomics",
-                        "omics_code": "proteomics",
-                        "count": 66,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "prot-ph",
-                        "assay_name": "Phophoproteomics",
-                        "omics_code": "proteomics",
-                        "count": 66,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "prot-pr",
-                        "assay_name": "Global Proteomics",
-                        "omics_code": "proteomics",
-                        "count": 66,
-                        "qc_count": null
-                    }
-                ]
-            },
-            {
-                "tissue_code": "T68",
-                "sample_data": [
-                    {
-                        "assay_code": "transcript-rna-seq",
-                        "assay_name": "RNA-seq",
-                        "omics_code": "transcriptomics",
-                        "count": 78,
-                        "qc_count": 2
-                    },
-                    {
-                        "assay_code": "epigen-rrbs",
-                        "assay_name": "RRBS",
-                        "omics_code": "epigenomics",
-                        "count": 78,
-                        "qc_count": 2
-                    },
-                    {
-                        "assay_code": "metab-t-3hib",
-                        "assay_name": "Targeted 3-Hydroxyisobutyric Acid (3-HIB)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-aa",
-                        "assay_name": "Targeted Amino Acids",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-ac-duke",
-                        "assay_name": "Targeted Acylcarnitines",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 234,
-                        "qc_count": 24
-                    },
-                    {
-                        "assay_code": "metab-t-acoa",
-                        "assay_name": "Targeted Acyl-CoA",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-amines",
-                        "assay_name": "Targeted Amines",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 156,
-                        "qc_count": 12
-                    },
-                    {
-                        "assay_code": "metab-t-baiba",
-                        "assay_name": "Targeted Beta-aminoisobutyric acid (BAIBA)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-cer-duke",
-                        "assay_name": "Targeted Ceramide",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 234,
-                        "qc_count": 8
-                    },
-                    {
-                        "assay_code": "metab-t-ka",
-                        "assay_name": "Targeted Keto acids (KA)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-nuc",
-                        "assay_name": "Targeted Nucleotides",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-oa",
-                        "assay_name": "Targeted Organic acids (OA)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-oxylipneg",
-                        "assay_name": "Targeted Oxylipins",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": 27
-                    },
-                    {
-                        "assay_code": "metab-t-sphm",
-                        "assay_name": "Targeted Sphingomyelin",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-tca",
-                        "assay_name": "Targeted Tricarboxylic acid (TCA) cycle",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": 8
-                    },
-                    {
-                        "assay_code": "metab-u-hilicpos",
-                        "assay_name": "Untargeted HILIC-positive",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 23
-                    },
-                    {
-                        "assay_code": "metab-u-ionpneg",
-                        "assay_name": "Untargeted Ion-Pair negative",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 39
-                    },
-                    {
-                        "assay_code": "metab-u-lrpneg",
-                        "assay_name": "Untargeted lipidomics, reversed-phase negative",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 18
-                    },
-                    {
-                        "assay_code": "metab-u-lrppos",
-                        "assay_name": "Untargeted lipidomics, reversed-phase positive",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 18
-                    },
-                    {
-                        "assay_code": "metab-u-rpneg",
-                        "assay_name": "Untargeted Reversed-phase negative",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 33
-                    },
-                    {
-                        "assay_code": "metab-u-rppos",
-                        "assay_name": "Untargeted Reversed-phase positive",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 34
-                    },
-                    {
-                        "assay_code": "prot-ac",
-                        "assay_name": "Acetyl Proteomics",
-                        "omics_code": "proteomics",
-                        "count": 66,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "prot-ph",
-                        "assay_name": "Phophoproteomics",
-                        "omics_code": "proteomics",
-                        "count": 66,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "prot-pr",
-                        "assay_name": "Global Proteomics",
-                        "omics_code": "proteomics",
-                        "count": 66,
-                        "qc_count": null
-                    }
-                ]
-            },
-            {
-                "tissue_code": "T70",
-                "sample_data": [
-                    {
-                        "assay_code": "transcript-rna-seq",
-                        "assay_name": "RNA-seq",
-                        "omics_code": "transcriptomics",
-                        "count": 78,
-                        "qc_count": 2
-                    },
-                    {
-                        "assay_code": "epigen-rrbs",
-                        "assay_name": "RRBS",
-                        "omics_code": "epigenomics",
-                        "count": 78,
-                        "qc_count": 2
-                    },
-                    {
-                        "assay_code": "metab-t-3hib",
-                        "assay_name": "Targeted 3-Hydroxyisobutyric Acid (3-HIB)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-aa",
-                        "assay_name": "Targeted Amino Acids",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-ac-duke",
-                        "assay_name": "Targeted Acylcarnitines",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 234,
-                        "qc_count": 24
-                    },
-                    {
-                        "assay_code": "metab-t-acoa",
-                        "assay_name": "Targeted Acyl-CoA",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-amines",
-                        "assay_name": "Targeted Amines",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 156,
-                        "qc_count": 11
-                    },
-                    {
-                        "assay_code": "metab-t-baiba",
-                        "assay_name": "Targeted Beta-aminoisobutyric acid (BAIBA)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-cer-duke",
-                        "assay_name": "Targeted Ceramide",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 234,
-                        "qc_count": 24
-                    },
-                    {
-                        "assay_code": "metab-t-ka",
-                        "assay_name": "Targeted Keto acids (KA)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-nuc",
-                        "assay_name": "Targeted Nucleotides",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-oa",
-                        "assay_name": "Targeted Organic acids (OA)",
-                        "omics_code": "metabolomics-targeted",
-                        "count": null,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-oxylipneg",
-                        "assay_name": "Targeted Oxylipins",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": 26
-                    },
-                    {
-                        "assay_code": "metab-t-sphm",
-                        "assay_name": "Targeted Sphingomyelin",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 78,
-                        "qc_count": null
-                    },
-                    {
-                        "assay_code": "metab-t-tca",
-                        "assay_name": "Targeted Tricarboxylic acid (TCA) cycle",
-                        "omics_code": "metabolomics-targeted",
-                        "count": 156,
-                        "qc_count": 8
-                    },
-                    {
-                        "assay_code": "metab-u-hilicpos",
-                        "assay_name": "Untargeted HILIC-positive",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 23
-                    },
-                    {
-                        "assay_code": "metab-u-ionpneg",
-                        "assay_name": "Untargeted Ion-Pair negative",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 62,
-                        "qc_count": 31
-                    },
-                    {
-                        "assay_code": "metab-u-lrpneg",
-                        "assay_name": "Untargeted lipidomics, reversed-phase negative",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 18
-                    },
-                    {
-                        "assay_code": "metab-u-lrppos",
-                        "assay_name": "Untargeted lipidomics, reversed-phase positive",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 18
-                    },
-                    {
-                        "assay_code": "metab-u-rpneg",
-                        "assay_name": "Untargeted Reversed-phase negative",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 78,
-                        "qc_count": 37
-                    },
-                    {
-                        "assay_code": "metab-u-rppos",
-                        "assay_name": "Untargeted Reversed-phase positive",
-                        "omics_code": "metabolomics-untargeted",
-                        "count": 76,
-                        "qc_count": 36
-                    },
-                    {
-                        "assay_code": "prot-ac",
-                        "assay_name": "Acetyl Proteomics",
                         "omics_code": "proteomics",
                         "count": null,
                         "qc_count": null
                     },
                     {
                         "assay_code": "prot-ph",
-                        "assay_name": "Phophoproteomics",
+                        "assay_name": "Phosphoproteomics",
                         "omics_code": "proteomics",
-                        "count": 66,
+                        "count": null,
                         "qc_count": null
                     },
                     {
-                        "assay_code": "prot-pr",
-                        "assay_name": "Global Proteomics",
+                        "assay_code": "prot-ub",
+                        "assay_name": "Protein Ubiquitination",
                         "omics_code": "proteomics",
-                        "count": 66,
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "immunoassay-adipokine",
+                        "assay_name": "Proteomics Targeted Adipokine",
+                        "omics_code": "immunoassay",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "immunoassay-mag27plex",
+                        "assay_name": "Proteomics Targeted Mag27plex",
+                        "omics_code": "immunoassay",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "immunoassay-metabolic",
+                        "assay_name": "Proteomics Targeted Metabolic",
+                        "omics_code": "immunoassay",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "immunoassay-myokine",
+                        "assay_name": "Proteomics Targeted Myokine",
+                        "omics_code": "immunoassay",
+                        "count": null,
+                        "qc_count": null
+                    },
+                    {
+                        "assay_code": "immunoassay-pituitary",
+                        "assay_name": "Proteomics Targeted Pituitary",
+                        "omics_code": "immunoassay",
+                        "count": null,
                         "qc_count": null
                     }
                 ]

@@ -14,9 +14,7 @@ import {
 export const defaultGeneSearchParams = {
   ktype: 'gene',
   keys: '',
-  omics: 'all',
-  index:
-    'transcriptomics_training, transcriptomics_timewise, proteomics_untargeted_training, proteomics_untargeted_timewise',
+  omics: ['transcriptomics', 'proteomics'],
   filters: {
     assay: [],
     tissue: [],
@@ -36,7 +34,8 @@ export const defaultGeneSearchParams = {
     'p_value_female',
   ],
   unique_fields: ['tissue', 'assay'],
-  size: 25000,
+  size: 10000,
+  start: 0,
   save: false,
 };
 
@@ -60,7 +59,7 @@ export const defaultAnalysisState = {
   geneSearching: false,
   geneSearchError: '',
   scope: 'all',
-  enabledFilters: {},
+  hasResultFilters: {},
 };
 
 export default function AnalysisReducer(
@@ -121,7 +120,7 @@ export default function AnalysisReducer(
     // Handle form submit event
     case GENE_SEARCH_SUBMIT: {
       const params = { ...state.geneSearchParams };
-      params.keys = state.geneSearchInputValue;
+      params.keys = action.input;
       return {
         ...state,
         geneSearchResults: {},
@@ -150,12 +149,26 @@ export default function AnalysisReducer(
               }
             : action.geneSearchResults,
         geneSearching: false,
-        enabledFilters: action.geneSearchResults.uniqs
-          ? action.geneSearchResults.uniqs
-          : state.enabledFilters,
+        hasResultFilters:
+          action.geneSearchResults.uniqs && action.scope === 'all'
+            ? action.geneSearchResults.uniqs
+            : state.hasResultFilters,
       };
     // Revert param values to default
     case GENE_SEARCH_RESET: {
+      // Action to handle secondary filter reset
+      if (action.scope === 'filters') {
+        const params = { ...state.geneSearchParams };
+        params.filters = {
+          tissue: [],
+          assay: [],
+        };
+        return {
+          ...state,
+          geneSearchParams: params,
+        };
+      }
+
       const cloneDefaultGeneSearchParams = { ...defaultGeneSearchParams };
       cloneDefaultGeneSearchParams.keys = '';
       cloneDefaultGeneSearchParams.filters.assay = [];
@@ -169,7 +182,7 @@ export default function AnalysisReducer(
         geneSearching: false,
         geneSearchError: '',
         scope: 'all',
-        enabledFilters: {},
+        hasResultFilters: {},
       };
     }
     // Handle secondary filters: tissue, assay

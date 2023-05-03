@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Typeahead } from 'react-bootstrap-typeahead';
+import PageTitle from '../../lib/ui/pageTitle';
 import AnalysisActions from '../analysisActions';
 import { defaultGeneSearchParams } from '../analysisReducer';
 import GeneCentricTrainingResultsTable from './geneCentricTrainingResultsTable';
 import GeneCentricSearchResultFilters from './geneCentricSearchResultFilters';
 import AnimatedLoadingIcon from '../../lib/ui/loading';
+import { genes } from '../../data/genes';
+
+// Import as a module in your JS
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 function GeneCentricView({
   geneSearchInputValue,
@@ -19,8 +25,9 @@ function GeneCentricView({
   geneSearchReset,
   geneSearchChangeFilter,
   scope,
-  enabledFilters,
+  hasResultFilters,
 }) {
+  const [multiSelections, setMultiSelections] = useState([]);
   // Function to map array of keys to each array of values for each row
   function mapKeyToValue(indexObj) {
     const newArray = [];
@@ -54,27 +61,58 @@ function GeneCentricView({
     });
   }
 
+  // FIXME: Change 'keys' prop type to array so that it is not needed
+  // to be converted to string
+  function formatSearchInput() {
+    const newArr = [];
+    multiSelections.forEach((item) => newArr.push(item.id));
+    return newArr.join(', ');
+  }
+
   return (
-    <div className="geneCentricViewPage">
+    <div className="geneCentricViewPage px-3 px-md-4 mb-3">
       <form id="geneCentricSearchForm" name="geneCentricSearchForm">
-        <div className="main-content-container">
-          <div className="mt-4 mb-4">
-            Search by gene symbol and examine the training response of its
-            related molecules (e.g. protein phosphorylation/acetylation,
-            promoter methylation, transcript) in PASS1B 6-month data.
+        <PageTitle title="Gene-centric View" />
+        <div className="gene-centric-view-container">
+          <div className="gene-centric-view-summary-container row mb-4">
+            <div className="lead col-12">
+              Search by gene ID to examine and visualize the timewise endurance
+              training response across omes' (e.g. transcript, protein, protein
+              phosphorylation/acetylation and promoter methylation) for that
+              gene over 8 weeks of training in adult rats.
+            </div>
           </div>
-          <div className="es-search-ui-container d-flex align-items-center w-100">
+          <div className="es-search-ui-container d-flex align-items-center w-100 pb-2">
             <div className="search-box-input-group d-flex align-items-center flex-grow-1">
+              {/*
               <input
                 type="text"
                 id="keys"
                 name="keys"
                 pattern="[a-zA-Z0-9]+"
                 className="form-control search-input-kype flex-grow-1"
-                placeholder="Enter a gene symbol (Example: SMAD3)"
+                placeholder="Example: BRD2, SMAD3, ID1"
                 value={geneSearchInputValue}
                 onChange={(e) => geneSearchInputChange(e.target.value)}
               />
+              */}
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text material-icons">
+                    pest_control_rodent
+                  </span>
+                </div>
+                <Typeahead
+                  id="basic-typeahead-multiple"
+                  labelKey="id"
+                  multiple
+                  onChange={setMultiSelections}
+                  options={genes}
+                  placeholder="Example: BRD2, SMAD3, ID1"
+                  selected={multiSelections}
+                  minLength={2}
+                />
+              </div>
               <div className="search-button-group d-flex justify-content-end ml-4">
                 <button
                   type="submit"
@@ -83,7 +121,7 @@ function GeneCentricView({
                     e.preventDefault();
                     handleGeneCentricSearch(
                       geneSearchParams,
-                      geneSearchInputValue,
+                      formatSearchInput(),
                       'all'
                     );
                   }}
@@ -93,7 +131,10 @@ function GeneCentricView({
                 <button
                   type="button"
                   className="btn btn-secondary search-reset ml-2"
-                  onClick={() => geneSearchReset()}
+                  onClick={() => {
+                    geneSearchReset('all');
+                    setMultiSelections([]);
+                  }}
                 >
                   Reset
                 </button>
@@ -125,8 +166,9 @@ function GeneCentricView({
                     geneSearchParams={geneSearchParams}
                     handleGeneCentricSearch={handleGeneCentricSearch}
                     geneSearchChangeFilter={geneSearchChangeFilter}
-                    geneSearchInputValue={geneSearchInputValue}
-                    enabledFilters={enabledFilters}
+                    geneSearchInputValue={formatSearchInput()}
+                    geneSearchReset={geneSearchReset}
+                    hasResultFilters={hasResultFilters}
                   />
                 </div>
                 <div className="search-results-content-container col-md-9">
@@ -175,12 +217,14 @@ GeneCentricView.propTypes = {
   geneSearchParams: PropTypes.shape({
     ktype: PropTypes.string,
     keys: PropTypes.string,
-    omics: PropTypes.string,
+    omics: PropTypes.arrayOf(PropTypes.string),
     filters: PropTypes.shape({
       assay: PropTypes.arrayOf(PropTypes.string),
       tissue: PropTypes.arrayOf(PropTypes.string),
     }),
     fields: PropTypes.arrayOf(PropTypes.string),
+    size: PropTypes.number,
+    start: PropTypes.number,
     debug: PropTypes.bool,
     save: PropTypes.bool,
   }),
@@ -189,7 +233,7 @@ GeneCentricView.propTypes = {
   geneSearchReset: PropTypes.func.isRequired,
   geneSearchChangeFilter: PropTypes.func.isRequired,
   scope: PropTypes.string,
-  enabledFilters: PropTypes.shape({
+  hasResultFilters: PropTypes.shape({
     assay: PropTypes.object,
     tissue: PropTypes.object,
   }),
@@ -202,7 +246,7 @@ GeneCentricView.defaultProps = {
   genSearchError: '',
   geneSearchParams: { ...defaultGeneSearchParams },
   scope: 'all',
-  enabledFilters: {},
+  hasResultFilters: {},
 };
 
 const mapStateToProps = (state) => ({
@@ -216,7 +260,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(
       AnalysisActions.handleGeneCentricSearch(params, geneInputValue, scope)
     ),
-  geneSearchReset: () => dispatch(AnalysisActions.geneSearchReset()),
+  geneSearchReset: (scope) => dispatch(AnalysisActions.geneSearchReset(scope)),
   geneSearchChangeFilter: (field, value) =>
     dispatch(AnalysisActions.geneSearchChangeFilter(field, value)),
 });

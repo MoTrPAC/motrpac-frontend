@@ -54,8 +54,8 @@ export const tableColumns = [
     sortType: 'basic',
   },
   {
-    Header: 'Phase',
-    accessor: 'phase',
+    Header: 'Intervention',
+    accessor: 'study',
   },
   {
     Header: 'Category',

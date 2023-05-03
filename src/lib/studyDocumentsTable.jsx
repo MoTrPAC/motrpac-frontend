@@ -27,7 +27,7 @@ function StudyDocumentsTable({ currentView }) {
 
   return (
     <div className="card mb-3 border-secondary motrpac-study-documents">
-      <div className="card-header bg-secondary text-light">MoTrPAC study documents</div>
+      <h5 className="card-header bg-secondary text-light">MoTrPAC study documents</h5>
       <div className="card-body">
         <div className="table-responsive">
           <div className="table table-document-list">

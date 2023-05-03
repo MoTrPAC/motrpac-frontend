@@ -46,10 +46,11 @@ function geneSearchInputChange(geneInputValue = '') {
   };
 }
 
-function geneSearchSubmit(scope) {
+function geneSearchSubmit(scope, input) {
   return {
     type: GENE_SEARCH_SUBMIT,
     scope,
+    input,
   };
 }
 
@@ -60,16 +61,18 @@ function geneSearchFailure(geneSearchError = '') {
   };
 }
 
-function geneSearchSuccess(geneSearchResults) {
+function geneSearchSuccess(geneSearchResults, scope) {
   return {
     type: GENE_SEARCH_SUCCESS,
     geneSearchResults,
+    scope,
   };
 }
 
-function geneSearchReset() {
+function geneSearchReset(scope) {
   return {
     type: GENE_SEARCH_RESET,
+    scope,
   };
 }
 
@@ -101,14 +104,14 @@ const headersConfig = {
 function handleGeneCentricSearch(params, geneInputValue, scope) {
   params.keys = geneInputValue;
   return (dispatch) => {
-    dispatch(geneSearchSubmit(scope));
+    dispatch(geneSearchSubmit(scope, geneInputValue));
     return axios
       .post(`${host}${endpoint}`, params, headersConfig)
       .then((response) => {
         if (response.data.error) {
           dispatch(geneSearchFailure(response.data.error));
         }
-        dispatch(geneSearchSuccess(response.data));
+        dispatch(geneSearchSuccess(response.data, scope));
       })
       .catch((err) => {
         dispatch(geneSearchFailure(`${err.name}: ${err.message}`));

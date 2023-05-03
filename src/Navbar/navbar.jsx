@@ -7,6 +7,7 @@ import actions from '../Auth/authActions';
 import LoginButton from '../lib/loginButton';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
 import onVisibilityChange from '../lib/utils/pageVisibility';
+import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 
 /**
  * Renders the global header nav bar.
@@ -18,7 +19,15 @@ import onVisibilityChange from '../lib/utils/pageVisibility';
  *
  * @returns {Object} JSX representation of the global header nav bar.
  */
-export function Navbar({ isAuthenticated, profile, login, logout }) {
+export function Navbar({
+  isAuthenticated,
+  profile,
+  login,
+  logout,
+  handleDataFetch,
+  resetBrowseState,
+  allFiles,
+}) {
   useEffect(() => {
     /* Handle logout for various use cases */
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
@@ -75,13 +84,35 @@ export function Navbar({ isAuthenticated, profile, login, logout }) {
 
   const handleLogout = () => {
     logout();
+    // delay state reset so that list files do not
+    // disappear from the UI prior to page change
+    setTimeout(() => {
+      resetBrowseState();
+    }, 1000);
+  };
+
+  const handleLogIn = () => {
+    login();
+    // delay state reset so that list files do not
+    // disappear from the UI prior to page change
+    setTimeout(() => {
+      resetBrowseState();
+    }, 1000);
   };
 
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+  const userType = profile.user_metadata && profile.user_metadata.userType;
 
-  if (isAuthenticated && hasAccess) {
-    document.querySelector('body').classList.add('authenticated');
-  }
+  // post request to fetch data files when download nav link is clicked
+  const handleDataObjectFetch = () => {
+    if (!allFiles.length) {
+      if (userType && userType === 'internal') {
+        handleDataFetch();
+      } else {
+        handleDataFetch('PASS1B-06');
+      }
+    }
+  };
 
   const api =
     process.env.NODE_ENV !== 'production'
@@ -93,28 +124,19 @@ export function Navbar({ isAuthenticated, profile, login, logout }) {
       ? process.env.REACT_APP_API_SERVICE_KEY_DEV
       : process.env.REACT_APP_API_SERVICE_KEY;
 
-  function checkServiceStatus() {
+  const checkServiceStatus = () => {
     return axios.get(`${api}${endpoint}/info?key=${key}`).then((res) => {
       console.log(res.status);
     });
-  }
+  };
 
   const navbar = (
-    <div className="header-navbar-container fixed-top">
-      <nav className="navbar navbar-expand-lg navbar-light flex-md-nowrap p-0 shadow-sm bg-white">
-        <div
-          className={`${
-            isAuthenticated && hasAccess ? 'container-fluid' : 'container'
-          } header-navbar-items`}
-        >
-          <Link
-            to="/"
-            className={`navbar-brand header-logo ${
-              isAuthenticated && hasAccess ? 'resized' : ''
-            }`}
-          >
-            <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
-          </Link>
+    <div className="header-navbar-container fixed-top d-flex flex-column flex-md-row align-items-center px-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+      <Link to="/" className="navbar-brand header-logo my-0 mr-md-auto py-0">
+        <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
+      </Link>
+      <nav className="navbar navbar-expand-lg navbar-light my-md-0 mr-md-3 p-0">
+        <div className="header-navbar-items">
           <button
             className="navbar-toggler"
             type="button"
@@ -131,63 +153,165 @@ export function Navbar({ isAuthenticated, profile, login, logout }) {
             id="navbarSupportedContent"
           >
             <ul className="navbar-nav">
+              <li className="nnav-item navItem">
+                <Link
+                  to="/data-download"
+                  className="nav-link"
+                  onClick={handleDataObjectFetch}
+                >
+                  Downloads
+                </Link>
+              </li>
+              <li className="nnav-item navItem dropdown">
+                <div
+                  className="nav-link dropdown-toggle"
+                  role="button"
+                  id="exploreNavbarItemMenuLink"
+                  data-toggle="dropdown"
+                >
+                  Explore
+                </div>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="exploreNavbarItemMenuLink"
+                >
+                  <Link to="/search" className="dropdown-item">
+                    Differential Abundance
+                  </Link>
+                  <Link to="/gene-centric" className="dropdown-item">
+                    Gene-centric View
+                  </Link>
+                  <Link to="/graphical-clustering" className="dropdown-item">
+                    Graphical Clustering
+                  </Link>
+                  <a
+                    href="https://data-viz.motrpac-data.org"
+                    className="dropdown-item"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Interactive Data Visualization
+                  </a>
+                  {isAuthenticated && hasAccess && userType === 'internal' ? (
+                    <Link to="/analysis-phenotype" className="dropdown-item">
+                      Phenotype
+                    </Link>
+                  ) : null}
+                </div>
+              </li>
+              {isAuthenticated && hasAccess ? (
+                <>
+                  <li className="nav-item navItem">
+                    <Link to="/summary" className="nav-link">
+                      Summary
+                    </Link>
+                  </li>
+                  <li className="nav-item navItem">
+                    <Link to="/releases" className="nav-link">
+                      Releases
+                    </Link>
+                  </li>
+                </>
+              ) : null}
+              {isAuthenticated && hasAccess && userType === 'internal' ? (
+                <li className="nav-item navItem">
+                  <Link to="/qc-data-monitor" className="nav-link">
+                    QC Data Monitor
+                  </Link>
+                </li>
+              ) : null}
+              {!isAuthenticated && !hasAccess ? (
+                <li className="nav-item navItem dropdown">
+                  <div
+                    className="nav-link dropdown-toggle"
+                    role="button"
+                    id="dataAccessNavbarItemMenuLink"
+                    data-toggle="dropdown"
+                  >
+                    Data Access
+                  </div>
+                  <div
+                    className="dropdown-menu"
+                    aria-labelledby="dataAccessNavbarItemMenuLink"
+                  >
+                    <Link
+                      to="/data-download"
+                      className="dropdown-item"
+                      onClick={handleDataObjectFetch}
+                    >
+                      Endurance Training Data
+                    </Link>
+                    <Link
+                      to="/data-access"
+                      className="dropdown-item"
+                      onClick={checkServiceStatus}
+                    >
+                      Limited Acute Exercise Data
+                    </Link>
+                  </div>
+                </li>
+              ) : null}
               <li className="nav-item navItem dropdown">
                 <div
                   className="nav-link dropdown-toggle"
                   role="button"
-                  id="navbarDropdownMenuLink"
+                  id="aboutNavbarItemMenuLink"
+                  data-toggle="dropdown"
+                >
+                  Resources
+                </div>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="aboutNavbarItemMenuLink"
+                >
+                  <Link to="/code-repositories" className="dropdown-item">
+                    Code Repositories
+                  </Link>
+                  <Link to="/methods" className="dropdown-item">
+                    Methods
+                  </Link>
+                  <Link to="/related-studies" className="dropdown-item">
+                    Related Studies
+                  </Link>
+                </div>
+              </li>
+              <li className="nav-item navItem dropdown">
+                <div
+                  className="nav-link dropdown-toggle"
+                  role="button"
+                  id="aboutNavbarItemMenuLink"
                   data-toggle="dropdown"
                 >
                   About Us
                 </div>
                 <div
                   className="dropdown-menu"
-                  aria-labelledby="navbarDropdownMenuLink"
+                  aria-labelledby="aboutNavbarItemMenuLink"
                 >
+                  <Link to="/team" className="dropdown-item">
+                    Who we are
+                  </Link>
                   <Link to="/announcements" className="dropdown-item">
                     Announcements
                   </Link>
                   <Link to="/external-links" className="dropdown-item">
                     Useful Links
                   </Link>
-                  <Link to="/team" className="dropdown-item">
-                    Who we are
-                  </Link>
                   <Link to="/contact" className="dropdown-item">
                     Contact Us
                   </Link>
                 </div>
               </li>
-              {!isAuthenticated && !hasAccess ? (
-                <>
-                  <li className="nav-item navItem">
-                    <Link
-                      to="/data-access"
-                      className="nav-link"
-                      onClick={checkServiceStatus}
-                    >
-                      Data Access
-                    </Link>
-                  </li>
-                  <li className="nav-item navItem">
-                    <Link to="/related-studies" className="nav-link">
-                      Related Studies
-                    </Link>
-                  </li>
-                </>
-              ) : null}
-              <li className="nav-item navItem">
-                <LogoutButton
-                  isAuthenticated={isAuthenticated}
-                  profile={profile}
-                  handleLogout={handleLogout}
-                  login={login}
-                />
-              </li>
             </ul>
           </div>
         </div>
       </nav>
+      <LogoutButton
+        isAuthenticated={isAuthenticated}
+        profile={profile}
+        handleLogout={handleLogout}
+        login={handleLogIn}
+      />
     </div>
   );
   return navbar;
@@ -206,6 +330,8 @@ Navbar.propTypes = {
   isAuthenticated: PropTypes.bool,
   login: PropTypes.func,
   logout: PropTypes.func,
+  handleDataFetch: PropTypes.func,
+  resetBrowseState: PropTypes.func,
 };
 
 Navbar.defaultProps = {
@@ -213,17 +339,23 @@ Navbar.defaultProps = {
   isAuthenticated: false,
   login: null,
   logout: null,
+  handleDataFetch: null,
+  resetBrowseState: null,
 };
 
 const mapStateToProps = (state) => ({
   ...state.quickSearch,
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
+  allFiles: state.browseData.allFiles,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   login: () => dispatch(actions.login()),
   logout: () => dispatch(actions.logout()),
+  handleDataFetch: (phase) =>
+    dispatch(BrowseDataActions.handleDataFetch(phase)),
+  resetBrowseState: () => dispatch(BrowseDataActions.resetBrowseState()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
@@ -234,19 +366,12 @@ function LogoutButton({ profile, isAuthenticated, handleLogout, login }) {
     profile.user_metadata && profile.user_metadata.name
       ? profile.user_metadata.name
       : profile.name;
-  const siteName =
-    profile.user_metadata && profile.user_metadata.siteName
-      ? `, ${profile.user_metadata.siteName}`
-      : '';
 
   if (isAuthenticated) {
     return (
       <span className="user-logout-button">
         <img src={profile.picture} className="user-avatar" alt="avatar" />
-        <span className="user-display-name">
-          {userDisplayName}
-          {siteName}
-        </span>
+        <span className="user-display-name">{userDisplayName}</span>
         <button
           type="button"
           onClick={handleLogout}

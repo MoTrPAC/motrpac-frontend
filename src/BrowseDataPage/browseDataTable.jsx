@@ -16,7 +16,8 @@ import {
   PageNavigationControl,
   transformData,
 } from './helper';
-import IconSet from '../lib/iconSet';
+import AuthAccessFileDownloadModal from './components/authAccessModal';
+import OpenAccessFileDownloadModal from './components/openAccessModal';
 
 // React-Table row selection setup
 const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
@@ -150,65 +151,23 @@ function DataTable({
   } = instance;
 
   // default page size options given the length of entries in the data
-  const range = (start, stop, step = 10) =>
+  const range = (start, stop, step = 50) =>
     Array(Math.ceil(stop / step))
       .fill(start)
       .map((x, y) => x + y * step);
 
-  // Render modal
-  function renderModal() {
-    return (
-      <div
-        className="modal fade data-download-modal"
-        id="dataDownloadModal"
-        tabIndex="-1"
-        role="dialog"
-        aria-labelledby="dataDownloadModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">File Download Request</h5>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              {downloadRequestResponse.length > 0 && !waitingForResponse ? (
-                <div className="modal-message my-3">
-                  <span className="file-download-request-response">
-                    Your download request has been submitted. Processing time
-                    may vary depending on the total file size. We will notify
-                    you by email when the download is ready.
-                  </span>
-                </div>
-              ) : (
-                <div className="loading-spinner my-5">
-                  <img src={IconSet.Spinner} alt="" />
-                </div>
-              )}
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+  // anonymous user or authenticated user
+  const userType = profile.user_metadata && profile.user_metadata.userType;
+
+  function handleDownloadClickEvent(selectedFiles) {
+    if (userType && userType === 'internal') {
+      handleDownloadRequest(
+        profile.user_metadata.email,
+        profile.user_metadata.name,
+        selectedFiles
+      );
+    }
   }
-  /* End: Download modal */
 
   // Render the UI for your table
   // react-table doesn't have UI, it's headless. We just need to put the react-table
@@ -219,27 +178,36 @@ function DataTable({
         <PageSize
           pageSize={pageSize}
           setPageSize={setPageSize}
-          pageSizeOptions={range(10, preGlobalFilteredRows.length)}
+          pageSizeOptions={range(50, preGlobalFilteredRows.length)}
         />
         <div className="file-download-button">
           <button
             type="button"
-            className="btn btn-sm btn-primary d-flex align-items-center"
+            className="btn btn-primary d-flex align-items-center"
             disabled={Object.keys(selectedRowIds).length === 0}
             data-toggle="modal"
             data-target=".data-download-modal"
             onClick={() => {
-              handleDownloadRequest(
-                profile.user_metadata.email,
-                profile.user_metadata.name,
-                selectedFlatRows
-              );
+              handleDownloadClickEvent(selectedFlatRows);
             }}
           >
             <span className="material-icons">file_download</span>
             <span>Download selected files</span>
           </button>
-          {Object.keys(selectedRowIds).length > 0 ? renderModal() : null}
+          {Object.keys(selectedRowIds).length > 0 && userType ? (
+            <AuthAccessFileDownloadModal
+              waitingForResponse={waitingForResponse}
+              downloadRequestResponse={downloadRequestResponse}
+            />
+          ) : null}
+          {Object.keys(selectedRowIds).length > 0 && !userType ? (
+            <OpenAccessFileDownloadModal
+              waitingForResponse={waitingForResponse}
+              downloadRequestResponse={downloadRequestResponse}
+              handleDownloadRequest={handleDownloadRequest}
+              selectedFiles={selectedFlatRows}
+            />
+          ) : null}
         </div>
       </div>
       <div className="card mb-3">
@@ -311,10 +279,15 @@ BrowseDataTable.propTypes = {
   downloadRequestResponse: PropTypes.string.isRequired,
   profile: PropTypes.shape({
     user_metadata: PropTypes.shape({
+      userType: PropTypes.string,
       email: PropTypes.string,
       name: PropTypes.string,
     }),
-  }).isRequired,
+  }),
+};
+
+BrowseDataTable.defaultProps = {
+  profile: {},
 };
 
 DataTable.propTypes = {
@@ -331,10 +304,15 @@ DataTable.propTypes = {
   downloadRequestResponse: PropTypes.string.isRequired,
   profile: PropTypes.shape({
     user_metadata: PropTypes.shape({
+      userType: PropTypes.string,
       email: PropTypes.string,
       name: PropTypes.string,
     }),
-  }).isRequired,
+  }),
+};
+
+DataTable.defaultProps = {
+  profile: {},
 };
 
 export default BrowseDataTable;

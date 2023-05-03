@@ -1,0 +1,13 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 95px; height: 95px;"><style>
+     .line-arrow-right2 {animation:line-arrow-right2-move 1.6s infinite;}
+     @keyframes line-arrow-right2-move {
+         0%{transform: translate3d(-2px, 0, 0);}
+         50%{transform: translate3d(2px, 0, 0);}
+         100%{transform: translate3d(-2px, 0, 0);}
+     }
+     @media (prefers-reduced-motion: reduce) {
+         .line-arrow-right2 {
+             animation: none;
+         }
+     }
+    </style><path class="line-arrow-right2 stroke1" d="M4 51.0081H94M94 51.0081L58.1525 15M94 51.0081L58.1525 86.25" stroke="#000" stroke-width="4.0px" stroke-linecap="round" style="animation-duration: 1.6s;"></path></svg>

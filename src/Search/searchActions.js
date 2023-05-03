@@ -42,10 +42,11 @@ function searchFailure(searchError = '') {
   };
 }
 
-function searchSuccess(searchResults) {
+function searchSuccess(searchResults, scope) {
   return {
     type: SEARCH_SUCCESS,
     searchResults,
+    scope,
   };
 }
 
@@ -93,7 +94,8 @@ const headersConfig = {
 };
 
 // Handle search and results filtering events
-function handleSearch(params, scope) {
+function handleSearch(params, inputValue, scope) {
+  params.keys = inputValue;
   return (dispatch) => {
     dispatch(searchSubmit(params, scope));
     return axios
@@ -102,7 +104,7 @@ function handleSearch(params, scope) {
         if (response.data.error) {
           dispatch(searchFailure(response.data.error));
         }
-        dispatch(searchSuccess(response.data));
+        dispatch(searchSuccess(response.data, scope));
       })
       .catch((err) => {
         dispatch(searchFailure(`${err.name}: ${err.message}`));

@@ -277,7 +277,7 @@ function ReleaseEntry({ profile, currentView }) {
                           Note: The data in this release is outdated and no
                           longer available for download from the Data Hub
                           portal. Please visit the{' '}
-                          <Link to="/browse-data">Browse Data</Link> page for
+                          <Link to="/data-download">data download</Link> page for
                           the most up-to-date PASS1A and PASS1B data. Contact{' '}
                           <EmailLink
                             mailto="motrpac-data-requests@lists.stanford.edu"
@@ -341,7 +341,7 @@ function ReleaseEntry({ profile, currentView }) {
             <div className="release-data-status-info pt-3 pb-4 col-12 col-md-9 col-lg-10 float-left">
               The data sets included in prior consortium releases on this page
               are now outdated. Please visit the{' '}
-              <Link to="/browse-data">Browse Data</Link> page to view or
+              <Link to="/data-download">data download</Link> page to view or
               download the most up-to-date PASS1B 6-month data. The up-to-date
               PASS1A/1C 6-month data will be soon made available to the
               consortium community. To learn more about the prior released data
@@ -368,9 +368,7 @@ function ReleaseEntry({ profile, currentView }) {
               <button
                 type="button"
                 className={
-                  visibleReleases < 1
-                    ? 'btn btn-secondary btn-sm'
-                    : 'btn btn-danger btn-sm'
+                  visibleReleases < 1 ? 'btn btn-secondary' : 'btn btn-danger'
                 }
                 onClick={toggleViewReleaseLength}
               >
@@ -386,7 +384,9 @@ function ReleaseEntry({ profile, currentView }) {
   }
 
   return (
-    <div className="data-release-content-container">{renderReleaseEntry()}</div>
+    <div className="data-release-content-container border-top">
+      {renderReleaseEntry()}
+    </div>
   );
 }
 

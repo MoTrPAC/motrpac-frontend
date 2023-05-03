@@ -20,18 +20,19 @@ const tissues = [
   'Spleen',
   'Testes',
   'Vastus Lateralis',
+  'Vena Cava',
   'White Adipose',
 ];
 
-const tissueList = tissues.sort((a, b) =>
+export const tissueList = tissues.sort((a, b) =>
   a.toLowerCase().localeCompare(b.toLowerCase())
 );
 
 const browseDataFilters = [
   {
-    keyName: 'phase',
-    name: 'Phase',
-    filters: ['PASS1A-06', 'PASS1B-06'],
+    keyName: 'study',
+    name: 'Intervention',
+    filters: ['Acute Exercise', 'Endurance Training'],
   },
   {
     keyName: 'tissue_name',

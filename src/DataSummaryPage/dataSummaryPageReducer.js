@@ -8,7 +8,7 @@ import {
 
 export const defaultDataSummaryState = {
   release: 'internal',
-  phase: 'pass1a_06',
+  phase: 'pass1b_06',
   plot: 'tissue_count',
   sort: 'default',
   showQC: false,

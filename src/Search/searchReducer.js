@@ -43,6 +43,7 @@ export const defaultSearchState = {
     ],
     unique_fields: ['tissue', 'assay', 'sex', 'comparison_group'],
     size: 25000,
+    start: 0,
     save: false,
   },
   scope: 'all',
@@ -51,7 +52,7 @@ export const defaultSearchState = {
   downloadResults: {},
   downloading: false,
   downloadError: '',
-  enabledFilters: {},
+  hasResultFilters: {},
 };
 
 // Reducer to handle actions sent from components related to advanced search form
@@ -161,9 +162,10 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
               }
             : action.searchResults,
         searching: false,
-        enabledFilters: action.searchResults.uniqs
-          ? action.searchResults.uniqs
-          : state.enabledFilters,
+        hasResultFilters:
+          action.searchResults.uniqs && action.scope === 'all'
+            ? action.searchResults.uniqs
+            : state.hasResultFilters,
       };
 
     // Revert param/filter values to default
@@ -187,6 +189,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       }
 
       const defaultParams = { ...defaultSearchState.searchParams };
+      defaultParams.keys = '';
       defaultParams.filters = {
         tissue: [],
         assay: [],
@@ -199,7 +202,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       return {
         ...defaultSearchState,
         searchParams: defaultParams,
-        enabledFilters: {},
+        hasResultFilters: {},
       };
     }
 

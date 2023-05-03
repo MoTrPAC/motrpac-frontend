@@ -94,11 +94,6 @@ const teamInfo = {
       image: LaurensImg,
     },
     {
-      name: 'Aditya Singh, Ph.D.',
-      title: 'Postdoctoral Scholar',
-      image: AdityaImg,
-    },
-    {
       name: 'Samuel Montalvo Hernandez, Ph.D.',
       title: 'Postdoctoral Research Fellow',
       image: SamImg,
@@ -166,6 +161,11 @@ const teamInfo = {
       name: 'Chelsea Harris',
       title: 'Alumni',
       image: ChelseaImg,
+    },
+    {
+      name: 'Aditya Singh, Ph.D.',
+      title: 'Alumni',
+      image: AdityaImg,
     },
     {
       name: 'Elizabeth Chin',

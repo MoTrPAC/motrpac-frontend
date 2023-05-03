@@ -78,8 +78,8 @@ function DataTable({ columns, data, searchParams, handleSearchDownload }) {
       filterTypes,
       initialState: {
         pageIndex: 0,
-        pageSize: 40,
-        pageCount: Math.ceil(data / 40),
+        pageSize: 50,
+        pageCount: Math.ceil(data / 50),
       },
     },
     useFilters,
@@ -111,7 +111,7 @@ function DataTable({ columns, data, searchParams, handleSearchDownload }) {
   } = instance;
 
   // default page size options given the length of entries in the data
-  const range = (start, stop, step = 20) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
+  const range = (start, stop, step = 50) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
 
   // Render the UI for your table
   // react-table doesn't have UI, it's headless. We just need to put the react-table
@@ -122,12 +122,12 @@ function DataTable({ columns, data, searchParams, handleSearchDownload }) {
         <PageSize
           pageSize={pageSize}
           setPageSize={setPageSize}
-          pageSizeOptions={range(20, preGlobalFilteredRows.length)}
+          pageSizeOptions={range(50, preGlobalFilteredRows.length)}
         />
         <div className="file-download-button">
           <button
             type="button"
-            className="btn btn-sm btn-primary d-flex align-items-center"
+            className="btn btn-primary d-flex align-items-center"
             data-toggle="modal"
             data-target=".data-download-modal"
             onClick={(e) => {

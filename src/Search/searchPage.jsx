@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Typeahead } from 'react-bootstrap-typeahead';
+import PageTitle from '../lib/ui/pageTitle';
 import TimewiseResultsTable from './timewiseTable';
 import TrainingResultsTable from './trainingResultsTable';
-import AuthContentContainer from '../lib/ui/authContentContainer';
-import EmbargoExtension from '../lib/embargoExtension';
 import SearchActions from './searchActions';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
@@ -15,10 +15,14 @@ import { searchParamsDefaultProps, searchParamsPropType } from './sharedlib';
 import FeatureLinks from './featureLinks';
 import IconSet from '../lib/iconSet';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
+import { genes } from '../data/genes';
+import { metabolites } from '../data/metabolites';
+
+// Import as a module in your JS
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 export function SearchPage({
   profile,
-  expanded,
   searchResults,
   scope,
   searching,
@@ -36,8 +40,9 @@ export function SearchPage({
   handleQCDataFetch,
   allFiles,
   lastModified,
-  enabledFilters,
+  hasResultFilters,
 }) {
+  const [multiSelections, setMultiSelections] = useState([]);
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
   // Function to map array of keys to each array of values for each row
@@ -70,41 +75,114 @@ export function SearchPage({
     });
   }
 
+  // render feature links
+  function renderFeatureLinks() {
+    if (
+      !searching &&
+      !searchError &&
+      !searchResults.result &&
+      !searchResults.errors
+    ) {
+      return (
+        <FeatureLinks
+          handleDataFetch={handleDataFetch}
+          handleQCDataFetch={handleQCDataFetch}
+          allFiles={allFiles}
+          lastModified={lastModified}
+          userType={userType}
+        />
+      );
+    }
+    return null;
+  }
+
+  // render placeholder text in primary search input field
+  function renderPlaceholder() {
+    if (searchParams.ktype === 'protein') {
+      return 'Example: NP_001000006.1, NP_001001508.2, NP_001005898.3';
+    }
+    if (searchParams.ktype === 'metab') {
+      return 'Example: 8,9-EpETrE, C18:1 LPC plasmalogen B';
+    }
+    return 'Example: BRD2, SMAD3, ID1';
+  }
+
+  // FIXME: transform react-bootstrap-typeahead state from array to string
+  function formatSearchInput() {
+    const newArr = [];
+    multiSelections.forEach((item) => newArr.push(item.id));
+    return newArr.join(', ');
+  }
+
   return (
-    <AuthContentContainer classes="searchPage" expanded={expanded}>
+    <div className="searchPage px-3 px-md-4 mb-3">
       <form id="searchForm" name="searchForm">
-        {userType === 'external' && <EmbargoExtension />}
-        <div className="page-header pt-3 pb-2 mb-3 border-bottom">
-          <div className="page-title">
-            <h3 className="mb-0">Search differential analysis data</h3>
-          </div>
-        </div>
+        <PageTitle title="Search differential abundance data" />
         <div className="search-content-container">
-          <div className="mt-4 mb-4">
-            Search by genes, protein IDs, or metabolite names to examine the
-            training response of its related molecules in PASS1B 6-month data.{' '}
-            <span className="font-weight-bolder">
-              Multiple search terms MUST be separated by comma and space.
-              Examples: "NP_001000006.1, NP_001001508.2, NP_001005898.3" or
-              "8,9-EpETrE, C18:1 LPC plasmalogen B".
-            </span>
+          <div className="search-summary-container row mb-4">
+            <div className="lead col-12">
+              Search by gene ID, protein ID or metabolite name to examine the
+              timewise endurance training response over 8 weeks of training in
+              adult rats.{' '}
+              <span className="font-weight-bold">
+                Multiple search terms MUST be separated by comma and space.
+                Examples: "NP_001000006.1, NP_001001508.2, NP_001005898.3" or
+                "8,9-EpETrE, C18:1 LPC plasmalogen B".
+              </span>
+            </div>
           </div>
-          <div className="es-search-ui-container d-flex align-items-center w-100">
+          <div className="es-search-ui-container d-flex align-items-center w-100 pb-2">
             <RadioButton
               changeParam={changeParam}
               ktype={searchParams.ktype}
               resetSearch={resetSearch}
+              setMultiSelections={setMultiSelections}
             />
             <div className="search-box-input-group d-flex align-items-center flex-grow-1">
+              {/*  
               <input
                 type="text"
                 id="keys"
                 name="keys"
                 className="form-control search-input-kype flex-grow-1"
-                placeholder="Example: BRD2, SMAD3, ID1"
+                placeholder={renderPlaceholder()}
                 value={searchParams.keys}
                 onChange={(e) => changeParam('keys', e.target.value)}
               />
+              */}
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text material-icons">
+                    pest_control_rodent
+                  </span>
+                </div>
+                {searchParams.ktype === 'gene' ||
+                searchParams.ktype === 'metab' ? (
+                  <Typeahead
+                    id="dea-search-typeahead-multiple"
+                    labelKey="id"
+                    multiple
+                    onChange={setMultiSelections}
+                    options={
+                      searchParams.ktype === 'gene' ? genes : metabolites
+                    }
+                    placeholder={renderPlaceholder()}
+                    selected={multiSelections}
+                    minLength={2}
+                  />
+                ) : null}
+                {searchParams.ktype === 'protein' && (
+                  <input
+                    type="text"
+                    id="keys"
+                    name="keys"
+                    className="form-control search-input-kype flex-grow-1"
+                    placeholder={renderPlaceholder()}
+                    value={searchParams.keys}
+                    onChange={(e) => changeParam('keys', e.target.value)}
+                  />
+                )}
+              </div>
               <PrimaryOmicsFilter
                 omics={searchParams.omics}
                 toggleOmics={changeParam}
@@ -115,7 +193,13 @@ export function SearchPage({
                   className="btn btn-primary search-submit"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleSearch(searchParams, 'all');
+                    handleSearch(
+                      searchParams,
+                      multiSelections.length
+                        ? formatSearchInput()
+                        : searchParams.keys,
+                      'all'
+                    );
                   }}
                 >
                   Search
@@ -123,24 +207,17 @@ export function SearchPage({
                 <button
                   type="button"
                   className="btn btn-secondary search-reset ml-2"
-                  onClick={() => resetSearch('all')}
+                  onClick={() => {
+                    resetSearch('all');
+                    setMultiSelections([]);
+                  }}
                 >
                   Reset
                 </button>
               </div>
             </div>
           </div>
-          {!searching &&
-            !searchError &&
-            !searchResults.result &&
-            !searchResults.errors && (
-              <FeatureLinks
-                handleDataFetch={handleDataFetch}
-                handleQCDataFetch={handleQCDataFetch}
-                allFiles={allFiles}
-                lastModified={lastModified}
-              />
-            )}
+          {userType && renderFeatureLinks()}
           <div className="search-body-container mt-4 mb-2">
             {searching && <AnimatedLoadingIcon isFetching={searching} />}
             {!searching && searchError ? (
@@ -165,7 +242,7 @@ export function SearchPage({
                     changeResultFilter={changeResultFilter}
                     handleSearch={handleSearch}
                     resetSearch={resetSearch}
-                    enabledFilters={enabledFilters}
+                    hasResultFilters={hasResultFilters}
                   />
                 </div>
                 <div className="tabbed-content col-md-9">
@@ -281,12 +358,12 @@ export function SearchPage({
           </div>
         </div>
       </form>
-    </AuthContentContainer>
+    </div>
   );
 }
 
 // Radio buttons for selecting the search context
-function RadioButton({ changeParam, ktype, resetSearch }) {
+function RadioButton({ changeParam, ktype, resetSearch, setMultiSelections }) {
   return (
     <div className="search-context">
       <div className="form-check form-check-inline">
@@ -299,6 +376,7 @@ function RadioButton({ changeParam, ktype, resetSearch }) {
           checked={ktype === 'gene'}
           onChange={(e) => {
             resetSearch('all');
+            setMultiSelections([]);
             changeParam('ktype', e.target.value);
           }}
         />
@@ -316,6 +394,7 @@ function RadioButton({ changeParam, ktype, resetSearch }) {
           checked={ktype === 'protein'}
           onChange={(e) => {
             resetSearch('all');
+            setMultiSelections([]);
             changeParam('ktype', e.target.value);
           }}
         />
@@ -333,6 +412,7 @@ function RadioButton({ changeParam, ktype, resetSearch }) {
           checked={ktype === 'metab'}
           onChange={(e) => {
             resetSearch('all');
+            setMultiSelections([]);
             changeParam('ktype', e.target.value);
           }}
         />
@@ -490,9 +570,9 @@ SearchPage.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
   }),
-  expanded: PropTypes.bool,
   searchResults: PropTypes.shape({
     result: PropTypes.object,
+    uniqs: PropTypes.object,
     total: PropTypes.number,
   }),
   scope: PropTypes.string,
@@ -514,7 +594,7 @@ SearchPage.propTypes = {
   handleQCDataFetch: PropTypes.func.isRequired,
   allFiles: PropTypes.arrayOf(PropTypes.shape({})),
   lastModified: PropTypes.string,
-  enabledFilters: PropTypes.shape({
+  hasResultFilters: PropTypes.shape({
     assay: PropTypes.object,
     comparison_group: PropTypes.object,
     sex: PropTypes.object,
@@ -524,7 +604,6 @@ SearchPage.propTypes = {
 
 SearchPage.defaultProps = {
   profile: {},
-  expanded: true,
   searchResults: {},
   scope: 'all',
   searching: false,
@@ -535,13 +614,12 @@ SearchPage.defaultProps = {
   downloadError: '',
   allFiles: [],
   lastModified: '',
-  enabledFilters: {},
+  hasResultFilters: {},
 };
 
 const mapStateToProps = (state) => ({
   ...state.auth,
   ...state.search,
-  expanded: state.sidebar.expanded,
   allFiles: state.browseData.allFiles,
   lastModified: state.dataStatus.qcData.lastModified,
 });
@@ -551,8 +629,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(SearchActions.changeParam(field, value)),
   changeResultFilter: (field, value, bound) =>
     dispatch(SearchActions.changeResultFilter(field, value, bound)),
-  handleSearch: (params, scope) =>
-    dispatch(SearchActions.handleSearch(params, scope)),
+  handleSearch: (params, geneInputValue, scope) =>
+    dispatch(SearchActions.handleSearch(params, geneInputValue, scope)),
   resetSearch: (scope) => dispatch(SearchActions.searchReset(scope)),
   handleSearchDownload: (params, analysis) =>
     dispatch(SearchActions.handleSearchDownload(params, analysis)),

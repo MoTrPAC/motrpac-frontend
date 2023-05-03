@@ -1,43 +1,46 @@
+.header-navbar-container {
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
+
+  .header-logo {
+    img {
+      width: 70%;
+      height: 70%;
+    }
+  }
+}
+
 nav {
   border-bottom: 1px solid transparent;
 
-  .navbar-brand {
-    padding-top: 1.15rem;
-    padding-bottom: 1.15rem;
-
-    img {
-      width: 436px;
-      height: 51px;
-      transition: all 0.3s ease;
-    }
-  }
-
   .navbar-nav {
     .navItem {
+      font-size: 1.125rem;
       font-weight: $semibold-weight;
 
       .nav-link {
         color: $stanford-cool-grey;
 
         &:hover {
-          color: $stanford-black;
+          color: #000;
         }
 
         &.show, &.active {
-          color: $stanford-black;
+          color: #000;
         }
       }
 
       &.show {
         .nav-link {
-          color: $stanford-black;
+          color: #000;
         }
       }
 
       .dropdown-menu {
         background-color:transparentize(#fff, .1);
-        border: solid 1px $stanford-cool-grey;
-        top: 30px;
+        border: solid 1px $gray-semi-transparent;
+        box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.1);
+        top: 35px;
         left: 8px;
 
         .dropdown-item {
@@ -74,30 +77,6 @@ nav {
         border-color: $stanford-black;
       }
 
-      .user-avatar {
-        width: 36px;
-        height: 36px;
-        border-radius: 100%;
-        margin-right: 0.35rem;
-      }
-
-      .user-display-name {
-        color: $stanford-cool-grey;
-        font-size: 0.9rem;
-        font-weight: $regular-weight;
-        margin-right: 0.5rem;
-        vertical-align: middle;
-      }
-
-      .user-logout-button {
-        margin-left: 0.75rem;
-
-        .logOutBtn {
-          margin-left: 0.5rem;
-          margin-right: 0.25rem;
-        }
-      }
-
       .user-login-button {
         margin-left: 0.75rem;
       }
@@ -113,6 +92,28 @@ nav {
         }
       }
     }
+  }
+}
+
+.user-logout-button {
+  margin-left: 0.75rem;
+
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 100%;
+    margin-right: 0.35rem;
+  }
+
+  .user-display-name {
+    color: $stanford-cool-grey;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+
+  .logOutBtn {
+    margin-left: 0.5rem;
+    margin-right: 0.25rem;
   }
 }
 
