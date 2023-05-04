@@ -33,7 +33,8 @@ const BundleDataTypes = [
     title: 'Metabolomics-untargeted',
     description:
       'Analyses, sample-level metadata, QC and quantitative results across tissues for metabolomics-untargeted assays.',
-    object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_metabolomics-untargeted.zip',
+    object_zipfile:
+      'pass1b-06/bundles/motrpac_pass1b-06_metabolomics-untargeted.zip',
     object_zipfile_size: '272.42 MB',
   },
   {
@@ -136,6 +137,16 @@ const BundleDataTypes = [
       'Analyses, sample-level metadata, QC and quantitative results in targeted/untargeted metabolomics and immunoassay for plasma.',
     object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_plasma.zip',
     object_zipfile_size: '53.58 MB',
+  },
+  {
+    type: 'misc-analysis-resources',
+    phase: 'pass1b-06',
+    title: 'Miscellaneous analysis resources',
+    description:
+      'Miscellaneous resource files for R objects used in the data analysis of young adult rats performing endurance exercise training.',
+    object_zipfile:
+      'pass1b-06/bundles/motrpac_pass1b-06_misc-analysis-resources.zip',
+    object_zipfile_size: '166.93 MB',
   },
 ];
 
