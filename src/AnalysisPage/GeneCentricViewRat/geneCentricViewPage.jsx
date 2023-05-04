@@ -12,9 +12,6 @@ import GeneCentricSearchResultFilters from './geneCentricSearchResultFilters';
 import AnimatedLoadingIcon from '../../lib/ui/loading';
 import { genes } from '../../data/genes';
 
-// Import as a module in your JS
-import 'react-bootstrap-typeahead/css/Typeahead.css';
-
 function GeneCentricView({
   geneSearchResults,
   geneSearchParams,
