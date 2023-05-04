@@ -54,6 +54,13 @@
 }
 
 .geneCentricViewPage {
+  .gene-centric-view-summary-container {
+    .summary-tooltip-anchor {
+      color: $primary-blue;
+      cursor: default;
+    }
+  }
+
   label {
     font-size: inherit;
     font-weight: 600;

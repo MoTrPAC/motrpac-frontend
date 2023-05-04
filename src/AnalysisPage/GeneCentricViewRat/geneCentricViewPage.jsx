@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Tooltip } from 'react-tooltip';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import PageTitle from '../../lib/ui/pageTitle';
 import AnalysisActions from '../analysisActions';
@@ -76,11 +77,24 @@ function GeneCentricView({
         <div className="gene-centric-view-container">
           <div className="gene-centric-view-summary-container row mb-4">
             <div className="lead col-12">
-              Search by gene ID to examine and visualize the timewise endurance
-              training response across omes' (e.g. transcript, protein, protein
-              phosphorylation/acetylation and promoter methylation) for that
-              gene over 8 weeks of training in adult rats.
+              Search by gene ID to examine{' '}
+              <span className="summary-tooltip-anchor training-definition">
+                training
+              </span>{' '}
+              differential abundance data and visualize the{' '}
+              <span className="summary-tooltip-anchor timewise-definition">
+                timewise
+              </span>{' '}
+              endurance training response across omes' (e.g. transcript,
+              protein, protein phosphorylation/acetylation and promoter
+              methylation) for that gene over 8 weeks of training in adult rats.
             </div>
+            <Tooltip anchorSelect=".timewise-definition" place="top">
+              Per-training-time effects
+            </Tooltip>
+            <Tooltip anchorSelect=".training-definition" place="top">
+              Select differential analytes
+            </Tooltip>
           </div>
           <div className="es-search-ui-container d-flex align-items-center w-100 pb-2">
             <div className="search-box-input-group d-flex align-items-center flex-grow-1">
