@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Tooltip } from 'react-tooltip';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import PageTitle from '../lib/ui/pageTitle';
 import TimewiseResultsTable from './timewiseTable';
@@ -253,7 +254,7 @@ export function SearchPage({
                       role="presentation"
                     >
                       <a
-                        className="nav-link active"
+                        className="nav-link active timewise-definition"
                         id="timewise_dea_tab"
                         data-toggle="pill"
                         href="#timewise_dea"
@@ -263,13 +264,16 @@ export function SearchPage({
                       >
                         Timewise
                       </a>
+                      <Tooltip anchorSelect=".timewise-definition" place="top">
+                        Per-training-time effects
+                      </Tooltip>
                     </li>
                     <li
                       className="nav-item font-weight-bold"
                       role="presentation"
                     >
                       <a
-                        className="nav-link"
+                        className="nav-link training-definition"
                         id="training_dea_tab"
                         data-toggle="pill"
                         href="#training_dea"
@@ -279,6 +283,9 @@ export function SearchPage({
                       >
                         Training
                       </a>
+                      <Tooltip anchorSelect=".training-definition" place="top">
+                        Select differential analytes
+                      </Tooltip>
                     </li>
                   </ul>
                   {/* tab panes */}
