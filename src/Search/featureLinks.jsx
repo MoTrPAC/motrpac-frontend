@@ -45,7 +45,7 @@ function FeatureLinks({
     {
       route: 'https://data-viz.motrpac-data.org/',
       description:
-        'An intgeractive data visualization tool for the graphical clustering analysis of endurance training response in young adult rats.',
+        'An interactive data visualization tool for the graphical clustering analysis of endurance training response in young adult rats.',
       icon: 'data_exploration',
       title: 'Data Visualization',
       eventHandler: null,
@@ -61,7 +61,7 @@ function FeatureLinks({
     {
       route: 'summary',
       description:
-        'A dashboard to visualize sample counts by tissue, assay, or omics in the young adult rats endurance training and acute exercise studies.',
+        'A dashboard to visualize sample counts by tissue, assay, or omics in the young adult rat endurance training and acute exercise studies.',
       icon: 'assessment',
       title: 'Sample Summary',
       eventHandler: null,
@@ -69,7 +69,7 @@ function FeatureLinks({
     {
       route: 'releases',
       description:
-        'Access prior versions of the data sets in the young adult rats endurance training and acute exercise studies.',
+        'Access prior versions of the data sets in the young adult rat endurance training and acute exercise studies.',
       icon: 'rocket_launch',
       title: 'Data Releases',
       eventHandler: null,
