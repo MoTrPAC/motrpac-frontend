@@ -149,7 +149,7 @@ function TrainingDataTable({
           <div className="table-responsive">
             <table
               {...getTableProps()}
-              className="table table-sm timewiseDEATable"
+              className="table table-sm deaResultsTable"
             >
               <thead>
                 {headerGroups.map((headerGroup) => (
