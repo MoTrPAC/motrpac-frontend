@@ -19,9 +19,6 @@ import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import { genes } from '../data/genes';
 import { metabolites } from '../data/metabolites';
 
-// Import as a module in your JS
-import 'react-bootstrap-typeahead/css/Typeahead.css';
-
 export function SearchPage({
   profile,
   searchResults,
