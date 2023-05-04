@@ -16,12 +16,10 @@ import { genes } from '../../data/genes';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 function GeneCentricView({
-  geneSearchInputValue,
   geneSearchResults,
   geneSearchParams,
   geneSearching,
   genSearchError,
-  geneSearchInputChange,
   handleGeneCentricSearch,
   geneSearchReset,
   geneSearchChangeFilter,
@@ -77,7 +75,7 @@ function GeneCentricView({
         <div className="gene-centric-view-container">
           <div className="gene-centric-view-summary-container row mb-4">
             <div className="lead col-12">
-              Search by gene ID to examine{' '}
+              Search by gene IDs to examine{' '}
               <span className="summary-tooltip-anchor training-definition">
                 training
               </span>{' '}
@@ -98,18 +96,6 @@ function GeneCentricView({
           </div>
           <div className="es-search-ui-container d-flex align-items-center w-100 pb-2">
             <div className="search-box-input-group d-flex align-items-center flex-grow-1">
-              {/*
-              <input
-                type="text"
-                id="keys"
-                name="keys"
-                pattern="[a-zA-Z0-9]+"
-                className="form-control search-input-kype flex-grow-1"
-                placeholder="Example: BRD2, SMAD3, ID1"
-                value={geneSearchInputValue}
-                onChange={(e) => geneSearchInputChange(e.target.value)}
-              />
-              */}
               <div className="input-group">
                 <div className="input-group-prepend">
                   <span className="input-group-text material-icons">
@@ -221,7 +207,6 @@ function GeneCentricView({
 }
 
 GeneCentricView.propTypes = {
-  geneSearchInputValue: PropTypes.string,
   geneSearchResults: PropTypes.shape({
     result: PropTypes.object,
     total: PropTypes.number,
@@ -242,7 +227,6 @@ GeneCentricView.propTypes = {
     debug: PropTypes.bool,
     save: PropTypes.bool,
   }),
-  geneSearchInputChange: PropTypes.func.isRequired,
   handleGeneCentricSearch: PropTypes.func.isRequired,
   geneSearchReset: PropTypes.func.isRequired,
   geneSearchChangeFilter: PropTypes.func.isRequired,
@@ -254,7 +238,6 @@ GeneCentricView.propTypes = {
 };
 
 GeneCentricView.defaultProps = {
-  geneSearchInputValue: '',
   geneSearchResults: {},
   geneSearching: false,
   genSearchError: '',
@@ -268,8 +251,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  geneSearchInputChange: (geneInputValue) =>
-    dispatch(AnalysisActions.geneSearchInputChange(geneInputValue)),
   handleGeneCentricSearch: (params, geneInputValue, scope) =>
     dispatch(
       AnalysisActions.handleGeneCentricSearch(params, geneInputValue, scope)
