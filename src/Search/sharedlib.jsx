@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Tooltip } from 'react-tooltip';
 import roundNumbers from '../lib/utils/roundNumbers';
 import {
   tissueList,
@@ -168,11 +169,12 @@ export const timewiseTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center timewise-p-value-col-header">
         <span>P-value</span>
-        <span className="material-icons col-header-info">info</span>
-        <span className="tooltip-on-bottom" id="timewise-p-value-tooltip">
-          The p-value of the presented log fold change
-          <i />
+        <span className="material-icons col-header-info timewise-p-value-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".timewise-p-value-tooltip" place="left">
+          The p-value of the presented log fold change
+        </Tooltip>
       </div>
     ),
     accessor: 'p_value',
@@ -183,11 +185,12 @@ export const timewiseTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center timewise-adj-p-value-col-header">
         <span>Adj p-value</span>
-        <span className="material-icons col-header-info">info</span>
-        <span className="tooltip-on-bottom" id="timewise-adj-p-value-tooltip">
-          The FDR adjusted p-value of the presented log-fold change
-          <i />
+        <span className="material-icons col-header-info timewise-adj-p-value-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".timewise-adj-p-value-tooltip" place="left">
+          The FDR adjusted p-value of the presented log-fold change
+        </Tooltip>
       </div>
     ),
     accessor: 'adj_p_value',
@@ -198,11 +201,12 @@ export const timewiseTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center timewise-selection-fdr-col-header">
         <span>Selection FDR</span>
-        <span className="material-icons col-header-info">info</span>
-        <span className="tooltip-on-bottom" id="timewise-selection-fdr-tooltip">
-          Cross-tissue, IHW FDR adjusted p-value
-          <i />
+        <span className="material-icons col-header-info timewise-selection-fdr-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".timewise-selection-fdr-tooltip" place="left">
+          Cross-tissue, IHW FDR adjusted p-value
+        </Tooltip>
       </div>
     ),
     accessor: 'selection_fdr',
@@ -244,11 +248,12 @@ export const metabTimewiseTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center timewise-p-value-col-header">
         <span>P-value</span>
-        <span className="material-icons col-header-info">info</span>
-        <span className="tooltip-on-bottom" id="timewise-p-value-tooltip">
-          The p-value of the presented log fold change
-          <i />
+        <span className="material-icons col-header-info timewise-p-value-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".timewise-p-value-tooltip" place="left">
+          The p-value of the presented log fold change
+        </Tooltip>
       </div>
     ),
     accessor: 'p_value',
@@ -258,11 +263,12 @@ export const metabTimewiseTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center timewise-adj-p-value-col-header">
         <span>Adj p-value</span>
-        <span className="material-icons col-header-info">info</span>
-        <span className="tooltip-on-bottom" id="timewise-adj-p-value-tooltip">
-          The FDR adjusted p-value of the presented log-fold change
-          <i />
+        <span className="material-icons col-header-info timewise-adj-p-value-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".timewise-adj-p-value-tooltip" place="left">
+          The FDR adjusted p-value of the presented log-fold change
+        </Tooltip>
       </div>
     ),
     accessor: 'adj_p_value',
@@ -272,11 +278,12 @@ export const metabTimewiseTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center timewise-selection-fdr-col-header">
         <span>Selection FDR</span>
-        <span className="material-icons col-header-info">info</span>
-        <span className="tooltip-on-bottom" id="timewise-selection-fdr-tooltip">
-          Cross-tissue, IHW FDR adjusted p-value
-          <i />
+        <span className="material-icons col-header-info timewise-selection-fdr-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".timewise-selection-fdr-tooltip" place="left">
+          Cross-tissue, IHW FDR adjusted p-value
+        </Tooltip>
       </div>
     ),
     accessor: 'selection_fdr',
@@ -318,11 +325,12 @@ export const trainingTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center training-p-value-col-header">
         <span>P-value</span>
-        <span className="material-icons col-header-info">info</span>
-        <span className="tooltip-on-bottom" id="training-p-value-tooltip">
-          Combined p-value (males and females)
-          <i />
+        <span className="material-icons col-header-info training-p-value-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".training-p-value-tooltip" place="left">
+          Combined p-value (males and females)
+        </Tooltip>
       </div>
     ),
     accessor: 'p_value',
@@ -332,11 +340,12 @@ export const trainingTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center training-adj-p-value-col-header">
         <span>Adj p-value</span>
-        <span className="material-icons col-header-info">info</span>
-        <span className="tooltip-on-bottom" id="training-adj-p-value-tooltip">
-          FDR-adjusted combined p-value
-          <i />
+        <span className="material-icons col-header-info training-adj-p-value-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".training-adj-p-value-tooltip" place="left">
+          FDR-adjusted combined p-value
+        </Tooltip>
       </div>
     ),
     accessor: 'adj_p_value',
@@ -346,11 +355,12 @@ export const trainingTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center training-male-p-value-col-header">
         <span>Male p-value</span>
-        <span className="material-icons col-header-info">info</span>
-        <span className="tooltip-on-bottom" id="training-male-p-value-tooltip">
-          Training effect p-value, male data
-          <i />
+        <span className="material-icons col-header-info training-male-p-value-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".training-male-p-value-tooltip" place="left">
+          Training effect p-value, male data
+        </Tooltip>
       </div>
     ),
     accessor: 'p_value_male',
@@ -360,14 +370,12 @@ export const trainingTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center training-female-p-value-col-header">
         <span>Female p-value</span>
-        <span className="material-icons col-header-info">info</span>
-        <span
-          className="tooltip-on-bottom"
-          id="training-female-p-value-tooltip"
-        >
-          Training effect p-value, female data
-          <i />
+        <span className="material-icons col-header-info training-female-p-value-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".training-female-p-value-tooltip" place="left">
+          Training effect p-value, female data
+        </Tooltip>
       </div>
     ),
     accessor: 'p_value_female',
@@ -396,11 +404,12 @@ export const metabTrainingTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center training-p-value-col-header">
         <span>P-value</span>
-        <span className="material-icons col-header-info">info</span>
-        <span className="tooltip-on-bottom" id="training-p-value-tooltip">
-          Combined p-value (males and females)
-          <i />
+        <span className="material-icons col-header-info training-p-value-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".training-p-value-tooltip" place="left">
+          Combined p-value (males and females)
+        </Tooltip>
       </div>
     ),
     accessor: 'p_value',
@@ -410,11 +419,12 @@ export const metabTrainingTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center training-adj-p-value-col-header">
         <span>Adj p-value</span>
-        <span className="material-icons col-header-info">info</span>
-        <span className="tooltip-on-bottom" id="training-adj-p-value-tooltip">
-          FDR-adjusted combined p-value
-          <i />
+        <span className="material-icons col-header-info training-adj-p-value-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".training-adj-p-value-tooltip" place="left">
+          FDR-adjusted combined p-value
+        </Tooltip>
       </div>
     ),
     accessor: 'adj_p_value',
@@ -424,11 +434,12 @@ export const metabTrainingTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center training-male-p-value-col-header">
         <span>Male p-value</span>
-        <span className="material-icons col-header-info">info</span>
-        <span className="tooltip-on-bottom" id="training-male-p-value-tooltip">
-          Training effect p-value, male data
-          <i />
+        <span className="material-icons col-header-info training-male-p-value-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".training-male-p-value-tooltip" place="left">
+          Training effect p-value, male data
+        </Tooltip>
       </div>
     ),
     accessor: 'p_value_male',
@@ -438,14 +449,12 @@ export const metabTrainingTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center training-female-p-value-col-header">
         <span>Female p-value</span>
-        <span className="material-icons col-header-info">info</span>
-        <span
-          className="tooltip-on-bottom"
-          id="training-female-p-value-tooltip"
-        >
-          Training effect p-value, female data
-          <i />
+        <span className="material-icons col-header-info training-female-p-value-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".training-female-p-value-tooltip" place="left">
+          Training effect p-value, female data
+        </Tooltip>
       </div>
     ),
     accessor: 'p_value_female',
