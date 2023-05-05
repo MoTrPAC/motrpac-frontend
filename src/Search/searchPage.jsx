@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -41,6 +41,7 @@ export function SearchPage({
   hasResultFilters,
 }) {
   const [multiSelections, setMultiSelections] = useState([]);
+  const inputRef = useRef(null);
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
   // Function to map array of keys to each array of values for each row
@@ -105,11 +106,38 @@ export function SearchPage({
     return 'Example: BRD2, SMAD3, ID1';
   }
 
+  const inputEl = document.querySelector('.rbt-input-main');
+
   // FIXME: transform react-bootstrap-typeahead state from array to string
   function formatSearchInput() {
     const newArr = [];
-    multiSelections.forEach((item) => newArr.push(item.id));
-    return newArr.join(', ');
+    if (multiSelections.length) {
+      multiSelections.forEach((item) => newArr.push(item.id));
+      return newArr.join(', ');
+    }
+    // Handle manually entered gene/metabolite input
+    if (inputEl.value && inputEl.value.length) {
+      const str = inputEl.value;
+      if (searchParams.ktype === 'gene') {
+        const arr = str.split(',').map((s) => s.trim());
+        return arr.join(', ');
+      }
+      return str;
+    }
+    return '';
+  }
+
+  // Clear manually entered gene/protein/metabolite input
+  function clearGeneInput(ktype) {
+    const inputElProtein = document.querySelector('.search-input-kype');
+
+    if (ktype && ktype === 'protein') {
+      if (inputElProtein.value && inputElProtein.value.length) {
+        inputElProtein.value = '';
+      }
+    } else if (inputEl.value && inputEl.value.length) {
+      inputRef.current.clear();
+    }
   }
 
   return (
@@ -167,6 +195,7 @@ export function SearchPage({
                     placeholder={renderPlaceholder()}
                     selected={multiSelections}
                     minLength={2}
+                    ref={inputRef}
                   />
                 ) : null}
                 {searchParams.ktype === 'protein' && (
@@ -193,7 +222,8 @@ export function SearchPage({
                     e.preventDefault();
                     handleSearch(
                       searchParams,
-                      multiSelections.length
+                      multiSelections.length ||
+                        (inputEl.value && inputEl.value.length)
                         ? formatSearchInput()
                         : searchParams.keys,
                       'all'
@@ -206,6 +236,9 @@ export function SearchPage({
                   type="button"
                   className="btn btn-secondary search-reset ml-2"
                   onClick={() => {
+                    clearGeneInput(
+                      searchParams.ktype === 'protein' ? 'protein' : null
+                    );
                     resetSearch('all');
                     setMultiSelections([]);
                   }}
