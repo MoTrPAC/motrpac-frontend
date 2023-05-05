@@ -103,6 +103,13 @@ const headersConfig = {
 // Handle gene-centric search
 function handleGeneCentricSearch(params, geneInputValue, scope) {
   params.keys = geneInputValue;
+  // Reset all filters if scope is 'all'
+  if (scope === 'all') {
+    params.filters = {
+      assay: [],
+      tissue: [],
+    };
+  }
   return (dispatch) => {
     dispatch(geneSearchSubmit(scope, geneInputValue));
     return axios

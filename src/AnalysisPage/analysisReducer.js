@@ -121,6 +121,14 @@ export default function AnalysisReducer(
     case GENE_SEARCH_SUBMIT: {
       const params = { ...state.geneSearchParams };
       params.keys = action.input;
+      // Reset all filters if scope is 'all'
+      if (action.scope === 'all') {
+        params.filters = {
+          assay: [],
+          tissue: [],
+        };
+      }
+
       return {
         ...state,
         geneSearchResults: {},
