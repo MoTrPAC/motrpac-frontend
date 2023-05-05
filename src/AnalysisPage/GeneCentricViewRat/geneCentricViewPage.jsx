@@ -105,10 +105,10 @@ function GeneCentricView({
               methylation) for that gene over 8 weeks of training in adult rats.
             </div>
             <Tooltip anchorSelect=".timewise-definition" place="top">
-              Per-training-time effects
+              Select time-point-specific differential analytes
             </Tooltip>
             <Tooltip anchorSelect=".training-definition" place="top">
-              Select differential analytes
+              Select overall training differential analytes
             </Tooltip>
           </div>
           <div className="es-search-ui-container d-flex align-items-center w-100 pb-2">

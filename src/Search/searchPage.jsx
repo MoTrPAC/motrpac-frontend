@@ -295,7 +295,7 @@ export function SearchPage({
                         Timewise
                       </a>
                       <Tooltip anchorSelect=".timewise-definition" place="top">
-                        Per-training-time effects
+                        Select time-point-specific differential analytes
                       </Tooltip>
                     </li>
                     <li
@@ -314,7 +314,7 @@ export function SearchPage({
                         Training
                       </a>
                       <Tooltip anchorSelect=".training-definition" place="top">
-                        Select differential analytes
+                        Select overall training differential analytes
                       </Tooltip>
                     </li>
                   </ul>
