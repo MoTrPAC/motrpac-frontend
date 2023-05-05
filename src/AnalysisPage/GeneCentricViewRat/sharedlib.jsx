@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Tooltip } from 'react-tooltip';
 import roundNumbers from '../../lib/utils/roundNumbers';
 import { tissueList, assayList } from '../../lib/searchFilters';
 
@@ -68,11 +69,12 @@ export const geneSearchTrainingTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center training-p-value-col-header">
         <span>P-value</span>
-        <span className="material-icons col-header-info">info</span>
-        <span className="tooltip-on-bottom" id="training-p-value-tooltip">
-          Combined p-value (males and females)
-          <i />
+        <span className="material-icons col-header-info training-p-value-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".training-p-value-tooltip" place="left">
+          Combined p-value (males and females)
+        </Tooltip>
       </div>
     ),
     accessor: 'p_value',
@@ -82,11 +84,12 @@ export const geneSearchTrainingTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center training-adj-p-value-col-header">
         <span>Adj p-value</span>
-        <span className="material-icons col-header-info">info</span>
-        <span className="tooltip-on-bottom" id="training-adj-p-value-tooltip">
-          FDR-adjusted combined p-value
-          <i />
+        <span className="material-icons col-header-info training-adj-p-value-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".training-adj-p-value-tooltip" place="left">
+          FDR-adjusted combined p-value
+        </Tooltip>
       </div>
     ),
     accessor: 'adj_p_value',
@@ -96,11 +99,12 @@ export const geneSearchTrainingTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center training-male-p-value-col-header">
         <span>Male p-value</span>
-        <span className="material-icons col-header-info">info</span>
-        <span className="tooltip-on-bottom" id="training-male-p-value-tooltip">
-          Training effect p-value, male data
-          <i />
+        <span className="material-icons col-header-info training-male-p-value-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".training-male-p-value-tooltip" place="left">
+          Training effect p-value, male data
+        </Tooltip>
       </div>
     ),
     accessor: 'p_value_male',
@@ -110,14 +114,12 @@ export const geneSearchTrainingTableColumns = [
     Header: () => (
       <div className="d-flex align-items-center training-female-p-value-col-header">
         <span>Female p-value</span>
-        <span className="material-icons col-header-info">info</span>
-        <span
-          className="tooltip-on-bottom"
-          id="training-female-p-value-tooltip"
-        >
-          Training effect p-value, female data
-          <i />
+        <span className="material-icons col-header-info training-female-p-value-tooltip">
+          info
         </span>
+        <Tooltip anchorSelect=".training-female-p-value-tooltip" place="left">
+          Training effect p-value, female data
+        </Tooltip>
       </div>
     ),
     accessor: 'p_value_female',

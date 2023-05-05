@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Tooltip } from 'react-tooltip';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import PageTitle from '../../lib/ui/pageTitle';
 import AnalysisActions from '../analysisActions';
@@ -11,16 +12,11 @@ import GeneCentricSearchResultFilters from './geneCentricSearchResultFilters';
 import AnimatedLoadingIcon from '../../lib/ui/loading';
 import { genes } from '../../data/genes';
 
-// Import as a module in your JS
-import 'react-bootstrap-typeahead/css/Typeahead.css';
-
 function GeneCentricView({
-  geneSearchInputValue,
   geneSearchResults,
   geneSearchParams,
   geneSearching,
   genSearchError,
-  geneSearchInputChange,
   handleGeneCentricSearch,
   geneSearchReset,
   geneSearchChangeFilter,
@@ -28,6 +24,8 @@ function GeneCentricView({
   hasResultFilters,
 }) {
   const [multiSelections, setMultiSelections] = useState([]);
+  const inputRef = useRef(null);
+
   // Function to map array of keys to each array of values for each row
   function mapKeyToValue(indexObj) {
     const newArray = [];
@@ -65,8 +63,26 @@ function GeneCentricView({
   // to be converted to string
   function formatSearchInput() {
     const newArr = [];
-    multiSelections.forEach((item) => newArr.push(item.id));
-    return newArr.join(', ');
+    if (multiSelections.length) {
+      multiSelections.forEach((item) => newArr.push(item.id));
+      return newArr.join(', ');
+    }
+    // Handle manually entered gene input
+    const inputEl = document.querySelector('.rbt-input-main');
+    if (inputEl.value && inputEl.value.length) {
+      const str = inputEl.value;
+      const arr = str.split(',').map((s) => s.trim());
+      return arr.join(', ');
+    }
+    return '';
+  }
+
+  // Clear manually entered gene input
+  function clearGeneInput() {
+    const inputEl = document.querySelector('.rbt-input-main');
+    if (inputEl.value && inputEl.value.length) {
+      inputRef.current.clear();
+    }
   }
 
   return (
@@ -76,26 +92,27 @@ function GeneCentricView({
         <div className="gene-centric-view-container">
           <div className="gene-centric-view-summary-container row mb-4">
             <div className="lead col-12">
-              Search by gene ID to examine and visualize the timewise endurance
-              training response across omes' (e.g. transcript, protein, protein
-              phosphorylation/acetylation and promoter methylation) for that
-              gene over 8 weeks of training in adult rats.
+              Search by gene IDs to examine{' '}
+              <span className="summary-tooltip-anchor training-definition">
+                training
+              </span>{' '}
+              differential abundance data and visualize the{' '}
+              <span className="summary-tooltip-anchor timewise-definition">
+                timewise
+              </span>{' '}
+              endurance training response across omes' (e.g. transcript,
+              protein, protein phosphorylation/acetylation and promoter
+              methylation) for that gene over 8 weeks of training in adult rats.
             </div>
+            <Tooltip anchorSelect=".timewise-definition" place="top">
+              Select time-point-specific differential analytes
+            </Tooltip>
+            <Tooltip anchorSelect=".training-definition" place="top">
+              Select overall training differential analytes
+            </Tooltip>
           </div>
           <div className="es-search-ui-container d-flex align-items-center w-100 pb-2">
             <div className="search-box-input-group d-flex align-items-center flex-grow-1">
-              {/*
-              <input
-                type="text"
-                id="keys"
-                name="keys"
-                pattern="[a-zA-Z0-9]+"
-                className="form-control search-input-kype flex-grow-1"
-                placeholder="Example: BRD2, SMAD3, ID1"
-                value={geneSearchInputValue}
-                onChange={(e) => geneSearchInputChange(e.target.value)}
-              />
-              */}
               <div className="input-group">
                 <div className="input-group-prepend">
                   <span className="input-group-text material-icons">
@@ -111,6 +128,7 @@ function GeneCentricView({
                   placeholder="Example: BRD2, SMAD3, ID1"
                   selected={multiSelections}
                   minLength={2}
+                  ref={inputRef}
                 />
               </div>
               <div className="search-button-group d-flex justify-content-end ml-4">
@@ -132,6 +150,7 @@ function GeneCentricView({
                   type="button"
                   className="btn btn-secondary search-reset ml-2"
                   onClick={() => {
+                    clearGeneInput();
                     geneSearchReset('all');
                     setMultiSelections([]);
                   }}
@@ -207,7 +226,6 @@ function GeneCentricView({
 }
 
 GeneCentricView.propTypes = {
-  geneSearchInputValue: PropTypes.string,
   geneSearchResults: PropTypes.shape({
     result: PropTypes.object,
     total: PropTypes.number,
@@ -228,7 +246,6 @@ GeneCentricView.propTypes = {
     debug: PropTypes.bool,
     save: PropTypes.bool,
   }),
-  geneSearchInputChange: PropTypes.func.isRequired,
   handleGeneCentricSearch: PropTypes.func.isRequired,
   geneSearchReset: PropTypes.func.isRequired,
   geneSearchChangeFilter: PropTypes.func.isRequired,
@@ -240,7 +257,6 @@ GeneCentricView.propTypes = {
 };
 
 GeneCentricView.defaultProps = {
-  geneSearchInputValue: '',
   geneSearchResults: {},
   geneSearching: false,
   genSearchError: '',
@@ -254,8 +270,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  geneSearchInputChange: (geneInputValue) =>
-    dispatch(AnalysisActions.geneSearchInputChange(geneInputValue)),
   handleGeneCentricSearch: (params, geneInputValue, scope) =>
     dispatch(
       AnalysisActions.handleGeneCentricSearch(params, geneInputValue, scope)
