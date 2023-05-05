@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -24,6 +24,8 @@ function GeneCentricView({
   hasResultFilters,
 }) {
   const [multiSelections, setMultiSelections] = useState([]);
+  const inputRef = useRef(null);
+
   // Function to map array of keys to each array of values for each row
   function mapKeyToValue(indexObj) {
     const newArray = [];
@@ -61,8 +63,26 @@ function GeneCentricView({
   // to be converted to string
   function formatSearchInput() {
     const newArr = [];
-    multiSelections.forEach((item) => newArr.push(item.id));
-    return newArr.join(', ');
+    if (multiSelections.length) {
+      multiSelections.forEach((item) => newArr.push(item.id));
+      return newArr.join(', ');
+    }
+    // Handle manually entered gene input
+    const inputEl = document.querySelector('.rbt-input-main');
+    if (inputEl.value && inputEl.value.length) {
+      const str = inputEl.value;
+      const arr = str.split(',').map((s) => s.trim());
+      return arr.join(', ');
+    }
+    return '';
+  }
+
+  // Clear manually entered gene input
+  function clearGeneInput() {
+    const inputEl = document.querySelector('.rbt-input-main');
+    if (inputEl.value && inputEl.value.length) {
+      inputRef.current.clear();
+    }
   }
 
   return (
@@ -108,6 +128,7 @@ function GeneCentricView({
                   placeholder="Example: BRD2, SMAD3, ID1"
                   selected={multiSelections}
                   minLength={2}
+                  ref={inputRef}
                 />
               </div>
               <div className="search-button-group d-flex justify-content-end ml-4">
@@ -129,6 +150,7 @@ function GeneCentricView({
                   type="button"
                   className="btn btn-secondary search-reset ml-2"
                   onClick={() => {
+                    clearGeneInput();
                     geneSearchReset('all');
                     setMultiSelections([]);
                   }}
