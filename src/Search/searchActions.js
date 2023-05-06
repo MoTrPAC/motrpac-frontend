@@ -96,6 +96,18 @@ const headersConfig = {
 // Handle search and results filtering events
 function handleSearch(params, inputValue, scope) {
   params.keys = inputValue;
+  // Reset all filters if scope is 'all'
+  if (scope === 'all') {
+    params.filters = {
+      tissue: [],
+      assay: [],
+      sex: [],
+      comparison_group: [],
+      adj_p_value: { min: '', max: '' },
+      logFC: { min: '', max: '' },
+      p_value: { min: '', max: '' },
+    };
+  }
   return (dispatch) => {
     dispatch(searchSubmit(params, scope));
     return axios
