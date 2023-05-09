@@ -161,7 +161,11 @@ export function LandingPage({ isAuthenticated, profile }) {
                   activity improves and preserves health. We aim to generate a
                   molecular map of the effects of exercise and training.
                 </p>
-                <Link to="/the-study" className="btn btn-dark" role="button">
+                <Link
+                  to="/study-overview"
+                  className="btn btn-dark"
+                  role="button"
+                >
                   OVERVIEW OF STUDY
                 </Link>
               </div>
