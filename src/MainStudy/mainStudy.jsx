@@ -7,18 +7,17 @@ import PASS1B06Profiling from '../assets/figures/pass1b-06-molecular-profiling.p
 function MainStudy() {
   return (
     <div className="mainStudyPage px-3 px-md-4 mb-3 container">
-      <PageTitle title="The experimental design of MoTrPAC study" />
+      <PageTitle title="MoTrPAC Project Overview" />
       <div className="main-study-container">
-        <div className="main-study-summary-container row mb-4">
-          <div className="lead col-12">
+        <div className="main-study-content-container project-overview mt-5">
+          <h3>Summary of MoTrPAC Studies</h3>
+          <p>
             The MoTrPAC study is divided into two main parts - animal (rats) and
             human, with multiple phases or interventions in each of them.
             Preclinical animal study sites conduct the endurance exercise and
             training intervention in rats, while Clinical study sites conduct
             the human endurance and resistance training interventions.
-          </div>
-        </div>
-        <div className="main-study-content-container study-overview">
+          </p>
           <div className="table-responsive">
             <table className="table table-bordered">
               <thead>
@@ -54,7 +53,7 @@ function MainStudy() {
                       </li>
                       <li>Controls</li>
                     </ul>
-                    <strong>Middle age adult (18 month old)</strong>
+                    <strong>Middle-aged adult (18 month old)</strong>
                     <ul>
                       <li>Acute exercise</li>
                       <li>Endurance training</li>
@@ -88,10 +87,10 @@ function MainStudy() {
           </div>
         </div>
         <div
-          className="main-study-content-container endurance-training mt-5 mb-2"
+          className="main-study-content-container endurance-training mt-5"
           id="endurance-training"
         >
-          <h3>Endurance Exercise Time Course Study</h3>
+          <h3>Endurance Training in Young Adult Rats</h3>
           <h6>
             Species: <span className="font-italic">Rattus norvegicus</span>
           </h6>
@@ -105,39 +104,42 @@ function MainStudy() {
             training, with a 48 hour rest or wash out period before samples were
             collected.
           </p>
-          <img
-            src={PASS1B06TimeCourse}
-            alt="Endurance Exercise Time Course Intervention"
-          />
-        </div>
-        <div
-          className="main-study-content-container endurance-training my-5"
-          id="molecular-profiling"
-        >
-          <h3>Tissues / Molecular Profiling</h3>
-          <h6>
-            Species: <span className="font-italic">Rattus norvegicus</span>
-          </h6>
-          <p>
-            For each time point, We profiled the temporal transcriptome,
-            proteome, metabolome, lipidome, phosphoproteome, acetylproteome,
-            ubiquitylproteome, epigenome, and immunome in whole blood, plasma
-            and 18 solid tissues in Rattus norvegicus over the 8 weeks of
-            enduranceexercise training. The figure shows the specific molecular
-            profiling performed on every tissue. For example, in liver we run
-            all the available assays for the 4 exercise time points and the
-            control. For blood, however, we only perform transcriptomics
-            (rna-seq).
-          </p>
-          <img
-            src={PASS1B06Profiling}
-            className="mb-2"
-            alt="Endurance Exercise Tissues / Molecular Profiling"
-          />
-          <div className="data-download-button-container mt-5">
-            <Link className="btn btn-primary" to="data-download" role="button">
-              Download Data
-            </Link>
+          <div className="main-study-content-container mt-5">
+            <h5>Experimental Design</h5>
+            <div className="study-figure border">
+              <img
+                src={PASS1B06TimeCourse}
+                alt="Endurance Exercise Time Course Intervention"
+              />
+            </div>
+          </div>
+          <div className="main-study-content-container mt-5">
+            <h5>Tissues / Molecular Profiling</h5>
+            <p>
+              For each time point, We profiled the temporal transcriptome,
+              proteome, metabolome, lipidome, phosphoproteome, acetylproteome,
+              ubiquitylproteome, epigenome, and immunome in whole blood, plasma
+              and 18 solid tissues in Rattus norvegicus over the 8 weeks of
+              enduranceexercise training. The figure shows the specific
+              molecular profiling performed on every tissue. For example, in
+              liver we run all the available assays for the 4 exercise time
+              points and the control. For blood, however, we only perform
+              transcriptomics (rna-seq).
+            </p>
+            <img
+              src={PASS1B06Profiling}
+              className="mb-2"
+              alt="Endurance Exercise Tissues / Molecular Profiling"
+            />
+            <div className="data-download-button-container my-5">
+              <Link
+                className="btn btn-primary"
+                to="data-download"
+                role="button"
+              >
+                Download Data
+              </Link>
+            </div>
           </div>
         </div>
       </div>
