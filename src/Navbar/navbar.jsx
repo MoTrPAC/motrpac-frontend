@@ -288,7 +288,7 @@ export function Navbar({
                   className="dropdown-menu"
                   aria-labelledby="aboutNavbarItemMenuLink"
                 >
-                  <Link to="/study-overview" className="dropdown-item">
+                  <Link to="/project-overview" className="dropdown-item">
                     Overview of Study
                   </Link>
                   <Link to="/tutorials" className="dropdown-item">

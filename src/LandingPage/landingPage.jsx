@@ -162,11 +162,11 @@ export function LandingPage({ isAuthenticated, profile }) {
                   molecular map of the effects of exercise and training.
                 </p>
                 <Link
-                  to="/study-overview"
+                  to="/project-overview"
                   className="btn btn-dark"
                   role="button"
                 >
-                  OVERVIEW OF STUDY
+                  PROJECT OVERVIEW
                 </Link>
               </div>
             </div>

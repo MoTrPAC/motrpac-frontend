@@ -122,7 +122,7 @@ function App({ history = History }) {
                 component={withTracker(CodeRepositories)}
               />
               <Route
-                path="/study-overview"
+                path="/project-overview"
                 component={withTracker(MainStudy)}
               />
               <Route path="/tutorials" component={withTracker(Tutorials)} />
