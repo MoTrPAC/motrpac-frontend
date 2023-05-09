@@ -282,7 +282,31 @@ export function Navbar({
                   id="aboutNavbarItemMenuLink"
                   data-toggle="dropdown"
                 >
-                  About Us
+                  Help
+                </div>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="aboutNavbarItemMenuLink"
+                >
+                  <Link to="/study-overview" className="dropdown-item">
+                    Overview of Study
+                  </Link>
+                  <Link to="/tutorials" className="dropdown-item">
+                    Tutorials
+                  </Link>
+                  <Link to="/contact" className="dropdown-item">
+                    Contact Us
+                  </Link>
+                </div>
+              </li>
+              <li className="nav-item navItem dropdown">
+                <div
+                  className="nav-link dropdown-toggle"
+                  role="button"
+                  id="aboutNavbarItemMenuLink"
+                  data-toggle="dropdown"
+                >
+                  About
                 </div>
                 <div
                   className="dropdown-menu"
@@ -296,9 +320,6 @@ export function Navbar({
                   </Link>
                   <Link to="/external-links" className="dropdown-item">
                     Useful Links
-                  </Link>
-                  <Link to="/contact" className="dropdown-item">
-                    Contact Us
                   </Link>
                 </div>
               </li>
