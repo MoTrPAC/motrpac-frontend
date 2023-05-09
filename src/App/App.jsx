@@ -120,7 +120,10 @@ function App({ history = History }) {
                 path="/code-repositories"
                 component={withTracker(CodeRepositories)}
               />
-              <Route path="/the-study" component={withTracker(MainStudy)} />
+              <Route
+                path="/study-overview"
+                component={withTracker(MainStudy)}
+              />
               <PrivateRoute
                 path="/analysis-phenotype"
                 component={withTracker(Pass1b06PhenotypeAnimalConnected)}
