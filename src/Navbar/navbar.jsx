@@ -289,7 +289,7 @@ export function Navbar({
                   aria-labelledby="aboutNavbarItemMenuLink"
                 >
                   <Link to="/project-overview" className="dropdown-item">
-                    Overview of Study
+                    Project Overview
                   </Link>
                   <Link to="/tutorials" className="dropdown-item">
                     Tutorials
