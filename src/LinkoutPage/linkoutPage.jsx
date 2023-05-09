@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import PageTitle from '../lib/ui/pageTitle';
 import MOTRLogo from '../assets/MoTrPAC_horizontal.png';
 import metaAnalysisGeneIcon from '../assets/analysisIcons/MetaAnalysisGene.svg';
@@ -15,7 +14,7 @@ const featured = [
     name: 'Featured',
     links: [
       {
-        protocol: 'http',
+        protocol: 'https',
         url: 'MoTrPAC.org',
         text: 'Primary entrance point for overarching MoTrPAC study of which the Bioinformatic Datahub is a component.',
         image: MOTRLogo,
@@ -51,8 +50,8 @@ const partners = [
         title: 'CFDE',
       },
       {
-        protocol: 'http',
-        url: 'METABOLOMICSworkbench.org',
+        protocol: 'https',
+        url: 'metabolomicsworkbench.org',
         text: 'UCSD Metabolomics Workbench',
         image: MWLogo,
         title: 'Metabolomics Workbench',
@@ -78,9 +77,6 @@ const partners = [
 /**
  * Renders the External Links page in both
  * unauthenticated and authenticated states.
- *
- * @param {Boolean} isAuthenticated Redux state for user's authentication status.
- * @param {Boolean} expanded        Redux state for sidebar
  *
  * @returns {Object} JSX representation of the External Links page.
  */
