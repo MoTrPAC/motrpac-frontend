@@ -75,6 +75,12 @@ describe('Unauthenticated Application routing', () => {
     testCorrectComponentInPath(mountApp, 'Route', 'CodeRepositories', '/code-repositories', history);
   });
 
+  test('loads the browse data page at /project-overview', () => {
+    history.push('/project-overview');
+    mountApp.update();
+    testCorrectComponentInPath(mountApp, 'Route', 'MainStudy', '/project-overview', history);
+  });
+
   test('loads the linkout page at /external-links', () => {
     history.push('/external-links');
     mountApp.update();
