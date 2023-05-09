@@ -25,6 +25,7 @@ import SearchPageConnected from '../Search/searchPage';
 import GeneCentricViewConnected from '../AnalysisPage/GeneCentricViewRat/geneCentricViewPage';
 import GraphicalClustering from '../AnalysisPage/GraphicalClustering/graphicalClusteringPage';
 import CodeRepositories from '../CodeRepoPage/codeRepoPage';
+import MainStudy from '../MainStudy/mainStudy';
 import Pass1b06PhenotypeAnimalConnected from '../AnalysisPage/pass1b06PhenotypeAnimal';
 import CallbackConnected from '../Auth/callback';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
@@ -119,6 +120,7 @@ function App({ history = History }) {
                 path="/code-repositories"
                 component={withTracker(CodeRepositories)}
               />
+              <Route path="/the-study" component={withTracker(MainStudy)} />
               <PrivateRoute
                 path="/analysis-phenotype"
                 component={withTracker(Pass1b06PhenotypeAnimalConnected)}
