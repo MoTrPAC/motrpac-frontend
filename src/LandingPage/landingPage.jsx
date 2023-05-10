@@ -153,7 +153,7 @@ export function LandingPage({ isAuthenticated, profile }) {
                     label="Molecular Transducers of Physical Activity Consortium"
                   />{' '}
                   is a national research consortium. Its goal is to{' '}
-                  <span className="font-italic">
+                  <span className="font-italic about-motrpac-emphasis">
                     study the molecular changes that occur during and after
                     exercise,
                   </span>{' '}

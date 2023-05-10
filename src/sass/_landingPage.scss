@@ -132,7 +132,8 @@ section {
         color: #fff;
 
         a {
-          color: $accent-yellow;
+          color: #fff;
+          font-weight: bold;
         
           &:hover {
             color: $accent-yellow-shade-medium;
@@ -143,6 +144,10 @@ section {
             font-size: 1.3rem;
             margin-top: 0.2rem;
           }
+        }
+
+        .about-motrpac-emphasis {
+          color: $accent-yellow;
         }
       }
     }
