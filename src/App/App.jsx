@@ -25,12 +25,13 @@ import SearchPageConnected from '../Search/searchPage';
 import GeneCentricViewConnected from '../AnalysisPage/GeneCentricViewRat/geneCentricViewPage';
 import GraphicalClustering from '../AnalysisPage/GraphicalClustering/graphicalClusteringPage';
 import CodeRepositories from '../CodeRepoPage/codeRepoPage';
-import MainStudy from '../MainStudy/mainStudy';
+import MainStudyConnected from '../MainStudy/mainStudy';
 import Tutorials from '../Tutorials/tutorials';
 import Pass1b06PhenotypeAnimalConnected from '../AnalysisPage/pass1b06PhenotypeAnimal';
 import CallbackConnected from '../Auth/callback';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
 import PrivateRoute from '../Auth/privateRoute';
+import ScrollToTop from '../lib/scrollToTop';
 
 const store = configureStore();
 
@@ -38,6 +39,7 @@ function App({ history = History }) {
   return (
     <Provider store={store}>
       <Router history={history}>
+        <ScrollToTop />
         <div className="App container-fluid">
           <header>
             <NavbarConnected />
@@ -123,7 +125,7 @@ function App({ history = History }) {
               />
               <Route
                 path="/project-overview"
-                component={withTracker(MainStudy)}
+                component={withTracker(MainStudyConnected)}
               />
               <Route path="/tutorials" component={withTracker(Tutorials)} />
               <PrivateRoute
