@@ -8,6 +8,9 @@ const testUser = require('../../testData/testUser.json');
 // Mocking Google Analytics
 jest.mock('ga-gtag');
 
+// Mocking scrollTo
+window.scrollTo = jest.fn();
+
 describe('<App />', () => {
   let component;
 
