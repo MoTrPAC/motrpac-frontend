@@ -8,6 +8,7 @@ import LoginButton from '../lib/loginButton';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
 import onVisibilityChange from '../lib/utils/pageVisibility';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
+import DataStatusActions from '../DataStatusPage/dataStatusActions';
 
 /**
  * Renders the global header nav bar.
@@ -26,7 +27,9 @@ export function Navbar({
   logout,
   handleDataFetch,
   resetBrowseState,
+  handleQCDataFetch,
   allFiles,
+  lastModified,
 }) {
   useEffect(() => {
     /* Handle logout for various use cases */
@@ -111,6 +114,18 @@ export function Navbar({
       } else {
         handleDataFetch('PASS1B-06');
       }
+    }
+  };
+
+  // Call to invoke Redux action to fetch QC data
+  // if timestamp is empty or older than 24 hours
+  const fecthQCData = () => {
+    if (
+      !lastModified ||
+      !lastModified.length ||
+      (lastModified.length && dayjs().diff(dayjs(lastModified), 'hour') >= 24)
+    ) {
+      handleQCDataFetch();
     }
   };
 
@@ -215,7 +230,11 @@ export function Navbar({
               ) : null}
               {isAuthenticated && hasAccess && userType === 'internal' ? (
                 <li className="nav-item navItem">
-                  <Link to="/qc-data-monitor" className="nav-link">
+                  <Link
+                    to="/qc-data-monitor"
+                    className="nav-link"
+                    onClick={fecthQCData}
+                  >
                     QC Data Monitor
                   </Link>
                 </li>
@@ -353,6 +372,8 @@ Navbar.propTypes = {
   logout: PropTypes.func,
   handleDataFetch: PropTypes.func,
   resetBrowseState: PropTypes.func,
+  handleQCDataFetch: PropTypes.func,
+  lastModified: PropTypes.string,
 };
 
 Navbar.defaultProps = {
@@ -362,6 +383,8 @@ Navbar.defaultProps = {
   logout: null,
   handleDataFetch: null,
   resetBrowseState: null,
+  handleQCDataFetch: null,
+  lastModified: '',
 };
 
 const mapStateToProps = (state) => ({
@@ -369,6 +392,7 @@ const mapStateToProps = (state) => ({
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
   allFiles: state.browseData.allFiles,
+  lastModified: state.dataStatus.qcData.lastModified,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -377,6 +401,7 @@ const mapDispatchToProps = (dispatch) => ({
   handleDataFetch: (phase) =>
     dispatch(BrowseDataActions.handleDataFetch(phase)),
   resetBrowseState: () => dispatch(BrowseDataActions.resetBrowseState()),
+  handleQCDataFetch: () => dispatch(DataStatusActions.fetchData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
