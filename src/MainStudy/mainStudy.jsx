@@ -1,10 +1,26 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PageTitle from '../lib/ui/pageTitle';
+import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 import PASS1B06TimeCourse from '../assets/figures/pass1b-06-time-course.png';
 import PASS1B06Profiling from '../assets/figures/pass1b-06-molecular-profiling.png';
 
-function MainStudy() {
+function MainStudy({ profile, allFiles, handleDataFetch }) {
+  const userType = profile.user_metadata && profile.user_metadata.userType;
+
+  // post request to fetch data files when download nav link is clicked
+  const handleDataObjectFetch = () => {
+    if (!allFiles.length) {
+      if (userType && userType === 'internal') {
+        handleDataFetch();
+      } else {
+        handleDataFetch('PASS1B-06');
+      }
+    }
+  };
+
   return (
     <div className="mainStudyPage px-3 px-md-4 mb-3 container">
       <PageTitle title="MoTrPAC Project Overview" />
@@ -134,8 +150,9 @@ function MainStudy() {
             <div className="data-download-button-container my-5">
               <Link
                 className="btn btn-primary"
-                to="data-download"
+                to="/data-download"
                 role="button"
+                onClick={handleDataObjectFetch}
               >
                 Download Data
               </Link>
@@ -147,4 +164,28 @@ function MainStudy() {
   );
 }
 
-export default MainStudy;
+MainStudy.propTypes = {
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.shape({
+      hasAccess: PropTypes.bool,
+      userType: PropTypes.string,
+    }),
+  }),
+  handleDataFetch: PropTypes.func,
+};
+
+MainStudy.defaultProps = {
+  profile: {},
+  handleDataFetch: null,
+};
+
+const mapStateToProps = (state) => ({
+  allFiles: state.browseData.allFiles,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleDataFetch: (phase) =>
+    dispatch(BrowseDataActions.handleDataFetch(phase)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainStudy);
