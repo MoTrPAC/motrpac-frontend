@@ -8,6 +8,9 @@ const testUser = require('../../testData/testUser.json');
 // Mocking Google Analytics
 jest.mock('ga-gtag');
 
+// Mocking scrollTo
+window.scrollTo = jest.fn();
+
 describe('<App />', () => {
   let component;
 
@@ -20,7 +23,7 @@ describe('<App />', () => {
   });
 
   test('It should contain fifteen <Route /> children', () => {
-    expect(component.find('Route').length).toBe(16);
+    expect(component.find('Route').length).toBe(18);
   });
 
   test('It should contain four <PrivateRoute /> children', () => {
@@ -73,6 +76,12 @@ describe('Unauthenticated Application routing', () => {
     history.push('/code-repositories');
     mountApp.update();
     testCorrectComponentInPath(mountApp, 'Route', 'CodeRepositories', '/code-repositories', history);
+  });
+
+  test('loads the browse data page at /project-overview', () => {
+    history.push('/project-overview');
+    mountApp.update();
+    testCorrectComponentInPath(mountApp, 'Route', 'MainStudy', '/project-overview', history);
   });
 
   test('loads the linkout page at /external-links', () => {

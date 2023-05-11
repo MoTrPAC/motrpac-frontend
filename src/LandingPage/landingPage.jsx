@@ -10,6 +10,7 @@ import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Hear
 import ContactHelpdesk from '../lib/ui/contactHelpdesk';
 import onVisibilityChange from '../lib/utils/pageVisibility';
 import AnnouncementBanner from './announcementBanner';
+import ExternalLink from '../lib/ui/externalLink';
 
 /**
  * Renders the landing page in unauthenticated state.
@@ -114,7 +115,7 @@ export function LandingPage({ isAuthenticated, profile }) {
                   width: 2,
                 },
                 move: {
-                  speed: 5,
+                  speed: 3,
                   enable: visibility,
                 },
               },
@@ -147,19 +148,26 @@ export function LandingPage({ isAuthenticated, profile }) {
               <div className="content col-12">
                 <h3>About MoTrPAC</h3>
                 <p>
-                  Molecular Transducers of Physical Activity Consortium is a national
-                  research consortium designed to discover and characterize the range
-                  of molecular transducers (the "molecular map") that underlie the
-                  effects of physical activity in humans.
+                  <ExternalLink
+                    to="https://motrpac.org/"
+                    label="Molecular Transducers of Physical Activity Consortium"
+                  />{' '}
+                  is a national research consortium. Its goal is to{' '}
+                  <span className="font-italic about-motrpac-emphasis">
+                    study the molecular changes that occur in response to
+                    exercise,
+                  </span>{' '}
+                  and ultimately to advance the understanding of how physical
+                  activity improves and preserves health. We aim to generate a
+                  molecular map of the effects of exercise and training.
                 </p>
-                <a
-                  href="https://motrpac.org/"
+                <Link
+                  to="/project-overview"
                   className="btn btn-dark"
                   role="button"
-                  target="_new"
                 >
-                  READ MORE
-                </a>
+                  PROJECT OVERVIEW
+                </Link>
               </div>
             </div>
           </div>

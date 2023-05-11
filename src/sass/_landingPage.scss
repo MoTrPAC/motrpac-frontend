@@ -63,8 +63,8 @@ main {
           }
 
           .inline-link-with-icon .material-icons {
-            font-size: 1.55rem;
-            margin-top: 0.25rem;
+            font-size: 1.45rem;
+            margin-top: 0.15rem;
           }
         }
       }
@@ -121,7 +121,7 @@ section {
     .content {
       background: rgba(31, 93, 147, 0.85);
       border-radius: 5px;
-      max-width: 50%;
+      max-width: 65%;
       padding: 1.50rem 1.75rem;
 
       h3 {
@@ -130,6 +130,25 @@ section {
   
       p {
         color: #fff;
+
+        a {
+          color: #fff;
+          font-weight: bold;
+        
+          &:hover {
+            color: $accent-yellow-shade-medium;
+            text-decoration: none;
+          }
+
+          .material-icons {
+            font-size: 1.3rem;
+            margin-top: 0.2rem;
+          }
+        }
+
+        .about-motrpac-emphasis {
+          color: $accent-yellow;
+        }
       }
     }
   }
