@@ -154,7 +154,7 @@ export function LandingPage({ isAuthenticated, profile }) {
                   />{' '}
                   is a national research consortium. Its goal is to{' '}
                   <span className="font-italic about-motrpac-emphasis">
-                    study the molecular changes that occur during and after
+                    study the molecular changes that occur in response to
                     exercise,
                   </span>{' '}
                   and ultimately to advance the understanding of how physical
