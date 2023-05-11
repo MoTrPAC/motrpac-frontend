@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -6,8 +6,13 @@ import PageTitle from '../lib/ui/pageTitle';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 import PASS1B06TimeCourse from '../assets/figures/pass1b-06-time-course.png';
 import PASS1B06Profiling from '../assets/figures/pass1b-06-molecular-profiling.png';
+import ToggleShowHide from './components/toggleShowHide';
 
 function MainStudy({ profile, allFiles, handleDataFetch }) {
+  const [showSummary, setShowSummary] = useState(true);
+  const [showExpDesign, setShowExpDesign] = useState(true);
+  const [showTissueProfiling, setShowTissueProfiling] = useState(true);
+
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
   // post request to fetch data files when download nav link is clicked
@@ -21,12 +26,35 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
     }
   };
 
+  // Event handlers for show/hide sectional content
+  const toggleShowSummary = (e) => {
+    e.preventDefault();
+    setShowSummary(!showSummary);
+  };
+
+  const toggleShowExpDesign = (e) => {
+    e.preventDefault();
+    setShowExpDesign(!showExpDesign);
+  };
+
+  const toggleShowTissueProfiling = (e) => {
+    e.preventDefault();
+    setShowTissueProfiling(!showTissueProfiling);
+  };
+
   return (
     <div className="mainStudyPage px-3 px-md-4 mb-3 container">
       <PageTitle title="MoTrPAC Project Overview" />
       <div className="main-study-container">
         <div className="main-study-content-container project-overview mt-5">
-          <h3>Summary of MoTrPAC Studies</h3>
+          <div className="d-flex align-items-center">
+            <h3>Summary of MoTrPAC Studies</h3>
+            <ToggleShowHide
+              icon={showSummary ? 'expand_less' : 'expand_more'}
+              toggleState={(e) => toggleShowSummary(e)}
+              toggleTarget="project-overview-study-table"
+            />
+          </div>
           <p>
             The MoTrPAC study is divided into two main parts - animal (rats) and
             human, with multiple phases or interventions in each of them.
@@ -34,7 +62,10 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
             training intervention in rats, while Clinical study sites conduct
             the human endurance and resistance training interventions.
           </p>
-          <div className="table-responsive">
+          <div
+            className="table-responsive collapse show"
+            id="project-overview-study-table"
+          >
             <table className="table table-bordered">
               <thead>
                 <tr>
@@ -121,8 +152,18 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
             collected.
           </p>
           <div className="main-study-content-container mt-5">
-            <h5>Experimental Design</h5>
-            <div className="study-figure border">
+            <div className="d-flex align-items-center sub-section-title">
+              <h5>Experimental Design</h5>
+              <ToggleShowHide
+                icon={showExpDesign ? 'expand_less' : 'expand_more'}
+                toggleState={(e) => toggleShowExpDesign(e)}
+                toggleTarget="project-overview-experiment-design"
+              />
+            </div>
+            <div
+              className="study-figure border collapse show"
+              id="project-overview-experiment-design"
+            >
               <img
                 src={PASS1B06TimeCourse}
                 alt="Endurance Exercise Time Course Intervention"
@@ -130,23 +171,35 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
             </div>
           </div>
           <div className="main-study-content-container mt-5">
-            <h5>Tissues / Molecular Profiling</h5>
-            <p>
-              For each time point, We profiled the temporal transcriptome,
-              proteome, metabolome, lipidome, phosphoproteome, acetylproteome,
-              ubiquitylproteome, epigenome, and immunome in whole blood, plasma
-              and 18 solid tissues in Rattus norvegicus over the 8 weeks of
-              enduranceexercise training. The figure shows the specific
-              molecular profiling performed on every tissue. For example, in
-              liver we run all the available assays for the 4 exercise time
-              points and the control. For blood, however, we only perform
-              transcriptomics (rna-seq).
-            </p>
-            <img
-              src={PASS1B06Profiling}
-              className="mb-2"
-              alt="Endurance Exercise Tissues / Molecular Profiling"
-            />
+            <div className="d-flex align-items-center sub-section-title">
+              <h5>Tissues / Molecular Profiling</h5>
+              <ToggleShowHide
+                icon={showTissueProfiling ? 'expand_less' : 'expand_more'}
+                toggleState={(e) => toggleShowTissueProfiling(e)}
+                toggleTarget="project-overview-tissue-profiling"
+              />
+            </div>
+            <div
+              className="tissue-profiling-figure collapse show"
+              id="project-overview-tissue-profiling"
+            >
+              <p>
+                For each time point, we profiled the temporal transcriptome,
+                proteome, metabolome, lipidome, phosphoproteome, acetylproteome,
+                ubiquitylproteome, epigenome, and immunome in whole blood,
+                plasma and 18 solid tissues in Rattus norvegicus over the 8
+                weeks of endurance exercise training. The figure shows the
+                specific molecular profiling performed on every tissue. For
+                example, in liver we run all the available assays for the 4
+                exercise time points and the control. For blood, however, we
+                only perform transcriptomics (rna-seq).
+              </p>
+              <img
+                src={PASS1B06Profiling}
+                className="mb-2"
+                alt="Endurance Exercise Tissues / Molecular Profiling"
+              />
+            </div>
             <div className="data-download-button-container my-5">
               <Link
                 className="btn btn-primary"

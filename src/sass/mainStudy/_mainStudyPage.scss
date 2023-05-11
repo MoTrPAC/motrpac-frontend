@@ -38,4 +38,35 @@
   div#endurance-training {
     scroll-margin-top: 5.5em;
   }
+
+  .show-collapse-button {
+    margin-left: 0.15rem;
+    margin-top: -0.25rem;
+    padding: 0;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &:focus, &:active {
+      box-shadow: none;
+      outline: none;
+      text-decoration: none;
+    }
+
+    .material-icons {
+      color: $stanford-cool-grey;
+      font-size: 2.5rem;
+      font-weight: normal;
+      line-height: 0;
+    }
+  }
+
+  .sub-section-title {
+    .show-collapse-button {
+      .material-icons {
+        font-size: 2.15rem;
+      }
+    }
+  }
 }
