@@ -199,6 +199,12 @@ export function Navbar({
                   <Link to="/graphical-clustering" className="dropdown-item">
                     Graphical Clustering
                   </Link>
+                  <Link
+                    to="/mitochondria-graphical-analysis"
+                    className="dropdown-item"
+                  >
+                    Mitochondria Graphical Analysis
+                  </Link>
                   <a
                     href="https://data-viz.motrpac-data.org"
                     className="dropdown-item"
