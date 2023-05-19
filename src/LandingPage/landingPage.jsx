@@ -159,7 +159,7 @@ export function LandingPage({ isAuthenticated, profile }) {
                   </span>{' '}
                   and ultimately to advance the understanding of how physical
                   activity improves and preserves health. We aim to generate a
-                  molecular map of the effects of exercise and training.
+                  molecular map of the effects of exercise.
                 </p>
                 <Link
                   to="/project-overview"
