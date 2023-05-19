@@ -54,13 +54,13 @@ const teamInfo = {
       image: MaleneImg,
     },
     {
-      name: 'Daniel Katz, Ph.D.',
+      name: 'Daniel Katz, M.D.',
       title: 'Instructor',
       image: DanImg,
     },
     {
       name: 'David Jimenez-Morales, Ph.D.',
-      title: 'Senior Research Engineer',
+      title: 'Bioinformatics Lead',
       image: DavidJMImg,
     },
     {
