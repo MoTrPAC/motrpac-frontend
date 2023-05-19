@@ -24,6 +24,7 @@ import BrowseDataPageConnected from '../BrowseDataPage/browseDataPage';
 import SearchPageConnected from '../Search/searchPage';
 import GeneCentricViewConnected from '../AnalysisPage/GeneCentricViewRat/geneCentricViewPage';
 import GraphicalClustering from '../AnalysisPage/GraphicalClustering/graphicalClusteringPage';
+import MitochondriaGraphicalAnalysis from '../AnalysisPage/MitoGraphicalAnalysis/mitoGraphicalAnalysisPage';
 import CodeRepositories from '../CodeRepoPage/codeRepoPage';
 import MainStudyConnected from '../MainStudy/mainStudy';
 import Tutorials from '../Tutorials/tutorials';
@@ -118,6 +119,10 @@ function App({ history = History }) {
               <Route
                 path="/graphical-clustering"
                 component={withTracker(GraphicalClustering)}
+              />
+              <Route
+                path="/mitochondria-graphical-analysis"
+                component={withTracker(MitochondriaGraphicalAnalysis)}
               />
               <Route
                 path="/code-repositories"
