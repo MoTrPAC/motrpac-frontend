@@ -36,7 +36,7 @@ function GraphicalClustering() {
 
   return (
     <div className="graphicalClusteringPage px-3 px-md-4 mb-3">
-      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 page-header">
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 mb-3 page-header border-bottom">
         <div className="page-title">
           <h1 className="mb-0">Graphical Clustering</h1>
         </div>
@@ -143,7 +143,7 @@ function IframeGraphicalResults({ srcPath, iframeRef }) {
       heightCalculationMethod="max"
       src={srcPath}
       style={{
-        height: '64vh',
+        height: '63vh',
         width: '1px',
         minWidth: '1200px',
         border: 'none',
@@ -192,19 +192,19 @@ function MitoChondriaGraphicalAnalysis({ tissue, setTissue, iframeRef }) {
   return (
     <div className="graphical-clustering-summary-container row mb-2">
       <div className="lead col-12">
-        Explore multi-omic changes and associated pathway enrichment results
-        over the training time course per tissue in adult rats. Compare
-        responses between male and female rats, identify pathways affected
-        in single or multiple omes' and explore what molecules drive those
-        enrichments. To learn more, see the{' '}
+        Explore the mitochondria-selected (using{' '}
         <ExternalLink
-          to="https://www.biorxiv.org/content/10.1101/2022.09.21.508770v1"
-          label="MoTrPAC Endurance Exercise Training Animal Study Landscape Preprint"
-        />{' '}
-        as well as the{' '}
+          to="https://www.broadinstitute.org/mitocarta/mitocarta30-inventory-mammalian-mitochondrial-proteins-and-pathways"
+          label="MitoCarta"
+        />
+        ) multi-omic changes and associated pathway enrichment results over the
+        training time course per tissue in adult rats. Compare responses between
+        male and female rats, identify pathways affected in single or multiple
+        omes' and explore what molecules drive those enrichments. To learn more,
+        see the{' '}
         <ExternalLink
-          to="https://motrpac.github.io/MotrpacRatTraining6mo/articles/MotrpacRatTraining6mo.html"
-          label="documentation"
+          to="https://www.biorxiv.org/content/10.1101/2023.01.13.523698v1"
+          label="MoTrPAC mitochondrial companion preprint"
         />
         .
       </div>
