@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ExternalLink from '../../lib/ui/externalLink';
 import OpenAccessBundleDownloads from './openAccessBundleDownloads';
 import DataTypeInfo from './dataTypeInfo';
 
-function OpenAccessBrowseDataSummary() {
+function OpenAccessBrowseDataSummary({ profile }) {
   return (
     <div className="browse-data-summary-container row mb-4">
       <div className="lead col-12">
@@ -76,7 +77,7 @@ function OpenAccessBrowseDataSummary() {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <OpenAccessBundleDownloads sets="all" />
+                  <OpenAccessBundleDownloads sets="all" profile={profile} />
                 </div>
               </div>
             </div>
@@ -87,5 +88,19 @@ function OpenAccessBrowseDataSummary() {
     </div>
   );
 }
+
+OpenAccessBrowseDataSummary.propTypes = {
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.shape({
+      userType: PropTypes.string,
+      email: PropTypes.string,
+      name: PropTypes.string,
+    }),
+  }),
+};
+
+OpenAccessBrowseDataSummary.defaultProps = {
+  profile: {},
+};
 
 export default OpenAccessBrowseDataSummary;

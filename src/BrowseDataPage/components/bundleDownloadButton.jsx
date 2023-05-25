@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { trackEvent } from '../../GoogleAnalytics/googleAnalytics';
 
-function BundleDownloadButton({ bundlefile }) {
+function BundleDownloadButton({ bundlefile, profile }) {
   const [fetchStatus, setFetchStatus] = useState({
     status: null,
     fileUrl: null,
@@ -43,7 +44,12 @@ function BundleDownloadButton({ bundlefile }) {
   }
 
   // reset state upon user clicking download link
-  function handleFileDownload() {
+  function handleFileDownload(file) {
+    const eventLabel =
+      profile && profile.user_metadata
+        ? `${profile.user_metadata.name} - ${profile.user_metadata.email}`
+        : 'anonymous';
+    trackEvent('Bundle dataset download', file, eventLabel);
     setTimeout(() => {
       setFetchStatus({
         status: null,
@@ -80,7 +86,7 @@ function BundleDownloadButton({ bundlefile }) {
         href={fetchStatus.fileUrl}
         className="btn-bundle-data-download ready-to-download-link px-3"
         download
-        onClick={(e) => handleFileDownload(e)}
+        onClick={(e) => handleFileDownload(file, e)}
       >
         Click to download
       </a>
@@ -147,6 +153,17 @@ function BundleDownloadButton({ bundlefile }) {
 
 BundleDownloadButton.propTypes = {
   bundlefile: PropTypes.string.isRequired,
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.shape({
+      userType: PropTypes.string,
+      email: PropTypes.string,
+      name: PropTypes.string,
+    }),
+  }),
+};
+
+BundleDownloadButton.defaultProps = {
+  profile: {},
 };
 
 export default BundleDownloadButton;

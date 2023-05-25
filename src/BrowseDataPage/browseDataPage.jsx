@@ -34,7 +34,7 @@ export function BrowseDataPage({
         }
       />
       {!userType || (userType && userType === 'external') ? (
-        <OpenAccessBrowseDataSummary />
+        <OpenAccessBrowseDataSummary profile={profile} />
       ) : null}
       {userType && userType === 'internal' ? (
         <AuthAccessBrowseDataSummary />

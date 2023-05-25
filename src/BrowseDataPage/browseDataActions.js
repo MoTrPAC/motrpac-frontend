@@ -259,7 +259,8 @@ function handleDownloadRequest(email, name, selectedFiles) {
   };
 
   // Track download request in Google Analytics
-  trackEvent('Data file download', JSON.stringify(fileObjects), name);
+  const eventLabel = name + ' - ' + email;
+  trackEvent('Data file download', JSON.stringify(fileObjects), eventLabel);
 
   return (dispatch) => {
     dispatch(downloadRequested());

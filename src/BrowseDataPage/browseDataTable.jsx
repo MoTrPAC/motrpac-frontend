@@ -158,9 +158,10 @@ function DataTable({
 
   // anonymous user or authenticated user
   const userType = profile.user_metadata && profile.user_metadata.userType;
+  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
 
   function handleDownloadClickEvent(selectedFiles) {
-    if (userType && userType === 'internal') {
+    if (userType && hasAccess) {
       handleDownloadRequest(
         profile.user_metadata.email,
         profile.user_metadata.name,
@@ -194,7 +195,7 @@ function DataTable({
             <span className="material-icons">file_download</span>
             <span>Download selected files</span>
           </button>
-          {Object.keys(selectedRowIds).length > 0 && userType ? (
+          {Object.keys(selectedRowIds).length > 0 && userType && hasAccess ? (
             <AuthAccessFileDownloadModal
               waitingForResponse={waitingForResponse}
               downloadRequestResponse={downloadRequestResponse}
