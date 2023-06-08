@@ -1,11 +1,21 @@
-.header-navbar-container {
-  padding-top: 0.75em;
-  padding-bottom: 0.75em;
+.header-wrapper {
+  .header-navbar-container {
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+  
+    .header-logo {
+      img {
+        width: 70%;
+        height: 70%;
+      }
+    }
+  }
 
-  .header-logo {
-    img {
-      width: 70%;
-      height: 70%;
+  .promote-banner {
+    background-color: $primary-blue;
+
+    .btn {
+      color: #000;
     }
   }
 }
