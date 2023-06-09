@@ -4,7 +4,7 @@ import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 // Function to render landing page announcement
 function PromoteBanner() {
   return (
-    <div className="promote-banner d-flex align-items-center justify-content-center w-100 text-light p-2">
+    <div className="promote-banner d-flex align-items-center justify-content-center w-100 text-light px-3 py-2">
       <span>
         The Bioinformatics Center of MoTrPAC will be hosting a virtual Office
         Hour on Thursday, June 22, 2023 at 11:00 am Pacific Time.

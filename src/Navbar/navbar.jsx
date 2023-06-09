@@ -152,11 +152,14 @@ export function Navbar({
 
   const navbar = (
     <div className="header-wrapper mb-3 fixed-top">
-      <div className="header-navbar-container d-flex flex-column flex-md-row align-items-center px-3 px-md-4 bg-white border-bottom shadow-sm">
-        <Link to="/" className="navbar-brand header-logo my-0 mr-md-auto py-0">
+      <div className="header-navbar-container d-flex flex-column flex-md-row flex-sm-row flex-xs-row align-items-center px-3 px-md-4 bg-white border-bottom shadow-sm">
+        <Link
+          to="/"
+          className="navbar-brand header-logo my-0 mr-md-auto mr-sm-auto mr-xs-auto py-0"
+        >
           <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
         </Link>
-        <nav className="navbar navbar-expand-lg navbar-light my-md-0 mr-md-3 p-0">
+        <nav className="navbar navbar-expand-lg navbar-light my-md-0 mr-md-3 mr-sm-3 mr-xs-2 p-0">
           <div className="header-navbar-items">
             <button
               className="navbar-toggler"
