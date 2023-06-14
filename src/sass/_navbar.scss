@@ -1,11 +1,22 @@
-.header-navbar-container {
-  padding-top: 0.75em;
-  padding-bottom: 0.75em;
+.header-wrapper {
+  .header-navbar-container {
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+  
+    .header-logo {
+      img {
+        width: 70%;
+        height: 70%;
+      }
+    }
+  }
 
-  .header-logo {
-    img {
-      width: 70%;
-      height: 70%;
+  .promote-banner {
+    background-color: $primary-blue;
+
+    .btn {
+      color: #000;
+      white-space: nowrap;
     }
   }
 }
@@ -132,20 +143,20 @@ nav {
 }
 
 @include media-breakpoint-down(md) {
+  .navbar-brand {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+
+    img {
+      width: 305px;
+      height: 36px;
+    }
+  }
+
   nav {
     &.navbar>.container-fluid {
       padding-left: 15px;
       padding-right: 15px;
-    }
-  
-    .navbar-brand {
-      padding-top: 0.75rem;
-      padding-bottom: 0.75rem;
-  
-      img {
-        width: 305px;
-        height: 36px;
-      }
     }
   
     .navbar-nav {
@@ -160,18 +171,36 @@ nav {
   }
 }
 
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(sm) {
   nav {
-    .navbar-brand {
-      img {
-        width: 250px;
-        height: 29px;
-      }
-    }
-  
     .header-navbar-items.container {
       padding-left: 15px;
       padding-right: 15px;
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .header-wrapper {
+    .header-navbar-container {     
+      .header-logo.navbar-brand {
+        text-align: center;
+        margin: 1rem 0 !important;
+  
+        img {
+          width: 70%;
+          height: auto;
+        }
+      }
+
+      nav {
+        margin-bottom: 1rem !important;
+
+        .header-navbar-items.container {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+      }
     }
   }
 }

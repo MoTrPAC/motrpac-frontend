@@ -9,7 +9,6 @@ import ExternalLink from '../lib/ui/externalLink';
  * Renders the Methods page.
  *
  * @param {Object} profile    Redux state of authenticated user profile
- * @param {Boolean} expanded  Redux state of collapsed/expanded sidebar
  *
  * @returns {object} JSX representation of the Methods component
  */
@@ -73,7 +72,6 @@ Methods.defaultProps = {
 
 const mapStateToProps = (state) => ({
   profile: state.auth.profile,
-  expanded: state.sidebar.expanded,
 });
 
 export default connect(mapStateToProps)(Methods);

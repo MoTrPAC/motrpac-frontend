@@ -5,7 +5,7 @@
 
 main {
   width: 100%;
-  height: 39.5rem;
+  height: 48.5rem;
   overflow: hidden;
 
   .hero-wrapper {
@@ -226,6 +226,7 @@ section {
 @include media-breakpoint-down(lg) {
   main {
     height: auto;
+    padding-top: 2.75rem;
 
     .hero-wrapper.row {
       align-items: start;
@@ -264,6 +265,7 @@ section {
 
   main {
     height: auto;
+    padding-top: 4.85rem;
 
     .hero-wrapper.row {
       flex-direction: column;
@@ -312,6 +314,7 @@ section {
 @include media-breakpoint-down(sm) {
   main {
     height: auto;
+    padding-top: 4.85rem;
 
     .hero-wrapper.row {
       flex-direction: column;
@@ -390,6 +393,7 @@ section {
 @include media-breakpoint-down(xs) {
   main {
     height: auto;
+    padding-top: 13.5rem;
 
     .hero-wrapper.row {
       flex-direction: column;
@@ -485,6 +489,7 @@ section {
 
   main {
     max-width: 98%;
+    padding-top: 15rem;
   }
 
   section {
@@ -576,6 +581,7 @@ section {
 @media (max-width: 320px) {
   main {
     max-width: 92%;
+    padding-top: 16rem;
 
     .hero-wrapper .content h3 {
       font-size: 1.65rem;

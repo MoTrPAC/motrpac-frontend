@@ -44,7 +44,11 @@ function StudyDocumentsTable({ currentView }) {
 }
 
 StudyDocumentsTable.propTypes = {
-  currentView: PropTypes.string.isRequired,
+  currentView: PropTypes.string,
+};
+
+StudyDocumentsTable.defaultProps = {
+  currentView: '',
 };
 
 export default StudyDocumentsTable;
