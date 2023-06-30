@@ -40,32 +40,43 @@ main {
 
     .announcement-banner {
       border-radius: 0.35rem;
+      color: #fff;
       margin-bottom: 0;
+      /*
       background: rgb(15,133,218);
       background: linear-gradient(360deg, rgba(15,133,218,1) 0%, rgba(73,166,233,1) 100%);
+      */
+      background: #2094e8;
+      background: linear-gradient(-45deg, #0e3293 0%, #006db5 50%, #002878 100%);
+      text-align: center;
+
+      h3 {
+        font-size: 2.75rem;
+        font-weight: 600;
+      }
 
       .announcement-banner-content {
-        h5 {
-          color: #fff;
-          font-size: 1.175rem;
-          font-weight: 600;
-          line-height: 1.6;
-          margin-top: 0.25rem;
-          margin-bottom: 0.4rem;
+        font-size: 1.3rem;
+        line-height: 1.6;
+        margin-top: 0.25rem;
+        margin-bottom: 0.4rem;
 
-          a {
-            color: $accent-yellow;
-          
-            &:hover {
-              color: $accent-yellow-shade-medium;
-              text-decoration: none;
-            }
-          }
+        .secondary {
+          font-size: 1.125rem;
+        }
 
-          .inline-link-with-icon .material-icons {
-            font-size: 1.45rem;
-            margin-top: 0.15rem;
+        a {
+          color: $accent-yellow;
+        
+          &:hover {
+            color: $accent-yellow-shade-medium;
+            text-decoration: none;
           }
+        }
+
+        .inline-link-with-icon .material-icons {
+          font-size: 1.45rem;
+          margin-top: 0.15rem;
         }
       }
     }
