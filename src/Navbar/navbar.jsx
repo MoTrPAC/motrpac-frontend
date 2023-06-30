@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import actions from '../Auth/authActions';
@@ -10,7 +10,6 @@ import MoTrPAClogo from '../assets/logo-motrpac.png';
 import onVisibilityChange from '../lib/utils/pageVisibility';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
-import PromoteBanner from '../LandingPage/promoteBanner';
 
 /**
  * Renders the global header nav bar.
@@ -33,9 +32,6 @@ export function Navbar({
   allFiles,
   lastModified,
 }) {
-  const location = useLocation();
-  const currentPath = location.pathname;
-
   useEffect(() => {
     /* Handle logout for various use cases */
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
@@ -151,218 +147,215 @@ export function Navbar({
   };
 
   const navbar = (
-    <div className="header-wrapper mb-3 fixed-top">
-      <div className="header-navbar-container d-flex flex-column flex-md-row flex-sm-row flex-xs-row align-items-center px-3 px-md-4 bg-white border-bottom shadow-sm">
-        <Link
-          to="/"
-          className="navbar-brand header-logo my-0 mr-md-auto mr-sm-auto mr-xs-auto py-0"
-        >
-          <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
-        </Link>
-        <nav className="navbar navbar-expand-lg navbar-light my-md-0 mr-md-3 mr-sm-3 mr-xs-2 p-0">
-          <div className="header-navbar-items">
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon" />
-            </button>
-            <div
-              className="collapse navbar-collapse flex-row-reverse"
-              id="navbarSupportedContent"
-            >
-              <ul className="navbar-nav">
-                <li className="nnav-item navItem">
-                  <Link
-                    to="/data-download"
-                    className="nav-link"
-                    onClick={handleDataObjectFetch}
+    <div className="header-navbar-container d-flex flex-column flex-md-row flex-sm-row flex-xs-row align-items-center px-3 px-md-4 bg-white border-bottom shadow-sm mb-3 fixed-top">
+      <Link
+        to="/"
+        className="navbar-brand header-logo my-0 mr-md-auto mr-sm-auto mr-xs-auto py-0"
+      >
+        <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
+      </Link>
+      <nav className="navbar navbar-expand-lg navbar-light my-md-0 mr-md-3 mr-sm-3 mr-xs-2 p-0">
+        <div className="header-navbar-items">
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon" />
+          </button>
+          <div
+            className="collapse navbar-collapse flex-row-reverse"
+            id="navbarSupportedContent"
+          >
+            <ul className="navbar-nav">
+              <li className="nnav-item navItem">
+                <Link
+                  to="/data-download"
+                  className="nav-link"
+                  onClick={handleDataObjectFetch}
+                >
+                  Downloads
+                </Link>
+              </li>
+              <li className="nnav-item navItem dropdown">
+                <div
+                  className="nav-link dropdown-toggle"
+                  role="button"
+                  id="exploreNavbarItemMenuLink"
+                  data-toggle="dropdown"
+                >
+                  Explore
+                </div>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="exploreNavbarItemMenuLink"
+                >
+                  <Link to="/search" className="dropdown-item">
+                    Differential Abundance
+                  </Link>
+                  <Link to="/gene-centric" className="dropdown-item">
+                    Gene-centric View
+                  </Link>
+                  <Link to="/graphical-clustering" className="dropdown-item">
+                    Graphical Clustering
+                  </Link>
+                  <a
+                    href="https://data-viz.motrpac-data.org"
+                    className="dropdown-item"
+                    target="_blank"
+                    rel="noreferrer"
                   >
-                    Downloads
+                    Interactive Data Visualization
+                  </a>
+                  {isAuthenticated && hasAccess && userType === 'internal' ? (
+                    <Link to="/analysis-phenotype" className="dropdown-item">
+                      Phenotype
+                    </Link>
+                  ) : null}
+                </div>
+              </li>
+              {isAuthenticated && hasAccess ? (
+                <>
+                  <li className="nav-item navItem">
+                    <Link to="/summary" className="nav-link">
+                      Summary
+                    </Link>
+                  </li>
+                  <li className="nav-item navItem">
+                    <Link to="/releases" className="nav-link">
+                      Releases
+                    </Link>
+                  </li>
+                </>
+              ) : null}
+              {isAuthenticated && hasAccess && userType === 'internal' ? (
+                <li className="nav-item navItem">
+                  <Link
+                    to="/qc-data-monitor"
+                    className="nav-link"
+                    onClick={fecthQCData}
+                  >
+                    QC Data Monitor
                   </Link>
                 </li>
-                <li className="nnav-item navItem dropdown">
+              ) : null}
+              {!isAuthenticated && !hasAccess ? (
+                <li className="nav-item navItem dropdown">
                   <div
                     className="nav-link dropdown-toggle"
                     role="button"
-                    id="exploreNavbarItemMenuLink"
+                    id="dataAccessNavbarItemMenuLink"
                     data-toggle="dropdown"
                   >
-                    Explore
+                    Data Access
                   </div>
                   <div
                     className="dropdown-menu"
-                    aria-labelledby="exploreNavbarItemMenuLink"
+                    aria-labelledby="dataAccessNavbarItemMenuLink"
                   >
-                    <Link to="/search" className="dropdown-item">
-                      Differential Abundance
-                    </Link>
-                    <Link to="/gene-centric" className="dropdown-item">
-                      Gene-centric View
-                    </Link>
-                    <Link to="/graphical-clustering" className="dropdown-item">
-                      Graphical Clustering
-                    </Link>
-                    <a
-                      href="https://data-viz.motrpac-data.org"
-                      className="dropdown-item"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Interactive Data Visualization
-                    </a>
-                    {isAuthenticated && hasAccess && userType === 'internal' ? (
-                      <Link to="/analysis-phenotype" className="dropdown-item">
-                        Phenotype
-                      </Link>
-                    ) : null}
-                  </div>
-                </li>
-                {isAuthenticated && hasAccess ? (
-                  <>
-                    <li className="nav-item navItem">
-                      <Link to="/summary" className="nav-link">
-                        Summary
-                      </Link>
-                    </li>
-                    <li className="nav-item navItem">
-                      <Link to="/releases" className="nav-link">
-                        Releases
-                      </Link>
-                    </li>
-                  </>
-                ) : null}
-                {isAuthenticated && hasAccess && userType === 'internal' ? (
-                  <li className="nav-item navItem">
                     <Link
-                      to="/qc-data-monitor"
-                      className="nav-link"
-                      onClick={fecthQCData}
+                      to="/data-download"
+                      className="dropdown-item"
+                      onClick={handleDataObjectFetch}
                     >
-                      QC Data Monitor
+                      Endurance Training Data
                     </Link>
-                  </li>
-                ) : null}
-                {!isAuthenticated && !hasAccess ? (
-                  <li className="nav-item navItem dropdown">
-                    <div
-                      className="nav-link dropdown-toggle"
-                      role="button"
-                      id="dataAccessNavbarItemMenuLink"
-                      data-toggle="dropdown"
+                    <Link
+                      to="/data-access"
+                      className="dropdown-item"
+                      onClick={checkServiceStatus}
                     >
-                      Data Access
-                    </div>
-                    <div
-                      className="dropdown-menu"
-                      aria-labelledby="dataAccessNavbarItemMenuLink"
-                    >
-                      <Link
-                        to="/data-download"
-                        className="dropdown-item"
-                        onClick={handleDataObjectFetch}
-                      >
-                        Endurance Training Data
-                      </Link>
-                      <Link
-                        to="/data-access"
-                        className="dropdown-item"
-                        onClick={checkServiceStatus}
-                      >
-                        Limited Acute Exercise Data
-                      </Link>
-                    </div>
-                  </li>
-                ) : null}
-                <li className="nav-item navItem dropdown">
-                  <div
-                    className="nav-link dropdown-toggle"
-                    role="button"
-                    id="aboutNavbarItemMenuLink"
-                    data-toggle="dropdown"
-                  >
-                    Resources
-                  </div>
-                  <div
-                    className="dropdown-menu"
-                    aria-labelledby="aboutNavbarItemMenuLink"
-                  >
-                    <Link to="/code-repositories" className="dropdown-item">
-                      Code Repositories
-                    </Link>
-                    <Link to="/methods" className="dropdown-item">
-                      Methods
-                    </Link>
-                    <Link to="/related-studies" className="dropdown-item">
-                      Related Studies
+                      Limited Acute Exercise Data
                     </Link>
                   </div>
                 </li>
-                <li className="nav-item navItem dropdown">
-                  <div
-                    className="nav-link dropdown-toggle"
-                    role="button"
-                    id="aboutNavbarItemMenuLink"
-                    data-toggle="dropdown"
-                  >
-                    Help
-                  </div>
-                  <div
-                    className="dropdown-menu"
-                    aria-labelledby="aboutNavbarItemMenuLink"
-                  >
-                    <Link to="/project-overview" className="dropdown-item">
-                      Project Overview
-                    </Link>
-                    <Link to="/tutorials" className="dropdown-item">
-                      Tutorials
-                    </Link>
-                    <Link to="/contact" className="dropdown-item">
-                      Contact Us
-                    </Link>
-                  </div>
-                </li>
-                <li className="nav-item navItem dropdown">
-                  <div
-                    className="nav-link dropdown-toggle"
-                    role="button"
-                    id="aboutNavbarItemMenuLink"
-                    data-toggle="dropdown"
-                  >
-                    About
-                  </div>
-                  <div
-                    className="dropdown-menu"
-                    aria-labelledby="aboutNavbarItemMenuLink"
-                  >
-                    <Link to="/team" className="dropdown-item">
-                      Who we are
-                    </Link>
-                    <Link to="/announcements" className="dropdown-item">
-                      Announcements
-                    </Link>
-                    <Link to="/external-links" className="dropdown-item">
-                      Useful Links
-                    </Link>
-                  </div>
-                </li>
-              </ul>
-            </div>
+              ) : null}
+              <li className="nav-item navItem dropdown">
+                <div
+                  className="nav-link dropdown-toggle"
+                  role="button"
+                  id="aboutNavbarItemMenuLink"
+                  data-toggle="dropdown"
+                >
+                  Resources
+                </div>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="aboutNavbarItemMenuLink"
+                >
+                  <Link to="/code-repositories" className="dropdown-item">
+                    Code Repositories
+                  </Link>
+                  <Link to="/methods" className="dropdown-item">
+                    Methods
+                  </Link>
+                  <Link to="/related-studies" className="dropdown-item">
+                    Related Studies
+                  </Link>
+                </div>
+              </li>
+              <li className="nav-item navItem dropdown">
+                <div
+                  className="nav-link dropdown-toggle"
+                  role="button"
+                  id="aboutNavbarItemMenuLink"
+                  data-toggle="dropdown"
+                >
+                  Help
+                </div>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="aboutNavbarItemMenuLink"
+                >
+                  <Link to="/project-overview" className="dropdown-item">
+                    Project Overview
+                  </Link>
+                  <Link to="/tutorials" className="dropdown-item">
+                    Tutorials
+                  </Link>
+                  <Link to="/contact" className="dropdown-item">
+                    Contact Us
+                  </Link>
+                </div>
+              </li>
+              <li className="nav-item navItem dropdown">
+                <div
+                  className="nav-link dropdown-toggle"
+                  role="button"
+                  id="aboutNavbarItemMenuLink"
+                  data-toggle="dropdown"
+                >
+                  About
+                </div>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="aboutNavbarItemMenuLink"
+                >
+                  <Link to="/team" className="dropdown-item">
+                    Who we are
+                  </Link>
+                  <Link to="/announcements" className="dropdown-item">
+                    Announcements
+                  </Link>
+                  <Link to="/external-links" className="dropdown-item">
+                    Useful Links
+                  </Link>
+                </div>
+              </li>
+            </ul>
           </div>
-        </nav>
-        <LogoutButton
-          isAuthenticated={isAuthenticated}
-          profile={profile}
-          handleLogout={handleLogout}
-          login={handleLogIn}
-        />
-      </div>
-      {currentPath === '/' && <PromoteBanner />}
+        </div>
+      </nav>
+      <LogoutButton
+        isAuthenticated={isAuthenticated}
+        profile={profile}
+        handleLogout={handleLogout}
+        login={handleLogIn}
+      />
     </div>
   );
   return navbar;
