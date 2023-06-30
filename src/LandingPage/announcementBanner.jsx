@@ -8,7 +8,7 @@ function AnnouncementBanner() {
       <div className="announcement-banner-content">
         <div className="mb-1 font-weight-bold primary">
           <a
-            href="https://www.biorxiv.org/content/10.1101/2022.09.21.508770v1"
+            href="https://www.biorxiv.org/content/10.1101/2022.09.21.508770v2"
             className="inline-link-with-icon"
             target="_blank"
             rel="noopener noreferrer"
