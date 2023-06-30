@@ -1,13 +1,11 @@
-.header-wrapper {
-  .header-navbar-container {
-    padding-top: 0.75em;
-    padding-bottom: 0.75em;
-  
-    .header-logo {
-      img {
-        width: 70%;
-        height: 70%;
-      }
+.header-navbar-container {
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
+
+  .header-logo {
+    img {
+      width: 70%;
+      height: 70%;
     }
   }
 }
@@ -172,25 +170,23 @@ nav {
 }
 
 @include media-breakpoint-down(xs) {
-  .header-wrapper {
-    .header-navbar-container {     
-      .header-logo.navbar-brand {
-        text-align: center;
-        margin: 1rem 0 !important;
-  
-        img {
-          width: 70%;
-          height: auto;
-        }
+  .header-navbar-container {     
+    .header-logo.navbar-brand {
+      text-align: center;
+      margin: 1rem 0 !important;
+
+      img {
+        width: 70%;
+        height: auto;
       }
+    }
 
-      nav {
-        margin-bottom: 1rem !important;
+    nav {
+      margin-bottom: 1rem !important;
 
-        .header-navbar-items.container {
-          padding-left: 15px;
-          padding-right: 15px;
-        }
+      .header-navbar-items.container {
+        padding-left: 15px;
+        padding-right: 15px;
       }
     }
   }
