@@ -11,6 +11,7 @@ import ContactHelpdesk from '../lib/ui/contactHelpdesk';
 import onVisibilityChange from '../lib/utils/pageVisibility';
 import AnnouncementBanner from './announcementBanner';
 import ExternalLink from '../lib/ui/externalLink';
+import PromoteBanner from './promoteBanner';
 
 /**
  * Renders the landing page in unauthenticated state.
@@ -255,6 +256,9 @@ export function LandingPage({ isAuthenticated, profile }) {
               please <ContactHelpdesk /> about obtaining access to our cloud
               storage and data submission guidelines.
             </div>
+          </div>
+          <div className="row mt-4">
+            <PromoteBanner />
           </div>
         </div>
       </section>
