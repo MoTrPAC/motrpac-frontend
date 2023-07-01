@@ -136,6 +136,27 @@ p {
   }
 }
 
+@include media-breakpoint-down(xs) {
+  .announcementsPage,
+  .browseDataPage,
+  .codeRepoPage,
+  .contactPage,
+  .dataAccessPage,
+  .errorPage,
+  .geneCentricViewPage,
+  .graphicalClusteringPage,
+  .linkoutPage,
+  .mainStudyPage,
+  .methodsPage,
+  .relatedStudyPage,
+  .searchPage,
+  .teamPage,
+  .tutorialsPage {
+    padding-top: 8.50rem;
+  }
+}
+
+
 /*
 $primary:       $blue !default;
 $secondary:     $gray-600 !default;
