@@ -48,6 +48,7 @@ main {
       */
       background: #2094e8;
       background: linear-gradient(-45deg, #0e3293 0%, #006db5 50%, #002878 100%);
+      order: -2;
       text-align: center;
 
       h3 {
@@ -275,7 +276,7 @@ section {
 @include media-breakpoint-down(lg) {
   main {
     height: auto;
-    padding-top: 2.75rem;
+    padding-top: 0.75rem;
 
     .hero-wrapper.row {
       align-items: start;
@@ -314,7 +315,7 @@ section {
 
   main {
     height: auto;
-    padding-top: 4.85rem;
+    padding-top: 1.85rem;
 
     .hero-wrapper.row {
       flex-direction: column;
@@ -363,7 +364,7 @@ section {
 @include media-breakpoint-down(sm) {
   main {
     height: auto;
-    padding-top: 4.85rem;
+    padding-top: 1.85rem;
 
     .hero-wrapper.row {
       flex-direction: column;
@@ -442,7 +443,7 @@ section {
 @include media-breakpoint-down(xs) {
   main {
     height: auto;
-    padding-top: 13.5rem;
+    padding-top: 9.5rem;
 
     .hero-wrapper.row {
       flex-direction: column;
@@ -538,7 +539,7 @@ section {
 
   main {
     max-width: 98%;
-    padding-top: 15rem;
+    padding-top: 9.5rem;
   }
 
   section {
@@ -630,7 +631,7 @@ section {
 @media (max-width: 320px) {
   main {
     max-width: 92%;
-    padding-top: 16rem;
+    padding-top: 9.125rem;
 
     .hero-wrapper .content h3 {
       font-size: 1.65rem;
