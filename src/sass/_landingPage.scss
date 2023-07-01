@@ -5,7 +5,7 @@
 
 main {
   width: 100%;
-  height: 48.5rem;
+  height: 39.5rem;
   overflow: hidden;
 
   .hero-wrapper {
@@ -40,32 +40,44 @@ main {
 
     .announcement-banner {
       border-radius: 0.35rem;
+      color: #fff;
       margin-bottom: 0;
+      /*
       background: rgb(15,133,218);
       background: linear-gradient(360deg, rgba(15,133,218,1) 0%, rgba(73,166,233,1) 100%);
+      */
+      background: #2094e8;
+      background: linear-gradient(-45deg, #0e3293 0%, #006db5 50%, #002878 100%);
+      order: -2;
+      text-align: center;
+
+      h3 {
+        font-size: 2.75rem;
+        font-weight: 600;
+      }
 
       .announcement-banner-content {
-        h5 {
-          color: #fff;
-          font-size: 1.175rem;
-          font-weight: 600;
-          line-height: 1.6;
-          margin-top: 0.25rem;
-          margin-bottom: 0.4rem;
+        font-size: 1.3rem;
+        line-height: 1.6;
+        margin-top: 0.25rem;
+        margin-bottom: 0.4rem;
 
-          a {
-            color: $accent-yellow;
-          
-            &:hover {
-              color: $accent-yellow-shade-medium;
-              text-decoration: none;
-            }
-          }
+        .secondary {
+          font-size: 1.125rem;
+        }
 
-          .inline-link-with-icon .material-icons {
-            font-size: 1.45rem;
-            margin-top: 0.15rem;
+        a {
+          color: $accent-yellow;
+        
+          &:hover {
+            color: $accent-yellow-shade-medium;
+            text-decoration: none;
           }
+        }
+
+        .inline-link-with-icon .material-icons {
+          font-size: 1.45rem;
+          margin-top: 0.15rem;
         }
       }
     }
@@ -101,8 +113,28 @@ section {
 
   .about-motrpac {
     background-color: #2094E8;
+    /*
+    background-image: url(./assets/LandingPageGraphics/about_motrpac.jpg);
+    background-repeat: no-repeat!important;
+    background-position: top center!important;
+    background-size: cover!important;
+    */
     height: 486px;
     position: relative;
+    /*
+    background: #2094e8;
+    background: linear-gradient(-45deg, #0e3293 0%, #2094e8 35%, #4ac7e8 65%, #002878 100%);
+    */
+    /*
+    background-size: 400% 400%;
+    animation: Gradient 20s ease infinite;
+    background: linear-gradient(
+      217deg,
+      rgba(177, 4, 14, 0.8),
+      rgba(255, 0, 0, 0) 70.71%
+    ), linear-gradient(127deg, rgba(0, 109, 181, 0.8), rgba(0, 255, 0, 0) 70.71%),
+    linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%);
+    */
 
     .particles-wrapper {
       width: 100%;
@@ -207,6 +239,12 @@ section {
       margin-left: 0;
       margin-right: 0;
 
+      .office-hour-banner {
+        border-radius: 0.35rem;
+        background: lighten($gray-transparent, 30%);
+        text-align: center;
+      }
+
       .access-data-info, .upload-data-info {
         line-height: 1.55;
       }
@@ -220,13 +258,25 @@ section {
   }
 }
 
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0% 50%
+  }
+}
+
 /* responsive styling */
 
 /* Large devices (desktops, less than 1200px) */
 @include media-breakpoint-down(lg) {
   main {
     height: auto;
-    padding-top: 2.75rem;
+    padding-top: 0.75rem;
 
     .hero-wrapper.row {
       align-items: start;
@@ -265,7 +315,7 @@ section {
 
   main {
     height: auto;
-    padding-top: 4.85rem;
+    padding-top: 1.85rem;
 
     .hero-wrapper.row {
       flex-direction: column;
@@ -314,7 +364,7 @@ section {
 @include media-breakpoint-down(sm) {
   main {
     height: auto;
-    padding-top: 4.85rem;
+    padding-top: 1.85rem;
 
     .hero-wrapper.row {
       flex-direction: column;
@@ -393,7 +443,7 @@ section {
 @include media-breakpoint-down(xs) {
   main {
     height: auto;
-    padding-top: 13.5rem;
+    padding-top: 9.5rem;
 
     .hero-wrapper.row {
       flex-direction: column;
@@ -489,7 +539,7 @@ section {
 
   main {
     max-width: 98%;
-    padding-top: 15rem;
+    padding-top: 9.5rem;
   }
 
   section {
@@ -581,7 +631,7 @@ section {
 @media (max-width: 320px) {
   main {
     max-width: 92%;
-    padding-top: 16rem;
+    padding-top: 9.125rem;
 
     .hero-wrapper .content h3 {
       font-size: 1.65rem;
