@@ -222,8 +222,8 @@ export function SearchPage({
                     e.preventDefault();
                     handleSearch(
                       searchParams,
-                      multiSelections.length ||
-                        (inputEl.value && inputEl.value.length)
+                      (multiSelections && multiSelections.length) ||
+                        (inputEl && inputEl.value && inputEl.value.length)
                         ? formatSearchInput()
                         : searchParams.keys,
                       'all'
