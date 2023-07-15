@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import { Tooltip } from 'react-tooltip';
 import actions from '../Auth/authActions';
 import LoginButton from '../lib/loginButton';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
@@ -148,13 +149,12 @@ export function Navbar({
 
   const navbar = (
     <div className="header-navbar-container d-flex flex-column flex-md-row flex-sm-row flex-xs-row align-items-center px-3 px-md-4 bg-white border-bottom shadow-sm mb-3 fixed-top">
-      <Link
-        to="/"
-        className="navbar-brand header-logo my-0 mr-md-auto mr-sm-auto mr-xs-auto py-0"
-      >
-        <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
-      </Link>
-      <nav className="navbar navbar-expand-lg navbar-light my-md-0 mr-md-3 mr-sm-3 mr-xs-2 p-0">
+      <div className="navbar-brand my-0 mr-md-auto mr-sm-auto mr-xs-auto py-0">
+        <Link to="/" className="header-logo">
+          <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
+        </Link>
+      </div>
+      <nav className="navbar navbar-expand-xl navbar-light my-md-0 mr-md-3 mr-sm-3 mr-xs-2 p-0">
         <div className="header-navbar-items">
           <button
             className="navbar-toggler"
@@ -218,62 +218,58 @@ export function Navbar({
                   ) : null}
                 </div>
               </li>
-              {isAuthenticated && hasAccess ? (
-                <>
-                  <li className="nav-item navItem">
-                    <Link to="/summary" className="nav-link">
-                      Summary
-                    </Link>
-                  </li>
-                  <li className="nav-item navItem">
-                    <Link to="/releases" className="nav-link">
-                      Releases
-                    </Link>
-                  </li>
-                </>
-              ) : null}
-              {isAuthenticated && hasAccess && userType === 'internal' ? (
-                <li className="nav-item navItem">
+              <li className="nav-item navItem dropdown">
+                <div
+                  className="nav-link dropdown-toggle"
+                  role="button"
+                  id="dataAccessNavbarItemMenuLink"
+                  data-toggle="dropdown"
+                >
+                  Data Access
+                </div>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="dataAccessNavbarItemMenuLink"
+                >
                   <Link
-                    to="/qc-data-monitor"
-                    className="nav-link"
-                    onClick={fecthQCData}
+                    to="/data-download"
+                    className="dropdown-item"
+                    onClick={handleDataObjectFetch}
                   >
-                    QC Data Monitor
+                    Endurance Training Data
                   </Link>
-                </li>
-              ) : null}
-              {!isAuthenticated && !hasAccess ? (
-                <li className="nav-item navItem dropdown">
-                  <div
-                    className="nav-link dropdown-toggle"
-                    role="button"
-                    id="dataAccessNavbarItemMenuLink"
-                    data-toggle="dropdown"
+                  <Link
+                    to={
+                      isAuthenticated && hasAccess
+                        ? '/releases'
+                        : '/data-access'
+                    }
+                    className="dropdown-item"
+                    onClick={checkServiceStatus}
                   >
-                    Data Access
-                  </div>
-                  <div
-                    className="dropdown-menu"
-                    aria-labelledby="dataAccessNavbarItemMenuLink"
-                  >
-                    <Link
-                      to="/data-download"
-                      className="dropdown-item"
-                      onClick={handleDataObjectFetch}
-                    >
-                      Endurance Training Data
-                    </Link>
-                    <Link
-                      to="/data-access"
-                      className="dropdown-item"
-                      onClick={checkServiceStatus}
-                    >
-                      Limited Acute Exercise Data
-                    </Link>
-                  </div>
-                </li>
-              ) : null}
+                    Limited Acute Exercise Data
+                  </Link>
+                  {isAuthenticated && hasAccess ? (
+                    <>
+                      {userType === 'internal' && (
+                        <Link
+                          to="/qc-data-monitor"
+                          className="dropdown-item"
+                          onClick={fecthQCData}
+                        >
+                          QC Data Monitor
+                        </Link>
+                      )}
+                      <Link to="/summary" className="dropdown-item">
+                        Sample Summary
+                      </Link>
+                      <Link to="/releases" className="dropdown-item">
+                        Prior Data Releases
+                      </Link>
+                    </>
+                  ) : null}
+                </div>
+              </li>
               <li className="nav-item navItem dropdown">
                 <div
                   className="nav-link dropdown-toggle"
@@ -419,9 +415,15 @@ function LogoutButton({ profile, isAuthenticated, handleLogout, login }) {
 
   if (isAuthenticated) {
     return (
-      <span className="user-logout-button">
-        <img src={profile.picture} className="user-avatar" alt="avatar" />
-        <span className="user-display-name">{userDisplayName}</span>
+      <div className="user-logout-button">
+        <img
+          src={profile.picture}
+          className="user-avatar logged-in-user-icon"
+          alt="avatar"
+        />
+        <Tooltip anchorSelect=".logged-in-user-icon" place="bottom">
+          {userDisplayName}
+        </Tooltip>
         <button
           type="button"
           onClick={handleLogout}
@@ -429,7 +431,7 @@ function LogoutButton({ profile, isAuthenticated, handleLogout, login }) {
         >
           Log out
         </button>
-      </span>
+      </div>
     );
   }
 

@@ -2,10 +2,14 @@
   padding-top: 0.75em;
   padding-bottom: 0.75em;
 
-  .header-logo {
-    img {
-      width: 70%;
-      height: 70%;
+  .navbar-brand {
+    width: 305px;
+
+    .header-logo {
+      img {
+        width: 305px;
+        height: 36px;
+      }
     }
   }
 }
@@ -96,13 +100,14 @@ nav {
 }
 
 .user-logout-button {
-  margin-left: 0.75rem;
-
   .user-avatar {
     width: 36px;
     height: 36px;
     border-radius: 100%;
-    margin-right: 0.35rem;
+  }
+
+  .react-tooltip {
+    font-size: 0.825rem;
   }
 
   .user-display-name {
@@ -112,21 +117,15 @@ nav {
   }
 
   .logOutBtn {
-    margin-left: 0.5rem;
-    margin-right: 0.25rem;
+    margin-left: 0.75rem;
   }
 }
 
 @include media-breakpoint-up(lg) {
   nav {
-    .navbar-brand.resized {
+    .navbar-brand {
       padding-top: 0.75rem;
       padding-bottom: 0.75rem;
-  
-      img {
-        width: 305px;
-        height: 36px;
-      }
     }
   }
 }
@@ -135,11 +134,6 @@ nav {
   .navbar-brand {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
-
-    img {
-      width: 305px;
-      height: 36px;
-    }
   }
 
   nav {
@@ -170,18 +164,13 @@ nav {
 }
 
 @include media-breakpoint-down(xs) {
-  .header-navbar-container {     
-    .header-logo.navbar-brand {
+  .header-navbar-container {
+    .navbar-brand {    
       text-align: center;
       margin: 1rem 0 !important;
-
-      img {
-        width: 70%;
-        height: auto;
-      }
     }
 
-    nav {
+    .navbar {
       margin-bottom: 1rem !important;
 
       .header-navbar-items.container {
@@ -193,11 +182,13 @@ nav {
 }
 
 @media (max-width: 320px) {
-  nav {
+  .header-navbar-container {
     .navbar-brand {
-      img {
-        width: 210px;
-        height: auto;
+      .header-logo {
+        img {
+          width: 285px;
+          height: auto;
+        }
       }
     }
 
