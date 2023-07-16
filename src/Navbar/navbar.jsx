@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import dayjs from 'dayjs';
-import { Tooltip } from 'react-tooltip';
 import actions from '../Auth/authActions';
 import LoginButton from '../lib/loginButton';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
@@ -274,14 +273,14 @@ export function Navbar({
                 <div
                   className="nav-link dropdown-toggle"
                   role="button"
-                  id="aboutNavbarItemMenuLink"
+                  id="resourcesNavbarItemMenuLink"
                   data-toggle="dropdown"
                 >
                   Resources
                 </div>
                 <div
                   className="dropdown-menu"
-                  aria-labelledby="aboutNavbarItemMenuLink"
+                  aria-labelledby="resourcesNavbarItemMenuLink"
                 >
                   <Link to="/code-repositories" className="dropdown-item">
                     Code Repositories
@@ -298,14 +297,14 @@ export function Navbar({
                 <div
                   className="nav-link dropdown-toggle"
                   role="button"
-                  id="aboutNavbarItemMenuLink"
+                  id="helpNavbarItemMenuLink"
                   data-toggle="dropdown"
                 >
                   Help
                 </div>
                 <div
                   className="dropdown-menu"
-                  aria-labelledby="aboutNavbarItemMenuLink"
+                  aria-labelledby="helpNavbarItemMenuLink"
                 >
                   <Link to="/project-overview" className="dropdown-item">
                     Project Overview
@@ -412,18 +411,25 @@ function LogoutButton({ profile, isAuthenticated, handleLogout, login }) {
     profile.user_metadata && profile.user_metadata.name
       ? profile.user_metadata.name
       : profile.name;
+  const userEmail = profile.user_metadata && profile.user_metadata.email;
 
   if (isAuthenticated) {
     return (
-      <div className="user-logout-button">
-        <img
-          src={profile.picture}
-          className="user-avatar logged-in-user-icon"
-          alt="avatar"
-        />
-        <Tooltip anchorSelect=".logged-in-user-icon" place="bottom">
-          {userDisplayName}
-        </Tooltip>
+      <div className="user-logout-button dropdown">
+        <button
+          type="button"
+          className="btn dropdown-toggle px-0 py-0"
+          data-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img src={profile.picture} className="user-avatar" alt="avatar" />
+        </button>
+        <div className="user-logout-dropdown dropdown-menu dropdown-menu-right">
+          <ul>
+            <li className="user-display-name">{userDisplayName}</li>
+            <li className="user-email">{userEmail}</li>
+          </ul>
+        </div>
         <button
           type="button"
           onClick={handleLogout}
