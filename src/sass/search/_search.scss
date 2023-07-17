@@ -316,19 +316,3 @@
     }
   }
 }
-
-@media (min-width: 948px) and (max-width: 1199.98px) {
-  .feature-links-container {
-    .card-deck .card {
-      min-width: 300px;
-    }
-  }
-}
-
-@media (min-width: 576px) and (max-width: 947.98px) {
-  .feature-links-container {
-    .card-deck .card {
-      min-width: 200px;
-    }
-  }
-}
