@@ -54,7 +54,7 @@ function FeatureLinks({
       route: 'code-repositories',
       description:
         'Explore the source code essential to the workflow for the young adult rats data in the endurance training study.',
-      icon: 'code',
+      icon: 'terminal',
       title: 'Code Repositories',
       eventHandler: null,
     },
@@ -94,7 +94,7 @@ function FeatureLinks({
   ];
 
   const featuresToRender =
-    userType === 'internal' ? features : features.slice(0, 4);
+    userType === 'internal' ? features : features.slice(0, 5);
 
   return (
     <div className="feature-links-container pt-2">
