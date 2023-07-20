@@ -94,7 +94,7 @@ function FeatureLinks({
   ];
 
   const featuresToRender =
-    userType === 'internal' ? features : features.slice(0, 5);
+    userType === 'internal' ? features : features.slice(0, 4);
 
   return (
     <div className="feature-links-container pt-2">
