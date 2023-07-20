@@ -165,7 +165,6 @@ nav {
 
 @media (max-width: 1199.98px) {
   .header-navbar-container {
-    display: flex;
     align-items: start !important;
     padding-top: 0.9rem;
   }
@@ -205,6 +204,10 @@ nav {
 }
 
 @include media-breakpoint-down(sm) {
+  .header-navbar-container {
+    align-items: center !important;
+    padding-top: 0.75rem;
+  }
   nav {
     .header-navbar-items.container {
       padding-left: 15px;
