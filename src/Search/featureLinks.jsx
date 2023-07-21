@@ -54,7 +54,7 @@ function FeatureLinks({
       route: 'code-repositories',
       description:
         'Explore the source code essential to the workflow for the young adult rats data in the endurance training study.',
-      icon: 'code',
+      icon: 'terminal',
       title: 'Code Repositories',
       eventHandler: null,
     },
@@ -98,7 +98,7 @@ function FeatureLinks({
 
   return (
     <div className="feature-links-container pt-2">
-      <div className="row row-cols-1 row-cols-md-4 mt-5">
+      <div className="row row-cols-1 row-cols-xl-4 row-cols-lg-3 row-cols-sm-1 mt-5">
         {featuresToRender.map((item) => (
           <div key={item.route} className="col mb-4">
             <div className={`card h-100 mb-3 p-3 shadow-sm ${item.route}`}>

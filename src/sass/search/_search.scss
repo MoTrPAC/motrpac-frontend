@@ -317,18 +317,36 @@
   }
 }
 
-@media (min-width: 948px) and (max-width: 1199.98px) {
-  .feature-links-container {
-    .card-deck .card {
-      min-width: 300px;
+@include media-breakpoint-down(md) {
+  .searchPage {
+    .es-search-ui-container {
+      align-items: start !important;
+    }
+
+    .search-box-input-group {
+      flex-wrap: wrap;
+
+      .input-group {
+        margin-bottom: 1.0rem;
+      }
+
+      .controlPanelContainer {
+        margin-left: 0 !important;
+      }
     }
   }
 }
 
-@media (min-width: 576px) and (max-width: 947.98px) {
-  .feature-links-container {
-    .card-deck .card {
-      min-width: 200px;
+@media (max-width: 535.98px) {
+  .searchPage {
+    .search-box-input-group {
+      .controlPanelContainer {
+        margin-bottom: 1.0rem;
+      }
+
+      .search-button-group {
+        margin-left: 0 !important;
+      }
     }
   }
 }
