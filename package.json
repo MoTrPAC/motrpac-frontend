@@ -63,16 +63,16 @@
     "@wojtekmaj/enzyme-adapter-react-17": "0.8.0",
     "enzyme": "3.11.0",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "8.5.0",
-    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-config-prettier": "^8.9.0",
+    "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "jest-canvas-mock": "^2.2.0",
-    "prettier": "2.8.1",
+    "prettier": "^3.0.0",
     "react-error-overlay": "^6.0.11",
     "sass": "^1.57.1",
     "storybook-react-router": "1.0.8",
-    "stylelint": "^14.16.0",
-    "stylelint-config-recommended": "9.0.0"
+    "stylelint": "^15.10.0",
+    "stylelint-config-recommended": "^13.0.0"
   },
   "resolutions": {
     "autoprefixer": "10.4.5"
