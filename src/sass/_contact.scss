@@ -64,3 +64,17 @@
     }
   }
 }
+
+@include media-breakpoint-down(sm) {
+  .contactPage {
+    .contact-form-container {
+      .form-footer {
+        flex-direction: column;
+
+        .contact-form-button-group {
+          margin-top: 1.25rem;
+        }
+      }
+    }
+  }
+}
