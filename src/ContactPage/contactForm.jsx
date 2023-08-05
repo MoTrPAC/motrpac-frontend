@@ -129,11 +129,14 @@ function ContactForm() {
     setRequestPending(true);
     setReCaptcha('');
 
+    // regex pattern to replace new line characters with <br> tags
+    const pattern = /[\r\n]+/g;
+
     const formData = {
       email,
       name,
       subject,
-      message,
+      message: message.replace(pattern, '<br>'),
     };
 
     // post request configs
