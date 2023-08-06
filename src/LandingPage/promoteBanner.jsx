@@ -8,10 +8,10 @@ function PromoteBanner() {
       <h3 className="office-hour-title">Join Us</h3>
       <div className="office-hour-content mb-3">
         The Bioinformatics Center of MoTrPAC will be hosting the next virtual
-        Office Hour on Tuesday, July 18, 2023 at 11:00 am Pacific Time.
+        Office Hour on Tuesday, August 24, 2023 at 11:00 am Pacific Time.
       </div>
       <a
-        href="https://docs.google.com/forms/d/e/1FAIpQLSekaYf_S0P1Mc_tqEW4RENvaicr5vBXgKObbeAB4VIusQlSIg/viewform"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSfs-jT_lB0Z7naiV8pQkU8mLjadoejfPLQSstFfgDFg63AlIQ/viewform"
         className="btn btn-primary"
         role="button"
         target="_blank"
@@ -19,8 +19,8 @@ function PromoteBanner() {
         onClick={trackEvent.bind(
           this,
           'MoTrPAC Office Hour',
-          'July 18, 2023',
-          'Landing Page'
+          'August 24, 2023',
+          'Landing Page',
         )}
       >
         SIGN UP
