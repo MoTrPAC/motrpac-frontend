@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { Tooltip } from 'react-tooltip';
@@ -14,6 +14,7 @@ function ContactForm() {
   const [error, setError] = useState(false);
   const [formValidated, setFormValidated] = useState(false);
   const [requestPending, setRequestPending] = useState(false);
+  const recaptchaRef = useRef(null);
 
   // Set up environment variables
   const api =
@@ -113,6 +114,7 @@ function ContactForm() {
     setReCaptcha('');
     setSuccess(false);
     setError(false);
+    recaptchaRef.current.reset();
 
     // Reset form validation classes on DOM elenments
     fields.forEach((field) => {
@@ -215,8 +217,7 @@ function ContactForm() {
             <label htmlFor="subject" className="required-field">
               Subject
             </label>
-            <input
-              type="text"
+            <select
               className="form-control"
               id="subject"
               value={subject}
@@ -225,7 +226,13 @@ function ContactForm() {
               onChange={(e) => setSubject(e.target.value)}
               onBlur={validateOnBlur}
               disabled={requestPending || success}
-            />
+            >
+              <option value="">--- Select a subject ---</option>
+              <option value="Registration">Registration</option>
+              <option value="Data Access">Data Access</option>
+              <option value="Data Usage">Data Usage</option>
+              <option value="Other">Other</option>
+            </select>
             <div className="invalid-feedback">A valid subject is required</div>
           </div>
           <div className="form-group">
@@ -248,7 +255,11 @@ function ContactForm() {
           </div>
           <div className="mt-4 d-flex justify-content-between align-items-end form-footer">
             <div className="reCAPTCHA-container">
-              <ReCAPTCHA sitekey={recaptchaKey} onChange={handleReCAPTCHA} />
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey={recaptchaKey}
+                onChange={handleReCAPTCHA}
+              />
             </div>
             <div className="contact-form-button-group">
               <button
@@ -265,7 +276,7 @@ function ContactForm() {
                   isOpen
                   delayShow={5000}
                 >
-                  Reset contact form to start over
+                  Reset form to start over
                 </Tooltip>
               )}
               <button
