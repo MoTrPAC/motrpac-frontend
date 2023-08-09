@@ -8,7 +8,7 @@ function PromoteBanner() {
       <h3 className="office-hour-title">Join Us</h3>
       <div className="office-hour-content mb-3">
         The Bioinformatics Center of MoTrPAC will be hosting the next virtual
-        Office Hour on Tuesday, August 24, 2023 at 11:00 am Pacific Time.
+        Office Hour on Thursday, August 24, 2023 at 11:00 am Pacific Time.
       </div>
       <a
         href="https://docs.google.com/forms/d/e/1FAIpQLSfs-jT_lB0Z7naiV8pQkU8mLjadoejfPLQSstFfgDFg63AlIQ/viewform"
