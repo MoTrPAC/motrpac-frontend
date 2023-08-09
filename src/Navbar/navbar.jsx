@@ -134,17 +134,28 @@ export function Navbar({
     process.env.NODE_ENV !== 'production'
       ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
       : process.env.REACT_APP_API_SERVICE_ADDRESS;
-  const endpoint = process.env.REACT_APP_USER_REGISTRATION_ENDPOINT;
+  const endpointRegUser = process.env.REACT_APP_USER_REGISTRATION_ENDPOINT;
+  const endpointSendEmail = process.env.REACT_APP_SEND_EMAIL_ENDPOINT;
   const key =
     process.env.NODE_ENV !== 'production'
       ? process.env.REACT_APP_API_SERVICE_KEY_DEV
       : process.env.REACT_APP_API_SERVICE_KEY;
 
-  const checkServiceStatus = () => {
-    return axios.get(`${api}${endpoint}/info?key=${key}`).then((res) => {
-      console.log(res.status);
-    });
-  };
+  // Send GET request to endpoint to 'warm up' CF backend service
+  function checkServiceStatus(e) {
+    if (e.target.id === 'reg_user') {
+      return axios
+        .get(`${api}${endpointRegUser}/info?key=${key}`)
+        .then((res) => {
+          console.log(res.status);
+        });
+    }
+    return axios
+      .get(`${api}${endpointSendEmail}/info?key=${key}`)
+      .then((res) => {
+        console.log(res.status);
+      });
+  }
 
   const navbar = (
     <div className="header-navbar-container d-flex flex-column flex-md-row flex-sm-row flex-xs-row align-items-center px-3 px-md-4 bg-white border-bottom shadow-sm mb-3 fixed-top">
@@ -238,13 +249,14 @@ export function Navbar({
                     Endurance Training Data
                   </Link>
                   <Link
+                    id="reg_user"
                     to={
                       isAuthenticated && hasAccess
                         ? '/releases'
                         : '/data-access'
                     }
                     className="dropdown-item"
-                    onClick={checkServiceStatus}
+                    onClick={(e) => checkServiceStatus(e)}
                   >
                     Limited Acute Exercise Data
                   </Link>
@@ -312,7 +324,12 @@ export function Navbar({
                   <Link to="/tutorials" className="dropdown-item">
                     Tutorials
                   </Link>
-                  <Link to="/contact" className="dropdown-item">
+                  <Link
+                    id="send_email"
+                    to="/contact"
+                    className="dropdown-item"
+                    onClick={(e) => checkServiceStatus(e)}
+                  >
                     Contact Us
                   </Link>
                 </div>
