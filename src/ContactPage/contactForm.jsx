@@ -227,10 +227,13 @@ function ContactForm() {
               onBlur={validateOnBlur}
               disabled={requestPending || success}
             >
-              <option value="">--- Select a subject ---</option>
-              <option value="Registration">Registration</option>
+              <option value="">--- Please select a subject ---</option>
+              <option value="Account Access">Account Access</option>
               <option value="Data Access">Data Access</option>
-              <option value="Data Usage">Data Usage</option>
+              <option value="Data Usage/Analysis">Data Usage/Analysis</option>
+              <option value="Animal Study Design">Animal Study Design</option>
+              <option value="Human Study Design">Human Study Design</option>
+              <option value="Technical Support">Technical Support</option>
               <option value="Other">Other</option>
             </select>
             <div className="invalid-feedback">A valid subject is required</div>
