@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { Typeahead } from 'react-bootstrap-typeahead';
+import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import TimewiseResultsTable from './timewiseTable';
 import TrainingResultsTable from './trainingResultsTable';
@@ -18,6 +19,7 @@ import IconSet from '../lib/iconSet';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import { genes } from '../data/genes';
 import { metabolites } from '../data/metabolites';
+import searchStructuredData from '../lib/searchStructuredData/search';
 
 export function SearchPage({
   profile,
@@ -142,6 +144,13 @@ export function SearchPage({
 
   return (
     <div className="searchPage px-3 px-md-4 mb-3">
+      <Helmet>
+        <html lang="en" />
+        <title>Search Differential Abundance Data - MoTrPAC Data Hub</title>
+        <script type="application/ld+json">
+          {JSON.stringify(searchStructuredData)}
+        </script>
+      </Helmet>
       <form id="searchForm" name="searchForm">
         <PageTitle title="Search differential abundance data" />
         <div className="search-content-container">
