@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import BrowseDataTable from './browseDataTable';
 import actions from './browseDataActions';
@@ -9,6 +10,7 @@ import BrowseDataFilter from './browseDataFilter';
 import BootstrapSpinner from '../lib/ui/spinner';
 import OpenAccessBrowseDataSummary from './components/openAccessSummary';
 import AuthAccessBrowseDataSummary from './components/authAccessSummary';
+import dataDownloadStructuredData from '../lib/searchStructuredData/dataDownload';
 
 export function BrowseDataPage({
   profile,
@@ -26,6 +28,13 @@ export function BrowseDataPage({
 
   return (
     <div className="browseDataPage px-3 px-md-4 mb-3">
+      <Helmet>
+        <html lang="en" />
+        <title>Data Download - MoTrPAC Data Hub</title>
+        <script type="application/ld+json">
+          {JSON.stringify(dataDownloadStructuredData)}
+        </script>
+      </Helmet>
       <PageTitle
         title={
           userType && userType === 'internal'
