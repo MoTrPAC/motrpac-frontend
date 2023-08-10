@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import Particles from 'react-particles-js';
+import { Helmet } from 'react-helmet';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-yellow_pipelineball_left.gif';
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
@@ -12,6 +13,7 @@ import onVisibilityChange from '../lib/utils/pageVisibility';
 import AnnouncementBanner from './announcementBanner';
 import ExternalLink from '../lib/ui/externalLink';
 import PromoteBanner from './promoteBanner';
+import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
 
 /**
  * Renders the landing page in unauthenticated state.
@@ -57,7 +59,7 @@ export function LandingPage({ isAuthenticated, profile }) {
       document.removeEventListener(
         visibilityChange,
         handleVisibilityChange,
-        false
+        false,
       );
     };
   });
@@ -75,6 +77,13 @@ export function LandingPage({ isAuthenticated, profile }) {
 
   return (
     <div className="row marketing">
+      <Helmet>
+        <html lang="en" />
+        <title>Welcome to MoTrPAC Data Hub</title>
+        <script type="application/ld+json">
+          {JSON.stringify(landingPageStructuredData)}
+        </script>
+      </Helmet>
       <main>
         <div className="container hero h-100">
           <div className="row hero-wrapper h-100">
