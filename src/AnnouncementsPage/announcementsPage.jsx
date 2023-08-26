@@ -68,9 +68,10 @@ function AnnouncementEntry({ entry }) {
                     rel="noopener noreferrer"
                     onClick={trackEvent.bind(
                       this,
+                      'User Interests',
                       link.gaEventCategory,
+                      'Announcement Page',
                       link.gaEventAction,
-                      'Announcement Page'
                     )}
                   >
                     {link.label}
