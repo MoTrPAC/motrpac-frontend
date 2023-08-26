@@ -14,9 +14,10 @@ function AnnouncementBanner() {
             rel="noopener noreferrer"
             onClick={trackEvent.bind(
               this,
-              'MoTrPAC Landscape Preprint',
-              'bioRxiv',
-              'Landing Page'
+              'User Interests',
+              'MoTrPAC Landscape Paper',
+              'Landing Page',
+              'Preprint on bioRxiv',
             )}
           >
             The MoTrPAC Endurance Exercise Training Animal Study Landscape
@@ -34,9 +35,10 @@ function AnnouncementBanner() {
             rel="noopener noreferrer"
             onClick={trackEvent.bind(
               this,
-              'MoTrPAC Landscape Preprint',
-              'MotrpacRatTraining6moData',
-              'Landing Page'
+              'User Interests',
+              'MoTrPAC Landscape Paper',
+              'Landing Page',
+              'MotrpacRatTraining6moData R package',
             )}
           >
             R package
