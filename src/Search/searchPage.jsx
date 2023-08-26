@@ -542,9 +542,12 @@ function ResultsDownloadLink({ downloadPath, downloadError, profile }) {
           download
           onClick={trackEvent.bind(
             this,
-            'Search results download',
+            'Data Download',
+            'Search Results',
+            profile && profile.user_metadata
+              ? profile.user_metadata.name + ' - ' + profile.user_metadata.email
+              : 'anonymous',
             resultDownloadFilePath,
-            profile.user_metadata.name
           )}
         >
           Click this link to download the search results.
