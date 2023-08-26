@@ -260,7 +260,12 @@ function handleDownloadRequest(email, name, selectedFiles) {
 
   // Track download request in Google Analytics
   const eventLabel = name + ' - ' + email;
-  trackEvent('Data file download', JSON.stringify(fileObjects), eventLabel);
+  trackEvent(
+    'Data Download',
+    'Selected Files',
+    eventLabel,
+    JSON.stringify(fileObjects),
+  );
 
   return (dispatch) => {
     dispatch(downloadRequested());
