@@ -122,14 +122,14 @@
             {
                 "label": "Temporal dynamics of the multi-omic response to endurance exercise training across tissues",
                 "url": "https://www.biorxiv.org/content/10.1101/2022.09.21.508770v2",
-                "gaEventCategory": "MoTrPAC Landscape Preprint",
-                "gaEventAction": "bioRxiv"
+                "gaEventCategory": "MoTrPAC Landscape Paper",
+                "gaEventAction": "Preprint on bioRxiv"
             },
             {
                 "label": "R package consisting of the processed data and downstream analysis results presented in this preprint",
                 "url": "https://motrpac.github.io/MotrpacRatTraining6moData/",
-                "gaEventCategory": "MoTrPAC Landscape Preprint",
-                "gaEventAction": "MotrpacRatTraining6moData"
+                "gaEventCategory": "MoTrPAC Landscape Paper",
+                "gaEventAction": "MotrpacRatTraining6moData R package"
             }
         ]
     }
