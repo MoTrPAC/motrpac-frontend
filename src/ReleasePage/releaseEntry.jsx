@@ -98,9 +98,14 @@ function ReleaseEntry({ profile, currentView }) {
           download
           onClick={trackEvent.bind(
             this,
-            `Release ${modalStatus.releaseVersion} Downloads (${currentView})`,
+            'Data Download',
+            `${currentView.toUpperCase()} Release ${
+              modalStatus.releaseVersion
+            }`,
+            profile && profile.user_metadata
+              ? `${profile.user_metadata.name} - ${profile.user_metadata.email}`
+              : 'anonymous',
             modalStatus.file,
-            profile.user_metadata.name
           )}
         >
           {modalStatus.message}

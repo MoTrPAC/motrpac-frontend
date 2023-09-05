@@ -49,7 +49,7 @@ function BundleDownloadButton({ bundlefile, profile }) {
       profile && profile.user_metadata
         ? `${profile.user_metadata.name} - ${profile.user_metadata.email}`
         : 'anonymous';
-    trackEvent('Bundle dataset download', file, eventLabel);
+    trackEvent('Data Download', 'Bundled Files', eventLabel, file);
     setTimeout(() => {
       setFetchStatus({
         status: null,

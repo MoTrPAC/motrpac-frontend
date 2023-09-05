@@ -43,10 +43,11 @@ export const withTracker = (WrappedComponent) => {
   return HOC;
 };
 
-export const trackEvent = (category, action, label) => {
+export const trackEvent = (category, action, label, target) => {
   gtag('event', action, {
     event_category: category,
     event_label: label,
+    event_target: target,
   });
 };
 
