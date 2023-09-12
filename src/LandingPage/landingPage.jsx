@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import Particles from 'react-particles-js';
 import { Helmet } from 'react-helmet';
-import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-yellow_pipelineball_left.gif';
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Heart.png';
