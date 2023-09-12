@@ -19,7 +19,7 @@ function PromoteBanner() {
         onClick={trackEvent.bind(
           this,
           'User Engagement',
-          'Open Office Hour',
+          'open_office_hour',
           'Landing Page',
           'September 26, 2023',
         )}

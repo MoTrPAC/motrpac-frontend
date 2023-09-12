@@ -165,7 +165,8 @@ function DataTable({
       handleDownloadRequest(
         profile.user_metadata.email,
         profile.user_metadata.name,
-        selectedFiles
+        profile.userid,
+        selectedFiles,
       );
     }
   }
@@ -279,6 +280,7 @@ BrowseDataTable.propTypes = {
   handleDownloadRequest: PropTypes.func.isRequired,
   downloadRequestResponse: PropTypes.string.isRequired,
   profile: PropTypes.shape({
+    userid: PropTypes.string,
     user_metadata: PropTypes.shape({
       userType: PropTypes.string,
       email: PropTypes.string,
@@ -304,6 +306,7 @@ DataTable.propTypes = {
   handleDownloadRequest: PropTypes.func.isRequired,
   downloadRequestResponse: PropTypes.string.isRequired,
   profile: PropTypes.shape({
+    userid: PropTypes.string,
     user_metadata: PropTypes.shape({
       userType: PropTypes.string,
       email: PropTypes.string,

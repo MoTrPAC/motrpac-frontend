@@ -237,10 +237,13 @@ function handleUrlFetch(selectedFiles) {
 }
 
 // Request to download files
-function handleDownloadRequest(email, name, selectedFiles) {
+function handleDownloadRequest(email, name, selectedFiles, userid) {
   if (!email || !name || selectedFiles.length === 0) {
     return false;
   }
+
+  // Remove 'auth0|' substring from userid
+  const userID = userid ? userid.substring(userid.indexOf('|') + 1) : '';
 
   const fileObjects = [];
   selectedFiles.forEach((file) => {
@@ -254,16 +257,16 @@ function handleDownloadRequest(email, name, selectedFiles) {
 
   const requestBody = {
     email,
-    name,
+    name: `${name} (${userID})`,
     files: fileObjects,
   };
 
   // Track download request in Google Analytics
-  const eventLabel = name + ' - ' + email;
+  // No longer capture full names and email addresses
   trackEvent(
     'Data Download',
-    'Selected Files',
-    eventLabel,
+    'selected_files',
+    userID,
     JSON.stringify(fileObjects),
   );
 

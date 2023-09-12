@@ -99,11 +99,9 @@ function ReleaseEntry({ profile, currentView }) {
           onClick={trackEvent.bind(
             this,
             'Data Download',
-            `${currentView.toUpperCase()} Release ${
-              modalStatus.releaseVersion
-            }`,
-            profile && profile.user_metadata
-              ? `${profile.user_metadata.name} - ${profile.user_metadata.email}`
+            `${currentView}_release_${modalStatus.releaseVersion}`,
+            profile && profile.userid
+              ? profile.userid.substring(profile.userid.indexOf('|') + 1)
               : 'anonymous',
             modalStatus.file,
           )}
@@ -398,6 +396,8 @@ function ReleaseEntry({ profile, currentView }) {
 ReleaseEntry.propTypes = {
   profile: PropTypes.shape({
     name: PropTypes.string,
+    email: PropTypes.string,
+    userid: PropTypes.string,
     user_metadata: PropTypes.object,
   }).isRequired,
   currentView: PropTypes.string.isRequired,
