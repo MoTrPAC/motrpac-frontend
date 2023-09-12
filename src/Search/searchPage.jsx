@@ -543,9 +543,9 @@ function ResultsDownloadLink({ downloadPath, downloadError, profile }) {
           onClick={trackEvent.bind(
             this,
             'Data Download',
-            'Search Results',
-            profile && profile.user_metadata
-              ? `${profile.user_metadata.name} - ${profile.user_metadata.email}`
+            'search_results',
+            profile && profile.userid
+              ? profile.userid.substring(profile.userid.indexOf('|') + 1)
               : 'anonymous',
             resultDownloadFilePath,
           )}
@@ -617,6 +617,7 @@ function ResultsDownloadModal({
 
 SearchPage.propTypes = {
   profile: PropTypes.shape({
+    userid: PropTypes.string,
     user_metadata: PropTypes.object,
   }),
   searchResults: PropTypes.shape({
