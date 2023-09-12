@@ -93,6 +93,7 @@ BrowseDataPage.propTypes = {
       userType: PropTypes.string,
       email: PropTypes.string,
       name: PropTypes.string,
+      userid: PropTypes.string,
     }),
   }),
   activeFilters: BrowseDataFilter.propTypes.activeFilters.isRequired,
@@ -120,8 +121,8 @@ const mapDispatchToProps = (dispatch) => ({
   changePageRequest: (maxRows, page) =>
     dispatch(actions.changePageRequest(maxRows, page)),
   loadDataObjects: (files) => dispatch(actions.loadDataObjects(files)),
-  handleDownloadRequest: (email, name, selectedFiles) =>
-    dispatch(actions.handleDownloadRequest(email, name, selectedFiles)),
+  handleDownloadRequest: (email, name, selectedFiles, userid) =>
+    dispatch(actions.handleDownloadRequest(email, name, selectedFiles, userid)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BrowseDataPage);
