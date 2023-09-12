@@ -45,11 +45,11 @@ function BundleDownloadButton({ bundlefile, profile }) {
 
   // reset state upon user clicking download link
   function handleFileDownload(file) {
-    const eventLabel =
-      profile && profile.user_metadata
-        ? `${profile.user_metadata.name} - ${profile.user_metadata.email}`
+    const userID =
+      profile && profile.userid
+        ? profile.userid.substring(profile.userid.indexOf('|') + 1)
         : 'anonymous';
-    trackEvent('Data Download', 'Bundled Files', eventLabel, file);
+    trackEvent('Data Download', 'bundled_files', userID, file);
     setTimeout(() => {
       setFetchStatus({
         status: null,
@@ -154,6 +154,7 @@ function BundleDownloadButton({ bundlefile, profile }) {
 BundleDownloadButton.propTypes = {
   bundlefile: PropTypes.string.isRequired,
   profile: PropTypes.shape({
+    userid: PropTypes.string,
     user_metadata: PropTypes.shape({
       userType: PropTypes.string,
       email: PropTypes.string,
