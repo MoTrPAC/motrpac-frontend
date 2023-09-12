@@ -69,7 +69,7 @@ function AnnouncementEntry({ entry }) {
                     onClick={trackEvent.bind(
                       this,
                       'User Interests',
-                      link.gaEventCategory,
+                      link.gaEventCategory.toLowerCase().split(' ').join('_'),
                       'Announcement Page',
                       link.gaEventAction,
                     )}

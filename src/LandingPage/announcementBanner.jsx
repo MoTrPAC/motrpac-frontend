@@ -15,7 +15,7 @@ function AnnouncementBanner() {
             onClick={trackEvent.bind(
               this,
               'User Interests',
-              'MoTrPAC Landscape Paper',
+              'motrpac_landscape_paper',
               'Landing Page',
               'Preprint on bioRxiv',
             )}
@@ -36,7 +36,7 @@ function AnnouncementBanner() {
             onClick={trackEvent.bind(
               this,
               'User Interests',
-              'MoTrPAC Landscape Paper',
+              'motrpac_landscape_paper',
               'Landing Page',
               'MotrpacRatTraining6moData R package',
             )}
