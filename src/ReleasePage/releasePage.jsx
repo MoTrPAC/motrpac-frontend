@@ -99,6 +99,8 @@ export function ReleasePage({ profile }) {
 ReleasePage.propTypes = {
   profile: PropTypes.shape({
     name: PropTypes.string,
+    email: PropTypes.string,
+    userid: PropTypes.string,
     user_metadata: PropTypes.object,
   }).isRequired,
 };
