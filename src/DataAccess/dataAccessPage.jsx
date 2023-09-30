@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
+import PageTitle from '../lib/ui/pageTitle';
 import dayjs from 'dayjs';
 import ReCAPTCHA from 'react-google-recaptcha';
 import axios from 'axios';
@@ -44,6 +45,17 @@ export function DataAccessPage({ isAuthenticated, profile }) {
   const [checkboxAlert, setCheckboxAlert] = useState(false);
   const [formValues, setFormValues] = useState(defaultFormValues);
   const [requestPending, setRequestPending] = useState(false);
+
+  const api =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
+      : process.env.REACT_APP_API_SERVICE_ADDRESS;
+  const endpoint = process.env.REACT_APP_USER_REGISTRATION_ENDPOINT;
+  const key =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_API_SERVICE_KEY_DEV
+      : process.env.REACT_APP_API_SERVICE_KEY;
+  const recaptchaKey = process.env.REACT_APP_reCAPTCHA_SITE_KEY;
 
   useEffect(() => {
     // validate REQUIRED form values by subscribing to changes
@@ -191,7 +203,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
     };
 
     // post request configs
-    const serviceUrl = 'https://service-apis.motrpac-data.org/new_user';
+    const serviceUrl = `${api}${endpoint}?key=${key}`;
     const timeOutConfig = { timeout: 5000 };
 
     return axios.post(serviceUrl, userObj, timeOutConfig).then((response) => {
@@ -214,10 +226,15 @@ export function DataAccessPage({ isAuthenticated, profile }) {
     <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 dataAccessPage`}>
       <div className={`${!isAuthenticated ? 'container' : ''}`}>
         <form id="dataAccessRegistration" name="dataAccessRegistration" noValidate>
-          <div className="page-title pt-3 pb-2 border-bottom">
-            <h3>MoTrPAC External Data Release</h3>
+          <PageTitle title="MoTrPAC External Data Release" />
+          <div className="alert alert-info alert-limited-acute-exercise-date mt-4" role="alert">
+            A limited data set from adult rats (6-month old) that performed an acute
+            bout of endurance exercise is available to registered users. Please
+            see the <Link to="/data-download">data download page</Link> if you
+            are interested in the full experimental data set from endurance
+            trained (1wk, 2wks, 4wks or 8wks) compared to untrained adult rats.
           </div>
-          <div className="alert alert-dark alert-consortia-members-access" role="alert">
+          <div className="alert alert-dark alert-consortia-members-access mt-4" role="alert">
             MoTrPAC consortium members are not required to fill out the following data use
             agreement and registration. Consortium members who already have registered
             accounts may access the released data upon login. Consortium members who don't
@@ -278,7 +295,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
           </div>
           <StudyDocumentsTable currentView="external" />
           <div className="card mb-3 border-secondary">
-            <div className="card-header bg-secondary text-light">Data Use Agreement and Registration</div>
+            <h5 className="card-header bg-secondary text-light">Data Use Agreement and Registration</h5>
             <div className="card-body">
               {/* Data use agreement section */}
               <h5 className="card-title pt-1 pb-2">Data Use Agreement</h5>
@@ -634,7 +651,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                 <div className="mt-3 d-flex justify-content-between align-items-end form-footer">
                   <div className="reCAPTCHA-container">
                     <ReCAPTCHA
-                      sitekey="6Lf8oboUAAAAAB6SoflqfgfHvwHrV62gaPaL2-BL"
+                      sitekey={recaptchaKey}
                       onChange={handleReCAPTCHA}
                     />
                   </div>

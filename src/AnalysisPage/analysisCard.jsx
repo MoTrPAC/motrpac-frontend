@@ -55,7 +55,7 @@ function AnalysisCard({ analysisType, onPickAnalysis }) {
         onClick={onPickAnalysis.bind(
           this,
           analysisType.shortName,
-          analysisType.title
+          analysisType.preferredTitle || analysisType.title
         )}
         onKeyPress={onPickAnalysis.bind(
           this,

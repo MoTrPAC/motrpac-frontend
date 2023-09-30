@@ -25,7 +25,7 @@ function TableControls({ sort, toggleSort, showQC, toggleQC }) {
           <div className="controlLabel">Sort:</div>
           <div className="dropdown">
             <button
-              className="btn btn-sm btn-primary dropdown-toggle"
+              className="btn btn-primary dropdown-toggle"
               type="button"
               id="tableSortMenu"
               data-toggle="dropdown"

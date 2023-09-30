@@ -1,7 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import actions from '../UploadPage/uploadActions';
+import dayjs from 'dayjs';
+import axios from 'axios';
+import DataStatusActions from '../DataStatusPage/dataStatusActions';
+import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 
 /**
  * Renders the gloabl sidebar.
@@ -15,8 +18,11 @@ export function Sidebar({
   isAuthenticated = false,
   profile,
   expanded,
-  clearForm,
   resetDepth,
+  fetchData,
+  handleDataFetch,
+  allFiles,
+  qcData,
   toggleSidebar,
 }) {
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
@@ -26,21 +32,71 @@ export function Sidebar({
     return '';
   }
 
+  // Call to invoke Redux action to fetch data
+  // if timestamp is empty or older than 24 hours
+  const handleQcDataFetch = () => {
+    const lastUpdate = qcData.lastModified;
+    // Convert timestamp string back to dayjs() object to calculate time difference
+    if (
+      !lastUpdate ||
+      !lastUpdate.length ||
+      (lastUpdate.length && dayjs().diff(dayjs(lastUpdate), 'hour') >= 24)
+    ) {
+      fetchData();
+    }
+  };
+
+  const handleDataObjectFetch = () => {
+    if (allFiles.length === 0) {
+      handleDataFetch();
+    }
+  };
+
+  const api =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
+      : process.env.REACT_APP_API_SERVICE_ADDRESS;
+  const endpoint = process.env.REACT_APP_SIGNED_URL_ENDPOINT;
+  const key =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_API_SERVICE_KEY_DEV
+      : process.env.REACT_APP_API_SERVICE_KEY;
+
+  function checkServiceStatus() {
+    return axios.get(`${api}${endpoint}/info?key=${key}`).then((res) => {
+      console.log(res.status);
+    });
+  }
+
   function renderNavLink(route, label, id, icon, disabled, handler) {
     // Don't show tooltip if sidebar is expanded
     // due to the presence of navlink labels
     return (
       <div className="sidebar-nav-link-wrapper">
-        <NavLink
-          to={`/${route}`}
-          onClick={handler}
-          className={`nav-link d-inline-flex align-items-center w-100 ${
-            disabled ? 'disabled-link' : ''
-          }`}
-        >
-          <i className="material-icons nav-link-icon">{icon}</i>
-          <span className="nav-link-label">{label}</span>
-        </NavLink>
+        {route.indexOf('http') !== -1 ? (
+          <a
+            href={route}
+            target="_blank"
+            rel="noreferrer"
+            className={`nav-link d-inline-flex align-items-center w-100 ${
+              disabled ? 'disabled-link' : ''
+            }`}
+          >
+            <i className="material-icons nav-link-icon">{icon}</i>
+            <span className="nav-link-label">{label}</span>
+          </a>
+        ) : (
+          <NavLink
+            to={`/${route}`}
+            onClick={handler}
+            className={`nav-link d-inline-flex align-items-center w-100 ${
+              disabled ? 'disabled-link' : ''
+            }`}
+          >
+            <i className="material-icons nav-link-icon">{icon}</i>
+            <span className="nav-link-label">{label}</span>
+          </NavLink>
+        )}
         {!expanded && !disabled && (
           <div className="tooltip-on-right" id={id}>
             {label}
@@ -77,13 +133,7 @@ export function Sidebar({
         <div className="sidebar-panel h-100 w-100">
           <ul className="nav flex-column">
             <li className="nav-item">
-              {renderNavLink(
-                'dashboard',
-                'Dashboard',
-                'dashboard',
-                'home',
-                false
-              )}
+              {renderNavLink('home', 'Home', 'home', 'home', false)}
             </li>
             <li className="nav-item">
               {renderNavLink(
@@ -103,7 +153,7 @@ export function Sidebar({
             <li className="nav-item">
               {renderNavLink(
                 'analysis/animal',
-                'Animal',
+                'Rat',
                 'animal-analysis',
                 'pest_control_rodent',
                 userType === 'external',
@@ -128,39 +178,61 @@ export function Sidebar({
           <ul className="nav flex-column">
             <li className="nav-item">
               {renderNavLink(
+                'browse-data',
+                'Browse Data',
+                'browse-data',
+                'view_list',
+                userType === 'external',
+                handleDataObjectFetch
+              )}
+            </li>
+            <li className="nav-item">
+              {renderNavLink(
+                'https://collab.motrpac-data.org/hub/oauth_login?next=%2Fhub%2Fhome',
+                'MoTrPAC Collab',
+                'motrpac-collab',
+                'hub',
+                userType === 'external'
+              )}
+            </li>
+            <li className="nav-item">
+              {renderNavLink(
+                'https://github.com/orgs/MoTrPAC/repositories?q=MotrpacRatTraining&type=public&language=r',
+                'Code Repository',
+                'code-repository',
+                'code',
+                userType === 'external'
+              )}
+            </li>
+            {userType !== 'external' && (
+              <li className="nav-item">
+                {renderNavLink(
+                  'summary',
+                  'Summary',
+                  'summary',
+                  'assessment',
+                  false
+                )}
+              </li>
+            )}
+            <li className="nav-item">
+              {renderNavLink(
+                'qc-data-monitor',
+                'QC Data Monitor',
+                'qc-data-monitor',
+                'fact_check',
+                userType === 'external',
+                handleQcDataFetch
+              )}
+            </li>
+            <li className="nav-item">
+              {renderNavLink(
                 'releases',
                 'Releases',
                 'releases',
-                'cloud_done',
-                false
-              )}
-            </li>
-            <li className="nav-item">
-              {renderNavLink(
-                'summary',
-                'Summary',
-                'summary',
-                'assessment',
-                true
-              )}
-            </li>
-            <li className="nav-item">
-              {renderNavLink(
-                'download',
-                'Browse Data',
-                'download',
-                'view_list',
-                true
-              )}
-            </li>
-            <li className="nav-item">
-              {renderNavLink(
-                'upload',
-                'Upload Data',
-                'upload',
-                'cloud_upload',
-                true,
-                clearForm
+                'rocket_launch',
+                false,
+                checkServiceStatus
               )}
             </li>
           </ul>
@@ -174,14 +246,17 @@ export function Sidebar({
 const mapStateToProps = (state) => ({
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
+  qcData: state.dataStatus.qcData,
   expanded: state.sidebar.expanded,
+  allFiles: state.browseData.allFiles,
 });
 
-// Need to clear the upload form values and recently uploaded files
-// if user navigates away from and returns to the upload page
+// Need to reset depth of views on analysis page
+// if user clicks on either the rat or human analysis links
 const mapDispatchToProps = (dispatch) => ({
-  clearForm: () => dispatch(actions.clearForm()),
   resetDepth: () => dispatch({ type: 'RESET_DEPTH' }),
+  fetchData: () => dispatch(DataStatusActions.fetchData()),
+  handleDataFetch: () => dispatch(BrowseDataActions.handleDataFetch()),
   toggleSidebar: () => dispatch({ type: 'SIDEBAR_TOGGLED' }),
 });
 

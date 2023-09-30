@@ -43,12 +43,19 @@ export function AuthReducer(state = defaultAuthState, action) {
         payload: {},
         profile: {},
       };
-    case PROFILE_RECEIVE:
+    case PROFILE_RECEIVE: {
+      const { profile } = action;
+      const { payload } = state;
+      const profileObj = { ...profile };
+      profileObj.userid =
+        payload && payload.idTokenPayload ? payload.idTokenPayload.sub : '';
+
       return {
         ...state,
         payload: {},
-        profile: action.profile,
+        profile: profileObj,
       };
+    }
     default:
       return state;
   }

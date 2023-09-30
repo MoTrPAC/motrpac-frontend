@@ -61,18 +61,23 @@ function ReleasedSampleSummary({ data, release, userType }) {
         studyCount: 0,
         qcCount: 0,
       },
+      immunoassay: {
+        label: 'Proteomics Targeted',
+        studyCount: 0,
+        qcCount: 0,
+      },
       proteomics: {
-        label: 'Proteomics',
+        label: 'Proteomics Untargeted',
         studyCount: 0,
         qcCount: 0,
       },
       pass1a_06: {
-        label: 'PASS1A 6-Month',
+        label: 'Acute Exercise Training',
         studyCount: 0,
         qcCount: 0,
       },
       pass1b_06: {
-        label: 'PASS1B 6-Month',
+        label: 'Endurance Exercise Training',
         studyCount: 0,
         qcCount: 0,
       },
@@ -127,49 +132,58 @@ function ReleasedSampleSummary({ data, release, userType }) {
       );
       // internal pass1b_06 'study' samples for each omic
       const internalPass1B06TranscriptCount = countSamples(
-        data.internal.pass1b_06,
+        data.external.pass1b_06,
         'transcriptomics'
       );
       const internalPass1B06EpigenCount = countSamples(
-        data.internal.pass1b_06,
+        data.external.pass1b_06,
         'epigenomics'
       );
       const internalPass1B06MetaTargCount = countSamples(
-        data.internal.pass1b_06,
+        data.external.pass1b_06,
         'metabolomics-targeted'
       );
       const internalPass1B06MetaUntargCount = countSamples(
-        data.internal.pass1b_06,
+        data.external.pass1b_06,
         'metabolomics-untargeted'
       );
       const internalPass1B06ProtCount = countSamples(
-        data.internal.pass1b_06,
+        data.external.pass1b_06,
         'proteomics'
+      );
+      const internalPass1B06ImmunoassayCount = countSamples(
+        data.external.pass1b_06,
+        'immunoassay'
       );
       // internal pass1b_06 'QC' samples for each omic
       const internalPass1B06TranscriptCountQC = countSamples(
-        data.internal.pass1b_06,
+        data.external.pass1b_06,
         'transcriptomics',
         'qcCount'
       );
       const internalPass1B06EpigenCountQC = countSamples(
-        data.internal.pass1b_06,
+        data.external.pass1b_06,
         'epigenomics',
         'qcCount'
       );
       const internalPass1B06MetaTargCountQC = countSamples(
-        data.internal.pass1b_06,
+        data.external.pass1b_06,
         'metabolomics-targeted',
         'qcCount'
       );
       const internalPass1B06MetaUntargCountQC = countSamples(
-        data.internal.pass1b_06,
+        data.external.pass1b_06,
         'metabolomics-untargeted',
         'qcCount'
       );
       const internalPass1B06ProtCountQC = countSamples(
-        data.internal.pass1b_06,
+        data.external.pass1b_06,
         'proteomics',
+        'qcCount'
+      );
+      const internalPass1B06ImmunoassayCountQC = countSamples(
+        data.external.pass1b_06,
+        'immunoassay',
         'qcCount'
       );
       // assign internal release 'study' sample counts
@@ -183,6 +197,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
         internalPass1A06MetaUntargCount + internalPass1B06MetaUntargCount;
       countObject.proteomics.studyCount =
         internalPass1A06ProtCount + internalPass1B06ProtCount;
+      countObject.immunoassay.studyCount = internalPass1B06ImmunoassayCount;
       countObject.pass1a_06.studyCount =
         internalPass1A06TranscriptCount +
         internalPass1A06EpigenCount +
@@ -194,7 +209,8 @@ function ReleasedSampleSummary({ data, release, userType }) {
         internalPass1B06EpigenCount +
         internalPass1B06MetaTargCount +
         internalPass1B06MetaUntargCount +
-        internalPass1B06ProtCount;
+        internalPass1B06ProtCount +
+        internalPass1B06ImmunoassayCount;
       // assign internal release 'QC' sample counts
       countObject.transcriptomics.qcCount =
         internalPass1A06TranscriptCountQC + internalPass1B06TranscriptCountQC;
@@ -206,6 +222,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
         internalPass1A06MetaUntargCountQC + internalPass1B06MetaUntargCountQC;
       countObject.proteomics.qcCount =
         internalPass1A06ProtCountQC + internalPass1B06ProtCountQC;
+      countObject.immunoassay.qcCount = internalPass1B06ImmunoassayCountQC;
       countObject.pass1a_06.qcCount =
         internalPass1A06TranscriptCountQC +
         internalPass1A06EpigenCountQC +
@@ -217,7 +234,8 @@ function ReleasedSampleSummary({ data, release, userType }) {
         internalPass1B06EpigenCountQC +
         internalPass1B06MetaTargCountQC +
         internalPass1B06MetaUntargCountQC +
-        internalPass1B06ProtCountQC;
+        internalPass1B06ProtCountQC +
+        internalPass1B06ImmunoassayCountQC;
     } else if (metric === 'external') {
       // external pass1a_06 'study' samples for each omic
       const externalPass1A06TranscriptCount = countSamples(
@@ -266,30 +284,112 @@ function ReleasedSampleSummary({ data, release, userType }) {
         'proteomics',
         'qcCount'
       );
+      // internal pass1b_06 'study' samples for each omic
+      const externalPass1B06TranscriptCount = countSamples(
+        data.external.pass1b_06,
+        'transcriptomics'
+      );
+      const externalPass1B06EpigenCount = countSamples(
+        data.external.pass1b_06,
+        'epigenomics'
+      );
+      const externalPass1B06MetaTargCount = countSamples(
+        data.external.pass1b_06,
+        'metabolomics-targeted'
+      );
+      const externalPass1B06MetaUntargCount = countSamples(
+        data.external.pass1b_06,
+        'metabolomics-untargeted'
+      );
+      const externalPass1B06ProtCount = countSamples(
+        data.external.pass1b_06,
+        'proteomics'
+      );
+      const externalPass1B06ImmunoassayCount = countSamples(
+        data.external.pass1b_06,
+        'immunoassay'
+      );
+      // internal pass1b_06 'QC' samples for each omic
+      const externalPass1B06TranscriptCountQC = countSamples(
+        data.external.pass1b_06,
+        'transcriptomics',
+        'qcCount'
+      );
+      const externalPass1B06EpigenCountQC = countSamples(
+        data.external.pass1b_06,
+        'epigenomics',
+        'qcCount'
+      );
+      const externalPass1B06MetaTargCountQC = countSamples(
+        data.external.pass1b_06,
+        'metabolomics-targeted',
+        'qcCount'
+      );
+      const externalPass1B06MetaUntargCountQC = countSamples(
+        data.external.pass1b_06,
+        'metabolomics-untargeted',
+        'qcCount'
+      );
+      const externalPass1B06ProtCountQC = countSamples(
+        data.external.pass1b_06,
+        'proteomics',
+        'qcCount'
+      );
+      const externalPass1B06ImmunoassayCountQC = countSamples(
+        data.external.pass1b_06,
+        'immunoassay',
+        'qcCount'
+      );
       // assign external release sample counts
-      countObject.transcriptomics.studyCount = externalPass1A06TranscriptCount;
-      countObject.epigenomics.studyCount = externalPass1A06EpigenCount;
-      countObject.metabolomics_targeted.studyCount = externalPass1A06MetaTargCount;
-      countObject.metabolomics_untargeted.studyCount = externalPass1A06MetaUntargCount;
-      countObject.proteomics.studyCount = externalPass1A06ProtCount;
+      countObject.transcriptomics.studyCount =
+        externalPass1A06TranscriptCount + externalPass1B06TranscriptCount;
+      countObject.epigenomics.studyCount =
+        externalPass1A06EpigenCount + externalPass1B06EpigenCount;
+      countObject.metabolomics_targeted.studyCount =
+        externalPass1A06MetaTargCount + externalPass1B06MetaTargCount;
+      countObject.metabolomics_untargeted.studyCount =
+        externalPass1A06MetaUntargCount + externalPass1B06MetaUntargCount;
+      countObject.proteomics.studyCount =
+        externalPass1A06ProtCount + externalPass1B06ProtCount;
+      countObject.immunoassay.studyCount = externalPass1B06ImmunoassayCount;
       countObject.pass1a_06.studyCount =
         externalPass1A06TranscriptCount +
         externalPass1A06EpigenCount +
         externalPass1A06MetaTargCount +
         externalPass1A06MetaUntargCount +
         externalPass1A06ProtCount;
+      countObject.pass1b_06.studyCount =
+        externalPass1B06TranscriptCount +
+        externalPass1B06EpigenCount +
+        externalPass1B06MetaTargCount +
+        externalPass1B06MetaUntargCount +
+        externalPass1B06ProtCount +
+        externalPass1B06ImmunoassayCount;
       // assign external release sample counts
-      countObject.transcriptomics.qcCount = externalPass1A06TranscriptCountQC;
-      countObject.epigenomics.qcCount = externalPass1A06EpigenCountQC;
-      countObject.metabolomics_targeted.qcCount = externalPass1A06MetaTargCountQC;
-      countObject.metabolomics_untargeted.qcCount = externalPass1A06MetaUntargCountQC;
-      countObject.proteomics.qcCount = externalPass1A06ProtCountQC;
+      countObject.transcriptomics.qcCount =
+        externalPass1A06TranscriptCountQC + externalPass1B06TranscriptCountQC;
+      countObject.epigenomics.qcCount =
+        externalPass1A06EpigenCountQC + externalPass1B06EpigenCountQC;
+      countObject.metabolomics_targeted.qcCount =
+        externalPass1A06MetaTargCountQC + externalPass1B06MetaTargCountQC;
+      countObject.metabolomics_untargeted.qcCount =
+        externalPass1A06MetaUntargCountQC + externalPass1B06MetaUntargCountQC;
+      countObject.proteomics.qcCount =
+        externalPass1A06ProtCountQC + externalPass1B06ProtCountQC;
+      countObject.immunoassay.qcCount = externalPass1B06ImmunoassayCountQC;
       countObject.pass1a_06.qcCount =
         externalPass1A06TranscriptCountQC +
         externalPass1A06EpigenCountQC +
         externalPass1A06MetaTargCountQC +
         externalPass1A06MetaUntargCountQC +
         externalPass1A06ProtCountQC;
+      countObject.pass1b_06.qcCount =
+        externalPass1B06TranscriptCountQC +
+        externalPass1B06EpigenCountQC +
+        externalPass1B06MetaTargCountQC +
+        externalPass1B06MetaUntargCountQC +
+        externalPass1B06ProtCountQC +
+        externalPass1B06ImmunoassayCountQC;
     }
     return countObject;
   }
@@ -302,6 +402,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
       summary.epigenomics.label,
       summary.metabolomics_targeted.label,
       summary.metabolomics_untargeted.label,
+      summary.immunoassay.label,
       summary.proteomics.label,
     ],
     datasets: [
@@ -311,6 +412,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
           summary.epigenomics.studyCount,
           summary.metabolomics_targeted.studyCount,
           summary.metabolomics_untargeted.studyCount,
+          summary.immunoassay.studyCount,
           summary.proteomics.studyCount,
         ],
         backgroundColor: [
@@ -318,6 +420,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
           '#ffde72',
           '#93D689',
           '#fd6666',
+          '#8b9ead',
           '#b566ff',
         ],
       },
@@ -330,6 +433,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
       summary.epigenomics.label,
       summary.metabolomics_targeted.label,
       summary.metabolomics_untargeted.label,
+      summary.immunoassay.label,
       summary.proteomics.label,
     ],
     datasets: [
@@ -339,6 +443,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
           summary.epigenomics.qcCount,
           summary.metabolomics_targeted.qcCount,
           summary.metabolomics_untargeted.qcCount,
+          summary.immunoassay.qcCount,
           summary.proteomics.qcCount,
         ],
         backgroundColor: [
@@ -346,6 +451,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
           '#ffde72',
           '#93D689',
           '#fd6666',
+          '#8b9ead',
           '#b566ff',
         ],
       },
@@ -353,21 +459,21 @@ function ReleasedSampleSummary({ data, release, userType }) {
   };
 
   const phaseData = {
-    labels: [summary.pass1a_06.label, summary.pass1b_06.label],
+    labels: [summary.pass1b_06.label, summary.pass1a_06.label],
     datasets: [
       {
-        data: [summary.pass1a_06.studyCount, summary.pass1b_06.studyCount],
-        backgroundColor: ['#56bf46', '#f9c002'],
+        data: [summary.pass1b_06.studyCount, summary.pass1a_06.studyCount],
+        backgroundColor: ['#f9c002', '#56bf46'],
       },
     ],
   };
 
   const phaseDataQC = {
-    labels: [summary.pass1a_06.label, summary.pass1b_06.label],
+    labels: [summary.pass1b_06.label, summary.pass1a_06.label],
     datasets: [
       {
-        data: [summary.pass1a_06.qcCount, summary.pass1b_06.qcCount],
-        backgroundColor: ['#56bf46', '#f9c002'],
+        data: [summary.pass1b_06.qcCount, summary.pass1a_06.qcCount],
+        backgroundColor: ['#f9c002', '#56bf46'],
       },
     ],
   };
@@ -379,7 +485,7 @@ function ReleasedSampleSummary({ data, release, userType }) {
       position: 'bottom',
       labels: {
         boxWidth: 12,
-        fontFamily: "'Open Sans', sans-serif",
+        fontFamily: "'Helvetica Neue', Arial, sans-serif",
       },
     },
     responsive: true,
@@ -388,9 +494,9 @@ function ReleasedSampleSummary({ data, release, userType }) {
 
   return (
     <div className="release-sample-summary-plots">
-      <h5 className="release-sample-summary-plots-title mb-4">
+      <h4 className="release-sample-summary-plots-title mb-4">
         Total Study Assays
-      </h5>
+      </h4>
       <div>
         <Pie data={omicsData} options={options} height={350} />
       </div>
@@ -425,12 +531,12 @@ ReleasedSampleSummary.propTypes = {
       pass1a_06: PropTypes.arrayOf(
         PropTypes.shape({ ...tissueSamplePropType })
       ),
-      pass1b_06: PropTypes.arrayOf(
-        PropTypes.shape({ ...tissueSamplePropType })
-      ),
     }),
     external: PropTypes.shape({
       pass1a_06: PropTypes.arrayOf(
+        PropTypes.shape({ ...tissueSamplePropType })
+      ),
+      pass1b_06: PropTypes.arrayOf(
         PropTypes.shape({ ...tissueSamplePropType })
       ),
     }),
@@ -441,6 +547,6 @@ ReleasedSampleSummary.propTypes = {
 
 ReleasedSampleSummary.defaultProps = {
   userType: '',
-}
+};
 
 export default ReleasedSampleSummary;

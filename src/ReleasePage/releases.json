@@ -1,11 +1,11 @@
 [
   {
-    "label": "Release 2.0",
-    "emoji": "rocket",
+    "label": "Release 2.0 (Outdated)",
+    "emoji": null,
     "version": "2.0",
     "date": "June 30, 2020",
     "target": "internal",
-    "description": "The second major internal data release is now available through the MoTrPAC data hub. This release includes the majority of the PASS1A and PASS1B molecular and phenotypic data. Processed data is available for Web download and through the command-line, while raw data is available through the command-line only.",
+    "description": "This is the second major internal data release through the MoTrPAC data hub. It includes the majority of the PASS1A and PASS1B molecular and phenotypic data.",
     "readme_file_location": "https://docs.google.com/document/d/1bdXcYQLZ65GpJKTjf9XwRxhrfHJSD9NIqCxhG6icL8U",
     "result_files": {
       "bucket_name": "motrpac-internal-release2-results",
@@ -196,12 +196,12 @@
     "documentation": false
   },
   {
-    "label": "Release 1.2.1",
-    "emoji": "tada",
+    "label": "Release 1.2.1 (Outdated)",
+    "emoji": null,
     "version": "1.2.1",
     "date": "May 1, 2020",
     "target": "internal",
-    "description": "This is an interim internal release of the PASS1B 6M phenotypic data. The previous PASS1A 6M phenotypic data is available for download as part of the Release 1.2  data below.",
+    "description": "This is an interim internal release of the PASS1B 6M phenotypic data. The previous PASS1A 6M phenotypic data is included as part of the Release 1.2 data below.",
     "readme_file_location": "https://docs.google.com/document/d/1JjVlHeTg1ahzR06H72kxlbP1ZMaJEsqRkswVh9JweyM",
     "result_files": {
       "bucket_name": "motrpac-internal-release1-2-results",
@@ -323,12 +323,12 @@
     "documentation": false
   },
   {
-    "label": "Release 1.2",
-    "emoji": "zap",
+    "label": "Release 1.2 (Outdated)",
+    "emoji": null,
     "version": "1.2",
     "date": "October 15, 2019",
     "target": "internal",
-    "description": "This is an internal patch release containing the complete set of phenotype data released to the BIC by DMAQC. Web download is not available to RRBS due to large file sizes. You may choose to download different bundled assay quantitative results and the phenotypic data separately, or all of them together using command-line.",
+    "description": "This is an internal patch release containing the complete set of PASS1A 6M phenotype data released to the BIC by DMAQC. The data files available in this release include metadata, QC and quantitative results, phenotypic data, raw and intermediate files of genomics, epigenomics, transcriptomics, metabolomics and proteomics.",
     "readme_file_location": "https://docs.google.com/document/d/1ExXyt_HiscTOgF9eDq-KrdcE6V2jAqTEKDfQdfHJPlU",
     "result_files": {
       "bucket_name": "motrpac-internal-release1-2-results",
@@ -420,12 +420,12 @@
     "documentation": false
   },
   {
-    "label": "Release 1.1",
-    "emoji": "sparkles",
+    "label": "Release 1.1 (Outdated)",
+    "emoji": null,
     "version": "1.1",
     "date": "September 13, 2019",
     "target": "internal",
-    "description": "This is an internal patch release containing updated metabolomics and proteomics data from 6-month old rats. Web download is not available to RRBS due to large file sizes. You may choose to download different bundled assay quantitative results and the phenotypic data separately, or all of them together using command-line.",
+    "description": "This is an internal patch release containing updated PASS1A metabolomics and proteomics data from 6-month old rats. The data files available in this release include metadata, QC and quantitative results, phenotypic data, raw and intermediate files of genomics, epigenomics, transcriptomics, metabolomics and proteomics.",
     "readme_file_location": "https://docs.google.com/document/d/1t0mZvhMwd2zYxGN84qg7H_8ORQTFoLTqIwYIjWOOdBY",
     "result_files": {
       "bucket_name": "motrpac-internal-release1-1-results",
@@ -522,7 +522,7 @@
     "version": "1.0",
     "date": "August 30, 2019",
     "target": "internal",
-    "description": "The early internal release consists of acute exercise data from 6-month old rats. Web download is not available to RRBS due to large file sizes. You may choose to download different bundled assay quantitative results and the phenotypic data separately, or all of them together using command-line.",
+    "description": "This early internal release consists of PASS1A acute exercise data from 6-month old rats. The data files available in this release include metadata, QC and quantitative results, phenotypic data, raw and intermediate files of genomics, epigenomics, transcriptomics, metabolomics and proteomics.",
     "readme_file_location": "https://docs.google.com/document/d/1l-RtUNQr-FtC0aYe6rUXgJb_i5ZeWQiLp9nEjCl0QOk/",
     "result_files": {
       "bucket_name": "motrpac-internal-release1-results",

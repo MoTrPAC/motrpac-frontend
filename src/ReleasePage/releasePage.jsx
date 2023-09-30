@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReleaseEntry from './releaseEntry';
 import IconSet from '../lib/iconSet';
-import AuthContentContainer from '../lib/ui/authContentContainer';
+import EmbargoExtension from '../lib/embargoExtension';
 
 /**
  * Renders the data release UIs
@@ -13,12 +13,10 @@ import AuthContentContainer from '../lib/ui/authContentContainer';
  *
  * @returns {object} JSX representation of data release page elements.
  */
-export function ReleasePage({ profile, expanded }) {
+export function ReleasePage({ profile }) {
   const [currentView, setCurrentView] = useState('internal');
 
   const userType = profile.user_metadata && profile.user_metadata.userType;
-  // flag to temporarily suppress quick search rendering
-  const inProduction = false;
 
   // Handler to set current view to either internal or external releases
   function handleViewChange(releaseView) {
@@ -26,71 +24,39 @@ export function ReleasePage({ profile, expanded }) {
   }
 
   // Render external release view if user type is 'external'
-  if (userType === 'external') {
+  if (userType && userType === 'external') {
     return (
-      <AuthContentContainer
-        classes="dataReleasePage external"
-        expanded={expanded}
-      >
-        <div className="alert alert-warning alert-dismissible fade show d-flex align-items-center justify-content-between w-100" role="alert">
-          <span>
-            Please note that the publication embargo on MoTrPAC data has been
-            extended until release of additional control data. The control data
-            has been delayed due to the COVID-19 pandemic and we apologize for
-            any inconvenience caused.
-          </span>
-          <button
-            type="button"
-            className="close"
-            data-dismiss="alert"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
+      <div className="dataReleasePage external px-3 px-md-4 mb-3 w-100">
+        <div className="alert alert-info mb-4" role="alert">
+          This is a limited data set from adult rats (6-month old) that
+          performed an acute bout of endurance exercise. Please see the{' '}
+          <Link to="/data-download">data download page</Link> if you are
+          interested in the full experimental data set from endurance trained
+          (1wk, 2wks, 4wks or 8wks) compared to untrained adult rats.
         </div>
-        <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 border-bottom">
+        <EmbargoExtension />
+        <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 page-header">
           <div
             className="page-title"
             style={{ backgroundImage: `url(${IconSet.InternalDataRelease})` }}
           >
-            <h3>Data Releases</h3>
+            <h1>Data Releases</h1>
           </div>
         </div>
         <ReleaseEntry profile={profile} currentView={userType} />
-      </AuthContentContainer>
+      </div>
     );
   }
 
   // Render internal release view by default
   return (
-    <AuthContentContainer
-      classes="dataReleasePage internal"
-      expanded={expanded}
-    >
-      <p
-        className="alert alert-info alert-dismissible fade show warning-note d-flex align-items-center"
-        role="alert"
-      >
-        <span className="material-icons">info</span>
-        <span className="warning-note-text">
-          {' '}
-          Some features are unavailable to smaller mobile device screens.
-        </span>
-        <button
-          type="button"
-          className="close"
-          data-dismiss="alert"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </p>
-      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 border-bottom">
+    <div className="dataReleasePage internal px-3 px-md-4 mb-3 w-100">
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 page-header">
         <div
           className="page-title"
           style={{ backgroundImage: `url(${IconSet.InternalDataRelease})` }}
         >
-          <h3>Data Releases</h3>
+          <h1>Data Releases</h1>
         </div>
         <div className="btn-toolbar">
           <div
@@ -100,7 +66,7 @@ export function ReleasePage({ profile, expanded }) {
           >
             <button
               type="button"
-              className={`btn btn-sm btn-outline-primary ${
+              className={`btn btn-outline-primary ${
                 currentView === 'internal' ? 'active' : ''
               }`}
               onClick={handleViewChange.bind(this, 'internal')}
@@ -112,7 +78,7 @@ export function ReleasePage({ profile, expanded }) {
             </button>
             <button
               type="button"
-              className={`btn btn-sm btn-outline-primary ${
+              className={`btn btn-outline-primary ${
                 currentView === 'external' ? 'active' : ''
               }`}
               onClick={handleViewChange.bind(this, 'external')}
@@ -123,41 +89,24 @@ export function ReleasePage({ profile, expanded }) {
               </span>
             </button>
           </div>
-          {inProduction && (
-            <div
-              className="btn-group"
-              role="group"
-              aria-label="Search button group"
-            >
-              <Link
-                className="advSearchBtn btn btn-sm btn-outline-primary"
-                to="/search"
-              >
-                <span className="d-flex align-items-center">
-                  <i className="material-icons search-icon">search</i>
-                  Search Data
-                </span>
-              </Link>
-            </div>
-          )}
         </div>
       </div>
       <ReleaseEntry profile={profile} currentView={currentView} />
-    </AuthContentContainer>
+    </div>
   );
 }
 
 ReleasePage.propTypes = {
   profile: PropTypes.shape({
     name: PropTypes.string,
+    email: PropTypes.string,
+    userid: PropTypes.string,
     user_metadata: PropTypes.object,
   }).isRequired,
-  expanded: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   profile: state.auth.profile,
-  expanded: state.sidebar.expanded,
 });
 
 export default connect(mapStateToProps)(ReleasePage);

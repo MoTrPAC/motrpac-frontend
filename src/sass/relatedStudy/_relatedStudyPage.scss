@@ -1,20 +1,8 @@
 .relatedStudyPage {
   margin-bottom: 1.25rem;
 
-  .container {
-    .page-title {
-      margin-top: 1.0rem;
-      margin-bottom: 1.5rem;
-  
-      h3 {
-        margin-bottom: 0;
-      }
-    }
-  
-    .main-content {
-      margin-top: 1.25rem;
-      margin-bottom: 1.25rem;
-
+  .related-studies-container {
+    .related-studies-content-container {
       .card-img-top {
         height: 20vh;
         width: 95%;
@@ -28,9 +16,7 @@
       .card-body {
         border-top: 1px solid $gray-200;
 
-        h6 {
-          font-size: 1.1rem;
-
+        h5 {
           a {
             overflow-wrap: break-word;
           }
@@ -40,13 +26,13 @@
 
     &.heritage-proteomics {
       .back-button {
-        font-size: 0.85rem;
+        a:hover {
+          text-decoration: none;
+        }
       }
 
       .data-download-container {
         a {
-          font-size: 0.9rem;
-
           i {
             margin-top: 0.1rem;
           }

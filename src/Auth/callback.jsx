@@ -20,7 +20,7 @@ function Callback({ location }) {
           <h3>{message || 'Authenticating...'}</h3>
         </div>
       ) : (
-        <Redirect to="/dashboard" />
+        <Redirect to="/search" />
       )}
     </>
   );

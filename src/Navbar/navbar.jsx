@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import dayjs from 'dayjs';
 import actions from '../Auth/authActions';
 import LoginButton from '../lib/loginButton';
-import QuickSearchBox from '../Search/quickSearchBox';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
-import QuickSearchBoxActions from '../Search/quickSearchBoxActions';
-import SearchActions from '../Search/searchActions';
 import onVisibilityChange from '../lib/utils/pageVisibility';
+import BrowseDataActions from '../BrowseDataPage/browseDataActions';
+import DataStatusActions from '../DataStatusPage/dataStatusActions';
 
 /**
  * Renders the global header nav bar.
@@ -25,12 +26,11 @@ export function Navbar({
   profile,
   login,
   logout,
-  quickSearchTerm,
-  handleQuickSearchInputChange,
-  handleQuickSearchRequestSubmit,
-  resetQuickSearch,
-  getSearchForm,
-  resetAdvSearch,
+  handleDataFetch,
+  resetBrowseState,
+  handleQCDataFetch,
+  allFiles,
+  lastModified,
 }) {
   useEffect(() => {
     /* Handle logout for various use cases */
@@ -88,68 +88,84 @@ export function Navbar({
 
   const handleLogout = () => {
     logout();
-    // FIXME: Redirect to landing page not working
-    return <Redirect to="/" />;
+    // delay state reset so that list files do not
+    // disappear from the UI prior to page change
+    setTimeout(() => {
+      resetBrowseState();
+    }, 1000);
+  };
+
+  const handleLogIn = () => {
+    login();
+    // delay state reset so that list files do not
+    // disappear from the UI prior to page change
+    setTimeout(() => {
+      resetBrowseState();
+    }, 1000);
   };
 
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   const userType = profile.user_metadata && profile.user_metadata.userType;
-  // flag to temporarily suppress quick search rendering
-  const inProduction = false;
 
-  if (isAuthenticated && hasAccess) {
-    document.querySelector('body').classList.add('authenticated');
-  }
-
-  // Function to render login button
-  const LogoutButton = () => {
-    const userDisplayName =
-      profile.user_metadata && profile.user_metadata.name
-        ? profile.user_metadata.name
-        : profile.name;
-    const siteName =
-      profile.user_metadata && profile.user_metadata.siteName
-        ? `, ${profile.user_metadata.siteName}`
-        : '';
-
-    if (isAuthenticated) {
-      return (
-        <span className="user-logout-button">
-          <img src={profile.picture} className="user-avatar" alt="avatar" />
-          <span className="user-display-name">
-            {userDisplayName}
-            {siteName}
-          </span>
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="logOutBtn btn btn-primary"
-          >
-            Log out
-          </button>
-        </span>
-      );
+  // post request to fetch data files when download nav link is clicked
+  const handleDataObjectFetch = () => {
+    if (!allFiles.length) {
+      if (userType && userType === 'internal') {
+        handleDataFetch();
+      } else {
+        handleDataFetch('PASS1B-06');
+      }
     }
-
-    return <LoginButton login={login} />;
   };
 
+  // Call to invoke Redux action to fetch QC data
+  // if timestamp is empty or older than 24 hours
+  const fecthQCData = () => {
+    if (
+      !lastModified ||
+      !lastModified.length ||
+      (lastModified.length && dayjs().diff(dayjs(lastModified), 'hour') >= 24)
+    ) {
+      handleQCDataFetch();
+    }
+  };
+
+  const api =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
+      : process.env.REACT_APP_API_SERVICE_ADDRESS;
+  const endpointRegUser = process.env.REACT_APP_USER_REGISTRATION_ENDPOINT;
+  const endpointSendEmail = process.env.REACT_APP_SEND_EMAIL_ENDPOINT;
+  const key =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_API_SERVICE_KEY_DEV
+      : process.env.REACT_APP_API_SERVICE_KEY;
+
+  // Send GET request to endpoint to 'warm up' CF backend service
+  function checkServiceStatus(e) {
+    if (e.target.id === 'reg_user') {
+      return axios
+        .get(`${api}${endpointRegUser}/info?key=${key}`)
+        .then((res) => {
+          console.log(res.status);
+        });
+    }
+    return axios
+      .get(`${api}${endpointSendEmail}/info?key=${key}`)
+      .then((res) => {
+        console.log(res.status);
+      });
+  }
+
   const navbar = (
-    <div className="header-navbar-container fixed-top">
-      <nav className="navbar navbar-expand-lg navbar-light flex-md-nowrap p-0 shadow-sm bg-white">
-        <div
-          className={`${
-            isAuthenticated && hasAccess ? 'container-fluid' : 'container'
-          } header-navbar-items`}
-        >
-          <Link
-            to="/"
-            className={`navbar-brand header-logo ${
-              isAuthenticated && hasAccess ? 'resized' : ''
-            }`}
-          >
-            <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
-          </Link>
+    <div className="header-navbar-container d-flex flex-column flex-md-row flex-sm-row flex-xs-row align-items-center px-3 px-md-4 bg-white border-bottom shadow-sm mb-3 fixed-top">
+      <div className="navbar-brand my-0 mr-md-auto mr-sm-auto mr-xs-auto py-0">
+        <Link to="/" className="header-logo">
+          <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
+        </Link>
+      </div>
+      <nav className="navbar navbar-expand-xl navbar-light my-md-0 mr-md-3 mr-sm-3 mr-xs-2 p-0">
+        <div className="header-navbar-items">
           <button
             className="navbar-toggler"
             type="button"
@@ -166,67 +182,192 @@ export function Navbar({
             id="navbarSupportedContent"
           >
             <ul className="navbar-nav">
+              <li className="nnav-item navItem">
+                <Link
+                  to="/data-download"
+                  className="nav-link"
+                  onClick={handleDataObjectFetch}
+                >
+                  Downloads
+                </Link>
+              </li>
+              <li className="nnav-item navItem dropdown">
+                <div
+                  className="nav-link dropdown-toggle"
+                  role="button"
+                  id="exploreNavbarItemMenuLink"
+                  data-toggle="dropdown"
+                >
+                  Explore
+                </div>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="exploreNavbarItemMenuLink"
+                >
+                  <Link to="/search" className="dropdown-item">
+                    Differential Abundance
+                  </Link>
+                  <Link to="/gene-centric" className="dropdown-item">
+                    Gene-centric View
+                  </Link>
+                  <Link to="/graphical-clustering" className="dropdown-item">
+                    Graphical Clustering
+                  </Link>
+                  <a
+                    href="https://data-viz.motrpac-data.org"
+                    className="dropdown-item"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Interactive Data Visualization
+                  </a>
+                  {isAuthenticated && hasAccess && userType === 'internal' ? (
+                    <Link to="/analysis-phenotype" className="dropdown-item">
+                      Phenotype
+                    </Link>
+                  ) : null}
+                </div>
+              </li>
               <li className="nav-item navItem dropdown">
                 <div
                   className="nav-link dropdown-toggle"
                   role="button"
-                  id="navbarDropdownMenuLink"
+                  id="dataAccessNavbarItemMenuLink"
                   data-toggle="dropdown"
                 >
-                  About Us
+                  Data Access
                 </div>
                 <div
                   className="dropdown-menu"
-                  aria-labelledby="navbarDropdownMenuLink"
+                  aria-labelledby="dataAccessNavbarItemMenuLink"
                 >
+                  <Link
+                    to="/data-download"
+                    className="dropdown-item"
+                    onClick={handleDataObjectFetch}
+                  >
+                    Endurance Training Data
+                  </Link>
+                  <Link
+                    id="reg_user"
+                    to={
+                      isAuthenticated && hasAccess
+                        ? '/releases'
+                        : '/data-access'
+                    }
+                    className="dropdown-item"
+                    onClick={(e) => checkServiceStatus(e)}
+                  >
+                    Limited Acute Exercise Data
+                  </Link>
+                  {isAuthenticated && hasAccess ? (
+                    <>
+                      {userType === 'internal' && (
+                        <Link
+                          to="/qc-data-monitor"
+                          className="dropdown-item"
+                          onClick={fecthQCData}
+                        >
+                          QC Data Monitor
+                        </Link>
+                      )}
+                      <Link to="/summary" className="dropdown-item">
+                        Sample Summary
+                      </Link>
+                      <Link to="/releases" className="dropdown-item">
+                        Prior Data Releases
+                      </Link>
+                    </>
+                  ) : null}
+                </div>
+              </li>
+              <li className="nav-item navItem dropdown">
+                <div
+                  className="nav-link dropdown-toggle"
+                  role="button"
+                  id="resourcesNavbarItemMenuLink"
+                  data-toggle="dropdown"
+                >
+                  Resources
+                </div>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="resourcesNavbarItemMenuLink"
+                >
+                  <Link to="/code-repositories" className="dropdown-item">
+                    Code Repositories
+                  </Link>
+                  <Link to="/methods" className="dropdown-item">
+                    Methods
+                  </Link>
+                  <Link to="/related-studies" className="dropdown-item">
+                    Related Studies
+                  </Link>
+                </div>
+              </li>
+              <li className="nav-item navItem dropdown">
+                <div
+                  className="nav-link dropdown-toggle"
+                  role="button"
+                  id="helpNavbarItemMenuLink"
+                  data-toggle="dropdown"
+                >
+                  Help
+                </div>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="helpNavbarItemMenuLink"
+                >
+                  <Link to="/project-overview" className="dropdown-item">
+                    Project Overview
+                  </Link>
+                  <Link to="/tutorials" className="dropdown-item">
+                    Tutorials
+                  </Link>
+                  <Link
+                    id="send_email"
+                    to="/contact"
+                    className="dropdown-item"
+                    onClick={(e) => checkServiceStatus(e)}
+                  >
+                    Contact Us
+                  </Link>
+                </div>
+              </li>
+              <li className="nav-item navItem dropdown">
+                <div
+                  className="nav-link dropdown-toggle"
+                  role="button"
+                  id="aboutNavbarItemMenuLink"
+                  data-toggle="dropdown"
+                >
+                  About
+                </div>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="aboutNavbarItemMenuLink"
+                >
+                  <Link to="/team" className="dropdown-item">
+                    Who we are
+                  </Link>
                   <Link to="/announcements" className="dropdown-item">
                     Announcements
                   </Link>
                   <Link to="/external-links" className="dropdown-item">
                     Useful Links
                   </Link>
-                  <Link to="/team" className="dropdown-item">
-                    Who we are
-                  </Link>
-                  <Link to="/contact" className="dropdown-item">
-                    Contact Us
-                  </Link>
                 </div>
               </li>
-              {!isAuthenticated && !hasAccess ? (
-                <>
-                  <li className="nav-item navItem">
-                    <Link to="/data-access" className="nav-link">
-                      Data Access
-                    </Link>
-                  </li>
-                  <li className="nav-item navItem">
-                    <Link to="/related-studies" className="nav-link">
-                      Related Studies
-                    </Link>
-                  </li>
-                </>
-              ) : null}
-              <li className="nav-item navItem">
-                <LogoutButton />
-              </li>
             </ul>
-            {isAuthenticated &&
-            hasAccess &&
-            userType === 'internal' &&
-            inProduction ? (
-              <QuickSearchBox
-                quickSearchTerm={quickSearchTerm}
-                handleQuickSearchInputChange={handleQuickSearchInputChange}
-                handleQuickSearchRequestSubmit={handleQuickSearchRequestSubmit}
-                resetQuickSearch={resetQuickSearch}
-                getSearchForm={getSearchForm}
-                resetAdvSearch={resetAdvSearch}
-              />
-            ) : null}
           </div>
         </div>
       </nav>
+      <LogoutButton
+        isAuthenticated={isAuthenticated}
+        profile={profile}
+        handleLogout={handleLogout}
+        login={handleLogIn}
+      />
     </div>
   );
   return navbar;
@@ -237,7 +378,6 @@ Navbar.propTypes = {
     name: PropTypes.string,
     picture: PropTypes.string,
     user_metadata: PropTypes.shape({
-      userType: PropTypes.string,
       hasAccess: PropTypes.bool,
       name: PropTypes.string,
       siteName: PropTypes.string,
@@ -246,11 +386,10 @@ Navbar.propTypes = {
   isAuthenticated: PropTypes.bool,
   login: PropTypes.func,
   logout: PropTypes.func,
-  quickSearchTerm: PropTypes.string,
-  handleQuickSearchInputChange: PropTypes.func,
-  handleQuickSearchRequestSubmit: PropTypes.func,
-  resetQuickSearch: PropTypes.func,
-  getSearchForm: PropTypes.func,
+  handleDataFetch: PropTypes.func,
+  resetBrowseState: PropTypes.func,
+  handleQCDataFetch: PropTypes.func,
+  lastModified: PropTypes.string,
 };
 
 Navbar.defaultProps = {
@@ -258,29 +397,66 @@ Navbar.defaultProps = {
   isAuthenticated: false,
   login: null,
   logout: null,
-  quickSearchTerm: '',
-  handleQuickSearchInputChange: null,
-  handleQuickSearchRequestSubmit: null,
-  resetQuickSearch: null,
-  getSearchForm: null,
+  handleDataFetch: null,
+  resetBrowseState: null,
+  handleQCDataFetch: null,
+  lastModified: '',
 };
 
 const mapStateToProps = (state) => ({
   ...state.quickSearch,
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
+  allFiles: state.browseData.allFiles,
+  lastModified: state.dataStatus.qcData.lastModified,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   login: () => dispatch(actions.login()),
   logout: () => dispatch(actions.logout()),
-  handleQuickSearchInputChange: (e) =>
-    dispatch(QuickSearchBoxActions.quickSearchInputChange(e)),
-  handleQuickSearchRequestSubmit: (searchTerm) =>
-    dispatch(QuickSearchBoxActions.handleQuickSearchRequestSubmit(searchTerm)),
-  resetQuickSearch: () => dispatch(QuickSearchBoxActions.quickSearchReset()),
-  getSearchForm: () => dispatch(SearchActions.getSearchForm()),
-  resetAdvSearch: () => dispatch(SearchActions.searchFormReset()),
+  handleDataFetch: (phase) =>
+    dispatch(BrowseDataActions.handleDataFetch(phase)),
+  resetBrowseState: () => dispatch(BrowseDataActions.resetBrowseState()),
+  handleQCDataFetch: () => dispatch(DataStatusActions.fetchData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+
+// Function to render login button
+function LogoutButton({ profile, isAuthenticated, handleLogout, login }) {
+  const userDisplayName =
+    profile.user_metadata && profile.user_metadata.name
+      ? profile.user_metadata.name
+      : profile.name;
+  const userEmail = profile.user_metadata && profile.user_metadata.email;
+
+  if (isAuthenticated) {
+    return (
+      <div className="user-logout-button dropdown">
+        <button
+          type="button"
+          className="btn dropdown-toggle px-0 py-0"
+          data-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img src={profile.picture} className="user-avatar" alt="avatar" />
+        </button>
+        <div className="user-logout-dropdown dropdown-menu dropdown-menu-right">
+          <ul>
+            <li className="user-display-name">{userDisplayName}</li>
+            <li className="user-email">{userEmail}</li>
+          </ul>
+        </div>
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="logOutBtn btn btn-primary"
+        >
+          Log out
+        </button>
+      </div>
+    );
+  }
+
+  return <LoginButton login={login} />;
+}

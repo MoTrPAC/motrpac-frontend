@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
+import PageTitle from '../lib/ui/pageTitle';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
-import AuthContentContainer from '../lib/ui/authContentContainer';
 
 const announcementData = require('./announcements');
 // Pre-sort array in reverse order to workaround Storybook issue
@@ -19,12 +18,10 @@ const announcements = announcementData.reverse();
  *
  * @returns {Object} JSX representation of the Announcements page.
  */
-export function AnnouncementsPage({ isAuthenticated, expanded }) {
+function AnnouncementsPage() {
   const pageContent = (
     <>
-      <div className="page-title pt-3 pb-2 border-bottom">
-        <h3>Announcements</h3>
-      </div>
+      <PageTitle title="Announcements" />
       <div className="news-item-list">
         {announcements.map((entry) => (
           <AnnouncementEntry entry={entry} key={entry.aid} />
@@ -33,18 +30,10 @@ export function AnnouncementsPage({ isAuthenticated, expanded }) {
     </>
   );
 
-  if (!isAuthenticated) {
-    return (
-      <div className="col-md-9 col-lg-10 px-4 announcementsPage">
-        <div className="container">{pageContent}</div>
-      </div>
-    );
-  }
-
   return (
-    <AuthContentContainer classes="announcementsPage" expanded={expanded}>
+    <div className="announcementsPage px-3 px-md-4 mb-3 container">
       <div>{pageContent}</div>
-    </AuthContentContainer>
+    </div>
   );
 }
 
@@ -79,9 +68,10 @@ function AnnouncementEntry({ entry }) {
                     rel="noopener noreferrer"
                     onClick={trackEvent.bind(
                       this,
-                      link.gaEventCategory,
+                      'User Interests',
+                      link.gaEventCategory.toLowerCase().split(' ').join('_'),
+                      'Announcement Page',
                       link.gaEventAction,
-                      'Announcement Page'
                     )}
                   >
                     {link.label}
@@ -129,19 +119,4 @@ AnnouncementEntry.propTypes = {
   }).isRequired,
 };
 
-AnnouncementsPage.propTypes = {
-  isAuthenticated: PropTypes.bool,
-  expanded: PropTypes.bool,
-};
-
-AnnouncementsPage.defaultProps = {
-  isAuthenticated: false,
-  expanded: false,
-};
-
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  expanded: state.sidebar.expanded,
-});
-
-export default connect(mapStateToProps)(AnnouncementsPage);
+export default AnnouncementsPage;

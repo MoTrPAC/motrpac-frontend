@@ -1,48 +1,57 @@
+.header-navbar-container {
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
+
+  .navbar-brand {
+    width: 305px;
+
+    .header-logo {
+      img {
+        width: 305px;
+        height: 36px;
+      }
+    }
+  }
+}
+
 nav {
   border-bottom: 1px solid transparent;
 
-  .navbar-brand {
-    padding-top: 1.15rem;
-    padding-bottom: 1.15rem;
-
-    img {
-      width: 436px;
-      height: 51px;
-      transition: all 0.3s ease;
-    }
-  }
-
   .navbar-nav {
     .navItem {
+      font-size: 1.125rem;
       font-weight: $semibold-weight;
 
       .nav-link {
         color: $stanford-cool-grey;
 
         &:hover {
-          color: $stanford-black;
+          color: #000;
         }
 
         &.show, &.active {
-          color: $stanford-black;
+          color: #000;
         }
       }
 
       &.show {
         .nav-link {
-          color: $stanford-black;
+          color: #000;
         }
       }
 
       .dropdown-menu {
         background-color:transparentize(#fff, .1);
-        border: solid 1px $stanford-cool-grey;
-        top: 30px;
+        border: solid 1px $gray-semi-transparent;
+        box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.1);
+        top: 35px;
         left: 8px;
 
         .dropdown-item {
           color: $stanford-cool-grey;
           font-weight: $semibold-weight;
+          padding-left: 1.25rem;
+          padding-right: 1.25rem;
 
           &:hover {
             color: $stanford-black;
@@ -74,30 +83,6 @@ nav {
         border-color: $stanford-black;
       }
 
-      .user-avatar {
-        width: 36px;
-        height: 36px;
-        border-radius: 100%;
-        margin-right: 0.35rem;
-      }
-
-      .user-display-name {
-        color: $stanford-cool-grey;
-        font-size: 0.9rem;
-        font-weight: $regular-weight;
-        margin-right: 0.5rem;
-        vertical-align: middle;
-      }
-
-      .user-logout-button {
-        margin-left: 0.75rem;
-
-        .logOutBtn {
-          margin-left: 0.5rem;
-          margin-right: 0.25rem;
-        }
-      }
-
       .user-login-button {
         margin-left: 0.75rem;
       }
@@ -116,35 +101,94 @@ nav {
   }
 }
 
+.user-logout-button {
+  .dropdown-toggle {
+    width: 36px;
+    height: 36px;
+    border-radius: 100%;
+    border: none;
+    overflow: hidden;
+
+    &::after {
+      display: none;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 100%;
+    }
+  }
+
+  .user-logout-dropdown {
+    background-color:transparentize(#fff, .1);
+    border: solid 1px $gray-semi-transparent;
+    box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.1);
+    top: 38px;
+
+    ul {
+      margin: 0;
+      padding: 0;
+
+      li {
+        color: $stanford-cool-grey;
+        font-size: 1.0rem;
+        font-weight: $semibold-weight;
+        list-style: none;
+        padding: 0.5rem 1.25rem;
+
+        &.user-display-name {
+          line-height: 1;
+          padding-bottom: 0.075rem;
+        }
+
+        &.user-email {
+          color: $gray;
+          font-size: 0.925rem;
+          font-weight: 300;
+          padding-top: 0.125rem;
+        }
+      }
+    }
+  }
+
+  .user-display-name {
+    color: $stanford-cool-grey;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+
+  .logOutBtn {
+    margin-left: 0.75rem;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .header-navbar-container {
+    align-items: start !important;
+    padding-top: 0.9rem;
+  }
+}
+
 @include media-breakpoint-up(lg) {
   nav {
-    .navbar-brand.resized {
+    .navbar-brand {
       padding-top: 0.75rem;
       padding-bottom: 0.75rem;
-  
-      img {
-        width: 305px;
-        height: 36px;
-      }
     }
   }
 }
 
 @include media-breakpoint-down(md) {
+  .navbar-brand {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
   nav {
     &.navbar>.container-fluid {
       padding-left: 15px;
       padding-right: 15px;
-    }
-  
-    .navbar-brand {
-      padding-top: 0.75rem;
-      padding-bottom: 0.75rem;
-  
-      img {
-        width: 305px;
-        height: 36px;
-      }
     }
   
     .navbar-nav {
@@ -159,15 +203,12 @@ nav {
   }
 }
 
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(sm) {
+  .header-navbar-container {
+    align-items: center !important;
+    padding-top: 0.75rem;
+  }
   nav {
-    .navbar-brand {
-      img {
-        width: 250px;
-        height: 29px;
-      }
-    }
-  
     .header-navbar-items.container {
       padding-left: 15px;
       padding-right: 15px;
@@ -175,12 +216,32 @@ nav {
   }
 }
 
+@include media-breakpoint-down(xs) {
+  .header-navbar-container {
+    .navbar-brand {    
+      text-align: center;
+      margin: 1rem 0 !important;
+    }
+
+    .navbar {
+      margin-bottom: 1rem !important;
+
+      .header-navbar-items.container {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+    }
+  }
+}
+
 @media (max-width: 320px) {
-  nav {
+  .header-navbar-container {
     .navbar-brand {
-      img {
-        width: 210px;
-        height: auto;
+      .header-logo {
+        img {
+          width: 285px;
+          height: auto;
+        }
       }
     }
 

@@ -105,5 +105,32 @@
             "icon": "date_range"
         },
         "links": []
+    },
+    {
+        "aid": 6,
+        "posted_date": "2022-09-23",
+        "title": "MoTrPAC Landscape Preprint available at bioRxiv",
+        "content": "The MoTrPAC Landscape Preprint is online now at bioRxiv. This study profiled the temporal transcriptome, proteome, metabolome, lipidome, phosphoproteome, acetylproteome, ubiquitylproteome, epigenome, and immunome in whole blood, plasma, and 18 solid tissues in Rattus norvegicus over 8 weeks of endurance exercise training. The resulting data compendium encompasses 9466 assays across 19 tissues, 25 molecular platforms, and 4 training time points in young adult male and female rats.",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "landscape-preprint"
+            ],
+            "icon": "menu_book"
+        },
+        "links": [
+            {
+                "label": "Temporal dynamics of the multi-omic response to endurance exercise training across tissues",
+                "url": "https://www.biorxiv.org/content/10.1101/2022.09.21.508770v2",
+                "gaEventCategory": "MoTrPAC Landscape Paper",
+                "gaEventAction": "Preprint on bioRxiv"
+            },
+            {
+                "label": "R package consisting of the processed data and downstream analysis results presented in this preprint",
+                "url": "https://motrpac.github.io/MotrpacRatTraining6moData/",
+                "gaEventCategory": "MoTrPAC Landscape Paper",
+                "gaEventAction": "MotrpacRatTraining6moData R package"
+            }
+        ]
     }
 ]

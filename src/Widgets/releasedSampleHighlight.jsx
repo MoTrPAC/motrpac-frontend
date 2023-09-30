@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import getIcon from '../assets/dashboardIcons/get.png';
-import metabolomicsIcon from '../assets/dashboardIcons/metabolomics.png';
-import proteomicsIcon from '../assets/dashboardIcons/proteomics.png';
-import assayIcon from '../assets/dashboardIcons/assay.png';
-import tissueIcon from '../assets/dashboardIcons/tissue.png';
+import getIcon from '../assets/dataSummaryIcons/get.png';
+import metabolomicsIcon from '../assets/dataSummaryIcons/metabolomics.png';
+import proteomicsIcon from '../assets/dataSummaryIcons/proteomics.png';
+import assayIcon from '../assets/dataSummaryIcons/assay.png';
+import tissueIcon from '../assets/dataSummaryIcons/tissue.png';
 
 /**
- * Renders the highlighted items of release samples on dashboard
+ * Renders the highlighted items of release samples on data summary page
  *
  * @param {Array} data  Array of tissue sample metadata by phase/release
  *
- * @returns {object} JSX representation of the dashboard highlighted items
+ * @returns {object} JSX representation of release samples page highlighted items
  */
 function ReleasedSampleHighlight({ data }) {
   // Utility function to get total count of
@@ -48,7 +48,7 @@ function ReleasedSampleHighlight({ data }) {
           omicSet('metabolomics-targeted') + omicSet('metabolomics-untargeted')
         );
       case 'proteomics':
-        return omicSet('proteomics');
+        return omicSet('proteomics') + omicSet('immunoassay');
       default:
         return data.length;
     }
@@ -88,7 +88,7 @@ function ReleasedSampleHighlight({ data }) {
   ];
 
   return (
-    <div className="dashboard-highlights card-deck">
+    <div className="release-sample-highlights card-deck">
       {highlightItems.map((item) => {
         return (
           <div className="card shadow-sm" key={item.metric}>

@@ -53,6 +53,112 @@
   }
 }
 
+.geneCentricViewPage {
+  .gene-centric-view-summary-container {
+    .summary-tooltip-anchor {
+      color: $primary-blue;
+      cursor: default;
+    }
+  }
+
+  label {
+    font-size: inherit;
+    font-weight: 600;
+    line-height: 1;
+    margin-right: 0.5rem;
+    margin-bottom: 0;
+    width: auto;
+
+    &.form-check-label {
+      font-weight: normal;
+    }
+  }
+
+  .search-box-input-group {
+    .input-group-prepend {
+      .material-icons {
+        color: $stanford-black;
+        font-size: 1.75rem;
+        line-height: 0;
+      }
+    }
+    .rbt {
+      flex-grow: 3;
+    }
+  }
+
+  .pagination-page-size,
+  .search-results-usage-instructions,
+  .view-plots-button {
+    margin-bottom: 0.85rem;
+    
+    select {
+      margin-right: 0.65rem;
+      max-width: 85px;
+    }
+  }
+
+  .pagination-footer {
+    margin-bottom: 1.0rem;
+
+    .btn {
+      min-width: 60px;
+      max-width: 80px;
+
+      &.disabled-btn {
+        pointer-events: none;
+      }
+    }
+  }
+
+  .card-body.table-ui-wrapper {
+    padding: 0;
+  }
+
+  .deaResultsTable {
+    font-size: 0.9rem;
+
+    thead {
+      th:first-child {
+        vertical-align: middle;
+
+        input, span {
+          display: none;
+        }
+      }
+    }
+
+    tbody {
+      td:first-child {
+        text-align: center;
+      }
+    }
+  }
+
+  .gene-centric-time-series-plots-container {
+    .plot-lengend {
+      .legend-icon {
+        &.female {
+          color: #ff6eff;
+        }
+
+        &.male {
+          color: #5555ff;
+        }
+      }
+    }
+  }
+}
+
+.graphicalClusteringPage {
+  .graphical-clustering-summary-container {
+    .inline-link-with-icon .material-icons {
+      font-size: inherit;
+      line-height: 1.5;
+    }
+  }
+}
+
 @media (max-width: 1480px) {
   .analysisPage {
     .animal-phenotype-data {

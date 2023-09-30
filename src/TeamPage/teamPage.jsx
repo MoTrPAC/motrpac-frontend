@@ -1,9 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import PageTitle from '../lib/ui/pageTitle';
 import TeamMemberCard from './teamMemberCard';
 import teamInfo from '../lib/teamInfo';
-import AuthContentContainer from '../lib/ui/authContentContainer';
 
 /**
  * The team page, includes all team members listed in the /src/lib/teamInfo.json file.
@@ -14,76 +12,35 @@ import AuthContentContainer from '../lib/ui/authContentContainer';
  *
  * @returns {Object} JSX representation of the Team page.
  */
-export function TeamPage({ isAuthenticated, expanded }) {
+function TeamPage() {
   const PIs = teamInfo.PIs.map((pi) => (
-    <TeamMemberCard
-      key={pi.name}
-      memberInfo={pi}
-      isAuthenticated={isAuthenticated}
-    />
+    <TeamMemberCard key={pi.name} memberInfo={pi} />
   ));
   const staff = teamInfo.Staff.map((member) => (
-    <TeamMemberCard
-      key={member.name}
-      memberInfo={member}
-      isAuthenticated={isAuthenticated}
-    />
+    <TeamMemberCard key={member.name} memberInfo={member} />
   ));
   const CoIs = teamInfo.CoIs.map((coi) => (
-    <TeamMemberCard
-      key={coi.name}
-      memberInfo={coi}
-      isAuthenticated={isAuthenticated}
-    />
+    <TeamMemberCard key={coi.name} memberInfo={coi} />
   ));
   const Alumni = teamInfo.Alumni.map((alumni) => (
-    <TeamMemberCard
-      key={alumni.name}
-      memberInfo={alumni}
-      isAuthenticated={isAuthenticated}
-    />
+    <TeamMemberCard key={alumni.name} memberInfo={alumni} />
   ));
 
   const pageContent = (
     <>
-      <div className="page-title pt-3 pb-2 border-bottom">
-        <h3>MoTrPAC Bioinformatics Center Team</h3>
-      </div>
       <div className="row d-flex justify-content-center">{PIs}</div>
       <div className="row">{staff}</div>
       <div className="row">{CoIs}</div>
-      <div className="row pt-3 pb-2 border-top">{Alumni}</div>
+      <div className="row pt-5 pb-0 border-top">{Alumni}</div>
     </>
   );
 
-  if (!isAuthenticated) {
-    return (
-      <div className="col-md-9 col-lg-10 px-4 teamPage">
-        <div className="container">{pageContent}</div>
-      </div>
-    );
-  }
-
   return (
-    <AuthContentContainer classes="teamPage" expanded={expanded}>
+    <div className="teamPage px-3 px-md-4 mb-3 container">
+      <PageTitle title="MoTrPAC Bioinformatics Center Team" />
       <div>{pageContent}</div>
-    </AuthContentContainer>
+    </div>
   );
 }
 
-TeamPage.propTypes = {
-  isAuthenticated: PropTypes.bool,
-  expanded: PropTypes.bool,
-};
-
-TeamPage.defaultProps = {
-  isAuthenticated: false,
-  expanded: false,
-};
-
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  expanded: state.sidebar.expanded,
-});
-
-export default connect(mapStateToProps)(TeamPage);
+export default TeamPage;

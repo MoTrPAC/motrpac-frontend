@@ -7,15 +7,23 @@
   .page-title {
     background-size: contain;
     background-repeat: no-repeat;
-    padding-left: 60px;
+    padding-left: 80px;
 
-    h3 {
+    h1 {
       margin-bottom: 0;
     }
   }
 
-  .material-icons {
-    margin-right: 0.2rem;
+  .page-header {
+    .btn-toolbar {
+      .btn {
+        padding: 0.2em 0.5em;
+
+        .material-icons {
+          margin-right: 0.1em;
+        }
+      }
+    }
   }
 
   .release-timeline {
@@ -25,10 +33,10 @@
 
     li {
       color: $stanford-cardinal-red;
-      font-size: 0.85rem;
 
       .material-icons {
-        font-size: 0.95rem;
+        font-size: 1.1rem;
+        margin-right: 0.1em;
       }
     }
   }
@@ -75,7 +83,6 @@
 
         table.release-data-links-table {
           border-collapse: collapse;
-          font-size: 0.85rem;
           margin-bottom: 0;
           text-align: center;
 
@@ -162,6 +169,11 @@
                 &:focus {
                   outline: none;
                 }
+
+                &.disabled {
+                  color: $gray;
+                  cursor: not-allowed;
+                }
               }
 
               .file-size {
@@ -222,6 +234,13 @@
 
   .view-more-button-container {
     .view-more-button-wrapper {
+      border-left: 2px solid #e1e4e8;
+      padding-right: 0;
+    }
+  }
+
+  .release-data-status-info-container {
+    .release-data-status-info {
       border-left: 2px solid #e1e4e8;
       padding-right: 0;
     }

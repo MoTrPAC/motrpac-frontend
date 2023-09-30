@@ -7,26 +7,31 @@ import History from './history';
 import NavbarConnected from '../Navbar/navbar';
 import FooterConnected from '../Footer/footer';
 import LandingPageConnected from '../LandingPage/landingPage';
-import DashboardConnected from '../Dashboard/dashboard';
-import UploadScreenConnected from '../UploadPage/uploadScreen';
-import LinkoutPageConnected from '../LinkoutPage/linkoutPage';
+import LinkoutPage from '../LinkoutPage/linkoutPage';
 import AnalysisHomePageConnected from '../AnalysisPage/analysisHomePage';
-import DownloadPageConnected from '../DownloadPage/downloadPage';
 import MethodsConnected from '../MethodsPage/methods';
-import TeamPageConnected from '../TeamPage/teamPage';
-import ContactConnected from '../ContactPage/contact';
+import TeamPage from '../TeamPage/teamPage';
+import Contact from '../ContactPage/contact';
 import ErrorPageConnected from '../ErrorPage/error';
-import SearchPageConnected from '../Search/searchPage';
 import ReleasePageConnected from '../ReleasePage/releasePage';
-import DataSummaryPage from '../DataSummaryPage/dataSummaryPage';
+import DataStatusPageConnected from '../DataStatusPage/dataStatusPage';
+import DataSummaryPageConnected from '../DataSummaryPage/dataSummaryPage';
 import DataAccessPageConnected from '../DataAccess/dataAccessPage';
-import RelatedStudyConnected from '../RelatedStudy/relatedStudy';
-import HeritageProteomicsConnected from '../RelatedStudy/heritageProteomics';
-import AnnouncementsPageConnected from '../AnnouncementsPage/announcementsPage';
+import RelatedStudy from '../RelatedStudy/relatedStudy';
+import HeritageProteomics from '../RelatedStudy/heritageProteomics';
+import AnnouncementsPage from '../AnnouncementsPage/announcementsPage';
+import BrowseDataPageConnected from '../BrowseDataPage/browseDataPage';
+import SearchPageConnected from '../Search/searchPage';
+import GeneCentricViewConnected from '../AnalysisPage/GeneCentricViewRat/geneCentricViewPage';
+import GraphicalClustering from '../AnalysisPage/GraphicalClustering/graphicalClusteringPage';
+import CodeRepositories from '../CodeRepoPage/codeRepoPage';
+import MainStudyConnected from '../MainStudy/mainStudy';
+import Tutorials from '../Tutorials/tutorials';
+import Pass1b06PhenotypeAnimalConnected from '../AnalysisPage/pass1b06PhenotypeAnimal';
 import CallbackConnected from '../Auth/callback';
-import SidebarConnected from '../Sidebar/sidebar';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
 import PrivateRoute from '../Auth/privateRoute';
+import ScrollToTop from '../lib/scrollToTop';
 
 const store = configureStore();
 
@@ -34,12 +39,12 @@ function App({ history = History }) {
   return (
     <Provider store={store}>
       <Router history={history}>
+        <ScrollToTop />
         <div className="App container-fluid">
           <header>
             <NavbarConnected />
           </header>
           <div className="row justify-content-center">
-            <SidebarConnected />
             <Switch>
               <Route
                 path="/callback"
@@ -50,54 +55,43 @@ function App({ history = History }) {
                 exact
                 component={withTracker(LandingPageConnected)}
               />
-              <PrivateRoute
-                path="/dashboard"
-                component={withTracker(DashboardConnected)}
-              />
-              <PrivateRoute
-                path="/upload"
-                component={withTracker(UploadScreenConnected)}
-              />
               <Route
                 path="/external-links"
-                component={withTracker(LinkoutPageConnected)}
-              />
-              <PrivateRoute
-                path="/download"
-                component={withTracker(DownloadPageConnected)}
+                component={withTracker(LinkoutPage)}
               />
               <PrivateRoute
                 path="/analysis/:subjectType"
                 component={withTracker(AnalysisHomePageConnected)}
               />
-              <PrivateRoute
+              <Route
                 path="/methods"
                 component={withTracker(MethodsConnected)}
               />
-              <Route path="/team" component={withTracker(TeamPageConnected)} />
-              <Route
-                path="/contact"
-                component={withTracker(ContactConnected)}
-              />
+              <Route path="/team" component={withTracker(TeamPage)} />
+              <Route path="/contact" component={withTracker(Contact)} />
               <Route
                 path="/announcements"
-                component={withTracker(AnnouncementsPageConnected)}
+                component={withTracker(AnnouncementsPage)}
               />
               <Route
                 path="/error"
                 component={withTracker(ErrorPageConnected)}
               />
               <PrivateRoute
-                path="/search"
-                component={withTracker(SearchPageConnected)}
-              />
-              <PrivateRoute
                 path="/summary"
-                component={withTracker(DataSummaryPage)}
+                component={withTracker(DataSummaryPageConnected)}
               />
               <PrivateRoute
                 path="/releases"
                 component={withTracker(ReleasePageConnected)}
+              />
+              <PrivateRoute
+                path="/qc-data-monitor"
+                component={withTracker(DataStatusPageConnected)}
+              />
+              <Route
+                path="/data-download"
+                component={withTracker(BrowseDataPageConnected)}
               />
               <Route
                 path="/data-access"
@@ -106,12 +100,37 @@ function App({ history = History }) {
               <Route
                 path="/related-studies"
                 exact
-                component={withTracker(RelatedStudyConnected)}
+                component={withTracker(RelatedStudy)}
               />
               <Route
                 path="/related-studies/heritage-proteomics"
                 exact
-                component={withTracker(HeritageProteomicsConnected)}
+                component={withTracker(HeritageProteomics)}
+              />
+              <Route
+                path="/search"
+                component={withTracker(SearchPageConnected)}
+              />
+              <Route
+                path="/gene-centric"
+                component={withTracker(GeneCentricViewConnected)}
+              />
+              <Route
+                path="/graphical-clustering"
+                component={withTracker(GraphicalClustering)}
+              />
+              <Route
+                path="/code-repositories"
+                component={withTracker(CodeRepositories)}
+              />
+              <Route
+                path="/project-overview"
+                component={withTracker(MainStudyConnected)}
+              />
+              <Route path="/tutorials" component={withTracker(Tutorials)} />
+              <PrivateRoute
+                path="/analysis-phenotype"
+                component={withTracker(Pass1b06PhenotypeAnimalConnected)}
               />
             </Switch>
           </div>

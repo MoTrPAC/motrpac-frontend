@@ -8,16 +8,17 @@ function ReleaseDataTableInternal({ release, renderDataTypeRow }) {
         <thead className="thead-dark">
           <tr className="table-head">
             <th className="col-data-type">Data type</th>
-            <th className="col-command-line-download">Command-line download</th>
             <th className="col-web-download">Web download</th>
           </tr>
         </thead>
         <tbody>
-          {release.result_files.data_types.map((item) => renderDataTypeRow(
-            release.result_files.bucket_name,
-            item,
-            release.version,
-          ))}
+          {release.result_files.data_types.map((item) =>
+            renderDataTypeRow(
+              release.result_files.bucket_name,
+              item,
+              release.version
+            )
+          )}
         </tbody>
       </table>
     </div>

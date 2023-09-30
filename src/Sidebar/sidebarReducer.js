@@ -1,5 +1,5 @@
 export const defaultSidebarState = {
-  expanded: false,
+  expanded: true,
 };
 
 export default function SidebarReducer(

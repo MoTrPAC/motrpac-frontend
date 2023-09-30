@@ -17,6 +17,12 @@ main {
       margin-right: 0;
     }
 
+    .motrpac-tag-line {
+      h3 {
+        font-family: 'Open Sans', sans-serif;
+      }
+    }
+
     .content {
       h3 {
         color: #8a8a8a;
@@ -32,33 +38,46 @@ main {
       }
     }
 
-    .marker-paper-announce {
+    .announcement-banner {
       border-radius: 0.35rem;
+      color: #fff;
       margin-bottom: 0;
+      /*
       background: rgb(15,133,218);
       background: linear-gradient(360deg, rgba(15,133,218,1) 0%, rgba(73,166,233,1) 100%);
+      */
+      background: #2094e8;
+      background: linear-gradient(-45deg, #0e3293 0%, #006db5 50%, #002878 100%);
+      order: -2;
+      text-align: center;
 
-      .marker-paper-announce-content {
-        h5 {
-          color: #fff;
-          font-weight: 600;
-          line-height: 1.6;
-          margin-top: 0.25rem;
-          margin-bottom: 0.4rem;
+      h3 {
+        font-size: 2.75rem;
+        font-weight: 600;
+      }
 
-          a {
-            color: $accent-yellow;
-          
-            &:hover {
-              color: $accent-yellow-shade-medium;
-              text-decoration: none;
-            }
+      .announcement-banner-content {
+        font-size: 1.3rem;
+        line-height: 1.6;
+        margin-top: 0.25rem;
+        margin-bottom: 0.4rem;
+
+        .secondary {
+          font-size: 1.125rem;
+        }
+
+        a {
+          color: $accent-yellow;
+        
+          &:hover {
+            color: $accent-yellow-shade-medium;
+            text-decoration: none;
           }
+        }
 
-          .inline-link-with-icon .material-icons {
-            font-size: 1.6rem;
-            margin-top: 0.2rem;
-          }
+        .inline-link-with-icon .material-icons {
+          font-size: 1.45rem;
+          margin-top: 0.15rem;
         }
       }
     }
@@ -94,8 +113,28 @@ section {
 
   .about-motrpac {
     background-color: #2094E8;
+    /*
+    background-image: url(./assets/LandingPageGraphics/about_motrpac.jpg);
+    background-repeat: no-repeat!important;
+    background-position: top center!important;
+    background-size: cover!important;
+    */
     height: 486px;
     position: relative;
+    /*
+    background: #2094e8;
+    background: linear-gradient(-45deg, #0e3293 0%, #2094e8 35%, #4ac7e8 65%, #002878 100%);
+    */
+    /*
+    background-size: 400% 400%;
+    animation: Gradient 20s ease infinite;
+    background: linear-gradient(
+      217deg,
+      rgba(177, 4, 14, 0.8),
+      rgba(255, 0, 0, 0) 70.71%
+    ), linear-gradient(127deg, rgba(0, 109, 181, 0.8), rgba(0, 255, 0, 0) 70.71%),
+    linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%);
+    */
 
     .particles-wrapper {
       width: 100%;
@@ -114,7 +153,7 @@ section {
     .content {
       background: rgba(31, 93, 147, 0.85);
       border-radius: 5px;
-      max-width: 50%;
+      max-width: 65%;
       padding: 1.50rem 1.75rem;
 
       h3 {
@@ -123,6 +162,25 @@ section {
   
       p {
         color: #fff;
+
+        a {
+          color: #fff;
+          font-weight: bold;
+        
+          &:hover {
+            color: $accent-yellow-shade-medium;
+            text-decoration: none;
+          }
+
+          .material-icons {
+            font-size: 1.3rem;
+            margin-top: 0.2rem;
+          }
+        }
+
+        .about-motrpac-emphasis {
+          color: $accent-yellow;
+        }
       }
     }
   }
@@ -144,7 +202,12 @@ section {
       text-align: center;
 
       img {
-        height: 26.0rem;
+        height: 24.5rem;
+        transition: height 0.5s ease;
+
+        &:hover {
+          height: 26.5rem;
+        }
       }
     }
   }
@@ -175,13 +238,35 @@ section {
     .row {
       margin-left: 0;
       margin-right: 0;
+
+      .office-hour-banner {
+        border-radius: 0.35rem;
+        background: lighten($gray-transparent, 30%);
+        text-align: center;
+      }
+
+      .access-data-info, .upload-data-info {
+        line-height: 1.55;
+      }
     }
 
     .inline-link-with-icon {
       .material-icons {
-        font-size: 1.45rem;
+        font-size: 1.3rem;
       }
     }
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0% 50%
   }
 }
 
@@ -191,6 +276,7 @@ section {
 @include media-breakpoint-down(lg) {
   main {
     height: auto;
+    padding-top: 0.75rem;
 
     .hero-wrapper.row {
       align-items: start;
@@ -229,6 +315,7 @@ section {
 
   main {
     height: auto;
+    padding-top: 1.85rem;
 
     .hero-wrapper.row {
       flex-direction: column;
@@ -277,6 +364,7 @@ section {
 @include media-breakpoint-down(sm) {
   main {
     height: auto;
+    padding-top: 1.85rem;
 
     .hero-wrapper.row {
       flex-direction: column;
@@ -355,6 +443,7 @@ section {
 @include media-breakpoint-down(xs) {
   main {
     height: auto;
+    padding-top: 9.5rem;
 
     .hero-wrapper.row {
       flex-direction: column;
@@ -450,6 +539,7 @@ section {
 
   main {
     max-width: 98%;
+    padding-top: 9.5rem;
   }
 
   section {
@@ -541,6 +631,7 @@ section {
 @media (max-width: 320px) {
   main {
     max-width: 92%;
+    padding-top: 9.125rem;
 
     .hero-wrapper .content h3 {
       font-size: 1.65rem;

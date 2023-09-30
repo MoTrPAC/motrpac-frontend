@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import Particles from 'react-particles-js';
-import { useSpring, animated } from 'react-spring';
-import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
+import { Helmet } from 'react-helmet';
 import LogoAnimation from '../assets/LandingPageGraphics/LogoAnimation_03082019-yellow_pipelineball_left.gif';
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import HealthyHeart from '../assets/LandingPageGraphics/Infographic_Healthy_Heart.png';
 import ContactHelpdesk from '../lib/ui/contactHelpdesk';
 import onVisibilityChange from '../lib/utils/pageVisibility';
-
-// react-spring mouse parallax config
-const calc = (x, y) => [x - window.innerWidth / 2, y - window.innerHeight / 2];
-const trans3d = (x, y) => `translate3d(${x / 6}px,${y / 16}px,0)`;
+import AnnouncementBanner from './announcementBanner';
+import ExternalLink from '../lib/ui/externalLink';
+import PromoteBanner from './promoteBanner';
+import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
 
 /**
  * Renders the landing page in unauthenticated state.
@@ -59,22 +58,15 @@ export function LandingPage({ isAuthenticated, profile }) {
       document.removeEventListener(
         visibilityChange,
         handleVisibilityChange,
-        false
+        false,
       );
     };
   });
 
-  // react-spring set animation values
-  const [values, set] = useSpring(() => ({
-    xy: [0, 0],
-    config: { mass: 10, tension: 550, friction: 140 },
-  }));
-  const { xy } = values;
-
   // Redirect authenticated users to protected route
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   if (isAuthenticated && hasAccess) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to="/search" />;
   }
 
   // Play or stop the particles animation
@@ -82,73 +74,19 @@ export function LandingPage({ isAuthenticated, profile }) {
     setVisibility(!visibility);
   }
 
-  // Function to render marker paper announcement
-  const MarkerPaperNotice = () => (
-    <div
-      className="alert alert-primary alert-dismissible fade show marker-paper-announce d-flex align-items-center justify-content-between w-100"
-      role="alert"
-    >
-      <span className="marker-paper-announce-content">
-        <h5>
-          The
-          {' '}
-          <a
-            href="https://www.cell.com/cell/fulltext/S0092-8674(20)30691-7"
-            className="inline-link-with-icon"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={trackEvent.bind(
-              this,
-              'MoTrPAC Marker Paper',
-              'Cell Publication',
-              'Landing Page'
-            )}
-          >
-            first MoTrPAC paper
-            <i className="material-icons external-linkout-icon">open_in_new</i>
-          </a>
-          {' '}
-          is now published in the journal
-          {' '}
-          <i>Cell</i>
-          . Read the
-          {' '}
-          <a
-            href="https://www.nih.gov/news-events/news-releases/nih-funded-study-recruit-thousands-participants-reveal-exercise-impact-molecular-level"
-            className="inline-link-with-icon"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={trackEvent.bind(
-              this,
-              'MoTrPAC Marker Paper',
-              'NIH Press Release',
-              'Landing Page'
-            )}
-          >
-            NIH press release
-            <i className="material-icons external-linkout-icon">open_in_new</i>
-          </a>
-          {' '}
-          for further information about this publication.
-        </h5>
-      </span>
-      <button
-        type="button"
-        className="close"
-        data-dismiss="alert"
-        aria-label="Close"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  );
-
   return (
     <div className="row marketing">
+      <Helmet>
+        <html lang="en" />
+        <title>Welcome to MoTrPAC Data Hub</title>
+        <script type="application/ld+json">
+          {JSON.stringify(landingPageStructuredData)}
+        </script>
+      </Helmet>
       <main>
         <div className="container hero h-100">
           <div className="row hero-wrapper h-100">
-            <MarkerPaperNotice />
+            <AnnouncementBanner />
             <div className="hero-image col-12 col-md-8 mx-auto">
               <img
                 src={LogoAnimation}
@@ -186,7 +124,7 @@ export function LandingPage({ isAuthenticated, profile }) {
                   width: 2,
                 },
                 move: {
-                  speed: 5,
+                  speed: 3,
                   enable: visibility,
                 },
               },
@@ -219,19 +157,26 @@ export function LandingPage({ isAuthenticated, profile }) {
               <div className="content col-12">
                 <h3>About MoTrPAC</h3>
                 <p>
-                  Molecular Transducers of Physical Activity Consortium is a national
-                  research consortium designed to discover and characterize the range
-                  of molecular transducers (the "molecular map") that underlie the
-                  effects of physical activity in humans.
+                  <ExternalLink
+                    to="https://motrpac.org/"
+                    label="Molecular Transducers of Physical Activity Consortium"
+                  />{' '}
+                  is a national research consortium. Its goal is to{' '}
+                  <span className="font-italic about-motrpac-emphasis">
+                    study the molecular changes that occur in response to
+                    exercise,
+                  </span>{' '}
+                  and ultimately to advance the understanding of how physical
+                  activity improves and preserves health. We aim to generate a
+                  molecular map of the effects of exercise.
                 </p>
-                <a
-                  href="https://motrpac.org/"
+                <Link
+                  to="/project-overview"
                   className="btn btn-dark"
                   role="button"
-                  target="_new"
                 >
-                  READ MORE
-                </a>
+                  PROJECT OVERVIEW
+                </Link>
               </div>
             </div>
           </div>
@@ -240,20 +185,12 @@ export function LandingPage({ isAuthenticated, profile }) {
       <section>
         <div className="container featurette multi-omics" id="multi-omics">
           <div className="row featurette-wrapper h-100">
-            <div
-              className="feature-image col-12 col-md-6 mx-auto"
-              onMouseMove={({ clientX: x, clientY: y }) => set({ xy: calc(x, y) })}
-            >
-              <animated.div
-                className="animated-image-container"
-                style={{ transform: xy.interpolate(trans3d) }}
-              >
-                <img
-                  src={LayerRunner}
-                  className="img-fluid data-layer-runner"
-                  alt="Data Layer Runner"
-                />
-              </animated.div>
+            <div className="feature-image col-12 col-md-6 mx-auto">
+              <img
+                src={LayerRunner}
+                className="img-fluid data-layer-runner"
+                alt="Data Layer Runner"
+              />
             </div>
             <div className="content col-12 col-md-6">
               <h3>Multi-Omics</h3>
@@ -285,7 +222,7 @@ export function LandingPage({ isAuthenticated, profile }) {
                   Center, Consortium Coordinating Center.
                 </p>
                 <a
-                  href="https://commonfund.nih.gov/MolecularTransducers/overview#ClinicalCenter"
+                  href="https://commonfund.nih.gov/MolecularTransducers#ClinicalCenter"
                   className="btn btn-success"
                   role="button"
                   target="_new"
@@ -308,23 +245,28 @@ export function LandingPage({ isAuthenticated, profile }) {
         <div className="container featurette data-policies">
           <div className="row">
             <div className="p-2 col-12 col-md-6 access-data-info">
-              <h5>Accessing Data: </h5>
-              The first MoTrPAC public data release is now available. Please agree to
-              the data use agreement and register for an account on the&nbsp;
-              <a href="/data-access" className="inline-link">Data Access</a>
-              &nbsp;page if you are interested in obtaining access to the data. For updates when
-              subsequent publicly accessible data become available, please
-              {' '}
-              <ContactHelpdesk />
+              <h4>Data Access</h4>
+              The MoTrPAC{' '}
+              <Link to="/data-download">
+                Endurance Exercise Training Animal Study data
+              </Link>{' '}
+              is now available to the public. This is in addition to the Limited
+              Acute Exercise data made available to the public in a prior
+              release. Please agree to the data use agreement and register for
+              an account on the <Link to="/data-access">Data Access</Link> page
+              if you are interested in obtaining access to the Limited Acute
+              Exercise data. For updates when subsequent publicly accessible
+              data become available, please <ContactHelpdesk />
             </div>
             <div className="p-2 col-12 col-md-6 upload-data-info">
-              <h5>Uploading Data From Study Sites:</h5>
-              If you are a member of one of the sites involved with MoTrPAC, please log in using
-              your provided ID at the link on the bottom right of this website. If you have issues
-              logging in, please
-              {' '}
-              <ContactHelpdesk />
+              <h4>Study Data Submission</h4>
+              If you are a member of one of the sites involved with MoTrPAC,
+              please <ContactHelpdesk /> about obtaining access to our cloud
+              storage and data submission guidelines.
             </div>
+          </div>
+          <div className="row mt-4">
+            <PromoteBanner />
           </div>
         </div>
       </section>

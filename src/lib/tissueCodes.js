@@ -245,6 +245,12 @@ const tissues = [
     motrpac_tissue_code: 'T70 Rat White Adipose Powder',
     tissue_name_release: 't70-white-adipose',
   },
+  {
+    bic_tissue_code: 'T99',
+    bic_tissue_name: 'Vena Cava Powder',
+    motrpac_tissue_code: 'T99 Rat Vena Cava Powder',
+    tissue_name_release: 't99-vena-cava',
+  },
 ];
 
 export default tissues;
