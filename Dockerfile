@@ -1,5 +1,5 @@
 # create-react-app build environment
-FROM node:14-alpine as react-build
+FROM node:16-alpine as react-build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package*.json ./
