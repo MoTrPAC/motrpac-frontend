@@ -25,7 +25,7 @@ function OpenAccessFileDownloadModal({
       return false;
     }
     // submit download request
-    handleDownloadRequest(email, name, selectedFiles);
+    handleDownloadRequest(email, name, null, selectedFiles);
     // set submission status
     setSubmitted(true);
   }
