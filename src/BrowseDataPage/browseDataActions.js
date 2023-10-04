@@ -237,7 +237,7 @@ function handleUrlFetch(selectedFiles) {
 }
 
 // Request to download files
-function handleDownloadRequest(email, name, selectedFiles, userid) {
+function handleDownloadRequest(email, name, userid, selectedFiles) {
   if (!email || !name || selectedFiles.length === 0) {
     return false;
   }
