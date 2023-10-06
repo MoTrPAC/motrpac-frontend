@@ -1,0 +1,25 @@
+.user-survey-modal {
+  .modal-dialog.modal {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+
+    .modal-content {
+      border: 5px solid #454545;
+      box-shadow: 0 0 0.65rem 0.5rem rgba(0, 0, 0, 0.65);
+
+      .modal-header {
+        border-bottom: none;
+        padding-bottom: 0;
+
+        h4 {
+          font-weight: 700;
+        }
+      }
+
+      .modal-footer {
+        border-top: none;
+        padding-top: 0;
+      }
+    }
+  }
+}
