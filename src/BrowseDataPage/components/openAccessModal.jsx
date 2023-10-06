@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import surveyModdalActions from '../../UserSurvey/userSurveyActions';
 import BootstrapSpinner from '../../lib/ui/spinner';
 
 function OpenAccessFileDownloadModal({
@@ -11,6 +13,7 @@ function OpenAccessFileDownloadModal({
   const [submitted, setSubmitted] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const dispatch = useDispatch();
 
   function handleSubmit() {
     // validate email and name input
@@ -75,13 +78,25 @@ function OpenAccessFileDownloadModal({
     );
   }
 
-  // reset state upon modal close event
+  // reset state and close modal if user has not submitted download request
   function handleModalClose() {
     setName('');
     setEmail('');
     setTimeout(() => {
       setSubmitted(false);
     }, 500);
+  }
+
+  // reset state, close modal, and show survey modal if user submitted download request
+  function handleModalCloseAfterRequest() {
+    setName('');
+    setEmail('');
+    setTimeout(() => {
+      setSubmitted(false);
+    }, 500);
+    setTimeout(() => {
+      dispatch(surveyModdalActions.toggleUserSurveyModal(true));
+    }, 800);
   }
 
   return (
@@ -102,7 +117,9 @@ function OpenAccessFileDownloadModal({
               className="close"
               data-dismiss="modal"
               aria-label="Close"
-              onClick={handleModalClose}
+              onClick={
+                submitted ? handleModalCloseAfterRequest : handleModalClose
+              }
             >
               <span aria-hidden="true">&times;</span>
             </button>
@@ -132,7 +149,7 @@ function OpenAccessFileDownloadModal({
                 type="button"
                 className="btn btn-secondary"
                 data-dismiss="modal"
-                onClick={handleModalClose}
+                onClick={handleModalCloseAfterRequest}
               >
                 Close
               </button>

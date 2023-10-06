@@ -1,11 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import surveyModdalActions from '../../UserSurvey/userSurveyActions';
 import BootstrapSpinner from '../../lib/ui/spinner';
 
 function AuthAccessFileDownloadModal({
   downloadRequestResponse,
   waitingForResponse,
 }) {
+  const dispatch = useDispatch();
+
+  // close modal and show survey modal if user submitted download request
+  function handleModalCloseAfterRequest() {
+    setTimeout(() => {
+      dispatch(surveyModdalActions.toggleUserSurveyModal(true));
+    }, 500);
+  }
+
   return (
     <div
       className="modal fade data-download-modal"
@@ -24,6 +35,7 @@ function AuthAccessFileDownloadModal({
               className="close"
               data-dismiss="modal"
               aria-label="Close"
+              onClick={handleModalCloseAfterRequest}
             >
               <span aria-hidden="true">&times;</span>
             </button>
@@ -46,6 +58,7 @@ function AuthAccessFileDownloadModal({
               type="button"
               className="btn btn-secondary"
               data-dismiss="modal"
+              onClick={handleModalCloseAfterRequest}
             >
               Close
             </button>
