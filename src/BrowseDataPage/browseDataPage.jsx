@@ -89,7 +89,9 @@ export function BrowseDataPage({
             profile={profile}
           />
         )}
-        <UserSurveyModal userID={profile.userid} />
+        <UserSurveyModal
+          userID={profile && profile.userid ? profile.userid : ''}
+        />
       </div>
     </div>
   );
