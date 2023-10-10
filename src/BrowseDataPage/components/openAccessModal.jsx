@@ -28,7 +28,7 @@ function OpenAccessFileDownloadModal({
       return false;
     }
     // submit download request
-    handleDownloadRequest(email, name, null, selectedFiles);
+    handleDownloadRequest(email, name, '', selectedFiles);
     // set submission status
     setSubmitted(true);
   }
@@ -151,7 +151,7 @@ function OpenAccessFileDownloadModal({
                 data-dismiss="modal"
                 onClick={handleModalCloseAfterRequest}
               >
-                Close
+                Done
               </button>
             </div>
           ) : null}
