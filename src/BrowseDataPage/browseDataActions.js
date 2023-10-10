@@ -14,6 +14,7 @@ const LOAD_DATA_OBJECTS = 'LOAD_DATA_OBJECTS';
 const DOWNLOAD_REQUEST_SUBMITTED = 'DOWNLOAD_REQUEST_SUBMITTED';
 const DOWNLOAD_REQUEST_SUCCESS = 'DOWNLOAD_REQUEST_SUCCESS';
 const DOWNLOAD_REQUEST_FAILURE = 'DOWNLOAD_REQUEST_FAILURE';
+const DOWNLOAD_BUNDLED_DATASET = 'DOWNLOAD_BUNDLED_DATASET';
 const DATA_FETCH_REQUESTED = 'DATA_FETCH_REQUESTED';
 const DATA_FETCH_SUCCESS = 'DATA_FETCH_SUCCESS';
 const DATA_FETCH_FAILURE = 'DATA_FETCH_FAILURE';
@@ -33,6 +34,7 @@ export const types = {
   DOWNLOAD_REQUEST_SUBMITTED,
   DOWNLOAD_REQUEST_SUCCESS,
   DOWNLOAD_REQUEST_FAILURE,
+  DOWNLOAD_BUNDLED_DATASET,
   DATA_FETCH_REQUESTED,
   DATA_FETCH_SUCCESS,
   DATA_FETCH_FAILURE,
@@ -125,6 +127,12 @@ function downloadRequestFailure(error = '') {
   return {
     type: DOWNLOAD_REQUEST_FAILURE,
     error,
+  };
+}
+
+function downloadBundledDataset() {
+  return {
+    type: DOWNLOAD_BUNDLED_DATASET,
   };
 }
 
@@ -330,6 +338,7 @@ const actions = {
   handleDownloadRequest,
   handleDataFetch,
   resetBrowseState,
+  downloadBundledDataset,
 };
 
 export default actions;
