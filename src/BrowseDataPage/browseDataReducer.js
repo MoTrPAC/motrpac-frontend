@@ -16,6 +16,7 @@ export const defaultBrowseDataState = {
   requireUpdate: false,
   selectedFileUrls: [],
   selectedFileNames: [],
+  downloadBundledDataset: false,
   downloadRequestResponse: '',
   waitingForResponse: false,
   fetching: false,
@@ -250,6 +251,11 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
       return {
         ...state,
         waitingForResponse: true,
+      };
+    case types.DOWNLOAD_BUNDLED_DATASET:
+      return {
+        ...state,
+        downloadBundledDataset: true,
       };
     case types.DOWNLOAD_REQUEST_FAILURE:
       return {
