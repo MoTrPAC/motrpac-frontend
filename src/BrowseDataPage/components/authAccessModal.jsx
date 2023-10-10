@@ -60,7 +60,7 @@ function AuthAccessFileDownloadModal({
               data-dismiss="modal"
               onClick={handleModalCloseAfterRequest}
             >
-              Close
+              Done
             </button>
           </div>
         </div>
