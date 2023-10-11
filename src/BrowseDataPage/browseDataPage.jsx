@@ -24,6 +24,7 @@ export function BrowseDataPage({
   downloadRequestResponse,
   waitingForResponse,
   showUserSurveyModal,
+  surveyId,
 }) {
   // anonymous user or authenticated user
   const userType = profile.user_metadata && profile.user_metadata.userType;
@@ -90,7 +91,7 @@ export function BrowseDataPage({
           />
         )}
         <UserSurveyModal
-          userID={profile && profile.userid ? profile.userid : ''}
+          userID={profile && profile.email ? profile.email : (surveyId ? surveyId : 'anonymous')}
         />
       </div>
     </div>
@@ -115,17 +116,20 @@ BrowseDataPage.propTypes = {
   downloadRequestResponse: PropTypes.string.isRequired,
   waitingForResponse: PropTypes.bool.isRequired,
   showUserSurveyModal: PropTypes.bool,
+  surveyId: PropTypes.string,
 };
 
 BrowseDataPage.defaultProps = {
   profile: {},
   showUserSurveyModal: false,
+  surveyId: '',
 };
 
 const mapStateToProps = (state) => ({
   ...state.browseData,
   profile: state.auth.profile,
   showUserSurveyModal: state.userSurvey.showUserSurveyModal,
+  surveyId: state.userSurvey.surveyId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
