@@ -418,6 +418,7 @@ export function SearchPage({
         </div>
         <UserSurveyModal
           userID={profile && profile.email ? profile.email : (surveyId ? surveyId : 'anonymous')}
+          dataContext="search_results"
         />
       </form>
     </div>
