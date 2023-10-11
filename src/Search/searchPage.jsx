@@ -605,7 +605,7 @@ function ResultsDownloadModal({
     if (downloadedData && !surveySubmitted) {
       setTimeout(() => {
         dispatch(surveyModdalActions.toggleUserSurveyModal(true));
-      }, 500);
+      }, 1000);
     }
   }
 
