@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import surveyModdalActions from '../../UserSurvey/userSurveyActions';
 import BootstrapSpinner from '../../lib/ui/spinner';
 
@@ -9,12 +9,17 @@ function AuthAccessFileDownloadModal({
   waitingForResponse,
 }) {
   const dispatch = useDispatch();
+  const surveySubmitted = useSelector(
+    (state) => state.userSurvey.surveySubmitted,
+  );
 
   // close modal and show survey modal if user submitted download request
   function handleModalCloseAfterRequest() {
-    setTimeout(() => {
-      dispatch(surveyModdalActions.toggleUserSurveyModal(true));
-    }, 500);
+    if (!surveySubmitted) {
+      setTimeout(() => {
+        dispatch(surveyModdalActions.toggleUserSurveyModal(true));
+      }, 500);
+    }
   }
 
   return (
