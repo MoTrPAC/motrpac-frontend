@@ -23,7 +23,7 @@ function OpenAccessBrowseDataSummary({ profile }) {
     if (downloadedData && !surveySubmitted) {
       setTimeout(() => {
         dispatch(surveyModdalActions.toggleUserSurveyModal(true));
-      }, 1700);
+      }, 2400);
     }
   };
 
