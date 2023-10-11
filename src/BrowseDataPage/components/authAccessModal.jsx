@@ -9,13 +9,18 @@ function AuthAccessFileDownloadModal({
   waitingForResponse,
 }) {
   const dispatch = useDispatch();
+  // get states from redux store
   const surveySubmitted = useSelector(
     (state) => state.userSurvey.surveySubmitted,
+  );
+  const downloadedData = useSelector(
+    (state) => state.userSurvey.downloadedData,
   );
 
   // close modal and show survey modal if user submitted download request
   function handleModalCloseAfterRequest() {
-    if (!surveySubmitted) {
+    // show survey modal if user has not submitted survey
+    if (downloadedData && !surveySubmitted) {
       setTimeout(() => {
         dispatch(surveyModdalActions.toggleUserSurveyModal(true));
       }, 500);
@@ -30,8 +35,10 @@ function AuthAccessFileDownloadModal({
       role="dialog"
       aria-labelledby="dataDownloadModalLabel"
       aria-hidden="true"
+      data-backdrop="static"
+      data-keyboard="false"
     >
-      <div className="modal-dialog modal modal-dialog-centered">
+      <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">File Download Request</h5>
