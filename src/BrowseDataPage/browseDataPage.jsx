@@ -16,7 +16,6 @@ import UserSurveyModal from '../UserSurvey/userSurveyModal';
 export function BrowseDataPage({
   profile,
   filteredFiles,
-  selectedFileNames,
   fetching,
   activeFilters,
   onChangeFilter,
@@ -94,7 +93,7 @@ export function BrowseDataPage({
         <UserSurveyModal
           userID={profile && profile.email ? profile.email : (surveyId ? surveyId : 'anonymous')}
           dataContext={
-            selectedFileNames.length ? 'selected_files' : 'bundled_files'
+            downloadRequestResponse.length ? 'selected_files' : 'bundled_files'
           }
         />
       </div>
@@ -104,7 +103,6 @@ export function BrowseDataPage({
 
 BrowseDataPage.propTypes = {
   filteredFiles: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  selectedFileNames: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetching: PropTypes.bool.isRequired,
   profile: PropTypes.shape({
     user_metadata: PropTypes.shape({
