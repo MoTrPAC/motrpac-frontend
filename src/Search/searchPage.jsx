@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { Typeahead } from 'react-bootstrap-typeahead';
@@ -11,6 +11,7 @@ import TrainingResultsTable from './trainingResultsTable';
 import SearchActions from './searchActions';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
+import surveyModdalActions from '../UserSurvey/userSurveyActions';
 import SearchResultFilters from './deaSearchResultFilters';
 import AnimatedLoadingIcon from '../lib/ui/loading';
 import { searchParamsDefaultProps, searchParamsPropType } from './sharedlib';
@@ -20,6 +21,7 @@ import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import { genes } from '../data/genes';
 import { metabolites } from '../data/metabolites';
 import searchStructuredData from '../lib/searchStructuredData/search';
+import UserSurveyModal from '../UserSurvey/userSurveyModal';
 
 export function SearchPage({
   profile,
@@ -45,6 +47,17 @@ export function SearchPage({
   const [multiSelections, setMultiSelections] = useState([]);
   const inputRef = useRef(null);
   const userType = profile.user_metadata && profile.user_metadata.userType;
+  const showUserSurveyModal = useSelector(
+    (state) => state.userSurvey.showUserSurveyModal,
+  );
+  const surveyId = useSelector((state) => state.userSurvey.surveyId);
+
+  useEffect(() => {
+    if (showUserSurveyModal) {
+      const userSurveyModalRef = document.querySelector('body');
+      userSurveyModalRef.classList.add('modal-open');
+    }
+  }, [showUserSurveyModal]);
 
   // Function to map array of keys to each array of values for each row
   function mapKeyToValue(indexObj) {
@@ -403,6 +416,9 @@ export function SearchPage({
             ) : null}
           </div>
         </div>
+        <UserSurveyModal
+          userID={profile && profile.email ? profile.email : (surveyId ? surveyId : 'anonymous')}
+        />
       </form>
     </div>
   );
@@ -520,6 +536,23 @@ function PrimaryOmicsFilter({ omics, toggleOmics }) {
 
 // Render modal message
 function ResultsDownloadLink({ downloadPath, downloadError, profile }) {
+  const dispatch = useDispatch();
+
+  // track event when user clicks download link
+  function handleSearchResultsDownload() {
+    // update store to show that user has downloaded data
+    dispatch(surveyModdalActions.userDownloadedData());
+    // track event in Google Analytics 4
+    trackEvent(
+      'Data Download',
+      'search_results',
+      profile && profile.userid
+        ? profile.userid.substring(profile.userid.indexOf('|') + 1)
+        : 'anonymous',
+      resultDownloadFilePath,
+    );
+  }
+
   const host =
     process.env.NODE_ENV !== 'production'
       ? process.env.REACT_APP_ES_PROXY_HOST_DEV
@@ -540,15 +573,7 @@ function ResultsDownloadLink({ downloadPath, downloadError, profile }) {
           id={resultDownloadFilePath}
           href={`${host}/${resultDownloadFilePath}`}
           download
-          onClick={trackEvent.bind(
-            this,
-            'Data Download',
-            'search_results',
-            profile && profile.userid
-              ? profile.userid.substring(profile.userid.indexOf('|') + 1)
-              : 'anonymous',
-            resultDownloadFilePath,
-          )}
+          onClick={handleSearchResultsDownload}
         >
           Click this link to download the search results.
         </a>
@@ -564,6 +589,25 @@ function ResultsDownloadModal({
   downloading,
   profile,
 }) {
+  const dispatch = useDispatch();
+
+  // get states from store
+  const surveySubmitted = useSelector(
+    (state) => state.userSurvey.surveySubmitted,
+  );
+  const downloadedData = useSelector(
+    (state) => state.userSurvey.downloadedData,
+  );
+
+  // show modal if user downloaded data and has not submitted survey
+  function handleSearchResultsDownloadModalClose() {
+    if (downloadedData && !surveySubmitted) {
+      setTimeout(() => {
+        dispatch(surveyModdalActions.toggleUserSurveyModal(true));
+      }, 500);
+    }
+  }
+
   return (
     <div
       className="modal fade data-download-modal"
@@ -572,6 +616,8 @@ function ResultsDownloadModal({
       role="dialog"
       aria-labelledby="dataDownloadModalLabel"
       aria-hidden="true"
+      data-backdrop="static"
+      data-keyboard="false"
     >
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
@@ -582,6 +628,7 @@ function ResultsDownloadModal({
               className="close"
               data-dismiss="modal"
               aria-label="Close"
+              onClick={handleSearchResultsDownloadModalClose}
             >
               <span aria-hidden="true">&times;</span>
             </button>
@@ -604,8 +651,9 @@ function ResultsDownloadModal({
               type="button"
               className="btn btn-secondary"
               data-dismiss="modal"
+              onClick={handleSearchResultsDownloadModalClose}
             >
-              Close
+              Done
             </button>
           </div>
         </div>
