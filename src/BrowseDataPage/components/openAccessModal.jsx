@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import surveyModdalActions from '../../UserSurvey/userSurveyActions';
 import BootstrapSpinner from '../../lib/ui/spinner';
 
@@ -14,6 +14,14 @@ function OpenAccessFileDownloadModal({
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const dispatch = useDispatch();
+
+  // get states from redux store
+  const surveySubmitted = useSelector(
+    (state) => state.userSurvey.surveySubmitted,
+  );
+  const downloadedData = useSelector(
+    (state) => state.userSurvey.downloadedData,
+  );
 
   function handleSubmit() {
     // validate email and name input
@@ -29,6 +37,10 @@ function OpenAccessFileDownloadModal({
     }
     // submit download request
     handleDownloadRequest(email, name, '', selectedFiles);
+    // set user survey id in redux store
+    dispatch(surveyModdalActions.setUserSurveyId(email));
+    // update store to show that user has downloaded data
+    dispatch(surveyModdalActions.userDownloadedData());
     // set submission status
     setSubmitted(true);
   }
@@ -94,9 +106,12 @@ function OpenAccessFileDownloadModal({
     setTimeout(() => {
       setSubmitted(false);
     }, 500);
-    setTimeout(() => {
-      dispatch(surveyModdalActions.toggleUserSurveyModal(true));
-    }, 800);
+    // show survey modal if user has not submitted survey
+    if (downloadedData && !surveySubmitted) {
+      setTimeout(() => {
+        dispatch(surveyModdalActions.toggleUserSurveyModal(true));
+      }, 800);
+    }
   }
 
   return (
@@ -107,8 +122,10 @@ function OpenAccessFileDownloadModal({
       role="dialog"
       aria-labelledby="dataDownloadModalLabel"
       aria-hidden="true"
+      data-backdrop="static"
+      data-keyboard="false"
     >
-      <div className="modal-dialog modal modal-dialog-centered">
+      <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">File Download Request</h5>
