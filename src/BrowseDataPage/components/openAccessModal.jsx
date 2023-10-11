@@ -110,7 +110,7 @@ function OpenAccessFileDownloadModal({
     if (downloadedData && !surveySubmitted) {
       setTimeout(() => {
         dispatch(surveyModdalActions.toggleUserSurveyModal(true));
-      }, 800);
+      }, 1000);
     }
   }
 
