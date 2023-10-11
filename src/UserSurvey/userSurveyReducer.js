@@ -4,6 +4,8 @@ export const defaultUserSurveyState = {
   showUserSurveyModal: false,
   surveySubmitted: false,
   waitingForResponse: false,
+  downloadedData: false,
+  surveyId: '',
   status: '',
   error: '',
 };
@@ -14,6 +16,11 @@ function userSurveyReducer(state = defaultUserSurveyState, action) {
       return {
         ...state,
         showUserSurveyModal: action.value,
+      };
+    case surveyModdalActionTypes.USER_SURVEY_ID:
+      return {
+        ...state,
+        surveyId: action.value,
       };
     case surveyModdalActionTypes.USER_SURVEY_SUBMIT:
       return {
@@ -38,6 +45,11 @@ function userSurveyReducer(state = defaultUserSurveyState, action) {
         ...state,
         error: action.error,
         waitingForResponse: false,
+      };
+    case surveyModdalActionTypes.USER_DOWNLOADED_DATA:
+      return {
+        ...state,
+        downloadedData: true,
       };
     default:
       return state;
