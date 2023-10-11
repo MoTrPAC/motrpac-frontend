@@ -35,13 +35,13 @@ function UserSurveyModal({
   // render custom textarea placeholder message if user selected a response
   function renderTextAreaPlaceholderMessage() {
     if (rating === 'Awful' || rating === 'Poor') {
-      return 'Tell us what went wrong...';
+      return '(Optional) Tell us what went wrong...';
     }
     if (rating === 'Average') {
-      return 'Tell us how we can improve...';
+      return '(Optional) Tell us how we can improve...';
     }
     if (rating === 'Good' || rating === 'Awesome') {
-      return 'Tell us what you liked...';
+      return '(Optional) Tell us what you liked...';
     }
   }
 
