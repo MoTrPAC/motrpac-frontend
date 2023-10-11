@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import BundleDataTypes from './bundleDataTypes';
 import BundleDownloadButton from './bundleDownloadButton';
 
-function OpenAccessBundleDownloads({ sets, profile }) {
+function OpenAccessBundleDownloads({
+  sets,
+  profile,
+  handleUserSurveyOpenOnBundledDownload,
+}) {
   const numOfSets = sets === 'all' ? BundleDataTypes.length : 2;
 
   return (
@@ -28,6 +32,9 @@ function OpenAccessBundleDownloads({ sets, profile }) {
                 <BundleDownloadButton
                   bundlefile={item.object_zipfile}
                   profile={profile}
+                  handleUserSurveyOpenOnBundledDownload={
+                    handleUserSurveyOpenOnBundledDownload
+                  }
                 />
               </div>
             </div>
@@ -47,11 +54,13 @@ OpenAccessBundleDownloads.propTypes = {
       name: PropTypes.string,
     }),
   }),
+  handleUserSurveyOpenOnBundledDownload: PropTypes.func,
 };
 
 OpenAccessBundleDownloads.defaultProps = {
   sets: '',
   profile: {},
+  handleUserSurveyOpenOnBundledDownload: null,
 };
 
 export default OpenAccessBundleDownloads;
