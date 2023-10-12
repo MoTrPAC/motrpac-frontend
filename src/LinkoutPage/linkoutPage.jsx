@@ -94,8 +94,8 @@ function LinkoutPage() {
     <div key={item.name} className="featured-link">
       <div className="row row-cols-1 row-cols-md-2">
         {item.links.map((link) => (
-          <div className="col mb-4 mt-2 py-3">
-            <div key={link.url} className="card">
+          <div key={link.url} className="col mb-4 mt-2 py-3">
+            <div className="card">
               <div
                 className="card-img-top"
                 style={{ backgroundImage: `url("${link.image}")` }}
