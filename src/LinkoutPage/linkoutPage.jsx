@@ -8,6 +8,7 @@ import ENCODELogo from '../assets/ExternalLogos/ENCODE.png';
 import MWLogo from '../assets/ExternalLogos/MetabolomicsWorkbench.jpeg';
 import GTExLogo from '../assets/ExternalLogos/GTEx.png';
 import CFDELogo from '../assets/ExternalLogos/CFDE.png';
+import OmicsPipelinesImage from '../assets/ExternalLogos/omicspipelines_dashboard.png';
 
 const featured = [
   {
@@ -26,6 +27,13 @@ const featured = [
         text: 'A database comprising meta-analysis results from 43 publicly available exercise transcriptome datasets from human skeletal muscle and blood.',
         image: metaAnalysisGeneIcon,
         title: 'Exercise Transcriptome Meta-analysis',
+      },
+      {
+        protocol: 'https',
+        url: 'omicspipelines.org',
+        text: 'OmicsPipelines is a user-friendly set of applications built by the MoTRPAC Bioinformatics Center, designed to run proteomics and genomics data analysis pipelines in the cloud, requiring minimal knowledge of cloud computing. It features two main components: an installer that sets up the necessary infrastructure on selected cloud platforms and a dashboard that facilitates the creation, execution, and monitoring of various scientific workflows, promoting collaboration through multi-user access and extensive support resources.',
+        image: OmicsPipelinesImage,
+        title: 'OmicsPipelines',
       },
     ],
   },
@@ -84,22 +92,24 @@ function LinkoutPage() {
   // Render featured links
   const featuredLinks = featured.map((item) => (
     <div key={item.name} className="featured-link">
-      <div className="card-deck">
+      <div className="row row-cols-1 row-cols-md-2">
         {item.links.map((link) => (
-          <div key={link.url} className="card mt-2 py-3">
-            <div
-              className="card-img-top"
-              style={{ backgroundImage: `url("${link.image}")` }}
-            />
-            <div className="card-body">
-              <h5 className="card-title">
-                <a href={`${link.protocol}://${link.url}`} target="_new">
-                  {link.title}
-                  &nbsp;
-                  <span className="oi oi-external-link" />
-                </a>
-              </h5>
-              <p className="card-text">{link.text}</p>
+          <div className="col mb-4 mt-2 py-3">
+            <div key={link.url} className="card">
+              <div
+                className="card-img-top"
+                style={{ backgroundImage: `url("${link.image}")` }}
+              />
+              <div className="card-body">
+                <h5 className="card-title">
+                  <a href={`${link.protocol}://${link.url}`} target="_new">
+                    {link.title}
+                    &nbsp;
+                    <span className="oi oi-external-link" />
+                  </a>
+                </h5>
+                <p className="card-text">{link.text}</p>
+              </div>
             </div>
           </div>
         ))}
