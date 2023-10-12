@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import surveyModdalActions from '../../UserSurvey/userSurveyActions';
 import { trackEvent } from '../../GoogleAnalytics/googleAnalytics';
 
-function BundleDownloadButton({ bundlefile, profile }) {
+function BundleDownloadButton({
+  bundlefile,
+  profile,
+  handleUserSurveyOpenOnBundledDownload,
+}) {
   const [fetchStatus, setFetchStatus] = useState({
     status: null,
     fileUrl: null,
     fetching: false,
   });
+  const dispatch = useDispatch();
 
   // fetch signed url upon user's initial button click
   function handleFileFetch(e, bucket, filename) {
@@ -45,6 +52,7 @@ function BundleDownloadButton({ bundlefile, profile }) {
 
   // reset state upon user clicking download link
   function handleFileDownload(file) {
+    dispatch(surveyModdalActions.userDownloadedData());
     const userID =
       profile && profile.userid
         ? profile.userid.substring(profile.userid.indexOf('|') + 1)
@@ -57,6 +65,9 @@ function BundleDownloadButton({ bundlefile, profile }) {
         fetching: false,
       });
     }, 1500);
+    if (typeof handleUserSurveyOpenOnBundledDownload === 'function') {
+      handleUserSurveyOpenOnBundledDownload();
+    }
   }
 
   // render button with fetch state
@@ -161,10 +172,12 @@ BundleDownloadButton.propTypes = {
       name: PropTypes.string,
     }),
   }),
+  handleUserSurveyOpenOnBundledDownload: PropTypes.func,
 };
 
 BundleDownloadButton.defaultProps = {
   profile: {},
+  handleUserSurveyOpenOnBundledDownload: null,
 };
 
 export default BundleDownloadButton;
