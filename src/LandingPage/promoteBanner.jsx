@@ -8,10 +8,11 @@ function PromoteBanner() {
       <h3 className="office-hour-title">Join Us</h3>
       <div className="office-hour-content mb-3">
         The Bioinformatics Center of MoTrPAC will be hosting the next virtual
-        Office Hour on Tuesday, September 26, 2023 at 11:00 am Pacific Time.
+        Office Hour on {process.env.REACT_APP_OFFICE_HOUR_DAY}{' '}
+        {process.env.REACT_APP_OFFICE_HOUR_DATE} at 11:00 am Pacific Time.
       </div>
       <a
-        href="https://docs.google.com/forms/d/e/1FAIpQLSeY2lHGlbfLXhHT0aedNs98ORK4rc8FBhhXKE0nrW6vtSCqJA/viewform"
+        href={process.env.REACT_APP_OFFICE_HOUR_SIGNUP_URL}
         className="btn btn-primary"
         role="button"
         target="_blank"
@@ -21,7 +22,7 @@ function PromoteBanner() {
           'User Engagement',
           'open_office_hour',
           'Landing Page',
-          'September 26, 2023',
+          process.env.REACT_APP_OFFICE_HOUR_DATE,
         )}
       >
         SIGN UP
