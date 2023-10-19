@@ -5,7 +5,7 @@ import configureStore from './configureStore';
 import 'bootstrap';
 import History from './history';
 import NavbarConnected from '../Navbar/navbar';
-import FooterConnected from '../Footer/footer';
+import Footer from '../Footer/footer';
 import LandingPageConnected from '../LandingPage/landingPage';
 import LinkoutPage from '../LinkoutPage/linkoutPage';
 import AnalysisHomePageConnected from '../AnalysisPage/analysisHomePage';
@@ -136,7 +136,7 @@ function App({ history = History }) {
           </div>
         </div>
       </Router>
-      <FooterConnected />
+      <Footer />
     </Provider>
   );
 }
