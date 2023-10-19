@@ -75,3 +75,6 @@ src/__snapshots__/*
 
 # VS Code user settings
 .vscode/
+
+# gke 
+terraform
