@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link , useLocation } from 'react-router-dom';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import actions from '../Auth/authActions';
@@ -32,6 +32,16 @@ export function Navbar({
   allFiles,
   lastModified,
 }) {
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const isHomepage = currentPath === '/';
+
+  if (isHomepage) {
+    document.querySelector('body').classList.add('homepage');
+  } else {
+    document.querySelector('body').classList.remove('homepage');
+  }
+
   useEffect(() => {
     /* Handle logout for various use cases */
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
@@ -158,7 +168,7 @@ export function Navbar({
   }
 
   const navbar = (
-    <div className="header-navbar-container d-flex flex-column flex-md-row flex-sm-row flex-xs-row align-items-center px-3 px-md-4 bg-white border-bottom shadow-sm mb-3 fixed-top">
+    <div className="header-navbar-container d-flex flex-column flex-md-row flex-sm-row flex-xs-row align-items-center px-3 px-md-4 bg-white border-bottom shadow-sm fixed-top">
       <div className="navbar-brand my-0 mr-md-auto mr-sm-auto mr-xs-auto py-0">
         <Link to="/" className="header-logo">
           <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
