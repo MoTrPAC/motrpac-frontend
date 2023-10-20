@@ -23,6 +23,22 @@
     background-size: cover;
     background-repeat: no-repeat;
 
+    position: relative;
+
+    .animated-down-arrow {
+      position: absolute;
+      bottom: 4rem;
+      text-align: center;
+      z-index: 5;
+
+      img {
+        width: 3.0rem;
+        height: 3.0rem;
+        margin: 0 auto !important;
+        opacity: 0.65;
+      }
+    }
+
     &.first {
       position: relative;
       // background-image: url(./assets/LandingPageGraphics/background_molecule_network.jpg);
@@ -98,6 +114,7 @@
 
       .section-content-container {
         height: 65vh;
+        margin-top: -5.0rem;
         padding-top: 15px;
         padding-bottom: 15px;
 
@@ -178,18 +195,18 @@
         padding-bottom: 1.5em;
 
         .content-code-repository {
-          min-height: 520px;
-          margin-bottom: 4.0em;
+          min-height: 560px;
+          margin-bottom: 5.0em;
 
           .feature-image {
             text-align: center;
       
             img {
-              height: 30.0rem;
+              height: 32.0rem;
               transition: height 0.5s ease;
       
               &:hover {
-                height: 31.0rem;
+                height: 33.0rem;
               }
             }
           }
@@ -200,7 +217,7 @@
 
           h1 .material-icons {
             color: #56bf46;
-            font-size: 6.5rem !important;
+            font-size: 7.5rem !important;
             margin-left: -10px;
           }
       
