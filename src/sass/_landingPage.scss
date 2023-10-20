@@ -3,14 +3,282 @@
   margin-right: 0;
 }
 
-main {
-  width: 100%;
-  height: 39.5rem;
-  overflow: hidden;
+.content-container {
+  scroll-snap-type: y mandatory;
+  height: 100vh;
+  overflow-y: scroll;
 
+  /* Hide container scrollbar */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  section {
+    height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+
+    background-position-x: center;
+    background-position-y: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    position: relative;
+
+    .animated-down-arrow {
+      position: absolute;
+      bottom: 4rem;
+      text-align: center;
+      z-index: 5;
+
+      img {
+        width: 3.0rem;
+        height: 3.0rem;
+        margin: 0 auto !important;
+        opacity: 0.65;
+      }
+    }
+
+    &.first {
+      position: relative;
+      // background-image: url(./assets/LandingPageGraphics/background_molecule_network.jpg);
+
+      video.fullscreen {
+        position: absolute;
+        z-index: 0;
+        object-fit: cover;
+        width:100%;
+        height:100%;
+        top: 0;
+        left: 0;
+      
+        &::-webkit-media-controls {
+          display: none !important;
+        }
+      }
+
+      .section-content-container {
+        z-index: 2;
+
+        h1 {
+          color: $accent-yellow;
+          text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.5);
+        }
+
+        p {
+          color: #fff;
+          font-size: 2.05rem;
+          line-height: 2;
+          text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.75);
+
+          .about-motrpac-emphasis {
+            color: $accent-yellow;
+          }
+        }
+
+        .btn {
+          box-shadow: 0 0 2.0em 0.1em rgba(0, 0, 0, 0.25);
+        }
+      }
+    }
+    &.second {
+      background-image: url(./assets/LandingPageGraphics/background_wave.jpg);
+    }
+    &.third {
+      background-image: url(./assets/LandingPageGraphics/background_wave_gradient.jpg);
+
+      .section-content-container {
+        height: 75vh;
+        padding-top: 15px;
+        padding-bottom: 15px;
+
+        .vis-tooltip {
+          background-color: #000;
+          border: none;
+          border-radius: 0.5rem;
+          padding: 0.5rem 1.0rem;
+          vertical-align: middle;
+
+          pre {
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.0rem;
+            margin-bottom: 0;
+            text-align: left;
+          }
+        }
+      }
+    }
+    &.fourth {
+      background-image: url(./assets/LandingPageGraphics/background_molecule_network_horizontal_wave.jpg);
+
+      .section-content-container {
+        height: 65vh;
+        margin-top: -5.0rem;
+        padding-top: 15px;
+        padding-bottom: 15px;
+
+        img {
+          margin-left: 15em;
+          margin-right: 15em;
+        }
+      }
+
+      h1 {
+        color: #fff
+      }
+    }
+    &.fifth {
+      background-image: url(./assets/LandingPageGraphics/background_molecule_network_vertical_wave.jpg);
+
+      .section-content-container {
+        padding-top: 15px;
+        padding-bottom: 15px;
+
+        .content-landscape-preprint {
+
+          .feature-image {
+            background-color: #fff;
+            border-radius: 0.75rem;
+            box-shadow: 0 2em 3em rgba(0, 0, 0, 0.5);
+            padding: 2.5rem 2.65rem;
+            text-align: center;
+      
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+
+        .content {
+          text-align: left;
+
+          h1 {
+            color: #fff;
+            font-size: 3.4rem;
+            line-height: 1.25;
+          }
+        }
+
+        .office-hour-banner {
+          border-radius: 0.35rem;
+          background: lighten($gray-transparent, 30%);
+          text-align: center;
+        }
+      }
+    }
+    &.sixth {
+      background-image: url(./assets/LandingPageGraphics/background_molecules_gradient.jpg);
+
+      #iframe-container {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio for responsive design */
+      }
+
+      .tutorial-video-preview {
+        border-radius: 1.5rem;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Adjust image size to fit the container */
+      }
+
+      h1 {
+        color: #fff
+      }
+    }
+    &.seventh {
+      .section-content-container {
+        padding-top: 4.0em;
+        padding-bottom: 1.5em;
+
+        .content-code-repository {
+          min-height: 560px;
+          margin-bottom: 5.0em;
+
+          .feature-image {
+            text-align: center;
+      
+            img {
+              height: 32.0rem;
+              transition: height 0.5s ease;
+      
+              &:hover {
+                height: 33.0rem;
+              }
+            }
+          }
+        }
+
+        .content {
+          text-align: left;
+
+          h1 .material-icons {
+            color: #56bf46;
+            font-size: 7.5rem !important;
+            margin-left: -10px;
+          }
+      
+          p {
+            color: $stanford-black;
+            font-size: 1.85rem;
+          }
+        }
+
+        .office-hour-banner {
+          border-radius: 0.35rem;
+          background: lighten($gray-transparent, 30%);
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+// hide global footer
+// but show homepage-specific footer
+body.homepage {
+  footer.footer {
+    display: none;
+  }
+
+  .homepage-footer-container {
+    footer.footer {
+      display: block;
+    }
+  }
+}
+
+section.first {
   .hero-wrapper {
     align-items: center;
     width: 100%;
+
+    .carousel {
+      .carousel-inner {
+        .carousel-item {
+          height: 39.5rem;
+
+          &.first {
+            background-color: #2094E8;
+            background-image: url(./assets/LandingPageGraphics/background_molecule_network.jpg);
+            background-repeat: no-repeat !important;
+            background-position: top left !important;
+            background-size: cover !important;
+          }
+
+          &.second {
+            background-color: #56bf46;
+          }
+
+          &.third {
+            background-color: #f9c002;
+          }
+        }
+      }
+    }
 
     &.row {
       margin-left: 0;
