@@ -313,6 +313,14 @@ export function Navbar({
                   <Link to="/related-studies" className="dropdown-item">
                     Related Studies
                   </Link>
+                  <a
+                    href="https://omicspipelines.org/"
+                    className="dropdown-item"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    OmicsPipelines
+                  </a>
                 </div>
               </li>
               <li className="nav-item navItem dropdown">

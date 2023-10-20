@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import surveyModdalActions from '../../UserSurvey/userSurveyActions';
 import BootstrapSpinner from '../../lib/ui/spinner';
 
 function OpenAccessFileDownloadModal({
@@ -11,6 +13,15 @@ function OpenAccessFileDownloadModal({
   const [submitted, setSubmitted] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const dispatch = useDispatch();
+
+  // get states from redux store
+  const surveySubmitted = useSelector(
+    (state) => state.userSurvey.surveySubmitted,
+  );
+  const downloadedData = useSelector(
+    (state) => state.userSurvey.downloadedData,
+  );
 
   function handleSubmit() {
     // validate email and name input
@@ -25,7 +36,11 @@ function OpenAccessFileDownloadModal({
       return false;
     }
     // submit download request
-    handleDownloadRequest(email, name, selectedFiles);
+    handleDownloadRequest(email, name, '', selectedFiles);
+    // set user survey id in redux store
+    dispatch(surveyModdalActions.setUserSurveyId(email));
+    // update store to show that user has downloaded data
+    dispatch(surveyModdalActions.userDownloadedData());
     // set submission status
     setSubmitted(true);
   }
@@ -75,13 +90,28 @@ function OpenAccessFileDownloadModal({
     );
   }
 
-  // reset state upon modal close event
+  // reset state and close modal if user has not submitted download request
   function handleModalClose() {
     setName('');
     setEmail('');
     setTimeout(() => {
       setSubmitted(false);
     }, 500);
+  }
+
+  // reset state, close modal, and show survey modal if user submitted download request
+  function handleModalCloseAfterRequest() {
+    setName('');
+    setEmail('');
+    setTimeout(() => {
+      setSubmitted(false);
+    }, 500);
+    // show survey modal if user has not submitted survey
+    if (downloadedData && !surveySubmitted) {
+      setTimeout(() => {
+        dispatch(surveyModdalActions.toggleUserSurveyModal(true));
+      }, 1000);
+    }
   }
 
   return (
@@ -92,8 +122,10 @@ function OpenAccessFileDownloadModal({
       role="dialog"
       aria-labelledby="dataDownloadModalLabel"
       aria-hidden="true"
+      data-backdrop="static"
+      data-keyboard="false"
     >
-      <div className="modal-dialog modal modal-dialog-centered">
+      <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">File Download Request</h5>
@@ -102,7 +134,9 @@ function OpenAccessFileDownloadModal({
               className="close"
               data-dismiss="modal"
               aria-label="Close"
-              onClick={handleModalClose}
+              onClick={
+                submitted ? handleModalCloseAfterRequest : handleModalClose
+              }
             >
               <span aria-hidden="true">&times;</span>
             </button>
@@ -132,9 +166,9 @@ function OpenAccessFileDownloadModal({
                 type="button"
                 className="btn btn-secondary"
                 data-dismiss="modal"
-                onClick={handleModalClose}
+                onClick={handleModalCloseAfterRequest}
               >
-                Close
+                Done
               </button>
             </div>
           ) : null}

@@ -237,13 +237,15 @@ function handleUrlFetch(selectedFiles) {
 }
 
 // Request to download files
-function handleDownloadRequest(email, name, selectedFiles, userid) {
+function handleDownloadRequest(email, name, userid, selectedFiles) {
   if (!email || !name || selectedFiles.length === 0) {
     return false;
   }
 
   // Remove 'auth0|' substring from userid
-  const userID = userid ? userid.substring(userid.indexOf('|') + 1) : '';
+  const userID = userid
+    ? userid.substring(userid.indexOf('|') + 1)
+    : 'anonymous';
 
   const fileObjects = [];
   selectedFiles.forEach((file) => {
@@ -256,8 +258,9 @@ function handleDownloadRequest(email, name, selectedFiles, userid) {
   });
 
   const requestBody = {
+    name,
+    user_id: userID,
     email,
-    name: `${name} (${userID})`,
     files: fileObjects,
   };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,7 @@ import BootstrapSpinner from '../lib/ui/spinner';
 import OpenAccessBrowseDataSummary from './components/openAccessSummary';
 import AuthAccessBrowseDataSummary from './components/authAccessSummary';
 import dataDownloadStructuredData from '../lib/searchStructuredData/dataDownload';
+import UserSurveyModal from '../UserSurvey/userSurveyModal';
 
 export function BrowseDataPage({
   profile,
@@ -22,9 +23,18 @@ export function BrowseDataPage({
   handleDownloadRequest,
   downloadRequestResponse,
   waitingForResponse,
+  showUserSurveyModal,
+  surveyId,
 }) {
   // anonymous user or authenticated user
   const userType = profile.user_metadata && profile.user_metadata.userType;
+
+  useEffect(() => {
+    if (showUserSurveyModal) {
+      const userSurveyModalRef = document.querySelector('body');
+      userSurveyModalRef.classList.add('modal-open');
+    }
+  }, [showUserSurveyModal]);
 
   return (
     <div className="browseDataPage px-3 px-md-4 mb-3">
@@ -80,6 +90,12 @@ export function BrowseDataPage({
             profile={profile}
           />
         )}
+        <UserSurveyModal
+          userID={profile && profile.email ? profile.email : (surveyId ? surveyId : 'anonymous')}
+          dataContext={
+            downloadRequestResponse.length ? 'selected_files' : 'bundled_files'
+          }
+        />
       </div>
     </div>
   );
@@ -102,15 +118,21 @@ BrowseDataPage.propTypes = {
   handleDownloadRequest: PropTypes.func.isRequired,
   downloadRequestResponse: PropTypes.string.isRequired,
   waitingForResponse: PropTypes.bool.isRequired,
+  showUserSurveyModal: PropTypes.bool,
+  surveyId: PropTypes.string,
 };
 
 BrowseDataPage.defaultProps = {
   profile: {},
+  showUserSurveyModal: false,
+  surveyId: '',
 };
 
 const mapStateToProps = (state) => ({
   ...state.browseData,
   profile: state.auth.profile,
+  showUserSurveyModal: state.userSurvey.showUserSurveyModal,
+  surveyId: state.userSurvey.surveyId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -121,8 +143,8 @@ const mapDispatchToProps = (dispatch) => ({
   changePageRequest: (maxRows, page) =>
     dispatch(actions.changePageRequest(maxRows, page)),
   loadDataObjects: (files) => dispatch(actions.loadDataObjects(files)),
-  handleDownloadRequest: (email, name, selectedFiles, userid) =>
-    dispatch(actions.handleDownloadRequest(email, name, selectedFiles, userid)),
+  handleDownloadRequest: (email, name, userid, selectedFiles) =>
+    dispatch(actions.handleDownloadRequest(email, name, userid, selectedFiles)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BrowseDataPage);

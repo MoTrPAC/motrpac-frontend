@@ -1,11 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import surveyModdalActions from '../../UserSurvey/userSurveyActions';
 import ExternalLink from '../../lib/ui/externalLink';
 import OpenAccessBundleDownloads from './openAccessBundleDownloads';
 import DataTypeInfo from './dataTypeInfo';
 
 function OpenAccessBrowseDataSummary({ profile }) {
+  const dispatch = useDispatch();
+
+  // get states from redux store
+  const surveySubmitted = useSelector(
+    (state) => state.userSurvey.surveySubmitted,
+  );
+  const downloadedData = useSelector(
+    (state) => state.userSurvey.downloadedData,
+  );
+
+  // show user survey modal
+  const handleUserSurveyOpenOnBundledDownload = () => {
+    if (downloadedData && !surveySubmitted) {
+      setTimeout(() => {
+        dispatch(surveyModdalActions.toggleUserSurveyModal(true));
+      }, 2400);
+    }
+  };
+
+  const handleBundledDataModalClose = () => {
+    if (downloadedData && !surveySubmitted) {
+      setTimeout(() => {
+        dispatch(surveyModdalActions.toggleUserSurveyModal(true));
+      }, 1000);
+    }
+  };
+
   return (
     <div className="browse-data-summary-container row mb-4">
       <div className="lead col-12">
@@ -71,6 +100,7 @@ function OpenAccessBrowseDataSummary({ profile }) {
                     type="button"
                     className="btn btn-secondary d-flex align-items-center modal-close-button"
                     data-dismiss="modal"
+                    onClick={handleBundledDataModalClose}
                   >
                     <span className="material-icons">close</span>
                     <span className="ml-1 button-text">Close</span>
@@ -82,7 +112,11 @@ function OpenAccessBrowseDataSummary({ profile }) {
               </div>
             </div>
           </div>
-          <OpenAccessBundleDownloads />
+          <OpenAccessBundleDownloads
+            handleUserSurveyOpenOnBundledDownload={
+              handleUserSurveyOpenOnBundledDownload
+            }
+          />
         </div>
       </div>
     </div>
