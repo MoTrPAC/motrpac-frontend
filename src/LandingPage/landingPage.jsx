@@ -8,6 +8,7 @@ import IframeResizer from 'iframe-resizer-react';
 import Footer from '../Footer/footer';
 import PromoteBanner from './promoteBanner';
 import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
+import IconSet from '../lib/iconSet';
 
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.svg';
@@ -18,6 +19,15 @@ import LandscapePreprintAbstract from '../assets/LandingPageGraphics/landscape_p
 
 // import figure 4E visualization dataset
 const figure4eData = require('../data/landscape_figure_4e.json');
+
+// animated down arrow icon
+function AnimatedDownArrow() {
+  return (
+    <div className="animated-down-arrow pb-4 w-100">
+      <img src={IconSet.ArrowDownAnimated} alt="down-arrow" />
+    </div>
+  );
+}
 
 // configs for visjs network visualization rendering
 const options = {
@@ -200,6 +210,7 @@ export function LandingPage({ isAuthenticated, profile }) {
             </Link>
           </div>
         </div>
+        <AnimatedDownArrow />
       </section>
       {/*
       <section className="second">
@@ -216,6 +227,7 @@ export function LandingPage({ isAuthenticated, profile }) {
             </h1>
           </div>
         </div>
+        <AnimatedDownArrow />
       </section>
       */}
       <section className="third">
@@ -235,6 +247,7 @@ export function LandingPage({ isAuthenticated, profile }) {
             </div>
           </div>
         </div>
+        <AnimatedDownArrow />
       </section>
       <section className="fourth">
         <div className="w-100 h-100 d-flex align-items-center">
@@ -254,6 +267,7 @@ export function LandingPage({ isAuthenticated, profile }) {
             </div>
           </div>
         </div>
+        <AnimatedDownArrow />
       </section>
       <section className="fifth">
         <div className="w-100 h-100 d-flex align-items-center">
@@ -284,6 +298,7 @@ export function LandingPage({ isAuthenticated, profile }) {
             </div>
           </div>
         </div>
+        <AnimatedDownArrow />
       </section>
       <section className="sixth">
         <div className="w-100 h-100 d-flex align-items-center">
@@ -321,6 +336,7 @@ export function LandingPage({ isAuthenticated, profile }) {
             </div>
           </div>
         </div>
+        <AnimatedDownArrow />
       </section>
       <section className="seventh">
         <div className="w-100 h-100 d-flex align-items-center">
