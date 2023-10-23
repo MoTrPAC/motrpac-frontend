@@ -13,9 +13,9 @@ import IconSet from '../lib/iconSet';
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.svg';
 import DifferentialAnalytesHeatmap from '../assets/LandingPageGraphics/figure1c-differential-analytes-grid.svg';
-import VideoMoleculeNetwork from '../assets/LandingPageGraphics/background_video_molecules_221511488.mp4';
 import TutorialVideoPreviewImage from '../assets/LandingPageGraphics/tutorial_video_preview_image.jpg';
 import LandscapePreprintAbstract from '../assets/LandingPageGraphics/landscape_preprint_abstract.jpg';
+import BackgroundVideo from './components/backgroundVideo';
 
 // import figure 4E visualization dataset
 const figure4eData = require('../data/landscape_figure_4e.json');
@@ -148,7 +148,9 @@ export function LandingPage({ isAuthenticated, profile }) {
   useEffect(() => {
     // set video height responsively
     const el = document.querySelector('#iframe-container');
-    setVideoHeight(((el.scrollWidth - 30) / 16) * 9 + 'px');
+    if (el) {
+      setVideoHeight(((el.scrollWidth - 30) / 16) * 9 + 'px');
+    }
   }, []);
 
   const handleAddNode = useCallback(() => {
@@ -184,9 +186,7 @@ export function LandingPage({ isAuthenticated, profile }) {
       </Helmet>
       <section className="first">
         <div className="w-100 h-100 d-flex align-items-center">
-          <video className="fullscreen" autoPlay muted loop>
-            <source src={VideoMoleculeNetwork} type="video/mp4" />
-          </video>
+          <BackgroundVideo />
           <div className="section-content-container container text-center">
             <h1 className="display-1">About MoTrPAC</h1>
             <p className="lead">
