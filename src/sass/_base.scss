@@ -1,24 +1,9 @@
 html, body {
-  /**
-  color: $stanford-black;
-  font-family: $opensans;
-  **/
   height: 100%;
   min-height: 100%;
   margin: 0;
   padding: 0;
 }
-
-/**
-:root {
-  font-size: 17px;
-}
-
-h1, h2, h3, h4, h5 {
-  color: $stanford-cool-grey;
-  font-weight: $semibold-weight;
-}
-**/
 
 .titleRow {
   margin-top: 1rem;
@@ -36,33 +21,6 @@ h1, h2, h3, h4, h5 {
   font-weight: $bold-weight;
 }
 
-/**
-a {
-  color: $primary-blue;
-
-  &:hover {
-    color: $primary-blue-shade-medium;
-    text-decoration: none;
-  }
-}
-
-button {
-  background-color: $primary-blue;
-  color: #fff;
-  font-weight: $regular-weight;
-}
-
-label {
-  color: $stanford-cool-grey;
-  font-size: 0.75rem;
-}
-
-p {
-  color: $stanford-black;
-  font-size: 0.85rem;
-}
-**/
-
 #root {
   display: flex;
   flex-direction: column;
@@ -73,19 +31,25 @@ p {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  /**
-  &.test-version {
-    background: url(../src/assets/background-img-test-version.gif);
+  margin-top: 1.75rem;
+}
+
+body.homepage {
+  .App {
+    margin-top: 0;
   }
-  **/
 }
 
 @include media-breakpoint-up(lg) {
   body {
-    padding-top: 5.60rem;
+    padding-top: 4.30rem;
 
     &.authenticated {
-      padding-top: 4.50rem;
+      padding-top: 4.30rem;
+    }
+
+    &.homepage {
+      padding-top: 0;
     }
   }
 }
