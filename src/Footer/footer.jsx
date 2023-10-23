@@ -5,7 +5,7 @@ import React from 'react';
  *
  * @returns {object} JSX representation of the global footer.
  */
-export function Footer() {
+function Footer() {
   // Get current copyright year
   const getCopyrightYear = () => {
     const today = new Date();

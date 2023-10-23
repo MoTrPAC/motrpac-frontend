@@ -45,7 +45,11 @@ body.homepage {
     padding-top: 4.30rem;
 
     &.authenticated {
-      padding-top: 4.50rem;
+      padding-top: 4.30rem;
+    }
+
+    &.homepage {
+      padding-top: 0;
     }
   }
 }

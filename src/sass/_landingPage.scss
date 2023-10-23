@@ -27,15 +27,15 @@
 
     .animated-down-arrow {
       position: absolute;
-      bottom: 4rem;
+      bottom: 0.5rem;
       text-align: center;
       z-index: 5;
 
       img {
-        width: 3.0rem;
-        height: 3.0rem;
+        width: 2.75rem;
+        height: 2.75rem;
         margin: 0 auto !important;
-        opacity: 0.65;
+        opacity: 0.55;
       }
     }
 
@@ -113,8 +113,8 @@
       background-image: url(./assets/LandingPageGraphics/background_molecule_network_horizontal_wave.jpg);
 
       .section-content-container {
-        height: 65vh;
-        margin-top: -5.0rem;
+        height: 60vh;
+        margin-top: -3.0rem;
         padding-top: 15px;
         padding-bottom: 15px;
 
