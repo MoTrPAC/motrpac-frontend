@@ -4,7 +4,7 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 #COPY package.json yarn.lock ./
 COPY package*.json ./
-RUN yarn
+RUN yarn cache clean && yarn
 COPY . ./
 RUN yarn sass && yarn build
 
