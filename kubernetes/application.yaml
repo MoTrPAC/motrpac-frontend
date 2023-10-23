@@ -70,10 +70,10 @@ metadata:
   annotations:
     kubernetes.io/ingress.global-static-ip-name: ${_STATIC_IP_NAME}
     networking.gke.io/managed-certificates: ${_MANAGED_CERT_NAME}
-    kubernetes.io/ingress.allow-http: false
-    cloud.google.com/load-balancer-type: External
+    kubernetes.io/ingress.allow-http: "false"
+    cloud.google.com/load-balancer-type: "External"
     compute.kubernetes.io/service-account-name: ${_KSA_NAME}
-    kubernetes.io/ingress.class: gce
+    kubernetes.io/ingress.class: "gce"
 spec:
   rules:
   - host: ${_HOSTNAME}
