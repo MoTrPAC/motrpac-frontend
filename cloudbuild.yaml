@@ -4,26 +4,26 @@ timeout: 1800s
 steps:
   
   - id: "Show variables"
-    name: 'ubuntu'
+    name: "ubuntu"
     script: |
       #!/usr/bin/env bash
       echo "SUBST Vars not in this file but in application.yaml:  $_KSA_NAME $_LABEL_NAME $_STATIC_IP_NAME $_MANAGED_CERT_NAME $_HOSTNAME"
 
-  - id: 'Install envsubst'
-    name: 'ubuntu'
+  - id: "Install envsubst"
+    name: "ubuntu"
     script: |
       #!/usr/bin/env bash
       apt update; apt install -y gettext-base; /usr/bin/envsubst < kubernetes/application.yaml > /workspace/application-subst.yaml; cat /workspace/application-subst.yaml
 
   # Download the .env file
-  - name: 'gcr.io/cloud-builders/gsutil'
+  - name: "gcr.io/cloud-builders/gsutil"
     args: 
     - cp
     - ${_ENV_FILE_PATH}
     - .env
 
   # Build the image
-  - name: 'gcr.io/cloud-builders/docker'
+  - name: "gcr.io/cloud-builders/docker"
     args: 
     - build
     - -t
@@ -31,13 +31,13 @@ steps:
     - .
       
   # Push the container image to Container Registry
-  - name: 'gcr.io/cloud-builders/docker'
+  - name: "gcr.io/cloud-builders/docker"
     args: 
     - push
     - ${_CR_REGION}-docker.pkg.dev/$PROJECT_ID/${_ARTIFACT_REPO}/${_SERVICE_NAME}-${_ENV}:${SHORT_SHA}
 
   # deploy container image to GKE
-  - name: 'gcr.io/cloud-builders/gke-deploy'
+  - name: "gcr.io/cloud-builders/gke-deploy"
     args: 
     - run
     - --filename=/workspace/application-subst.yaml
