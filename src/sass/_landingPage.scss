@@ -89,7 +89,7 @@
 
       .section-content-container {
         height: 75vh;
-        padding-top: 15px;
+        padding-top: 72px;
         padding-bottom: 15px;
 
         .vis-tooltip {
@@ -121,6 +121,11 @@
         img {
           margin-left: 15em;
           margin-right: 15em;
+
+          &.img-fluid {
+            max-width: 70%;
+            height: auto;
+          }
         }
       }
 
@@ -191,12 +196,12 @@
     }
     &.seventh {
       .section-content-container {
-        padding-top: 4.0em;
-        padding-bottom: 1.5em;
+        padding-top: 72px;
+        padding-bottom: 0;
 
         .content-code-repository {
           min-height: 560px;
-          margin-bottom: 5.0em;
+          margin-bottom: 3.0em;
 
           .feature-image {
             text-align: center;

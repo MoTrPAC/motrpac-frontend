@@ -240,7 +240,7 @@ export function LandingPage({ isAuthenticated, profile }) {
               getNodes={getNodes}
             />
             <div className="container text-center">
-              <h1 className="py-4 text-white">
+              <h1 className="py-3 text-white">
                 A network of genes functionally related to longevity, muscle
                 system processes, and response to mechanical stimulus
               </h1>
