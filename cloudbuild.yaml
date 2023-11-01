@@ -26,6 +26,7 @@ steps:
   - name: "gcr.io/cloud-builders/docker"
     args: 
     - build
+    - --no-cache
     - --build-arg
     - NODE_ENV=${_NODE_ENV}
     - -t
