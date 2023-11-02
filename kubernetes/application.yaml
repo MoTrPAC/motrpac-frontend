@@ -80,7 +80,25 @@ spec:
     http:
       paths:
       - path: /*
-        pathType: Prefix
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: ${_LABEL_NAME}
+            port:
+              number: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: catch-all-ingress
+spec:
+  rules:
+  - host: "*"
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
         backend:
           service:
             name: ${_LABEL_NAME}
