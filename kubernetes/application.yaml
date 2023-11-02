@@ -79,8 +79,8 @@ spec:
   - host: ${_HOSTNAME}
     http:
       paths:
-      - path: /
-        pathType: Prefix
+      - path: /*
+        pathType: ImplementationSpecific
         backend:
           service:
             name: ${_LABEL_NAME}
