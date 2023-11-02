@@ -79,7 +79,7 @@ spec:
   - host: ${_HOSTNAME}
     http:
       paths:
-      - path: /.*
+      - path: /
         pathType: Prefix
         backend:
           service:
