@@ -40,6 +40,18 @@ const omeLabels = [
   'METHYL',
 ];
 
+const assayMap = {
+  METAB: 'Metabolomics',
+  IMMUNO: 'Immunoassays',
+  UBIQ: 'Ubiquitylome',
+  ACETYL: 'Acetylproteomics',
+  PHOSPHO: 'Phosphoproteomics',
+  PROT: 'Global proteomics',
+  TRNSCRPT: 'RNA-Seq',
+  ATAC: 'ATAC-seq',
+  METHYL: 'RRBS',
+};
+
 const omeColors = [
   { type: 'Genomics', color: '#FC8D62' },
   { type: 'Proteomics', color: '#8DA0CB' },
@@ -130,25 +142,31 @@ function Figure1C() {
       .attr('class', 'heatmap-tooltip');
 
     // Tooltip functions
-    const onMouseOver = (event) => {
-      d3.select(event.currentTarget).attr('rx', 12).attr('ry', 12);
+    const onMouseOver = (event, d) => {
+      if (d.featureCnt !== null) {
+        d3.select(event.currentTarget).attr('rx', 12).attr('ry', 12);
+      }
     };
     const onMouseMove = (event, d) => {
-      tooltip
-        .html(
-          'Tissue: ' +
-            figureTissueProps[d.tissue].label +
-            '<br/>Assay: ' +
-            d.ome,
-        )
-        .style('top', event.pageY - 60 + 'px')
-        .style('left', event.pageX + 'px');
-      tooltip.transition().duration(100).style('opacity', 1);
-      d3.select(this).style('opacity', 1);
+      if (d.featureCnt !== null) {
+        tooltip
+          .html(
+            'Tissue: ' +
+              figureTissueProps[d.tissue].label +
+              '<br/>Assay: ' +
+              assayMap[d.ome],
+          )
+          .style('top', event.pageY - 60 + 'px')
+          .style('left', event.pageX + 'px');
+        tooltip.transition().duration(100).style('opacity', 1);
+        d3.select(this).style('opacity', 1);
+      }
     };
-    const onMouseLeave = (event) => {
-      tooltip.transition().duration(100).style('opacity', 0);
-      d3.select(event.currentTarget).attr('rx', 4).attr('ry', 4);
+    const onMouseLeave = (event, d) => {
+      if (d.featureCnt !== null) {
+        tooltip.transition().duration(100).style('opacity', 0);
+        d3.select(event.currentTarget).attr('rx', 4).attr('ry', 4);
+      }
     };
 
     // Draw squares
