@@ -1,0 +1,1622 @@
+[
+  {
+    "ome": "METHYL",
+    "tissue": "BLOOD",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#DDA0DD"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "BLOOD",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#DDA0DD"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "BLOOD",
+    "omeType": "Genomics",
+    "featureCnt": 1582,
+    "diffProportion": 0.1,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#DDA0DD"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "BLOOD",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#DDA0DD"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "BLOOD",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#DDA0DD"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "BLOOD",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#DDA0DD"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "BLOOD",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#DDA0DD"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "BLOOD",
+    "omeType": "Immunoassays",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#DDA0DD"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "BLOOD",
+    "omeType": "Metabolomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#DDA0DD"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "PLASMA",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#8c5220"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "PLASMA",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#8c5220"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "PLASMA",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#8c5220"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "PLASMA",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#8c5220"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "PLASMA",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#8c5220"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "PLASMA",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#8c5220"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "PLASMA",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#8c5220"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "PLASMA",
+    "omeType": "Immunoassays",
+    "featureCnt": 14,
+    "diffProportion": 0.1,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#8c5220"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "PLASMA",
+    "omeType": "Metabolomics",
+    "featureCnt": 529,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#8c5220"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "HEART",
+    "omeType": "Genomics",
+    "featureCnt": 107,
+    "diffProportion": 0.0001094885656076,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#d92c04"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "HEART",
+    "omeType": "Genomics",
+    "featureCnt": 75,
+    "diffProportion": 0.0001029758652032,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#d92c04"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "HEART",
+    "omeType": "Genomics",
+    "featureCnt": 722,
+    "diffProportion": 0.0499826929733472,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#d92c04"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "HEART",
+    "omeType": "Proteomics",
+    "featureCnt": 693,
+    "diffProportion": 0.0754573170731707,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#d92c04"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "HEART",
+    "omeType": "Proteomics",
+    "featureCnt": 436,
+    "diffProportion": 0.0108436132113012,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#d92c04"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "HEART",
+    "omeType": "Proteomics",
+    "featureCnt": 450,
+    "diffProportion": 0.0863226549012085,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#d92c04"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "HEART",
+    "omeType": "Proteomics",
+    "featureCnt": 24,
+    "diffProportion": 0.0033907883582933,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#d92c04"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "HEART",
+    "omeType": "Immunoassays",
+    "featureCnt": 4,
+    "diffProportion": 0.1,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#d92c04"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "HEART",
+    "omeType": "Metabolomics",
+    "featureCnt": 568,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#d92c04"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "VENACV",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#5a2e15"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "VENACV",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#5a2e15"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "VENACV",
+    "omeType": "Genomics",
+    "featureCnt": 90,
+    "diffProportion": 0.0055086301872934,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#5a2e15"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "VENACV",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#5a2e15"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "VENACV",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#5a2e15"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "VENACV",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#5a2e15"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "VENACV",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#5a2e15"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "VENACV",
+    "omeType": "Immunoassays",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#5a2e15"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "VENACV",
+    "omeType": "Metabolomics",
+    "featureCnt": 23,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#5a2e15"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "SPLEEN",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f2e751"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "SPLEEN",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f2e751"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "SPLEEN",
+    "omeType": "Genomics",
+    "featureCnt": 1099,
+    "diffProportion": 0.0673448127949016,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f2e751"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "SPLEEN",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f2e751"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "SPLEEN",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f2e751"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "SPLEEN",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f2e751"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "SPLEEN",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f2e751"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "SPLEEN",
+    "omeType": "Immunoassays",
+    "featureCnt": 12,
+    "diffProportion": 0.1,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#f2e751"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "SPLEEN",
+    "omeType": "Metabolomics",
+    "featureCnt": 83,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#f2e751"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "SKM-GN",
+    "omeType": "Genomics",
+    "featureCnt": 119,
+    "diffProportion": 0.0001077944441475,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f28b2f"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "SKM-GN",
+    "omeType": "Genomics",
+    "featureCnt": 442,
+    "diffProportion": 0.0004507890337918,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f28b2f"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "SKM-GN",
+    "omeType": "Genomics",
+    "featureCnt": 566,
+    "diffProportion": 0.0410919122985335,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f28b2f"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "SKM-GN",
+    "omeType": "Proteomics",
+    "featureCnt": 691,
+    "diffProportion": 0.1,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f28b2f"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "SKM-GN",
+    "omeType": "Proteomics",
+    "featureCnt": 694,
+    "diffProportion": 0.0234056186975144,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f28b2f"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "SKM-GN",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f28b2f"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "SKM-GN",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f28b2f"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "SKM-GN",
+    "omeType": "Immunoassays",
+    "featureCnt": 7,
+    "diffProportion": 0.1,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#f28b2f"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "SKM-GN",
+    "omeType": "Metabolomics",
+    "featureCnt": 298,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#f28b2f"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "SKM-VL",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#bf7534"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "SKM-VL",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#bf7534"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "SKM-VL",
+    "omeType": "Genomics",
+    "featureCnt": 766,
+    "diffProportion": 0.054820010019323,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#bf7534"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "SKM-VL",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#bf7534"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "SKM-VL",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#bf7534"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "SKM-VL",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#bf7534"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "SKM-VL",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#bf7534"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "SKM-VL",
+    "omeType": "Immunoassays",
+    "featureCnt": 10,
+    "diffProportion": 0.1,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#bf7534"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "SKM-VL",
+    "omeType": "Metabolomics",
+    "featureCnt": 53,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#bf7534"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "WAT-SC",
+    "omeType": "Genomics",
+    "featureCnt": 328,
+    "diffProportion": 0.0003799590153964,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f2b443"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "WAT-SC",
+    "omeType": "Genomics",
+    "featureCnt": 4,
+    "diffProportion": 0.00000361928718138963,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f2b443"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "WAT-SC",
+    "omeType": "Genomics",
+    "featureCnt": 1742,
+    "diffProportion": 0.1,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f2b443"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "WAT-SC",
+    "omeType": "Proteomics",
+    "featureCnt": 649,
+    "diffProportion": 0.0651344841429145,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f2b443"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "WAT-SC",
+    "omeType": "Proteomics",
+    "featureCnt": 50,
+    "diffProportion": 0.0016499472016895,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f2b443"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "WAT-SC",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f2b443"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "WAT-SC",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f2b443"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "WAT-SC",
+    "omeType": "Immunoassays",
+    "featureCnt": 12,
+    "diffProportion": 0.1,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#f2b443"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "WAT-SC",
+    "omeType": "Metabolomics",
+    "featureCnt": 330,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#f2b443"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "BAT",
+    "omeType": "Genomics",
+    "featureCnt": 621,
+    "diffProportion": 0.00056403064839,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#7553a7"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "BAT",
+    "omeType": "Genomics",
+    "featureCnt": 253,
+    "diffProportion": 0.0002490772818875,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#7553a7"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "BAT",
+    "omeType": "Genomics",
+    "featureCnt": 1635,
+    "diffProportion": 0.1,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#7553a7"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "BAT",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#7553a7"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "BAT",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#7553a7"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "BAT",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#7553a7"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "BAT",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#7553a7"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "BAT",
+    "omeType": "Immunoassays",
+    "featureCnt": 11,
+    "diffProportion": 0.1,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#7553a7"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "BAT",
+    "omeType": "Metabolomics",
+    "featureCnt": 254,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#7553a7"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "LIVER",
+    "omeType": "Genomics",
+    "featureCnt": 103,
+    "diffProportion": 0.0001189975553511,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#da6c75"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "LIVER",
+    "omeType": "Genomics",
+    "featureCnt": 1032,
+    "diffProportion": 0.0017137220648358,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#da6c75"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "LIVER",
+    "omeType": "Genomics",
+    "featureCnt": 276,
+    "diffProportion": 0.0191175451963704,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#da6c75"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "LIVER",
+    "omeType": "Proteomics",
+    "featureCnt": 1042,
+    "diffProportion": 0.1,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#da6c75"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "LIVER",
+    "omeType": "Proteomics",
+    "featureCnt": 720,
+    "diffProportion": 0.0165262698831685,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#da6c75"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "LIVER",
+    "omeType": "Proteomics",
+    "featureCnt": 2012,
+    "diffProportion": 0.1,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#da6c75"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "LIVER",
+    "omeType": "Proteomics",
+    "featureCnt": 161,
+    "diffProportion": 0.0172303082191781,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#da6c75"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "LIVER",
+    "omeType": "Immunoassays",
+    "featureCnt": 7,
+    "diffProportion": 0.1,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#da6c75"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "LIVER",
+    "omeType": "Metabolomics",
+    "featureCnt": 598,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#da6c75"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "LUNG",
+    "omeType": "Genomics",
+    "featureCnt": 109,
+    "diffProportion": 0.0000804072590788279,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#04bf8a"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "LUNG",
+    "omeType": "Genomics",
+    "featureCnt": 173,
+    "diffProportion": 0.0002176412718301,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#04bf8a"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "LUNG",
+    "omeType": "Genomics",
+    "featureCnt": 961,
+    "diffProportion": 0.058224780369585,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#04bf8a"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "LUNG",
+    "omeType": "Proteomics",
+    "featureCnt": 318,
+    "diffProportion": 0.0292360025742392,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#04bf8a"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "LUNG",
+    "omeType": "Proteomics",
+    "featureCnt": 272,
+    "diffProportion": 0.0057069721575292,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#04bf8a"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "LUNG",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#04bf8a"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "LUNG",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#04bf8a"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "LUNG",
+    "omeType": "Immunoassays",
+    "featureCnt": 9,
+    "diffProportion": 0.1,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#04bf8a"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "LUNG",
+    "omeType": "Metabolomics",
+    "featureCnt": 301,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#04bf8a"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "KIDNEY",
+    "omeType": "Genomics",
+    "featureCnt": 82,
+    "diffProportion": 0.0001499011931769,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f2ced0"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "KIDNEY",
+    "omeType": "Genomics",
+    "featureCnt": 237,
+    "diffProportion": 0.000283444678057,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f2ced0"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "KIDNEY",
+    "omeType": "Genomics",
+    "featureCnt": 339,
+    "diffProportion": 0.0212126900694575,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f2ced0"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "KIDNEY",
+    "omeType": "Proteomics",
+    "featureCnt": 247,
+    "diffProportion": 0.0250710515631344,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f2ced0"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "KIDNEY",
+    "omeType": "Proteomics",
+    "featureCnt": 19,
+    "diffProportion": 0.0006303078556263,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f2ced0"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "KIDNEY",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f2ced0"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "KIDNEY",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f2ced0"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "KIDNEY",
+    "omeType": "Immunoassays",
+    "featureCnt": 3,
+    "diffProportion": 0.1,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#f2ced0"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "KIDNEY",
+    "omeType": "Metabolomics",
+    "featureCnt": 220,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#f2ced0"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "ADRNL",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f1997c"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "ADRNL",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f1997c"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "ADRNL",
+    "omeType": "Genomics",
+    "featureCnt": 4493,
+    "diffProportion": 0.1,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f1997c"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "ADRNL",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f1997c"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "ADRNL",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f1997c"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "ADRNL",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f1997c"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "ADRNL",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f1997c"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "ADRNL",
+    "omeType": "Immunoassays",
+    "featureCnt": 22,
+    "diffProportion": 0.1,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#f1997c"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "ADRNL",
+    "omeType": "Metabolomics",
+    "featureCnt": 89,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#f1997c"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "CORTEX",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#088c03"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "CORTEX",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#088c03"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "CORTEX",
+    "omeType": "Genomics",
+    "featureCnt": 105,
+    "diffProportion": 0.0063856960408684,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#088c03"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "CORTEX",
+    "omeType": "Proteomics",
+    "featureCnt": 14,
+    "diffProportion": 0.0012603528988116,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#088c03"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "CORTEX",
+    "omeType": "Proteomics",
+    "featureCnt": 389,
+    "diffProportion": 0.0083652316029418,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#088c03"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "CORTEX",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#088c03"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "CORTEX",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#088c03"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "CORTEX",
+    "omeType": "Immunoassays",
+    "featureCnt": 10,
+    "diffProportion": 0.1,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#088c03"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "CORTEX",
+    "omeType": "Metabolomics",
+    "featureCnt": 44,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#088c03"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "HYPOTH",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#025939"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "HYPOTH",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#025939"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "HYPOTH",
+    "omeType": "Genomics",
+    "featureCnt": 16,
+    "diffProportion": 0.0009436744323208,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#025939"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "HYPOTH",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#025939"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "HYPOTH",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#025939"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "HYPOTH",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#025939"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "HYPOTH",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#025939"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "HYPOTH",
+    "omeType": "Immunoassays",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#025939"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "HYPOTH",
+    "omeType": "Metabolomics",
+    "featureCnt": 46,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#025939"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "HIPPOC",
+    "omeType": "Genomics",
+    "featureCnt": 61,
+    "diffProportion": 0.0000790762852813106,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f3c288"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "HIPPOC",
+    "omeType": "Genomics",
+    "featureCnt": 31,
+    "diffProportion": 0.0000451614595018254,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f3c288"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "HIPPOC",
+    "omeType": "Genomics",
+    "featureCnt": 244,
+    "diffProportion": 0.0146917148362235,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#f3c288"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "HIPPOC",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f3c288"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "HIPPOC",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f3c288"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "HIPPOC",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f3c288"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "HIPPOC",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#f3c288"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "HIPPOC",
+    "omeType": "Immunoassays",
+    "featureCnt": 9,
+    "diffProportion": 0.1,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#f3c288"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "HIPPOC",
+    "omeType": "Metabolomics",
+    "featureCnt": 146,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#f3c288"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "SMLINT",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#A18277"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "SMLINT",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#A18277"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "SMLINT",
+    "omeType": "Genomics",
+    "featureCnt": 746,
+    "diffProportion": 0.0410919122985335,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#A18277"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "SMLINT",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#A18277"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "SMLINT",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#A18277"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "SMLINT",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#A18277"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "SMLINT",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#A18277"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "SMLINT",
+    "omeType": "Immunoassays",
+    "featureCnt": 5,
+    "diffProportion": 0.1,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#A18277"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "SMLINT",
+    "omeType": "Metabolomics",
+    "featureCnt": 36,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#A18277"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "COLON",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#6d86a5"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "COLON",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#6d86a5"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "COLON",
+    "omeType": "Genomics",
+    "featureCnt": 2516,
+    "diffProportion": 0.1,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#6d86a5"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "COLON",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#6d86a5"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "COLON",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#6d86a5"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "COLON",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#6d86a5"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "COLON",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#6d86a5"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "COLON",
+    "omeType": "Immunoassays",
+    "featureCnt": 6,
+    "diffProportion": 0.1,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#6d86a5"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "COLON",
+    "omeType": "Metabolomics",
+    "featureCnt": 52,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#6d86a5"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "OVARY",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#a5415b"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "OVARY",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#a5415b"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "OVARY",
+    "omeType": "Genomics",
+    "featureCnt": 896,
+    "diffProportion": 0.0525975931904902,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#a5415b"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "OVARY",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#a5415b"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "OVARY",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#a5415b"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "OVARY",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#a5415b"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "OVARY",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#a5415b"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "OVARY",
+    "omeType": "Immunoassays",
+    "featureCnt": 0,
+    "diffProportion": 0,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#a5415b"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "OVARY",
+    "omeType": "Metabolomics",
+    "featureCnt": 21,
+    "diffProportion": 0.0921052631578947,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#a5415b"
+  },
+  {
+    "ome": "METHYL",
+    "tissue": "TESTES",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#214da6"
+  },
+  {
+    "ome": "ATAC",
+    "tissue": "TESTES",
+    "omeType": "Genomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#214da6"
+  },
+  {
+    "ome": "TRNSCRPT",
+    "tissue": "TESTES",
+    "omeType": "Genomics",
+    "featureCnt": 107,
+    "diffProportion": 0.0061639495362636,
+    "omeColor": "#FC8D62",
+    "tissueColor": "#214da6"
+  },
+  {
+    "ome": "PROT",
+    "tissue": "TESTES",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#214da6"
+  },
+  {
+    "ome": "PHOSPHO",
+    "tissue": "TESTES",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#214da6"
+  },
+  {
+    "ome": "ACETYL",
+    "tissue": "TESTES",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#214da6"
+  },
+  {
+    "ome": "UBIQ",
+    "tissue": "TESTES",
+    "omeType": "Proteomics",
+    "featureCnt": null,
+    "diffProportion": 0,
+    "omeColor": "#8DA0CB",
+    "tissueColor": "#214da6"
+  },
+  {
+    "ome": "IMMUNO",
+    "tissue": "TESTES",
+    "omeType": "Immunoassays",
+    "featureCnt": 4,
+    "diffProportion": 0.0869565217391304,
+    "omeColor": "#66C2A5",
+    "tissueColor": "#214da6"
+  },
+  {
+    "ome": "METAB",
+    "tissue": "TESTES",
+    "omeType": "Metabolomics",
+    "featureCnt": 44,
+    "diffProportion": 0.1,
+    "omeColor": "#E78AC3",
+    "tissueColor": "#214da6"
+  }
+]

@@ -89,7 +89,7 @@
 
       .section-content-container {
         height: 75vh;
-        padding-top: 15px;
+        padding-top: 72px;
         padding-bottom: 15px;
 
         .vis-tooltip {
@@ -121,6 +121,11 @@
         img {
           margin-left: 15em;
           margin-right: 15em;
+
+          &.img-fluid {
+            max-width: 70%;
+            height: auto;
+          }
         }
       }
 
@@ -247,6 +252,78 @@ body.homepage {
   .homepage-footer-container {
     footer.footer {
       display: block;
+    }
+  }
+
+  #heatmap-container {
+    min-width: 1450px !important;
+    min-height: 610px;
+  }
+
+  .heatmap-y-axis {
+    .tick {
+      text {
+        font-size: 1.35rem;
+        font-weight: 800;
+      }
+    }
+    .tick:last-child,
+    .tick:nth-child(7),
+    .tick:nth-child(8) {
+      text {
+        fill: #FC8D62;
+      }
+    }
+    .tick:nth-child(3),
+    .tick:nth-child(4),
+    .tick:nth-child(5),
+    .tick:nth-child(6) {
+      text {
+        fill: #8DA0CB;
+      }
+    }
+    .tick:nth-child(2) {
+      text {
+        fill: #66C2A5;
+      }
+    }
+    .tick:first-child {
+      text {
+        fill: #E78AC3;
+      }
+    }
+  }
+
+  .heatmap-tooltip {
+    background: #000;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 9px 13px;
+    position: absolute;
+    text-align: left;
+  }
+
+  .legend-title-diff-proportion,
+  .legend-title-ome-type {
+    tspan {
+      fill: #fff;
+      font-size: 1.0rem;
+    }
+  }
+  
+  .legend-y-axis {
+    font-size: 0.7rem;
+
+    .tick {
+      text {
+        fill: #fff;
+        font-size: 0.85rem;
+      }
+      text::before {
+        content: '%';
+      }
     }
   }
 }

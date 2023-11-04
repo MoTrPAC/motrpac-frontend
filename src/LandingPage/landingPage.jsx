@@ -12,10 +12,10 @@ import IconSet from '../lib/iconSet';
 
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.svg';
-import DifferentialAnalytesHeatmap from '../assets/LandingPageGraphics/figure1c-differential-analytes-grid.svg';
 import TutorialVideoPreviewImage from '../assets/LandingPageGraphics/tutorial_video_preview_image.jpg';
 import LandscapePreprintAbstract from '../assets/LandingPageGraphics/landscape_preprint_abstract.jpg';
 import BackgroundVideo from './components/backgroundVideo';
+import Figure1C from './components/figure1c';
 
 // import figure 4E visualization dataset
 const figure4eData = require('../data/landscape_figure_4e.json');
@@ -240,7 +240,7 @@ export function LandingPage({ isAuthenticated, profile }) {
               getNodes={getNodes}
             />
             <div className="container text-center">
-              <h1 className="py-4 text-white">
+              <h1 className="py-3 text-white">
                 A network of genes functionally related to longevity, muscle
                 system processes, and response to mechanical stimulus
               </h1>
@@ -252,13 +252,7 @@ export function LandingPage({ isAuthenticated, profile }) {
       <section className="fourth">
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container-fluid text-center">
-            <Link to="/search">
-              <img
-                src={DifferentialAnalytesHeatmap}
-                className="img-fluid mb-4"
-                alt="Rat Figure - Endurance Training"
-              />
-            </Link>
+            <Figure1C />
             <div className="container text-center">
               <h1 className="py-4">
                 Visualize the number of training-differential features whose
