@@ -10,8 +10,8 @@ RUN yarn sass && yarn build
 
 # nginx server environment
 FROM nginx:alpine
-#COPY nginx.conf /etc/nginx/conf.d/configfile.template
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/configfile.template
+#COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=react-build /app/build /usr/share/nginx/html
 
@@ -22,6 +22,6 @@ LABEL org.opencontainers.image.url="https://motrpac-data.org"
 LABEL org.opencontainers.image.vendor="MoTrPAC"
 LABEL org.opencontainers.image.version=$IMAGE_VERSION
 
-EXPOSE 80
-#ENTRYPOINT ["/docker-entrypoint.sh"]
+EXPOSE $PORT
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
