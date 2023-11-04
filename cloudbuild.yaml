@@ -27,7 +27,7 @@ steps:
     args: 
     - build
     - --build-arg
-    - PORT=${_SERVER_PORT} 
+    - SERVER_PORT=${_SERVER_PORT} 
     - --no-cache
     - -t
     - ${_CR_REGION}-docker.pkg.dev/$PROJECT_ID/${_ARTIFACT_REPO}/${_SERVICE_NAME}-${_ENV}:${SHORT_SHA}
