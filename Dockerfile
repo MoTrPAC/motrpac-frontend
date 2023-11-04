@@ -22,7 +22,8 @@ LABEL org.opencontainers.image.url="https://motrpac-data.org"
 LABEL org.opencontainers.image.vendor="MoTrPAC"
 LABEL org.opencontainers.image.version=$IMAGE_VERSION
 
-ENV PORT $SERVER_PORT
+ARG SERVER_PORT
+ENV PORT=$SERVER_PORT
 EXPOSE $SERVER_PORT
 RUN sh -c "envsubst '\$PORT'  < /etc/nginx/conf.d/configfile.template > /etc/nginx/conf.d/default.conf"
 #ENTRYPOINT ["/docker-entrypoint.sh"]
