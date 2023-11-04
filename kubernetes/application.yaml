@@ -23,8 +23,8 @@ spec:
         image: us-west1-docker.pkg.dev/$PROJECT_ID/${_ARTIFACT_REPO}/${_SERVICE_NAME}-${_ENV}:${SHORT_SHA} 
         imagePullPolicy: Always
         ports:
-          - containerPort: 80
-            hostPort: 80
+          - containerPort: ${_SERVER_PORT}
+            hostPort: ${_SERVER_PORT}
             protocol: TCP
             # the name cannot be longer than 15 chars
             name: frontend-prt
@@ -85,5 +85,5 @@ spec:
           service:
             name: ${_LABEL_NAME}
             port:
-              number: 80
+              number: ${_SERVER_PORT}
 
