@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: motrpac-frontend-staging
+  namespace: motrpac-portal-staging
+  labels:
+    app: motrpac-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: motrpac-frontend
+      env: staging
+  template:
+    metadata:
+      labels:
+        app: motrpac-frontend
+        env: staging
+    spec:
+      containers:
+      - name: motrpac-frontend-app
+        image: gcr.io/motrpac-portal-dev/motrpac-frontend-staging:v1
+        ports:
+        - containerPort: 80
