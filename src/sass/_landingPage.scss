@@ -79,6 +79,29 @@
         .btn {
           box-shadow: 0 0 2.0em 0.1em rgba(0, 0, 0, 0.25);
         }
+
+        .office-hour-anchor-link-container {
+          margin-top: 4.0em;
+
+          .office-hour-anchor-link {
+            border: solid 2px #fff;
+            border-radius: 1.4rem;
+            color: #fff;
+            display: inline-block;
+            font-size: 1.35rem;
+            font-weight: 400;
+            opacity: 0.7;
+            padding: 0.3rem 1.55rem;
+            text-decoration: none;
+            text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.75);
+            transition: ease-in-out 0.25s;
+
+            &:hover {
+              opacity: 1.0;
+              box-shadow: inset 0rem 3.0rem rgba(255, 255, 255, 0.22);
+            }
+          }
+        }
       }
     }
     &.second {

@@ -208,6 +208,11 @@ export function LandingPage({ isAuthenticated, profile }) {
             >
               PROJECT OVERVIEW
             </Link>
+            <div className="office-hour-anchor-link-container">
+              <a href="#join-office-hour" className="office-hour-anchor-link">
+                Join us at the monthly office hour to learn more
+              </a>
+            </div>
           </div>
         </div>
         <AnimatedDownArrow />
@@ -361,7 +366,7 @@ export function LandingPage({ isAuthenticated, profile }) {
                 </Link>
               </div>
             </div>
-            <div className="row mt-4">
+            <div className="row mt-4" id="join-office-hour">
               <PromoteBanner />
             </div>
           </div>
