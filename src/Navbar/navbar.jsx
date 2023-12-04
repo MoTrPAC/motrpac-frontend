@@ -307,14 +307,9 @@ export function Navbar({
                   <Link to="/code-repositories" className="dropdown-item">
                     Code Repositories
                   </Link>
-                  <a
-                    href="https://connect.biorxiv.org/relate/content/218"
-                    className="dropdown-item"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Preprints
-                  </a>
+                  <Link to="/publications" className="dropdown-item">
+                    Publications
+                  </Link>
                   <Link to="/methods" className="dropdown-item">
                     Methods
                   </Link>
