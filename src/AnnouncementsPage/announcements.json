@@ -75,7 +75,7 @@
             "tags": [
                 "marker-paper"
             ],
-            "icon": "menu_book"
+            "icon": "auto_stories"
         },
         "links": [
             {
@@ -130,6 +130,47 @@
                 "url": "https://motrpac.github.io/MotrpacRatTraining6moData/",
                 "gaEventCategory": "MoTrPAC Landscape Paper",
                 "gaEventAction": "MotrpacRatTraining6moData R package"
+            }
+        ]
+    },
+    {
+        "aid": 7,
+        "posted_date": "2023-11-16",
+        "title": "MoTrPAC Landscape paper officially accepted in Nature",
+        "content": "The MoTrPAC Landscape paper has been officially accepted for publication in the Nature journal. This study profiled the temporal transcriptome, proteome, metabolome, lipidome, phosphoproteome, acetylproteome, ubiquitylproteome, epigenome, and immunome in whole blood, plasma, and 18 solid tissues in Rattus norvegicus over 8 weeks of endurance exercise training. The resulting data compendium encompasses 9466 assays across 19 tissues, 25 molecular platforms, and 4 training time points in young adult male and female rats.",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "landscape-paper-accepted"
+            ],
+            "icon": "auto_stories"
+        },
+        "links": []
+    },
+    {
+        "aid": 8,
+        "posted_date": "2023-12-01",
+        "title": "MoTrPAC Mitochondria companion paper accepted in Cell Metabolism",
+        "content": "The MoTrPAC Mitochondria companion paper has been accepted for publication in the Cell Metabolism journal. This study provides a multi-omic, cross-tissue atlas of the mitochondrial response to training and identify candidates for prevention of disease-associated mitochondrial dysfunction.",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "mitochondria-paper-accepted"
+            ],
+            "icon": "auto_stories"
+        },
+        "links": [
+            {
+                "label": "Preprint: The mitochondrial multi-omic response to exercise training across tissues",
+                "url": "https://www.biorxiv.org/content/10.1101/2023.01.13.523698v1",
+                "gaEventCategory": "MoTrPAC Mitochondria Companion Paper",
+                "gaEventAction": "Preprint on bioRxiv"
+            },
+            {
+                "label": "Explore mitochondrial-selected multi-omic analysis results presented in this preprint",
+                "url": "/graphical-clustering",
+                "gaEventCategory": "MoTrPAC Mitochondria Companion Paper",
+                "gaEventAction": "Graphical Clustering"
             }
         ]
     }
