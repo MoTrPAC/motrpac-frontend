@@ -3,14 +3,6 @@ import PageTitle from '../lib/ui/pageTitle';
 
 const publications = [
   {
-    url: 'https://doi.org/10.1038/s41467-021-23579-x',
-    title:
-      'Time trajectories in the transcriptomic response to exercise - a meta-analysis',
-    authors:
-      'David Amar, Malene E. Lindholm, Jessica Norrbom, Matthew T. Wheeler, Manuel A. Rivas, and Euan A. Ashley.',
-    cite: 'Nat Commun 12, 3471 (2021).',
-  },
-  {
     url: 'https://www.cell.com/cell/fulltext/S0092-8674(20)30691-7',
     title:
       'Molecular Transducers of Physical Activity Consortium (MoTrPAC): Mapping the Dynamic Responses to Exercise',
