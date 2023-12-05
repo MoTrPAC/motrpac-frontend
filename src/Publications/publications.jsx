@@ -7,7 +7,7 @@ const publications = [
     title:
       'Time trajectories in the transcriptomic response to exercise - a meta-analysis',
     authors:
-      'David Amar, Malene E. Lindholm, Jessica Norrbom, Matthew T. Wheeler, Manuel A. Rivas and Euan A. Ashley.',
+      'David Amar, Malene E. Lindholm, Jessica Norrbom, Matthew T. Wheeler, Manuel A. Rivas, and Euan A. Ashley.',
     cite: 'Nat Commun 12, 3471 (2021).',
   },
   {
