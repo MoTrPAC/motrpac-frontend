@@ -136,8 +136,9 @@ function Figure1C() {
 
     // create a tooltip
     const tooltip = d3
-      .select('body')
+      .select('#heatmap-container')
       .append('div')
+      .style('display', 'none')
       .style('opacity', 0)
       .attr('class', 'heatmap-tooltip');
 
@@ -156,15 +157,23 @@ function Figure1C() {
               '<br/>Assay: ' +
               assayMap[d.ome],
           )
-          .style('top', event.pageY - 60 + 'px')
-          .style('left', event.pageX + 'px');
-        tooltip.transition().duration(100).style('opacity', 1);
+          .style('top', event.pageY - 280 + 'px')
+          .style('left', event.pageX - 16 + 'px');
+        tooltip
+          .transition()
+          .duration(100)
+          .style('display', 'block')
+          .style('opacity', 1);
         d3.select(this).style('opacity', 1);
       }
     };
     const onMouseLeave = (event, d) => {
       if (d.featureCnt !== null) {
-        tooltip.transition().duration(100).style('opacity', 0);
+        tooltip
+          .transition()
+          .duration(100)
+          .style('opacity', 0)
+          .style('display', 'none');
         d3.select(event.currentTarget).attr('rx', 4).attr('ry', 4);
       }
     };

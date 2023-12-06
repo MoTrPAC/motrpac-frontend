@@ -25,11 +25,17 @@
     font-size: 5.0rem;
     margin: 0 2.5rem;
 
-    &.webinar {
+    &.webinar,
+    &.landscape-paper-accepted,
+    &.mitochondria-paper-accepted {
       color: $accent-green;
     }
 
     &.dataset {
+      color: $gray-semi-transparent;
+    }
+
+    &.marker-paper {
       color: $accent-yellow;
     }
 
@@ -37,7 +43,7 @@
       color: $stanford-bright-red;
     }
 
-    &.marker-paper, &.landscape-preprint {
+    &.landscape-preprint {
       color: $primary-blue;
     }
 

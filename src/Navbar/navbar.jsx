@@ -307,6 +307,9 @@ export function Navbar({
                   <Link to="/code-repositories" className="dropdown-item">
                     Code Repositories
                   </Link>
+                  <Link to="/publications" className="dropdown-item">
+                    Publications
+                  </Link>
                   <Link to="/methods" className="dropdown-item">
                     Methods
                   </Link>

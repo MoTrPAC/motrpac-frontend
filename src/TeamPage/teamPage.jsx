@@ -39,6 +39,21 @@ function TeamPage() {
     <div className="teamPage px-3 px-md-4 mb-3 container">
       <PageTitle title="MoTrPAC Bioinformatics Center Team" />
       <div>{pageContent}</div>
+      <div className="pt-5 pb-0 mb-5 border-top text-center">
+        <h5>
+          <a
+            href="https://motrpac.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="external-link-text">
+              Learn more about the Molecular Transducers of Physical Activity
+              Consortium
+            </span>{' '}
+            <span className="oi oi-external-link" />
+          </a>
+        </h5>
+      </div>
     </div>
   );
 }

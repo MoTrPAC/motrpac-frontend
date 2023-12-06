@@ -27,6 +27,7 @@ import GraphicalClustering from '../AnalysisPage/GraphicalClustering/graphicalCl
 import CodeRepositories from '../CodeRepoPage/codeRepoPage';
 import MainStudyConnected from '../MainStudy/mainStudy';
 import Tutorials from '../Tutorials/tutorials';
+import Publications from '../Publications/publications';
 import Pass1b06PhenotypeAnimalConnected from '../AnalysisPage/pass1b06PhenotypeAnimal';
 import CallbackConnected from '../Auth/callback';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
@@ -128,6 +129,10 @@ function App({ history = History }) {
                 component={withTracker(MainStudyConnected)}
               />
               <Route path="/tutorials" component={withTracker(Tutorials)} />
+              <Route
+                path="/publications"
+                component={withTracker(Publications)}
+              />
               <PrivateRoute
                 path="/analysis-phenotype"
                 component={withTracker(Pass1b06PhenotypeAnimalConnected)}
