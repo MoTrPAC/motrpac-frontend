@@ -635,10 +635,19 @@ export const transformData = (arr, qcFiles, omicType) => {
  */
 export function retrieveReport(e, filename) {
   e.preventDefault();
-  const api = process.env.REACT_APP_API_SERVICE_ADDRESS_DEV;
+  const api =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
+      : process.env.REACT_APP_API_SERVICE_ADDRESS;
   const endpoint = process.env.REACT_APP_SIGNED_URL_ENDPOINT;
-  const key = process.env.REACT_APP_API_SERVICE_KEY_DEV;
-  const bucket = process.env.REACT_APP_QC_REPORT_BUCKET_DEV;
+  const key =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_API_SERVICE_KEY_DEV
+      : process.env.REACT_APP_API_SERVICE_KEY;
+  const bucket =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_QC_REPORT_BUCKET_DEV
+      : process.env.REACT_APP_QC_REPORT_BUCKET;
   return axios
     .get(`${api}${endpoint}?bucket=${bucket}&object=${filename}&key=${key}`)
     .then((response) => {

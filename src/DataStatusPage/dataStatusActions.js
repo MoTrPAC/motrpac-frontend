@@ -37,9 +37,15 @@ function useNull() {
   return null;
 }
 
-const api = process.env.REACT_APP_API_SERVICE_ADDRESS_DEV;
+const api =
+  process.env.NODE_ENV !== 'production'
+    ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
+    : process.env.REACT_APP_API_SERVICE_ADDRESS;
 const endpoint = process.env.REACT_APP_QC_DATA_ENDPOINT;
-const key = process.env.REACT_APP_API_SERVICE_KEY_DEV;
+const key =
+  process.env.NODE_ENV !== 'production'
+    ? process.env.REACT_APP_API_SERVICE_KEY_DEV
+    : process.env.REACT_APP_API_SERVICE_KEY;
 
 // Handler for predefined searches
 function fetchData() {
