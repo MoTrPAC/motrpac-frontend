@@ -16,6 +16,7 @@ export const defaultDataStatusState = {
     proteomicsRaw: [],
     rnaSeq: [],
     rrbs: [],
+    methylcapSeq: [],
     lastModified: '',
   },
   errMsg: '',

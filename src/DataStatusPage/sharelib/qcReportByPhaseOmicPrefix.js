@@ -1,7 +1,7 @@
 // Static function to prepend prefix GET, METAB, or PROT to y-axis CAS/assay labels
 function selectOmicPrefix(assay) {
   let omicPrefix = 'METAB';
-  const patternGet = /rna-seq|rrbs|atac-seq/;
+  const patternGet = /rna[-_]?seq|rrbs|atac[-_]?seq|methylcap[-_]?seq/;
   if (assay.toLowerCase().match(patternGet)) {
     omicPrefix = 'GET';
   }

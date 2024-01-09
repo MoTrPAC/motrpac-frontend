@@ -20,6 +20,10 @@ const qcReportButtonList = [
     buttonLabel: 'RRBS',
   },
   {
+    qcReport: 'methylcapseq',
+    buttonLabel: 'MethylCap-seq',
+  },
+  {
     qcReport: 'atacseq',
     buttonLabel: 'ATAC-seq',
   },

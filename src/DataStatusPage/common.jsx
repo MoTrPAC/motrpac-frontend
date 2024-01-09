@@ -20,7 +20,7 @@ export const commonReportPropType = {
 };
 
 /**
- * props common to rna-seq, rrbs, atac-seq, and immunoassay
+ * props common to rna-seq, rrbs, atac-seq, methylcap-seq, and immunoassay
  * QC data reports
  */
 export const getDataReportPropType = {
@@ -57,7 +57,7 @@ export const metabProtRawDataReportPropType = {
 };
 
 /**
- * column headers common to rna-seq, rrbs, and atac-seq
+ * column headers common to rna-seq, rrbs, methylcap-seq, and atac-seq
  * data qc status reports
  */
 export const getDataTableColumns = [
@@ -635,10 +635,10 @@ export const transformData = (arr, qcFiles, omicType) => {
  */
 export function retrieveReport(e, filename) {
   e.preventDefault();
-  const api = process.env.REACT_APP_API_SERVICE_ADDRESS;
+  const api = process.env.REACT_APP_API_SERVICE_ADDRESS_DEV;
   const endpoint = process.env.REACT_APP_SIGNED_URL_ENDPOINT;
-  const key = process.env.REACT_APP_API_SERVICE_KEY;
-  const bucket = process.env.REACT_APP_QC_REPORT_BUCKET;
+  const key = process.env.REACT_APP_API_SERVICE_KEY_DEV;
+  const bucket = process.env.REACT_APP_QC_REPORT_BUCKET_DEV;
   return axios
     .get(`${api}${endpoint}?bucket=${bucket}&object=${filename}&key=${key}`)
     .then((response) => {
