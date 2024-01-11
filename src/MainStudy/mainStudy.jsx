@@ -7,6 +7,7 @@ import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 import PASS1B06TimeCourse from '../assets/figures/pass1b-06-time-course.png';
 import PASS1B06Profiling from '../assets/figures/pass1b-06-molecular-profiling.svg';
 import ToggleShowHide from './components/toggleShowHide';
+import ExternalLink from '../lib/ui/externalLink';
 
 function MainStudy({ profile, allFiles, handleDataFetch }) {
   const [showSummary, setShowSummary] = useState(true);
@@ -149,7 +150,12 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
             tissues. Rats were endurance-exercise trained on treadmills and
             tissue samples were collected at either 1, 2, 4, or 8 weeks of
             training, with a 48 hour rest or wash out period before samples were
-            collected.
+            collected. See the{' '}
+            <ExternalLink
+              to="http://study-docs.motrpac-data.org/Animal_Protocol.pdf"
+              label="animal protocol"
+            />{' '}
+            to learn more.
           </p>
           <div className="main-study-content-container mt-5">
             <div className="d-flex align-items-center sub-section-title">
