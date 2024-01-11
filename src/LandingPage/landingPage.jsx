@@ -169,6 +169,13 @@ export function LandingPage({ isAuthenticated, profile }) {
     console.log(networkNodes);
   }, [networkNodes]);
 
+  const goToExternalLink = useCallback(() => {
+    window.open(
+      'https://www.biorxiv.org/content/10.1101/2022.09.21.508770v3',
+      '_blank',
+    );
+  }, []);
+
   // Redirect authenticated users to protected route
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   if (isAuthenticated && hasAccess) {
@@ -191,7 +198,7 @@ export function LandingPage({ isAuthenticated, profile }) {
             <h1 className="display-1">About MoTrPAC</h1>
             <p className="lead">
               <span className="font-weight-bold">
-                Molecular Transducers of Physical Activity Consortium
+                Molecular Transducers of Physical Activity Consortium (MoTrPAC)
               </span>{' '}
               is a national research consortium. Its goal is to{' '}
               <span className="font-italic about-motrpac-emphasis">
@@ -201,16 +208,25 @@ export function LandingPage({ isAuthenticated, profile }) {
               activity improves and preserves health. We aim to generate a
               molecular map of the effects of exercise.
             </p>
-            <Link
-              to="/project-overview"
-              className="btn btn-primary btn-lg mt-4"
-              role="button"
-            >
-              PROJECT OVERVIEW
-            </Link>
+            <div className="highlighted-links-container">
+              <Link
+                to="/project-overview"
+                className="btn btn-primary btn-lg mt-4"
+                role="button"
+              >
+                PROJECT OVERVIEW
+              </Link>
+              <Link
+                to="/tutorial"
+                className="btn btn-primary btn-lg mt-4"
+                role="button"
+              >
+                VIDEO TUTORIALS
+              </Link>
+            </div>
             <div className="office-hour-anchor-link-container">
               <a href="#join-office-hour" className="office-hour-anchor-link">
-                Join us at the monthly office hour to learn more
+                Join our monthly open office event to learn more
               </a>
             </div>
           </div>
@@ -287,7 +303,7 @@ export function LandingPage({ isAuthenticated, profile }) {
                   LEARN MORE
                 </a>
               </div>
-              <div className="feature-image col-12 col-md-6 mx-auto">
+              <div className="feature-image col-12 col-md-6 mx-auto" onClick={goToExternalLink}>
                 <img
                   src={LandscapePreprintAbstract}
                   className="img-fluid data-layer-runner"

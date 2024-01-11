@@ -28,6 +28,7 @@ import ChelseaImg from '../assets/teamMemberPhotos/Chelsea.jpg';
 import JayImg from '../assets/teamMemberPhotos/Jay.jpg';
 import SamImg from '../assets/teamMemberPhotos/Sam.jpg';
 import DanImg from '../assets/teamMemberPhotos/Dan.jpg';
+import MiaImg from '../assets/teamMemberPhotos/Mia.jpg';
 
 const teamInfo = {
   PIs: [
@@ -115,13 +116,18 @@ const teamInfo = {
     },
     {
       name: 'Terra Coakley',
-      title: 'Program Manager',
+      title: 'Administrative Director',
       image: TerraImg,
     },
     {
-      name: 'Brooke Zelnik',
-      title: 'Administrative Associate',
+      name: 'Brooke Gazzoli',
+      title: 'Administrative Supervisor',
       image: BrookeImg,
+    },
+    {
+      name: 'Mia Levanto',
+      title: 'CRCA/Program Manager',
+      image: MiaImg,
     },
   ],
   CoIs: [
