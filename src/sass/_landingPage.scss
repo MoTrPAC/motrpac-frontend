@@ -180,6 +180,11 @@
             cursor: pointer;
             padding: 2.5rem 2.65rem;
             text-align: center;
+            transition: all 0.25s ease-out;
+
+            &:hover {
+              padding: 2.25rem 2.4rem;
+            }
       
             img {
               width: 100%;
@@ -304,6 +309,7 @@ body.homepage {
     .tick:nth-child(8) {
       text {
         fill: #ff8839;
+        text-shadow: 0 0 0.15rem rgba(0, 0, 0, 1), 0 0 0.5rem rgba(0, 0, 0, 0.5);
       }
     }
     .tick:nth-child(3),
@@ -312,16 +318,19 @@ body.homepage {
     .tick:nth-child(6) {
       text {
         fill: #dba0ff;
+        text-shadow: 0 0 0.15rem rgba(0, 0, 0, 1), 0 0 0.5rem rgba(0, 0, 0, 0.5);
       }
     }
     .tick:nth-child(2) {
       text {
         fill: #f9e802;
+        text-shadow: 0 0 0.15rem rgba(0, 0, 0, 1), 0 0 0.5rem rgba(0, 0, 0, 0.5);
       }
     }
     .tick:first-child {
       text {
         fill: #31fd94;
+        text-shadow: 0 0 0.15rem rgba(0, 0, 0, 1), 0 0 0.5rem rgba(0, 0, 0, 0.5);
       }
     }
   }
