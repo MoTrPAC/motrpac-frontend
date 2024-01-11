@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import PageTitle from '../lib/ui/pageTitle';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 import PASS1B06TimeCourse from '../assets/figures/pass1b-06-time-course.png';
-import PASS1B06Profiling from '../assets/figures/pass1b-06-molecular-profiling.png';
+import PASS1B06Profiling from '../assets/figures/pass1b-06-molecular-profiling.svg';
 import ToggleShowHide from './components/toggleShowHide';
 
 function MainStudy({ profile, allFiles, handleDataFetch }) {
