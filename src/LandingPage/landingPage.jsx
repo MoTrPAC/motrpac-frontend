@@ -217,7 +217,7 @@ export function LandingPage({ isAuthenticated, profile }) {
                 PROJECT OVERVIEW
               </Link>
               <Link
-                to="/tutorial"
+                to="/tutorials"
                 className="btn btn-primary btn-lg mt-4"
                 role="button"
               >
