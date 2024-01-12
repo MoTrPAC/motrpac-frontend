@@ -37,9 +37,15 @@ function useNull() {
   return null;
 }
 
-const api = process.env.REACT_APP_API_SERVICE_ADDRESS;
+const api =
+  process.env.NODE_ENV !== 'production'
+    ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
+    : process.env.REACT_APP_API_SERVICE_ADDRESS;
 const endpoint = process.env.REACT_APP_QC_DATA_ENDPOINT;
-const key = process.env.REACT_APP_API_SERVICE_KEY;
+const key =
+  process.env.NODE_ENV !== 'production'
+    ? process.env.REACT_APP_API_SERVICE_KEY_DEV
+    : process.env.REACT_APP_API_SERVICE_KEY;
 
 // Handler for predefined searches
 function fetchData() {
@@ -62,6 +68,7 @@ function fetchData() {
         axios.get(`${api}${endpoint}/immunoassay?key=${key}`).catch(useNull),
         axios.get(`${api}${endpoint}/rna_seq?key=${key}`).catch(useNull),
         axios.get(`${api}${endpoint}/rrbs?key=${key}`).catch(useNull),
+        axios.get(`${api}${endpoint}/methylcap_seq?key=${key}`).catch(useNull),
         axios.get(`${api}${endpoint}/atac_seq?key=${key}`).catch(useNull),
       ])
       .then(
@@ -74,6 +81,7 @@ function fetchData() {
             immunoAssay,
             rnaSeq,
             rrbs,
+            methylcapSeq,
             atacSeq
           ) => {
             const payload = {
@@ -84,6 +92,7 @@ function fetchData() {
               immunoAssay: immunoAssay.data,
               rnaSeq: rnaSeq.data,
               rrbs: rrbs.data,
+              methylcapSeq: methylcapSeq.data,
               atacSeq: atacSeq.data,
               lastModified: dayjs().format(),
             };

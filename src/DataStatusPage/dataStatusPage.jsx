@@ -101,6 +101,13 @@ export function DataStatusPage({
             <QcReportHelpLink qcReportViewChange={qcReportViewChange} />
           </>
         );
+      case 'methylcapseq':
+        return (
+          <>
+            <StatusReportGetData qcData={qcData.methylcapSeq} />
+            <QcReportHelpLink qcReportViewChange={qcReportViewChange} />
+          </>
+        );
       case 'atacseq':
         return (
           <>
@@ -154,6 +161,7 @@ DataStatusPage.propTypes = {
     proteomicsRaw: PropTypes.arrayOf(PropTypes.object),
     rnaSeq: PropTypes.arrayOf(PropTypes.object),
     rrbs: PropTypes.arrayOf(PropTypes.object),
+    methylcapSeq: PropTypes.arrayOf(PropTypes.object),
     lastModified: PropTypes.string,
   }),
   isFetchingQcData: PropTypes.bool,
@@ -174,6 +182,7 @@ DataStatusPage.defaultProps = {
     proteomicsRaw: [],
     rnaSeq: [],
     rrbs: [],
+    methylcapSeq: [],
     lastModified: '',
   },
   isFetchingQcData: false,
