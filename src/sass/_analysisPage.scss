@@ -156,6 +156,70 @@
       font-size: inherit;
       line-height: 1.5;
     }
+
+    #introduction {
+      margin-left: 15px;
+      margin-right: 15px;
+
+      &.section {
+        margin-top: 1.5em;
+      }
+    }
+  }
+
+  .tocify {
+    border: solid 1px #ccc;
+    border-radius: 5px;
+    padding: 0.5rem;
+    overflow-x: auto;
+    transition: top 0.3s ease;
+
+    &.toc-fix-top {
+      position: fixed;
+      top: 100px;
+      z-index: 1000;
+      max-width: 258px;
+    }
+
+    ol {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      
+      li {
+        font-size: 0.9rem;
+        margin: 0;
+        padding-top: 0.15rem;
+        padding-bottom: 0.15rem;
+
+        a {
+          color: #000;
+          text-decoration: none;
+
+          &.is-active-link {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+
+    ol>li>ol {
+      padding-left: 1.0rem;
+    }
+
+    ol>li>ol>li>ol {
+      padding-left: 1.0rem;
+    }
+  }
+
+  .graphical-clustering-content-container {
+    h3 {
+      font-size: 1.65rem !important;
+    }
+
+    h4 {
+      font-size: 1.25rem !important;
+    }
   }
 }
 
