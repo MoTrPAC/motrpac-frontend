@@ -1,6 +1,8 @@
-import React, { useRef, useState } from 'react';
-import IframeResizer from 'iframe-resizer-react';
+import React, { useState } from 'react';
+import PageTitle from '../../lib/ui/pageTitle';
 import ExternalLink from '../../lib/ui/externalLink';
+import Pass1bLandscapeGraphicalReport from './pass1bLandscapeReport';
+import Pass1bMitochondriaGraphicalReport from './pass1bMitoReport';
 
 const reportTissues = {
   ADRNL: 'Adrenal',
@@ -23,9 +25,7 @@ const reportTissues = {
 };
 
 function GraphicalClustering() {
-  const iframeRef = useRef(null);
   const [tissue, setTissue] = useState('SKM_GN');
-  const iframeRefMito = useRef(null);
   const [mitoTissue, setMitoTissue] = useState('HEART');
   const [currentView, setCurrentView] = useState('landscape');
 
@@ -35,12 +35,10 @@ function GraphicalClustering() {
   }
 
   return (
-    <div className="graphicalClusteringPage px-3 px-md-4 mb-3">
-      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 mb-3 page-header border-bottom">
-        <div className="page-title">
-          <h1 className="mb-0">Graphical Clustering</h1>
-        </div>
-        <div className="btn-toolbar">
+    <div className="graphicalClusteringPage px-3 px-md-4 mb-3 container">
+      <div className="row d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center page-header">
+        <PageTitle title="Tissue-level visualization of graphical results" />
+        <div className="btn-toolbar mb-3">
           <div
             className="btn-group"
             role="group"
@@ -48,7 +46,7 @@ function GraphicalClustering() {
           >
             <button
               type="button"
-              className={`btn btn-outline-primary ${
+              className={`btn btn-outline-primary btn-sm ${
                 currentView === 'landscape' ? 'active' : ''
               }`}
               onClick={handleViewChange.bind(this, 'landscape')}
@@ -57,7 +55,7 @@ function GraphicalClustering() {
             </button>
             <button
               type="button"
-              className={`btn btn-outline-primary ${
+              className={`btn btn-outline-primary btn-sm ${
                 currentView === 'mitochondria' ? 'active' : ''
               }`}
               onClick={handleViewChange.bind(this, 'mitochondria')}
@@ -67,19 +65,14 @@ function GraphicalClustering() {
           </div>
         </div>
       </div>
-      <div className="graphical-clustering-container">
+      <div className="row graphical-clustering-container">
         {currentView === 'landscape' && (
-          <LandscapeGraphicalClustering
-            tissue={tissue}
-            setTissue={setTissue}
-            iframeRef={iframeRef}
-          />
+          <LandscapeGraphicalClustering tissue={tissue} setTissue={setTissue} />
         )}
         {currentView === 'mitochondria' && (
           <MitoChondriaGraphicalAnalysis
             tissue={mitoTissue}
             setTissue={setMitoTissue}
-            iframeRef={iframeRefMito}
           />
         )}
       </div>
@@ -94,11 +87,11 @@ function ReportControls({ tissue, toggleReport }) {
   const tissueKeys = Object.keys(reportTissues);
 
   return (
-    <div className="controlPanelContainer mt-3 mb-1 ml-3">
-      <div className="controlPanel">
+    <div className="controlPanelContainer container mt-1 ml-3">
+      <div className="controlPanel row border-top pt-3">
         <div className="controlRow d-flex align-items-center">
           <div className="controlLabel mr-2 font-weight-bold">
-            Select a tissue:
+            Select tissue:
           </div>
           <div className="dropdown">
             <button
@@ -135,28 +128,8 @@ function ReportControls({ tissue, toggleReport }) {
   );
 }
 
-// iFrame content component
-function IframeGraphicalResults({ srcPath, iframeRef }) {
-  return (
-    <IframeResizer
-      forwardRef={iframeRef}
-      heightCalculationMethod="max"
-      src={srcPath}
-      style={{
-        height: '63vh',
-        width: '1px',
-        minWidth: '1200px',
-        border: 'none',
-      }}
-      scrolling
-      sizeHeight
-      sizeWidth
-    />
-  );
-}
-
 // Landscape graphical clustering component
-function LandscapeGraphicalClustering({ tissue, setTissue, iframeRef }) {
+function LandscapeGraphicalClustering({ tissue, setTissue }) {
   return (
     <div className="graphical-clustering-summary-container row mb-2">
       <div className="lead col-12">
@@ -164,31 +137,29 @@ function LandscapeGraphicalClustering({ tissue, setTissue, iframeRef }) {
         over the training time course per tissue in adult rats. Compare
         responses between male and female rats, identify pathways affected in
         single or multiple omes' and explore what molecules drive those
-        enrichments. To learn more, see the{' '}
+        enrichments. See the{' '}
         <ExternalLink
-          to="https://www.biorxiv.org/content/10.1101/2022.09.21.508770v1"
-          label="MoTrPAC Endurance Exercise Training Animal Study Landscape Preprint"
+          to="https://www.biorxiv.org/content/10.1101/2022.09.21.508770v3"
+          label="study's landscape preprint"
         />{' '}
-        as well as the{' '}
+        and the{' '}
         <ExternalLink
           to="https://motrpac.github.io/MotrpacRatTraining6mo/articles/MotrpacRatTraining6mo.html"
           label="documentation"
-        />
-        .
+        />{' '}
+        to learn more.
       </div>
-      <div className="graphical-clustering-content-container mt-2">
-        <ReportControls tissue={tissue} toggleReport={setTissue} />
-        <IframeGraphicalResults
-          srcPath={`/static-assets/graphical-analysis-reports/graphical-analysis-results_${tissue}.html`}
-          iframeRef={iframeRef}
-        />
+      <GraphicalClusteringIntroduction />
+      <ReportControls tissue={tissue} toggleReport={setTissue} />
+      <div className="graphical-clustering-content-container mt-3">
+        <Pass1bLandscapeGraphicalReport tissue={tissue} />
       </div>
     </div>
   );
 }
 
 // Mitochondria graphical analysis component
-function MitoChondriaGraphicalAnalysis({ tissue, setTissue, iframeRef }) {
+function MitoChondriaGraphicalAnalysis({ tissue, setTissue }) {
   return (
     <div className="graphical-clustering-summary-container row mb-2">
       <div className="lead col-12">
@@ -208,13 +179,98 @@ function MitoChondriaGraphicalAnalysis({ tissue, setTissue, iframeRef }) {
         />
         .
       </div>
+      <GraphicalClusteringIntroduction />
+      <ReportControls tissue={tissue} toggleReport={setTissue} />
       <div className="graphical-clustering-content-container mt-2">
-        <ReportControls tissue={tissue} toggleReport={setTissue} />
-        <IframeGraphicalResults
-          srcPath={`/static-assets/mito-graphical-analysis-reports/mito-graphical-analysis-results_${tissue}.html`}
-          iframeRef={iframeRef}
-        />
+        <Pass1bMitochondriaGraphicalReport tissue={tissue} />
       </div>
+    </div>
+  );
+}
+
+// Common introduction component
+function GraphicalClusteringIntroduction() {
+  return (
+    <div className="section level2" id="introduction">
+      <h2 id="section_introduction">Introduction</h2>
+      <p>
+        <strong>Objectives of these reports:</strong>
+      </p>
+      <ul>
+        <li>
+          To share representations of complex data as interactive reports that
+          allow researchers to extract meaningful biology
+          <br />
+        </li>
+        <li>
+          To compile biological insights from these reports, some of which will
+          be included in the landscape manuscript and companions
+        </li>
+      </ul>
+      <p>
+        <strong>Background about graphical clustering analysis:</strong>
+      </p>
+      <p>
+        A graphical approach with <code>repfdr</code> has replaced multiomics
+        clustering as the primary method to characterize and explore main
+        patterns of training-differential analytes in the PASS1B data. To learn
+        more about this approach, see presentations by David Amar{' '}
+        <ExternalLink
+          to="https://docs.google.com/presentation/d/1j7bhPO0S3Yz6nf21ljM-x7GrMoBdaGL67XPox9kByok/edit?usp=sharing"
+          label="here"
+        />{' '}
+        and{' '}
+        <ExternalLink
+          to="https://docs.google.com/presentation/d/1NrsHfF8ki312D2fjhbmWSRER19aco3AA2EQ6A-HQLlQ/edit?usp=sharing"
+          label="here"
+        />
+        .
+      </p>
+      <p>
+        Briefly, each differential molecule is assigned one of nine states
+        [(male up/1, male null/0, male down/-1) x (female up/1, female null/0,
+        female down/-1)] for each training time point (1, 2, 4, and 8 weeks).
+        These states are our <code>nodes</code> in the graphs. Then, for each
+        pair of nodes (x,y) such that y is from a time point that is immediately
+        after x (e.g., x is a node from week 4 and y is a node from week 8), we
+        define their edge set as the intersection of their analytes. This
+        defines the <code>edges</code> in the graphs. By visualizing these
+        graphs and characterizing different nodes, edges, and paths (i.e. a set
+        of edges that traverses all time points), we can extract meaningful
+        biology.
+      </p>
+      <p>
+        We refer to sets of molecules in specific edges, nodes, or paths as{' '}
+        <strong>graphical clusters</strong>. Throughout this report, you will
+        see labels for these clusters, e.g.{' '}
+        <code>
+          "SKM-GN:1w_F-1_M-1-&gt;2w_F-1_M-1-&gt;4w_F-1_M-1-&gt;8w_F-1_M-1"
+        </code>
+        . Here’s how to break it down:
+      </p>
+      <ul>
+        <li>
+          All clusters are prefixed with the tissue abbreviation and a colon,
+          e.g. <code>SKM-GN:</code>
+          <br />
+        </li>
+        <li>
+          Nodes are defined by the time point and state in each sex, where state
+          is 1 for up, 0 for null, and -1 for down. For example,{' '}
+          <code>1w_F-1_M-1</code> is a node that characterizes molecules at the
+          <code>1w</code> time point that are down-regulated in females (
+          <code>F-1</code>) and down-regulated in males (<code>M-1</code>).
+          These three pieces of information (time point, female state, male
+          state) are separated by underscores (<code>_</code>)<br />
+        </li>
+        <li>
+          Edges contain <code>---</code> and connect a pair of nodes
+          <br />
+        </li>
+        <li>
+          Paths contain <code>-&gt;</code> and connect four nodes
+        </li>
+      </ul>
     </div>
   );
 }
