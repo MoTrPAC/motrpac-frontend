@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import * as tocbot from 'tocbot';
 import {
   tocbotConfig,
-  handleScroll,
   pass1b06GraphicalClusteringLandscapeImageLocation,
 } from '../sharedLib';
 
@@ -15,9 +14,6 @@ function GraphicalAnalysisWhiteAdipose() {
   // load plot images
   const tissueImageFolder = 'white_adipose';
   const imageURL = `${pass1b06GraphicalClusteringLandscapeImageLocation}/${tissueImageFolder}`;
-
-  // fix toc position to the top of the page when scrolling
-  window.addEventListener('scroll', handleScroll);
 
   return (
     <div className="container-fluid main-container">

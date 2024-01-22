@@ -18,13 +18,15 @@ export const pass1b06GraphicalClusteringMitoImageLocation =
 // fix toc position to the top of the page when scrolling
 export function handleScroll() {
   const toc = document.getElementById('TOC');
-  const tocBottom = toc.offsetTop + toc.offsetHeight;
+  if (toc) {
+    const tocBottom = toc.offsetTop + toc.offsetHeight;
 
-  if (window.scrollY >= tocBottom) {
-    toc.classList.add('toc-fix-top');
-  }
+    if (window.scrollY >= tocBottom) {
+      toc.classList.add('toc-fix-top');
+    }
 
-  if (window.scrollY <= tocBottom) {
-    toc.classList.remove('toc-fix-top');
+    if (window.scrollY <= tocBottom) {
+      toc.classList.remove('toc-fix-top');
+    }
   }
 }

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import PageTitle from '../../lib/ui/pageTitle';
 import ExternalLink from '../../lib/ui/externalLink';
 import Pass1bLandscapeGraphicalReport from './pass1bLandscapeReport';
 import Pass1bMitochondriaGraphicalReport from './pass1bMitoReport';
+import { handleScroll } from './sharedLib';
 
 const reportTissues = {
   ADRNL: 'Adrenal',
@@ -28,10 +30,19 @@ function GraphicalClustering() {
   const [tissue, setTissue] = useState('SKM_GN');
   const [mitoTissue, setMitoTissue] = useState('HEART');
   const [currentView, setCurrentView] = useState('landscape');
+  const location = useLocation();
+  const { pathname } = location;
 
   // Handler to set current view to either landscape or companion study
   function handleViewChange(study) {
     setCurrentView(study);
+  }
+
+  // fix toc position to the top of the page when scrolling
+  if (pathname === '/graphical-clustering') {
+    window.addEventListener('scroll', handleScroll);
+  } else {
+    window.removeEventListener('scroll', handleScroll);
   }
 
   return (
