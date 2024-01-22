@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import * as tocbot from 'tocbot';
-import { tocbotConfig, handleScroll } from '../sharedLib';
+import {
+  tocbotConfig,
+  handleScroll,
+  pass1b06GraphicalClusteringLandscapeImageLocation,
+} from '../sharedLib';
 
 function GraphicalAnalysisHypothalamus() {
   // initialize table of contents
@@ -9,10 +13,8 @@ function GraphicalAnalysisHypothalamus() {
   }, []);
 
   // load plot images
-  const images = require.context(
-    `../../../assets/graphical-clustering-analysis/figures/landscape/hypothalamus/`,
-    false,
-  );
+  const tissueImageFolder = 'hypothalamus';
+  const imageURL = `${pass1b06GraphicalClusteringLandscapeImageLocation}/${tissueImageFolder}`;
 
   // fix toc position to the top of the page when scrolling
   window.addEventListener('scroll', handleScroll);
@@ -35,7 +37,7 @@ function GraphicalAnalysisHypothalamus() {
               <h3 id="all-paths">All paths</h3>
               <p>Tree of ALL differential analytes (all paths)</p>
               <p>
-                <img src={images('./figure_1.png')} width="100%" alt="" />
+                <img src={`${imageURL}/figure_1.png`} width="100%" alt="" />
               </p>
             </div>
             <div className="section level3">
@@ -45,7 +47,7 @@ function GraphicalAnalysisHypothalamus() {
                 ome distributions for selected clusters in this tissue.
               </p>
               <p>
-                <img src={images('./figure_2.png')} width="100%" alt="" />
+                <img src={`${imageURL}/figure_2.png`} width="100%" alt="" />
               </p>
             </div>
           </div>
@@ -59,13 +61,13 @@ function GraphicalAnalysisHypothalamus() {
             <div className="section level3">
               <h3 id="all-omes">All omes</h3>
               <p>
-                <img src={images('./figure_3.png')} width="100%" alt="" />
+                <img src={`${imageURL}/figure_3.png`} width="100%" alt="" />
               </p>
             </div>
             <div className="section level3">
               <h3 id="split-by-ome-group">Split by ome group</h3>
               <p>
-                <img src={images('./figure_4.png')} width="100%" alt="" />
+                <img src={`${imageURL}/figure_4.png`} width="100%" alt="" />
               </p>
             </div>
           </div>

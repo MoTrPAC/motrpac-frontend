@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import * as tocbot from 'tocbot';
-import { tocbotConfig, handleScroll } from '../sharedLib';
+import {
+  tocbotConfig,
+  handleScroll,
+  pass1b06GraphicalClusteringLandscapeImageLocation,
+} from '../sharedLib';
 
 function GraphicalAnalysisLung() {
   // initialize table of contents
@@ -9,10 +13,8 @@ function GraphicalAnalysisLung() {
   }, []);
 
   // load plot images
-  const images = require.context(
-    `../../../assets/graphical-clustering-analysis/figures/landscape/lung/`,
-    false,
-  );
+  const tissueImageFolder = 'lung';
+  const imageURL = `${pass1b06GraphicalClusteringLandscapeImageLocation}/${tissueImageFolder}`;
 
   // fix toc position to the top of the page when scrolling
   window.addEventListener('scroll', handleScroll);
@@ -35,7 +37,7 @@ function GraphicalAnalysisLung() {
               <h3 id="all-paths">All paths</h3>
               <p>Tree of ALL differential analytes (all paths)</p>
               <p>
-                <img src={images('./figure_1.png')} width="100%" alt="" />
+                <img src={`${imageURL}/figure_1.png`} width="100%" alt="" />
               </p>
             </div>
             <div className="section level3">
@@ -45,7 +47,7 @@ function GraphicalAnalysisLung() {
                 ome distributions for selected clusters in this tissue.
               </p>
               <p>
-                <img src={images('./figure_2.png')} width="100%" alt="" />
+                <img src={`${imageURL}/figure_2.png`} width="100%" alt="" />
               </p>
             </div>
           </div>
@@ -59,15 +61,15 @@ function GraphicalAnalysisLung() {
             <div className="section level3">
               <h3 id="all-omes">All omes</h3>
               <p>
-                <img src={images('./figure_3.png')} width="100%" alt="" />
+                <img src={`${imageURL}/figure_3.png`} width="100%" alt="" />
               </p>
             </div>
             <div className="section level3">
               <h3 id="split-by-ome-group">Split by ome group</h3>
               <p>
-                <img src={images('./figure_4.png')} width="100%" alt="" />
-                <img src={images('./figure_5.png')} width="100%" alt="" />
-                <img src={images('./figure_6.png')} width="100%" alt="" />
+                <img src={`${imageURL}/figure_4.png`} width="100%" alt="" />
+                <img src={`${imageURL}/figure_5.png`} width="100%" alt="" />
+                <img src={`${imageURL}/figure_6.png`} width="100%" alt="" />
               </p>
             </div>
           </div>
@@ -136,9 +138,9 @@ function GraphicalAnalysisLung() {
                   LUNG:1w_F-1_M0-&gt;2w_F-1_M0-&gt;4w_F-1_M0-&gt;8w_F0_M0
                 </h4>
                 <p>
-                  <img src={images('./figure_7.png')} width="100%" alt="" />
-                  <img src={images('./figure_8.png')} width="100%" alt="" />
-                  <img src={images('./figure_9.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_8.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_9.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
@@ -147,9 +149,9 @@ function GraphicalAnalysisLung() {
                   LUNG:1w_F-1_M0-&gt;2w_F-1_M0-&gt;4w_F-1_M0-&gt;8w_F-1_M-1
                 </h4>
                 <p>
-                  <img src={images('./figure_10.png')} width="100%" alt="" />
-                  <img src={images('./figure_11.png')} width="100%" alt="" />
-                  <img src={images('./figure_12.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_10.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_11.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_12.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
@@ -158,9 +160,9 @@ function GraphicalAnalysisLung() {
                   LUNG:1w_F1_M1-&gt;2w_F1_M1-&gt;4w_F1_M1-&gt;8w_F1_M1
                 </h4>
                 <p>
-                  <img src={images('./figure_13.png')} width="100%" alt="" />
-                  <img src={images('./figure_14.png')} width="100%" alt="" />
-                  <img src={images('./figure_15.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_13.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_14.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_15.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
@@ -169,9 +171,9 @@ function GraphicalAnalysisLung() {
                   LUNG:1w_F-1_M-1-&gt;2w_F-1_M-1-&gt;4w_F-1_M0-&gt;8w_F0_M0
                 </h4>
                 <p>
-                  <img src={images('./figure_16.png')} width="100%" alt="" />
-                  <img src={images('./figure_17.png')} width="100%" alt="" />
-                  <img src={images('./figure_18.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_16.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_17.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_18.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
@@ -180,9 +182,9 @@ function GraphicalAnalysisLung() {
                   LUNG:1w_F-1_M-1-&gt;2w_F-1_M-1-&gt;4w_F-1_M0-&gt;8w_F0_M-1
                 </h4>
                 <p>
-                  <img src={images('./figure_19.png')} width="100%" alt="" />
-                  <img src={images('./figure_20.png')} width="100%" alt="" />
-                  <img src={images('./figure_21.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_19.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_20.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_21.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
@@ -192,63 +194,63 @@ function GraphicalAnalysisLung() {
               <div className="section level4">
                 <h4 id="lung4w_f-1_m0">LUNG:4w_F-1_M0</h4>
                 <p>
-                  <img src={images('./figure_22.png')} width="100%" alt="" />
-                  <img src={images('./figure_23.png')} width="100%" alt="" />
-                  <img src={images('./figure_24.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_22.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_23.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_24.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="lung8w_f-1_m-1">LUNG:8w_F-1_M-1</h4>
                 <p>
-                  <img src={images('./figure_25.png')} width="100%" alt="" />
-                  <img src={images('./figure_26.png')} width="100%" alt="" />
-                  <img src={images('./figure_27.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_25.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_26.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_27.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="lung8w_f-1_m0">LUNG:8w_F-1_M0</h4>
                 <p>
-                  <img src={images('./figure_28.png')} width="100%" alt="" />
-                  <img src={images('./figure_29.png')} width="100%" alt="" />
-                  <img src={images('./figure_30.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_28.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_29.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_30.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="lung8w_f0_m-1">LUNG:8w_F0_M-1</h4>
                 <p>
-                  <img src={images('./figure_31.png')} width="100%" alt="" />
-                  <img src={images('./figure_32.png')} width="100%" alt="" />
-                  <img src={images('./figure_33.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_31.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_32.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_33.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="lung8w_f0_m1">LUNG:8w_F0_M1</h4>
                 <p>
-                  <img src={images('./figure_34.png')} width="100%" alt="" />
-                  <img src={images('./figure_35.png')} width="100%" alt="" />
-                  <img src={images('./figure_36.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_34.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_35.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_36.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="lung8w_f1_m0">LUNG:8w_F1_M0</h4>
                 <p>
-                  <img src={images('./figure_37.png')} width="100%" alt="" />
-                  <img src={images('./figure_38.png')} width="100%" alt="" />
-                  <img src={images('./figure_39.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_37.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_38.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_39.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="lung8w_f1_m1">LUNG:8w_F1_M1</h4>
                 <p>
-                  <img src={images('./figure_40.png')} width="100%" alt="" />
-                  <img src={images('./figure_41.png')} width="100%" alt="" />
-                  <img src={images('./figure_42.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_40.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_41.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_42.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
@@ -258,18 +260,18 @@ function GraphicalAnalysisLung() {
               <div className="section level4">
                 <h4 id="lung1w_f-1_m02w_f-1_m0">LUNG:1w_F-1_M0—2w_F-1_M0</h4>
                 <p>
-                  <img src={images('./figure_43.png')} width="100%" alt="" />
-                  <img src={images('./figure_44.png')} width="100%" alt="" />
-                  <img src={images('./figure_45.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_43.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_44.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_45.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="lung2w_f-1_m04w_f-1_m0">LUNG:2w_F-1_M0—4w_F-1_M0</h4>
                 <p>
-                  <img src={images('./figure_46.png')} width="100%" alt="" />
-                  <img src={images('./figure_47.png')} width="100%" alt="" />
-                  <img src={images('./figure_48.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_46.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_47.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_48.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
