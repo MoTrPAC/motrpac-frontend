@@ -268,7 +268,7 @@ function QcReportHelp() {
             </ul>
           </li>
         </ul>
-        <h4 className="mt-4">RNA-seq, RRBS, and ATAC-seq</h4>
+        <h4 className="mt-4">RNA-seq, RRBS, MethylCap-seq, and ATAC-seq</h4>
         <h6>Terms & Definitions</h6>
         <ul className="terms-definitions">
           <li>

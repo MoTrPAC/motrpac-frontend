@@ -53,10 +53,10 @@ const assayMap = {
 };
 
 const omeColors = [
-  { type: 'Genomics', color: '#FC8D62' },
-  { type: 'Proteomics', color: '#8DA0CB' },
-  { type: 'Metabolomics', color: '#66C2A5' },
-  { type: 'Immunoassays', color: '#E78AC3' },
+  { type: 'Genomics', color: '#ff8839' },
+  { type: 'Proteomics', color: '#dba0ff' },
+  { type: 'Immunoassays', color: '#f9e802' },
+  { type: 'Metabolomics', color: '#31fd94' },
 ];
 
 /**

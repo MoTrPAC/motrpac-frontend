@@ -37,9 +37,10 @@
 #### Building and running
 
  * Preparation:
-   - Set `node` environment to `14.15.x`, or use `nvm` to run `nvm use v14.15.4`
+   - Set `node` environment to `16.20.x`, or use `nvm` to run `nvm use v16.20.0`
    - If `node_modules` directory already exist in your local working copy, run `rm -fr node_modules/` and `rm -f yarn.lock`.
    - Create a `.env` file at the root of the local working copy and add `ESLINT_NO_DEV_ERRORS=true`.
+   - Add additional required environment variables to the `.env` file in root (e.g. the API service address)
    - Run `yarn install`.
 
  * Building CSS: Uses sass in `node_modules/sass/sass.js`
@@ -70,9 +71,10 @@
 
 #### Software:
 
- * [Node v14](https://github.com/nodejs/Release)
+ * [Node v16](https://github.com/nodejs/Release)
      - Check your version: `node --version`
-     - If the version is not 14, you can `brew install node@14` or use [nvm](https://github.com/creationix/nvm/blob/master/README.md#installation), the Node Version Manager
+     - If the version is not 16, you can `brew install node@16` or use [nvm](https://github.
+       com/creationix/nvm/blob/master/README.md#installation), the Node Version Manager
      
  * [React v16](https://reactjs.org/versions)
      - Storybook used to visualize individual UI components
@@ -107,14 +109,6 @@
 #### Download Page Behavior
   - Makes call to backend for a list of uploads (size depending maxRows variable) on a given page. Expects backend to give total count of uploads fitting filters and the uploads for a specific page. (e.g on page 2, with 10 rows per page, expects items 11-20  from backend and a count of all  rows that fit current filters)
   - Changing filters should also call backend
-
-#### Samir's Flow for Creating Custom Font Icons
-  1. Create a 200px by 200px artboard in Adobe Illustrator
-  2. Draw Icon and export artboard as SVG (make sure only one color -- white counts as a color but transparent does not)
-  3. Upload all icons to [IcoMoon](https://icomoon.io/app/#/select) 4. Download and unzip resultant zipped file
-  5. Copy contents of the fonts folder (icomoon.eot, icomoon.woff, icomoon.svg, icomoon.tff) and place  them in the src/assets/fonts folder overwriting  the previous file. 
-
-  - Make sure you upload ALL custom icons to icomoon so that previously created icons are still accessible
 
 ---
 
