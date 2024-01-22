@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import * as tocbot from 'tocbot';
-import { tocbotConfig, handleScroll } from '../sharedLib';
+import {
+  tocbotConfig,
+  handleScroll,
+  pass1b06GraphicalClusteringMitoImageLocation,
+} from '../sharedLib';
 
 function MitoGraphicalAnalysisWhiteAdipose() {
   // initialize table of contents
@@ -9,10 +13,8 @@ function MitoGraphicalAnalysisWhiteAdipose() {
   }, []);
 
   // load plot images
-  const images = require.context(
-    `../../../assets/graphical-clustering-analysis/figures/mitochondria/white_adipose/`,
-    false,
-  );
+  const tissueImageFolder = 'white_adipose';
+  const imageURL = `${pass1b06GraphicalClusteringMitoImageLocation}/${tissueImageFolder}`;
 
   // fix toc position to the top of the page when scrolling
   window.addEventListener('scroll', handleScroll);
@@ -35,7 +37,7 @@ function MitoGraphicalAnalysisWhiteAdipose() {
               <h3 id="all-paths">All paths</h3>
               <p>Tree of ALL differential analytes (all paths)</p>
               <p>
-                <img src={images('./figure_1.png')} width="100%" alt="" />
+                <img src={`${imageURL}/figure_1.png`} width="100%" alt="" />
               </p>
             </div>
             <div className="section level3">
@@ -45,7 +47,7 @@ function MitoGraphicalAnalysisWhiteAdipose() {
                 ome distributions for selected clusters in this tissue.
               </p>
               <p>
-                <img src={images('./figure_2.png')} width="100%" alt="" />
+                <img src={`${imageURL}/figure_2.png`} width="100%" alt="" />
               </p>
             </div>
           </div>
@@ -59,16 +61,16 @@ function MitoGraphicalAnalysisWhiteAdipose() {
             <div className="section level3">
               <h3 id="all-omes">All omes</h3>
               <p>
-                <img src={images('./figure_3.png')} width="100%" alt="" />
+                <img src={`${imageURL}/figure_3.png`} width="100%" alt="" />
               </p>
             </div>
             <div className="section level3">
               <h3 id="split-by-ome-group">Split by ome group</h3>
               <p>
-                <img src={images('./figure_4.png')} width="100%" alt="" />
+                <img src={`${imageURL}/figure_4.png`} width="100%" alt="" />
               </p>
               <p>
-                <img src={images('./figure_5.png')} width="100%" alt="" />
+                <img src={`${imageURL}/figure_5.png`} width="100%" alt="" />
               </p>
             </div>
           </div>
@@ -137,9 +139,9 @@ function MitoGraphicalAnalysisWhiteAdipose() {
                   WAT-SC:1w_F0_M-1-&gt;2w_F0_M-1-&gt;4w_F0_M0-&gt;8w_F1_M0
                 </h4>
                 <p>
-                  <img src={images('./figure_6.png')} width="100%" alt="" />
-                  <img src={images('./figure_7.png')} width="100%" alt="" />
-                  <img src={images('./figure_8.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_6.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_8.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
@@ -148,9 +150,9 @@ function MitoGraphicalAnalysisWhiteAdipose() {
                   WAT-SC:1w_F0_M1-&gt;2w_F0_M1-&gt;4w_F0_M1-&gt;8w_F0_M1
                 </h4>
                 <p>
-                  <img src={images('./figure_9.png')} width="100%" alt="" />
-                  <img src={images('./figure_10.png')} width="100%" alt="" />
-                  <img src={images('./figure_11.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_9.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_10.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_11.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
@@ -159,8 +161,8 @@ function MitoGraphicalAnalysisWhiteAdipose() {
                   WAT-SC:1w_F0_M-1-&gt;2w_F0_M-1-&gt;4w_F0_M-1-&gt;8w_F0_M-1
                 </h4>
                 <p>
-                  <img src={images('./figure_12.png')} width="100%" alt="" />
-                  <img src={images('./figure_13.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_12.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_13.png`} width="100%" alt="" />
                   No significant enrichments for
                   WAT-SC:1w_F0_M-1-&gt;2w_F0_M-1-&gt;4w_F0_M-1-&gt;8w_F0_M-1
                 </p>
@@ -171,9 +173,9 @@ function MitoGraphicalAnalysisWhiteAdipose() {
                   WAT-SC:1w_F1_M-1-&gt;2w_F1_M-1-&gt;4w_F1_M0-&gt;8w_F1_M0
                 </h4>
                 <p>
-                  <img src={images('./figure_14.png')} width="100%" alt="" />
-                  <img src={images('./figure_15.png')} width="100%" alt="" />
-                  <img src={images('./figure_16.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_14.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_15.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_16.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
@@ -182,9 +184,9 @@ function MitoGraphicalAnalysisWhiteAdipose() {
                   WAT-SC:1w_F0_M0-&gt;2w_F0_M0-&gt;4w_F0_M0-&gt;8w_F1_M1
                 </h4>
                 <p>
-                  <img src={images('./figure_17.png')} width="100%" alt="" />
-                  <img src={images('./figure_18.png')} width="100%" alt="" />
-                  <img src={images('./figure_19.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_17.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_18.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_19.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
@@ -194,26 +196,26 @@ function MitoGraphicalAnalysisWhiteAdipose() {
               <div className="section level4">
                 <h4 id="wat-sc8w_f1_m0">WAT-SC:8w_F1_M0</h4>
                 <p>
-                  <img src={images('./figure_20.png')} width="100%" alt="" />
-                  <img src={images('./figure_21.png')} width="100%" alt="" />
-                  <img src={images('./figure_22.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_20.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_21.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_22.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="wat-sc1w_f0_m-1">WAT-SC:1w_F0_M-1</h4>
                 <p>
-                  <img src={images('./figure_23.png')} width="100%" alt="" />
-                  <img src={images('./figure_24.png')} width="100%" alt="" />
-                  <img src={images('./figure_25.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_23.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_24.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_25.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="wat-sc8w_f-1_m-1">WAT-SC:8w_F-1_M-1</h4>
                 <p>
-                  <img src={images('./figure_26.png')} width="100%" alt="" />
-                  <img src={images('./figure_27.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_26.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_27.png`} width="100%" alt="" />
                   No significant enrichments for WAT-SC:8w_F-1_M-1
                 </p>
                 <hr />
@@ -221,36 +223,36 @@ function MitoGraphicalAnalysisWhiteAdipose() {
               <div className="section level4">
                 <h4 id="wat-sc8w_f-1_m0">WAT-SC:8w_F-1_M0</h4>
                 <p>
-                  <img src={images('./figure_28.png')} width="100%" alt="" />
-                  <img src={images('./figure_29.png')} width="100%" alt="" />
-                  <img src={images('./figure_30.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_28.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_29.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_30.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="wat-sc8w_f0_m-1">WAT-SC:8w_F0_M-1</h4>
                 <p>
-                  <img src={images('./figure_31.png')} width="100%" alt="" />
-                  <img src={images('./figure_32.png')} width="100%" alt="" />
-                  <img src={images('./figure_33.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_31.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_32.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_33.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="wat-sc8w_f0_m1">WAT-SC:8w_F0_M1</h4>
                 <p>
-                  <img src={images('./figure_34.png')} width="100%" alt="" />
-                  <img src={images('./figure_35.png')} width="100%" alt="" />
-                  <img src={images('./figure_36.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_34.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_35.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_36.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="wat-sc8w_f1_m1">WAT-SC:8w_F1_M1</h4>
                 <p>
-                  <img src={images('./figure_37.png')} width="100%" alt="" />
-                  <img src={images('./figure_38.png')} width="100%" alt="" />
-                  <img src={images('./figure_39.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_37.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_38.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_39.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
@@ -262,18 +264,18 @@ function MitoGraphicalAnalysisWhiteAdipose() {
                   WAT-SC:1w_F0_M-1—2w_F0_M-1
                 </h4>
                 <p>
-                  <img src={images('./figure_40.png')} width="100%" alt="" />
-                  <img src={images('./figure_41.png')} width="100%" alt="" />
-                  <img src={images('./figure_42.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_40.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_41.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_42.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="wat-sc4w_f1_m08w_f1_m0">WAT-SC:4w_F1_M0—8w_F1_M0</h4>
                 <p>
-                  <img src={images('./figure_43.png')} width="100%" alt="" />
-                  <img src={images('./figure_44.png')} width="100%" alt="" />
-                  <img src={images('./figure_45.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_43.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_44.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_45.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>

@@ -9,6 +9,12 @@ export const tocbotConfig = {
   tocScrollOffset: 100,
 };
 
+export const pass1b06GraphicalClusteringLandscapeImageLocation =
+  'https://cdn.motrpac-data.org/assets/datahub/graphical_clustering_results/figures/pass1b_06/landscape';
+
+export const pass1b06GraphicalClusteringMitoImageLocation =
+  'https://cdn.motrpac-data.org/assets/datahub/graphical_clustering_results/figures/pass1b_06/mitochondria';
+
 // fix toc position to the top of the page when scrolling
 export function handleScroll() {
   const toc = document.getElementById('TOC');

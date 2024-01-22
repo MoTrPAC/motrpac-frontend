@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import * as tocbot from 'tocbot';
-import { tocbotConfig, handleScroll } from '../sharedLib';
+import {
+  tocbotConfig,
+  handleScroll,
+  pass1b06GraphicalClusteringMitoImageLocation,
+} from '../sharedLib';
 
 function MitoGraphicalAnalysisLung() {
   // initialize table of contents
@@ -9,10 +13,8 @@ function MitoGraphicalAnalysisLung() {
   }, []);
 
   // load plot images
-  const images = require.context(
-    `../../../assets/graphical-clustering-analysis/figures/mitochondria/lung/`,
-    false,
-  );
+  const tissueImageFolder = 'lung';
+  const imageURL = `${pass1b06GraphicalClusteringMitoImageLocation}/${tissueImageFolder}`;
 
   // fix toc position to the top of the page when scrolling
   window.addEventListener('scroll', handleScroll);
@@ -35,7 +37,7 @@ function MitoGraphicalAnalysisLung() {
               <h3 id="all-paths">All paths</h3>
               <p>Tree of ALL differential analytes (all paths)</p>
               <p>
-                <img src={images('./figure_1.png')} width="100%" alt="" />
+                <img src={`${imageURL}/figure_1.png`} width="100%" alt="" />
               </p>
             </div>
             <div className="section level3">
@@ -45,7 +47,7 @@ function MitoGraphicalAnalysisLung() {
                 ome distributions for selected clusters in this tissue.
               </p>
               <p>
-                <img src={images('./figure_2.png')} width="100%" alt="" />
+                <img src={`${imageURL}/figure_2.png`} width="100%" alt="" />
               </p>
             </div>
           </div>
@@ -59,13 +61,13 @@ function MitoGraphicalAnalysisLung() {
             <div className="section level3">
               <h3 id="all-omes">All omes</h3>
               <p>
-                <img src={images('./figure_3.png')} width="100%" alt="" />
+                <img src={`${imageURL}/figure_3.png`} width="100%" alt="" />
               </p>
             </div>
             <div className="section level3">
               <h3 id="split-by-ome-group">Split by ome group</h3>
               <p>
-                <img src={images('./figure_4.png')} width="100%" alt="" />
+                <img src={`${imageURL}/figure_4.png`} width="100%" alt="" />
               </p>
             </div>
           </div>
@@ -132,44 +134,44 @@ function MitoGraphicalAnalysisLung() {
               <div className="section level4">
                 <h4 id="lung1w_f-1_m-1">LUNG:1w_F-1_M-1</h4>
                 <p>
-                  <img src={images('./figure_5.png')} width="100%" alt="" />
-                  <img src={images('./figure_6.png')} width="100%" alt="" />
-                  <img src={images('./figure_7.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_5.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_6.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="lung2w_f-1_m-1">LUNG:2w_F-1_M-1</h4>
                 <p>
-                  <img src={images('./figure_8.png')} width="100%" alt="" />
-                  <img src={images('./figure_9.png')} width="100%" alt="" />
-                  <img src={images('./figure_10.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_8.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_9.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_10.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="lung8w_f-1_m-1">LUNG:8w_F-1_M-1</h4>
                 <p>
-                  <img src={images('./figure_11.png')} width="100%" alt="" />
-                  <img src={images('./figure_12.png')} width="100%" alt="" />
-                  <img src={images('./figure_13.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_11.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_12.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_13.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="lung8w_f0_m-1">LUNG:8w_F0_M-1</h4>
                 <p>
-                  <img src={images('./figure_14.png')} width="100%" alt="" />
-                  <img src={images('./figure_15.png')} width="100%" alt="" />
-                  <img src={images('./figure_16.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_14.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_15.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_16.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="lung8w_f1_m1">LUNG:8w_F1_M1</h4>
                 <p>
-                  <img src={images('./figure_17.png')} width="100%" alt="" />
-                  <img src={images('./figure_18.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_17.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_18.png`} width="100%" alt="" />
                   No significant enrichments for LUNG:8w_F1_M1
                 </p>
                 <hr />
@@ -182,26 +184,26 @@ function MitoGraphicalAnalysisLung() {
                   LUNG:1w_F-1_M-1—2w_F-1_M-1
                 </h4>
                 <p>
-                  <img src={images('./figure_19.png')} width="100%" alt="" />
-                  <img src={images('./figure_20.png')} width="100%" alt="" />
-                  <img src={images('./figure_21.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_19.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_20.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_21.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="lung4w_f-1_m08w_f0_m0">LUNG:4w_F-1_M0—8w_F0_M0</h4>
                 <p>
-                  <img src={images('./figure_22.png')} width="100%" alt="" />
-                  <img src={images('./figure_23.png')} width="100%" alt="" />
-                  <img src={images('./figure_24.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_22.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_23.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_24.png`} width="100%" alt="" />
                 </p>
                 <hr />
               </div>
               <div className="section level4">
                 <h4 id="lung1w_f0_m12w_f0_m1">LUNG:1w_F0_M1—2w_F0_M1</h4>
                 <p>
-                  <img src={images('./figure_25.png')} width="100%" alt="" />
-                  <img src={images('./figure_26.png')} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_25.png`} width="100%" alt="" />
+                  <img src={`${imageURL}/figure_26.png`} width="100%" alt="" />
                   No significant enrichments for LUNG:1w_F0_M1—2w_F0_M1
                 </p>
                 <hr />
