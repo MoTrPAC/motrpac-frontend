@@ -37,7 +37,13 @@ function GraphicalClustering() {
   return (
     <div className="graphicalClusteringPage px-3 px-md-4 mb-3 container">
       <div className="row d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center page-header">
-        <PageTitle title="Tissue-level visualization of graphical results" />
+        <PageTitle
+          title={`Tissue-level visualization of graphical results${
+            currentView === 'mitochondria'
+              ? ': MITOCHONDRIA-RELATED FEATURES ONLY'
+              : ''
+          }`}
+        />
         <div className="btn-toolbar mb-3">
           <div
             className="btn-group"
@@ -179,9 +185,9 @@ function MitoChondriaGraphicalAnalysis({ tissue, setTissue }) {
         />
         .
       </div>
-      <GraphicalClusteringIntroduction />
+      <GraphicalClusteringIntroduction currentView="mitochondria" />
       <ReportControls tissue={tissue} toggleReport={setTissue} />
-      <div className="graphical-clustering-content-container mt-2">
+      <div className="graphical-clustering-content-container mt-3">
         <Pass1bMitochondriaGraphicalReport tissue={tissue} />
       </div>
     </div>
@@ -189,7 +195,7 @@ function MitoChondriaGraphicalAnalysis({ tissue, setTissue }) {
 }
 
 // Common introduction component
-function GraphicalClusteringIntroduction() {
+function GraphicalClusteringIntroduction({ currentView }) {
   return (
     <div className="section level2" id="introduction">
       <h2 id="section_introduction">Introduction</h2>
@@ -206,6 +212,9 @@ function GraphicalClusteringIntroduction() {
           To compile biological insights from these reports, some of which will
           be included in the landscape manuscript and companions
         </li>
+        {currentView && currentView === 'mitochondria' ? (
+          <li>To highlight results related to mitochondrial genes</li>
+        ) : null}
       </ul>
       <p>
         <strong>Background about graphical clustering analysis:</strong>
@@ -257,7 +266,7 @@ function GraphicalClusteringIntroduction() {
         <li>
           Nodes are defined by the time point and state in each sex, where state
           is 1 for up, 0 for null, and -1 for down. For example,{' '}
-          <code>1w_F-1_M-1</code> is a node that characterizes molecules at the
+          <code>1w_F-1_M-1</code> is a node that characterizes molecules at the{' '}
           <code>1w</code> time point that are down-regulated in females (
           <code>F-1</code>) and down-regulated in males (<code>M-1</code>).
           These three pieces of information (time point, female state, male
