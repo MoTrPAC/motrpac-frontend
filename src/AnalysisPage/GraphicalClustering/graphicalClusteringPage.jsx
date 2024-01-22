@@ -89,8 +89,15 @@ function GraphicalClustering() {
 export default GraphicalClustering;
 
 // Tissue selection dropdown component
-function ReportControls({ tissue, toggleReport }) {
+function ReportControls({ tissue, toggleReport, currentView }) {
   const tissueKeys = Object.keys(reportTissues);
+
+  if (currentView === 'mitochondria') {
+    tissueKeys.splice(tissueKeys.indexOf('CORTEX'), 1);
+    tissueKeys.splice(tissueKeys.indexOf('HIPPOC'), 1);
+    tissueKeys.splice(tissueKeys.indexOf('HYPOTH'), 1);
+    tissueKeys.splice(tissueKeys.indexOf('PLASMA'), 1);
+  }
 
   return (
     <div className="controlPanelContainer container mt-1 ml-3">
@@ -186,7 +193,11 @@ function MitoChondriaGraphicalAnalysis({ tissue, setTissue }) {
         .
       </div>
       <GraphicalClusteringIntroduction currentView="mitochondria" />
-      <ReportControls tissue={tissue} toggleReport={setTissue} />
+      <ReportControls
+        tissue={tissue}
+        toggleReport={setTissue}
+        currentView="mitochondria"
+      />
       <div className="graphical-clustering-content-container mt-3">
         <Pass1bMitochondriaGraphicalReport tissue={tissue} />
       </div>
