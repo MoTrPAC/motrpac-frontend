@@ -6,7 +6,6 @@ export const tocbotConfig = {
   ignoreSelector: '.toc-ignore',
   headingsOffset: 100,
   scrollSmoothOffset: -100,
-  tocScrollOffset: 100,
 };
 
 export const pass1b06GraphicalClusteringLandscapeImageLocation =
@@ -17,15 +16,32 @@ export const pass1b06GraphicalClusteringMitoImageLocation =
 
 // fix toc position to the top of the page when scrolling
 export function handleScroll() {
+  // page elements to compute total offset height
+  // to fix toc to the top of the page when scrolling
+  const pageHeader = document.querySelector('.page-header');
+  const summary = document.querySelector('.page-summary');
+  const intro = document.getElementById('introduction');
+  const control = document.querySelector('.controlPanelContainer');
+  // current scroll height of the page
+  const scrollHeight =
+    window.scrollY ||
+    document.body.scrollTop ||
+    (document.documentElement && document.documentElement.scrollTop);
+  // conditions required to fix toc to the top of the page
+  const page = document.querySelector('.graphicalClusteringPage');
   const toc = document.getElementById('TOC');
-  if (toc) {
-    const tocBottom = toc.offsetTop + toc.offsetHeight;
 
-    if (window.scrollY >= tocBottom) {
+  if (page && toc) {
+    const offsetHeight =
+      pageHeader.offsetHeight +
+      summary.offsetHeight +
+      intro.offsetHeight +
+      control.offsetHeight +
+      30;
+
+    if (scrollHeight >= offsetHeight) {
       toc.classList.add('toc-fix-top');
-    }
-
-    if (window.scrollY <= tocBottom) {
+    } else {
       toc.classList.remove('toc-fix-top');
     }
   }

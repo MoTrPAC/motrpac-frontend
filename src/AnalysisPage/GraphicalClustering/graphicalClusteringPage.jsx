@@ -156,7 +156,7 @@ function ReportControls({ tissue, toggleReport, currentView }) {
 function LandscapeGraphicalClustering({ tissue, setTissue }) {
   return (
     <div className="graphical-clustering-summary-container row mb-2">
-      <div className="lead col-12">
+      <div className="lead col-12 page-summary">
         Explore multi-omic changes and associated pathway enrichment results
         over the training time course per tissue in adult rats. Compare
         responses between male and female rats, identify pathways affected in
@@ -186,7 +186,7 @@ function LandscapeGraphicalClustering({ tissue, setTissue }) {
 function MitoChondriaGraphicalAnalysis({ tissue, setTissue }) {
   return (
     <div className="graphical-clustering-summary-container row mb-2">
-      <div className="lead col-12">
+      <div className="lead col-12 page-summary">
         Explore the mitochondria-selected (using{' '}
         <ExternalLink
           to="https://www.broadinstitute.org/mitocarta/mitocarta30-inventory-mammalian-mitochondrial-proteins-and-pathways"
