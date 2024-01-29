@@ -11,7 +11,7 @@ import { handleScroll } from './sharedLib';
 function GraphicalClustering() {
   const [tissue, setTissue] = useState('SKM_GN');
   const [mitoTissue, setMitoTissue] = useState('HEART');
-  const [currentView, setCurrentView] = useState('landscape');
+  const [currentView, setCurrentView] = useState('pass1b-06-landscape');
   const location = useLocation();
   const { pathname } = location;
 
@@ -32,8 +32,8 @@ function GraphicalClustering() {
       <div className="row d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center page-header">
         <PageTitle
           title={`Tissue-level visualization of graphical results${
-            currentView === 'mitochondria'
-              ? ': MITOCHONDRIA-RELATED FEATURES ONLY'
+            currentView === 'pass1b-06-mitochondria'
+              ? ' (Mitochondria-related features only)'
               : ''
           }`}
         />
@@ -46,18 +46,18 @@ function GraphicalClustering() {
             <button
               type="button"
               className={`btn btn-outline-primary btn-sm ${
-                currentView === 'landscape' ? 'active' : ''
+                currentView === 'pass1b-06-landscape' ? 'active' : ''
               }`}
-              onClick={handleViewChange.bind(this, 'landscape')}
+              onClick={handleViewChange.bind(this, 'pass1b-06-landscape')}
             >
               <span className="d-flex align-items-center">Landscape</span>
             </button>
             <button
               type="button"
               className={`btn btn-outline-primary btn-sm ${
-                currentView === 'mitochondria' ? 'active' : ''
+                currentView === 'pass1b-06-mitochondria' ? 'active' : ''
               }`}
-              onClick={handleViewChange.bind(this, 'mitochondria')}
+              onClick={handleViewChange.bind(this, 'pass1b-06-mitochondria')}
             >
               <span className="d-flex align-items-center">Mitochondria</span>
             </button>
@@ -65,10 +65,10 @@ function GraphicalClustering() {
         </div>
       </div>
       <div className="row graphical-clustering-container">
-        {currentView === 'landscape' && (
+        {currentView === 'pass1b-06-landscape' && (
           <LandscapeGraphicalClustering tissue={tissue} setTissue={setTissue} />
         )}
-        {currentView === 'mitochondria' && (
+        {currentView === 'pass1b-06-mitochondria' && (
           <MitoChondriaGraphicalAnalysis
             tissue={mitoTissue}
             setTissue={setMitoTissue}
