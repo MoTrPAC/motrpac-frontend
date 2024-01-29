@@ -33,15 +33,13 @@ export function handleScroll() {
 
   if (page && toc) {
     const offsetHeight =
-      pageHeader.offsetHeight +
-      summary.offsetHeight +
-      intro.offsetHeight +
-      control.offsetHeight +
-      30;
+      pageHeader.offsetHeight + summary.offsetHeight + intro.offsetHeight + 50;
 
     if (scrollHeight >= offsetHeight) {
+      control.classList.add('controlPanelContainer-fix-top');
       toc.classList.add('toc-fix-top');
     } else {
+      control.classList.remove('controlPanelContainer-fix-top');
       toc.classList.remove('toc-fix-top');
     }
   }
