@@ -4,27 +4,9 @@ import PageTitle from '../../lib/ui/pageTitle';
 import ExternalLink from '../../lib/ui/externalLink';
 import Pass1bLandscapeGraphicalReport from './pass1bLandscapeReport';
 import Pass1bMitochondriaGraphicalReport from './pass1bMitoReport';
+import GraphicalClusteringIntroduction from './components/graphicalClusteringIntroduction';
+import TissueSelection from './components/tissueSelection';
 import { handleScroll } from './sharedLib';
-
-const reportTissues = {
-  ADRNL: 'Adrenal',
-  BLOOD: 'Blood RNA',
-  BAT: 'Brown Adipose',
-  COLON: 'Colon',
-  CORTEX: 'Cortex',
-  SKM_GN: 'Gastrocnemius',
-  HEART: 'Heart',
-  HIPPOC: 'Hippocampus',
-  HYPOTH: 'Hypothalamus',
-  KIDNEY: 'Kidney',
-  LIVER: 'Liver',
-  LUNG: 'Lung',
-  PLASMA: 'Plasma',
-  SMLINT: 'Small Intestine',
-  SPLEEN: 'Spleen',
-  SKM_VL: 'Vastus Lateralis',
-  WAT_SC: 'White Adipose',
-};
 
 function GraphicalClustering() {
   const [tissue, setTissue] = useState('SKM_GN');
@@ -99,59 +81,6 @@ function GraphicalClustering() {
 
 export default GraphicalClustering;
 
-// Tissue selection dropdown component
-function ReportControls({ tissue, toggleReport, currentView }) {
-  const tissueKeys = Object.keys(reportTissues);
-
-  if (currentView === 'mitochondria') {
-    tissueKeys.splice(tissueKeys.indexOf('CORTEX'), 1);
-    tissueKeys.splice(tissueKeys.indexOf('HIPPOC'), 1);
-    tissueKeys.splice(tissueKeys.indexOf('HYPOTH'), 1);
-    tissueKeys.splice(tissueKeys.indexOf('PLASMA'), 1);
-  }
-
-  return (
-    <div className="controlPanelContainer container mt-1 ml-3">
-      <div className="controlPanel row border-top pt-3">
-        <div className="controlRow d-flex align-items-center">
-          <div className="controlLabel mr-2 font-weight-bold">
-            Select tissue:
-          </div>
-          <div className="dropdown">
-            <button
-              className="btn btn-primary dropdown-toggle"
-              type="button"
-              id="reportViewMenu"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              {reportTissues[tissue]}
-            </button>
-            <div
-              className="dropdown-menu animate slideIn"
-              aria-labelledby="reportViewMenu"
-            >
-              {tissueKeys.map((key) => {
-                return (
-                  <button
-                    key={key}
-                    className="dropdown-item"
-                    type="button"
-                    onClick={toggleReport.bind(this, key)}
-                  >
-                    {reportTissues[key]}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // Landscape graphical clustering component
 function LandscapeGraphicalClustering({ tissue, setTissue }) {
   return (
@@ -173,9 +102,13 @@ function LandscapeGraphicalClustering({ tissue, setTissue }) {
         />{' '}
         to learn more.
       </div>
-      <GraphicalClusteringIntroduction />
-      <ReportControls tissue={tissue} toggleReport={setTissue} />
-      <div className="graphical-clustering-content-container mt-3">
+      <GraphicalClusteringIntroduction currentView="pass1b-06-landscape" />
+      <TissueSelection
+        tissue={tissue}
+        toggleTissue={setTissue}
+        currentView="pass1b-06-landscape"
+      />
+      <div className="graphical-clustering-content-container pt-3">
         <Pass1bLandscapeGraphicalReport tissue={tissue} />
       </div>
     </div>
@@ -203,105 +136,15 @@ function MitoChondriaGraphicalAnalysis({ tissue, setTissue }) {
         />
         .
       </div>
-      <GraphicalClusteringIntroduction currentView="mitochondria" />
-      <ReportControls
+      <GraphicalClusteringIntroduction currentView="pass1b-06-mitochondria" />
+      <TissueSelection
         tissue={tissue}
-        toggleReport={setTissue}
-        currentView="mitochondria"
+        toggleTissue={setTissue}
+        currentView="pass1b-06-mitochondria"
       />
-      <div className="graphical-clustering-content-container mt-3">
+      <div className="graphical-clustering-content-container pt-3">
         <Pass1bMitochondriaGraphicalReport tissue={tissue} />
       </div>
-    </div>
-  );
-}
-
-// Common introduction component
-function GraphicalClusteringIntroduction({ currentView }) {
-  return (
-    <div className="section level2" id="introduction">
-      <h2 id="section_introduction">Introduction</h2>
-      <p>
-        <strong>Objectives of these reports:</strong>
-      </p>
-      <ul>
-        <li>
-          To share representations of complex data as interactive reports that
-          allow researchers to extract meaningful biology
-          <br />
-        </li>
-        <li>
-          To compile biological insights from these reports, some of which will
-          be included in the landscape manuscript and companions
-        </li>
-        {currentView && currentView === 'mitochondria' ? (
-          <li>To highlight results related to mitochondrial genes</li>
-        ) : null}
-      </ul>
-      <p>
-        <strong>Background about graphical clustering analysis:</strong>
-      </p>
-      <p>
-        A graphical approach with <code>repfdr</code> has replaced multiomics
-        clustering as the primary method to characterize and explore main
-        patterns of training-differential analytes in the PASS1B data. To learn
-        more about this approach, see presentations by David Amar{' '}
-        <ExternalLink
-          to="https://docs.google.com/presentation/d/1j7bhPO0S3Yz6nf21ljM-x7GrMoBdaGL67XPox9kByok/edit?usp=sharing"
-          label="here"
-        />{' '}
-        and{' '}
-        <ExternalLink
-          to="https://docs.google.com/presentation/d/1NrsHfF8ki312D2fjhbmWSRER19aco3AA2EQ6A-HQLlQ/edit?usp=sharing"
-          label="here"
-        />
-        .
-      </p>
-      <p>
-        Briefly, each differential molecule is assigned one of nine states
-        [(male up/1, male null/0, male down/-1) x (female up/1, female null/0,
-        female down/-1)] for each training time point (1, 2, 4, and 8 weeks).
-        These states are our <code>nodes</code> in the graphs. Then, for each
-        pair of nodes (x,y) such that y is from a time point that is immediately
-        after x (e.g., x is a node from week 4 and y is a node from week 8), we
-        define their edge set as the intersection of their analytes. This
-        defines the <code>edges</code> in the graphs. By visualizing these
-        graphs and characterizing different nodes, edges, and paths (i.e. a set
-        of edges that traverses all time points), we can extract meaningful
-        biology.
-      </p>
-      <p>
-        We refer to sets of molecules in specific edges, nodes, or paths as{' '}
-        <strong>graphical clusters</strong>. Throughout this report, you will
-        see labels for these clusters, e.g.{' '}
-        <code>
-          "SKM-GN:1w_F-1_M-1-&gt;2w_F-1_M-1-&gt;4w_F-1_M-1-&gt;8w_F-1_M-1"
-        </code>
-        . Here’s how to break it down:
-      </p>
-      <ul>
-        <li>
-          All clusters are prefixed with the tissue abbreviation and a colon,
-          e.g. <code>SKM-GN:</code>
-          <br />
-        </li>
-        <li>
-          Nodes are defined by the time point and state in each sex, where state
-          is 1 for up, 0 for null, and -1 for down. For example,{' '}
-          <code>1w_F-1_M-1</code> is a node that characterizes molecules at the{' '}
-          <code>1w</code> time point that are down-regulated in females (
-          <code>F-1</code>) and down-regulated in males (<code>M-1</code>).
-          These three pieces of information (time point, female state, male
-          state) are separated by underscores (<code>_</code>)<br />
-        </li>
-        <li>
-          Edges contain <code>---</code> and connect a pair of nodes
-          <br />
-        </li>
-        <li>
-          Paths contain <code>-&gt;</code> and connect four nodes
-        </li>
-      </ul>
     </div>
   );
 }
