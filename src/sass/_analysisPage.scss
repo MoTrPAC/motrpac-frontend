@@ -167,6 +167,13 @@
     }
   }
 
+  .controlPanelContainer-fix-top {
+    position: fixed;
+    top: 74px;
+    z-index: 1001;
+    max-width: 258px;
+  }
+
   .tocify {
     background-color: #fff;
     border: solid 1px #ccc;
@@ -174,10 +181,11 @@
     padding: 0.5rem;
     overflow-x: auto;
     transition: top 0.5s ease;
+    max-height: calc(100vh - 250px);
 
     &.toc-fix-top {
       position: fixed;
-      top: 100px;
+      top: 144px;
       z-index: 1000;
       max-width: 258px;
     }
