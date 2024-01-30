@@ -213,18 +213,14 @@
     &.sixth {
       background-image: url(./assets/LandingPageGraphics/background_molecules_gradient.jpg);
 
-      #iframe-container {
-        position: relative;
-        width: 100%;
-        height: 0;
-        padding-bottom: 56.25%; /* 16:9 aspect ratio for responsive design */
+      #tutorial-video-iframe-container {
+        border: 1px solid #000;
+        border-radius: 0.5rem;
+        box-shadow: 0 2em 3em rgba(0, 0, 0, 0.5);
       }
 
-      .tutorial-video-preview {
-        border-radius: 1.5rem;
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Adjust image size to fit the container */
+      .homepage-tutorial-video {
+        border-radius: 0.5rem;
       }
 
       h1 {

@@ -1,10 +1,9 @@
-import React, { useCallback, useState, useEffect, useRef } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import VisNetworkReactComponent from 'vis-network-react';
-import IframeResizer from 'iframe-resizer-react';
 import Footer from '../Footer/footer';
 import PromoteBanner from './promoteBanner';
 import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
@@ -12,7 +11,6 @@ import IconSet from '../lib/iconSet';
 
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.svg';
-import TutorialVideoPreviewImage from '../assets/LandingPageGraphics/tutorial_video_preview_image.jpg';
 import LandscapePreprintAbstract from '../assets/LandingPageGraphics/landscape_preprint_abstract.jpg';
 import BackgroundVideo from './components/backgroundVideo';
 import Figure1C from './components/figure1c';
@@ -142,16 +140,7 @@ export function LandingPage({ isAuthenticated, profile }) {
   // Local state for managing particle animation
   const [data, setData] = useState(figure4eData);
   const [networkNodes, setNetwortNodes] = useState([]);
-  const [videoHeight, setVideoHeight] = useState('480px');
   const iframeRef = useRef(null);
-
-  useEffect(() => {
-    // set video height responsively
-    const el = document.querySelector('#iframe-container');
-    if (el) {
-      setVideoHeight(((el.scrollWidth - 30) / 16) * 9 + 'px');
-    }
-  }, []);
 
   const handleAddNode = useCallback(() => {
     const id = data.nodes.length + 1;
@@ -318,33 +307,19 @@ export function LandingPage({ isAuthenticated, profile }) {
       <section className="sixth">
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container text-center">
-            <div className="col-12" id="iframe-container">
-              <img
-                src={TutorialVideoPreviewImage}
-                alt="Tutorial Video Preview"
-                className="tutorial-video-preview"
-              />
-              <IframeResizer
-                forwardRef={iframeRef}
-                heightCalculationMethod="max"
-                widthCalculationMethod="max"
+            <div
+              className="embedContainer embed-responsive embed-responsive-16by9"
+              id="tutorial-video-iframe-container"
+            >
+              <iframe
+                ref={iframeRef}
+                title="Data Hub tutorial video"
                 allow="autoplay"
                 src="https://drive.google.com/file/d/1dYoqYmN5RVk8Spyp2c-bxP5R7WA73Zag/preview"
-                style={{
-                  height: videoHeight,
-                  width: '1px',
-                  minWidth: '100%',
-                  border: '1px solid #000',
-                  borderRadius: '0.5rem',
-                  boxShadow: '0 2em 3em rgba(0, 0, 0, 0.5)',
-                }}
-                autoResize
-                scrolling
-                sizeHeight
-                sizeWidth
+                className="embed-responsive-item homepage-tutorial-video"
               />
             </div>
-            <div className="container text-center mt-5">
+            <div className="container text-center mt-4">
               <h1 className="py-4">
                 Watch our tutorial video to learn how to use the MoTrPAC Data
               </h1>
