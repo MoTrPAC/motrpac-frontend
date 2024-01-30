@@ -28,6 +28,7 @@ import CodeRepositories from '../CodeRepoPage/codeRepoPage';
 import MainStudyConnected from '../MainStudy/mainStudy';
 import Tutorials from '../Tutorials/tutorials';
 import Publications from '../Publications/publications';
+import FullTableEnduranceTraining from '../Publications/Data/Animal/Phenotype/fullTableEnduranceTraining';
 import Pass1b06PhenotypeAnimalConnected from '../AnalysisPage/pass1b06PhenotypeAnimal';
 import CallbackConnected from '../Auth/callback';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
@@ -131,7 +132,13 @@ function App({ history = History }) {
               <Route path="/tutorials" component={withTracker(Tutorials)} />
               <Route
                 path="/publications"
+                exact
                 component={withTracker(Publications)}
+              />
+              <Route
+                path="/publications/data/animal/phenotype/full-table-endurance-training"
+                exact
+                component={withTracker(FullTableEnduranceTraining)}
               />
               <PrivateRoute
                 path="/analysis-phenotype"
