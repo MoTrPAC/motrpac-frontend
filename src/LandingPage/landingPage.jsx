@@ -315,7 +315,7 @@ export function LandingPage({ isAuthenticated, profile }) {
                 ref={iframeRef}
                 title="Data Hub tutorial video"
                 allow="autoplay"
-                src="https://drive.google.com/file/d/1dYoqYmN5RVk8Spyp2c-bxP5R7WA73Zag/preview"
+                src="https://drive.google.com/file/d/1w9z4itQHYaJAzCyUOc1gu9Crx6xErGt_/preview"
                 className="embed-responsive-item homepage-tutorial-video"
               />
             </div>
