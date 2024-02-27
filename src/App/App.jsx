@@ -28,6 +28,7 @@ import CodeRepositories from '../CodeRepoPage/codeRepoPage';
 import MainStudyConnected from '../MainStudy/mainStudy';
 import Tutorials from '../Tutorials/tutorials';
 import Publications from '../Publications/publications';
+import MultiOmicsWorkingGroups from '../MultiOmicsWorkingGroups/multiOmicsWorkingGroups';
 import FullTableEnduranceTraining from '../Publications/Data/Animal/Phenotype/fullTableEnduranceTraining';
 import Pass1b06PhenotypeAnimalConnected from '../AnalysisPage/pass1b06PhenotypeAnimal';
 import CallbackConnected from '../Auth/callback';
@@ -143,6 +144,10 @@ function App({ history = History }) {
               <PrivateRoute
                 path="/analysis-phenotype"
                 component={withTracker(Pass1b06PhenotypeAnimalConnected)}
+              />
+              <PrivateRoute
+                path="/multiomics-working-groups"
+                component={withTracker(MultiOmicsWorkingGroups)}
               />
             </Switch>
           </div>
