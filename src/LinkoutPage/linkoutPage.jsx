@@ -52,7 +52,7 @@ const partners = [
       },
       {
         protocol: 'https',
-        url: 'www.nih-cfde.org',
+        url: 'nih-cfde.org',
         text: 'Common Fund Data Ecosystem',
         image: CFDELogo,
         title: 'CFDE',
