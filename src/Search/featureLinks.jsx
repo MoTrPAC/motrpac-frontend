@@ -91,6 +91,14 @@ function FeatureLinks({
       title: 'MoTrPAC Collab',
       eventHandler: null,
     },
+    {
+      route: 'multiomics-working-groups',
+      description:
+        'Data analysis resources available to each of the MoTrPAC multi-omics working groups.',
+      icon: 'group',
+      title: 'Multi-omics Working Groups',
+      eventHandler: null,
+    },
   ];
 
   const featuresToRender =
