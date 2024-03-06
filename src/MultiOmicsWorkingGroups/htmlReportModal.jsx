@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-function HtmlReportModal({ selectedReport }) {
+function HtmlReportModal({ selectedReport, selectedReportLabel }) {
   const iframeRef = useRef(null);
   const [iframeLoaded, setIframeLoaded] = useState(false);
 
@@ -21,7 +21,7 @@ function HtmlReportModal({ selectedReport }) {
         <div className="modal-content" style={{ height: '90vh' }}>
           <div className="modal-header">
             <h5 className="modal-title" id="html-report-modal-label">
-              HTML Report
+              {selectedReportLabel}
             </h5>
             <button
               type="button"
@@ -60,10 +60,12 @@ function HtmlReportModal({ selectedReport }) {
 
 HtmlReportModal.propTypes = {
   selectedReport: PropTypes.string,
+  selectedReportLabel: PropTypes.string,
 };
 
 HtmlReportModal.defaultProps = {
   selectedReport: null,
+  selectedReportLabel: null,
 };
 
 export default HtmlReportModal;

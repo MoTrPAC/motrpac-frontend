@@ -40,9 +40,11 @@ const proteomicsReportsQCNorm = [
 
 function MultiOmicsWorkingGroups() {
   const [selectedReport, setSelectedReport] = useState(null);
+  const [selectedReportLabel, setSelectedReportLabel] = useState(null);
 
-  const handleClickReport = (report) => {
+  const handleClickReport = (report, reportLabel) => {
     setSelectedReport(report);
+    setSelectedReportLabel(reportLabel);
   };
 
   // get states from redux store
@@ -159,6 +161,7 @@ function MultiOmicsWorkingGroups() {
                             onClick={(e) =>
                               handleClickReport(
                                 'metabolomics/qc/metabolomics-qc.html',
+                                'metabolomics-qc.html',
                               )
                             }
                           >
@@ -191,7 +194,10 @@ function MultiOmicsWorkingGroups() {
                               data-toggle="modal"
                               data-target="#html-report-modal"
                               onClick={(e) =>
-                                handleClickReport(`proteomics/da/${report}`)
+                                handleClickReport(
+                                  `proteomics/da/${report}`,
+                                  report,
+                                )
                               }
                             >
                               {report}
@@ -213,6 +219,7 @@ function MultiOmicsWorkingGroups() {
                               onClick={(e) =>
                                 handleClickReport(
                                   `proteomics/qc-norm/${report}`,
+                                  report,
                                 )
                               }
                             >
@@ -226,7 +233,10 @@ function MultiOmicsWorkingGroups() {
                 </li>
               </ul>
             </li>
-            <HtmlReportModal selectedReport={selectedReport} />
+            <HtmlReportModal
+              selectedReport={selectedReport}
+              selectedReportLabel={selectedReportLabel}
+            />
           </ul>
         </div>
       </div>
