@@ -157,7 +157,9 @@ function MultiOmicsWorkingGroups() {
                             data-toggle="modal"
                             data-target="#html-report-modal"
                             onClick={(e) =>
-                              handleClickReport('metabolomics-qc.html')
+                              handleClickReport(
+                                'metabolomics/qc/metabolomics-qc.html',
+                              )
                             }
                           >
                             metabolomics-qc.html
@@ -188,7 +190,9 @@ function MultiOmicsWorkingGroups() {
                               href="#"
                               data-toggle="modal"
                               data-target="#html-report-modal"
-                              onClick={(e) => handleClickReport(report)}
+                              onClick={(e) =>
+                                handleClickReport(`proteomics/da/${report}`)
+                              }
                             >
                               {report}
                             </a>
@@ -206,7 +210,11 @@ function MultiOmicsWorkingGroups() {
                               href="#"
                               data-toggle="modal"
                               data-target="#html-report-modal"
-                              onClick={(e) => handleClickReport(report)}
+                              onClick={(e) =>
+                                handleClickReport(
+                                  `proteomics/qc-norm/${report}`,
+                                )
+                              }
                             >
                               {report}
                             </a>
