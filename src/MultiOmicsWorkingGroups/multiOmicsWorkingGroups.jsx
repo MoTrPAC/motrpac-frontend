@@ -1,11 +1,50 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PageTitle from '../lib/ui/pageTitle';
+import HtmlReportModal from './htmlReportModal';
+
+const proteomicsReportsDA = [
+  't55-gastrocnemius_prot-ph_DEA_report.html',
+  't55-gastrocnemius_prot-pr_DEA_report.html',
+  't58-heart_prot-ac_DEA_report.html',
+  't58-heart_prot-ph_DEA_report.html',
+  't58-heart_prot-pr_DEA_report.html',
+  't59-kidney_prot-ph_DEA_report.html',
+  't59-kidney_prot-pr_DEA_report.html',
+  't66-lung_prot-ph_DEA_report.html',
+  't66-lung_prot-pr_DEA_report.html',
+  't68-liver_prot-ac_DEA_report.html',
+  't68-liver_prot-ph_DEA_report.html',
+  't68-liver_prot-pr_DEA_report.html',
+  't70-white-adipose_prot-ph_DEA_report.html',
+  't70-white-adipose_prot-pr_DEA_report.html',
+];
+
+const proteomicsReportsQCNorm = [
+  't55-gastrocnemius_prot-ph_qc-norm_report.html',
+  't55-gastrocnemius_prot-pr_qc-norm_report.html',
+  't58-heart_prot-ac_qc-norm_report.html',
+  't58-heart_prot-ph_qc-norm_report.html',
+  't58-heart_prot-pr_qc-norm_report.html',
+  't59-kidney_prot-ph_qc-norm_report.html',
+  't59-kidney_prot-pr_qc-norm_report.html',
+  't66-lung_prot-ph_qc-norm_report.html',
+  't66-lung_prot-pr_qc-norm_report.html',
+  't68-liver_prot-ac_qc-norm_report.html',
+  't68-liver_prot-ph_qc-norm_report.html',
+  't68-liver_prot-pr_qc-norm_report.html',
+  't70-white-adipose_prot-ph_qc-norm_report.html',
+  't70-white-adipose_prot-pr_qc-norm_report.html',
+];
 
 function MultiOmicsWorkingGroups() {
-  const iframeRef = useRef(null);
-  const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [selectedReport, setSelectedReport] = useState(null);
+
+  const handleClickReport = (report) => {
+    setSelectedReport(report);
+  };
+
   // get states from redux store
   const userProfile = useSelector((state) => state.auth.profile);
 
@@ -15,10 +54,6 @@ function MultiOmicsWorkingGroups() {
   if (userType !== 'internal') {
     return <Redirect to="/search" />;
   }
-
-  const handleIframeLoad = () => {
-    setIframeLoaded(true);
-  };
 
   return (
     <div className="multiOmicsWorkingGroupsPage px-3 px-md-4 mb-3 container">
@@ -107,95 +142,83 @@ function MultiOmicsWorkingGroups() {
               </a>
             </li>
             <li>
-              Analysis R Notebooks (coming soon):
-              <div className="list-group mt-2 w-25">
-                <button
-                  type="button"
-                  className="list-group-item list-group-item-action"
-                  data-toggle="modal"
-                  data-target="#metab-qc-notebook"
-                >
-                  Metabolomics QC
-                </button>
-                <div
-                  className="modal fade"
-                  id="metab-qc-notebook"
-                  tabIndex="-1"
-                  aria-labelledby="metab-qc-notebook-label"
-                  aria-hidden="true"
-                >
-                  <div className="modal-dialog modal-xl">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5
-                          className="modal-title"
-                          id="metab-qc-notebook-label"
-                        >
-                          Metabolomics QC
-                        </h5>
-                        <button
-                          type="button"
-                          className="close"
-                          data-dismiss="modal"
-                          aria-label="Close"
-                        >
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div className="modal-body">
-                        <div className="embed-responsive embed-responsive-1by1">
-                          {!iframeLoaded && (
-                            <div className="bootstrap-spinner d-flex justify-content-center py-5">
-                              <div
-                                className="spinner-border text-secondary"
-                                role="status"
-                              >
-                                <span className="sr-only">Loading...</span>
-                              </div>
-                            </div>
-                          )}
-                          <iframe
-                            ref={iframeRef}
-                            title="Metabolomics QC Notebook"
-                            src="/static-assets/dawg-pac/metabolomics-qc-notebook.html"
-                            className="embed-responsive-item"
-                            allowFullScreen
-                            onLoad={handleIframeLoad}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  className="list-group-item list-group-item-action"
-                  data-toggle="modal"
-                  data-target="#metab-da-notebook"
-                  disabled
-                >
-                  Metabolomics DA
-                </button>
-                <button
-                  type="button"
-                  className="list-group-item list-group-item-action"
-                  data-toggle="modal"
-                  data-target="#transcript-qc-da-notebook"
-                  disabled
-                >
-                  Transcriptomics QC and DA
-                </button>
-                <button
-                  type="button"
-                  className="list-group-item list-group-item-action"
-                  data-toggle="modal"
-                  data-target="#prot-qc-da-notebook"
-                  disabled
-                >
-                  Proteomics QC and DA
-                </button>
-              </div>
+              Analysis HTML Reports:
+              <ul className="list-style mt-2">
+                <li>
+                  Metabolomics
+                  <ul className="list-style mt-2">
+                    <li>
+                      QC
+                      <ul className="list-style mb-2">
+                        <li>
+                          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                          <a
+                            href="#"
+                            data-toggle="modal"
+                            data-target="#html-report-modal"
+                            onClick={(e) =>
+                              handleClickReport('metabolomics-qc.html')
+                            }
+                          >
+                            metabolomics-qc.html
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      DA
+                      <ul className="list-style mb-2">
+                        <li>Coming soon</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <ul className="list-style mt-2">
+                <li>
+                  Proteomics
+                  <ul className="list-style mt-2">
+                    <li>
+                      DA
+                      <ul className="list-style mb-2">
+                        {proteomicsReportsDA.map((report) => (
+                          <li key={report}>
+                            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                            <a
+                              href="#"
+                              data-toggle="modal"
+                              data-target="#html-report-modal"
+                              onClick={(e) => handleClickReport(report)}
+                            >
+                              {report}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                    <li>
+                      QC-norm
+                      <ul className="list-style mb-2">
+                        {proteomicsReportsQCNorm.map((report) => (
+                          <li key={report}>
+                            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                            <a
+                              href="#"
+                              data-toggle="modal"
+                              data-target="#html-report-modal"
+                              onClick={(e) => handleClickReport(report)}
+                            >
+                              {report}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
             </li>
+            <HtmlReportModal selectedReport={selectedReport} />
           </ul>
         </div>
       </div>
