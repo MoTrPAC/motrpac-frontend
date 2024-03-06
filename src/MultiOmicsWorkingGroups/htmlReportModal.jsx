@@ -18,7 +18,7 @@ function HtmlReportModal({ selectedReport }) {
       aria-hidden="true"
     >
       <div className="modal-dialog modal-xl">
-        <div className="modal-content">
+        <div className="modal-content" style={{ height: '90vh' }}>
           <div className="modal-header">
             <h5 className="modal-title" id="html-report-modal-label">
               HTML Report
@@ -48,6 +48,7 @@ function HtmlReportModal({ selectedReport }) {
                 className="embed-responsive-item"
                 allowFullScreen
                 onLoad={handleIframeLoad}
+                style={{ height: '77vh' }}
               />
             </div>
           </div>
