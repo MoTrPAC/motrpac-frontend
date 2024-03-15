@@ -143,7 +143,7 @@ function MultiOmicsWorkingGroups() {
           <ul>
             <li>
               <a
-                href="https://docs.google.com/document/d/12e09jW5n-3hjbJYs4_zll_l4wdu1HSIOe_Uti4cSThE/edit?usp=sharing"
+                href="https://docs.google.com/document/d/1pE6SIaLxAd-gyJW34pqWyzbo6JINe2jlNTc-ONfOlqs/edit?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
               >
