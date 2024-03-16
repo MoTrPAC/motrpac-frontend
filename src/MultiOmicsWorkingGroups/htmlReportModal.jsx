@@ -20,9 +20,19 @@ function HtmlReportModal({ selectedReport, selectedReportLabel }) {
       <div className="modal-dialog modal-xl">
         <div className="modal-content" style={{ height: '90vh' }}>
           <div className="modal-header">
-            <h5 className="modal-title" id="html-report-modal-label">
-              {selectedReportLabel}
-            </h5>
+            <div className="d-flex align-items-center">
+              <h5 className="modal-title" id="html-report-modal-label">
+                {selectedReportLabel}
+              </h5>
+              <a
+                role="button"
+                className="btn btn-primary btn-report-download ml-3"
+                href={`/static-assets/dawg-pac/${selectedReport}`}
+                download
+              >
+                <span>Download Report</span>
+              </a>
+            </div>
             <button
               type="button"
               className="close"
