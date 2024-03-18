@@ -168,7 +168,7 @@ export function Navbar({
   }
 
   const navbar = (
-    <div className="header-navbar-container d-flex flex-column flex-md-row flex-sm-row flex-xs-row align-items-center px-3 px-md-4 bg-white border-bottom shadow-sm fixed-top">
+    <div className="header-navbar-container d-flex flex-md-row flex-sm-row flex-xs-row align-items-center px-3 px-md-4 bg-white border-bottom shadow-sm fixed-top">
       <div className="navbar-brand my-0 mr-md-auto mr-sm-auto mr-xs-auto py-0">
         <Link to="/" className="header-logo">
           <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
