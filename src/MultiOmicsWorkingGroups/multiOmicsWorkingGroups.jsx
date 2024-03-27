@@ -80,7 +80,7 @@ function MultiOmicsWorkingGroups() {
       <div className="multi-omics-working-groups-container">
         <div className="multi-omics-working-groups-content-container pre-cawg mt-5">
           <h3 className="border-bottom mb-3 pb-3">
-            PRE-CAWG: PRE-COVID CASS Analysis Working Group
+            PRE-CAWG: PRE-COVID Analysis Working Group
           </h3>
           <p>
             Processed PreCAWG data are set for internal dissemination of the
