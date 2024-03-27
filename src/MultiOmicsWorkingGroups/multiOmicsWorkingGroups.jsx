@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import HtmlReportModal from './htmlReportModal';
 
@@ -76,8 +77,32 @@ function MultiOmicsWorkingGroups() {
 
   return (
     <div className="multiOmicsWorkingGroupsPage px-3 px-md-4 mb-3 container">
+      <Helmet>
+        <html lang="en" />
+        <title>Resources for MoTrPAC Multi-omics Analysis Working Groups</title>
+      </Helmet>
       <PageTitle title="Resources for Multi-omics Analysis Working Groups" />
       <div className="multi-omics-working-groups-container">
+        <div className="multi-omics-working-groups-content-container bic-updates mt-5">
+          <h3 className="border-bottom mb-3 pb-3">BIC Updates</h3>
+          <p>
+            The Bioinformatics Center is committed to keeping our community
+            informed and up-to-date with the latest developments in
+            bioinformatics resources, tools, and data. To this end, we provide
+            monthly BIC Updates that encapsulate all recent advancements, new
+            resources, and crucial data updates facilitated by our center. For
+            comprehensive access to past and present updates, we invite you to
+            explore our archive through the provided link.
+          </p>
+          <p>
+            Note: BIC Updates are disseminated monthly through email by Jane Lu.
+            To be added to the distribution list, please contact Jane at{' '}
+            <a href="mailto:motrpac-acc@aging.ufl.edu">
+              motrpac-acc@aging.ufl.edu
+            </a>
+            .
+          </p>
+        </div>
         <div className="multi-omics-working-groups-content-container pre-cawg mt-5">
           <h3 className="border-bottom mb-3 pb-3">
             PRE-CAWG: PRE-COVID Analysis Working Group
