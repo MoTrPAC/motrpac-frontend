@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import HtmlReportModal from './htmlReportModal';
 
@@ -76,11 +77,48 @@ function MultiOmicsWorkingGroups() {
 
   return (
     <div className="multiOmicsWorkingGroupsPage px-3 px-md-4 mb-3 container">
+      <Helmet>
+        <html lang="en" />
+        <title>Resources for MoTrPAC Multi-omics Analysis Working Groups</title>
+      </Helmet>
       <PageTitle title="Resources for Multi-omics Analysis Working Groups" />
       <div className="multi-omics-working-groups-container">
+        <div className="multi-omics-working-groups-content-container bic-updates mt-5">
+          <h3 className="border-bottom mb-3 pb-3">BIC Updates</h3>
+          <p>
+            The Bioinformatics Center is committed to keeping our community
+            informed and up-to-date with the latest developments in
+            bioinformatics resources, tools, and data. To this end, we provide{' '}
+            <a
+              href="https://docs.google.com/document/d/11RneqlJsUPcj3XxKuoUhv09z-briz5WytL8gJvzgOPY/edit?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              monthly BIC Updates
+            </a>{' '}
+            that encapsulate all recent advancements, new resources, and crucial
+            data updates facilitated by our center.{' '}
+            <a
+              href="https://drive.google.com/drive/folders/1a5lMTVRHhsWGC7NKKBWGIvByZ8zAiAj5?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              The archive of all the monthly BIC Updates is available here
+            </a>
+            .
+          </p>
+          <p>
+            Note: BIC Updates are disseminated monthly through email by Jane Lu.
+            To be added to the distribution list, please contact Jane at{' '}
+            <a href="mailto:motrpac-acc@aging.ufl.edu">
+              motrpac-acc@aging.ufl.edu
+            </a>
+            .
+          </p>
+        </div>
         <div className="multi-omics-working-groups-content-container pre-cawg mt-5">
           <h3 className="border-bottom mb-3 pb-3">
-            PRE-CAWG: PRE-COVID CASS Analysis Working Group
+            PRE-CAWG: PRE-COVID Analysis Working Group
           </h3>
           <p>
             Processed PreCAWG data are set for internal dissemination of the
@@ -129,7 +167,7 @@ function MultiOmicsWorkingGroups() {
           id="endurance-training"
         >
           <h3 className="border-bottom mb-3 pb-3">
-            DAWG-PAC: Data Analysis Working Group
+            DAWG-PAC: Data Analysis Working Group - PASS1A/1C
           </h3>
           <h5>PASS1A/1C: Acute exercise on young adult rats</h5>
           <p>
@@ -147,7 +185,7 @@ function MultiOmicsWorkingGroups() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Analysis Report
+                Analysis Report (deadline for revisions: 4/1/2024)
               </a>
             </li>
             <li>
@@ -170,7 +208,7 @@ function MultiOmicsWorkingGroups() {
               </a>
             </li>
             <li>
-              Analysis HTML Reports:
+              Integrated R Notebooks for Omics Data Analysis (HTML format)
               <ul className="list-style mt-2">
                 <li>
                   Transcriptomics
