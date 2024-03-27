@@ -129,7 +129,7 @@ function MultiOmicsWorkingGroups() {
           id="endurance-training"
         >
           <h3 className="border-bottom mb-3 pb-3">
-            DAWG-PAC: Data Analysis Working Group
+            DAWG-PAC: Data Analysis Working Group - PASS1A/1C
           </h3>
           <h5>PASS1A/1C: Acute exercise on young adult rats</h5>
           <p>
