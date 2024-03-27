@@ -88,11 +88,24 @@ function MultiOmicsWorkingGroups() {
           <p>
             The Bioinformatics Center is committed to keeping our community
             informed and up-to-date with the latest developments in
-            bioinformatics resources, tools, and data. To this end, we provide
-            monthly BIC Updates that encapsulate all recent advancements, new
-            resources, and crucial data updates facilitated by our center. For
-            comprehensive access to past and present updates, we invite you to
-            explore our archive through the provided link.
+            bioinformatics resources, tools, and data. To this end, we provide{' '}
+            <a
+              href="https://docs.google.com/document/d/11RneqlJsUPcj3XxKuoUhv09z-briz5WytL8gJvzgOPY/edit?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              monthly BIC Updates
+            </a>{' '}
+            that encapsulate all recent advancements, new resources, and crucial
+            data updates facilitated by our center.{' '}
+            <a
+              href="https://drive.google.com/drive/folders/1a5lMTVRHhsWGC7NKKBWGIvByZ8zAiAj5?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              The archive of all the monthly BIC Updates is available here
+            </a>
+            .
           </p>
           <p>
             Note: BIC Updates are disseminated monthly through email by Jane Lu.
