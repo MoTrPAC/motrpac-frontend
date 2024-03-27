@@ -147,7 +147,7 @@ function MultiOmicsWorkingGroups() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Analysis Report
+                Analysis Report (deadline for revisions: 4/1/2024)
               </a>
             </li>
             <li>
