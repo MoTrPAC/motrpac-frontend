@@ -170,7 +170,7 @@ function MultiOmicsWorkingGroups() {
               </a>
             </li>
             <li>
-              Analysis HTML Reports:
+              Integrated R Notebooks for Omics Data Analysis (HTML format)
               <ul className="list-style mt-2">
                 <li>
                   Transcriptomics
