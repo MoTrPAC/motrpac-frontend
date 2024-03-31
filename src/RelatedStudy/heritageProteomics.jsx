@@ -98,7 +98,9 @@ function HeritageProteomics() {
             <div className="mx-3 d-flex align-items-center">
               <a
                 download
-                href="http://related-studies.motrpac-data.org/heritage_proteomics/HERITAGE_proteomics_somalogic.xlsx"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://drive.google.com/file/d/1XOdx__kqZYuEkLHnDuBqRPho50w3sNG3/view?usp=sharing"
                 className="btn btn-outline-primary d-flex align-items-center"
                 role="button"
               >
@@ -117,7 +119,9 @@ function HeritageProteomics() {
             <div className="mx-3 d-flex align-items-center">
               <a
                 download
-                href="http://related-studies.motrpac-data.org/heritage_proteomics/HERITAGE_somalogic_analytes.xlsx"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://drive.google.com/file/d/1eNj4AmspK7UH74odeDDZpfBA1CNKghFA/view?usp=sharing"
                 className="btn btn-outline-primary d-flex align-items-center"
                 role="button"
               >
