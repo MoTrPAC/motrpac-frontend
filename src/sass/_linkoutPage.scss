@@ -56,6 +56,17 @@
 
     .card-body {
       border-top: 1px solid $gray-200;
+
+      .card-title {
+        .inline-link-with-icon {
+          text-decoration: none;
+
+          .material-icons {
+            font-size: 1.25rem;
+            vertical-align: middle;
+          }
+        }
+      }
     }
   }
 

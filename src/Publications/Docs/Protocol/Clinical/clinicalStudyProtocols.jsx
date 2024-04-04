@@ -30,16 +30,16 @@ function ClinicalStudyProtocols() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Adult_Combined_MOPs_2024_03_28.pdf
+              MoTrPAC Adult Study - Manual of Procedures chapters_2024.03.28
             </a>
           </p>
           <p>
             <a
-              href="https://drive.google.com/file/d/1nCJAgLKVxgzVwGm8qPMM-3co4pYuRdRY/view?usp=sharing"
+              href="https://drive.google.com/file/d/15QxK8QfaiWN0U9T3tlsuaWqbp5Yu7rIr/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
             >
-              MoTrPAC_Adult_Protocol_v3.0_2023_08_22_clean.pdf
+              MoTrPAC Adult Study - Protocol_v3.0_2023.08.22
             </a>
           </p>
           <p>
@@ -48,7 +48,7 @@ function ClinicalStudyProtocols() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Pediatric_Clinical_Protocol_Version_v8.12_2023_03_14.pdf
+              MoTrPAC Pediatric Study - Protocol_v8.12_2023.03.14
             </a>
           </p>
           <p>
@@ -57,7 +57,7 @@ function ClinicalStudyProtocols() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Peds_Combined_MOPs_2024_01_08.pdf
+              MoTrPAC Pediatric Study - Manual of Procedures chapters_2024.01.08
             </a>
           </p>
         </div>
