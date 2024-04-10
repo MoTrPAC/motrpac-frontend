@@ -1,20 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import PageTitle from '../../../../lib/ui/pageTitle';
 
 function ClinicalStudyProtocols() {
-  // get states from redux store
-  const userProfile = useSelector((state) => state.auth.profile);
-
-  const userType =
-    userProfile.user_metadata && userProfile.user_metadata.userType;
-
-  if (userType !== 'internal') {
-    return <Redirect to="/search" />;
-  }
-
   return (
     <div className="clinicalStudyProtocolsPage px-3 px-md-4 mb-3 container">
       <Helmet>

@@ -324,14 +324,6 @@ export function Navbar({
                   >
                     OmicsPipelines
                   </a>
-                  {isAuthenticated && hasAccess && userType === 'internal' ? (
-                    <Link
-                      to="/publications/docs/protocol/clinical/study-protocols"
-                      className="dropdown-item"
-                    >
-                      Clinical Study Protocols
-                    </Link>
-                  ) : null}
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
