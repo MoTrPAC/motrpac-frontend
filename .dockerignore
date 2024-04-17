@@ -5,5 +5,8 @@ LICENSE
 .eslintrc.js
 .prettierrc.js
 .circleci/
+.github/
+scripts/
 .storybook/
-terraform/
+.env
+build/
