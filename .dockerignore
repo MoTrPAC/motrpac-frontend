@@ -6,4 +6,5 @@ LICENSE
 .prettierrc.js
 .circleci/
 .storybook/
-terraform/
+.env
+build/
