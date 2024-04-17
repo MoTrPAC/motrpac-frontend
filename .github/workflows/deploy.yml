@@ -1,0 +1,208 @@
+name: deploy
+
+on:
+  pull_request:
+    branches:
+      - 130_MS_Github_Actions
+  #  pull_request:
+#    types:
+#      - closed
+#    branches:
+#      - master
+#      - dev
+#      - 130_MS_Github_Actions
+#      - "*"
+#    paths:
+#      - .github/**
+#      - .circleci/**
+  workflow_dispatch:
+    inputs:
+      version_bump:
+        description: 'Version increment to bump (patch, minor, major)'
+        required: true
+
+jobs:
+  get-version-bump:
+    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    outputs:
+      increment: ${{ steps.run-script.outputs.result }}
+    steps:
+      - name: Check for PR labels or workflow dispatch input
+        id: run-script
+        uses: actions/github-script@v7
+        with:
+          result-encoding: string
+          script: |
+            var versionBump = null;
+            console.log(`Event name: ${context.eventName}`);
+            
+            // check if the event is a pull request or a dispatch
+            // if it is a pull request, check which labels it has
+            // if it is a pull request that was merged into the `dev` branch, default to a pre-release version bump
+            if (context.eventName == 'pull_request') {
+            // Get the pull request number from the context
+              var pullRequestNumber = context.issue.number;
+              if (!pullRequestNumber) {
+                console.log('No pull request number found in context, trying to get it from commit');
+                // Otherwise get issue number from the commit
+                pullRequestNumber = (
+                  await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                    commit_sha: context.sha, 
+                    owner: context.repo.owner, 
+                    repo: context.repo.repo,
+                  })
+                ).data[0].number;
+              }
+              console.log(`Pull request number: ${pullRequestNumber}`);
+            // now get the pull request from the API
+              const { data: pullRequest } = await github.rest.pulls.get({
+                owner: context.repo.owner, 
+                repo: context.repo.repo, 
+                pull_number: pullRequestNumber,
+              });
+              console.log(`Pull request labels: ${JSON.stringify(pullRequest.labels, null, 2)}`);
+            
+            // check if on dev branch
+              if (pullRequest.base.ref !== 'master') {
+                console.log('On dev branch, defaulting to pre-release version bump');
+                versionBump = "prerelease";
+                return versionBump;
+              }
+            
+              for (const label of (pullRequest.labels ?? [])) {
+                if (['major', 'minor', 'patch'].includes(label.name)) {
+                  versionBump = label.name;
+                  break;
+                }
+              }
+            // if it is a workflow dispatch, check what the input was
+            } else if (context.eventName == 'workflow_dispatch') {
+              if (['major', 'minor', 'patch'].includes(${{ toJSON(inputs.version_bump) }})) {
+                versionBump = ${{ toJSON(inputs.version_bump) }};
+              }
+            }
+            
+            console.log(`Version bump: ${versionBump}`);
+            return versionBump;
+
+  bump-version:
+    if: needs.get-version-bump.outputs.increment != null && needs.get-version-bump.outputs.increment != 'null'
+    needs: get-version-bump
+    runs-on: ubuntu-latest
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      contents: write
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for all branches and tags.
+          ref: ${{ github.base_ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+
+      - name: Clean input string
+        run: |
+          INPUT_VERSION="${{ needs.get-version-bump.outputs.increment }}"
+          INPUT_VERSION=${INPUT_VERSION,,}
+          echo "INPUT_VERSION=${INPUT_VERSION// /}" >> $GITHUB_ENV
+
+      - name: Bump version and push tag
+        run: |
+          # Configure the credentials of the GitHub Actions Bot
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+
+          # add args to yarn version command if INPUT_VERSION is "prerelease"
+          if [ $INPUT_VERSION == "prerelease" ]; then
+            yarn version --prerelease --preid dev --message "chore(release): bump version to v%s"
+          else
+            yarn version --${{ env.INPUT_VERSION }} --message "chore(release): bump version to v%s"
+          fi
+          git push
+          git push --tags
+
+  build-image:
+    runs-on: ubuntu-latest
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      contents: read
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    needs:
+      - bump-version
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          token_format: access_token
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.SERVICE_ACCOUNT }}
+
+      # This example uses the docker login action
+      - name: Login to Artifact Registry
+        uses: docker/login-action@v3
+        with:
+          registry: us-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Extract version
+        id: extract-version
+        run: |
+          echo "PACKAGE_VERSION=$(jq -r '.version' package.json)" >> $GITHUB_ENV
+
+      - name: Build and push server image
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: |
+            us-docker.pkg.dev/motrpac-portal-dev/datahub/frontend:${{ github.sha }}
+            us-docker.pkg.dev/motrpac-portal-dev/datahub/frontend:${{ env.PACKAGE_VERSION }}
+            us-docker.pkg.dev/motrpac-portal-dev/datahub/frontend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            REACT_APP_ES_PROXY_HOST="${{secrets.REACT_APP_ES_PROXY_HOST}}"
+            REACT_APP_ES_PROXY_HOST_DEV="${{secrets.REACT_APP_ES_PROXY_HOST_DEV}}"
+            REACT_APP_API_SERVICE_ADDRESS="${{secrets.REACT_APP_API_SERVICE_ADDRESS}}"
+            REACT_APP_API_SERVICE_ADDRESS_DEV="${{secrets.REACT_APP_API_SERVICE_ADDRESS_DEV}}"
+            REACT_APP_API_SERVICE_KEY="${{secrets.REACT_APP_API_SERVICE_KEY}}"
+            REACT_APP_API_SERVICE_KEY_DEV="${{secrets.REACT_APP_API_SERVICE_KEY_DEV}}"
+            REACT_APP_SIGNED_URL_ENDPOINT="${{secrets.REACT_APP_SIGNED_URL_ENDPOINT}}"
+            REACT_APP_USER_REGISTRATION_ENDPOINT="${{secrets.REACT_APP_USER_REGISTRATION_ENDPOINT}}"
+            REACT_APP_SEND_EMAIL_ENDPOINT="${{secrets.REACT_APP_SEND_EMAIL_ENDPOINT}}"
+            REACT_APP_FILE_DOWNLOAD_ENDPOINT="${{secrets.REACT_APP_FILE_DOWNLOAD_ENDPOINT}}"
+            REACT_APP_QC_DATA_ENDPOINT="${{secrets.REACT_APP_QC_DATA_ENDPOINT}}"
+            REACT_APP_ES_ENDPOINT="${{secrets.REACT_APP_ES_ENDPOINT}}"
+            REACT_APP_FILE_SEARCH_ENDPOINT="${{secrets.REACT_APP_FILE_SEARCH_ENDPOINT}}"
+            REACT_APP_DATA_FILE_BUCKET="${{secrets.REACT_APP_DATA_FILE_BUCKET}}"
+            REACT_APP_QC_REPORT_BUCKET="${{secrets.REACT_APP_QC_REPORT_BUCKET}}"
+            REACT_APP_QC_REPORT_BUCKET_DEV="${{secrets.REACT_APP_QC_REPORT_BUCKET_DEV}}"
+            REACT_APP_ES_ACCESS_TOKEN="${{secrets.REACT_APP_ES_ACCESS_TOKEN}}"
+            REACT_APP_ES_ACCESS_TOKEN_DEV="${{secrets.REACT_APP_ES_ACCESS_TOKEN_DEV}}"
+            REACT_APP_reCAPTCHA_SITE_KEY="${{secrets.REACT_APP_reCAPTCHA_SITE_KEY}}"
+            REACT_APP_AUTH0_CLIENT_ID="${{secrets.REACT_APP_AUTH0_CLIENT_ID}}"
+            REACT_APP_QUALTRICS_SURVEY_URL="${{secrets.REACT_APP_QUALTRICS_SURVEY_URL}}"
+            REACT_APP_USER_SURVEY_SUBMIT_URL="${{secrets.REACT_APP_USER_SURVEY_SUBMIT_URL}}"
+            REACT_APP_USER_SURVEY_INPUT_1="${{secrets.REACT_APP_USER_SURVEY_INPUT_1}}"
+            REACT_APP_USER_SURVEY_INPUT_2="${{secrets.REACT_APP_USER_SURVEY_INPUT_2}}"
+            REACT_APP_USER_SURVEY_INPUT_3="${{secrets.REACT_APP_USER_SURVEY_INPUT_3}}"
+            REACT_APP_USER_SURVEY_INPUT_4="${{secrets.REACT_APP_USER_SURVEY_INPUT_4}}"
+            REACT_APP_USER_SURVEY_INPUT_5="${{secrets.REACT_APP_USER_SURVEY_INPUT_5}}"
+            REACT_APP_OFFICE_HOUR_DAY="${{secrets.REACT_APP_OFFICE_HOUR_DAY}}"
+            REACT_APP_OFFICE_HOUR_DATE="${{secrets.REACT_APP_OFFICE_HOUR_DATE}}"
+            REACT_APP_OFFICE_HOUR_SIGNUP_URL="${{secrets.REACT_APP_OFFICE_HOUR_SIGNUP_URL}}"
