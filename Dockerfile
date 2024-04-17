@@ -1,15 +1,17 @@
 # create-react-app build environment
-FROM node:14-alpine as react-build
+FROM node:16-alpine as react-build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
-COPY package.json yarn.lock ./
-RUN yarn
+#COPY package.json yarn.lock ./
+COPY package*.json ./
+RUN yarn cache clean && yarn
 COPY . ./
 RUN yarn sass && yarn build
 
 # nginx server environment
 FROM nginx:alpine
 COPY nginx.conf /etc/nginx/conf.d/configfile.template
+#COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=react-build /app/build /usr/share/nginx/html
 
@@ -20,5 +22,9 @@ LABEL org.opencontainers.image.url="https://motrpac-data.org"
 LABEL org.opencontainers.image.vendor="MoTrPAC"
 LABEL org.opencontainers.image.version=$IMAGE_VERSION
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ARG SERVER_PORT
+ENV PORT=$SERVER_PORT
+EXPOSE $SERVER_PORT
+RUN sh -c "envsubst '\$PORT'  < /etc/nginx/conf.d/configfile.template > /etc/nginx/conf.d/default.conf"
+#ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
