@@ -1,27 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import browseDataFilters, { tissueList } from '../lib/browseDataFilters';
+import { useSelector } from 'react-redux';
+import browseDataFilters, { tissues, omes } from '../lib/browseDataFilters';
+import assayList from '../lib/assayList';
 
-// build list of PASS1B-06 tissues
-const pass1bTissues = tissueList.filter((item) => item !== 'Aorta');
+function BrowseDataFilter({ activeFilters, onChangeFilter, onResetFilters }) {
+  const dataDownload = useSelector((state) => state.browseData);
 
-function BrowseDataFilter({
-  activeFilters,
-  onChangeFilter,
-  onResetFilters,
-  userType,
-}) {
   const fileFilters = [...browseDataFilters];
-  if (!userType || (userType && userType !== 'internal')) {
-    fileFilters.forEach((item) => {
-      if (item.keyName === 'study') {
-        item.filters = ['Endurance Training'];
+  fileFilters.forEach((item) => {
+    if (item.keyName === 'tissue_name') {
+      if (dataDownload.pass1b06DataSelected) {
+        item.filters = tissues.pass1b_06;
       }
-      if (item.keyName === 'tissue_name') {
-        item.filters = pass1bTissues;
+      if (dataDownload.pass1a06DataSelected) {
+        item.filters = tissues.pass1a_06;
       }
-    });
-  }
+      if (dataDownload.humanPrecovidSedAduDataSelected) {
+        item.filters = tissues.human_sed_adu;
+      }
+    }
+    if (item.keyName === 'omics') {
+      if (dataDownload.pass1b06DataSelected) {
+        item.filters = omes.pass1b_06;
+      }
+      if (dataDownload.pass1a06DataSelected) {
+        item.filters = omes.pass1a_06;
+      }
+      if (dataDownload.humanPrecovidSedAduDataSelected) {
+        item.filters = omes.human_sed_adu;
+      }
+    }
+    if (item.keyName === 'assay') {
+      if (dataDownload.pass1b06DataSelected) {
+        item.filters = assayList.pass1b_06;
+      }
+      if (dataDownload.pass1a06DataSelected) {
+        item.filters = assayList.pass1a_06;
+      }
+      if (dataDownload.humanPrecovidSedAduDataSelected) {
+        item.filters = assayList.human_sed_adu;
+      }
+    }
+  });
   const filters = fileFilters.map((item) => (
     <div key={item.name} className="card filter-module mb-4">
       <div className="card-header font-weight-bold d-flex align-items-center">
@@ -52,15 +73,9 @@ function BrowseDataFilter({
               key={filter}
               type="button"
               className={`btn filterBtn ${
-                isActiveFilter ||
-                (filter === 'Endurance Training' && userType !== 'internal')
-                  ? 'activeFilter'
-                  : ''
+                isActiveFilter ? 'activeFilter' : ''
               }`}
               onClick={() => onChangeFilter(item.keyName, filter)}
-              disabled={
-                filter === 'Endurance Training' && userType !== 'internal'
-              }
             >
               {filter}
             </button>
@@ -95,7 +110,6 @@ BrowseDataFilter.propTypes = {
   }),
   onChangeFilter: PropTypes.func.isRequired,
   onResetFilters: PropTypes.func.isRequired,
-  userType: PropTypes.string,
 };
 BrowseDataFilter.defaultProps = {
   activeFilters: {
@@ -104,7 +118,6 @@ BrowseDataFilter.defaultProps = {
     tissue_name: [],
     category: [],
   },
-  userType: null,
 };
 
 export default BrowseDataFilter;
