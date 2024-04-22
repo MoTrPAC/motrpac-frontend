@@ -32,7 +32,7 @@
     "react-tooltip": "^5.11.2",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "tocbot": "^4.25.0",
+    "tocbot": "4.25.0",
     "victory": "36.9.2",
     "vis-data": "^7.1.7",
     "vis-network": "^9.1.8",
