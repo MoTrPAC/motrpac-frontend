@@ -1,43 +1,84 @@
 import assayList from './assayList';
 
-const tissues = [
-  'Adrenal',
-  'Aorta',
-  'Blood RNA',
-  'Brown Adipose',
-  'Colon',
-  'Cortex',
-  'Gastrocnemius',
-  'Heart',
-  'Hippocampus',
-  'Hypothalamus',
-  'Kidney',
-  'Liver',
-  'Lung',
-  'Ovaries',
-  'Plasma',
-  'Small Intestine',
-  'Spleen',
-  'Testes',
-  'Vastus Lateralis',
-  'Vena Cava',
-  'White Adipose',
-];
+export const tissues = {
+  pass1b_06: [
+    'Adrenal',
+    'Blood RNA',
+    'Brown Adipose',
+    'Colon',
+    'Cortex',
+    'Gastrocnemius',
+    'Heart',
+    'Hippocampus',
+    'Hypothalamus',
+    'Kidney',
+    'Liver',
+    'Lung',
+    'Ovaries',
+    'Plasma',
+    'Small Intestine',
+    'Spleen',
+    'Testes',
+    'Vastus Lateralis',
+    'Vena Cava',
+    'White Adipose',
+  ],
+  pass1a_06: [
+    'Adrenal',
+    'Aorta',
+    'Blood RNA',
+    'Brown Adipose',
+    'Colon',
+    'Cortex',
+    'Gastrocnemius',
+    'Heart',
+    'Hippocampus',
+    'Hypothalamus',
+    'Kidney',
+    'Liver',
+    'Lung',
+    'Ovaries',
+    'Plasma',
+    'Small Intestine',
+    'Spleen',
+    'Testes',
+    'Tibia',
+    'Vastus Lateralis',
+    'White Adipose',
+  ],
+  human_sed_adu: ['Adipose', 'Blood', 'Muscle', 'PBMC'],
+};
 
-export const tissueList = tissues.sort((a, b) =>
-  a.toLowerCase().localeCompare(b.toLowerCase())
-);
+export const omes = {
+  pass1b_06: [
+    'Epigenomics',
+    'Metabolomics Targeted',
+    'Metabolomics Untargeted',
+    'Proteomics Targeted',
+    'Proteomics Untargeted',
+    'Transcriptomics',
+  ],
+  pass1a_06: [
+    'Epigenomics',
+    'Metabolomics Targeted',
+    'Metabolomics Untargeted',
+    'Proteomics Untargeted',
+    'Transcriptomics',
+  ],
+  human_sed_adu: [
+    'Epigenomics',
+    'Metabolomics Targeted',
+    'Metabolomics Untargeted',
+    'Proteomics',
+    'Transcriptomics',
+  ],
+};
 
 const browseDataFilters = [
   {
-    keyName: 'study',
-    name: 'Intervention',
-    filters: ['Acute Exercise', 'Endurance Training'],
-  },
-  {
     keyName: 'tissue_name',
     name: 'Tissue',
-    filters: tissueList,
+    filters: tissues,
   },
   {
     keyName: 'omics',
