@@ -95,6 +95,12 @@ function App({ history = History }) {
               />
               <Route
                 path="/data-download"
+                exact
+                component={withTracker(BrowseDataPageConnected)}
+              />
+              <Route
+                path="/data-download/file-browser"
+                exact
                 component={withTracker(BrowseDataPageConnected)}
               />
               <Route
