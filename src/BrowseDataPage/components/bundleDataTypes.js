@@ -207,9 +207,9 @@ const BundleDataTypes = {
       participant_type: 'Young Adult',
       intervention: 'Acute Exercise',
       description:
-        'Phenotypic data from young adult rats (6-month old) that performed the endurance exercise training.',
-      object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_phenotype.zip',
-      object_zipfile_size: '617.78 KB',
+        'Phenotypic data from young adult rats (6-month old) that performed the acute exercise training.',
+      object_zipfile: 'pass1a-06/bundles/motrpac_pass1a-06_phenotype.zip',
+      object_zipfile_size: '339.51 KB',
     },
     {
       type: 'transcriptomics',
@@ -219,9 +219,48 @@ const BundleDataTypes = {
       participant_type: 'Young Adult',
       intervention: 'Acute Exercise',
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across tissues for RNA-seq.',
-      object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_transcriptomics.zip',
-      object_zipfile_size: '540.44 MB',
+        'Sample-level metadata, QC, and quantitative results across tissues for RNA-seq.',
+      object_zipfile: 'pass1a-06/bundles/motrpac_pass1a-06_transcriptomics.zip',
+      object_zipfile_size: '381.07 MB',
+    },
+    {
+      type: 'proteomics-untargeted',
+      phase: 'human-precovid-sed-adu',
+      title: 'Proteomics-untargeted',
+      species: 'Rat',
+      participant_type: 'Young Adult',
+      intervention: 'Acute Exercise',
+      description:
+        'Sample-level metadata, QC, and quantitative results across tissues for Acetyl Proteomics, Global Proteomics, Phosphoproteomics.',
+      object_zipfile:
+        'pass1a-06/bundles/motrpac_pass1a-06_proteomics-untargeted.zip',
+      object_zipfile_size: '2.19 GB',
+    },
+    {
+      type: 'metabolomics-targeted',
+      phase: 'human-precovid-sed-adu',
+      title: 'Metabolomics-targeted',
+      species: 'Rat',
+      participant_type: 'Young Adult',
+      intervention: 'Acute Exercise',
+      description:
+        'Sample-level metadata, QC, and quantitative results across tissues for metabolomics-targeted assays.',
+      object_zipfile:
+        'pass1a-06/bundles/motrpac_pass1a-06_metabolomics-targeted.zip',
+      object_zipfile_size: '1 MB',
+    },
+    {
+      type: 'metabolomics-untargeted',
+      phase: 'human-precovid-sed-adu',
+      title: 'Metabolomics-untargeted',
+      species: 'Rat',
+      participant_type: 'Young Adult',
+      intervention: 'Acute Exercise',
+      description:
+        'Sample-level metadata, QC, and quantitative results across tissues for metabolomics-untargeted assays.',
+      object_zipfile:
+        'pass1a-06/bundles/motrpac_pass1a-06_metabolomics-untargeted.zip',
+      object_zipfile_size: '207.7 MB',
     },
   ],
   human_sed_adu: [
@@ -234,9 +273,10 @@ const BundleDataTypes = {
       intervention: 'Sedentary',
       study_group: 'Pre-COVID',
       description:
-        'Phenotypic data from young adult rats (6-month old) that performed the endurance exercise training.',
-      object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_phenotype.zip',
-      object_zipfile_size: '617.78 KB',
+        'Phenotypic data from human sedentary adults performing acute exercise prior to COVID-19.',
+      object_zipfile:
+        'human-precovid/bundles/motrpac_human-precovid-sed-adu_phenotype.zip',
+      object_zipfile_size: '89.44 MB',
     },
     {
       type: 'transcriptomics',
@@ -247,9 +287,66 @@ const BundleDataTypes = {
       intervention: 'Sedentary',
       study_group: 'Pre-COVID',
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across tissues for RNA-seq.',
-      object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_transcriptomics.zip',
-      object_zipfile_size: '540.44 MB',
+        'Differential analysis, metadata, QC normalized data across human tissues for RNA-seq.',
+      object_zipfile:
+        'analysis/bundles/motrpac_human-precovid-sed-adu_transcriptomics.zip',
+      object_zipfile_size: '321.97 MB',
+    },
+    {
+      type: 'proteomics',
+      phase: 'human-precovid-sed-adu',
+      title: 'Proteomics',
+      species: 'Human',
+      participant_type: 'Adult',
+      intervention: 'Sedentary',
+      study_group: 'Pre-COVID',
+      description:
+        'Differential analysis, metadata, QC normalized data across human tissues for Global Proteomics, Phosphoproteomics, and OLink.',
+      object_zipfile:
+        'analysis/bundles/motrpac_human-precovid-sed-adu_proteomics.zip',
+      object_zipfile_size: '117.91 MB',
+    },
+    {
+      type: 'metabolomics-targeted',
+      phase: 'human-precovid-sed-adu',
+      title: 'Metabolomics-targeted',
+      species: 'Human',
+      participant_type: 'Adult',
+      intervention: 'Sedentary',
+      study_group: 'Pre-COVID',
+      description:
+        'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-targeted assays.',
+      object_zipfile:
+        'analysis/bundles/motrpac_human-precovid-sed-adu_metabolomics-targeted.zip',
+      object_zipfile_size: '13.82 MB',
+    },
+    {
+      type: 'metabolomics-untargeted',
+      phase: 'human-precovid-sed-adu',
+      title: 'Metabolomics-untargeted',
+      species: 'Human',
+      participant_type: 'Adult',
+      intervention: 'Sedentary',
+      study_group: 'Pre-COVID',
+      description:
+        'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-untargeted assays.',
+      object_zipfile:
+        'analysis/bundles/motrpac_human-precovid-sed-adu_metabolomics-untargeted.zip',
+      object_zipfile_size: '217.87 MB',
+    },
+    {
+      type: 'epigenomics',
+      phase: 'human-precovid-sed-adu',
+      title: 'Epigenomics',
+      species: 'Human',
+      participant_type: 'Adult',
+      intervention: 'Sedentary',
+      study_group: 'Pre-COVID',
+      description:
+        'Differential analysis, metadata, QC normalized data across human tissues for ATAC-seq and Methylcap-seq assays.',
+      object_zipfile:
+        'ganalysis/bundles/motrpac_human-precovid-sed-adu_epigenomics.zip',
+      object_zipfile_size: '3.11 GB',
     },
   ],
 };
