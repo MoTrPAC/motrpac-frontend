@@ -76,16 +76,17 @@ function BundleDownloadButton({
     return (
       <button
         type="button"
-        className="btn btn-primary btn-bundle-data-download d-flex align-items-center"
+        className="btn btn-secondary btn-block btn-bundle-data-download d-flex align-items-center justify-content-center px-3"
         disabled
       >
         <div
-          className="spinner-border spinner-border-sm text-light mr-1"
+          className="spinner-border spinner-border-sm text-light mr-2"
           role="status"
         >
           <span className="sr-only">Loading...</span>
         </div>
-        <span className="file-size">Get</span>
+        <span className="file-size font-weight-bold">Get</span> (
+        {bundlefileSize})
       </button>
     );
   }
@@ -96,7 +97,7 @@ function BundleDownloadButton({
       <a
         id={file}
         href={fetchStatus.fileUrl}
-        className="btn-bundle-data-download ready-to-download-link px-3"
+        className="btn-bundle-data-download ready-to-download-link px-3 w-100"
         download
         onClick={(e) => handleFileDownload(file, e)}
       >
@@ -110,7 +111,7 @@ function BundleDownloadButton({
     return (
       <button
         type="button"
-        className="btn btn-danger btn-bundle-data-download px-3"
+        className="btn btn-danger btn-block btn-bundle-data-download px-3"
         onClick={(e) => {
           e.preventDefault();
           setFetchStatus({

@@ -36,6 +36,25 @@
         .card-footer {
           background-color: #fff;
           border-top: none;
+
+          .ready-to-download-link {
+            background-color: #343a40;
+            border-color: #343a40;
+            border-radius: 0.25rem;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.5;
+            padding: 0.465rem 0.75rem;
+            text-align: center;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      
+            &:hover, &:focus, &:active {
+              background-color: #23272b;
+              border-color: #23272b;
+              text-decoration: none;
+            }
+          }
         }
       }
     }
