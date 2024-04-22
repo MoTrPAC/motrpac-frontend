@@ -30,6 +30,34 @@
         font-size: 5.0rem;
       }
     }
+
+    .bundle-datasets-item {
+      .card {
+        .card-footer {
+          background-color: #fff;
+          border-top: none;
+        }
+      }
+    }
+  }
+
+  .selective-data-downloads-card {
+    .card-header {
+      .material-icons {
+        font-size: 1.85rem;
+      }
+    }
+
+    &.external-access {
+      max-width: 22rem;
+    }
+  }
+
+  .data-download-selective-files {
+    .nav.nav-tabs {
+      margin-left: 15px;
+      margin-right: 15px;
+    }
   }
 
   label {
