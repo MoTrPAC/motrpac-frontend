@@ -7,6 +7,7 @@ import { trackEvent } from '../../GoogleAnalytics/googleAnalytics';
 
 function BundleDownloadButton({
   bundlefile,
+  bundlefileSize,
   profile,
   handleUserSurveyOpenOnBundledDownload,
 }) {
@@ -129,15 +130,17 @@ function BundleDownloadButton({
     return (
       <button
         type="button"
-        className="btn btn-primary btn-bundle-data-download d-flex align-items-center"
+        className="btn btn-secondary btn-block btn-bundle-data-download d-flex align-items-center justify-content-center px-3"
         onClick={(e) =>
           handleFileFetch(e, process.env.REACT_APP_DATA_FILE_BUCKET, file)
         }
       >
-        <i className="material-icons open-access-bundle-data-download-icon">
-          file_download
+        <i className="material-icons open-access-bundle-data-download-icon mr-2">
+          cloud_download
         </i>
-        <span className="file-size">Get</span>
+        <span className="file-size">
+          <span className="font-weight-bold">Get</span> ({bundlefileSize})
+        </span>
       </button>
     );
   }
@@ -164,6 +167,7 @@ function BundleDownloadButton({
 
 BundleDownloadButton.propTypes = {
   bundlefile: PropTypes.string.isRequired,
+  bundlefileSize: PropTypes.string.isRequired,
   profile: PropTypes.shape({
     userid: PropTypes.string,
     user_metadata: PropTypes.shape({
