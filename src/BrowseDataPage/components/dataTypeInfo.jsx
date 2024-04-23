@@ -34,13 +34,10 @@ function DataTypeInfo({ grid }) {
           <p>
             <span className="font-weight-bold">Note:</span> Raw files are not
             currently available for direct download through the Data Hub portal.
-            Please submit your requests to{' '}
-            <EmailLink
-              mailto="motrpac-data-requests@lists.stanford.edu"
-              label="MoTrPAC Data Requests"
-            />{' '}
-            and specify the relevant tissues/assays if you would like to get
-            access to the raw files.
+            Please{' '}
+            <Link to="/contact">submit your requests to our helpdesk</Link> and
+            specify the relevant tissues/assays if you would like to get access
+            to the raw files.
           </p>
         </div>
         <div>
