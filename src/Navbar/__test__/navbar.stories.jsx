@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { Navbar } from '../navbar';
 
@@ -38,11 +37,20 @@ const actions = {
   getSearchForm: action('Go to advanced search page'),
 };
 
-storiesOf('Navbar', module)
-  .add('Default', () => <Navbar {...loggedOutState} />)
-  .add('Internal user logged-in', () => (
-    <Navbar {...internalLoggedInState} {...actions} />
-  ))
-  .add('External user logged-in', () => (
-    <Navbar {...externalLoggedInState} {...actions} />
-  ));
+export default {
+  title: 'Navbar',
+};
+
+export const Default = () => <Navbar {...loggedOutState} />;
+
+export const InternalUserLoggedIn = {
+  render: () => <Navbar {...internalLoggedInState} {...actions} />,
+
+  name: 'Internal user logged-in',
+};
+
+export const ExternalUserLoggedIn = {
+  render: () => <Navbar {...externalLoggedInState} {...actions} />,
+
+  name: 'External user logged-in',
+};

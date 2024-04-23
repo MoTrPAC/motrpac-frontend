@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import ReleaseEntry from '../releaseEntry';
 
 import internalUser from '../../testData/testUser';
@@ -25,15 +24,22 @@ const externalLoggedInState = {
   profile: externalUser,
 };
 
-storiesOf('Release Entry', module)
-  .addDecorator(story => (
-    <div className="dataReleasePage container-fluid">
-      {story()}
-    </div>
-  ))
-  .add('Internal user view', () => (
-    <ReleaseEntry {...internalLoggedInState} />
-  ))
-  .add('External user view', () => (
-    <ReleaseEntry {...externalLoggedInState} />
-  ));
+export default {
+  title: 'Release Entry',
+
+  decorators: [
+    (story) => <div className="dataReleasePage container-fluid">{story()}</div>,
+  ],
+};
+
+export const InternalUserView = {
+  render: () => <ReleaseEntry {...internalLoggedInState} />,
+
+  name: 'Internal user view',
+};
+
+export const ExternalUserView = {
+  render: () => <ReleaseEntry {...externalLoggedInState} />,
+
+  name: 'External user view',
+};

@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import SampleSearchResultTable from '../sampleSearchResultTable';
 
 const urlSearchParamsObj = {
@@ -11,13 +10,18 @@ const urlSearchParamsObj = {
   site: 'MSSM',
 };
 
-storiesOf('Sample Results Table', module)
-  // Padding added to indicate it is a component
-  .addDecorator((story) => (
-    <div className="searchPage container-fluid">
-      <div className="advanced-search-form-container">
-        {story()}
+export default {
+  title: 'Sample Results Table',
+
+  decorators: [
+    (story) => (
+      <div className="searchPage container-fluid">
+        <div className="advanced-search-form-container">{story()}</div>
       </div>
-    </div>
-  ))
-  .add('Default', () => <SampleSearchResultTable params={urlSearchParamsObj} />);
+    ),
+  ],
+};
+
+export const Default = () => (
+  <SampleSearchResultTable params={urlSearchParamsObj} />
+);

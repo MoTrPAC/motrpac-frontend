@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import SearchResults from '../searchResults';
 
 import stanfordPass1aRNAseqMetadata from '../../data/stanford_pass1a_get_rna_seq_metadata';
@@ -28,14 +27,33 @@ stanfordPass1aRNAseqMetadata.forEach((entry) => {
   }
 });
 
-storiesOf('Search Results', module)
-  // Padding added to indicate it is a component
-  .addDecorator((story) => (
-    <div className="searchPage container-fluid">
-      <div className="advanced-search-form-container">
-        {story()}
+export default {
+  title: 'Search Results',
+
+  decorators: [
+    (story) => (
+      <div className="searchPage container-fluid">
+        <div className="advanced-search-form-container">{story()}</div>
       </div>
-    </div>
-  ))
-  .add('Show advanced search results', () => <SearchResults advSearchParams={params} lunrResutls={searchResutls} />)
-  .add('Show sample results table', () => <SearchResults urlSearchParamsObj={urlSearchParamsObj} advSearchParams={params} />);
+    ),
+  ],
+};
+
+export const ShowAdvancedSearchResults = {
+  render: () => (
+    <SearchResults advSearchParams={params} lunrResutls={searchResutls} />
+  ),
+
+  name: 'Show advanced search results',
+};
+
+export const ShowSampleResultsTable = {
+  render: () => (
+    <SearchResults
+      urlSearchParamsObj={urlSearchParamsObj}
+      advSearchParams={params}
+    />
+  ),
+
+  name: 'Show sample results table',
+};

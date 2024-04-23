@@ -1,11 +1,10 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import configureStore from '../../App/configureStore';
 import { AnalysisHomePage } from '../analysisHomePage';
 import { Navbar } from '../../Navbar/navbar';
-import { Footer } from '../../Footer/footer';
+import Footer from '../../Footer/footer';
 import { Sidebar } from '../../Sidebar/sidebar';
 import { defaultAnalysisState } from '../analysisReducer';
 
@@ -44,25 +43,50 @@ const depth1StateAnimal = {
   currentAnalysis: 'PHENOTYPE',
   currentAnalysisTitle: 'Phenotypic Data',
 };
-storiesOf('Analysis Page', module)
-  .addDecorator((story) => (
-    <Provider store={store}>
-      <div className="App">
-        <header>
-          <Navbar isAuthenticated {...navbarAction} profile={testUser} />
-        </header>
-        <div className="componentHolder">
-          <div className="container-fluid">
-            <div className="row mt-5 pt-1">
-              <Sidebar isAuthenticated profile={testUser} {...sidebarActions} />
-              {story()}
+
+export default {
+  title: 'Analysis Page',
+
+  decorators: [
+    (story) => (
+      <Provider store={store}>
+        <div className="App">
+          <header>
+            <Navbar isAuthenticated {...navbarAction} profile={testUser} />
+          </header>
+          <div className="componentHolder">
+            <div className="container-fluid">
+              <div className="row mt-5 pt-1">
+                <Sidebar
+                  isAuthenticated
+                  profile={testUser}
+                  {...sidebarActions}
+                />
+                {story()}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <Footer isAuthenticated profile={testUser} />
-    </Provider>
-  ))
-  .add('Animal', () => <AnalysisHomePage {...defaultAnalysisState} match={animalMatch} {...AnalysisActions} />)
-  .add('Animal Depth 1', () => <AnalysisHomePage {...depth1StateAnimal} {...AnalysisActions} />)
-  .add('Human', () => <AnalysisHomePage {...defaultAnalysisState} match={humanMatch} {...AnalysisActions} />);
+        <Footer isAuthenticated profile={testUser} />
+      </Provider>
+    ),
+  ],
+};
+
+export const Animal = () => (
+  <AnalysisHomePage
+    {...defaultAnalysisState}
+    match={animalMatch}
+    {...AnalysisActions}
+  />
+);
+export const AnimalDepth1 = () => (
+  <AnalysisHomePage {...depth1StateAnimal} {...AnalysisActions} />
+);
+export const Human = () => (
+  <AnalysisHomePage
+    {...defaultAnalysisState}
+    match={humanMatch}
+    {...AnalysisActions}
+  />
+);

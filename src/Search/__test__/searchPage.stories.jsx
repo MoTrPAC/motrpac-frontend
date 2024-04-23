@@ -1,9 +1,8 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { SearchPage } from '../searchPage';
 import { Navbar } from '../../Navbar/navbar';
-import { Footer } from '../../Footer/footer';
+import Footer from '../../Footer/footer';
 import { Sidebar } from '../../Sidebar/sidebar';
 import { defaultSearchState } from '../searchReducer';
 
@@ -77,32 +76,41 @@ const sidebarActions = {
   resetDepth: action('resetting depth'),
 };
 
-// Provider necessary to link data from components of UploadScreen
-storiesOf('Search Page', module)
-  .addDecorator(story => (
-    <div className="App">
-      <header>
-        <Navbar isAuthenticated {...navbarAction} profile={testUser} />
-      </header>
-      <div className="componentHolder">
-        <div className="container-fluid">
-          <div className="row">
-            <Sidebar isAuthenticated profile={testUser} {...sidebarActions} />
-            {story()}
+export default {
+  title: 'Search Page',
+
+  decorators: [
+    (story) => (
+      <div className="App">
+        <header>
+          <Navbar isAuthenticated {...navbarAction} profile={testUser} />
+        </header>
+        <div className="componentHolder">
+          <div className="container-fluid">
+            <div className="row">
+              <Sidebar isAuthenticated profile={testUser} {...sidebarActions} />
+              {story()}
+            </div>
           </div>
         </div>
+        <div className="mt-auto">
+          <Footer isAuthenticated {...footerAction} profile={testUser} />
+        </div>
       </div>
-      <div className="mt-auto">
-        <Footer isAuthenticated {...footerAction} profile={testUser} />
-      </div>
-    </div>
-  ))
-  .add('Default', () => (
-    <SearchPage {...defaultState} {...actions} />
-  ))
-  .add('Multiple term/value pairs', () => (
-    <SearchPage {...multiTermState} {...actions} />
-  ))
-  .add('Form field values changed', () => (
-    <SearchPage {...changedState} {...actions} />
-  ));
+    ),
+  ],
+};
+
+export const Default = () => <SearchPage {...defaultState} {...actions} />;
+
+export const MultipleTermValuePairs = {
+  render: () => <SearchPage {...multiTermState} {...actions} />,
+
+  name: 'Multiple term/value pairs',
+};
+
+export const FormFieldValuesChanged = {
+  render: () => <SearchPage {...changedState} {...actions} />,
+
+  name: 'Form field values changed',
+};

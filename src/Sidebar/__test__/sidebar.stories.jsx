@@ -1,9 +1,8 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { Sidebar } from '../sidebar';
 
-import internalUser  from '../../testData/testUser';
+import internalUser from '../../testData/testUser';
 
 const externalUser = {
   ...internalUser,
@@ -44,17 +43,36 @@ const sidebarActions = {
   toggleSidebar: action('toggling sidebar'),
 };
 
-storiesOf('Sidebar', module)
-  .add('Default', () => <Sidebar profile={internalUser} />)
-  .add('Internal user logged-in', () => (
-    <Sidebar {...internalLoggedInState} {...sidebarActions} />
-  ))
-  .add('Internal user logged-in with sidebar expanded', () => (
+export default {
+  title: 'Sidebar',
+};
+
+export const Default = () => <Sidebar profile={internalUser} />;
+
+export const InternalUserLoggedIn = {
+  render: () => <Sidebar {...internalLoggedInState} {...sidebarActions} />,
+
+  name: 'Internal user logged-in',
+};
+
+export const InternalUserLoggedInWithSidebarExpanded = {
+  render: () => (
     <Sidebar {...internalLoggedInStateExpanded} {...sidebarActions} />
-  ))
-  .add('External user logged-in', () => (
-    <Sidebar {...externalLoggedInState} {...sidebarActions} />
-  ))
-  .add('External user logged-in with sidebar expanded', () => (
+  ),
+
+  name: 'Internal user logged-in with sidebar expanded',
+};
+
+export const ExternalUserLoggedIn = {
+  render: () => <Sidebar {...externalLoggedInState} {...sidebarActions} />,
+
+  name: 'External user logged-in',
+};
+
+export const ExternalUserLoggedInWithSidebarExpanded = {
+  render: () => (
     <Sidebar {...externalLoggedInStateExpanded} {...sidebarActions} />
-  ));
+  ),
+
+  name: 'External user logged-in with sidebar expanded',
+};

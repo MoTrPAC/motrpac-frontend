@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import SearchTermRow from '../searchTermRow';
 
@@ -75,18 +74,34 @@ const actions = {
   removeSearchParam: action('Advanced search form term/value pair removed'),
 };
 
-storiesOf('Serach Term Item', module)
-  .addDecorator(story => (
-    <div className="searchPage container-fluid">
-      <div className="advanced-search-form-container">
-        <ul className="param-list">
-          <li className="param-item form-group d-flex align-items-center justify-content-start">
-            {story()}
-          </li>
-        </ul>
+export default {
+  title: 'Serach Term Item',
+
+  decorators: [
+    (story) => (
+      <div className="searchPage container-fluid">
+        <div className="advanced-search-form-container">
+          <ul className="param-list">
+            <li className="param-item form-group d-flex align-items-center justify-content-start">
+              {story()}
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  ))
-  .add('Default', () => <SearchTermRow {...defaultState} {...actions} />)
-  .add('New term/value pair', () => <SearchTermRow {...newTermState} {...actions} />)
-  .add('Form field values changed', () => <SearchTermRow {...changedState} {...actions} />);
+    ),
+  ],
+};
+
+export const Default = () => <SearchTermRow {...defaultState} {...actions} />;
+
+export const NewTermValuePair = {
+  render: () => <SearchTermRow {...newTermState} {...actions} />,
+
+  name: 'New term/value pair',
+};
+
+export const FormFieldValuesChanged = {
+  render: () => <SearchTermRow {...changedState} {...actions} />,
+
+  name: 'Form field values changed',
+};

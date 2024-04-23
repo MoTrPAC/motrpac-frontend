@@ -145,3 +145,5 @@ src/__snapshots__/*
 # Build files
 build/
 
+.yarnrc.yml
+.yarn

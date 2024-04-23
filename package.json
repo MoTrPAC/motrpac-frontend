@@ -2,6 +2,7 @@
   "name": "MoTrPAC",
   "version": "2.0.4",
   "type": "module",
+  "packageManager": "yarn@4.1.1",
   "private": true,
   "dependencies": {
     "auth0-js": "9.26.0",
@@ -44,8 +45,8 @@
     "build": "vite build",
     "serve": "vite preview",
     "test": "react-scripts test",
-    "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public",
+    "storybook": "storybook dev -p 9009",
+    "build-storybook": "storybook build",
     "sass-lint": "stylelint --config=stylelint.config.js '**/*.scss'",
     "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
     "inspect-branch": "yarn && yarn sass && yarn start"
@@ -57,11 +58,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@storybook/addon-actions": "8.0.10",
-    "@storybook/addon-links": "8.0.10",
-    "@storybook/addons": "7.6.17",
-    "@storybook/preset-create-react-app": "8.0.10",
-    "@storybook/react": "8.0.10",
+    "@storybook/addon-actions": "^8.0.9",
+    "@storybook/addon-links": "^8.0.9",
+    "@storybook/react": "^8.0.9",
+    "@storybook/react-vite": "^8.0.9",
     "@vitejs/plugin-react-swc": "^3.6.0",
     "@vitest/coverage-v8": "^1.4.0",
     "@wojtekmaj/enzyme-adapter-react-17": "0.8.0",
@@ -74,7 +74,8 @@
     "prettier": "^3.0.0",
     "react-error-overlay": "^6.0.11",
     "sass": "1.70.0",
-    "storybook-react-router": "1.0.8",
+    "storybook": "^8.0.9",
+    "storybook-addon-remix-react-router": "^3.0.0",
     "stylelint": "^16.2.0",
     "stylelint-config-recommended": "^14.0.0",
     "vitest": "^1.4.0"

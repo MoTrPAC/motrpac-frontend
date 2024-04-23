@@ -1,9 +1,8 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { Dashboard } from '../dashboard';
 import { Navbar } from '../../Navbar/navbar';
-import { Footer } from '../../Footer/footer';
+import Footer from '../../Footer/footer';
 import { Sidebar } from '../../Sidebar/sidebar';
 
 import internalUser from '../../testData/testUser';
@@ -63,30 +62,41 @@ const sidebarActions = {
   toggleSidebar: action('toggling sidebar'),
 };
 
-storiesOf('Dashboard', module)
-  .addDecorator((story) => (
-    <div className="App">
-      <header>
-        <Navbar isAuthenticated {...navbarAction} profile={internalUser} />
-      </header>
-      <div className="componentHolder">
-        <div className="container-fluid">
-          <div className="row mt-5 pt-1">
-            <Sidebar
-              isAuthenticated
-              profile={internalUser}
-              {...sidebarActions}
-            />
-            {story()}
+export default {
+  title: 'Dashboard',
+
+  decorators: [
+    (story) => (
+      <div className="App">
+        <header>
+          <Navbar isAuthenticated {...navbarAction} profile={internalUser} />
+        </header>
+        <div className="componentHolder">
+          <div className="container-fluid">
+            <div className="row mt-5 pt-1">
+              <Sidebar
+                isAuthenticated
+                profile={internalUser}
+                {...sidebarActions}
+              />
+              {story()}
+            </div>
           </div>
         </div>
+        <Footer isAuthenticated profile={internalUser} {...footerAction} />
       </div>
-      <Footer isAuthenticated profile={internalUser} {...footerAction} />
-    </div>
-  ))
-  .add('Internal user view', () => (
-    <Dashboard {...internalLoggedInState} {...defaultActions} />
-  ))
-  .add('External user view', () => (
-    <Dashboard {...externalLoggedInState} {...defaultActions} />
-  ));
+    ),
+  ],
+};
+
+export const InternalUserView = {
+  render: () => <Dashboard {...internalLoggedInState} {...defaultActions} />,
+
+  name: 'Internal user view',
+};
+
+export const ExternalUserView = {
+  render: () => <Dashboard {...externalLoggedInState} {...defaultActions} />,
+
+  name: 'External user view',
+};
