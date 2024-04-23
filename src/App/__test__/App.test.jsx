@@ -149,20 +149,20 @@ describe('Authenticated Application routing', () => {
     history.push('/qc-reports');
     // Update required to re-render the application
     mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'DataStatusPage', '/qc-data-monitor', history, true);
+    testCorrectComponentInPath(mountApp, 'AuthWrapper', 'DataStatusPage', '/qc-data-monitor', history, true);
   });
 
   test('loads the methods page at /methods', () => {
     history.push('/methods');
     // Update required to re-render the application
     mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'Methods', '/methods', history, true);
+    testCorrectComponentInPath(mountApp, 'AuthWrapper', 'Methods', '/methods', history, true);
   });
 
   test('loads the sample summary page at /summary', () => {
     history.push('/summary');
     mountApp.update();
-    testCorrectComponentInPath(mountApp, 'PrivateRoute', 'DataSummaryPage', '/summary', history, true);
+    testCorrectComponentInPath(mountApp, 'AuthWrapper', 'DataSummaryPage', '/summary', history, true);
   });
 
   test('loads the linkout page at /external-links', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import ContactHelpdesk from '../lib/ui/contactHelpdesk';
 
 /**
@@ -11,7 +11,7 @@ import ContactHelpdesk from '../lib/ui/contactHelpdesk';
  */
 export function ErrorPage({ isAuthenticated, profile }) {
   if (isAuthenticated && profile.user_metadata) {
-    return <Redirect to="/dashboard" />
+    return <Navigate to="/dashboard" />
   }
 
   return (

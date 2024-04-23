@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import analysisTypes from '../lib/analysisTypes';
 import AnimalDataAnalysis from './animalDataAnalysis';
@@ -27,7 +27,7 @@ export function AnalysisHomePage({
     !(subjectType === 'animal' || subjectType === 'human') ||
     userType === 'external'
   ) {
-    return <Redirect to="/dashboard" />;
+    return <Navigate to="/dashboard" />;
   }
 
   // Button to return 1 depth level

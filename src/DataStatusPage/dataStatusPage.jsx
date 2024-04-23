@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import StatusReportGetData from './statusReportGetData';
 import StatusReportImmunoAssay from './statusReportImmunoAssay';
 import QcReportByPhase from './qcReportByPhase.jsx';
@@ -31,7 +31,7 @@ export function DataStatusPage({
   // Send users to default page if they are not consortium members
   const userType = profile.user_metadata && profile.user_metadata.userType;
   if (userType === 'external') {
-    return <Redirect to="/home" />;
+    return <Navigate to="/home" />;
   }
 
   // Render button group

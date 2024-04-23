@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import actions from './authActions';
 
 function Callback({ location }) {
@@ -20,7 +20,7 @@ function Callback({ location }) {
           <h3>{message || 'Authenticating...'}</h3>
         </div>
       ) : (
-        <Redirect to="/search" />
+        <Navigate to="/search" />
       )}
     </>
   );

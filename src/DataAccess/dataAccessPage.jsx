@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import PageTitle from '../lib/ui/pageTitle';
 import dayjs from 'dayjs';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -90,7 +90,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
 
   if (isAuthenticated && hasAccess) {
-    return <Redirect to="/releases" />;
+    return <Navigate to="/releases" />;
   }
 
   // Render registration response view if auth0 post request is successful

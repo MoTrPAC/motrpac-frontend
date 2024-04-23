@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function SelectiveDataDownloadsCard({
   cardIcon,
@@ -10,12 +10,12 @@ function SelectiveDataDownloadsCard({
   cssSelector,
   children,
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function handleDataSelect(e) {
     e.preventDefault();
     dataSelectHandler();
-    history.push('/data-download/file-browser', {
+    navigate('/data-download/file-browser', {
       state: { selectedData },
     });
   }

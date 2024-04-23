@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import VisNetworkReactComponent from 'vis-network-react';
 import { useMediaQuery } from 'react-responsive';
@@ -86,7 +86,7 @@ export function LandingPage({ isAuthenticated, profile }) {
   // Redirect authenticated users to protected route
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   if (isAuthenticated && hasAccess) {
-    return <Redirect to="/search" />;
+    return <Navigate to="/search" />;
   }
 
   const backgroundVideo = document.querySelector('video');
