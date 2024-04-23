@@ -11,7 +11,7 @@ import { defaultAnalysisState } from '../analysisReducer';
 
 const store = configureStore();
 
-const testUser = require('../../testData/testUser');
+import testUser from '../../testData/testUser';
 
 const navbarAction = {
   logout: action('logging out'),

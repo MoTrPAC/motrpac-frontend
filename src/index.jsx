@@ -4,7 +4,7 @@ import { install } from 'ga-gtag';
 import trackingId from './GoogleAnalytics/googleAnalytics';
 import App from './App/App';
 import * as serviceWorker from './serviceWorker';
-import './main.css';
+import './sass/main.scss';
 
 install(trackingId());
 

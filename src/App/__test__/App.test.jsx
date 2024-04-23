@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import App from '../App';
 
-const testUser = require('../../testData/testUser.json');
+import testUser from '../../testData/testUser.json';
 
 // Mocking Google Analytics
 jest.mock('ga-gtag');

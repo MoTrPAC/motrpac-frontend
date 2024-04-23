@@ -6,7 +6,7 @@ import { Navbar } from '../../Navbar/navbar';
 import { Footer } from '../../Footer/footer';
 import { Sidebar } from '../../Sidebar/sidebar';
 
-const internalUser = require('../../testData/testUser');
+import internalUser from '../../testData/testUser';
 
 const externalUser = {
   ...internalUser,

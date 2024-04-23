@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Sidebar } from '../sidebar';
 
-const internalUser = require('../../testData/testUser');
+import internalUser from '../../testData/testUser';
 
 const externalUser = {
   ...internalUser,
@@ -20,15 +20,35 @@ const sidebarActions = {
   resetDepth: jest.fn(),
 };
 
-const internalUserLoggedInSidebar = shallow(<Sidebar profile={internalUser} {...sidebarActions} />);
+const internalUserLoggedInSidebar = shallow(
+  <Sidebar profile={internalUser} {...sidebarActions} />,
+);
 
-const externalUserLoggedInSidebar = shallow(<Sidebar profile={externalUser} {...sidebarActions} />);
+const externalUserLoggedInSidebar = shallow(
+  <Sidebar profile={externalUser} {...sidebarActions} />,
+);
 
-const defaultNavItems = ['Dashboard', 'Methods', 'Animal', 'Human', 'Browse Data', 'Summary', 'Releases', 'Upload Data', 'QC Reports'];
+const defaultNavItems = [
+  'Dashboard',
+  'Methods',
+  'Animal',
+  'Human',
+  'Browse Data',
+  'Summary',
+  'Releases',
+  'Upload Data',
+  'QC Reports',
+];
 
 const internalUserDisabledNavItems = ['Summary', 'Browse Data', 'Upload Data'];
 
-const externalUserDisabledNavItems = ['Animal', 'Human', 'Browse Data', 'Summary', 'Upload Data'];
+const externalUserDisabledNavItems = [
+  'Animal',
+  'Human',
+  'Browse Data',
+  'Summary',
+  'Upload Data',
+];
 
 describe('Sidebar', () => {
   test('Logged In sidebar has expected nav links', () => {

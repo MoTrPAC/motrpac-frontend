@@ -17,16 +17,14 @@ function ContactForm() {
   const recaptchaRef = useRef(null);
 
   // Set up environment variables
-  const api =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
-      : process.env.REACT_APP_API_SERVICE_ADDRESS;
-  const endpoint = process.env.REACT_APP_SEND_EMAIL_ENDPOINT;
-  const key =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_KEY_DEV
-      : process.env.REACT_APP_API_SERVICE_KEY;
-  const recaptchaKey = process.env.REACT_APP_reCAPTCHA_SITE_KEY;
+  const api = import.meta.env.DEV
+    ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+    : import.meta.env.VITE_API_SERVICE_ADDRESS;
+  const endpoint = import.meta.env.VITE_SEND_EMAIL_ENDPOINT;
+  const key = import.meta.env.DEV
+    ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+    : import.meta.env.VITE_API_SERVICE_KEY;
+  const recaptchaKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
   useEffect(() => {
     // validate REQUIRED form values by subscribing to changes in the states

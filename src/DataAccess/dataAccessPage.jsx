@@ -47,15 +47,15 @@ export function DataAccessPage({ isAuthenticated, profile }) {
   const [requestPending, setRequestPending] = useState(false);
 
   const api =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
-      : process.env.REACT_APP_API_SERVICE_ADDRESS;
-  const endpoint = process.env.REACT_APP_USER_REGISTRATION_ENDPOINT;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+      : import.meta.env.VITE_API_SERVICE_ADDRESS;
+  const endpoint = import.meta.env.VITE_USER_REGISTRATION_ENDPOINT;
   const key =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_KEY_DEV
-      : process.env.REACT_APP_API_SERVICE_KEY;
-  const recaptchaKey = process.env.REACT_APP_reCAPTCHA_SITE_KEY;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+      : import.meta.env.VITE_API_SERVICE_KEY;
+  const recaptchaKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
   useEffect(() => {
     // validate REQUIRED form values by subscribing to changes

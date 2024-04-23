@@ -8,11 +8,11 @@ function PromoteBanner() {
       <h3 className="office-hour-title">Join Us</h3>
       <div className="office-hour-content mb-3">
         The Bioinformatics Center of MoTrPAC will be hosting the next virtual
-        Office Hour on {process.env.REACT_APP_OFFICE_HOUR_DAY}{' '}
-        {process.env.REACT_APP_OFFICE_HOUR_DATE} at 11:00 am Pacific Time.
+        Office Hour on {import.meta.env.VITE_OFFICE_HOUR_DAY}{' '}
+        {import.meta.env.VITE_OFFICE_HOUR_DATE} at 11:00 am Pacific Time.
       </div>
       <a
-        href={process.env.REACT_APP_OFFICE_HOUR_SIGNUP_URL}
+        href={import.meta.env.VITE_OFFICE_HOUR_SIGNUP_URL}
         className="btn btn-primary"
         role="button"
         target="_blank"
@@ -22,7 +22,7 @@ function PromoteBanner() {
           'User Engagement',
           'open_office_hour',
           'Landing Page',
-          process.env.REACT_APP_OFFICE_HOUR_DATE,
+          import.meta.env.VITE_OFFICE_HOUR_DATE,
         )}
       >
         SIGN UP

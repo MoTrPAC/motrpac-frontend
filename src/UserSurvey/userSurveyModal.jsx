@@ -179,7 +179,7 @@ function UserSurveyModal({
                 <div className="detailed-user-survey-link mt-3 mb-2">
                   <span>
                     <a
-                      href={process.env.REACT_APP_QUALTRICS_SURVEY_URL}
+                      href={import.meta.env.VITE_QUALTRICS_SURVEY_URL}
                       className="text-info"
                       target="_blank"
                       rel="noreferrer"

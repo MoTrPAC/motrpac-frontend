@@ -7,7 +7,7 @@ import { Footer } from '../../Footer/footer';
 import { Sidebar } from '../../Sidebar/sidebar';
 import { defaultSearchState } from '../searchReducer';
 
-const testUser = require('../../testData/testUser');
+import testUser from '../../testData/testUser';
 
 const defaultState = {
   ...defaultSearchState,

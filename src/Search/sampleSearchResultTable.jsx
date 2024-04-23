@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import tissueList from '../lib/tissueList';
 // import { Link } from 'react-router-dom';
 
-const sinaiPass1aRNAseqMetadata = require('../data/sinai_pass1a_get_rna_seq_metadata');
-const sinaiPass1aMethylomeMetadata = require('../data/sinai_pass1a_get_methylome_metadata');
-const stanfordPass1aRNAseqMetadata = require('../data/stanford_pass1a_get_rna_seq_metadata');
+import sinaiPass1aRNAseqMetadata from '../data/sinai_pass1a_get_rna_seq_metadata';
+import sinaiPass1aMethylomeMetadata from '../data/sinai_pass1a_get_methylome_metadata';
+import stanfordPass1aRNAseqMetadata from '../data/stanford_pass1a_get_rna_seq_metadata';
 
 /**
  * Renders a given tissue analysis samples table

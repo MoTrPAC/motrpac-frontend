@@ -23,8 +23,8 @@
 │   |   └── \_\_test\_\_: contains the storybook story and jest tests for the feature.  
 ├── public  
 ├── .storybook: configuration for storybook  
-├── .eslintrc.js: ESlint configuration  
-├── .prettierrc.js: Prettier configuration  
+├── .eslintrc.cjs: ESlint configuration  
+├── .prettierrc.cjs: Prettier configuration  
 ├── .stylelint.config.js: StyleLint configurations for Sass Linting
 
 #### Flow for creating new components

@@ -1,7 +1,7 @@
-const pass1b06PhenoKeyAnimal = require('../../data/pass1b_06_pheno_key_animal');
-const pass1b06PhenoRegistrationAnimal = require('../../data/pass1b_06_pheno_registration_animal');
-const pass1b06PhenoNmrTestingAnimal = require('../../data/pass1b_06_pheno_nmr_testing_animal');
-const pass1b06PhenoVo2MaxAnimal = require('../../data/pass1b_06_pheno_vo2_max_animal');
+import pass1b06PhenoKeyAnimal from '../../data/pass1b_06_pheno_key_animal';
+import pass1b06PhenoRegistrationAnimal from '../../data/pass1b_06_pheno_registration_animal';
+import pass1b06PhenoNmrTestingAnimal from '../../data/pass1b_06_pheno_nmr_testing_animal';
+import pass1b06PhenoVo2MaxAnimal from '../../data/pass1b_06_pheno_vo2_max_animal';
 
 // animal sets by 1-week, 2-week, 4-week, and 8-week
 const oneWeekRats = pass1b06PhenoKeyAnimal.filter(

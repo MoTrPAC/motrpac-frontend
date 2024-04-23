@@ -33,7 +33,7 @@ const mapStateToProps = state => ({
   authenticating: state.auth.authenticating,
 });
 
-const testUser = require('../testData/testUser');
+import testUser from '../testData/testUser';
 
 const mapDispatchToProps = dispatch => ({
   authSuccess: () => dispatch({

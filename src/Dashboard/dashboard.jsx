@@ -10,7 +10,7 @@ import PlotControls from '../Widgets/plotControls';
 import TableControls from '../Widgets/tableControls';
 import dashboardActions from './dashboardActions';
 
-const animalReleaseSamples = require('../data/animal_release_samples');
+import animalReleaseSamples from '../data/animal_release_samples';
 
 /**
  * Renders the Dashboard page.

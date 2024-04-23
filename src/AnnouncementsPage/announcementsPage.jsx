@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import PageTitle from '../lib/ui/pageTitle';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
-const announcementData = require('./announcements');
+import announcementData from './announcements';
 // Pre-sort array in reverse order to workaround Storybook issue
 const announcements = announcementData.reverse();
 

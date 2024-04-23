@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import ReleaseEntry from '../releaseEntry';
 
-const internalUser = require('../../testData/testUser');
+import internalUser from '../../testData/testUser';
 
 const externalUser = {
   ...internalUser,

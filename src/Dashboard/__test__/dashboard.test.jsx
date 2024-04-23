@@ -10,7 +10,7 @@ import { defaultSidebarState } from '../../Sidebar/sidebarReducer';
 import DashboardConnected, { Dashboard } from '../dashboard';
 import History from '../../App/history';
 
-const testUser = require('../../testData/testUser');
+import testUser from '../../testData/testUser';
 
 const controlActions = {
   toggleRelease: jest.fn(),

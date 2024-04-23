@@ -41,7 +41,7 @@
 
     &.first {
       position: relative;
-      // background-image: url(./assets/LandingPageGraphics/background_molecule_network.jpg);
+      // background-image: url(../assets/LandingPageGraphics/background_molecule_network.jpg);
 
       video.fullscreen {
         position: absolute;
@@ -133,10 +133,10 @@
       }
     }
     &.second {
-      background-image: url(./assets/LandingPageGraphics/background_wave.jpg);
+      background-image: url(../assets/LandingPageGraphics/background_wave.jpg);
     }
     &.third {
-      background-image: url(./assets/LandingPageGraphics/background_wave_gradient.jpg);
+      background-image: url(../assets/LandingPageGraphics/background_wave_gradient.jpg);
 
       .section-content-container {
         height: 75vh;
@@ -162,7 +162,7 @@
       }
     }
     &.fourth {
-      background-image: url(./assets/LandingPageGraphics/background_molecule_network_horizontal_wave.jpg);
+      background-image: url(../assets/LandingPageGraphics/background_molecule_network_horizontal_wave.jpg);
 
       .section-content-container {
         height: 60vh;
@@ -186,7 +186,7 @@
       }
     }
     &.fifth {
-      background-image: url(./assets/LandingPageGraphics/background_molecule_network_vertical_wave.jpg);
+      background-image: url(../assets/LandingPageGraphics/background_molecule_network_vertical_wave.jpg);
 
       .section-content-container {
         padding-top: 15px;
@@ -238,7 +238,7 @@
       }
     }
     &.sixth {
-      background-image: url(./assets/LandingPageGraphics/background_molecules_gradient.jpg);
+      background-image: url(../assets/LandingPageGraphics/background_molecules_gradient.jpg);
 
       #tutorial-video-iframe-container {
         border: 1px solid #000;
@@ -404,7 +404,7 @@ section.first {
 
           &.first {
             background-color: #2094E8;
-            background-image: url(./assets/LandingPageGraphics/background_molecule_network.jpg);
+            background-image: url(../assets/LandingPageGraphics/background_molecule_network.jpg);
             background-repeat: no-repeat !important;
             background-position: top left !important;
             background-size: cover !important;
@@ -523,7 +523,7 @@ section {
   .about-motrpac {
     background-color: #2094E8;
     /*
-    background-image: url(./assets/LandingPageGraphics/about_motrpac.jpg);
+    background-image: url(../assets/LandingPageGraphics/about_motrpac.jpg);
     background-repeat: no-repeat!important;
     background-position: top center!important;
     background-size: cover!important;
@@ -691,7 +691,7 @@ section {
             svg, .heatmap-tooltip {
               display: none;
             }
-            background-image: url(./assets/LandingPageGraphics/figure1c-differential-analytes-grid-bkgd.svg);
+            background-image: url(../assets/LandingPageGraphics/figure1c-differential-analytes-grid-bkgd.svg);
             background-repeat: no-repeat;
             background-position: center;
             background-size: 95%;

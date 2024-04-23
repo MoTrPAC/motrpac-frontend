@@ -5,7 +5,7 @@ import { ErrorPage } from '../error';
 import { Navbar } from '../../Navbar/navbar';
 import { Footer } from '../../Footer/footer';
 
-const testUser = require('../../testData/testUser');
+import testUser from '../../testData/testUser';
 
 const loginAction = {
   login: action('logging in'),

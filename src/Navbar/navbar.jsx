@@ -141,15 +141,15 @@ export function Navbar({
   };
 
   const api =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
-      : process.env.REACT_APP_API_SERVICE_ADDRESS;
-  const endpointRegUser = process.env.REACT_APP_USER_REGISTRATION_ENDPOINT;
-  const endpointSendEmail = process.env.REACT_APP_SEND_EMAIL_ENDPOINT;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+      : import.meta.env.VITE_API_SERVICE_ADDRESS;
+  const endpointRegUser = import.meta.env.VITE_USER_REGISTRATION_ENDPOINT;
+  const endpointSendEmail = import.meta.env.VITE_SEND_EMAIL_ENDPOINT;
   const key =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_KEY_DEV
-      : process.env.REACT_APP_API_SERVICE_KEY;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+      : import.meta.env.VITE_API_SERVICE_KEY;
 
   // Send GET request to endpoint to 'warm up' CF backend service
   function checkServiceStatus(e) {

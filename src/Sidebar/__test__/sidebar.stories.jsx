@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { Sidebar } from '../sidebar';
 
-const internalUser = require('../../testData/testUser');
+import internalUser  from '../../testData/testUser';
 
 const externalUser = {
   ...internalUser,

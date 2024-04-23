@@ -579,9 +579,9 @@ function ResultsDownloadLink({ downloadPath, downloadError, profile }) {
   }
 
   const host =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_ES_PROXY_HOST_DEV
-      : process.env.REACT_APP_ES_PROXY_HOST;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_ES_PROXY_HOST_DEV
+      : import.meta.env.VITE_ES_PROXY_HOST;
 
   const resultDownloadFilePath =
     downloadPath &&

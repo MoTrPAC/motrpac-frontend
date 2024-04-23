@@ -4,7 +4,7 @@ import { Router } from 'react-router-dom';
 import { Navbar } from '../navbar';
 import History from '../../App/history';
 
-const internalUser = require('../../testData/testUser');
+import internalUser from '../../testData/testUser';
 
 const navbarActions = {
   login: jest.fn(),

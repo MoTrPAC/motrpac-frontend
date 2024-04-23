@@ -6,7 +6,7 @@ import { Navbar } from '../../Navbar/navbar';
 import { Footer } from '../../Footer/footer';
 import { Sidebar } from '../../Sidebar/sidebar';
 
-const testUser = require('../../testData/testUser');
+import testUser from '../../testData/testUser';
 
 const loggedInState = {
   isAuthenticated: true,

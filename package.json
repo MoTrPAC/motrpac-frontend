@@ -1,6 +1,7 @@
 {
   "name": "MoTrPAC",
   "version": "2.0.4",
+  "type": "module",
   "private": true,
   "dependencies": {
     "auth0-js": "9.26.0",
@@ -28,7 +29,6 @@
     "react-redux": "8.0.5",
     "react-responsive": "^10.0.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "5.0.1",
     "react-table": "^7.7.0",
     "react-tooltip": "^5.11.2",
     "react-youtube": "^10.1.0",
@@ -36,17 +36,16 @@
     "redux-thunk": "^2.3.0",
     "tocbot": "^4.25.0",
     "victory": "37.0.2",
-    "vis-network-react": "DinerIsmail/vis-network-react"
+    "vis-network-react": "DinerIsmail/vis-network-react",
+    "vite": "^5.2.8"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "sass": "node_modules/sass/sass.js src/sass/main.scss src/main.css",
-    "sass-watch": "node_modules/sass/sass.js --watch src/sass/main.scss src/main.css",
     "sass-lint": "stylelint --config=stylelint.config.js '**/*.scss'",
     "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
     "inspect-branch": "yarn && yarn sass && yarn start"
@@ -58,24 +57,27 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@storybook/addon-actions": "8.0.10",
     "@storybook/addon-links": "8.0.10",
     "@storybook/addons": "7.6.17",
     "@storybook/preset-create-react-app": "8.0.10",
     "@storybook/react": "8.0.10",
+    "@vitejs/plugin-react-swc": "^3.6.0",
+    "@vitest/coverage-v8": "^1.4.0",
     "@wojtekmaj/enzyme-adapter-react-17": "0.8.0",
     "enzyme": "3.11.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-react-hooks": "^4.6.0",
     "jest-canvas-mock": "^2.2.0",
     "postcss-normalize": "^10.0.1",
+    "jsdom": "^24.0.0",
     "prettier": "^3.0.0",
     "react-error-overlay": "^6.0.11",
     "sass": "1.70.0",
     "storybook-react-router": "1.0.8",
     "stylelint": "^16.2.0",
-    "stylelint-config-recommended": "^14.0.0"
+    "stylelint-config-recommended": "^14.0.0",
+    "vitest": "^1.4.0"
   },
   "resolutions": {
     "autoprefixer": "10.4.5"

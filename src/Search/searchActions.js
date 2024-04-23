@@ -77,15 +77,13 @@ function downloadSuccess(downloadResults) {
   };
 }
 
-const accessToken =
-  process.env.NODE_ENV !== 'production'
-    ? process.env.REACT_APP_ES_ACCESS_TOKEN_DEV
-    : process.env.REACT_APP_ES_ACCESS_TOKEN;
-const host =
-  process.env.NODE_ENV !== 'production'
-    ? process.env.REACT_APP_ES_PROXY_HOST_DEV
-    : process.env.REACT_APP_ES_PROXY_HOST;
-const endpoint = process.env.REACT_APP_ES_ENDPOINT;
+const accessToken = import.meta.env.DEV
+  ? import.meta.env.VITE_ES_ACCESS_TOKEN_DEV
+  : import.meta.env.VITE_ES_ACCESS_TOKEN;
+const host = import.meta.env.DEV
+  ? import.meta.env.VITE_ES_PROXY_HOST_DEV
+  : import.meta.env.VITE_ES_PROXY_HOST;
+const endpoint = import.meta.env.VITE_ES_ENDPOINT;
 
 const headersConfig = {
   headers: {

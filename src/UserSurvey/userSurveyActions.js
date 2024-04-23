@@ -74,18 +74,18 @@ function handleUserSurveySubmit(user, rating, comment, dataContext) {
 
   const formdata = new FormData();
   formdata.append(
-    process.env.REACT_APP_USER_SURVEY_INPUT_1,
+    import.meta.env.VITE_USER_SURVEY_INPUT_1,
     dayjs().format('YYYY-MM-DD'),
   );
-  formdata.append(process.env.REACT_APP_USER_SURVEY_INPUT_2, user);
-  formdata.append(process.env.REACT_APP_USER_SURVEY_INPUT_3, dataContext);
-  formdata.append(process.env.REACT_APP_USER_SURVEY_INPUT_4, rating);
-  formdata.append(process.env.REACT_APP_USER_SURVEY_INPUT_5, comment);
+  formdata.append(import.meta.env.VITE_USER_SURVEY_INPUT_2, user);
+  formdata.append(import.meta.env.VITE_USER_SURVEY_INPUT_3, dataContext);
+  formdata.append(import.meta.env.VITE_USER_SURVEY_INPUT_4, rating);
+  formdata.append(import.meta.env.VITE_USER_SURVEY_INPUT_5, comment);
 
   return (dispatch) => {
     dispatch(userSurveySubmitInProgress());
     return axios
-      .post(process.env.REACT_APP_USER_SURVEY_SUBMIT_URL, formdata, {
+      .post(import.meta.env.VITE_USER_SURVEY_SUBMIT_URL, formdata, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Accept: '*/*',

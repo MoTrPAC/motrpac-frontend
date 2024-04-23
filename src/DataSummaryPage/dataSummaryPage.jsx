@@ -9,7 +9,7 @@ import PlotControls from '../Widgets/plotControls';
 import TableControls from '../Widgets/tableControls';
 import DataSummaryPageActions from './dataSummaryPageActions';
 
-const animalReleaseSamples = require('../data/animal_release_samples.json');
+import animalReleaseSamples from '../data/animal_release_samples.json';
 
 /**
  * Renders the release samples summary page.

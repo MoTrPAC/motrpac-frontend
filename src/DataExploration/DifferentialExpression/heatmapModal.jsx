@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Heatmap from './heatmap';
 
-const figureTissueProps = require('./figureTissueProps');
-const figureAssayProps = require('./figureAssayProps');
+import figureTissueProps from './figureTissueProps';
+import figureAssayProps from './figureAssayProps';
 
 /**
  * Renders bootstrap modal containing heatmap of top 50 DE genes

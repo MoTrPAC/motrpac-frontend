@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import SearchResultFilters from '../searchResultFilters';
 
-const stanfordPass1aRNAseqMetadata = require('../../data/stanford_pass1a_get_rna_seq_metadata');
+import stanfordPass1aRNAseqMetadata from '../../data/stanford_pass1a_get_rna_seq_metadata';
 
 // FIXME: Temp workaround to mock indexed search results
 const searchResutls = [];

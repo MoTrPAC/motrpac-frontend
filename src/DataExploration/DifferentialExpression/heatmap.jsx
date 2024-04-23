@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
-const figureTissueProps = require('./figureTissueProps.json');
+import figureTissueProps from './figureTissueProps.json';
 
 const pass1bTissues = [
   'Adrenal',
@@ -27,25 +27,25 @@ const pass1bTissues = [
   'Whole Blood',
 ];
 
-const adrenalRnaSeq = require('../../data/pass1b_06_dea/adrenal_rna-seq.json');
-const brownAdiposeRnaSeq = require('../../data/pass1b_06_dea/brown-adipose_rna-seq.json');
-const colonRnaSeq = require('../../data/pass1b_06_dea/colon_rna-seq.json');
-const cortexRnaSeq = require('../../data/pass1b_06_dea/cortex_rna-seq.json');
-const gastrocRnaSeq = require('../../data/pass1b_06_dea/gastrocnemius_rna-seq.json');
-const heartRnaSeq = require('../../data/pass1b_06_dea/heart_rna-seq.json');
-const hippocRnaSeq = require('../../data/pass1b_06_dea/hippocampus_rna-seq.json');
-const hypothRnaSeq = require('../../data/pass1b_06_dea/hypothalamus_rna-seq.json');
-const kidneyRnaSeq = require('../../data/pass1b_06_dea/kidney_rna-seq.json');
-const liverRnaSeq = require('../../data/pass1b_06_dea/liver_rna-seq.json');
-const lungRnaSeq = require('../../data/pass1b_06_dea/lung_rna-seq.json');
-const ovaryRnaSeq = require('../../data/pass1b_06_dea/ovary_rna-seq.json');
-const smallIntRnaSeq = require('../../data/pass1b_06_dea/small-intestine_rna-seq.json');
-const spleenRnaSeq = require('../../data/pass1b_06_dea/spleen_rna-seq.json');
-const testesRnaSeq = require('../../data/pass1b_06_dea/testis_rna-seq.json');
-const vastusLatRnaSeq = require('../../data/pass1b_06_dea/vastus-lateralis_rna-seq.json');
-const venaCavaRnaSeq = require('../../data/pass1b_06_dea/vena-cava_rna-seq.json');
-const whiteAdiposeRnaSeq = require('../../data/pass1b_06_dea/white-adipose_rna-seq.json');
-const bloodRnaSeq = require('../../data/pass1b_06_dea/whole-blood_rna-seq.json');
+import adrenalRnaSeq from '../../data/pass1b_06_dea/adrenal_rna-seq.json';
+import brownAdiposeRnaSeq from '../../data/pass1b_06_dea/brown-adipose_rna-seq.json';
+import colonRnaSeq from '../../data/pass1b_06_dea/colon_rna-seq.json';
+import cortexRnaSeq from '../../data/pass1b_06_dea/cortex_rna-seq.json';
+import gastrocRnaSeq from '../../data/pass1b_06_dea/gastrocnemius_rna-seq.json';
+import heartRnaSeq from '../../data/pass1b_06_dea/heart_rna-seq.json';
+import hippocRnaSeq from '../../data/pass1b_06_dea/hippocampus_rna-seq.json';
+import hypothRnaSeq from '../../data/pass1b_06_dea/hypothalamus_rna-seq.json';
+import kidneyRnaSeq from '../../data/pass1b_06_dea/kidney_rna-seq.json';
+import liverRnaSeq from '../../data/pass1b_06_dea/liver_rna-seq.json';
+import lungRnaSeq from '../../data/pass1b_06_dea/lung_rna-seq.json';
+import ovaryRnaSeq from '../../data/pass1b_06_dea/ovary_rna-seq.json';
+import smallIntRnaSeq from '../../data/pass1b_06_dea/small-intestine_rna-seq.json';
+import spleenRnaSeq from '../../data/pass1b_06_dea/spleen_rna-seq.json';
+import testesRnaSeq from '../../data/pass1b_06_dea/testis_rna-seq.json';
+import vastusLatRnaSeq from '../../data/pass1b_06_dea/vastus-lateralis_rna-seq.json';
+import venaCavaRnaSeq from '../../data/pass1b_06_dea/vena-cava_rna-seq.json';
+import whiteAdiposeRnaSeq from '../../data/pass1b_06_dea/white-adipose_rna-seq.json';
+import bloodRnaSeq from '../../data/pass1b_06_dea/whole-blood_rna-seq.json';
 
 function loadRnaSeqDataset(tissue) {
   switch (tissue) {

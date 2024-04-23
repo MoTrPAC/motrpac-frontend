@@ -53,14 +53,14 @@ export function Sidebar({
   };
 
   const api =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
-      : process.env.REACT_APP_API_SERVICE_ADDRESS;
-  const endpoint = process.env.REACT_APP_SIGNED_URL_ENDPOINT;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+      : import.meta.env.VITE_API_SERVICE_ADDRESS;
+  const endpoint = import.meta.env.VITE_SIGNED_URL_ENDPOINT;
   const key =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_KEY_DEV
-      : process.env.REACT_APP_API_SERVICE_KEY;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+      : import.meta.env.VITE_API_SERVICE_KEY;
 
   function checkServiceStatus() {
     return axios.get(`${api}${endpoint}/info?key=${key}`).then((res) => {
