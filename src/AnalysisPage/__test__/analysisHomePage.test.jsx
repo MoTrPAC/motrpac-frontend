@@ -27,8 +27,8 @@ const loggedInRootState = {
 };
 
 const analysisActions = {
-  onPickAnalysis: jest.fn(),
-  goBack: jest.fn(),
+  onPickAnalysis: vi.fn(),
+  goBack: vi.fn(),
 };
 
 function constructMatchState(subject) {
@@ -46,9 +46,9 @@ function constructMatchState(subject) {
 describe('Pure Analysis Home Page', () => {
   test('Redirects to home if not logged in', () => {
     const shallowAnalysis = shallow(
-      <AnalysisHomePage {...defaultAnalysisState} {...analysisActions} />
+      <AnalysisHomePage {...defaultAnalysisState} {...analysisActions} />,
     );
-    expect(shallowAnalysis.find('Redirect')).toHaveLength(1);
+    expect(shallowAnalysis.find('Navigate')).toHaveLength(1);
   });
   test('Redirects if no url match (animal or human)', () => {
     const shallowAnalysis = shallow(
@@ -56,9 +56,9 @@ describe('Pure Analysis Home Page', () => {
         {...defaultAnalysisState}
         {...analysisActions}
         loggedIn
-      />
+      />,
     );
-    expect(shallowAnalysis.find('Redirect')).toHaveLength(1);
+    expect(shallowAnalysis.find('Navigate')).toHaveLength(1);
   });
 
   const matchingSubjects = [
@@ -78,7 +78,7 @@ describe('Pure Analysis Home Page', () => {
         <AnalysisHomePage
           {...constructMatchState(match)}
           {...analysisActions}
-        />
+        />,
       );
       expect(shallowAnalysis.find('Redirect')).toHaveLength(0);
     });
@@ -95,7 +95,7 @@ describe('Pure Analysis Home Page', () => {
         />,
       );
       expect(shallowAnalysis.find('h3').text()).toEqual(
-        expect.stringMatching(expected)
+        expect.stringMatching(expected),
       );
     });
   });
@@ -116,21 +116,21 @@ describe('Pure Analysis Home Page', () => {
 });
 
 describe('Connected Animal AnalysisPage', () => {
-  let mountedAnalysis = mount((
+  let mountedAnalysis = mount(
     <Provider store={createStore(rootReducer, loggedInRootState)}>
       <AnalysisHomePageConnected
         match={{ params: { subjectType: 'animal' } }}
       />
-    </Provider>
-  ));
+    </Provider>,
+  );
   beforeAll(() => {
-    mountedAnalysis = mount((
+    mountedAnalysis = mount(
       <Provider store={createStore(rootReducer, loggedInRootState)}>
         <AnalysisHomePageConnected
           match={{ params: { subjectType: 'animal' } }}
         />
-      </Provider>
-    ));
+      </Provider>,
+    );
   });
   afterAll(() => {
     mountedAnalysis.unmount();
@@ -144,7 +144,8 @@ describe('Connected Animal AnalysisPage', () => {
       // Click button --> replace analysisTypeButton with SubAnalysisButton
       mountedAnalysis.find('.activeAnalysis').first().simulate('click');
       expect(
-        mountedAnalysis.find('Provider').props().store.getState().analysis.depth
+        mountedAnalysis.find('Provider').props().store.getState().analysis
+          .depth,
       ).toEqual(1);
       mountedAnalysis.update();
       expect(mountedAnalysis.find('AnalysisCard')).toHaveLength(0);
@@ -153,7 +154,8 @@ describe('Connected Animal AnalysisPage', () => {
       // Click back button --> replace SubAnalysisButton with AnalysisTypeButton
       mountedAnalysis.find('.backButton').first().simulate('click');
       expect(
-        mountedAnalysis.find('Provider').props().store.getState().analysis.depth
+        mountedAnalysis.find('Provider').props().store.getState().analysis
+          .depth,
       ).toEqual(0);
       mountedAnalysis.update();
       expect(mountedAnalysis.find('AnimalDataAnalysis')).toHaveLength(0);
@@ -165,19 +167,19 @@ describe('Connected Animal AnalysisPage', () => {
 });
 
 describe('Connected Human AnalysisPage', () => {
-  let mountedAnalysis = mount((
+  let mountedAnalysis = mount(
     <Provider store={createStore(rootReducer, loggedInRootState)}>
       <AnalysisHomePageConnected match={{ params: { subjectType: 'human' } }} />
-    </Provider>
-  ));
+    </Provider>,
+  );
   beforeAll(() => {
-    mountedAnalysis = mount((
+    mountedAnalysis = mount(
       <Provider store={createStore(rootReducer, loggedInRootState)}>
         <AnalysisHomePageConnected
           match={{ params: { subjectType: 'human' } }}
         />
-      </Provider>
-    ));
+      </Provider>,
+    );
   });
   afterAll(() => {
     mountedAnalysis.unmount();
@@ -189,7 +191,7 @@ describe('Connected Human AnalysisPage', () => {
     expect(mountedAnalysis.find('.activeAnalysis')).toHaveLength(0);
     expect(mountedAnalysis.find('SubAnalysisCard')).toHaveLength(0);
     expect(
-      mountedAnalysis.find('Provider').props().store.getState().analysis.depth
+      mountedAnalysis.find('Provider').props().store.getState().analysis.depth,
     ).toEqual(0);
   });
 });

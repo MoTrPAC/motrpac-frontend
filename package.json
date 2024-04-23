@@ -44,7 +44,7 @@
     "start": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "test": "react-scripts test",
+    "test": "vitest",
     "storybook": "storybook dev -p 9009",
     "build-storybook": "storybook build",
     "sass-lint": "stylelint --config=stylelint.config.js '**/*.scss'",
@@ -78,7 +78,9 @@
     "storybook-addon-remix-react-router": "^3.0.0",
     "stylelint": "^16.2.0",
     "stylelint-config-recommended": "^14.0.0",
-    "vitest": "^1.4.0"
+    "vite-plugin-image-optimizer": "^1.1.7",
+    "vitest": "^1.4.0",
+    "vitest-canvas-mock": "^0.3.3"
   },
   "resolutions": {
     "autoprefixer": "10.4.5"

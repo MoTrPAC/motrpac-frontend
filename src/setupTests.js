@@ -1,11 +1,10 @@
-import { configure } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import { configure } from 'enzyme';
 
-const crypto = require('crypto');
+import * as crypto from 'node:crypto';
+import 'vitest-canvas-mock';
 
 configure({ adapter: new Adapter() });
-
-require('jest-canvas-mock');
 
 jest.mock('react-chartjs-2', () => ({
   Bar: () => null,

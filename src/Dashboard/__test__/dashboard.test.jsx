@@ -1,23 +1,22 @@
+import { mount, shallow } from 'enzyme';
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { applyMiddleware, createStore } from 'redux';
 import thunkMiddleWare from 'redux-thunk';
-import { Router } from 'react-router-dom';
 import rootReducer, { defaultRootState } from '../../App/reducers';
-import { defaultDashboardState } from '../dashboardReducer';
 import { defaultSidebarState } from '../../Sidebar/sidebarReducer';
-import DashboardConnected, { Dashboard } from '../dashboard';
-import History from '../../App/history';
 
 import testUser from '../../testData/testUser';
+import DashboardConnected, { Dashboard } from '../dashboard';
+import { defaultDashboardState } from '../dashboardReducer';
 
 const controlActions = {
-  toggleRelease: jest.fn(),
-  togglePhase: jest.fn(),
-  togglePlot: jest.fn(),
-  toggleSort: jest.fn(),
-  toggleQC: jest.fn(),
+  toggleRelease: vi.fn(),
+  togglePhase: vi.fn(),
+  togglePlot: vi.fn(),
+  toggleSort: vi.fn(),
+  toggleQC: vi.fn(),
 };
 
 describe('Shallow Dashboard', () => {
@@ -28,7 +27,7 @@ describe('Shallow Dashboard', () => {
       {...defaultDashboardState}
       {...controlActions}
       {...defaultSidebarState}
-    />
+    />,
   );
   const loggedInRootState = {
     ...defaultRootState,
@@ -38,19 +37,21 @@ describe('Shallow Dashboard', () => {
       profile: testUser,
     },
   };
-  const mountDash = mount((
+  const mountDash = mount(
     <Provider
       store={createStore(
         rootReducer,
         loggedInRootState,
-        applyMiddleware(thunkMiddleWare)
+        applyMiddleware(thunkMiddleWare),
       )}
     >
-      <Router history={History}>
-        <DashboardConnected />
-      </Router>
-    </Provider>
-  ));
+      <MemoryRouter>
+        <Routes>
+          <Route path={'/'} element={<DashboardConnected />} />
+        </Routes>
+      </MemoryRouter>
+    </Provider>,
+  );
   test('Has expected widgets', () => {
     expect(shallowDash.find('ReleasedSampleHighlight')).toHaveLength(1);
     expect(shallowDash.find('ReleasedSamplePlot')).toHaveLength(1);
