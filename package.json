@@ -1,6 +1,6 @@
 {
   "name": "MoTrPAC",
-  "version": "2.0.0-dev.3",
+  "version": "2.0.0-dev.5",
   "private": true,
   "dependencies": {
     "auth0-js": "9.20.0",

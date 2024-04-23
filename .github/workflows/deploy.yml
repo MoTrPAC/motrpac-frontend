@@ -164,23 +164,60 @@ jobs:
         run: |
           echo "PACKAGE_VERSION=$(jq -r '.version' package.json)" >> $GITHUB_ENV
 
-      - name: Select project based on base branch
-        id: select-project
-        run: |
-          if [[ ${{ github.ref }} == 'refs/heads/master' ]]; then
-            echo "PROJECT_ID=motrpac-portal" >> $GITHUB_ENV
-          else
-            echo "PROJECT_ID=motrpac-portal-dev" >> $GITHUB_ENV
-          fi
-
-      - name: Build and push server image
+      - name: Build and push server image (prod)
+        if: github.ref == 'refs/heads/master'
         uses: docker/build-push-action@v5
         with:
           push: true
+          file: Dockerfile
           tags: |
-            us-docker.pkg.dev/${{ env.PROJECT_ID }}/datahub/frontend:${{ github.sha }}
-            us-docker.pkg.dev/${{ env.PROJECT_ID }}/datahub/frontend:${{ env.PACKAGE_VERSION }}
-            us-docker.pkg.dev/${{ env.PROJECT_ID }}/datahub/frontend:latest
+            us-docker.pkg.dev/motrpac-portal/datahub/frontend:${{ github.sha }}
+            us-docker.pkg.dev/motrpac-portal/datahub/frontend:${{ env.PACKAGE_VERSION }}
+            us-docker.pkg.dev/motrpac-portal/datahub/frontend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            REACT_APP_ES_PROXY_HOST="${{secrets.REACT_APP_ES_PROXY_HOST}}"
+            REACT_APP_ES_PROXY_HOST_DEV="${{secrets.REACT_APP_ES_PROXY_HOST_DEV}}"
+            REACT_APP_API_SERVICE_ADDRESS="${{secrets.REACT_APP_API_SERVICE_ADDRESS}}"
+            REACT_APP_API_SERVICE_ADDRESS_DEV="${{secrets.REACT_APP_API_SERVICE_ADDRESS_DEV}}"
+            REACT_APP_API_SERVICE_KEY="${{secrets.REACT_APP_API_SERVICE_KEY}}"
+            REACT_APP_API_SERVICE_KEY_DEV="${{secrets.REACT_APP_API_SERVICE_KEY_DEV}}"
+            REACT_APP_SIGNED_URL_ENDPOINT="${{secrets.REACT_APP_SIGNED_URL_ENDPOINT}}"
+            REACT_APP_USER_REGISTRATION_ENDPOINT="${{secrets.REACT_APP_USER_REGISTRATION_ENDPOINT}}"
+            REACT_APP_SEND_EMAIL_ENDPOINT="${{secrets.REACT_APP_SEND_EMAIL_ENDPOINT}}"
+            REACT_APP_FILE_DOWNLOAD_ENDPOINT="${{secrets.REACT_APP_FILE_DOWNLOAD_ENDPOINT}}"
+            REACT_APP_QC_DATA_ENDPOINT="${{secrets.REACT_APP_QC_DATA_ENDPOINT}}"
+            REACT_APP_ES_ENDPOINT="${{secrets.REACT_APP_ES_ENDPOINT}}"
+            REACT_APP_FILE_SEARCH_ENDPOINT="${{secrets.REACT_APP_FILE_SEARCH_ENDPOINT}}"
+            REACT_APP_DATA_FILE_BUCKET="${{secrets.REACT_APP_DATA_FILE_BUCKET}}"
+            REACT_APP_QC_REPORT_BUCKET="${{secrets.REACT_APP_QC_REPORT_BUCKET}}"
+            REACT_APP_QC_REPORT_BUCKET_DEV="${{secrets.REACT_APP_QC_REPORT_BUCKET_DEV}}"
+            REACT_APP_ES_ACCESS_TOKEN="${{secrets.REACT_APP_ES_ACCESS_TOKEN}}"
+            REACT_APP_ES_ACCESS_TOKEN_DEV="${{secrets.REACT_APP_ES_ACCESS_TOKEN_DEV}}"
+            REACT_APP_reCAPTCHA_SITE_KEY="${{secrets.REACT_APP_reCAPTCHA_SITE_KEY}}"
+            REACT_APP_AUTH0_CLIENT_ID="${{secrets.REACT_APP_AUTH0_CLIENT_ID}}"
+            REACT_APP_QUALTRICS_SURVEY_URL="${{secrets.REACT_APP_QUALTRICS_SURVEY_URL}}"
+            REACT_APP_USER_SURVEY_SUBMIT_URL="${{secrets.REACT_APP_USER_SURVEY_SUBMIT_URL}}"
+            REACT_APP_USER_SURVEY_INPUT_1="${{secrets.REACT_APP_USER_SURVEY_INPUT_1}}"
+            REACT_APP_USER_SURVEY_INPUT_2="${{secrets.REACT_APP_USER_SURVEY_INPUT_2}}"
+            REACT_APP_USER_SURVEY_INPUT_3="${{secrets.REACT_APP_USER_SURVEY_INPUT_3}}"
+            REACT_APP_USER_SURVEY_INPUT_4="${{secrets.REACT_APP_USER_SURVEY_INPUT_4}}"
+            REACT_APP_USER_SURVEY_INPUT_5="${{secrets.REACT_APP_USER_SURVEY_INPUT_5}}"
+            REACT_APP_OFFICE_HOUR_DAY="${{secrets.REACT_APP_OFFICE_HOUR_DAY}}"
+            REACT_APP_OFFICE_HOUR_DATE="${{secrets.REACT_APP_OFFICE_HOUR_DATE}}"
+            REACT_APP_OFFICE_HOUR_SIGNUP_URL="${{secrets.REACT_APP_OFFICE_HOUR_SIGNUP_URL}}"
+
+      - name: Build and push server image (dev)
+        if: github.ref != 'refs/heads/master'
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          file: Dockerfile.dev
+          tags: |
+            us-docker.pkg.dev/motrpac-portal-dev/datahub/frontend:${{ github.sha }}
+            us-docker.pkg.dev/motrpac-portal-dev/datahub/frontend:${{ env.PACKAGE_VERSION }}
+            us-docker.pkg.dev/motrpac-portal-dev/datahub/frontend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
