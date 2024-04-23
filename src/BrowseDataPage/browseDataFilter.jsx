@@ -8,6 +8,12 @@ function BrowseDataFilter({ activeFilters, onChangeFilter, onResetFilters }) {
   const dataDownload = useSelector((state) => state.browseData);
 
   const fileFilters = [...browseDataFilters];
+  // Remove phenotype, results, and analysis filters
+  // if human-precovif-sed-adu data tab is selected
+  if (dataDownload.humanPrecovidSedAduDataSelected) {
+    fileFilters.splice(3, 2);
+  }
+
   fileFilters.forEach((item) => {
     if (item.keyName === 'tissue_name') {
       if (dataDownload.pass1b06DataSelected) {
