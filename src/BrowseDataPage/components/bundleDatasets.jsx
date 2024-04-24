@@ -2,12 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BundleDownloadButton from './bundleDownloadButton';
 
-function BundleDatasets({
-  profile,
-  bundleDatasets,
-  tagColor,
-  handleUserSurveyOpenOnBundledDownload,
-}) {
+function BundleDatasets({ profile, bundleDatasets, tagColor }) {
   return (
     <div className="row row-cols-1 row-cols-md-3 bundle-datasets">
       {bundleDatasets.map((item) => {
@@ -42,9 +37,6 @@ function BundleDatasets({
                   bundlefile={item.object_zipfile}
                   bundlefileSize={item.object_zipfile_size}
                   profile={profile}
-                  handleUserSurveyOpenOnBundledDownload={
-                    handleUserSurveyOpenOnBundledDownload
-                  }
                 />
               </div>
             </div>
@@ -65,12 +57,10 @@ BundleDatasets.propTypes = {
   }),
   bundleDatasets: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   tagColor: PropTypes.string.isRequired,
-  handleUserSurveyOpenOnBundledDownload: PropTypes.func,
 };
 
 BundleDatasets.defaultProps = {
   profile: {},
-  handleUserSurveyOpenOnBundledDownload: null,
 };
 
 export default BundleDatasets;
