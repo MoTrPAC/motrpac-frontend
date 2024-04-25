@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 
 const publications = [
@@ -17,7 +18,7 @@ const publications = [
  *
  * @returns {object} JSX representation of the Publications component
  */
-export function Publications() {
+function Publications() {
   // Render list of publications
   function renderPublications() {
     return (
@@ -31,6 +32,10 @@ export function Publications() {
 
   return (
     <div className="publicationsPage px-3 px-md-4 mb-3 container">
+      <Helmet>
+        <html lang="en" />
+        <title>Publications - MoTrPAC Data Hub</title>
+      </Helmet>
       <PageTitle title="Publications" />
       <div className="publications-content-container row mb-4">
         <div className="lead col-12">{renderPublications()}</div>
