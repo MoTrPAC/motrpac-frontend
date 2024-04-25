@@ -1,0 +1,33 @@
+.multiOmicsWorkingGroupsPage {
+    .multi-omics-wg-tab-content {
+        .pre-cawg {
+            .resources-table {
+                th {
+                    text-align: center;
+                    width: 33.33%;
+                }
+
+                td {
+                    text-align: center;
+                    vertical-align: top;
+
+                    img {
+                        width: 6.0em;
+                    }
+                }
+            }
+
+            .release-notes-table {
+                td {
+                    dl {
+                        dt {
+                            float: left; 
+                            clear: left;
+                            margin-right: 0.5rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
