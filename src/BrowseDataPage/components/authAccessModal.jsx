@@ -68,7 +68,7 @@ function AuthAccessFileDownloadModal({
           <div className="modal-footer">
             <button
               type="button"
-              className="btn btn-secondary"
+              className="btn btn-secondary px-3"
               data-dismiss="modal"
               onClick={handleModalCloseAfterRequest}
             >
