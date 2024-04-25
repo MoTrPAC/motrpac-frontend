@@ -52,11 +52,16 @@ function DataDownloadsMain({
       <div className="browse-data-summary-container row mb-4">
         <div className="col-12">
           <p className="lead">
-            Browse and download the rat{' '}
-            {userType && userType === 'internal' && 'or human '}study data
-            consisting of both quantitative results and analyses that defining
-            the molecular changes that occur with training and exercise across
-            tissues.
+            Explore and download the MoTrPAC multi-omics datasets, which
+            includes quantitative results and analyses of molecular changes from
+            exercise across tissues. Currently, the complete young rat endurance
+            training dataset is publicly available.{' '}
+            {userType && userType === 'internal'
+              ? 'The young rat acute exercise and human precovid sedentary adult datasets are currently available to consortium members only in the early preview phase. '
+              : null}
+            For a summary of all the ongoing studies in MoTrPAC (data available
+            soon), please visit our{' '}
+            <Link to="/project-overview">Project Overview</Link>.
           </p>
           <div className="bd-callout bd-callout-info">
             Learn more about MoTrPAC studies:
@@ -102,10 +107,10 @@ function DataDownloadsMain({
                 Endurance Training
               </h3>
               <ul className="list-unstyled mt-3 mb-4 text-muted">
-                <li>Total of 60 male and female animals</li>
+                <li>Male and female animals</li>
                 <li>20 tissues</li>
                 <li>29 assays across different omes</li>
-                <li>4 time points</li>
+                <li>5 time points</li>
               </ul>
             </SelectiveDataDownloadsCard>
             {/* pass1a/1c-06 data set */}
@@ -118,7 +123,7 @@ function DataDownloadsMain({
               >
                 <h3 className="card-title phase-card-title">Acute Exercise</h3>
                 <ul className="list-unstyled mt-3 mb-4 text-muted">
-                  <li>Total of 70 male and female animals</li>
+                  <li>Male and female animals</li>
                   <li>21 tissues</li>
                   <li>30 assays across different omes</li>
                   <li>7 time points</li>
@@ -139,7 +144,7 @@ function DataDownloadsMain({
                   Pre-COVID Sedentary
                 </h3>
                 <ul className="list-unstyled mt-3 mb-4 text-muted">
-                  <li>175 adult participants</li>
+                  <li>Adult participants</li>
                   <li>4 tissues</li>
                   <li>22 assays across different omes</li>
                   <li>Acute exercise</li>
