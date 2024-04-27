@@ -33,6 +33,13 @@
 
     .bundle-datasets-item {
       .card {
+        .bundle-dataset-tags {
+          .badge.badge-pill.badge-purple {
+            background-color: #6f42c1;
+            color: #fff;
+          }
+        }
+
         .card-footer {
           background-color: #fff;
           border-top: none;

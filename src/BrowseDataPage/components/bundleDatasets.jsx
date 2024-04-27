@@ -2,7 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BundleDownloadButton from './bundleDownloadButton';
 
-function BundleDatasets({ profile, bundleDatasets, tagColor }) {
+const tagColors = {
+  human: 'badge-primary',
+  rat: 'badge-warning',
+  endurance: 'badge-success',
+  acute: 'badge-info',
+  youngAdult: 'badge-secondary',
+  adult: 'badge-dark',
+  preCovid: 'badge-danger',
+  sedentary: 'badge-purple',
+};
+
+function BundleDatasets({ profile, bundleDatasets }) {
   return (
     <div className="row row-cols-1 row-cols-md-3 bundle-datasets">
       {bundleDatasets.map((item) => {
@@ -15,17 +26,25 @@ function BundleDatasets({ profile, bundleDatasets, tagColor }) {
               <div className="card-body">
                 <h5 className="card-title">{item.title}</h5>
                 <div className="bundle-dataset-tags mb-2">
-                  <span className={`badge badge-pill ${tagColor} mr-1`}>
+                  <span
+                    className={`badge badge-pill ${item.species === 'Rat' ? tagColors.rat : tagColors.human} mr-1`}
+                  >
                     {item.species}
                   </span>
-                  <span className={`badge badge-pill ${tagColor} mr-1`}>
+                  <span
+                    className={`badge badge-pill ${item.participant_type === 'Young Adult' ? tagColors.youngAdult : tagColors.adult} mr-1`}
+                  >
                     {item.participant_type}
                   </span>
-                  <span className={`badge badge-pill ${tagColor} mr-1`}>
+                  <span
+                    className={`badge badge-pill ${item.intervention === 'Endurance Training' ? tagColors.endurance : item.intervention === 'Acute Exercise' ? tagColors.acute : tagColors.sedentary} mr-1`}
+                  >
                     {item.intervention}
                   </span>
                   {item.species === 'Human' && (
-                    <span className={`badge badge-pill ${tagColor} mr-1`}>
+                    <span
+                      className={`badge badge-pill ${item.study_group === 'Pre-COVID' && tagColors.preCovid} mr-1`}
+                    >
                       {item.study_group}
                     </span>
                   )}
@@ -56,7 +75,6 @@ BundleDatasets.propTypes = {
     }),
   }),
   bundleDatasets: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  tagColor: PropTypes.string.isRequired,
 };
 
 BundleDatasets.defaultProps = {

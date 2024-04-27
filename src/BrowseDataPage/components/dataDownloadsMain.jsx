@@ -213,7 +213,6 @@ function DataDownloadsMain({
               <BundleDatasets
                 profile={profile}
                 bundleDatasets={BundleDataTypes.pass1b_06}
-                tagColor="badge-success"
               />
             </div>
             {userType && userType === 'internal' && (
@@ -226,7 +225,6 @@ function DataDownloadsMain({
                 <BundleDatasets
                   profile={profile}
                   bundleDatasets={BundleDataTypes.pass1a_06}
-                  tagColor="badge-info"
                 />
               </div>
             )}
@@ -240,7 +238,6 @@ function DataDownloadsMain({
                 <BundleDatasets
                   profile={profile}
                   bundleDatasets={BundleDataTypes.human_sed_adu}
-                  tagColor="badge-warning"
                 />
               </div>
             )}
