@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import HtmlReportModal from './htmlReportModal';
 
 const proteomicsReportsDA = [
@@ -52,7 +53,7 @@ const proteomics1A1CIndependentAnalyses = [
   't70-white-adipose_prot-pr_1A1C-independent-analyses_report.html',
 ];
 
-function DawgPAC() {
+function DawgPAC({ profile }) {
   const [selectedReport, setSelectedReport] = useState(null);
   const [selectedReportLabel, setSelectedReportLabel] = useState(null);
 
@@ -246,10 +247,22 @@ function DawgPAC() {
         <HtmlReportModal
           selectedReport={selectedReport}
           selectedReportLabel={selectedReportLabel}
+          profile={profile}
         />
       </ul>
     </div>
   );
 }
+
+DawgPAC.propTypes = {
+  profile: PropTypes.shape({
+    userid: PropTypes.string,
+    user_metadata: PropTypes.object,
+  }),
+};
+
+DawgPAC.defaultProps = {
+  profile: {},
+};
 
 export default DawgPAC;

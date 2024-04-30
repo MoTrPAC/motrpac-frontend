@@ -72,7 +72,7 @@ function MultiOmicsWorkingGroups() {
             role="tabpanel"
             aria-labelledby="dawg-pac_tab"
           >
-            <DawgPAC />
+            <DawgPAC profile={userProfile} />
           </div>
         </div>
       </div>
