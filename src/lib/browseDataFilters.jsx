@@ -46,7 +46,7 @@ export const tissues = {
     'Vastus Lateralis',
     'White Adipose',
   ],
-  human_sed_adu: ['Adipose', 'Blood', 'Muscle', 'PBMC'],
+  human_sed_adu: ['Adipose', 'Blood', 'Muscle', 'Plasma'],
 };
 
 export const omes = {
