@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function DataVizLink({ title, tissue, plotType }) {
-  const url = `https://data-viz-dev.motrpac-data.org/?tissues[${tissue}]=1&plot_type=${plotType}&topk=10`;
+  const url = `https://data-viz.motrpac-data.org/?tissues[${tissue}]=1&plot_type=${plotType}&topk=10`;
 
   return (
     <p className="data-visualization-link-container text-center">

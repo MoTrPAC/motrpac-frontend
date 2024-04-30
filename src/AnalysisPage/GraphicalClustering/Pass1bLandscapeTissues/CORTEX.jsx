@@ -4,6 +4,7 @@ import {
   tocbotConfig,
   pass1b06GraphicalClusteringLandscapeImageLocation,
 } from '../sharedLib';
+import DataVizLink from '../components/dataVizLink';
 
 function GraphicalAnalysisCortex() {
   // initialize table of contents
@@ -36,6 +37,7 @@ function GraphicalAnalysisCortex() {
               <p>
                 <img src={`${imageURL}/figure_1.png`} width="100%" alt="" />
               </p>
+              <DataVizLink title="trajectory" tissue="Cortex" plotType="Tree" />
             </div>
             <div className="section level3">
               <h3 id="top-clusters">Top clusters</h3>
@@ -47,6 +49,11 @@ function GraphicalAnalysisCortex() {
               <p>
                 <img src={`${imageURL}/figure_2.png`} width="100%" alt="" />
               </p>
+              <DataVizLink
+                title="cluster"
+                tissue="Cortex"
+                plotType="Histogram"
+              />
             </div>
           </div>
           <div className="section level2">
