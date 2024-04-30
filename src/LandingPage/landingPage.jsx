@@ -10,6 +10,7 @@ import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
 import IconSet from '../lib/iconSet';
 
 import LogoMotrpacWhite from '../assets/logo-motrpac-white.png';
+import BackgroundVideoPreloader from '../assets/LandingPageGraphics/background_video_preload.jpg';
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.svg';
 import LandscapePreprintAbstract from '../assets/LandingPageGraphics/landscape_preprint_abstract.jpg';
@@ -138,7 +139,7 @@ let events = {
  * @returns {object} JSX representation of the landing page.
  */
 export function LandingPage({ isAuthenticated, profile }) {
-  // Local state for managing particle animation
+  const [backgroundVideoLoaded, setBackgroundVideoLoaded] = useState(false);
   const [data, setData] = useState(figure4eData);
   const [networkNodes, setNetwortNodes] = useState([]);
   const iframeRef = useRef(null);
@@ -169,6 +170,13 @@ export function LandingPage({ isAuthenticated, profile }) {
     return <Redirect to="/search" />;
   }
 
+  const backgroundVideo = document.querySelector('video');
+  if (backgroundVideo) {
+    backgroundVideo.onloadeddata = (e) => {
+      setBackgroundVideoLoaded(true);
+    };
+  }
+
   return (
     <div className="row marketing content-container">
       <Helmet>
@@ -181,6 +189,13 @@ export function LandingPage({ isAuthenticated, profile }) {
       <section className="first">
         <div className="w-100 h-100 d-flex align-items-center">
           <BackgroundVideo />
+          {!backgroundVideoLoaded && (
+            <img
+              src={BackgroundVideoPreloader}
+              className="background-video-preloader"
+              alt="Background Video"
+            />
+          )}
           <div className="section-content-container container text-center">
             <div className="logo-container">
               <img src={LogoMotrpacWhite} alt="MoTrPAC Logo" />
