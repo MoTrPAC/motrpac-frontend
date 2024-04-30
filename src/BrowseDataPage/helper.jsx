@@ -254,7 +254,7 @@ export const transformData = (arr) => {
     if (item.tissue_name !== null && item.tissue_name !== undefined) {
       let newTissueVal = item.tissue_name;
       if (
-        newTissueVal.indexOf('Human EDTA Plasma') !== -1 ||
+        newTissueVal.indexOf('Human PBMC') !== -1 ||
         newTissueVal.indexOf('Human EDTA Packed Cells') !== -1 ||
         newTissueVal.indexOf('Human PAXgene RNA') !== -1
       ) {
@@ -275,8 +275,8 @@ export const transformData = (arr) => {
         newTissueVal = 'Muscle';
         item.tissue_name = newTissueVal;
       }
-      if (newTissueVal.indexOf('Human PBMC') !== -1) {
-        newTissueVal = 'PBMC';
+      if (newTissueVal.indexOf('Human EDTA Plasma') !== -1) {
+        newTissueVal = 'Plasma';
         item.tissue_name = newTissueVal;
       }
       if (
