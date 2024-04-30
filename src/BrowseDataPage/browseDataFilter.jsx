@@ -8,10 +8,9 @@ function BrowseDataFilter({ activeFilters, onChangeFilter, onResetFilters }) {
   const dataDownload = useSelector((state) => state.browseData);
 
   const fileFilters = [...browseDataFilters];
-  // Remove phenotype, results, and analysis filters
-  // if human-precovif-sed-adu data tab is selected
+  // Remove phenotype filter if human-precovid-sed-adu data tab is selected
   if (dataDownload.humanPrecovidSedAduDataSelected) {
-    fileFilters.splice(3, 2);
+    fileFilters.splice(4, 1);
   }
 
   fileFilters.forEach((item) => {
