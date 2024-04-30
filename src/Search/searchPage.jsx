@@ -248,7 +248,21 @@ export function SearchPage({
                         (inputEl && inputEl.value && inputEl.value.length)
                         ? formatSearchInput()
                         : searchParams.keys,
-                      'all'
+                      'all',
+                    );
+                    // track event in Google Analytics 4
+                    trackEvent(
+                      'Differential Abundance Search',
+                      'keyword_search',
+                      profile && profile.userid
+                        ? profile.userid.substring(
+                            profile.userid.indexOf('|') + 1,
+                          )
+                        : 'anonymous',
+                      (multiSelections && multiSelections.length) ||
+                        (inputEl && inputEl.value && inputEl.value.length)
+                        ? formatSearchInput()
+                        : searchParams.keys,
                     );
                   }}
                 >
@@ -296,6 +310,7 @@ export function SearchPage({
                     handleSearch={handleSearch}
                     resetSearch={resetSearch}
                     hasResultFilters={hasResultFilters}
+                    profile={profile}
                   />
                 </div>
                 <div className="tabbed-content col-md-9">
