@@ -251,6 +251,20 @@ export const transformData = (arr) => {
         item.assay = newMetabAssayVal;
       }
     }
+    if (
+      item.assay !== null &&
+      item.assay !== undefined &&
+      item.omics === 'Metabolomics Targeted'
+    ) {
+      let newMetabAssayVal = item.assay;
+      if (
+        newMetabAssayVal.indexOf('Acylcarnitines') !== -1 &&
+        newMetabAssayVal.indexOf('Oxylipins') !== -1
+      ) {
+        newMetabAssayVal = 'Merged';
+        item.assay = newMetabAssayVal;
+      }
+    }
     if (item.tissue_name !== null && item.tissue_name !== undefined) {
       let newTissueVal = item.tissue_name;
       if (
