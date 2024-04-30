@@ -146,7 +146,7 @@ function GeneCentricView({
                     );
                     // track event in Google Analytics 4
                     trackEvent(
-                      'Differential Abundance Search',
+                      'Gene-centric View Search',
                       'keyword_search',
                       profile && profile.userid
                         ? profile.userid.substring(
