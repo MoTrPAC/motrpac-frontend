@@ -57,31 +57,54 @@
         }
       }
 
+      .background-video-preloader {
+        position: absolute;
+        z-index: 1;
+        object-fit: cover;
+        width:100%;
+        height:100%;
+        top: 0;
+        left: 0;
+      }
+
       .section-content-container {
-        z-index: 2;
+        z-index: 5;
 
-        h1 {
-          color: $accent-yellow;
-          text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.5);
-        }
-
-        p {
-          color: #fff;
-          font-size: 2.05rem;
-          line-height: 2;
-          text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.75);
-
-          .about-motrpac-emphasis {
-            color: $accent-yellow;
+        .logo-container {
+          margin-bottom: 1.5rem;
+          img {
+            width: 100%;
+            max-width: 35.0rem;
           }
         }
 
-        .btn {
-          box-shadow: 0 0 2.0em 0.1em rgba(0, 0, 0, 0.25);
+        h2, h3 {
+          color: $accent-yellow;
+          line-height: 1;
+          text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.5);
+        }
+
+        p.hero {
+          margin-top: 1.75rem;
+
+          a {
+            color: #fff;
+            font-size: 2.05rem;
+            line-height: 1.5;
+            text-decoration: none;
+            text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.75);
+
+            .about-motrpac-emphasis {
+              color: $accent-yellow;
+            }
+          }
         }
 
         .highlighted-links-container {
-          a {
+          .btn {
+            box-shadow: 0 0 2.0em 0.1em rgba(0, 0, 0, 0.25);
+            max-width: 206px;
+            width: 100%;
             font-weight: 500;
             margin-left: 0.75em;
             margin-right: 0.75em;
@@ -89,7 +112,7 @@
         }
 
         .office-hour-anchor-link-container {
-          margin-top: 4.0em;
+          margin-top: 3.0em;
 
           .office-hour-anchor-link {
             border: solid 2px #fff;
@@ -198,8 +221,8 @@
 
           h1 {
             color: #fff;
-            font-size: 3.4rem;
-            line-height: 1.25;
+            font-size: 3.55rem;
+            line-height: 1.3;
           }
         }
 
@@ -692,12 +715,34 @@ section {
         .section-content-container {
           height: 60vh;
 
-          .display-1 {
-            font-size: 6.0rem;
+          .logo-container {
+            margin-bottom: 1.5rem;
+            img {
+              width: 100%;
+              max-width: 28.0rem;
+            }
           }
 
-          p {
-            line-height: 1.6;
+          .display-2 {
+            font-size: 4.5rem;
+          }
+
+          .display-3 {
+            font-size: 3.5rem;
+          }
+
+          p.hero {
+            a {
+              font-size: 1.85rem;
+              line-height: 1.45;
+            }
+          }
+
+          .highlighted-links-container {
+            .btn {
+              font-size: 1.05rem;
+              max-width: 185px;
+            }
           }
         }
       }
@@ -738,19 +783,41 @@ section {
       &.first {
         .section-content-container {
           height: 65vh;
+          margin-top: -8.5rem;
 
-          .display-1 {
-            font-size: 5.5rem;
+          .logo-container {
+            margin-bottom: 1.5rem;
+            img {
+              width: 100%;
+              max-width: 24.0rem;
+            }
           }
 
-          p {
-            font-size: 1.65rem;
-            line-height: 1.7;
+          .display-2 {
+            font-size: 4.0rem;
+          }
+
+          .display-3 {
+            font-size: 3.0rem;
+          }
+
+          p.hero {
+            margin-top: 1.75rem;
+  
+            a {
+              font-size: 1.65rem;
+              line-height: 1.45;
+  
+              .about-motrpac-emphasis {
+                color: $accent-yellow;
+              }
+            }
           }
 
           .highlighted-links-container {
             .btn {
-              font-size: 1.15rem;
+              font-size: 1.05rem;
+            max-width: 185px;
             }
           }
           
@@ -839,6 +906,10 @@ section {
 
 /* Small devices (landscape phones, less than 768px) */
 @include media-breakpoint-down(sm) {
+  body {
+    padding-top: 3.75rem;
+  }
+
   .content-container {
     justify-content: center;
 
@@ -849,20 +920,42 @@ section {
 
       &.first {
         .section-content-container {
-          height: 75vh;
+          height: 67vh;
+          margin-top: -7.5rem;
 
-          .display-1 {
-            font-size: 4.75rem;
+          .logo-container {
+            margin-bottom: 1.5rem;
+            img {
+              width: 100%;
+              max-width: 22.0rem;
+            }
           }
 
-          p {
-            font-size: 1.65rem;
-            line-height: 1.65;
+          .display-2 {
+            font-size: 3.5rem;
+          }
+
+          .display-3 {
+            font-size: 2.75rem;
+          }
+
+          p.hero {
+            margin-top: 1.55rem;
+  
+            a {
+              font-size: 1.55rem;
+              line-height: 1.4;
+  
+              .about-motrpac-emphasis {
+                color: $accent-yellow;
+              }
+            }
           }
 
           .highlighted-links-container {
             .btn {
-              font-size: 1.15rem;
+              font-size: 1.0rem;
+              max-width: 180px;
             }
           }
           
@@ -987,20 +1080,38 @@ section {
 
       &.first {
         .section-content-container {
-          height: 65vh;
+          height: 68vh;
+          margin-top: -7.5rem;
 
-          .display-1 {
-            font-size: 4.0rem;
+          .logo-container {
+            margin-bottom: 1.5rem;
+            img {
+              width: 100%;
+              max-width: 22.0rem;
+            }
           }
 
-          p {
-            font-size: 1.5rem;
-            line-height: 1.6;
+          .display-2 {
+            font-size: 3.5rem;
+          }
+
+          .display-3 {
+            font-size: 2.75rem;
+          }
+
+          p.hero {
+            margin-top: 1.55rem;
+  
+            a {
+              font-size: 1.55rem;
+              line-height: 1.4;
+            }
           }
 
           .highlighted-links-container {
             .btn {
-              font-size: 1.1rem;
+              font-size: 1.0rem;
+              max-width: 180px;
             }
           }
           
@@ -1111,6 +1222,10 @@ section {
 
 /* Phone portrait at 430x932 (e.g. iPhone 15 plus) or smaller */
 @media (max-width: 430px) {
+  body {
+    padding-top: 3.75rem;
+  }
+
   .content-container {
     justify-content: center;
 
@@ -1121,22 +1236,38 @@ section {
 
       &.first {
         .section-content-container {
-          height: 75vh;
+          height: 73vh;
+          margin-top: -7.4rem;
 
-          .display-1 {
-            font-size: 3.0rem;
+          .logo-container {
+            margin-bottom: 1.5rem;
+            img {
+              width: 100%;
+              max-width: 18.0rem;
+            }
           }
 
-          p {
-            font-size: 1.45rem;
-            line-height: 1.45;
+          .display-2 {
+            font-size: 2.75rem;
+          }
+
+          .display-3 {
+            font-size: 2.25rem;
+          }
+
+          p.hero {
+            margin-top: 1.55rem;
+  
+            a {
+              font-size: 1.25rem;
+              line-height: 1.2;
+            }
           }
 
           .highlighted-links-container {
             .btn {
               font-size: 0.9rem;
-              margin-left: 0.5rem;
-              margin-right: 0.5rem;
+              max-width: 165px;
             }
           }
           
@@ -1268,6 +1399,10 @@ section {
 
 /* Phone portrait at 375x667 (e.g. iPhone 8) or smaller */
 @media (max-width: 375px) {
+  body {
+    padding-top: 3.75rem;
+  }
+
   .content-container {
     justify-content: center;
 
@@ -1278,35 +1413,53 @@ section {
 
       &.first {
         .section-content-container {
-          height: 85vh;
+          height: 71vh;
+          margin-top: -7.5rem;
 
-          .display-1 {
-            font-size: 2.75rem;
+          .logo-container {
+            margin-bottom: 1.0rem;
+            img {
+              width: 100%;
+              max-width: 12.5rem;
+            }
           }
 
-          p {
-            font-size: 1.25rem;
-            line-height: 1.35;
+          .display-2 {
+            font-size: 1.95rem;
+          }
+
+          .display-3 {
+            font-size: 1.55rem;
+          }
+
+          p.hero {
+            margin-top: 0.75rem;
+            margin-bottom: 0;
+            line-height: 1.2;
+
+            a {
+              font-size: 1.0rem;
+            }
           }
 
           .highlighted-links-container {
+            margin-top: 0.25rem;
+
             .btn {
-              font-size: 0.85rem;
-              padding-left: 0.55rem;
-              padding-right: 0.55rem;
-              margin-left: 0.4rem;
-              margin-right: 0.4rem;
+              font-size: 0.7rem;
+              max-width: 140px;
+              margin-top: 1.0rem !important;
             }
           }
           
           .office-hour-anchor-link-container {
-            margin-top: 2.25rem;
+            margin-top: 1.85rem;
             padding: 0 0.75rem;
 
             .office-hour-anchor-link {
               border-radius: 2.35rem;
               box-shadow: inset 0rem 4.5rem rgba(255, 255, 255, 0.2);
-              font-size: 1.1rem;
+              font-size: 0.95rem;
             }
           }
         }
@@ -1348,22 +1501,24 @@ section {
 
       &.fifth {
         .section-content-container {
-          height: 85vh;
+          height: 80vh;
+          margin-top: -7rem;
 
           .content {
             h1 {
-              font-size: 1.65rem;
+              font-size: 1.55rem;
               line-height: 1.25;
+              margin-bottom: 0;
             }
 
             .btn {
-              font-size: 1.0rem;
+              font-size: 0.85rem;
             }
           }
 
           .feature-image {
             max-width: 90%;
-            margin: 2.0rem 1.25rem !important;
+            margin: 1.75rem 1.25rem !important;
             padding: 2.0rem 2.15rem !important;
           }
         }

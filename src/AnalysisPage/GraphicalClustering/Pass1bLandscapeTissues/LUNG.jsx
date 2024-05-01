@@ -4,6 +4,7 @@ import {
   tocbotConfig,
   pass1b06GraphicalClusteringLandscapeImageLocation,
 } from '../sharedLib';
+import DataVizLink from '../components/dataVizLink';
 
 function GraphicalAnalysisLung() {
   // initialize table of contents
@@ -35,6 +36,7 @@ function GraphicalAnalysisLung() {
               <p>
                 <img src={`${imageURL}/figure_1.png`} width="100%" alt="" />
               </p>
+              <DataVizLink title="trajectory" tissue="Lung" plotType="Tree" />
             </div>
             <div className="section level3">
               <h3 id="top-clusters">Top clusters</h3>
@@ -45,6 +47,7 @@ function GraphicalAnalysisLung() {
               <p>
                 <img src={`${imageURL}/figure_2.png`} width="100%" alt="" />
               </p>
+              <DataVizLink title="cluster" tissue="Lung" plotType="Histogram" />
             </div>
           </div>
           <div className="section level2">
