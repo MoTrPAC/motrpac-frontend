@@ -4,6 +4,14 @@ import ExternalLink from '../lib/ui/externalLink';
 
 const publications = [
   {
+    url: 'https://doi.org/10.1016/j.cmet.2023.12.021',
+    title:
+      'The mitochondrial multi-omic response to exercise training across tissues',
+    authors:
+      'Amar D, Gay NR, Jimenez-Morales D, Jean Beltran PM, Ramaker ME, Raja AN, Zhao B, Sun Y, Marwaha S, Gaul DA, Hershman SG, Ferrasse A, Xia A, Lanza I, Fernández FM, Montgomery SB, Hevener AL, Ashley EA, Walsh MJ, Sparks LM, Burant CF, Rector SR, Thyfault J, Wheeler MT, Goodpaster BH, Coen PM, Schenk S, Bodine SC, Lindholm ME and The MoTrPAC Study Group.',
+    cite: 'Cell Metabolism 36, 1-19, June 4, 2024.',
+  },
+  {
     url: 'https://www.nature.com/articles/s41586-023-06877-w',
     title:
       'Temporal dynamics of the multi-omic response to endurance exercise training',
