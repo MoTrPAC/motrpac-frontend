@@ -1,6 +1,6 @@
 module.exports = {
-  extends: ['airbnb', 'plugin:prettier/recommended'],
-  plugins: ['react-hooks', 'prettier'],
+  extends: ['airbnb'],
+  plugins: ['react-hooks'],
   rules: {
     'jsx-a11y/label-has-for': 0,
     'jsx-a11y/label-has-associated-control': 0,
