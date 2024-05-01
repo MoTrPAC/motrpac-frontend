@@ -13,7 +13,7 @@ import LogoMotrpacWhite from '../assets/logo-motrpac-white.png';
 import BackgroundVideoPreloader from '../assets/LandingPageGraphics/background_video_preload.jpg';
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.svg';
-import LandscapePreprintAbstract from '../assets/LandingPageGraphics/landscape_preprint_abstract.jpg';
+import LandscapePreprintAbstract from '../assets/LandingPageGraphics/landscape_abstract.jpg';
 import BackgroundVideo from './components/backgroundVideo';
 import Figure1C from './components/figure1c';
 
@@ -263,8 +263,8 @@ export function LandingPage({ isAuthenticated, profile }) {
             <div className="row content-landscape-preprint d-flex align-items-center">
               <div className="content col-12 col-md-6">
                 <h1>
-                  MoTrPAC Endurance Exercise Training Animal Study Landscape
-                  Paper now published in{' '}
+                  MoTrPAC animal endurance training exercise study paper now published in
+                  {' '}
                   <span className="font-italic">Nature</span>
                 </h1>
                 <a
