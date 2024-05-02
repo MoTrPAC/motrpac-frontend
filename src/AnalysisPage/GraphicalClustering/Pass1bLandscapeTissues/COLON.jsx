@@ -149,6 +149,11 @@ function GraphicalAnalysisColon() {
                   <img src={`${imageURL}/figure_6.png`} width="100%" alt="" />
                   <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />
                 </p>
+                <DataVizLink
+                  title="timecourse"
+                  tissue="Colon"
+                  plotType="Trajectories"
+                />
                 <hr />
               </div>
               <div className="section level4">
