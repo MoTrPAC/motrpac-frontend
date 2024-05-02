@@ -1397,7 +1397,185 @@ section {
   }
 }
 
-/* Phone portrait at 375x667 (e.g. iPhone 8) or smaller */
+/* Phone portrait at 390x844 (e.g. iPhone12/13 + Pro) or smaller */
+@media (max-width: 398px) {
+  body {
+    padding-top: 3.75rem;
+  }
+
+  .content-container {
+    justify-content: center;
+
+    section {
+      .animated-down-arrow {
+        display: none;
+      }
+
+      &.first {
+        .section-content-container {
+          height: 73vh;
+          margin-top: -7.4rem;
+
+          .logo-container {
+            margin-bottom: 1.5rem;
+            img {
+              width: 100%;
+              max-width: 18.0rem;
+            }
+          }
+
+          .display-2 {
+            font-size: 2.75rem;
+          }
+
+          .display-3 {
+            font-size: 2.25rem;
+          }
+
+          p.hero {
+            margin-top: 1.25rem;
+            margin-bottom: 0.25rem;
+            line-height: 1.25;
+  
+            a {
+              font-size: 1.15rem;
+            }
+          }
+
+          .highlighted-links-container {
+            .btn {
+              font-size: 0.8rem;
+              max-width: 150px;
+            }
+          }
+          
+          .office-hour-anchor-link-container {
+            margin-top: 2.5rem;
+            padding: 0 0.75rem;
+
+            .office-hour-anchor-link {
+              border-radius: 2.35rem;
+              box-shadow: inset 0rem 4.5rem rgba(255, 255, 255, 0.2);
+              font-size: 1.15rem;
+            }
+          }
+        }
+      }
+
+      &.third {
+        .section-content-container {
+          height: 60vh;
+          padding-top: 0;
+
+          .container {
+            h1 {
+              font-size: 1.65rem;
+              line-height: 1.35;
+            }
+          }
+        }
+      }
+
+      &.fourth {
+        .section-content-container {
+          height: 55vh;
+          padding-top: 0;
+
+          #heatmap-container {
+            width: 100% !important;
+            min-width: 355px !important;
+            min-height: 220px !important;
+          }
+
+          .container {
+            h1 {
+              font-size: 1.65rem;
+              line-height: 1.35;
+            }
+          }
+        }
+      }
+
+      &.fifth {
+        .section-content-container {
+          height: 85vh;
+
+          .content {
+            h1 {
+              font-size: 1.85rem;
+              line-height: 1.35;
+            }
+
+            .btn {
+              font-size: 1.15rem;
+            }
+          }
+
+          .feature-image {
+            max-width: 90%;
+            margin: 2.0rem 1.25rem !important;
+            padding: 2.0rem 2.15rem !important;
+          }
+        }
+      }
+
+      &.seventh {
+        .section-content-container {
+          padding-top: 0em;
+          padding-bottom: 1.5em;
+  
+          .content-code-repository {
+            min-height: 350px;
+            margin-bottom: 5.0em;
+  
+            .feature-image {
+              text-align: center;
+        
+              img {
+                height: 26.0rem;
+                transition: height 0.5s ease;
+        
+                &:hover {
+                  height: 27.0rem;
+                }
+              }
+            }
+          }
+  
+          .content {
+            h1 {
+              margin-bottom: 0.25rem;
+
+              .material-icons {
+                color: #56bf46;
+                font-size: 4.25rem !important;
+                margin-left: -6px;
+              }
+            }
+        
+            p {
+              color: $stanford-black;
+              font-size: 1.3rem;
+              line-height: 1.4;
+            }
+
+            .btn {
+              font-size: 1.15rem;
+              margin-top: 1.15rem !important;
+            }
+          }
+  
+          .office-hour-banner {
+            margin-left: 1.0rem !important;
+            margin-right: 1.0rem !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Phone portrait at 375x667 (e.g. iPhone 8 or iPhone 11 Pro) or smaller */
 @media (max-width: 375px) {
   body {
     padding-top: 3.75rem;
