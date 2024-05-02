@@ -7,7 +7,7 @@ on:
     branches:
       - master
       - dev
-    paths:
+    paths-ignore:
       - .github/**
       - .circleci/**
   workflow_dispatch:
@@ -95,9 +95,17 @@ jobs:
       id-token: write   # to verify the deployment originates from an appropriate source
 
     steps:
+      - name: Get app token
+        uses: actions/create-github-app-token@v1
+        id: get_app_token
+        with:
+          app-id: ${{ secrets.GITHUB_APP_ID }}
+          private-key: ${{ secrets.GITHUB_APP_PRIVATE_KEY }}
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
+          token: ${{ steps.get_app_token.outputs.token }}
           fetch-depth: 0  # Fetch all history for all branches and tags.
           ref: ${{ github.base_ref }}
 
@@ -109,9 +117,7 @@ jobs:
 
       - name: Clean input string
         run: |
-          INPUT_VERSION="${{ needs.get-version-bump.outputs.increment }}"
-          INPUT_VERSION=${INPUT_VERSION,,}
-          echo "INPUT_VERSION=${INPUT_VERSION// /}" >> $GITHUB_ENV
+          echo "INPUT_VERSION=${{ needs.get-version-bump.outputs.increment }}" >> $GITHUB_ENV
 
       - name: Bump version and push tag
         run: |
@@ -120,7 +126,7 @@ jobs:
           git config user.name "github-actions[bot]"
 
           # add args to yarn version command if INPUT_VERSION is "prerelease"
-          if [ $INPUT_VERSION == "prerelease" ]; then
+          if [ ${{ env.INPUT_VERSION }} == "prerelease" ]; then
             yarn version --prerelease --preid dev --message "chore(release): bump version to v%s"
           else
             yarn version --${{ env.INPUT_VERSION }} --message "chore(release): bump version to v%s"
