@@ -1,8 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function DataVizLink({ title, tissue, plotType }) {
-  const url = `https://data-viz.motrpac-data.org/?tissues[${tissue}]=1&plot_type=${plotType}&topk=10`;
+function DataVizLink({ title, tissue, plotType, minClusterSize }) {
+  let topkStr = '';
+  let minClusterSizeStr = '';
+
+  // include 'topk' param for non-trajectory plots
+  if (plotType !== 'Trajectories') {
+    topkStr = '&topk=10';
+  }
+
+  // include 'min_cluster_size' param if minClusterSize is provided
+  if (minClusterSize && typeof (minClusterSize) === 'number') {
+    minClusterSizeStr = `&min_cluster_size=${minClusterSize}`;
+  }
+
+  const url = `https://data-viz.motrpac-data.org/?tissues[${tissue}]=1&plot_type=${plotType}${topkStr}${minClusterSizeStr}`;
 
   return (
     <p className="data-visualization-link-container text-center">
@@ -23,6 +36,11 @@ DataVizLink.propTypes = {
   title: PropTypes.string.isRequired,
   tissue: PropTypes.string.isRequired,
   plotType: PropTypes.string.isRequired,
+  minClusterSize: PropTypes.number,
+};
+
+DataVizLink.defaultProps = {
+  minClusterSize: null,
 };
 
 export default DataVizLink;
