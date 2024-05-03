@@ -2,11 +2,13 @@ node_modules/
 README.md
 LICENSE
 .prettierignore
-.eslintrc.js
+eslint.config.cjs
 .prettierrc.js
+stylelint.config.js
 .circleci/
 .github/
 scripts/
 .storybook/
 .env
 build/
+/.yarn/
