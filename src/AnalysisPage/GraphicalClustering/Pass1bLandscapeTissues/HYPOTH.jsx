@@ -40,6 +40,7 @@ function GraphicalAnalysisHypothalamus() {
                 title="trajectory"
                 tissue="Hypothalamus"
                 plotType="Tree"
+                minClusterSize={1}
               />
             </div>
             <div className="section level3">
@@ -55,6 +56,7 @@ function GraphicalAnalysisHypothalamus() {
                 title="cluster"
                 tissue="Hypothalamus"
                 plotType="Histogram"
+                minClusterSize={1}
               />
             </div>
           </div>

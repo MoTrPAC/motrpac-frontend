@@ -150,6 +150,11 @@ function MitoGraphicalAnalysisBrownAdipose() {
                   <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />
                   <img src={`${imageURL}/figure_8.png`} width="100%" alt="" />
                 </p>
+                <DataVizLink
+                  title="timecourse"
+                  tissue="Brown Adipose"
+                  plotType="Trajectories"
+                />
                 <hr />
               </div>
               <div className="section level4">

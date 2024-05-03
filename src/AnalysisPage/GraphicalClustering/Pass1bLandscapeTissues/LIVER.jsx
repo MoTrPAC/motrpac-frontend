@@ -145,6 +145,11 @@ function GraphicalAnalysisLiver() {
                   <img src={`${imageURL}/figure_8.png`} width="100%" alt="" />
                   <img src={`${imageURL}/figure_9.png`} width="100%" alt="" />
                 </p>
+                <DataVizLink
+                  title="timecourse"
+                  tissue="Liver"
+                  plotType="Trajectories"
+                />
                 <hr />
               </div>
               <div className="section level4">
