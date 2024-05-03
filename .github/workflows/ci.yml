@@ -15,11 +15,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Run corepack enable
+        run: corepack enable
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: yarn
+#          cache: yarn
 
       - name: Install project
         run: yarn install --frozen-lockfile
@@ -37,11 +40,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Run corepack enable
+        run: corepack enable
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: yarn
+#          cache: yarn
 
       - name: Install project
         run: yarn install --frozen-lockfile
