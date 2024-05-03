@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom';
 import { install } from 'ga-gtag';
 import trackingId from './GoogleAnalytics/googleAnalytics';
 import App from './App/App';
@@ -8,7 +8,9 @@ import './sass/main.scss';
 
 install(trackingId());
 
-render(<App />, document.getElementById('root'));
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(<App />);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
