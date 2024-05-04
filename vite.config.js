@@ -9,6 +9,13 @@ export default defineConfig({
   plugins: [react(), visualizer()],
   build: {
     outDir: 'build',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vis-network-react': ['vis-network-react'],
+        }
+      }
+    }
   },
   test: {
     globals: true,
