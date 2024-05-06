@@ -144,14 +144,16 @@ function MitoGraphicalAnalysisSpleen() {
                 <p>
                   <img src={`${imageURL}/figure_6.png`} width="100%" alt="" />
                   <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />
-                  No significant enrichments for
-                  SPLEEN:1w_F0_M0-&gt;2w_F0_M0-&gt;4w_F0_M0-&gt;8w_F1_M1
                 </p>
                 <DataVizLink
                   title="timecourse"
                   tissue="Spleen"
                   plotType="Trajectories"
                 />
+                <p>
+                  No significant enrichments for
+                  SPLEEN:1w_F0_M0-&gt;2w_F0_M0-&gt;4w_F0_M0-&gt;8w_F1_M1
+                </p>
                 <hr />
               </div>
             </div>

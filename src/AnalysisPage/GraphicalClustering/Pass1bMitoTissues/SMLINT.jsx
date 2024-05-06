@@ -145,7 +145,16 @@ function MitoGraphicalAnalysisSmallIntestine() {
                 <h4 id="smlint1w_f1_m0">SMLINT:1w_F1_M0</h4>
                 <p>
                   <img src={`${imageURL}/figure_6.png`} width="100%" alt="" />
+                </p>
+                <p>
                   <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />
+                </p>
+                <DataVizLink
+                  title="pathway enrichment"
+                  tissue="Small Intestine"
+                  plotType="Pathway"
+                />
+                <p>
                   <img src={`${imageURL}/figure_8.png`} width="100%" alt="" />
                 </p>
                 <DataVizLink
