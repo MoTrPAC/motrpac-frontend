@@ -59,6 +59,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@storybook/addon-actions": "8.0.10",
     "@storybook/addon-links": "8.0.10",
     "@storybook/addons": "7.6.17",
@@ -83,7 +84,10 @@
   "jest": {
     "transform": {},
     "transformIgnorePatterns": [
-      "/node_modules/(?!(vis-network|vis-data))"
-    ]
+      "/node_modules/(?!(vis-network|vis-data|d3|d3-array))"
+    ],
+    "moduleNameMapper": {
+      "d3": "<rootDir>/node_modules/d3/dist/d3.min.js"
+    }
   }
 }
