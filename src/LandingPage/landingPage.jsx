@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import VisNetworkReactComponent from 'vis-network-react';
+import { useMediaQuery } from 'react-responsive';
 import Footer from '../Footer/footer';
 import PromoteBanner from './promoteBanner';
 import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
 import IconSet from '../lib/iconSet';
 
 import LogoMotrpacWhite from '../assets/logo-motrpac-white.png';
-import BackgroundVideoPreloader from '../assets/LandingPageGraphics/background_video_preload.jpg';
+import BackgroundVideoImage from '../assets/LandingPageGraphics/background_video_preload.jpg';
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.svg';
 import LandscapePreprintAbstract from '../assets/LandingPageGraphics/landscape_abstract.jpg';
@@ -143,6 +144,7 @@ export function LandingPage({ isAuthenticated, profile }) {
   const [data, setData] = useState(figure4eData);
   const [networkNodes, setNetwortNodes] = useState([]);
   const iframeRef = useRef(null);
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
 
   const handleAddNode = useCallback(() => {
     const id = data.nodes.length + 1;
@@ -188,10 +190,18 @@ export function LandingPage({ isAuthenticated, profile }) {
       </Helmet>
       <section className="first">
         <div className="w-100 h-100 d-flex align-items-center">
-          <BackgroundVideo />
           {!backgroundVideoLoaded && (
             <img
-              src={BackgroundVideoPreloader}
+              src={BackgroundVideoImage}
+              className="background-video-preloader"
+              alt="Background Video"
+            />
+          )}
+          {!isTabletOrMobile ? (
+            <BackgroundVideo />
+          ) : (
+            <img
+              src={BackgroundVideoImage}
               className="background-video-preloader"
               alt="Background Video"
             />
