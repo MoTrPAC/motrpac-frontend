@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import * as d3 from 'd3';
+import * as d3 from 'd3/dist/d3.min';
 import figureRat from '../../assets/figures/rat-figure-pass1b.svg';
 import FigureAssayLegends from './figureAssayLegends';
 import HeatmapModal from './heatmapModal';
