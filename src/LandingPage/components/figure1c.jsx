@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import * as d3 from 'd3/dist/d3.min';
+import * as d3 from 'd3';
 
 const dataset = require('./figure1c_data.json');
 
