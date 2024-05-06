@@ -146,7 +146,16 @@ function GraphicalAnalysisWhiteAdipose() {
                 </h4>
                 <p>
                   <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />
+                </p>
+                <p>
                   <img src={`${imageURL}/figure_8.png`} width="100%" alt="" />
+                </p>
+                <DataVizLink
+                  title="pathway enrichment"
+                  tissue="White Adipose"
+                  plotType="Pathway"
+                />
+                <p>
                   <img src={`${imageURL}/figure_9.png`} width="100%" alt="" />
                 </p>
                 <DataVizLink
