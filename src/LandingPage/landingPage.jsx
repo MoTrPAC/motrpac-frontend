@@ -144,7 +144,7 @@ export function LandingPage({ isAuthenticated, profile }) {
   const [data, setData] = useState(figure4eData);
   const [networkNodes, setNetwortNodes] = useState([]);
   const iframeRef = useRef(null);
-  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   const handleAddNode = useCallback(() => {
     const id = data.nodes.length + 1;
@@ -197,7 +197,7 @@ export function LandingPage({ isAuthenticated, profile }) {
               alt="Background Video"
             />
           )}
-          {!isTabletOrMobile ? (
+          {!isMobile ? (
             <BackgroundVideo />
           ) : (
             <img
