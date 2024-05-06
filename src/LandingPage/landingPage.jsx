@@ -14,7 +14,7 @@ import LogoMotrpacWhite from '../assets/logo-motrpac-white.png';
 import BackgroundVideoImage from '../assets/LandingPageGraphics/background_video_preload.jpg';
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.svg';
-import LandscapePreprintAbstract from '../assets/LandingPageGraphics/landscape_abstract.jpg';
+import LandscapeAbstract from '../assets/LandingPageGraphics/landscape_abstract.gif';
 import BackgroundVideo from './components/backgroundVideo';
 import Figure1C from './components/figure1c';
 
@@ -292,7 +292,7 @@ export function LandingPage({ isAuthenticated, profile }) {
                 onClick={goToExternalLink}
               >
                 <img
-                  src={LandscapePreprintAbstract}
+                  src={LandscapeAbstract}
                   className="img-fluid lanascape-paper-abstract"
                   alt="Landscape Paper Abstract"
                 />
