@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import PageTitle from '../../lib/ui/pageTitle';
 import ExternalLink from '../../lib/ui/externalLink';
 import Pass1bLandscapeGraphicalReport from './pass1bLandscapeReport';
@@ -30,6 +31,10 @@ function GraphicalClustering() {
   return (
     <div className="graphicalClusteringPage px-3 px-md-4 mb-3 container">
       <div className="row d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center page-header">
+        <Helmet>
+          <html lang="en" />
+          <title>Tissue-level graphical analysis results - MoTrPAC Data Hub</title>
+        </Helmet>
         <PageTitle
           title={`Tissue-level visualization of graphical results${
             currentView === 'pass1b-06-mitochondria'

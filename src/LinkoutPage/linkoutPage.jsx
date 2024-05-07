@@ -8,9 +8,10 @@ import NIHLogo from '../assets/ExternalLogos/NIHCommonFund.png';
 import ENCODELogo from '../assets/ExternalLogos/ENCODE.png';
 import MWLogo from '../assets/ExternalLogos/MetabolomicsWorkbench.jpeg';
 import GTExLogo from '../assets/ExternalLogos/GTEx.png';
-import CFDELogo from '../assets/ExternalLogos/CFDE.png';
+import CFDELogo from '../assets/ExternalLogos/CFDE_WORKBENCH.png';
 import OmicsPipelinesImage from '../assets/ExternalLogos/omicspipelines_dashboard.png';
 import MoTrPACRecruitmentLogo from '../assets/ExternalLogos/MoTrPAC_Recruitment_logo.png';
+import WuTsaiHumanPerformanceAllianceStanfordSiteLogo from '../assets/ExternalLogos/WuTsai_Human_Performance_Alliace.jpg';
 
 const featured = [
   {
@@ -61,10 +62,10 @@ const partners = [
       },
       {
         protocol: 'https',
-        url: 'nih-cfde.org',
-        text: 'Common Fund Data Ecosystem',
+        url: 'info.cfde.cloud',
+        text: 'CFDE Information Portal',
         image: CFDELogo,
-        title: 'CFDE',
+        title: 'CFDE Workbench',
       },
       {
         protocol: 'https',
@@ -86,6 +87,13 @@ const partners = [
         text: 'ENCODE project website',
         image: ENCODELogo,
         title: 'ENCODE Project',
+      },
+      {
+        protocol: 'https',
+        url: 'humanperformance.stanford.edu',
+        text: 'The Wu Tsai Human Performance Alliance at Stanford University',
+        image: WuTsaiHumanPerformanceAllianceStanfordSiteLogo,
+        title: 'Wu Tsai Human Performance Alliance at Stanford',
       },
     ],
   },

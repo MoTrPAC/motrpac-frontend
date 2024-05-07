@@ -151,7 +151,17 @@ function GraphicalAnalysisHippocampus() {
                 </h4>
                 <p>
                   <img src={`${imageURL}/figure_6.png`} width="100%" alt="" />
+                </p>
+                <p>
                   <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />
+                </p>
+                <DataVizLink
+                  title="pathway enrichment"
+                  tissue="Hippocampus"
+                  plotType="Pathway"
+                  clusterName="1w_F0_M-1-&gt;2w_F0_M-1-&gt;4w_F0_M-1-&gt;8w_F0_M-1"
+                />
+                <p>
                   <img src={`${imageURL}/figure_8.png`} width="100%" alt="" />
                 </p>
                 <DataVizLink

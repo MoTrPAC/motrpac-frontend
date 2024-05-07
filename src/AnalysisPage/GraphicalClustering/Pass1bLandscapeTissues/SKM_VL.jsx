@@ -144,7 +144,17 @@ function GraphicalAnalysisVastusLateralis() {
                 </h4>
                 <p>
                   <img src={`${imageURL}/figure_5.png`} width="100%" alt="" />
+                </p>
+                <p>
                   <img src={`${imageURL}/figure_6.png`} width="100%" alt="" />
+                </p>
+                <DataVizLink
+                  title="pathway enrichment"
+                  tissue="Vastus Lateralis"
+                  plotType="Pathway"
+                  clusterName="1w_F-1_M0-&gt;2w_F-1_M0-&gt;4w_F-1_M0-&gt;8w_F-1_M-1"
+                />
+                <p>
                   <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />
                 </p>
                 <DataVizLink
