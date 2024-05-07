@@ -155,6 +155,7 @@ function MitoGraphicalAnalysisWhiteAdipose() {
                   title="pathway enrichment"
                   tissue="White Adipose"
                   plotType="Pathway"
+                  clusterName="1w_F0_M-1-&gt;2w_F0_M-1-&gt;4w_F0_M0-&gt;8w_F1_M0"
                 />
                 <p>
                   <img src={`${imageURL}/figure_8.png`} width="100%" alt="" />

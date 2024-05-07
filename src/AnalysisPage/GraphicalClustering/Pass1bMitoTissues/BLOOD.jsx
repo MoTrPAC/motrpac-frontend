@@ -155,6 +155,7 @@ function MitoGraphicalAnalysisBlood() {
                   title="pathway enrichment"
                   tissue="Blood RNA"
                   plotType="Pathway"
+                  clusterName="1w_F0_M1-&gt;2w_F0_M1-&gt;4w_F0_M1-&gt;8w_F1_M1"
                 />
                 <p>
                   <img src={`${imageURL}/figure_8.png`} width="100%" alt="" />

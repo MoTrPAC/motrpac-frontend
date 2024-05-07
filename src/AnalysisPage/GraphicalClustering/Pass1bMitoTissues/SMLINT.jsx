@@ -153,6 +153,8 @@ function MitoGraphicalAnalysisSmallIntestine() {
                   title="pathway enrichment"
                   tissue="Small Intestine"
                   plotType="Pathway"
+                  clusterName="1w_F1_M0"
+
                 />
                 <p>
                   <img src={`${imageURL}/figure_8.png`} width="100%" alt="" />

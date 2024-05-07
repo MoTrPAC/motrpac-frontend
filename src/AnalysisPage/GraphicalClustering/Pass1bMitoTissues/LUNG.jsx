@@ -142,6 +142,7 @@ function MitoGraphicalAnalysisLung() {
                   title="pathway enrichment"
                   tissue="Lung"
                   plotType="Pathway"
+                  clusterName="1w_F-1_M-1"
                 />
                 <p>
                   <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />
