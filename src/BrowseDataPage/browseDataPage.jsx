@@ -20,6 +20,8 @@ export function BrowseDataPage({
   waitingForResponse,
   showUserSurveyModal,
   surveyId,
+  surveySubmitted,
+  downloadedData,
 }) {
   useEffect(() => {
     if (showUserSurveyModal) {
@@ -47,15 +49,11 @@ export function BrowseDataPage({
         handleDownloadRequest={handleDownloadRequest}
         downloadRequestResponse={downloadRequestResponse}
         waitingForResponse={waitingForResponse}
+        surveySubmitted={surveySubmitted}
+        downloadedData={downloadedData}
       />
       <UserSurveyModal
-        userID={
-          profile && profile.email
-            ? profile.email
-            : surveyId
-              ? surveyId
-              : 'anonymous'
-        }
+        userID={profile && profile.email ? profile.email : (surveyId ? surveyId : 'anonymous')}
         dataContext={
           downloadRequestResponse.length ? 'selected_files' : 'bundled_files'
         }
@@ -83,12 +81,16 @@ BrowseDataPage.propTypes = {
   waitingForResponse: PropTypes.bool.isRequired,
   showUserSurveyModal: PropTypes.bool,
   surveyId: PropTypes.string,
+  surveySubmitted: PropTypes.bool,
+  downloadedData: PropTypes.bool,
 };
 
 BrowseDataPage.defaultProps = {
   profile: {},
   showUserSurveyModal: false,
   surveyId: '',
+  surveySubmitted: false,
+  downloadedData: false,
 };
 
 const mapStateToProps = (state) => ({
@@ -96,6 +98,8 @@ const mapStateToProps = (state) => ({
   profile: state.auth.profile,
   showUserSurveyModal: state.userSurvey.showUserSurveyModal,
   surveyId: state.userSurvey.surveyId,
+  surveySubmitted: state.userSurvey.surveySubmitted,
+  downloadedData: state.userSurvey.downloadedData,
 });
 
 const mapDispatchToProps = (dispatch) => ({
