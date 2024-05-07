@@ -24,11 +24,7 @@ function BundleDatasets({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    showUserSurveyModal();
-  }, [downloadedData]);
-
-  // show user survey modal if user has not submitted survey after downloading data
-  function showUserSurveyModal() {
+    // show user survey modal if user has not submitted survey after downloading data
     if (downloadedData) {
       if (!surveySubmitted) {
         setTimeout(() => {
@@ -36,7 +32,7 @@ function BundleDatasets({
         }, 2000);
       }
     }
-  }
+  }, [dispatch, downloadedData, surveySubmitted]);
 
   return (
     <div className="row row-cols-1 row-cols-md-3 bundle-datasets">
