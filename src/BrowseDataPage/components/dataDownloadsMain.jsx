@@ -22,6 +22,8 @@ function DataDownloadsMain({
   handleDownloadRequest,
   downloadRequestResponse,
   waitingForResponse,
+  surveySubmitted,
+  downloadedData,
 }) {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -213,6 +215,8 @@ function DataDownloadsMain({
               <BundleDatasets
                 profile={profile}
                 bundleDatasets={BundleDataTypes.pass1b_06}
+                surveySubmitted={surveySubmitted}
+                downloadedData={downloadedData}
               />
             </div>
             {userType && userType === 'internal' && (
@@ -225,6 +229,8 @@ function DataDownloadsMain({
                 <BundleDatasets
                   profile={profile}
                   bundleDatasets={BundleDataTypes.pass1a_06}
+                  surveySubmitted={surveySubmitted}
+                  downloadedData={downloadedData}
                 />
               </div>
             )}
@@ -238,6 +244,8 @@ function DataDownloadsMain({
                 <BundleDatasets
                   profile={profile}
                   bundleDatasets={BundleDataTypes.human_sed_adu}
+                  surveySubmitted={surveySubmitted}
+                  downloadedData={downloadedData}
                 />
               </div>
             )}
@@ -301,6 +309,8 @@ DataDownloadsMain.propTypes = {
   handleDownloadRequest: PropTypes.func.isRequired,
   downloadRequestResponse: PropTypes.string.isRequired,
   waitingForResponse: PropTypes.bool.isRequired,
+  surveySubmitted: PropTypes.bool.isRequired,
+  downloadedData: PropTypes.bool.isRequired,
 };
 
 DataDownloadsMain.defaultProps = {
