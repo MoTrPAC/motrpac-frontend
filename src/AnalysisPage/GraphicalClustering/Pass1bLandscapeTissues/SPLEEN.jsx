@@ -148,6 +148,7 @@ function GraphicalAnalysisSpleen() {
                   title="pathway enrichment"
                   tissue="Spleen"
                   plotType="Pathway"
+                  clusterName="1w_F0_M0-&gt;2w_F0_M0-&gt;4w_F0_M0-&gt;8w_F-1_M-1"
                 />
                 <p>
                   <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />

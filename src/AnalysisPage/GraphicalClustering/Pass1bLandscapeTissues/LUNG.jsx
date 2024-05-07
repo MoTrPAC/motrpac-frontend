@@ -146,6 +146,7 @@ function GraphicalAnalysisLung() {
                   title="pathway enrichment"
                   tissue="Lung"
                   plotType="Pathway"
+                  clusterName="1w_F-1_M0-&gt;2w_F-1_M0-&gt;4w_F-1_M0-&gt;8w_F0_M0"
                 />
                 <p>
                   <img src={`${imageURL}/figure_9.png`} width="100%" alt="" />
