@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import BundleDownloadButton from './bundleDownloadButton';
+import surveyModdalActions from '../../UserSurvey/userSurveyActions';
 
 const tagColors = {
   human: 'badge-primary',
@@ -13,7 +15,29 @@ const tagColors = {
   sedentary: 'badge-purple',
 };
 
-function BundleDatasets({ profile, bundleDatasets }) {
+function BundleDatasets({
+  profile,
+  bundleDatasets,
+  surveySubmitted,
+  downloadedData,
+}) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    showUserSurveyModal();
+  }, [downloadedData]);
+
+  // show user survey modal if user has not submitted survey after downloading data
+  function showUserSurveyModal() {
+    if (downloadedData) {
+      if (!surveySubmitted) {
+        setTimeout(() => {
+          dispatch(surveyModdalActions.toggleUserSurveyModal(true));
+        }, 2000);
+      }
+    }
+  }
+
   return (
     <div className="row row-cols-1 row-cols-md-3 bundle-datasets">
       {bundleDatasets.map((item) => {
@@ -75,6 +99,8 @@ BundleDatasets.propTypes = {
     }),
   }),
   bundleDatasets: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  surveySubmitted: PropTypes.bool.isRequired,
+  downloadedData: PropTypes.bool.isRequired,
 };
 
 BundleDatasets.defaultProps = {
