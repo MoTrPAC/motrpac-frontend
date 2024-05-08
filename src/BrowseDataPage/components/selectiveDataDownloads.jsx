@@ -71,7 +71,11 @@ function SelectiveDataDownloads({
   return (
     <div className="data-download-selective-files">
       <div className="link link-back mb-1">
-        <Link to="/data-download" className="d-flex align-items-center">
+        <Link
+          to="/data-download"
+          className="d-flex align-items-center"
+          onClick={onResetFilters}
+        >
           <span className="material-icons">arrow_back</span>
           <span>Back</span>
         </Link>
