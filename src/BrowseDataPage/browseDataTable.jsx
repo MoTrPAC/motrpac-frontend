@@ -156,21 +156,6 @@ function DataTable({
       .fill(start)
       .map((x, y) => x + y * step);
 
-  // anonymous user or authenticated user
-  const userType = profile.user_metadata && profile.user_metadata.userType;
-  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
-
-  function handleDownloadClickEvent(selectedFiles) {
-    if (userType && hasAccess) {
-      handleDownloadRequest(
-        profile.user_metadata.email,
-        profile.user_metadata.name,
-        profile.userid,
-        selectedFiles,
-      );
-    }
-  }
-
   // Render the UI for your table
   // react-table doesn't have UI, it's headless. We just need to put the react-table
   // props from the Hooks, and it will do its magic automatically
@@ -188,28 +173,18 @@ function DataTable({
             className="btn btn-primary d-flex align-items-center"
             disabled={Object.keys(selectedRowIds).length === 0}
             data-toggle="modal"
-            data-target=".data-download-modal"
-            onClick={() => {
-              handleDownloadClickEvent(selectedFlatRows);
-            }}
+            data-target="#dataDownloadModal"
           >
             <span className="material-icons">file_download</span>
             <span>Download selected files</span>
           </button>
-          {Object.keys(selectedRowIds).length > 0 && userType && hasAccess ? (
-            <AuthAccessFileDownloadModal
-              waitingForResponse={waitingForResponse}
-              downloadRequestResponse={downloadRequestResponse}
-            />
-          ) : null}
-          {Object.keys(selectedRowIds).length > 0 && !userType ? (
-            <OpenAccessFileDownloadModal
-              waitingForResponse={waitingForResponse}
-              downloadRequestResponse={downloadRequestResponse}
-              handleDownloadRequest={handleDownloadRequest}
-              selectedFiles={selectedFlatRows}
-            />
-          ) : null}
+          <OpenAccessFileDownloadModal
+            waitingForResponse={waitingForResponse}
+            downloadRequestResponse={downloadRequestResponse}
+            handleDownloadRequest={handleDownloadRequest}
+            selectedFiles={selectedFlatRows}
+            profile={profile}
+          />
         </div>
       </div>
       <div className="card mb-3">
