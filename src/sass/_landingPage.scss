@@ -85,6 +85,7 @@
         }
 
         p.hero {
+          font-weight: 400;
           margin-top: 1.75rem;
 
           a {
@@ -93,10 +94,6 @@
             line-height: 1.5;
             text-decoration: none;
             text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.75);
-
-            .about-motrpac-emphasis {
-              color: $accent-yellow;
-            }
           }
         }
 
