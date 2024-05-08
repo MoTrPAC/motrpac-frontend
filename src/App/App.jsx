@@ -148,7 +148,7 @@ function App({ history = History }) {
                 exact
                 component={withTracker(FullTableEnduranceTraining)}
               />
-              <PrivateRoute
+              <Route
                 path="/publications/docs/protocol/clinical/study-protocols"
                 exact
                 component={withTracker(ClinicalStudyProtocols)}

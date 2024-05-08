@@ -4,6 +4,7 @@ import {
   tocbotConfig,
   pass1b06GraphicalClusteringMitoImageLocation,
 } from '../sharedLib';
+import DataVizLink from '../components/dataVizLink';
 
 function MitoGraphicalAnalysisSpleen() {
   // initialize table of contents
@@ -35,6 +36,7 @@ function MitoGraphicalAnalysisSpleen() {
               <p>
                 <img src={`${imageURL}/figure_1.png`} width="100%" alt="" />
               </p>
+              <DataVizLink title="trajectory" tissue="Spleen" plotType="Tree" />
             </div>
             <div className="section level3">
               <h3 id="top-clusters">Top clusters</h3>
@@ -45,6 +47,11 @@ function MitoGraphicalAnalysisSpleen() {
               <p>
                 <img src={`${imageURL}/figure_2.png`} width="100%" alt="" />
               </p>
+              <DataVizLink
+                title="cluster"
+                tissue="Spleen"
+                plotType="Histogram"
+              />
             </div>
           </div>
           <div className="section level2">
@@ -137,6 +144,13 @@ function MitoGraphicalAnalysisSpleen() {
                 <p>
                   <img src={`${imageURL}/figure_6.png`} width="100%" alt="" />
                   <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />
+                </p>
+                <DataVizLink
+                  title="timecourse"
+                  tissue="Spleen"
+                  plotType="Trajectories"
+                />
+                <p>
                   No significant enrichments for
                   SPLEEN:1w_F0_M0-&gt;2w_F0_M0-&gt;4w_F0_M0-&gt;8w_F1_M1
                 </p>

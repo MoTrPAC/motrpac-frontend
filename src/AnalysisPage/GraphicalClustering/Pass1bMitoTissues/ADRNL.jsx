@@ -4,6 +4,7 @@ import {
   tocbotConfig,
   pass1b06GraphicalClusteringMitoImageLocation,
 } from '../sharedLib';
+import DataVizLink from '../components/dataVizLink';
 
 function MitoGraphicalAnalysisAdrenal() {
   // initialize table of contents
@@ -35,6 +36,11 @@ function MitoGraphicalAnalysisAdrenal() {
               <p>
                 <img src={`${imageURL}/figure_1.png`} width="100%" alt="" />
               </p>
+              <DataVizLink
+                title="trajectory"
+                tissue="Adrenal"
+                plotType="Tree"
+              />
             </div>
             <div className="section level3">
               <h3 id="top-clusters">Top clusters</h3>
@@ -45,6 +51,11 @@ function MitoGraphicalAnalysisAdrenal() {
               <p>
                 <img src={`${imageURL}/figure_2.png`} width="100%" alt="" />
               </p>
+              <DataVizLink
+                title="cluster"
+                tissue="Adrenal"
+                plotType="Histogram"
+              />
             </div>
           </div>
           <div className="section level2">
@@ -136,9 +147,24 @@ function MitoGraphicalAnalysisAdrenal() {
                 </h4>
                 <p>
                   <img src={`${imageURL}/figure_6.png`} width="100%" alt="" />
+                </p>
+                <p>
                   <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />
+                </p>
+                <DataVizLink
+                  title="pathway enrichment"
+                  tissue="Adrenal"
+                  plotType="Pathway"
+                  clusterName="1w_F-1_M1-&gt;2w_F-1_M0-&gt;4w_F-1_M0-&gt;8w_F-1_M0"
+                />
+                <p>
                   <img src={`${imageURL}/figure_8.png`} width="100%" alt="" />
                 </p>
+                <DataVizLink
+                  title="timecourse"
+                  tissue="Adrenal"
+                  plotType="Trajectories"
+                />
                 <hr />
               </div>
               <div className="section level4">

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link , useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import actions from '../Auth/authActions';
@@ -90,7 +90,7 @@ export function Navbar({
       document.removeEventListener(
         visibilityChange,
         handleVisibilityChange,
-        false
+        false,
       );
       window.removeEventListener('storage', handleStorageChange, false);
     };
@@ -326,14 +326,6 @@ export function Navbar({
                   >
                     OmicsPipelines
                   </a>
-                  {isAuthenticated && hasAccess && userType === 'internal' ? (
-                    <Link
-                      to="/publications/docs/protocol/clinical/study-protocols"
-                      className="dropdown-item"
-                    >
-                      Clinical Study Protocols
-                    </Link>
-                  ) : null}
                 </div>
               </li>
               <li className="nav-item navItem dropdown">

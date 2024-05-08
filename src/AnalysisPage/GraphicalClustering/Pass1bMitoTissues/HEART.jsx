@@ -4,6 +4,7 @@ import {
   tocbotConfig,
   pass1b06GraphicalClusteringMitoImageLocation,
 } from '../sharedLib';
+import DataVizLink from '../components/dataVizLink';
 
 function MitoGraphicalAnalysisHeart() {
   // initialize table of contents
@@ -35,6 +36,7 @@ function MitoGraphicalAnalysisHeart() {
               <p>
                 <img src={`${imageURL}/figure_1.png`} width="100%" alt="" />
               </p>
+              <DataVizLink title="trajectory" tissue="Heart" plotType="Tree" />
             </div>
             <div className="section level3">
               <h3 id="top-clusters">Top clusters</h3>
@@ -45,6 +47,11 @@ function MitoGraphicalAnalysisHeart() {
               <p>
                 <img src={`${imageURL}/figure_2.png`} width="100%" alt="" />
               </p>
+              <DataVizLink
+                title="cluster"
+                tissue="Heart"
+                plotType="Histogram"
+              />
             </div>
           </div>
           <div className="section level2">
@@ -137,9 +144,24 @@ function MitoGraphicalAnalysisHeart() {
                 </h4>
                 <p>
                   <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />
+                </p>
+                <p>
                   <img src={`${imageURL}/figure_8.png`} width="100%" alt="" />
+                </p>
+                <DataVizLink
+                  title="pathway enrichment"
+                  tissue="Heart"
+                  plotType="Pathway"
+                  clusterName="1w_F1_M1-&gt;2w_F1_M1-&gt;4w_F1_M1-&gt;8w_F1_M1"
+                />
+                <p>
                   <img src={`${imageURL}/figure_9.png`} width="100%" alt="" />
                 </p>
+                <DataVizLink
+                  title="timecourse"
+                  tissue="Heart"
+                  plotType="Trajectories"
+                />
                 <hr />
               </div>
               <div className="section level4">

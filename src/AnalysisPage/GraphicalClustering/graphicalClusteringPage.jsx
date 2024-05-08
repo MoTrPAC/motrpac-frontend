@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import PageTitle from '../../lib/ui/pageTitle';
 import ExternalLink from '../../lib/ui/externalLink';
 import Pass1bLandscapeGraphicalReport from './pass1bLandscapeReport';
@@ -30,6 +31,10 @@ function GraphicalClustering() {
   return (
     <div className="graphicalClusteringPage px-3 px-md-4 mb-3 container">
       <div className="row d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center page-header">
+        <Helmet>
+          <html lang="en" />
+          <title>Tissue-level graphical analysis results - MoTrPAC Data Hub</title>
+        </Helmet>
         <PageTitle
           title={`Tissue-level visualization of graphical results${
             currentView === 'pass1b-06-mitochondria'
@@ -90,16 +95,20 @@ function LandscapeGraphicalClustering({ tissue, setTissue }) {
         over the training time course per tissue in adult rats. Compare
         responses between male and female rats, identify pathways affected in
         single or multiple omes' and explore what molecules drive those
-        enrichments. See the{' '}
+        enrichments. See the
+        {' '}
         <ExternalLink
-          to="https://www.biorxiv.org/content/10.1101/2022.09.21.508770v3"
-          label="study's landscape preprint"
-        />{' '}
-        and the{' '}
+          to="https://www.nature.com/articles/s41586-023-06877-w"
+          label="main animal endurance training study"
+        />
+        {' '}
+        and the
+        {' '}
         <ExternalLink
           to="https://motrpac.github.io/MotrpacRatTraining6mo/articles/MotrpacRatTraining6mo.html"
           label="documentation"
-        />{' '}
+        />
+        {' '}
         to learn more.
       </div>
       <GraphicalClusteringIntroduction currentView="pass1b-06-landscape" />
@@ -120,7 +129,8 @@ function MitoChondriaGraphicalAnalysis({ tissue, setTissue }) {
   return (
     <div className="graphical-clustering-summary-container row mb-2">
       <div className="lead col-12 page-summary">
-        Explore the mitochondria-selected (using{' '}
+        Explore the mitochondria-selected (using
+        {' '}
         <ExternalLink
           to="https://www.broadinstitute.org/mitocarta/mitocarta30-inventory-mammalian-mitochondrial-proteins-and-pathways"
           label="MitoCarta"
@@ -128,13 +138,14 @@ function MitoChondriaGraphicalAnalysis({ tissue, setTissue }) {
         ) multi-omic changes and associated pathway enrichment results over the
         training time course per tissue in adult rats. Compare responses between
         male and female rats, identify pathways affected in single or multiple
-        omes' and explore what molecules drive those enrichments. To learn more,
-        see the{' '}
+        omes' and explore what molecules drive those enrichments. See the
+        {' '}
         <ExternalLink
-          to="https://www.biorxiv.org/content/10.1101/2023.01.13.523698v1"
-          label="MoTrPAC mitochondrial companion preprint"
+          to="https://doi.org/10.1016/j.cmet.2023.12.021"
+          label="animal mitochondrial response study"
         />
-        .
+        {' '}
+        to learn more.
       </div>
       <GraphicalClusteringIntroduction currentView="pass1b-06-mitochondria" />
       <TissueSelection

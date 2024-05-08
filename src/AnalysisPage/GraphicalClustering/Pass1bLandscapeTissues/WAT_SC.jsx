@@ -4,6 +4,7 @@ import {
   tocbotConfig,
   pass1b06GraphicalClusteringLandscapeImageLocation,
 } from '../sharedLib';
+import DataVizLink from '../components/dataVizLink';
 
 function GraphicalAnalysisWhiteAdipose() {
   // initialize table of contents
@@ -35,6 +36,11 @@ function GraphicalAnalysisWhiteAdipose() {
               <p>
                 <img src={`${imageURL}/figure_1.png`} width="100%" alt="" />
               </p>
+              <DataVizLink
+                title="trajectory"
+                tissue="White Adipose"
+                plotType="Tree"
+              />
             </div>
             <div className="section level3">
               <h3 id="top-clusters">Top clusters</h3>
@@ -45,6 +51,11 @@ function GraphicalAnalysisWhiteAdipose() {
               <p>
                 <img src={`${imageURL}/figure_2.png`} width="100%" alt="" />
               </p>
+              <DataVizLink
+                title="cluster"
+                tissue="White Adipose"
+                plotType="Histogram"
+              />
             </div>
           </div>
           <div className="section level2">
@@ -135,9 +146,24 @@ function GraphicalAnalysisWhiteAdipose() {
                 </h4>
                 <p>
                   <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />
+                </p>
+                <p>
                   <img src={`${imageURL}/figure_8.png`} width="100%" alt="" />
+                </p>
+                <DataVizLink
+                  title="pathway enrichment"
+                  tissue="White Adipose"
+                  plotType="Pathway"
+                  clusterName="1w_F0_M1-&gt;2w_F0_M1-&gt;4w_F0_M0-&gt;8w_F-1_M0"
+                />
+                <p>
                   <img src={`${imageURL}/figure_9.png`} width="100%" alt="" />
                 </p>
+                <DataVizLink
+                  title="timecourse"
+                  tissue="White Adipose"
+                  plotType="Trajectories"
+                />
                 <hr />
               </div>
               <div className="section level4">

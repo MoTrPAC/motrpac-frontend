@@ -4,6 +4,7 @@ import {
   tocbotConfig,
   pass1b06GraphicalClusteringLandscapeImageLocation,
 } from '../sharedLib';
+import DataVizLink from '../components/dataVizLink';
 
 function GraphicalAnalysisColon() {
   // initialize table of contents
@@ -36,6 +37,7 @@ function GraphicalAnalysisColon() {
               <p>
                 <img src={`${imageURL}/figure_1.png`} width="100%" alt="" />
               </p>
+              <DataVizLink title="trajectory" tissue="Colon" plotType="Tree" />
             </div>
             <div className="section level3">
               <h3 id="top-clusters">Top clusters</h3>
@@ -47,6 +49,11 @@ function GraphicalAnalysisColon() {
               <p>
                 <img src={`${imageURL}/figure_2.png`} width="100%" alt="" />
               </p>
+              <DataVizLink
+                title="cluster"
+                tissue="Colon"
+                plotType="Histogram"
+              />
             </div>
           </div>
           <div className="section level2">
@@ -139,9 +146,24 @@ function GraphicalAnalysisColon() {
                 </h4>
                 <p>
                   <img src={`${imageURL}/figure_5.png`} width="100%" alt="" />
+                </p>
+                <p>
                   <img src={`${imageURL}/figure_6.png`} width="100%" alt="" />
+                </p>
+                <DataVizLink
+                  title="pathway enrichment"
+                  tissue="Colon"
+                  plotType="Pathway"
+                  clusterName="1w_F0_M0-&gt;2w_F0_M0-&gt;4w_F0_M0-&gt;8w_F1_M1"
+                />
+                <p>
                   <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />
                 </p>
+                <DataVizLink
+                  title="timecourse"
+                  tissue="Colon"
+                  plotType="Trajectories"
+                />
                 <hr />
               </div>
               <div className="section level4">

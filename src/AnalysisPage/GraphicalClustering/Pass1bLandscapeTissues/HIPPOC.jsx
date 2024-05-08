@@ -4,6 +4,7 @@ import {
   tocbotConfig,
   pass1b06GraphicalClusteringLandscapeImageLocation,
 } from '../sharedLib';
+import DataVizLink from '../components/dataVizLink';
 
 function GraphicalAnalysisHippocampus() {
   // initialize table of contents
@@ -36,6 +37,11 @@ function GraphicalAnalysisHippocampus() {
               <p>
                 <img src={`${imageURL}/figure_1.png`} width="100%" alt="" />
               </p>
+              <DataVizLink
+                title="trajectory"
+                tissue="Hippocampus"
+                plotType="Tree"
+              />
             </div>
             <div className="section level3">
               <h3 id="top-clusters">Top clusters</h3>
@@ -47,6 +53,11 @@ function GraphicalAnalysisHippocampus() {
               <p>
                 <img src={`${imageURL}/figure_2.png`} width="100%" alt="" />
               </p>
+              <DataVizLink
+                title="cluster"
+                tissue="Hippocampus"
+                plotType="Histogram"
+              />
             </div>
           </div>
           <div className="section level2">
@@ -140,9 +151,24 @@ function GraphicalAnalysisHippocampus() {
                 </h4>
                 <p>
                   <img src={`${imageURL}/figure_6.png`} width="100%" alt="" />
+                </p>
+                <p>
                   <img src={`${imageURL}/figure_7.png`} width="100%" alt="" />
+                </p>
+                <DataVizLink
+                  title="pathway enrichment"
+                  tissue="Hippocampus"
+                  plotType="Pathway"
+                  clusterName="1w_F0_M-1-&gt;2w_F0_M-1-&gt;4w_F0_M-1-&gt;8w_F0_M-1"
+                />
+                <p>
                   <img src={`${imageURL}/figure_8.png`} width="100%" alt="" />
                 </p>
+                <DataVizLink
+                  title="timecourse"
+                  tissue="Hippocampus"
+                  plotType="Trajectories"
+                />
                 <hr />
               </div>
               <div className="section level4">
