@@ -9,10 +9,15 @@ function OpenAccessFileDownloadModal({
   waitingForResponse,
   handleDownloadRequest,
   selectedFiles,
+  profile,
 }) {
   const [submitted, setSubmitted] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState(
+    profile && profile.user_metadata.name ? profile.user_metadata.name : '',
+  );
+  const [email, setEmail] = useState(
+    profile && profile.user_metadata.email ? profile.user_metadata.email : '',
+  );
   const dispatch = useDispatch();
 
   // get states from redux store
@@ -36,7 +41,12 @@ function OpenAccessFileDownloadModal({
       return false;
     }
     // submit download request
-    handleDownloadRequest(email, name, '', selectedFiles);
+    handleDownloadRequest(
+      email,
+      name,
+      profile && profile.userid ? profile.userid : '',
+      selectedFiles,
+    );
     // set user survey id in redux store
     dispatch(surveyModdalActions.setUserSurveyId(email));
     // update store to show that user has downloaded data
@@ -50,8 +60,17 @@ function OpenAccessFileDownloadModal({
     return (
       <div className="form-file-download-request mb-4">
         <p className="mt-2">
-          Please provide your email address and name. We will notify you when
-          the the download is ready.
+          {profile && profile.user_metadata.email ? (
+            <span>
+              Please submit your request upon verifying your email address and
+              name. We will notify you when the the download is ready.
+            </span>
+          ) : (
+            <span>
+              Please submit your request upon providing your email address and
+              name. We will notify you when the the download is ready.
+            </span>
+          )}
         </p>
         <div className="form-group">
           <label htmlFor="requester-email">Email address</label>
@@ -59,6 +78,7 @@ function OpenAccessFileDownloadModal({
             type="email"
             className="form-control w-100 mt-1"
             id="requester-email"
+            value={email}
             onChange={(e) => {
               e.preventDefault();
               setEmail(e.target.value);
@@ -71,6 +91,7 @@ function OpenAccessFileDownloadModal({
             type="text"
             className="form-control w-100 mt-1"
             id="requester-name"
+            value={name}
             onChange={(e) => {
               e.preventDefault();
               setName(e.target.value);
@@ -81,7 +102,7 @@ function OpenAccessFileDownloadModal({
           <button
             type="button"
             className="btn btn-primary px-3"
-            onClick={handleSubmit}
+            onClick={() => handleSubmit()}
           >
             Submit
           </button>
@@ -90,7 +111,7 @@ function OpenAccessFileDownloadModal({
     );
   }
 
-  // reset state and close modal if user has not submitted download request
+  // reset state and close modal
   function handleModalClose() {
     setName('');
     setEmail('');
@@ -134,8 +155,8 @@ function OpenAccessFileDownloadModal({
               className="close"
               data-dismiss="modal"
               aria-label="Close"
-              onClick={
-                submitted ? handleModalCloseAfterRequest : handleModalClose
+              onClick={() =>
+                submitted ? handleModalCloseAfterRequest() : handleModalClose()
               }
             >
               <span aria-hidden="true">&times;</span>
@@ -166,7 +187,7 @@ function OpenAccessFileDownloadModal({
                 type="button"
                 className="btn btn-secondary px-3"
                 data-dismiss="modal"
-                onClick={handleModalCloseAfterRequest}
+                onClick={() => handleModalCloseAfterRequest()}
               >
                 Done
               </button>
@@ -183,6 +204,18 @@ OpenAccessFileDownloadModal.propTypes = {
   downloadRequestResponse: PropTypes.string.isRequired,
   handleDownloadRequest: PropTypes.func.isRequired,
   selectedFiles: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  profile: PropTypes.shape({
+    userid: PropTypes.string,
+    user_metadata: PropTypes.shape({
+      userType: PropTypes.string,
+      email: PropTypes.string,
+      name: PropTypes.string,
+    }),
+  }),
+};
+
+OpenAccessFileDownloadModal.defaultProps = {
+  profile: {},
 };
 
 export default OpenAccessFileDownloadModal;
