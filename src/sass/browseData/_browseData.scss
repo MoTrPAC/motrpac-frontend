@@ -80,9 +80,16 @@
   }
 
   .data-download-selective-files {
+    /* tab UI temporary removed
     .nav.nav-tabs {
       margin-left: 15px;
       margin-right: 15px;
+    }
+    */
+    .link-back {
+      a {
+        text-decoration: none;
+      }
     }
   }
 
