@@ -13,10 +13,14 @@ function OpenAccessFileDownloadModal({
 }) {
   const [submitted, setSubmitted] = useState(false);
   const [name, setName] = useState(
-    profile && profile.user_metadata.name ? profile.user_metadata.name : '',
+    profile && profile.user_metadata && profile.user_metadata.name
+      ? profile.user_metadata.name
+      : '',
   );
   const [email, setEmail] = useState(
-    profile && profile.user_metadata.email ? profile.user_metadata.email : '',
+    profile && profile.user_metadata && profile.user_metadata.email
+      ? profile.user_metadata.email
+      : '',
   );
   const dispatch = useDispatch();
 
@@ -60,7 +64,7 @@ function OpenAccessFileDownloadModal({
     return (
       <div className="form-file-download-request mb-4">
         <p className="mt-2">
-          {profile && profile.user_metadata.email ? (
+          {profile && profile.user_metadata && profile.user_metadata.email ? (
             <span>
               Please submit your request upon verifying your email address and
               name. We will notify you when the the download is ready.
