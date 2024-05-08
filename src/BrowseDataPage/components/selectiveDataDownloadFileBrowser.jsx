@@ -15,44 +15,40 @@ function SelectiveDataDownloadFileBrowser({
   handleDownloadRequest,
   downloadRequestResponse,
   waitingForResponse,
-  studySummary,
 }) {
   return (
-    <>
-      <p className="lead mb-4">{studySummary}</p>
-      <div className="selective-data-download-content-container row">
-        <BrowseDataFilter
-          activeFilters={activeFilters}
-          onChangeFilter={onChangeFilter}
-          onResetFilters={onResetFilters}
+    <div className="selective-data-download-content-container row">
+      <BrowseDataFilter
+        activeFilters={activeFilters}
+        onChangeFilter={onChangeFilter}
+        onResetFilters={onResetFilters}
+      />
+      {fetching && (
+        <div className="col-md-9">
+          <BootstrapSpinner isFetching={fetching} />
+        </div>
+      )}
+      {!fetching && !filteredFiles.length && (
+        <div className="browse-data-table-wrapper col-md-9">
+          <p className="mt-4">
+            <span>
+              No matches found for the selected filters. Please refer to the{' '}
+              <Link to="/summary">Summary Table</Link> for data that are
+              available.
+            </span>
+          </p>
+        </div>
+      )}
+      {!fetching && filteredFiles.length && (
+        <BrowseDataTable
+          filteredFiles={filteredFiles}
+          handleDownloadRequest={handleDownloadRequest}
+          downloadRequestResponse={downloadRequestResponse}
+          waitingForResponse={waitingForResponse}
+          profile={profile}
         />
-        {fetching && (
-          <div className="col-md-9">
-            <BootstrapSpinner isFetching={fetching} />
-          </div>
-        )}
-        {!fetching && !filteredFiles.length && (
-          <div className="browse-data-table-wrapper col-md-9">
-            <p className="mt-4">
-              <span>
-                No matches found for the selected filters. Please refer to the{' '}
-                <Link to="/summary">Summary Table</Link> for data that are
-                available.
-              </span>
-            </p>
-          </div>
-        )}
-        {!fetching && filteredFiles.length && (
-          <BrowseDataTable
-            filteredFiles={filteredFiles}
-            handleDownloadRequest={handleDownloadRequest}
-            downloadRequestResponse={downloadRequestResponse}
-            waitingForResponse={waitingForResponse}
-            profile={profile}
-          />
-        )}
-      </div>
-    </>
+      )}
+    </div>
   );
 }
 
@@ -72,7 +68,6 @@ SelectiveDataDownloadFileBrowser.propTypes = {
   handleDownloadRequest: PropTypes.func.isRequired,
   downloadRequestResponse: PropTypes.string.isRequired,
   waitingForResponse: PropTypes.bool.isRequired,
-  studySummary: PropTypes.string.isRequired,
 };
 
 SelectiveDataDownloadFileBrowser.defaultProps = {
