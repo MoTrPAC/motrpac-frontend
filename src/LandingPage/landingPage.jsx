@@ -214,18 +214,9 @@ export function LandingPage({ isAuthenticated, profile }) {
             <h2 className="display-2">Exercise</h2>
             <p className="lead hero">
               <a href="https://motrpac.org/" target="_blank" rel="noreferrer">
-                <span className="font-weight-bold">
-                  Molecular Transducers of Physical Activity Consortium
-                  (MoTrPAC)
-                </span>{' '}
-                is a national research consortium. Its goal is to{' '}
-                <span className="font-italic about-motrpac-emphasis">
-                  study the molecular changes that occur in response to
-                  exercise,
-                </span>{' '}
-                and ultimately to advance the understanding of how physical
-                activity improves and preserves health. We aim to generate a
-                molecular map of the effects of exercise.
+                Welcome to the data repository for the Molecular Transducers of Physical
+                Activity Consortium; a national research initiative that aims to generate
+                a molecular map of the effects of exercise and training.
               </a>
             </p>
             <div className="highlighted-links-container">

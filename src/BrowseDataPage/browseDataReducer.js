@@ -20,6 +20,9 @@ export const defaultBrowseDataState = {
   waitingForResponse: false,
   fetching: false,
   error: '',
+  pass1b06DataSelected: false,
+  pass1a06DataSelected: false,
+  humanPrecovidSedAduDataSelected: false,
 };
 
 function createSorter(sortBy) {
@@ -266,6 +269,27 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
         error: '',
       };
     }
+    case types.SELECT_PASS1B_06_DATA:
+      return {
+        ...state,
+        pass1b06DataSelected: true,
+        pass1a06DataSelected: false,
+        humanPrecovidSedAduDataSelected: false,
+      };
+    case types.SELECT_PASS1A_06_DATA:
+      return {
+        ...state,
+        pass1b06DataSelected: false,
+        pass1a06DataSelected: true,
+        humanPrecovidSedAduDataSelected: false,
+      };
+    case types.SELECT_HUMAN_PRECOVID_SED_ADU_DATA:
+      return {
+        ...state,
+        pass1b06DataSelected: false,
+        pass1a06DataSelected: false,
+        humanPrecovidSedAduDataSelected: true,
+      };
     case types.RESET_BROWSE_STATE:
       return defaultBrowseDataState;
     default:

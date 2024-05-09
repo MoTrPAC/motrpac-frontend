@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
-function HtmlReportModal({ selectedReport, selectedReportLabel }) {
+function HtmlReportModal({ selectedReport, selectedReportLabel, profile }) {
   const iframeRef = useRef(null);
   const [iframeLoaded, setIframeLoaded] = useState(false);
 
@@ -29,6 +30,19 @@ function HtmlReportModal({ selectedReport, selectedReportLabel }) {
                 className="btn btn-primary btn-report-download ml-3"
                 href={`/static-assets/dawg-pac/${selectedReport}`}
                 download
+                onClick={(e) => {
+                  // track event in Google Analytics 4
+                  trackEvent(
+                    'Multi-omics Working Groups',
+                    'html_report_download',
+                    profile && profile.userid
+                      ? profile.userid.substring(
+                          profile.userid.indexOf('|') + 1,
+                        )
+                      : 'anonymous',
+                    selectedReport,
+                  );
+                }}
               >
                 <span>Download Report</span>
               </a>
@@ -71,11 +85,16 @@ function HtmlReportModal({ selectedReport, selectedReportLabel }) {
 HtmlReportModal.propTypes = {
   selectedReport: PropTypes.string,
   selectedReportLabel: PropTypes.string,
+  profile: PropTypes.shape({
+    userid: PropTypes.string,
+    user_metadata: PropTypes.object,
+  }),
 };
 
 HtmlReportModal.defaultProps = {
   selectedReport: null,
   selectedReportLabel: null,
+  profile: {},
 };
 
 export default HtmlReportModal;

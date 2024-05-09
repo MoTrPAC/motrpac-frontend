@@ -256,7 +256,9 @@ export function Navbar({
                     className="dropdown-item"
                     onClick={handleDataObjectFetch}
                   >
-                    Endurance Training Data
+                    {isAuthenticated && hasAccess && userType === 'internal'
+                      ? 'Rat and Human Data'
+                      : 'Endurance Training Data'}
                   </Link>
                   <Link
                     id="reg_user"

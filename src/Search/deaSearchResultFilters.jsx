@@ -7,6 +7,7 @@ import {
   assayList,
 } from '../lib/searchFilters';
 import { searchParamsPropType } from './sharedlib';
+import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
 function SearchResultFilters({
   searchParams,
@@ -14,6 +15,7 @@ function SearchResultFilters({
   handleSearch,
   resetSearch,
   hasResultFilters,
+  profile,
 }) {
   const [inputError, setInputError] = useState(false);
   // FIXME - this is a hack to get the search filters such as tissue and assay
@@ -164,6 +166,15 @@ function SearchResultFilters({
             onClick={(e) => {
               e.preventDefault();
               handleSearch(searchParams, searchParams.keys, 'filters');
+              // track event in Google Analytics 4
+              trackEvent(
+                'Differential Abundance Search',
+                'search_filters',
+                profile && profile.userid
+                  ? profile.userid.substring(profile.userid.indexOf('|') + 1)
+                  : 'anonymous',
+                searchParams.keys,
+              );
             }}
             disabled={inputError}
           >
@@ -200,10 +211,15 @@ SearchResultFilters.propTypes = {
     sex: PropTypes.object,
     tissue: PropTypes.object,
   }),
+  profile: PropTypes.shape({
+    userid: PropTypes.string,
+    user_metadata: PropTypes.object,
+  }),
 };
 
 SearchResultFilters.defaultProps = {
   hasResultFilters: {},
+  profile: {},
 };
 
 export default SearchResultFilters;

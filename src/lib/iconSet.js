@@ -15,6 +15,9 @@ import Archive from '../assets/icons/archive.png';
 import InternalDataRelease from '../assets/icons/data-release-internal.png';
 import ArrowRightAnimated from '../assets/icons/arrow-right-animated.svg';
 import ArrowDownAnimated from '../assets/icons/arrow-down-animated.svg';
+import GitHub from '../assets/icons/github.svg';
+import GoogleCloud from '../assets/icons/google-cloud.svg';
+import GoogleDrive from '../assets/icons/google-drive.svg';
 
 const IconSet = {
   Clinic,
@@ -34,6 +37,9 @@ const IconSet = {
   InternalDataRelease,
   ArrowRightAnimated,
   ArrowDownAnimated,
+  GitHub,
+  GoogleCloud,
+  GoogleDrive,
 };
 
 export default IconSet;
