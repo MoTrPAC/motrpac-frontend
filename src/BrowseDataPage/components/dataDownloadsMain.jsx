@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import PageTitle from '../../lib/ui/pageTitle';
-import ExternalLink from '../../lib/ui/externalLink';
 import BrowseDataFilter from '../browseDataFilter';
 import DataTypeInfo from './dataTypeInfo';
 import BundleDatasets from './bundleDatasets';
@@ -53,41 +52,49 @@ function DataDownloadsMain({
       <PageTitle title="Data Download" />
       <div className="browse-data-summary-container row mb-4">
         <div className="col-12">
-          <p className="lead">
+          <p className="lead mb-2">
             Explore and download the MoTrPAC multi-omics datasets, which
             includes quantitative results and analyses of molecular changes from
             exercise across tissues. Currently, the complete young rat endurance
-            training dataset is publicly available.{' '}
+            training dataset is publicly available.
+            {' '}
             {userType && userType === 'internal'
               ? 'The young rat acute exercise and human precovid sedentary adult datasets are currently available to consortium members only in the early preview phase. '
               : null}
             For a summary of all the ongoing studies in MoTrPAC (data available
-            soon), please visit our{' '}
-            <Link to="/project-overview">Project Overview</Link>.
+            soon), please visit our
+            {' '}
+            <Link to="/project-overview">Project Overview</Link>
+            .
           </p>
-          <div className="bd-callout bd-callout-info">
-            Learn more about MoTrPAC studies:
-            <ul className="mb-0">
-              <li>
-                <ExternalLink
-                  to="https://www.cell.com/cell/fulltext/S0092-8674(20)30691-7"
-                  label="First published paper of the entire MoTrPAC study"
-                />
-              </li>
-              <li>
-                <ExternalLink
-                  to="https://www.biorxiv.org/content/10.1101/2022.09.21.508770v1"
-                  label="MoTrPAC Endurance Exercise Training Animal Study Landscape Preprint"
-                />
-              </li>
-              <li>
-                <Link to="/methods">Project overview</Link> covering the study
-                design and study protocols
-              </li>
-            </ul>
+          <div className="row">
+            <DataTypeInfo grid="col-7 col-md-7" />
+            <div className="browse-data-summary-content col-5 col-md-5">
+              <div className="bd-callout bd-callout-info">
+                <h4>Learn more about MoTrPAC studies</h4>
+                <ul className="mb-0">
+                  <li>
+                    <a
+                      href="https://www.nature.com/articles/s41586-023-06877-w"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      MoTrPAC Endurance Exercise Training Animal Study
+                    </a>
+                    {' '}
+                    in Nature
+                  </li>
+                  <li>
+                    <Link to="/project-overview">Project overview</Link>
+                    {' '}
+                    covering the study design and study protocols
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="col-12 mt-3">
+        <div className="col-12 mt-2">
           <h2>Study Data</h2>
           <p>
             Browse and find the data of your interest by tissue, ome, or assay
@@ -253,40 +260,37 @@ function DataDownloadsMain({
         </div>
         {/* Additional data information */}
         {userType && userType === 'internal' ? (
-          <>
-            <DataTypeInfo grid="col-6 col-md-6" />
-            <div className="browse-data-summary-content col-6 col-md-6">
-              <div className="bd-callout bd-callout-info">
-                <h4>Additional Information</h4>
-                <p>
-                  The currently available young adult rats experimental data for
-                  acute exercise and endurance training include all tissues and
-                  assays from the very last consortium data release, as well as
-                  additional tissues and assays made available afterwards. The
-                  phenotypic data sets have also been updated since then.
-                </p>
-                <p>
-                  Please refer to this{' '}
-                  <a
-                    href="https://docs.google.com/document/d/1bdXcYQLZ65GpJKTjf9XwRxhrfHJSD9NIqCxhG6icL8U"
-                    className="inline-link-with-icon"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    README
-                    <i className="material-icons readme-file-icon">
-                      description
-                    </i>
-                  </a>{' '}
-                  document for the data included in the very last consortium
-                  data release.
-                </p>
-              </div>
+          <div className="browse-data-summary-content col-12 col-md-12">
+            <div className="bd-callout bd-callout-info">
+              <h4>Additional Information</h4>
+              <p>
+                The currently available young adult rats experimental data for
+                acute exercise and endurance training include all tissues and
+                assays from the very last consortium data release, as well as
+                additional tissues and assays made available afterwards. The
+                phenotypic data sets have also been updated since then.
+              </p>
+              <p>
+                Please refer to this
+                {' '}
+                <a
+                  href="https://docs.google.com/document/d/1bdXcYQLZ65GpJKTjf9XwRxhrfHJSD9NIqCxhG6icL8U"
+                  className="inline-link-with-icon"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  README
+                  <i className="material-icons readme-file-icon">
+                    description
+                  </i>
+                </a>
+                {' '}
+                document for the data included in the very last consortium
+                data release.
+              </p>
             </div>
-          </>
-        ) : (
-          <DataTypeInfo grid="col-12 col-md-12" />
-        )}
+          </div>
+        ) : null}
       </div>
     </div>
   );
