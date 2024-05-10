@@ -12,7 +12,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'vis-network-react': ['vis-network-react'],
+          'vis': ['vis-network', 'vis-data'],
         }
       }
     }
@@ -23,11 +23,6 @@ export default defineConfig({
     setupFiles: './src/setupTests.js',
     css: true,
     reporters: ['verbose'],
-    server: {
-      deps: {
-        inline: ['vis-data'],
-      },
-    },
     coverage: {
       reporter: ['text', 'json', 'html'],
       include: ['src/**/*'],

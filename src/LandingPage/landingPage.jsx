@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import VisNetworkReactComponent from 'vis-network-react';
 import { useMediaQuery } from 'react-responsive';
 import YouTube from 'react-youtube';
 import Footer from '../Footer/footer';
@@ -18,6 +17,7 @@ import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.sv
 import NatureIssueCover from '../assets/LandingPageGraphics/nature_issue_cover.jpg';
 import BackgroundVideo from './components/backgroundVideo';
 import Figure1C from './components/figure1c';
+import VisNetworkReactComponent from './components/visNetwork';
 
 // import network figure 4e visualization dataset
 import landscapeFigure4eNetworkData from '../data/landscape_figure_4e';

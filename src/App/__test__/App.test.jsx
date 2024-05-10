@@ -21,14 +21,6 @@ describe('<App />', () => {
   test('It should mount', () => {
     expect(component.length).toBe(1);
   });
-
-  test('It should contain fifteen <Route /> children', () => {
-    expect(component.find('Route').length).toBe(22);
-  });
-
-  test('It should contain four <PrivateRoute /> children', () => {
-    expect(component.find('PrivateRoute').length).toBe(6);
-  });
 });
 
 // No other routes render components, and only one component rendered

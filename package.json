@@ -37,7 +37,8 @@
     "redux-thunk": "^2.3.0",
     "tocbot": "^4.25.0",
     "victory": "37.0.2",
-    "vis-network-react": "DinerIsmail/vis-network-react",
+    "vis-data": "^7.1.9",
+    "vis-network": "^9.1.9",
     "vite": "^5.2.8"
   },
   "scripts": {
