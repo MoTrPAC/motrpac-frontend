@@ -77,10 +77,12 @@
     "react-error-overlay": "^6.0.11",
     "rollup-plugin-visualizer": "^5.12.0",
     "sass": "1.70.0",
+    "sharp": "^0.33.3",
     "storybook": "^8.0.9",
     "storybook-addon-remix-react-router": "^3.0.0",
     "stylelint": "^16.2.0",
     "stylelint-config-recommended": "^14.0.0",
+    "svgo": "^3.3.2",
     "vite-plugin-image-optimizer": "^1.1.7",
     "vitest": "^1.4.0",
     "vitest-canvas-mock": "^0.3.3"
