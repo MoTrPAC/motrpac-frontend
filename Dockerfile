@@ -2,6 +2,7 @@
 FROM node:20-alpine as react-build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
+RUN corepack enable
 
 ARG VITE_ES_PROXY_HOST
 ARG VITE_API_SERVICE_ADDRESS
