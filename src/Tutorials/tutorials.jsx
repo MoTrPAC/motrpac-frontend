@@ -14,8 +14,10 @@ function Tutorials() {
             <p className="lead">
               The following tutorial video is designed to help you get started
               with the MoTrPAC study and the exploration of the Data Hub. Please
-              reach out to us with any{' '}
-              <Link to="/contact">questions or comments</Link>.
+              reach out to us with any
+              {' '}
+              <Link to="/contact">questions or comments</Link>
+              .
             </p>
           </div>
           <div
@@ -26,7 +28,7 @@ function Tutorials() {
               ref={iframeRef}
               title="Data Hub tutorial video"
               allow="autoplay"
-              src="https://drive.google.com/file/d/1w9z4itQHYaJAzCyUOc1gu9Crx6xErGt_/preview"
+              src="https://drive.google.com/file/d/1chxJyVd6SlqP1m7cLV-F26OL7CJA2SXG/preview"
               className="embed-responsive-item border border-dark"
             />
           </div>
