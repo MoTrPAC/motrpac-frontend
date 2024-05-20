@@ -75,10 +75,31 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
                     <div className="subhead">
                       Preclinical animal study sites
                     </div>
+                    <div className="d-flex align-items-center mt-1">
+                      <span className="material-icons mr-1">
+                        pest_control_rodent
+                      </span>
+                      <ExternalLink
+                        to="https://motrpac.org/actDocumentDownload.cfm?docGUID=A31CDD1F-8A59-41D9-BABA-125B37A39BF5"
+                        label="Animal Protocol"
+                      />
+                    </div>
                   </th>
                   <th scope="col">
                     <h4>Humans</h4>
                     <div className="subhead">Clinical study sites</div>
+                    <div className="d-flex align-items-center mt-1">
+                      <span className="material-icons mr-1">person</span>
+                      <ExternalLink
+                        to="https://motrpac.org/actDocumentDownload.cfm?docGUID=8120CEC8-5761-4C74-9EB3-4544EEC99FA4"
+                        label="Adult Protocol"
+                      />
+                      <span className="material-icons mr-1 ml-3">person</span>
+                      <ExternalLink
+                        to="https://motrpac.org/actDocumentDownload.cfm?docGUID=67F818DF-22CC-4C56-88F4-B07FDA8BA6EE"
+                        label="Pediatric Protocol"
+                      />
+                    </div>
                   </th>
                 </tr>
               </thead>
@@ -152,7 +173,7 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
             training, with a 48 hour rest or wash out period before samples were
             collected. See the{' '}
             <ExternalLink
-              to="http://study-docs.motrpac-data.org/Animal_Protocol.pdf"
+              to="https://motrpac.org/actDocumentDownload.cfm?docGUID=A31CDD1F-8A59-41D9-BABA-125B37A39BF5"
               label="animal protocol"
             />{' '}
             to learn more.
@@ -206,14 +227,22 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
                 alt="Endurance Exercise Tissues / Molecular Profiling"
               />
             </div>
-            <div className="data-download-button-container my-5">
+            <div className="data-download-button-container my-5 d-flex align-items-center justify-content-center">
               <Link
-                className="btn btn-primary"
+                className="btn btn-primary mr-3"
                 to="/data-download"
                 role="button"
                 onClick={handleDataObjectFetch}
               >
                 Download Data
+              </Link>
+              <Link
+                className="btn btn-primary ml-3"
+                to="/search"
+                role="button"
+                onClick={handleDataObjectFetch}
+              >
+                Explore Data
               </Link>
             </div>
           </div>

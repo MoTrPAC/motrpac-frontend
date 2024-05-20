@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link , useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import actions from '../Auth/authActions';
@@ -90,7 +90,7 @@ export function Navbar({
       document.removeEventListener(
         visibilityChange,
         handleVisibilityChange,
-        false
+        false,
       );
       window.removeEventListener('storage', handleStorageChange, false);
     };
@@ -168,7 +168,7 @@ export function Navbar({
   }
 
   const navbar = (
-    <div className="header-navbar-container d-flex flex-column flex-md-row flex-sm-row flex-xs-row align-items-center px-3 px-md-4 bg-white border-bottom shadow-sm fixed-top">
+    <div className="header-navbar-container d-flex flex-md-row flex-sm-row flex-xs-row align-items-center px-3 px-md-4 bg-white border-bottom shadow-sm fixed-top">
       <div className="navbar-brand my-0 mr-md-auto mr-sm-auto mr-xs-auto py-0">
         <Link to="/" className="header-logo">
           <img default src={MoTrPAClogo} alt="MoTrPAC Data Hub" />
@@ -256,7 +256,9 @@ export function Navbar({
                     className="dropdown-item"
                     onClick={handleDataObjectFetch}
                   >
-                    Endurance Training Data
+                    {isAuthenticated && hasAccess && userType === 'internal'
+                      ? 'Rat and Human Data'
+                      : 'Endurance Training Data'}
                   </Link>
                   <Link
                     id="reg_user"
@@ -304,11 +306,11 @@ export function Navbar({
                   className="dropdown-menu"
                   aria-labelledby="resourcesNavbarItemMenuLink"
                 >
-                  <Link to="/code-repositories" className="dropdown-item">
-                    Code Repositories
-                  </Link>
                   <Link to="/publications" className="dropdown-item">
                     Publications
+                  </Link>
+                  <Link to="/code-repositories" className="dropdown-item">
+                    Code Repositories
                   </Link>
                   <Link to="/methods" className="dropdown-item">
                     Methods

@@ -251,6 +251,57 @@ export const transformData = (arr) => {
         item.assay = newMetabAssayVal;
       }
     }
+    if (
+      item.assay !== null &&
+      item.assay !== undefined &&
+      item.omics === 'Metabolomics Targeted'
+    ) {
+      let newMetabAssayVal = item.assay;
+      if (
+        newMetabAssayVal.indexOf('Acylcarnitines') !== -1 &&
+        newMetabAssayVal.indexOf('Oxylipins') !== -1
+      ) {
+        newMetabAssayVal = 'Merged';
+        item.assay = newMetabAssayVal;
+      }
+    }
+    if (item.tissue_name !== null && item.tissue_name !== undefined) {
+      let newTissueVal = item.tissue_name;
+      if (
+        newTissueVal.indexOf('Human PBMC') !== -1 ||
+        newTissueVal.indexOf('Human EDTA Packed Cells') !== -1 ||
+        newTissueVal.indexOf('Human PAXgene RNA') !== -1
+      ) {
+        newTissueVal = 'Blood';
+        item.tissue_name = newTissueVal;
+      }
+      if (
+        newTissueVal.indexOf('Human Adipose') !== -1 ||
+        newTissueVal.indexOf('Human Adipose Powder') !== -1
+      ) {
+        newTissueVal = 'Adipose';
+        item.tissue_name = newTissueVal;
+      }
+      if (
+        newTissueVal.indexOf('Human Muscle') !== -1 ||
+        newTissueVal.indexOf('Human Muscle Powder') !== -1
+      ) {
+        newTissueVal = 'Muscle';
+        item.tissue_name = newTissueVal;
+      }
+      if (newTissueVal.indexOf('Human EDTA Plasma') !== -1) {
+        newTissueVal = 'Plasma';
+        item.tissue_name = newTissueVal;
+      }
+      if (
+        newTissueVal.indexOf('EDTA Plasma') !== -1 &&
+        item.omics.indexOf('Metabolomics') !== -1 &&
+        item.study.indexOf('Acute Exercise') !== -1
+      ) {
+        newTissueVal = 'Plasma';
+        item.tissue_name = newTissueVal;
+      }
+    }
   });
   return tranformArray;
 };

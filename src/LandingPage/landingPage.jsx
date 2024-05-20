@@ -1,19 +1,20 @@
-import React, { useCallback, useState, useEffect, useRef } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import VisNetworkReactComponent from 'vis-network-react';
-import IframeResizer from 'iframe-resizer-react';
+import { useMediaQuery } from 'react-responsive';
 import Footer from '../Footer/footer';
 import PromoteBanner from './promoteBanner';
 import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
 import IconSet from '../lib/iconSet';
 
+import LogoMotrpacWhite from '../assets/logo-motrpac-white.png';
+import BackgroundVideoImage from '../assets/LandingPageGraphics/background_video_preload.jpg';
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.svg';
-import TutorialVideoPreviewImage from '../assets/LandingPageGraphics/tutorial_video_preview_image.jpg';
-import LandscapePreprintAbstract from '../assets/LandingPageGraphics/landscape_preprint_abstract.jpg';
+import LandscapeAbstract from '../assets/LandingPageGraphics/landscape_abstract.gif';
 import BackgroundVideo from './components/backgroundVideo';
 import Figure1C from './components/figure1c';
 
@@ -139,19 +140,11 @@ let events = {
  * @returns {object} JSX representation of the landing page.
  */
 export function LandingPage({ isAuthenticated, profile }) {
-  // Local state for managing particle animation
+  const [backgroundVideoLoaded, setBackgroundVideoLoaded] = useState(false);
   const [data, setData] = useState(figure4eData);
   const [networkNodes, setNetwortNodes] = useState([]);
-  const [videoHeight, setVideoHeight] = useState('480px');
   const iframeRef = useRef(null);
-
-  useEffect(() => {
-    // set video height responsively
-    const el = document.querySelector('#iframe-container');
-    if (el) {
-      setVideoHeight(((el.scrollWidth - 30) / 16) * 9 + 'px');
-    }
-  }, []);
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   const handleAddNode = useCallback(() => {
     const id = data.nodes.length + 1;
@@ -170,16 +163,20 @@ export function LandingPage({ isAuthenticated, profile }) {
   }, [networkNodes]);
 
   const goToExternalLink = useCallback(() => {
-    window.open(
-      'https://www.biorxiv.org/content/10.1101/2022.09.21.508770v3',
-      '_blank',
-    );
+    window.open('https://www.nature.com/articles/s41586-023-06877-w', '_blank');
   }, []);
 
   // Redirect authenticated users to protected route
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   if (isAuthenticated && hasAccess) {
     return <Redirect to="/search" />;
+  }
+
+  const backgroundVideo = document.querySelector('video');
+  if (backgroundVideo) {
+    backgroundVideo.onloadeddata = (e) => {
+      setBackgroundVideoLoaded(true);
+    };
   }
 
   return (
@@ -193,28 +190,42 @@ export function LandingPage({ isAuthenticated, profile }) {
       </Helmet>
       <section className="first">
         <div className="w-100 h-100 d-flex align-items-center">
-          <BackgroundVideo />
+          {!backgroundVideoLoaded && (
+            <img
+              src={BackgroundVideoImage}
+              className="background-video-preloader"
+              alt="Background Video"
+            />
+          )}
+          {!isMobile ? (
+            <BackgroundVideo />
+          ) : (
+            <img
+              src={BackgroundVideoImage}
+              className="background-video-preloader"
+              alt="Background Video"
+            />
+          )}
           <div className="section-content-container container text-center">
-            <h1 className="display-1">About MoTrPAC</h1>
-            <p className="lead">
-              <span className="font-weight-bold">
-                Molecular Transducers of Physical Activity Consortium (MoTrPAC)
-              </span>{' '}
-              is a national research consortium. Its goal is to{' '}
-              <span className="font-italic about-motrpac-emphasis">
-                study the molecular changes that occur in response to exercise,
-              </span>{' '}
-              and ultimately to advance the understanding of how physical
-              activity improves and preserves health. We aim to generate a
-              molecular map of the effects of exercise.
+            <div className="logo-container">
+              <img src={LogoMotrpacWhite} alt="MoTrPAC Logo" />
+            </div>
+            <h3 className="display-3">The Molecular Map of</h3>
+            <h2 className="display-2">Exercise</h2>
+            <p className="lead hero">
+              <a href="https://motrpac.org/" target="_blank" rel="noreferrer">
+                Welcome to the data repository for the Molecular Transducers of Physical
+                Activity Consortium; a national research initiative that aims to generate
+                a molecular map of the effects of exercise and training.
+              </a>
             </p>
             <div className="highlighted-links-container">
               <Link
-                to="/project-overview"
+                to="/data-download"
                 className="btn btn-primary btn-lg mt-4"
                 role="button"
               >
-                PROJECT OVERVIEW
+                DATA DOWNLOAD
               </Link>
               <Link
                 to="/tutorials"
@@ -223,11 +234,60 @@ export function LandingPage({ isAuthenticated, profile }) {
               >
                 VIDEO TUTORIALS
               </Link>
+              <Link
+                to="/graphical-clustering"
+                className="btn btn-primary btn-lg mt-4"
+                role="button"
+              >
+                EXPLORE DATA
+              </Link>
+              <Link
+                to="/publications"
+                className="btn btn-primary btn-lg mt-4"
+                role="button"
+              >
+                PUBLICATIONS
+              </Link>
             </div>
             <div className="office-hour-anchor-link-container">
               <a href="#join-office-hour" className="office-hour-anchor-link">
                 Join our monthly open office event to learn more
               </a>
+            </div>
+          </div>
+        </div>
+        <AnimatedDownArrow />
+      </section>
+      <section className="fifth">
+        <div className="w-100 h-100 d-flex align-items-center">
+          <div className="section-content-container container text-center">
+            <div className="row content-landscape-preprint d-flex align-items-center">
+              <div className="content col-12 col-md-6">
+                <h1>
+                  MoTrPAC animal endurance training exercise study paper now published in
+                  {' '}
+                  <span className="font-italic">Nature</span>
+                </h1>
+                <a
+                  href="https://www.nature.com/articles/s41586-023-06877-w"
+                  className="btn btn-primary btn-lg mt-4"
+                  role="button"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  LEARN MORE
+                </a>
+              </div>
+              <div
+                className="feature-image col-12 col-md-6 mx-auto"
+                onClick={goToExternalLink}
+              >
+                <img
+                  src={LandscapeAbstract}
+                  className="img-fluid lanascape-paper-abstract"
+                  alt="Landscape Paper Abstract"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -284,67 +344,22 @@ export function LandingPage({ isAuthenticated, profile }) {
         </div>
         <AnimatedDownArrow />
       </section>
-      <section className="fifth">
-        <div className="w-100 h-100 d-flex align-items-center">
-          <div className="section-content-container container text-center">
-            <div className="row content-landscape-preprint d-flex align-items-center">
-              <div className="content col-12 col-md-6">
-                <h1>
-                  MoTrPAC Endurance Exercise Training Animal Study Landscape
-                  Preprint now available at bioRxiv
-                </h1>
-                <a
-                  href="https://www.biorxiv.org/content/10.1101/2022.09.21.508770v3"
-                  className="btn btn-primary btn-lg mt-4"
-                  role="button"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  LEARN MORE
-                </a>
-              </div>
-              <div className="feature-image col-12 col-md-6 mx-auto" onClick={goToExternalLink}>
-                <img
-                  src={LandscapePreprintAbstract}
-                  className="img-fluid data-layer-runner"
-                  alt="Data Layer Runner"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <AnimatedDownArrow />
-      </section>
       <section className="sixth">
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container text-center">
-            <div className="col-12" id="iframe-container">
-              <img
-                src={TutorialVideoPreviewImage}
-                alt="Tutorial Video Preview"
-                className="tutorial-video-preview"
-              />
-              <IframeResizer
-                forwardRef={iframeRef}
-                heightCalculationMethod="max"
-                widthCalculationMethod="max"
+            <div
+              className="embedContainer embed-responsive embed-responsive-16by9"
+              id="tutorial-video-iframe-container"
+            >
+              <iframe
+                ref={iframeRef}
+                title="Data Hub tutorial video"
                 allow="autoplay"
-                src="https://drive.google.com/file/d/1dYoqYmN5RVk8Spyp2c-bxP5R7WA73Zag/preview"
-                style={{
-                  height: videoHeight,
-                  width: '1px',
-                  minWidth: '100%',
-                  border: '1px solid #000',
-                  borderRadius: '0.5rem',
-                  boxShadow: '0 2em 3em rgba(0, 0, 0, 0.5)',
-                }}
-                autoResize
-                scrolling
-                sizeHeight
-                sizeWidth
+                src="https://drive.google.com/file/d/1chxJyVd6SlqP1m7cLV-F26OL7CJA2SXG/preview"
+                className="embed-responsive-item homepage-tutorial-video"
               />
             </div>
-            <div className="container text-center mt-5">
+            <div className="container text-center mt-4">
               <h1 className="py-4">
                 Watch our tutorial video to learn how to use the MoTrPAC Data
               </h1>

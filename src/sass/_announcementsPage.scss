@@ -25,9 +25,7 @@
     font-size: 5.0rem;
     margin: 0 2.5rem;
 
-    &.webinar,
-    &.landscape-paper-accepted,
-    &.mitochondria-paper-accepted {
+    &.webinar {
       color: $accent-green;
     }
 
@@ -35,7 +33,9 @@
       color: $gray-semi-transparent;
     }
 
-    &.marker-paper {
+    &.marker-paper,
+    &.landscape-paper-published,
+    &.companion-paper-published {
       color: $accent-yellow;
     }
 

@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PageTitle from '../lib/ui/pageTitle';
+import ExternalLink from '../lib/ui/externalLink';
 import MOTRLogo from '../assets/MoTrPAC_horizontal.png';
 import metaAnalysisGeneIcon from '../assets/analysisIcons/MetaAnalysisGene.svg';
 import NIHLogo from '../assets/ExternalLogos/NIHCommonFund.png';
 import ENCODELogo from '../assets/ExternalLogos/ENCODE.png';
 import MWLogo from '../assets/ExternalLogos/MetabolomicsWorkbench.jpeg';
 import GTExLogo from '../assets/ExternalLogos/GTEx.png';
-import CFDELogo from '../assets/ExternalLogos/CFDE.png';
+import CFDELogo from '../assets/ExternalLogos/CFDE_WORKBENCH.png';
 import OmicsPipelinesImage from '../assets/ExternalLogos/omicspipelines_dashboard.png';
+import MoTrPACRecruitmentLogo from '../assets/ExternalLogos/MoTrPAC_Recruitment_logo.png';
+import WuTsaiHumanPerformanceAllianceStanfordSiteLogo from '../assets/ExternalLogos/WuTsai_Human_Performance_Alliace.jpg';
 
 const featured = [
   {
@@ -17,9 +20,16 @@ const featured = [
       {
         protocol: 'https',
         url: 'MoTrPAC.org',
-        text: 'Primary entrance point for overarching MoTrPAC study of which the Bioinformatic Datahub is a component.',
+        text: 'Primary entrance point for overarching MoTrPAC study of which the Bioinformatic Data Hub is a component.',
         image: MOTRLogo,
-        title: 'MoTrPAC Main Site',
+        title: 'MoTrPAC Consortium Site',
+      },
+      {
+        protocol: 'https',
+        url: 'motrpac.org/join/volunteerHome.cfm',
+        text: 'The MoTrPAC Study is recruiting volunteers to participate in the research study. More information and details available at the MoTrPAC Consortium Site.',
+        image: MoTrPACRecruitmentLogo,
+        title: 'Volunteer',
       },
       {
         protocol: 'https',
@@ -52,10 +62,10 @@ const partners = [
       },
       {
         protocol: 'https',
-        url: 'www.nih-cfde.org',
-        text: 'Common Fund Data Ecosystem',
+        url: 'info.cfde.cloud',
+        text: 'CFDE Information Portal',
         image: CFDELogo,
-        title: 'CFDE',
+        title: 'CFDE Workbench',
       },
       {
         protocol: 'https',
@@ -77,6 +87,13 @@ const partners = [
         text: 'ENCODE project website',
         image: ENCODELogo,
         title: 'ENCODE Project',
+      },
+      {
+        protocol: 'https',
+        url: 'humanperformance.stanford.edu',
+        text: 'The Wu Tsai Human Performance Alliance at Stanford University',
+        image: WuTsaiHumanPerformanceAllianceStanfordSiteLogo,
+        title: 'Wu Tsai Human Performance Alliance at Stanford',
       },
     ],
   },
@@ -101,12 +118,11 @@ function LinkoutPage() {
                 style={{ backgroundImage: `url("${link.image}")` }}
               />
               <div className="card-body">
-                <h5 className="card-title">
-                  <a href={`${link.protocol}://${link.url}`} target="_new">
-                    {link.title}
-                    &nbsp;
-                    <span className="oi oi-external-link" />
-                  </a>
+                <h5 className="card-title text-center">
+                  <ExternalLink
+                    to={`${link.protocol}://${link.url}`}
+                    label={link.title}
+                  />
                 </h5>
                 <p className="card-text">{link.text}</p>
               </div>
@@ -150,11 +166,10 @@ function UsefulLink({ link }) {
         />
         <div className="card-body">
           <h5 className="card-title">
-            <a href={`${link.protocol}://www.${link.url}`} target="_new">
-              {link.title}
-              &nbsp;
-              <span className="oi oi-external-link" />
-            </a>
+            <ExternalLink
+              to={`${link.protocol}://${link.url}`}
+              label={link.title}
+            />
           </h5>
           <p className="card-text">{link.text}</p>
         </div>

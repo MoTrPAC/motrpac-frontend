@@ -11,6 +11,7 @@ import GeneCentricTrainingResultsTable from './geneCentricTrainingResultsTable';
 import GeneCentricSearchResultFilters from './geneCentricSearchResultFilters';
 import AnimatedLoadingIcon from '../../lib/ui/loading';
 import { genes } from '../../data/genes';
+import { trackEvent } from '../../GoogleAnalytics/googleAnalytics';
 
 function GeneCentricView({
   geneSearchResults,
@@ -22,6 +23,7 @@ function GeneCentricView({
   geneSearchChangeFilter,
   scope,
   hasResultFilters,
+  profile,
 }) {
   const [multiSelections, setMultiSelections] = useState([]);
   const inputRef = useRef(null);
@@ -140,7 +142,18 @@ function GeneCentricView({
                     handleGeneCentricSearch(
                       geneSearchParams,
                       formatSearchInput(),
-                      'all'
+                      'all',
+                    );
+                    // track event in Google Analytics 4
+                    trackEvent(
+                      'Gene-centric View Search',
+                      'keyword_search',
+                      profile && profile.userid
+                        ? profile.userid.substring(
+                            profile.userid.indexOf('|') + 1,
+                          )
+                        : 'anonymous',
+                      formatSearchInput(),
                     );
                   }}
                 >
@@ -254,6 +267,10 @@ GeneCentricView.propTypes = {
     assay: PropTypes.object,
     tissue: PropTypes.object,
   }),
+  profile: PropTypes.shape({
+    userid: PropTypes.string,
+    user_metadata: PropTypes.object,
+  }),
 };
 
 GeneCentricView.defaultProps = {
@@ -263,16 +280,18 @@ GeneCentricView.defaultProps = {
   geneSearchParams: { ...defaultGeneSearchParams },
   scope: 'all',
   hasResultFilters: {},
+  profile: {},
 };
 
 const mapStateToProps = (state) => ({
   ...state.analysis,
+  ...state.auth,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   handleGeneCentricSearch: (params, geneInputValue, scope) =>
     dispatch(
-      AnalysisActions.handleGeneCentricSearch(params, geneInputValue, scope)
+      AnalysisActions.handleGeneCentricSearch(params, geneInputValue, scope),
     ),
   geneSearchReset: (scope) => dispatch(AnalysisActions.geneSearchReset(scope)),
   geneSearchChangeFilter: (field, value) =>

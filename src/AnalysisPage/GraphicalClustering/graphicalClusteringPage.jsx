@@ -1,46 +1,48 @@
-import React, { useRef, useState } from 'react';
-import IframeResizer from 'iframe-resizer-react';
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import PageTitle from '../../lib/ui/pageTitle';
 import ExternalLink from '../../lib/ui/externalLink';
-
-const reportTissues = {
-  ADRNL: 'Adrenal',
-  BLOOD: 'Blood RNA',
-  BAT: 'Brown Adipose',
-  COLON: 'Colon',
-  CORTEX: 'Cortex',
-  SKM_GN: 'Gastrocnemius',
-  HEART: 'Heart',
-  HIPPOC: 'Hippocampus',
-  HYPOTH: 'Hypothalamus',
-  KIDNEY: 'Kidney',
-  LIVER: 'Liver',
-  LUNG: 'Lung',
-  PLASMA: 'Plasma',
-  SMLINT: 'Small Intestine',
-  SPLEEN: 'Spleen',
-  SKM_VL: 'Vastus Lateralis',
-  WAT_SC: 'White Adipose',
-};
+import Pass1bLandscapeGraphicalReport from './pass1bLandscapeReport';
+import Pass1bMitochondriaGraphicalReport from './pass1bMitoReport';
+import GraphicalClusteringIntroduction from './components/graphicalClusteringIntroduction';
+import TissueSelection from './components/tissueSelection';
+import { handleScroll } from './sharedLib';
 
 function GraphicalClustering() {
-  const iframeRef = useRef(null);
   const [tissue, setTissue] = useState('SKM_GN');
-  const iframeRefMito = useRef(null);
   const [mitoTissue, setMitoTissue] = useState('HEART');
-  const [currentView, setCurrentView] = useState('landscape');
+  const [currentView, setCurrentView] = useState('pass1b-06-landscape');
+  const location = useLocation();
+  const { pathname } = location;
 
   // Handler to set current view to either landscape or companion study
   function handleViewChange(study) {
     setCurrentView(study);
   }
 
+  // fix toc position to the top of the page when scrolling
+  if (pathname === '/graphical-clustering') {
+    window.addEventListener('scroll', handleScroll);
+  } else {
+    window.removeEventListener('scroll', handleScroll);
+  }
+
   return (
-    <div className="graphicalClusteringPage px-3 px-md-4 mb-3">
-      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 mb-3 page-header border-bottom">
-        <div className="page-title">
-          <h1 className="mb-0">Graphical Clustering</h1>
-        </div>
-        <div className="btn-toolbar">
+    <div className="graphicalClusteringPage px-3 px-md-4 mb-3 container">
+      <div className="row d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center page-header">
+        <Helmet>
+          <html lang="en" />
+          <title>Tissue-level graphical analysis results - MoTrPAC Data Hub</title>
+        </Helmet>
+        <PageTitle
+          title={`Tissue-level visualization of graphical results${
+            currentView === 'pass1b-06-mitochondria'
+              ? ' (Mitochondria-related features only)'
+              : ''
+          }`}
+        />
+        <div className="btn-toolbar mb-3">
           <div
             className="btn-group"
             role="group"
@@ -48,38 +50,33 @@ function GraphicalClustering() {
           >
             <button
               type="button"
-              className={`btn btn-outline-primary ${
-                currentView === 'landscape' ? 'active' : ''
+              className={`btn btn-outline-primary btn-sm ${
+                currentView === 'pass1b-06-landscape' ? 'active' : ''
               }`}
-              onClick={handleViewChange.bind(this, 'landscape')}
+              onClick={handleViewChange.bind(this, 'pass1b-06-landscape')}
             >
               <span className="d-flex align-items-center">Landscape</span>
             </button>
             <button
               type="button"
-              className={`btn btn-outline-primary ${
-                currentView === 'mitochondria' ? 'active' : ''
+              className={`btn btn-outline-primary btn-sm ${
+                currentView === 'pass1b-06-mitochondria' ? 'active' : ''
               }`}
-              onClick={handleViewChange.bind(this, 'mitochondria')}
+              onClick={handleViewChange.bind(this, 'pass1b-06-mitochondria')}
             >
               <span className="d-flex align-items-center">Mitochondria</span>
             </button>
           </div>
         </div>
       </div>
-      <div className="graphical-clustering-container">
-        {currentView === 'landscape' && (
-          <LandscapeGraphicalClustering
-            tissue={tissue}
-            setTissue={setTissue}
-            iframeRef={iframeRef}
-          />
+      <div className="row graphical-clustering-container">
+        {currentView === 'pass1b-06-landscape' && (
+          <LandscapeGraphicalClustering tissue={tissue} setTissue={setTissue} />
         )}
-        {currentView === 'mitochondria' && (
+        {currentView === 'pass1b-06-mitochondria' && (
           <MitoChondriaGraphicalAnalysis
             tissue={mitoTissue}
             setTissue={setMitoTissue}
-            iframeRef={iframeRefMito}
           />
         )}
       </div>
@@ -89,110 +86,51 @@ function GraphicalClustering() {
 
 export default GraphicalClustering;
 
-// Tissue selection dropdown component
-function ReportControls({ tissue, toggleReport }) {
-  const tissueKeys = Object.keys(reportTissues);
-
-  return (
-    <div className="controlPanelContainer mt-3 mb-1 ml-3">
-      <div className="controlPanel">
-        <div className="controlRow d-flex align-items-center">
-          <div className="controlLabel mr-2 font-weight-bold">
-            Select a tissue:
-          </div>
-          <div className="dropdown">
-            <button
-              className="btn btn-primary dropdown-toggle"
-              type="button"
-              id="reportViewMenu"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              {reportTissues[tissue]}
-            </button>
-            <div
-              className="dropdown-menu animate slideIn"
-              aria-labelledby="reportViewMenu"
-            >
-              {tissueKeys.map((key) => {
-                return (
-                  <button
-                    key={key}
-                    className="dropdown-item"
-                    type="button"
-                    onClick={toggleReport.bind(this, key)}
-                  >
-                    {reportTissues[key]}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// iFrame content component
-function IframeGraphicalResults({ srcPath, iframeRef }) {
-  return (
-    <IframeResizer
-      forwardRef={iframeRef}
-      heightCalculationMethod="max"
-      src={srcPath}
-      style={{
-        height: '63vh',
-        width: '1px',
-        minWidth: '1200px',
-        border: 'none',
-      }}
-      scrolling
-      sizeHeight
-      sizeWidth
-    />
-  );
-}
-
 // Landscape graphical clustering component
-function LandscapeGraphicalClustering({ tissue, setTissue, iframeRef }) {
+function LandscapeGraphicalClustering({ tissue, setTissue }) {
   return (
     <div className="graphical-clustering-summary-container row mb-2">
-      <div className="lead col-12">
+      <div className="lead col-12 page-summary">
         Explore multi-omic changes and associated pathway enrichment results
         over the training time course per tissue in adult rats. Compare
         responses between male and female rats, identify pathways affected in
         single or multiple omes' and explore what molecules drive those
-        enrichments. To learn more, see the{' '}
+        enrichments. See the
+        {' '}
         <ExternalLink
-          to="https://www.biorxiv.org/content/10.1101/2022.09.21.508770v1"
-          label="MoTrPAC Endurance Exercise Training Animal Study Landscape Preprint"
-        />{' '}
-        as well as the{' '}
+          to="https://www.nature.com/articles/s41586-023-06877-w"
+          label="main animal endurance training study"
+        />
+        {' '}
+        and the
+        {' '}
         <ExternalLink
           to="https://motrpac.github.io/MotrpacRatTraining6mo/articles/MotrpacRatTraining6mo.html"
           label="documentation"
         />
-        .
+        {' '}
+        to learn more.
       </div>
-      <div className="graphical-clustering-content-container mt-2">
-        <ReportControls tissue={tissue} toggleReport={setTissue} />
-        <IframeGraphicalResults
-          srcPath={`/static-assets/graphical-analysis-reports/graphical-analysis-results_${tissue}.html`}
-          iframeRef={iframeRef}
-        />
+      <GraphicalClusteringIntroduction currentView="pass1b-06-landscape" />
+      <TissueSelection
+        tissue={tissue}
+        toggleTissue={setTissue}
+        currentView="pass1b-06-landscape"
+      />
+      <div className="graphical-clustering-content-container pt-3">
+        <Pass1bLandscapeGraphicalReport tissue={tissue} />
       </div>
     </div>
   );
 }
 
 // Mitochondria graphical analysis component
-function MitoChondriaGraphicalAnalysis({ tissue, setTissue, iframeRef }) {
+function MitoChondriaGraphicalAnalysis({ tissue, setTissue }) {
   return (
     <div className="graphical-clustering-summary-container row mb-2">
-      <div className="lead col-12">
-        Explore the mitochondria-selected (using{' '}
+      <div className="lead col-12 page-summary">
+        Explore the mitochondria-selected (using
+        {' '}
         <ExternalLink
           to="https://www.broadinstitute.org/mitocarta/mitocarta30-inventory-mammalian-mitochondrial-proteins-and-pathways"
           label="MitoCarta"
@@ -200,20 +138,23 @@ function MitoChondriaGraphicalAnalysis({ tissue, setTissue, iframeRef }) {
         ) multi-omic changes and associated pathway enrichment results over the
         training time course per tissue in adult rats. Compare responses between
         male and female rats, identify pathways affected in single or multiple
-        omes' and explore what molecules drive those enrichments. To learn more,
-        see the{' '}
+        omes' and explore what molecules drive those enrichments. See the
+        {' '}
         <ExternalLink
-          to="https://www.biorxiv.org/content/10.1101/2023.01.13.523698v1"
-          label="MoTrPAC mitochondrial companion preprint"
+          to="https://doi.org/10.1016/j.cmet.2023.12.021"
+          label="animal mitochondrial response study"
         />
-        .
+        {' '}
+        to learn more.
       </div>
-      <div className="graphical-clustering-content-container mt-2">
-        <ReportControls tissue={tissue} toggleReport={setTissue} />
-        <IframeGraphicalResults
-          srcPath={`/static-assets/mito-graphical-analysis-reports/mito-graphical-analysis-results_${tissue}.html`}
-          iframeRef={iframeRef}
-        />
+      <GraphicalClusteringIntroduction currentView="pass1b-06-mitochondria" />
+      <TissueSelection
+        tissue={tissue}
+        toggleTissue={setTissue}
+        currentView="pass1b-06-mitochondria"
+      />
+      <div className="graphical-clustering-content-container pt-3">
+        <Pass1bMitochondriaGraphicalReport tissue={tissue} />
       </div>
     </div>
   );

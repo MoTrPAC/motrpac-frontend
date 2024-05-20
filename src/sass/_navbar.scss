@@ -190,71 +190,89 @@ nav {
       padding-left: 15px;
       padding-right: 15px;
     }
-  
-    .navbar-nav {
-      padding-bottom: 0.5rem;
-  
-      .navItem:last-child {
-        .user-logout-button {
-          margin-left: 0;
-        }
-      }
-    }
-  }
-}
-
-@include media-breakpoint-down(sm) {
-  .header-navbar-container {
-    align-items: center !important;
-    padding-top: 0.75rem;
-  }
-  nav {
-    .header-navbar-items.container {
-      padding-left: 15px;
-      padding-right: 15px;
-    }
   }
 }
 
 @include media-breakpoint-down(xs) {
   .header-navbar-container {
+    align-items: start !important;
+    padding-top: 0.75rem;
+
     .navbar-brand {    
-      text-align: center;
-      margin: 1rem 0 !important;
-    }
+      margin-right: auto !important;
 
-    .navbar {
-      margin-bottom: 1rem !important;
-
-      .header-navbar-items.container {
-        padding-left: 15px;
-        padding-right: 15px;
-      }
-    }
-  }
-}
-
-@media (max-width: 320px) {
-  .header-navbar-container {
-    .navbar-brand {
       .header-logo {
         img {
-          width: 285px;
+          width: 90%;
           height: auto;
         }
       }
     }
 
-    .navbar-nav {
-      .navItem:last-child {
-        .user-logout-button {
-          font-size: 90%;
+    nav.navbar {
+      margin-bottom: 0 !important;
+      margin-right: 0.75rem !important;
+  
+      .header-navbar-items {
+        padding-bottom: 0;
+
+        .navbar-toggler {
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
+
+          .navbar-toggler-icon {
+            width: 1.0em;
+            height: 1.0em;
+          }
         }
 
-        .logOutBtn {
-          font-size: 90%;
-          margin-left: 0.15rem;
+        #navbarSupportedContent {
+          .navbar-nav {
+            padding-top: 0.25rem;
+            padding-bottom: 0;
+
+            .navItem {
+              font-size: 1.0rem;
+
+              .nav-link {
+                padding-top: 0.25rem;
+                padding-bottom: 0.25rem;
+              }
+            }
+          }
         }
+      }
+    }
+
+    .logInBtn {
+      font-size: 0.9rem;
+      padding: 0.25rem 0.5rem;
+    }
+
+    .user-logout-button {
+      font-size: 0.9rem;
+
+      .logOutBtn {
+        font-size: 0.9rem;
+        margin-left: 0.5rem;
+        padding: 0.25rem 0.5rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 499.98px) {
+  .header-navbar-container {
+    .user-logout-button {
+      font-size: 0.9rem;
+
+      .btn.dropdown-toggle {
+        display: none;
+      }
+
+      .logOutBtn {
+        margin-left: 0;
+        white-space: nowrap;
       }
     }
   }

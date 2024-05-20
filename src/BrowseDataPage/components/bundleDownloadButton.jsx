@@ -5,11 +5,7 @@ import { useDispatch } from 'react-redux';
 import surveyModdalActions from '../../UserSurvey/userSurveyActions';
 import { trackEvent } from '../../GoogleAnalytics/googleAnalytics';
 
-function BundleDownloadButton({
-  bundlefile,
-  profile,
-  handleUserSurveyOpenOnBundledDownload,
-}) {
+function BundleDownloadButton({ bundlefile, bundlefileSize, profile }) {
   const [fetchStatus, setFetchStatus] = useState({
     status: null,
     fileUrl: null,
@@ -51,23 +47,18 @@ function BundleDownloadButton({
   }
 
   // reset state upon user clicking download link
-  function handleFileDownload(file) {
-    dispatch(surveyModdalActions.userDownloadedData());
+  async function handleFileDownload(file) {
+    await dispatch(surveyModdalActions.userDownloadedData());
     const userID =
       profile && profile.userid
         ? profile.userid.substring(profile.userid.indexOf('|') + 1)
         : 'anonymous';
     trackEvent('Data Download', 'bundled_files', userID, file);
-    setTimeout(() => {
-      setFetchStatus({
-        status: null,
-        fileUrl: null,
-        fetching: false,
-      });
-    }, 1500);
-    if (typeof handleUserSurveyOpenOnBundledDownload === 'function') {
-      handleUserSurveyOpenOnBundledDownload();
-    }
+    setFetchStatus({
+      status: null,
+      fileUrl: null,
+      fetching: false,
+    });
   }
 
   // render button with fetch state
@@ -75,16 +66,17 @@ function BundleDownloadButton({
     return (
       <button
         type="button"
-        className="btn btn-primary btn-bundle-data-download d-flex align-items-center"
+        className="btn btn-secondary btn-block btn-bundle-data-download d-flex align-items-center justify-content-center px-3"
         disabled
       >
         <div
-          className="spinner-border spinner-border-sm text-light mr-1"
+          className="spinner-border spinner-border-sm text-light mr-2"
           role="status"
         >
           <span className="sr-only">Loading...</span>
         </div>
-        <span className="file-size">Get</span>
+        <span className="file-size font-weight-bold">Get</span> (
+        {bundlefileSize})
       </button>
     );
   }
@@ -95,7 +87,7 @@ function BundleDownloadButton({
       <a
         id={file}
         href={fetchStatus.fileUrl}
-        className="btn-bundle-data-download ready-to-download-link px-3"
+        className="btn-bundle-data-download ready-to-download-link px-3 w-100"
         download
         onClick={(e) => handleFileDownload(file, e)}
       >
@@ -109,7 +101,7 @@ function BundleDownloadButton({
     return (
       <button
         type="button"
-        className="btn btn-danger btn-bundle-data-download px-3"
+        className="btn btn-danger btn-block btn-bundle-data-download px-3"
         onClick={(e) => {
           e.preventDefault();
           setFetchStatus({
@@ -129,15 +121,17 @@ function BundleDownloadButton({
     return (
       <button
         type="button"
-        className="btn btn-primary btn-bundle-data-download d-flex align-items-center"
+        className="btn btn-secondary btn-block btn-bundle-data-download d-flex align-items-center justify-content-center px-3"
         onClick={(e) =>
           handleFileFetch(e, process.env.REACT_APP_DATA_FILE_BUCKET, file)
         }
       >
-        <i className="material-icons open-access-bundle-data-download-icon">
-          file_download
+        <i className="material-icons open-access-bundle-data-download-icon mr-2">
+          cloud_download
         </i>
-        <span className="file-size">Get</span>
+        <span className="file-size">
+          <span className="font-weight-bold">Get</span> ({bundlefileSize})
+        </span>
       </button>
     );
   }
@@ -164,6 +158,7 @@ function BundleDownloadButton({
 
 BundleDownloadButton.propTypes = {
   bundlefile: PropTypes.string.isRequired,
+  bundlefileSize: PropTypes.string.isRequired,
   profile: PropTypes.shape({
     userid: PropTypes.string,
     user_metadata: PropTypes.shape({
@@ -172,12 +167,10 @@ BundleDownloadButton.propTypes = {
       name: PropTypes.string,
     }),
   }),
-  handleUserSurveyOpenOnBundledDownload: PropTypes.func,
 };
 
 BundleDownloadButton.defaultProps = {
   profile: {},
-  handleUserSurveyOpenOnBundledDownload: null,
 };
 
 export default BundleDownloadButton;

@@ -18,6 +18,9 @@ const DATA_FETCH_REQUESTED = 'DATA_FETCH_REQUESTED';
 const DATA_FETCH_SUCCESS = 'DATA_FETCH_SUCCESS';
 const DATA_FETCH_FAILURE = 'DATA_FETCH_FAILURE';
 const RESET_BROWSE_STATE = 'RESET_BROWSE_STATE';
+const SELECT_PASS1B_06_DATA = 'SELECT_PASS1B_06_DATA';
+const SELECT_PASS1A_06_DATA = 'SELECT_PASS1A_06_DATA';
+const SELECT_HUMAN_PRECOVID_SED_ADU_DATA = 'SELECT_HUMAN_PRECOVID_SED_ADU_DATA';
 
 export const types = {
   CHANGE_FILTER,
@@ -37,6 +40,9 @@ export const types = {
   DATA_FETCH_SUCCESS,
   DATA_FETCH_FAILURE,
   RESET_BROWSE_STATE,
+  SELECT_PASS1B_06_DATA,
+  SELECT_PASS1A_06_DATA,
+  SELECT_HUMAN_PRECOVID_SED_ADU_DATA,
 };
 
 function changeFilter(category, filter) {
@@ -151,6 +157,24 @@ function dataFetchFailure(error = '') {
 function resetBrowseState() {
   return {
     type: RESET_BROWSE_STATE,
+  };
+}
+
+function selectPass1B06Data() {
+  return {
+    type: SELECT_PASS1B_06_DATA,
+  };
+}
+
+function selectPass1A06Data() {
+  return {
+    type: SELECT_PASS1A_06_DATA,
+  };
+}
+
+function selectHumanPreCovidSedAduData() {
+  return {
+    type: SELECT_HUMAN_PRECOVID_SED_ADU_DATA,
   };
 }
 
@@ -330,6 +354,9 @@ const actions = {
   handleDownloadRequest,
   handleDataFetch,
   resetBrowseState,
+  selectPass1B06Data,
+  selectPass1A06Data,
+  selectHumanPreCovidSedAduData,
 };
 
 export default actions;

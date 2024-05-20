@@ -28,6 +28,9 @@ import CodeRepositories from '../CodeRepoPage/codeRepoPage';
 import MainStudyConnected from '../MainStudy/mainStudy';
 import Tutorials from '../Tutorials/tutorials';
 import Publications from '../Publications/publications';
+import MultiOmicsWorkingGroups from '../MultiOmicsWorkingGroups/multiOmicsWorkingGroups';
+import FullTableEnduranceTraining from '../Publications/Data/Animal/Phenotype/fullTableEnduranceTraining';
+import ClinicalStudyProtocols from '../Publications/Docs/Protocol/Clinical/clinicalStudyProtocols';
 import Pass1b06PhenotypeAnimalConnected from '../AnalysisPage/pass1b06PhenotypeAnimal';
 import CallbackConnected from '../Auth/callback';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
@@ -92,6 +95,12 @@ function App({ history = History }) {
               />
               <Route
                 path="/data-download"
+                exact
+                component={withTracker(BrowseDataPageConnected)}
+              />
+              <Route
+                path="/data-download/file-browser"
+                exact
                 component={withTracker(BrowseDataPageConnected)}
               />
               <Route
@@ -131,11 +140,26 @@ function App({ history = History }) {
               <Route path="/tutorials" component={withTracker(Tutorials)} />
               <Route
                 path="/publications"
+                exact
                 component={withTracker(Publications)}
+              />
+              <Route
+                path="/publications/data/animal/phenotype/full-table-endurance-training"
+                exact
+                component={withTracker(FullTableEnduranceTraining)}
+              />
+              <Route
+                path="/publications/docs/protocol/clinical/study-protocols"
+                exact
+                component={withTracker(ClinicalStudyProtocols)}
               />
               <PrivateRoute
                 path="/analysis-phenotype"
                 component={withTracker(Pass1b06PhenotypeAnimalConnected)}
+              />
+              <PrivateRoute
+                path="/multiomics-working-groups"
+                component={withTracker(MultiOmicsWorkingGroups)}
               />
             </Switch>
           </div>

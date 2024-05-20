@@ -291,7 +291,7 @@
       }
     }
 
-    &.releases {
+    &.releases, &.multiomics-working-groups {
       .material-icons {
         color: $stanford-cardinal-red;
       }
