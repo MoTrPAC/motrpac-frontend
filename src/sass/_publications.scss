@@ -10,11 +10,17 @@
 
 .publicationsPage {
     .pub-item-content {
-        .pub-image img {
+        .pub-image {
+            background-color: #fff;
             border: 1px solid #ccc;
+            height: fit-content;
             margin: 5px 0 25px 0;
             padding: 12px;
-            width: 100%;
+
+            img {
+                
+                width: 100%;
+            }
         }
 
         .pub-title {
@@ -36,6 +42,11 @@
                 }
             }
         }
+
+        &.landscape-paper {
+            background-color: lighten($primary-blue, 43%);;
+            border-radius: 8px;
+        }
     }
 
     .external-links-content-container {
@@ -43,6 +54,15 @@
             a {
                 text-decoration: none;
             }
+        }
+    }
+}
+
+/* Medium devices (tablets, less than 992px) */
+@include media-breakpoint-down(md) {
+    .publicationsPage {
+        .external-links-content-container {
+            display: block !important;
         }
     }
 }

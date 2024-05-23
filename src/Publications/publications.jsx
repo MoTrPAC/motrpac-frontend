@@ -10,16 +10,7 @@ import VenuPaper from '../assets/publications/venu_paper.gif';
 import NikPaper from '../assets/publications/nik_paper.gif';
 import MarkerPaper from '../assets/publications/marker_paper.gif';
 
-const publications = [
-  {
-    url: 'https://www.cell.com/cell-metabolism/fulltext/S1550-4131(23)00472-2',
-    title:
-      'The mitochondrial multi-omic response to exercise training across tissues',
-    authors:
-      'Amar D, Gay NR, Jimenez-Morales D, Jean Beltran PM, Ramaker ME, Raja AN, Zhao B, Sun Y, Marwaha S, Gaul DA, Hershman SG, Ferrasse A, Xia A, Lanza I, Fernández FM, Montgomery SB, Hevener AL, Ashley EA, Walsh MJ, Sparks LM, Burant CF, Rector SR, Thyfault J, Wheeler MT, Goodpaster BH, Coen PM, Schenk S, Bodine SC, Lindholm ME and The MoTrPAC Study Group.',
-    cite: 'Cell Metabolism 36, 1-19, June 4, 2024.',
-    image: MitoPaper,
-  },
+const landscapePublications = [
   {
     url: 'https://www.nature.com/articles/s41586-023-06877-w',
     title:
@@ -28,6 +19,18 @@ const publications = [
       'MoTrPAC Study Group, David Amar, Nicole R. Gay, Pierre M. Jean Beltran, Joshua N. Adkins, Jose J. Almagro Armenteros, Euan Ashley, Julian Avila-Pacheco, Dam Bae, Nasim Bararpour, Charles Burant, Clary Clish, Gary Cutter, Surendra Dasari, Courtney Dennis, Charles R. Evans, Facundo M. Fernández, David Gaul, Yongchao Ge, Robert Gerszten, Laurie J. Goodyear, Zhenxin Hou, Olga Ilkayeva, Anna A. Ivanova, David Jimenez-Morales, Maureen T. Kachman, Hasmik Keshishian, William E. Kraus, Ian R. Lanza, Jun Li, Malene E. Lindholm, Ana C. Lira, Gina M. Many, Shruti Marwaha, Michael E. Miller, Michael J. Muehlbauer, K. Sreekumaran Nair, Venugopalan D. Nair, Archana Natarajan Raja, Christopher Newgard, Eric A. Ortlund, Paul D. Piehowski, David M. Presby, Wei-Jun Qian, Jessica L. Rooney, James A. Sanford, Evan Savage, Stuart C. Sealfon, Gregory R. Smith, Kevin S. Smith, Alec Steep, Cynthia L. Stowe, Yifei Sun, Russell Tracy, Nikolai G. Vetr, Martin J. Walsh, Si Wu, Tiantian Zhang, Bingqing Zhao, Jimmy Zhen, Brent G. Albertson, Mary Anne S. Amper, Ali Tugrul Balci, Marcas Bamman, Elisabeth R. Barton, Bryan Bergman, Daniel Bessesen, Frank Booth, Brian Bouverat, Thomas W. Buford, Tiziana Caputo, Toby L. Chambers, Clarisa Chavez, Maria Chikina, Roxanne Chiu, Michael Cicha, Paul M. Coen, Dan Cooper, Elaine Cornell, Karen P. Dalton, Luis Oliveria De Sousa, Roger Farrar, Kishore Gadde, Nicole Gagne, Bret H. Goodpaster, Marina A. Gritsenko, Kristy Guevara, Fadia Haddad, Joshua R. Hansen, Melissa Harris, Trevor Hastie, Krista M. Hennig, Steven G. Hershman, Andrea Hevener, Michael F. Hirshman, Fang-Chi Hsu, Kim M. Huffman, Chia-Jui Hung, Chelsea Hutchinson-Bunch, Bailey E. Jackson, Catherine Jankowski, Christopher A. Jin, Neil M. Johannsen, Benjamin G. Ke, Wendy M. Kohrt, Kyle S. Kramer, Christiaan Leeuwenburgh, Sarah J. Lessard, Bridget Lester, Xueyun Liu, Ching-ju Lu, Nathan S. Makarewicz, Kristal M. Maner-Smith, DR Mani, Nada Marjanovic, Andrea Marshall, Sandy May, Edward Melanson, Matthew E. Monroe, Ronald J. Moore, Samuel Moore, Kerrie L. Moreau, Charles C. Mundorff, Nicolas Musi, Daniel Nachun, Michael D. Nestor, Robert L. Newton Jr., Barbara Nicklas, Pasquale Nigro, German Nudelman, Marco Pahor, Cadence Pearce, Vladislav A. Petyuk, Hanna Pincas, Scott Powers, Shlomit Radom-Aizik, Krithika Ramachandran, Megan E. Ramaker, Irene Ramos, Tuomo Rankinen, Alexander (Sasha) Raskind, Blake B. Rasmussen, Eric Ravussin, R. Scott Rector, W. Jack Rejeski, Collyn Richards, Stas Rirak, Jeremy M. Robbins, Aliza B. Rubenstein, Frederique Ruf-Zamojski, Scott Rushing, Tyler J. Sagendorf, Mihir Samdarshi, Irene E. Schauer, Robert Schwartz, Nitish Seenarine, Tanu Soni, Lauren M. Sparks, Christopher Teng, Anna Thalacker-Mercer, John Thyfault, Rob Tibshirani, Scott Trappe, Todd A. Trappe, Karan Uppal, Sindhu Vangeti, Mital Vasoya, Elena Volpi, Alexandria Vornholt, Michael P. Walkup, John Williams, Ashley Xia, Zhen Yan, Xuechen Yu, Chongzhi Zang, Elena Zaslavsky, Navid Zebarjadi, Sue C. Bodine, Steven Carr, Karyn Esser, Stephen B. Montgomery, Simon Schenk, Michael P. Snyder, Matthew T. Wheeler.',
     cite: 'Nature 629, May 1, 2024.',
     image: LandscapePaper,
+  },
+];
+
+const companionPublications = [
+  {
+    url: 'https://www.cell.com/cell-metabolism/fulltext/S1550-4131(23)00472-2',
+    title:
+      'The mitochondrial multi-omic response to exercise training across tissues',
+    authors:
+      'Amar D, Gay NR, Jimenez-Morales D, Jean Beltran PM, Ramaker ME, Raja AN, Zhao B, Sun Y, Marwaha S, Gaul DA, Hershman SG, Ferrasse A, Xia A, Lanza I, Fernández FM, Montgomery SB, Hevener AL, Ashley EA, Walsh MJ, Sparks LM, Burant CF, Rector SR, Thyfault J, Wheeler MT, Goodpaster BH, Coen PM, Schenk S, Bodine SC, Lindholm ME and The MoTrPAC Study Group.',
+    cite: 'Cell Metabolism 36, 1-19, June 4, 2024.',
+    image: MitoPaper,
   },
   {
     url: 'https://doi.org/10.1038/s42255-023-00959-9',
@@ -83,11 +86,20 @@ const publications = [
  */
 function Publications() {
   // Render list of publications
-  function renderPublications() {
+  function renderPublications(category) {
+    if (category === 'landscape') {
+      return (
+        <div className="publication-item">
+          {landscapePublications.map((pub) => (
+            <LandscapePublication key={pub.url} pub={pub} />
+          ))}
+        </div>
+      );
+    }
     return (
       <div className="publication-item">
-        {publications.map((pub) => (
-          <Publication key={pub.url} pub={pub} />
+        {companionPublications.map((pub) => (
+          <CompanionPublication key={pub.url} pub={pub} />
         ))}
       </div>
     );
@@ -100,11 +112,8 @@ function Publications() {
         <title>Publications - MoTrPAC Data Hub</title>
       </Helmet>
       <PageTitle title="Publications" />
-      <div className="publications-content-container row mb-4">
-        <div className="lead col-12">{renderPublications()}</div>
-      </div>
-      <div className="external-links-content-container row mb-4">
-        <div className="link-item lead col-12 col-md-6">
+      <div className="external-links-content-container mt-4 mb-2 py-2 border-top border-bottom d-flex align-items-center">
+        <div className="link-item mr-4">
           <a
             href="https://www.nature.com/collections/cfiiibcebh"
             target="_blank"
@@ -112,12 +121,25 @@ function Publications() {
             className="preprint-link d-flex align-items-center justify-content-center"
           >
             <span className="material-icons">navigate_next</span>
-            <span>See Nature collection of MoTrPAC publications</span>
+            <span>Nature collection of MoTrPAC publications</span>
             {' '}
             <span className="oi oi-external-link" />
           </a>
         </div>
-        <div className="link-item lead col-12 col-md-6">
+        <div className="link-item mr-4">
+          <a
+            href="http://doi.org/10.1101/2024.05.15.24307328"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="preprint-link d-flex align-items-center justify-content-center"
+          >
+            <span className="material-icons">navigate_next</span>
+            <span>Preprint at medRxiv</span>
+            {' '}
+            <span className="oi oi-external-link" />
+          </a>
+        </div>
+        <div className="link-item">
           <a
             href="https://connect.biorxiv.org/relate/content/218"
             target="_blank"
@@ -125,35 +147,74 @@ function Publications() {
             className="preprint-link d-flex align-items-center justify-content-center"
           >
             <span className="material-icons">navigate_next</span>
-            <span>See our full list of preprints at bioRxiv</span>
+            <span>Preprints at bioRxiv</span>
             {' '}
             <span className="oi oi-external-link" />
           </a>
+        </div>
+      </div>
+      <div className="publications-content-container mb-5">
+        <div className="lead w-100">{renderPublications('landscape')}</div>
+      </div>
+      <div className="publications-content-container mb-5">
+        <div className="lead w-100">{renderPublications('companion')}</div>
+      </div>
+    </div>
+  );
+}
+
+// Landscape publication component
+function LandscapePublication({ pub }) {
+  return (
+    <div className="pub-item-content landscape-paper container mt-4 px-5 py-4">
+      <div className="highlight-header row mb-2">
+        <h2 className="display-4">Highlights</h2>
+      </div>
+      <div className="row">
+        <div className="pub-image col-12 col-md-4">
+          <a href={pub.url} target="_blank" rel="noopener noreferrer">
+            <img src={pub.image} alt="Publication" />
+          </a>
+        </div>
+        <div className="pub-title-authors-container col-12 col-md-8">
+          <h3 className="pub-title ml-3">
+            {pub.title}
+          </h3>
+          <p className="authors-cite ml-3">
+            <span className="pub-authors">{pub.authors}</span>
+            <span className="pub-cite font-italic ml-1">{pub.cite}</span>
+            <span className="fulltext-link ml-1">
+              <ExternalLink to={pub.url} label="Full text" />
+            </span>
+          </p>
         </div>
       </div>
     </div>
   );
 }
 
-function Publication({ pub }) {
+// Companion publication component
+function CompanionPublication({ pub }) {
   return (
-    <div className="pub-item-content mt-4 pb-2 border-bottom row">
-      <div className="pub-image col-4 col-md-4">
-        <a href={pub.url} target="_blank" rel="noopener noreferrer">
-          <img src={pub.image} alt="Publication" />
-        </a>
-      </div>
-      <div className="pub-title-authors-container col-8 col-md-8">
-        <h3 className="pub-title">
-          {pub.title}
-        </h3>
-        <p className="authors-cite">
-          <span className="pub-authors">{pub.authors}</span>
-          <span className="pub-cite font-italic ml-1">{pub.cite}</span>
-          <span className="fulltext-link ml-1">
-            <ExternalLink to={pub.url} label="Full text" />
-          </span>
-        </p>
+    <div className="pub-item-content mt-4 px-3 pb-2 border-bottom">
+      <div className="row">
+        <div className="pub-image col-12 col-md-4">
+          <a href={pub.url} target="_blank" rel="noopener noreferrer">
+            <img src={pub.image} alt="Publication" />
+          </a>
+        </div>
+        <div className="pub-title-authors-container col-12 col-md-8">
+          <h3 className="pub-title ml-3">
+            {pub.title}
+          </h3>
+          <p className="authors-cite ml-3">
+            <span className="pub-authors">{pub.authors}</span>
+            <span className="pub-cite font-italic ml-1">{pub.cite}</span>
+            <span className="fulltext-link ml-1">
+              <ExternalLink to={pub.url} label="Full text" />
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );
