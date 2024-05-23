@@ -15,6 +15,7 @@ import BackgroundVideoImage from '../assets/LandingPageGraphics/background_video
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.svg';
 import LandscapeAbstract from '../assets/LandingPageGraphics/landscape_abstract.gif';
+import NatureIssueCover from '../assets/LandingPageGraphics/nature_issue_cover.jpg';
 import BackgroundVideo from './components/backgroundVideo';
 import Figure1C from './components/figure1c';
 
@@ -163,7 +164,7 @@ export function LandingPage({ isAuthenticated, profile }) {
   }, [networkNodes]);
 
   const goToExternalLink = useCallback(() => {
-    window.open('https://www.nature.com/articles/s41586-023-06877-w', '_blank');
+    window.open('https://www.nature.com/nature/volumes/629/issues/8010', '_blank');
   }, []);
 
   // Redirect authenticated users to protected route
@@ -261,7 +262,7 @@ export function LandingPage({ isAuthenticated, profile }) {
       <section className="fifth">
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container text-center">
-            <div className="row content-landscape-preprint d-flex align-items-center">
+            <div className="row content-landscape-paper d-flex align-items-center">
               <div className="content col-12 col-md-6">
                 <h1>
                   MoTrPAC animal endurance training exercise study paper now published in
@@ -278,15 +279,15 @@ export function LandingPage({ isAuthenticated, profile }) {
                   LEARN MORE
                 </a>
               </div>
-              <div
-                className="feature-image col-12 col-md-6 mx-auto"
-                onClick={goToExternalLink}
-              >
-                <img
-                  src={LandscapeAbstract}
-                  className="img-fluid lanascape-paper-abstract"
-                  alt="Landscape Paper Abstract"
-                />
+              <div className="feature-image-content-container col-12 col-md-6 mx-auto">
+                <div className="feature-image" onClick={goToExternalLink}>
+                  <img
+                    src={NatureIssueCover}
+                    className="img-fluid lanascape-paper-abstract"
+                    alt="Landscape Paper Abstract"
+                  />
+                </div>
+                <div className="feature-image-attribution mt-1">Cover image by Nik Spencer/Nature</div>
               </div>
             </div>
           </div>
