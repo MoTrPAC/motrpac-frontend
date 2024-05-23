@@ -165,6 +165,12 @@ function Publications() {
 
 // Landscape publication component
 function LandscapePublication({ pub }) {
+  const [showAllAuthors, setShowAllAuthors] = React.useState(false);
+  const truncateLength = 623;
+  const truncatedAuthors = !showAllAuthors
+    ? `${pub.authors.substring(0, truncateLength)}...`
+    : pub.authors;
+
   return (
     <div className="pub-item-content landscape-paper container mt-4 px-5 py-4">
       <div className="highlight-header row mb-2">
@@ -180,11 +186,23 @@ function LandscapePublication({ pub }) {
           <h3 className="pub-title ml-3">
             {pub.title}
           </h3>
+          <p className="authors-cite ml-3 mb-1">
+            <span className="pub-authors">
+              {truncatedAuthors}
+            </span>
+          </p>
           <p className="authors-cite ml-3">
-            <span className="pub-authors">{pub.authors}</span>
             <span className="pub-cite font-italic ml-1">{pub.cite}</span>
             <span className="fulltext-link ml-1">
               <ExternalLink to={pub.url} label="Full text" />
+            </span>
+            <span className="ml-3">
+              <a
+                href="#"
+                onClick={() => setShowAllAuthors(!showAllAuthors)}
+                className="show-authors-control">
+                {showAllAuthors ? 'Show less authors' : 'Show all authors'}
+              </a>
             </span>
           </p>
         </div>
