@@ -557,9 +557,10 @@ function PreCAWG() {
             below).
           </li>
           <li>
-            Download and install the{' '}
+            Download and install the
+            {' '}
             <a
-              href="https://cloud.google.com/sdk/?hl=en"
+              href="https://cloud.google.com/sdk/docs/install"
               target="_blank"
               rel="noreferrer"
             >
