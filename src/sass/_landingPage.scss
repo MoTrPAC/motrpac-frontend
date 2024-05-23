@@ -191,25 +191,31 @@
         padding-top: 15px;
         padding-bottom: 15px;
 
-        .content-landscape-preprint {
-
+        .content-landscape-paper {
           .feature-image {
             background-color: #fff;
             border-radius: 0.75rem;
             box-shadow: 0 2em 3em rgba(0, 0, 0, 0.5);
             cursor: pointer;
-            padding: 2.5rem 2.65rem;
+            padding: 1.45rem 1.6rem;
             text-align: center;
             transition: all 0.25s ease-out;
 
             &:hover {
-              padding: 2.25rem 2.4rem;
+              padding: 1.25rem 1.4rem;
             }
       
             img {
               width: 100%;
               height: 100%;
             }
+          }
+
+          .feature-image-attribution {
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 400;
+            opacity: 0.4;
           }
         }
 

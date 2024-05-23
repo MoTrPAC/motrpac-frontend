@@ -10,6 +10,13 @@
 
 .publicationsPage {
     .pub-item-content {
+        .pub-image img {
+            border: 1px solid #ccc;
+            margin: 5px 0 25px 0;
+            padding: 12px;
+            width: 100%;
+        }
+
         .pub-title {
             font-weight: 600;
         }
@@ -27,6 +34,14 @@
                     position: relative;
                     top: 2px;
                 }
+            }
+        }
+    }
+
+    .external-links-content-container {
+        .link-item {
+            a {
+                text-decoration: none;
             }
         }
     }
