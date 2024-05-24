@@ -557,15 +557,17 @@ function PreCAWG() {
             below).
           </li>
           <li>
-            Download and install the{' '}
+            Download and install the
+            {' '}
             <a
-              href="https://cloud.google.com/sdk/?hl=en"
+              href="https://cloud.google.com/sdk/docs/install"
               target="_blank"
               rel="noreferrer"
             >
               Google Command Line Tools
             </a>{' '}
-            on your preferred work computer.
+            on your preferred work computer and connect them to the institutional
+            Google account you created (See Google CLI instructions).
           </li>
           <li>
             Set up a{' '}
@@ -666,7 +668,8 @@ function PreCAWG() {
               rel="noreferrer"
             >
               jzhen@stanford.edu
-            </a>{' '}
+            </a>
+            {' '}
             and <b>your local site PI</b> with a written request for the
             following access permissions:
             <ol className="nested-order-list">
@@ -714,6 +717,19 @@ function PreCAWG() {
             </ol>
           </li>
           <li>
+            Once this is done, you should be able to open a PowerShell (Windows) or
+            Terminal (Mac) and run the command
+            {' '}
+            <code>gsutil ls gs://motrpac-data-hub</code>
+            . If you can, that means your Google Cloud CLI is set up and your GCP
+            access is working correctly. If this fails, but you think you have access,
+            check that
+            {' '}
+            <code>gsutil</code>
+            {' '}
+            is in your PATH.
+          </li>
+          <li>
             Clone the following two GitHub repositories once you are granted
             access:
             <ol className="nested-order-list">
@@ -738,45 +754,88 @@ function PreCAWG() {
             </ol>
           </li>
           <li>
-            Install the{' '}
+            Install the
+            {' '}
             <a
               href="https://github.com/MoTrPAC/MotrpacHumanPreSuspension"
               target="_blank"
               rel="noreferrer"
             >
               MoTrPAC/MotrpacHumanPreSuspension
-            </a>{' '}
+            </a>
+            {' '}
             package - this package gives you programmatic access to the PreCAWG
-            data. Also review the <code>README.md</code>
+            data. Also review the
+            {' '}
+            <code>README.md</code>
+            {' '}
+            which explains how to install from the local clone of the repo. This
+            package cannot be installed directly from GitHub.com.
           </li>
           <li>
-            Read the{' '}
+            Read the
+            {' '}
             <a
               href="https://github.com/MoTrPAC/precovid-analyses"
               target="_blank"
               rel="noreferrer"
             >
               MoTrPAC/precovid-analyses
-            </a>{' '}
-            <code>README.md</code> - this repo is where novel analysis code must
+            </a>
+            {' '}
+            <code>README.md</code>
+            {' '}
+            - this repo is where novel analysis code must
             be stored
           </li>
           <li>
-            Set up your <code>motrpac_config.json</code> configuration file
+            Set up your
+            {' '}
+            <code>motrpac_config.json</code>
+            {' '}
+            configuration file as described in the
+            {' '}
+            <a
+              href="https://github.com/MoTrPAC/precovid-analyses"
+              target="_blank"
+              rel="noreferrer"
+            >
+              MoTrPAC/precovid-analyses
+            </a>
+            {' '}
+            <code>README.md</code>
           </li>
           <li>
-            Open Rstudio and attempt to run{' '}
+            Open Rstudio and attempt to run
+            {' '}
             <code>
               human-precovid-sed-adu_t07-adipose_prot-ph_metadata_qc-report_v1.Rmd
-            </code>{' '}
-            (after pointing to your <code>motrpac_config.json</code> file.
+            </code>
+            {' '}
+            (after pointing to your
+            {' '}
+            <code>motrpac_config.json</code>
+            {' '}
+            file). This R markdown file is in the
+            {' '}
+            <a
+              href="https://github.com/MoTrPAC/precovid-analyses"
+              target="_blank"
+              rel="noreferrer"
+            >
+              MoTrPAC/precovid-analyses
+            </a>
+            {' '}
+            repo in the QC folder.
           </li>
           <li>
-            Then ensure that{' '}
-            <code>MotrpacHumanPreSuspension::load_differential_analysis</code>{' '}
+            Then ensure that
+            {' '}
+            <code>MotrpacHumanPreSuspension::load_differential_analysis</code>
+            {' '}
             runs for you.
           </li>
-          <li>If #13 and #15 are running, you are ready to go!</li>
+          <li>If #13 and #14 are running, you are ready to go!</li>
         </ol>
       </div>
     </div>
