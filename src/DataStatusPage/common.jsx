@@ -102,6 +102,10 @@ export const getDataTableColumns = [
     accessor: 'dmaqc_valid',
   },
   {
+    Header: 'QC Passed',
+    accessor: 'qc_passed',
+  },
+  {
     Header: 'Submit Date',
     accessor: 'submission_date',
   },
