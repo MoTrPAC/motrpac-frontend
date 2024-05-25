@@ -31,6 +31,7 @@
     "react-scripts": "5.0.1",
     "react-table": "^7.7.0",
     "react-tooltip": "^5.11.2",
+    "react-youtube": "^10.1.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "tocbot": "^4.25.0",
