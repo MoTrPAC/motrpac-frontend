@@ -1,10 +1,11 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import VisNetworkReactComponent from 'vis-network-react';
 import { useMediaQuery } from 'react-responsive';
+import YouTube from 'react-youtube';
 import Footer from '../Footer/footer';
 import PromoteBanner from './promoteBanner';
 import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
@@ -144,7 +145,6 @@ export function LandingPage({ isAuthenticated, profile }) {
   const [backgroundVideoLoaded, setBackgroundVideoLoaded] = useState(false);
   const [data, setData] = useState(figure4eData);
   const [networkNodes, setNetwortNodes] = useState([]);
-  const iframeRef = useRef(null);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   const handleAddNode = useCallback(() => {
@@ -179,6 +179,22 @@ export function LandingPage({ isAuthenticated, profile }) {
       setBackgroundVideoLoaded(true);
     };
   }
+
+  // youtube video player configuration
+  const onPlayerReady = (event) => {
+    // access to player in all event handlers via event.target
+    event.target.pauseVideo();
+  };
+
+  const opts = {
+    height: '390',
+    width: '640',
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 0,
+      cc_load_policy: 1,
+    },
+  };
 
   return (
     <div className="row marketing content-container">
@@ -352,12 +368,13 @@ export function LandingPage({ isAuthenticated, profile }) {
               className="embedContainer embed-responsive embed-responsive-16by9"
               id="tutorial-video-iframe-container"
             >
-              <iframe
-                ref={iframeRef}
-                title="Data Hub tutorial video"
-                allow="autoplay"
-                src="https://drive.google.com/file/d/1chxJyVd6SlqP1m7cLV-F26OL7CJA2SXG/preview"
-                className="embed-responsive-item homepage-tutorial-video"
+              <YouTube
+                videoId="3zHnzUMo_vw"
+                opts={opts}
+                onReady={onPlayerReady}
+                title="Data Hub Tutorial Video"
+                className="embed-video-iframe-container"
+                iframeClassName="embed-responsive-item border border-dark"
               />
             </div>
             <div className="container text-center mt-4">
