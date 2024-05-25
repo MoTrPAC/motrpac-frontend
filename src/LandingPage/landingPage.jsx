@@ -15,7 +15,6 @@ import LogoMotrpacWhite from '../assets/logo-motrpac-white.png';
 import BackgroundVideoImage from '../assets/LandingPageGraphics/background_video_preload.jpg';
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.svg';
-import LandscapeAbstract from '../assets/LandingPageGraphics/landscape_abstract.gif';
 import NatureIssueCover from '../assets/LandingPageGraphics/nature_issue_cover.jpg';
 import BackgroundVideo from './components/backgroundVideo';
 import Figure1C from './components/figure1c';
