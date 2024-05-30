@@ -85,7 +85,7 @@ function DawgPAC({ profile }) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Analysis Report (deadline for revisions: 4/1/2024)
+            Analysis Report
           </a>
         </li>
         <li>
