@@ -34,4 +34,22 @@
             }
         }
     }
+
+    .multi-omics-wg-tabs {
+        border-bottom: 1px solid $gray-semi-transparent;
+
+        .nav-item {
+            .nav-link {
+                font-size: 1.25rem;
+                padding: 0.45rem 1.15rem;
+    
+                &.active {
+                    background: linear-gradient(#dedede, #fff);
+                    border-top-color: $gray-semi-transparent;
+                    border-right-color: $gray-semi-transparent;
+                    border-left-color: $gray-semi-transparent;
+                }
+            }
+        }
+    }
 }
