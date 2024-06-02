@@ -5,6 +5,7 @@ import {
   pass1b06GraphicalClusteringLandscapeImageLocation,
 } from '../sharedLib';
 import DataVizLink from '../components/dataVizLink';
+import PathwayNetworkDescription from '../components/pathwayNetworkDescription';
 
 function GraphicalAnalysisLung() {
   // initialize table of contents
@@ -73,63 +74,10 @@ function GraphicalAnalysisLung() {
             </div>
           </div>
           <div className="section level2">
-            <h2 id="detailed-view-of-selected-clusters">
-              Detailed view of selected clusters
-            </h2>
-            <p>
-              Here we show highlighted trees, top pathway enrichments, network
-              view of <em>all</em> pathway enrichments, and sample-level
-              trajectories for each selected cluster (node, edge, or path).
-            </p>
-            <p>
-              <strong>Interactive networks of pathway enrichments</strong>
-            </p>
-            <p>
-              These networks summarize all significant pathway enrichments for a
-              set of differential analytes. Results from all omes are combined.
-            </p>
-            <p>
-              Each node is a pathway. Hover over a node to see the pathway name
-              (and parent pathway in parentheses), nominal enrichment p-value,
-              datasets in which this pathway was significantly enriched, and the
-              union of genes at the intersection of the input features and
-              pathway members. Larger nodes indicate that more datasets (e.g.
-              METAB;SKM-GN) were significantly enriched for this pathway.{' '}
-              <strong>
-                Pathways only enriched with metabolites are not shown because
-                edges are defined using genes, not KEGG IDs.
-              </strong>
-            </p>
-            <p>
-              Edges are drawn between nodes if there is a substantial overlap in
-              the intersection of the input features and pathway members for
-              both pathways. Hover over an edge to see the similarity score and
-              list of genes in the intersection.
-            </p>
-            <p>
-              Nodes are colored to visually separate groups of related pathway
-              enrichments. Each group has a label (rectangular node), which
-              corresponds to the most frequently occurring parent pathway in the
-              group. These labels are meant to help summarize groups of related
-              pathway enrichments.
-            </p>
-            <p>Explore these interactive plots!</p>
-            <ul>
-              <li>
-                Hover over nodes (pathways) and edges (intersection between
-                pathways) to see more information
-                <br />
-              </li>
-              <li>
-                Click nodes to highlight them and connected edges
-                <br />
-              </li>
-              <li>
-                Zoom in and out
-                <br />
-              </li>
-              <li>Click and drag nodes</li>
-            </ul>
+            <PathwayNetworkDescription
+              tissue="Lung"
+              clusterName="1w_F-1_M0-&gt;2w_F-1_M0-&gt;4w_F-1_M0-&gt;8w_F0_M0"
+            />
             <div className="section level3">
               <h3 id="selected-paths">Selected paths</h3>
               <div className="section level4">
