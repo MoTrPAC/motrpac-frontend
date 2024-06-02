@@ -82,11 +82,12 @@ function PathwayNetworkDescription({ tissue, clusterName }) {
 }
 
 PathwayNetworkDescription.propTypes = {
-  tissue: PropTypes.string.isRequired,
+  tissue: PropTypes.string,
   clusterName: PropTypes.string,
 };
 
 PathwayNetworkDescription.defaultProps = {
+  tissue: null,
   clusterName: null,
 };
 
