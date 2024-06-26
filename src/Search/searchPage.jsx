@@ -147,10 +147,10 @@ export function SearchPage({
     const inputElProtein = document.querySelector('.search-input-kype');
 
     if (ktype && ktype === 'protein') {
-      if (inputElProtein.value && inputElProtein.value.length) {
+      if (inputElProtein && inputElProtein.value && inputElProtein.value.length) {
         inputElProtein.value = '';
       }
-    } else if (inputEl.value && inputEl.value.length) {
+    } else if (inputEl && inputEl.value && inputEl.value.length) {
       inputRef.current.clear();
     }
   }
@@ -185,6 +185,7 @@ export function SearchPage({
               ktype={searchParams.ktype}
               resetSearch={resetSearch}
               setMultiSelections={setMultiSelections}
+              inputEl={inputEl}
             />
             <div className="search-box-input-group d-flex align-items-center flex-grow-1">
               {/*  
@@ -440,64 +441,72 @@ export function SearchPage({
   );
 }
 
+function RadioButtonComponent({ ktype, keyType, elId, label, eventHandler }) {
+  return (
+    <div className="form-check form-check-inline">
+      <input
+        className="form-check-input"
+        type="radio"
+        name="ktype"
+        id={elId}
+        value={keyType}
+        checked={ktype === keyType}
+        onChange={(e) => eventHandler(e)}
+      />
+      <label className="form-check-label" htmlFor={elId}>
+        {label}
+      </label>
+    </div>
+  );
+}
+
 // Radio buttons for selecting the search context
-function RadioButton({ changeParam, ktype, resetSearch, setMultiSelections }) {
+function RadioButton({
+  changeParam,
+  ktype,
+  resetSearch,
+  setMultiSelections,
+  inputEl,
+}) {
+  const radioButtons = [
+    {
+      keyType: 'gene',
+      id: 'inlineRadioGene',
+      label: 'Gene',
+    },
+    {
+      keyType: 'protein',
+      id: 'inlineRadioProtein',
+      label: 'Protein ID',
+    },
+    {
+      keyType: 'metab',
+      id: 'inlineRadioMetab',
+      label: 'Metabolite',
+    },
+  ];
+
+  const handleRadioChange = (e) => {
+    resetSearch('all');
+    setMultiSelections([]);
+    changeParam('ktype', e.target.value);
+    if (inputEl && inputEl.value && inputEl.value.length) {
+      inputEl.value = '';
+    }
+  };
+
   return (
     <div className="search-context">
-      <div className="form-check form-check-inline">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="ktype"
-          id="inlineRadioGene"
-          value="gene"
-          checked={ktype === 'gene'}
-          onChange={(e) => {
-            resetSearch('all');
-            setMultiSelections([]);
-            changeParam('ktype', e.target.value);
-          }}
+      {radioButtons.map((item) => (
+        <RadioButtonComponent
+          key={item.id}
+          ktype={ktype}
+          keyType={item.keyType}
+          elId={item.id}
+          label={item.label}
+          eventHandler={handleRadioChange}
         />
-        <label className="form-check-label" htmlFor="inlineRadioGene">
-          Gene
-        </label>
-      </div>
-      <div className="form-check form-check-inline">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="ktype"
-          id="inlineRadioProtein"
-          value="protein"
-          checked={ktype === 'protein'}
-          onChange={(e) => {
-            resetSearch('all');
-            setMultiSelections([]);
-            changeParam('ktype', e.target.value);
-          }}
-        />
-        <label className="form-check-label" htmlFor="inlineRadioProtein">
-          Protein ID
-        </label>
-      </div>
-      <div className="form-check form-check-inline">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="ktype"
-          id="inlineRadioMetab"
-          value="metab"
-          checked={ktype === 'metab'}
-          onChange={(e) => {
-            resetSearch('all');
-            setMultiSelections([]);
-            changeParam('ktype', e.target.value);
-          }}
-        />
-        <label className="form-check-label" htmlFor="inlineRadioMetabolite">
-          Metabolite
-        </label>
-      </div>
+      ))}
     </div>
   );
 }
