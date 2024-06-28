@@ -19,8 +19,11 @@ import NatureIssueCover from '../assets/LandingPageGraphics/nature_issue_cover.j
 import BackgroundVideo from './components/backgroundVideo';
 import Figure1C from './components/figure1c';
 
-// import figure 4E visualization dataset
-const figure4eData = require('../data/landscape_figure_4e.json');
+// import network figure 4e visualization dataset
+import landscapeFigure4eNetworkData from '../data/landscape_figure_4e';
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+import 'vis-network/styles/vis-network.css';
 
 // animated down arrow icon
 function AnimatedDownArrow() {
@@ -56,82 +59,6 @@ const options = {
   },
 };
 
-let events = {
-  click(params) {
-    params.event = '[original event]';
-    console.log(
-      'click event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM),
-    );
-  },
-  doubleClick (params) {
-    console.log('doubleClick Event:', params);
-    params.event = '[original event]';
-  },
-  oncontext (params) {
-    console.log('oncontext Event:', params);
-
-    params.event = '[original event]';
-  },
-  dragStart (params) {
-    // There's no point in displaying this event on screen, it gets immediately overwritten
-    params.event = '[original event]';
-    console.log('dragStart Event:', params);
-    console.log(
-      'dragStart event, getNodeAt returns: ' +
-        this.getNodeAt(params.pointer.DOM),
-    );
-  },
-  dragging (params) {
-    params.event = '[original event]';
-  },
-  dragEnd (params) {
-    params.event = '[original event]';
-    console.log('dragEnd Event:', params);
-    console.log(
-      'dragEnd event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM),
-    );
-  },
-  controlNodeDragging (params) {
-    params.event = '[original event]';
-  },
-  controlNodeDragEnd (params) {
-    params.event = '[original event]';
-    console.log('controlNodeDragEnd Event:', params);
-  },
-  zoom (params) {},
-  showPopup (params) {},
-  hidePopup () {
-    console.log('hidePopup Event');
-  },
-  select (params) {
-    console.log('select Event:', params);
-  },
-  selectNode (params) {
-    console.log('selectNode Event:', params);
-  },
-  selectEdge (params) {
-    console.log('selectEdge Event:', params);
-  },
-  deselectNode (params) {
-    console.log('deselectNode Event:', params);
-  },
-  deselectEdge (params) {
-    console.log('deselectEdge Event:', params);
-  },
-  hoverNode (params) {
-    console.log('hoverNode Event:', params);
-  },
-  hoverEdge (params) {
-    console.log('hoverEdge Event:', params);
-  },
-  blurNode (params) {
-    console.log('blurNode Event:', params);
-  },
-  blurEdge (params) {
-    console.log('blurEdge Event:', params);
-  },
-};
-
 /**
  * Renders the landing page in unauthenticated state.
  *
@@ -142,25 +69,15 @@ let events = {
  */
 export function LandingPage({ isAuthenticated, profile }) {
   const [backgroundVideoLoaded, setBackgroundVideoLoaded] = useState(false);
-  const [data, setData] = useState(figure4eData);
   const [networkNodes, setNetwortNodes] = useState([]);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
-  const handleAddNode = useCallback(() => {
-    const id = data.nodes.length + 1;
-    setData({
-      ...data,
-      nodes: [...data.nodes, { id, label: `Node ${id}` }],
-    });
-  }, [setData, data]);
-
+  // vis-network-react event object
+  const events = {};
+  // vis-network-react event handlers
   const getNodes = useCallback((a) => {
     setNetwortNodes(a);
   }, []);
-
-  const handleGetNodes = useCallback(() => {
-    console.log(networkNodes);
-  }, [networkNodes]);
 
   const goToExternalLink = useCallback(() => {
     window.open('https://www.nature.com/nature/volumes/629/issues/8010', '_blank');
@@ -331,7 +248,7 @@ export function LandingPage({ isAuthenticated, profile }) {
         <div className="w-100 h-100 d-flex align-items-start direction-column">
           <div className="section-content-container container-fluid text-center">
             <VisNetworkReactComponent
-              data={data}
+              data={landscapeFigure4eNetworkData}
               options={options}
               events={events}
               getNodes={getNodes}
