@@ -366,7 +366,7 @@ function Figure1C() {
     <div
       ref={svgRef}
       id="heatmap-container"
-      className="d-flex align-items-center justify-content-center position-relative"
+      className="d-flex align-items-center justify-content-center position-relative mt-lg-4"
     >
       {renderHeatmap()}
     </div>
