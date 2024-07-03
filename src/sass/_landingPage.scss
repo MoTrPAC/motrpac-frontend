@@ -47,7 +47,7 @@
 
     &.first {
       position: relative;
-      // background-image: url(./assets/LandingPageGraphics/background_molecule_network.jpg);
+      background-image: url(./assets/LandingPageGraphics/background_hero_image.jpg);
 
       video.fullscreen {
         position: absolute;
@@ -244,6 +244,8 @@
       }
     }
     &.seventh {
+      background-color: #fff;
+
       .section-content-container {
         padding-top: 4.0em;
         padding-bottom: 1.5em;
