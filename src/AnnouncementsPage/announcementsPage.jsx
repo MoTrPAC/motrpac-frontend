@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
@@ -20,19 +21,23 @@ const announcements = announcementData.reverse();
  */
 function AnnouncementsPage() {
   const pageContent = (
-    <>
+    <div>
       <PageTitle title="Announcements" />
       <div className="news-item-list">
         {announcements.map((entry) => (
           <AnnouncementEntry entry={entry} key={entry.aid} />
         ))}
       </div>
-    </>
+    </div>
   );
 
   return (
     <div className="announcementsPage px-3 px-md-4 mb-3 container">
-      <div>{pageContent}</div>
+      <Helmet>
+        <html lang="en" />
+        <title>Announcements - MoTrPAC Data Hub</title>
+      </Helmet>
+      {pageContent}
     </div>
   );
 }

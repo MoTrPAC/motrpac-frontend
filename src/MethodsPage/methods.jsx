@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import StudyDocumentsTable from '../lib/studyDocumentsTable';
 import ExternalLink from '../lib/ui/externalLink';
@@ -17,6 +18,10 @@ export function Methods({ profile }) {
 
   return (
     <div className="methodsPage px-3 px-md-4 mb-3 container">
+      <Helmet>
+        <html lang="en" />
+        <title>Methods - MoTrPAC Data Hub</title>
+      </Helmet>
       <PageTitle title="Methods" />
       <div className="methods-content-container">
         <div className="methods-summary-container row mb-4">
