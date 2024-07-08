@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import history from '../App/history';
 
+import '@styles/authLoading.scss';
+
 // Intended to act as placeholder until auth0 or other auth system
 //  is in place. Clicking the h3 element authorizes test user logIng.
 export function AuthLoading({ authenticating, authSuccess }) {

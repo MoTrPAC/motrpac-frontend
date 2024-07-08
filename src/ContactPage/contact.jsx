@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import PageTitle from '../lib/ui/pageTitle';
 import ContactForm from './contactForm';
 
+import '@styles/contact.scss';
+
 /**
  * Renders the Contact Us page in both
  * unauthenticated and authenticated states.

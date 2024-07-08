@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import ContactHelpdesk from '../lib/ui/contactHelpdesk';
 
+import '@styles/errorPage.scss'
+
 /**
  * Renders the Error page.
  *

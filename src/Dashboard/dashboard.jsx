@@ -10,6 +10,8 @@ import PlotControls from '../Widgets/plotControls';
 import TableControls from '../Widgets/tableControls';
 import dashboardActions from './dashboardActions';
 
+import '@styles/dashboard.scss';
+
 import animalReleaseSamples from '../data/animal_release_samples';
 
 /**

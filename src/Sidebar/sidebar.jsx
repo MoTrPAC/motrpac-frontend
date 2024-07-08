@@ -1,10 +1,12 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
-import dayjs from 'dayjs';
 import axios from 'axios';
-import DataStatusActions from '../DataStatusPage/dataStatusActions';
+import dayjs from 'dayjs';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
+import DataStatusActions from '../DataStatusPage/dataStatusActions';
+
+import '@styles/navbar.scss';
 
 /**
  * Renders the gloabl sidebar.

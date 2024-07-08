@@ -4,6 +4,8 @@ import PageTitle from '../lib/ui/pageTitle';
 import HeritageFamilyStudyLogo from '../assets/ExternalLogos/HeritageFamilyStudy.png';
 import StanfordMedicineLogo from '../assets/ExternalLogos/StanfordMedicine.png';
 
+import '@styles/relatedStudy.scss';
+
 const relatedStudies = [
   {
     id: 'heritage-proteomics',

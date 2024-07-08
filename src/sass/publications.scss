@@ -1,0 +1,76 @@
+@use 'colors';
+@use 'bootstrapCustom';
+
+.fullPhenoPass1b06Table {
+    .bootstrap-spinner {
+        position: absolute;
+        z-index: 100;
+        top: calc(100vh / 2 - 160px);
+        left: 0;
+        width: 100%;
+    }
+}
+
+.publicationsPage {
+    .pub-item-content {
+        .pub-image {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            height: fit-content;
+            margin: 5px 0 25px 0;
+            padding: 12px;
+
+            img {
+                
+                width: 100%;
+            }
+        }
+
+        .pub-title {
+            font-weight: 600;
+        }
+
+        .show-authors-control {
+            font-weight: 400;
+            text-decoration: underline;
+        }
+
+        .fulltext-link {
+            font-weight: 500;
+
+            a.inline-link-with-icon {
+                position: relative;
+                text-decoration: none;
+                white-space: nowrap;
+
+                .material-icons {
+                    font-size: 1.35rem;
+                    position: relative;
+                    top: 2px;
+                }
+            }
+        }
+
+        &.landscape-paper {
+            background-color: lighten(colors.$primary-blue, 43%);;
+            border-radius: 8px;
+        }
+    }
+
+    .external-links-content-container {
+        .link-item {
+            a {
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+/* Medium devices (tablets, less than 992px) */
+@include bootstrapCustom.media-breakpoint-down(md) {
+    .publicationsPage {
+        .external-links-content-container {
+            display: block !important;
+        }
+    }
+}

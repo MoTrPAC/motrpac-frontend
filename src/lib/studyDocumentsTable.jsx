@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import IconSet from './iconSet';
 import StudyDocuments from '../DataAccess/studyDocuments';
 
+import '@styles/studyDocumentsTable.scss';
+
 function StudyDocumentsTable({ currentView }) {
   const newArray = [...StudyDocuments];
   if (currentView === 'internal') {

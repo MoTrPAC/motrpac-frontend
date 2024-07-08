@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import analysisTypes from '../lib/analysisTypes';
-import AnimalDataAnalysis from './animalDataAnalysis';
 import AuthContentContainer from '../lib/ui/authContentContainer';
 import AnalysisCard from './analysisCard';
+import AnimalDataAnalysis from './animalDataAnalysis';
+
+import '@styles/analysisPage.scss';
 
 // TODO: Add animation of transitions potentially with CSSTransitions package
 

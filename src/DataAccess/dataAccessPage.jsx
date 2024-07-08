@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { connect } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
-import PageTitle from '../lib/ui/pageTitle';
-import dayjs from 'dayjs';
-import ReCAPTCHA from 'react-google-recaptcha';
-import axios from 'axios';
-import RegistrationResponse from './response';
 import IconSet from '../lib/iconSet';
+import StudyDocumentsTable from '../lib/studyDocumentsTable';
 import EmailLink from '../lib/ui/emailLink';
 import ExternalLink from '../lib/ui/externalLink';
-import StudyDocumentsTable from '../lib/studyDocumentsTable';
+import PageTitle from '../lib/ui/pageTitle';
+import RegistrationResponse from './response';
+
+import '@styles/dataAccessPage.scss';
 
 const defaultFormValues = {
   dataUseAgreement1: false,

@@ -1,9 +1,10 @@
 import React from 'react';
+import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import dayjs from 'dayjs';
-import PageTitle from '../lib/ui/pageTitle';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
+import PageTitle from '../lib/ui/pageTitle';
+import '@styles/announcementsPage.scss';
 
 import announcementData from './announcements';
 // Pre-sort array in reverse order to workaround Storybook issue

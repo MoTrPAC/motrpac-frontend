@@ -2,16 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import StatusReportGetData from './statusReportGetData';
-import StatusReportImmunoAssay from './statusReportImmunoAssay';
+import AnimatedLoadingIcon from '../lib/ui/loading';
+import DataStatusActions from './dataStatusActions';
 import QcReportByPhase from './qcReportByPhase.jsx';
 import QcReportHelp from './qcReportHelp';
-import DataStatusActions from './dataStatusActions';
-import qcReportButtonList from './sharelib/qcReportButtonList';
-import AnimatedLoadingIcon from '../lib/ui/loading';
-import QcReportHelpLink from './sharelib/qcReportHelpLink';
 import QcReportMetabolomics from './qcReportMetab';
 import QcReportProteomics from './qcReportProt';
+import qcReportButtonList from './sharelib/qcReportButtonList';
+import QcReportHelpLink from './sharelib/qcReportHelpLink';
+import StatusReportGetData from './statusReportGetData';
+import StatusReportImmunoAssay from './statusReportImmunoAssay';
+
+import '@styles/dataStatusPage.scss';
 
 /**
  * Renders the data qc status page

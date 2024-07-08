@@ -1,15 +1,17 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import ReleasedSampleTable from '../Widgets/releasedSampleTable';
-import ReleasedSamplePlot from '../Widgets/releasedSamplePlot';
-import ReleasedSampleHighlight from '../Widgets/releasedSampleHighlight';
-import ReleasedSampleSummary from '../Widgets/releasedSampleSummary';
+
+import animalReleaseSamples from '../data/animal_release_samples.json';
 import PlotControls from '../Widgets/plotControls';
+import ReleasedSampleHighlight from '../Widgets/releasedSampleHighlight';
+import ReleasedSamplePlot from '../Widgets/releasedSamplePlot';
+import ReleasedSampleSummary from '../Widgets/releasedSampleSummary';
+import ReleasedSampleTable from '../Widgets/releasedSampleTable';
 import TableControls from '../Widgets/tableControls';
 import DataSummaryPageActions from './dataSummaryPageActions';
 
-import animalReleaseSamples from '../data/animal_release_samples.json';
+import '@styles/dataSummaryPage.scss';
 
 /**
  * Renders the release samples summary page.

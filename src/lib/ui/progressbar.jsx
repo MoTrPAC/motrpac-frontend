@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ToolTip from './tooltip';
 
+import '@styles/progressBar.scss';
+
 /**
  * Renders the progress bar UI
  *

@@ -1,0 +1,1767 @@
+@use 'colors';
+@use 'fonts';
+@use 'bootstrapCustom';
+
+.marketing.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.content-container {
+  scroll-snap-type: y mandatory;
+  height: 100vh;
+  overflow-y: scroll;
+
+  /* Hide container scrollbar */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  section {
+    height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+
+    background-position-x: center;
+    background-position-y: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    position: relative;
+
+    .animated-down-arrow {
+      position: absolute;
+      bottom: 0.5rem;
+      text-align: center;
+      z-index: 5;
+
+      img {
+        width: 2.75rem;
+        height: 2.75rem;
+        margin: 0 auto !important;
+        opacity: 0.55;
+      }
+    }
+
+    &.first {
+      position: relative;
+      // background-image: url(../assets/LandingPageGraphics/background_molecule_network.jpg);
+
+      video.fullscreen {
+        position: absolute;
+        z-index: 0;
+        object-fit: cover;
+        width:100%;
+        height:100%;
+        top: 0;
+        left: 0;
+      
+        &::-webkit-media-controls {
+          display: none !important;
+        }
+      }
+
+      .background-video-preloader {
+        position: absolute;
+        z-index: 1;
+        object-fit: cover;
+        width:100%;
+        height:100%;
+        top: 0;
+        left: 0;
+      }
+
+      .section-content-container {
+        z-index: 5;
+
+        .logo-container {
+          margin-bottom: 1.5rem;
+          img {
+            width: 100%;
+            max-width: 35.0rem;
+          }
+        }
+
+        h2, h3 {
+          color: colors.$accent-yellow;
+          line-height: 1;
+          text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.5);
+        }
+
+        p.hero {
+          font-weight: 400;
+          margin-top: 1.75rem;
+
+          a {
+            color: #fff;
+            font-size: 2.05rem;
+            line-height: 1.5;
+            text-decoration: none;
+            text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.75);
+          }
+        }
+
+        .highlighted-links-container {
+          .btn {
+            box-shadow: 0 0 2.0em 0.1em rgba(0, 0, 0, 0.25);
+            max-width: 206px;
+            width: 100%;
+            font-weight: 500;
+            margin-left: 0.75em;
+            margin-right: 0.75em;
+          }
+        }
+
+        .office-hour-anchor-link-container {
+          margin-top: 3.0em;
+
+          .office-hour-anchor-link {
+            border: solid 2px #fff;
+            border-radius: 1.4rem;
+            color: #fff;
+            display: inline-block;
+            font-size: 1.35rem;
+            font-weight: 400;
+            opacity: 1.0;
+            box-shadow: inset 0 3.0rem rgba(255, 255, 255, 0.22);
+            padding: 0.3rem 1.55rem 0.35rem 1.55rem;
+            text-decoration: none;
+            text-shadow: 0 0.15em 0.15em rgba(0, 0, 0, 0.8);
+            transition: ease-in-out 0.25s;
+
+            &:hover {
+              text-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 1.0);
+            }
+          }
+        }
+      }
+    }
+    &.second {
+      background-image: url(../assets/LandingPageGraphics/background_wave.jpg);
+    }
+    &.third {
+      background-image: url(../assets/LandingPageGraphics/background_wave_gradient.jpg);
+
+      .section-content-container {
+        height: 75vh;
+        padding-top: 72px;
+        padding-bottom: 15px;
+
+        .vis-tooltip {
+          background-color: #000;
+          border: none;
+          border-radius: 0.5rem;
+          padding: 0.5rem 1.0rem;
+          text-align: left;
+          vertical-align: middle;
+
+          div span {
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.0rem;
+            margin-bottom: 0;
+            text-align: left;
+          }
+        }
+      }
+    }
+    &.fourth {
+      background-image: url(../assets/LandingPageGraphics/background_molecule_network_horizontal_wave.jpg);
+
+      .section-content-container {
+        height: 60vh;
+        margin-top: -3.0rem;
+        padding-top: 15px;
+        padding-bottom: 15px;
+
+        img {
+          margin-left: 15em;
+          margin-right: 15em;
+
+          &.img-fluid {
+            max-width: 70%;
+            height: auto;
+          }
+        }
+      }
+
+      h1 {
+        color: #fff
+      }
+    }
+    &.fifth {
+      background-image: url(../assets/LandingPageGraphics/background_molecule_network_vertical_wave.jpg);
+
+      .section-content-container {
+        padding-top: 15px;
+        padding-bottom: 15px;
+
+        .content-landscape-paper {
+          .feature-image {
+            background-color: #fff;
+            border-radius: 0.75rem;
+            box-shadow: 0 2em 3em rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            padding: 1.45rem 1.6rem;
+            text-align: center;
+            transition: all 0.25s ease-out;
+
+            &:hover {
+              padding: 1.25rem 1.4rem;
+            }
+      
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          .feature-image-attribution {
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 400;
+            opacity: 0.4;
+          }
+        }
+
+        .content {
+          text-align: left;
+
+          h1 {
+            color: #fff;
+            font-size: 3.55rem;
+            line-height: 1.3;
+          }
+        }
+
+        .office-hour-banner {
+          border-radius: 0.35rem;
+          background: lighten(colors.$gray-transparent, 30%);
+          text-align: center;
+        }
+      }
+    }
+    &.sixth {
+      background-image: url(../assets/LandingPageGraphics/background_molecules_gradient.jpg);
+
+      #tutorial-video-iframe-container {
+        border: 1px solid #000;
+        border-radius: 0.5rem;
+        box-shadow: 0 2em 3em rgba(0, 0, 0, 0.5);
+      }
+
+      .homepage-tutorial-video {
+        border-radius: 0.5rem;
+      }
+
+      h1 {
+        color: #fff
+      }
+    }
+    &.seventh {
+      .section-content-container {
+        padding-top: 4.0em;
+        padding-bottom: 1.5em;
+
+        .content-code-repository {
+          min-height: 560px;
+          margin-bottom: 5.0em;
+
+          .feature-image {
+            text-align: center;
+      
+            img {
+              height: 32.0rem;
+              transition: height 0.5s ease;
+      
+              &:hover {
+                height: 33.0rem;
+              }
+            }
+          }
+        }
+
+        .content {
+          text-align: left;
+
+          h1 .material-icons {
+            color: #56bf46;
+            font-size: 7.5rem !important;
+            margin-left: -10px;
+          }
+      
+          p {
+            color: colors.$stanford-black;
+            font-size: 1.85rem;
+          }
+        }
+
+        .office-hour-banner {
+          border-radius: 0.35rem;
+          background: lighten(colors.$gray-transparent, 30%);
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+// hide global footer
+// but show homepage-specific footer
+body.homepage {
+  footer.footer {
+    display: none;
+  }
+
+  .homepage-footer-container {
+    footer.footer {
+      display: block;
+    }
+  }
+
+  #heatmap-container {
+    min-width: 1450px !important;
+    min-height: 610px;
+  }
+
+  .heatmap-y-axis {
+    .tick {
+      text {
+        font-size: 1.35rem;
+        font-weight: 800;
+      }
+    }
+    .tick:last-child,
+    .tick:nth-child(7),
+    .tick:nth-child(8) {
+      text {
+        fill: #ff8839;
+        text-shadow: 0 0 0.15rem rgba(0, 0, 0, 1), 0 0 0.5rem rgba(0, 0, 0, 0.5);
+      }
+    }
+    .tick:nth-child(3),
+    .tick:nth-child(4),
+    .tick:nth-child(5),
+    .tick:nth-child(6) {
+      text {
+        fill: #dba0ff;
+        text-shadow: 0 0 0.15rem rgba(0, 0, 0, 1), 0 0 0.5rem rgba(0, 0, 0, 0.5);
+      }
+    }
+    .tick:nth-child(2) {
+      text {
+        fill: #f9e802;
+        text-shadow: 0 0 0.15rem rgba(0, 0, 0, 1), 0 0 0.5rem rgba(0, 0, 0, 0.5);
+      }
+    }
+    .tick:first-child {
+      text {
+        fill: #31fd94;
+        text-shadow: 0 0 0.15rem rgba(0, 0, 0, 1), 0 0 0.5rem rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+
+  .heatmap-tooltip {
+    background: #000;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 9px 13px;
+    position: absolute;
+    text-align: left;
+  }
+
+  .legend-title-diff-proportion,
+  .legend-title-ome-type {
+    tspan {
+      fill: #fff;
+      font-size: 1.0rem;
+    }
+  }
+  
+  .legend-y-axis {
+    font-size: 0.7rem;
+
+    .tick {
+      text {
+        fill: #fff;
+        font-size: 0.85rem;
+      }
+      text::before {
+        content: '%';
+      }
+    }
+  }
+}
+
+section.first {
+  .hero-wrapper {
+    align-items: center;
+    width: 100%;
+
+    .carousel {
+      .carousel-inner {
+        .carousel-item {
+          height: 39.5rem;
+
+          &.first {
+            background-color: #2094E8;
+            background-image: url(../assets/LandingPageGraphics/background_molecule_network.jpg);
+            background-repeat: no-repeat !important;
+            background-position: top left !important;
+            background-size: cover !important;
+          }
+
+          &.second {
+            background-color: #56bf46;
+          }
+
+          &.third {
+            background-color: #f9c002;
+          }
+        }
+      }
+    }
+
+    &.row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .motrpac-tag-line {
+      h3 {
+        font-family: 'Open Sans', sans-serif;
+      }
+    }
+
+    .content {
+      h3 {
+        color: #8a8a8a;
+        font-size: 1.875rem;
+        font-weight: fonts.$semibold-weight;
+  
+        em {
+          color: #2094E8;
+          display: block;
+          font-size: 2.75rem;
+          font-style: normal;
+        }
+      }
+    }
+
+    .announcement-banner {
+      border-radius: 0.35rem;
+      color: #fff;
+      margin-bottom: 0;
+      /*
+      background: rgb(15,133,218);
+      background: linear-gradient(360deg, rgba(15,133,218,1) 0%, rgba(73,166,233,1) 100%);
+      */
+      background: #2094e8;
+      background: linear-gradient(-45deg, #0e3293 0%, #006db5 50%, #002878 100%);
+      order: -2;
+      text-align: center;
+
+      h3 {
+        font-size: 2.75rem;
+        font-weight: 600;
+      }
+
+      .announcement-banner-content {
+        font-size: 1.3rem;
+        line-height: 1.6;
+        margin-top: 0.25rem;
+        margin-bottom: 0.4rem;
+
+        .secondary {
+          font-size: 1.125rem;
+        }
+
+        a {
+          color: colors.$accent-yellow;
+        
+          &:hover {
+            color: colors.$accent-yellow-shade-medium;
+            text-decoration: none;
+          }
+        }
+
+        .inline-link-with-icon .material-icons {
+          font-size: 1.45rem;
+          margin-top: 0.15rem;
+        }
+      }
+    }
+  }
+}
+
+section {
+  width: 100%;
+
+  &:last-child {
+    height: auto;
+  }
+
+  .featurette-wrapper {
+    width: 100%;
+    align-items: center;
+
+    &.row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  h3 {
+    font-size: 2.75rem;
+    font-weight: fonts.$semibold-weight;
+  }
+
+  p {
+    font-size: 1.25rem;
+    font-weight: normal;
+  }
+
+  .about-motrpac {
+    background-color: #2094E8;
+    /*
+    background-image: url(../assets/LandingPageGraphics/about_motrpac.jpg);
+    background-repeat: no-repeat!important;
+    background-position: top center!important;
+    background-size: cover!important;
+    */
+    height: 486px;
+    position: relative;
+    /*
+    background: #2094e8;
+    background: linear-gradient(-45deg, #0e3293 0%, #2094e8 35%, #4ac7e8 65%, #002878 100%);
+    */
+    /*
+    background-size: 400% 400%;
+    animation: Gradient 20s ease infinite;
+    background: linear-gradient(
+      217deg,
+      rgba(177, 4, 14, 0.8),
+      rgba(255, 0, 0, 0) 70.71%
+    ), linear-gradient(127deg, rgba(0, 109, 181, 0.8), rgba(0, 255, 0, 0) 70.71%),
+    linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%);
+    */
+
+    .particles-wrapper {
+      width: 100%;
+    }
+
+    .particle-media-control {
+      background: rgba(31, 93, 147, 0.85);
+      border: none;
+      color: #5aa9e0;
+      font-size: 0.65rem;
+      position: absolute;
+      right: 0.75rem;
+      bottom: 0.75rem;
+    }
+
+    .content {
+      background: rgba(31, 93, 147, 0.85);
+      border-radius: 5px;
+      max-width: 65%;
+      padding: 1.50rem 1.75rem;
+
+      h3 {
+        color: #f9c002;
+      }
+  
+      p {
+        color: #fff;
+
+        a {
+          color: #fff;
+          font-weight: bold;
+        
+          &:hover {
+            color: colors.$accent-yellow-shade-medium;
+            text-decoration: none;
+          }
+
+          .material-icons {
+            font-size: 1.3rem;
+            margin-top: 0.2rem;
+          }
+        }
+
+        .about-motrpac-emphasis {
+          color: colors.$accent-yellow;
+        }
+      }
+    }
+  }
+
+  .multi-omics {
+    height: 30.0rem;
+
+    .content {
+      h3 {
+        color: #56bf46;
+      }
+  
+      p {
+        color: #8a8a8a;
+      }
+    }
+
+    .feature-image {
+      text-align: center;
+
+      img {
+        height: 24.5rem;
+        transition: height 0.5s ease;
+
+        &:hover {
+          height: 26.5rem;
+        }
+      }
+    }
+  }
+
+  .interrelated-components {
+    background-color: #f9c002;
+    height: 30.0rem;
+
+    .content {
+      h3 {
+        color: #fff;
+      }
+  
+      p {
+        color: #000;
+      }
+    }
+
+    .feature-image {
+      text-align: center;
+    }
+  }
+
+  .data-policies {
+    margin-top: 1.875rem;
+    margin-bottom: 1.875rem;
+
+    .row {
+      margin-left: 0;
+      margin-right: 0;
+
+      .office-hour-banner {
+        border-radius: 0.35rem;
+        background: lighten(colors.$gray-transparent, 30%);
+        text-align: center;
+      }
+
+      .access-data-info, .upload-data-info {
+        line-height: 1.55;
+      }
+    }
+
+    .inline-link-with-icon {
+      .material-icons {
+        font-size: 1.3rem;
+      }
+    }
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0 50%
+  }
+}
+
+/* responsive styling */
+
+/* Hack to switch to static svg due to non-responsive scg grid */
+@media (max-width: 1449.98px) {
+  .content-container {
+    section {
+      &.fourth {
+        .section-content-container {
+          #heatmap-container {
+            svg, .heatmap-tooltip {
+              display: none;
+            }
+            background-image: url(../assets/LandingPageGraphics/figure1c-differential-analytes-grid-bkgd.svg);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 95%;
+            width: 100% !important;
+            min-width: 1200px !important;
+            min-height: 580px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Large devices (desktops, less than 1200px) */
+@include bootstrapCustom.media-breakpoint-down(lg) {
+  .content-container {
+    justify-content: center;
+
+    section {
+      .animated-down-arrow {
+        display: none;
+      }
+
+      &.first {
+        .section-content-container {
+          height: 60vh;
+
+          .logo-container {
+            margin-bottom: 1.5rem;
+            img {
+              width: 100%;
+              max-width: 28.0rem;
+            }
+          }
+
+          .display-2 {
+            font-size: 4.5rem;
+          }
+
+          .display-3 {
+            font-size: 3.5rem;
+          }
+
+          p.hero {
+            a {
+              font-size: 1.85rem;
+              line-height: 1.45;
+            }
+          }
+
+          .highlighted-links-container {
+            .btn {
+              font-size: 1.05rem;
+              max-width: 185px;
+            }
+          }
+        }
+      }
+
+      &.fourth {
+        .section-content-container {
+          #heatmap-container {
+            width: 100% !important;
+            min-width: 992px !important;
+            min-height: 500px !important;
+          }
+
+          .container {
+            h1 {
+              font-size: 2.35rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Medium devices (tablets, less than 992px) */
+@include bootstrapCustom.media-breakpoint-down(md) {
+  body {
+    padding-top: 4.3rem;
+  }
+
+  .content-container {
+    justify-content: center;
+
+    section {
+      .animated-down-arrow {
+        display: none;
+      }
+
+      &.first {
+        .section-content-container {
+          height: 65vh;
+          margin-top: -8.5rem;
+
+          .logo-container {
+            margin-bottom: 1.5rem;
+            img {
+              width: 100%;
+              max-width: 24.0rem;
+            }
+          }
+
+          .display-2 {
+            font-size: 4.0rem;
+          }
+
+          .display-3 {
+            font-size: 3.0rem;
+          }
+
+          p.hero {
+            margin-top: 1.75rem;
+  
+            a {
+              font-size: 1.65rem;
+              line-height: 1.45;
+  
+              .about-motrpac-emphasis {
+                color: colors.$accent-yellow;
+              }
+            }
+          }
+
+          .highlighted-links-container {
+            .btn {
+              font-size: 1.05rem;
+            max-width: 185px;
+            }
+          }
+          
+          .office-hour-anchor-link-container {
+            margin-top: 3.0rem;
+
+            .office-hour-anchor-link {
+              border-radius: 1.4rem;
+              box-shadow: inset 0 3.0rem rgba(255, 255, 255, 0.2);
+              font-size: 1.35rem;
+            }
+          }
+        }
+      }
+
+      &.third {
+        .section-content-container {
+          height: 65vh;
+          padding-top: 0;
+
+          .container {
+            h1 {
+              font-size: 1.95rem;
+              line-height: 1.65;
+            }
+          }
+        }
+      }
+
+      &.fourth {
+        .section-content-container {
+          height: 60vh;
+          padding-top: 0;
+
+          #heatmap-container {
+            width: 100% !important;
+            min-width: 768px !important;
+            min-height: 430px !important;
+          }
+
+          .container {
+            h1 {
+              font-size: 1.95rem;
+              line-height: 1.65;
+            }
+          }
+        }
+      }
+
+      &.fifth {
+        .section-content-container {
+          height: 65vh;
+
+          .content {
+            h1 {
+              font-size: 2.5rem;
+              line-height: 1.45;
+            }
+
+            .btn {
+              font-size: 1.25rem;
+            }
+          }
+        }
+      }
+
+      &.seventh {
+        .section-content-container {
+
+          .content-code-repository {
+            .feature-image {
+              img {
+                height: 25.0rem;
+        
+                &:hover {
+                  height: 26.0rem;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Small devices (landscape phones, less than 768px) */
+@include bootstrapCustom.media-breakpoint-down(sm) {
+  body {
+    padding-top: 3.75rem;
+  }
+
+  .content-container {
+    justify-content: center;
+
+    section {
+      .animated-down-arrow {
+        display: none;
+      }
+
+      &.first {
+        .section-content-container {
+          height: 67vh;
+          margin-top: -7.5rem;
+
+          .logo-container {
+            margin-bottom: 1.5rem;
+            img {
+              width: 100%;
+              max-width: 22.0rem;
+            }
+          }
+
+          .display-2 {
+            font-size: 3.5rem;
+          }
+
+          .display-3 {
+            font-size: 2.75rem;
+          }
+
+          p.hero {
+            margin-top: 1.55rem;
+  
+            a {
+              font-size: 1.55rem;
+              line-height: 1.4;
+  
+              .about-motrpac-emphasis {
+                color: colors.$accent-yellow;
+              }
+            }
+          }
+
+          .highlighted-links-container {
+            .btn {
+              font-size: 1.0rem;
+              max-width: 180px;
+            }
+          }
+          
+          .office-hour-anchor-link-container {
+            margin-top: 2.75rem;
+
+            .office-hour-anchor-link {
+              border-radius: 1.4rem;
+              box-shadow: inset 0 3.0rem rgba(255, 255, 255, 0.2);
+              font-size: 1.35rem;
+            }
+          }
+        }
+      }
+
+      &.third {
+        .section-content-container {
+          height: 65vh;
+          padding-top: 0;
+
+          .container {
+            h1 {
+              font-size: 1.85rem;
+              line-height: 1.55;
+            }
+          }
+        }
+      }
+
+      &.fourth {
+        .section-content-container {
+          height: 60vh;
+          padding-top: 0;
+
+          #heatmap-container {
+            width: 100% !important;
+            min-width: 576px !important;
+            min-height: 360px !important;
+          }
+
+          .container {
+            h1 {
+              font-size: 1.95rem;
+              line-height: 1.55;
+            }
+          }
+        }
+      }
+
+      &.fifth {
+        .section-content-container {
+          height: 90vh;
+
+          .content {
+            h1 {
+              font-size: 2.0rem;
+              line-height: 1.45;
+            }
+
+            .btn {
+              font-size: 1.25rem;
+            }
+          }
+
+          .feature-image {
+            max-width: 93%;
+            margin: 3.0rem 1.25rem !important;
+            padding: 2.0rem 2.15rem !important;
+          }
+        }
+      }
+
+      &.seventh {
+        .section-content-container {
+          padding-top: 0;
+          padding-bottom: 1.5em;
+  
+          .content {
+            h1 {
+              .material-icons {
+                color: #56bf46;
+                font-size: 5.0rem !important;
+                margin-left: -6px;
+              }
+            }
+        
+            p {
+              color: colors.$stanford-black;
+              font-size: 1.5rem;
+              line-height: 1.5;
+            }
+
+            .btn {
+              font-size: 1.25rem;
+              margin-top: 1.15rem !important;
+            }
+          }
+  
+          .office-hour-banner {
+            margin-left: 1.0rem !important;
+            margin-right: 1.0rem !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Extra small screen devices (e.g. less than 576px) */
+@include bootstrapCustom.media-breakpoint-down(xs) {
+  body {
+    padding-top: 3.75rem;
+  }
+
+  .content-container {
+    justify-content: center;
+
+    section {
+      .animated-down-arrow {
+        display: none;
+      }
+
+      &.first {
+        .section-content-container {
+          height: 68vh;
+          margin-top: -7.5rem;
+
+          .logo-container {
+            margin-bottom: 1.5rem;
+            img {
+              width: 100%;
+              max-width: 22.0rem;
+            }
+          }
+
+          .display-2 {
+            font-size: 3.5rem;
+          }
+
+          .display-3 {
+            font-size: 2.75rem;
+          }
+
+          p.hero {
+            margin-top: 1.55rem;
+  
+            a {
+              font-size: 1.55rem;
+              line-height: 1.4;
+            }
+          }
+
+          .highlighted-links-container {
+            .btn {
+              font-size: 1.0rem;
+              max-width: 180px;
+            }
+          }
+          
+          .office-hour-anchor-link-container {
+            margin-top: 3.0rem;
+
+            .office-hour-anchor-link {
+              border-radius: 1.4rem;
+              box-shadow: inset 0 3.0rem rgba(255, 255, 255, 0.2);
+              font-size: 1.25rem;
+            }
+          }
+        }
+      }
+
+      &.third {
+        .section-content-container {
+          height: 65vh;
+          padding-top: 0;
+
+          .container {
+            h1 {
+              font-size: 1.75rem;
+              line-height: 1.45;
+            }
+          }
+        }
+      }
+
+      &.fourth {
+        .section-content-container {
+          height: 55vh;
+          padding-top: 0;
+
+          #heatmap-container {
+            width: 100% !important;
+            min-width: 430px !important;
+            min-height: 300px !important;
+          }
+
+          .container {
+            h1 {
+              font-size: 1.85rem;
+              line-height: 1.55;
+            }
+          }
+        }
+      }
+
+      &.fifth {
+        .section-content-container {
+          height: 90vh;
+
+          .content {
+            h1 {
+              font-size: 1.95rem;
+              line-height: 1.45;
+            }
+
+            .btn {
+              font-size: 1.25rem;
+            }
+          }
+
+          .feature-image {
+            max-width: 93%;
+            margin: 3.0rem 1.25rem !important;
+            padding: 2.0rem 2.15rem !important;
+          }
+        }
+      }
+
+      &.seventh {
+        .section-content-container {
+          padding-top: 0;
+          padding-bottom: 1.5em;
+  
+          .content {
+            h1 {
+              .material-icons {
+                color: #56bf46;
+                font-size: 5.0rem !important;
+                margin-left: -6px;
+              }
+            }
+        
+            p {
+              color: colors.$stanford-black;
+              font-size: 1.5rem;
+              line-height: 1.5;
+            }
+
+            .btn {
+              font-size: 1.25rem;
+              margin-top: 1.15rem !important;
+            }
+          }
+  
+          .office-hour-banner {
+            margin-left: 1.0rem !important;
+            margin-right: 1.0rem !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Phone portrait at 430x932 (e.g. iPhone 15 plus) or smaller */
+@media (max-width: 430px) {
+  body {
+    padding-top: 3.75rem;
+  }
+
+  .content-container {
+    justify-content: center;
+
+    section {
+      .animated-down-arrow {
+        display: none;
+      }
+
+      &.first {
+        .section-content-container {
+          height: 73vh;
+          margin-top: -7.4rem;
+
+          .logo-container {
+            margin-bottom: 1.5rem;
+            img {
+              width: 100%;
+              max-width: 18.0rem;
+            }
+          }
+
+          .display-2 {
+            font-size: 2.75rem;
+          }
+
+          .display-3 {
+            font-size: 2.25rem;
+          }
+
+          p.hero {
+            margin-top: 1.55rem;
+  
+            a {
+              font-size: 1.25rem;
+              line-height: 1.2;
+            }
+          }
+
+          .highlighted-links-container {
+            .btn {
+              font-size: 0.9rem;
+              max-width: 165px;
+            }
+          }
+          
+          .office-hour-anchor-link-container {
+            margin-top: 2.5rem;
+            padding: 0 0.75rem;
+
+            .office-hour-anchor-link {
+              border-radius: 2.35rem;
+              box-shadow: inset 0 4.5rem rgba(255, 255, 255, 0.2);
+              font-size: 1.15rem;
+            }
+          }
+        }
+      }
+
+      &.third {
+        .section-content-container {
+          height: 60vh;
+          padding-top: 0;
+
+          .container {
+            h1 {
+              font-size: 1.65rem;
+              line-height: 1.35;
+            }
+          }
+        }
+      }
+
+      &.fourth {
+        .section-content-container {
+          height: 55vh;
+          padding-top: 0;
+
+          #heatmap-container {
+            width: 100% !important;
+            min-width: 355px !important;
+            min-height: 220px !important;
+          }
+
+          .container {
+            h1 {
+              font-size: 1.65rem;
+              line-height: 1.35;
+            }
+          }
+        }
+      }
+
+      &.fifth {
+        .section-content-container {
+          height: 85vh;
+
+          .content {
+            h1 {
+              font-size: 1.85rem;
+              line-height: 1.35;
+            }
+
+            .btn {
+              font-size: 1.15rem;
+            }
+          }
+
+          .feature-image {
+            max-width: 90%;
+            margin: 2.0rem 1.25rem !important;
+            padding: 2.0rem 2.15rem !important;
+          }
+        }
+      }
+
+      &.seventh {
+        .section-content-container {
+          padding-top: 0;
+          padding-bottom: 1.5em;
+  
+          .content-code-repository {
+            min-height: 350px;
+            margin-bottom: 5.0em;
+  
+            .feature-image {
+              text-align: center;
+        
+              img {
+                height: 26.0rem;
+                transition: height 0.5s ease;
+        
+                &:hover {
+                  height: 27.0rem;
+                }
+              }
+            }
+          }
+  
+          .content {
+            h1 {
+              margin-bottom: 0.25rem;
+
+              .material-icons {
+                color: #56bf46;
+                font-size: 4.25rem !important;
+                margin-left: -6px;
+              }
+            }
+        
+            p {
+              color: colors.$stanford-black;
+              font-size: 1.3rem;
+              line-height: 1.4;
+            }
+
+            .btn {
+              font-size: 1.15rem;
+              margin-top: 1.15rem !important;
+            }
+          }
+  
+          .office-hour-banner {
+            margin-left: 1.0rem !important;
+            margin-right: 1.0rem !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Phone portrait at 390x844 (e.g. iPhone12/13 + Pro) or smaller */
+@media (max-width: 398px) {
+  body {
+    padding-top: 3.75rem;
+  }
+
+  .content-container {
+    justify-content: center;
+
+    section {
+      .animated-down-arrow {
+        display: none;
+      }
+
+      &.first {
+        .section-content-container {
+          height: 73vh;
+          margin-top: -7.4rem;
+
+          .logo-container {
+            margin-bottom: 1.5rem;
+            img {
+              width: 100%;
+              max-width: 18.0rem;
+            }
+          }
+
+          .display-2 {
+            font-size: 2.75rem;
+          }
+
+          .display-3 {
+            font-size: 2.25rem;
+          }
+
+          p.hero {
+            margin-top: 1.25rem;
+            margin-bottom: 0.25rem;
+            line-height: 1.25;
+  
+            a {
+              font-size: 1.15rem;
+            }
+          }
+
+          .highlighted-links-container {
+            .btn {
+              font-size: 0.8rem;
+              max-width: 150px;
+            }
+          }
+          
+          .office-hour-anchor-link-container {
+            margin-top: 2.5rem;
+            padding: 0 0.75rem;
+
+            .office-hour-anchor-link {
+              border-radius: 2.35rem;
+              box-shadow: inset 0 4.5rem rgba(255, 255, 255, 0.2);
+              font-size: 1.15rem;
+            }
+          }
+        }
+      }
+
+      &.third {
+        .section-content-container {
+          height: 60vh;
+          padding-top: 0;
+
+          .container {
+            h1 {
+              font-size: 1.65rem;
+              line-height: 1.35;
+            }
+          }
+        }
+      }
+
+      &.fourth {
+        .section-content-container {
+          height: 55vh;
+          padding-top: 0;
+
+          #heatmap-container {
+            width: 100% !important;
+            min-width: 355px !important;
+            min-height: 220px !important;
+          }
+
+          .container {
+            h1 {
+              font-size: 1.65rem;
+              line-height: 1.35;
+            }
+          }
+        }
+      }
+
+      &.fifth {
+        .section-content-container {
+          height: 85vh;
+
+          .content {
+            h1 {
+              font-size: 1.85rem;
+              line-height: 1.35;
+            }
+
+            .btn {
+              font-size: 1.15rem;
+            }
+          }
+
+          .feature-image {
+            max-width: 90%;
+            margin: 2.0rem 1.25rem !important;
+            padding: 2.0rem 2.15rem !important;
+          }
+        }
+      }
+
+      &.seventh {
+        .section-content-container {
+          padding-top: 0;
+          padding-bottom: 1.5em;
+  
+          .content-code-repository {
+            min-height: 350px;
+            margin-bottom: 5.0em;
+  
+            .feature-image {
+              text-align: center;
+        
+              img {
+                height: 26.0rem;
+                transition: height 0.5s ease;
+        
+                &:hover {
+                  height: 27.0rem;
+                }
+              }
+            }
+          }
+  
+          .content {
+            h1 {
+              margin-bottom: 0.25rem;
+
+              .material-icons {
+                color: #56bf46;
+                font-size: 4.25rem !important;
+                margin-left: -6px;
+              }
+            }
+        
+            p {
+              color: colors.$stanford-black;
+              font-size: 1.3rem;
+              line-height: 1.4;
+            }
+
+            .btn {
+              font-size: 1.15rem;
+              margin-top: 1.15rem !important;
+            }
+          }
+  
+          .office-hour-banner {
+            margin-left: 1.0rem !important;
+            margin-right: 1.0rem !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Phone portrait at 375x667 (e.g. iPhone 8 or iPhone 11 Pro) or smaller */
+@media (max-width: 375px) {
+  body {
+    padding-top: 3.75rem;
+  }
+
+  .content-container {
+    justify-content: center;
+
+    section {
+      .animated-down-arrow {
+        display: none;
+      }
+
+      &.first {
+        .section-content-container {
+          height: 71vh;
+          margin-top: -7.5rem;
+
+          .logo-container {
+            margin-bottom: 1.0rem;
+            img {
+              width: 100%;
+              max-width: 12.5rem;
+            }
+          }
+
+          .display-2 {
+            font-size: 1.95rem;
+          }
+
+          .display-3 {
+            font-size: 1.55rem;
+          }
+
+          p.hero {
+            margin-top: 0.75rem;
+            margin-bottom: 0;
+            line-height: 1.2;
+
+            a {
+              font-size: 1.0rem;
+            }
+          }
+
+          .highlighted-links-container {
+            margin-top: 0.25rem;
+
+            .btn {
+              font-size: 0.7rem;
+              max-width: 140px;
+              margin-top: 1.0rem !important;
+            }
+          }
+          
+          .office-hour-anchor-link-container {
+            margin-top: 1.85rem;
+            padding: 0 0.75rem;
+
+            .office-hour-anchor-link {
+              border-radius: 2.35rem;
+              box-shadow: inset 0 4.5rem rgba(255, 255, 255, 0.2);
+              font-size: 0.95rem;
+            }
+          }
+        }
+      }
+
+      &.third {
+        .section-content-container {
+          height: 55vh;
+          padding-top: 0;
+
+          .container {
+            h1 {
+              font-size: 1.55rem;
+              line-height: 1.35;
+            }
+          }
+        }
+      }
+
+      &.fourth {
+        .section-content-container {
+          height: 55vh;
+          padding-top: 0;
+
+          #heatmap-container {
+            width: 100% !important;
+            min-width: 300px !important;
+            min-height: 180px !important;
+          }
+
+          .container {
+            h1 {
+              font-size: 1.55rem;
+              line-height: 1.35;
+            }
+          }
+        }
+      }
+
+      &.fifth {
+        .section-content-container {
+          height: 80vh;
+          margin-top: -7rem;
+
+          .content {
+            h1 {
+              font-size: 1.55rem;
+              line-height: 1.25;
+              margin-bottom: 0;
+            }
+
+            .btn {
+              font-size: 0.85rem;
+            }
+          }
+
+          .feature-image {
+            max-width: 90%;
+            margin: 1.75rem 1.25rem !important;
+            padding: 2.0rem 2.15rem !important;
+          }
+        }
+      }
+
+      &.seventh {
+        .section-content-container {
+          padding-top: 2.0em;
+          padding-bottom: 1.5em;
+  
+          .content-code-repository {
+            min-height: 250px;
+            margin-bottom: 5.0em;
+  
+            .feature-image {
+              text-align: center;
+        
+              img {
+                height: 24.0rem;
+                transition: height 0.5s ease;
+        
+                &:hover {
+                  height: 25.0rem;
+                }
+              }
+            }
+          }
+  
+          .content {
+            h1 {
+              margin-bottom: 0.25rem;
+
+              .material-icons {
+                color: #56bf46;
+                font-size: 3.5rem !important;
+                margin-left: -6px;
+              }
+            }
+        
+            p {
+              color: colors.$stanford-black;
+              font-size: 1.2rem;
+              line-height: 1.35;
+            }
+
+            .btn {
+              font-size: 1.0rem;
+              margin-top: 1.0rem !important;
+            }
+          }
+  
+          .office-hour-banner {
+            margin-left: 1.0rem !important;
+            margin-right: 1.0rem !important;
+          }
+        }
+      }
+    }
+  }
+}

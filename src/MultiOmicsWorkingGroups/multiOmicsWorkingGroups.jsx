@@ -7,6 +7,8 @@ import BicUpdates from './bicUpdates';
 import PreCAWG from './preCAWG';
 import DawgPAC from './dawgPAC';
 
+import '@styles/multiOmicsWorkingGroups.scss';
+
 function MultiOmicsWorkingGroups() {
   // get states from redux store
   const userProfile = useSelector((state) => state.auth.profile);

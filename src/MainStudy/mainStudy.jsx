@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import PageTitle from '../lib/ui/pageTitle';
-import BrowseDataActions from '../BrowseDataPage/browseDataActions';
-import PASS1B06TimeCourse from '../assets/figures/pass1b-06-time-course.png';
 import PASS1B06Profiling from '../assets/figures/pass1b-06-molecular-profiling.svg';
-import ToggleShowHide from './components/toggleShowHide';
+import PASS1B06TimeCourse from '../assets/figures/pass1b-06-time-course.png';
+import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 import ExternalLink from '../lib/ui/externalLink';
+import PageTitle from '../lib/ui/pageTitle';
+import ToggleShowHide from './components/toggleShowHide';
+
+import '@styles/mainStudyPage.scss';
 
 function MainStudy({ profile, allFiles, handleDataFetch }) {
   const [showSummary, setShowSummary] = useState(true);

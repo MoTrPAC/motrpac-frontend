@@ -3,6 +3,8 @@ import PageTitle from '../lib/ui/pageTitle';
 import TeamMemberCard from './teamMemberCard';
 import teamInfo from '../lib/teamInfo';
 
+import '@styles/teamPage.scss';
+
 /**
  * The team page, includes all team members listed in the /src/lib/teamInfo.json file.
  * Members seperated by Principal Investigators, Staff and Co-Investigators

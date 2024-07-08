@@ -1,3 +1,6 @@
+@use '../colors';
+@use '../bootstrapCustom';
+
 .searchPage {
   .alert-embargo-extension,
   .alert-search-data-disclaimer {
@@ -34,7 +37,7 @@
     .search-box-input-group {
       .input-group-prepend {
         .material-icons {
-          color: $stanford-black;
+          color: colors.$stanford-black;
           font-size: 1.75rem;
           line-height: 0;
         }
@@ -136,8 +139,8 @@
 
       .filterBtn {
         background-color: #fff;
-        border: 1px solid $gray-semi-transparent;
-        color: $stanford-cool-grey;
+        border: 1px solid colors.$gray-semi-transparent;
+        color: colors.$stanford-cool-grey;
         font-size: .9rem;
         font-weight: 500;
         margin: 0.3rem;
@@ -151,7 +154,7 @@
       }
 
       .activeFilter {
-        background-color: $stanford-cool-grey;
+        background-color: colors.$stanford-cool-grey;
         color: #fff;
       }
 
@@ -163,13 +166,13 @@
       }
 
       .range-filter-input.error {
-        border-color: $accent-red;
+        border-color: colors.$accent-red;
       }
     }
 
     .submit-search-filters-button {
       .input-error-notify {
-        color: $accent-red;
+        color: colors.$accent-red;
       }
 
       .btn {
@@ -233,19 +236,19 @@
     }
 
     .PASS1A-06 {
-      background-color: lighten($primary-blue-shade-light, 18%);
+      background-color: lighten(colors.$primary-blue-shade-light, 18%);
     }
 
     .PASS1B-06 {
-      background-color: lighten($accent-yellow-shade-light, 18%);
+      background-color: lighten(colors.$accent-yellow-shade-light, 18%);
     }
 
     .PASS {
-      background-color: lighten($accent-green-shade-light, 16%);
+      background-color: lighten(colors.$accent-green-shade-light, 16%);
     }
 
     .FAIL {
-      background-color: lighten($accent-red-shade-light, 21%);
+      background-color: lighten(colors.$accent-red-shade-light, 21%);
     }
   }
 }
@@ -253,8 +256,8 @@
 .feature-links-container {
   .card {
     &:hover {
-      border: 1px solid $primary-blue;
-      background-color: lighten($blue-transparent, 15%);
+      border: 1px solid colors.$primary-blue;
+      background-color: lighten(colors.$blue-transparent, 15%);
       cursor: pointer;
       transition: .2s;
       transform: translateY(-1px);
@@ -266,13 +269,13 @@
 
       .feature-summary {
         h4 {
-          color: $stanford-cool-grey;
+          color: colors.$stanford-cool-grey;
           font-family: 'Open Sans', sans-serif;
           font-weight: 600;
         }
 
         p {
-          color: $stanford-cool-grey;
+          color: colors.$stanford-cool-grey;
         }
       }
     }
@@ -287,37 +290,37 @@
 
     &.qc-data-monitor {
       .material-icons {
-        color: $accent-green;
+        color: colors.$accent-green;
       }
     }
 
     &.releases, &.multiomics-working-groups {
       .material-icons {
-        color: $stanford-cardinal-red;
+        color: colors.$stanford-cardinal-red;
       }
     }
 
     &.data-download {
       .material-icons {
-        color: $accent-yellow;
+        color: colors.$accent-yellow;
       }
     }
 
     &.summary {
       .material-icons {
-        color: lighten($accent-violet, 12%);
+        color: lighten(colors.$accent-violet, 12%);
       }
     }
 
     &.code-repositories {
       .material-icons {
-        color: $gray-semi-transparent;
+        color: colors.$gray-semi-transparent;
       }
     }
   }
 }
 
-@include media-breakpoint-down(md) {
+@include bootstrapCustom.media-breakpoint-down(md) {
   .searchPage {
     .es-search-ui-container {
       align-items: start !important;

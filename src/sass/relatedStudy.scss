@@ -1,0 +1,49 @@
+@use 'bootstrapCustom';
+
+.relatedStudyPage {
+  margin-bottom: 1.25rem;
+
+  .related-studies-container {
+    .related-studies-content-container {
+      .card-img-top {
+        height: 20vh;
+        width: 95%;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        border-radius: 10px;
+        margin: 1.5em auto;
+      }
+  
+      .card-body {
+        border-top: 1px solid bootstrapCustom.$gray-200;
+
+        h5 {
+          a {
+            overflow-wrap: break-word;
+          }
+        }
+      }
+    }
+
+    &.heritage-proteomics {
+      .back-button {
+        a:hover {
+          text-decoration: none;
+        }
+      }
+
+      .data-download-container {
+        a {
+          i {
+            margin-top: 0.1rem;
+          }
+        }
+
+        .file-download-info {
+          color: #999999;
+        }
+      }
+    }
+  }
+}

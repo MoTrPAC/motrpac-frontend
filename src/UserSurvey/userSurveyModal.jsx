@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import surveyModdalActions from './userSurveyActions';
 import BootstrapSpinner from '../lib/ui/spinner';
 
+import '@styles/userSurvey.scss';
+
 function UserSurveyModal({
   userID,
   dataContext,

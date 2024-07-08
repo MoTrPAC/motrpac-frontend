@@ -1,0 +1,74 @@
+@use 'colors';
+
+.mainStudyPage {
+  .main-study-content-container {
+    table {
+      th {
+        padding-left: 1rem;
+
+        h4 {
+          font-weight: 600;
+        }
+        
+        .subhead {
+          font-size: 1.2rem;
+          font-weight: 400;
+        }
+      }
+
+      td {
+        padding-left: 1rem;
+      }
+    }
+
+    .study-figure {
+      padding: 1.5em;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    .data-download-button-container {
+      text-align: center;
+    }
+  }
+
+  // For anchored element hiding behind
+  // fixed position top navbar
+  div#endurance-training {
+    scroll-margin-top: 5.5em;
+  }
+
+  .show-collapse-button {
+    margin-left: 0.15rem;
+    margin-top: -0.25rem;
+    padding: 0;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &:focus, &:active {
+      box-shadow: none;
+      outline: none;
+      text-decoration: none;
+    }
+
+    .material-icons {
+      color: colors.$stanford-cool-grey;
+      font-size: 2.5rem;
+      font-weight: normal;
+      line-height: 0;
+    }
+  }
+
+  .sub-section-title {
+    .show-collapse-button {
+      .material-icons {
+        font-size: 2.15rem;
+      }
+    }
+  }
+}

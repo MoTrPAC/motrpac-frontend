@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PageTitle from '../lib/ui/pageTitle';
-import ExternalLink from '../lib/ui/externalLink';
-import MOTRLogo from '../assets/MoTrPAC_horizontal.png';
 import metaAnalysisGeneIcon from '../assets/analysisIcons/MetaAnalysisGene.svg';
-import NIHLogo from '../assets/ExternalLogos/NIHCommonFund.png';
-import ENCODELogo from '../assets/ExternalLogos/ENCODE.png';
-import MWLogo from '../assets/ExternalLogos/MetabolomicsWorkbench.jpeg';
-import GTExLogo from '../assets/ExternalLogos/GTEx.png';
 import CFDELogo from '../assets/ExternalLogos/CFDE_WORKBENCH.png';
-import OmicsPipelinesImage from '../assets/ExternalLogos/omicspipelines_dashboard.png';
+import ENCODELogo from '../assets/ExternalLogos/ENCODE.png';
+import GTExLogo from '../assets/ExternalLogos/GTEx.png';
+import MWLogo from '../assets/ExternalLogos/MetabolomicsWorkbench.jpeg';
 import MoTrPACRecruitmentLogo from '../assets/ExternalLogos/MoTrPAC_Recruitment_logo.png';
+import NIHLogo from '../assets/ExternalLogos/NIHCommonFund.png';
+import OmicsPipelinesImage from '../assets/ExternalLogos/omicspipelines_dashboard.png';
 import WuTsaiHumanPerformanceAllianceStanfordSiteLogo from '../assets/ExternalLogos/WuTsai_Human_Performance_Alliace.jpg';
+import MOTRLogo from '../assets/MoTrPAC_horizontal.png';
+import ExternalLink from '../lib/ui/externalLink';
+import PageTitle from '../lib/ui/pageTitle';
+
+import '@styles/linkoutPage.scss';
 
 const featured = [
   {

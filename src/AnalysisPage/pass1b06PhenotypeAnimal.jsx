@@ -1,13 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import PageTitle from '../lib/ui/pageTitle';
-import WeightGainPlot from './plots/weightGain';
+import AnalysisActions from './analysisActions';
 import BodyFatChangePlot from './plots/bodyFatChange';
-import VO2MaxChangePlot from './plots/vo2MaxChange';
 import LactateChangePlot from './plots/lactateChange';
 import PhenotypePlotControls from './plots/phenotypePlotControls';
-import AnalysisActions from './analysisActions';
+import VO2MaxChangePlot from './plots/vo2MaxChange';
+import WeightGainPlot from './plots/weightGain';
+
+import '@styles/phenotypeAnimal.scss';
 
 /**
  * Functional component to render animal pass1b-06 phenotype data visualization

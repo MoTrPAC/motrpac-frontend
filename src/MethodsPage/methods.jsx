@@ -5,6 +5,8 @@ import PageTitle from '../lib/ui/pageTitle';
 import StudyDocumentsTable from '../lib/studyDocumentsTable';
 import ExternalLink from '../lib/ui/externalLink';
 
+import '@styles/methods.scss';
+
 /**
  * Renders the Methods page.
  *

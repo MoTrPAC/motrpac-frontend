@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
+import axios from 'axios';
+import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import dayjs from 'dayjs';
-import actions from '../Auth/authActions';
-import LoginButton from '../lib/loginButton';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
-import onVisibilityChange from '../lib/utils/pageVisibility';
+import actions from '../Auth/authActions';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
+import LoginButton from '../lib/loginButton';
+import onVisibilityChange from '../lib/utils/pageVisibility';
+
+import '@styles/navbar.scss';
 
 /**
  * Renders the global header nav bar.

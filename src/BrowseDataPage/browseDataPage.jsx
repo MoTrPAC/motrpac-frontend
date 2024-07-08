@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import actions from './browseDataActions';
-import BrowseDataFilter from './browseDataFilter';
+import { connect } from 'react-redux';
 import dataDownloadStructuredData from '../lib/searchStructuredData/dataDownload';
 import UserSurveyModal from '../UserSurvey/userSurveyModal';
+import actions from './browseDataActions';
+import BrowseDataFilter from './browseDataFilter';
 import DataDownloadsMain from './components/dataDownloadsMain';
+
+import '@styles/browseData.scss';
 
 export function BrowseDataPage({
   profile,

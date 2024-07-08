@@ -1,29 +1,28 @@
-import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Link, Navigate } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
 import { Helmet } from 'react-helmet';
+import { connect } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
+import { Link, Navigate } from 'react-router-dom';
 import YouTube from 'react-youtube';
-import Footer from '../Footer/footer';
-import PromoteBanner from './promoteBanner';
-import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
-import IconSet from '../lib/iconSet';
-
-import LogoMotrpacWhite from '../assets/logo-motrpac-white.png';
 import BackgroundVideoImage from '../assets/LandingPageGraphics/background_video_preload.jpg';
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
-import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.svg';
 import NatureIssueCover from '../assets/LandingPageGraphics/nature_issue_cover.jpg';
-import BackgroundVideo from './components/backgroundVideo';
-import Figure1C from './components/figure1c';
-import VisNetworkReactComponent from './components/visNetwork';
+
+import LogoMotrpacWhite from '../assets/logo-motrpac-white.png';
 
 // import network figure 4e visualization dataset
 import landscapeFigure4eNetworkData from '../data/landscape_figure_4e';
+import Footer from '../Footer/footer';
+import IconSet from '../lib/iconSet';
+import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
+import BackgroundVideo from './components/backgroundVideo';
+import Figure1C from './components/figure1c';
+import VisNetworkReactComponent from './components/visNetwork';
+import PromoteBanner from './promoteBanner';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import 'vis-network/styles/vis-network.css';
+import '@styles/landingPage.scss'
 
 // animated down arrow icon
 function AnimatedDownArrow() {

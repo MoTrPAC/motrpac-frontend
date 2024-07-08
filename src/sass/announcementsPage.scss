@@ -1,0 +1,130 @@
+@use 'colors';
+@use 'bootstrapCustom';
+
+.announcementsPage {
+  .page-title {
+    margin-bottom: 1.5rem;
+
+    h3 {
+      margin-bottom: 0;
+    }
+  }
+
+  .announcement-item {
+    border-top: 1px solid colors.$gray-transparent;
+    margin-top: 0.65rem;
+    padding-top: 1.5rem;
+    align-items: start;
+    justify-content: start;
+
+    &:first-child {
+      border-top: none;
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+
+  .announcement-icon {
+    font-size: 5.0rem;
+    margin: 0 2.5rem;
+
+    &.webinar {
+      color: colors.$accent-green;
+    }
+
+    &.dataset {
+      color: colors.$gray-semi-transparent;
+    }
+
+    &.marker-paper,
+    &.landscape-paper-published,
+    &.companion-paper-published {
+      color: colors.$accent-yellow;
+    }
+
+    &.release {
+      color: colors.$stanford-bright-red;
+    }
+
+    &.landscape-preprint {
+      color: colors.$primary-blue;
+    }
+
+    &.embargo-extension {
+      color: colors.$accent-violet-shade-medium;
+    }
+  }
+
+  .announcement-header {
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+
+  .announcement-title {
+    margin-bottom: 0;
+  }
+
+  .announcement-date {
+    color: colors.$gray-semi-transparent;
+    min-width: 125px;
+    text-align: right;
+  }
+
+  .announcement-content {
+    line-height: 1.6;
+  }
+
+  .announcement-links {
+    list-style: none;
+    margin: 0 0 1.0rem 0;
+    padding: 0;
+
+    .announcement-link-item {
+      line-height: 2.25;
+
+      .inline-link-with-icon .material-icons {
+        margin-top: 0.4rem;
+      }
+    }
+  }
+}
+
+/* responsive styling */
+
+/* Large devices (desktops, less than 1200px) */
+@include bootstrapCustom.media-breakpoint-down(lg) {
+  .announcementsPage {
+    .announcement-header {
+      flex-direction: column;
+      align-items: start;
+      justify-content: start;
+
+      .announcement-date {
+        margin-top: 0.5rem;
+        text-align: left;
+      }
+    }
+  }
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@include bootstrapCustom.media-breakpoint-down(xs) {
+  .announcementsPage {
+    .announcement-item {
+      flex-direction: column;
+      align-items: start;
+      justify-content: start;
+    }
+
+    .announcement-item-icon {
+      flex-grow: 1;
+      margin: 0 auto !important;
+    }
+
+    .announcement-icon {
+      font-size: 5.5rem;
+      margin: 0 0 0.75rem 0;
+    }
+  }
+}

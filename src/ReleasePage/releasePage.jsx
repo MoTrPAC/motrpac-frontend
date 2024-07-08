@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import ReleaseEntry from './releaseEntry';
-import IconSet from '../lib/iconSet';
 import EmbargoExtension from '../lib/embargoExtension';
+import IconSet from '../lib/iconSet';
+import ReleaseEntry from './releaseEntry';
+
+import '@styles/releasePage.scss';
 
 /**
  * Renders the data release UIs

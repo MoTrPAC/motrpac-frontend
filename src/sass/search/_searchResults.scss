@@ -1,3 +1,7 @@
+@use '../colors';
+@use '../fonts';
+@use '../bootstrapCustom';
+
 .searchPage {
   .search-results-container {
     .search-result-filters-container {
@@ -9,13 +13,13 @@
 
           .search-result-filters-content {
             .list-group-item.active {
-              background-color: $gray-semi-transparent;
-              border-color: $gray-semi-transparent;
+              background-color: colors.$gray-semi-transparent;
+              border-color: colors.$gray-semi-transparent;
             }
 
             .search-result-filters-title {
               font-size: 1.1rem;
-              font-weight: $bold-weight;
+              font-weight: fonts.$bold-weight;
             }
           }
         }
@@ -62,7 +66,7 @@
           .search-result-list {
             .search-result-list-item {
               &:hover {
-                background-color: lighten($gray-transparent, 45%);
+                background-color: lighten(colors.$gray-transparent, 45%);
               }
 
               img {
@@ -93,7 +97,7 @@
   }
 }
 
-@include media-breakpoint-down(md) {
+@include bootstrapCustom.media-breakpoint-down(md) {
   .searchPage {
     .search-result-filters-content {
       .list-group-item {

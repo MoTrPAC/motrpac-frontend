@@ -1,0 +1,52 @@
+@use 'colors';
+/* responsive graph styling
+.graph-svg-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: 530px;
+  vertical-align: top;
+  overflow: hidden;
+}
+
+.graph-svg-content {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+*/
+
+.graph-title {
+  h5.card-title {
+    color: colors.$stanford-cardinal-red;
+    margin-bottom: 0;
+  }
+}
+
+.graph-svg-content {
+  width: 1020px;
+
+  .bar {
+    fill: colors.$stanford-cool-grey;
+
+    &:hover {
+      fill: colors.$accent-green;
+    }
+  }
+}
+
+.tooltip {
+  background-color: #fff;
+  border: solid 1px colors.$stanford-cool-grey;
+  border-radius: 2px;
+  font-size: 0.75rem;
+  padding: 2px 5px;
+}
+
+.animal-phenotype-data {
+  .warning-note {
+    font-size: 0.85rem;
+    margin: 0.5rem;
+  }
+}

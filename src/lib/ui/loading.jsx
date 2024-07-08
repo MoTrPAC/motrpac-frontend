@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import '@styles/loader.scss';
+
 /**
  * Renders the animated loading SVG icon
  *
