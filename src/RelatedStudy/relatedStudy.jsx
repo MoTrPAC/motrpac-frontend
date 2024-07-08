@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import HeritageFamilyStudyLogo from '../assets/ExternalLogos/HeritageFamilyStudy.png';
 import StanfordMedicineLogo from '../assets/ExternalLogos/StanfordMedicine.png';
@@ -41,6 +42,10 @@ function RelatedStudy() {
 
   return (
     <div className="relatedStudyPage px-3 px-md-4 mb-3 container">
+      <Helmet>
+        <html lang="en" />
+        <title>Related Exercise Studies - MoTrPAC Data Hub</title>
+      </Helmet>
       <PageTitle title="Related Exercise Studies" />
       <div className="related-studies-container my-4">
         <div className="related-studies-content-container">

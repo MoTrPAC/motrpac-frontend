@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
 import ReleasedSampleTable from '../Widgets/releasedSampleTable';
 import ReleasedSamplePlot from '../Widgets/releasedSamplePlot';
 import ReleasedSampleHighlight from '../Widgets/releasedSampleHighlight';
@@ -76,6 +77,10 @@ export function DataSummaryPage({
 
   return (
     <div className="dataSummaryPage px-3 px-md-4 mb-3 w-100">
+      <Helmet>
+        <html lang="en" />
+        <title>Sample Summary - MoTrPAC Data Hub</title>
+      </Helmet>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 page-header">
         <div className="page-title">
           <h1 className="mb-0">

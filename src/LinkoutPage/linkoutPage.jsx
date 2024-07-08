@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import ExternalLink from '../lib/ui/externalLink';
 import MOTRLogo from '../assets/MoTrPAC_horizontal.png';
@@ -147,6 +148,10 @@ function LinkoutPage() {
 
   return (
     <div className="linkoutPage px-3 px-md-4 mb-3 container">
+      <Helmet>
+        <html lang="en" />
+        <title>Useful Links - MoTrPAC Data Hub</title>
+      </Helmet>
       <div>
         <PageTitle title="Useful Links" />
         <div className="externalLinks">{featuredLinks}</div>

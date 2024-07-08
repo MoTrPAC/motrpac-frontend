@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
-import PageTitle from '../lib/ui/pageTitle';
 import dayjs from 'dayjs';
 import ReCAPTCHA from 'react-google-recaptcha';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
 import RegistrationResponse from './response';
 import IconSet from '../lib/iconSet';
 import EmailLink from '../lib/ui/emailLink';
 import ExternalLink from '../lib/ui/externalLink';
 import StudyDocumentsTable from '../lib/studyDocumentsTable';
+import PageTitle from '../lib/ui/pageTitle';
 
 const defaultFormValues = {
   dataUseAgreement1: false,
@@ -224,6 +225,10 @@ export function DataAccessPage({ isAuthenticated, profile }) {
 
   return (
     <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 dataAccessPage`}>
+      <Helmet>
+        <html lang="en" />
+        <title>Limited Acute Exercise Data Access Signup - MoTrPAC Data Hub</title>
+      </Helmet>
       <div className={`${!isAuthenticated ? 'container' : ''}`}>
         <form id="dataAccessRegistration" name="dataAccessRegistration" noValidate>
           <PageTitle title="MoTrPAC External Data Release" />

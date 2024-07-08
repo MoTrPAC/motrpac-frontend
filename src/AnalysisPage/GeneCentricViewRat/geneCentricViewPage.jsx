@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { Typeahead } from 'react-bootstrap-typeahead';
+import { Helmet } from 'react-helmet';
 import PageTitle from '../../lib/ui/pageTitle';
 import AnalysisActions from '../analysisActions';
 import { defaultGeneSearchParams } from '../analysisReducer';
@@ -89,6 +90,10 @@ function GeneCentricView({
 
   return (
     <div className="geneCentricViewPage px-3 px-md-4 mb-3">
+      <Helmet>
+        <html lang="en" />
+        <title>Gene-centric View - MoTrPAC Data Hub</title>
+      </Helmet>
       <form id="geneCentricSearchForm" name="geneCentricSearchForm">
         <PageTitle title="Gene-centric View" />
         <div className="gene-centric-view-container">
