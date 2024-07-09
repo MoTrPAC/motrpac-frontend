@@ -38,6 +38,18 @@ html, body {
 }
 
 body.homepage {
+  background-image: url(./assets/LandingPageGraphics/background_hero_image.jpg);
+  background-position-x: center;
+  background-position-y: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+
+  &.loaded {
+    background-image: none;
+    height: 100%;
+  }
+
   .App {
     margin-top: 0;
   }

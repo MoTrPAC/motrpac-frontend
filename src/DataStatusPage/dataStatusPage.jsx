@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import AnimatedLoadingIcon from '../lib/ui/loading';
 import DataStatusActions from './dataStatusActions';
 import QcReportByPhase from './qcReportByPhase.jsx';
@@ -133,6 +134,10 @@ export function DataStatusPage({
 
   return (
     <div className="dataStatusPage px-3 px-md-4 mb-3 w-100">
+      <Helmet>
+        <html lang="en" />
+        <title>QC Data Monitor - MoTrPAC Data Hub</title>
+      </Helmet>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 page-header">
         <div className="page-title">
           <h1 className="mb-0">QC Data Monitor</h1>

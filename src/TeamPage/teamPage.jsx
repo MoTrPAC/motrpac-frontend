@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import TeamMemberCard from './teamMemberCard';
 import teamInfo from '../lib/teamInfo';
@@ -39,6 +40,10 @@ function TeamPage() {
 
   return (
     <div className="teamPage px-3 px-md-4 mb-3 container">
+      <Helmet>
+        <html lang="en" />
+        <title>Bioinformatics Center Team - MoTrPAC Data Hub</title>
+      </Helmet>
       <PageTitle title="MoTrPAC Bioinformatics Center Team" />
       <div>{pageContent}</div>
       <div className="pt-5 pb-0 mb-5 border-top text-center">

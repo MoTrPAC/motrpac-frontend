@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+
 import EmbargoExtension from '../lib/embargoExtension';
 import IconSet from '../lib/iconSet';
 import ReleaseEntry from './releaseEntry';
@@ -53,6 +55,10 @@ export function ReleasePage({ profile }) {
   // Render internal release view by default
   return (
     <div className="dataReleasePage internal px-3 px-md-4 mb-3 w-100">
+      <Helmet>
+        <html lang="en" />
+        <title>Prior Data Releases - MoTrPAC Data Hub</title>
+      </Helmet>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 page-header">
         <div
           className="page-title"

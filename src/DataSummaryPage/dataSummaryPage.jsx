@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
-import animalReleaseSamples from '../data/animal_release_samples.json';
 import PlotControls from '../Widgets/plotControls';
 import ReleasedSampleHighlight from '../Widgets/releasedSampleHighlight';
 import ReleasedSamplePlot from '../Widgets/releasedSamplePlot';
@@ -13,6 +13,7 @@ import DataSummaryPageActions from './dataSummaryPageActions';
 
 import '@styles/dataSummaryPage.scss';
 
+import animalReleaseSamples from '../data/animal_release_samples.json';
 /**
  * Renders the release samples summary page.
  *
@@ -78,6 +79,10 @@ export function DataSummaryPage({
 
   return (
     <div className="dataSummaryPage px-3 px-md-4 mb-3 w-100">
+      <Helmet>
+        <html lang="en" />
+        <title>Sample Summary - MoTrPAC Data Hub</title>
+      </Helmet>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 page-header">
         <div className="page-title">
           <h1 className="mb-0">

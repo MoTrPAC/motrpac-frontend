@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import ContactForm from './contactForm';
 
@@ -17,6 +18,10 @@ import '@styles/contact.scss';
 function Contact() {
   return (
     <div className="contactPage px-3 px-md-4 mb-3 container">
+      <Helmet>
+        <html lang="en" />
+        <title>Contact Form - MoTrPAC Data Hub</title>
+      </Helmet>
       <PageTitle title="Contact Us" />
       <div className="contact-content-container">
         <div className="contact-summary-container row mb-4">

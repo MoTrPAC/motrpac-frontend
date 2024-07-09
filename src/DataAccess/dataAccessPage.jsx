@@ -3,6 +3,7 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 import IconSet from '../lib/iconSet';
@@ -226,6 +227,10 @@ export function DataAccessPage({ isAuthenticated, profile }) {
 
   return (
     <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 dataAccessPage`}>
+      <Helmet>
+        <html lang="en" />
+        <title>Limited Acute Exercise Data Access Signup - MoTrPAC Data Hub</title>
+      </Helmet>
       <div className={`${!isAuthenticated ? 'container' : ''}`}>
         <form id="dataAccessRegistration" name="dataAccessRegistration" noValidate>
           <PageTitle title="MoTrPAC External Data Release" />

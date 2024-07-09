@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
+
 import PageTitle from '../lib/ui/pageTitle';
 import AnalysisActions from './analysisActions';
 import BodyFatChangePlot from './plots/bodyFatChange';
@@ -28,6 +30,10 @@ function Pass1b06PhenotypeAnimal({
 }) {
   return (
     <div className="analysisPhenotypePage px-3 px-md-4 mb-3 w-100">
+      <Helmet>
+        <html lang="en" />
+        <title>Endurance Trained Young Adult Rats Phenotypic Data - MoTrPAC Data Hub</title>
+      </Helmet>
       <PageTitle title="Endurance Exercise Training Young Adult Rats Phenotypic Data" />
       <div className="analysis-phenotype-container">
         <div className="analysis-phenotype-summary-container row mb-4">

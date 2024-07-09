@@ -1,5 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
+import ExternalLink from '../lib/ui/externalLink';
+import PageTitle from '../lib/ui/pageTitle';
+
+import '@styles/linkoutPage.scss';
+
 import metaAnalysisGeneIcon from '../assets/analysisIcons/MetaAnalysisGene.svg';
 import CFDELogo from '../assets/ExternalLogos/CFDE_WORKBENCH.png';
 import ENCODELogo from '../assets/ExternalLogos/ENCODE.png';
@@ -10,10 +16,6 @@ import NIHLogo from '../assets/ExternalLogos/NIHCommonFund.png';
 import OmicsPipelinesImage from '../assets/ExternalLogos/omicspipelines_dashboard.png';
 import WuTsaiHumanPerformanceAllianceStanfordSiteLogo from '../assets/ExternalLogos/WuTsai_Human_Performance_Alliace.jpg';
 import MOTRLogo from '../assets/MoTrPAC_horizontal.png';
-import ExternalLink from '../lib/ui/externalLink';
-import PageTitle from '../lib/ui/pageTitle';
-
-import '@styles/linkoutPage.scss';
 
 const featured = [
   {
@@ -149,6 +151,10 @@ function LinkoutPage() {
 
   return (
     <div className="linkoutPage px-3 px-md-4 mb-3 container">
+      <Helmet>
+        <html lang="en" />
+        <title>Useful Links - MoTrPAC Data Hub</title>
+      </Helmet>
       <div>
         <PageTitle title="Useful Links" />
         <div className="externalLinks">{featuredLinks}</div>

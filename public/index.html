@@ -43,7 +43,13 @@
     <!-- Warm up connection for better performance in loading Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <!-- Google Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="print" onload="this.onload=null;this.removeAttribute('media');" fetchpriority="high">
+
+    <!-- no-JS fallback -->
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    </noscript>
+
 
     <!-- Clarity tracking code -->
     <script type="text/javascript">
@@ -53,9 +59,6 @@
           y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
       })(window, document, "clarity", "script", "igkabpsgqm");
     </script>
-
-    <!-- Siteimprove Analytics -->
-    <script async src="https://siteimproveanalytics.com/js/siteanalyze_80352.js"></script>
 
     <title>MoTrPAC Data Hub</title>
   </head>
@@ -74,5 +77,8 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+    <!-- Siteimprove Analytics -->
+    <script async src="https://siteimproveanalytics.com/js/siteanalyze_80352.js"></script>
   </body>
 </html>

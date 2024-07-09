@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import PASS1B06Profiling from '../assets/figures/pass1b-06-molecular-profiling.svg';
-import PASS1B06TimeCourse from '../assets/figures/pass1b-06-time-course.png';
+
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 import ExternalLink from '../lib/ui/externalLink';
 import PageTitle from '../lib/ui/pageTitle';
 import ToggleShowHide from './components/toggleShowHide';
 
 import '@styles/mainStudyPage.scss';
+
+import PASS1B06Profiling from '../assets/figures/pass1b-06-molecular-profiling.svg';
+import PASS1B06TimeCourse from '../assets/figures/pass1b-06-time-course.png';
 
 function MainStudy({ profile, allFiles, handleDataFetch }) {
   const [showSummary, setShowSummary] = useState(true);
@@ -47,6 +49,10 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
 
   return (
     <div className="mainStudyPage px-3 px-md-4 mb-3 container">
+      <Helmet>
+        <html lang="en" />
+        <title>Project Overview - MoTrPAC Data Hub</title>
+      </Helmet>
       <PageTitle title="MoTrPAC Project Overview" />
       <div className="main-study-container">
         <div className="main-study-content-container project-overview mt-5">

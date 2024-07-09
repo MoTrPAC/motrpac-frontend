@@ -274,6 +274,16 @@ export function Navbar({
                   >
                     Limited Acute Exercise Data
                   </Link>
+                  {!userType || (userType && userType !== 'internal') ? (
+                    <a
+                      href="https://docs.google.com/forms/d/e/1FAIpQLScjGxwsHDDsE4P4j1VNvIUR73cEyh9SJrofxuQyHqucl0GhBg/viewform"
+                      className="dropdown-item"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Data Updates Signup
+                    </a>
+                  ) : null}
                   {isAuthenticated && hasAccess ? (
                     <>
                       {userType === 'internal' && (

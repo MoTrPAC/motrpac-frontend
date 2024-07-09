@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import IconSet from '../lib/iconSet';
 
@@ -96,6 +97,10 @@ export function CodeRepositories() {
 
   return (
     <div className="codeRepoPage px-3 px-md-4 mb-3 container">
+      <Helmet>
+        <html lang="en" />
+        <title>Code Repositories - MoTrPAC Data Hub</title>
+      </Helmet>
       <PageTitle title="Code Repositories" />
       <div className="code-repo-content-container">
         <div className="code-repo-summary-container row">

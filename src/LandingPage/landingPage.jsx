@@ -1,18 +1,12 @@
 import PropTypes from 'prop-types';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { Link, Navigate } from 'react-router-dom';
 import YouTube from 'react-youtube';
-import BackgroundVideoImage from '../assets/LandingPageGraphics/background_video_preload.jpg';
-import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
-import NatureIssueCover from '../assets/LandingPageGraphics/nature_issue_cover.jpg';
-
-import LogoMotrpacWhite from '../assets/logo-motrpac-white.png';
 
 // import network figure 4e visualization dataset
-import landscapeFigure4eNetworkData from '../data/landscape_figure_4e';
 import Footer from '../Footer/footer';
 import IconSet from '../lib/iconSet';
 import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
@@ -23,6 +17,11 @@ import PromoteBanner from './promoteBanner';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import '@styles/landingPage.scss'
+
+import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
+import LogoMoTrPACWhite from '../assets/LandingPageGraphics/logo-motrpac-white.png';
+import NatureIssueCover from '../assets/LandingPageGraphics/nature_issue_cover.jpg';
+import landscapeFigure4eNetworkData from '../data/landscape_figure_4e';
 
 // animated down arrow icon
 function AnimatedDownArrow() {
@@ -70,6 +69,15 @@ export function LandingPage({ isAuthenticated, profile }) {
   const [backgroundVideoLoaded, setBackgroundVideoLoaded] = useState(false);
   const [networkNodes, setNetwortNodes] = useState([]);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+
+  useEffect(() => {
+    if (backgroundVideoLoaded || isMobile) {
+      const documentBody = document.querySelector('body.homepage');
+      if (documentBody) {
+        documentBody.classList.add('loaded');
+      }
+    }
+  }, [backgroundVideoLoaded, isMobile]);
 
   // vis-network-react event object
   const events = {};
@@ -122,25 +130,10 @@ export function LandingPage({ isAuthenticated, profile }) {
       </Helmet>
       <section className="first">
         <div className="w-100 h-100 d-flex align-items-center">
-          {!backgroundVideoLoaded && (
-            <img
-              src={BackgroundVideoImage}
-              className="background-video-preloader"
-              alt="Background Video"
-            />
-          )}
-          {!isMobile ? (
-            <BackgroundVideo />
-          ) : (
-            <img
-              src={BackgroundVideoImage}
-              className="background-video-preloader"
-              alt="Background Video"
-            />
-          )}
+          {!isMobile && <BackgroundVideo />}
           <div className="section-content-container container text-center">
             <div className="logo-container">
-              <img src={LogoMotrpacWhite} alt="MoTrPAC Logo" />
+              <img src={LogoMoTrPACWhite} alt="MoTrPAC Logo" />
             </div>
             <h3 className="display-3">The Molecular Map of</h3>
             <h2 className="display-2">Exercise</h2>
@@ -216,6 +209,7 @@ export function LandingPage({ isAuthenticated, profile }) {
                     src={NatureIssueCover}
                     className="img-fluid lanascape-paper-abstract"
                     alt="Landscape Paper Abstract"
+                    loading="lazy"
                   />
                 </div>
                 <div className="feature-image-attribution mt-1">Cover image by Nik Spencer/Nature</div>
@@ -280,15 +274,16 @@ export function LandingPage({ isAuthenticated, profile }) {
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container text-center">
             <div
-              className="embedContainer embed-responsive embed-responsive-16by9"
-              id="tutorial-video-iframe-container"
+              className="embedContainer embed-responsive embed-responsive-16by9 mt-lg-4"
+              id="youtube-tutorial-video-container"
             >
               <YouTube
                 videoId="3zHnzUMo_vw"
                 opts={opts}
                 onReady={onPlayerReady}
+                loading="lazy"
                 title="Data Hub Tutorial Video"
-                className="embed-video-iframe-container"
+                className="embed-youtube-video-container"
                 iframeClassName="embed-responsive-item border border-dark"
               />
             </div>
@@ -310,6 +305,7 @@ export function LandingPage({ isAuthenticated, profile }) {
                   src={LayerRunner}
                   className="img-fluid data-layer-runner"
                   alt="Data Layer Runner"
+                  loading="lazy"
                 />
               </div>
               <div className="content col-12 col-md-7">
