@@ -25,7 +25,7 @@ export const searchParamsDefaultProps = {
   },
   fields: [
     'gene_symbol',
-    'metabolite',
+    'metabolite_refmet',
     'feature_ID',
     'tissue',
     'assay',
@@ -82,7 +82,7 @@ export const searchParamsPropType = {
  */
 export const timewiseResultsTablePropType = {
   gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  metabolite: PropTypes.string,
+  metabolite_refmet: PropTypes.string,
   feature_ID: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tissue: PropTypes.string,
   assay: PropTypes.string,
@@ -100,7 +100,7 @@ export const timewiseResultsTablePropType = {
  */
 export const trainingResultsTablePropType = {
   gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  metabolite: PropTypes.string,
+  metabolite_refmet: PropTypes.string,
   feature_ID: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tissue: PropTypes.string,
   assay_name: PropTypes.string,
@@ -216,8 +216,19 @@ export const timewiseTableColumns = [
 
 export const metabTimewiseTableColumns = [
   {
-    Header: 'Metabolite',
-    accessor: 'metabolite',
+    Header: () => (
+      <div className="d-flex align-items-center timewise-refmet-col-header">
+        <span>RefMet Name</span>
+        <span className="material-icons col-header-info timewise-refmet-tooltip">
+          info
+        </span>
+        <Tooltip anchorSelect=".timewise-refmet-tooltip" place="right">
+          Reference nomenclature for metabolite names
+        </Tooltip>
+      </div>
+    ),
+    accessor: 'metabolite_refmet',
+    sortType: 'basic',
   },
   {
     Header: 'Feature ID',
@@ -385,8 +396,19 @@ export const trainingTableColumns = [
 
 export const metabTrainingTableColumns = [
   {
-    Header: 'Metabolite',
-    accessor: 'metabolite',
+    Header: () => (
+      <div className="d-flex align-items-center training-refmet-col-header">
+        <span>RefMet Name</span>
+        <span className="material-icons col-header-info training-refmet-tooltip">
+          info
+        </span>
+        <Tooltip anchorSelect=".training-refmet-tooltip" place="right">
+          Reference nomenclature for metabolite names
+        </Tooltip>
+      </div>
+    ),
+    accessor: 'metabolite_refmet',
+    sortType: 'basic',
   },
   {
     Header: 'Feature ID',
