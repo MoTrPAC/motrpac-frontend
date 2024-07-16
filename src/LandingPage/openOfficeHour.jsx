@@ -2,7 +2,7 @@ import React from 'react';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
 // Function to render landing page announcement
-function PromoteBanner() {
+function OpenOfficeHour() {
   return (
     <div className="office-hour-banner border w-100 px-3 py-4 mb-4">
       <h3 className="office-hour-title">Join Us</h3>
@@ -31,4 +31,4 @@ function PromoteBanner() {
   );
 }
 
-export default PromoteBanner;
+export default OpenOfficeHour;
