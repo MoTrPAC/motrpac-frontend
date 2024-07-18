@@ -247,22 +247,18 @@
       background-color: #fff;
 
       .section-content-container {
-        padding-top: 4.0em;
-        padding-bottom: 1.5em;
-
         .content-code-repository {
           min-height: 560px;
-          margin-bottom: 5.0em;
 
           .feature-image {
             text-align: center;
       
             img {
-              height: 32.0rem;
+              height: 40.0rem;
               transition: height 0.5s ease;
       
               &:hover {
-                height: 33.0rem;
+                height: 42.0rem;
               }
             }
           }
@@ -273,20 +269,42 @@
 
           h1 .material-icons {
             color: #56bf46;
-            font-size: 7.5rem !important;
+            font-size: 3.5em !important;
             margin-left: -10px;
           }
       
           p {
             color: $stanford-black;
-            font-size: 1.85rem;
+            font-size: 2.0rem;
           }
         }
+      }
+    }
+    &.eighth {
+      background-color: #fff;
 
-        .office-hour-banner {
-          border-radius: 0.35rem;
-          background: lighten($gray-transparent, 30%);
-          text-align: center;
+      .section-content-container {
+        height: calc(100vh - 67.2px);
+        padding-top: 4.65em;
+
+        .panel-content-container {
+          padding: 1.25em 0;
+        }
+
+        .office-hour-signup {
+          border-radius: 0.45rem;
+          color: #fff;
+          margin-bottom: 6.0em;
+
+          background-color: hsla(197, 92%, 60%, 1);
+          background-image: radial-gradient(circle at 96% 96%, hsla(55.36363636363636, 93%, 54%, 0.85) 5%, transparent 86%), radial-gradient(circle at 5% 90%, hsla(229, 71%, 68%, 1) 13%, transparent 65%), radial-gradient(circle at 57% 73%, hsla(308, 93%, 51%, 1) 3%, transparent 89%), radial-gradient(circle at 20% 4%, hsla(318, 60%, 76%, 1) 22%, transparent 56%), radial-gradient(circle at 74% 15%, hsla(324, 92%, 59%, 1) 13%, transparent 57%);
+          background-blend-mode: normal, normal, normal, normal, normal;
+        }
+
+        .data-update-signup {
+          h1 {
+            color: $stanford-black;
+          }
         }
       }
     }
@@ -489,7 +507,21 @@ body.homepage {
 
       &.seventh {
         .section-content-container {
-          padding-top: 6.0em;
+          .feature-image {
+            img {
+              height: 38.0rem;
+      
+              &:hover {
+                height: 40.0rem;
+              }
+            }
+          }
+        }
+      }
+
+      &.eighth {
+        .section-content-container {
+          padding-top: 4.65em;
         }
       }
     }
@@ -612,17 +644,40 @@ body.homepage {
 
       &.seventh {
         .section-content-container {
-
           .content-code-repository {
             .feature-image {
               img {
-                height: 25.0rem;
+                height: 32.0rem;
         
                 &:hover {
-                  height: 25.0rem;
+                  height: 32.0rem;
                 }
               }
             }
+          }
+
+          .content {
+            h1 .material-icons {
+              font-size: 3.0em !important;
+            }
+        
+            p {
+              font-size: 1.85rem;
+            }
+          }
+        }
+      }
+
+      &.eighth {
+        .section-content-container {
+          padding-top: 4.65em;
+
+          .office-hour-signup {
+            margin-bottom: 4.0em;
+          }
+
+          .data-updates-signup-title {
+            line-height: 1.0;
           }
         }
       }
@@ -760,59 +815,60 @@ body.homepage {
 
       &.seventh {
         .section-content-container {
-          padding-top: 7.0em;
-          padding-bottom: 1.5em;
-
-          .row.content-code-repository {
-            margin-bottom: 2.5em;
-          }
+          padding-top: 4.65em;
 
           .feature-image {
             img {
-              height: 20.0em !important;
-              width: auto;
+              height: 24.0em !important;
 
               &:hover {
-                height: 20.0em !important;
+                height: 24.0em !important;
               }
             }
           }
-  
+
           .content {
             h1 {
               margin-bottom: 0 !important;
 
               .material-icons {
-                color: #56bf46;
-                font-size: 4.5rem !important;
-                margin-left: -6px;
+                font-size: 2.5em !important;
               }
             }
         
             p {
-              color: $stanford-black;
-              font-size: 1.15rem;
-              line-height: 1.35;
+              font-size: 1.5rem;
+              line-height: 1.3;
             }
 
             .btn {
-              font-size: 1.0rem;
-              margin-top: 0.5em !important;
+              font-size: 1.15rem;
+              margin-top: 0.65em !important;
             }
           }
-  
-          .office-hour-banner {
-            margin-left: 1.0rem !important;
-            margin-right: 1.0rem !important;
-            
-            .office-hour-title {
-              font-size: 1.35rem;
-            }
+        }
+      }
 
-            .office-hour-content {
-              font-size: 0.9rem;
-              line-height: 1.35;
+      &.eighth {
+        .section-content-container {
+          padding-top: 4.65em;
+
+          .office-hour-signup {
+            margin-bottom: 3.0em;
+            padding: 2.55rem !important;
+
+            .office-hour-title {
+              font-size: 5.0rem;
             }
+          }
+
+          .data-updates-signup-title {
+            font-size: 4.15rem;
+            line-height: 1.0;
+          }
+
+          .btn {
+            font-size: 1.15rem;
           }
         }
       }
@@ -941,49 +997,64 @@ body.homepage {
 
       &.seventh {
         .section-content-container {
-          padding-top: 6.0em;
-          padding-bottom: 1.5em;
-
-          .row.content-code-repository {
-            margin-bottom: 2.5em;
-          }
-
           .feature-image {
             img {
-              height: 20.0em !important;
-              width: auto;
+              height: 22.0em !important;
+
+              &:hover {
+                height: 22.0em !important;
+              }
             }
           }
   
           .content {
-            padding-left: 2.0em;
-            padding-right: 2.0em;
+            padding-left: 2.5em;
+            padding-right: 2.5em;
 
             h1 {
               margin-bottom: 0 !important;
 
               .material-icons {
-                color: #56bf46;
-                font-size: 4.5rem !important;
+                font-size: 2.5em !important;
                 margin-left: -6px;
               }
             }
         
             p {
-              color: $stanford-black;
-              font-size: 1.15rem;
-              line-height: 1.35;
+              font-size: 1.4rem;
+              line-height: 1.3;
             }
 
             .btn {
-              font-size: 1.0rem;
-              margin-top: 0.5em !important;
+              font-size: 1.15rem;
+              margin-top: 0.65em !important;
             }
           }
+        }
+      }
+
+      &.eighth {
+        .section-content-container {
+          .panel-content-container {
+            padding: 1.25em;
+
+            .office-hour-signup {
+              margin-bottom: 3.0em;
+              padding: 2.55rem !important;
   
-          .office-hour-banner {
-            margin-left: 2.0rem !important;
-            margin-right: 2.0rem !important;
+              .office-hour-title {
+                font-size: 4.85rem;
+              }
+            }
+  
+            .data-updates-signup-title {
+              font-size: 4.0rem;
+              line-height: 1.0;
+            }
+  
+            .btn {
+              font-size: 1.15rem;
+            }
           }
         }
       }
@@ -1118,62 +1189,72 @@ body.homepage {
 
       &.seventh {
         .section-content-container {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start !important;
-          padding-top: 6.0em;
-          padding-bottom: 1.5em;
-
-          .row.content-code-repository {
-            flex-direction: column;
-            align-items: flex-start !important;
-            margin-bottom: 1.0em;
-            min-height: unset;
-          }
+          padding-top: 3.5em;
 
           .feature-image {
             img {
-              height: 16.0em !important;
-              width: auto;
-      
+              height: 22.0em !important;
+
               &:hover {
-                height: 16.0em !important;
+                height: 22.0em !important;
               }
             }
           }
   
           .content {
+            padding-left: 2.5em;
+            padding-right: 2.5em;
+
             h1 {
               margin-bottom: 0 !important;
 
               .material-icons {
-                color: #56bf46;
-                font-size: 4.25rem !important;
+                font-size: 2.25em !important;
                 margin-left: -6px;
               }
             }
         
             p {
-              color: $stanford-black;
-              font-size: 1.0rem;
-              line-height: 1.35;
+              font-size: 1.3rem;
+              line-height: 1.3;
             }
 
             .btn {
-              font-size: 1.0rem;
-              margin-top: 0.4em !important;
+              font-size: 1.15rem;
+              margin-top: 0.65em !important;
             }
           }
+        }
+      }
 
-          #join-office-hour {
-            margin-top: 1.15em !important;
-          }
+      &.eighth {
+        .section-content-container {
+          .panel-content-container {
+            padding: 1.25em;
 
-          .office-hour-banner {
-            margin-left: 2.0rem !important;
-            margin-right: 2.0rem !important;
-            padding-top: 1.0em !important;
-            padding-bottom: 1.0em !important;
+            .office-hour-signup {
+              margin-bottom: 3.5em;
+              padding: 2.55rem !important;
+  
+              .office-hour-title {
+                font-size: 4.15rem;
+              }
+            }
+  
+            .data-updates-signup-title {
+              font-size: 3.0rem;
+              line-height: 1.0;
+              margin-bottom: 0.5em;
+            }
+
+            .lead {
+              font-size: 1.25rem;
+              line-height: 1.3;
+            }
+  
+            .btn {
+              font-size: 1.0rem;
+            }
           }
         }
       }
@@ -1310,58 +1391,63 @@ body.homepage {
 
       &.seventh {
         .section-content-container {
-          padding-top: 5.5em;
-
           .feature-image {
             img {
-              height: 12.5em !important;
-              width: auto;
-      
+              height: 20.0em !important;
+
               &:hover {
-                height: 12.5em !important;
+                height: 20.0em !important;
               }
             }
           }
   
           .content {
             h1 {
-              margin-bottom: 0 !important;
-
               .material-icons {
-                color: #56bf46;
-                font-size: 3.75rem !important;
-                margin-left: -6px;
+                font-size: 2.0em !important;
               }
             }
         
             p {
-              color: $stanford-black;
-              font-size: 0.9rem;
-              line-height: 1.35;
+              font-size: 1.25rem;
+              line-height: 1.3;
             }
 
             .btn {
-              font-size: 0.85rem;
-              margin-top: 0.25em !important;
-              padding: 0.55em 1.15em !important;
+              font-size: 1.1rem;
+              margin-top: 0.65em !important;
             }
           }
-          #join-office-hour {
-            margin-top: 1.0em !important;
-          }
+        }
+      }
 
-          .office-hour-banner {
-            margin-left: 2.0rem !important;
-            margin-right: 2.0rem !important;
-            padding: 0.85em 0.9em !important;
-            
-            .office-hour-title {
-              font-size: 1.25rem;
+      &.eighth {
+        .section-content-container {
+          .panel-content-container {
+            padding: 1.25em;
+
+            .office-hour-signup {
+              margin-bottom: 3.0em;
+              padding: 2.25rem !important;
+  
+              .office-hour-title {
+                font-size: 3.65rem;
+              }
+            }
+  
+            .data-updates-signup-title {
+              font-size: 2.65rem;
+              line-height: 1.0;
+              margin-bottom: 0.5em;
             }
 
-            .office-hour-content {
-              font-size: 0.85rem;
+            .lead {
+              font-size: 1.0rem;
               line-height: 1.3;
+            }
+  
+            .btn {
+              font-size: 1.0rem;
             }
           }
         }
@@ -1507,58 +1593,72 @@ body.homepage {
 
       &.seventh {
         .section-content-container {
-          padding-top: 5.5em;
+          .content-code-repository {
+            min-height: unset;
+          }
 
           .feature-image {
             img {
-              height: 9.5em !important;
-              width: auto;
-      
+              height: 16.0em !important;
+
               &:hover {
-                height: 9.5em !important;
+                height: 16.0em !important;
               }
             }
           }
   
           .content {
             h1 {
-              margin-bottom: 0 !important;
-
               .material-icons {
-                color: #56bf46;
-                font-size: 3.15rem !important;
-                margin-left: -6px;
+                font-size: 1.8em !important;
               }
             }
         
             p {
-              color: $stanford-black;
-              font-size: 0.75rem;
-              line-height: 1.3;
+              font-size: 1.0rem;
+              line-height: 1.2;
             }
 
             .btn {
-              font-size: 0.8rem;
-              margin-top: 0.15em !important;
-              padding: 0.5em 1.0em !important;
+              font-size: 0.85rem;
+              margin-top: 0.5em !important;
             }
           }
-          #join-office-hour {
-            margin-top: 0.85em !important;
-          }
+        }
+      }
 
-          .office-hour-banner {
-            margin-left: 2.0rem !important;
-            margin-right: 2.0rem !important;
-            padding: 0.85em 0.9em !important;
-            
-            .office-hour-title {
-              font-size: 1.10rem;
+      &.eighth {
+        .section-content-container {
+          .panel-content-container {
+            padding: 1.25em;
+
+            .office-hour-signup {
+              margin-bottom: 2.25em;
+              padding: 1.25rem 2.0rem 1.75rem 2.0rem !important;
+  
+              .office-hour-title {
+                font-size: 2.65rem;
+              }
             }
 
-            .office-hour-content {
-              font-size: 0.75rem;
-              line-height: 1.3;
+            .data-update-signup {
+              margin-bottom: 1.0em !important;
+            }
+  
+            .data-updates-signup-title {
+              font-size: 2.15rem;
+              line-height: 1.0;
+              margin-bottom: 0.35em;
+            }
+
+            .lead {
+              font-size: 0.9rem;
+              line-height: 1.25;
+              margin-bottom: 1.25rem !important;
+            }
+  
+            .btn {
+              font-size: 0.85rem;
             }
           }
         }
