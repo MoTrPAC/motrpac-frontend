@@ -7,7 +7,8 @@ import VisNetworkReactComponent from 'vis-network-react';
 import { useMediaQuery } from 'react-responsive';
 import YouTube from 'react-youtube';
 import Footer from '../Footer/footer';
-import PromoteBanner from './promoteBanner';
+import OpenOfficeHour from './openOfficeHour';
+import SubscribeDataUpdates from './components/subscribeDataUpdates';
 import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
 import IconSet from '../lib/iconSet';
 
@@ -301,7 +302,7 @@ export function LandingPage({ isAuthenticated, profile }) {
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container text-center">
             <div className="row content-code-repository d-flex align-items-center">
-              <div className="feature-image col-12 col-md-5 mx-auto">
+              <div className="feature-image col-12 col-md-6 mx-auto">
                 <img
                   src={LayerRunner}
                   className="img-fluid data-layer-runner"
@@ -309,7 +310,7 @@ export function LandingPage({ isAuthenticated, profile }) {
                   loading="lazy"
                 />
               </div>
-              <div className="content col-12 col-md-7">
+              <div className="content col-12 col-md-6">
                 <h1>
                   <span className="material-icons">terminal</span>
                 </h1>
@@ -327,13 +328,20 @@ export function LandingPage({ isAuthenticated, profile }) {
                 </Link>
               </div>
             </div>
-            <div className="row mt-4" id="join-office-hour">
-              <PromoteBanner />
-            </div>
           </div>
         </div>
-        <div className="w-100 homepage-footer-container">
-          <Footer />
+      </section>
+      <section className="eighth">
+        <div className="w-100 h-100">
+          <div className="section-content-container container text-center d-flex align-items-center">
+            <div className="panel-content-container">
+              <OpenOfficeHour />
+              <SubscribeDataUpdates />
+            </div>
+          </div>
+          <div className="w-100 homepage-footer-container">
+            <Footer />
+          </div>
         </div>
       </section>
     </div>
