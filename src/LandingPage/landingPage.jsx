@@ -5,7 +5,7 @@ import { Redirect, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import VisNetworkReactComponent from 'vis-network-react';
 import { useMediaQuery } from 'react-responsive';
-import YouTube from 'react-youtube';
+import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import Footer from '../Footer/footer';
 import OpenOfficeHour from './openOfficeHour';
 import SubscribeDataUpdates from './components/subscribeDataUpdates';
@@ -104,22 +104,6 @@ export function LandingPage({ isAuthenticated, profile }) {
       setBackgroundVideoLoaded(true);
     };
   }
-
-  // youtube video player configuration
-  const onPlayerReady = (event) => {
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo();
-  };
-
-  const opts = {
-    height: '390',
-    width: '640',
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 0,
-      cc_load_policy: 1,
-    },
-  };
 
   return (
     <div className="row marketing content-container">
@@ -276,17 +260,15 @@ export function LandingPage({ isAuthenticated, profile }) {
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container text-center">
             <div
-              className="embedContainer embed-responsive embed-responsive-16by9 mt-lg-4"
+              className="embedContainer embed-responsive mt-lg-4"
               id="youtube-tutorial-video-container"
             >
-              <YouTube
-                videoId="3zHnzUMo_vw"
-                opts={opts}
-                onReady={onPlayerReady}
-                loading="lazy"
+              <LiteYouTubeEmbed
+                id="3zHnzUMo_vw"
+                params="autoplay=0&cc_load_policy=1"
+                poster="maxresdefault"
                 title="Data Hub Tutorial Video"
-                className="embed-youtube-video-container"
-                iframeClassName="embed-responsive-item border border-dark"
+                iframeClass="embed-responsive-item border border-dark"
               />
             </div>
             <div className="container text-center mt-4">
