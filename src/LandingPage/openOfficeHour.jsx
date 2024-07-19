@@ -2,18 +2,22 @@ import React from 'react';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
 // Function to render landing page announcement
-function PromoteBanner() {
+function OpenOfficeHour() {
   return (
-    <div className="office-hour-banner border w-100 px-3 py-4 mb-4">
-      <h3 className="office-hour-title">Join Us</h3>
-      <div className="office-hour-content mb-3">
-        The Bioinformatics Center of MoTrPAC will be hosting the next virtual
-        Office Hour on {process.env.REACT_APP_OFFICE_HOUR_DAY}{' '}
-        {process.env.REACT_APP_OFFICE_HOUR_DATE} at 11:00 am Pacific Time.
+    <div className="office-hour-signup col-12 border p-5" id="join-office-hour">
+      <h1 className="office-hour-title display-2">Join Us</h1>
+      <div className="office-hour-content mb-4 lead">
+        Come join us at the next virtual office hour on
+        {' '}
+        {process.env.REACT_APP_OFFICE_HOUR_DAY}
+        {' '}
+        {process.env.REACT_APP_OFFICE_HOUR_DATE}
+        {' '}
+        at 11:00 am Pacific Time and learn more about our data.
       </div>
       <a
         href={process.env.REACT_APP_OFFICE_HOUR_SIGNUP_URL}
-        className="btn btn-primary"
+        className="btn btn-dark btn-lg"
         role="button"
         target="_blank"
         rel="noopener noreferrer"
@@ -31,4 +35,4 @@ function PromoteBanner() {
   );
 }
 
-export default PromoteBanner;
+export default OpenOfficeHour;

@@ -5,9 +5,10 @@ import { Redirect, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import VisNetworkReactComponent from 'vis-network-react';
 import { useMediaQuery } from 'react-responsive';
-import YouTube from 'react-youtube';
+import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import Footer from '../Footer/footer';
-import PromoteBanner from './promoteBanner';
+import OpenOfficeHour from './openOfficeHour';
+import SubscribeDataUpdates from './components/subscribeDataUpdates';
 import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
 import IconSet from '../lib/iconSet';
 
@@ -29,6 +30,14 @@ function AnimatedDownArrow() {
   return (
     <div className="animated-down-arrow pb-4 w-100">
       <img src={IconSet.ArrowDownAnimated} alt="down-arrow" />
+    </div>
+  );
+}
+
+function AnimatedDownArrowDark() {
+  return (
+    <div className="animated-down-arrow pb-4 w-100">
+      <img src={IconSet.ArrowDownAnimatedDark} alt="down-arrow" />
     </div>
   );
 }
@@ -103,22 +112,6 @@ export function LandingPage({ isAuthenticated, profile }) {
       setBackgroundVideoLoaded(true);
     };
   }
-
-  // youtube video player configuration
-  const onPlayerReady = (event) => {
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo();
-  };
-
-  const opts = {
-    height: '390',
-    width: '640',
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 0,
-      cc_load_policy: 1,
-    },
-  };
 
   return (
     <div className="row marketing content-container">
@@ -275,17 +268,15 @@ export function LandingPage({ isAuthenticated, profile }) {
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container text-center">
             <div
-              className="embedContainer embed-responsive embed-responsive-16by9 mt-lg-4"
+              className="embedContainer embed-responsive mt-lg-4"
               id="youtube-tutorial-video-container"
             >
-              <YouTube
-                videoId="3zHnzUMo_vw"
-                opts={opts}
-                onReady={onPlayerReady}
-                loading="lazy"
+              <LiteYouTubeEmbed
+                id="3zHnzUMo_vw"
+                params="autoplay=0&cc_load_policy=1"
+                poster="maxresdefault"
                 title="Data Hub Tutorial Video"
-                className="embed-youtube-video-container"
-                iframeClassName="embed-responsive-item border border-dark"
+                iframeClass="embed-responsive-item border border-dark"
               />
             </div>
             <div className="container text-center mt-4">
@@ -301,7 +292,7 @@ export function LandingPage({ isAuthenticated, profile }) {
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container text-center">
             <div className="row content-code-repository d-flex align-items-center">
-              <div className="feature-image col-12 col-md-5 mx-auto">
+              <div className="feature-image col-12 col-md-6 mx-auto">
                 <img
                   src={LayerRunner}
                   className="img-fluid data-layer-runner"
@@ -309,14 +300,14 @@ export function LandingPage({ isAuthenticated, profile }) {
                   loading="lazy"
                 />
               </div>
-              <div className="content col-12 col-md-7">
+              <div className="content col-12 col-md-6">
                 <h1>
                   <span className="material-icons">terminal</span>
                 </h1>
                 <p>
-                  Deep dive into our source codes integral to the MoTrPAC 6
+                  Deep dive into the source code essential to the MoTrPAC 6
                   month old rats performing endurance training exercise study,
-                  from ingestion to QC and from processing to analysis.
+                  from ingestion to QC, and from processing to analysis.
                 </p>
                 <Link
                   to="/code-repositories"
@@ -327,13 +318,21 @@ export function LandingPage({ isAuthenticated, profile }) {
                 </Link>
               </div>
             </div>
-            <div className="row mt-4" id="join-office-hour">
-              <PromoteBanner />
-            </div>
           </div>
         </div>
-        <div className="w-100 homepage-footer-container">
-          <Footer />
+        <AnimatedDownArrowDark />
+      </section>
+      <section className="eighth">
+        <div className="w-100 h-100">
+          <div className="section-content-container container text-center d-flex align-items-center">
+            <div className="panel-content-container">
+              <OpenOfficeHour />
+              <SubscribeDataUpdates />
+            </div>
+          </div>
+          <div className="w-100 homepage-footer-container">
+            <Footer />
+          </div>
         </div>
       </section>
     </div>

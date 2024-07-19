@@ -529,11 +529,15 @@ function PreCAWG() {
         analysis on these data, complete the steps below:
         <ol>
           <li>
-            Ensure you are listed on the required IRB for your institution.
+            <strong>Ensure you are listed on the required IRB for your institution.</strong>
           </li>
           <li>
-            Become listed as a MoTrPAC member on the main site with your
-            institutional email: Reach out to{' '}
+            <strong>
+              Become listed as a MoTrPAC member on the main site with your institutional email.
+            </strong>
+            {' '}
+            Reach out to
+            {' '}
             <a href="mailto:janelu@ufl.edu" target="_blank" rel="noreferrer">
               janelu@ufl.edu
             </a>

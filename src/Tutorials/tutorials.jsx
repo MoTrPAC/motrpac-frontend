@@ -1,25 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import YouTube from 'react-youtube';
+import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import PageTitle from '../lib/ui/pageTitle';
 
 function Tutorials() {
-  const onPlayerReady = (event) => {
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo();
-  };
-
-  const opts = {
-    height: '390',
-    width: '640',
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 0,
-      cc_load_policy: 1,
-    },
-  };
-
   return (
     <div className="tutorialsPage px-3 px-md-4 mb-3 container">
       <Helmet>
@@ -40,16 +25,15 @@ function Tutorials() {
             </p>
           </div>
           <div
-            className="embedContainer embed-responsive embed-responsive-16by9 mx-3"
+            className="embedContainer embed-responsive mx-3"
             id="tutorial-video-iframe-container"
           >
-            <YouTube
-              videoId="3zHnzUMo_vw"
-              opts={opts}
-              onReady={onPlayerReady}
+            <LiteYouTubeEmbed
+              id="3zHnzUMo_vw"
+              params="autoplay=0&cc_load_policy=1"
+              poster="maxresdefault"
               title="Data Hub Tutorial Video"
-              className="embed-video-iframe-container"
-              iframeClassName="embed-responsive-item border border-dark"
+              iframeClass="embed-responsive-item border border-dark"
             />
           </div>
           <div className="col-12 mt-5">
@@ -59,16 +43,15 @@ function Tutorials() {
             </p>
           </div>
           <div
-            className="embedContainer embed-responsive embed-responsive-16by9 mx-3 mb-4"
+            className="embedContainer embed-responsive mx-3 mb-4"
             id="tutorial-video-iframe-container"
           >
-            <YouTube
-              videoId="G5zZ8r1lfvo"
-              opts={opts}
-              onReady={onPlayerReady}
-              title="Data Hub Tutorial Video"
-              className="embed-video-iframe-container"
-              iframeClassName="embed-responsive-item border border-dark"
+            <LiteYouTubeEmbed
+              id="G5zZ8r1lfvo"
+              params="autoplay=0&cc_load_policy=1"
+              poster="maxresdefault"
+              title="Data Hub Tutorial Video (Spanish)"
+              iframeClass="embed-responsive-item border border-dark"
             />
           </div>
         </div>
