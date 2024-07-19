@@ -34,6 +34,14 @@ function AnimatedDownArrow() {
   );
 }
 
+function AnimatedDownArrowDark() {
+  return (
+    <div className="animated-down-arrow pb-4 w-100">
+      <img src={IconSet.ArrowDownAnimatedDark} alt="down-arrow" />
+    </div>
+  );
+}
+
 // configs for visjs network visualization rendering
 const options = {
   height: '100%',
@@ -297,9 +305,9 @@ export function LandingPage({ isAuthenticated, profile }) {
                   <span className="material-icons">terminal</span>
                 </h1>
                 <p>
-                  Deep dive into our source codes integral to the MoTrPAC 6
+                  Deep dive into the source code essential to the MoTrPAC 6
                   month old rats performing endurance training exercise study,
-                  from ingestion to QC and from processing to analysis.
+                  from ingestion to QC, and from processing to analysis.
                 </p>
                 <Link
                   to="/code-repositories"
@@ -312,6 +320,7 @@ export function LandingPage({ isAuthenticated, profile }) {
             </div>
           </div>
         </div>
+        <AnimatedDownArrowDark />
       </section>
       <section className="eighth">
         <div className="w-100 h-100">
