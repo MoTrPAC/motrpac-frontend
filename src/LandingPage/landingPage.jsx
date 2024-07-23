@@ -1,33 +1,44 @@
-import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
+import React, { useCallback, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useMediaQuery } from 'react-responsive';
+import PropTypes from 'prop-types';
 import { Link, Navigate } from 'react-router-dom';
-import YouTube from 'react-youtube';
+import { Helmet } from 'react-helmet';
+import { useMediaQuery } from 'react-responsive';
+import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 
-// import network figure 4e visualization dataset
+import OpenOfficeHour from './openOfficeHour';
 import Footer from '../Footer/footer';
-import IconSet from '../lib/iconSet';
-import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
+import SubscribeDataUpdates from './components/subscribeDataUpdates';
 import BackgroundVideo from './components/backgroundVideo';
+// import network figure 4e visualization dataset
 import Figure1C from './components/figure1c';
 import VisNetworkReactComponent from './components/visNetwork';
-import PromoteBanner from './promoteBanner';
+import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
+import IconSet from '../lib/iconSet';
+
+import LogoMoTrPACWhite from '../assets/LandingPageGraphics/logo-motrpac-white.png';
+import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
+// import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.svg';
+import NatureIssueCover from '../assets/LandingPageGraphics/nature_issue_cover.jpg';
+// import network figure 4e visualization dataset
+import landscapeFigure4eNetworkData from '../data/landscape_figure_4e';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import '@styles/landingPage.scss'
-
-import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
-import LogoMoTrPACWhite from '../assets/LandingPageGraphics/logo-motrpac-white.png';
-import NatureIssueCover from '../assets/LandingPageGraphics/nature_issue_cover.jpg';
-import landscapeFigure4eNetworkData from '../data/landscape_figure_4e';
 
 // animated down arrow icon
 function AnimatedDownArrow() {
   return (
     <div className="animated-down-arrow pb-4 w-100">
       <img src={IconSet.ArrowDownAnimated} alt="down-arrow" />
+    </div>
+  );
+}
+
+function AnimatedDownArrowDark() {
+  return (
+    <div className="animated-down-arrow pb-4 w-100">
+      <img src={IconSet.ArrowDownAnimatedDark} alt="down-arrow" />
     </div>
   );
 }
@@ -102,22 +113,6 @@ export function LandingPage({ isAuthenticated, profile }) {
       setBackgroundVideoLoaded(true);
     };
   }
-
-  // youtube video player configuration
-  const onPlayerReady = (event) => {
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo();
-  };
-
-  const opts = {
-    height: '390',
-    width: '640',
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 0,
-      cc_load_policy: 1,
-    },
-  };
 
   return (
     <div className="row marketing content-container">
@@ -274,17 +269,15 @@ export function LandingPage({ isAuthenticated, profile }) {
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container text-center">
             <div
-              className="embedContainer embed-responsive embed-responsive-16by9 mt-lg-4"
+              className="embedContainer embed-responsive mt-lg-4"
               id="youtube-tutorial-video-container"
             >
-              <YouTube
-                videoId="3zHnzUMo_vw"
-                opts={opts}
-                onReady={onPlayerReady}
-                loading="lazy"
+              <LiteYouTubeEmbed
+                id="3zHnzUMo_vw"
+                params="autoplay=0&cc_load_policy=1"
+                poster="maxresdefault"
                 title="Data Hub Tutorial Video"
-                className="embed-youtube-video-container"
-                iframeClassName="embed-responsive-item border border-dark"
+                iframeClass="embed-responsive-item border border-dark"
               />
             </div>
             <div className="container text-center mt-4">
@@ -300,7 +293,7 @@ export function LandingPage({ isAuthenticated, profile }) {
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container text-center">
             <div className="row content-code-repository d-flex align-items-center">
-              <div className="feature-image col-12 col-md-5 mx-auto">
+              <div className="feature-image col-12 col-md-6 mx-auto">
                 <img
                   src={LayerRunner}
                   className="img-fluid data-layer-runner"
@@ -308,14 +301,14 @@ export function LandingPage({ isAuthenticated, profile }) {
                   loading="lazy"
                 />
               </div>
-              <div className="content col-12 col-md-7">
+              <div className="content col-12 col-md-6">
                 <h1>
                   <span className="material-icons">terminal</span>
                 </h1>
                 <p>
-                  Deep dive into our source codes integral to the MoTrPAC 6
+                  Deep dive into the source code essential to the MoTrPAC 6
                   month old rats performing endurance training exercise study,
-                  from ingestion to QC and from processing to analysis.
+                  from ingestion to QC, and from processing to analysis.
                 </p>
                 <Link
                   to="/code-repositories"
@@ -326,13 +319,21 @@ export function LandingPage({ isAuthenticated, profile }) {
                 </Link>
               </div>
             </div>
-            <div className="row mt-4" id="join-office-hour">
-              <PromoteBanner />
-            </div>
           </div>
         </div>
-        <div className="w-100 homepage-footer-container">
-          <Footer />
+        <AnimatedDownArrowDark />
+      </section>
+      <section className="eighth">
+        <div className="w-100 h-100">
+          <div className="section-content-container container text-center d-flex align-items-center">
+            <div className="panel-content-container">
+              <OpenOfficeHour />
+              <SubscribeDataUpdates />
+            </div>
+          </div>
+          <div className="w-100 homepage-footer-container">
+            <Footer />
+          </div>
         </div>
       </section>
     </div>

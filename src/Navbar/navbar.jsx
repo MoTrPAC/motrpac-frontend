@@ -276,7 +276,7 @@ export function Navbar({
                   </Link>
                   {!userType || (userType && userType !== 'internal') ? (
                     <a
-                      href="https://docs.google.com/forms/d/e/1FAIpQLScjGxwsHDDsE4P4j1VNvIUR73cEyh9SJrofxuQyHqucl0GhBg/viewform"
+                      href={import.meta.env.REACT_APP_DATA_UPDATES_SIGNUP_URL}
                       className="dropdown-item"
                       target="_blank"
                       rel="noreferrer"

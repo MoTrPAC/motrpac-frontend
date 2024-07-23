@@ -3775,12 +3775,12 @@ __metadata:
     react-error-overlay: "npm:^6.0.11"
     react-google-recaptcha: "npm:^3.1.0"
     react-helmet: "npm:^6.1.0"
+    react-lite-youtube-embed: "npm:^2.4.0"
     react-redux: "npm:8.0.5"
     react-responsive: "npm:^10.0.0"
     react-router-dom: "npm:^6.22.3"
     react-table: "npm:^7.7.0"
     react-tooltip: "npm:^5.11.2"
-    react-youtube: "npm:^10.1.0"
     redux: "npm:^4.0.1"
     redux-thunk: "npm:^2.3.0"
     rollup-plugin-visualizer: "npm:^5.12.0"
@@ -5494,7 +5494,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:2.6.9, debug@npm:^2.6.6":
+"debug@npm:2.6.9":
   version: 2.6.9
   resolution: "debug@npm:2.6.9"
   dependencies:
@@ -6632,7 +6632,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-deep-equal@npm:3.1.3, fast-deep-equal@npm:^3.1.1, fast-deep-equal@npm:^3.1.3":
+"fast-deep-equal@npm:^3.1.1, fast-deep-equal@npm:^3.1.3":
   version: 3.1.3
   resolution: "fast-deep-equal@npm:3.1.3"
   checksum: 10c0/40dedc862eb8992c54579c66d914635afbec43350afbbe991235fdcb4e3a8d5af1b23ae7e79bef7d4882d0ecee06c3197488026998fb19f72dc95acff1d1b1d0
@@ -8467,13 +8467,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"load-script@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "load-script@npm:1.0.0"
-  checksum: 10c0/9919c777fe83f8a3a917f65c9c3ab186ad8b194248c57f413ef6e610194abc8484d123a6838d77ab33e5fa1a05a676b5dfe779c38cfe602bdd27c239423d0acd
-  languageName: node
-  linkType: hard
-
 "local-pkg@npm:^0.5.0":
   version: 0.5.0
   resolution: "local-pkg@npm:0.5.0"
@@ -10230,6 +10223,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-lite-youtube-embed@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "react-lite-youtube-embed@npm:2.4.0"
+  peerDependencies:
+    react: ">=18.2.0"
+    react-dom: ">=18.2.0"
+  checksum: 10c0/a6820c3950d45922c4d2a19c8e4b6e97c65e622fec3ef7e88ea6600a89c24a70f0658a88c4a227a919a0b0dff744656e378e9c033ad56cfcb7c590e7a943cffe
+  languageName: node
+  linkType: hard
+
 "react-overlays@npm:^5.2.0":
   version: 5.2.1
   resolution: "react-overlays@npm:5.2.1"
@@ -10387,19 +10390,6 @@ __metadata:
     react: ">=16.14.0"
     react-dom: ">=16.14.0"
   checksum: 10c0/4b105dcef7b3d166e359b97fdbbef9c622de3c91e3c9387f959495c66d4caefb25e38cd75e0258dac104c3814c0ae74b97807382d36f45dfae6200645bafd3a3
-  languageName: node
-  linkType: hard
-
-"react-youtube@npm:^10.1.0":
-  version: 10.1.0
-  resolution: "react-youtube@npm:10.1.0"
-  dependencies:
-    fast-deep-equal: "npm:3.1.3"
-    prop-types: "npm:15.8.1"
-    youtube-player: "npm:5.5.2"
-  peerDependencies:
-    react: ">=0.14.1"
-  checksum: 10c0/a5302e89c45c647b59b5088c328184a0415601cf591e1146a861780bff97cc9163bdb286221f3dd69c3b1d340776fd556d8c86713681db553c356a55f4a77433
   languageName: node
   linkType: hard
 
@@ -11184,13 +11174,6 @@ __metadata:
   dependencies:
     is-arrayish: "npm:^0.3.1"
   checksum: 10c0/df5e4662a8c750bdba69af4e8263c5d96fe4cd0f9fe4bdfa3cbdeb45d2e869dff640beaaeb1ef0e99db4d8d2ec92f85508c269f50c972174851bc1ae5bd64308
-  languageName: node
-  linkType: hard
-
-"sister@npm:^3.0.0":
-  version: 3.0.2
-  resolution: "sister@npm:3.0.2"
-  checksum: 10c0/47260b4fd0ccf843e1c1a8a0ed1006dd659cbfe3d165c59d9814faa7ae2773dc3e0ca57fced900a453315ee6ae9def06c394a9707423846e31f96095d39967df
   languageName: node
   linkType: hard
 
@@ -13258,16 +13241,5 @@ __metadata:
   version: 1.1.1
   resolution: "yocto-queue@npm:1.1.1"
   checksum: 10c0/cb287fe5e6acfa82690acb43c283de34e945c571a78a939774f6eaba7c285bacdf6c90fbc16ce530060863984c906d2b4c6ceb069c94d1e0a06d5f2b458e2a92
-  languageName: node
-  linkType: hard
-
-"youtube-player@npm:5.5.2":
-  version: 5.5.2
-  resolution: "youtube-player@npm:5.5.2"
-  dependencies:
-    debug: "npm:^2.6.6"
-    load-script: "npm:^1.0.0"
-    sister: "npm:^3.0.0"
-  checksum: 10c0/c098f276d3172f74bfa0b7ab9d5c0740da1ea028173405d3c0b8dc48b998436ce51f2b1587b113e54de962c3098ffc5bfb2152fe89cc63f7906bcf18062dc39a
   languageName: node
   linkType: hard
