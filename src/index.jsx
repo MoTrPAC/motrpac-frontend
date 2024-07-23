@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRoot } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { install } from 'ga-gtag';
 import trackingId from './GoogleAnalytics/googleAnalytics';
 import App from './App/App';
