@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '@styles/footer.scss'
+
 /**
  * Renders the global footer.
  *

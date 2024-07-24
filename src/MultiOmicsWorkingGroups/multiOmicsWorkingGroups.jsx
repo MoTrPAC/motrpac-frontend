@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import BicUpdates from './bicUpdates';
 import PreCAWG from './preCAWG';
 import DawgPAC from './dawgPAC';
+
+import '@styles/multiOmicsWorkingGroups.scss';
 
 function MultiOmicsWorkingGroups() {
   // get states from redux store
@@ -15,7 +17,7 @@ function MultiOmicsWorkingGroups() {
     userProfile.user_metadata && userProfile.user_metadata.userType;
 
   if (userType !== 'internal') {
-    return <Redirect to="/search" />;
+    return <Navigate to="/search" />;
   }
 
   return (

@@ -1,22 +1,23 @@
-import React from 'react';
 import { mount } from 'enzyme';
-import { Router } from 'react-router-dom';
+import React from 'react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import QuickSearchBox from '../quickSearchBox';
-import History from '../../App/history';
 
 const quickSearchActions = {
-  handleQuickSearchInputChange: jest.fn(),
-  handleQuickSearchRequestSubmit: jest.fn(),
-  resetQuickSearch: jest.fn(),
-  getSearchForm: jest.fn(),
-  resetAdvSearch: jest.fn(),
+  handleQuickSearchInputChange: vi.fn(),
+  handleQuickSearchRequestSubmit: vi.fn(),
+  resetQuickSearch: vi.fn(),
+  getSearchForm: vi.fn(),
+  resetAdvSearch: vi.fn(),
 };
 
-const mountQuickSearchBox = mount((
-  <Router history={History}>
-    <QuickSearchBox {...quickSearchActions} />
-  </Router>
-));
+const mountQuickSearchBox = mount(
+  <MemoryRouter>
+    <Routes>
+      <Route path={'/'} element={<QuickSearchBox {...quickSearchActions} />} />
+    </Routes>
+  </MemoryRouter>,
+);
 
 describe('Quick Search Box', () => {
   test('Renders required componenents without crashing', () => {
@@ -24,13 +25,19 @@ describe('Quick Search Box', () => {
   });
 
   test('Changing input value invokes handleQuickSearchInputChange()', () => {
-    mountQuickSearchBox.find('.quick-search-box').simulate('change', { target: { value: 'liver' } });
-    expect(quickSearchActions.handleQuickSearchInputChange.mock.calls.length).toBe(1);
+    mountQuickSearchBox
+      .find('.quick-search-box')
+      .simulate('change', { target: { value: 'liver' } });
+    expect(
+      quickSearchActions.handleQuickSearchInputChange.mock.calls.length,
+    ).toBe(1);
   });
 
   test('Submitting form invokes handleQuickSearchRequestSubmit()', () => {
     mountQuickSearchBox.find('.quick-search-box-form').simulate('submit');
-    expect(quickSearchActions.handleQuickSearchRequestSubmit.mock.calls.length).toBe(1);
+    expect(
+      quickSearchActions.handleQuickSearchRequestSubmit.mock.calls.length,
+    ).toBe(1);
   });
 
   test('Clicking Advanced link invokes resetQuickSearch() and getSearchForm()', () => {

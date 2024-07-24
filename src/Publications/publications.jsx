@@ -10,6 +10,8 @@ import VenuPaper from '../assets/publications/venu_paper.gif';
 import NikPaper from '../assets/publications/nik_paper.gif';
 import MarkerPaper from '../assets/publications/marker_paper.gif';
 
+import '@styles/publications.scss';
+
 const landscapePublications = [
   {
     url: 'https://www.nature.com/articles/s41586-023-06877-w',

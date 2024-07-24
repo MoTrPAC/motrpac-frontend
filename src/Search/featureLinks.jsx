@@ -11,9 +11,9 @@ import dayjs from 'dayjs';
 function FeatureLinks({
   handleDataFetch,
   handleQCDataFetch,
-  allFiles,
-  lastModified,
-  userType,
+  allFiles = [],
+  lastModified ='',
+  userType = '',
 }) {
   const handleDataObjectFetch = () => {
     if (allFiles.length === 0) {
@@ -158,12 +158,6 @@ FeatureLinks.propTypes = {
   allFiles: PropTypes.arrayOf(PropTypes.shape({})),
   lastModified: PropTypes.string,
   userType: PropTypes.string,
-};
-
-FeatureLinks.defaultProps = {
-  allFiles: [],
-  lastModified: '',
-  userType: '',
 };
 
 export default FeatureLinks;

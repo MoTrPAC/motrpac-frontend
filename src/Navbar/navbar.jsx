@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
+import axios from 'axios';
+import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import dayjs from 'dayjs';
-import actions from '../Auth/authActions';
-import LoginButton from '../lib/loginButton';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
-import onVisibilityChange from '../lib/utils/pageVisibility';
+import actions from '../Auth/authActions';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
+import LoginButton from '../lib/loginButton';
+import onVisibilityChange from '../lib/utils/pageVisibility';
+
+import '@styles/navbar.scss';
 
 /**
  * Renders the global header nav bar.
@@ -22,15 +24,15 @@ import DataStatusActions from '../DataStatusPage/dataStatusActions';
  * @returns {Object} JSX representation of the global header nav bar.
  */
 export function Navbar({
-  isAuthenticated,
-  profile,
-  login,
-  logout,
-  handleDataFetch,
-  resetBrowseState,
-  handleQCDataFetch,
+  profile={},
+  isAuthenticated=false,
+  login=null,
+  logout=null,
+  handleDataFetch=null,
+  resetBrowseState=null,
+  handleQCDataFetch=null,
+  lastModified='',
   allFiles,
-  lastModified,
 }) {
   const location = useLocation();
   const currentPath = location.pathname;
@@ -141,15 +143,15 @@ export function Navbar({
   };
 
   const api =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
-      : process.env.REACT_APP_API_SERVICE_ADDRESS;
-  const endpointRegUser = process.env.REACT_APP_USER_REGISTRATION_ENDPOINT;
-  const endpointSendEmail = process.env.REACT_APP_SEND_EMAIL_ENDPOINT;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+      : import.meta.env.VITE_API_SERVICE_ADDRESS;
+  const endpointRegUser = import.meta.env.VITE_USER_REGISTRATION_ENDPOINT;
+  const endpointSendEmail = import.meta.env.VITE_SEND_EMAIL_ENDPOINT;
   const key =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_KEY_DEV
-      : process.env.REACT_APP_API_SERVICE_KEY;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+      : import.meta.env.VITE_API_SERVICE_KEY;
 
   // Send GET request to endpoint to 'warm up' CF backend service
   function checkServiceStatus(e) {
@@ -274,7 +276,7 @@ export function Navbar({
                   </Link>
                   {!userType || (userType && userType !== 'internal') ? (
                     <a
-                      href={process.env.REACT_APP_DATA_UPDATES_SIGNUP_URL}
+                      href={import.meta.env.REACT_APP_DATA_UPDATES_SIGNUP_URL}
                       className="dropdown-item"
                       target="_blank"
                       rel="noreferrer"
@@ -423,17 +425,6 @@ Navbar.propTypes = {
   resetBrowseState: PropTypes.func,
   handleQCDataFetch: PropTypes.func,
   lastModified: PropTypes.string,
-};
-
-Navbar.defaultProps = {
-  profile: {},
-  isAuthenticated: false,
-  login: null,
-  logout: null,
-  handleDataFetch: null,
-  resetBrowseState: null,
-  handleQCDataFetch: null,
-  lastModified: '',
 };
 
 const mapStateToProps = (state) => ({

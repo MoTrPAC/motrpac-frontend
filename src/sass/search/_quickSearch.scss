@@ -1,9 +1,12 @@
+@use '../colors';
+@use '../bootstrapCustom';
+
 .quick-search-box-container {
   margin-right: 0.5rem;
   position: relative;
 
   .quick-search-box-icon {
-    color: lighten($gray, 10%);
+    color: lighten(colors.$gray, 10%);
     position: absolute;
     top: 0.5rem;
     left: 0.55rem;
@@ -43,7 +46,7 @@
 /* responsive styling */
 
 /* Large devices (desktops, less than 1200px) */
-@include media-breakpoint-down(lg) {
+@include bootstrapCustom.media-breakpoint-down(lg) {
   .quick-search-box-container {
     display: none !important;
   }

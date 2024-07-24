@@ -2,9 +2,9 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function (app) {
   app.use(
-    process.env.REACT_APP_ES_ENDPOINT,
+    import.meta.env.VITE_ES_ENDPOINT,
     createProxyMiddleware({
-      target: process.env.REACT_APP_ES_PROXY_HOST,
+      target: import.meta.env.VITE_ES_PROXY_HOST,
       changeOrigin: true,
     })
   );

@@ -4,13 +4,15 @@ import figureRat from '../../assets/figures/rat-figure-pass1b.svg';
 import FigureAssayLegends from './figureAssayLegends';
 import HeatmapModal from './heatmapModal';
 
+import '@styles/differentialExpression.scss';
+
 /**
  * Renders the data exploration page in both
  * unauthenticated and authenticated states.
  *
  * @returns {Object} JSX representation of the data exploration page.
  */
-function DifferenrialExpression() {
+function DifferentialExpression() {
   const [tissue, setTissue] = useState();
   const [assay, setAssay] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -147,4 +149,4 @@ function DifferenrialExpression() {
   );
 }
 
-export default DifferenrialExpression;
+export default DifferentialExpression;

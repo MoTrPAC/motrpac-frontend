@@ -53,7 +53,7 @@ const proteomics1A1CIndependentAnalyses = [
   't70-white-adipose_prot-pr_1A1C-independent-analyses_report.html',
 ];
 
-function DawgPAC({ profile }) {
+function DawgPAC({ profile = {} }) {
   const [selectedReport, setSelectedReport] = useState(null);
   const [selectedReportLabel, setSelectedReportLabel] = useState(null);
 
@@ -259,10 +259,6 @@ DawgPAC.propTypes = {
     userid: PropTypes.string,
     user_metadata: PropTypes.object,
   }),
-};
-
-DawgPAC.defaultProps = {
-  profile: {},
 };
 
 export default DawgPAC;

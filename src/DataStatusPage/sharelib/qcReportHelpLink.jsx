@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function QcReportHelpLink({ qcReportViewChange }) {
+function QcReportHelpLink({ qcReportViewChange = null }) {
   return (
     <div className="help-page-link d-flex align-items-center mb-4">
       <span className="material-icons">help_center</span>
@@ -18,10 +18,6 @@ function QcReportHelpLink({ qcReportViewChange }) {
 
 QcReportHelpLink.propTypes = {
   qcReportViewChange: PropTypes.func,
-};
-
-QcReportHelpLink.defaultProps = {
-  qcReportViewChange: null,
 };
 
 export default QcReportHelpLink;

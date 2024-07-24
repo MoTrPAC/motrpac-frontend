@@ -211,26 +211,26 @@ function useNull() {
   return null;
 }
 
-const bucket = process.env.REACT_APP_DATA_FILE_BUCKET;
+const bucket = import.meta.env.VITE_DATA_FILE_BUCKET;
 const api =
-  process.env.NODE_ENV !== 'production'
-    ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
-    : process.env.REACT_APP_API_SERVICE_ADDRESS;
-const endpoint = process.env.REACT_APP_SIGNED_URL_ENDPOINT;
-const fileDownloadEndpoint = process.env.REACT_APP_FILE_DOWNLOAD_ENDPOINT;
+  import.meta.env.DEV
+    ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+    : import.meta.env.VITE_API_SERVICE_ADDRESS;
+const endpoint = import.meta.env.VITE_SIGNED_URL_ENDPOINT;
+const fileDownloadEndpoint = import.meta.env.VITE_FILE_DOWNLOAD_ENDPOINT;
 const key =
-  process.env.NODE_ENV !== 'production'
-    ? process.env.REACT_APP_API_SERVICE_KEY_DEV
-    : process.env.REACT_APP_API_SERVICE_KEY;
+  import.meta.env.DEV
+    ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+    : import.meta.env.VITE_API_SERVICE_KEY;
 const searchHost =
-  process.env.NODE_ENV !== 'production'
-    ? process.env.REACT_APP_ES_PROXY_HOST_DEV
-    : process.env.REACT_APP_ES_PROXY_HOST;
-const fileSearchEndpoint = process.env.REACT_APP_FILE_SEARCH_ENDPOINT;
+  import.meta.env.DEV
+    ? import.meta.env.VITE_ES_PROXY_HOST_DEV
+    : import.meta.env.VITE_ES_PROXY_HOST;
+const fileSearchEndpoint = import.meta.env.VITE_FILE_SEARCH_ENDPOINT;
 const accessToken =
-  process.env.NODE_ENV !== 'production'
-    ? process.env.REACT_APP_ES_ACCESS_TOKEN_DEV
-    : process.env.REACT_APP_ES_ACCESS_TOKEN;
+  import.meta.env.DEV
+    ? import.meta.env.VITE_ES_ACCESS_TOKEN_DEV
+    : import.meta.env.VITE_ES_ACCESS_TOKEN;
 
 const headersConfig = {
   headers: {

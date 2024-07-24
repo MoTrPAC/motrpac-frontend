@@ -1,48 +1,50 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Typeahead } from 'react-bootstrap-typeahead';
+import { Helmet } from 'react-helmet';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
-import { Typeahead } from 'react-bootstrap-typeahead';
-import { Helmet } from 'react-helmet';
-import PageTitle from '../lib/ui/pageTitle';
-import TimewiseResultsTable from './timewiseTable';
-import TrainingResultsTable from './trainingResultsTable';
-import SearchActions from './searchActions';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
-import DataStatusActions from '../DataStatusPage/dataStatusActions';
-import surveyModdalActions from '../UserSurvey/userSurveyActions';
-import SearchResultFilters from './deaSearchResultFilters';
-import AnimatedLoadingIcon from '../lib/ui/loading';
-import { searchParamsDefaultProps, searchParamsPropType } from './sharedlib';
-import FeatureLinks from './featureLinks';
-import IconSet from '../lib/iconSet';
-import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import { genes } from '../data/genes';
 import { metabolites } from '../data/metabolites';
+import DataStatusActions from '../DataStatusPage/dataStatusActions';
+import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
+import IconSet from '../lib/iconSet';
 import searchStructuredData from '../lib/searchStructuredData/search';
+import AnimatedLoadingIcon from '../lib/ui/loading';
+import PageTitle from '../lib/ui/pageTitle';
+import surveyModdalActions from '../UserSurvey/userSurveyActions';
 import UserSurveyModal from '../UserSurvey/userSurveyModal';
+import SearchResultFilters from './deaSearchResultFilters';
+import FeatureLinks from './featureLinks';
+import SearchActions from './searchActions';
+import { searchParamsDefaultProps, searchParamsPropType } from './sharedlib';
+import TimewiseResultsTable from './timewiseTable';
+import TrainingResultsTable from './trainingResultsTable';
+
+import '@styles/search/_all.scss';
 
 export function SearchPage({
-  profile,
-  searchResults,
-  scope,
-  searching,
-  searchError,
-  searchParams,
+  profile = {},
+  searchResults = {},
+  scope = 'all',
+  searching = false,
+  searchError = '',
+  searchParams = { ...searchParamsDefaultProps },
   changeParam,
   changeResultFilter,
   handleSearch,
   resetSearch,
-  downloadResults,
-  downloading,
-  downloadError,
+  downloadResults = {},
+  downloading = false,
+  downloadError = '',
   handleSearchDownload,
   handleDataFetch,
   handleQCDataFetch,
-  allFiles,
-  lastModified,
-  hasResultFilters,
+  allFiles = [],
+  lastModified = '',
+  hasResultFilters = {},
 }) {
   const [multiSelections, setMultiSelections] = useState([]);
   const inputRef = useRef(null);
@@ -579,9 +581,9 @@ function ResultsDownloadLink({ downloadPath, downloadError, profile }) {
   }
 
   const host =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_ES_PROXY_HOST_DEV
-      : process.env.REACT_APP_ES_PROXY_HOST;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_ES_PROXY_HOST_DEV
+      : import.meta.env.VITE_ES_PROXY_HOST;
 
   const resultDownloadFilePath =
     downloadPath &&
@@ -723,21 +725,6 @@ SearchPage.propTypes = {
     sex: PropTypes.object,
     tissue: PropTypes.object,
   }),
-};
-
-SearchPage.defaultProps = {
-  profile: {},
-  searchResults: {},
-  scope: 'all',
-  searching: false,
-  searchError: '',
-  searchParams: { ...searchParamsDefaultProps },
-  downloadResults: {},
-  downloading: false,
-  downloadError: '',
-  allFiles: [],
-  lastModified: '',
-  hasResultFilters: {},
 };
 
 const mapStateToProps = (state) => ({

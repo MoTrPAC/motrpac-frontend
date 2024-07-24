@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
-import dayjs from 'dayjs';
-import ReCAPTCHA from 'react-google-recaptcha';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import dayjs from 'dayjs';
+import PropTypes from 'prop-types';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { Helmet } from 'react-helmet';
-import RegistrationResponse from './response';
+import { connect } from 'react-redux';
+import { Link, Navigate } from 'react-router-dom';
 import IconSet from '../lib/iconSet';
+import StudyDocumentsTable from '../lib/studyDocumentsTable';
 import EmailLink from '../lib/ui/emailLink';
 import ExternalLink from '../lib/ui/externalLink';
-import StudyDocumentsTable from '../lib/studyDocumentsTable';
 import PageTitle from '../lib/ui/pageTitle';
+import RegistrationResponse from './response';
+
+import '@styles/dataAccessPage.scss';
 
 const defaultFormValues = {
   dataUseAgreement1: false,
@@ -38,7 +40,7 @@ const defaultFormValues = {
  *
  * @returns {object} JSX representation of the data access page
  */
-export function DataAccessPage({ isAuthenticated, profile }) {
+export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
   const [reCaptcha, setReCaptcha] = useState('');
   const [auth0Status, setAuth0Status] = useState();
   const [auth0Error, setAuth0Error] = useState();
@@ -48,15 +50,15 @@ export function DataAccessPage({ isAuthenticated, profile }) {
   const [requestPending, setRequestPending] = useState(false);
 
   const api =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
-      : process.env.REACT_APP_API_SERVICE_ADDRESS;
-  const endpoint = process.env.REACT_APP_USER_REGISTRATION_ENDPOINT;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+      : import.meta.env.VITE_API_SERVICE_ADDRESS;
+  const endpoint = import.meta.env.VITE_USER_REGISTRATION_ENDPOINT;
   const key =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_KEY_DEV
-      : process.env.REACT_APP_API_SERVICE_KEY;
-  const recaptchaKey = process.env.REACT_APP_reCAPTCHA_SITE_KEY;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+      : import.meta.env.VITE_API_SERVICE_KEY;
+  const recaptchaKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
   useEffect(() => {
     // validate REQUIRED form values by subscribing to changes
@@ -91,7 +93,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
 
   if (isAuthenticated && hasAccess) {
-    return <Redirect to="/releases" />;
+    return <Navigate to="/releases" />;
   }
 
   // Render registration response view if auth0 post request is successful
@@ -696,11 +698,6 @@ DataAccessPage.propTypes = {
     user_metadata: PropTypes.object,
   }),
   isAuthenticated: PropTypes.bool,
-};
-
-DataAccessPage.defaultProps = {
-  profile: {},
-  isAuthenticated: false,
 };
 
 const mapStateToProps = state => ({

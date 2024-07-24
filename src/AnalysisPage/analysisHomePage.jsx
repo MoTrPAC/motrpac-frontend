@@ -1,23 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import analysisTypes from '../lib/analysisTypes';
-import AnimalDataAnalysis from './animalDataAnalysis';
 import AuthContentContainer from '../lib/ui/authContentContainer';
 import AnalysisCard from './analysisCard';
+import AnimalDataAnalysis from './animalDataAnalysis';
+
+import '@styles/analysisPage.scss';
 
 // TODO: Add animation of transitions potentially with CSSTransitions package
 
 export function AnalysisHomePage({
-  match, // match object from react-router used to find human vs animal in route
+  match = {
+    params: {
+      subjectType: '',
+    },
+  }, // match object from react-router used to find human vs animal in route
   depth,
   currentAnalysis,
   currentAnalysisTitle,
   onPickAnalysis,
   goBack,
-  expanded,
-  profile,
+  expanded = false,
+  profile = {},
 }) {
   const subjectType = match.params.subjectType.slice(0).toLowerCase();
   const userType = profile.user_metadata && profile.user_metadata.userType;
@@ -27,7 +33,7 @@ export function AnalysisHomePage({
     !(subjectType === 'animal' || subjectType === 'human') ||
     userType === 'external'
   ) {
-    return <Redirect to="/dashboard" />;
+    return <Navigate to="/dashboard" />;
   }
 
   // Button to return 1 depth level
@@ -105,15 +111,6 @@ AnalysisHomePage.propTypes = {
   }),
 };
 
-AnalysisHomePage.defaultProps = {
-  match: {
-    params: {
-      subjectType: '',
-    },
-  },
-  expanded: false,
-  profile: {},
-};
 
 const mapStateToProps = (state) => ({
   depth: state.analysis.depth,

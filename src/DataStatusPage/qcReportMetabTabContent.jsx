@@ -15,7 +15,7 @@ import QcReportDataTable from './sharelib/qcReportDataTable';
  *
  * @returns {object} The data qc status table component
  */
-function QcReportMetabTabContent({ qcData, qcDataRaw, qcFiles }) {
+function QcReportMetabTabContent({ qcData, qcDataRaw, qcFiles =  'processed' }) {
   // Define table column headers
   const processedDataColumns = useMemo(
     () => metabProcessedDataTableColumns,
@@ -52,10 +52,6 @@ QcReportMetabTabContent.propTypes = {
     })
   ).isRequired,
   qcFiles: PropTypes.string,
-};
-
-QcReportMetabTabContent.defaultProps = {
-  qcFiles: 'processed',
 };
 
 export default QcReportMetabTabContent;

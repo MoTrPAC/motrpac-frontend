@@ -4,9 +4,9 @@ import BundleDataTypes from './bundleDataTypes';
 import BundleDownloadButton from './bundleDownloadButton';
 
 function OpenAccessBundleDownloads({
-  sets,
-  profile,
-  handleUserSurveyOpenOnBundledDownload,
+  sets = '',
+  profile =  {},
+  handleUserSurveyOpenOnBundledDownload = null,
 }) {
   const numOfSets = sets === 'all' ? BundleDataTypes.length : 2;
 
@@ -55,12 +55,6 @@ OpenAccessBundleDownloads.propTypes = {
     }),
   }),
   handleUserSurveyOpenOnBundledDownload: PropTypes.func,
-};
-
-OpenAccessBundleDownloads.defaultProps = {
-  sets: '',
-  profile: {},
-  handleUserSurveyOpenOnBundledDownload: null,
 };
 
 export default OpenAccessBundleDownloads;

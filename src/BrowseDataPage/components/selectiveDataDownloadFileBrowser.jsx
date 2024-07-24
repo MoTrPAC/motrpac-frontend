@@ -6,7 +6,7 @@ import BrowseDataFilter from '../browseDataFilter';
 import BootstrapSpinner from '../../lib/ui/spinner';
 
 function SelectiveDataDownloadFileBrowser({
-  profile,
+  profile = {},
   filteredFiles,
   fetching,
   activeFilters,
@@ -68,10 +68,6 @@ SelectiveDataDownloadFileBrowser.propTypes = {
   handleDownloadRequest: PropTypes.func.isRequired,
   downloadRequestResponse: PropTypes.string.isRequired,
   waitingForResponse: PropTypes.bool.isRequired,
-};
-
-SelectiveDataDownloadFileBrowser.defaultProps = {
-  profile: {},
 };
 
 export default SelectiveDataDownloadFileBrowser;

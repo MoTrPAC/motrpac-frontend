@@ -10,7 +10,9 @@ import PlotControls from '../Widgets/plotControls';
 import TableControls from '../Widgets/tableControls';
 import dashboardActions from './dashboardActions';
 
-const animalReleaseSamples = require('../data/animal_release_samples');
+import '@styles/dashboard.scss';
+
+import animalReleaseSamples from '../data/animal_release_samples';
 
 /**
  * Renders the Dashboard page.
@@ -31,13 +33,13 @@ const animalReleaseSamples = require('../data/animal_release_samples');
  * @returns {object} JSX representation of the Dashboard
  */
 export function Dashboard({
-  profile,
-  expanded,
-  release,
-  phase,
-  plot,
-  sort,
-  showQC,
+  profile= {},
+  expanded= false,
+  release= 'internal',
+  phase= 'pass1a_06',
+  plot= 'tissue_name',
+  sort= 'default',
+  showQC= true,
   toggleRelease,
   togglePhase,
   togglePlot,
@@ -230,16 +232,6 @@ Dashboard.propTypes = {
   togglePlot: PropTypes.func.isRequired,
   toggleSort: PropTypes.func.isRequired,
   toggleQC: PropTypes.func.isRequired,
-};
-
-Dashboard.defaultProps = {
-  profile: {},
-  expanded: false,
-  release: 'internal',
-  phase: 'pass1a_06',
-  plot: 'tissue_name',
-  sort: 'default',
-  showQC: true,
 };
 
 const mapStateToProps = (state) => ({

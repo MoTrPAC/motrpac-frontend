@@ -4,14 +4,16 @@ import { connect } from 'react-redux';
 import surveyModdalActions from './userSurveyActions';
 import BootstrapSpinner from '../lib/ui/spinner';
 
+import '@styles/userSurvey.scss';
+
 function UserSurveyModal({
-  userID,
-  dataContext,
-  showUserSurveyModal,
-  surveySubmitted,
-  waitingForResponse,
-  statusMsg,
-  errorMsg,
+  userID = '',
+  dataContext = '',
+  showUserSurveyModal = false,
+  surveySubmitted  = false,
+  waitingForResponse = false,
+  statusMsg = '',
+  errorMsg = '',
   handleModalClose,
   handleUserSurveySubmit,
 }) {
@@ -179,7 +181,7 @@ function UserSurveyModal({
                 <div className="detailed-user-survey-link mt-3 mb-2">
                   <span>
                     <a
-                      href={process.env.REACT_APP_QUALTRICS_SURVEY_URL}
+                      href={import.meta.env.VITE_QUALTRICS_SURVEY_URL}
                       className="text-info"
                       target="_blank"
                       rel="noreferrer"
@@ -246,16 +248,6 @@ UserSurveyModal.propTypes = {
   errorMsg: PropTypes.string,
   handleModalClose: PropTypes.func.isRequired,
   handleUserSurveySubmit: PropTypes.func.isRequired,
-};
-
-UserSurveyModal.defaultProps = {
-  userID: '',
-  dataContext: '',
-  showUserSurveyModal: false,
-  surveySubmitted: false,
-  waitingForResponse: false,
-  statusMsg: '',
-  errorMsg: '',
 };
 
 const mapStateToProps = (state) => ({

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
-function HtmlReportModal({ selectedReport, selectedReportLabel, profile }) {
+function HtmlReportModal({ selectedReport = null, selectedReportLabel = null, profile = {} }) {
   const iframeRef = useRef(null);
   const [iframeLoaded, setIframeLoaded] = useState(false);
 
@@ -89,12 +89,6 @@ HtmlReportModal.propTypes = {
     userid: PropTypes.string,
     user_metadata: PropTypes.object,
   }),
-};
-
-HtmlReportModal.defaultProps = {
-  selectedReport: null,
-  selectedReportLabel: null,
-  profile: {},
 };
 
 export default HtmlReportModal;

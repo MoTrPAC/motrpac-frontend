@@ -9,7 +9,7 @@ function OpenAccessFileDownloadModal({
   waitingForResponse,
   handleDownloadRequest,
   selectedFiles,
-  profile,
+  profile = {},
 }) {
   const [submitted, setSubmitted] = useState(false);
   const [name, setName] = useState(
@@ -216,10 +216,6 @@ OpenAccessFileDownloadModal.propTypes = {
       name: PropTypes.string,
     }),
   }),
-};
-
-OpenAccessFileDownloadModal.defaultProps = {
-  profile: {},
 };
 
 export default OpenAccessFileDownloadModal;

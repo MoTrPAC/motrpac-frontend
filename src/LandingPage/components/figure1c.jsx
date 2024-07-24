@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import * as d3 from 'd3';
 
-const dataset = require('./figure1c_data.json');
+import dataset from './figure1c_data.json';
 
-const figureTissueProps = require('./figureTissueProps.json');
+import figureTissueProps from './figureTissueProps.json';
 
 const tissueLabels = [
   'BLOOD',

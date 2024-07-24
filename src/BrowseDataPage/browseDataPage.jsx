@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import actions from './browseDataActions';
-import BrowseDataFilter from './browseDataFilter';
+import { connect } from 'react-redux';
 import dataDownloadStructuredData from '../lib/searchStructuredData/dataDownload';
 import UserSurveyModal from '../UserSurvey/userSurveyModal';
+import actions from './browseDataActions';
+import BrowseDataFilter from './browseDataFilter';
 import DataDownloadsMain from './components/dataDownloadsMain';
 
+import '@styles/browseData.scss';
+
 export function BrowseDataPage({
-  profile,
+  profile = {},
   filteredFiles,
   fetching,
   activeFilters,
@@ -18,10 +20,10 @@ export function BrowseDataPage({
   handleDownloadRequest,
   downloadRequestResponse,
   waitingForResponse,
-  showUserSurveyModal,
-  surveyId,
-  surveySubmitted,
-  downloadedData,
+  showUserSurveyModal = false,
+  surveyId = '',
+  surveySubmitted = false,
+  downloadedData = false,
 }) {
   useEffect(() => {
     if (showUserSurveyModal) {
@@ -83,14 +85,6 @@ BrowseDataPage.propTypes = {
   surveyId: PropTypes.string,
   surveySubmitted: PropTypes.bool,
   downloadedData: PropTypes.bool,
-};
-
-BrowseDataPage.defaultProps = {
-  profile: {},
-  showUserSurveyModal: false,
-  surveyId: '',
-  surveySubmitted: false,
-  downloadedData: false,
 };
 
 const mapStateToProps = (state) => ({

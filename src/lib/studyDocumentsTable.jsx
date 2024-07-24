@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import IconSet from './iconSet';
 import StudyDocuments from '../DataAccess/studyDocuments';
 
-function StudyDocumentsTable({ currentView }) {
+import '@styles/studyDocumentsTable.scss';
+
+function StudyDocumentsTable({ currentView = '' }) {
   const newArray = [...StudyDocuments];
   if (currentView === 'internal') {
     newArray.pop();
@@ -45,10 +47,6 @@ function StudyDocumentsTable({ currentView }) {
 
 StudyDocumentsTable.propTypes = {
   currentView: PropTypes.string,
-};
-
-StudyDocumentsTable.defaultProps = {
-  currentView: '',
 };
 
 export default StudyDocumentsTable;

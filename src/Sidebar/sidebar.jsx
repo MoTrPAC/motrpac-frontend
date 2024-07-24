@@ -1,10 +1,12 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
-import dayjs from 'dayjs';
 import axios from 'axios';
-import DataStatusActions from '../DataStatusPage/dataStatusActions';
+import dayjs from 'dayjs';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
+import DataStatusActions from '../DataStatusPage/dataStatusActions';
+
+import '@styles/navbar.scss';
 
 /**
  * Renders the gloabl sidebar.
@@ -53,14 +55,14 @@ export function Sidebar({
   };
 
   const api =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
-      : process.env.REACT_APP_API_SERVICE_ADDRESS;
-  const endpoint = process.env.REACT_APP_SIGNED_URL_ENDPOINT;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+      : import.meta.env.VITE_API_SERVICE_ADDRESS;
+  const endpoint = import.meta.env.VITE_SIGNED_URL_ENDPOINT;
   const key =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_KEY_DEV
-      : process.env.REACT_APP_API_SERVICE_KEY;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+      : import.meta.env.VITE_API_SERVICE_KEY;
 
   function checkServiceStatus() {
     return axios.get(`${api}${endpoint}/info?key=${key}`).then((res) => {

@@ -16,7 +16,7 @@ const tagColors = {
 };
 
 function BundleDatasets({
-  profile,
+  profile = {},
   bundleDatasets,
   surveySubmitted,
   downloadedData,
@@ -97,10 +97,6 @@ BundleDatasets.propTypes = {
   bundleDatasets: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   surveySubmitted: PropTypes.bool.isRequired,
   downloadedData: PropTypes.bool.isRequired,
-};
-
-BundleDatasets.defaultProps = {
-  profile: {},
 };
 
 export default BundleDatasets;

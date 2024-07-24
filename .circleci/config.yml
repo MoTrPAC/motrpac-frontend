@@ -38,6 +38,6 @@ jobs:
 
       - run:
           name: Run Frontend tests
-          command: yarn test --updateSnapshot --ci
+          command: yarn test
           # use this line instead if we version control snapshots
           # command: yarn test --ci

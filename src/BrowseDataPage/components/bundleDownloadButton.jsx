@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import surveyModdalActions from '../../UserSurvey/userSurveyActions';
 import { trackEvent } from '../../GoogleAnalytics/googleAnalytics';
 
-function BundleDownloadButton({ bundlefile, bundlefileSize, profile }) {
+function BundleDownloadButton({ bundlefile, bundlefileSize, profile = {} }) {
   const [fetchStatus, setFetchStatus] = useState({
     status: null,
     fileUrl: null,
@@ -23,9 +23,9 @@ function BundleDownloadButton({ bundlefile, bundlefileSize, profile }) {
       fetching: true,
     });
 
-    const api = process.env.REACT_APP_API_SERVICE_ADDRESS;
-    const endpoint = process.env.REACT_APP_SIGNED_URL_ENDPOINT;
-    const key = process.env.REACT_APP_API_SERVICE_KEY;
+    const api = import.meta.env.VITE_API_SERVICE_ADDRESS;
+    const endpoint = import.meta.env.VITE_SIGNED_URL_ENDPOINT;
+    const key = import.meta.env.VITE_API_SERVICE_KEY;
     return axios
       .get(`${api}${endpoint}?bucket=${bucket}&object=${filename}&key=${key}`)
       .then((response) => {
@@ -123,7 +123,7 @@ function BundleDownloadButton({ bundlefile, bundlefileSize, profile }) {
         type="button"
         className="btn btn-secondary btn-block btn-bundle-data-download d-flex align-items-center justify-content-center px-3"
         onClick={(e) =>
-          handleFileFetch(e, process.env.REACT_APP_DATA_FILE_BUCKET, file)
+          handleFileFetch(e, import.meta.env.VITE_DATA_FILE_BUCKET, file)
         }
       >
         <i className="material-icons open-access-bundle-data-download-icon mr-2">
@@ -167,10 +167,6 @@ BundleDownloadButton.propTypes = {
       name: PropTypes.string,
     }),
   }),
-};
-
-BundleDownloadButton.defaultProps = {
-  profile: {},
 };
 
 export default BundleDownloadButton;

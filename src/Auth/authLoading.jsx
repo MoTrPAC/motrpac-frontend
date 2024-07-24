@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import history from '../App/history';
 
+import '@styles/authLoading.scss';
+
 // Intended to act as placeholder until auth0 or other auth system
 //  is in place. Clicking the h3 element authorizes test user logIng.
-export function AuthLoading({ authenticating, authSuccess }) {
+export function AuthLoading({ authenticating = false, authSuccess }) {
   function clickH3() {
     authSuccess();
     history.push('/dashboard');
@@ -25,15 +27,12 @@ AuthLoading.propTypes = {
   authSuccess: PropTypes.func.isRequired,
   authenticating: PropTypes.bool,
 };
-AuthLoading.defaultProps = {
-  authenticating: false,
-};
 
 const mapStateToProps = state => ({
   authenticating: state.auth.authenticating,
 });
 
-const testUser = require('../testData/testUser');
+import testUser from '../testData/testUser';
 
 const mapDispatchToProps = dispatch => ({
   authSuccess: () => dispatch({

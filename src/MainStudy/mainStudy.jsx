@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { Helmet } from "react-helmet";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import PageTitle from '../lib/ui/pageTitle';
-import BrowseDataActions from '../BrowseDataPage/browseDataActions';
-import PASS1B06TimeCourse from '../assets/figures/pass1b-06-time-course.png';
-import PASS1B06Profiling from '../assets/figures/pass1b-06-molecular-profiling.svg';
-import ToggleShowHide from './components/toggleShowHide';
-import ExternalLink from '../lib/ui/externalLink';
 
-function MainStudy({ profile, allFiles, handleDataFetch }) {
+import BrowseDataActions from '../BrowseDataPage/browseDataActions';
+import ExternalLink from '../lib/ui/externalLink';
+import PageTitle from '../lib/ui/pageTitle';
+import ToggleShowHide from './components/toggleShowHide';
+
+import '@styles/mainStudyPage.scss';
+
+import PASS1B06Profiling from '../assets/figures/pass1b-06-molecular-profiling.svg';
+import PASS1B06TimeCourse from '../assets/figures/pass1b-06-time-course.png';
+
+function MainStudy({ profile = {}, allFiles, handleDataFetch = null }) {
   const [showSummary, setShowSummary] = useState(true);
   const [showExpDesign, setShowExpDesign] = useState(true);
   const [showTissueProfiling, setShowTissueProfiling] = useState(true);
@@ -265,11 +269,6 @@ MainStudy.propTypes = {
     }),
   }),
   handleDataFetch: PropTypes.func,
-};
-
-MainStudy.defaultProps = {
-  profile: {},
-  handleDataFetch: null,
 };
 
 const mapStateToProps = (state) => ({

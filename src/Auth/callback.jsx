@@ -1,10 +1,12 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, useLocation } from 'react-router-dom';
 import actions from './authActions';
 
-function Callback({ location }) {
+function Callback() {
+  const location = useLocation();
+
   const { isAuthenticated, isFetching, message } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   // Handle authentication if expected values are in the URL.
@@ -16,26 +18,14 @@ function Callback({ location }) {
     <>
       {isFetching && !isAuthenticated ? (
         <div className="authLoading">
-          <span className="oi oi-shield" />
+          <span className="oi oi-shield"/>
           <h3>{message || 'Authenticating...'}</h3>
         </div>
       ) : (
-        <Redirect to="/search" />
+        <Navigate to="/search"/>
       )}
     </>
   );
 }
-
-Callback.propTypes = {
-  location: PropTypes.shape({
-    hash: PropTypes.string,
-  }),
-};
-
-Callback.defaultProps = {
-  location: {
-    hash: '',
-  },
-};
 
 export default Callback;

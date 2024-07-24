@@ -11,7 +11,7 @@ import QcReportProtTabContent from './qcReportProtTabContent';
  *
  * @returns {object} JSX representation of proteomics QC report
  */
-function QcReportProteomics({ qcData, qcDataRaw }) {
+function QcReportProteomics({ qcData= [], qcDataRaw = [] }) {
   // Render proteomics QC report with sub tabs
   function renderQcReportProtTabs() {
     return (
@@ -75,11 +75,6 @@ function QcReportProteomics({ qcData, qcDataRaw }) {
 QcReportProteomics.propTypes = {
   qcData: PropTypes.arrayOf(PropTypes.object),
   qcDataRaw: PropTypes.arrayOf(PropTypes.object),
-};
-
-QcReportProteomics.defaultProps = {
-  qcData: [],
-  qcDataRaw: [],
 };
 
 export default QcReportProteomics;

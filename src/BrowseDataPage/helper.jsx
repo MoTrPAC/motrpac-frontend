@@ -77,8 +77,8 @@ export const tableColumns = [
  * Global filter rendering function
  */
 export const GlobalFilter = ({
-  preGlobalFilteredRows,
-  globalFilter,
+  preGlobalFilteredRows = [],
+  globalFilter = '',
   setGlobalFilter,
 }) => {
   const count = preGlobalFilteredRows.length;
@@ -108,15 +108,10 @@ GlobalFilter.propTypes = {
   setGlobalFilter: PropTypes.func.isRequired,
 };
 
-GlobalFilter.defaultProps = {
-  globalFilter: '',
-  preGlobalFilteredRows: [],
-};
-
 /**
  * page count and page index rendering function
  */
-export const PageIndex = ({ pageIndex, pageOptions }) => (
+export const PageIndex = ({ pageIndex = 0, pageOptions = [] }) => (
   <span className="page-index">
     {pageOptions.length > 0 ? (
       <span>{`Showing Page ${pageIndex + 1} of ${pageOptions.length}`}</span>
@@ -129,11 +124,6 @@ export const PageIndex = ({ pageIndex, pageOptions }) => (
 PageIndex.propTypes = {
   pageIndex: PropTypes.number,
   pageOptions: PropTypes.arrayOf(PropTypes.number),
-};
-
-PageIndex.defaultProps = {
-  pageIndex: 0,
-  pageOptions: [],
 };
 
 /**

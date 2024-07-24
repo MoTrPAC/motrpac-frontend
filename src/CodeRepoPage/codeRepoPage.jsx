@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import IconSet from '../lib/iconSet';
 
+import '@styles/codeRepo.scss';
+
 const repositories = {
   pipelines: [
     {

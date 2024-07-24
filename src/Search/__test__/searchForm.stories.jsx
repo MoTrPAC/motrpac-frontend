@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import SearchForm from '../searchForm';
 import { defaultSearchState } from '../searchReducer';
@@ -58,10 +57,24 @@ const actions = {
   resetSearchForm: action('Advanced search form reset'),
 };
 
-storiesOf('Search Form', module)
-  .addDecorator(story => (
-    <div className="searchPage container-fluid">{story()}</div>
-  ))
-  .add('Default', () => <SearchForm {...defaultState} {...actions} />)
-  .add('Multiple term/value pairs', () => <SearchForm {...multiTermState} {...actions} />)
-  .add('Form field values changed', () => <SearchForm {...changedState} {...actions} />);
+export default {
+  title: 'Search Form',
+
+  decorators: [
+    (story) => <div className="searchPage container-fluid">{story()}</div>,
+  ],
+};
+
+export const Default = () => <SearchForm {...defaultState} {...actions} />;
+
+export const MultipleTermValuePairs = {
+  render: () => <SearchForm {...multiTermState} {...actions} />,
+
+  name: 'Multiple term/value pairs',
+};
+
+export const FormFieldValuesChanged = {
+  render: () => <SearchForm {...changedState} {...actions} />,
+
+  name: 'Form field values changed',
+};

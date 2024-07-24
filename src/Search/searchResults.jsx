@@ -21,10 +21,10 @@ const searchIconMapping = {
  * @returns {object} JSX representation of search result content.
  */
 function SearchResults({
-  urlSearchParamsObj,
-  lunrResutls,
-  advSearchParams,
-  quickSearchQueryString,
+  urlSearchParamsObj= {},
+  lunrResutls = [],
+  advSearchParams = [{ term: 'all', value: '', operator: 'and' }],
+  quickSearchQueryString = '',
 }) {
   const [visibleResults, setVisibleResults] = useState(50);
 
@@ -176,13 +176,6 @@ SearchResults.propTypes = {
     operator: PropTypes.string,
   })),
   quickSearchQueryString: PropTypes.string,
-};
-
-SearchResults.defaultProps = {
-  urlSearchParamsObj: {},
-  lunrResutls: [],
-  advSearchParams: [{ term: 'all', value: '', operator: 'and' }],
-  quickSearchQueryString: '',
 };
 
 export default SearchResults;

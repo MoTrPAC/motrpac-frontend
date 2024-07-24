@@ -131,7 +131,7 @@ export const geneSearchTrainingTableColumns = [
  * page count and page index rendering function
  * common to all data qc status reports
  */
-export const PageIndex = ({ pageIndex, pageOptions }) => (
+export const PageIndex = ({ pageIndex = 0, pageOptions = [] }) => (
   <span className="page-index">
     Showing Page {pageIndex + 1} of {pageOptions.length}
   </span>
@@ -140,11 +140,6 @@ export const PageIndex = ({ pageIndex, pageOptions }) => (
 PageIndex.propTypes = {
   pageIndex: PropTypes.number,
   pageOptions: PropTypes.arrayOf(PropTypes.number),
-};
-
-PageIndex.defaultProps = {
-  pageIndex: 0,
-  pageOptions: [],
 };
 
 /**

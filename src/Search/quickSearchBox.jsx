@@ -8,12 +8,12 @@ import { Link } from 'react-router-dom';
  * @returns {object} JSX representation of search input element.
  */
 function QuickSearchBox({
-  quickSearchTerm,
-  handleQuickSearchInputChange,
-  handleQuickSearchRequestSubmit,
-  resetQuickSearch,
-  getSearchForm,
-  resetAdvSearch,
+  quickSearchTerm = '',
+  handleQuickSearchInputChange = null,
+  handleQuickSearchRequestSubmit = null,
+  resetQuickSearch = null,
+  getSearchForm = null,
+  resetAdvSearch = null,
 }) {
   const quickSearchInput = useRef(null);
 
@@ -61,13 +61,5 @@ QuickSearchBox.propTypes = {
   resetAdvSearch: PropTypes.func,
 };
 
-QuickSearchBox.defaultProps = {
-  quickSearchTerm: '',
-  handleQuickSearchInputChange: null,
-  handleQuickSearchRequestSubmit: null,
-  resetQuickSearch: null,
-  getSearchForm: null,
-  resetAdvSearch: null,
-};
 
 export default QuickSearchBox;

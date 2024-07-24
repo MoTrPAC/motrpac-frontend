@@ -14,6 +14,7 @@ function tag_with_latest_and_version() {
     compose_file=$2
 
     docker compose -f "$compose_file" build
+    docker tag "motrpac-frontend:latest" "us-docker.pkg.dev/$project_id/datahub/frontend:latest"
     docker tag "motrpac-frontend:latest" "us-docker.pkg.dev/$project_id/datahub/frontend:$VERSION"
     docker push "us-docker.pkg.dev/$project_id/datahub/frontend:latest"
     docker push "us-docker.pkg.dev/$project_id/datahub/frontend:$VERSION"

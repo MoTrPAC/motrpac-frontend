@@ -1,14 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
+
 import PageTitle from '../lib/ui/pageTitle';
-import WeightGainPlot from './plots/weightGain';
+import AnalysisActions from './analysisActions';
 import BodyFatChangePlot from './plots/bodyFatChange';
-import VO2MaxChangePlot from './plots/vo2MaxChange';
 import LactateChangePlot from './plots/lactateChange';
 import PhenotypePlotControls from './plots/phenotypePlotControls';
-import AnalysisActions from './analysisActions';
+import VO2MaxChangePlot from './plots/vo2MaxChange';
+import WeightGainPlot from './plots/weightGain';
+
+import '@styles/phenotypeAnimal.scss';
 
 /**
  * Functional component to render animal pass1b-06 phenotype data visualization
@@ -16,10 +19,10 @@ import AnalysisActions from './analysisActions';
  * @return {Object} JSX representation of the animal phenotype data visualization
  */
 function Pass1b06PhenotypeAnimal({
-  weightPlot,
-  bodyFatPlot,
-  vo2Plot,
-  lactatePlot,
+  weightPlot= 'one_week_program',
+  bodyFatPlot= 'one_week_program',
+  vo2Plot= 'one_week_program',
+  lactatePlot= 'one_week_program',
   toggleWeightPlot,
   toggleBodyFatPlot,
   toggleVo2Plot,
@@ -153,12 +156,6 @@ Pass1b06PhenotypeAnimal.propTypes = {
   toggleLactatePlot: PropTypes.func.isRequired,
 };
 
-Pass1b06PhenotypeAnimal.defaultProps = {
-  weightPlot: 'one_week_program',
-  bodyFatPlot: 'one_week_program',
-  vo2Plot: 'one_week_program',
-  lactatePlot: 'one_week_program',
-};
 
 const mapStateToProps = (state) => ({
   ...state.analysis,

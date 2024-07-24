@@ -1,18 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import StatusReportGetData from './statusReportGetData';
-import StatusReportImmunoAssay from './statusReportImmunoAssay';
+import AnimatedLoadingIcon from '../lib/ui/loading';
+import DataStatusActions from './dataStatusActions';
 import QcReportByPhase from './qcReportByPhase.jsx';
 import QcReportHelp from './qcReportHelp';
-import DataStatusActions from './dataStatusActions';
-import qcReportButtonList from './sharelib/qcReportButtonList';
-import AnimatedLoadingIcon from '../lib/ui/loading';
-import QcReportHelpLink from './sharelib/qcReportHelpLink';
 import QcReportMetabolomics from './qcReportMetab';
 import QcReportProteomics from './qcReportProt';
+import qcReportButtonList from './sharelib/qcReportButtonList';
+import QcReportHelpLink from './sharelib/qcReportHelpLink';
+import StatusReportGetData from './statusReportGetData';
+import StatusReportImmunoAssay from './statusReportImmunoAssay';
+
+import '@styles/dataStatusPage.scss';
 
 /**
  * Renders the data qc status page
@@ -22,17 +24,28 @@ import QcReportProteomics from './qcReportProt';
  * @returns {object} JSX representation of the data qc status page
  */
 export function DataStatusPage({
+    qcData = {
+    atacSeq: [],
+    immunoAssay: [],
+    metabolomics: [],
+    metabolomicsRaw: [],
+    proteomics: [],
+    proteomicsRaw: [],
+    rnaSeq: [],
+    rrbs: [],
+    methylcapSeq: [],
+    lastModified: '',
+  },
+  isFetchingQcData = false,
+  errMsg = '',
   qcReportView,
-  qcData,
-  isFetchingQcData,
-  errMsg,
   qcReportViewChange,
   profile,
 }) {
   // Send users to default page if they are not consortium members
   const userType = profile.user_metadata && profile.user_metadata.userType;
   if (userType === 'external') {
-    return <Redirect to="/home" />;
+    return <Navigate to="/home" />;
   }
 
   // Render button group
@@ -175,24 +188,6 @@ DataStatusPage.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
   }),
-};
-
-DataStatusPage.defaultProps = {
-  qcData: {
-    atacSeq: [],
-    immunoAssay: [],
-    metabolomics: [],
-    metabolomicsRaw: [],
-    proteomics: [],
-    proteomicsRaw: [],
-    rnaSeq: [],
-    rrbs: [],
-    methylcapSeq: [],
-    lastModified: '',
-  },
-  isFetchingQcData: false,
-  errMsg: '',
-  profile: {},
 };
 
 const mapStateToProps = (state) => ({
