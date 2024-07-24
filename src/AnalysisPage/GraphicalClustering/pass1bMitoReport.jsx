@@ -14,7 +14,7 @@ import MitoGraphicalAnalysisSmallIntestine from './Pass1bMitoTissues/SMLINT';
 import MitoGraphicalAnalysisVastusLateralis from './Pass1bMitoTissues/SKM_VL';
 import MitoGraphicalAnalysisWhiteAdipose from './Pass1bMitoTissues/WAT_SC';
 
-function Pass1bMitochondriaGraphicalReport({ tissue }) {
+function Pass1bMitochondriaGraphicalReport({ tissue = 'HEART' }) {
   switch (tissue) {
     case 'ADRNL':
       return <MitoGraphicalAnalysisAdrenal />;
@@ -49,10 +49,6 @@ function Pass1bMitochondriaGraphicalReport({ tissue }) {
 
 Pass1bMitochondriaGraphicalReport.propTypes = {
   tissue: PropTypes.string,
-};
-
-Pass1bMitochondriaGraphicalReport.defaultProps = {
-  tissue: 'HEART',
 };
 
 export default Pass1bMitochondriaGraphicalReport;

@@ -16,7 +16,7 @@ const plotViewLabels = {
  *
  * @returns {object} JSX representation of the dropdown menu controls
  */
-function PhenotypePlotControls({ plot, togglePlot }) {
+function PhenotypePlotControls({ plot = 'one_week_program', togglePlot }) {
   return (
     <div className="controlPanelContainer">
       <div className="controlPanel">
@@ -75,10 +75,6 @@ function PhenotypePlotControls({ plot, togglePlot }) {
 PhenotypePlotControls.propTypes = {
   plot: PropTypes.string,
   togglePlot: PropTypes.func.isRequired,
-};
-
-PhenotypePlotControls.defaultProps = {
-  plot: 'one_week_program',
 };
 
 export default PhenotypePlotControls;

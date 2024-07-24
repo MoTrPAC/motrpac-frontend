@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function DataVizLink({
-  title, tissue, plotType, minClusterSize, clusterName,
+  title, tissue, plotType, minClusterSize = null, clusterName = null,
 }) {
   let topkStr = '';
   let minClusterSizeStr = '';
@@ -49,9 +49,5 @@ DataVizLink.propTypes = {
   clusterName: PropTypes.string,
 };
 
-DataVizLink.defaultProps = {
-  minClusterSize: null,
-  clusterName: null,
-};
 
 export default DataVizLink;

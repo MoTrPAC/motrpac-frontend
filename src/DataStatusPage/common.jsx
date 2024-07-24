@@ -403,8 +403,8 @@ export const immunoTableColumns = [
  * common to all data qc status reports
  */
 export function GlobalFilter({
-  preGlobalFilteredRows,
-  globalFilter,
+  preGlobalFilteredRows = [],
+  globalFilter = '',
   setGlobalFilter,
 }) {
   const count = preGlobalFilteredRows.length;
@@ -432,16 +432,11 @@ GlobalFilter.propTypes = {
   setGlobalFilter: PropTypes.func.isRequired,
 };
 
-GlobalFilter.defaultProps = {
-  globalFilter: '',
-  preGlobalFilteredRows: [],
-};
-
 /**
  * page count and page index rendering function
  * common to all data qc status reports
  */
-export const PageIndex = ({ pageIndex, pageOptions }) => (
+export const PageIndex = ({ pageIndex = 0, pageOptions = [] }) => (
   <span className="page-index">
     Showing Page
     {' '}
@@ -457,11 +452,6 @@ export const PageIndex = ({ pageIndex, pageOptions }) => (
 PageIndex.propTypes = {
   pageIndex: PropTypes.number,
   pageOptions: PropTypes.arrayOf(PropTypes.number),
-};
-
-PageIndex.defaultProps = {
-  pageIndex: 0,
-  pageOptions: [],
 };
 
 /**

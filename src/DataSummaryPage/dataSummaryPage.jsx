@@ -14,6 +14,7 @@ import DataSummaryPageActions from './dataSummaryPageActions';
 import '@styles/dataSummaryPage.scss';
 
 import animalReleaseSamples from '../data/animal_release_samples.json';
+
 /**
  * Renders the release samples summary page.
  *
@@ -37,12 +38,12 @@ import animalReleaseSamples from '../data/animal_release_samples.json';
  * @returns {object} JSX representation of the release samples summary page
  */
 export function DataSummaryPage({
-  profile,
-  release,
-  phase,
-  plot,
-  sort,
-  showQC,
+  profile = {},
+  release = 'internal',
+  phase = 'pass1b_06',
+  plot = 'tissue_name',
+  sort = 'default',
+  showQC = true,
   toggleRelease,
   togglePhase,
   togglePlot,
@@ -217,14 +218,6 @@ DataSummaryPage.propTypes = {
   toggleQC: PropTypes.func.isRequired,
 };
 
-DataSummaryPage.defaultProps = {
-  profile: {},
-  release: 'internal',
-  phase: 'pass1b_06',
-  plot: 'tissue_name',
-  sort: 'default',
-  showQC: true,
-};
 
 const mapStateToProps = (state) => ({
   ...state.auth,

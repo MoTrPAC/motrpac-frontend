@@ -15,7 +15,7 @@ const searchIconMapping = {
 };
 
 function SearchTermList({
-  advSearchParams,
+  advSearchParams = [{ term: 'all', value: '', operator: 'and' }],
   handleSearchFormChange,
   addSearchParam,
   removeSearchParam,
@@ -78,10 +78,6 @@ SearchTermList.propTypes = {
   handleSearchFormChange: PropTypes.func.isRequired,
   addSearchParam: PropTypes.func.isRequired,
   removeSearchParam: PropTypes.func.isRequired,
-};
-
-SearchTermList.defaultProps = {
-  advSearchParams: [{ term: 'all', value: '', operator: 'and' }],
 };
 
 export default SearchTermList;

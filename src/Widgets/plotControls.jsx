@@ -16,7 +16,7 @@ const plotViewLabels = {
  *
  * @returns {object} JSX representation of the dropdown menu controls
  */
-function PlotControls({ plot, togglePlot }) {
+function PlotControls({ plot = 'tissue_count', togglePlot }) {
   return (
     <div className="controlPanelContainer mb-3 mx-3">
       <div className="controlPanel">
@@ -76,10 +76,6 @@ function PlotControls({ plot, togglePlot }) {
 PlotControls.propTypes = {
   plot: PropTypes.string,
   togglePlot: PropTypes.func.isRequired,
-};
-
-PlotControls.defaultProps = {
-  plot: 'tissue_count',
 };
 
 export default PlotControls;

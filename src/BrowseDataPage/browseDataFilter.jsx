@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import browseDataFilters, { tissues, omes } from '../lib/browseDataFilters';
 import assayList from '../lib/assayList';
 
-function BrowseDataFilter({ activeFilters, onChangeFilter, onResetFilters }) {
+function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name: [], category: [] }, onChangeFilter, onResetFilters }) {
   const dataDownload = useSelector((state) => state.browseData);
 
   const fileFilters = [...browseDataFilters];
@@ -115,14 +115,6 @@ BrowseDataFilter.propTypes = {
   }),
   onChangeFilter: PropTypes.func.isRequired,
   onResetFilters: PropTypes.func.isRequired,
-};
-BrowseDataFilter.defaultProps = {
-  activeFilters: {
-    assay: [],
-    omics: [],
-    tissue_name: [],
-    category: [],
-  },
 };
 
 export default BrowseDataFilter;

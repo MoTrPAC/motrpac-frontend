@@ -24,15 +24,15 @@ import '@styles/navbar.scss';
  * @returns {Object} JSX representation of the global header nav bar.
  */
 export function Navbar({
-  isAuthenticated,
-  profile,
-  login,
-  logout,
-  handleDataFetch,
-  resetBrowseState,
-  handleQCDataFetch,
+  profile={},
+  isAuthenticated=false,
+  login=null,
+  logout=null,
+  handleDataFetch=null,
+  resetBrowseState=null,
+  handleQCDataFetch=null,
+  lastModified='',
   allFiles,
-  lastModified,
 }) {
   const location = useLocation();
   const currentPath = location.pathname;
@@ -425,17 +425,6 @@ Navbar.propTypes = {
   resetBrowseState: PropTypes.func,
   handleQCDataFetch: PropTypes.func,
   lastModified: PropTypes.string,
-};
-
-Navbar.defaultProps = {
-  profile: {},
-  isAuthenticated: false,
-  login: null,
-  logout: null,
-  handleDataFetch: null,
-  resetBrowseState: null,
-  handleQCDataFetch: null,
-  lastModified: '',
 };
 
 const mapStateToProps = (state) => ({

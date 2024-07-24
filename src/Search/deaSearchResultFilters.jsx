@@ -14,8 +14,8 @@ function SearchResultFilters({
   changeResultFilter,
   handleSearch,
   resetSearch,
-  hasResultFilters,
-  profile,
+  hasResultFilters = {},
+  profile = {},
 }) {
   const [inputError, setInputError] = useState(false);
   // FIXME - this is a hack to get the search filters such as tissue and assay
@@ -215,11 +215,6 @@ SearchResultFilters.propTypes = {
     userid: PropTypes.string,
     user_metadata: PropTypes.object,
   }),
-};
-
-SearchResultFilters.defaultProps = {
-  hasResultFilters: {},
-  profile: {},
 };
 
 export default SearchResultFilters;

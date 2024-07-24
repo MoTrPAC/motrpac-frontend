@@ -101,7 +101,7 @@ function loadRnaSeqDataset(tissue) {
  *
  * @returns {Object} JSX representation of the htop 50 DE genes heatmap
  */
-function Heatmap({ tissue, assay }) {
+function Heatmap({ tissue = '', assay= '' }) {
   const modalRef = useRef();
 
   let dataset = [];
@@ -346,11 +346,6 @@ function Heatmap({ tissue, assay }) {
 Heatmap.propTypes = {
   tissue: PropTypes.string,
   assay: PropTypes.string,
-};
-
-Heatmap.defaultProps = {
-  tissue: '',
-  assay: '',
 };
 
 export default Heatmap;

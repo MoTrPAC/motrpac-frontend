@@ -11,7 +11,7 @@ import { Pie, Doughnut } from 'react-chartjs-2';
  *
  * @returns {object} JSX representation of the dashboard sample count plots
  */
-function ReleasedSampleSummary({ data, release, userType }) {
+function ReleasedSampleSummary({ data, release, userType = '' }) {
   // flag to temporarily suppress quick search rendering
   const inProduction = false;
 
@@ -543,10 +543,6 @@ ReleasedSampleSummary.propTypes = {
   }).isRequired,
   release: PropTypes.string.isRequired,
   userType: PropTypes.string,
-};
-
-ReleasedSampleSummary.defaultProps = {
-  userType: '',
 };
 
 export default ReleasedSampleSummary;

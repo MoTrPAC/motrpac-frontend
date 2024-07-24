@@ -12,14 +12,18 @@ import '@styles/analysisPage.scss';
 // TODO: Add animation of transitions potentially with CSSTransitions package
 
 export function AnalysisHomePage({
-  match, // match object from react-router used to find human vs animal in route
+  match = {
+    params: {
+      subjectType: '',
+    },
+  }, // match object from react-router used to find human vs animal in route
   depth,
   currentAnalysis,
   currentAnalysisTitle,
   onPickAnalysis,
   goBack,
-  expanded,
-  profile,
+  expanded = false,
+  profile = {},
 }) {
   const subjectType = match.params.subjectType.slice(0).toLowerCase();
   const userType = profile.user_metadata && profile.user_metadata.userType;
@@ -107,15 +111,6 @@ AnalysisHomePage.propTypes = {
   }),
 };
 
-AnalysisHomePage.defaultProps = {
-  match: {
-    params: {
-      subjectType: '',
-    },
-  },
-  expanded: false,
-  profile: {},
-};
 
 const mapStateToProps = (state) => ({
   depth: state.analysis.depth,

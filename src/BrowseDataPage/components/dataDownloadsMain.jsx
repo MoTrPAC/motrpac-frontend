@@ -12,7 +12,7 @@ import SelectiveDataDownloads from './selectiveDataDownloads';
 import SelectiveDataDownloadsCard from './selectiveDataDownloadsCard';
 
 function DataDownloadsMain({
-  profile,
+  profile = {},
   filteredFiles,
   fetching,
   activeFilters,
@@ -315,10 +315,6 @@ DataDownloadsMain.propTypes = {
   waitingForResponse: PropTypes.bool.isRequired,
   surveySubmitted: PropTypes.bool.isRequired,
   downloadedData: PropTypes.bool.isRequired,
-};
-
-DataDownloadsMain.defaultProps = {
-  profile: {},
 };
 
 export default DataDownloadsMain;

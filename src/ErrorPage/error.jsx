@@ -11,7 +11,7 @@ import '@styles/errorPage.scss'
  *
  * @returns {Object} JSX representation of the Error page.
  */
-export function ErrorPage({ isAuthenticated, profile }) {
+export function ErrorPage({ isAuthenticated = {}, profile = false }) {
   if (isAuthenticated && profile.user_metadata) {
     return <Navigate to="/dashboard" />
   }
@@ -61,11 +61,6 @@ ErrorPage.propTypes = {
     user_metadata: PropTypes.object,
   }),
   isAuthenticated: PropTypes.bool,
-};
-
-ErrorPage.defaultProps = {
-  profile: {},
-  isAuthenticated: false,
 };
 
 const mapStateToProps = (state) => ({

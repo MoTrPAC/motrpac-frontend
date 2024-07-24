@@ -1,69 +1,55 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link, Navigate } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { useMediaQuery } from 'react-responsive';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
-
-import OpenOfficeHour from './openOfficeHour';
-import Footer from '../Footer/footer';
-import SubscribeDataUpdates from './components/subscribeDataUpdates';
-import BackgroundVideo from './components/backgroundVideo';
-// import network figure 4e visualization dataset
-import Figure1C from './components/figure1c';
-import VisNetworkReactComponent from './components/visNetwork';
-import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
-import IconSet from '../lib/iconSet';
+import { connect } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
+import { Link, Navigate } from 'react-router-dom';
+import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 
 import LogoMoTrPACWhite from '../assets/LandingPageGraphics/logo-motrpac-white.png';
-import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 // import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.svg';
 import NatureIssueCover from '../assets/LandingPageGraphics/nature_issue_cover.jpg';
 // import network figure 4e visualization dataset
 import landscapeFigure4eNetworkData from '../data/landscape_figure_4e';
+import Footer from '../Footer/footer';
+import IconSet from '../lib/iconSet';
+import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
+import BackgroundVideo from './components/backgroundVideo';
+// import network figure 4e visualization dataset
+import Figure1C from './components/figure1c';
+import SubscribeDataUpdates from './components/subscribeDataUpdates';
+import VisNetworkReactComponent from './components/visNetwork';
+
+import OpenOfficeHour from './openOfficeHour';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import '@styles/landingPage.scss'
 
 // animated down arrow icon
 function AnimatedDownArrow() {
-  return (
-    <div className="animated-down-arrow pb-4 w-100">
-      <img src={IconSet.ArrowDownAnimated} alt="down-arrow" />
-    </div>
-  );
+  return (<div className="animated-down-arrow pb-4 w-100">
+      <img src={IconSet.ArrowDownAnimated} alt="down-arrow"/>
+    </div>);
 }
 
 function AnimatedDownArrowDark() {
-  return (
-    <div className="animated-down-arrow pb-4 w-100">
-      <img src={IconSet.ArrowDownAnimatedDark} alt="down-arrow" />
-    </div>
-  );
+  return (<div className="animated-down-arrow pb-4 w-100">
+      <img src={IconSet.ArrowDownAnimatedDark} alt="down-arrow"/>
+    </div>);
 }
 
 // configs for visjs network visualization rendering
 const options = {
-  height: '100%',
-  width: '100%',
-  nodes: {
-    shape: 'dot',
-    size: 30,
-    font: {
-      size: 25,
-      color: '#ffffff',
-    },
-    borderWidth: 4,
-  },
-  edges: {
+  height: '100%', width: '100%', nodes: {
+    shape: 'dot', size: 30, font: {
+      size: 25, color: '#ffffff',
+    }, borderWidth: 4,
+  }, edges: {
     width: 4,
-  },
-  interaction: {
-    hover: true,
-    zoomView: false,
-  },
-  physics: {
+  }, interaction: {
+    hover: true, zoomView: false,
+  }, physics: {
     enabled: false,
   },
 };
@@ -76,7 +62,7 @@ const options = {
  *
  * @returns {object} JSX representation of the landing page.
  */
-export function LandingPage({ isAuthenticated, profile }) {
+export function LandingPage({ isAuthenticated = false, profile = {} }) {
   const [backgroundVideoLoaded, setBackgroundVideoLoaded] = useState(false);
   const [networkNodes, setNetwortNodes] = useState([]);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
@@ -104,7 +90,7 @@ export function LandingPage({ isAuthenticated, profile }) {
   // Redirect authenticated users to protected route
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   if (isAuthenticated && hasAccess) {
-    return <Navigate to="/search" />;
+    return <Navigate to="/search"/>;
   }
 
   const backgroundVideo = document.querySelector('video');
@@ -114,10 +100,9 @@ export function LandingPage({ isAuthenticated, profile }) {
     };
   }
 
-  return (
-    <div className="row marketing content-container">
+  return (<div className="row marketing content-container">
       <Helmet>
-        <html lang="en" />
+        <html lang="en"/>
         <title>Welcome to MoTrPAC Data Hub</title>
         <script type="application/ld+json">
           {JSON.stringify(landingPageStructuredData)}
@@ -125,10 +110,10 @@ export function LandingPage({ isAuthenticated, profile }) {
       </Helmet>
       <section className="first">
         <div className="w-100 h-100 d-flex align-items-center">
-          {!isMobile && <BackgroundVideo />}
+          {!isMobile && <BackgroundVideo/>}
           <div className="section-content-container container text-center">
             <div className="logo-container">
-              <img src={LogoMoTrPACWhite} alt="MoTrPAC Logo" />
+              <img src={LogoMoTrPACWhite} alt="MoTrPAC Logo"/>
             </div>
             <h3 className="display-3">The Molecular Map of</h3>
             <h2 className="display-2">Exercise</h2>
@@ -176,7 +161,7 @@ export function LandingPage({ isAuthenticated, profile }) {
             </div>
           </div>
         </div>
-        <AnimatedDownArrow />
+        <AnimatedDownArrow/>
       </section>
       <section className="fifth">
         <div className="w-100 h-100 d-flex align-items-center">
@@ -212,7 +197,7 @@ export function LandingPage({ isAuthenticated, profile }) {
             </div>
           </div>
         </div>
-        <AnimatedDownArrow />
+        <AnimatedDownArrow/>
       </section>
       {/*
       <section className="second">
@@ -249,12 +234,12 @@ export function LandingPage({ isAuthenticated, profile }) {
             </div>
           </div>
         </div>
-        <AnimatedDownArrow />
+        <AnimatedDownArrow/>
       </section>
       <section className="fourth">
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container-fluid text-center">
-            <Figure1C />
+            <Figure1C/>
             <div className="container text-center">
               <h1 className="py-4">
                 Visualize the number of training-differential features whose
@@ -263,7 +248,7 @@ export function LandingPage({ isAuthenticated, profile }) {
             </div>
           </div>
         </div>
-        <AnimatedDownArrow />
+        <AnimatedDownArrow/>
       </section>
       <section className="sixth">
         <div className="w-100 h-100 d-flex align-items-center">
@@ -287,7 +272,7 @@ export function LandingPage({ isAuthenticated, profile }) {
             </div>
           </div>
         </div>
-        <AnimatedDownArrow />
+        <AnimatedDownArrow/>
       </section>
       <section className="seventh">
         <div className="w-100 h-100 d-flex align-items-center">
@@ -321,35 +306,28 @@ export function LandingPage({ isAuthenticated, profile }) {
             </div>
           </div>
         </div>
-        <AnimatedDownArrowDark />
+        <AnimatedDownArrowDark/>
       </section>
       <section className="eighth">
         <div className="w-100 h-100">
           <div className="section-content-container container text-center d-flex align-items-center">
             <div className="panel-content-container">
-              <OpenOfficeHour />
-              <SubscribeDataUpdates />
+              <OpenOfficeHour/>
+              <SubscribeDataUpdates/>
             </div>
           </div>
           <div className="w-100 homepage-footer-container">
-            <Footer />
+            <Footer/>
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>);
 }
 
 LandingPage.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
-  }),
-  isAuthenticated: PropTypes.bool,
-};
-
-LandingPage.defaultProps = {
-  profile: {},
-  isAuthenticated: false,
+  }), isAuthenticated: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

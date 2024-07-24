@@ -17,7 +17,7 @@ const tableSortLabels = {
  *
  * @returns {object} JSX representation of the dropdown menu controls
  */
-function TableControls({ sort, toggleSort, showQC, toggleQC }) {
+function TableControls({ sort = 'default', toggleSort, showQC = false, toggleQC }) {
   return (
     <div className="controlPanelContainer mb-3 mx-3">
       <div className="controlPanel d-flex align-items-center">
@@ -98,11 +98,6 @@ TableControls.propTypes = {
   toggleSort: PropTypes.func.isRequired,
   showQC: PropTypes.bool,
   toggleQC: PropTypes.func.isRequired,
-};
-
-TableControls.defaultProps = {
-  sort: 'default',
-  showQC: false,
 };
 
 export default TableControls;

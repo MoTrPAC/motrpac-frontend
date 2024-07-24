@@ -15,16 +15,16 @@ import { genes } from '../../data/genes';
 import { trackEvent } from '../../GoogleAnalytics/googleAnalytics';
 
 function GeneCentricView({
-  geneSearchResults,
-  geneSearchParams,
-  geneSearching,
-  genSearchError,
+  geneSearchResults = {},
+  geneSearchParams = { ...defaultGeneSearchParams },
+  geneSearching = false,
+  genSearchError = '',
   handleGeneCentricSearch,
   geneSearchReset,
   geneSearchChangeFilter,
-  scope,
-  hasResultFilters,
-  profile,
+  scope = 'all',
+  hasResultFilters = {},
+  profile = {},
 }) {
   const [multiSelections, setMultiSelections] = useState([]);
   const inputRef = useRef(null);
@@ -276,16 +276,6 @@ GeneCentricView.propTypes = {
     userid: PropTypes.string,
     user_metadata: PropTypes.object,
   }),
-};
-
-GeneCentricView.defaultProps = {
-  geneSearchResults: {},
-  geneSearching: false,
-  genSearchError: '',
-  geneSearchParams: { ...defaultGeneSearchParams },
-  scope: 'all',
-  hasResultFilters: {},
-  profile: {},
 };
 
 const mapStateToProps = (state) => ({

@@ -6,8 +6,8 @@ function SelectiveDataDownloadsCard({
   cardIcon,
   cardTitle,
   dataSelectHandler,
-  selectedData,
-  cssSelector,
+  selectedData = '',
+  cssSelector = '',
   children,
 }) {
   const navigate = useNavigate();
@@ -50,11 +50,6 @@ SelectiveDataDownloadsCard.propTypes = {
   dataSelectHandler: PropTypes.func.isRequired,
   selectedData: PropTypes.string,
   cssSelector: PropTypes.string,
-};
-
-SelectiveDataDownloadsCard.defaultProps = {
-  selectedData: '',
-  cssSelector: '',
 };
 
 export default SelectiveDataDownloadsCard;

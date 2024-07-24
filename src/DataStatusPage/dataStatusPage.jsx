@@ -24,10 +24,21 @@ import '@styles/dataStatusPage.scss';
  * @returns {object} JSX representation of the data qc status page
  */
 export function DataStatusPage({
+    qcData = {
+    atacSeq: [],
+    immunoAssay: [],
+    metabolomics: [],
+    metabolomicsRaw: [],
+    proteomics: [],
+    proteomicsRaw: [],
+    rnaSeq: [],
+    rrbs: [],
+    methylcapSeq: [],
+    lastModified: '',
+  },
+  isFetchingQcData = false,
+  errMsg = '',
   qcReportView,
-  qcData,
-  isFetchingQcData,
-  errMsg,
   qcReportViewChange,
   profile,
 }) {
@@ -177,24 +188,6 @@ DataStatusPage.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
   }),
-};
-
-DataStatusPage.defaultProps = {
-  qcData: {
-    atacSeq: [],
-    immunoAssay: [],
-    metabolomics: [],
-    metabolomicsRaw: [],
-    proteomics: [],
-    proteomicsRaw: [],
-    rnaSeq: [],
-    rrbs: [],
-    methylcapSeq: [],
-    lastModified: '',
-  },
-  isFetchingQcData: false,
-  errMsg: '',
-  profile: {},
 };
 
 const mapStateToProps = (state) => ({

@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
  *
  * @returns {object} JSX representation of the registration response page
  */
-function RegistrationResponse({ status, errMsg }) {
+function RegistrationResponse({ status = null, errMsg = null }) {
   // Render Auth0-specific 'user already exists' message
   function renderAuth0Error() {
     return (
@@ -80,9 +80,5 @@ RegistrationResponse.propTypes = {
   errMsg: PropTypes.string,
 };
 
-RegistrationResponse.defaultProps = {
-  status: null,
-  errMsg: null,
-};
 
 export default RegistrationResponse;

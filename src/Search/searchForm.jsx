@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import SearchTermList from './searchTermList';
 
 function SearchForm({
-  advSearchParams,
+  advSearchParams = [{ term: 'all', value: '', operator: 'and' }],
   handleSearchFormChange,
   addSearchParam,
   removeSearchParam,
@@ -55,8 +55,5 @@ SearchForm.propTypes = {
   handleSearchFormSubmit: PropTypes.func.isRequired,
 };
 
-SearchForm.defaultProps = {
-  advSearchParams: [{ term: 'all', value: '', operator: 'and' }],
-};
 
 export default SearchForm;

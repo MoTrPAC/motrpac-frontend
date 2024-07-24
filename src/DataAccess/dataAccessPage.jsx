@@ -40,7 +40,7 @@ const defaultFormValues = {
  *
  * @returns {object} JSX representation of the data access page
  */
-export function DataAccessPage({ isAuthenticated, profile }) {
+export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
   const [reCaptcha, setReCaptcha] = useState('');
   const [auth0Status, setAuth0Status] = useState();
   const [auth0Error, setAuth0Error] = useState();
@@ -698,11 +698,6 @@ DataAccessPage.propTypes = {
     user_metadata: PropTypes.object,
   }),
   isAuthenticated: PropTypes.bool,
-};
-
-DataAccessPage.defaultProps = {
-  profile: {},
-  isAuthenticated: false,
 };
 
 const mapStateToProps = state => ({

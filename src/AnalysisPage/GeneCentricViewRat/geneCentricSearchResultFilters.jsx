@@ -13,7 +13,7 @@ function GeneCentricSearchResultFilters({
   geneSearchChangeFilter,
   geneSearchInputValue,
   geneSearchReset,
-  hasResultFilters,
+  hasResultFilters = {},
 }) {
   // FIXME - this is a hack to get the search filters such as tissue and assay
   // to render accordingly to the ktype (gene)
@@ -118,10 +118,6 @@ GeneCentricSearchResultFilters.propTypes = {
     assay: PropTypes.object,
     tissue: PropTypes.object,
   }),
-};
-
-GeneCentricSearchResultFilters.defaultProps = {
-  hasResultFilters: {},
 };
 
 export default GeneCentricSearchResultFilters;

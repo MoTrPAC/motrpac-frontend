@@ -10,7 +10,7 @@ import selectOmicPrefix from './sharelib/qcReportByPhaseOmicPrefix';
  *
  * @returns {object} JSX representation of QC report samples by phase page content
  */
-function qcReportByPhaseTabContent({ data, phases }) {
+function qcReportByPhaseTabContent({ data= {}, phases = [] }) {
   // FIXME: current implementation needs to be refactored to reduce the number of
   //       functions and variables for parsing and transforming data
   //       to be more readable and maintainable
@@ -222,11 +222,6 @@ function qcReportByPhaseTabContent({ data, phases }) {
 qcReportByPhaseTabContent.propTypes = {
   data: PropTypes.object,
   phases: PropTypes.arrayOf(PropTypes.string),
-};
-
-qcReportByPhaseTabContent.defaultProps = {
-  data: {},
-  phases: [],
 };
 
 export default qcReportByPhaseTabContent;

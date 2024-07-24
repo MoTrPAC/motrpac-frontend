@@ -41,7 +41,7 @@ function BrowseDataTable({
   waitingForResponse,
   handleDownloadRequest,
   downloadRequestResponse,
-  profile,
+  profile = {},
 }) {
   // Define table column headers
   const columns = useMemo(() => tableColumns, []);
@@ -71,7 +71,7 @@ function DataTable({
   waitingForResponse,
   handleDownloadRequest,
   downloadRequestResponse,
-  profile,
+  profile = {},
 }) {
   const filterTypes = React.useMemo(
     () => ({
@@ -264,10 +264,6 @@ BrowseDataTable.propTypes = {
   }),
 };
 
-BrowseDataTable.defaultProps = {
-  profile: {},
-};
-
 DataTable.propTypes = {
   columns: PropTypes.arrayOf(
     PropTypes.shape({
@@ -288,10 +284,6 @@ DataTable.propTypes = {
       name: PropTypes.string,
     }),
   }),
-};
-
-DataTable.defaultProps = {
-  profile: {},
 };
 
 export default BrowseDataTable;

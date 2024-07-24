@@ -15,7 +15,7 @@ import '@styles/methods.scss';
  *
  * @returns {object} JSX representation of the Methods component
  */
-export function Methods({ profile }) {
+export function Methods({ profile= {} }) {
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
   return (
@@ -84,10 +84,6 @@ Methods.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
   }),
-};
-
-Methods.defaultProps = {
-  profile: {},
 };
 
 const mapStateToProps = (state) => ({

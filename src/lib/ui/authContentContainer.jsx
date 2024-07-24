@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function AuthContentContainer({ classes, expanded, children }) {
+function AuthContentContainer({ classes = '', expanded = false, children }) {
   return (
     <div className="loggedInContentContainer d-flex w-100">
       <div
@@ -23,11 +23,6 @@ function AuthContentContainer({ classes, expanded, children }) {
 AuthContentContainer.propTypes = {
   classes: PropTypes.string,
   expanded: PropTypes.bool,
-};
-
-AuthContentContainer.defaultProps = {
-  classes: '',
-  expanded: false,
 };
 
 export default AuthContentContainer;

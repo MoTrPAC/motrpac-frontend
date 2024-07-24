@@ -18,7 +18,7 @@ import GraphicalAnalysisSmallIntestine from './Pass1bLandscapeTissues/SMLINT';
 import GraphicalAnalysisVastusLateralis from './Pass1bLandscapeTissues/SKM_VL';
 import GraphicalAnalysisWhiteAdipose from './Pass1bLandscapeTissues/WAT_SC';
 
-function Pass1bLandscapeGraphicalReport({ tissue }) {
+function Pass1bLandscapeGraphicalReport({ tissue= 'SKM_GN' }) {
   switch (tissue) {
     case 'ADRNL':
       return <GraphicalAnalysisAdrenal />;
@@ -61,10 +61,6 @@ function Pass1bLandscapeGraphicalReport({ tissue }) {
 
 Pass1bLandscapeGraphicalReport.propTypes = {
   tissue: PropTypes.string,
-};
-
-Pass1bLandscapeGraphicalReport.defaultProps = {
-  tissue: 'SKM_GN',
 };
 
 export default Pass1bLandscapeGraphicalReport;

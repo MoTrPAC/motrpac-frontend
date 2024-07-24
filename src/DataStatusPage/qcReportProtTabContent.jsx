@@ -15,7 +15,7 @@ import QcReportDataTable from './sharelib/qcReportDataTable';
  *
  * @returns {object} The data qc status table component
  */
-function QcReportProtTabContent({ qcData, qcDataRaw, qcFiles }) {
+function QcReportProtTabContent({ qcData, qcDataRaw, qcFiles = 'processed_by_bic' }) {
   // Define table column headers
   const processedDataColumns = useMemo(() => protProcessedDataTableColumns, []);
   const processedQcData = useMemo(
@@ -61,10 +61,6 @@ QcReportProtTabContent.propTypes = {
     })
   ).isRequired,
   qcFiles: PropTypes.string,
-};
-
-QcReportProtTabContent.defaultProps = {
-  qcFiles: 'processed_by_bic',
 };
 
 export default QcReportProtTabContent;

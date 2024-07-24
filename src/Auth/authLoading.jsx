@@ -7,7 +7,7 @@ import '@styles/authLoading.scss';
 
 // Intended to act as placeholder until auth0 or other auth system
 //  is in place. Clicking the h3 element authorizes test user logIng.
-export function AuthLoading({ authenticating, authSuccess }) {
+export function AuthLoading({ authenticating = false, authSuccess }) {
   function clickH3() {
     authSuccess();
     history.push('/dashboard');
@@ -26,9 +26,6 @@ export function AuthLoading({ authenticating, authSuccess }) {
 AuthLoading.propTypes = {
   authSuccess: PropTypes.func.isRequired,
   authenticating: PropTypes.bool,
-};
-AuthLoading.defaultProps = {
-  authenticating: false,
 };
 
 const mapStateToProps = state => ({

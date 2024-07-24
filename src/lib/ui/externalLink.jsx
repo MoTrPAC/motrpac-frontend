@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
  *
  * @returns {Object} JSX representation of a link.
  */
-function ExternalLink({ to, label }) {
+function ExternalLink({ to, label = null }) {
   return (
     <a
       href={to}
@@ -27,10 +27,6 @@ function ExternalLink({ to, label }) {
 ExternalLink.propTypes = {
   to: PropTypes.string.isRequired,
   label: PropTypes.string,
-};
-
-ExternalLink.defaultProps = {
-  label: null,
 };
 
 export default ExternalLink;

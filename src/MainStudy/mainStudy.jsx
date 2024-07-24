@@ -14,7 +14,7 @@ import '@styles/mainStudyPage.scss';
 import PASS1B06Profiling from '../assets/figures/pass1b-06-molecular-profiling.svg';
 import PASS1B06TimeCourse from '../assets/figures/pass1b-06-time-course.png';
 
-function MainStudy({ profile, allFiles, handleDataFetch }) {
+function MainStudy({ profile = {}, allFiles, handleDataFetch = null }) {
   const [showSummary, setShowSummary] = useState(true);
   const [showExpDesign, setShowExpDesign] = useState(true);
   const [showTissueProfiling, setShowTissueProfiling] = useState(true);
@@ -269,11 +269,6 @@ MainStudy.propTypes = {
     }),
   }),
   handleDataFetch: PropTypes.func,
-};
-
-MainStudy.defaultProps = {
-  profile: {},
-  handleDataFetch: null,
 };
 
 const mapStateToProps = (state) => ({

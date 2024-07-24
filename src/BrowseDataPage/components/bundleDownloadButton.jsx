@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import surveyModdalActions from '../../UserSurvey/userSurveyActions';
 import { trackEvent } from '../../GoogleAnalytics/googleAnalytics';
 
-function BundleDownloadButton({ bundlefile, bundlefileSize, profile }) {
+function BundleDownloadButton({ bundlefile, bundlefileSize, profile = {} }) {
   const [fetchStatus, setFetchStatus] = useState({
     status: null,
     fileUrl: null,
@@ -167,10 +167,6 @@ BundleDownloadButton.propTypes = {
       name: PropTypes.string,
     }),
   }),
-};
-
-BundleDownloadButton.defaultProps = {
-  profile: {},
 };
 
 export default BundleDownloadButton;

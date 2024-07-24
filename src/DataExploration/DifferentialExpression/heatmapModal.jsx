@@ -15,7 +15,7 @@ import figureAssayProps from './figureAssayProps';
  *
  * @returns {Object} JSX representation of the heatmap modal
  */
-function HeatmapModal({ tissue, assay, dismissModal }) {
+function HeatmapModal({ tissue = '', assay = '', dismissModal = null }) {
   // Transform tissue abbreviation to full name
   function renderTissueName() {
     let tissueName = '';
@@ -79,12 +79,6 @@ HeatmapModal.propTypes = {
   tissue: PropTypes.string,
   assay: PropTypes.string,
   dismissModal: PropTypes.func,
-};
-
-HeatmapModal.defaultProps = {
-  tissue: '',
-  assay: '',
-  dismissModal: null,
 };
 
 export default HeatmapModal;

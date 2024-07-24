@@ -7,13 +7,13 @@ import BootstrapSpinner from '../lib/ui/spinner';
 import '@styles/userSurvey.scss';
 
 function UserSurveyModal({
-  userID,
-  dataContext,
-  showUserSurveyModal,
-  surveySubmitted,
-  waitingForResponse,
-  statusMsg,
-  errorMsg,
+  userID = '',
+  dataContext = '',
+  showUserSurveyModal = false,
+  surveySubmitted  = false,
+  waitingForResponse = false,
+  statusMsg = '',
+  errorMsg = '',
   handleModalClose,
   handleUserSurveySubmit,
 }) {
@@ -248,16 +248,6 @@ UserSurveyModal.propTypes = {
   errorMsg: PropTypes.string,
   handleModalClose: PropTypes.func.isRequired,
   handleUserSurveySubmit: PropTypes.func.isRequired,
-};
-
-UserSurveyModal.defaultProps = {
-  userID: '',
-  dataContext: '',
-  showUserSurveyModal: false,
-  surveySubmitted: false,
-  waitingForResponse: false,
-  statusMsg: '',
-  errorMsg: '',
 };
 
 const mapStateToProps = (state) => ({

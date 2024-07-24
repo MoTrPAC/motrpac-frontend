@@ -19,10 +19,10 @@ import '@styles/phenotypeAnimal.scss';
  * @return {Object} JSX representation of the animal phenotype data visualization
  */
 function Pass1b06PhenotypeAnimal({
-  weightPlot,
-  bodyFatPlot,
-  vo2Plot,
-  lactatePlot,
+  weightPlot= 'one_week_program',
+  bodyFatPlot= 'one_week_program',
+  vo2Plot= 'one_week_program',
+  lactatePlot= 'one_week_program',
   toggleWeightPlot,
   toggleBodyFatPlot,
   toggleVo2Plot,
@@ -156,12 +156,6 @@ Pass1b06PhenotypeAnimal.propTypes = {
   toggleLactatePlot: PropTypes.func.isRequired,
 };
 
-Pass1b06PhenotypeAnimal.defaultProps = {
-  weightPlot: 'one_week_program',
-  bodyFatPlot: 'one_week_program',
-  vo2Plot: 'one_week_program',
-  lactatePlot: 'one_week_program',
-};
 
 const mapStateToProps = (state) => ({
   ...state.analysis,
