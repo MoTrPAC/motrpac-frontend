@@ -1962,17 +1962,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fullhuman/postcss-purgecss@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "@fullhuman/postcss-purgecss@npm:6.0.0"
-  dependencies:
-    purgecss: "npm:^6.0.0"
-  peerDependencies:
-    postcss: ^8.0.0
-  checksum: 10c0/817c1103c400249841cc86257fbdb1da90c75dc412ff3b63b156f72055fe43347281749432f680f7e13673473a7daebf496bd1d2f7b17370f6dafb011cbf83f7
-  languageName: node
-  linkType: hard
-
 "@humanwhocodes/module-importer@npm:^1.0.1":
   version: 1.0.1
   resolution: "@humanwhocodes/module-importer@npm:1.0.1"
@@ -3736,7 +3725,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "MoTrPAC@workspace:."
   dependencies:
-    "@fullhuman/postcss-purgecss": "npm:^6.0.0"
     "@storybook/addon-actions": "npm:^8.0.9"
     "@storybook/addon-links": "npm:^8.0.9"
     "@storybook/react": "npm:^8.0.9"
@@ -4809,13 +4797,6 @@ __metadata:
   version: 7.2.0
   resolution: "commander@npm:7.2.0"
   checksum: 10c0/8d690ff13b0356df7e0ebbe6c59b4712f754f4b724d4f473d3cc5b3fdcf978e3a5dc3078717858a2ceb50b0f84d0660a7f22a96cdc50fb877d0c9bb31593d23a
-  languageName: node
-  linkType: hard
-
-"commander@npm:^12.0.0":
-  version: 12.1.0
-  resolution: "commander@npm:12.1.0"
-  checksum: 10c0/6e1996680c083b3b897bfc1cfe1c58dfbcd9842fd43e1aaf8a795fbc237f65efcc860a3ef457b318e73f29a4f4a28f6403c3d653d021d960e4632dd45bde54a9
   languageName: node
   linkType: hard
 
@@ -9756,7 +9737,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-selector-parser@npm:^6.0.7, postcss-selector-parser@npm:^6.1.0":
+"postcss-selector-parser@npm:^6.1.0":
   version: 6.1.0
   resolution: "postcss-selector-parser@npm:6.1.0"
   dependencies:
@@ -9773,7 +9754,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.38, postcss@npm:^8.4.4":
+"postcss@npm:^8.4.38":
   version: 8.4.39
   resolution: "postcss@npm:8.4.39"
   dependencies:
@@ -9936,20 +9917,6 @@ __metadata:
   version: 2.3.1
   resolution: "punycode@npm:2.3.1"
   checksum: 10c0/14f76a8206bc3464f794fb2e3d3cc665ae416c01893ad7a02b23766eb07159144ee612ad67af5e84fa4479ccfe67678c4feb126b0485651b302babf66f04f9e9
-  languageName: node
-  linkType: hard
-
-"purgecss@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "purgecss@npm:6.0.0"
-  dependencies:
-    commander: "npm:^12.0.0"
-    glob: "npm:^10.3.10"
-    postcss: "npm:^8.4.4"
-    postcss-selector-parser: "npm:^6.0.7"
-  bin:
-    purgecss: bin/purgecss.js
-  checksum: 10c0/24f01c1f46e7908964e0d99d48b3ed701d0b878abe111e8706ba26206bcd3747d7ae8c9c01173e5e79ae2d565c6bfc06dc683bfb999f2d00f204243edf603281
   languageName: node
   linkType: hard
 
