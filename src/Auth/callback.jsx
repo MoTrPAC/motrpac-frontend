@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import actions from './authActions';
 
-function Callback({ location = { hash: '' } }) {
+function Callback() {
+  const location = useLocation();
+
   const { isAuthenticated, isFetching, message } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   // Handle authentication if expected values are in the URL.
@@ -25,11 +27,5 @@ function Callback({ location = { hash: '' } }) {
     </>
   );
 }
-
-Callback.propTypes = {
-  location: PropTypes.shape({
-    hash: PropTypes.string,
-  }),
-};
 
 export default Callback;

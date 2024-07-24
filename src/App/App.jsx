@@ -1,3 +1,4 @@
+import Callback from "@/Auth/callback.jsx";
 import React, { lazy, Suspense } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -63,7 +64,6 @@ const ClinicalStudyProtocols = lazy(
 const Pass1b06PhenotypeAnimalConnected = lazy(
   () => import('../AnalysisPage/pass1b06PhenotypeAnimal'),
 );
-const CallbackConnected = lazy(() => import('../Auth/callback'));
 
 const store = configureStore();
 
@@ -82,7 +82,7 @@ function App({ history = History }) {
                 <Route element={<PageTracker/>}>
                   <Route
                     path="/callback"
-                    element={<CallbackConnected/>}
+                    element={<Callback />}
                   />
                   <Route
                     path="/"
