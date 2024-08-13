@@ -20,6 +20,7 @@ import IconSet from '../lib/iconSet';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import { genes } from '../data/genes';
 import { metabolites } from '../data/metabolites';
+import { proteins } from '../data/proteins';
 import searchStructuredData from '../lib/searchStructuredData/search';
 import UserSurveyModal from '../UserSurvey/userSurveyModal';
 
@@ -110,6 +111,20 @@ export function SearchPage({
     return null;
   }
 
+  // get options based on selected search context
+  function getOptions() {
+    switch (searchParams.ktype) {
+      case 'gene':
+        return genes;
+      case 'metab':
+        return metabolites;
+      case 'protein':
+        return proteins;
+      default:
+        return [];
+    }
+  }
+
   // render placeholder text in primary search input field
   function renderPlaceholder() {
     if (searchParams.ktype === 'protein') {
@@ -130,7 +145,7 @@ export function SearchPage({
       multiSelections.forEach((item) => newArr.push(item.id));
       return newArr.join(', ');
     }
-    // Handle manually entered gene/metabolite input
+    // Handle manually entered gene/metabolite/protein input
     if (inputEl.value && inputEl.value.length) {
       const str = inputEl.value;
       if (searchParams.ktype === 'gene') {
@@ -143,14 +158,8 @@ export function SearchPage({
   }
 
   // Clear manually entered gene/protein/metabolite input
-  function clearGeneInput(ktype) {
-    const inputElProtein = document.querySelector('.search-input-kype');
-
-    if (ktype && ktype === 'protein') {
-      if (inputElProtein && inputElProtein.value && inputElProtein.value.length) {
-        inputElProtein.value = '';
-      }
-    } else if (inputEl && inputEl.value && inputEl.value.length) {
+  function clearGeneInput() {
+    if (inputEl && inputEl.value && inputEl.value.length) {
       inputRef.current.clear();
     }
   }
@@ -205,22 +214,18 @@ export function SearchPage({
                     pest_control_rodent
                   </span>
                 </div>
-                {searchParams.ktype === 'gene' ||
-                searchParams.ktype === 'metab' ? (
-                  <Typeahead
-                    id="dea-search-typeahead-multiple"
-                    labelKey="id"
-                    multiple
-                    onChange={setMultiSelections}
-                    options={
-                      searchParams.ktype === 'gene' ? genes : metabolites
-                    }
-                    placeholder={renderPlaceholder()}
-                    selected={multiSelections}
-                    minLength={2}
-                    ref={inputRef}
-                  />
-                ) : null}
+                <Typeahead
+                  id="dea-search-typeahead-multiple"
+                  labelKey="id"
+                  multiple
+                  onChange={setMultiSelections}
+                  options={getOptions()}
+                  placeholder={renderPlaceholder()}
+                  selected={multiSelections}
+                  minLength={2}
+                  ref={inputRef}
+                />
+                {/*
                 {searchParams.ktype === 'protein' && (
                   <input
                     type="text"
@@ -232,6 +237,7 @@ export function SearchPage({
                     onChange={(e) => changeParam('keys', e.target.value)}
                   />
                 )}
+                */}
               </div>
               <PrimaryOmicsFilter
                 omics={searchParams.omics}
@@ -273,9 +279,7 @@ export function SearchPage({
                   type="button"
                   className="btn btn-secondary search-reset ml-2"
                   onClick={() => {
-                    clearGeneInput(
-                      searchParams.ktype === 'protein' ? 'protein' : null
-                    );
+                    clearGeneInput();
                     resetSearch('all');
                     setMultiSelections([]);
                   }}
@@ -477,7 +481,7 @@ function RadioButton({
     {
       keyType: 'protein',
       id: 'inlineRadioProtein',
-      label: 'Protein ID',
+      label: 'Protein Name',
     },
     {
       keyType: 'metab',
