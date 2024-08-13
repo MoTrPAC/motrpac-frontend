@@ -1,4 +1,4 @@
-const baseUrl = 'http://study-docs.motrpac-data.org';
+const baseUrl = 'https://d1yw74buhe0ts0.cloudfront.net/docs';
 
 const StudyDocuments = [
   {
