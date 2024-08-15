@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import IconSet from './iconSet';
-import StudyDocuments from '../DataAccess/studyDocuments';
+import { AnimalStudyDocuments } from '../DataAccess/studyDocuments';
 
 function StudyDocumentsTable({ currentView }) {
-  const newArray = [...StudyDocuments];
+  const newArray = [...AnimalStudyDocuments];
   if (currentView === 'internal') {
     newArray.pop();
   }
@@ -27,7 +27,7 @@ function StudyDocumentsTable({ currentView }) {
 
   return (
     <div className="card mb-3 border-secondary motrpac-study-documents">
-      <h5 className="card-header bg-secondary text-light">MoTrPAC study documents</h5>
+      <h5 className="card-header bg-secondary text-light">MoTrPAC animal study documents</h5>
       <div className="card-body">
         <div className="table-responsive">
           <div className="table table-document-list">
