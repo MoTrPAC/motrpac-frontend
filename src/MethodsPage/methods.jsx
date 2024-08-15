@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import StudyDocumentsTable from '../lib/studyDocumentsTable';
+import HumanStudyDocumentsTable from '../lib/humanStudyDocumentsTable';
 import ExternalLink from '../lib/ui/externalLink';
 
 /**
@@ -15,6 +16,8 @@ import ExternalLink from '../lib/ui/externalLink';
  */
 export function Methods({ profile }) {
   const userType = profile.user_metadata && profile.user_metadata.userType;
+
+  const baseUrl = 'https://d1yw74buhe0ts0.cloudfront.net/docs';
 
   return (
     <div className="methodsPage px-3 px-md-4 mb-3 container">
@@ -30,18 +33,18 @@ export function Methods({ profile }) {
             (rats). Preclinical Animal Study Sites (PASSs) conduct the endurance
             exercise and training intervention in rats (see{' '}
             <ExternalLink
-              to="https://motrpac.org/actDocumentDownload.cfm?docGUID=A31CDD1F-8A59-41D9-BABA-125B37A39BF5"
+              to={`${baseUrl}/Animal_Protocol.pdf`}
               label="animal protocol"
             />
             ), and Human Clinical Exercise Sites conduct the human endurance and
             resistance training interventions (see{' '}
             <ExternalLink
-              to="https://motrpac.org/actDocumentDownload.cfm?docGUID=8120CEC8-5761-4C74-9EB3-4544EEC99FA4"
+              to={`${baseUrl}/MoTrPAC_Adult_Study_Protocol.pdf`}
               label="adult protocol"
             />{' '}
             and{' '}
             <ExternalLink
-              to="https://motrpac.org/actDocumentDownload.cfm?docGUID=67F818DF-22CC-4C56-88F4-B07FDA8BA6EE"
+              to={`${baseUrl}/MoTrPAC_Pediatric_Study_Protocol.pdf`}
               label="pediatric protocol"
             />
             ). Multiple biospecimen samples are collected at different time
@@ -69,9 +72,14 @@ export function Methods({ profile }) {
             </div>
           </section>
         ) : (
-          <section className="study-docs-container">
-            <StudyDocumentsTable currentView={userType} />
-          </section>
+          <>
+            <section className="study-docs-container">
+              <StudyDocumentsTable currentView={userType} />
+            </section>
+            <section className="study-docs-container pt-4">
+              <HumanStudyDocumentsTable />
+            </section>
+          </>
         )}
       </div>
     </div>
