@@ -29,35 +29,22 @@ export function Methods({ profile }) {
       <div className="methods-content-container">
         <div className="methods-summary-container row mb-4">
           <div className="lead col-12">
-            The MoTrPAC study is divided into two main parts; human and animal
-            (rats). Preclinical Animal Study Sites (PASSs) conduct the endurance
-            exercise and training intervention in rats (see{' '}
-            <ExternalLink
-              to={`${baseUrl}/Animal_Protocol.pdf`}
-              label="animal protocol"
-            />
-            ), and Human Clinical Exercise Sites conduct the human endurance and
-            resistance training interventions (see{' '}
-            <ExternalLink
-              to={`${baseUrl}/MoTrPAC_Adult_Study_Protocol.pdf`}
-              label="adult protocol"
-            />{' '}
-            and{' '}
-            <ExternalLink
-              to={`${baseUrl}/MoTrPAC_Pediatric_Study_Protocol.pdf`}
-              label="pediatric protocol"
-            />
-            ). Multiple biospecimen samples are collected at different time
-            points after acute and chronic exercise. Please see the Animal
-            protocol below for details on the animal training intervention and
-            sample collection. The biospecimen samples are distributed from a
-            central biorepository to various Chemical Analysis Sites (CASs) for
-            molecular ‘omics analysis. Specific methods for the different
-            molecular assays are described in the Manual Of Procedures (MOPs).
-            There is one for the genomic, transcriptomic and epigenomic data
-            (GET), one for proteomics and one for metabolomics. In addition, the
-            assay-specific quality control (QC) procedures are described in the
-            QC Standard Operating Procedures (SOPs) documents.
+            The MoTrPAC study is divided into two main parts; human and animal (rats).
+            Preclinical Animal Study Sites (PASSs) conduct the endurance exercise and
+            training intervention in rats, and Human Clinical Exercise Sites conduct
+            the human endurance and resistance training interventions. Multiple
+            biospecimen samples are collected at different time points after acute
+            and chronic exercise. Please see the Animal protocol below for details
+            on the animal training intervention and sample collection, and the Adult
+            and Pediatric protocols for the human interventions and sample collection.
+            The biospecimen samples are distributed from a central biorepository to
+            various Chemical Analysis Sites (CASs) for molecular 'omics analysis.
+            Specific methods for the different molecular assays and specific
+            operational details are described in the Manual Of Procedures (MOPs).
+            There is one for the genomic, transcriptomic and epigenomic data (GET),
+            one for proteomics and one for metabolomics. In addition, the
+            assay-specific quality control (QC) procedures are described in the QC
+            Standard Operating Procedures (SOPs) documents.
           </div>
         </div>
         {userType && userType === 'internal' ? (
