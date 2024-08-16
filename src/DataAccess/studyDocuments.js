@@ -1,6 +1,6 @@
-const baseUrl = 'http://study-docs.motrpac-data.org';
+const baseUrl = 'https://d1yw74buhe0ts0.cloudfront.net/docs';
 
-const StudyDocuments = [
+export const AnimalStudyDocuments = [
   {
     title: 'Animal protocol',
     location: `${baseUrl}/Animal_Protocol.pdf`,
@@ -63,4 +63,29 @@ const StudyDocuments = [
   },
 ];
 
-export default StudyDocuments;
+export const HumanStudyDocuments = [
+  {
+    title: 'MoTrPAC Adult Study - Protocol',
+    location: `${baseUrl}/MoTrPAC_Adult_Study_Protocol.pdf`,
+    description: 'Describes the MoTrPAC research study for the Adult humans including design, rationale, objectives, methodologies, and how data is managed and analyzed.',
+    filetype: 'pdf',
+  },
+  {
+    title: 'MoTrPAC Adult Study - Manual of Procedures chapters',
+    location: `${baseUrl}/MoTrPAC_Adult_Study_Manual_of_Procedures_chapters.pdf`,
+    description: 'Details the conduct of the MoTrPAC study operations for standardized implementation of the Adult human protocol.',
+    filetype: 'pdf',
+  },
+  {
+    title: 'MoTrPAC Pediatric Study - Protocol',
+    location: `${baseUrl}/MoTrPAC_Pediatric_Study_Protocol.pdf`,
+    description: 'Describes the MoTrPAC research study for the Pediatric humans including design, rationale, objectives, methodologies, and how data is managed and analyzed.',
+    filetype: 'pdf',
+  },
+  {
+    title: 'MoTrPAC Pediatric Study - Manual of Procedures chapters',
+    location: `${baseUrl}/MoTrPAC_Pediatric_Study_Manual_of_Procedures_chapters.pdf`,
+    description: 'Details the conduct of the MoTrPAC study operations for standardized implementation of the Pediatric human protocol.',
+    filetype: 'pdf',
+  },
+];
