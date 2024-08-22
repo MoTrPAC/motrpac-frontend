@@ -11,7 +11,7 @@ import {
 
 export const searchParamsDefaultProps = {
   ktype: 'gene',
-  keys: '',
+  keys: [],
   omics: 'all',
   analysis: 'all',
   filters: {
@@ -47,7 +47,7 @@ export const searchParamsDefaultProps = {
 
 export const searchParamsPropType = {
   ktype: PropTypes.string,
-  keys: PropTypes.string,
+  keys: PropTypes.arrayOf(PropTypes.string),
   omics: PropTypes.string,
   analysis: PropTypes.string,
   filters: PropTypes.shape({
