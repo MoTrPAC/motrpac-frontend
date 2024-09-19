@@ -35,6 +35,7 @@ function FeatureLinks({
 
   const features = [
     {
+      name: 'data-download',
       route: 'data-download',
       description:
         'Browse and download the available MoTrPAC study data in young adult rats by tissue, assay, or omics.',
@@ -43,14 +44,16 @@ function FeatureLinks({
       eventHandler: handleDataObjectFetch,
     },
     {
+      name: 'pass1b-06-data-visualization',
       route: 'https://data-viz.motrpac-data.org/',
       description:
         'An interactive data visualization tool for the graphical clustering analysis of endurance training response in young adult rats.',
       icon: 'data_exploration',
-      title: 'Data Visualization',
+      title: 'Endurance Trained Young Adult Rats Data Visualization',
       eventHandler: null,
     },
     {
+      name: 'code-repositories',
       route: 'code-repositories',
       description:
         'Explore the source code essential to the workflow for the young adult rats data in the endurance training study.',
@@ -59,6 +62,7 @@ function FeatureLinks({
       eventHandler: null,
     },
     {
+      name: 'sample-summary',
       route: 'summary',
       description:
         'A dashboard to visualize sample counts by tissue, assay, or omics in the young adult rat endurance training and acute exercise studies.',
@@ -66,6 +70,7 @@ function FeatureLinks({
       title: 'Sample Summary',
       eventHandler: null,
     },
+    /*
     {
       route: 'releases',
       description:
@@ -74,15 +79,9 @@ function FeatureLinks({
       title: 'Data Releases',
       eventHandler: null,
     },
+    */
     {
-      route: 'qc-data-monitor',
-      description:
-        'Track and visualize the sample-level data submissions and their QC statuses by omics or assays.',
-      icon: 'fact_check',
-      title: 'QC Data Monitor',
-      eventHandler: fecthQCData,
-    },
-    {
+      name: 'motrpac-collab',
       route:
         'https://collab.motrpac-data.org/hub/oauth_login?next=%2Fhub%2Fhome',
       description:
@@ -92,9 +91,29 @@ function FeatureLinks({
       eventHandler: null,
     },
     {
+      name: 'qc-data-monitor',
+      route: 'qc-data-monitor',
+      description:
+        'Track and visualize the sample-level data submissions and their QC statuses by omics or assays.',
+      icon: 'fact_check',
+      title: 'QC Data Monitor',
+      eventHandler: fecthQCData,
+    },
+    {
+      name: 'precovid-human-data-visualization',
+      route:
+        'https://data-viz-dev.motrpac-data.org/precawg/',
+      description:
+        'An interactive data visualization tool for the analysis of pre-COVID human sedentary adults study data.',
+      icon: 'airline_seat_recline_normal',
+      title: 'Pre-COVID Human Data Visualization',
+      eventHandler: null,
+    },
+    {
+      name: 'multiomics-working-groups',
       route: 'multiomics-working-groups',
       description:
-        'Data analysis resources available to each of the MoTrPAC multi-omics working groups.',
+        'Data analysis resources, including onboarding guide and Jupyter notebooks, for each of the MoTrPAC multi-omics working groups.',
       icon: 'group',
       title: 'Multi-omics Working Groups',
       eventHandler: null,
@@ -108,9 +127,9 @@ function FeatureLinks({
     <div className="feature-links-container pt-2">
       <div className="row row-cols-1 row-cols-xl-4 row-cols-lg-3 row-cols-sm-1 mt-5">
         {featuresToRender.map((item) => (
-          <div key={item.route} className="col mb-4">
-            <div className={`card h-100 mb-3 p-3 shadow-sm ${item.route}`}>
-              {item.route.indexOf('http') !== -1 ? (
+          <div key={item.name} className="col mb-4">
+            <div className={`card h-100 mb-3 p-3 shadow-sm ${item.name}`}>
+              {item.route.indexOf('https') !== -1 ? (
                 <a
                   href={item.route}
                   target="_blank"

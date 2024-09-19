@@ -303,13 +303,19 @@
       }
     }
 
-    &.summary {
+    &.sample-summary {
       .material-icons {
         color: lighten($accent-violet, 12%);
       }
     }
 
-    &.code-repositories {
+    &.code-repositories, &.motrpac-collab {
+      .material-icons {
+        color: $gray;
+      }
+    }
+
+    &.motrpac-collab {
       .material-icons {
         color: $gray-semi-transparent;
       }
