@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory} from 'react-router-dom';
 import dayjs from 'dayjs';
 
 /**
@@ -15,6 +15,8 @@ function FeatureLinks({
   lastModified,
   userType,
 }) {
+  const history = useHistory();
+
   const handleDataObjectFetch = () => {
     if (allFiles.length === 0) {
       handleDataFetch();
@@ -123,46 +125,44 @@ function FeatureLinks({
   const featuresToRender =
     userType === 'internal' ? features : features.slice(0, 4);
 
+  // handle click event for external links
+  function handleFeatureLinkClick(e, item) {
+    e.stopPropagation();
+
+    if (item.route.indexOf('https') !== -1) {
+      return window.open(item.route, '_blank');
+    }
+
+    history.push(`/${item.route}`);
+    if (item.eventHandler) {
+      item.eventHandler();
+    }
+  }
+
   return (
     <div className="feature-links-container pt-2">
       <div className="row row-cols-1 row-cols-xl-4 row-cols-lg-3 row-cols-sm-1 mt-5">
         {featuresToRender.map((item) => (
           <div key={item.name} className="col mb-4">
-            <div className={`card h-100 mb-3 p-3 shadow-sm ${item.name}`}>
-              {item.route.indexOf('https') !== -1 ? (
-                <a
-                  href={item.route}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="external-link"
-                >
-                  <div className="card-body">
-                    <div className="h-100 d-flex align-items-start">
-                      <div className="feature-icon mr-3">
-                        <span className="material-icons">{item.icon}</span>
-                      </div>
-                      <div className="feature-summary">
-                        <h4 className="card-title">{item.title}</h4>
-                        <p className="card-text">{item.description}</p>
-                      </div>
-                    </div>
+            {/*
+              eslint-disable-next-line jsx-a11y/no-static-element-interactions,
+              jsx-a11y/click-events-have-key-events
+            */}
+            <div
+              className={`card h-100 mb-3 p-3 shadow-sm ${item.name}`}
+              onClick={(e) => handleFeatureLinkClick(e, item)}
+            >
+              <div className="card-body">
+                <div className="h-100 d-flex align-items-start">
+                  <div className="feature-icon mr-3">
+                    <span className="material-icons">{item.icon}</span>
                   </div>
-                </a>
-              ) : (
-                <Link to={`/${item.route}`} onClick={item.eventHandler}>
-                  <div className="card-body">
-                    <div className="h-100 d-flex align-items-start">
-                      <div className="feature-icon mr-3">
-                        <span className="material-icons">{item.icon}</span>
-                      </div>
-                      <div className="feature-summary">
-                        <h4 className="card-title">{item.title}</h4>
-                        <p className="card-text">{item.description}</p>
-                      </div>
-                    </div>
+                  <div className="feature-summary">
+                    <h4 className="card-title">{item.title}</h4>
+                    <p className="card-text">{item.description}</p>
                   </div>
-                </Link>
-              )}
+                </div>
+              </div>
             </div>
           </div>
         ))}

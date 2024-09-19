@@ -320,6 +320,13 @@
         color: $gray-semi-transparent;
       }
     }
+
+    &.pass1b-06-data-visualization,
+    &.precovid-human-data-visualization {
+      .material-icons {
+        color: $primary-blue;
+      }
+    }
   }
 }
 
