@@ -47,7 +47,7 @@ function FeatureLinks({
     },
     {
       name: 'pass1b-06-data-visualization',
-      route: 'https://data-viz.motrpac-data.org/',
+      route: process.env.NODE_ENV !== 'production' ? 'https://data-viz-dev.motrpac-data.org/' : 'https://data-viz.motrpac-data.org/',
       description:
         'An interactive data visualization tool for the graphical clustering analysis of endurance training response in young adult rats.',
       icon: 'data_exploration',
@@ -103,8 +103,7 @@ function FeatureLinks({
     },
     {
       name: 'precovid-human-data-visualization',
-      route:
-        'https://data-viz-dev.motrpac-data.org/precawg/',
+      route: process.env.NODE_ENV !== 'production' ? 'https://data-viz-dev.motrpac-data.org/precawg' : 'https://data-viz.motrpac-data.org/precawg',
       description:
         'An interactive data visualization tool for the analysis of pre-COVID human sedentary adults study data.',
       icon: 'airline_seat_recline_normal',
@@ -122,8 +121,7 @@ function FeatureLinks({
     },
   ];
 
-  const featuresToRender =
-    userType === 'internal' ? features : features.slice(0, 4);
+  const featuresToRender = userType === 'internal' ? features : features.slice(0, 4);
 
   // handle click event for external links
   function handleFeatureLinkClick(e, item) {
