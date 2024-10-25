@@ -111,7 +111,7 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
               <tbody>
                 <tr>
                   <td>
-                    <strong>Young adult (6 month old)</strong>
+                    <strong>Young Adults (6 month old)</strong>
                     <ul>
                       <li>Acute exercise</li>
                       <li>
@@ -127,7 +127,7 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
                       </li>
                       <li>Controls</li>
                     </ul>
-                    <strong>Middle-aged adult (18 month old)</strong>
+                    <strong>Middle-aged Adults (18 month old)</strong>
                     <ul>
                       <li>Acute exercise</li>
                       <li>Endurance training</li>
@@ -135,13 +135,13 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
                     </ul>
                   </td>
                   <td>
-                    <strong>Pediatric</strong>
+                    <strong>Pediatrics</strong>
                     <ul>
                       <li>Endurance training</li>
                       <li>Acute exercise</li>
                       <li>Control</li>
                     </ul>
-                    <strong>Adult</strong>
+                    <strong>Sedentary Adults</strong>
                     <ul>
                       <li>Acute endurance exercise</li>
                       <li>Acute resistance exercise</li>
@@ -149,7 +149,7 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
                       <li>Resistance training</li>
                       <li>Control</li>
                     </ul>
-                    <strong>Highly active adult</strong>
+                    <strong>Highly Active Adults</strong>
                     <ul>
                       <li>Acute endurance exercise</li>
                       <li>Acute resistance exercise</li>

@@ -100,7 +100,7 @@ function HeritageProteomics() {
                 download
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://drive.google.com/file/d/1XOdx__kqZYuEkLHnDuBqRPho50w3sNG3/view?usp=sharing"
+                href="https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/publications/data/related-studies/heritage-proteomics/HERITAGE_proteomics_somalogic.xlsx"
                 className="btn btn-outline-primary d-flex align-items-center"
                 role="button"
               >
@@ -121,7 +121,7 @@ function HeritageProteomics() {
                 download
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://drive.google.com/file/d/1eNj4AmspK7UH74odeDDZpfBA1CNKghFA/view?usp=sharing"
+                href="https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/publications/data/related-studies/heritage-proteomics/HERITAGE_somalogic_analytes.xlsx"
                 className="btn btn-outline-primary d-flex align-items-center"
                 role="button"
               >
