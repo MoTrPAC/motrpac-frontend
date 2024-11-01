@@ -32,6 +32,7 @@
     "react-scripts": "5.0.1",
     "react-table": "^7.7.0",
     "react-tooltip": "^5.11.2",
+    "react-wordcloud": "^1.2.7",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "tocbot": "^4.25.0",
