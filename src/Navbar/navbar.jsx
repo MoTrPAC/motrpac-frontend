@@ -345,7 +345,7 @@ export function Navbar({
                   id="helpNavbarItemMenuLink"
                   data-toggle="dropdown"
                 >
-                  Help
+                  Learn
                 </div>
                 <div
                   className="dropdown-menu"
@@ -354,16 +354,14 @@ export function Navbar({
                   <Link to="/project-overview" className="dropdown-item">
                     Project Overview
                   </Link>
+                  <Link to="/exercise-benefits" className="dropdown-item">
+                    Exercise Benefits
+                  </Link>
+                  <Link to="/study-assays" className="dropdown-item">
+                    Study Assays
+                  </Link>
                   <Link to="/tutorials" className="dropdown-item">
                     Tutorials
-                  </Link>
-                  <Link
-                    id="send_email"
-                    to="/contact"
-                    className="dropdown-item"
-                    onClick={(e) => checkServiceStatus(e)}
-                  >
-                    Contact Us
                   </Link>
                 </div>
               </li>
@@ -388,6 +386,14 @@ export function Navbar({
                   </Link>
                   <Link to="/external-links" className="dropdown-item">
                     Useful Links
+                  </Link>
+                  <Link
+                    id="send_email"
+                    to="/contact"
+                    className="dropdown-item"
+                    onClick={(e) => checkServiceStatus(e)}
+                  >
+                    Contact Us
                   </Link>
                 </div>
               </li>
