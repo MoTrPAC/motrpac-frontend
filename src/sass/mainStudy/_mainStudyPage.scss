@@ -70,3 +70,8 @@
     }
   }
 }
+
+// disable react-wordcloud tooltip
+div[data-tippy-root=""] {
+  display: none !important;
+}
