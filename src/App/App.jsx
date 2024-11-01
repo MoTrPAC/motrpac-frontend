@@ -25,7 +25,8 @@ import SearchPageConnected from '../Search/searchPage';
 import GeneCentricViewConnected from '../AnalysisPage/GeneCentricViewRat/geneCentricViewPage';
 import GraphicalClustering from '../AnalysisPage/GraphicalClustering/graphicalClusteringPage';
 import CodeRepositories from '../CodeRepoPage/codeRepoPage';
-import MainStudyConnected from '../MainStudy/mainStudy';
+import ProjectOverviewConnected from '../MainStudy/overview';
+import ExerciseBenefits from '../MainStudy/exerciseBenefits';
 import Tutorials from '../Tutorials/tutorials';
 import Publications from '../Publications/publications';
 import MultiOmicsWorkingGroups from '../MultiOmicsWorkingGroups/multiOmicsWorkingGroups';
@@ -134,7 +135,11 @@ function App({ history = History }) {
               />
               <Route
                 path="/project-overview"
-                component={withTracker(MainStudyConnected)}
+                component={withTracker(ProjectOverviewConnected)}
+              />
+              <Route
+                path="/exercise-benefits"
+                component={withTracker(ExerciseBenefits)}
               />
               <Route path="/tutorials" component={withTracker(Tutorials)} />
               <Route
