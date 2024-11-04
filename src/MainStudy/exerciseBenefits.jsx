@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet';
 import ReactWordcloud from 'react-wordcloud';
 import PageTitle from '../lib/ui/pageTitle';
 import ExternalLink from '../lib/ui/externalLink';
+import exerciseBenefitsData from './exerciseBenefitsData';
+import exerciseBenefitsReferenceData from './exerciseBenefitsReferenceData';
 
 const exerciseBenefits = [
   'Improved immune system',
@@ -22,41 +24,10 @@ const exerciseBenefits = [
   'Increased reliance on lipid metabolism',
   'Stronger skeleton, joints and tendons',
   'Reduced risk of all-cause mortality',
-  'Reduced risk of cardiovascular disease',
+  'Reduced risk of cardiovascular diseases',
   'Improved cognition',
   'Reduced stress response',
   'Reduced risk for dementia',
-];
-
-const exerciseBenefitList = [
-  {
-    title: 'Younger-looking skin',
-    evidence: 'Exercise improves skin health by enhancing blood flow and delivering oxygen and nutrients to the skin, promoting collagen production and reducing signs of aging.',
-  },
-  {
-    title: 'Reduced risk of cancer',
-    evidence: 'Physical activity is linked to a lower risk of several cancers, including colon, breast, and prostate. The American College of Sports Medicine notes that exercise decreases the risk of developing these cancers.',
-  },
-  {
-    title: 'Reduced risk of metabolic disease',
-    evidence: 'Regular exercise improves insulin sensitivity, reduces the risk of type 2 diabetes, and enhances overall metabolic health.',
-  },
-  {
-    title: 'Better temperature regulation',
-    evidence: 'Exercise improves thermoregulation by enhancing sweat response and increasing blood flow to the skin.',
-  },
-  {
-    title: 'Better sex',
-    evidence: 'Physical activity is associated with improved sexual function and satisfaction, likely due to enhanced cardiovascular health and psychological well-being.',
-  },
-  {
-    title: 'Improved sleep',
-    evidence: 'Exercise has been shown to improve sleep quality and reduce the time it takes to fall asleep.',
-  },
-  {
-    title: 'Reduced risk for depression',
-    evidence: 'Regular physical activity reduces the risk of depression and anxiety, as highlighted by the United States Department of Health and Human Services.',
-  },
 ];
 
 function ExerciseBenefits() {
@@ -113,14 +84,56 @@ function ExerciseBenefits() {
               </tr>
             </thead>
             <tbody>
-              {exerciseBenefitList.map((benefit) => (
-                <tr key={`${benefit}`}>
+              {exerciseBenefitsData.map((benefit) => (
+                <tr key={`${benefit.title}`}>
                   <th scope="row">{benefit.title}</th>
-                  <td>{benefit.evidence}</td>
+                  <td>
+                    {benefit.evidence}
+                    <sup>
+                      [
+                      <a href={`#cite-${benefit.citationNo}`}>
+                        {benefit.citationNo}
+                      </a>
+                      ]
+                    </sup>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          <p>
+            These benefits underscore the importance of regular physical activity
+            as a cornerstone of preventive health care.
+          </p>
+        </div>
+        <div className="exercise-benefits-page-content-container row mt-3 mb-4">
+          <div className="col-12">
+            <h5 className="border-bottom mb-3 pb-2">
+              References:
+            </h5>
+            <ol className="cexercise-benefits-itation-list">
+              {exerciseBenefitsReferenceData.map((reference) => (
+                <li key={`${reference.doi}`} id={`cite-${reference.citationNo}`}>
+                  <p>
+                    <span className="font-weight-bold">{reference.title}</span>
+                    <br />
+                    {`${reference.author}.`}
+                    <br />
+                    {`${reference.journal}.`}
+                    {' '}
+                    <em>{`${reference.publicationIssue}.`}</em>
+                    <br />
+                    doi:
+                    {' '}
+                    <ExternalLink
+                      to={`https://doi.org/${reference.doi}`}
+                      label={reference.doi}
+                    />
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
       </div>
     </div>
