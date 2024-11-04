@@ -23,7 +23,7 @@ describe('<App />', () => {
   });
 
   test('It should contain fifteen <Route /> children', () => {
-    expect(component.find('Route').length).toBe(21);
+    expect(component.find('Route').length).toBe(23);
   });
 
   test('It should contain four <PrivateRoute /> children', () => {
@@ -81,7 +81,7 @@ describe('Unauthenticated Application routing', () => {
   test('loads the browse data page at /project-overview', () => {
     history.push('/project-overview');
     mountApp.update();
-    testCorrectComponentInPath(mountApp, 'Route', 'MainStudy', '/project-overview', history);
+    testCorrectComponentInPath(mountApp, 'Route', 'ProjectOverview', '/project-overview', history);
   });
 
   test('loads the linkout page at /external-links', () => {
