@@ -27,6 +27,7 @@ import GraphicalClustering from '../AnalysisPage/GraphicalClustering/graphicalCl
 import CodeRepositories from '../CodeRepoPage/codeRepoPage';
 import ProjectOverviewConnected from '../MainStudy/overview';
 import ExerciseBenefits from '../MainStudy/exerciseBenefits';
+import StudyAssays from '../MainStudy/studyAssays';
 import Tutorials from '../Tutorials/tutorials';
 import Publications from '../Publications/publications';
 import MultiOmicsWorkingGroups from '../MultiOmicsWorkingGroups/multiOmicsWorkingGroups';
@@ -140,6 +141,10 @@ function App({ history = History }) {
               <Route
                 path="/exercise-benefits"
                 component={withTracker(ExerciseBenefits)}
+              />
+              <Route
+                path="/study-assays"
+                component={withTracker(StudyAssays)}
               />
               <Route path="/tutorials" component={withTracker(Tutorials)} />
               <Route
