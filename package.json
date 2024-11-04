@@ -13,6 +13,8 @@
     "dayjs": "1.11.7",
     "from-exponential": "^1.1.1",
     "ga-gtag": "1.2.0",
+    "highcharts": "^11.4.8",
+    "highcharts-react-official": "^3.2.1",
     "history": "4.10.1",
     "http-proxy-middleware": "^2.0.1",
     "jquery": "^3.5.1",
