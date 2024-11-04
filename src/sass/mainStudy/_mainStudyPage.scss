@@ -71,6 +71,14 @@
   }
 }
 
+.exerciseBenefitsPage {
+  .exercise-benefits-page-content-container {
+    .cexercise-benefits-itation-list {
+      padding-left: 20px;
+    }
+  }
+}
+
 // disable react-wordcloud tooltip
 div[data-tippy-root=""] {
   display: none !important;
