@@ -79,6 +79,22 @@
   }
 }
 
+.studyAssaysPage {
+  .study-assays-page-content-container {
+    .pass1b-06-assay-tissue-table {
+      table td:first-child {
+        width: 35%;
+      }
+
+      .badge-pill {
+        font-size: 0.8rem;
+        font-weight: 500;
+        padding: 0.3rem 0.65rem;
+      }
+    }
+  }
+}
+
 // disable react-wordcloud tooltip
 div[data-tippy-root=""] {
   display: none !important;
