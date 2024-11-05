@@ -1,0 +1,184 @@
+{
+  "epigenomics": {
+    "epigen-atac-seq": [
+      "t52-hippocampus",
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t69-brown-adipose",
+      "t70-white-adipose"
+    ],
+    "epigen-rrbs": [
+      "t52-hippocampus",
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t69-brown-adipose",
+      "t70-white-adipose"
+    ]
+  },
+  "metabolomics-targeted": {
+    "metab-t-acoa": [
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t68-liver",
+      "t70-white-adipose"
+    ],
+    "metab-t-amines": [
+      "t52-hippocampus",
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t69-brown-adipose",
+      "t70-white-adipose"
+    ],
+    "metab-t-etamidpos": [
+      "t52-hippocampus",
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t69-brown-adipose",
+      "t70-white-adipose"
+    ],
+    "metab-t-ka": [
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t68-liver",
+      "t70-white-adipose"
+    ],
+    "metab-t-nuc": [
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t68-liver",
+      "t70-white-adipose"
+    ],
+    "metab-t-oxylipneg": [
+      "t52-hippocampus",
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t69-brown-adipose",
+      "t70-white-adipose"
+    ],
+    "metab-t-tca": [
+      "t52-hippocampus",
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t69-brown-adipose",
+      "t70-white-adipose"
+    ]
+  },
+  "metabolomics-untargeted": {
+    "metab-u-hilicpos": [
+      "t52-hippocampus",
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t69-brown-adipose",
+      "t70-white-adipose"
+    ],
+    "metab-u-ionpneg": [
+      "t52-hippocampus",
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t69-brown-adipose",
+      "t70-white-adipose"
+    ],
+    "metab-u-lrpneg": [
+      "t52-hippocampus",
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t69-brown-adipose",
+      "t70-white-adipose"
+    ],
+    "metab-u-lrppos": [
+      "t52-hippocampus",
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t69-brown-adipose",
+      "t70-white-adipose"
+    ],
+    "metab-u-rpneg": [
+      "t52-hippocampus",
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t69-brown-adipose",
+      "t70-white-adipose"
+    ],
+    "metab-u-rppos": [
+      "t52-hippocampus",
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t69-brown-adipose",
+      "t70-white-adipose"
+    ]
+  },
+  "proteomics-untargeted": {
+    "prot-ac": [
+      "t58-heart",
+      "t68-liver"
+    ],
+    "prot-ph": [
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t70-white-adipose"
+    ],
+    "prot-pr": [
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t70-white-adipose"
+    ],
+    "prot-ub": [
+      "t58-heart",
+      "t68-liver"
+    ]
+  },
+  "transcriptomics": {
+    "transcript-rna-seq": [
+      "t52-hippocampus",
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t69-brown-adipose",
+      "t70-white-adipose"
+    ]
+  }
+}
