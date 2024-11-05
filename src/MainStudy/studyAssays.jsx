@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Highcharts from 'highcharts';
@@ -6,6 +6,7 @@ import HighchartsReact from 'highcharts-react-official';
 import PageTitle from '../lib/ui/pageTitle';
 import ExternalLink from '../lib/ui/externalLink';
 import pass1b06AssayTissueTreeData from './pass1b06AssayTissueTreeData';
+import Pass1b06AssayTissueTable from './pass1b06AssayTissueTable';
 
 // Import order is important!
 require('highcharts/modules/treemap')(Highcharts);
@@ -15,6 +16,7 @@ require('highcharts/modules/exporting')(Highcharts);
 require('highcharts/modules/export-data')(Highcharts);
 
 function StudyAssays() {
+  const [assayView, setAssayView] = useState('table');
   // Highcharts options
   const chartOptions = {
     chart: {
@@ -27,7 +29,7 @@ function StudyAssays() {
       style: {
         fontSize: '1.5rem',
       },
-      text: 'Enduarance trained young adult rats study assays',
+      text: 'Click on a node to expand or collapse its child nodes',
     },
     tooltip: {
       enabled: false,
@@ -100,35 +102,65 @@ function StudyAssays() {
     },
   };
 
+  function handleViewChange(view) {
+    setAssayView(view);
+  }
+
   return (
-    <div className="exerciseBenefitsPage px-3 px-md-4 mb-3 container">
+    <div className="studyAssaysPage px-3 px-md-4 mb-3 container">
       <Helmet>
         <html lang="en" />
         <title>Assays in MoTrPAC Studies - MoTrPAC Data Hub</title>
       </Helmet>
       <PageTitle title="Assays in MoTrPAC Studies" />
-      <div className="exercise-benefits-page-container">
+      <div className="study-assays-page-container">
         <div className="study-assays-page-content-container row mb-4">
-          <div className="study-assays-content-container study-assays mt-4">
-            <div className="col-12">
+          <div className="study-assays-content-container study-assays mt-4 w-100">
+            <div className="col-12 d-flex align-items-center">
               <h3>Endurance trained young adult rats study</h3>
-            </div>
-            <div className="col-12">
-              <p>
-                Below is a visual guide to the assays performed in the endurance
-                trained young adult rats study. Click on a node to expand or
-                collapse it.
-              </p>
-            </div>
-            <div className="plot-container">
-              <div className="w-100">
-                <HighchartsReact
-                  highcharts={Highcharts}
-                  options={chartOptions}
-                  containerProps={{ className: 'phenotype-plot-container' }}
-                />
+              <div className="btn-group ml-3" role="group" aria-label="Assay View Select Button Group">
+                <button
+                  type="button"
+                  className={`btn btn-outline-primary btn-sm ${
+                    assayView === 'table' ? 'active' : ''
+                  }`}
+                  onClick={handleViewChange.bind(this, 'table')}
+                >
+                  <span className="d-flex align-items-center">
+                    <span className="material-icons">table_view</span>
+                    <span className="ml-1">Table</span>
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  className={`btn btn-outline-primary btn-sm ${
+                    assayView === 'graph' ? 'active' : ''
+                  }`}
+                  onClick={handleViewChange.bind(this, 'graph')}
+                >
+                  <span className="d-flex align-items-center">
+                    <span className="material-icons">account_tree</span>
+                    <span className="ml-1">Graph</span>
+                  </span>
+                </button>
               </div>
             </div>
+            {assayView === 'table' && (
+              <div className="table-container col-12">
+                <Pass1b06AssayTissueTable />
+              </div>
+            )}
+            {assayView === 'graph' && (
+              <div className="plot-container col-12 mt-4">
+                <div className="w-100">
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={chartOptions}
+                    containerProps={{ className: 'assay-tissue-treegraph-container' }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
