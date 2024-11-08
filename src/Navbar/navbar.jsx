@@ -363,6 +363,9 @@ export function Navbar({
                   <Link to="/tutorials" className="dropdown-item">
                     Tutorials
                   </Link>
+                  <Link to="/license" className="dropdown-item">
+                    License
+                  </Link>
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
