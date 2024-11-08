@@ -55,8 +55,11 @@ function DataDownloadsMain({
           <p className="lead mb-2">
             Explore and download the MoTrPAC multi-omics datasets, which
             includes quantitative results and analyses of molecular changes from
-            exercise across tissues. Currently, the complete young rat endurance
-            training dataset is publicly available.
+            exercise across tissues. Currently, the complete young adult rat endurance
+            training dataset is publicly available and provided under the
+            {' '}
+            <Link to="/license">CC BY 4.0 license</Link>
+            .
             {' '}
             {userType && userType === 'internal'
               ? 'The young rat acute exercise and human precovid sedentary adult datasets are currently available to consortium members only in the early preview phase. '
