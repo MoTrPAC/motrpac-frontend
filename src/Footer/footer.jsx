@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 /**
  * Renders the global footer.
@@ -42,9 +43,17 @@ function Footer() {
           </span>
         </div>
         <div className="footer-content">
-          &#169;
-          {getCopyrightYear()}
-          &nbsp;Stanford University
+          <span className="mr-2">
+            &#169;
+            {getCopyrightYear()}
+            &nbsp;Stanford University
+          </span>
+          <span className="mr-2">
+            <Link to="/license">License</Link>
+          </span>
+          <span>
+            <Link to="/contact">Contact</Link>
+          </span>
         </div>
       </div>
     </footer>

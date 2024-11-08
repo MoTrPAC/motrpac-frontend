@@ -170,8 +170,8 @@ function App({ history = History }) {
             </Switch>
           </div>
         </div>
+        <Footer />
       </Router>
-      <Footer />
     </Provider>
   );
 }
