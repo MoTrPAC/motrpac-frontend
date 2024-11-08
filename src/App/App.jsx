@@ -29,6 +29,7 @@ import ProjectOverviewConnected from '../MainStudy/overview';
 import ExerciseBenefits from '../MainStudy/exerciseBenefits';
 import StudyAssays from '../MainStudy/studyAssays';
 import Tutorials from '../Tutorials/tutorials';
+import License from '../License/licensePage';
 import Publications from '../Publications/publications';
 import MultiOmicsWorkingGroups from '../MultiOmicsWorkingGroups/multiOmicsWorkingGroups';
 import FullTableEnduranceTraining from '../Publications/Data/Animal/Phenotype/fullTableEnduranceTraining';
@@ -147,6 +148,7 @@ function App({ history = History }) {
                 component={withTracker(StudyAssays)}
               />
               <Route path="/tutorials" component={withTracker(Tutorials)} />
+              <Route path="/license" component={withTracker(License)} />
               <Route
                 path="/publications"
                 exact
