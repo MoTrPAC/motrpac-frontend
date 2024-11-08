@@ -167,7 +167,7 @@ export function SearchPage({
       <form id="searchForm" name="searchForm">
         <PageTitle title="Search differential abundance data" />
         <div className="search-content-container">
-          <div className="search-summary-container row mb-4">
+          <div className="search-summary-container row mb-4 pb-2">
             <div className="lead col-12">
               Search by gene symbol, protein ID or metabolite name to examine the
               timewise endurance training response over 8 weeks of training in
@@ -479,7 +479,7 @@ function RadioButton({
     {
       keyType: 'gene',
       id: 'inlineRadioGene',
-      label: 'Gene',
+      label: 'Gene Symbol',
     },
     {
       keyType: 'protein',
