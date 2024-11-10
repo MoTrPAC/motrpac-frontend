@@ -272,6 +272,9 @@ export function Navbar({
                   >
                     Limited Acute Exercise Data
                   </Link>
+                  <Link to="/data-deposition" className="dropdown-item">
+                    Data Deposition
+                  </Link>
                   {!userType || (userType && userType !== 'internal') ? (
                     <a
                       href={process.env.REACT_APP_DATA_UPDATES_SIGNUP_URL}
