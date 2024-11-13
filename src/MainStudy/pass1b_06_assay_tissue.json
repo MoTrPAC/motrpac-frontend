@@ -29,6 +29,7 @@
       "t70-white-adipose"
     ],
     "metab-t-amines": [
+      "t31-plasma",
       "t52-hippocampus",
       "t55-gastrocnemius",
       "t58-heart",
@@ -39,6 +40,7 @@
       "t70-white-adipose"
     ],
     "metab-t-etamidpos": [
+      "t31-plasma",
       "t52-hippocampus",
       "t55-gastrocnemius",
       "t58-heart",
@@ -49,6 +51,7 @@
       "t70-white-adipose"
     ],
     "metab-t-ka": [
+      "t31-plasma",
       "t55-gastrocnemius",
       "t58-heart",
       "t68-liver",
@@ -61,6 +64,7 @@
       "t70-white-adipose"
     ],
     "metab-t-oxylipneg": [
+      "t31-plasma",
       "t52-hippocampus",
       "t55-gastrocnemius",
       "t58-heart",
@@ -71,6 +75,7 @@
       "t70-white-adipose"
     ],
     "metab-t-tca": [
+      "t31-plasma",
       "t52-hippocampus",
       "t55-gastrocnemius",
       "t58-heart",
@@ -83,16 +88,28 @@
   },
   "metabolomics-untargeted": {
     "metab-u-hilicpos": [
+      "t31-plasma",
       "t52-hippocampus",
+      "t53-cortex",
+      "t54-hypothalamus",
       "t55-gastrocnemius",
+      "t56-vastus-lateralis",
       "t58-heart",
       "t59-kidney",
+      "t60-adrenal",
+      "t61-colon",
+      "t62-spleen",
+      "t63-testes",
+      "t64-ovaries",
       "t66-lung",
+      "t67-small-intestine",
       "t68-liver",
       "t69-brown-adipose",
-      "t70-white-adipose"
+      "t70-white-adipose",
+      "t99-vena-cava"
     ],
     "metab-u-ionpneg": [
+      "t31-plasma",
       "t52-hippocampus",
       "t55-gastrocnemius",
       "t58-heart",
@@ -103,6 +120,7 @@
       "t70-white-adipose"
     ],
     "metab-u-lrpneg": [
+      "t31-plasma",
       "t52-hippocampus",
       "t55-gastrocnemius",
       "t58-heart",
@@ -113,6 +131,7 @@
       "t70-white-adipose"
     ],
     "metab-u-lrppos": [
+      "t31-plasma",
       "t52-hippocampus",
       "t55-gastrocnemius",
       "t58-heart",
@@ -123,6 +142,7 @@
       "t70-white-adipose"
     ],
     "metab-u-rpneg": [
+      "t31-plasma",
       "t52-hippocampus",
       "t55-gastrocnemius",
       "t58-heart",
@@ -133,6 +153,7 @@
       "t70-white-adipose"
     ],
     "metab-u-rppos": [
+      "t31-plasma",
       "t52-hippocampus",
       "t55-gastrocnemius",
       "t58-heart",
@@ -149,6 +170,7 @@
       "t68-liver"
     ],
     "prot-ph": [
+      "t53-cortex",
       "t55-gastrocnemius",
       "t58-heart",
       "t59-kidney",
@@ -157,6 +179,7 @@
       "t70-white-adipose"
     ],
     "prot-pr": [
+      "t53-cortex",
       "t55-gastrocnemius",
       "t58-heart",
       "t59-kidney",
@@ -171,14 +194,25 @@
   },
   "transcriptomics": {
     "transcript-rna-seq": [
+      "t30-blood-rna",
       "t52-hippocampus",
+      "t53-cortex",
+      "t54-hypothalamus",
       "t55-gastrocnemius",
+      "t56-vastus-lateralis",
       "t58-heart",
       "t59-kidney",
+      "t60-adrenal",
+      "t61-colon",
+      "t62-spleen",
+      "t63-testes",
+      "t64-ovaries",
       "t66-lung",
+      "t67-small-intestine",
       "t68-liver",
       "t69-brown-adipose",
-      "t70-white-adipose"
+      "t70-white-adipose",
+      "t99-vena-cava"
     ]
   }
 }

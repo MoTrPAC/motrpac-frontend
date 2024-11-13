@@ -22,7 +22,7 @@ function StudyAssays() {
     chart: {
       spacingBottom: 30,
       marginRight: 120,
-      height: 2000,
+      height: 2600,
     },
     title: {
       align: 'center',
