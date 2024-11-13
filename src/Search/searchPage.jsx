@@ -167,16 +167,23 @@ export function SearchPage({
       <form id="searchForm" name="searchForm">
         <PageTitle title="Search differential abundance data" />
         <div className="search-content-container">
-          <div className="search-summary-container row mb-4">
+          <div className="search-summary-container row mb-4 pb-2">
             <div className="lead col-12">
-              Search by gene ID, protein ID or metabolite name to examine the
+              Search by gene symbol, protein ID or metabolite name to examine the
               timewise endurance training response over 8 weeks of training in
-              adult rats.{' '}
+              young adult rats.
+              {' '}
               <span className="font-weight-bold">
                 Multiple search terms MUST be separated by comma and space.
                 Examples: "NP_001000006.1, NP_001001508.2, NP_001005898.3" or
                 "8,9-EpETrE, C18:1 LPC plasmalogen B".
               </span>
+              {' '}
+              The endurance trained young adult rats dataset is made available
+              under the
+              {' '}
+              <Link to="/license">CC BY 4.0 license</Link>
+              .
             </div>
           </div>
           <div className="es-search-ui-container d-flex align-items-center w-100 pb-2">
@@ -472,7 +479,7 @@ function RadioButton({
     {
       keyType: 'gene',
       id: 'inlineRadioGene',
-      label: 'Gene',
+      label: 'Gene Symbol',
     },
     {
       keyType: 'protein',

@@ -1,0 +1,92 @@
+{
+  "transcriptomics": [
+    {
+      "id": "transcript-rna-seq",
+      "assay": "RNA-seq"
+    }
+  ],
+  "epigenomics": [
+    {
+      "id": "epigen-atac-seq",
+      "assay": "ATAC-seq"
+    },
+    {
+      "id": "epigen-rrbs",
+      "assay": "RRBS"
+    }
+  ],
+  "metabolomics-targeted": [
+    {
+      "id": "metab-t-acoa",
+      "assay": "Targeted Acyl-CoA"
+    },
+    {
+      "id": "metab-t-amines",
+      "assay": "Targeted Amines"
+    },
+    {
+      "id": "metab-t-etamidpos",
+      "assay": "Targeted Ethanolamides"
+    },
+    {
+      "id": "metab-t-ka",
+      "assay": "Targeted Keto Acids"
+    },
+    {
+      "id": "metab-t-nuc",
+      "assay": "Targeted Nucleotides"
+    },
+    {
+      "id": "metab-t-oxylipneg",
+      "assay": "Targeted Oxylipins"
+    },
+    {
+      "id": "metab-t-tca",
+      "assay": "Targeted Tricarboxylic Acid Cycle"
+    }
+  ],
+  "metabolomics-untargeted": [
+    {
+      "id": "metab-u-hilicpos",
+      "assay": "Untargeted HILIC-Positive"
+    },
+    {
+      "id": "metab-u-ionpneg",
+      "assay": "Untargeted Ion-Pair Negative"
+    },
+    {
+      "id": "metab-u-lrpneg",
+      "assay": "Untargeted Lipidomics Reversed-Phase Negative"
+    },
+    {
+      "id": "metab-u-lrppos",
+      "assay": "Untargeted Lipidomics Reversed-Phase Positive"
+    },
+    {
+      "id": "metab-u-rpneg",
+      "assay": "Untargeted Reversed-Phase Negative"
+    },
+    {
+      "id": "metab-u-rppos",
+      "assay": "Untargeted Reversed-Phase Positive"
+    }
+  ],
+  "proteomics-untargeted": [
+    {
+      "id": "prot-ac",
+      "assay": "Acetyl Proteomics"
+    },
+    {
+      "id": "prot-ph",
+      "assay": "Phosphoproteomics"
+    },
+    {
+      "id": "prot-pr",
+      "assay": "Global Proteomics"
+    },
+    {
+      "id": "prot-ub",
+      "assay": "Protein Ubiquitination"
+    }
+  ]
+}
