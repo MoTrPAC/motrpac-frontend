@@ -1,5 +1,15 @@
 const exerciseBenefitsData = [
   {
+    title: 'Reduced risk of all-cause mortality',
+    evidence: 'Regular physical activity is associated with a lower risk of all-cause mortality.',
+    citationNo: 4,
+  },
+  {
+    title: 'Reduced risk of cardiovascular diseases',
+    evidence: 'Exercise reduces the risk of cardiovascular diseases, including heart disease and stroke.',
+    citationNo: 4,
+  },
+  {
     title: 'Younger-looking skin',
     evidence: 'Exercise improves skin health by enhancing blood flow and delivering oxygen and nutrients to the skin, promoting collagen production and reducing signs of aging.',
     citationNo: 1,
@@ -68,16 +78,6 @@ const exerciseBenefitsData = [
     title: 'Stronger skeleton, joints, and tendons',
     evidence: 'Weight-bearing and resistance exercises improve bone density and joint health, reducing the risk of osteoporosis and fractures.',
     citationNo: 2,
-  },
-  {
-    title: 'Reduced risk of all-cause mortality',
-    evidence: 'Regular physical activity is associated with a lower risk of all-cause mortality.',
-    citationNo: 4,
-  },
-  {
-    title: 'Reduced risk of cardiovascular diseases',
-    evidence: 'Exercise reduces the risk of cardiovascular diseases, including heart disease and stroke.',
-    citationNo: 4,
   },
   {
     title: 'Improved cognition',
