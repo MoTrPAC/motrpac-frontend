@@ -1,9 +1,9 @@
 const pass1b06AssayTissueTreeData = [
   [undefined, 'Rats: Endurance Training'],
-  ['Rats: Endurance Training', 'Transcriptomics'],
-  ['Rats: Endurance Training', 'Untargeted Proteomics'],
-  ['Rats: Endurance Training', 'Untargeted Metabolomics'],
   ['Rats: Endurance Training', 'Targeted Metabolomics'],
+  ['Rats: Endurance Training', 'Untargeted Metabolomics'],
+  ['Rats: Endurance Training', 'Untargeted Proteomics'],
+  ['Rats: Endurance Training', 'Transcriptomics'],
   ['Rats: Endurance Training', 'Epigenomics'],
   ['Epigenomics', 'RRBS'],
   ['Epigenomics', 'ATAC-seq'],
