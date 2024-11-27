@@ -273,7 +273,7 @@ export function Navbar({
                     Limited Acute Exercise Data
                   </Link>
                   <Link to="/data-deposition" className="dropdown-item">
-                    Data Deposition
+                    Public Data Repositories
                   </Link>
                   {!userType || (userType && userType !== 'internal') ? (
                     <a
