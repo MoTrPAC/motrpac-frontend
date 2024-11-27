@@ -339,6 +339,14 @@ export function Navbar({
                   >
                     OmicsPipelines
                   </a>
+                  <a
+                    href="https://community.motrpac-data.org/"
+                    className="dropdown-item"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Community
+                  </a>
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
