@@ -55,61 +55,6 @@ function DataDeposition() {
               </tbody>
             </table>
           </div>
-          {/* Immunoassay data deposition table */}
-          <h4 className="mt-4">Immunoassays</h4>
-          <div className="table-responsive">
-            <table className="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Repository</th>
-                  <th>Data type</th>
-                  <th>Accession</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <ExternalLink to="https://www.immport.org/home" label="IMMPORT" />
-                  </td>
-                  <td>Readouts, results</td>
-                  <td>
-                    <ExternalLink to="https://immport.org/shared/study/SDY2193" label="SDY2193" />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          {/* Metabolomics data deposition table */}
-          <h4 className="mt-4">Metabolomics (Targeted and Untargeted)</h4>
-          <div className="table-responsive">
-            <table className="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Repository</th>
-                  <th>Data type</th>
-                  <th>Project</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <ExternalLink to="https://www.metabolomicsworkbench.org/" label="Metabolomics Workbench" />
-                  </td>
-                  <td>Metabolomics raw + results files (identification and quantification)</td>
-                  <td>
-                    <ul className="list-unstyled">
-                      <li>
-                        <ExternalLink to="https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?Mode=Project&ProjectID=PR001020" label="PR001020" />
-                      </li>
-                      <li>
-                        <ExternalLink to="http://dx.doi.org/10.21228/M8V97D" label="DOI: 10.21228/M8V97D" />
-                      </li>
-                    </ul>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
           {/* Proteomics data deposition table */}
           <h4 className="mt-4">Proteomics</h4>
           <div className="table-responsive">
@@ -175,6 +120,61 @@ function DataDeposition() {
                       </li>
                       <li>
                         <ExternalLink to="https://docs.google.com/document/d/1Kj81cOGdDUCYos7FRwHx8bBxY6Hs7EINDJ4I7zflMOM/edit?usp=drive_link" label="Methods" />
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          {/* Immunoassay data deposition table */}
+          <h4 className="mt-4">Immunoassays</h4>
+          <div className="table-responsive">
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Repository</th>
+                  <th>Data type</th>
+                  <th>Accession</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <ExternalLink to="https://www.immport.org/home" label="IMMPORT" />
+                  </td>
+                  <td>Readouts, results</td>
+                  <td>
+                    <ExternalLink to="https://immport.org/shared/study/SDY2193" label="SDY2193" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          {/* Metabolomics data deposition table */}
+          <h4 className="mt-4">Metabolomics (Untargeted and Targeted)</h4>
+          <div className="table-responsive">
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Repository</th>
+                  <th>Data type</th>
+                  <th>Project</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <ExternalLink to="https://www.metabolomicsworkbench.org/" label="Metabolomics Workbench" />
+                  </td>
+                  <td>Metabolomics raw + results files (identification and quantification)</td>
+                  <td>
+                    <ul className="list-unstyled">
+                      <li>
+                        <ExternalLink to="https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?Mode=Project&ProjectID=PR001020" label="PR001020" />
+                      </li>
+                      <li>
+                        <ExternalLink to="http://dx.doi.org/10.21228/M8V97D" label="DOI: 10.21228/M8V97D" />
                       </li>
                     </ul>
                   </td>
