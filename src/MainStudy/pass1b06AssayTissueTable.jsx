@@ -33,8 +33,8 @@ function Pass1b06AssayTissueTable() {
           </tbody>
         </table>
       </div>
-      {/* Render metabolomics-targeted assay table */}
-      <h4 className="mt-4">Targeted Metabolomics</h4>
+      {/* Render transcriptomics assay table */}
+      <h4 className="mt-4">Transcriptomics</h4>
       <div className="table-responsive">
         <table className="table table-bordered">
           <thead>
@@ -44,37 +44,11 @@ function Pass1b06AssayTissueTable() {
             </tr>
           </thead>
           <tbody>
-            {pass1b06AssayByOmicJson['metabolomics-targeted'].map((item) => (
+            {pass1b06AssayByOmicJson['transcriptomics'].map((item) => (
               <tr key={item.id}>
                 <td>{item.assay}</td>
                 <td>
-                  {pass1b06AssayTissueJson['metabolomics-targeted'][item.id].map((tissue) => (
-                    <span key={`${item.id}-${tissue}`} className="badge badge-pill badge-light mr-1">
-                      {capitalize(tissue.split('-').slice(1).join('-').replace(/-/g, ' '))}
-                    </span>
-                  ))}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {/* Render metabolomics-untargeted assay table */}
-      <h4 className="mt-4">Untargeted Metabolomics</h4>
-      <div className="table-responsive">
-        <table className="table table-bordered">
-          <thead>
-            <tr>
-              <th>Assay</th>
-              <th>Tissues</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pass1b06AssayByOmicJson['metabolomics-untargeted'].map((item) => (
-              <tr key={item.id}>
-                <td>{item.assay}</td>
-                <td>
-                  {pass1b06AssayTissueJson['metabolomics-untargeted'][item.id].map((tissue) => (
+                  {pass1b06AssayTissueJson['transcriptomics'][item.id].map((tissue) => (
                     <span key={`${item.id}-${tissue}`} className="badge badge-pill badge-light mr-1">
                       {capitalize(tissue.split('-').slice(1).join('-').replace(/-/g, ' '))}
                     </span>
@@ -111,8 +85,8 @@ function Pass1b06AssayTissueTable() {
           </tbody>
         </table>
       </div>
-      {/* Render transcriptomics assay table */}
-      <h4 className="mt-4">Transcriptomics</h4>
+      {/* Render metabolomics-untargeted assay table */}
+      <h4 className="mt-4">Untargeted Metabolomics</h4>
       <div className="table-responsive">
         <table className="table table-bordered">
           <thead>
@@ -122,11 +96,37 @@ function Pass1b06AssayTissueTable() {
             </tr>
           </thead>
           <tbody>
-            {pass1b06AssayByOmicJson['transcriptomics'].map((item) => (
+            {pass1b06AssayByOmicJson['metabolomics-untargeted'].map((item) => (
               <tr key={item.id}>
                 <td>{item.assay}</td>
                 <td>
-                  {pass1b06AssayTissueJson['transcriptomics'][item.id].map((tissue) => (
+                  {pass1b06AssayTissueJson['metabolomics-untargeted'][item.id].map((tissue) => (
+                    <span key={`${item.id}-${tissue}`} className="badge badge-pill badge-light mr-1">
+                      {capitalize(tissue.split('-').slice(1).join('-').replace(/-/g, ' '))}
+                    </span>
+                  ))}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {/* Render metabolomics-targeted assay table */}
+      <h4 className="mt-4">Targeted Metabolomics</h4>
+      <div className="table-responsive">
+        <table className="table table-bordered">
+          <thead>
+            <tr>
+              <th>Assay</th>
+              <th>Tissues</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pass1b06AssayByOmicJson['metabolomics-targeted'].map((item) => (
+              <tr key={item.id}>
+                <td>{item.assay}</td>
+                <td>
+                  {pass1b06AssayTissueJson['metabolomics-targeted'][item.id].map((tissue) => (
                     <span key={`${item.id}-${tissue}`} className="badge badge-pill badge-light mr-1">
                       {capitalize(tissue.split('-').slice(1).join('-').replace(/-/g, ' '))}
                     </span>
