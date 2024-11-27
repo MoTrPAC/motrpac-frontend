@@ -8,9 +8,9 @@ function DataDeposition() {
     <div className="dataDepositionPage px-3 px-md-4 mb-3 container">
       <Helmet>
         <html lang="en" />
-        <title>Data Deposition at Public Repositories - MoTrPAC Data Hub</title>
+        <title>MoTrPAC Data Accessible at Public Repositories - MoTrPAC Data Hub</title>
       </Helmet>
-      <PageTitle title="Data Deposition at Public Repositories" />
+      <PageTitle title="MoTrPAC Data Accessible at Public Repositories" />
       <div className="data-deposition-content-container row mb-4">
         <div className="col-12">
           <p className="lead">
