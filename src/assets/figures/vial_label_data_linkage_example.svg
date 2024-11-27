@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1458.5 536.17">
+  <!-- Generator: Adobe Illustrator 29.1.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 142)  -->
+  <defs>
+    <style>
+      .st0, .st1 {
+        stroke: #aeaeae;
+      }
+
+      .st0, .st1, .st2, .st3, .st4, .st5, .st6, .st7, .st8 {
+        stroke-miterlimit: 10;
+      }
+
+      .st0, .st2, .st5 {
+        fill: #d3e0f1;
+      }
+
+      .st1, .st6 {
+        fill: #fff;
+      }
+
+      .st9 {
+        fill: #4172d0;
+      }
+
+      .st9, .st10, .st11, .st12, .st13 {
+        font-family: HelveticaNeue-Bold, 'Helvetica Neue';
+        font-weight: 700;
+      }
+
+      .st9, .st10, .st12, .st13 {
+        font-size: 16px;
+      }
+
+      .st10 {
+        fill: #78a558;
+      }
+
+      .st2, .st3, .st5, .st7, .st8 {
+        stroke-width: 2px;
+      }
+
+      .st2, .st4 {
+        stroke: #2151c4;
+      }
+
+      .st3 {
+        fill: #f9e6cd;
+      }
+
+      .st3, .st5, .st7 {
+        stroke: #e59648;
+      }
+
+      .st14 {
+        fill: #666;
+      }
+
+      .st11 {
+        font-size: 36px;
+      }
+
+      .st12 {
+        fill: #da9346;
+      }
+
+      .st4, .st7 {
+        fill: #f7e7d0;
+      }
+
+      .st6 {
+        stroke: #ea3323;
+        stroke-width: 3px;
+      }
+
+      .st8 {
+        fill: none;
+        stroke: #666;
+      }
+    </style>
+  </defs>
+  <g>
+    <rect class="st1" x="287.5" y="366.38" width="230" height="55"/>
+    <rect class="st1" x="517.5" y="366.38" width="230" height="55"/>
+    <rect class="st1" x="287.5" y="421.38" width="230" height="55"/>
+    <rect class="st1" x="517.5" y="421.38" width="230" height="55"/>
+    <rect class="st2" x="287.5" y="311.38" width="230" height="55"/>
+    <rect class="st2" x="517.5" y="311.38" width="230" height="55"/>
+    <rect class="st4" x="57.5" y="366.38" width="230" height="55"/>
+    <rect class="st4" x="57.5" y="421.38" width="230" height="55"/>
+    <rect class="st7" x="57.5" y="311.38" width="230" height="55"/>
+  </g>
+  <g>
+    <rect class="st1" x="997.5" y="366.38" width="230" height="55"/>
+    <rect class="st1" x="1227.5" y="366.38" width="230" height="55"/>
+    <rect class="st1" x="997.5" y="421.38" width="230" height="55"/>
+    <rect class="st1" x="1227.5" y="421.38" width="230" height="55"/>
+    <rect class="st2" x="997.5" y="311.38" width="230" height="55"/>
+    <rect class="st2" x="1227.5" y="311.38" width="230" height="55"/>
+    <rect class="st4" x="767.5" y="366.38" width="230" height="55"/>
+    <rect class="st4" x="767.5" y="421.38" width="230" height="55"/>
+    <rect class="st7" x="767.5" y="311.38" width="230" height="55"/>
+  </g>
+  <g>
+    <rect class="st0" x="57.5" y="117.38" width="200" height="55"/>
+    <rect class="st1" x="457.5" y="117.38" width="200" height="55"/>
+    <rect class="st1" x="657.5" y="117.38" width="200" height="55"/>
+    <rect class="st1" x="857.5" y="117.38" width="200" height="55"/>
+    <rect class="st1" x="1057.5" y="117.38" width="200" height="55"/>
+    <rect class="st1" x="1257.5" y="117.38" width="200" height="55"/>
+    <rect class="st0" x="57.5" y="172.38" width="200" height="55"/>
+    <rect class="st1" x="457.5" y="172.38" width="200" height="55"/>
+    <rect class="st1" x="657.5" y="172.38" width="200" height="55"/>
+    <rect class="st1" x="857.5" y="172.38" width="200" height="55"/>
+    <rect class="st1" x="1057.5" y="172.38" width="200" height="55"/>
+    <rect class="st1" x="1257.5" y="172.38" width="200" height="55"/>
+    <rect class="st5" x="57.5" y="47.38" width="200" height="70"/>
+    <rect class="st3" x="257.5" y="47.38" width="200" height="70"/>
+    <rect class="st3" x="457.5" y="47.38" width="200" height="70"/>
+    <rect class="st3" x="657.5" y="47.38" width="200" height="70"/>
+    <rect class="st3" x="857.5" y="47.38" width="200" height="70"/>
+    <rect class="st3" x="1057.5" y="47.38" width="200" height="70"/>
+    <rect class="st3" x="1257.5" y="47.38" width="200" height="70"/>
+    <rect class="st6" x="257.5" y="117.38" width="200" height="55"/>
+    <rect class="st6" x="257.5" y="172.38" width="200" height="55"/>
+  </g>
+  <g>
+    <text class="st12" transform="translate(65.5 399.59)"><tspan x="0" y="0">ENSRNOG00000000001</tspan></text>
+    <text class="st10" transform="translate(386.93 399.59)"><tspan x="0" y="0">18.0</tspan></text>
+    <text class="st10" transform="translate(621.38 399.59)"><tspan x="0" y="0">2.0</tspan></text>
+    <text class="st12" transform="translate(65.5 454.59)"><tspan x="0" y="0">ENSRNOG00000000007</tspan></text>
+    <text class="st10" transform="translate(386.93 454.59)"><tspan x="0" y="0">10.0</tspan></text>
+    <text class="st10" transform="translate(621.38 454.59)"><tspan x="0" y="0">6.0</tspan></text>
+    <text class="st13" transform="translate(65.5 344.59)"><tspan x="0" y="0">gene_id</tspan></text>
+    <text class="st9" transform="translate(356.44 344.59)"><tspan x="0" y="0">Sample_01a</tspan></text>
+    <text class="st9" transform="translate(586.44 344.59)"><tspan x="0" y="0">Sample_02a</tspan></text>
+  </g>
+  <g>
+    <text class="st12" transform="translate(775.5 399.59)"><tspan x="0" y="0">Compound_01</tspan></text>
+    <text class="st10" transform="translate(1101.38 399.59)"><tspan x="0" y="0">3.5</tspan></text>
+    <text class="st10" transform="translate(1331.38 399.59)"><tspan x="0" y="0">2.0</tspan></text>
+    <text class="st12" transform="translate(775.5 454.59)"><tspan x="0" y="0">Compound_02</tspan></text>
+    <text class="st10" transform="translate(1101.38 454.59)"><tspan x="0" y="0">1.3</tspan></text>
+    <text class="st10" transform="translate(1331.38 454.59)"><tspan x="0" y="0">0.7</tspan></text>
+    <text class="st13" transform="translate(775.5 344.59)"><tspan x="0" y="0">metabolite_name</tspan></text>
+    <text class="st9" transform="translate(1066.14 344.59)"><tspan x="0" y="0">Sample_01b</tspan></text>
+    <text class="st9" transform="translate(1296.14 344.59)"><tspan x="0" y="0">Sample_02b</tspan></text>
+  </g>
+  <g>
+    <text class="st9" transform="translate(65.5 150.59)"><tspan x="0" y="0">Sample_01a</tspan></text>
+    <text class="st13" transform="translate(265.5 150.59)"><tspan x="0" y="0">10029885</tspan></text>
+    <text class="st13" transform="translate(465.5 150.59)"><tspan x="0" y="0">One-week program</tspan></text>
+    <text class="st13" transform="translate(665.5 150.59)"><tspan x="0" y="0">2</tspan></text>
+    <text class="st13" transform="translate(865.5 150.59)"><tspan x="0" y="0">432</tspan></text>
+    <text class="st13" transform="translate(1065.5 150.59)"><tspan x="0" y="0">58</tspan></text>
+    <text class="st13" transform="translate(1265.5 150.59)"><tspan x="0" y="0">-1</tspan></text>
+    <text class="st9" transform="translate(65.5 205.59)"><tspan x="0" y="0">Sample_01b</tspan></text>
+    <text class="st13" transform="translate(265.5 205.59)"><tspan x="0" y="0">10029885</tspan></text>
+    <text class="st13" transform="translate(465.5 205.59)"><tspan x="0" y="0">One-week program</tspan></text>
+    <text class="st13" transform="translate(665.5 205.59)"><tspan x="0" y="0">2</tspan></text>
+    <text class="st13" transform="translate(865.5 205.59)"><tspan x="0" y="0">432</tspan></text>
+    <text class="st13" transform="translate(1065.5 205.59)"><tspan x="0" y="0">58</tspan></text>
+    <text class="st13" transform="translate(1265.5 205.59)"><tspan x="0" y="0">4</tspan></text>
+    <text class="st13" transform="translate(65.5 78.49)"><tspan x="0" y="0">viallabel</tspan><tspan x="0" y="19.2">(pass1bf0004)</tspan></text>
+    <text class="st13" transform="translate(265.5 78.49)"><tspan x="0" y="0">pid</tspan><tspan x="0" y="19.2">(pass1bf0001)</tspan></text>
+    <text class="st13" transform="translate(465.5 78.49)"><tspan x="0" y="0">key___ani_rand_group</tspan><tspan x="0" y="19.2">(pass1bf0011)</tspan></text>
+    <text class="st13" transform="translate(665.5 78.49)"><tspan x="0" y="0">registration___sex</tspan><tspan x="0" y="19.2">(pass1bf00027)</tspan></text>
+    <text class="st13" transform="translate(865.5 78.49)"><tspan x="0" y="0">terminal_weight___mg</tspan><tspan x="0" y="19.2">(pass1bf0058)</tspan></text>
+    <text class="st13" transform="translate(1065.5 68.89)"><tspan x="0" y="0">vo_2_max_test___vo_2_</tspan><tspan x="0" y="19.2">max_1</tspan><tspan x="0" y="38.4">(pass1bf0056)</tspan></text>
+    <text class="st13" transform="translate(1265.5 68.89)"><tspan x="0" y="0">calculated_variables___</tspan><tspan x="0" y="19.2">vo_2_max_change</tspan><tspan x="0" y="38.4">(pass1bf0111)</tspan></text>
+  </g>
+  <g>
+    <polyline class="st8" points="402 304.88 402 272.88 1 272.88 1 144.88 51 144.88"/>
+    <circle class="st14" cx="51" cy="144.88" r="6"/>
+    <circle class="st14" cx="402" cy="304.38" r="6"/>
+    <rect class="st14" x="45.05" y="194.93" width="9.9" height="9.9" transform="translate(-126.69 93.9) rotate(-45)"/>
+    <rect class="st14" x="1108.05" y="298.43" width="9.9" height="9.9" transform="translate(111.47 875.87) rotate(-45)"/>
+    <polyline class="st8" points="1113 305.88 1113 250.88 23 250.88 23 199.88 51 199.88"/>
+  </g>
+  <text class="st11" transform="translate(617.66 30.85)"><tspan x="0" y="0">Phenotypic data</tspan></text>
+  <text class="st11" transform="translate(269.02 518.85)"><tspan x="0" y="0">RNAseq results</tspan></text>
+  <text class="st11" transform="translate(927.27 518.85)"><tspan x="0" y="0">Metabolomics results</tspan></text>
+</svg>
