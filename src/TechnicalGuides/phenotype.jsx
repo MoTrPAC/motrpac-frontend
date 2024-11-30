@@ -195,7 +195,7 @@ function Phenotype() {
             from downstream molecular analysis due to contamination issues. However,
             phenotypic data for these samples remains accessible.
           </p>
-          <h5 className="mt-4">Example data linkage via vial lables and pids</h5>
+          <h5 className="mt-4">Example data linkage via vial labels and pids</h5>
           <div className="vial-label-linkage-example mt-4 w-100">
             <img
               src={VialLabelExample}
