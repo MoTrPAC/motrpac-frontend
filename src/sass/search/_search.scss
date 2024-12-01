@@ -303,15 +303,28 @@
       }
     }
 
-    &.summary {
+    &.sample-summary {
       .material-icons {
         color: lighten($accent-violet, 12%);
       }
     }
 
-    &.code-repositories {
+    &.code-repositories, &.motrpac-collab {
+      .material-icons {
+        color: $gray;
+      }
+    }
+
+    &.motrpac-collab {
       .material-icons {
         color: $gray-semi-transparent;
+      }
+    }
+
+    &.pass1b-06-data-visualization,
+    &.precovid-human-data-visualization {
+      .material-icons {
+        color: $primary-blue;
       }
     }
   }

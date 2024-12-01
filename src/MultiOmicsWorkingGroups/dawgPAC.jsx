@@ -111,6 +111,31 @@ function DawgPAC({ profile }) {
           Integrated R Notebooks for Omics Data Analysis (HTML format)
           <ul className="list-style mt-2">
             <li>
+              Phenotypes
+              <ul className="list-style mb-2">
+                <li>
+                  Comprehensive analysis of key variables from the rat phenotypic data,
+                  including summary statistics, correlation analysis, statistical
+                  testing, and regression models:
+                  {' '}
+                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                  <a
+                    href="#"
+                    data-toggle="modal"
+                    data-target="#html-report-modal"
+                    onClick={(e) =>
+                      handleClickReport(
+                        'phenotypes/pass1ac-pheno-analysis.html',
+                        'pass1ac-pheno-analysis.html',
+                      )
+                    }
+                  >
+                    pass1ac-pheno-analysis.html
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
               Transcriptomics
               <ul className="list-style mb-2">
                 <li>

@@ -25,8 +25,12 @@ import SearchPageConnected from '../Search/searchPage';
 import GeneCentricViewConnected from '../AnalysisPage/GeneCentricViewRat/geneCentricViewPage';
 import GraphicalClustering from '../AnalysisPage/GraphicalClustering/graphicalClusteringPage';
 import CodeRepositories from '../CodeRepoPage/codeRepoPage';
-import MainStudyConnected from '../MainStudy/mainStudy';
+import ProjectOverviewConnected from '../MainStudy/overview';
+import ExerciseBenefits from '../MainStudy/exerciseBenefits';
+import StudyAssays from '../MainStudy/studyAssays';
 import Tutorials from '../Tutorials/tutorials';
+import License from '../License/licensePage';
+import DataDeposition from '../DataDeposition/dataDepositionPage';
 import Publications from '../Publications/publications';
 import MultiOmicsWorkingGroups from '../MultiOmicsWorkingGroups/multiOmicsWorkingGroups';
 import FullTableEnduranceTraining from '../Publications/Data/Animal/Phenotype/fullTableEnduranceTraining';
@@ -134,9 +138,22 @@ function App({ history = History }) {
               />
               <Route
                 path="/project-overview"
-                component={withTracker(MainStudyConnected)}
+                component={withTracker(ProjectOverviewConnected)}
+              />
+              <Route
+                path="/exercise-benefits"
+                component={withTracker(ExerciseBenefits)}
+              />
+              <Route
+                path="/study-assays"
+                component={withTracker(StudyAssays)}
               />
               <Route path="/tutorials" component={withTracker(Tutorials)} />
+              <Route path="/license" component={withTracker(License)} />
+              <Route
+                path="/data-deposition"
+                component={withTracker(DataDeposition)}
+              />
               <Route
                 path="/publications"
                 exact
@@ -158,8 +175,8 @@ function App({ history = History }) {
             </Switch>
           </div>
         </div>
+        <Footer />
       </Router>
-      <Footer />
     </Provider>
   );
 }

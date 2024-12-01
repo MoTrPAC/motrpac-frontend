@@ -29,6 +29,7 @@ import JayImg from '../assets/teamMemberPhotos/Jay.jpg';
 import SamImg from '../assets/teamMemberPhotos/Sam.jpg';
 import DanImg from '../assets/teamMemberPhotos/Dan.jpg';
 import MiaImg from '../assets/teamMemberPhotos/Mia.jpg';
+import PaulineImg from '../assets/teamMemberPhotos/Pauline.jpg';
 
 const teamInfo = {
   PIs: [
@@ -100,14 +101,14 @@ const teamInfo = {
       image: SamImg,
     },
     {
+      name: 'Pauline Brochet',
+      title: 'Postdoctoral Scholar',
+      image: PaulineImg,
+    },
+    {
       name: 'Jimmy Zhen',
       title: 'Software Developer',
       image: JimmyImg,
-    },
-    {
-      name: 'Chris Teng',
-      title: 'Software Developer',
-      image: ChrisImg,
     },
     {
       name: 'Jay Yu',
@@ -148,6 +149,11 @@ const teamInfo = {
     },
   ],
   Alumni: [
+    {
+      name: 'Chris Teng',
+      title: 'Alumni',
+      image: ChrisImg,
+    },
     {
       name: 'Manuel A. Rivas, Ph.D.',
       title: 'Alumni',
