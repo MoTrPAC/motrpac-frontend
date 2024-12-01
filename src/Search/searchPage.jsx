@@ -185,7 +185,7 @@ export function SearchPage({
       <form id="searchForm" name="searchForm">
         <PageTitle title="Search differential abundance data" />
         <div className="search-content-container">
-          <div className="search-summary-container row mb-4 pb-2">
+          <div className="search-summary-container row mb-4">
             <div className="lead col-12">
               Search by gene symbol, protein name or metabolite name to examine the
               timewise endurance training response over 8 weeks of training in
@@ -194,8 +194,7 @@ export function SearchPage({
               <ol>
                 <li>
                   Use
-                  
-              {' '}
+                  {' '}
                   <span className="font-weight-bold">
                     auto-suggested search terms
                   </span>
@@ -215,12 +214,13 @@ export function SearchPage({
                   <code>"tca acids", "8,9-epetre", "coa(3:0, 3-oh)"</code>
                 </li>
               </ol>
-              {' '}
+              <p>
               The endurance trained young adult rats dataset is made available
               under the
               {' '}
               <Link to="/license">CC BY 4.0 license</Link>
               .
+              </p>
             </div>
           </div>
           <div className="es-search-ui-container d-flex align-items-center w-100 pb-2">
@@ -489,17 +489,17 @@ function RadioButton({
     {
       keyType: 'gene',
       id: 'inlineRadioGene',
-      label: 'Gene Symbol',
+      label: 'Gene symbol',
     },
     {
       keyType: 'protein',
       id: 'inlineRadioProtein',
-      label: 'Protein',
+      label: 'Protein name',
     },
     {
       keyType: 'metab',
       id: 'inlineRadioMetab',
-      label: 'Metabolite',
+      label: 'Metabolite name',
     },
   ];
 
