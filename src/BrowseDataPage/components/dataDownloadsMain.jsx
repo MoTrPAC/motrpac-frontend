@@ -100,7 +100,7 @@ function DataDownloadsMain({
         <div className="col-12 mt-2">
           <h2>Study Data</h2>
           <p>
-            Browse and customze the data of your interest to download by tissue,
+            Browse and customize the data of your interest to download by tissue,
             ome, or assay types. It is recommended to download the phenotypic data
             along with the omics data for a comprehensive analysis. Learn more
             about the
