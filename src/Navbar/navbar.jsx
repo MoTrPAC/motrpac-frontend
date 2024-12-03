@@ -273,7 +273,7 @@ export function Navbar({
                     Limited Acute Exercise Data
                   </Link>
                   <Link to="/data-deposition" className="dropdown-item">
-                    Data Deposition
+                    Public Data Repositories
                   </Link>
                   {!userType || (userType && userType !== 'internal') ? (
                     <a
@@ -338,6 +338,14 @@ export function Navbar({
                     rel="noreferrer"
                   >
                     OmicsPipelines
+                  </a>
+                  <a
+                    href="https://community.motrpac-data.org/"
+                    className="dropdown-item"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Community
                   </a>
                 </div>
               </li>

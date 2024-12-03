@@ -22,7 +22,6 @@ function StudyAssays() {
     chart: {
       spacingBottom: 30,
       marginRight: 120,
-      height: 2600,
     },
     title: {
       align: 'center',
@@ -48,7 +47,7 @@ function StudyAssays() {
         },
         dataLabels: {
           align: 'left',
-          pointFormat: '{point.id}',
+          pointFormat: '{point.name}',
           style: {
             color: '#000000',
             textOutline: '3px #ffffff',
@@ -115,7 +114,7 @@ function StudyAssays() {
       <PageTitle title="Assays in MoTrPAC Studies" />
       <div className="study-assays-page-container">
         <div className="study-assays-page-content-container row mb-4">
-          <div className="study-assays-content-container study-assays mt-4 w-100">
+          <div className="study-assays-content-container study-assays w-100">
             <div className="col-12 d-flex align-items-center">
               <h3 className="study-title-species-icon mr-1 d-flex align-items-center">
                 <span className="material-icons study-title-species-icon mr-1">pest_control_rodent</span>

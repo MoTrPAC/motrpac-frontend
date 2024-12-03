@@ -21,69 +21,55 @@
       "t70-white-adipose"
     ]
   },
-  "metabolomics-targeted": {
-    "metab-t-acoa": [
-      "t55-gastrocnemius",
-      "t58-heart",
-      "t68-liver",
-      "t70-white-adipose"
-    ],
-    "metab-t-amines": [
-      "t31-plasma",
+  "transcriptomics": {
+    "transcript-rna-seq": [
+      "t30-blood-rna",
       "t52-hippocampus",
+      "t53-cortex",
+      "t54-hypothalamus",
+      "t55-gastrocnemius",
+      "t56-vastus-lateralis",
+      "t58-heart",
+      "t59-kidney",
+      "t60-adrenal",
+      "t61-colon",
+      "t62-spleen",
+      "t63-testes",
+      "t64-ovaries",
+      "t66-lung",
+      "t67-small-intestine",
+      "t68-liver",
+      "t69-brown-adipose",
+      "t70-white-adipose",
+      "t99-vena-cava"
+    ]
+  },
+  "proteomics-untargeted": {
+    "prot-ac": [
+      "t58-heart",
+      "t68-liver"
+    ],
+    "prot-ph": [
+      "t53-cortex",
       "t55-gastrocnemius",
       "t58-heart",
       "t59-kidney",
       "t66-lung",
       "t68-liver",
-      "t69-brown-adipose",
       "t70-white-adipose"
     ],
-    "metab-t-etamidpos": [
-      "t31-plasma",
-      "t52-hippocampus",
+    "prot-pr": [
+      "t53-cortex",
       "t55-gastrocnemius",
       "t58-heart",
       "t59-kidney",
       "t66-lung",
       "t68-liver",
-      "t69-brown-adipose",
       "t70-white-adipose"
     ],
-    "metab-t-ka": [
-      "t31-plasma",
-      "t55-gastrocnemius",
+    "prot-ub": [
       "t58-heart",
-      "t68-liver",
-      "t70-white-adipose"
-    ],
-    "metab-t-nuc": [
-      "t55-gastrocnemius",
-      "t58-heart",
-      "t68-liver",
-      "t70-white-adipose"
-    ],
-    "metab-t-oxylipneg": [
-      "t31-plasma",
-      "t52-hippocampus",
-      "t55-gastrocnemius",
-      "t58-heart",
-      "t59-kidney",
-      "t66-lung",
-      "t68-liver",
-      "t69-brown-adipose",
-      "t70-white-adipose"
-    ],
-    "metab-t-tca": [
-      "t31-plasma",
-      "t52-hippocampus",
-      "t55-gastrocnemius",
-      "t58-heart",
-      "t59-kidney",
-      "t66-lung",
-      "t68-liver",
-      "t69-brown-adipose",
-      "t70-white-adipose"
+      "t68-liver"
     ]
   },
   "metabolomics-untargeted": {
@@ -164,55 +150,69 @@
       "t70-white-adipose"
     ]
   },
-  "proteomics-untargeted": {
-    "prot-ac": [
-      "t58-heart",
-      "t68-liver"
-    ],
-    "prot-ph": [
-      "t53-cortex",
+  "metabolomics-targeted": {
+    "metab-t-acoa": [
       "t55-gastrocnemius",
       "t58-heart",
-      "t59-kidney",
-      "t66-lung",
       "t68-liver",
       "t70-white-adipose"
     ],
-    "prot-pr": [
-      "t53-cortex",
-      "t55-gastrocnemius",
-      "t58-heart",
-      "t59-kidney",
-      "t66-lung",
-      "t68-liver",
-      "t70-white-adipose"
-    ],
-    "prot-ub": [
-      "t58-heart",
-      "t68-liver"
-    ]
-  },
-  "transcriptomics": {
-    "transcript-rna-seq": [
-      "t30-blood-rna",
+    "metab-t-amines": [
+      "t31-plasma",
       "t52-hippocampus",
-      "t53-cortex",
-      "t54-hypothalamus",
       "t55-gastrocnemius",
-      "t56-vastus-lateralis",
       "t58-heart",
       "t59-kidney",
-      "t60-adrenal",
-      "t61-colon",
-      "t62-spleen",
-      "t63-testes",
-      "t64-ovaries",
       "t66-lung",
-      "t67-small-intestine",
       "t68-liver",
       "t69-brown-adipose",
-      "t70-white-adipose",
-      "t99-vena-cava"
+      "t70-white-adipose"
+    ],
+    "metab-t-etamidpos": [
+      "t31-plasma",
+      "t52-hippocampus",
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t69-brown-adipose",
+      "t70-white-adipose"
+    ],
+    "metab-t-ka": [
+      "t31-plasma",
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t68-liver",
+      "t70-white-adipose"
+    ],
+    "metab-t-nuc": [
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t68-liver",
+      "t70-white-adipose"
+    ],
+    "metab-t-oxylipneg": [
+      "t31-plasma",
+      "t52-hippocampus",
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t69-brown-adipose",
+      "t70-white-adipose"
+    ],
+    "metab-t-tca": [
+      "t31-plasma",
+      "t52-hippocampus",
+      "t55-gastrocnemius",
+      "t58-heart",
+      "t59-kidney",
+      "t66-lung",
+      "t68-liver",
+      "t69-brown-adipose",
+      "t70-white-adipose"
     ]
   }
 }
