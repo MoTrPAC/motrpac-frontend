@@ -8,6 +8,8 @@ import {
   DOWNLOAD_SUBMIT,
   DOWNLOAD_FAILURE,
   DOWNLOAD_SUCCESS,
+  PAGE_SIZE_CHANGE,
+  PAGE_INDEX_CHANGE,
 } from './searchActions';
 
 export const defaultSearchState = {
@@ -42,9 +44,11 @@ export const defaultSearchState = {
       'p_value_female',
     ],
     unique_fields: ['tissue', 'assay', 'sex', 'comparison_group'],
-    size: 25000,
+    size: 25,
     start: 0,
     save: false,
+    convert_assay_code: 1,
+    convert_tissue_code: 1,
   },
   scope: 'all',
   searching: false,
@@ -121,6 +125,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         fields,
         unique_fields,
         size,
+        start,
       } = action.params;
       return {
         ...state,
@@ -134,8 +139,11 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
           fields,
           unique_fields,
           size,
+          start,
           debug: true,
           save: false,
+          convert_assay_code: 1,
+          convert_tissue_code: 1,
         },
         scope: action.scope,
         searching: true,
@@ -235,6 +243,26 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
             }
             : action.downloadResults,
         downloading: false,
+      };
+
+    // Handle page size change
+    case PAGE_SIZE_CHANGE:
+      return {
+        ...state,
+        searchParams: {
+          ...state.searchParams,
+          size: action.pageSize,
+        },
+      };
+
+    // Handle page index change
+    case PAGE_INDEX_CHANGE:
+      return {
+        ...state,
+        searchParams: {
+          ...state.searchParams,
+          start: action.pageIndex,
+        },
       };
 
     default:
