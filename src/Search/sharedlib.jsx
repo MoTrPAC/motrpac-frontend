@@ -2,12 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tooltip';
 import roundNumbers from '../lib/utils/roundNumbers';
-import {
-  tissueList,
-  assayList,
-  sexList,
-  timepointList,
-} from '../lib/searchFilters';
+import { sexList, timepointList } from '../lib/searchFilters';
 
 export const searchParamsDefaultProps = {
   ktype: 'gene',
@@ -39,7 +34,7 @@ export const searchParamsDefaultProps = {
     'p_value_female',
   ],
   unique_fields: ['tissue', 'assay', 'sex', 'comparison_group'],
-  size: 25000,
+  size: 25,
   start: 0,
   debug: true,
   save: false,
@@ -630,24 +625,6 @@ export const transformData = (arr) => {
       );
     }
     */
-    // Transform tissue values
-    /*
-    if (item.tissue && item.tissue.length) {
-      const matchedTissue = tissueList.find(
-        (filter) => filter.filter_value === item.tissue
-      );
-      item.tissue = matchedTissue && matchedTissue.filter_label;
-    }
-      */
-    // Transform assay values
-    /*
-    if (item.assay && item.assay.length) {
-      const matchedAssay = assayList.find(
-        (filter) => filter.filter_value === item.assay
-      );
-      item.assay = matchedAssay && matchedAssay.filter_label;
-    }
-      */
     // Transform sex values
     if (item.sex && item.sex.length) {
       const matchedSex = sexList.find(
