@@ -111,15 +111,6 @@ export const trainingResultsTablePropType = {
   p_value_female: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
-// react-table function to filter multiple values in one column
-/*
-function multipleSelectFilter(rows, id, filterValue) {
-  return filterValue.length === 0
-    ? rows
-    : rows.filter((row) => filterValue.includes(row.values[id]));
-}
-*/
-
 /**
  * column headers common to transcriptomics, proteomics,
  * and metabolomic timewise dea results
@@ -345,88 +336,6 @@ export const metabTrainingTableColumns = [
   },
   ...commonTrainingColumns,
 ];
-
-/**
- * Global filter rendering function
- * common to timewise DEA results
- */
-export const TimewiseGlobalFilter = ({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
-}) => {
-  const count = preGlobalFilteredRows.length;
-
-  return (
-    <div className="form-group d-flex align-items-center justify-content-end">
-      <label htmlFor="searchFilterInput">Filter:</label>
-      <input
-        type="text"
-        className="form-control global-filter"
-        id="searchFilterInput"
-        value={globalFilter || ''}
-        onChange={(e) => {
-          setGlobalFilter(e.target.value || undefined);
-        }}
-        placeholder={`${count} entries`}
-      />
-    </div>
-  );
-};
-
-TimewiseGlobalFilter.propTypes = {
-  preGlobalFilteredRows: PropTypes.arrayOf(
-    PropTypes.shape({ ...timewiseResultsTablePropType })
-  ),
-  globalFilter: PropTypes.string,
-  setGlobalFilter: PropTypes.func.isRequired,
-};
-
-TimewiseGlobalFilter.defaultProps = {
-  globalFilter: '',
-  preGlobalFilteredRows: [],
-};
-
-/**
- * Global filter rendering function
- * common to training DEA results
- */
-export const TrainingGlobalFilter = ({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
-}) => {
-  const count = preGlobalFilteredRows.length;
-
-  return (
-    <div className="form-group d-flex align-items-center justify-content-end">
-      <label htmlFor="searchFilterInput">Filter:</label>
-      <input
-        type="text"
-        className="form-control global-filter"
-        id="searchFilterInput"
-        value={globalFilter || ''}
-        onChange={(e) => {
-          setGlobalFilter(e.target.value || undefined);
-        }}
-        placeholder={`${count} entries`}
-      />
-    </div>
-  );
-};
-
-TrainingGlobalFilter.propTypes = {
-  preGlobalFilteredRows: PropTypes.arrayOf(
-    PropTypes.shape({ ...trainingResultsTablePropType })
-  ),
-  globalFilter: PropTypes.string,
-  setGlobalFilter: PropTypes.func.isRequired,
-};
-
-TrainingGlobalFilter.defaultProps = {
-  globalFilter: '',
-  preGlobalFilteredRows: [],
-};
 
 /**
  * page count and page index rendering function
