@@ -504,7 +504,7 @@ export const transformData = (arr) => {
       const newGeneVal = item.gene_symbol;
       item.gene_symbol = (
         <a
-          href={`https://www.ncbi.nlm.nih.gov/gene/?term=${newGeneVal.toLowerCase()}`}
+          href={`https://www.ncbi.nlm.nih.gov/gene/?term=rat+${newGeneVal.toLowerCase()}`}
           target="_blank"
           rel="noreferrer"
         >
