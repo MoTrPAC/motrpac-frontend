@@ -32,6 +32,7 @@ import Tutorials from '../Tutorials/tutorials';
 import License from '../License/licensePage';
 import DataDeposition from '../DataDeposition/dataDepositionPage';
 import Publications from '../Publications/publications';
+import Phenotype from '../TechnicalGuides/phenotype';
 import MultiOmicsWorkingGroups from '../MultiOmicsWorkingGroups/multiOmicsWorkingGroups';
 import FullTableEnduranceTraining from '../Publications/Data/Animal/Phenotype/fullTableEnduranceTraining';
 import Pass1b06PhenotypeAnimalConnected from '../AnalysisPage/pass1b06PhenotypeAnimal';
@@ -158,6 +159,11 @@ function App({ history = History }) {
                 path="/publications"
                 exact
                 component={withTracker(Publications)}
+              />
+              <Route
+                path="/technical-guides/phenotype"
+                exact
+                component={withTracker(Phenotype)}
               />
               <Route
                 path="/publications/data/animal/phenotype/full-table-endurance-training"

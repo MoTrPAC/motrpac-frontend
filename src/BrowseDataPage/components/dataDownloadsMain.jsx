@@ -100,8 +100,14 @@ function DataDownloadsMain({
         <div className="col-12 mt-2">
           <h2>Study Data</h2>
           <p>
-            Browse and find the data of your interest by tissue, ome, or assay
-            types.
+            Browse and customize the data of your interest to download by tissue,
+            ome, or assay types. It is recommended to download the phenotypic data
+            along with the omics data for a comprehensive analysis. Learn more
+            about the
+            {' '}
+            <Link to="/technical-guides/phenotype">phenotypic data</Link>
+            {' '}
+            in MoTrPAC studies.
           </p>
           <div className="card-deck mb-3 text-center">
             <SelectiveDataDownloadsCard
