@@ -38,6 +38,8 @@ export const searchParamsDefaultProps = {
   start: 0,
   debug: true,
   save: false,
+  convert_assay_code: 1,
+  convert_tissue_code: 1,
 };
 
 export const searchParamsPropType = {
@@ -69,6 +71,8 @@ export const searchParamsPropType = {
   start: PropTypes.number,
   debug: PropTypes.bool,
   save: PropTypes.bool,
+  convert_assay_code: PropTypes.number,
+  convert_tissue_code: PropTypes.number,
 };
 
 /**
