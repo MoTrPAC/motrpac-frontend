@@ -11,6 +11,7 @@ import {
   searchParamsPropType,
   trainingResultsTablePropType,
   trainingTableColumns,
+  proteinTrainingTableColumns,
   metabTrainingTableColumns,
   PageIndex,
   PageSize,
@@ -29,13 +30,16 @@ function TrainingResultsTable({
   handleSearchDownload,
 }) {
   // Define table column headers
-  const columns = useMemo(
-    () =>
-      searchParams.ktype === 'metab'
-        ? metabTrainingTableColumns
-        : trainingTableColumns,
-    []
-  );
+  const columns = useMemo(() => {
+    switch (searchParams.ktype) {
+      case 'metab':
+        return metabTrainingTableColumns;
+      case 'protein':
+        return proteinTrainingTableColumns;
+      default:
+        return trainingTableColumns;
+    }
+  }, [searchParams.ktype]);
   const data = useMemo(() => transformData(trainingData), [trainingData]);
   return (
     <TrainingDataTable
