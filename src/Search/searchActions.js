@@ -9,6 +9,8 @@ export const SEARCH_RESET = 'SEARCH_RESET';
 export const DOWNLOAD_SUBMIT = 'DOWNLOAD_SUBMIT';
 export const DOWNLOAD_FAILURE = 'DOWNLOAD_FAILURE';
 export const DOWNLOAD_SUCCESS = 'DOWNLOAD_SUCCESS';
+export const PAGE_SIZE_CHANGE = 'PAGE_SIZE_CHANGE';
+export const PAGE_INDEX_CHANGE = 'PAGE_INDEX_CHANGE';
 
 function changeResultFilter(field, filterValue, bound) {
   return {
@@ -27,11 +29,13 @@ function changeParam(field, paramValue) {
   };
 }
 
-function searchSubmit(params, scope) {
+function searchSubmit(params, scope, pageIndex, pageSize) {
   return {
     type: SEARCH_SUBMIT,
     params,
     scope,
+    pageIndex,
+    pageSize,
   };
 }
 
@@ -77,6 +81,20 @@ function downloadSuccess(downloadResults) {
   };
 }
 
+function pageSizeChange(pageSize) {
+  return {
+    type: PAGE_SIZE_CHANGE,
+    pageSize,
+  };
+}
+
+function pageIndexChange(pageIndex) {
+  return {
+    type: PAGE_INDEX_CHANGE,
+    pageIndex,
+  };
+}
+
 const accessToken =
   process.env.NODE_ENV !== 'production'
     ? process.env.REACT_APP_ES_ACCESS_TOKEN_DEV
@@ -94,7 +112,7 @@ const headersConfig = {
 };
 
 // Handle search and results filtering events
-function handleSearch(params, inputValue, scope) {
+function handleSearch(params, inputValue, scope, pageIndex, pageSize) {
   params.keys = inputValue;
   // Reset all filters if scope is 'all'
   if (scope === 'all') {
@@ -108,8 +126,36 @@ function handleSearch(params, inputValue, scope) {
       p_value: { min: '', max: '' },
     };
   }
+  // insert 'is_meta" field to fields array if ktype is 'metab'
+  // and delete 'protein_name' field if it exists
+  if (params.ktype === 'metab') {
+    if (!params.fields.includes('is_meta')) {
+      params.fields = ['is_meta', ...params.fields];
+    }
+    if (params.fields.includes('protein_name')) {
+      const index = params.fields.indexOf('protein_name');
+      params.fields.splice(index, 1);
+    }
+  }
+  // delete 'is_meta' flag from fields array (if it exists)
+  // if ktype is 'protein' or 'gene'
+  if (params.ktype === 'protein' || params.ktype === 'gene') {
+    if (params.fields.includes('is_meta')) {
+      const index = params.fields.indexOf('is_meta');
+      params.fields.splice(index, 1);
+    }
+  }
+
+  if (pageIndex !== undefined) {
+    params.start = pageIndex;
+  }
+
+  if (pageSize !== undefined) {
+    params.size = pageSize;
+  }
+
   return (dispatch) => {
-    dispatch(searchSubmit(params, scope));
+    dispatch(searchSubmit(params, scope, pageIndex, pageSize));
     return axios
       .post(`${host}${endpoint}`, params, headersConfig)
       .then((response) => {
@@ -153,6 +199,8 @@ const SearchActions = {
   handleSearchDownload,
   searchReset,
   changeResultFilter,
+  pageSizeChange,
+  pageIndexChange,
 };
 
 export default SearchActions;
