@@ -2,8 +2,6 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
   useTable,
-  useFilters,
-  useGlobalFilter,
   useSortBy,
   usePagination,
 } from 'react-table';
@@ -11,6 +9,7 @@ import {
   searchParamsPropType,
   timewiseResultsTablePropType,
   timewiseTableColumns,
+  proteinTimewiseTableColumns,
   metabTimewiseTableColumns,
   PageIndex,
   PageSize,
@@ -27,15 +26,21 @@ function TimewiseResultsTable({
   timewiseData,
   searchParams,
   handleSearchDownload,
+  pageCount,
+  handlePageSizeChange,
+  handlePageIndexChange,
 }) {
   // Define table column headers
-  const columns = useMemo(
-    () =>
-      searchParams.ktype === 'metab'
-        ? metabTimewiseTableColumns
-        : timewiseTableColumns,
-    []
-  );
+  const columns = useMemo(() => {
+    switch (searchParams.ktype) {
+      case 'metab':
+        return metabTimewiseTableColumns;
+      case 'protein':
+        return proteinTimewiseTableColumns;
+      default:
+        return timewiseTableColumns;
+    }
+  }, [searchParams.ktype]);
   const data = useMemo(() => transformData(timewiseData), [timewiseData]);
   return (
     <DataTable
@@ -43,6 +48,9 @@ function TimewiseResultsTable({
       data={data}
       searchParams={searchParams}
       handleSearchDownload={handleSearchDownload}
+      pageCount={pageCount}
+      handlePageSizeChange={handlePageSizeChange}
+      handlePageIndexChange={handlePageIndexChange}
     />
   );
 }
@@ -54,64 +62,45 @@ function TimewiseResultsTable({
  *
  * @returns {object} JSX representation of table on data qc status
  */
-function DataTable({ columns, data, searchParams, handleSearchDownload }) {
-  const filterTypes = React.useMemo(
-    () => ({
-      text: (rows, id, filterValue) =>
-        rows.filter((row) => {
-          const rowValue = row.values[id];
-          return rowValue !== undefined
-            ? String(rowValue)
-                .toLowerCase()
-                .startsWith(String(filterValue).toLowerCase())
-            : true;
-        }),
-    }),
-    []
-  );
-
+function DataTable({
+  columns,
+  data,
+  searchParams,
+  handleSearchDownload,
+  pageCount: controlledPageCount,
+  handlePageSizeChange,
+  handlePageIndexChange,
+}) {
   // Use the useTable hook to create your table configuration
-  const instance = useTable(
-    {
-      columns,
-      data,
-      filterTypes,
-      initialState: {
-        pageIndex: 0,
-        pageSize: 50,
-        pageCount: Math.ceil(data / 50),
-      },
-    },
-    useFilters,
-    useGlobalFilter,
-    useSortBy,
-    usePagination
-  );
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    preGlobalFilteredRows,
-    setGlobalFilter,
-    preFilteredRows,
-    setFilter,
-    filterValue,
     pageOptions,
     pageCount,
     page,
-    state: { pageIndex, pageSize, globalFilter },
+    state: { pageIndex, pageSize },
     gotoPage,
     previousPage,
     nextPage,
     setPageSize,
     canPreviousPage,
     canNextPage,
-  } = instance;
-
-  // default page size options given the length of entries in the data
-  const range = (start, stop, step = 50) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
+  } = useTable(
+    {
+      columns,
+      data,
+      manualPagination: true,
+      initialState: {
+        pageIndex: 0,
+      },
+      pageCount: controlledPageCount,
+    },
+    useSortBy,
+    usePagination,
+  );
 
   // Render the UI for your table
   // react-table doesn't have UI, it's headless. We just need to put the react-table
@@ -120,9 +109,9 @@ function DataTable({ columns, data, searchParams, handleSearchDownload }) {
     <div className="search-results-container">
       <div className="d-flex align-items-center justify-content-between">
         <PageSize
-          pageSize={pageSize}
+          pageSize={searchParams.size}
           setPageSize={setPageSize}
-          pageSizeOptions={range(50, preGlobalFilteredRows.length)}
+          handlePageSizeChange={handlePageSizeChange}
         />
         <div className="file-download-button">
           <button
@@ -204,8 +193,25 @@ function DataTable({ columns, data, searchParams, handleSearchDownload }) {
           nextPage={nextPage}
           gotoPage={gotoPage}
           pageCount={pageCount}
+          pageIndex={pageIndex}
+          handlePageIndexChange={handlePageIndexChange}
         />
       </div>
+      <pre>
+        <code>
+          {JSON.stringify(
+            {
+              pageIndex,
+              pageSize,
+              pageCount,
+              canNextPage,
+              canPreviousPage,
+            },
+            null,
+            2
+          )}
+        </code>
+      </pre>
     </div>
   );
 }
@@ -216,6 +222,9 @@ TimewiseResultsTable.propTypes = {
   ).isRequired,
   searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
   handleSearchDownload: PropTypes.func.isRequired,
+  pageCount: PropTypes.number.isRequired,
+  handlePageSizeChange: PropTypes.func.isRequired,
+  handlePageIndexChange: PropTypes.func.isRequired,
 };
 
 DataTable.propTypes = {
@@ -230,6 +239,9 @@ DataTable.propTypes = {
     .isRequired,
   searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
   handleSearchDownload: PropTypes.func.isRequired,
+  pageCount: PropTypes.number.isRequired,
+  handlePageSizeChange: PropTypes.func.isRequired,
+  handlePageIndexChange: PropTypes.func.isRequired,
 };
 
 export default TimewiseResultsTable;
