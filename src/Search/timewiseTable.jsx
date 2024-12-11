@@ -2,6 +2,8 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
   useTable,
+  useFilters,
+  useGlobalFilter,
   useSortBy,
   usePagination,
 } from 'react-table';
@@ -26,9 +28,6 @@ function TimewiseResultsTable({
   timewiseData,
   searchParams,
   handleSearchDownload,
-  pageCount,
-  handlePageSizeChange,
-  handlePageIndexChange,
 }) {
   // Define table column headers
   const columns = useMemo(() => {
@@ -48,9 +47,6 @@ function TimewiseResultsTable({
       data={data}
       searchParams={searchParams}
       handleSearchDownload={handleSearchDownload}
-      pageCount={pageCount}
-      handlePageSizeChange={handlePageSizeChange}
-      handlePageIndexChange={handlePageIndexChange}
     />
   );
 }
@@ -67,9 +63,6 @@ function DataTable({
   data,
   searchParams,
   handleSearchDownload,
-  pageCount: controlledPageCount,
-  handlePageSizeChange,
-  handlePageIndexChange,
 }) {
   // Use the useTable hook to create your table configuration
   // Use the state and functions returned from useTable to build your UI
@@ -78,6 +71,7 @@ function DataTable({
     getTableBodyProps,
     headerGroups,
     prepareRow,
+    preGlobalFilteredRows,
     pageOptions,
     pageCount,
     page,
@@ -92,15 +86,20 @@ function DataTable({
     {
       columns,
       data,
-      manualPagination: true,
       initialState: {
         pageIndex: 0,
+        pageSize: 50,
+        pageCount: Math.ceil(data / 50),
       },
-      pageCount: controlledPageCount,
     },
+    useFilters,
+    useGlobalFilter,
     useSortBy,
     usePagination,
   );
+
+  // default page size options given the length of entries in the data
+  const range = (start, stop, step = 50) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
 
   // Render the UI for your table
   // react-table doesn't have UI, it's headless. We just need to put the react-table
@@ -109,9 +108,9 @@ function DataTable({
     <div className="search-results-container">
       <div className="d-flex align-items-center justify-content-between">
         <PageSize
-          pageSize={searchParams.size}
+          pageSize={pageSize}
           setPageSize={setPageSize}
-          handlePageSizeChange={handlePageSizeChange}
+          hpageSizeOptions={range(50, preGlobalFilteredRows.length)}
         />
         <div className="file-download-button">
           <button
@@ -193,25 +192,8 @@ function DataTable({
           nextPage={nextPage}
           gotoPage={gotoPage}
           pageCount={pageCount}
-          pageIndex={pageIndex}
-          handlePageIndexChange={handlePageIndexChange}
         />
       </div>
-      <pre>
-        <code>
-          {JSON.stringify(
-            {
-              pageIndex,
-              pageSize,
-              pageCount,
-              canNextPage,
-              canPreviousPage,
-            },
-            null,
-            2
-          )}
-        </code>
-      </pre>
     </div>
   );
 }
@@ -222,9 +204,6 @@ TimewiseResultsTable.propTypes = {
   ).isRequired,
   searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
   handleSearchDownload: PropTypes.func.isRequired,
-  pageCount: PropTypes.number.isRequired,
-  handlePageSizeChange: PropTypes.func.isRequired,
-  handlePageIndexChange: PropTypes.func.isRequired,
 };
 
 DataTable.propTypes = {
@@ -239,9 +218,6 @@ DataTable.propTypes = {
     .isRequired,
   searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
   handleSearchDownload: PropTypes.func.isRequired,
-  pageCount: PropTypes.number.isRequired,
-  handlePageSizeChange: PropTypes.func.isRequired,
-  handlePageIndexChange: PropTypes.func.isRequired,
 };
 
 export default TimewiseResultsTable;

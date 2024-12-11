@@ -369,7 +369,7 @@ PageIndex.defaultProps = {
  * page size control rendering function
  * common to all data qc status reports
  */
-export function PageSize({ pageSize, setPageSize, handlePageSizeChange }) {
+export function PageSize({ pageSize, setPageSize, pageSizeOptions }) {
   return (
     <div className="pagination-page-size d-flex align-items-center justify-content-start">
       <label htmlFor="pageSizeSelect">Show:</label>
@@ -379,10 +379,9 @@ export function PageSize({ pageSize, setPageSize, handlePageSizeChange }) {
         value={pageSize}
         onChange={(e) => {
           setPageSize(Number(e.target.value));
-          handlePageSizeChange(Number(e.target.value));
         }}
       >
-        {[1000].map((size) => (
+        {pageSizeOptions.map((size) => (
           <option key={size} value={size}>
             {size}
           </option>
@@ -396,7 +395,7 @@ export function PageSize({ pageSize, setPageSize, handlePageSizeChange }) {
 PageSize.propTypes = {
   pageSize: PropTypes.number.isRequired,
   setPageSize: PropTypes.func.isRequired,
-  handlePageSizeChange: PropTypes.func.isRequired,
+  pageSizeOptions: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 /**
@@ -410,28 +409,7 @@ export function PageNavigationControl({
   nextPage,
   gotoPage,
   pageCount,
-  pageIndex,
-  handlePageIndexChange,
 }) {
-
-  // Custom function for handling previous page click
-  const handlePreviousPage = () => {
-    if (canPreviousPage) {
-      const newPageIndex = pageIndex - 1;
-      previousPage();
-      handlePageIndexChange(newPageIndex);
-    }
-  };
-
-  // Custom function for handling next page click
-  const handleNextPage = () => {
-    if (canNextPage) {
-      const newPageIndex = pageIndex + 1;
-      nextPage();
-      handlePageIndexChange(newPageIndex);
-    }
-  };
-
   return (
     <div className="btn-group pagination-navigation-control" role="group">
       <button
@@ -450,7 +428,7 @@ export function PageNavigationControl({
         className={`btn btn-sm btn-outline-primary ${
           !canPreviousPage ? 'disabled-btn' : ''
         }`}
-        onClick={handlePreviousPage}
+        onClick={() => previousPage()}
         disabled={!canPreviousPage}
       >
         Previous
@@ -461,7 +439,7 @@ export function PageNavigationControl({
         className={`btn btn-sm btn-outline-primary ${
           !canNextPage ? 'disabled-btn' : ''
         }`}
-        onClick={handleNextPage}
+        onClick={() => nextPage()}
         disabled={!canNextPage}
       >
         Next
@@ -488,8 +466,6 @@ PageNavigationControl.propTypes = {
   nextPage: PropTypes.func.isRequired,
   gotoPage: PropTypes.func.isRequired,
   pageCount: PropTypes.number.isRequired,
-  pageIndex: PropTypes.number.isRequired,
-  handlePageIndexChange: PropTypes.func.isRequired,
 };
 
 /**

@@ -44,8 +44,6 @@ export function SearchPage({
   allFiles,
   lastModified,
   hasResultFilters,
-  handlePageSizeChange,
-  handlePageIndexChange,
 }) {
   const [multiSelections, setMultiSelections] = useState([]);
   const inputRef = useRef(null);
@@ -61,14 +59,6 @@ export function SearchPage({
       userSurveyModalRef.classList.add('modal-open');
     }
   }, [showUserSurveyModal]);
-
-  // Function to handle page change and fetch new data
-  useEffect(() => {
-    const fetchPageData = async () => {
-      await handleSearch(searchParams, searchParams.keys, 'page', searchParams.start, searchParams.size);
-    };
-    fetchPageData();
-  }, [searchParams.start, searchParams.size]);
 
   // Function to map array of keys to each array of values for each row
   function mapKeyToValue(indexObj) {
@@ -90,18 +80,12 @@ export function SearchPage({
 
   const timewiseResults = [];
   const trainingResults = [];
-  let totalTimewisePageCount = 0;
-  let totalTrainingPageCount = 0;
   if (searchResults.result && Object.keys(searchResults.result).length > 0) {
     Object.keys(searchResults.result).forEach((key) => {
       if (key.indexOf('timewise') > -1) {
         timewiseResults.push(...mapKeyToValue(searchResults.result[key]));
-        // set total timewise results
-        totalTimewisePageCount = Math.ceil(parseInt(searchResults.sub_totals.timewise) / searchParams.size);
       } else if (key.indexOf('training') > -1) {
         trainingResults.push(...mapKeyToValue(searchResults.result[key]));
-        // set total training results
-        totalTrainingPageCount = Math.ceil(parseInt(searchResults.sub_totals.training) / searchParams.size);
       }
     });
   }
@@ -401,9 +385,6 @@ export function SearchPage({
                           timewiseData={timewiseResults}
                           searchParams={searchParams}
                           handleSearchDownload={handleSearchDownload}
-                          pageCount={totalTimewisePageCount}
-                          handlePageSizeChange={handlePageSizeChange}
-                          handlePageIndexChange={handlePageIndexChange}
                         />
                       ) : (
                         scope === 'filters' && (
@@ -435,9 +416,6 @@ export function SearchPage({
                           trainingData={trainingResults}
                           searchParams={searchParams}
                           handleSearchDownload={handleSearchDownload}
-                          pageCount={totalTrainingPageCount}
-                          handlePageSizeChange={handlePageSizeChange}
-                          handlePageIndexChange={handlePageIndexChange}
                         />
                       ) : (
                         scope === 'filters' && (
@@ -755,8 +733,6 @@ SearchPage.propTypes = {
   handleSearchDownload: PropTypes.func.isRequired,
   handleDataFetch: PropTypes.func.isRequired,
   handleQCDataFetch: PropTypes.func.isRequired,
-  handlePageSizeChange: PropTypes.func.isRequired,
-  handlePageIndexChange: PropTypes.func.isRequired,
   allFiles: PropTypes.arrayOf(PropTypes.shape({})),
   lastModified: PropTypes.string,
   hasResultFilters: PropTypes.shape({
@@ -801,8 +777,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(SearchActions.handleSearchDownload(params, analysis)),
   handleDataFetch: () => dispatch(BrowseDataActions.handleDataFetch()),
   handleQCDataFetch: () => dispatch(DataStatusActions.fetchData()),
-  handlePageSizeChange: (size) => dispatch(SearchActions.pageSizeChange(size)),
-  handlePageIndexChange: (index) => dispatch(SearchActions.pageIndexChange(index)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
