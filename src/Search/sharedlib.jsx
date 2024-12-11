@@ -34,7 +34,7 @@ export const searchParamsDefaultProps = {
     'p_value_female',
   ],
   unique_fields: ['tissue', 'assay', 'sex', 'comparison_group'],
-  size: 25,
+  size: 10000,
   start: 0,
   debug: true,
   save: false,
