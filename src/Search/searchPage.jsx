@@ -156,12 +156,6 @@ export function SearchPage({
       const terms = inputStr.match(/("[^"]+"|[^, ]+)/g);
       // Remove double quotes from terms that are enclosed and trim any extra spaces
       return terms.map((term) => term.replace(/"/g, '').trim());
-      /*
-      if (searchParams.ktype === 'gene') {
-        newArr = inputStr.split(',').map((s) => s.trim());
-        return newArr;
-      }
-      */
     }
     return newArr;
   }
