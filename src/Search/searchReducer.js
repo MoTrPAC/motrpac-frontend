@@ -14,7 +14,7 @@ export const defaultSearchState = {
   searchResults: {},
   searchParams: {
     ktype: 'gene',
-    keys: '',
+    keys: [],
     omics: 'all',
     analysis: 'all',
     filters: {
@@ -42,9 +42,11 @@ export const defaultSearchState = {
       'p_value_female',
     ],
     unique_fields: ['tissue', 'assay', 'sex', 'comparison_group'],
-    size: 25000,
+    size: 10000,
     start: 0,
     save: false,
+    convert_assay_code: 1,
+    convert_tissue_code: 1,
   },
   scope: 'all',
   searching: false,
@@ -121,6 +123,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         fields,
         unique_fields,
         size,
+        start,
       } = action.params;
       return {
         ...state,
@@ -134,8 +137,11 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
           fields,
           unique_fields,
           size,
+          start,
           debug: true,
           save: false,
+          convert_assay_code: 1,
+          convert_tissue_code: 1,
         },
         scope: action.scope,
         searching: true,
@@ -157,9 +163,9 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         searchResults:
           action.searchResults.message || action.searchResults.errors
             ? {
-                errors:
+              errors:
                   action.searchResults.message || action.searchResults.errors,
-              }
+            }
             : action.searchResults,
         searching: false,
         hasResultFilters:
@@ -189,7 +195,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       }
 
       const defaultParams = { ...defaultSearchState.searchParams };
-      defaultParams.keys = '';
+      defaultParams.keys = [];
       defaultParams.filters = {
         tissue: [],
         assay: [],
@@ -229,10 +235,10 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         downloadResults:
           action.downloadResults.message || action.downloadResults.errors
             ? {
-                errors:
-                  action.downloadResults.message ||
-                  action.downloadResults.errors,
-              }
+              errors:
+                  action.downloadResults.message
+                  || action.downloadResults.errors,
+            }
             : action.downloadResults,
         downloading: false,
       };
