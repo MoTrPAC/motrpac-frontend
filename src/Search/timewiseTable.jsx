@@ -110,7 +110,7 @@ function DataTable({
         <PageSize
           pageSize={pageSize}
           setPageSize={setPageSize}
-          hpageSizeOptions={range(50, preGlobalFilteredRows.length)}
+          pageSizeOptions={range(50, preGlobalFilteredRows.length)}
         />
         <div className="file-download-button">
           <button
