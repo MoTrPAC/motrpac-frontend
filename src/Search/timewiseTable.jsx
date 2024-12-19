@@ -11,6 +11,7 @@ import {
   searchParamsPropType,
   timewiseResultsTablePropType,
   timewiseTableColumns,
+  proteinTimewiseTableColumns,
   metabTimewiseTableColumns,
   PageIndex,
   PageSize,
@@ -29,13 +30,16 @@ function TimewiseResultsTable({
   handleSearchDownload,
 }) {
   // Define table column headers
-  const columns = useMemo(
-    () =>
-      searchParams.ktype === 'metab'
-        ? metabTimewiseTableColumns
-        : timewiseTableColumns,
-    []
-  );
+  const columns = useMemo(() => {
+    switch (searchParams.ktype) {
+      case 'metab':
+        return metabTimewiseTableColumns;
+      case 'protein':
+        return proteinTimewiseTableColumns;
+      default:
+        return timewiseTableColumns;
+    }
+  }, [searchParams.ktype]);
   const data = useMemo(() => transformData(timewiseData), [timewiseData]);
   return (
     <DataTable
@@ -54,28 +58,34 @@ function TimewiseResultsTable({
  *
  * @returns {object} JSX representation of table on data qc status
  */
-function DataTable({ columns, data, searchParams, handleSearchDownload }) {
-  const filterTypes = React.useMemo(
-    () => ({
-      text: (rows, id, filterValue) =>
-        rows.filter((row) => {
-          const rowValue = row.values[id];
-          return rowValue !== undefined
-            ? String(rowValue)
-                .toLowerCase()
-                .startsWith(String(filterValue).toLowerCase())
-            : true;
-        }),
-    }),
-    []
-  );
-
+function DataTable({
+  columns,
+  data,
+  searchParams,
+  handleSearchDownload,
+}) {
   // Use the useTable hook to create your table configuration
-  const instance = useTable(
+  // Use the state and functions returned from useTable to build your UI
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    preGlobalFilteredRows,
+    pageOptions,
+    pageCount,
+    page,
+    state: { pageIndex, pageSize },
+    gotoPage,
+    previousPage,
+    nextPage,
+    setPageSize,
+    canPreviousPage,
+    canNextPage,
+  } = useTable(
     {
       columns,
       data,
-      filterTypes,
       initialState: {
         pageIndex: 0,
         pageSize: 50,
@@ -85,30 +95,8 @@ function DataTable({ columns, data, searchParams, handleSearchDownload }) {
     useFilters,
     useGlobalFilter,
     useSortBy,
-    usePagination
+    usePagination,
   );
-  // Use the state and functions returned from useTable to build your UI
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    preGlobalFilteredRows,
-    setGlobalFilter,
-    preFilteredRows,
-    setFilter,
-    filterValue,
-    pageOptions,
-    pageCount,
-    page,
-    state: { pageIndex, pageSize, globalFilter },
-    gotoPage,
-    previousPage,
-    nextPage,
-    setPageSize,
-    canPreviousPage,
-    canNextPage,
-  } = instance;
 
   // default page size options given the length of entries in the data
   const range = (start, stop, step = 50) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);

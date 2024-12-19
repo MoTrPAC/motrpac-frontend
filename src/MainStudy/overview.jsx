@@ -10,7 +10,7 @@ import PASS1B06Profiling from '../assets/figures/pass1b-06-molecular-profiling.s
 import ToggleShowHide from './components/toggleShowHide';
 import ExternalLink from '../lib/ui/externalLink';
 
-function MainStudy({ profile, allFiles, handleDataFetch }) {
+function ProjectOverview({ profile, allFiles, handleDataFetch }) {
   const [showSummary, setShowSummary] = useState(true);
   const [showExpDesign, setShowExpDesign] = useState(true);
   const [showTissueProfiling, setShowTissueProfiling] = useState(true);
@@ -111,7 +111,7 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
               <tbody>
                 <tr>
                   <td>
-                    <strong>Young adult (6 month old)</strong>
+                    <strong>Young Adults (6 month old)</strong>
                     <ul>
                       <li>Acute exercise</li>
                       <li>
@@ -127,7 +127,7 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
                       </li>
                       <li>Controls</li>
                     </ul>
-                    <strong>Middle-aged adult (18 month old)</strong>
+                    <strong>Middle-aged Adults (18 month old)</strong>
                     <ul>
                       <li>Acute exercise</li>
                       <li>Endurance training</li>
@@ -135,13 +135,13 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
                     </ul>
                   </td>
                   <td>
-                    <strong>Pediatric</strong>
+                    <strong>Pediatrics</strong>
                     <ul>
                       <li>Endurance training</li>
                       <li>Acute exercise</li>
                       <li>Control</li>
                     </ul>
-                    <strong>Adult</strong>
+                    <strong>Sedentary Adults</strong>
                     <ul>
                       <li>Acute endurance exercise</li>
                       <li>Acute resistance exercise</li>
@@ -149,7 +149,7 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
                       <li>Resistance training</li>
                       <li>Control</li>
                     </ul>
-                    <strong>Highly active adult</strong>
+                    <strong>Highly Active Adults</strong>
                     <ul>
                       <li>Acute endurance exercise</li>
                       <li>Acute resistance exercise</li>
@@ -166,7 +166,9 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
         >
           <h3>Endurance Training in Young Adult Rats</h3>
           <h6>
-            Species: <span className="font-italic">Rattus norvegicus</span>
+            Species:
+            {' '}
+            <span className="font-italic">Rattus norvegicus</span>
           </h6>
           <p>
             In this intervention, we're specifically interested in the long term
@@ -176,11 +178,13 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
             tissues. Rats were endurance-exercise trained on treadmills and
             tissue samples were collected at either 1, 2, 4, or 8 weeks of
             training, with a 48 hour rest or wash out period before samples were
-            collected. See the{' '}
+            collected. See the
+            {' '}
             <ExternalLink
               to="https://motrpac.org/actDocumentDownload.cfm?docGUID=A31CDD1F-8A59-41D9-BABA-125B37A39BF5"
               label="animal protocol"
-            />{' '}
+            />
+            {' '}
             to learn more.
           </p>
           <div className="main-study-content-container mt-5">
@@ -257,7 +261,7 @@ function MainStudy({ profile, allFiles, handleDataFetch }) {
   );
 }
 
-MainStudy.propTypes = {
+ProjectOverview.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.shape({
       hasAccess: PropTypes.bool,
@@ -267,7 +271,7 @@ MainStudy.propTypes = {
   handleDataFetch: PropTypes.func,
 };
 
-MainStudy.defaultProps = {
+ProjectOverview.defaultProps = {
   profile: {},
   handleDataFetch: null,
 };
@@ -277,8 +281,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleDataFetch: (phase) =>
-    dispatch(BrowseDataActions.handleDataFetch(phase)),
+  handleDataFetch: (phase) => dispatch(BrowseDataActions.handleDataFetch(phase)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainStudy);
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectOverview);

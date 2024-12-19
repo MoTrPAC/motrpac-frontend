@@ -20,6 +20,7 @@ import IconSet from '../lib/iconSet';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import { genes } from '../data/genes';
 import { metabolites } from '../data/metabolites';
+import { proteins } from '../data/proteins';
 import searchStructuredData from '../lib/searchStructuredData/search';
 import UserSurveyModal from '../UserSurvey/userSurveyModal';
 
@@ -110,50 +111,61 @@ export function SearchPage({
     return null;
   }
 
+  // get options based on selected search context
+  function getOptions() {
+    switch (searchParams.ktype) {
+      case 'gene':
+        return genes;
+      case 'metab':
+        return metabolites;
+      case 'protein':
+        return proteins;
+      default:
+        return [];
+    }
+  }
+
   // render placeholder text in primary search input field
   function renderPlaceholder() {
     if (searchParams.ktype === 'protein') {
-      return 'Example: NP_001000006.1, NP_001001508.2, NP_001005898.3';
+      return 'Example: "atpase inhibitor, mitochondrial", "global ischemia-induced protein 11"';
     }
     if (searchParams.ktype === 'metab') {
-      return 'Example: 8,9-EpETrE, C18:1 LPC plasmalogen B';
+      return 'Example: "amino acids and peptides", "c10:2 carnitine"';
     }
-    return 'Example: BRD2, SMAD3, ID1';
+    return 'Example: brd2, smad3, vegfa';
   }
 
   const inputEl = document.querySelector('.rbt-input-main');
 
-  // FIXME: transform react-bootstrap-typeahead state from array to string
+  // Transform input values
+  // Keep react-bootstrap-typeahead state array as is
+  // Convert manually entered gene/protein/metabolite string input to array
   function formatSearchInput() {
     const newArr = [];
+    // react-bootstrap-typeahead state array has values
     if (multiSelections.length) {
       multiSelections.forEach((item) => newArr.push(item.id));
-      return newArr.join(', ');
+      return newArr;
     }
-    // Handle manually entered gene/metabolite input
+    // Handle manually entered gene/protein/metabolite string input
+    // convert formatted string to array
     if (inputEl.value && inputEl.value.length) {
-      const str = inputEl.value;
-      if (searchParams.ktype === 'gene') {
-        const arr = str.split(',').map((s) => s.trim());
-        return arr.join(', ');
-      }
-      return str;
+      const inputStr = inputEl.value;
+      // Match terms enclosed in double quotes or not containing commas
+      const terms = inputStr.match(/("[^"]+"|[^, ]+)/g);
+      // Remove double quotes from terms that are enclosed and trim any extra spaces
+      return terms.map((term) => term.replace(/"/g, '').trim());
     }
-    return '';
+    return newArr;
   }
 
   // Clear manually entered gene/protein/metabolite input
-  function clearGeneInput(ktype) {
-    const inputElProtein = document.querySelector('.search-input-kype');
-
-    if (ktype && ktype === 'protein') {
-      if (inputElProtein && inputElProtein.value && inputElProtein.value.length) {
-        inputElProtein.value = '';
-      }
-    } else if (inputEl && inputEl.value && inputEl.value.length) {
+  const clearSearchTermInput = () => {
+    if (inputEl && inputEl.value && inputEl.value.length) {
       inputRef.current.clear();
     }
-  }
+  };
 
   return (
     <div className="searchPage px-3 px-md-4 mb-3">
@@ -169,14 +181,40 @@ export function SearchPage({
         <div className="search-content-container">
           <div className="search-summary-container row mb-4">
             <div className="lead col-12">
-              Search by gene ID, protein ID or metabolite name to examine the
+              Search by gene symbol, protein name or metabolite name to examine the
               timewise endurance training response over 8 weeks of training in
-              adult rats.{' '}
-              <span className="font-weight-bold">
-                Multiple search terms MUST be separated by comma and space.
-                Examples: "NP_001000006.1, NP_001001508.2, NP_001005898.3" or
-                "8,9-EpETrE, C18:1 LPC plasmalogen B".
-              </span>
+              young adult rats. To ensure the best search results, please use the
+              following guidelines:
+              <ol>
+                <li>
+                  Use
+                  {' '}
+                  <span className="font-weight-bold">
+                    auto-suggested search terms
+                  </span>
+                  {' '}
+                  by typing the first few
+                  characters of the gene symbol, protein or metabolite names.
+                </li>
+                <li>
+                  Separate multiple search terms using a comma followed by a space. For example:
+                  {' '}
+                  <code>brd2, smad3, vegfa</code>
+                </li>
+                <li>
+                  Use double quotes to enclose search terms containing commas,
+                  spaces or commas followed by spaces. For example:
+                  {' '}
+                  <code>"tca acids", "8,9-epetre", "coa(3:0, 3-oh)"</code>
+                </li>
+              </ol>
+              <p>
+              The endurance trained young adult rats dataset is made available
+              under the
+              {' '}
+              <Link to="/license">CC BY 4.0 license</Link>
+              .
+              </p>
             </div>
           </div>
           <div className="es-search-ui-container d-flex align-items-center w-100 pb-2">
@@ -184,54 +222,28 @@ export function SearchPage({
               changeParam={changeParam}
               ktype={searchParams.ktype}
               resetSearch={resetSearch}
+              clearInput={clearSearchTermInput}
               setMultiSelections={setMultiSelections}
               inputEl={inputEl}
             />
             <div className="search-box-input-group d-flex align-items-center flex-grow-1">
-              {/*  
-              <input
-                type="text"
-                id="keys"
-                name="keys"
-                className="form-control search-input-kype flex-grow-1"
-                placeholder={renderPlaceholder()}
-                value={searchParams.keys}
-                onChange={(e) => changeParam('keys', e.target.value)}
-              />
-              */}
               <div className="input-group">
                 <div className="input-group-prepend">
                   <span className="input-group-text material-icons">
                     pest_control_rodent
                   </span>
                 </div>
-                {searchParams.ktype === 'gene' ||
-                searchParams.ktype === 'metab' ? (
-                  <Typeahead
-                    id="dea-search-typeahead-multiple"
-                    labelKey="id"
-                    multiple
-                    onChange={setMultiSelections}
-                    options={
-                      searchParams.ktype === 'gene' ? genes : metabolites
-                    }
-                    placeholder={renderPlaceholder()}
-                    selected={multiSelections}
-                    minLength={2}
-                    ref={inputRef}
-                  />
-                ) : null}
-                {searchParams.ktype === 'protein' && (
-                  <input
-                    type="text"
-                    id="keys"
-                    name="keys"
-                    className="form-control search-input-kype flex-grow-1"
-                    placeholder={renderPlaceholder()}
-                    value={searchParams.keys}
-                    onChange={(e) => changeParam('keys', e.target.value)}
-                  />
-                )}
+                <Typeahead
+                  id="dea-search-typeahead-multiple"
+                  labelKey="id"
+                  multiple
+                  onChange={setMultiSelections}
+                  options={getOptions()}
+                  placeholder={renderPlaceholder()}
+                  selected={multiSelections}
+                  minLength={2}
+                  ref={inputRef}
+                />
               </div>
               <PrimaryOmicsFilter
                 omics={searchParams.omics}
@@ -273,9 +285,7 @@ export function SearchPage({
                   type="button"
                   className="btn btn-secondary search-reset ml-2"
                   onClick={() => {
-                    clearGeneInput(
-                      searchParams.ktype === 'protein' ? 'protein' : null
-                    );
+                    clearSearchTermInput();
                     resetSearch('all');
                     setMultiSelections([]);
                   }}
@@ -465,6 +475,7 @@ function RadioButton({
   changeParam,
   ktype,
   resetSearch,
+  clearInput,
   setMultiSelections,
   inputEl,
 }) {
@@ -472,22 +483,23 @@ function RadioButton({
     {
       keyType: 'gene',
       id: 'inlineRadioGene',
-      label: 'Gene',
+      label: 'Gene symbol',
     },
     {
       keyType: 'protein',
       id: 'inlineRadioProtein',
-      label: 'Protein ID',
+      label: 'Protein name',
     },
     {
       keyType: 'metab',
       id: 'inlineRadioMetab',
-      label: 'Metabolite',
+      label: 'Metabolite name',
     },
   ];
 
   const handleRadioChange = (e) => {
     resetSearch('all');
+    clearInput();
     setMultiSelections([]);
     changeParam('ktype', e.target.value);
     if (inputEl && inputEl.value && inputEl.value.length) {

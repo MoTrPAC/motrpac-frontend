@@ -108,6 +108,26 @@ function handleSearch(params, inputValue, scope) {
       p_value: { min: '', max: '' },
     };
   }
+  // insert 'is_meta" field to fields array if ktype is 'metab'
+  // and delete 'protein_name' field if it exists
+  if (params.ktype === 'metab') {
+    if (!params.fields.includes('is_meta')) {
+      params.fields = ['is_meta', ...params.fields];
+    }
+    if (params.fields.includes('protein_name')) {
+      const index = params.fields.indexOf('protein_name');
+      params.fields.splice(index, 1);
+    }
+  }
+  // delete 'is_meta' flag from fields array (if it exists)
+  // if ktype is 'protein' or 'gene'
+  if (params.ktype === 'protein' || params.ktype === 'gene') {
+    if (params.fields.includes('is_meta')) {
+      const index = params.fields.indexOf('is_meta');
+      params.fields.splice(index, 1);
+    }
+  }
+
   return (dispatch) => {
     dispatch(searchSubmit(params, scope));
     return axios

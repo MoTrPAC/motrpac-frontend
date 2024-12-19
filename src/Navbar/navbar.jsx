@@ -272,6 +272,9 @@ export function Navbar({
                   >
                     Limited Acute Exercise Data
                   </Link>
+                  <Link to="/data-deposition" className="dropdown-item">
+                    Public Data Repositories
+                  </Link>
                   {!userType || (userType && userType !== 'internal') ? (
                     <a
                       href={process.env.REACT_APP_DATA_UPDATES_SIGNUP_URL}
@@ -336,6 +339,14 @@ export function Navbar({
                   >
                     OmicsPipelines
                   </a>
+                  <a
+                    href="https://community.motrpac-data.org/"
+                    className="dropdown-item"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Community
+                  </a>
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
@@ -345,7 +356,7 @@ export function Navbar({
                   id="helpNavbarItemMenuLink"
                   data-toggle="dropdown"
                 >
-                  Help
+                  Learn
                 </div>
                 <div
                   className="dropdown-menu"
@@ -354,16 +365,17 @@ export function Navbar({
                   <Link to="/project-overview" className="dropdown-item">
                     Project Overview
                   </Link>
+                  <Link to="/exercise-benefits" className="dropdown-item">
+                    Exercise Benefits
+                  </Link>
+                  <Link to="/study-assays" className="dropdown-item">
+                    Study Assays
+                  </Link>
                   <Link to="/tutorials" className="dropdown-item">
                     Tutorials
                   </Link>
-                  <Link
-                    id="send_email"
-                    to="/contact"
-                    className="dropdown-item"
-                    onClick={(e) => checkServiceStatus(e)}
-                  >
-                    Contact Us
+                  <Link to="/license" className="dropdown-item">
+                    License
                   </Link>
                 </div>
               </li>
@@ -388,6 +400,14 @@ export function Navbar({
                   </Link>
                   <Link to="/external-links" className="dropdown-item">
                     Useful Links
+                  </Link>
+                  <Link
+                    id="send_email"
+                    to="/contact"
+                    className="dropdown-item"
+                    onClick={(e) => checkServiceStatus(e)}
+                  >
+                    Contact Us
                   </Link>
                 </div>
               </li>

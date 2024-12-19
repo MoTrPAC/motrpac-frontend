@@ -16,7 +16,7 @@ function FullTableEnduranceTraining() {
           type="button"
           role="button"
           className="btn btn-primary d-flex align-items-center ml-4"
-          href="https://cdn.motrpac-data.org/assets/datahub/publications/data/animal/phenotype/animal-endurance-training-study-full-table.xlsx"
+          href="https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/publications/data/animal/phenotype/animal-endurance-training-study-full-table.xlsx"
           download
         >
           <i className="material-icons">file_download</i>
