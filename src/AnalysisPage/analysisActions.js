@@ -10,6 +10,7 @@ export const GENE_SEARCH_FAILURE = 'GENE_SEARCH_FAILURE';
 export const GENE_SEARCH_SUCCESS = 'GENE_SEARCH_SUCCESS';
 export const GENE_SEARCH_RESET = 'GENE_SEARCH_RESET';
 export const GENE_SEARCH_CHANGE_FILTER = 'GENE_SEARCH_CHANGE_FILTER';
+export const PASS1AC06_ANALYSIS_CATEGORY_OPTION_CHANGE = 'PASS1AC06_ANALYSIS_CATEGORY_OPTION_CHANGE';
 
 function toggleWeightPlot(weightPlot) {
   return {
@@ -84,6 +85,14 @@ function geneSearchChangeFilter(field, filterValue) {
   };
 }
 
+function pass1ac06AnalysisCategoryOptionChange(category, option) {
+  return {
+    type: PASS1AC06_ANALYSIS_CATEGORY_OPTION_CHANGE,
+    category,
+    option,
+  };
+}
+
 const accessToken =
   process.env.NODE_ENV !== 'production'
     ? process.env.REACT_APP_ES_ACCESS_TOKEN_DEV
@@ -135,6 +144,7 @@ const AnalysisActions = {
   handleGeneCentricSearch,
   geneSearchReset,
   geneSearchChangeFilter,
+  pass1ac06AnalysisCategoryOptionChange,
 };
 
 export default AnalysisActions;

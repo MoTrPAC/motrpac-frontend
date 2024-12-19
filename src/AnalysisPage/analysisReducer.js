@@ -9,6 +9,7 @@ import {
   GENE_SEARCH_SUCCESS,
   GENE_SEARCH_RESET,
   GENE_SEARCH_CHANGE_FILTER,
+  PASS1AC06_ANALYSIS_CATEGORY_OPTION_CHANGE,
 } from './analysisActions';
 
 export const defaultGeneSearchParams = {
@@ -60,6 +61,16 @@ export const defaultAnalysisState = {
   geneSearchError: '',
   scope: 'all',
   hasResultFilters: {},
+  pass1ac06AnalysisCategoryOptions: {
+    summaryStatistics: {
+      weight_distribution: true,
+      lactate_change: true,
+      rat_work: true,
+    },
+    correlationAnalysis: {
+      overall_correlation_matrix: true,
+    },
+  },
 };
 
 export default function AnalysisReducer(
@@ -219,6 +230,17 @@ export default function AnalysisReducer(
       return {
         ...state,
         geneSearchParams: params,
+      };
+    }
+    // Handle analysis category option change
+    case PASS1AC06_ANALYSIS_CATEGORY_OPTION_CHANGE: {
+      const { category, option } = action;
+      const newOptions = { ...state.pass1ac06AnalysisCategoryOptions };
+      newOptions[category][option] = !newOptions[category][option];
+
+      return {
+        ...state,
+        pass1ac06AnalysisCategoryOptions: newOptions,
       };
     }
     default:
