@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import {
   COLORS,
   defaultChartOptions,
@@ -14,9 +13,6 @@ import Chart from '../chartWrapper';
  * @returns JSX representation of Highcharts plots for rat work - boxplots and scatter plots
  */
 function PlotWeightDistribution() {
-  const analysisState = useSelector((state) => state.analysis);
-  const { intervention, phase, sex } = analysisState.pass1ac06PlotDisplayOptions;
-
   // Base chart options
   const baseChartOptions = defaultChartOptions('Intervention', 'Weight', 'Weight: {point.y} grams');
 
@@ -26,15 +22,6 @@ function PlotWeightDistribution() {
 
   // Scatter plot data for pass1a and pass1c (both male and female)
   const scatterData = useMemo(() => allScatterPlotDataByPhaseSex(getWeightData), []);
-
-  // conditionally render x-axis categories based on intervention
-  const xAxisCategories = () => {
-    const { acute, control } = intervention;
-    const categories = [];
-    if (acute) categories.push('Acute');
-    if (control) categories.push('Control');
-    return categories.length ? categories : ['Acute', 'Control'];
-  };
 
   // Highcharts options for the plots
   const chartOptions = useMemo(() => {
@@ -116,7 +103,7 @@ function PlotWeightDistribution() {
   }, [baseChartOptions, boxPlotData, scatterData.pass1a, scatterData.pass1c]);
 
   return (
-    <div className="col-lg-10 h-90">
+    <div className="col-lg-11 h-90">
       <Chart options={chartOptions.male} className="phenotype-plot-container" />
       <Chart options={chartOptions.female} className="phenotype-plot-container" />
     </div>
