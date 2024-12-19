@@ -5,6 +5,7 @@ import HighchartsReact from 'highcharts-react-official';
 
 // Import order is important!
 require('highcharts/highcharts-more')(Highcharts);
+require('highcharts/modules/heatmap')(Highcharts);
 require('highcharts/modules/boost')(Highcharts);
 require('highcharts/modules/exporting')(Highcharts);
 require('highcharts/modules/export-data')(Highcharts);
