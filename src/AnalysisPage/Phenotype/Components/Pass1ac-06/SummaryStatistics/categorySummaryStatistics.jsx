@@ -15,7 +15,7 @@ function CategorySummaryStatistics() {
   const analysisState = useSelector((state) => state.analysis);
 
   return (
-    <div className="col-lg-10 analysis-category-content-container">
+    <div className="w-100 analysis-category-content-container">
       <h2>Summary Statistics</h2>
       <p>
         In this section, various summary statistics and visualizations that

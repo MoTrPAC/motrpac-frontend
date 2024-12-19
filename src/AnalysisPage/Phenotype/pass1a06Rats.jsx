@@ -1,7 +1,7 @@
 import React from 'react';
 import AnalysisCategoryNavigation from './Components/Pass1ac-06/analysisCategoryNavigation';
 import CategorySummaryStatistics from './Components/Pass1ac-06/SummaryStatistics/categorySummaryStatistics';
-import pass1ac06Data from './pass1ac-animal_pheno.json';
+import CategoryCorrelationAnalyses from './Components/Pass1ac-06/correlationAnalyses/categoryCorrelationAnalyses';
 
 /**
  * Functional component for PASS1AC-06 phenotypic data analysis visualization
@@ -24,7 +24,10 @@ function PhenotypePass1a06Rats() {
         {/* analysis category navigation component */}
         <AnalysisCategoryNavigation />
         {/* content of analysis categories */}
-        <CategorySummaryStatistics phenoData={pass1ac06Data} />
+        <div className="col-lg-10 analysis-category-content-container">
+          <CategorySummaryStatistics />
+          <CategoryCorrelationAnalyses />
+        </div>
       </div>
     </div>
   );
