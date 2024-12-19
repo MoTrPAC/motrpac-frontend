@@ -123,7 +123,7 @@ function PlotOverallCorrelationMatrix() {
             dataLabels: {
               enabled: true,
               color: '#000000',
-              style: { fontSize: 9 },
+              style: { fontSize: '1.25rem', textOutline: 'none' },
             },
           },
         ],
