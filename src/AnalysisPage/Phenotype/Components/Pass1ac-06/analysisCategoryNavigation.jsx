@@ -40,28 +40,34 @@ function AnalysisCategoryNavigation() {
             <div className="form-group" key={category.title}>
               <h6>{category.title}</h6>
               <div className="form-group">
-                {category.selections.map((sel) => (
-                  <div className="form-group form-check selection-item" key={sel.label}>
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id={sel.label}
-                      value={sel.value}
-                      checked={
-                        analysisState.pass1ac06AnalysisCategoryOptions[category.categoryVal][
-                          sel.value
-                        ]
-                      }
-                      onChange={() => dispatch(
-                        AnalysisActions.pass1ac06AnalysisCategoryOptionChange(
-                          category.categoryVal,
-                          sel.value,
-                        ),
-                      )}
-                    />
-                    <label className="form-check-label" htmlFor={sel.label}>{sel.label}</label>
-                  </div>
-                ))}
+                {category.selections.map((sel) => {
+                  const otherValues = category.selections.filter((s) => s.value !== sel.value);
+                  const isOtherChecked = otherValues.find((s) => analysisState.pass1ac06AnalysisCategoryOptions[category.categoryVal][s.value]);
+
+                  return (
+                    <div className="form-group form-check selection-item" key={sel.label}>
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        id={sel.label}
+                        value={sel.value}
+                        checked={
+                          analysisState.pass1ac06AnalysisCategoryOptions[category.categoryVal][
+                            sel.value
+                          ]
+                        }
+                        disabled={!isOtherChecked}
+                        onChange={() => dispatch(
+                          AnalysisActions.pass1ac06AnalysisCategoryOptionChange(
+                            category.categoryVal,
+                            sel.value,
+                          ),
+                        )}
+                      />
+                      <label className="form-check-label" htmlFor={sel.label}>{sel.label}</label>
+                    </div>
+                  );
+})}
               </div>
             </div>
           ))}
