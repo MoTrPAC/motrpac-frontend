@@ -12,64 +12,6 @@ export const pass1aFemaleControl = pass1ac06Data.filter((item) => item.phase ===
 export const pass1cFemaleAcute = pass1ac06Data.filter((item) => item.phase === 'pass1c' && item.sex === 'female' && item.intervention === 'acute');
 export const pass1cFemaleControl = pass1ac06Data.filter((item) => item.phase === 'pass1c' && item.sex === 'female' && item.intervention === 'control');
 
-export const groupiCategory = [
-  'acute_00.0h_IPE', 'acute_00.5h', 'acute_01.0h', 'acute_04.0h',
-  'acute_07.0h', 'acute_24.0h', 'acute_48.0h', 'control_00.0h',
-  'control_00.0h_IPE', 'control_00.5h', 'control_04.0h', 'control_07.0h',
-];
-
-const createGroupiData = (phase, sex) => groupiCategory.reduce((acc, groupi) => {
-  acc[groupi] = pass1ac06Data.filter((item) => item.phase === phase && item.sex === sex && item.groupi === groupi);
-  return acc;
-}, {});
-
-// male groupi data
-export const pass1aMaleGroupi = createGroupiData('pass1a', 'male');
-export const pass1cMaleGroupi = createGroupiData('pass1c', 'male');
-
-// female groupi data
-export const pass1aFemaleGroupi = createGroupiData('pass1a', 'female');
-export const pass1cFemaleGroupi = createGroupiData('pass1c', 'female');
-
-// Function to get all box plot data by phase, sex, and each of the groupi categories
-export function allBoxPlotDataByPhaseSexGroupi(processData) {
-  const boxPlotData = {};
-  // male groupi data
-  Object.keys(pass1aMaleGroupi).forEach((groupi) => {
-    boxPlotData[`pass1aMale${groupi}`] = calculateBoxPlotData(pass1aMaleGroupi[groupi], processData);
-  });
-  Object.keys(pass1cMaleGroupi).forEach((groupi) => {
-    boxPlotData[`pass1cMale${groupi}`] = calculateBoxPlotData(pass1cMaleGroupi[groupi], processData);
-  });
-  // female groupi data
-  Object.keys(pass1aFemaleGroupi).forEach((groupi) => {
-    boxPlotData[`pass1aFemale${groupi}`] = calculateBoxPlotData(pass1aFemaleGroupi[groupi], processData);
-  });
-  Object.keys(pass1cFemaleGroupi).forEach((groupi) => {
-    boxPlotData[`pass1cFemale${groupi}`] = calculateBoxPlotData(pass1cFemaleGroupi[groupi], processData);
-  });
-  return boxPlotData;
-}
-
-// Function to get all scatter plot data by phase, sex, and each of the groupi categories
-export function allScatterPlotDataByPhaseSexGroupi(processData) {
-  const getScatterPlots = (groupiData, offset) => Object.keys(groupiData).reduce((acc, groupi) => {
-    acc[groupi] = processData(groupiData[groupi]).map((value, x) => [x + offset, Math.round(value * 1000) / 1000]);
-    return acc;
-  }, {});
-
-  return {
-    pass1a: {
-      male: getScatterPlots(pass1aMaleGroupi, -0.15),
-      female: getScatterPlots(pass1aFemaleGroupi, -0.15),
-    },
-    pass1c: {
-      male: getScatterPlots(pass1cMaleGroupi, 0.15),
-      female: getScatterPlots(pass1cFemaleGroupi, 0.15),
-    },
-  };
-}
-
 // Function to calculate box plot data
 function calculateBoxPlotData(rawData, processData) {
   const boxPlotData = processData(rawData).sort((a, b) => a - b);
