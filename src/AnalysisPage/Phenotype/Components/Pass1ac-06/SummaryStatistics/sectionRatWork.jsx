@@ -31,7 +31,7 @@ function SectionRatWork() {
         </code>
       </p>
       <div className="analysis-section-plot-container row mb-4">
-        {/* phenotpypic data analysis plots */}
+        {/* phenotypic data analysis plots */}
         <PlotRatWork />
       </div>
     </div>
