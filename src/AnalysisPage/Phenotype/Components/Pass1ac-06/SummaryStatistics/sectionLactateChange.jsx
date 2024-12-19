@@ -14,7 +14,7 @@ function SectionLactateChange() {
     <div className="analysis-section-content-container w-100">
       <h3>Lactate Change (before / after) Due to Acute Exercise</h3>
       <div className="analysis-section-plot-container row mb-4">
-        {/* phenotpypic data analysis plots */}
+        {/* phenotypic data analysis plots */}
         <PlotLactateChange />
       </div>
     </div>
