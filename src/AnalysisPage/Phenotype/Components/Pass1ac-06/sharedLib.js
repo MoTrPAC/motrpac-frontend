@@ -115,3 +115,46 @@ export function defaultChartOptions(xAxisTitle, yAxisTitle, scatterTooltipFormat
     exporting: { enabled: true },
   };
 }
+
+// correlation matrix chart options
+export function correlationMatrixChartOptions(xAxisTitle, yAxisTitle, tooltipFormat) {
+  return {
+    chart: {
+      type: 'heatmap',
+      marginTop: 40,
+      marginBottom: 80,
+      plotBorderWidth: 1,
+    },
+    xAxis: {
+      title: {
+        text: xAxisTitle,
+        margin: 10,
+        style: { fontSize: '1.0rem', fontWeight: 'bold' },
+      },
+      labels: { style: { fontSize: '0.85rem', fontWeight: 'bold' } },
+    },
+    yAxis: {
+      title: {
+        text: yAxisTitle,
+        margin: 20,
+        style: { fontSize: '1.0rem', fontWeight: 'bold' },
+      },
+      labels: { style: { fontSize: '0.85rem', fontWeight: 'bold' } },
+    },
+    tooltip: {
+      format: tooltipFormat,
+    },
+    credits: { enabled: false },
+    legend: {
+      layout: 'vertical',
+      align: 'right',
+      verticalAlign: 'middle',
+      padding: 15,
+      title: {
+        text: 'Correlation',
+        style: { fontWeight: 'normal', fontSize: '1.0rem' },
+      },
+    },
+    exporting: { enabled: true },
+  };
+}
