@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import HtmlReportModal from './htmlReportModal';
+import IconSet from '../lib/iconSet';
 
 const proteomicsReportsDA = [
   't55-gastrocnemius_prot-ph_DEA_report.html',
@@ -70,6 +71,74 @@ function DawgPAC({ profile }) {
       <h3 className="border-bottom mb-3 pb-3">
         DAWG-PAC: Data Analysis Working Group - PASS1A/1C
       </h3>
+      <h5 className="mb-2">MoTrPAC Data Freeze: rat-acute-06</h5>
+      <div className="table-responsive">
+        <table className="table table-bordered resources-table">
+          <thead className="thead-light">
+            <tr>
+              <th scope="col">Data and Metadata</th>
+              <th scope="col">Code</th>
+              <th scope="col">Methods</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="p-3">
+                <img
+                  src={IconSet.GoogleCloud}
+                  className="my-3"
+                  alt="Data and Metadata"
+                />
+                <p>
+                  <span className="font-weight-bold">GCP bucket:</span>
+                  <br />
+                  <a
+                    href="https://console.cloud.google.com/storage/browser/mawg-data?project=motrpac-portal"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    gs://mawg-data/rat-acute-06
+                  </a>
+                </p>
+              </td>
+              <td className="p-3">
+                <img src={IconSet.GitHub} className="my-3" alt="Code" />
+                <p>
+                  <span className="font-weight-bold">
+                    Analysis collaboration repository:
+                  </span>
+                  <br />
+                  <a
+                    href="https://github.com/MoTrPAC/motrpac-rat-acute-6m"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    https://github.com/MoTrPAC/motrpac-rat-acute-6m
+                  </a>
+                </p>
+              </td>
+              <td className="p-3">
+                <img src={IconSet.GoogleDrive} className="my-3" alt="Methods" />
+                <p>
+                  <a
+                    href="https://drive.google.com/drive/u/0/folders/1ixx17MrzRhBiADSsGIeEAD2yfzr79HO_"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    MoTrPAC MAWG Teamdrive &gt; PASS1A-1C-06 &gt; Writing Methods
+                  </a>
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className="bd-callout bd-callout-warning mb-4">
+        <b>2024DEC20 Soft Release →</b>{' '}
+        <a href="https://docs.google.com/document/d/1-VphKxR9jQKFUFRjsF12YVY_pkO2oLOAHunjFc2Alxg/edit?tab=t.0#heading=h.ve0qe6m0m7t7" target="_blank" rel="noopener noreferrer">
+          Read Notes
+        </a>
+      </div>
       <h5>PASS1A/1C: Acute exercise on young adult rats</h5>
       <p>
         The goal of the acute exercise study on young adult rats (designated as
