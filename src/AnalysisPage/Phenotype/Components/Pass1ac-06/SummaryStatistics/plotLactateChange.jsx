@@ -103,7 +103,7 @@ function PlotLactateChange() {
   }, [baseChartOptions, boxPlotData, scatterData]);
 
   return (
-    <div className="col-lg-10 h-90">
+    <div className="col-lg-11 h-90">
       <Chart options={chartOptions.male} className="phenotype-plot-container" />
       <Chart options={chartOptions.female} className="phenotype-plot-container" />
     </div>
