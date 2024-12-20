@@ -121,7 +121,7 @@ function DawgPAC({ profile }) {
                 <img src={IconSet.GoogleDrive} className="my-3" alt="Methods" />
                 <p>
                   <a
-                    href="https://drive.google.com/drive/u/0/folders/1ixx17MrzRhBiADSsGIeEAD2yfzr79HO_"
+                    href="https://drive.google.com/drive/folders/1_DCO6a9Ug8vlfTOUi67yl6KI3H0Px1b-?usp=drive_link"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
