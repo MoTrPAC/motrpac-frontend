@@ -89,10 +89,20 @@ function PreCAWG() {
         </table>
       </div>
       <div className="bd-callout bd-callout-warning mb-4">
-        <b>START HERE FOR ONBOARDING →</b>{' '}
-        <a href="#onboarding">
-          Analysis Collaboration: Getting started step-by-step
-        </a>
+        <div className="mb-2">
+          <b>START HERE FOR ONBOARDING →</b>
+          {' '}
+          <a href="#onboarding">
+            Analysis Collaboration: Getting started step-by-step
+          </a>
+        </div>
+        <div className="mt-2">
+          <b>2024DEC20 Freeze 1.2 →</b>
+          {' '}
+          <a href="https://docs.google.com/document/d/1BB2r66Jv9fYYQvR_SNw6Hwo6UThJNS1RtjFYsWCGzhY/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
+            Read latest release notes
+          </a>
+        </div>
       </div>
       <h5 className="mt-3 mb-2">2024APR01 Freeze 1.1 Release Notes</h5>
       <table className="table table-bordered release-notes-table">
