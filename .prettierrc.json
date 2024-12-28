@@ -1,4 +1,8 @@
-export default {
-  arrowParens: 'always',
-  singleQuote: true,
-};
+{
+  "arrowParens": "always",
+  "semi": true,
+  "tabWidth": 2,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "bracketSpacing": true
+}
