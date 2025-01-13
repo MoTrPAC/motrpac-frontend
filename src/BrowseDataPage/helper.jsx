@@ -244,22 +244,22 @@ export const transformData = (arr) => {
     if (item.assay !== null && item.assay !== undefined) {
       let newMetabAssayVal = item.assay;
       if (
-        newMetabAssayVal.indexOf('Targeted') !== -1 &&
-        newMetabAssayVal.indexOf('Untargeted') !== -1
+        newMetabAssayVal.includes('Targeted')
+        && newMetabAssayVal.includes('Untargeted')
       ) {
         newMetabAssayVal = 'Merged';
         item.assay = newMetabAssayVal;
       }
     }
     if (
-      item.assay !== null &&
-      item.assay !== undefined &&
-      item.omics === 'Metabolomics Targeted'
+      item.assay !== null
+      && item.assay !== undefined
+      && item.omics === 'Metabolomics Targeted'
     ) {
       let newMetabAssayVal = item.assay;
       if (
-        newMetabAssayVal.indexOf('Acylcarnitines') !== -1 &&
-        newMetabAssayVal.indexOf('Oxylipins') !== -1
+        newMetabAssayVal.includes('Acylcarnitines')
+        && newMetabAssayVal.includes('Oxylipins')
       ) {
         newMetabAssayVal = 'Merged';
         item.assay = newMetabAssayVal;
@@ -267,36 +267,28 @@ export const transformData = (arr) => {
     }
     if (item.tissue_name !== null && item.tissue_name !== undefined) {
       let newTissueVal = item.tissue_name;
+      const tissueMappings = {
+        'Human PBMC': 'Blood',
+        'Human EDTA Packed Cells': 'Blood',
+        'Human PAXgene RNA': 'Blood',
+        'Human Adipose': 'Adipose',
+        'Human Adipose Powder': 'Adipose',
+        'Humnan Adipose Powder': 'Adipose',
+        'Human Muscle': 'Muscle',
+        'Human Muscle Powder': 'Muscle',
+        'Human EDTA Plasma': 'Plasma',
+      };
+
+      Object.keys(tissueMappings).forEach((key) => {
+        if (newTissueVal.indexOf(key) !== -1) {
+          newTissueVal = tissueMappings[key];
+          item.tissue_name = newTissueVal;
+        }
+      });
       if (
-        newTissueVal.indexOf('Human PBMC') !== -1 ||
-        newTissueVal.indexOf('Human EDTA Packed Cells') !== -1 ||
-        newTissueVal.indexOf('Human PAXgene RNA') !== -1
-      ) {
-        newTissueVal = 'Blood';
-        item.tissue_name = newTissueVal;
-      }
-      if (
-        newTissueVal.indexOf('Human Adipose') !== -1 ||
-        newTissueVal.indexOf('Human Adipose Powder') !== -1
-      ) {
-        newTissueVal = 'Adipose';
-        item.tissue_name = newTissueVal;
-      }
-      if (
-        newTissueVal.indexOf('Human Muscle') !== -1 ||
-        newTissueVal.indexOf('Human Muscle Powder') !== -1
-      ) {
-        newTissueVal = 'Muscle';
-        item.tissue_name = newTissueVal;
-      }
-      if (newTissueVal.indexOf('Human EDTA Plasma') !== -1) {
-        newTissueVal = 'Plasma';
-        item.tissue_name = newTissueVal;
-      }
-      if (
-        newTissueVal.indexOf('EDTA Plasma') !== -1 &&
-        item.omics.indexOf('Metabolomics') !== -1 &&
-        item.study.indexOf('Acute Exercise') !== -1
+        newTissueVal.includes('EDTA Plasma')
+        && item.omics.includes('Metabolomics')
+        && item.study.includes('Acute Exercise')
       ) {
         newTissueVal = 'Plasma';
         item.tissue_name = newTissueVal;
