@@ -61,7 +61,6 @@ SelectiveDataDownloadFileBrowser.propTypes = {
     }),
   }),
   filteredFiles: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  fetching: PropTypes.bool.isRequired,
   activeFilters: BrowseDataFilter.propTypes.activeFilters.isRequired,
   onChangeFilter: PropTypes.func.isRequired,
   onResetFilters: PropTypes.func.isRequired,
