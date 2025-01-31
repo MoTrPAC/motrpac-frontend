@@ -11,7 +11,6 @@ import DataDownloadsMain from './components/dataDownloadsMain';
 export function BrowseDataPage({
   profile,
   filteredFiles,
-  fetching,
   activeFilters,
   onChangeFilter,
   onResetFilters,
@@ -42,7 +41,6 @@ export function BrowseDataPage({
       <DataDownloadsMain
         profile={profile}
         filteredFiles={filteredFiles}
-        fetching={fetching}
         activeFilters={activeFilters}
         onChangeFilter={onChangeFilter}
         onResetFilters={onResetFilters}
@@ -64,7 +62,6 @@ export function BrowseDataPage({
 
 BrowseDataPage.propTypes = {
   filteredFiles: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  fetching: PropTypes.bool.isRequired,
   profile: PropTypes.shape({
     user_metadata: PropTypes.shape({
       userType: PropTypes.string,
@@ -103,13 +100,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onChangeSort: (column) => dispatch(actions.sortChange(column)),
   onChangeFilter: (category, filter) =>
     dispatch(actions.changeFilter(category, filter)),
   onResetFilters: () => dispatch(actions.resetFilters()),
-  changePageRequest: (maxRows, page) =>
-    dispatch(actions.changePageRequest(maxRows, page)),
-  loadDataObjects: (files) => dispatch(actions.loadDataObjects(files)),
   handleDownloadRequest: (email, name, userid, selectedFiles) =>
     dispatch(actions.handleDownloadRequest(email, name, userid, selectedFiles)),
 });
