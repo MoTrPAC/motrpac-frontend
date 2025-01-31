@@ -9,7 +9,6 @@ import SelectiveDataDownloadFileBrowser from './selectiveDataDownloadFileBrowser
 function SelectiveDataDownloads({
   profile,
   filteredFiles,
-  fetching,
   activeFilters,
   onChangeFilter,
   onResetFilters,
@@ -54,20 +53,6 @@ function SelectiveDataDownloads({
     return summary;
   }
 
-  // set data file list based on selected data
-  let dataFiles = [];
-  if (dataDownload.pass1b06DataSelected) {
-    dataFiles = filteredFiles.filter((item) => item.phase === 'PASS1B-06');
-  }
-  if (dataDownload.pass1a06DataSelected) {
-    dataFiles = filteredFiles.filter((item) => item.phase === 'PASS1A-06');
-  }
-  if (dataDownload.humanPrecovidSedAduDataSelected) {
-    dataFiles = filteredFiles.filter(
-      (item) => item.phase === 'HUMAN-PRECOVID-SED-ADU',
-    );
-  }
-
   return (
     <div className="data-download-selective-files">
       <div className="link link-back mb-1">
@@ -86,8 +71,7 @@ function SelectiveDataDownloads({
         <div className="tab-content mx-3">
           <SelectiveDataDownloadFileBrowser
             profile={profile}
-            filteredFiles={dataFiles}
-            fetching={fetching}
+            filteredFiles={filteredFiles}
             activeFilters={activeFilters}
             onChangeFilter={onChangeFilter}
             onResetFilters={onResetFilters}
@@ -103,7 +87,6 @@ function SelectiveDataDownloads({
 
 SelectiveDataDownloads.propTypes = {
   filteredFiles: PropTypes.arrayOf(PropTypes.shape({})),
-  fetching: PropTypes.bool.isRequired,
   profile: PropTypes.shape({
     user_metadata: PropTypes.shape({
       userType: PropTypes.string,
