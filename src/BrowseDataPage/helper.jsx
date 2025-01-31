@@ -273,7 +273,6 @@ export const transformData = (arr) => {
         'Human PAXgene RNA': 'Blood',
         'Human Adipose': 'Adipose',
         'Human Adipose Powder': 'Adipose',
-        'Humnan Adipose Powder': 'Adipose',
         'Human Muscle': 'Muscle',
         'Human Muscle Powder': 'Muscle',
         'Human EDTA Plasma': 'Plasma',
