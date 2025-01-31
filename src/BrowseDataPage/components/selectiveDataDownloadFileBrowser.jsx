@@ -32,9 +32,11 @@ function SelectiveDataDownloadFileBrowser({
         <div className="browse-data-table-wrapper col-md-9">
           <p className="mt-4">
             <span>
-              No matches found for the selected filters. Please refer to the{' '}
-              <Link to="/summary">Summary Table</Link> for data that are
-              available.
+              No matches found for the selected filters. Please refer to the
+              {' '}
+              <Link to="/summary">Summary Table</Link>
+              {' '}
+              for data that are available.
             </span>
           </p>
         </div>
