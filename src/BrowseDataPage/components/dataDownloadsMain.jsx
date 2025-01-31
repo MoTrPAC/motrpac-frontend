@@ -14,7 +14,6 @@ import SelectiveDataDownloadsCard from './selectiveDataDownloadsCard';
 function DataDownloadsMain({
   profile,
   filteredFiles,
-  fetching,
   activeFilters,
   onChangeFilter,
   onResetFilters,
@@ -35,7 +34,6 @@ function DataDownloadsMain({
       <SelectiveDataDownloads
         profile={profile}
         filteredFiles={filteredFiles}
-        fetching={fetching}
         activeFilters={activeFilters}
         onChangeFilter={onChangeFilter}
         onResetFilters={onResetFilters}
@@ -153,9 +151,7 @@ function DataDownloadsMain({
               <SelectiveDataDownloadsCard
                 cardIcon="person"
                 cardTitle="Human Adults"
-                dataSelectHandler={() =>
-                  dispatch(actions.selectHumanPreCovidSedAduData())
-                }
+                dataSelectHandler={() => dispatch(actions.selectHumanPreCovidSedAduData())}
                 selectedData="human-precovid-sed-adu"
               >
                 <h3 className="card-title phase-card-title">
@@ -307,7 +303,6 @@ function DataDownloadsMain({
 
 DataDownloadsMain.propTypes = {
   filteredFiles: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  fetching: PropTypes.bool.isRequired,
   profile: PropTypes.shape({
     user_metadata: PropTypes.shape({
       userType: PropTypes.string,
