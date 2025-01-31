@@ -210,44 +210,6 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
         filteredFiles: state.allFiles,
         requireUpdate: true,
       };
-    case types.LOAD_DATA_OBJECTS: {
-      const { files } = action;
-      return {
-        ...state,
-        allFiles: files,
-        filteredFiles: files.slice(0, files.length),
-        fileCount: files.length,
-      };
-    }
-    // Fetch data objects on page load
-    case types.DATA_FETCH_REQUESTED:
-      return {
-        ...state,
-        allFiles: [],
-        filteredFiles: [],
-        fileCount: 0,
-        selectedFileUrls: [],
-        selectedFileNames: [],
-        fetching: true,
-        error: '',
-      };
-    case types.DATA_FETCH_FAILURE:
-      return {
-        ...state,
-        error: action.error,
-        fetching: false,
-      };
-    case types.DATA_FETCH_SUCCESS: {
-      const { results } = action;
-      return {
-        ...state,
-        allFiles: results,
-        filteredFiles: results.slice(0, results.length),
-        fileCount: results.length,
-        fetching: false,
-        error: '',
-      };
-    }
     // Request file downloads
     case types.DOWNLOAD_REQUEST_SUBMITTED:
       return {
@@ -272,6 +234,11 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
     case types.SELECT_PASS1B_06_DATA:
       return {
         ...state,
+        allFiles: action.files,
+        filteredFiles: action.files.slice(0, action.files.length),
+        selectedFileUrls: [],
+        selectedFileNames: [],
+        fileCount: action.files.length,
         pass1b06DataSelected: true,
         pass1a06DataSelected: false,
         humanPrecovidSedAduDataSelected: false,
@@ -279,6 +246,11 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
     case types.SELECT_PASS1A_06_DATA:
       return {
         ...state,
+        allFiles: action.files,
+        filteredFiles: action.files.slice(0, action.files.length),
+        selectedFileUrls: [],
+        selectedFileNames: [],
+        fileCount: action.files.length,
         pass1b06DataSelected: false,
         pass1a06DataSelected: true,
         humanPrecovidSedAduDataSelected: false,
@@ -286,6 +258,11 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
     case types.SELECT_HUMAN_PRECOVID_SED_ADU_DATA:
       return {
         ...state,
+        allFiles: action.files,
+        filteredFiles: action.files.slice(0, action.files.length),
+        selectedFileUrls: [],
+        selectedFileNames: [],
+        fileCount: action.files.length,
         pass1b06DataSelected: false,
         pass1a06DataSelected: false,
         humanPrecovidSedAduDataSelected: true,
