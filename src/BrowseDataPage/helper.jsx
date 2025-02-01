@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
  * BrowseDataTable props
  */
 export const browseDataPropType = {
-  tissue_name: PropTypes.string,
-  tissue_code: PropTypes.string,
-  assay: PropTypes.string,
-  omics: PropTypes.string,
+  tissue_name: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+  tisseu_superclass: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+  tissue_code: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+  assay: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+  omics: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   phase: PropTypes.string,
   study: PropTypes.string,
   species: PropTypes.string,
@@ -243,6 +244,10 @@ export const transformData = (arr) => {
     // Transform metabolomics assay value
     if (item.assay !== null && item.assay !== undefined) {
       let newMetabAssayVal = item.assay;
+      // convert value to string if it is an array
+      if (Array.isArray(newMetabAssayVal)) {
+        newMetabAssayVal = newMetabAssayVal.join(', ');
+      }
       if (
         newMetabAssayVal.includes('Targeted')
         && newMetabAssayVal.includes('Untargeted')
@@ -265,8 +270,14 @@ export const transformData = (arr) => {
         item.assay = newMetabAssayVal;
       }
     }
+    // Transform tissue name value
     if (item.tissue_name !== null && item.tissue_name !== undefined) {
       let newTissueVal = item.tissue_name;
+      // convert value to string if it is an array
+      if (Array.isArray(newTissueVal)) {
+        newTissueVal = newTissueVal.join(', ');
+      }
+      // Transform tissue name value
       const tissueMappings = {
         'Human PBMC': 'Blood',
         'Human EDTA Packed Cells': 'Blood',
@@ -291,6 +302,20 @@ export const transformData = (arr) => {
       ) {
         newTissueVal = 'Plasma';
         item.tissue_name = newTissueVal;
+      }
+    }
+    if (item.omics !== null && item.omics !== undefined) {
+      let newOmicsVal = item.omics;
+      // convert value to string if it is an array
+      if (Array.isArray(newOmicsVal)) {
+        newOmicsVal = newOmicsVal.join(', ');
+      }
+      if (
+        newOmicsVal.includes('Metabolomics Targeted')
+        && newOmicsVal.includes('Metabolomics Untargeted')
+      ) {
+        newOmicsVal = 'Metabolomics';
+        item.omics = newOmicsVal;
       }
     }
   });
