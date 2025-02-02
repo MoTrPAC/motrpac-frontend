@@ -242,80 +242,38 @@ export const transformData = (arr) => {
     const splits = item.object.split('/');
     item.filename = splits.pop();
     // Transform metabolomics assay value
-    if (item.assay !== null && item.assay !== undefined) {
-      let newMetabAssayVal = item.assay;
-      // convert value to string if it is an array
-      if (Array.isArray(newMetabAssayVal)) {
-        newMetabAssayVal = newMetabAssayVal.join(', ');
-      }
-      if (
-        newMetabAssayVal.includes('Targeted')
-        && newMetabAssayVal.includes('Untargeted')
-      ) {
-        newMetabAssayVal = 'Merged';
-        item.assay = newMetabAssayVal;
-      }
-    }
-    if (
-      item.assay !== null
-      && item.assay !== undefined
-      && item.omics === 'Metabolomics Targeted'
-    ) {
-      let newMetabAssayVal = item.assay;
-      if (
-        newMetabAssayVal.includes('Acylcarnitines')
-        && newMetabAssayVal.includes('Oxylipins')
-      ) {
-        newMetabAssayVal = 'Merged';
-        item.assay = newMetabAssayVal;
+    if (item.assay) {
+      const newMetabAssayVal = Array.isArray(item.assay) ? item.assay.join(', ') : item.assay;
+      // Applicable to PASS1B-06 and HUMAN-PRECOVID-SED-ADU
+      if (newMetabAssayVal.includes('Targeted') && newMetabAssayVal.includes('Untargeted')) {
+        item.assay = 'Merged';
       }
     }
     // Transform tissue name value
-    if (item.tissue_name !== null && item.tissue_name !== undefined) {
-      let newTissueVal = item.tissue_name;
-      // convert value to string if it is an array
-      if (Array.isArray(newTissueVal)) {
-        newTissueVal = newTissueVal.join(', ');
-      }
-      // Transform tissue name value
-      const tissueMappings = {
-        'Human PBMC': 'Blood',
-        'Human EDTA Packed Cells': 'Blood',
-        'Human PAXgene RNA': 'Blood',
-        'Human Adipose': 'Adipose',
-        'Human Adipose Powder': 'Adipose',
-        'Human Muscle': 'Muscle',
-        'Human Muscle Powder': 'Muscle',
-        'Human EDTA Plasma': 'Plasma',
-      };
-
-      Object.keys(tissueMappings).forEach((key) => {
-        if (newTissueVal.indexOf(key) !== -1) {
-          newTissueVal = tissueMappings[key];
-          item.tissue_name = newTissueVal;
+    if (item.tissue_name) {
+      const newTissueVal = item.tissue_name;
+      if (Array.isArray(item.tissue_name) && item.tissue_name.length) {
+        item.tissue_name = '';
+      } else if (typeof item.tissue_name === 'string' && item.tissue_name.length) {
+        if (
+          // Applicable to PASS1A-06 and HUMAN-PRECOVID-SED-ADU
+          newTissueVal.includes('EDTA Plasma') && item.omics.includes('Metabolomics') && item.study.includes('Acute Exercise')
+        ) {
+          item.tissue_name = 'Plasma';
+        } else if (item.phase.includes('HUMAN-PRECOVID-SED-ADU') && item.study.includes('Acute Exercise') && item.tissue_superclass) {
+          // Applicable to HUMAN-PRECOVID-SED-ADU
+          item.tissue_name = item.tissue_superclass;
         }
-      });
-      if (
-        newTissueVal.includes('EDTA Plasma')
-        && item.omics.includes('Metabolomics')
-        && item.study.includes('Acute Exercise')
-      ) {
-        newTissueVal = 'Plasma';
-        item.tissue_name = newTissueVal;
       }
     }
-    if (item.omics !== null && item.omics !== undefined) {
-      let newOmicsVal = item.omics;
-      // convert value to string if it is an array
-      if (Array.isArray(newOmicsVal)) {
-        newOmicsVal = newOmicsVal.join(', ');
-      }
+    if (item.omics) {
+      const newOmicsVal = (Array.isArray(item.omics)) ? item.omics.join(', ') : item.omics;
+      // Applicable to HUMAN-PRECOVID-SED-ADU
       if (
         newOmicsVal.includes('Metabolomics Targeted')
         && newOmicsVal.includes('Metabolomics Untargeted')
       ) {
-        newOmicsVal = 'Metabolomics';
-        item.omics = newOmicsVal;
+        item.omics = 'Metabolomics';
       }
     }
   });
