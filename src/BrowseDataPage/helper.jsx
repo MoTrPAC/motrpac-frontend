@@ -251,13 +251,12 @@ export const transformData = (arr) => {
     }
     // Transform tissue name value
     if (item.tissue_name) {
-      const newTissueVal = item.tissue_name;
       if (Array.isArray(item.tissue_name) && item.tissue_name.length) {
         item.tissue_name = '';
       } else if (typeof item.tissue_name === 'string' && item.tissue_name.length) {
         if (
           // Applicable to PASS1A-06 and HUMAN-PRECOVID-SED-ADU
-          newTissueVal.includes('EDTA Plasma') && item.omics.includes('Metabolomics') && item.study.includes('Acute Exercise')
+          item.tissue_name.includes('EDTA Plasma') && item.omics.includes('Metabolomics') && item.study.includes('Acute Exercise')
         ) {
           item.tissue_name = 'Plasma';
         } else if (item.phase.includes('HUMAN-PRECOVID-SED-ADU') && item.study.includes('Acute Exercise') && item.tissue_superclass) {
