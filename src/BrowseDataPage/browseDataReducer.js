@@ -92,6 +92,8 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
           newActiveFilters.category.splice(newActiveFilters.category.indexOf('Phenotype'), 1);
         }
         filtered = filterFiles(newActiveFilters, filtered);
+      } else {
+        filtered = filterFiles(newActiveFilters, filtered);
       }
 
       return {
