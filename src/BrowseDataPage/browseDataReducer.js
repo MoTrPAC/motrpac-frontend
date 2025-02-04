@@ -63,72 +63,37 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
       // return a subset of matching files
       // FIXME: need to optimize the workaround to return
       // merged metabolomics (not assay-specific) files
-      if (
-        action.category === 'assay' &&
-        action.filter.match(/Targeted|Untargeted/)
-      ) {
-        // return all metabolomics files, including merged
-        // (not specific to any one assay) files
-        Object.keys(state.activeFilters).forEach((cat) => {
-          if (newActiveFilters[cat].length) {
-            filtered = filtered.filter(
-              (file) =>
-                newActiveFilters[cat].findIndex((el) =>
-                  el.includes(file[cat])
-                ) !== -1 || file[cat] === 'Merged'
-            );
-          }
+      const filterFiles = (filters, files) => {
+        return files.filter((file) => {
+          return Object.keys(filters).every((cat) => {
+            if (!filters[cat].length) return true;
+            if (action.category === 'assay' && action.filter.match(/Targeted|Untargeted/)) {
+              return filters[cat].some((filter) => filter.includes(file[cat]) || file[cat] === 'Merged');
+            } else if (action.category === 'omics' && action.filter.match(/Metabolomics/)) {
+              return filters[cat].some((filter) => filter.includes(file[cat]) || file[cat] === 'Metabolomics');
+            } else {
+              return filters[cat].some((filter) => filter.includes(file[cat]));
+            }
+          });
         });
-      } else if (
-        action.category === 'category' &&
-        action.filter === 'Phenotype'
-      ) {
+      };
+
+      if (action.category === 'category' && action.filter === 'Phenotype') {
+        // return only phenotype files (not specific to any tissue, assay, or ome)
         // FIXME: need to move phenotype to its own page
-        // (phenotype not specific to any tissue, assay, or ome)
         newActiveFilters.assay = [];
         newActiveFilters.tissue_name = [];
         newActiveFilters.omics = [];
-        Object.keys(state.activeFilters).forEach((cat) => {
-          if (newActiveFilters[cat].length) {
-            filtered = filtered.filter(
-              (file) =>
-                newActiveFilters[cat].findIndex((el) =>
-                  el.includes(file[cat])
-                ) !== -1
-            );
-          }
-        });
+        filtered = filterFiles(newActiveFilters, filtered);
       } else if (action.category.match(/assay|omics|tissue_name/)) {
+        // return matching files, including 'merged' files (e.g. omics, assays, tissues)
         // FIXME: deselect phenotype filter if tissue, assay, or ome is selected
         if (newActiveFilters.category.indexOf('Phenotype') !== -1) {
-          newActiveFilters.category.splice(
-            newActiveFilters.category.indexOf('Phenotype'),
-            1
-          );
+          newActiveFilters.category.splice(newActiveFilters.category.indexOf('Phenotype'), 1);
         }
-        Object.keys(state.activeFilters).forEach((cat) => {
-          if (newActiveFilters[cat].length) {
-            filtered = filtered.filter(
-              (file) =>
-                newActiveFilters[cat].findIndex((el) =>
-                  el.includes(file[cat])
-                ) !== -1
-            );
-          }
-        });
+        filtered = filterFiles(newActiveFilters, filtered);
       } else {
-        // return matching files, excluding metabolomics
-        // merged files
-        Object.keys(state.activeFilters).forEach((cat) => {
-          if (newActiveFilters[cat].length) {
-            filtered = filtered.filter(
-              (file) =>
-                newActiveFilters[cat].findIndex((el) =>
-                  el.includes(file[cat])
-                ) !== -1
-            );
-          }
-        });
+        filtered = filterFiles(newActiveFilters, filtered);
       }
 
       return {
@@ -143,7 +108,7 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
       Object.keys(state.activeFilters).forEach((cat) => {
         if (state.activeFilters[cat].length) {
           filtered = filtered.filter(
-            (file) => !(state.activeFilters[cat].indexOf(file[cat.toLowerCase()]) === -1)
+            (file) => !(state.activeFilters[cat].indexOf(file[cat.toLowerCase()]) === -1),
           );
         }
       });
@@ -210,44 +175,6 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
         filteredFiles: state.allFiles,
         requireUpdate: true,
       };
-    case types.LOAD_DATA_OBJECTS: {
-      const { files } = action;
-      return {
-        ...state,
-        allFiles: files,
-        filteredFiles: files.slice(0, files.length),
-        fileCount: files.length,
-      };
-    }
-    // Fetch data objects on page load
-    case types.DATA_FETCH_REQUESTED:
-      return {
-        ...state,
-        allFiles: [],
-        filteredFiles: [],
-        fileCount: 0,
-        selectedFileUrls: [],
-        selectedFileNames: [],
-        fetching: true,
-        error: '',
-      };
-    case types.DATA_FETCH_FAILURE:
-      return {
-        ...state,
-        error: action.error,
-        fetching: false,
-      };
-    case types.DATA_FETCH_SUCCESS: {
-      const { results } = action;
-      return {
-        ...state,
-        allFiles: results,
-        filteredFiles: results.slice(0, results.length),
-        fileCount: results.length,
-        fetching: false,
-        error: '',
-      };
-    }
     // Request file downloads
     case types.DOWNLOAD_REQUEST_SUBMITTED:
       return {
@@ -272,6 +199,11 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
     case types.SELECT_PASS1B_06_DATA:
       return {
         ...state,
+        allFiles: action.files,
+        filteredFiles: action.files.slice(0, action.files.length),
+        selectedFileUrls: [],
+        selectedFileNames: [],
+        fileCount: action.files.length,
         pass1b06DataSelected: true,
         pass1a06DataSelected: false,
         humanPrecovidSedAduDataSelected: false,
@@ -279,6 +211,11 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
     case types.SELECT_PASS1A_06_DATA:
       return {
         ...state,
+        allFiles: action.files,
+        filteredFiles: action.files.slice(0, action.files.length),
+        selectedFileUrls: [],
+        selectedFileNames: [],
+        fileCount: action.files.length,
         pass1b06DataSelected: false,
         pass1a06DataSelected: true,
         humanPrecovidSedAduDataSelected: false,
@@ -286,6 +223,11 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
     case types.SELECT_HUMAN_PRECOVID_SED_ADU_DATA:
       return {
         ...state,
+        allFiles: action.files,
+        filteredFiles: action.files.slice(0, action.files.length),
+        selectedFileUrls: [],
+        selectedFileNames: [],
+        fileCount: action.files.length,
         pass1b06DataSelected: false,
         pass1a06DataSelected: false,
         humanPrecovidSedAduDataSelected: true,

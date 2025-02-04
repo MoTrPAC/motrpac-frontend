@@ -1,32 +1,16 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
-import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 import PASS1B06TimeCourse from '../assets/figures/pass1b-06-time-course.png';
 import PASS1B06Profiling from '../assets/figures/pass1b-06-molecular-profiling.svg';
 import ToggleShowHide from './components/toggleShowHide';
 import ExternalLink from '../lib/ui/externalLink';
 
-function ProjectOverview({ profile, allFiles, handleDataFetch }) {
+function ProjectOverview() {
   const [showSummary, setShowSummary] = useState(true);
   const [showExpDesign, setShowExpDesign] = useState(true);
   const [showTissueProfiling, setShowTissueProfiling] = useState(true);
-
-  const userType = profile.user_metadata && profile.user_metadata.userType;
-
-  // post request to fetch data files when download nav link is clicked
-  const handleDataObjectFetch = () => {
-    if (!allFiles.length) {
-      if (userType && userType === 'internal') {
-        handleDataFetch();
-      } else {
-        handleDataFetch('PASS1B-06');
-      }
-    }
-  };
 
   // Event handlers for show/hide sectional content
   const toggleShowSummary = (e) => {
@@ -241,7 +225,6 @@ function ProjectOverview({ profile, allFiles, handleDataFetch }) {
                 className="btn btn-primary mr-3"
                 to="/data-download"
                 role="button"
-                onClick={handleDataObjectFetch}
               >
                 Download Data
               </Link>
@@ -249,7 +232,6 @@ function ProjectOverview({ profile, allFiles, handleDataFetch }) {
                 className="btn btn-primary ml-3"
                 to="/search"
                 role="button"
-                onClick={handleDataObjectFetch}
               >
                 Explore Data
               </Link>
@@ -261,27 +243,4 @@ function ProjectOverview({ profile, allFiles, handleDataFetch }) {
   );
 }
 
-ProjectOverview.propTypes = {
-  profile: PropTypes.shape({
-    user_metadata: PropTypes.shape({
-      hasAccess: PropTypes.bool,
-      userType: PropTypes.string,
-    }),
-  }),
-  handleDataFetch: PropTypes.func,
-};
-
-ProjectOverview.defaultProps = {
-  profile: {},
-  handleDataFetch: null,
-};
-
-const mapStateToProps = (state) => ({
-  allFiles: state.browseData.allFiles,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  handleDataFetch: (phase) => dispatch(BrowseDataActions.handleDataFetch(phase)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectOverview);
+export default ProjectOverview;

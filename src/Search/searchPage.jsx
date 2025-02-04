@@ -39,9 +39,7 @@ export function SearchPage({
   downloading,
   downloadError,
   handleSearchDownload,
-  handleDataFetch,
   handleQCDataFetch,
-  allFiles,
   lastModified,
   hasResultFilters,
 }) {
@@ -100,9 +98,7 @@ export function SearchPage({
     ) {
       return (
         <FeatureLinks
-          handleDataFetch={handleDataFetch}
           handleQCDataFetch={handleQCDataFetch}
-          allFiles={allFiles}
           lastModified={lastModified}
           userType={userType}
         />
@@ -725,9 +721,7 @@ SearchPage.propTypes = {
   downloading: PropTypes.bool,
   downloadError: PropTypes.string,
   handleSearchDownload: PropTypes.func.isRequired,
-  handleDataFetch: PropTypes.func.isRequired,
   handleQCDataFetch: PropTypes.func.isRequired,
-  allFiles: PropTypes.arrayOf(PropTypes.shape({})),
   lastModified: PropTypes.string,
   hasResultFilters: PropTypes.shape({
     assay: PropTypes.object,
@@ -747,7 +741,6 @@ SearchPage.defaultProps = {
   downloadResults: {},
   downloading: false,
   downloadError: '',
-  allFiles: [],
   lastModified: '',
   hasResultFilters: {},
 };
@@ -769,7 +762,6 @@ const mapDispatchToProps = (dispatch) => ({
   resetSearch: (scope) => dispatch(SearchActions.searchReset(scope)),
   handleSearchDownload: (params, analysis) =>
     dispatch(SearchActions.handleSearchDownload(params, analysis)),
-  handleDataFetch: () => dispatch(BrowseDataActions.handleDataFetch()),
   handleQCDataFetch: () => dispatch(DataStatusActions.fetchData()),
 });
 

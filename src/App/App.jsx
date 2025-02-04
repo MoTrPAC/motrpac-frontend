@@ -25,7 +25,7 @@ import SearchPageConnected from '../Search/searchPage';
 import GeneCentricViewConnected from '../AnalysisPage/GeneCentricViewRat/geneCentricViewPage';
 import GraphicalClustering from '../AnalysisPage/GraphicalClustering/graphicalClusteringPage';
 import CodeRepositories from '../CodeRepoPage/codeRepoPage';
-import ProjectOverviewConnected from '../MainStudy/overview';
+import ProjectOverview from '../MainStudy/overview';
 import ExerciseBenefits from '../MainStudy/exerciseBenefits';
 import StudyAssays from '../MainStudy/studyAssays';
 import Tutorials from '../Tutorials/tutorials';
@@ -139,7 +139,7 @@ function App({ history = History }) {
               />
               <Route
                 path="/project-overview"
-                component={withTracker(ProjectOverviewConnected)}
+                component={withTracker(ProjectOverview)}
               />
               <Route
                 path="/exercise-benefits"

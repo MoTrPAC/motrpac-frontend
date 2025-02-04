@@ -26,10 +26,8 @@ export function Navbar({
   profile,
   login,
   logout,
-  handleDataFetch,
   resetBrowseState,
   handleQCDataFetch,
-  allFiles,
   lastModified,
 }) {
   const location = useLocation();
@@ -117,17 +115,6 @@ export function Navbar({
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
-  // post request to fetch data files when download nav link is clicked
-  const handleDataObjectFetch = () => {
-    if (!allFiles.length) {
-      if (userType && userType === 'internal') {
-        handleDataFetch();
-      } else {
-        handleDataFetch('PASS1B-06');
-      }
-    }
-  };
-
   // Call to invoke Redux action to fetch QC data
   // if timestamp is empty or older than 24 hours
   const fecthQCData = () => {
@@ -196,7 +183,6 @@ export function Navbar({
                 <Link
                   to="/data-download"
                   className="nav-link"
-                  onClick={handleDataObjectFetch}
                 >
                   Downloads
                 </Link>
@@ -254,7 +240,6 @@ export function Navbar({
                   <Link
                     to="/data-download"
                     className="dropdown-item"
-                    onClick={handleDataObjectFetch}
                   >
                     {isAuthenticated && hasAccess && userType === 'internal'
                       ? 'Rat and Human Data'
@@ -439,7 +424,6 @@ Navbar.propTypes = {
   isAuthenticated: PropTypes.bool,
   login: PropTypes.func,
   logout: PropTypes.func,
-  handleDataFetch: PropTypes.func,
   resetBrowseState: PropTypes.func,
   handleQCDataFetch: PropTypes.func,
   lastModified: PropTypes.string,
@@ -450,7 +434,6 @@ Navbar.defaultProps = {
   isAuthenticated: false,
   login: null,
   logout: null,
-  handleDataFetch: null,
   resetBrowseState: null,
   handleQCDataFetch: null,
   lastModified: '',
@@ -460,15 +443,12 @@ const mapStateToProps = (state) => ({
   ...state.quickSearch,
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
-  allFiles: state.browseData.allFiles,
   lastModified: state.dataStatus.qcData.lastModified,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   login: () => dispatch(actions.login()),
   logout: () => dispatch(actions.logout()),
-  handleDataFetch: (phase) =>
-    dispatch(BrowseDataActions.handleDataFetch(phase)),
   resetBrowseState: () => dispatch(BrowseDataActions.resetBrowseState()),
   handleQCDataFetch: () => dispatch(DataStatusActions.fetchData()),
 });

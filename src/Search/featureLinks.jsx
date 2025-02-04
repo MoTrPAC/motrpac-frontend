@@ -9,19 +9,11 @@ import dayjs from 'dayjs';
  * @returns {Object} JSX representation of portal feature link card deck.
  */
 function FeatureLinks({
-  handleDataFetch,
   handleQCDataFetch,
-  allFiles,
   lastModified,
   userType,
 }) {
   const history = useHistory();
-
-  const handleDataObjectFetch = () => {
-    if (allFiles.length === 0) {
-      handleDataFetch();
-    }
-  };
 
   // Call to invoke Redux action to fetch QC data
   // if timestamp is empty or older than 24 hours
@@ -43,7 +35,6 @@ function FeatureLinks({
         'Browse and download the available MoTrPAC study data in young adult rats by tissue, assay, or omics.',
       icon: 'cloud_download',
       title: 'Data Downloads',
-      eventHandler: handleDataObjectFetch,
     },
     {
       name: 'pass1b-06-data-visualization',
@@ -170,15 +161,12 @@ function FeatureLinks({
 }
 
 FeatureLinks.propTypes = {
-  handleDataFetch: PropTypes.func.isRequired,
   handleQCDataFetch: PropTypes.func.isRequired,
-  allFiles: PropTypes.arrayOf(PropTypes.shape({})),
   lastModified: PropTypes.string,
   userType: PropTypes.string,
 };
 
 FeatureLinks.defaultProps = {
-  allFiles: [],
   lastModified: '',
   userType: '',
 };
