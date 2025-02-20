@@ -660,6 +660,7 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
                     <ReCAPTCHA
                       sitekey={recaptchaKey}
                       onChange={handleReCAPTCHA}
+                      data-testid="recaptcha"
                     />
                   </div>
                   <div className="registration-button-group">
