@@ -58,7 +58,7 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
     import.meta.env.DEV
       ? import.meta.env.VITE_API_SERVICE_KEY_DEV
       : import.meta.env.VITE_API_SERVICE_KEY;
-  const recaptchaKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+  const recaptchaKey = import.meta.env.VITE_reCAPTCHA_SITE_KEY;
 
   useEffect(() => {
     // validate REQUIRED form values by subscribing to changes
