@@ -46,7 +46,8 @@ export function Navbar({
 
   useEffect(() => {
     /* Handle logout for various use cases */
-    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    const storedExpiresAt = localStorage.getItem('expires_at');
+    const expiresAt = storedExpiresAt ? JSON.parse(storedExpiresAt) : null;
     let expirationCheckInterval;
     const intervalLength = 2 * 60 * 60 * 1000;
 
