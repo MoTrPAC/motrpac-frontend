@@ -1,27 +1,110 @@
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import { configure } from 'enzyme';
-
+import '@testing-library/jest-dom';
+import React from 'react';
+import { expect, afterEach, vi } from 'vitest';
+import { cleanup } from '@testing-library/react';
+import * as matchers from '@testing-library/jest-dom/matchers';
 import * as crypto from 'node:crypto';
 import 'vitest-canvas-mock';
 
-configure({ adapter: new Adapter() });
+// Extend Vitest's expect method with methods from react-testing-library
+expect.extend(matchers);
 
-jest.mock('react-chartjs-2', () => ({
-  Bar: () => null,
-  Pie: () => null,
-  Doughnut: () => null,
+// Automatically unmount and cleanup DOM after each test
+afterEach(() => {
+  cleanup();
+  vi.clearAllMocks();
+});
+
+// Mock React Router
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: () => vi.fn(),
+    Navigate: ({ to }) => <div data-testid="mock-navigate">Navigate to {to}</div>,
+  };
+});
+
+// Mock Chart.js
+vi.mock('react-chartjs-2', () => ({
+  Bar: () => <div data-testid="mock-bar-chart">Bar Chart</div>,
+  Pie: () => <div data-testid="mock-pie-chart">Pie Chart</div>,
+  Doughnut: () => <div data-testid="mock-doughnut-chart">Doughnut Chart</div>,
 }));
 
-// fix for 'crypto.getRandomValues() not supported' error
+// Fix for 'crypto.getRandomValues() not supported' error
 Object.defineProperty(globalThis, 'crypto', {
   value: {
     getRandomValues: (arr) => crypto.randomBytes(arr.length),
   },
 });
 
-// fix for 'unstable_flushDiscreteUpdates: Cannot flush updates when React is already rendering' error
-// when <video> is used in a component
-// (https://github.com/testing-library/react-testing-library/issues/470#issuecomment-761821103)
+// Fix for HTMLMediaElement issues
 Object.defineProperty(HTMLMediaElement.prototype, 'muted', {
   set: () => {},
 });
+
+// Mock window.scrollTo
+window.scrollTo = vi.fn();
+
+// Mock IntersectionObserver
+class IntersectionObserver {
+  observe = vi.fn()
+  disconnect = vi.fn()
+  unobserve = vi.fn()
+}
+
+Object.defineProperty(window, 'IntersectionObserver', {
+  writable: true,
+  configurable: true,
+  value: IntersectionObserver,
+});
+
+// Mock matchMedia
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: vi.fn().mockImplementation(query => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  })),
+});
+
+// Mock ResizeObserver
+class ResizeObserver {
+  observe = vi.fn()
+  disconnect = vi.fn()
+  unobserve = vi.fn()
+}
+
+Object.defineProperty(window, 'ResizeObserver', {
+  writable: true,
+  configurable: true,
+  value: ResizeObserver,
+});
+
+// Mock fetch
+global.fetch = vi.fn();
+
+// Mock localStorage
+const localStorageMock = {
+  getItem: vi.fn(),
+  setItem: vi.fn(),
+  clear: vi.fn(),
+  removeItem: vi.fn(),
+};
+global.localStorage = localStorageMock;
+
+// Mock sessionStorage
+const sessionStorageMock = {
+  getItem: vi.fn(),
+  setItem: vi.fn(),
+  clear: vi.fn(),
+  removeItem: vi.fn(),
+};
+global.sessionStorage = sessionStorageMock;
