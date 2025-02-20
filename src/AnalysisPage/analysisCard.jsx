@@ -48,7 +48,7 @@ function AnalysisCard({ analysisType, onPickAnalysis }) {
   }
 
   return (
-    <div className="col mb-4">
+    <div className="col mb-4" data-testid="analysis-card">
       <div
         className="card h-100 shadow-sm analysisType activeAnalysis"
         id={analysisType.shortName}
@@ -65,6 +65,7 @@ function AnalysisCard({ analysisType, onPickAnalysis }) {
         tabIndex={0}
         role="button"
         title={analysisType.title}
+        data-testid={`active-analysis-${analysisType.shortName}`}
       >
         {analysisCardContent}
       </div>

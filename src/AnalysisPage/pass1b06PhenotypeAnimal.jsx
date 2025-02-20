@@ -29,7 +29,7 @@ function Pass1b06PhenotypeAnimal({
   toggleLactatePlot,
 }) {
   return (
-    <div className="analysisPhenotypePage px-3 px-md-4 mb-3 w-100">
+    <div className="analysisPhenotypePage px-3 px-md-4 mb-3 w-100" data-testid="animal-data-analysis">
       <Helmet>
         <html lang="en" />
         <title>Endurance Trained Young Adult Rats Phenotypic Data - MoTrPAC Data Hub</title>
