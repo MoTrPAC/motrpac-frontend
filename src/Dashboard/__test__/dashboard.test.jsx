@@ -1,14 +1,8 @@
-import { mount, shallow } from 'enzyme';
 import React from 'react';
-import { Provider } from 'react-redux';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { applyMiddleware, createStore } from 'redux';
-import thunkMiddleWare from 'redux-thunk';
-import rootReducer, { defaultRootState } from '../../App/reducers';
-import { defaultSidebarState } from '../../Sidebar/sidebarReducer';
-
-import testUser from '../../testData/testUser';
-import DashboardConnected, { Dashboard } from '../dashboard';
+import { screen } from '@testing-library/react';
+import { describe, test, expect, vi } from 'vitest';
+import { renderWithProviders, testUser } from '../../testUtils/test-utils';
+import { Dashboard } from '../dashboard';
 import { defaultDashboardState } from '../dashboardReducer';
 
 const controlActions = {
@@ -19,50 +13,59 @@ const controlActions = {
   toggleQC: vi.fn(),
 };
 
-describe('Shallow Dashboard', () => {
-  const shallowDash = shallow(
-    <Dashboard
-      isAuthenticated
-      profile={testUser}
-      {...defaultDashboardState}
-      {...controlActions}
-      {...defaultSidebarState}
-    />,
-  );
-  const loggedInRootState = {
-    ...defaultRootState,
-    auth: {
-      ...defaultRootState.auth,
-      isAuthenticated: true,
-      profile: testUser,
-    },
-  };
-  const mountDash = mount(
-    <Provider
-      store={createStore(
-        rootReducer,
-        loggedInRootState,
-        applyMiddleware(thunkMiddleWare),
-      )}
-    >
-      <MemoryRouter>
-        <Routes>
-          <Route path={'/'} element={<DashboardConnected />} />
-        </Routes>
-      </MemoryRouter>
-    </Provider>,
-  );
-  test('Has expected widgets', () => {
-    expect(shallowDash.find('ReleasedSampleHighlight')).toHaveLength(1);
-    expect(shallowDash.find('ReleasedSamplePlot')).toHaveLength(1);
-    expect(shallowDash.find('ReleasedSampleTable')).toHaveLength(1);
-    expect(shallowDash.find('ReleasedSampleSummary')).toHaveLength(1);
-    expect(shallowDash.find('PlotControls')).toHaveLength(1);
-    expect(shallowDash.find('TableControls')).toHaveLength(1);
+describe('Dashboard Component', () => {
+  test('renders all expected widgets and controls', () => {
+    renderWithProviders(
+      <Dashboard
+        isAuthenticated
+        profile={testUser}
+        {...defaultDashboardState}
+        {...controlActions}
+      />
+    );
+
+    // Check for main sections
+    expect(screen.getByText('Summary of Animal Study Assays')).toBeInTheDocument();
+    
+    // Check for control buttons (internal user view)
+    expect(screen.getByRole('button', { name: 'Internal Release' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'External Release' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'PASS1A 6-Month' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'PASS1B 6-Month' })).toBeInTheDocument();
+
+    // Check for main content sections
+    expect(screen.getByText('Overview')).toBeInTheDocument();
+    
+    // Verify active states of buttons
+    const internalReleaseBtn = screen.getByRole('button', { name: 'Internal Release' });
+    const pass1aBtn = screen.getByRole('button',  { name: 'PASS1A 6-Month' });
+    expect(internalReleaseBtn).toHaveClass('active');
+    expect(pass1aBtn).toHaveClass('active');
   });
 
-  test('Has 4 expected release sample filter buttons', () => {
-    expect(mountDash.find('.btn-outline-primary')).toHaveLength(4);
-    expect(mountDash.find('.btn-outline-primary.active')).toHaveLength(2);
+  test('external user view does not show release toggle buttons', () => {
+    const externalUser = {
+      ...testUser,
+      user_metadata: {
+        ...testUser.user_metadata,
+        userType: 'external'
+      }
+    };
+
+    renderWithProviders(
+      <Dashboard
+        isAuthenticated
+        profile={externalUser}
+        {...defaultDashboardState}
+        {...controlActions}
+      />
+    );
+
+    // Should not show internal/external toggle buttons
+    expect(screen.queryByText('Internal Release')).not.toBeInTheDocument();
+    expect(screen.queryByText('External Release')).not.toBeInTheDocument();
+
+    // Should show the external user warning message
+    expect(screen.getByText(/publication embargo on MoTrPAC data has been extended/i)).toBeInTheDocument();
   });
 });
