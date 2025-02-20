@@ -1,21 +1,23 @@
+import { describe, test, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
 import RegistrationResponse from '../response';
 
-const successResponse = shallow((
-  <RegistrationResponse status="success" />
-));
-
-const errorResponse = shallow((
-  <RegistrationResponse status="error" />
-));
-
 describe('New user registration response', () => {
-  test('Renders completion message if succeeded', () => {
-    expect(successResponse.find('.page-title').text()).toMatch('Registration Completed');
+  test('renders completion message if succeeded', () => {
+    render(<RegistrationResponse status="success" />);
+    expect(screen.getByRole('heading')).toHaveTextContent('Registration Completed');
+    expect(screen.getByText(/thank you for registering/i)).toBeInTheDocument();
   });
 
-  test('Renders incompletion message if failed', () => {
-    expect(errorResponse.find('.page-title').text()).toMatch('Registration Incomplete');
+  test('renders incompletion message if failed', () => {
+    render(<RegistrationResponse status="error" />);
+    expect(screen.getByRole('heading')).toHaveTextContent('Registration Incomplete');
+    expect(screen.getByText(/an error occurred/i)).toBeInTheDocument();
+  });
+
+  test('renders auth0 specific error message when user exists', () => {
+    render(<RegistrationResponse status="error" errMsg="user already exists" />);
+    expect(screen.getByText(/user already exists/i)).toBeInTheDocument();
   });
 });
