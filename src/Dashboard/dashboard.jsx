@@ -18,7 +18,6 @@ import animalReleaseSamples from '../data/animal_release_samples';
  * Renders the Dashboard page.
  *
  * @param {Object} profile          Redux state of authenticated user profile
- * @param {Boolean} expanded        Redux state of collapsed/expanded sidebar
  * @param {String} release          Redux state of user-selected release
  * @param {String} phase            Redux state of user-selected phase
  * @param {String} plot             Redux state of plot selection
@@ -34,7 +33,6 @@ import animalReleaseSamples from '../data/animal_release_samples';
  */
 export function Dashboard({
   profile= {},
-  expanded= false,
   release= 'internal',
   phase= 'pass1a_06',
   plot= 'tissue_name',
@@ -70,7 +68,7 @@ export function Dashboard({
   };
 
   return (
-    <AuthContentContainer classes="Dashboard" expanded={expanded}>
+    <AuthContentContainer classes="Dashboard">
       {userType === 'external' && (
         <div className="alert alert-warning alert-dismissible fade show d-flex align-items-center justify-content-between w-100" role="alert">
           <span>
@@ -221,7 +219,6 @@ Dashboard.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
   }),
-  expanded: PropTypes.bool,
   release: PropTypes.string,
   phase: PropTypes.string,
   plot: PropTypes.string,
@@ -236,7 +233,6 @@ Dashboard.propTypes = {
 
 const mapStateToProps = (state) => ({
   ...state.auth,
-  expanded: state.sidebar.expanded,
   ...state.dashboard,
 });
 
