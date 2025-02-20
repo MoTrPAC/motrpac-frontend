@@ -22,7 +22,6 @@ export function AnalysisHomePage({
   currentAnalysisTitle,
   onPickAnalysis,
   goBack,
-  expanded = false,
   profile = {},
 }) {
   const subjectType = match.params.subjectType.slice(0).toLowerCase();
@@ -75,7 +74,7 @@ export function AnalysisHomePage({
   }
 
   return (
-    <AuthContentContainer classes="analysisPage" expanded={expanded}>
+    <AuthContentContainer classes="analysisPage">
       <div className="page-title pt-3 pb-2 mb-3 border-bottom">
         <h3>
           {depth > 0 ? <BackButton /> : ''}
@@ -105,7 +104,6 @@ AnalysisHomePage.propTypes = {
   currentAnalysisTitle: PropTypes.string.isRequired,
   goBack: PropTypes.func.isRequired,
   onPickAnalysis: PropTypes.func.isRequired,
-  expanded: PropTypes.bool,
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
   }),
@@ -116,7 +114,6 @@ const mapStateToProps = (state) => ({
   depth: state.analysis.depth,
   currentAnalysis: state.analysis.currentAnalysis,
   currentAnalysisTitle: state.analysis.currentAnalysisTitle,
-  expanded: state.sidebar.expanded,
   profile: state.auth.profile,
 });
 
