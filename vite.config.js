@@ -19,10 +19,33 @@ export default defineConfig({
       }
     }
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler', // or "modern"
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@/app': path.resolve(__dirname, '/src/app'),
       '@styles': path.resolve(__dirname, './src/sass'),
+      '@/assets': path.resolve(__dirname, '/src/assets'),
+      '@/components': path.resolve(__dirname, '/src/components'),
+      '@/features': path.resolve(__dirname, '/src/features'),
+      '@/hooks': path.resolve(__dirname, '/src/hooks'),
+      '@/pages': path.resolve(__dirname, '/src/pages'),
+      '@/routes': path.resolve(__dirname, '/src/routes'),
+      '@/utils': path.resolve(__dirname, '/src/utils'),
+      '@/services': path.resolve(__dirname, '/src/services'),
+      '@/config': path.resolve(__dirname, '/src/config'),
+      '@/types': path.resolve(__dirname, '/src/types'),
+      '@/store': path.resolve(__dirname, '/src/store'),
+      '@/layout': path.resolve(__dirname, '/src/layout'),
+      '@/data': path.resolve(__dirname, '/src/data'),
+      '@/helper': path.resolve(__dirname, '/src/helper'),
+      '@/i18n': path.resolve(__dirname, '/src/i18n'),
     },
   },
   test: {
