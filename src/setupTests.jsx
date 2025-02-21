@@ -44,6 +44,9 @@ Object.defineProperty(HTMLMediaElement.prototype, 'muted', {
   set: () => {},
 });
 
+// Mocking Google Analytics
+vi.mock('ga-gtag');
+
 // Mock window.scrollTo
 window.scrollTo = vi.fn();
 
