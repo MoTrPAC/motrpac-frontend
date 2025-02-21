@@ -134,7 +134,8 @@ function DawgPAC({ profile }) {
         </table>
       </div>
       <div className="bd-callout bd-callout-warning mb-4">
-        <b>2024DEC20 Soft Release →</b>{' '}
+        <b>2024DEC20 Soft Release →</b>
+        {' '}
         <a href="https://docs.google.com/document/d/1-VphKxR9jQKFUFRjsF12YVY_pkO2oLOAHunjFc2Alxg/edit?tab=t.0#heading=h.ve0qe6m0m7t7" target="_blank" rel="noopener noreferrer">
           Read Notes
         </a>
@@ -147,191 +148,193 @@ function DawgPAC({ profile }) {
         The primary aim was to collect a wide range of tissue samples
         post-exercise for high-quality analysis at chemical analysis sites.
       </p>
+      <h5>Resources</h5>
       <ul>
-        <li>
-          <a
-            href="https://docs.google.com/document/d/1pE6SIaLxAd-gyJW34pqWyzbo6JINe2jlNTc-ONfOlqs/edit?usp=sharing"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Analysis Report
-          </a>
-        </li>
         <li>
           <a
             href="https://drive.google.com/drive/folders/1oykRI3kffrSTfQk_G2MTt_9kjqBYxqvT"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Working Google Drive folder
+            Google Drive working folder
           </a>
         </li>
         <li>
-          Source code is available in{' '}
+          Source code:
+          {' '}
           <a
             href="https://github.com/MoTrPAC/motrpac-rat-acute-6m"
             target="_blank"
             rel="noopener noreferrer"
           >
-            this GitHub repository
+            https://github.com/MoTrPAC/motrpac-rat-acute-6m
           </a>
         </li>
         <li>
-          Integrated R Notebooks for Omics Data Analysis (HTML format)
+          <strong>Integrated R Notebooks for Omics Data Analysis</strong>
+          {' '}
+          (HTML format)
           <ul className="list-style mt-2">
+            <li className="mb-2">
+              <strong>Phenotypes:</strong>
+              {' '}
+              Comprehensive analysis of key variables from the rat phenotypic data,
+              including summary statistics, correlation analysis, statistical testing,
+              and regression models:
+              {' '}
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+              <a
+                href="#"
+                data-toggle="modal"
+                data-target="#html-report-modal"
+                onClick={(e) => handleClickReport('phenotypes/pass1ac-6-pheno-analysis.html', 'pass1ac-6-pheno-analysis.html')}
+              >
+                pass1ac-6-pheno-analysis.html
+              </a>
+            </li>
             <li>
-              Phenotypes
+              <strong>Transcriptomics</strong>
               <ul className="list-style mb-2">
                 <li>
-                  Comprehensive analysis of key variables from the rat phenotypic data,
-                  including summary statistics, correlation analysis, statistical
-                  testing, and regression models:
+                  QC + DEA:
                   {' '}
-                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                  <a
-                    href="#"
-                    data-toggle="modal"
-                    data-target="#html-report-modal"
-                    onClick={(e) =>
-                      handleClickReport(
-                        'phenotypes/pass1ac-pheno-analysis.html',
-                        'pass1ac-pheno-analysis.html',
-                      )
-                    }
-                  >
-                    pass1ac-pheno-analysis.html
-                  </a>
+                  pass1ac-6-rna-seq-analysis-report.html
                 </li>
               </ul>
             </li>
             <li>
-              Transcriptomics
+              <strong>Metabolomics</strong>
               <ul className="list-style mb-2">
                 <li>
-                  QC + DEA:{' '}
-                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                  <a
-                    href="#"
-                    data-toggle="modal"
-                    data-target="#html-report-modal"
-                    onClick={(e) =>
-                      handleClickReport(
-                        'transcriptomics/pass1ac-rna-seq-analysis-report.html',
-                        'pass1ac-rna-seq-analysis-report.html',
-                      )
-                    }
-                  >
-                    pass1ac-rna-seq-analysis-report.html
-                  </a>
+                  QC + DA:
+                  {' '}
+                  pass1ac-6-metabolomics-analysis-report.html
                 </li>
               </ul>
             </li>
             <li>
-              Metabolomics
+              <strong>Proteomics</strong>
               <ul className="list-style mb-2">
                 <li>
-                  QC: {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                  <a
-                    href="#"
-                    data-toggle="modal"
-                    data-target="#html-report-modal"
-                    onClick={(e) =>
-                      handleClickReport(
-                        'metabolomics/metabolomics-qc.html',
-                        'metabolomics-qc.html',
-                      )
-                    }
-                  >
-                    metabolomics-qc.html
-                  </a>
+                  Coming soon
                 </li>
+              </ul>
+            </li>
+            <li>
+              <strong>ATAC-seq</strong>
+              <ul className="list-style mb-2">
                 <li>
-                  DA: {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                  <a
-                    href="#"
-                    data-toggle="modal"
-                    data-target="#html-report-modal"
-                    onClick={(e) =>
-                      handleClickReport(
-                        'metabolomics/metabolomics-da.html',
-                        'metabolomics-da.html',
-                      )
-                    }
-                  >
-                    metabolomics-da.html
-                  </a>
+                  Coming soon
                 </li>
               </ul>
             </li>
           </ul>
+        </li>
+        <li>
+          <strong>Preliminary Analysis Report:</strong>
           <ul className="list-style mt-2">
             <li>
-              Proteomics
+              <a
+                href="https://docs.google.com/document/d/1pE6SIaLxAd-gyJW34pqWyzbo6JINe2jlNTc-ONfOlqs/edit?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Link to the report
+              </a>
+              {' '}
+              (Google Doc)
+            </li>
+            <li>
+              R Notebooks for Omics Data Analysis (HTML format)
               <ul className="list-style mt-2">
                 <li>
-                  1A1C-independent-analyses
+                  Metabolomics
                   <ul className="list-style mb-2">
-                    {proteomics1A1CIndependentAnalyses.map((report) => (
-                      <li key={report}>
-                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                        <a
-                          href="#"
-                          data-toggle="modal"
-                          data-target="#html-report-modal"
-                          onClick={(e) =>
-                            handleClickReport(
-                              `proteomics/1a1c-independent-analyses/${report}`,
-                              report,
-                            )
-                          }
-                        >
-                          {report}
-                        </a>
-                      </li>
-                    ))}
+                    <li>
+                      QC:
+                      {' '}
+                      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                      <a
+                        href="#"
+                        data-toggle="modal"
+                        data-target="#html-report-modal"
+                        onClick={(e) => handleClickReport('metabolomics/metabolomics-qc.html', 'metabolomics-qc.html')}
+                      >
+                        metabolomics-qc.html
+                      </a>
+                    </li>
+                    <li>
+                      DA:
+                      {' '}
+                      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                      <a
+                        href="#"
+                        data-toggle="modal"
+                        data-target="#html-report-modal"
+                        onClick={(e) => handleClickReport('metabolomics/metabolomics-da.html', 'metabolomics-da.html')}
+                      >
+                        metabolomics-da.html
+                      </a>
+                    </li>
                   </ul>
                 </li>
                 <li>
-                  DA
-                  <ul className="list-style mb-2">
-                    {proteomicsReportsDA.map((report) => (
-                      <li key={report}>
-                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                        <a
-                          href="#"
-                          data-toggle="modal"
-                          data-target="#html-report-modal"
-                          onClick={(e) =>
-                            handleClickReport(`proteomics/da/${report}`, report)
-                          }
-                        >
-                          {report}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-                <li>
-                  QC-norm
-                  <ul className="list-style mb-2">
-                    {proteomicsReportsQCNorm.map((report) => (
-                      <li key={report}>
-                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                        <a
-                          href="#"
-                          data-toggle="modal"
-                          data-target="#html-report-modal"
-                          onClick={(e) =>
-                            handleClickReport(
-                              `proteomics/qc-norm/${report}`,
-                              report,
-                            )
-                          }
-                        >
-                          {report}
-                        </a>
-                      </li>
-                    ))}
+                  Proteomics
+                  <ul className="list-style mt-2">
+                    <li>
+                      1A1C-independent-analyses
+                      <ul className="list-style mb-2">
+                        {proteomics1A1CIndependentAnalyses.map((report) => (
+                          <li key={report}>
+                            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                            <a
+                              href="#"
+                              data-toggle="modal"
+                              data-target="#html-report-modal"
+                              onClick={(e) => handleClickReport(`proteomics/1a1c-independent-analyses/${report}`, report)}
+                            >
+                              {report}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                    <li>
+                      DA
+                      <ul className="list-style mb-2">
+                        {proteomicsReportsDA.map((report) => (
+                          <li key={report}>
+                            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                            <a
+                              href="#"
+                              data-toggle="modal"
+                              data-target="#html-report-modal"
+                              onClick={(e) => handleClickReport(`proteomics/da/${report}`, report)}
+                            >
+                              {report}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                    <li>
+                      QC-norm
+                      <ul className="list-style mb-2">
+                        {proteomicsReportsQCNorm.map((report) => (
+                          <li key={report}>
+                            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                            <a
+                              href="#"
+                              data-toggle="modal"
+                              data-target="#html-report-modal"
+                              onClick={(e) => handleClickReport(`proteomics/qc-norm/${report}`, report)}
+                            >
+                              {report}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
                   </ul>
                 </li>
               </ul>
