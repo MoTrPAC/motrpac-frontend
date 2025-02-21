@@ -1,6 +1,5 @@
 import Callback from "@/Auth/callback.jsx";
 import React, { lazy, Suspense } from 'react';
-import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AuthWrapper from '../Auth/AuthWrapper';
 import Footer from '../Footer/footer';
@@ -8,7 +7,7 @@ import { PageTracker } from '../GoogleAnalytics/googleAnalytics.jsx';
 import LandingPageConnected from '../LandingPage/landingPage';
 import ScrollToTop from '../lib/scrollToTop';
 import NavbarConnected from '../Navbar/navbar';
-import configureStore from './configureStore';
+
 import 'bootstrap';
 import History from './history';
 
@@ -65,137 +64,133 @@ const Pass1b06PhenotypeAnimalConnected = lazy(
   () => import('../AnalysisPage/pass1b06PhenotypeAnimal'),
 );
 
-const store = configureStore();
-
 function App({ history = History }) {
   return (
-    <Provider store={store}>
-      <BrowserRouter history={history}>
-        <ScrollToTop/>
-        <div className="App container-fluid">
-          <header>
-            <NavbarConnected/>
-          </header>
-          <div className="row justify-content-center">
-            <Suspense fallback={<div/>}>
-              <Routes>
-                <Route element={<PageTracker/>}>
+    <BrowserRouter history={history}>
+      <ScrollToTop/>
+      <div className="App container-fluid">
+        <header>
+          <NavbarConnected/>
+        </header>
+        <div className="row justify-content-center">
+          <Suspense fallback={<div/>}>
+            <Routes>
+              <Route element={<PageTracker/>}>
+                <Route
+                  path="/callback"
+                  element={<Callback />}
+                />
+                <Route
+                  path="/"
+                  exact
+                  element={<LandingPageConnected/>}
+                />
+                <Route
+                  path="/external-links"
+                  element={<LinkoutPage/>}
+                />
+                <Route
+                  path="/methods"
+                  element={<MethodsConnected/>}
+                />
+                <Route path="/team" element={<TeamPage/>}/>
+                <Route path="/contact" element={<Contact/>}/>
+                <Route
+                  path="/announcements"
+                  element={<AnnouncementsPage/>}
+                />
+                <Route path="/error" element={<ErrorPageConnected/>}/>
+                <Route element={<AuthWrapper/>}>
                   <Route
-                    path="/callback"
-                    element={<Callback />}
+                    path="/analysis/:subjectType"
+                    element={<AnalysisHomePageConnected/>}
                   />
                   <Route
-                    path="/"
+                    path="/summary"
+                    element={<DataSummaryPageConnected/>}
+                  />
+                  <Route
+                    path="/releases"
+                    element={<ReleasePageConnected/>}
+                  />
+                  <Route
+                    path="/qc-data-monitor"
+                    element={<DataStatusPageConnected/>}
+                  />
+                  <Route
+                    path="/publications/docs/protocol/clinical/study-protocols"
                     exact
-                    element={<LandingPageConnected/>}
+                    element={<ClinicalStudyProtocols/>}
                   />
                   <Route
-                    path="/external-links"
-                    element={<LinkoutPage/>}
+                    path="/analysis-phenotype"
+                    element={<Pass1b06PhenotypeAnimalConnected/>}
                   />
                   <Route
-                    path="/methods"
-                    element={<MethodsConnected/>}
-                  />
-                  <Route path="/team" element={<TeamPage/>}/>
-                  <Route path="/contact" element={<Contact/>}/>
-                  <Route
-                    path="/announcements"
-                    element={<AnnouncementsPage/>}
-                  />
-                  <Route path="/error" element={<ErrorPageConnected/>}/>
-                  <Route element={<AuthWrapper/>}>
-                    <Route
-                      path="/analysis/:subjectType"
-                      element={<AnalysisHomePageConnected/>}
-                    />
-                    <Route
-                      path="/summary"
-                      element={<DataSummaryPageConnected/>}
-                    />
-                    <Route
-                      path="/releases"
-                      element={<ReleasePageConnected/>}
-                    />
-                    <Route
-                      path="/qc-data-monitor"
-                      element={<DataStatusPageConnected/>}
-                    />
-                    <Route
-                      path="/publications/docs/protocol/clinical/study-protocols"
-                      exact
-                      element={<ClinicalStudyProtocols/>}
-                    />
-                    <Route
-                      path="/analysis-phenotype"
-                      element={<Pass1b06PhenotypeAnimalConnected/>}
-                    />
-                    <Route
-                      path="/multiomics-working-groups"
-                      element={<MultiOmicsWorkingGroups/>}
-                    />
-                  </Route>
-                  <Route
-                    path="/data-download"
-                    element={<BrowseDataPageConnected/>}
-                  />
-                  <Route
-                    path="/data-download/file-browser"
-                    element={<BrowseDataPageConnected/>}
-                  />
-                  <Route
-                    path="/data-access"
-                    element={<DataAccessPageConnected/>}
-                  />
-                  <Route
-                    path="/related-studies"
-                    exact
-                    element={<RelatedStudy/>}
-                  />
-                  <Route
-                    path="/related-studies/heritage-proteomics"
-                    exact
-                    element={<HeritageProteomics/>}
-                  />
-                  <Route
-                    path="/search"
-                    element={<SearchPageConnected/>}
-                  />
-                  <Route
-                    path="/gene-centric"
-                    element={<GeneCentricViewConnected/>}
-                  />
-                  <Route
-                    path="/graphical-clustering"
-                    element={<GraphicalClustering/>}
-                  />
-                  <Route
-                    path="/code-repositories"
-                    element={<CodeRepositories/>}
-                  />
-                  <Route
-                    path="/project-overview"
-                    element={<MainStudyConnected/>}
-                  />
-                  <Route path="/tutorials" element={<Tutorials/>}/>
-                  <Route
-                    path="/publications"
-                    exact
-                    element={<Publications/>}
-                  />
-                  <Route
-                    path="/publications/data/animal/phenotype/full-table-endurance-training"
-                    exact
-                    element={<FullTableEnduranceTraining/>}
+                    path="/multiomics-working-groups"
+                    element={<MultiOmicsWorkingGroups/>}
                   />
                 </Route>
-              </Routes>
-            </Suspense>
-          </div>
+                <Route
+                  path="/data-download"
+                  element={<BrowseDataPageConnected/>}
+                />
+                <Route
+                  path="/data-download/file-browser"
+                  element={<BrowseDataPageConnected/>}
+                />
+                <Route
+                  path="/data-access"
+                  element={<DataAccessPageConnected/>}
+                />
+                <Route
+                  path="/related-studies"
+                  exact
+                  element={<RelatedStudy/>}
+                />
+                <Route
+                  path="/related-studies/heritage-proteomics"
+                  exact
+                  element={<HeritageProteomics/>}
+                />
+                <Route
+                  path="/search"
+                  element={<SearchPageConnected/>}
+                />
+                <Route
+                  path="/gene-centric"
+                  element={<GeneCentricViewConnected/>}
+                />
+                <Route
+                  path="/graphical-clustering"
+                  element={<GraphicalClustering/>}
+                />
+                <Route
+                  path="/code-repositories"
+                  element={<CodeRepositories/>}
+                />
+                <Route
+                  path="/project-overview"
+                  element={<MainStudyConnected/>}
+                />
+                <Route path="/tutorials" element={<Tutorials/>}/>
+                <Route
+                  path="/publications"
+                  exact
+                  element={<Publications/>}
+                />
+                <Route
+                  path="/publications/data/animal/phenotype/full-table-endurance-training"
+                  exact
+                  element={<FullTableEnduranceTraining/>}
+                />
+              </Route>
+            </Routes>
+          </Suspense>
         </div>
-      </BrowserRouter>
+      </div>
       <Footer/>
-    </Provider>
+    </BrowserRouter>
   );
 }
 
