@@ -158,10 +158,15 @@ function DataDownloadsMain({
                   Pre-COVID Sedentary
                 </h3>
                 <ul className="list-unstyled mt-3 mb-4 text-muted">
-                  <li>Adult participants</li>
+                  <li>Acute exercise adult participants</li>
                   <li>4 tissues</li>
                   <li>22 assays across different omes</li>
-                  <li>Acute exercise</li>
+                  <li>
+                    <a href="/static-assets/MoTrPAC_Data_Release_Human_Precovid_Sed_Adu_ReadMe.pdf" target="_blank" rel="noopener noreferrer">
+                      <i className="bi bi-file-earmark-fill mr-1" />
+                      <span>Release README</span>
+                    </a>
+                  </li>
                 </ul>
               </SelectiveDataDownloadsCard>
             )}
