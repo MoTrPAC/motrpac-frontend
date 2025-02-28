@@ -162,7 +162,7 @@ function DataDownloadsMain({
                   <li>4 tissues</li>
                   <li>22 assays across different omes</li>
                   <li>
-                    <a href="/static-assets/MoTrPAC_Data_Release_Human_Precovid_Sed_Adu_ReadMe.pdf" target="_blank" rel="noopener noreferrer">
+                    <a href={process.env.REACT_APP_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
                       <i className="bi bi-file-earmark-fill mr-1" />
                       <span>Release README</span>
                     </a>
