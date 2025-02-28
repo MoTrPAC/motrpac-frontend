@@ -181,7 +181,7 @@ export function SearchPage({
                 The pre-COVID human sedentary adults dataset is now available to consortium
                 users. Please refer to the
                 {' '}
-                <a href="/static-assets/MoTrPAC_Data_Release_Human_Precovid_Sed_Adu_ReadMe.pdf" target="_blank" rel="noopener noreferrer">
+                <a href={process.env.REACT_APP_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
                   Release README
                 </a>
                 {' '}
