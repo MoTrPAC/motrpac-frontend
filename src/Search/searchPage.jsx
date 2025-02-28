@@ -178,7 +178,7 @@ export function SearchPage({
             <div className="w-100 lead text-center">
               <i className="bi bi-rocket-takeoff mr-2" />
               <span className="data-release-text">
-                The pre-COVID human sedentatary adults dataset is now available to consortium
+                The pre-COVID human sedentary adults dataset is now available to consortium
                 users. Please refer to the
                 {' '}
                 <a href="/static-assets/MoTrPAC_Data_Release_Human_Precovid_Sed_Adu_ReadMe.pdf" target="_blank" rel="noopener noreferrer">
