@@ -173,6 +173,23 @@ export function SearchPage({
         </script>
       </Helmet>
       <form id="searchForm" name="searchForm">
+        {userType && userType === 'internal' && (
+          <div className="alert alert-warning alert-data-release" role="alert">
+            <div className="w-100 lead text-center">
+              <i className="bi bi-rocket-takeoff mr-2" />
+              <span className="data-release-text">
+                The pre-COVID human sedentary adults dataset is now available to consortium
+                users. Please refer to the
+                {' '}
+                <a href={process.env.REACT_APP_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
+                  Release README
+                </a>
+                {' '}
+                document for more information.
+              </span>
+            </div>
+          </div>
+        )}
         <PageTitle title="Search differential abundance data" />
         <div className="search-content-container">
           <div className="search-summary-container row mb-4">
