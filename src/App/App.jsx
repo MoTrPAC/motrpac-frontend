@@ -46,7 +46,7 @@ const GraphicalClustering = lazy(
   () => import('../AnalysisPage/GraphicalClustering/graphicalClusteringPage'),
 );
 const CodeRepositories = lazy(() => import('../CodeRepoPage/codeRepoPage'));
-const MainStudyConnected = lazy(() => import('../MainStudy/mainStudy'));
+const ProjectOverview = lazy(() => import('../MainStudy/overview'));
 const Tutorials = lazy(() => import('../Tutorials/tutorials'));
 const Publications = lazy(() => import('../Publications/publications'));
 const MultiOmicsWorkingGroups = lazy(
@@ -170,7 +170,7 @@ function App({ history = History }) {
                 />
                 <Route
                   path="/project-overview"
-                  element={<MainStudyConnected/>}
+                  element={<ProjectOverview/>}
                 />
                 <Route path="/tutorials" element={<Tutorials/>}/>
                 <Route
