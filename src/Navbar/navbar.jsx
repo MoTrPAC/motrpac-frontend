@@ -24,15 +24,13 @@ import '@styles/navbar.scss';
  * @returns {Object} JSX representation of the global header nav bar.
  */
 export function Navbar({
-  profile={},
-  isAuthenticated=false,
-  login=null,
-  logout=null,
-  handleDataFetch=null,
-  resetBrowseState=null,
-  handleQCDataFetch=null,
-  lastModified='',
-  allFiles,
+  isAuthenticated,
+  profile,
+  login,
+  logout,
+  resetBrowseState,
+  handleQCDataFetch,
+  lastModified,
 }) {
   const location = useLocation();
   const currentPath = location.pathname;
@@ -120,17 +118,6 @@ export function Navbar({
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
-  // post request to fetch data files when download nav link is clicked
-  const handleDataObjectFetch = () => {
-    if (!allFiles.length) {
-      if (userType && userType === 'internal') {
-        handleDataFetch();
-      } else {
-        handleDataFetch('PASS1B-06');
-      }
-    }
-  };
-
   // Call to invoke Redux action to fetch QC data
   // if timestamp is empty or older than 24 hours
   const fecthQCData = () => {
@@ -199,7 +186,6 @@ export function Navbar({
                 <Link
                   to="/data-download"
                   className="nav-link"
-                  onClick={handleDataObjectFetch}
                 >
                   Downloads
                 </Link>
@@ -257,7 +243,6 @@ export function Navbar({
                   <Link
                     to="/data-download"
                     className="dropdown-item"
-                    onClick={handleDataObjectFetch}
                   >
                     {isAuthenticated && hasAccess && userType === 'internal'
                       ? 'Rat and Human Data'
@@ -274,6 +259,9 @@ export function Navbar({
                     onClick={(e) => checkServiceStatus(e)}
                   >
                     Limited Acute Exercise Data
+                  </Link>
+                  <Link to="/data-deposition" className="dropdown-item">
+                    Public Data Repositories
                   </Link>
                   {!userType || (userType && userType !== 'internal') ? (
                     <a
@@ -339,6 +327,14 @@ export function Navbar({
                   >
                     OmicsPipelines
                   </a>
+                  <a
+                    href="https://community.motrpac-data.org/"
+                    className="dropdown-item"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Community
+                  </a>
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
@@ -348,7 +344,7 @@ export function Navbar({
                   id="helpNavbarItemMenuLink"
                   data-toggle="dropdown"
                 >
-                  Help
+                  Learn
                 </div>
                 <div
                   className="dropdown-menu"
@@ -357,16 +353,17 @@ export function Navbar({
                   <Link to="/project-overview" className="dropdown-item">
                     Project Overview
                   </Link>
+                  <Link to="/exercise-benefits" className="dropdown-item">
+                    Exercise Benefits
+                  </Link>
+                  <Link to="/study-assays" className="dropdown-item">
+                    Study Assays
+                  </Link>
                   <Link to="/tutorials" className="dropdown-item">
                     Tutorials
                   </Link>
-                  <Link
-                    id="send_email"
-                    to="/contact"
-                    className="dropdown-item"
-                    onClick={(e) => checkServiceStatus(e)}
-                  >
-                    Contact Us
+                  <Link to="/license" className="dropdown-item">
+                    License
                   </Link>
                 </div>
               </li>
@@ -391,6 +388,14 @@ export function Navbar({
                   </Link>
                   <Link to="/external-links" className="dropdown-item">
                     Useful Links
+                  </Link>
+                  <Link
+                    id="send_email"
+                    to="/contact"
+                    className="dropdown-item"
+                    onClick={(e) => checkServiceStatus(e)}
+                  >
+                    Contact Us
                   </Link>
                 </div>
               </li>
@@ -422,25 +427,31 @@ Navbar.propTypes = {
   isAuthenticated: PropTypes.bool,
   login: PropTypes.func,
   logout: PropTypes.func,
-  handleDataFetch: PropTypes.func,
   resetBrowseState: PropTypes.func,
   handleQCDataFetch: PropTypes.func,
   lastModified: PropTypes.string,
+};
+
+Navbar.defaultProps = {
+  profile: {},
+  isAuthenticated: false,
+  login: null,
+  logout: null,
+  resetBrowseState: null,
+  handleQCDataFetch: null,
+  lastModified: '',
 };
 
 const mapStateToProps = (state) => ({
   ...state.quickSearch,
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
-  allFiles: state.browseData.allFiles,
   lastModified: state.dataStatus.qcData.lastModified,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   login: () => dispatch(actions.login()),
   logout: () => dispatch(actions.logout()),
-  handleDataFetch: (phase) =>
-    dispatch(BrowseDataActions.handleDataFetch(phase)),
   resetBrowseState: () => dispatch(BrowseDataActions.resetBrowseState()),
   handleQCDataFetch: () => dispatch(DataStatusActions.fetchData()),
 });

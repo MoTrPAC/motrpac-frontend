@@ -13,7 +13,7 @@ const trackingId = () => {
   let analyticsTrackerHostname = document.location.hostname;
 
   // match hostname to google analytics domain identified for tracker
-  if (/^(www\.)?motrpac(-[a-z]+)?.org/.test(analyticsTrackerHostname)) {
+  if (/^(www\.)?motrpac(-[a-z]+)?.org$/.test(analyticsTrackerHostname)) {
     // production app
     analyticsTrackerHostname = 'www.motrpac-data.org';
   } else {

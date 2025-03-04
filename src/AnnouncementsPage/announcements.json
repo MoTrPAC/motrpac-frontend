@@ -53,13 +53,13 @@
             },
             {
                 "label": "Webinar presentation slides",
-                "url": "http://study-docs.motrpac-data.org/MoTrPAC_BIC_Data_hub_webinar_slides.pdf",
+                "url": "https://d1yw74buhe0ts0.cloudfront.net/docs/MoTrPAC_BIC_Data_hub_webinar_slides.pdf",
                 "gaEventCategory": "NIH Funding Opportunity Webinar",
                 "gaEventAction": "Webinar Presentation Slides"
             },
             {
                 "label": "Recorded webinar",
-                "url": "http://study-docs.motrpac-data.org/MoTrPAC_BIC_Data_hub_recorded_webinar.mp4",
+                "url": "https://youtu.be/JT2Gr_tnJr4",
                 "gaEventCategory": "NIH Funding Opportunity Webinar",
                 "gaEventAction": "Webinar Recorded Video"
             }

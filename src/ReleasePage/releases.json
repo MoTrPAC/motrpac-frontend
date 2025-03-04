@@ -227,7 +227,7 @@
     "date": "October 15, 2019",
     "target": "external",
     "description": "This release contains data from 6-month old rats that performed an acute bout of endurance exercise. There is data from 5 different tissues collected at multiple different time points after exercise. Untrained control animals from 2 time points are also included. The data includes phenotypic and -omic data from multiple assays, including RNA sequencing, Reduced Representation Bisulfite Sequencing (RRBS), proteomics, phosphoproteomics, acetylproteomics, and targeted and untargeted metabolomics. You may choose to download different bundled assay quantitative results and the phenotypic data separately, or all of them together.",
-    "readme_file_location": "http://study-docs.motrpac-data.org/MoTrPAC_External_Data_Release_ReadMe.pdf",
+    "readme_file_location": "https://d1yw74buhe0ts0.cloudfront.net/docs/MoTrPAC_External_Data_Release_ReadMe.pdf",
     "result_files": {
       "bucket_name": "motrpac-external-release1-results",
       "data_types": [

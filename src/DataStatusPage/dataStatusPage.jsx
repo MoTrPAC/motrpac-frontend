@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import AnimatedLoadingIcon from '../lib/ui/loading';
-import DataStatusActions from './dataStatusActions';
-import QcReportByPhase from './qcReportByPhase.jsx';
-import QcReportHelp from './qcReportHelp';
-import QcReportMetabolomics from './qcReportMetab';
-import QcReportProteomics from './qcReportProt';
-import qcReportButtonList from './sharelib/qcReportButtonList';
-import QcReportHelpLink from './sharelib/qcReportHelpLink';
+import { Tooltip } from 'react-tooltip';
 import StatusReportGetData from './statusReportGetData';
 import StatusReportImmunoAssay from './statusReportImmunoAssay';
+import QcReportByPhase from './qcReportByPhase.jsx';
+import QcReportHelp from './qcReportHelp';
+import DataStatusActions from './dataStatusActions';
+import qcReportButtonList from './sharelib/qcReportButtonList';
+import AnimatedLoadingIcon from '../lib/ui/loading';
+import QcReportHelpLink from './sharelib/qcReportHelpLink';
+import QcReportMetabolomics from './qcReportMetab';
+import QcReportProteomics from './qcReportProt';
 
 import '@styles/dataStatusPage.scss';
 
@@ -42,6 +43,8 @@ export function DataStatusPage({
   qcReportViewChange,
   profile,
 }) {
+  const [isOpen, setIsOpen] = useState(true);
+
   // Send users to default page if they are not consortium members
   const userType = profile.user_metadata && profile.user_metadata.userType;
   if (userType === 'external') {
@@ -143,6 +146,23 @@ export function DataStatusPage({
     }
   }
 
+  // Render data transfer guidelines link
+  function renderDataTransferGuidelinesLink() {
+    let link = '';
+
+    switch (qcReportView) {
+      case 'metabolomics':
+        link = 'https://docs.google.com/document/d/13i-EQcZ0LYylhoyaTdI4vf-BgZYAbzcGU4m9GKSJCnA/edit?usp=sharing';
+        break;
+      case 'proteomics':
+        link = 'https://docs.google.com/document/d/1U60mx7Wl0sNKsy_S72lJsRdEdB3HbuXQ86Hw7lLWV-w/edit?usp=sharing';
+        break;
+      default:
+        link = 'https://docs.google.com/document/d/1W1b5PVp2yjam4FU2IidGagqdA7lYpkTaD_LMeaN_n_k/edit?usp=sharing';
+    }
+    return link;
+  }
+
   return (
     <div className="dataStatusPage px-3 px-md-4 mb-3 w-100">
       <Helmet>
@@ -150,8 +170,34 @@ export function DataStatusPage({
         <title>QC Data Monitor - MoTrPAC Data Hub</title>
       </Helmet>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 page-header">
-        <div className="page-title">
+        <div className="page-title d-flex align-items-end">
           <h1 className="mb-0">QC Data Monitor</h1>
+          {qcReportView.match(/metabolomics|proteomics|rnaseq|rrbs|methylcapseq|atacseq|immunoassay/) && (
+            <>
+              <a
+                href={renderDataTransferGuidelinesLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="data-transfer-guidelines-link mb-0 ml-2 text-info"
+                data-tooltip-id="data-transfer-guidelines-link-tooltip"
+                data-tooltip-content="Data Transfer Guidelines"
+                data-tooltip-place="right"
+                onMouseEnter={() => setIsOpen(true)}
+                onClick={() => setIsOpen(false)}
+              >
+                <span className="material-icons">
+                  description
+                </span>
+              </a>
+              <Tooltip
+                id="data-transfer-guidelines-link-tooltip"
+                defaultIsOpen={isOpen}
+                globalCloseEvents={{ clickOutsideAnchor: true }}
+              >
+                Data Transfer Guidelines
+              </Tooltip>
+            </>
+          )}
         </div>
         {renderButtonGroup()}
       </div>

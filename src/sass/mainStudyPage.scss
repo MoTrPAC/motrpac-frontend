@@ -72,3 +72,50 @@
     }
   }
 }
+
+.exerciseBenefitsPage {
+  .exercise-benefits-page-content-container {
+    .cexercise-benefits-itation-list {
+      padding-left: 20px;
+    }
+  }
+}
+
+.studyAssaysPage {
+  .study-assays-page-content-container {
+    h3 {
+      background: -webkit-linear-gradient(45deg, #a64d79, #1c4587);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      .study-title-species-icon {
+        font-size: 1.85rem;
+      }
+    }
+
+    .pass1b-06-assay-tissue-table {
+      h4 {
+        color: $stanford-cool-grey;
+
+      }
+      table td:first-child {
+        width: 35%;
+      }
+
+      .badge-pill {
+        font-size: 0.8rem;
+        font-weight: 500;
+        padding: 0.3rem 0.65rem;
+      }
+    }
+
+    .assay-tissue-treegraph-container {
+      min-height: 70vh;
+    }
+  }
+}
+
+// disable react-wordcloud tooltip
+div[data-tippy-root=""] {
+  display: none !important;
+}

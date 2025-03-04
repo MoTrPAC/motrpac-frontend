@@ -1,7 +1,12 @@
 .codeRepoPage {
   .code-repo-content-container {
     .code-repo-summary-container {
-      margin-bottom: 2.5em;
+      margin-bottom: 2.0em;
+
+      .material-icons {
+        font-size: 1.25rem;
+        line-height: 1.65;
+      }
     }
 
     .code-repo-container {

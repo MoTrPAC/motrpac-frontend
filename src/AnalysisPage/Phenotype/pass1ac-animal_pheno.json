@@ -1,0 +1,28 @@
+[
+  {
+    "pid": "pid_10000000",
+    "sex": "male",
+    "intervention": "acute",
+    "groupi": "acute_01.0h",
+    "phase": "pass1a",
+    "weight": "366",
+    "shock_count": "10",
+    "shock_duration": "10",
+    "distance": "408",
+    "work": "120",
+    "lactate_change": "6"
+  },
+  {
+    "pid": "pid_10000001",
+    "sex": "female",
+    "intervention": "acute",
+    "groupi": "acute_00.0h_IPE",
+    "phase": "pass1a",
+    "weight": "364",
+    "shock_count": "20",
+    "shock_duration": "20",
+    "distance": "384",
+    "work": "110",
+    "lactate_change": "8"
+  }
+]

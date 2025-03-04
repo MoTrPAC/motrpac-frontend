@@ -1,12 +1,8 @@
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { Helmet } from "react-helmet";
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
-import BrowseDataActions from '../BrowseDataPage/browseDataActions';
-import ExternalLink from '../lib/ui/externalLink';
+import { Helmet } from "react-helmet";
 import PageTitle from '../lib/ui/pageTitle';
+import ExternalLink from '../lib/ui/externalLink';
 import ToggleShowHide from './components/toggleShowHide';
 
 import '@styles/mainStudyPage.scss';
@@ -14,23 +10,10 @@ import '@styles/mainStudyPage.scss';
 import PASS1B06Profiling from '../assets/figures/pass1b-06-molecular-profiling.svg';
 import PASS1B06TimeCourse from '../assets/figures/pass1b-06-time-course.png';
 
-function MainStudy({ profile = {}, allFiles, handleDataFetch = null }) {
+function ProjectOverview() {
   const [showSummary, setShowSummary] = useState(true);
   const [showExpDesign, setShowExpDesign] = useState(true);
   const [showTissueProfiling, setShowTissueProfiling] = useState(true);
-
-  const userType = profile.user_metadata && profile.user_metadata.userType;
-
-  // post request to fetch data files when download nav link is clicked
-  const handleDataObjectFetch = () => {
-    if (!allFiles.length) {
-      if (userType && userType === 'internal') {
-        handleDataFetch();
-      } else {
-        handleDataFetch('PASS1B-06');
-      }
-    }
-  };
 
   // Event handlers for show/hide sectional content
   const toggleShowSummary = (e) => {
@@ -115,7 +98,7 @@ function MainStudy({ profile = {}, allFiles, handleDataFetch = null }) {
               <tbody>
                 <tr>
                   <td>
-                    <strong>Young adult (6 month old)</strong>
+                    <strong>Young Adults (6 month old)</strong>
                     <ul>
                       <li>Acute exercise</li>
                       <li>
@@ -131,7 +114,7 @@ function MainStudy({ profile = {}, allFiles, handleDataFetch = null }) {
                       </li>
                       <li>Controls</li>
                     </ul>
-                    <strong>Middle-aged adult (18 month old)</strong>
+                    <strong>Middle-aged Adults (18 month old)</strong>
                     <ul>
                       <li>Acute exercise</li>
                       <li>Endurance training</li>
@@ -139,13 +122,13 @@ function MainStudy({ profile = {}, allFiles, handleDataFetch = null }) {
                     </ul>
                   </td>
                   <td>
-                    <strong>Pediatric</strong>
+                    <strong>Pediatrics</strong>
                     <ul>
                       <li>Endurance training</li>
                       <li>Acute exercise</li>
                       <li>Control</li>
                     </ul>
-                    <strong>Adult</strong>
+                    <strong>Sedentary Adults</strong>
                     <ul>
                       <li>Acute endurance exercise</li>
                       <li>Acute resistance exercise</li>
@@ -153,7 +136,7 @@ function MainStudy({ profile = {}, allFiles, handleDataFetch = null }) {
                       <li>Resistance training</li>
                       <li>Control</li>
                     </ul>
-                    <strong>Highly active adult</strong>
+                    <strong>Highly Active Adults</strong>
                     <ul>
                       <li>Acute endurance exercise</li>
                       <li>Acute resistance exercise</li>
@@ -170,7 +153,9 @@ function MainStudy({ profile = {}, allFiles, handleDataFetch = null }) {
         >
           <h3>Endurance Training in Young Adult Rats</h3>
           <h6>
-            Species: <span className="font-italic">Rattus norvegicus</span>
+            Species:
+            {' '}
+            <span className="font-italic">Rattus norvegicus</span>
           </h6>
           <p>
             In this intervention, we're specifically interested in the long term
@@ -180,11 +165,13 @@ function MainStudy({ profile = {}, allFiles, handleDataFetch = null }) {
             tissues. Rats were endurance-exercise trained on treadmills and
             tissue samples were collected at either 1, 2, 4, or 8 weeks of
             training, with a 48 hour rest or wash out period before samples were
-            collected. See the{' '}
+            collected. See the
+            {' '}
             <ExternalLink
               to="https://motrpac.org/actDocumentDownload.cfm?docGUID=A31CDD1F-8A59-41D9-BABA-125B37A39BF5"
               label="animal protocol"
-            />{' '}
+            />
+            {' '}
             to learn more.
           </p>
           <div className="main-study-content-container mt-5">
@@ -241,7 +228,6 @@ function MainStudy({ profile = {}, allFiles, handleDataFetch = null }) {
                 className="btn btn-primary mr-3"
                 to="/data-download"
                 role="button"
-                onClick={handleDataObjectFetch}
               >
                 Download Data
               </Link>
@@ -249,7 +235,6 @@ function MainStudy({ profile = {}, allFiles, handleDataFetch = null }) {
                 className="btn btn-primary ml-3"
                 to="/search"
                 role="button"
-                onClick={handleDataObjectFetch}
               >
                 Explore Data
               </Link>
@@ -261,23 +246,4 @@ function MainStudy({ profile = {}, allFiles, handleDataFetch = null }) {
   );
 }
 
-MainStudy.propTypes = {
-  profile: PropTypes.shape({
-    user_metadata: PropTypes.shape({
-      hasAccess: PropTypes.bool,
-      userType: PropTypes.string,
-    }),
-  }),
-  handleDataFetch: PropTypes.func,
-};
-
-const mapStateToProps = (state) => ({
-  allFiles: state.browseData.allFiles,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  handleDataFetch: (phase) =>
-    dispatch(BrowseDataActions.handleDataFetch(phase)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainStudy);
+export default ProjectOverview;

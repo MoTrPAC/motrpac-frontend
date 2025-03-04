@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
  * BrowseDataTable props
  */
 export const browseDataPropType = {
-  tissue_name: PropTypes.string,
-  tissue_code: PropTypes.string,
-  assay: PropTypes.string,
-  omics: PropTypes.string,
+  tissue_name: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+  tissue_superclass: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+  tissue_code: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+  assay: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+  omics: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   phase: PropTypes.string,
   study: PropTypes.string,
   species: PropTypes.string,
@@ -231,65 +232,37 @@ export const transformData = (arr) => {
     const splits = item.object.split('/');
     item.filename = splits.pop();
     // Transform metabolomics assay value
-    if (item.assay !== null && item.assay !== undefined) {
-      let newMetabAssayVal = item.assay;
-      if (
-        newMetabAssayVal.indexOf('Targeted') !== -1 &&
-        newMetabAssayVal.indexOf('Untargeted') !== -1
-      ) {
-        newMetabAssayVal = 'Merged';
-        item.assay = newMetabAssayVal;
+    if (item.assay) {
+      const newMetabAssayVal = Array.isArray(item.assay) ? item.assay.join(', ') : item.assay;
+      // Applicable to PASS1B-06 and HUMAN-PRECOVID-SED-ADU
+      if (newMetabAssayVal.includes('Targeted') && newMetabAssayVal.includes('Untargeted')) {
+        item.assay = 'Merged';
       }
     }
-    if (
-      item.assay !== null &&
-      item.assay !== undefined &&
-      item.omics === 'Metabolomics Targeted'
-    ) {
-      let newMetabAssayVal = item.assay;
-      if (
-        newMetabAssayVal.indexOf('Acylcarnitines') !== -1 &&
-        newMetabAssayVal.indexOf('Oxylipins') !== -1
-      ) {
-        newMetabAssayVal = 'Merged';
-        item.assay = newMetabAssayVal;
+    // Transform tissue name value
+    if (item.tissue_name) {
+      if (Array.isArray(item.tissue_name) && item.tissue_name.length) {
+        item.tissue_name = '';
+      } else if (typeof item.tissue_name === 'string' && item.tissue_name.length) {
+        if (
+          // Applicable to PASS1A-06 and HUMAN-PRECOVID-SED-ADU
+          item.tissue_name.includes('EDTA Plasma') && item.omics.includes('Metabolomics') && item.study.includes('Acute Exercise')
+        ) {
+          item.tissue_name = 'Plasma';
+        } else if (item.phase.includes('HUMAN-PRECOVID-SED-ADU') && item.study.includes('Acute Exercise') && item.tissue_superclass) {
+          // Applicable to HUMAN-PRECOVID-SED-ADU
+          item.tissue_name = item.tissue_superclass;
+        }
       }
     }
-    if (item.tissue_name !== null && item.tissue_name !== undefined) {
-      let newTissueVal = item.tissue_name;
+    if (item.omics) {
+      const newOmicsVal = (Array.isArray(item.omics)) ? item.omics.join(', ') : item.omics;
+      // Applicable to HUMAN-PRECOVID-SED-ADU
       if (
-        newTissueVal.indexOf('Human PBMC') !== -1 ||
-        newTissueVal.indexOf('Human EDTA Packed Cells') !== -1 ||
-        newTissueVal.indexOf('Human PAXgene RNA') !== -1
+        newOmicsVal.includes('Metabolomics Targeted')
+        && newOmicsVal.includes('Metabolomics Untargeted')
       ) {
-        newTissueVal = 'Blood';
-        item.tissue_name = newTissueVal;
-      }
-      if (
-        newTissueVal.indexOf('Human Adipose') !== -1 ||
-        newTissueVal.indexOf('Human Adipose Powder') !== -1
-      ) {
-        newTissueVal = 'Adipose';
-        item.tissue_name = newTissueVal;
-      }
-      if (
-        newTissueVal.indexOf('Human Muscle') !== -1 ||
-        newTissueVal.indexOf('Human Muscle Powder') !== -1
-      ) {
-        newTissueVal = 'Muscle';
-        item.tissue_name = newTissueVal;
-      }
-      if (newTissueVal.indexOf('Human EDTA Plasma') !== -1) {
-        newTissueVal = 'Plasma';
-        item.tissue_name = newTissueVal;
-      }
-      if (
-        newTissueVal.indexOf('EDTA Plasma') !== -1 &&
-        item.omics.indexOf('Metabolomics') !== -1 &&
-        item.study.indexOf('Acute Exercise') !== -1
-      ) {
-        newTissueVal = 'Plasma';
-        item.tissue_name = newTissueVal;
+        item.omics = 'Metabolomics';
       }
     }
   });

@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import IconSet from '../lib/iconSet';
+import ExternalLink from '../lib/ui/externalLink';
 
 import '@styles/codeRepo.scss';
 
@@ -104,10 +106,24 @@ export function CodeRepositories() {
       <PageTitle title="Code Repositories" />
       <div className="code-repo-content-container">
         <div className="code-repo-summary-container row">
-          <div className="lead col-12">
+          <p className="lead col-12">
             Explore the source codes integral to the workflow of the MoTrPAC
             data, from ingestion to analysis.
-          </div>
+          </p>
+          <p className="lead col-12">
+            The MoTrPAC open source repositories are hosted on GitHub and
+            provided under the
+            {' '}
+            <ExternalLink
+              to="https://opensource.org/license/mit"
+              label="MIT License"
+            />
+            . The data available through the MoTrPAC Data Hub portal is
+            provided under the
+            {' '}
+            <Link to="/license">CC BY 4.0 license</Link>
+            .
+          </p>
         </div>
         <div className="code-repo-content-container d-flex align-items-start justify-content-between">
           {renderRepoComponent('Pipelines', repositories.pipelines)}

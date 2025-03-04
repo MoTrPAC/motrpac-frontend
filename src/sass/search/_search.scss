@@ -7,6 +7,13 @@
     font-size: smaller;
   }
 
+  .alert-data-release {
+    .bi-rocket-takeoff {
+      font-size: 1.5rem;
+      line-height: 0;
+    }
+  }
+
   .search-content-container {
     .es-search-ui-container {
       .btn.dropdown-toggle {
@@ -306,15 +313,28 @@
       }
     }
 
-    &.summary {
+    &.sample-summary {
       .material-icons {
         color: lighten(colors.$accent-violet, 12%);
       }
     }
 
-    &.code-repositories {
+    &.code-repositories, &.motrpac-collab {
+      .material-icons {
+        color: $gray;
+      }
+    }
+
+    &.motrpac-collab {
       .material-icons {
         color: colors.$gray-semi-transparent;
+      }
+    }
+
+    &.pass1b-06-data-visualization,
+    &.precovid-human-data-visualization {
+      .material-icons {
+        color: $primary-blue;
       }
     }
   }

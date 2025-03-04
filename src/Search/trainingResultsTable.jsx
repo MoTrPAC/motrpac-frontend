@@ -11,6 +11,7 @@ import {
   searchParamsPropType,
   trainingResultsTablePropType,
   trainingTableColumns,
+  proteinTrainingTableColumns,
   metabTrainingTableColumns,
   PageIndex,
   PageSize,
@@ -29,13 +30,16 @@ function TrainingResultsTable({
   handleSearchDownload,
 }) {
   // Define table column headers
-  const columns = useMemo(
-    () =>
-      searchParams.ktype === 'metab'
-        ? metabTrainingTableColumns
-        : trainingTableColumns,
-    []
-  );
+  const columns = useMemo(() => {
+    switch (searchParams.ktype) {
+      case 'metab':
+        return metabTrainingTableColumns;
+      case 'protein':
+        return proteinTrainingTableColumns;
+      default:
+        return trainingTableColumns;
+    }
+  }, [searchParams.ktype]);
   const data = useMemo(() => transformData(trainingData), [trainingData]);
   return (
     <TrainingDataTable
@@ -60,27 +64,28 @@ function TrainingDataTable({
   searchParams,
   handleSearchDownload,
 }) {
-  const filterTypes = React.useMemo(
-    () => ({
-      text: (rows, id, filterValue) =>
-        rows.filter((row) => {
-          const rowValue = row.values[id];
-          return rowValue !== undefined
-            ? String(rowValue)
-                .toLowerCase()
-                .startsWith(String(filterValue).toLowerCase())
-            : true;
-        }),
-    }),
-    []
-  );
-
   // Use the useTable hook to create your table configuration
-  const instance = useTable(
+  // Use the state and functions returned from useTable to build your UI
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    preGlobalFilteredRows,
+    pageOptions,
+    pageCount,
+    page,
+    state: { pageIndex, pageSize },
+    gotoPage,
+    previousPage,
+    nextPage,
+    setPageSize,
+    canPreviousPage,
+    canNextPage,
+  } = useTable(
     {
       columns,
       data,
-      filterTypes,
       initialState: {
         pageIndex: 0,
         pageSize: 50,
@@ -90,29 +95,8 @@ function TrainingDataTable({
     useFilters,
     useGlobalFilter,
     useSortBy,
-    usePagination
+    usePagination,
   );
-  // Use the state and functions returned from useTable to build your UI
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    preGlobalFilteredRows,
-    setGlobalFilter,
-    setFilter,
-    filterValue,
-    pageOptions,
-    pageCount,
-    page,
-    state: { pageIndex, pageSize, globalFilter },
-    gotoPage,
-    previousPage,
-    nextPage,
-    setPageSize,
-    canPreviousPage,
-    canNextPage,
-  } = instance;
 
   // default page size options given the length of entries in the data
   const range = (start, stop, step = 50) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);

@@ -14,7 +14,6 @@ import SelectiveDataDownloadsCard from './selectiveDataDownloadsCard';
 function DataDownloadsMain({
   profile = {},
   filteredFiles,
-  fetching,
   activeFilters,
   onChangeFilter,
   onResetFilters,
@@ -35,7 +34,6 @@ function DataDownloadsMain({
       <SelectiveDataDownloads
         profile={profile}
         filteredFiles={filteredFiles}
-        fetching={fetching}
         activeFilters={activeFilters}
         onChangeFilter={onChangeFilter}
         onResetFilters={onResetFilters}
@@ -55,8 +53,11 @@ function DataDownloadsMain({
           <p className="lead mb-2">
             Explore and download the MoTrPAC multi-omics datasets, which
             includes quantitative results and analyses of molecular changes from
-            exercise across tissues. Currently, the complete young rat endurance
-            training dataset is publicly available.
+            exercise across tissues. Currently, the complete young adult rat endurance
+            training dataset is publicly available and provided under the
+            {' '}
+            <Link to="/license">CC BY 4.0 license</Link>
+            .
             {' '}
             {userType && userType === 'internal'
               ? 'The young rat acute exercise and human precovid sedentary adult datasets are currently available to consortium members only in the early preview phase. '
@@ -97,8 +98,14 @@ function DataDownloadsMain({
         <div className="col-12 mt-2">
           <h2>Study Data</h2>
           <p>
-            Browse and find the data of your interest by tissue, ome, or assay
-            types.
+            Browse and customize the data of your interest to download by tissue,
+            ome, or assay types. It is recommended to download the phenotypic data
+            along with the omics data for a comprehensive analysis. Learn more
+            about the
+            {' '}
+            <Link to="/technical-guides/phenotype">phenotypic data</Link>
+            {' '}
+            in MoTrPAC studies.
           </p>
           <div className="card-deck mb-3 text-center">
             <SelectiveDataDownloadsCard
@@ -144,19 +151,22 @@ function DataDownloadsMain({
               <SelectiveDataDownloadsCard
                 cardIcon="person"
                 cardTitle="Human Adults"
-                dataSelectHandler={() =>
-                  dispatch(actions.selectHumanPreCovidSedAduData())
-                }
+                dataSelectHandler={() => dispatch(actions.selectHumanPreCovidSedAduData())}
                 selectedData="human-precovid-sed-adu"
               >
                 <h3 className="card-title phase-card-title">
                   Pre-COVID Sedentary
                 </h3>
                 <ul className="list-unstyled mt-3 mb-4 text-muted">
-                  <li>Adult participants</li>
+                  <li>Acute exercise adult participants</li>
                   <li>4 tissues</li>
                   <li>22 assays across different omes</li>
-                  <li>Acute exercise</li>
+                  <li>
+                    <a href={process.env.REACT_APP_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
+                      <i className="bi bi-file-earmark-fill mr-1" />
+                      <span>Release README</span>
+                    </a>
+                  </li>
                 </ul>
               </SelectiveDataDownloadsCard>
             )}
@@ -298,7 +308,6 @@ function DataDownloadsMain({
 
 DataDownloadsMain.propTypes = {
   filteredFiles: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  fetching: PropTypes.bool.isRequired,
   profile: PropTypes.shape({
     user_metadata: PropTypes.shape({
       userType: PropTypes.string,

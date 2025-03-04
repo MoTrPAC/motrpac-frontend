@@ -109,3 +109,9 @@ $green: colors.$accent-green !default;
     }
   }
 }
+
+.nav-pills .nav-link {
+  background: 0 0;
+  border: 0;
+  border-radius: .25rem;
+}

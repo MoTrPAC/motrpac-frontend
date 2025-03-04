@@ -7,7 +7,6 @@ import { PageTracker } from '../GoogleAnalytics/googleAnalytics.jsx';
 import LandingPageConnected from '../LandingPage/landingPage';
 import ScrollToTop from '../lib/scrollToTop';
 import NavbarConnected from '../Navbar/navbar';
-
 import 'bootstrap';
 import History from './history';
 

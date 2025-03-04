@@ -2,16 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tooltip';
 import roundNumbers from '../lib/utils/roundNumbers';
-import {
-  tissueList,
-  assayList,
-  sexList,
-  timepointList,
-} from '../lib/searchFilters';
+import { sexList, timepointList } from '../lib/searchFilters';
 
 export const searchParamsDefaultProps = {
   ktype: 'gene',
-  keys: '',
+  keys: [],
   omics: 'all',
   analysis: 'all',
   filters: {
@@ -39,15 +34,17 @@ export const searchParamsDefaultProps = {
     'p_value_female',
   ],
   unique_fields: ['tissue', 'assay', 'sex', 'comparison_group'],
-  size: 25000,
+  size: 10000,
   start: 0,
   debug: true,
   save: false,
+  convert_assay_code: 1,
+  convert_tissue_code: 1,
 };
 
 export const searchParamsPropType = {
   ktype: PropTypes.string,
-  keys: PropTypes.string,
+  keys: PropTypes.arrayOf(PropTypes.string),
   omics: PropTypes.string,
   analysis: PropTypes.string,
   filters: PropTypes.shape({
@@ -74,6 +71,8 @@ export const searchParamsPropType = {
   start: PropTypes.number,
   debug: PropTypes.bool,
   save: PropTypes.bool,
+  convert_assay_code: PropTypes.number,
+  convert_tissue_code: PropTypes.number,
 };
 
 /**
@@ -82,6 +81,7 @@ export const searchParamsPropType = {
  */
 export const timewiseResultsTablePropType = {
   gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  protein_name: PropTypes.string,
   metabolite_refmet: PropTypes.string,
   feature_ID: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tissue: PropTypes.string,
@@ -100,6 +100,7 @@ export const timewiseResultsTablePropType = {
  */
 export const trainingResultsTablePropType = {
   gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  protein_name: PropTypes.string,
   metabolite_refmet: PropTypes.string,
   feature_ID: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tissue: PropTypes.string,
@@ -110,55 +111,30 @@ export const trainingResultsTablePropType = {
   p_value_female: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
-// react-table function to filter multiple values in one column
-/*
-function multipleSelectFilter(rows, id, filterValue) {
-  return filterValue.length === 0
-    ? rows
-    : rows.filter((row) => filterValue.includes(row.values[id]));
-}
-*/
-
 /**
  * column headers common to transcriptomics, proteomics,
  * and metabolomic timewise dea results
  */
-export const timewiseTableColumns = [
-  {
-    Header: 'Gene',
-    accessor: 'gene_symbol',
-  },
+const commonTimewiseColumns = [
   {
     Header: 'Feature ID',
     accessor: 'feature_ID',
   },
-  /*
-  {
-    Header: 'Omic',
-    accessor: 'omic.raw',
-    filter: multipleSelectFilter,
-  },
-  */
   {
     Header: 'Tissue',
     accessor: 'tissue',
-    // filter: 'exactText',
   },
   {
     Header: 'Assay',
     accessor: 'assay',
-    // filter: 'exactText',
   },
-
   {
     Header: 'Sex',
     accessor: 'sex',
-    // filter: 'exactText',
   },
   {
     Header: 'Timepoint',
     accessor: 'comparison_group',
-    // filter: multipleSelectFilter,
   },
   {
     Header: 'logFC',
@@ -179,7 +155,6 @@ export const timewiseTableColumns = [
     ),
     accessor: 'p_value',
     sortType: 'basic',
-    // filter: 'between',
   },
   {
     Header: () => (
@@ -195,7 +170,6 @@ export const timewiseTableColumns = [
     ),
     accessor: 'adj_p_value',
     sortType: 'basic',
-    // filter: 'between',
   },
   {
     Header: () => (
@@ -212,6 +186,22 @@ export const timewiseTableColumns = [
     accessor: 'selection_fdr',
     sortType: 'basic',
   },
+];
+
+export const timewiseTableColumns = [
+  {
+    Header: 'Gene',
+    accessor: 'gene_symbol',
+  },
+  ...commonTimewiseColumns,
+];
+
+export const proteinTimewiseTableColumns = [
+  {
+    Header: 'Protein',
+    accessor: 'protein_name',
+  },
+  ...commonTimewiseColumns,
 ];
 
 export const metabTimewiseTableColumns = [
@@ -230,107 +220,25 @@ export const metabTimewiseTableColumns = [
     accessor: 'metabolite_refmet',
     sortType: 'basic',
   },
-  {
-    Header: 'Feature ID',
-    accessor: 'feature_ID',
-  },
-  {
-    Header: 'Tissue',
-    accessor: 'tissue',
-  },
-  {
-    Header: 'Assay',
-    accessor: 'assay',
-  },
-  {
-    Header: 'Sex',
-    accessor: 'sex',
-  },
-  {
-    Header: 'Timepoint',
-    accessor: 'comparison_group',
-  },
-  {
-    Header: 'logFC',
-    accessor: 'logFC',
-    sortType: 'basic',
-  },
-  {
-    Header: () => (
-      <div className="d-flex align-items-center timewise-p-value-col-header">
-        <span>P-value</span>
-        <span className="material-icons col-header-info timewise-p-value-tooltip">
-          info
-        </span>
-        <Tooltip anchorSelect=".timewise-p-value-tooltip" place="left">
-          The p-value of the presented log fold change
-        </Tooltip>
-      </div>
-    ),
-    accessor: 'p_value',
-    sortType: 'basic',
-  },
-  {
-    Header: () => (
-      <div className="d-flex align-items-center timewise-adj-p-value-col-header">
-        <span>Adj p-value</span>
-        <span className="material-icons col-header-info timewise-adj-p-value-tooltip">
-          info
-        </span>
-        <Tooltip anchorSelect=".timewise-adj-p-value-tooltip" place="left">
-          The FDR adjusted p-value of the presented log-fold change
-        </Tooltip>
-      </div>
-    ),
-    accessor: 'adj_p_value',
-    sortType: 'basic',
-  },
-  {
-    Header: () => (
-      <div className="d-flex align-items-center timewise-selection-fdr-col-header">
-        <span>Selection FDR</span>
-        <span className="material-icons col-header-info timewise-selection-fdr-tooltip">
-          info
-        </span>
-        <Tooltip anchorSelect=".timewise-selection-fdr-tooltip" place="left">
-          Cross-tissue, IHW FDR adjusted p-value
-        </Tooltip>
-      </div>
-    ),
-    accessor: 'selection_fdr',
-    sortType: 'basic',
-  },
+  ...commonTimewiseColumns,
 ];
 
 /**
  * column headers common to transcriptomics, proteomics,
  * and metabolomic training dea results
  */
-export const trainingTableColumns = [
-  {
-    Header: 'Gene',
-    accessor: 'gene_symbol',
-  },
+const commonTrainingColumns = [
   {
     Header: 'Feature ID',
     accessor: 'feature_ID',
   },
-  /*
-  {
-    Header: 'Omic',
-    accessor: 'omic.raw',
-    filter: multipleSelectFilter,
-  },
-  */
   {
     Header: 'Tissue',
     accessor: 'tissue',
-    // filter: 'exactText',
   },
   {
     Header: 'Assay',
     accessor: 'assay',
-    // filter: multipleSelectFilter,
   },
   {
     Header: () => (
@@ -392,6 +300,22 @@ export const trainingTableColumns = [
     accessor: 'p_value_female',
     sortType: 'basic',
   },
+];
+
+export const trainingTableColumns = [
+  {
+    Header: 'Gene',
+    accessor: 'gene_symbol',
+  },
+  ...commonTrainingColumns,
+];
+
+export const proteinTrainingTableColumns = [
+  {
+    Header: 'Protein',
+    accessor: 'protein_name',
+  },
+  ...commonTrainingColumns,
 ];
 
 export const metabTrainingTableColumns = [
@@ -410,191 +334,63 @@ export const metabTrainingTableColumns = [
     accessor: 'metabolite_refmet',
     sortType: 'basic',
   },
-  {
-    Header: 'Feature ID',
-    accessor: 'feature_ID',
-  },
-  {
-    Header: 'Tissue',
-    accessor: 'tissue',
-  },
-  {
-    Header: 'Assay',
-    accessor: 'assay',
-  },
-  {
-    Header: () => (
-      <div className="d-flex align-items-center training-p-value-col-header">
-        <span>P-value</span>
-        <span className="material-icons col-header-info training-p-value-tooltip">
-          info
-        </span>
-        <Tooltip anchorSelect=".training-p-value-tooltip" place="left">
-          Combined p-value (males and females)
-        </Tooltip>
-      </div>
-    ),
-    accessor: 'p_value',
-    sortType: 'basic',
-  },
-  {
-    Header: () => (
-      <div className="d-flex align-items-center training-adj-p-value-col-header">
-        <span>Adj p-value</span>
-        <span className="material-icons col-header-info training-adj-p-value-tooltip">
-          info
-        </span>
-        <Tooltip anchorSelect=".training-adj-p-value-tooltip" place="left">
-          FDR-adjusted combined p-value
-        </Tooltip>
-      </div>
-    ),
-    accessor: 'adj_p_value',
-    sortType: 'basic',
-  },
-  {
-    Header: () => (
-      <div className="d-flex align-items-center training-male-p-value-col-header">
-        <span>Male p-value</span>
-        <span className="material-icons col-header-info training-male-p-value-tooltip">
-          info
-        </span>
-        <Tooltip anchorSelect=".training-male-p-value-tooltip" place="left">
-          Training effect p-value, male data
-        </Tooltip>
-      </div>
-    ),
-    accessor: 'p_value_male',
-    sortType: 'basic',
-  },
-  {
-    Header: () => (
-      <div className="d-flex align-items-center training-female-p-value-col-header">
-        <span>Female p-value</span>
-        <span className="material-icons col-header-info training-female-p-value-tooltip">
-          info
-        </span>
-        <Tooltip anchorSelect=".training-female-p-value-tooltip" place="left">
-          Training effect p-value, female data
-        </Tooltip>
-      </div>
-    ),
-    accessor: 'p_value_female',
-    sortType: 'basic',
-  },
+  ...commonTrainingColumns,
 ];
-
-/**
- * Global filter rendering function
- * common to timewise DEA results
- */
-export const TimewiseGlobalFilter = ({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
-}) => {
-  const count = preGlobalFilteredRows.length;
-
-  return (
-    <div className="form-group d-flex align-items-center justify-content-end">
-      <label htmlFor="searchFilterInput">Filter:</label>
-      <input
-        type="text"
-        className="form-control global-filter"
-        id="searchFilterInput"
-        value={globalFilter || ''}
-        onChange={(e) => {
-          setGlobalFilter(e.target.value || undefined);
-        }}
-        placeholder={`${count} entries`}
-      />
-    </div>
-  );
-};
-
-TimewiseGlobalFilter.propTypes = {
-  preGlobalFilteredRows: PropTypes.arrayOf(
-    PropTypes.shape({ ...timewiseResultsTablePropType })
-  ),
-  globalFilter: PropTypes.string,
-  setGlobalFilter: PropTypes.func.isRequired,
-};
-
-/**
- * Global filter rendering function
- * common to training DEA results
- */
-export const TrainingGlobalFilter = ({
-  preGlobalFilteredRows = [],
-  globalFilter = '',
-  setGlobalFilter,
-}) => {
-  const count = preGlobalFilteredRows.length;
-
-  return (
-    <div className="form-group d-flex align-items-center justify-content-end">
-      <label htmlFor="searchFilterInput">Filter:</label>
-      <input
-        type="text"
-        className="form-control global-filter"
-        id="searchFilterInput"
-        value={globalFilter || ''}
-        onChange={(e) => {
-          setGlobalFilter(e.target.value || undefined);
-        }}
-        placeholder={`${count} entries`}
-      />
-    </div>
-  );
-};
-
-TrainingGlobalFilter.propTypes = {
-  preGlobalFilteredRows: PropTypes.arrayOf(
-    PropTypes.shape({ ...trainingResultsTablePropType })
-  ),
-  globalFilter: PropTypes.string,
-  setGlobalFilter: PropTypes.func.isRequired,
-};
 
 /**
  * page count and page index rendering function
  * common to all data qc status reports
  */
-export const PageIndex = ({ pageIndex = 0, pageOptions = [] }) => (
-  <span className="page-index">
-    Showing Page {pageIndex + 1} of {pageOptions.length}
-  </span>
-);
+export function PageIndex({ pageIndex, pageOptions }) {
+  return (
+    <span className="page-index">
+      Showing Page
+      {' '}
+      {pageIndex + 1}
+      {' '}
+      of
+      {' '}
+      {pageOptions.length}
+    </span>
+  );
+}
 
 PageIndex.propTypes = {
   pageIndex: PropTypes.number,
   pageOptions: PropTypes.arrayOf(PropTypes.number),
 };
 
+PageIndex.defaultProps = {
+  pageIndex: 0,
+  pageOptions: [],
+};
+
 /**
  * page size control rendering function
  * common to all data qc status reports
  */
-export const PageSize = ({ pageSize, setPageSize, pageSizeOptions }) => (
-  <div className="pagination-page-size d-flex align-items-center justify-content-start">
-    <label htmlFor="pageSizeSelect">Show:</label>
-    <select
-      className="form-control"
-      id="pageSizeSelect"
-      value={pageSize}
-      onChange={(e) => {
-        setPageSize(Number(e.target.value));
-      }}
-    >
-      {pageSizeOptions.map((size) => (
-        <option key={size} value={size}>
-          {size}
-        </option>
-      ))}
-    </select>
-    <span>entries</span>
-  </div>
-);
+export function PageSize({ pageSize, setPageSize, pageSizeOptions }) {
+  return (
+    <div className="pagination-page-size d-flex align-items-center justify-content-start">
+      <label htmlFor="pageSizeSelect">Show:</label>
+      <select
+        className="form-control"
+        id="pageSizeSelect"
+        value={pageSize}
+        onChange={(e) => {
+          setPageSize(Number(e.target.value));
+        }}
+      >
+        {pageSizeOptions.map((size) => (
+          <option key={size} value={size}>
+            {size}
+          </option>
+        ))}
+      </select>
+      <span>entries</span>
+    </div>
+  );
+}
 
 PageSize.propTypes = {
   pageSize: PropTypes.number.isRequired,
@@ -606,57 +402,62 @@ PageSize.propTypes = {
  * page navigation control rendering function
  * common to all data qc status reports
  */
-export const PageNavigationControl = ({
+export function PageNavigationControl({
   canPreviousPage,
   canNextPage,
   previousPage,
   nextPage,
   gotoPage,
   pageCount,
-}) => (
-  <div className="btn-group pagination-navigation-control" role="group">
-    <button
-      type="button"
-      className={`btn btn-sm btn-outline-primary ${
-        !canPreviousPage ? 'disabled-btn' : ''
-      }`}
-      onClick={() => gotoPage(0)}
-      disabled={!canPreviousPage}
-    >
-      First
-    </button>{' '}
-    <button
-      type="button"
-      className={`btn btn-sm btn-outline-primary ${
-        !canPreviousPage ? 'disabled-btn' : ''
-      }`}
-      onClick={() => previousPage()}
-      disabled={!canPreviousPage}
-    >
-      Previous
-    </button>{' '}
-    <button
-      type="button"
-      className={`btn btn-sm btn-outline-primary ${
-        !canNextPage ? 'disabled-btn' : ''
-      }`}
-      onClick={() => nextPage()}
-      disabled={!canNextPage}
-    >
-      Next
-    </button>{' '}
-    <button
-      type="button"
-      className={`btn btn-sm btn-outline-primary ${
-        !canNextPage ? 'disabled-btn' : ''
-      }`}
-      onClick={() => gotoPage(pageCount - 1)}
-      disabled={!canNextPage}
-    >
-      Last
-    </button>
-  </div>
-);
+}) {
+  return (
+    <div className="btn-group pagination-navigation-control" role="group">
+      <button
+        type="button"
+        className={`btn btn-sm btn-outline-primary ${
+          !canPreviousPage ? 'disabled-btn' : ''
+        }`}
+        onClick={() => gotoPage(0)}
+        disabled={!canPreviousPage}
+      >
+        First
+      </button>
+      {' '}
+      <button
+        type="button"
+        className={`btn btn-sm btn-outline-primary ${
+          !canPreviousPage ? 'disabled-btn' : ''
+        }`}
+        onClick={() => previousPage()}
+        disabled={!canPreviousPage}
+      >
+        Previous
+      </button>
+      {' '}
+      <button
+        type="button"
+        className={`btn btn-sm btn-outline-primary ${
+          !canNextPage ? 'disabled-btn' : ''
+        }`}
+        onClick={() => nextPage()}
+        disabled={!canNextPage}
+      >
+        Next
+      </button>
+      {' '}
+      <button
+        type="button"
+        className={`btn btn-sm btn-outline-primary ${
+          !canNextPage ? 'disabled-btn' : ''
+        }`}
+        onClick={() => gotoPage(pageCount - 1)}
+        disabled={!canNextPage}
+      >
+        Last
+      </button>
+    </div>
+  );
+}
 
 PageNavigationControl.propTypes = {
   canPreviousPage: PropTypes.bool.isRequired,
@@ -679,7 +480,7 @@ export const transformData = (arr) => {
       const newGeneVal = item.gene_symbol;
       item.gene_symbol = (
         <a
-          href={`https://www.ncbi.nlm.nih.gov/gene/?term=${newGeneVal.toLowerCase()}`}
+          href={`https://www.ncbi.nlm.nih.gov/gene/?term=rat+${newGeneVal.toLowerCase()}`}
           target="_blank"
           rel="noreferrer"
         >
@@ -713,20 +514,6 @@ export const transformData = (arr) => {
       );
     }
     */
-    // Transform tissue values
-    if (item.tissue && item.tissue.length) {
-      const matchedTissue = tissueList.find(
-        (filter) => filter.filter_value === item.tissue
-      );
-      item.tissue = matchedTissue && matchedTissue.filter_label;
-    }
-    // Transform assay values
-    if (item.assay && item.assay.length) {
-      const matchedAssay = assayList.find(
-        (filter) => filter.filter_value === item.assay
-      );
-      item.assay = matchedAssay && matchedAssay.filter_label;
-    }
     // Transform sex values
     if (item.sex && item.sex.length) {
       const matchedSex = sexList.find(
