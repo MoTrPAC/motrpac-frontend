@@ -44,7 +44,7 @@ describe('Navbar', () => {
     expect(screen.getByText(/explore/i)).toBeInTheDocument();
     expect(screen.getByText(/data access/i)).toBeInTheDocument();
     expect(screen.getByText(/resources/i)).toBeInTheDocument();
-    expect(screen.getByText(/help/i)).toBeInTheDocument();
+    expect(screen.getByText(/learn/i)).toBeInTheDocument();
     expect(screen.getByText(/about/i)).toBeInTheDocument();
   });
 });
