@@ -7,8 +7,8 @@ import BrowseDataFilter from '../browseDataFilter';
 import SelectiveDataDownloadFileBrowser from './selectiveDataDownloadFileBrowser';
 
 function SelectiveDataDownloads({
-  profile,
-  filteredFiles,
+  profile = {},
+  filteredFiles = [],
   activeFilters,
   onChangeFilter,
   onResetFilters,
@@ -101,11 +101,6 @@ SelectiveDataDownloads.propTypes = {
   handleDownloadRequest: PropTypes.func.isRequired,
   downloadRequestResponse: PropTypes.string.isRequired,
   waitingForResponse: PropTypes.bool.isRequired,
-};
-
-SelectiveDataDownloads.defaultProps = {
-  profile: {},
-  filteredFiles: [],
 };
 
 export default SelectiveDataDownloads;
