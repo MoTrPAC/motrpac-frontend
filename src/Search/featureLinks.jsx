@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 /**
@@ -13,7 +13,7 @@ function FeatureLinks({
   lastModified,
   userType,
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Call to invoke Redux action to fetch QC data
   // if timestamp is empty or older than 24 hours
@@ -122,7 +122,7 @@ function FeatureLinks({
       return window.open(item.route, '_blank');
     }
 
-    history.push(`/${item.route}`);
+    navigate(`/${item.route}`);
     if (item.eventHandler) {
       item.eventHandler();
     }
