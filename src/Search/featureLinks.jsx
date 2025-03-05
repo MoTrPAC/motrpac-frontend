@@ -10,8 +10,8 @@ import dayjs from 'dayjs';
  */
 function FeatureLinks({
   handleQCDataFetch,
-  lastModified,
-  userType,
+  lastModified = '',
+  userType = '',
 }) {
   const navigate = useNavigate();
 
@@ -164,11 +164,6 @@ FeatureLinks.propTypes = {
   handleQCDataFetch: PropTypes.func.isRequired,
   lastModified: PropTypes.string,
   userType: PropTypes.string,
-};
-
-FeatureLinks.defaultProps = {
-  lastModified: '',
-  userType: '',
 };
 
 export default FeatureLinks;

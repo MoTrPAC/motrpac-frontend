@@ -27,23 +27,23 @@ import { proteins } from '../data/proteins';
 import '@styles/search.scss';
 
 export function SearchPage({
-  profile,
-  searchResults,
-  scope,
-  searching,
-  searchError,
-  searchParams,
+  profile = {},
+  searchResults = {},
+  scope = 'all',
+  searching = false,
+  searchError = '',
+  searchParams = { ...searchParamsDefaultProps },
   changeParam,
   changeResultFilter,
   handleSearch,
   resetSearch,
-  downloadResults,
-  downloading,
-  downloadError,
+  downloadResults = {},
+  downloading = false,
+  downloadError = '',
   handleSearchDownload,
   handleQCDataFetch,
-  lastModified,
-  hasResultFilters,
+  lastModified = '',
+  hasResultFilters = {},
 }) {
   const [multiSelections, setMultiSelections] = useState([]);
   const inputRef = useRef(null);
@@ -748,20 +748,6 @@ SearchPage.propTypes = {
     sex: PropTypes.object,
     tissue: PropTypes.object,
   }),
-};
-
-SearchPage.defaultProps = {
-  profile: {},
-  searchResults: {},
-  scope: 'all',
-  searching: false,
-  searchError: '',
-  searchParams: { ...searchParamsDefaultProps },
-  downloadResults: {},
-  downloading: false,
-  downloadError: '',
-  lastModified: '',
-  hasResultFilters: {},
 };
 
 const mapStateToProps = (state) => ({
