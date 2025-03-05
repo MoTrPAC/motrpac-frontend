@@ -321,7 +321,7 @@
 
     &.code-repositories, &.motrpac-collab {
       .material-icons {
-        color: $gray;
+        color: colors.$gray;
       }
     }
 
@@ -334,7 +334,7 @@
     &.pass1b-06-data-visualization,
     &.precovid-human-data-visualization {
       .material-icons {
-        color: $primary-blue;
+        color: colors.$primary-blue;
       }
     }
   }
