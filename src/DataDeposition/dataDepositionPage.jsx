@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import ExternalLink from '../lib/ui/externalLink';
 
+import '@styles/dataDeposition.scss';
+
 function DataDeposition() {
   return (
     <div className="dataDepositionPage px-3 px-md-4 mb-3 container">

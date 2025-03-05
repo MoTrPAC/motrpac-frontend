@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import VialLabelExample from '../assets/figures/vial_label_data_linkage_example.svg';
 
+import '@styles/technicalGuides.scss';
+
 /**
  * React component that displays the phenotype technical guide.
  *
