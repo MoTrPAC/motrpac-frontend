@@ -24,7 +24,7 @@ import { genes } from '../data/genes';
 import { metabolites } from '../data/metabolites';
 import { proteins } from '../data/proteins';
 
-import '@styles/search/_all.scss';
+import '@styles/search.scss';
 
 export function SearchPage({
   profile,
