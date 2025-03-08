@@ -7,6 +7,8 @@ import ExternalLink from '../lib/ui/externalLink';
 import exerciseBenefitsData from './exerciseBenefitsData';
 import exerciseBenefitsReferenceData from './exerciseBenefitsReferenceData';
 
+import '@styles/mainStudyPage.scss';
+
 const exerciseBenefits = [
   'Improved immune system',
   'Younger-looking skin',
