@@ -64,7 +64,7 @@ const Pass1b06PhenotypeAnimalConnected = lazy(
 );
 const License = lazy(() => import('../License/licensePage'));
 const DataDeposition = lazy(() => import('../DataDeposition/dataDepositionPage'));
-const StudyAssay = lazy(() => import('../MainStudy/studyAssays'));
+const StudyAssays = lazy(() => import('../MainStudy/studyAssays'));
 const ExerciseBenefits = lazy(() => import('../MainStudy/exerciseBenefits'));
 const Phenotype = lazy(() => import('../TechnicalGuides/phenotype'));
 
@@ -190,7 +190,7 @@ function App({ history = History }) {
                 />
                 <Route path="/license" element={<License/>}/>
                 <Route path="/data-deposition" element={<DataDeposition/>}/>
-                <Route path="/study-assays" element={<StudyAssay/>}/>
+                <Route path="/study-assays" element={<StudyAssays/>}/>
                 <Route path="/exercise-benefits" element={<ExerciseBenefits/>}/>
                 <Route path="/technical-guides/phenotype" element={<Phenotype/>}/>
               </Route>
