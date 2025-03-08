@@ -265,7 +265,7 @@ export function Navbar({
                   </Link>
                   {!userType || (userType && userType !== 'internal') ? (
                     <a
-                      href={import.meta.env.REACT_APP_DATA_UPDATES_SIGNUP_URL}
+                      href={import.meta.env.VITE_DATA_UPDATES_SIGNUP_URL}
                       className="dropdown-item"
                       target="_blank"
                       rel="noreferrer"
