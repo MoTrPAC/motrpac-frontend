@@ -4,16 +4,24 @@ import { Helmet } from 'react-helmet';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import PageTitle from '../lib/ui/pageTitle';
-import ExternalLink from '../lib/ui/externalLink';
 import pass1b06AssayTissueTreeData from './pass1b06AssayTissueTreeData';
 import Pass1b06AssayTissueTable from './pass1b06AssayTissueTable';
 
 // Import order is important!
-require('highcharts/modules/treemap')(Highcharts);
-require('highcharts/modules/treegraph')(Highcharts);
-require('highcharts/modules/boost')(Highcharts);
-require('highcharts/modules/exporting')(Highcharts);
-require('highcharts/modules/export-data')(Highcharts);
+import TreeMap from 'highcharts/modules/treemap';
+import TreeGraph from 'highcharts/modules/treegraph';
+import Boost from 'highcharts/modules/boost';
+import Exporting from 'highcharts/modules/exporting';
+import ExportData from 'highcharts/modules/export-data';
+
+import '@styles/mainStudyPage.scss';
+
+// Initialize modules
+TreeMap(Highcharts);
+TreeGraph(Highcharts);
+Boost(Highcharts);
+Exporting(Highcharts);
+ExportData(Highcharts);
 
 function StudyAssays() {
   const [assayView, setAssayView] = useState('table');
