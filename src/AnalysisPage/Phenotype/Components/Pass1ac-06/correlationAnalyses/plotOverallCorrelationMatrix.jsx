@@ -5,7 +5,7 @@ import {
 } from '../sharedLib';
 import Chart from '../chartWrapper';
 
-const pass1ac06Data = require('../../../pass1ac-animal_pheno.json');
+import pass1ac06Data from '../../../pass1ac-animal_pheno.json';
 
 /**
  * Renders summary statistics plots for weight disctribution
