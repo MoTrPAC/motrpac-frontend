@@ -1,7 +1,7 @@
-import Callback from "@/Auth/callback.jsx";
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AuthWrapper from '../Auth/AuthWrapper';
+import Callback from '@Auth/callback';
+import AuthWrapper from '@Auth/AuthWrapper';
 import Footer from '../Footer/footer';
 import { PageTracker } from '../GoogleAnalytics/googleAnalytics.jsx';
 import LandingPageConnected from '../LandingPage/landingPage';
