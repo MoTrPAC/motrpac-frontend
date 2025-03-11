@@ -63,6 +63,20 @@
     }
 }
 
+.supplementalDataPage {
+    .table-of-tables {
+        table {
+            .table-name {
+                width: 40%;
+            }
+
+            .table-description, .table-contents {
+                width: 30%;
+            }
+        }
+    }
+}
+
 /* Medium devices (tablets, less than 992px) */
 @include media-breakpoint-down(md) {
     .publicationsPage {
