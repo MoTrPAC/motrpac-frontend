@@ -35,6 +35,7 @@ import Publications from '../Publications/publications';
 import Phenotype from '../TechnicalGuides/phenotype';
 import MultiOmicsWorkingGroups from '../MultiOmicsWorkingGroups/multiOmicsWorkingGroups';
 import FullTableEnduranceTraining from '../Publications/Data/Animal/Phenotype/fullTableEnduranceTraining';
+import SupplementalData from '../Publications/Data/Animal/Supplemental/supplementalData';
 import Pass1b06PhenotypeAnimalConnected from '../AnalysisPage/pass1b06PhenotypeAnimal';
 import CallbackConnected from '../Auth/callback';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
@@ -169,6 +170,11 @@ function App({ history = History }) {
                 path="/publications/data/animal/phenotype/full-table-endurance-training"
                 exact
                 component={withTracker(FullTableEnduranceTraining)}
+              />
+              <Route
+                path="/publications/data/supplemental"
+                exact
+                component={withTracker(SupplementalData)}
               />
               <PrivateRoute
                 path="/analysis-phenotype"

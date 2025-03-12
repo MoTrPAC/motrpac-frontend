@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 import PageTitle from '../lib/ui/pageTitle';
 import ExternalLink from '../lib/ui/externalLink';
 import MitoPaper from '../assets/publications/mito_paper.gif';
@@ -79,6 +80,29 @@ const companionPublications = [
   },
 ];
 
+const publicationRelatedLinks = [
+  {
+    title: 'Nature collection of MoTrPAC publications',
+    url: 'https://www.nature.com/collections/cfiiibcebh',
+    external: true,
+  },
+  {
+    title: 'Preprint at medRxiv',
+    url: 'http://doi.org/10.1101/2024.05.15.24307328',
+    external: true,
+  },
+  {
+    title: 'Preprints at bioRxiv',
+    url: 'https://connect.biorxiv.org/relate/content/218',
+    external: true,
+  },
+  {
+    title: 'Supplemental data',
+    url: '/publications/data/supplemental',
+    external: false,
+  },
+];
+
 /**
  * Renders the Pulications page.
  *
@@ -105,6 +129,33 @@ function Publications() {
     );
   }
 
+  // Render list of external links at the top of the page
+  function renderExternalLinks() {
+    return (
+      <div className="external-links-content-container mt-4 mb-2 py-2 border-top border-bottom d-flex align-items-center">
+        {publicationRelatedLinks.map((link) => (
+          <div className="link-item" key={link.title}>
+            {link.external ? (
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="preprint-link d-flex align-items-center justify-content-center"
+              >
+                <span>{link.title}</span>
+                <span className="material-icons ml-1">open_in_new</span>
+              </a>
+            ) : (
+              <Link to={link.url} className="preprint-link">
+                <span>{link.title}</span>
+              </Link>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="publicationsPage px-3 px-md-4 mb-3 container">
       <Helmet>
@@ -112,47 +163,7 @@ function Publications() {
         <title>Publications - MoTrPAC Data Hub</title>
       </Helmet>
       <PageTitle title="Publications" />
-      <div className="external-links-content-container mt-4 mb-2 py-2 border-top border-bottom d-flex align-items-center">
-        <div className="link-item mr-4">
-          <a
-            href="https://www.nature.com/collections/cfiiibcebh"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="preprint-link d-flex align-items-center justify-content-center"
-          >
-            <span className="material-icons">navigate_next</span>
-            <span>Nature collection of MoTrPAC publications</span>
-            {' '}
-            <span className="oi oi-external-link" />
-          </a>
-        </div>
-        <div className="link-item mr-4">
-          <a
-            href="http://doi.org/10.1101/2024.05.15.24307328"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="preprint-link d-flex align-items-center justify-content-center"
-          >
-            <span className="material-icons">navigate_next</span>
-            <span>Preprint at medRxiv</span>
-            {' '}
-            <span className="oi oi-external-link" />
-          </a>
-        </div>
-        <div className="link-item">
-          <a
-            href="https://connect.biorxiv.org/relate/content/218"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="preprint-link d-flex align-items-center justify-content-center"
-          >
-            <span className="material-icons">navigate_next</span>
-            <span>Preprints at bioRxiv</span>
-            {' '}
-            <span className="oi oi-external-link" />
-          </a>
-        </div>
-      </div>
+      {renderExternalLinks()}
       <div className="publications-content-container mb-5">
         <div className="lead w-100">{renderPublications('landscape')}</div>
       </div>
