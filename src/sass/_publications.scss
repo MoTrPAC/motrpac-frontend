@@ -56,14 +56,32 @@
 
     .external-links-content-container {
         .link-item {
+            padding-right: 1em;
+
             a {
+                .material-icons {
+                    font-size: 1.1rem;
+                    line-height: 100%;
+                }
+
                 text-decoration: none;
+            }
+
+            &:not(:first-child) {
+                border-left: solid 1px #007bff;
+                padding-left: 1em;
             }
         }
     }
 }
 
 .supplementalDataPage {
+    .link-back-to-publications {
+        a {
+            text-decoration: none;
+        }
+    }
+
     .table-of-tables {
         table {
             .table-name {
