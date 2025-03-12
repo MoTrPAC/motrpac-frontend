@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 import PageTitle from '../../../../lib/ui/pageTitle';
 
 function SupplementalData() {
@@ -9,7 +10,16 @@ function SupplementalData() {
         <html lang="en" />
         <title>MoTrPAC Publication Supplemental Data</title>
       </Helmet>
-      <PageTitle title="Publication Supplemental Data" />
+      <PageTitle title="Supplemental Data" />
+      <div className="link link-back-to-publications">
+        <Link
+          to="/publications"
+          className="d-flex align-items-center"
+        >
+          <span className="material-icons">arrow_back</span>
+          <span>Back to Publications</span>
+        </Link>
+      </div>
       <div className="supplemental-data-content-container">
         <section className="supplemental-data-by-publication-content-container mt-5">
           <h3 className="pb-3 mb-3 border-bottom">
@@ -133,6 +143,15 @@ function SupplementalData() {
             </table>
           </div>
         </section>
+      </div>
+      <div className="link link-back-to-publications mt-2 mb-3">
+        <Link
+          to="/publications"
+          className="d-flex align-items-center"
+        >
+          <span className="material-icons">arrow_back</span>
+          <span>Back to Publications</span>
+        </Link>
       </div>
     </div>
   );
