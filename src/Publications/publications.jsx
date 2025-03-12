@@ -134,7 +134,7 @@ function Publications() {
     return (
       <div className="external-links-content-container mt-4 mb-2 py-2 border-top border-bottom d-flex align-items-center">
         {publicationRelatedLinks.map((link) => (
-          <div className="link-item mr-2" key={link.title}>
+          <div className="link-item" key={link.title}>
             {link.external ? (
               <a
                 href={link.url}
@@ -142,13 +142,11 @@ function Publications() {
                 rel="noopener noreferrer"
                 className="preprint-link d-flex align-items-center justify-content-center"
               >
-                <span className="material-icons">navigate_next</span>
                 <span>{link.title}</span>
-                <i className="bi bi-box-arrow-up-right ml-2" />
+                <span className="material-icons ml-1">open_in_new</span>
               </a>
             ) : (
-              <Link to={link.url} className="preprint-link d-flex align-items-center justify-content-center">
-                <span className="material-icons">navigate_next</span>
+              <Link to={link.url} className="preprint-link">
                 <span>{link.title}</span>
               </Link>
             )}
