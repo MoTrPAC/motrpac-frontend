@@ -129,8 +129,8 @@ function FeatureLinks({
   }
 
   return (
-    <div className="feature-links-container pt-2">
-      <div className="row row-cols-1 row-cols-xl-4 row-cols-lg-3 row-cols-sm-1 mt-5">
+    <div className="feature-links-container">
+      <div className="row row-cols-1 row-cols-xl-4 row-cols-lg-3 row-cols-sm-1">
         {featuresToRender.map((item) => (
           <div key={item.name} className="col mb-4">
             {/*
