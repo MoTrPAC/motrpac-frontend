@@ -16,6 +16,7 @@ export const defaultSearchState = {
     ktype: 'gene',
     keys: [],
     omics: 'all',
+    species: 'rat',
     analysis: 'all',
     filters: {
       tissue: [],
@@ -29,9 +30,12 @@ export const defaultSearchState = {
     fields: [
       'gene_symbol',
       'metabolite_refmet',
+      'refmet_name',
       'feature_ID',
+      'feature_id',
       'tissue',
       'assay',
+      'omics',
       'sex',
       'comparison_group',
       'logFC',
@@ -40,6 +44,9 @@ export const defaultSearchState = {
       'selection_fdr',
       'p_value_male',
       'p_value_female',
+      'contrast1_randomGroupCode',
+      'contrast1_timepoint',
+      'contrast_type',
     ],
     unique_fields: ['tissue', 'assay', 'sex', 'comparison_group'],
     size: 10000,
@@ -117,6 +124,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       const {
         ktype,
         keys,
+        species,
         omics,
         analysis,
         filters,
@@ -131,6 +139,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         searchParams: {
           ktype,
           keys,
+          species,
           omics,
           analysis,
           filters,
@@ -196,6 +205,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
 
       const defaultParams = { ...defaultSearchState.searchParams };
       defaultParams.keys = [];
+      defaultParams.species = 'rat';
       defaultParams.filters = {
         tissue: [],
         assay: [],
