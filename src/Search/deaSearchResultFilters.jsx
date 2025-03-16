@@ -5,6 +5,8 @@ import {
   rangeSearchFilters,
   tissueList,
   assayList,
+  tissueListHuman,
+  assayListHuman,
 } from '../lib/searchFilters';
 import { searchParamsPropType } from './sharedlib';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
@@ -21,37 +23,55 @@ function SearchResultFilters({
   // FIXME - this is a hack to get the search filters such as tissue and assay
   // to render accordingly to the ktype (gene, protein, metabolite)
   function customizeTissueList() {
-    if (searchParams.ktype === 'protein') {
+    if (searchParams.species === 'rat' && searchParams.ktype === 'protein') {
       return tissueList.filter((t) =>
         t.filter_value.match(
-          /^(cortex|gastrocnemius|heart|kidney|lung|liver|white adipose)$/
-        )
+          /^(cortex|gastrocnemius|heart|kidney|lung|liver|white adipose)$/,
+        ),
       );
     }
-    if (searchParams.ktype === 'metab') {
+    if (searchParams.species === 'rat' && searchParams.ktype === 'metab') {
       return tissueList.filter((t) => t.filter_value !== 'blood rna');
+    }
+    if (searchParams.species === 'human') {
+      return tissueListHuman;
     }
     return tissueList;
   }
 
   function customizeAssayList() {
-    if (searchParams.ktype === 'gene') {
+    if (searchParams.species === 'rat' && searchParams.ktype === 'gene') {
       return assayList.filter((t) =>
         t.filter_value.match(
-          /^(transcript-rna-seq|epigen-atac-seq|epigen-rrbs|immunoassay|prot-pr|prot-ph|prot-ac|prot-ub)$/
-        )
+          /^(transcript-rna-seq|epigen-atac-seq|epigen-rrbs|immunoassay|prot-pr|prot-ph|prot-ac|prot-ub)$/,
+        ),
       );
     }
-    if (searchParams.ktype === 'protein') {
+    if (searchParams.species === 'rat' && searchParams.ktype === 'protein') {
       return assayList.filter((t) =>
-        t.filter_value.match(/^(prot-pr|prot-ph|prot-ac|prot-ub)$/)
+        t.filter_value.match(/^(prot-pr|prot-ph|prot-ac|prot-ub)$/),
       );
     }
-    if (searchParams.ktype === 'metab') {
+    if (searchParams.species === 'rat' && searchParams.ktype === 'metab') {
       return assayList.filter(
         (t) =>
           !t.filter_value.match(
-            /^(transcript-rna-seq|epigen-atac-seq|epigen-rrbs|immunoassay|prot-pr|prot-ph|prot-ac|prot-ub|prot-ub-protein-corrected)$/
+            /^(transcript-rna-seq|epigen-atac-seq|epigen-rrbs|epigen-methylcap-seq|immunoassay|prot-pr|prot-ph|prot-ac|prot-ub|prot-ub-protein-corrected)$/,
+          )
+      );
+    }
+    if (searchParams.species === 'human' && searchParams.ktype === 'gene') {
+      return assayListHuman.filter((t) =>
+        t.filter_value.match(
+          /^(transcript-rna-seq|epigen-atac-seq|epigen-methylcap-seq|prot-pr|prot-ph|prot-ol)$/,
+        ),
+      );
+    }
+    if (searchParams.species === 'human' && searchParams.ktype === 'metab') {
+      return assayListHuman.filter(
+        (t) =>
+          !t.filter_value.match(
+            /^(transcript-rna-seq|epigen-atac-seq|epigen-methylcap-seq|prot-pr|prot-ph|prot-ol)$/,
           )
       );
     }
@@ -66,12 +86,17 @@ function SearchResultFilters({
     (f) => f.keyName === 'assay'
   ).filters = customizeAssayList();
 
+  // Remove 'sex' and 'timepoint' filters for precawg search results
+  if (searchParams.species === 'human') {
+    commonSearchFilters.splice(2, 2);
+  }
+
   const commonSearchResultFilters = commonSearchFilters.map((item) => (
     <div key={item.name} className="card filter-module mb-3">
       <div className="card-header font-weight-bold">
         <div className="card-header-label">{item.name}</div>
       </div>
-      <div className="collapse show" id={`filters-${item.keyName}`}>
+      <div className="card-body-container" id={`filters-${item.keyName}`}>
         <div className="card-body">
           {item.filters.map((filter) => {
             const isActiveFilter =
@@ -125,7 +150,7 @@ function SearchResultFilters({
         <div className="card-header-label">{item.name}</div>
       </div>
       {/* filter body content */}
-      <div className="collapse show" id={`filters-${item.keyName}`}>
+      <div className="card-body-container" id={`filters-${item.keyName}`}>
         <div className="card-body">
           <div className="d-flex align-items-center p-1 range-filter-form-controls">
             <input
