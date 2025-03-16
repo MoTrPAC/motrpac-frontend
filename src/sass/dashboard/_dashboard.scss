@@ -1,370 +1,98 @@
-.Dashboard {
-  .page-title {
-    h3 {
-      margin-bottom: 0;
-    }
+.dashboardPage {
+  .jumbotron-fluid {
+    background-color: hsla(204, 0%, 100%, 1);
+    background-image: radial-gradient(circle at 0% 0%, hsla(295.99999999999994, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), radial-gradient(circle at 20% 0%, hsla(236.91176470588243, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), radial-gradient(circle at 40% 0%, hsla(186.61764705882354, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), radial-gradient(circle at 60% 0%, hsla(127.0588235294118, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), radial-gradient(circle at 80% 0%, hsla(62.20588235294117, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), radial-gradient(circle at 100% 0%, hsla(23.823529411764703, 77%, 74%, 0.35) 3%, transparent 40%);
+    background-blend-mode: normal, normal, normal, normal, normal, normal;
   }
 
-  .card {
-    margin-bottom: 1.0rem;
-  }
-
-  .disabled {
-    //background: $gray;
-    //border-color: $gray;
-    border: 1px dashed $gray-semi-transparent;
-  }
-
-  /* release/phase button group */
-  .btn-outline-primary:disabled {
-    border-color: $gray-semi-transparent;
-    color: $gray-semi-transparent;
-    pointer-events: none;
-    cursor: not-allowed;
-  }
-
-  /* highlighted card items at top */
-  .dashboard-highlights {
-    .media {
-      .icon {
-        margin-right: 1.0em;
+  .feature-links-container {
+    .card {
+      &:hover {
+        border: 1px solid $primary-blue;
+        background-color: lighten($blue-transparent, 15%);
+        cursor: pointer;
+        transition: .2s;
+        transform: translateY(-1px);
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.25) !important;
       }
-
-      img {
-        width: 3.25em;
-        height: auto;
-      }
-    }
-  }
-
-  /* main plot/table container */
-  .card-container-release-samples {
-    .card-header {
-      padding: 1.05rem 1.25rem;
-      margin-bottom: 0;
-      background-color: #fff;
-      border-bottom: 0 solid transparent;
-    }
-
-    .badge {
-      font-size: 0.85rem;
-      font-weight: 600;
-      padding: 0.35em 0.4em;
-    }
-
-    /* chart.js plot */
-    .release-sample-plot {
-      .releasedSamplePlot {
-        min-height: 65vh;
-      }
-    }
-
-    /* data table */
-    .releasedSampleTable {
-      table {
-        thead th {
-          border: none;
-          color: $gray;
-          font-size: 0.8rem;
-          height: 250px;
-          text-align: left;
-          white-space: nowrap;
-          vertical-align: bottom;
-
-          &:first-child {
-            padding-left: 8px;
-          }
-
-          &:not(:first-child) {
-            padding-bottom: 0;
-          }
-
-          .header-content-container {
-            width: 30px;
-
-            /* anlge positioning for table header items */
-            .header-assay {
-              padding: 8px 4px 8px 0;
-              transform-origin: bottom right;
-              transform: translateX(-20px) rotate(45deg);
-              float: right;
-
-              /* angle header text alignment for short list of assays */
-              &.short-list {
-                transform: translateX(-2px) rotate(45deg);
-              }
-            }
-          }
-        }
-
-        tbody td {
-          font-size: 0.85rem;
-          text-align: center;
-          white-space: nowrap;
-          vertical-align: middle;
-
-          &:first-child {
-            font-weight: 600;
-            padding-left: 8px;
-            text-align: left;
-            min-width: 12.0rem;
-          }
-        }
-      }
-    }
-
-    /* dropdown menus for plot and table */
-    .controlPanel {
-      .controlRow {
-        .controlLabel {
-          font-weight: 600;
-          font-size: 0.85rem;
-          margin-right: 0.45rem;
-          white-space: nowrap;
-        }
-
-        .btn.dropdown-toggle,
-        button.dropdown-item {
-          font-size: 0.85rem;
-        }
-
-        &.show-qc-sample-table {
-          button.btn {
+  
+      .card-body {
+        padding: 0.75em;
+  
+        .feature-summary {
+          h4 {
             color: $stanford-cool-grey;
-
-            &:hover {
-              color: $stanford-cool-grey;
-            }
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+          }
+  
+          p {
+            color: $stanford-cool-grey;
           }
         }
       }
-    }
-  }
-}
-
-/* responsive styling */
-
-@media (max-width: 1500px) {
-  .Dashboard {
-    .dashboard-highlights {
-      .media {
-        .icon {
-          margin-right: 0.9em;
+  
+      a:hover {
+        text-decoration: none;
+      }
+  
+      .material-icons {
+        font-size: 5.0rem;
+      }
+  
+      &.qc-data-monitor {
+        .material-icons {
+          color: $accent-green;
         }
-
-        img {
-          width: 3.0em;
-          height: auto;
+      }
+  
+      &.releases, &.multiomics-working-groups {
+        .material-icons {
+          color: $stanford-cardinal-red;
+        }
+      }
+  
+      &.data-download {
+        .material-icons {
+          color: $accent-yellow;
+        }
+      }
+  
+      &.sample-summary {
+        .material-icons {
+          color: lighten($accent-violet, 12%);
+        }
+      }
+  
+      &.code-repositories {
+        .material-icons {
+          color: $gray;
+        }
+      }
+  
+      &.motrpac-collab {
+        .material-icons {
+          color: $gray-semi-transparent;
+        }
+      }
+  
+      &.pass1b-06-data-visualization {
+        .material-icons {
+          color: $primary-blue;
         }
       }
 
-      .media-body {
-        .count {
-          font-size: 1.65rem;
-        }
-
-        .label {
-          font-size: 0.95rem;
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 1440px) {
-  .Dashboard {
-    .dashboard-highlights {
-      .media {
-        .icon {
-          margin-right: 0.8em;
-        }
-
-        img {
-          width: 2.75em;
-          height: auto;
+      &.precovid-human-data-visualization {
+        .material-icons {
+          color: #7183A5;
         }
       }
 
-      .media-body {
-        .count {
-          font-size: 1.55rem;
-        }
-
-        .label {
-          font-size: 0.85rem;
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 1380px) {
-  .Dashboard {
-    .dashboard-highlights {
-      .media {
-        .icon {
-          margin-right: 0.7em;
-        }
-
-        img {
-          width: 2.5em;
-          height: auto;
-        }
-      }
-
-      .media-body {
-        .count {
-          font-size: 1.45rem;
-        }
-
-        .label {
-          font-size: 0.75rem;
+      &.differential-abundance {
+        .material-icons {
+          color: #17a2b8;
         }
       }
     }
   }
-}
-
-@media (max-width: 1330px) {
-  .Dashboard {
-    .page-header {
-      flex-direction: column;
-
-      .btn-toolbar {
-        margin: 1.25em 0 0.5em;
-      }
-    }
-  }
-}
-
-@media (max-width: 595px) {
-  .page-header {
-    .btn-toolbar {
-      justify-content: center;
-      margin: 0.75em 0 0.15em;
-
-      .btn-group {
-        margin: 0.35em;
-      }
-    }
-  }
-}
-
-@media (min-width: 576px) and (max-width: 1330px) {
-  .Dashboard {
-    .dashboard-highlights {
-      .media {
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-
-        &>div {
-          justify-content: center;
-          width: 100%;
-
-          &.media-body {
-            margin-top: 0.85em;
-          }
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 575px) {
-  .Dashboard {
-    .page-title {
-      text-align: center;
-    }
-
-    .dashboard-highlights {
-      .media {
-        .icon {
-          margin-right: 1.0em;
-        }
-
-        img {
-          width: 3.25em;
-          height: auto;
-        }
-      }
-
-      .media-body {
-        .count {
-          font-size: 1.75rem;
-        }
-
-        .label {
-          font-size: 1.0rem;
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 468px) {
-  .Dashboard {
-    .card-header {
-      text-align: center;
-
-      .internal-user-labels {
-        float: none !important;
-      }
-
-      .card-title {
-        margin-top: 0.75em;
-      }
-    }
-
-    .releasedSamplePlot {
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
-}
-
-/* Animation settings for plot and table dropdown menus */
-
-@media (min-width: 992px) {
-  .controlPanel .animate {
-    animation-duration: 0.3s;
-    -webkit-animation-duration: 0.3s;
-    animation-fill-mode: both;
-    -webkit-animation-fill-mode: both;
-  }
-}
-
-@keyframes slideIn {
-  0% {
-    transform: translateY(2.45rem);
-    opacity: 0;
-  }
-  100% {
-    transform:translateY(1.85rem);
-    opacity: 1;
-  }
-  0% {
-    transform: translateY(2.45rem);
-    opacity: 0;
-  }
-}
-
-@-webkit-keyframes slideIn {
-  0% {
-    -webkit-transform: translateY(2.45rem);
-    -webkit-opacity: 0;
-  }
-  100% {
-    -webkit-transform: translateY(1.85rem);
-    -webkit-opacity: 1;
-  }
-  0% {
-    -webkit-transform: translateY(2.45rem);
-    -webkit-opacity: 0;
-  }
-}
-
-.controlPanel .slideIn {
-  -webkit-animation-name: slideIn;
-  animation-name: slideIn;
 }
