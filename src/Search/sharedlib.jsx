@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tooltip';
 import roundNumbers from '../lib/utils/roundNumbers';
-import { sexList, timepointList, assayListHuman, randomGroupList } from '../lib/searchFilters';
+import {
+  sexList, timepointList, assayListHuman, timepointListHuman, randomGroupList,
+} from '../lib/searchFilters';
 
 export const searchParamsDefaultProps = {
   ktype: 'gene',
@@ -552,6 +554,15 @@ PageNavigationControl.propTypes = {
   pageCount: PropTypes.number.isRequired,
 };
 
+/** normalize string */
+function normalizeString(str) {
+  return str
+    // Step 1: Capitalize the first letter of the first word
+    .replace(/^([a-z])/, (match, firstChar) => firstChar.toUpperCase())
+    // Step 2: Replace underscores with spaces
+    .replace(/_/g, ' ');
+}
+
 /**
  * Utility function to tranform some fields within each object in the array
  */
@@ -608,10 +619,22 @@ export const transformData = (arr) => {
     // Transform randomGroupCode values
     if (item.contrast1_randomGroupCode && item.contrast1_randomGroupCode.length) {
       const matchedRnadomGroupCode = randomGroupList.find(
-        (filter) => filter.filter_value === item.contrast1_randomGroupCode
+        (filter) => filter.filter_value === item.contrast1_randomGroupCode,
       );
       item.contrast1_randomGroupCode = matchedRnadomGroupCode
         && matchedRnadomGroupCode.filter_label;
+    }
+    // Transform human timepoint values
+    if (item.contrast1_timepoint && item.contrast1_timepoint.length) {
+      const matchedHumanTimepoint = timepointListHuman.find(
+        (filter) => filter.filter_value === item.contrast1_timepoint,
+      );
+      item.contrast1_timepoint = matchedHumanTimepoint
+        && matchedHumanTimepoint.filter_label;
+    }
+    // Transform human type values
+    if (item.contrast_type && item.contrast_type.length) {
+      item.contrast_type = normalizeString(item.contrast_type);
     }
     // Transform sex values
     if (item.sex && item.sex.length) {
