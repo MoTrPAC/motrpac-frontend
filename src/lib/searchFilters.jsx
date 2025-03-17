@@ -147,6 +147,16 @@ export const timepointList = [
   { filter_value: '8w', filter_label: '8 week' },
 ];
 
+export const timepointListHuman = [
+  { filter_value: 'pre_exercise', filter_label: 'Pre-Exercise' },
+  { filter_value: 'during_20_min', filter_label: 'During 20 Min' },
+  { filter_value: 'during_40_min', filter_label: 'During 40 Min' },
+  { filter_value: 'post_10_min', filter_label: 'Post 10 Min' },
+  { filter_value: 'post_15_30_45_min', filter_label: 'Post 15/30/45 Min' },
+  { filter_value: 'post_3.5_4_hr', filter_label: 'Post 3.5/4 Hour' },
+  { filter_value: 'post_24_hr', filter_label: 'Post 24 Hour' },
+];
+
 export const rangeList = [
   { filter_value: null, filter_label: 'Min' },
   { filter_value: null, filter_label: 'Max' },
