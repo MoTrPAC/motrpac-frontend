@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function DifferentialAbundanceSummary({ userType }) {
+function DifferentialAbundanceSummary({ userType, species }) {
   return (
     <div className="search-summary-container row mb-3 collapse show" id="collapseDifferentialAbundanceSummary">
       <div className="lead col-12">
@@ -37,13 +37,17 @@ function DifferentialAbundanceSummary({ userType }) {
           <li>
             Separate multiple search terms using a comma followed by a space. For example:
             {' '}
-            <code>brd2, smad3, vegfa</code>
+            <code>
+              {species === 'human' ? 'bag3, myom2, prag1' : 'brd2, smad3, vegfa'}
+            </code>
           </li>
           <li>
             Use double quotes to enclose search terms containing commas,
             spaces or commas followed by spaces. For example:
             {' '}
-            <code>"taurocholic acid", "8,9-epetre", "cer(d18:1/18:0)"</code>
+            <code>
+              {species === 'human' ? '"capric acid", "5,6-dihet", "cl(70:7)>cl(16:1_18:2_18:2_18:2)"' : '"taurocholic acid", "8,9-epetre", "cer(d18:1/18:0)"'}
+            </code>
           </li>
         </ol>
         <p>
@@ -60,10 +64,12 @@ function DifferentialAbundanceSummary({ userType }) {
 
 DifferentialAbundanceSummary.propTypes = {
   userType: PropTypes.string,
+  species: PropTypes.string,
 };
 
 DifferentialAbundanceSummary.defaultProps = {
   userType: '',
+  species: 'rat',
 };
 
 export default DifferentialAbundanceSummary;
