@@ -121,6 +121,13 @@ export function SearchPage({
 
   // render placeholder text in primary search input field
   function renderPlaceholder() {
+    if (searchParams.species === 'human') {
+      if (searchParams.ktype === 'metab') {
+        return 'Example: "aminobutyric acid", "coa(3:0, 3-oh)"';
+      }
+      return 'Example: bag3, myom2, prag1';
+    }
+
     if (searchParams.ktype === 'protein') {
       return 'Example: "atpase inhibitor, mitochondrial", "global ischemia-induced protein 11"';
     }
@@ -184,7 +191,7 @@ export function SearchPage({
       <form id="searchForm" name="searchForm">
         <PageTitle title="Search differential abundance data" />
         <div className="search-content-container">
-          <DifferentialAbundanceSummary userType={userType} />
+          <DifferentialAbundanceSummary userType={userType} species={searchParams.species} />
           <div className="search-form-container mt-3 mb-4 border shadow-sm rounded px-4 pt-2 pb-3">
             <div className="search-summary-toggle-container row">
               <a
