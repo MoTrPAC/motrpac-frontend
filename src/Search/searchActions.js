@@ -107,6 +107,7 @@ function handleSearch(params, inputValue, scope) {
       assay: [],
       sex: [],
       comparison_group: [],
+      contrast1_timepoint: [],
       adj_p_value: { min: '', max: '' },
       logFC: { min: '', max: '' },
       p_value: { min: '', max: '' },
