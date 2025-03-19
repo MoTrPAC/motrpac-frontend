@@ -122,6 +122,9 @@ export function SearchPage({
   // render placeholder text in primary search input field
   function renderPlaceholder() {
     if (searchParams.species === 'human') {
+      if (searchParams.ktype === 'protein') {
+        return 'Example: p14854, q8tep8_s76s';
+      }
       if (searchParams.ktype === 'metab') {
         return 'Example: "aminobutyric acid", "coa(3:0, 3-oh)"';
       }
@@ -137,7 +140,10 @@ export function SearchPage({
     return 'Example: brd2, smad3, vegfa';
   }
 
+  // selector for manually entered keyword input configured with auto-suggest
   const inputEl = document.querySelector('.rbt-input-main');
+  // selector for manually entered protein ID input for human species
+  const inputElProteinId = document.querySelector('.search-input-ktype');
 
   // Transform input values
   // Keep react-bootstrap-typeahead state array as is
@@ -163,7 +169,11 @@ export function SearchPage({
 
   // Clear manually entered gene/protein/metabolite input
   const clearSearchTermInput = () => {
-    if (inputEl && inputEl.value && inputEl.value.length) {
+    if (searchParams.ktype === 'protein' && searchParams.species === 'human') {
+      if (inputElProteinId && inputElProteinId.value && inputElProteinId.value.length) {
+        inputElProteinId.value = '';
+      }
+    } else if (inputEl && inputEl.value && inputEl.value.length) {
       inputRef.current.clear();
     }
   };
@@ -228,17 +238,29 @@ export function SearchPage({
                       {searchParams.species === 'human' ? 'person' : 'pest_control_rodent'}
                     </span>
                   </div>
-                  <Typeahead
-                    id="dea-search-typeahead-multiple"
-                    labelKey="id"
-                    multiple
-                    onChange={setMultiSelections}
-                    options={getOptions()}
-                    placeholder={renderPlaceholder()}
-                    selected={multiSelections}
-                    minLength={2}
-                    ref={inputRef}
-                  />
+                  {searchParams.ktype === 'protein' && searchParams.species === 'human' ? (
+                    <input
+                      type="text"
+                      id="keys"
+                      name="keys"
+                      className="form-control search-input-ktype flex-grow-1"
+                      placeholder={renderPlaceholder()}
+                      value={searchParams.keys}
+                      onChange={(e) => changeParam('keys', e.target.value)}
+                    />
+                  ) : (
+                    <Typeahead
+                      id="dea-search-typeahead-multiple"
+                      labelKey="id"
+                      multiple
+                      onChange={setMultiSelections}
+                      options={getOptions()}
+                      placeholder={renderPlaceholder()}
+                      selected={multiSelections}
+                      minLength={2}
+                      ref={inputRef}
+                    />
+                  )}
                 </div>
                 <PrimaryOmicsFilter
                   omics={searchParams.omics}
@@ -533,6 +555,11 @@ function RadioButton({
       keyType: 'gene',
       id: 'inlineRadioGene',
       label: 'Gene symbol',
+    },
+    {
+      keyType: 'protein',
+      id: 'inlineRadioProtein',
+      label: 'Protein ID',
     },
     {
       keyType: 'metab',
