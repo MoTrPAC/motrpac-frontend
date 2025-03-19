@@ -23,6 +23,7 @@ export const defaultSearchState = {
       assay: [],
       sex: [],
       comparison_group: [],
+      contrast1_timepoint: [],
       adj_p_value: { min: '', max: '' },
       logFC: { min: '', max: '' },
       p_value: { min: '', max: '' },
@@ -48,7 +49,7 @@ export const defaultSearchState = {
       'contrast1_timepoint',
       'contrast_type',
     ],
-    unique_fields: ['tissue', 'assay', 'sex', 'comparison_group'],
+    unique_fields: ['tissue', 'assay', 'sex', 'comparison_group', 'contrast1_timepoint'],
     size: 10000,
     start: 0,
     save: false,
@@ -90,7 +91,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       const newFilters = { ...filters };
 
       // Handle selection of a filter value
-      if (action.field.match(/^(tissue|assay|sex|comparison_group)$/)) {
+      if (action.field.match(/^(tissue|assay|sex|comparison_group|contrast1_timepoint)$/)) {
         if (isActiveFilter === -1) {
           // Adds filter if new
           newFilters[action.field].push(action.filterValue);
@@ -193,6 +194,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
           assay: [],
           sex: [],
           comparison_group: [],
+          contrast1_timepoint: [],
           adj_p_value: { min: '', max: '' },
           logFC: { min: '', max: '' },
           p_value: { min: '', max: '' },
@@ -211,6 +213,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         assay: [],
         sex: [],
         comparison_group: [],
+        contrast1_timepoint: [],
         adj_p_value: { min: '', max: '' },
         logFC: { min: '', max: '' },
         p_value: { min: '', max: '' },
