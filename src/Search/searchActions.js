@@ -141,6 +141,9 @@ function handleSearch(params, inputValue, scope) {
     delete requestParams.species;
     delete requestParams.convert_assay_code;
     requestParams.study = 'precawg';
+    requestParams.filters.must_not = {
+      assay: ['epigen-atac-seq', 'epigen-methylcap-seq'],
+    };
     host = humanDataHost;
   } else if (requestParams.species === 'rat') {
     delete requestParams.species;
@@ -177,6 +180,9 @@ function handleSearchDownload(params, analysis) {
     delete downloadSearchParams.species;
     delete downloadSearchParams.convert_assay_code;
     downloadSearchParams.study = 'precawg';
+    downloadSearchParams.filters.must_not = {
+      assay: ['epigen-atac-seq', 'epigen-methylcap-seq'],
+    };
     host = humanDataHost;
   } else if (downloadSearchParams.species === 'rat') {
     delete downloadSearchParams.species;

@@ -67,7 +67,7 @@ function SearchResultFilters({
     if (searchParams.species === 'human' && searchParams.ktype === 'gene') {
       return assayListHuman.filter((t) =>
         t.filter_value.match(
-          /^(transcript-rna-seq|epigen-atac-seq|epigen-methylcap-seq|prot-pr|prot-ph|prot-ol)$/,
+          /^(transcript-rna-seq|prot-pr|prot-ph|prot-ol)$/,
         ),
       );
     }
@@ -80,7 +80,7 @@ function SearchResultFilters({
       return assayListHuman.filter(
         (t) =>
           !t.filter_value.match(
-            /^(transcript-rna-seq|epigen-atac-seq|epigen-methylcap-seq|prot-pr|prot-ph|prot-ol)$/,
+            /^(transcript-rna-seq|prot-pr|prot-ph|prot-ol)$/,
           )
       );
     }
