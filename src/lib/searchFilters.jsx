@@ -162,7 +162,7 @@ export const rangeList = [
   { filter_value: null, filter_label: 'Max' },
 ];
 
-export const commonSearchFilters = [
+export const commonSearchFiltersRat = [
   {
     keyName: 'tissue',
     name: 'Tissue',
@@ -182,6 +182,24 @@ export const commonSearchFilters = [
     keyName: 'comparison_group',
     name: 'Timepoint',
     filters: timepointList,
+  },
+];
+
+export const commonSearchFiltersHuman = [
+  {
+    keyName: 'tissue',
+    name: 'Tissue',
+    filters: tissueList,
+  },
+  {
+    keyName: 'assay',
+    name: 'Assay',
+    filters: assayList,
+  },
+  {
+    keyName: 'contrast1_timepoint',
+    name: 'Timepoint',
+    filters: timepointListHuman,
   },
 ];
 
