@@ -12,6 +12,7 @@ import {
   humanResultsTablePropType,
   geneHumanTableColumns,
   metaboliteHumanTableColumns,
+  proteinHumanTableColumns,
   PageIndex,
   PageSize,
   PageNavigationControl,
@@ -33,6 +34,8 @@ function HumanResultsTable({
     switch (searchParams.ktype) {
       case 'metab':
         return metaboliteHumanTableColumns;
+      case 'protein':
+        return proteinHumanTableColumns;
       default:
         return geneHumanTableColumns;
     }
