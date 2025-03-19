@@ -8,7 +8,7 @@ import {
 
 export const searchParamsDefaultProps = {
   ktype: 'gene',
-  keys: [],
+  keys: [] || '',
   omics: 'all',
   species: 'rat',
   analysis: 'all',
@@ -42,7 +42,7 @@ export const searchParamsDefaultProps = {
     'contrast1_timepoint',
     'contrast_type',
   ],
-  unique_fields: ['tissue', 'assay', 'sex', 'comparison_group'],
+  unique_fields: ['tissue', 'assay', 'sex', 'comparison_group', 'contrast1_timepoint'],
   size: 10000,
   start: 0,
   debug: true,
@@ -53,7 +53,7 @@ export const searchParamsDefaultProps = {
 
 export const searchParamsPropType = {
   ktype: PropTypes.string,
-  keys: PropTypes.arrayOf(PropTypes.string),
+  keys: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   omics: PropTypes.string,
   species: PropTypes.string,
   analysis: PropTypes.string,
@@ -367,10 +367,6 @@ export const metabTrainingTableColumns = [
  */
 const commonHumanColumns = [
   {
-    Header: 'Feature ID',
-    accessor: 'feature_id',
-  },
-  {
     Header: 'Tissue',
     accessor: 'tissue',
   },
@@ -412,6 +408,22 @@ export const geneHumanTableColumns = [
     Header: 'Gene',
     accessor: 'gene_symbol',
   },
+  {
+    Header: 'Feature ID',
+    accessor: 'feature_id',
+  },
+  ...commonHumanColumns,
+];
+
+export const proteinHumanTableColumns = [
+  {
+    Header: 'Gene',
+    accessor: 'gene_symbol',
+  },
+  {
+    Header: 'Protein ID',
+    accessor: 'feature_id',
+  },
   ...commonHumanColumns,
 ];
 
@@ -419,6 +431,10 @@ export const metaboliteHumanTableColumns = [
   {
     Header: 'RefMet Name',
     accessor: 'refmet_name',
+  },
+  {
+    Header: 'Feature ID',
+    accessor: 'feature_id',
   },
   ...commonHumanColumns,
 ];
@@ -610,7 +626,7 @@ export const transformData = (arr) => {
     }
     */
     // Transform assay values
-    if (item.assay && item.assay.length) {
+    if (item.assay && item.assay.length && item.contrast1_randomGroupCode && item.contrast1_randomGroupCode !== 'NA') {
       const matchedAssay = assayListHuman.find(
         (filter) => filter.filter_value === item.assay
       );
