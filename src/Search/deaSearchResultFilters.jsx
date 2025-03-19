@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  commonSearchFilters,
+  commonSearchFiltersRat,
+  commonSearchFiltersHuman,
   rangeSearchFilters,
   tissueList,
   assayList,
@@ -20,6 +21,9 @@ function SearchResultFilters({
   profile,
 }) {
   const [inputError, setInputError] = useState(false);
+
+  const commonSearchFilters = searchParams.species === 'rat' ? commonSearchFiltersRat : commonSearchFiltersHuman;
+
   // FIXME - this is a hack to get the search filters such as tissue and assay
   // to render accordingly to the ktype (gene, protein, metabolite)
   function customizeTissueList() {
@@ -67,6 +71,11 @@ function SearchResultFilters({
         ),
       );
     }
+    if (searchParams.species === 'human' && searchParams.ktype === 'protein') {
+      return assayListHuman.filter((t) =>
+        t.filter_value.match(/^(prot-pr|prot-ph|prot-ol)$/),
+      );
+    }
     if (searchParams.species === 'human' && searchParams.ktype === 'metab') {
       return assayListHuman.filter(
         (t) =>
@@ -85,11 +94,6 @@ function SearchResultFilters({
   commonSearchFilters.find(
     (f) => f.keyName === 'assay'
   ).filters = customizeAssayList();
-
-  // Remove 'sex' and 'timepoint' filters for precawg search results
-  if (searchParams.species === 'human') {
-    commonSearchFilters.splice(2, 2);
-  }
 
   const commonSearchResultFilters = commonSearchFilters.map((item) => (
     <div key={item.name} className="card filter-module mb-3">
