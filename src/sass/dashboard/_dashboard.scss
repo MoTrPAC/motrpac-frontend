@@ -1,5 +1,8 @@
 .dashboardPage {
   .jumbotron-fluid {
+    border-radius: 6px;
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
     background-color: hsla(204, 0%, 100%, 1);
     background-image: radial-gradient(circle at 0% 0%, hsla(295.99999999999994, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), radial-gradient(circle at 20% 0%, hsla(236.91176470588243, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), radial-gradient(circle at 40% 0%, hsla(186.61764705882354, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), radial-gradient(circle at 60% 0%, hsla(127.0588235294118, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), radial-gradient(circle at 80% 0%, hsla(62.20588235294117, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), radial-gradient(circle at 100% 0%, hsla(23.823529411764703, 77%, 74%, 0.35) 3%, transparent 40%);
     background-blend-mode: normal, normal, normal, normal, normal, normal;
@@ -7,13 +10,17 @@
 
   .feature-links-container {
     .card {
+      border-radius: 6px;
+      transition-property: border;
+      transition-delay: .1s;
+
       &:hover {
-        border: 1px solid $primary-blue;
-        background-color: lighten($blue-transparent, 15%);
+        border: 1px solid #777;
+        background-color: hsla(54.26470588235339, 91%, 97%, 1);
+        background-image: radial-gradient(circle at 92% 6%, hsla(165.44117647058837, 73%, 96%, 0.92) 0%, transparent 58.06622751776674%), radial-gradient(circle at 0% 50%, hsla(42.35294117647056, 100%, 97%, 1) 0%, transparent 50%), radial-gradient(circle at 83% 89%, hsla(37.0588235294118, 88%, 95%, 1) 0%, transparent 78.77377033233643%), radial-gradient(circle at 0% 100%, hsla(38.38235294117625, 100%, 86%, 1) 0%, transparent 50%), radial-gradient(circle at 0% 0%, hsla(56.9117647058825, 100%, 99%, 1) 0%, transparent 50%);
+        background-blend-mode: normal, normal, normal, normal, normal;
         cursor: pointer;
-        transition: .2s;
-        transform: translateY(-1px);
-        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.25) !important;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15) !important;
       }
   
       .card-body {
@@ -38,60 +45,9 @@
   
       .material-icons {
         font-size: 5.0rem;
-      }
-  
-      &.qc-data-monitor {
-        .material-icons {
-          color: $accent-green;
-        }
-      }
-  
-      &.releases, &.multiomics-working-groups {
-        .material-icons {
-          color: $stanford-cardinal-red;
-        }
-      }
-  
-      &.data-download {
-        .material-icons {
-          color: $accent-yellow;
-        }
-      }
-  
-      &.sample-summary {
-        .material-icons {
-          color: lighten($accent-violet, 12%);
-        }
-      }
-  
-      &.code-repositories {
-        .material-icons {
-          color: $gray;
-        }
-      }
-  
-      &.motrpac-collab {
-        .material-icons {
-          color: $gray-semi-transparent;
-        }
-      }
-  
-      &.pass1b-06-data-visualization {
-        .material-icons {
-          color: $primary-blue;
-        }
-      }
-
-      &.precovid-human-data-visualization {
-        .material-icons {
-          color: #7183A5;
-        }
-      }
-
-      &.differential-abundance {
-        .material-icons {
-          color: #17a2b8;
-        }
+        background: -webkit-linear-gradient(45deg, #a64d79, #1c4587);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
     }
   }
