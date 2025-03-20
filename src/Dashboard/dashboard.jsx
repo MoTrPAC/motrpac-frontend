@@ -38,7 +38,7 @@ export function Dashboard({ profile, handleQCDataFetch, lastModified }) {
                 {' '}
                 or
                 {' '}
-                <Link to="/search">explore the Differential abundance</Link>
+                <Link to="/search">explore the differential abundance</Link>
                 {' '}
                 in the dataset. Please refer to the
                 {' '}
