@@ -359,10 +359,11 @@
   left: 0;
   width: 50%;
   height: 100%;
-  background-color: $stanford-black;
   border-radius: 25px;
   transition: transform 0.3s ease;
-  
+  background: -webkit-linear-gradient(45deg, #a64d79, #1c4587);
+  -webkit-background-clip: border-box;
+  -webkit-text-fill-color: transparent;
 }
 
 .slide-toggle-slider.right {
