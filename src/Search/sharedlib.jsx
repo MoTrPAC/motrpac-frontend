@@ -2,12 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tooltip';
 import roundNumbers from '../lib/utils/roundNumbers';
-import { sexList, timepointList } from '../lib/searchFilters';
+import {
+  sexList, timepointList, assayListHuman, timepointListHuman, randomGroupList,
+} from '../lib/searchFilters';
 
 export const searchParamsDefaultProps = {
   ktype: 'gene',
-  keys: [],
+  keys: [] || '',
   omics: 'all',
+  species: 'rat',
   analysis: 'all',
   filters: {
     tissue: [],
@@ -21,9 +24,12 @@ export const searchParamsDefaultProps = {
   fields: [
     'gene_symbol',
     'metabolite_refmet',
+    'refmet_name',
     'feature_ID',
+    'feature_id',
     'tissue',
     'assay',
+    'omics',
     'sex',
     'comparison_group',
     'logFC',
@@ -32,8 +38,11 @@ export const searchParamsDefaultProps = {
     'selection_fdr',
     'p_value_male',
     'p_value_female',
+    'contrast1_randomGroupCode',
+    'contrast1_timepoint',
+    'contrast_type',
   ],
-  unique_fields: ['tissue', 'assay', 'sex', 'comparison_group'],
+  unique_fields: ['tissue', 'assay', 'sex', 'comparison_group', 'contrast1_timepoint'],
   size: 10000,
   start: 0,
   debug: true,
@@ -44,8 +53,9 @@ export const searchParamsDefaultProps = {
 
 export const searchParamsPropType = {
   ktype: PropTypes.string,
-  keys: PropTypes.arrayOf(PropTypes.string),
+  keys: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   omics: PropTypes.string,
+  species: PropTypes.string,
   analysis: PropTypes.string,
   filters: PropTypes.shape({
     tissue: PropTypes.arrayOf(PropTypes.string),
@@ -109,6 +119,21 @@ export const trainingResultsTablePropType = {
   adj_p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   p_value_male: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   p_value_female: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
+
+export const humanResultsTablePropType = {
+  gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  refmet_name: PropTypes.string,
+  feature_id: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  tissue: PropTypes.string,
+  assay: PropTypes.string,
+  omics: PropTypes.string,
+  logFC: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  adj_p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  contrast1_randomGroupCode: PropTypes.string,
+  contrast1_timepoint: PropTypes.string,
+  contrast_type: PropTypes.string,
 };
 
 /**
@@ -338,6 +363,83 @@ export const metabTrainingTableColumns = [
 ];
 
 /**
+ * column headers common to human gene and metabolite search results
+ */
+const commonHumanColumns = [
+  {
+    Header: 'Tissue',
+    accessor: 'tissue',
+  },
+  {
+    Header: 'Assay',
+    accessor: 'assay',
+  },
+  {
+    Header: 'logFC',
+    accessor: 'logFC',
+    sortType: 'basic',
+  },
+  {
+    Header: 'P-value',
+    accessor: 'p_value',
+    sortType: 'basic',
+  },
+  {
+    Header: 'Adj p-value',
+    accessor: 'adj_p_value',
+    sortType: 'basic',
+  },
+  {
+    Header: 'Randomized Group',
+    accessor: 'contrast1_randomGroupCode',
+  },
+  {
+    Header: 'Timepoint',
+    accessor: 'contrast1_timepoint',
+  },
+  {
+    Header: 'Type',
+    accessor: 'contrast_type',
+  },
+];
+
+export const geneHumanTableColumns = [
+  {
+    Header: 'Gene',
+    accessor: 'gene_symbol',
+  },
+  {
+    Header: 'Feature ID',
+    accessor: 'feature_id',
+  },
+  ...commonHumanColumns,
+];
+
+export const proteinHumanTableColumns = [
+  {
+    Header: 'Gene',
+    accessor: 'gene_symbol',
+  },
+  {
+    Header: 'Protein ID',
+    accessor: 'feature_id',
+  },
+  ...commonHumanColumns,
+];
+
+export const metaboliteHumanTableColumns = [
+  {
+    Header: 'RefMet Name',
+    accessor: 'refmet_name',
+  },
+  {
+    Header: 'Feature ID',
+    accessor: 'feature_id',
+  },
+  ...commonHumanColumns,
+];
+
+/**
  * page count and page index rendering function
  * common to all data qc status reports
  */
@@ -468,6 +570,15 @@ PageNavigationControl.propTypes = {
   pageCount: PropTypes.number.isRequired,
 };
 
+/** normalize string */
+function normalizeString(str) {
+  return str
+    // Step 1: Capitalize the first letter of the first word
+    .replace(/^([a-z])/, (match, firstChar) => firstChar.toUpperCase())
+    // Step 2: Replace underscores with spaces
+    .replace(/_/g, ' ');
+}
+
 /**
  * Utility function to tranform some fields within each object in the array
  */
@@ -514,6 +625,33 @@ export const transformData = (arr) => {
       );
     }
     */
+    // Transform assay values
+    if (item.assay && item.assay.length && item.contrast1_randomGroupCode && item.contrast1_randomGroupCode !== 'NA') {
+      const matchedAssay = assayListHuman.find(
+        (filter) => filter.filter_value === item.assay
+      );
+      item.assay = matchedAssay && matchedAssay.filter_label;
+    }
+    // Transform randomGroupCode values
+    if (item.contrast1_randomGroupCode && item.contrast1_randomGroupCode.length) {
+      const matchedRnadomGroupCode = randomGroupList.find(
+        (filter) => filter.filter_value === item.contrast1_randomGroupCode,
+      );
+      item.contrast1_randomGroupCode = matchedRnadomGroupCode
+        && matchedRnadomGroupCode.filter_label;
+    }
+    // Transform human timepoint values
+    if (item.contrast1_timepoint && item.contrast1_timepoint.length) {
+      const matchedHumanTimepoint = timepointListHuman.find(
+        (filter) => filter.filter_value === item.contrast1_timepoint,
+      );
+      item.contrast1_timepoint = matchedHumanTimepoint
+        && matchedHumanTimepoint.filter_label;
+    }
+    // Transform human type values
+    if (item.contrast_type && item.contrast_type.length) {
+      item.contrast_type = normalizeString(item.contrast_type);
+    }
     // Transform sex values
     if (item.sex && item.sex.length) {
       const matchedSex = sexList.find(

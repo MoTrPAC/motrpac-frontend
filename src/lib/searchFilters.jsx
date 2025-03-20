@@ -21,6 +21,12 @@ export const tissueList = [
   { filter_value: 'white adipose', filter_label: 'White Adipose' },
 ];
 
+export const tissueListHuman = [
+  { filter_value: 'adipose', filter_label: 'Adipose' },
+  { filter_value: 'blood', filter_label: 'Blood' },
+  { filter_value: 'muscle', filter_label: 'Muscle' },
+];
+
 const assays = [
   { filter_value: 'transcript-rna-seq', filter_label: 'RNA-seq' },
   { filter_value: 'epigen-atac-seq', filter_label: 'ATAC-seq' },
@@ -71,8 +77,61 @@ const assays = [
 ];
 
 export const assayList = assays.sort((a, b) =>
-  a.filter_label.toLowerCase().localeCompare(b.filter_label.toLowerCase())
+  a.filter_label.toLowerCase().localeCompare(b.filter_label.toLowerCase()),
 );
+
+const assaysHuman = [
+  { filter_value: 'transcript-rna-seq', filter_label: 'RNA-seq' },
+  { filter_value: 'metab-t-acoa', filter_label: 'Targeted Acyl-CoA' },
+  { filter_value: 'metab-t-amines', filter_label: 'Targeted Amines' },
+  { filter_value: 'metab-t-conv', filter_label: 'Targeted Conventional' },
+  { filter_value: 'metab-t-ka', filter_label: 'Targeted Keto Acids' },
+  { filter_value: 'metab-t-nuc', filter_label: 'Targeted Nucleotides' },
+  { filter_value: 'metab-t-oxylipneg', filter_label: 'Targeted Oxylipins' },
+  {
+    filter_value: 'metab-t-tca',
+    filter_label: 'Targeted Tricarboxylic Acid Cycle',
+  },
+  {
+    filter_value: 'metab-u-hilicpos',
+    filter_label: 'Untargeted HILIC-Positive',
+  },
+  {
+    filter_value: 'metab-u-ionpneg',
+    filter_label: 'Untargeted Ion-Pair Negative',
+  },
+  {
+    filter_value: 'metab-u-lrpneg',
+    filter_label: 'Untargeted Lipidomics Reversed-Phase Negative',
+  },
+  {
+    filter_value: 'metab-u-lrppos',
+    filter_label: 'Untargeted Lipidomics Reversed-Phase Positive',
+  },
+  {
+    filter_value: 'metab-u-rpneg',
+    filter_label: 'Untargeted Reversed-Phase Negative',
+  },
+  {
+    filter_value: 'metab-u-rppos',
+    filter_label: 'Untargeted Reversed-Phase Positive',
+  },
+  { filter_value: 'prot-pr', filter_label: 'Global Proteomics' },
+  { filter_value: 'prot-ph', filter_label: 'Phosphoproteomics' },
+  { filter_value: 'prot-ol', filter_label: 'Proteomics Olink' },
+];
+
+export const assayListHuman = assaysHuman.sort((a, b) =>
+  a.filter_label.toLowerCase().localeCompare(b.filter_label.toLowerCase()),
+);
+
+export const randomGroupList = [
+  { filter_value: 'ADUControl', filter_label: 'Control Intervention' },
+  { filter_value: 'ADUEndur', filter_label: 'Endurance Intervention' },
+  { filter_value: 'ADUResist', filter_label: 'Resistance Intervention' },
+  { filter_value: 'ATHEndur', filter_label: 'Highly Active Endurance' },
+  { filter_value: 'ATHResist', filter_label: 'Highly Active Resistance' },
+];
 
 export const sexList = [
   { filter_value: 'Male', filter_label: 'Male' },
@@ -86,12 +145,22 @@ export const timepointList = [
   { filter_value: '8w', filter_label: '8 week' },
 ];
 
+export const timepointListHuman = [
+  { filter_value: 'pre_exercise', filter_label: 'Pre-Exercise' },
+  { filter_value: 'during_20_min', filter_label: 'During 20 Min' },
+  { filter_value: 'during_40_min', filter_label: 'During 40 Min' },
+  { filter_value: 'post_10_min', filter_label: 'Post 10 Min' },
+  { filter_value: 'post_15_30_45_min', filter_label: 'Post 15/30/45 Min' },
+  { filter_value: 'post_3.5_4_hr', filter_label: 'Post 3.5/4 Hour' },
+  { filter_value: 'post_24_hr', filter_label: 'Post 24 Hour' },
+];
+
 export const rangeList = [
   { filter_value: null, filter_label: 'Min' },
   { filter_value: null, filter_label: 'Max' },
 ];
 
-export const commonSearchFilters = [
+export const commonSearchFiltersRat = [
   {
     keyName: 'tissue',
     name: 'Tissue',
@@ -111,6 +180,24 @@ export const commonSearchFilters = [
     keyName: 'comparison_group',
     name: 'Timepoint',
     filters: timepointList,
+  },
+];
+
+export const commonSearchFiltersHuman = [
+  {
+    keyName: 'tissue',
+    name: 'Tissue',
+    filters: tissueList,
+  },
+  {
+    keyName: 'assay',
+    name: 'Assay',
+    filters: assayList,
+  },
+  {
+    keyName: 'contrast1_timepoint',
+    name: 'Timepoint',
+    filters: timepointListHuman,
   },
 ];
 

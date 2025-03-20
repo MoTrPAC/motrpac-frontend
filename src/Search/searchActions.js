@@ -81,10 +81,14 @@ const accessToken =
   process.env.NODE_ENV !== 'production'
     ? process.env.REACT_APP_ES_ACCESS_TOKEN_DEV
     : process.env.REACT_APP_ES_ACCESS_TOKEN;
-const host =
+const ratDataHost =
   process.env.NODE_ENV !== 'production'
     ? process.env.REACT_APP_ES_PROXY_HOST_DEV
     : process.env.REACT_APP_ES_PROXY_HOST;
+const humanDataHost =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_ES_PROXY_PRECAWG_HOST_DEV
+      : process.env.REACT_APP_ES_PROXY_PRECAWG_HOST;
 const endpoint = process.env.REACT_APP_ES_ENDPOINT;
 
 const headersConfig = {
@@ -103,6 +107,7 @@ function handleSearch(params, inputValue, scope) {
       assay: [],
       sex: [],
       comparison_group: [],
+      contrast1_timepoint: [],
       adj_p_value: { min: '', max: '' },
       logFC: { min: '', max: '' },
       p_value: { min: '', max: '' },
@@ -128,10 +133,27 @@ function handleSearch(params, inputValue, scope) {
     }
   }
 
+  let host = ratDataHost;
+
+  const requestParams = { ...params };
+  // handle params differently between human and rat
+  if (requestParams.species === 'human') {
+    delete requestParams.species;
+    delete requestParams.convert_assay_code;
+    requestParams.study = 'precawg';
+    requestParams.filters.must_not = {
+      assay: ['epigen-atac-seq', 'epigen-methylcap-seq'],
+    };
+    host = humanDataHost;
+  } else if (requestParams.species === 'rat') {
+    delete requestParams.species;
+    host = ratDataHost;
+  }
+
   return (dispatch) => {
     dispatch(searchSubmit(params, scope));
     return axios
-      .post(`${host}${endpoint}`, params, headersConfig)
+      .post(`${host}${endpoint}`, requestParams, headersConfig)
       .then((response) => {
         if (response.data.error) {
           dispatch(searchFailure(response.data.error));
@@ -151,6 +173,21 @@ function handleSearchDownload(params, analysis) {
   downloadSearchParams.save = true;
   downloadSearchParams.analysis = analysis;
   downloadSearchParams.size = 0;
+
+  let host = ratDataHost;
+
+  if (downloadSearchParams.species === 'human') {
+    delete downloadSearchParams.species;
+    delete downloadSearchParams.convert_assay_code;
+    downloadSearchParams.study = 'precawg';
+    downloadSearchParams.filters.must_not = {
+      assay: ['epigen-atac-seq', 'epigen-methylcap-seq'],
+    };
+    host = humanDataHost;
+  } else if (downloadSearchParams.species === 'rat') {
+    delete downloadSearchParams.species;
+    host = ratDataHost;
+  }
   return (dispatch) => {
     dispatch(downloadSubmit());
     return axios

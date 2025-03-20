@@ -41,6 +41,7 @@ import CallbackConnected from '../Auth/callback';
 import { withTracker } from '../GoogleAnalytics/googleAnalytics';
 import PrivateRoute from '../Auth/privateRoute';
 import ScrollToTop from '../lib/scrollToTop';
+import DashboardConnected from '../Dashboard/dashboard';
 
 const store = configureStore();
 
@@ -183,6 +184,11 @@ function App({ history = History }) {
               <PrivateRoute
                 path="/multiomics-working-groups"
                 component={withTracker(MultiOmicsWorkingGroups)}
+              />
+              <PrivateRoute
+                path="/dashboard"
+                exact
+                component={withTracker(DashboardConnected)}
               />
             </Switch>
           </div>

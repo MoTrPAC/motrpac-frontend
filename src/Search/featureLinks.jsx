@@ -37,6 +37,14 @@ function FeatureLinks({
       title: 'Data Downloads',
     },
     {
+      name: 'differential-abundance',
+      route: 'search',
+      description:
+        'Explore the differential abundance analysis results by gene, protein or metabolite in the MoTrPAC multi-omics exercise studies.',
+      icon: 'search',
+      title: 'Differential Abundance Analysis Results',
+    },
+    {
       name: 'pass1b-06-data-visualization',
       route: process.env.NODE_ENV !== 'production' ? 'https://data-viz-dev.motrpac-data.org/' : 'https://data-viz.motrpac-data.org/',
       description:
@@ -74,16 +82,6 @@ function FeatureLinks({
     },
     */
     {
-      name: 'motrpac-collab',
-      route:
-        'https://collab.motrpac-data.org/hub/oauth_login?next=%2Fhub%2Fhome',
-      description:
-        'A multi-user Jupyter notebook workspace containing a collection of notebooks for in-depth data exploration and analysis.',
-      icon: 'hub',
-      title: 'MoTrPAC Collab',
-      eventHandler: null,
-    },
-    {
       name: 'qc-data-monitor',
       route: 'qc-data-monitor',
       description:
@@ -110,9 +108,19 @@ function FeatureLinks({
       title: 'Multi-omics Working Groups',
       eventHandler: null,
     },
+    {
+      name: 'motrpac-collab',
+      route:
+        'https://collab.motrpac-data.org/hub/oauth_login?next=%2Fhub%2Fhome',
+      description:
+        'A multi-user Jupyter notebook workspace containing a collection of notebooks for in-depth data exploration and analysis.',
+      icon: 'hub',
+      title: 'MoTrPAC Collab',
+      eventHandler: null,
+    },
   ];
 
-  const featuresToRender = userType === 'internal' ? features : features.slice(0, 4);
+  const featuresToRender = userType === 'internal' ? features : features.slice(0, 5);
 
   // handle click event for external links
   function handleFeatureLinkClick(e, item) {
@@ -129,8 +137,8 @@ function FeatureLinks({
   }
 
   return (
-    <div className="feature-links-container pt-2">
-      <div className="row row-cols-1 row-cols-xl-4 row-cols-lg-3 row-cols-sm-1 mt-5">
+    <div className="feature-links-container">
+      <div className="row row-cols-1 row-cols-xl-4 row-cols-lg-3 row-cols-sm-1">
         {featuresToRender.map((item) => (
           <div key={item.name} className="col mb-4">
             {/*

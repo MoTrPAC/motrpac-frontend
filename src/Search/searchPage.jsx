@@ -8,21 +8,22 @@ import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import TimewiseResultsTable from './timewiseTable';
 import TrainingResultsTable from './trainingResultsTable';
+import HumanResultsTable from './humanResultsTable';
 import SearchActions from './searchActions';
-import BrowseDataActions from '../BrowseDataPage/browseDataActions';
-import DataStatusActions from '../DataStatusPage/dataStatusActions';
 import surveyModdalActions from '../UserSurvey/userSurveyActions';
 import SearchResultFilters from './deaSearchResultFilters';
 import AnimatedLoadingIcon from '../lib/ui/loading';
 import { searchParamsDefaultProps, searchParamsPropType } from './sharedlib';
-import FeatureLinks from './featureLinks';
 import IconSet from '../lib/iconSet';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import { genes } from '../data/genes';
 import { metabolites } from '../data/metabolites';
 import { proteins } from '../data/proteins';
+import { humanGenes } from '../data/human_genes';
+import { humanMetabolites } from '../data/human_metabolites';
 import searchStructuredData from '../lib/searchStructuredData/search';
 import UserSurveyModal from '../UserSurvey/userSurveyModal';
+import DifferentialAbundanceSummary from './components/differentialAbundanceSummary';
 
 export function SearchPage({
   profile,
@@ -39,17 +40,16 @@ export function SearchPage({
   downloading,
   downloadError,
   handleSearchDownload,
-  handleQCDataFetch,
-  lastModified,
   hasResultFilters,
 }) {
   const [multiSelections, setMultiSelections] = useState([]);
   const inputRef = useRef(null);
-  const userType = profile.user_metadata && profile.user_metadata.userType;
   const showUserSurveyModal = useSelector(
     (state) => state.userSurvey.showUserSurveyModal,
   );
   const surveyId = useSelector((state) => state.userSurvey.surveyId);
+
+  const userType = profile.user_metadata && profile.user_metadata.userType;
 
   useEffect(() => {
     if (showUserSurveyModal) {
@@ -78,7 +78,8 @@ export function SearchPage({
 
   const timewiseResults = [];
   const trainingResults = [];
-  if (searchResults.result && Object.keys(searchResults.result).length > 0) {
+  const humanResults = [];
+  if (searchParams.species === 'rat' && searchResults.result && Object.keys(searchResults.result).length > 0) {
     Object.keys(searchResults.result).forEach((key) => {
       if (key.indexOf('timewise') > -1) {
         timewiseResults.push(...mapKeyToValue(searchResults.result[key]));
@@ -87,42 +88,49 @@ export function SearchPage({
       }
     });
   }
-
-  // render feature links
-  function renderFeatureLinks() {
-    if (
-      !searching &&
-      !searchError &&
-      !searchResults.result &&
-      !searchResults.errors
-    ) {
-      return (
-        <FeatureLinks
-          handleQCDataFetch={handleQCDataFetch}
-          lastModified={lastModified}
-          userType={userType}
-        />
-      );
-    }
-    return null;
+  if (searchParams.species === 'human' && searchResults.result && Object.keys(searchResults.result).length > 0) {
+    humanResults.push(...mapKeyToValue(searchResults.result));
   }
 
   // get options based on selected search context
   function getOptions() {
-    switch (searchParams.ktype) {
-      case 'gene':
-        return genes;
-      case 'metab':
-        return metabolites;
-      case 'protein':
-        return proteins;
-      default:
-        return [];
+    if (searchParams.species === 'rat') {
+      switch (searchParams.ktype) {
+        case 'gene':
+          return genes;
+        case 'metab':
+          return metabolites;
+        case 'protein':
+          return proteins;
+        default:
+          return [];
+      }
     }
+    if (searchParams.species === 'human') {
+      switch (searchParams.ktype) {
+        case 'gene':
+          return humanGenes;
+        case 'metab':
+          return humanMetabolites;
+        default:
+          return [];
+      }
+    }
+    return [];
   }
 
   // render placeholder text in primary search input field
   function renderPlaceholder() {
+    if (searchParams.species === 'human') {
+      if (searchParams.ktype === 'protein') {
+        return 'Example: p14854, q8tep8_s76s';
+      }
+      if (searchParams.ktype === 'metab') {
+        return 'Example: "aminobutyric acid", "coa(3:0, 3-oh)"';
+      }
+      return 'Example: bag3, myom2, prag1';
+    }
+
     if (searchParams.ktype === 'protein') {
       return 'Example: "atpase inhibitor, mitochondrial", "global ischemia-induced protein 11"';
     }
@@ -132,7 +140,10 @@ export function SearchPage({
     return 'Example: brd2, smad3, vegfa';
   }
 
+  // selector for manually entered keyword input configured with auto-suggest
   const inputEl = document.querySelector('.rbt-input-main');
+  // selector for manually entered protein ID input for human species
+  const inputElProteinId = document.querySelector('.search-input-ktype');
 
   // Transform input values
   // Keep react-bootstrap-typeahead state array as is
@@ -158,13 +169,28 @@ export function SearchPage({
 
   // Clear manually entered gene/protein/metabolite input
   const clearSearchTermInput = () => {
-    if (inputEl && inputEl.value && inputEl.value.length) {
+    if (searchParams.ktype === 'protein' && searchParams.species === 'human') {
+      if (inputElProteinId && inputElProteinId.value && inputElProteinId.value.length) {
+        inputElProteinId.value = '';
+      }
+    } else if (inputEl && inputEl.value && inputEl.value.length) {
       inputRef.current.clear();
     }
   };
 
+  const handleSpeciesChange = (value) => {
+    resetSearch('all');
+    clearSearchTermInput();
+    setMultiSelections([]);
+    if (inputEl && inputEl.value && inputEl.value.length) {
+      inputEl.value = '';
+    }
+    // this gets called last to ensure that species param is updated
+    changeParam('species', value);
+  };
+
   return (
-    <div className="searchPage px-3 px-md-4 mb-3">
+    <div className="searchPage px-3 px-md-4 mb-3 w-100">
       <Helmet>
         <html lang="en" />
         <title>Search Differential Abundance Data - MoTrPAC Data Hub</title>
@@ -173,286 +199,299 @@ export function SearchPage({
         </script>
       </Helmet>
       <form id="searchForm" name="searchForm">
-        {userType && userType === 'internal' && (
-          <div className="alert alert-warning alert-data-release" role="alert">
-            <div className="w-100 lead text-center">
-              <i className="bi bi-rocket-takeoff mr-2" />
-              <span className="data-release-text">
-                The pre-COVID human sedentary adults dataset is now available to consortium
-                users. Please refer to the
-                {' '}
-                <a href={process.env.REACT_APP_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
-                  Release README
-                </a>
-                {' '}
-                document for more information.
-              </span>
-            </div>
-          </div>
-        )}
         <PageTitle title="Search differential abundance data" />
         <div className="search-content-container">
-          <div className="search-summary-container row mb-4">
-            <div className="lead col-12">
-              Search by gene symbol, protein name or metabolite name to examine the
-              timewise endurance training response over 8 weeks of training in
-              young adult rats. To ensure the best search results, please use the
-              following guidelines:
-              <ol>
-                <li>
-                  Use
-                  {' '}
-                  <span className="font-weight-bold">
-                    auto-suggested search terms
-                  </span>
-                  {' '}
-                  by typing the first few
-                  characters of the gene symbol, protein or metabolite names.
-                </li>
-                <li>
-                  Separate multiple search terms using a comma followed by a space. For example:
-                  {' '}
-                  <code>brd2, smad3, vegfa</code>
-                </li>
-                <li>
-                  Use double quotes to enclose search terms containing commas,
-                  spaces or commas followed by spaces. For example:
-                  {' '}
-                  <code>"tca acids", "8,9-epetre", "coa(3:0, 3-oh)"</code>
-                </li>
-              </ol>
-              <p>
-              The endurance trained young adult rats dataset is made available
-              under the
-              {' '}
-              <Link to="/license">CC BY 4.0 license</Link>
-              .
-              </p>
+          <DifferentialAbundanceSummary userType={userType} species={searchParams.species} />
+          <div className="search-form-container mt-3 mb-4 border shadow-sm rounded px-4 pt-2 pb-3">
+            <div className="search-summary-toggle-container row">
+              <a
+                className="btn btn-link show-collapse-summary-link mx-auto"
+                role="button"
+                data-toggle="collapse"
+                href="#collapseDifferentialAbundanceSummary"
+                aria-expanded="false"
+                aria-controls="collapseDifferentialAbundanceSummary"
+              >
+                <span className="material-icons">drag_handle</span>
+              </a>
             </div>
-          </div>
-          <div className="es-search-ui-container d-flex align-items-center w-100 pb-2">
-            <RadioButton
-              changeParam={changeParam}
-              ktype={searchParams.ktype}
-              resetSearch={resetSearch}
-              clearInput={clearSearchTermInput}
-              setMultiSelections={setMultiSelections}
-              inputEl={inputEl}
-            />
-            <div className="search-box-input-group d-flex align-items-center flex-grow-1">
-              <div className="input-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text material-icons">
-                    pest_control_rodent
-                  </span>
-                </div>
-                <Typeahead
-                  id="dea-search-typeahead-multiple"
-                  labelKey="id"
-                  multiple
-                  onChange={setMultiSelections}
-                  options={getOptions()}
-                  placeholder={renderPlaceholder()}
-                  selected={multiSelections}
-                  minLength={2}
-                  ref={inputRef}
-                />
-              </div>
-              <PrimaryOmicsFilter
-                omics={searchParams.omics}
-                toggleOmics={changeParam}
+            {userType && userType === 'internal' && (
+              <SpeciesToggleSwitch
+                onChange={handleSpeciesChange}
+                defaultSelected={searchParams.species}
               />
-              <div className="search-button-group d-flex justify-content-end ml-4">
-                <button
-                  type="submit"
-                  className="btn btn-primary search-submit"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleSearch(
-                      searchParams,
-                      (multiSelections && multiSelections.length) ||
-                        (inputEl && inputEl.value && inputEl.value.length)
-                        ? formatSearchInput()
-                        : searchParams.keys,
-                      'all',
-                    );
-                    // track event in Google Analytics 4
-                    trackEvent(
-                      'Differential Abundance Search',
-                      'keyword_search',
-                      profile && profile.userid
-                        ? profile.userid.substring(
-                            profile.userid.indexOf('|') + 1,
-                          )
-                        : 'anonymous',
-                      (multiSelections && multiSelections.length) ||
-                        (inputEl && inputEl.value && inputEl.value.length)
-                        ? formatSearchInput()
-                        : searchParams.keys,
-                    );
-                  }}
-                >
-                  Search
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-secondary search-reset ml-2"
-                  onClick={() => {
-                    clearSearchTermInput();
-                    resetSearch('all');
-                    setMultiSelections([]);
-                  }}
-                >
-                  Reset
-                </button>
+            )}
+            <div className="es-search-ui-container d-flex align-items-center w-100 mt-3 pb-2">
+              <RadioButton
+                searchParams={searchParams}
+                changeParam={changeParam}
+                ktype={searchParams.ktype}
+                resetSearch={resetSearch}
+                clearInput={clearSearchTermInput}
+                setMultiSelections={setMultiSelections}
+                inputEl={inputEl}
+              />
+              <div className="search-box-input-group d-flex align-items-center flex-grow-1">
+                <div className="input-group">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text material-icons">
+                      {searchParams.species === 'human' ? 'person' : 'pest_control_rodent'}
+                    </span>
+                  </div>
+                  {searchParams.ktype === 'protein' && searchParams.species === 'human' ? (
+                    <input
+                      type="text"
+                      id="keys"
+                      name="keys"
+                      className="form-control search-input-ktype flex-grow-1"
+                      placeholder={renderPlaceholder()}
+                      value={searchParams.keys}
+                      onChange={(e) => changeParam('keys', e.target.value)}
+                    />
+                  ) : (
+                    <Typeahead
+                      id="dea-search-typeahead-multiple"
+                      labelKey="id"
+                      multiple
+                      onChange={setMultiSelections}
+                      options={getOptions()}
+                      placeholder={renderPlaceholder()}
+                      selected={multiSelections}
+                      minLength={2}
+                      ref={inputRef}
+                    />
+                  )}
+                </div>
+                <PrimaryOmicsFilter
+                  omics={searchParams.omics}
+                  toggleOmics={changeParam}
+                />
+                <div className="search-button-group d-flex justify-content-end ml-4">
+                  <button
+                    type="submit"
+                    className="btn btn-primary search-submit"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleSearch(
+                        searchParams,
+                        (multiSelections && multiSelections.length)
+                          || (inputEl && inputEl.value && inputEl.value.length)
+                          ? formatSearchInput()
+                          : searchParams.keys,
+                        'all',
+                      );
+                      // track event in Google Analytics 4
+                      trackEvent(
+                        'Differential Abundance Search',
+                        'keyword_search',
+                        profile && profile.userid
+                          ? profile.userid.substring(profile.userid.indexOf('|') + 1)
+                          : 'anonymous',
+                        (multiSelections && multiSelections.length)
+                          || (inputEl && inputEl.value && inputEl.value.length)
+                          ? formatSearchInput()
+                          : searchParams.keys,
+                      );
+                    }}
+                  >
+                    Search
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-secondary search-reset ml-2"
+                    onClick={() => {
+                      clearSearchTermInput();
+                      resetSearch('all');
+                      setMultiSelections([]);
+                    }}
+                  >
+                    Reset
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-          {userType && renderFeatureLinks()}
           <div className="search-body-container mt-4 mb-2">
             {searching && <AnimatedLoadingIcon isFetching={searching} />}
             {!searching && searchError ? (
               <div className="alert alert-danger">{searchError}</div>
             ) : null}
-            {!searching &&
-            !searchResults.result &&
-            searchResults.errors &&
-            scope === 'all' ? (
-              <div className="alert alert-warning">
-                {searchResults.errors} Please modify your search parameters and
-                try again.
-              </div>
-            ) : null}
-            {!searching &&
-            (searchResults.result ||
-              (searchResults.errors && scope === 'filters')) ? (
-              <div className="search-results-wrapper-container row">
-                <div className="search-sidebar-container col-md-3">
-                  <SearchResultFilters
-                    searchParams={searchParams}
-                    changeResultFilter={changeResultFilter}
-                    handleSearch={handleSearch}
-                    resetSearch={resetSearch}
-                    hasResultFilters={hasResultFilters}
-                    profile={profile}
-                  />
+            {!searching
+              && !searchResults.result
+              && searchResults.errors
+              && scope === 'all' ? (
+                <div className="alert alert-warning">
+                  {searchResults.errors}
+                  {' '}
+                  Please modify your search parameters and
+                  try again.
                 </div>
-                <div className="tabbed-content col-md-9">
-                  {/* nav tabs */}
-                  <ul className="nav nav-tabs" id="dataTab" role="tablist">
-                    <li
-                      className="nav-item font-weight-bold"
-                      role="presentation"
-                    >
-                      <a
-                        className="nav-link active timewise-definition"
-                        id="timewise_dea_tab"
-                        data-toggle="pill"
-                        href="#timewise_dea"
-                        role="tab"
-                        aria-controls="timewise_dea"
-                        aria-selected="true"
-                      >
-                        Timewise
-                      </a>
-                      <Tooltip anchorSelect=".timewise-definition" place="top">
-                        Select time-point-specific differential analytes
-                      </Tooltip>
-                    </li>
-                    <li
-                      className="nav-item font-weight-bold"
-                      role="presentation"
-                    >
-                      <a
-                        className="nav-link training-definition"
-                        id="training_dea_tab"
-                        data-toggle="pill"
-                        href="#training_dea"
-                        role="tab"
-                        aria-controls="training_dea"
-                        aria-selected="false"
-                      >
-                        Training
-                      </a>
-                      <Tooltip anchorSelect=".training-definition" place="top">
-                        Select overall training differential analytes
-                      </Tooltip>
-                    </li>
-                  </ul>
-                  {/* tab panes */}
-                  <div className="tab-content mt-3">
-                    <div
-                      className="tab-pane fade show active"
-                      id="timewise_dea"
-                      role="tabpanel"
-                      aria-labelledby="timewise_dea_tab"
-                    >
-                      {timewiseResults.length ? (
-                        <TimewiseResultsTable
-                          timewiseData={timewiseResults}
-                          searchParams={searchParams}
-                          handleSearchDownload={handleSearchDownload}
-                        />
-                      ) : (
-                        scope === 'filters' && (
-                          <p className="mt-4">
-                            {searchResults.errors &&
-                            searchResults.errors.indexOf('No results found') !==
-                              -1 ? (
-                              <span>
-                                No matches found for the selected filters.
-                                Please refer to the{' '}
-                                <Link to="/summary">Summary Table</Link> for
-                                data that are available.
-                              </span>
-                            ) : (
-                              searchResults.errors
-                            )}
-                          </p>
-                        )
-                      )}
+              ) : null}
+            {!searching
+              && (searchResults.result
+                || (searchResults.errors && scope === 'filters')) ? (
+                  <div className="search-results-wrapper-container row">
+                    <div className="search-sidebar-container col-md-3">
+                      <SearchResultFilters
+                        searchParams={searchParams}
+                        changeResultFilter={changeResultFilter}
+                        handleSearch={handleSearch}
+                        resetSearch={resetSearch}
+                        hasResultFilters={hasResultFilters}
+                        profile={profile}
+                      />
                     </div>
-                    <div
-                      className="tab-pane fade"
-                      id="training_dea"
-                      role="tabpanel"
-                      aria-labelledby="training_dea_tab"
-                    >
-                      {trainingResults.length ? (
-                        <TrainingResultsTable
-                          trainingData={trainingResults}
-                          searchParams={searchParams}
-                          handleSearchDownload={handleSearchDownload}
-                        />
-                      ) : (
-                        scope === 'filters' && (
-                          <p className="mt-4">
-                            {searchResults.errors &&
-                            searchResults.errors.indexOf('No results found') !==
-                              -1 ? (
-                              <span>
-                                No matches found for the selected filters.
-                                Please refer to the{' '}
-                                <Link to="/summary">Summary Table</Link> for
-                                data that are available.
-                              </span>
+                    {/* render search results for human or rat */}
+                    {searchParams.species === 'rat' && (
+                      <div className="tabbed-content col-md-9">
+                        {/* nav tabs */}
+                        <ul className="nav nav-tabs" id="dataTab" role="tablist">
+                          <li
+                            className="nav-item font-weight-bold"
+                            role="presentation"
+                          >
+                            <a
+                              className="nav-link active timewise-definition"
+                              id="timewise_dea_tab"
+                              data-toggle="pill"
+                              href="#timewise_dea"
+                              role="tab"
+                              aria-controls="timewise_dea"
+                              aria-selected="true"
+                            >
+                              Timewise
+                            </a>
+                            <Tooltip anchorSelect=".timewise-definition" place="top">
+                              Select time-point-specific differential analytes
+                            </Tooltip>
+                          </li>
+                          <li
+                            className="nav-item font-weight-bold"
+                            role="presentation"
+                          >
+                            <a
+                              className="nav-link training-definition"
+                              id="training_dea_tab"
+                              data-toggle="pill"
+                              href="#training_dea"
+                              role="tab"
+                              aria-controls="training_dea"
+                              aria-selected="false"
+                            >
+                              Training
+                            </a>
+                            <Tooltip anchorSelect=".training-definition" place="top">
+                              Select overall training differential analytes
+                            </Tooltip>
+                          </li>
+                        </ul>
+                        {/* tab panes */}
+                        <div className="tab-content mt-3">
+                          <div
+                            className="tab-pane fade show active"
+                            id="timewise_dea"
+                            role="tabpanel"
+                            aria-labelledby="timewise_dea_tab"
+                          >
+                            {timewiseResults.length ? (
+                              <TimewiseResultsTable
+                                timewiseData={timewiseResults}
+                                searchParams={searchParams}
+                                handleSearchDownload={handleSearchDownload}
+                              />
                             ) : (
-                              searchResults.errors
+                              scope === 'filters' && (
+                                <p className="mt-4">
+                                  {searchResults.errors &&
+                                  searchResults.errors.indexOf('No results found') !==
+                                    -1 ? (
+                                    <span>
+                                      No matches found for the selected filters.
+                                      Please refer to the{' '}
+                                      <Link to="/summary">Summary Table</Link> for
+                                      data that are available.
+                                    </span>
+                                  ) : (
+                                    searchResults.errors
+                                  )}
+                                </p>
+                              )
                             )}
-                          </p>
-                        )
-                      )}
-                    </div>
+                          </div>
+                          <div
+                            className="tab-pane fade"
+                            id="training_dea"
+                            role="tabpanel"
+                            aria-labelledby="training_dea_tab"
+                          >
+                            {trainingResults.length ? (
+                              <TrainingResultsTable
+                                trainingData={trainingResults}
+                                searchParams={searchParams}
+                                handleSearchDownload={handleSearchDownload}
+                              />
+                            ) : (
+                              scope === 'filters' && (
+                                <p className="mt-4">
+                                  {searchResults.errors &&
+                                  searchResults.errors.indexOf('No results found') !==
+                                    -1 ? (
+                                    <span>
+                                      No matches found for the selected filters.
+                                      Please refer to the{' '}
+                                      <Link to="/summary">Summary Table</Link> for
+                                      data that are available.
+                                    </span>
+                                  ) : (
+                                    searchResults.errors
+                                  )}
+                                </p>
+                              )
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    {searchParams.species === 'human' && (
+                      <div className="human-da-results-content-container tabbed-content col-md-9">
+                        <div className="tab-content mt-3">
+                          {humanResults.length ? (
+                            <HumanResultsTable
+                              humanData={humanResults}
+                              searchParams={searchParams}
+                              handleSearchDownload={handleSearchDownload}
+                            />
+                          ) : (
+                            scope === 'filters' && (
+                              <p className="mt-4">
+                                {searchResults.errors
+                                && searchResults.errors.indexOf('No results found') !== -1 ? (
+                                  <span>
+                                    No matches found for the selected filters.
+                                    Please refer to the
+                                    {' '}
+                                    <Link to="/summary">Summary Table</Link>
+                                    {' '}
+                                    for data that are available.
+                                  </span>
+                                  ) : (
+                                    searchResults.errors
+                                  )}
+                              </p>
+                            )
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <ResultsDownloadModal
-                    downloadPath={downloadResults.path}
-                    downloadError={downloadError}
-                    downloading={downloading}
-                    profile={profile}
-                  />
-                </div>
-              </div>
-            ) : null}
+              ) : null}
+            <ResultsDownloadModal
+              downloadPath={downloadResults.path}
+              downloadError={downloadError}
+              downloading={downloading}
+              profile={profile}
+              species={searchParams.species}
+            />
           </div>
         </div>
         <UserSurveyModal
@@ -485,6 +524,7 @@ function RadioButtonComponent({ ktype, keyType, elId, label, eventHandler }) {
 
 // Radio buttons for selecting the search context
 function RadioButton({
+  searchParams,
   changeParam,
   ktype,
   resetSearch,
@@ -492,7 +532,7 @@ function RadioButton({
   setMultiSelections,
   inputEl,
 }) {
-  const radioButtons = [
+  const ratOptions = [
     {
       keyType: 'gene',
       id: 'inlineRadioGene',
@@ -510,7 +550,28 @@ function RadioButton({
     },
   ];
 
+  const humanOptions = [
+    {
+      keyType: 'gene',
+      id: 'inlineRadioGene',
+      label: 'Gene symbol',
+    },
+    {
+      keyType: 'protein',
+      id: 'inlineRadioProtein',
+      label: 'Protein ID',
+    },
+    {
+      keyType: 'metab',
+      id: 'inlineRadioMetab',
+      label: 'Metabolite name',
+    },
+  ];
+
+  const radioButtons = searchParams.species === 'human' ? humanOptions : ratOptions;
+
   const handleRadioChange = (e) => {
+    const selectedSpecis = searchParams.species;
     resetSearch('all');
     clearInput();
     setMultiSelections([]);
@@ -518,6 +579,7 @@ function RadioButton({
     if (inputEl && inputEl.value && inputEl.value.length) {
       inputEl.value = '';
     }
+    changeParam('species', selectedSpecis);
   };
 
   return (
@@ -584,8 +646,54 @@ function PrimaryOmicsFilter({ omics, toggleOmics }) {
   );
 }
 
+// Render species selection filter
+function SpeciesToggleSwitch({
+  onChange,
+  defaultSelected = 'rat',
+  ratLabel = 'Rat',
+  humanLabel = 'Human',
+  disabled = false,
+}) {
+  const [selected, setSelected] = useState(defaultSelected);
+
+  useEffect(() => {
+    setSelected(defaultSelected);
+  }, [defaultSelected]);
+
+  const handleToggle = (value) => {
+    if (disabled) return;
+
+    setSelected(value);
+    if (onChange) {
+      onChange(value);
+    }
+  };
+
+  return (
+    <div className={`slide-toggle-container row mt-2 ${disabled ? 'disabled' : ''}`}>
+      <div className="slide-toggle-switch mx-auto">
+        <div
+          className={`slide-toggle-option ${selected === 'rat' ? 'selected' : ''}`}
+          onClick={() => handleToggle('rat')}
+        >
+          {ratLabel}
+        </div>
+        <div
+          className={`slide-toggle-option ${selected === 'human' ? 'selected' : ''}`}
+          onClick={() => handleToggle('human')}
+        >
+          {humanLabel}
+        </div>
+        <div
+          className={`slide-toggle-slider ${selected === 'human' ? 'right' : 'left'}`}
+        />
+      </div>
+    </div>
+  );
+}
+
 // Render modal message
-function ResultsDownloadLink({ downloadPath, downloadError, profile }) {
+function ResultsDownloadLink({ downloadPath, downloadError, profile, species }) {
   const dispatch = useDispatch();
 
   // track event when user clicks download link
@@ -603,10 +711,17 @@ function ResultsDownloadLink({ downloadPath, downloadError, profile }) {
     );
   }
 
-  const host =
+  const ratDataHost =
     process.env.NODE_ENV !== 'production'
       ? process.env.REACT_APP_ES_PROXY_HOST_DEV
       : process.env.REACT_APP_ES_PROXY_HOST;
+
+  const humanDataHost =
+    process.env.NODE_ENV !== 'production'
+      ? process.env.REACT_APP_ES_PROXY_PRECAWG_HOST_DEV
+      : process.env.REACT_APP_ES_PROXY_PRECAWG_HOST;
+
+  const host = species === 'human' ? humanDataHost : ratDataHost;
 
   const resultDownloadFilePath =
     downloadPath &&
@@ -638,6 +753,7 @@ function ResultsDownloadModal({
   downloadError,
   downloading,
   profile,
+  species,
 }) {
   const dispatch = useDispatch();
 
@@ -689,6 +805,7 @@ function ResultsDownloadModal({
                 downloadPath={downloadPath}
                 downloadError={downloadError}
                 profile={profile}
+                species={species}
               />
             ) : (
               <div className="loading-spinner w-100 text-center my-3">
@@ -738,8 +855,6 @@ SearchPage.propTypes = {
   downloading: PropTypes.bool,
   downloadError: PropTypes.string,
   handleSearchDownload: PropTypes.func.isRequired,
-  handleQCDataFetch: PropTypes.func.isRequired,
-  lastModified: PropTypes.string,
   hasResultFilters: PropTypes.shape({
     assay: PropTypes.object,
     comparison_group: PropTypes.object,
@@ -758,7 +873,6 @@ SearchPage.defaultProps = {
   downloadResults: {},
   downloading: false,
   downloadError: '',
-  lastModified: '',
   hasResultFilters: {},
 };
 
@@ -766,7 +880,6 @@ const mapStateToProps = (state) => ({
   ...state.auth,
   ...state.search,
   allFiles: state.browseData.allFiles,
-  lastModified: state.dataStatus.qcData.lastModified,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -779,7 +892,6 @@ const mapDispatchToProps = (dispatch) => ({
   resetSearch: (scope) => dispatch(SearchActions.searchReset(scope)),
   handleSearchDownload: (params, analysis) =>
     dispatch(SearchActions.handleSearchDownload(params, analysis)),
-  handleQCDataFetch: () => dispatch(DataStatusActions.fetchData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
