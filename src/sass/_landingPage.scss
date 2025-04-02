@@ -399,6 +399,17 @@ body.homepage {
       }
     }
   }
+
+  .compliance-review-notice {
+    z-index: 300;
+    right: 0;
+    bottom: 0;
+
+    .toast.show {
+      opacity: 0.85;
+      max-width: 400px;
+    }
+  }
 }
 
 /****************************************************
