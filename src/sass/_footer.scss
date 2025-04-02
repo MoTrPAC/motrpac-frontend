@@ -19,6 +19,11 @@ footer {
         color: #fff;
         text-decoration: underline;
       }
+
+      &.compliance-review-notice {
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
     }
   }
 }
