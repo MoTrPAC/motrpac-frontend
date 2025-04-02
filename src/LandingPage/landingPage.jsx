@@ -19,6 +19,8 @@ import NatureIssueCover from '../assets/LandingPageGraphics/nature_issue_cover.j
 import BackgroundVideo from './components/backgroundVideo';
 import Figure1C from './components/figure1c';
 
+import ComplianceReviewNotice from '../lib/ui/complianceReviewNotice';
+
 // import network figure 4e visualization dataset
 import landscapeFigure4eNetworkData from '../data/landscape_figure_4e';
 
@@ -335,6 +337,7 @@ export function LandingPage({ isAuthenticated, profile }) {
           </div>
         </div>
       </section>
+      <ComplianceReviewNotice />
     </div>
   );
 }
