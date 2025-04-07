@@ -49,6 +49,21 @@ class Auth {
           authResult.expiresIn * 1000 + new Date().getTime(),
         );
         localStorage.setItem('expires_at', this.expiresAt);
+
+        // Create a date object for cookie expiration
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 1);
+        // Set the cookie name and value
+        const name = 'userSession';
+        // Use crypto.getRandomValues for cryptographically strong random values
+        const array = new Uint8Array(32);
+        window.crypto.getRandomValues(array);
+        const value = Array.from(array)
+          .map((byte) => byte.toString(16).padStart(2, '0'))
+          .join('');
+        // Set the cookie
+        document.cookie = `${name}=${value}; Domain=.motrpac-data.org; Path=/; Expires=${expirationDate.toUTCString()}; Secure; SameSite=Strict;`;
+
         cb(null, authResult);
       } else if (err) {
         console.log(`${err.error}: ${err.errorDescription}`);
