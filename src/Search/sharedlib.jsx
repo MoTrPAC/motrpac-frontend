@@ -600,8 +600,8 @@ export const transformData = (arr) => {
       const newFeatureId = item.feature_id;
       let featureLink = '';
       // Transform gene values and refmet names for humans
-      switch (omicsValue) {
-        case 'transcriptomics':
+      switch (true) {
+        case omicsValue.startsWith('transcriptomics'):
           featureLink = `${dataVizHost}?tissues=${item.tissue.toLowerCase()}&assays=${item.assay}&ftype=genes&genes=${newGeneVal}&fids=${newFeatureId}`;
           item.gene_symbol = (
             <a
@@ -613,7 +613,7 @@ export const transformData = (arr) => {
             </a>
           );
           break;
-        case 'proteomics':
+        case omicsValue.startsWith('proteomics'):
           featureLink = `${dataVizHost}?tissues=${item.tissue.toLowerCase()}&assays=${item.assay}&ftype=prot&prot=${newFeatureId}&fids=${newFeatureId}`;
           item.gene_symbol = (
             <a
@@ -625,7 +625,7 @@ export const transformData = (arr) => {
             </a>
           );
           break;
-        case 'metabolomics-targeted' || 'metabolomics-untargeted':
+        case omicsValue.startsWith('metabolomics'):
           featureLink = `${dataVizHost}?tissues=${item.tissue.toLowerCase()}&assays=${item.assay}&ftype=metab&metab=${encodeURIComponent(newRefmetName)}&fids=${encodeURIComponent(newFeatureId)}`;
           item.refmet_name = (
             <a
