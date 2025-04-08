@@ -587,7 +587,7 @@ export const transformData = (arr) => {
 
   const dataVizHost = process.env.NODE_ENV !== 'production'
     ? 'https://data-viz-dev.motrpac-data.org/precawg/'
-    : 'https://data-viz.motrpac-data.org/precawg/';
+    : 'https://data-viz-dev.motrpac-data.org/precawg/';
 
   tranformArray.forEach((item) => {
     // Determine if the data is human or rat
