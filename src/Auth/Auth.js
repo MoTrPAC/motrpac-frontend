@@ -1,6 +1,19 @@
 /* eslint-disable no-console */
 import auth0 from 'auth0-js';
+import * as jose from 'jose';
 import AUTH0_CONFIG from './auth0-variables';
+
+async function createJWT(email) {
+  const secretKey = new TextEncoder().encode(process.env.REACT_APP_JWT_SIGNING_SECRET);
+
+  const jwt = await new jose.SignJWT({ email })
+    .setProtectedHeader({ alg: 'HS256' })
+    .setIssuedAt()
+    .setExpirationTime('1h')
+    .sign(secretKey);
+
+  return jwt;
+}
 
 /**
  * A class for Auth0 authentication.
@@ -49,20 +62,18 @@ class Auth {
           authResult.expiresIn * 1000 + new Date().getTime(),
         );
         localStorage.setItem('expires_at', this.expiresAt);
-
+        const { userType } = this.idTokenPayload['https://motrpac.org/user_metadata'];
         // Create a date object for cookie expiration
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 1);
         // Set the cookie name and value
-        const name = 'userSession';
-        // Use crypto.getRandomValues for cryptographically strong random values
-        const array = new Uint8Array(32);
-        window.crypto.getRandomValues(array);
-        const value = Array.from(array)
-          .map((byte) => byte.toString(16).padStart(2, '0'))
-          .join('');
-        // Set the cookie
-        document.cookie = `${name}=${value}; Domain=.motrpac-data.org; Path=/; Expires=${expirationDate.toUTCString()}; Secure; SameSite=Strict;`;
+        const name = 'jwt';
+        // Set the cookie only if the user is internal
+        if (userType === 'internal') {
+          createJWT(this.idTokenPayload.email).then((token) => {
+            document.cookie = `${name}=${token}; Domain=.motrpac-data.org; Path=/; Expires=${expirationDate.toUTCString()}; HttpOnly; Secure; SameSite=Strict;`;
+          });
+        }
 
         cb(null, authResult);
       } else if (err) {
