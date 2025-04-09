@@ -71,7 +71,7 @@ class Auth {
         // Set the cookie only if the user is internal
         if (userType === 'internal') {
           createJWT(this.idTokenPayload.email).then((token) => {
-            document.cookie = `${name}=${token}; Domain=.motrpac-data.org; Path=/; Expires=${expirationDate.toUTCString()}; Secure; SameSite=Strict;`;
+            document.cookie = `${name}=${token}; Domain=.motrpac-data.org; Path=/; Expires=${expirationDate.toUTCString()}; Secure; SameSite=Lax;`;
           });
         }
 
