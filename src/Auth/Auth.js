@@ -62,13 +62,13 @@ class Auth {
           authResult.expiresIn * 1000 + new Date().getTime(),
         );
         localStorage.setItem('expires_at', this.expiresAt);
-        const { userType } = this.idTokenPayload['https://motrpac.org/user_metadata'];
+        const { userType, email } = this.idTokenPayload['https://motrpac.org/user_metadata'];
         // Create a date object for cookie expiration
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 1);
         // Set the cookie only if the user is internal
         if (userType === 'internal') {
-          createJWT(this.idTokenPayload.email).then((token) => {
+          createJWT(email).then((token) => {
             localStorage.setItem('ut', token);
           });
         }
