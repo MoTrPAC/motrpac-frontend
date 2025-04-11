@@ -66,12 +66,10 @@ class Auth {
         // Create a date object for cookie expiration
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 1);
-        // Set the cookie name and value
-        const name = 'jwt';
         // Set the cookie only if the user is internal
         if (userType === 'internal') {
           createJWT(this.idTokenPayload.email).then((token) => {
-            document.cookie = `${name}=${token}; Domain=.motrpac-data.org; Path=/; Expires=${expirationDate.toUTCString()}; Secure; SameSite=Lax;`;
+            localStorage.setItem('ut', token);
           });
         }
 
