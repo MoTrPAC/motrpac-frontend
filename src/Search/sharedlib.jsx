@@ -585,9 +585,12 @@ function normalizeString(str) {
 export const transformData = (arr) => {
   const tranformArray = [...arr];
 
+  // Get localStorage item
+  const token = localStorage.getItem('ut');
+
   const dataVizHost = process.env.NODE_ENV !== 'production'
-    ? 'https://data-viz-dev.motrpac-data.org/precawg/'
-    : 'https://data-viz-dev.motrpac-data.org/precawg/';
+    ? `https://data-viz-dev.motrpac-data.org/precawg/?${token && token.length ? `ut=${token}&` : ''}`
+    : `https://data-viz-dev.motrpac-data.org/precawg/?${token && token.length ? `ut=${token}&` : ''}`;
 
   tranformArray.forEach((item) => {
     // Determine if the data is human or rat
@@ -602,10 +605,10 @@ export const transformData = (arr) => {
       // Transform gene values and refmet names for humans
       switch (true) {
         case omicsValue.startsWith('transcriptomics'):
-          featureLink = `${dataVizHost}?tissues=${item.tissue.toLowerCase()}&assays=${item.assay}&ftype=genes&genes=${newGeneVal}&fids=${newFeatureId}`;
+          featureLink = `${dataVizHost}tissues=${item.tissue.toLowerCase()}&assays=${item.assay}&ftype=genes&genes=${newGeneVal}&fids=${newFeatureId}`;
           item.gene_symbol = (
             <a
-              href={`${dataVizHost}?query=${newGeneVal}`}
+              href={`${dataVizHost}query=${newGeneVal}`}
               target="_blank"
               rel="noreferrer"
             >
@@ -614,10 +617,10 @@ export const transformData = (arr) => {
           );
           break;
         case omicsValue.startsWith('proteomics'):
-          featureLink = `${dataVizHost}?tissues=${item.tissue.toLowerCase()}&assays=${item.assay}&ftype=prot&prot=${newFeatureId}&fids=${newFeatureId}`;
+          featureLink = `${dataVizHost}tissues=${item.tissue.toLowerCase()}&assays=${item.assay}&ftype=prot&prot=${newFeatureId}&fids=${newFeatureId}`;
           item.gene_symbol = (
             <a
-              href={`${dataVizHost}?query=${newGeneVal}`}
+              href={`${dataVizHost}query=${newGeneVal}`}
               target="_blank"
               rel="noreferrer"
             >
@@ -626,10 +629,10 @@ export const transformData = (arr) => {
           );
           break;
         case omicsValue.startsWith('metabolomics'):
-          featureLink = `${dataVizHost}?tissues=${item.tissue.toLowerCase()}&assays=${item.assay}&ftype=metab&metab=${encodeURIComponent(newRefmetName)}&fids=${encodeURIComponent(newFeatureId)}`;
+          featureLink = `${dataVizHost}tissues=${item.tissue.toLowerCase()}&assays=${item.assay}&ftype=metab&metab=${encodeURIComponent(newRefmetName)}&fids=${encodeURIComponent(newFeatureId)}`;
           item.refmet_name = (
             <a
-              href={`${dataVizHost}?query=${encodeURIComponent(newRefmetName)}`}
+              href={`${dataVizHost}query=${encodeURIComponent(newRefmetName)}`}
               target="_blank"
               rel="noreferrer"
             >
@@ -638,10 +641,10 @@ export const transformData = (arr) => {
           );
           break;
         default:
-          featureLink = `${dataVizHost}?tissues=${item.tissue.toLowerCase()}&assays=${item.assay}&ftype=genes&genes=${newGeneVal}&fids=${newFeatureId}`;
+          featureLink = `${dataVizHost}tissues=${item.tissue.toLowerCase()}&assays=${item.assay}&ftype=genes&genes=${newGeneVal}&fids=${newFeatureId}`;
           item.gene_symbol = (
             <a
-              href={`${dataVizHost}?query=${newGeneVal}`}
+              href={`${dataVizHost}query=${newGeneVal}`}
               target="_blank"
               rel="noreferrer"
             >
