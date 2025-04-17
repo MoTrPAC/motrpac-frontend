@@ -27,6 +27,13 @@ function FeatureLinks({
     }
   };
 
+  // Get localStorage item
+  const token = localStorage.getItem('ut');
+
+  const dataVizHost = process.env.NODE_ENV !== 'production'
+    ? `https://data-viz-dev.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`
+    : `https://data-viz.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`;
+
   const features = [
     {
       name: 'data-download',
@@ -92,7 +99,7 @@ function FeatureLinks({
     },
     {
       name: 'precovid-human-data-visualization',
-      route: process.env.NODE_ENV !== 'production' ? 'https://data-viz-dev.motrpac-data.org/precawg' : 'https://data-viz.motrpac-data.org/precawg',
+      route: dataVizHost,
       description:
         'An interactive data visualization tool for the analysis of pre-COVID human sedentary adults study data.',
       icon: 'airline_seat_recline_normal',

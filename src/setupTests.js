@@ -1,6 +1,11 @@
 import { configure } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
+const { TextEncoder, TextDecoder } = require('util');
+
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+
 const crypto = require('crypto');
 
 configure({ adapter: new Adapter() });

@@ -123,7 +123,7 @@ export const trainingResultsTablePropType = {
 
 export const humanResultsTablePropType = {
   gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  refmet_name: PropTypes.string,
+  refmet_name: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   feature_id: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tissue: PropTypes.string,
   assay: PropTypes.string,
@@ -585,9 +585,86 @@ function normalizeString(str) {
 export const transformData = (arr) => {
   const tranformArray = [...arr];
 
+  // Get localStorage item
+  const token = localStorage.getItem('ut');
+
+  const dataVizHost = process.env.NODE_ENV !== 'production'
+    ? `https://data-viz-dev.motrpac-data.org/precawg/?${token && token.length ? `ut=${token}&` : ''}`
+    : `https://data-viz.motrpac-data.org/precawg/?${token && token.length ? `ut=${token}&` : ''}`;
+
   tranformArray.forEach((item) => {
-    // Transform gene values
-    if (item.gene_symbol && item.gene_symbol.length) {
+    // Determine if the data is human or rat
+    const isHumanData = item.contrast1_randomGroupCode && item.contrast1_randomGroupCode !== 'NA';
+
+    if (isHumanData && item.feature_id && item.feature_id.length) {
+      const omicsValue = item.omics;
+      const newGeneVal = item.gene_symbol;
+      const newRefmetName = item.refmet_name;
+      const newFeatureId = item.feature_id;
+      let featureLink = '';
+      // Transform gene values and refmet names for humans
+      switch (true) {
+        case omicsValue.startsWith('transcriptomics'):
+          featureLink = `${dataVizHost}tissues=${item.tissue.toLowerCase()}&assays=${item.assay}&ftype=genes&genes=${newGeneVal}&fids=${newFeatureId}`;
+          item.gene_symbol = (
+            <a
+              href={`${dataVizHost}query=${newGeneVal}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {newGeneVal.toUpperCase()}
+            </a>
+          );
+          break;
+        case omicsValue.startsWith('proteomics'):
+          featureLink = `${dataVizHost}tissues=${item.tissue.toLowerCase()}&assays=${item.assay}&ftype=prot&prot=${newFeatureId}&fids=${newFeatureId}`;
+          item.gene_symbol = (
+            <a
+              href={`${dataVizHost}query=${newGeneVal}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {newGeneVal.toUpperCase()}
+            </a>
+          );
+          break;
+        case omicsValue.startsWith('metabolomics'):
+          featureLink = `${dataVizHost}tissues=${item.tissue.toLowerCase()}&assays=${item.assay}&ftype=metab&metab=${encodeURIComponent(newRefmetName)}&fids=${encodeURIComponent(newFeatureId)}`;
+          item.refmet_name = (
+            <a
+              href={`${dataVizHost}query=${encodeURIComponent(newRefmetName)}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {newRefmetName}
+            </a>
+          );
+          break;
+        default:
+          featureLink = `${dataVizHost}tissues=${item.tissue.toLowerCase()}&assays=${item.assay}&ftype=genes&genes=${newGeneVal}&fids=${newFeatureId}`;
+          item.gene_symbol = (
+            <a
+              href={`${dataVizHost}query=${newGeneVal}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {newGeneVal.toUpperCase()}
+            </a>
+          );
+          break;
+      }
+      // Transform feature_id values into links
+      item.feature_id = (
+        <a
+          href={featureLink}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {newFeatureId}
+        </a>
+      );
+    } else if (item.gene_symbol && item.gene_symbol.length) {
+      // Transform gene values for rats
       const newGeneVal = item.gene_symbol;
       item.gene_symbol = (
         <a
