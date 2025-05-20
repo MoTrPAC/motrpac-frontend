@@ -49,7 +49,7 @@
     "start": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "test": "vitest --ui",
+    "test": "vitest",
     "storybook": "storybook dev -p 9009",
     "build-storybook": "storybook build",
     "sass-lint": "stylelint --config=stylelint.config.js '**/*.scss'",
