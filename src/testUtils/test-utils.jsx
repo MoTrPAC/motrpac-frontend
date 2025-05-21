@@ -16,7 +16,7 @@ export function renderWithProviders(
   function Wrapper({ children }) {
     return (
       <Provider store={store}>
-        <MemoryRouter>
+        <MemoryRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true}}>
           {children}
         </MemoryRouter>
       </Provider>
@@ -38,7 +38,7 @@ export function renderWithRouter(
 ) {
   return render(
     <Provider store={store}>
-      <MemoryRouter initialEntries={[route]}>
+      <MemoryRouter initialEntries={[route]} future={{ v7_relativeSplatPath: true, v7_startTransition: true}}>
         {ui}
       </MemoryRouter>
     </Provider>

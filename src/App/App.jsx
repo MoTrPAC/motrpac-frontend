@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Callback from '@Auth/callback';
-import AuthWrapper from '@Auth/AuthWrapper';
+import Callback from '../Auth/callback';
+import AuthWrapper from '../Auth/AuthWrapper';
 import Footer from '../Footer/footer';
 import { PageTracker } from '../GoogleAnalytics/googleAnalytics.jsx';
 import LandingPageConnected from '../LandingPage/landingPage';
@@ -70,7 +70,7 @@ const Phenotype = lazy(() => import('../TechnicalGuides/phenotype'));
 
 function App({ history = History }) {
   return (
-    <BrowserRouter history={history}>
+    <BrowserRouter history={history} future={{ v7_relativeSplatPath: true, v7_startTransitions: true }}>
       <ScrollToTop/>
       <div className="App container-fluid">
         <header>
