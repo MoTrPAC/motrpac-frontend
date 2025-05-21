@@ -9,10 +9,10 @@ import LactateChangePlot from '../plots/lactateChange';
 import PhenotypePlotControls from '../plots/phenotypePlotControls';
 
 function PhenotypePass1b06Rats({
-  weightPlot,
-  bodyFatPlot,
-  vo2Plot,
-  lactatePlot,
+  weightPlot = 'one_week_program',
+  bodyFatPlot =  'one_week_program',
+  vo2Plot = 'one_week_program',
+  lactatePlot = 'one_week_program',
   toggleWeightPlot,
   toggleBodyFatPlot,
   toggleVo2Plot,
@@ -142,13 +142,6 @@ PhenotypePass1b06Rats.propTypes = {
   toggleBodyFatPlot: PropTypes.func.isRequired,
   toggleVo2Plot: PropTypes.func.isRequired,
   toggleLactatePlot: PropTypes.func.isRequired,
-};
-
-PhenotypePass1b06Rats.defaultProps = {
-  weightPlot: 'one_week_program',
-  bodyFatPlot: 'one_week_program',
-  vo2Plot: 'one_week_program',
-  lactatePlot: 'one_week_program',
 };
 
 const mapStateToProps = (state) => ({

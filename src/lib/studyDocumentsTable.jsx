@@ -5,7 +5,7 @@ import { AnimalStudyDocuments } from '../DataAccess/studyDocuments';
 
 import '@styles/studyDocumentsTable.scss';
 
-function StudyDocumentsTable({ currentView }) {
+function StudyDocumentsTable({ currentView = '' }) {
   const newArray = [...AnimalStudyDocuments];
   if (currentView === 'internal') {
     newArray.pop();
@@ -47,10 +47,6 @@ function StudyDocumentsTable({ currentView }) {
 
 StudyDocumentsTable.propTypes = {
   currentView: PropTypes.string,
-};
-
-StudyDocumentsTable.defaultProps = {
-  currentView: '',
 };
 
 export default StudyDocumentsTable;
