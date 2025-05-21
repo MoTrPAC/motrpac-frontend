@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 import * as path from "node:path";
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
-import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -59,6 +59,15 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
       include: ['src/**/*'],
       exclude: ['src/App/__test__/App.test.jsx'],
+    },
+  },
+  optimizeDeps: {
+    include: ['react-lite-youtube-embed'],
+    esbuildOptions: {
+      // Force it to be treated as a CommonJS module
+      loader: {
+        '.js': 'jsx',
+      },
     },
   },
 });
