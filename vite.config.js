@@ -61,13 +61,4 @@ export default defineConfig({
       exclude: ['src/App/__test__/App.test.jsx'],
     },
   },
-  optimizeDeps: {
-    include: ['react-lite-youtube-embed'],
-    esbuildOptions: {
-      // Force it to be treated as a CommonJS module
-      loader: {
-        '.js': 'jsx',
-      },
-    },
-  },
 });
