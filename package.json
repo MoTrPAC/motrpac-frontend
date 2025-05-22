@@ -1,6 +1,7 @@
 {
   "name": "MoTrPAC",
   "version": "3.0.0",
+  "type": "module",
   "packageManager": "yarn@4.1.1",
   "private": true,
   "dependencies": {
