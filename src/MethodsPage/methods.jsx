@@ -50,16 +50,21 @@ export function Methods({ profile= {} }) {
           </div>
         </div>
         {userType && userType === 'internal' ? (
-          <section className="study-docs-container">
-            <StudyDocumentsTable currentView={userType} />
-            <div className="pass-mop-link">
-              <ExternalLink
-                to="https://www.motrpac.org/secure/documents/dspList.cfm?documentFolderCurrent=BEC8E9C5-C740-4D8F-91F2-5977E98CF6A0"
-                label="Manuals of Procedures for Preclinical Animal Study Sites"
-              />
-              <span className="login-required-note ml-1">(login required)</span>
-            </div>
-          </section>
+          <>
+            <section className="study-docs-container">
+              <StudyDocumentsTable currentView={userType} />
+              <div className="pass-mop-link">
+                <ExternalLink
+                  to="https://www.motrpac.org/secure/documents/dspList.cfm?documentFolderCurrent=BEC8E9C5-C740-4D8F-91F2-5977E98CF6A0"
+                  label="Manuals of Procedures for Preclinical Animal Study Sites"
+                />
+                <span className="login-required-note ml-1">(login required)</span>
+              </div>
+            </section>
+            <section className="study-docs-container pt-4">
+              <HumanStudyDocumentsTable />
+            </section>
+          </>
         ) : (
           <>
             <section className="study-docs-container">

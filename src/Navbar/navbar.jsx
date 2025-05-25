@@ -182,6 +182,16 @@ export function Navbar({
             id="navbarSupportedContent"
           >
             <ul className="navbar-nav">
+              {isAuthenticated && hasAccess && (
+                <li className="nnav-item navItem">
+                  <Link
+                    to="/dashboard"
+                    className="nav-link"
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+              )}
               <li className="nnav-item navItem">
                 <Link
                   to="/data-download"

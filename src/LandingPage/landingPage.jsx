@@ -6,10 +6,11 @@ import { connect } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { Link, Navigate } from 'react-router-dom';
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
-
 import LogoMoTrPACWhite from '../assets/LandingPageGraphics/logo-motrpac-white.png';
 // import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.svg';
 import NatureIssueCover from '../assets/LandingPageGraphics/nature_issue_cover.jpg';
+import ComplianceReviewNotice from '../lib/ui/complianceReviewNotice';
+
 // import network figure 4e visualization dataset
 import landscapeFigure4eNetworkData from '../data/landscape_figure_4e';
 import Footer from '../Footer/footer';
@@ -321,7 +322,9 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
           </div>
         </div>
       </section>
-    </div>);
+      <ComplianceReviewNotice />
+    </div>
+  );
 }
 
 LandingPage.propTypes = {

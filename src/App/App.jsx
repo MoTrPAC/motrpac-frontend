@@ -42,6 +42,7 @@ const SearchPageConnected = lazy(() => import('../Search/searchPage'));
 const GeneCentricViewConnected = lazy(
   () => import('../AnalysisPage/GeneCentricViewRat/geneCentricViewPage'),
 );
+const DashboardConnected = lazy(() => import('../Dashboard/dashboard'));
 const GraphicalClustering = lazy(
   () => import('../AnalysisPage/GraphicalClustering/graphicalClusteringPage'),
 );
@@ -133,6 +134,11 @@ function App({ history = History }) {
                   <Route
                     path="/multiomics-working-groups"
                     element={<MultiOmicsWorkingGroups/>}
+                  />
+                  <Route
+                    path="/dashboard"
+                    exact
+                    element={<DashboardConnected/>}
                   />
                 </Route>
                 <Route

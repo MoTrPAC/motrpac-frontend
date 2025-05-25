@@ -1,6 +1,19 @@
 /* eslint-disable no-console */
 import auth0 from 'auth0-js';
+import * as jose from 'jose';
 import AUTH0_CONFIG from './auth0-variables';
+
+async function createJWT(email) {
+  const secretKey = new TextEncoder().encode(process.env.REACT_APP_JWT_SIGNING_SECRET);
+
+  const jwt = await new jose.SignJWT({ email })
+    .setProtectedHeader({ alg: 'HS256' })
+    .setIssuedAt()
+    .setExpirationTime('1h')
+    .sign(secretKey);
+
+  return jwt;
+}
 
 /**
  * A class for Auth0 authentication.
@@ -49,6 +62,17 @@ class Auth {
           authResult.expiresIn * 1000 + new Date().getTime(),
         );
         localStorage.setItem('expires_at', this.expiresAt);
+        const { userType, email } = this.idTokenPayload['https://motrpac.org/user_metadata'];
+        // Create a date object for cookie expiration
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 1);
+        // Set the cookie only if the user is internal
+        if (userType === 'internal') {
+          createJWT(email).then((token) => {
+            localStorage.setItem('ut', token);
+          });
+        }
+
         cb(null, authResult);
       } else if (err) {
         console.log(`${err.error}: ${err.errorDescription}`);

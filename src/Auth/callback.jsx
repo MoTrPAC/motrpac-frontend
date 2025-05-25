@@ -21,7 +21,7 @@ function Callback() {
           <h3>{message || 'Authenticating...'}</h3>
         </div>
       ) : (
-        <Navigate to="/search"/>
+        <Navigate to="/dashboard" />
       )}
     </>
   );

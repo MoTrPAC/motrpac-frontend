@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import '@styles/footer.scss'
 
@@ -9,6 +9,9 @@ import '@styles/footer.scss'
  * @returns {object} JSX representation of the global footer.
  */
 function Footer() {
+  const location = useLocation();
+  const path = location.pathname;
+
   // Get current copyright year
   const getCopyrightYear = () => {
     const today = new Date();
@@ -19,6 +22,14 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="footer-disclaimers">
+        {path !== '/' && (
+          <div className="footer-content compliance-review-notice mb-2">
+            <span>
+              This repository is under review for potential modification in
+              compliance with Administration directives.
+            </span>
+          </div>
+        )}
         <div className="footer-content">
           <span>
             MoTrPAC Data Hub is designed and maintained by the MoTrPAC

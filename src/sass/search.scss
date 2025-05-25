@@ -15,10 +15,40 @@
   }
 
   .search-content-container {
+    .search-summary-toggle-container {
+      .show-collapse-summary-link {
+        height: 20px;
+        padding: 0;
+  
+        &:hover {
+          text-decoration: none;
+        }
+  
+        &:focus, &:active {
+          box-shadow: none;
+          outline: none;
+          text-decoration: none;
+        }
+
+        .material-icons {
+          color: #bbb;
+          font-size: 2.25rem;
+          font-weight: normal;
+          line-height: 0.5;
+        }
+      }
+    }
+
     .es-search-ui-container {
       .btn.dropdown-toggle {
         min-width: 10.0em;
         text-align: left;
+      }
+
+      .species-select-dropdown {
+        .btn.dropdown-toggle {
+          min-width: 6.5em;
+        }
       }
 
       .dropdown-menu {
@@ -260,87 +290,7 @@
   }
 }
 
-.feature-links-container {
-  .card {
-    &:hover {
-      border: 1px solid colors.$primary-blue;
-      background-color: lighten(colors.$blue-transparent, 15%);
-      cursor: pointer;
-      transition: .2s;
-      transform: translateY(-1px);
-      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.25) !important;
-    }
-
-    .card-body {
-      padding: 0.75em;
-
-      .feature-summary {
-        h4 {
-          color: colors.$stanford-cool-grey;
-          font-family: 'Open Sans', sans-serif;
-          font-weight: 600;
-        }
-
-        p {
-          color: colors.$stanford-cool-grey;
-        }
-      }
-    }
-
-    a:hover {
-      text-decoration: none;
-    }
-
-    .material-icons {
-      font-size: 5.0rem;
-    }
-
-    &.qc-data-monitor {
-      .material-icons {
-        color: colors.$accent-green;
-      }
-    }
-
-    &.releases, &.multiomics-working-groups {
-      .material-icons {
-        color: colors.$stanford-cardinal-red;
-      }
-    }
-
-    &.data-download {
-      .material-icons {
-        color: colors.$accent-yellow;
-      }
-    }
-
-    &.sample-summary {
-      .material-icons {
-        color: lighten(colors.$accent-violet, 12%);
-      }
-    }
-
-    &.code-repositories, &.motrpac-collab {
-      .material-icons {
-        color: colors.$gray;
-      }
-    }
-
-    &.motrpac-collab {
-      .material-icons {
-        color: colors.$gray-semi-transparent;
-      }
-    }
-
-    &.pass1b-06-data-visualization,
-    &.precovid-human-data-visualization {
-      .material-icons {
-        color: colors.$primary-blue;
-      }
-    }
-  }
-}
-
-@include bootstrapCustom.media-breakpoint-down(md) {
+@include media-breakpoint-down(md) {
   .searchPage {
     .es-search-ui-container {
       align-items: start !important;
@@ -372,4 +322,62 @@
       }
     }
   }
+}
+
+.slide-toggle-container {
+  margin: 0 0 25px 0;
+}
+
+.slide-toggle-switch {
+  display: flex;
+  position: relative;
+  background-color: #f1f1f1;
+  border-radius: 28px;
+  width: 200px;
+  height: 40px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.slide-toggle-option {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.3s;
+  user-select: none;
+  color: #777;
+  font-weight: 500;
+}
+
+.slide-toggle-option.selected {
+  color: #fff;
+}
+
+.slide-toggle-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  border-radius: 25px;
+  transition: transform 0.3s ease;
+  background: -webkit-linear-gradient(45deg, #a64d79, #1c4587);
+  -webkit-background-clip: border-box;
+  -webkit-text-fill-color: transparent;
+}
+
+.slide-toggle-slider.right {
+  transform: translateX(100%);
+}
+
+.slide-toggle-container.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.slide-toggle-container.disabled .slide-toggle-option {
+  cursor: not-allowed;
 }

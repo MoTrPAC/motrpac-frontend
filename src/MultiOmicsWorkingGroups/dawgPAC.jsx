@@ -134,7 +134,7 @@ function DawgPAC({ profile = {} }) {
         </table>
       </div>
       <div className="bd-callout bd-callout-warning mb-4">
-        <b>2024DEC20 Soft Release →</b>
+        <b>2025MAY16 Data Freeze →</b>
         {' '}
         <a href="https://docs.google.com/document/d/1-VphKxR9jQKFUFRjsF12YVY_pkO2oLOAHunjFc2Alxg/edit?tab=t.0#heading=h.ve0qe6m0m7t7" target="_blank" rel="noopener noreferrer">
           Read Notes

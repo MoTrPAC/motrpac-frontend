@@ -19,6 +19,7 @@
     "highcharts-react-official": "^3.2.1",
     "history": "4.10.1",
     "http-proxy-middleware": "^2.0.1",
+    "jose": "^6.0.10",
     "jquery": "^3.5.1",
     "lodash": "^4.17.21",
     "popper.js": "^1.16.1",
@@ -113,7 +114,7 @@
   "jest": {
     "transform": {},
     "transformIgnorePatterns": [
-      "/node_modules/(?!(vis-network|vis-data|d3|d3-array))"
+      "/node_modules/(?!(vis-network|vis-data|d3|d3-array|jose)/).+\\.js$"
     ],
     "moduleNameMapper": {
       "d3": "<rootDir>/node_modules/d3/dist/d3.min.js"

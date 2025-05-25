@@ -16,12 +16,14 @@ export const defaultSearchState = {
     ktype: 'gene',
     keys: [],
     omics: 'all',
+    species: 'rat',
     analysis: 'all',
     filters: {
       tissue: [],
       assay: [],
       sex: [],
       comparison_group: [],
+      contrast1_timepoint: [],
       adj_p_value: { min: '', max: '' },
       logFC: { min: '', max: '' },
       p_value: { min: '', max: '' },
@@ -29,9 +31,12 @@ export const defaultSearchState = {
     fields: [
       'gene_symbol',
       'metabolite_refmet',
+      'refmet_name',
       'feature_ID',
+      'feature_id',
       'tissue',
       'assay',
+      'omics',
       'sex',
       'comparison_group',
       'logFC',
@@ -40,8 +45,11 @@ export const defaultSearchState = {
       'selection_fdr',
       'p_value_male',
       'p_value_female',
+      'contrast1_randomGroupCode',
+      'contrast1_timepoint',
+      'contrast_type',
     ],
-    unique_fields: ['tissue', 'assay', 'sex', 'comparison_group'],
+    unique_fields: ['tissue', 'assay', 'sex', 'comparison_group', 'contrast1_timepoint'],
     size: 10000,
     start: 0,
     save: false,
@@ -83,7 +91,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       const newFilters = { ...filters };
 
       // Handle selection of a filter value
-      if (action.field.match(/^(tissue|assay|sex|comparison_group)$/)) {
+      if (action.field.match(/^(tissue|assay|sex|comparison_group|contrast1_timepoint)$/)) {
         if (isActiveFilter === -1) {
           // Adds filter if new
           newFilters[action.field].push(action.filterValue);
@@ -117,6 +125,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       const {
         ktype,
         keys,
+        species,
         omics,
         analysis,
         filters,
@@ -131,6 +140,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         searchParams: {
           ktype,
           keys,
+          species,
           omics,
           analysis,
           filters,
@@ -184,6 +194,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
           assay: [],
           sex: [],
           comparison_group: [],
+          contrast1_timepoint: [],
           adj_p_value: { min: '', max: '' },
           logFC: { min: '', max: '' },
           p_value: { min: '', max: '' },
@@ -196,11 +207,13 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
 
       const defaultParams = { ...defaultSearchState.searchParams };
       defaultParams.keys = [];
+      defaultParams.species = 'rat';
       defaultParams.filters = {
         tissue: [],
         assay: [],
         sex: [],
         comparison_group: [],
+        contrast1_timepoint: [],
         adj_p_value: { min: '', max: '' },
         logFC: { min: '', max: '' },
         p_value: { min: '', max: '' },
