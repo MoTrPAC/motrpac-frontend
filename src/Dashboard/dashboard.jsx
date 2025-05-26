@@ -6,6 +6,8 @@ import { Helmet } from 'react-helmet';
 import FeatureLinks from '../Search/featureLinks';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
 
+import '@styles/dashboard.scss';
+
 /**
  * Renders the Dashboard page.
  *
