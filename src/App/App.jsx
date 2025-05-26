@@ -57,8 +57,8 @@ const FullTableEnduranceTraining = lazy(
   () =>
     import('../Publications/Data/Animal/Phenotype/fullTableEnduranceTraining'),
 );
-const ClinicalStudyProtocols = lazy(
-  () => import('../Publications/Docs/Protocol/Clinical/clinicalStudyProtocols'),
+const SupplementalData = lazy(
+  () => import('../Publications/Data/Animal/Supplemental/supplementalData'),
 );
 const Pass1b06PhenotypeAnimalConnected = lazy(
   () => import('../AnalysisPage/pass1b06PhenotypeAnimal'),
@@ -123,9 +123,9 @@ function App({ history = History }) {
                     element={<DataStatusPageConnected/>}
                   />
                   <Route
-                    path="/publications/docs/protocol/clinical/study-protocols"
+                    path="/publications/data/supplemental"
                     exact
-                    element={<ClinicalStudyProtocols/>}
+                    element={<SupplementalData/>}
                   />
                   <Route
                     path="/analysis-phenotype"
