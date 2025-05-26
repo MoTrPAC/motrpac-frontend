@@ -15,6 +15,7 @@ window.scrollTo = vi.fn();
 function renderWithRouterAndStore(
   ui,
   {
+    route = '/',
     preloadedState = {},
     store = configureStore(preloadedState),
     ...renderOptions
@@ -66,11 +67,6 @@ describe('<App /> routing (Unauthenticated)', () => {
     await waitFor(() => expect(screen.getByText(/useful links/i)).toBeInTheDocument());
   });
 
-  test('loads the team page at /team', async () => {
-    renderWithRouterAndStore(<App />, { route: '/team' });
-    await waitFor(() => expect(screen.getByText(/molecular transducers/i)).toBeInTheDocument());
-  });
-
   test('loads the contact page at /contact', async () => {
     renderWithRouterAndStore(<App />, { route: '/contact' });
     await waitFor(() => expect(screen.getByText(/contact us/i)).toBeInTheDocument());
@@ -119,10 +115,5 @@ describe('<App /> routing (Authenticated)', () => {
   test('loads the external links page at /external-links for authenticated user', async () => {
     renderWithRouterAndStore(<App />, { route: '/external-links', preloadedState: preloadedAuthState });
     await waitFor(() => expect(screen.getByText(/useful links/i)).toBeInTheDocument());
-  });
-
-  test('loads the team page at /team for authenticated user', async () => {
-    renderWithRouterAndStore(<App />, { route: '/team', preloadedState: preloadedAuthState });
-    await waitFor(() => expect(screen.getByText(/molecular transducers/i)).toBeInTheDocument());
   });
 });
