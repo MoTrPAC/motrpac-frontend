@@ -4,7 +4,7 @@ import * as jose from 'jose';
 import AUTH0_CONFIG from './auth0-variables';
 
 async function createJWT(email) {
-  const secretKey = new TextEncoder().encode(process.env.REACT_APP_JWT_SIGNING_SECRET);
+  const secretKey = new TextEncoder().encode(import.meta.env.VITE_JWT_SIGNING_SECRET);
 
   const jwt = await new jose.SignJWT({ email })
     .setProtectedHeader({ alg: 'HS256' })
