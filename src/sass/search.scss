@@ -290,7 +290,7 @@
   }
 }
 
-@include media-breakpoint-down(md) {
+@include bootstrapCustom.media-breakpoint-down(md) {
   .searchPage {
     .es-search-ui-container {
       align-items: start !important;
