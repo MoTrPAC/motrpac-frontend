@@ -91,7 +91,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
   // Redirect authenticated users to protected route
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   if (isAuthenticated && hasAccess) {
-    return <Navigate to="/search"/>;
+    return <Navigate to="/dashboard" replace={true}/>;
   }
 
   const backgroundVideo = document.querySelector('video');
