@@ -123,11 +123,6 @@ function App({ history = History }) {
                     element={<DataStatusPageConnected/>}
                   />
                   <Route
-                    path="/publications/data/supplemental"
-                    exact
-                    element={<SupplementalData/>}
-                  />
-                  <Route
                     path="/analysis-phenotype"
                     element={<Pass1b06PhenotypeAnimalConnected/>}
                   />
@@ -189,6 +184,11 @@ function App({ history = History }) {
                   exact
                   element={<Publications/>}
                 />
+                <Route
+                    path="/publications/data/supplemental"
+                    exact
+                    element={<SupplementalData/>}
+                  />
                 <Route
                   path="/publications/data/animal/phenotype/full-table-endurance-training"
                   exact
