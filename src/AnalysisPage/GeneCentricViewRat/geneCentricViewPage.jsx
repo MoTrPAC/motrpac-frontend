@@ -14,6 +14,8 @@ import AnimatedLoadingIcon from '../../lib/ui/loading';
 import { genes } from '../../data/genes';
 import { trackEvent } from '../../GoogleAnalytics/googleAnalytics';
 
+import '@styles/analysisPage.scss';
+
 function GeneCentricView({
   geneSearchResults = {},
   geneSearchParams = { ...defaultGeneSearchParams },

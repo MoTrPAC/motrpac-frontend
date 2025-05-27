@@ -4,6 +4,9 @@ import { useSelector } from 'react-redux';
 import browseDataFilters, { tissues, omes } from '../lib/browseDataFilters';
 import assayList from '../lib/assayList';
 
+import '@styles/browseData.scss';
+import '@styles/tooltip.scss';
+
 function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name: [], category: [] }, onChangeFilter, onResetFilters }) {
   const dataDownload = useSelector((state) => state.browseData);
 
