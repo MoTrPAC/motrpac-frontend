@@ -30,13 +30,13 @@
   
         .feature-summary {
           h4 {
-            color: $stanford-cool-grey;
+            color: colors.$stanford-cool-grey;
             font-family: 'Open Sans', sans-serif;
             font-weight: 600;
           }
   
           p {
-            color: $stanford-cool-grey;
+            color: colors.$stanford-cool-grey;
           }
         }
       }
