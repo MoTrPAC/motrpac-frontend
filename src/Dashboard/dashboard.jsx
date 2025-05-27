@@ -44,7 +44,7 @@ export function Dashboard({ profile = {}, handleQCDataFetch, lastModified = '' }
                 {' '}
                 in the dataset. Please refer to the
                 {' '}
-                <a href={process.env.REACT_APP_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
+                <a href={import.meta.env.VITE_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
                   Consortium Release document
                 </a>
                 {' '}
