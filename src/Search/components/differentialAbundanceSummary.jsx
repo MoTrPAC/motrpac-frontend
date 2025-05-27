@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function DifferentialAbundanceSummary({ userType, species }) {
+function DifferentialAbundanceSummary({ userType = '', species = 'rat' }) {
   return (
     <div className="search-summary-container row mb-3 collapse show" id="collapseDifferentialAbundanceSummary">
       <div className="lead col-12">
@@ -65,11 +65,6 @@ function DifferentialAbundanceSummary({ userType, species }) {
 DifferentialAbundanceSummary.propTypes = {
   userType: PropTypes.string,
   species: PropTypes.string,
-};
-
-DifferentialAbundanceSummary.defaultProps = {
-  userType: '',
-  species: 'rat',
 };
 
 export default DifferentialAbundanceSummary;

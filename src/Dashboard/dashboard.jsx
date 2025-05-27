@@ -15,7 +15,7 @@ import '@styles/dashboard.scss';
  *
  * @returns {object} JSX representation of the Dashboard
  */
-export function Dashboard({ profile, handleQCDataFetch, lastModified }) {
+export function Dashboard({ profile = {}, handleQCDataFetch, lastModified = '' }) {
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
   return (
@@ -84,11 +84,6 @@ Dashboard.propTypes = {
   }),
   handleQCDataFetch: PropTypes.func.isRequired,
   lastModified: PropTypes.string,
-};
-
-Dashboard.defaultProps = {
-  profile: {},
-  lastModified: '',
 };
 
 const mapStateToProps = (state) => ({
