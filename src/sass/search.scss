@@ -381,3 +381,11 @@
 .slide-toggle-container.disabled .slide-toggle-option {
   cursor: not-allowed;
 }
+
+.modal.fade {
+  display: none;
+
+  &.show {
+    display: block;
+  }
+}

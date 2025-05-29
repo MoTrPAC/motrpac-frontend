@@ -385,3 +385,11 @@
     }
   }
 }
+
+.modal.fade {
+  display: none;
+
+  &.show {
+    display: block;
+  }
+}
