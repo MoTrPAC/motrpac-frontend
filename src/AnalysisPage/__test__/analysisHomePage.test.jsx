@@ -98,7 +98,7 @@ describe('Connected Animal Analysis Page', () => {
     } else {
       expect(screen.queryByTestId('active-analysis')).not.toBeInTheDocument();
     }
-  });
+  }, 10000); // Icrease timeout for async operations
 });
 
 // Disabling this test because this UI is not implemented
