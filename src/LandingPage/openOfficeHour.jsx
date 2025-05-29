@@ -1,6 +1,8 @@
 import React from 'react';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
+import '@styles/landingPage.scss'
+
 // Function to render landing page announcement
 function OpenOfficeHour() {
   return (
@@ -9,14 +11,14 @@ function OpenOfficeHour() {
       <div className="office-hour-content mb-4 lead">
         Come join us at the next virtual office hour on
         {' '}
-        {import.meta.env.REACT_APP_OFFICE_HOUR_DAY}
+        {import.meta.env.VITE_OFFICE_HOUR_DAY}
         {' '}
-        {import.meta.env.REACT_APP_OFFICE_HOUR_DATE}
+        {import.meta.env.VITE_OFFICE_HOUR_DATE}
         {' '}
         at 11:00 am Pacific Time and learn more about our data.
       </div>
       <a
-        href={import.meta.env.REACT_APP_OFFICE_HOUR_SIGNUP_URL}
+        href={import.meta.env.VITE_OFFICE_HOUR_SIGNUP_URL}
         className="btn btn-dark btn-lg"
         role="button"
         target="_blank"
@@ -26,7 +28,7 @@ function OpenOfficeHour() {
           'User Engagement',
           'open_office_hour',
           'Landing Page',
-          import.meta.env.REACT_APP_OFFICE_HOUR_DATE,
+          import.meta.env.VITE_OFFICE_HOUR_DATE,
         )}
       >
         SIGN UP
