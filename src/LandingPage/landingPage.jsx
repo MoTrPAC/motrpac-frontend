@@ -1,30 +1,28 @@
-import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
-import LiteYouTubeEmbed from 'react-lite-youtube-embed';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useMediaQuery } from 'react-responsive';
 import { Link, Navigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { useMediaQuery } from 'react-responsive';
+import LiteYouTubeEmbed from 'react-lite-youtube-embed';
+import Footer from '../Footer/footer';
+import OpenOfficeHour from './openOfficeHour';
+import SubscribeDataUpdates from './components/subscribeDataUpdates';
+import VisNetworkReactComponent from './components/visNetwork';
+import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
+import IconSet from '../lib/iconSet';
+import ComplianceReviewNotice from '../lib/ui/complianceReviewNotice';
+
 import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
 import LogoMoTrPACWhite from '../assets/LandingPageGraphics/logo-motrpac-white.png';
 // import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.svg';
 import NatureIssueCover from '../assets/LandingPageGraphics/nature_issue_cover.jpg';
-import ComplianceReviewNotice from '../lib/ui/complianceReviewNotice';
+import BackgroundVideo from './components/backgroundVideo';
+import Figure1C from './components/figure1c';
 
 // import network figure 4e visualization dataset
 import landscapeFigure4eNetworkData from '../data/landscape_figure_4e';
-import Footer from '../Footer/footer';
-import IconSet from '../lib/iconSet';
-import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
-import BackgroundVideo from './components/backgroundVideo';
-// import network figure 4e visualization dataset
-import Figure1C from './components/figure1c';
-import SubscribeDataUpdates from './components/subscribeDataUpdates';
-import VisNetworkReactComponent from './components/visNetwork';
 
-import OpenOfficeHour from './openOfficeHour';
-
-// eslint-disable-next-line import/no-extraneous-dependencies
 import '@styles/landingPage.scss'
 
 // animated down arrow icon
