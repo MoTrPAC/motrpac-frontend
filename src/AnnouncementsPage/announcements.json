@@ -47,15 +47,227 @@
         "links": [
             {
                 "label": "NIH Funding Opportunity Announcement",
-                "url": "https://grants.nih.gov/grants/guide/rfa-files/RFA-RM-20-009.html"
+                "url": "https://grants.nih.gov/grants/guide/rfa-files/RFA-RM-20-009.html",
+                "gaEventCategory": "NIH Funding Opportunity Webinar",
+                "gaEventAction": "NIH Announcement"
             },
             {
                 "label": "Webinar presentation slides",
-                "url": "http://study-docs.motrpac-data.org/MoTrPAC_BIC_Data_hub_webinar_slides.pdf"
+                "url": "https://d1yw74buhe0ts0.cloudfront.net/docs/MoTrPAC_BIC_Data_hub_webinar_slides.pdf",
+                "gaEventCategory": "NIH Funding Opportunity Webinar",
+                "gaEventAction": "Webinar Presentation Slides"
             },
             {
                 "label": "Recorded webinar",
-                "url": "http://study-docs.motrpac-data.org/MoTrPAC_BIC_Data_hub_recorded_webinar.mp4"
+                "url": "https://youtu.be/JT2Gr_tnJr4",
+                "gaEventCategory": "NIH Funding Opportunity Webinar",
+                "gaEventAction": "Webinar Recorded Video"
+            }
+        ]
+    },
+    {
+        "aid": 4,
+        "posted_date": "2020-06-25",
+        "title": "First MoTrPAC paper published in the Cell journal",
+        "content": "The first MoTrPAC paper is now published in the Cell journal. This publication describes the entire MoTrPAC study. It includes the human endurance and resistance training interventions, and the extensive animal study protocols. It lists all the tissues collected and the analysis plan for those tissues. It also provides information on data dissemination, that will be done through the MoTrPAC data hub. Check it out so you know what is coming!",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "marker-paper"
+            ],
+            "icon": "auto_stories"
+        },
+        "links": [
+            {
+                "label": "Molecular Transducers of Physical Activity Consortium (MoTrPAC): Mapping the Dynamic Responses to Exercise",
+                "url": "https://www.cell.com/cell/fulltext/S0092-8674(20)30691-7",
+                "gaEventCategory": "MoTrPAC Marker Paper",
+                "gaEventAction": "Cell Publication"
+            },
+            {
+                "label": "NIH-funded study to recruit thousands of participants to reveal exercise impact at the molecular level",
+                "url": "https://www.nih.gov/news-events/news-releases/nih-funded-study-recruit-thousands-participants-reveal-exercise-impact-molecular-level",
+                "gaEventCategory": "MoTrPAC Marker Paper",
+                "gaEventAction": "NIH Press Release"
+            }
+        ]
+    },
+    {
+        "aid": 5,
+        "posted_date": "2021-01-15",
+        "title": "Embargo extension",
+        "content": "Please note that the publication embargo on MoTrPAC data has been extended until release of additional control data necessary to fully control for non-exercise induced molecular changes in the current dataset. The control data has been delayed due to the COVID-19 pandemic and we apologize for any inconvenience caused. Please be sure that the consortium is hard at work to release this data to the scientific community as soon as possible. Until then, data can only be used for analyses supporting grant submissions, and cannot be used in abstracts, manuscripts, preprints or presentations.",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "embargo-extension"
+            ],
+            "icon": "date_range"
+        },
+        "links": []
+    },
+    {
+        "aid": 6,
+        "posted_date": "2022-09-23",
+        "title": "MoTrPAC Landscape Preprint available at bioRxiv",
+        "content": "The MoTrPAC Landscape Preprint is online now at bioRxiv. This study profiled the temporal transcriptome, proteome, metabolome, lipidome, phosphoproteome, acetylproteome, ubiquitylproteome, epigenome, and immunome in whole blood, plasma, and 18 solid tissues in Rattus norvegicus over 8 weeks of endurance exercise training. The resulting data compendium encompasses 9466 assays across 19 tissues, 25 molecular platforms, and 4 training time points in young adult male and female rats.",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "landscape-preprint"
+            ],
+            "icon": "menu_book"
+        },
+        "links": [
+            {
+                "label": "Temporal dynamics of the multi-omic response to endurance exercise training across tissues",
+                "url": "https://www.biorxiv.org/content/10.1101/2022.09.21.508770v2",
+                "gaEventCategory": "MoTrPAC Landscape Paper",
+                "gaEventAction": "Preprint on bioRxiv"
+            },
+            {
+                "label": "R package consisting of the processed data and downstream analysis results presented in this preprint",
+                "url": "https://motrpac.github.io/MotrpacRatTraining6moData/",
+                "gaEventCategory": "MoTrPAC Landscape Paper",
+                "gaEventAction": "MotrpacRatTraining6moData R package"
+            }
+        ]
+    },
+    {
+        "aid": 7,
+        "posted_date": "2024-05-01",
+        "title": "MoTrPAC gene regulation study published in Nature Communications",
+        "content": "This study integrated MoTrPAC multi-tissue differential gene expression results with external genetic, transcriptomic, and other data. Several computational approaches were leveraged to explore possible ways in which exercise may modulate complex trait variation, including disease severity and risk.",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "companion-paper-published"
+            ],
+            "icon": "auto_stories"
+        },
+        "links": [
+            {
+                "label": "The impact of exercise on gene regulation in association with complex trait genetics",
+                "url": "https://doi.org/10.1038/s41467-024-45966-w",
+                "gaEventCategory": "MoTrPAC Companion Paper",
+                "gaEventAction": "Nature Publication"
+            }
+        ]
+    },
+    {
+        "aid": 8,
+        "posted_date": "2024-05-01",
+        "title": "MoTrPAC animal molecular adaptations study published in Cell Genomics",
+        "content": "In an integrated analysis of DNA methylation, chromatin accessibility, and transcriptome in eight tissues from the control group, we identified distinct molecular landscapes across rat tissues. We demonstrated that the transcriptional and epigenetic responses to eight weeks of exercise training are predominantly tissue-specific and implicated GPCR-encoding genes as potential mediators of the molecular adaptations to training.",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "companion-paper-published"
+            ],
+            "icon": "auto_stories"
+        },
+        "links": [
+            {
+                "label": "Molecular adaptations in response to exercise training are associated with tissue-specific transcriptomic and epigenomic signatures",
+                "url": "https://doi.org/10.1016/j.xgen.2023.100421",
+                "gaEventCategory": "MoTrPAC Companion Paper",
+                "gaEventAction": "Cell Publication"
+            }
+        ]
+    },
+    {
+        "aid": 9,
+        "posted_date": "2024-05-01",
+        "title": "MoTrPAC animal physiological adaptations study published in Function",
+        "content": "This paper extensively characterizes physiological adaptations to progressive endurance exercise in fully mature adult and aged rats, serving as a phenotypic compendium of the MoTrPAC pre-clinical animal endurance training data resource. Ultimately, the goal of this resource is to foster phenotypic and multi-omic data integration to develop an integrative molecular map of time-, sex-, and age-specific responses to endurance exercise training.",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "companion-paper-published"
+            ],
+            "icon": "auto_stories"
+        },
+        "links": [
+            {
+                "label": "Physiological adaptations to progressive endurance exercise training in adult and aged rats: insights from the Molecular Transducers of Physical Activity Consortium (MoTrPAC)",
+                "url": "https://doi.org/10.1093/function/zqae014",
+                "gaEventCategory": "MoTrPAC Companion Paper",
+                "gaEventAction": "Function Publication"
+            }
+        ]
+    },
+    {
+        "aid": 10,
+        "posted_date": "2024-05-01",
+        "title": "MoTrPAC animal white adipose tissue study published in Nature Metabolism",
+        "content": "Multi-omic profiling identifies profound sexual dimorphism in the subcutaneous white adipose tissue (scWAT) molecular landscape of sedentary rats that is largely preserved or amplified with training.  Using a computational approach, we identify candidate molecular regulators of sexually dimorphic scWAT phenotypic responses to training, demonstrating the resource utility of MoTrPAC-generate data to drive novel hypothesis-based research in the field.",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "companion-paper-published"
+            ],
+            "icon": "auto_stories"
+        },
+        "links": [
+            {
+                "label": "Sexual dimorphism and the multi-omic response to exercise training in rat subcutaneous white adipose tissue",
+                "url": "https://doi.org/10.1038/s42255-023-00959-9",
+                "gaEventCategory": "MoTrPAC Companion Paper",
+                "gaEventAction": "Nature Publication"
+            }
+        ]
+    },
+    {
+        "aid": 11,
+        "posted_date": "2024-05-01",
+        "title": "MoTrPAC animal endurance training study published in Nature",
+        "content": "The main MoTrPAC animal endurance training study has been published in Nature. This study profiled the temporal transcriptome, proteome, metabolome, lipidome, phosphoproteome, acetylproteome, ubiquitylproteome, epigenome, and immunome in whole blood, plasma, and 18 solid tissues in male and female rats over 8 weeks of endurance exercise training. The resulting data compendium encompasses 9466 assays across 19 tissues, 25 molecular platforms, and 4 training time points in young adult male and female rats.",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "landscape-paper-published"
+            ],
+            "icon": "auto_stories"
+        },
+        "links": [
+            {
+                "label": "Temporal dynamics of the multi-omic response to endurance exercise training",
+                "url": "https://www.nature.com/articles/s41586-023-06877-w",
+                "gaEventCategory": "MoTrPAC Landscape Paper",
+                "gaEventAction": "Nature Publication"
+            },
+            {
+                "label": "Explore the multi-omic analysis results presented in this published paper",
+                "url": "/graphical-clustering",
+                "gaEventCategory": "MoTrPAC Landscape Paper",
+                "gaEventAction": "Graphical Clustering"
+            }
+        ]
+    },
+    {
+        "aid": 12,
+        "posted_date": "2024-05-02",
+        "title": "MoTrPAC mitochondrial response study published in Cell Metabolism",
+        "content": "The MoTrPAC Mitochondria companion paper has been published in the Cell Metabolism. This study provides a multi-omic, cross-tissue atlas of the mitochondrial response to training and identify candidates for prevention of disease-associated mitochondrial dysfunction.",
+        "metadata": {
+            "target": "external",
+            "tags": [
+                "companion-paper-published"
+            ],
+            "icon": "auto_stories"
+        },
+        "links": [
+            {
+                "label": "The mitochondrial multi-omic response to exercise training across tissues",
+                "url": "https://doi.org/10.1016/j.cmet.2023.12.021",
+                "gaEventCategory": "MoTrPAC Companion Paper",
+                "gaEventAction": "Cell Publication"
+            },
+            {
+                "label": "Explore mitochondrial-selected multi-omic analysis results presented in this published paper",
+                "url": "/graphical-clustering",
+                "gaEventCategory": "MoTrPAC Companion Paper",
+                "gaEventAction": "Graphical Clustering"
             }
         ]
     }

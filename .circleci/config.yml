@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:10.13-browsers
+      - image: cimg/node:20.11.0-browsers
 
     steps:
       - checkout
@@ -34,10 +34,10 @@ jobs:
 
       - run:
           name: Compile CSS
-          command: node_modules/sass/sass.js src/sass/main.scss src/main.css
+          command: npx sass src/sass/main.scss src/main.css --load-path=node_modules
 
       - run:
           name: Run Frontend tests
-          command: yarn test --updateSnapshot --ci
+          command: yarn test
           # use this line instead if we version control snapshots
           # command: yarn test --ci

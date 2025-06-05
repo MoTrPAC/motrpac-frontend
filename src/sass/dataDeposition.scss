@@ -1,0 +1,21 @@
+.dataDepositionPage {
+  .data-deposition-content-container {
+    table {
+      td:first-child {
+        width: 23%;
+      }
+
+      td:last-child {
+        width: 22%;
+      }
+
+      ul {
+        margin-bottom: 0;
+
+        &.proteomics-data-submissions {
+          padding-left: 15px;
+        }
+      }
+    }
+  }
+}

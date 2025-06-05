@@ -10,9 +10,14 @@ import PropTypes from 'prop-types';
  *
  * @returns {Object} JSX representation of an email link.
  */
-function EmailLink({ mailto, label }) {
+function EmailLink({ mailto, label = null }) {
   return (
-    <a href={`mailto:${mailto}`} className="inline-link-with-icon" target="_blank" rel="noopener noreferrer">
+    <a
+      href={`mailto:${mailto}`}
+      className="inline-link-with-icon"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       {label && label.length ? label : mailto}
       <i className="material-icons email-icon">mail</i>
     </a>
@@ -22,10 +27,6 @@ function EmailLink({ mailto, label }) {
 EmailLink.propTypes = {
   mailto: PropTypes.string.isRequired,
   label: PropTypes.string,
-};
-
-EmailLink.defaultProps = {
-  label: null,
 };
 
 export default EmailLink;

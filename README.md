@@ -2,7 +2,7 @@
 
 **User interface and Frontend for MoTrPAC Bioinformatics Center**
 ---
-[![CircleCI](https://circleci.com/gh/AshleyLab/motrpac-frontend.svg?style=svg)](https://circleci.com/gh/AshleyLab/motrpac-frontend)
+[![CircleCI](https://circleci.com/gh/MoTrPAC/motrpac-frontend.svg?style=svg)](https://circleci.com/gh/MoTrPAC/motrpac-frontend)
 [![Sauce Test Status](https://saucelabs.com/buildstatus/motrpac-developers)](https://app.saucelabs.com/u/motrpac-developers)
 
 ### Directory Layout and Setup
@@ -23,8 +23,9 @@
 │   |   └── \_\_test\_\_: contains the storybook story and jest tests for the feature.  
 ├── public  
 ├── .storybook: configuration for storybook  
-├── .eslintrc.js: ESlint configuration  
-├── .stylelint.config.js: StyleLint configurations for Sass Linting . 
+├── .eslintrc: ESlint configuration  
+├── .prettierrc.js: Prettier configuration  
+├── .stylelint.config.js: StyleLint configurations for Sass Linting
 
 #### Flow for creating new components
   1. Create \[component\].jsx file in src/\[Component\]
@@ -35,37 +36,45 @@
 
 #### Building and running
 
+ * Preparation:
+   - Set `node` environment to `16.20.x`, or use `nvm` to run `nvm use v16.20.0`
+   - If `node_modules` directory already exist in your local working copy, run `rm -fr node_modules/` and `rm -f yarn.lock`.
+   - Create a `.env` file at the root of the local working copy and add `ESLINT_NO_DEV_ERRORS=true`.
+   - Add additional required environment variables to the `.env` file in root (e.g. the API service address)
+   - Run `yarn install`.
+
+ * Building CSS: Uses sass in `node_modules/sass/sass.js`
+   - `yarn sass`
+   - Compiles sass from `src/sass/main.scss` to `src/main.css`
+   - `yarn sass-watch`
+   - Compiles sass from `src/sass/main.scss` to `src/main.css` and watches for changes
+
  * Running React App:
    - `yarn start`
-   - runs core React app at localhost:3000
+   - Runs core React app at localhost:3000
 
  * Running Storybook:
    - `yarn run storybook`
-   - runs storybook server at localhost:9009
+   - Runs storybook server at localhost:9009
 
  * Testing:
    - `yarn test`
-   - runs tests and storybook snapshots
+   - Runs tests and storybook snapshots
    - `yarn test --coverage`
-   - runs all tests and returns table illustrating code coverage
-
- * Building CSS: Uses sass in node_modules/sass/sass.js
-   - `yarn sass`
-   - compiles sass from src/sass/main.scss to src/main.css
-   - `yarn sass-watch`
-   - compiles sass from src/sass/main.scss to src/main.css and watches for changes
+   - Runs all tests and returns table illustrating code coverage
 
  * Quickly inspect someone's branch:
    - `yarn inspect-branch`
-   - compiles Scss, rebuilds node_modules if different, and starts react app
+   - Compiles Scss, rebuilds node_modules if different, and starts react app
 
 ### Software versions and styles
 
 #### Software:
 
- * [Node v10](https://github.com/nodejs/Release)
+ * [Node v16](https://github.com/nodejs/Release)
      - Check your version: `node --version`
-     - If the version is not 10, you can `brew install node@10` or use [nvm](https://github.com/creationix/nvm/blob/master/README.md#installation), the Node Version Manager
+     - If the version is not 16, you can `brew install node@16` or use [nvm](https://github.
+       com/creationix/nvm/blob/master/README.md#installation), the Node Version Manager
      
  * [React v16](https://reactjs.org/versions)
      - Storybook used to visualize individual UI components
@@ -100,14 +109,6 @@
 #### Download Page Behavior
   - Makes call to backend for a list of uploads (size depending maxRows variable) on a given page. Expects backend to give total count of uploads fitting filters and the uploads for a specific page. (e.g on page 2, with 10 rows per page, expects items 11-20  from backend and a count of all  rows that fit current filters)
   - Changing filters should also call backend
-
-#### Samir's Flow for Creating Custom Font Icons
-  1. Create a 200px by 200px artboard in Adobe Illustrator
-  2. Draw Icon and export artboard as SVG (make sure only one color -- white counts as a color but transparent does not)
-  3. Upload all icons to [IcoMoon](https://icomoon.io/app/#/select) 4. Download and unzip resultant zipped file
-  5. Copy contents of the fonts folder (icomoon.eot, icomoon.woff, icomoon.svg, icomoon.tff) and place  them in the src/assets/fonts folder overwriting  the previous file. 
-
-  - Make sure you upload ALL custom icons to icomoon so that previously created icons are still accessible
 
 ---
 

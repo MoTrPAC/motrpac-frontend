@@ -1,0 +1,66 @@
+.codeRepoPage {
+  .code-repo-content-container {
+    .code-repo-summary-container {
+      margin-bottom: 2.0em;
+
+      .material-icons {
+        font-size: 1.25rem;
+        line-height: 1.65;
+      }
+    }
+
+    .code-repo-container {
+      .component {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 1.0rem;
+        text-align: center;
+
+        .component-icon {
+          font-size: 8.0rem;
+          margin-bottom: 0;
+        }
+      }
+
+      .component-repos-connector {
+        text-align: center;
+
+        .vertical-line {
+          display: inline-block;
+          border-left: 4px dotted #ccc;
+          margin: 0;
+          height: 50px;
+        }
+      }
+
+      .component-repos {
+        margin: 0;
+        padding: 0;
+
+        li {
+          list-style: none;
+          padding: 0;
+          margin: 0.85rem 0 0;
+
+          &:first-child {
+            margin-top: 0;
+          }
+        }
+
+        .repo-icon {
+          font-size: 1.0rem;
+        }
+      }
+    }
+
+    .component-connector {
+      padding-top: 75px;
+      text-align: center;
+      width: 70px;
+
+      img {
+        width: 70%;
+      }
+    }
+  }
+}

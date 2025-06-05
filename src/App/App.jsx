@@ -1,65 +1,211 @@
-import React from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import configureStore from './configureStore';
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Callback from '../Auth/callback';
+import AuthWrapper from '../Auth/AuthWrapper';
+import Footer from '../Footer/footer';
+import { PageTracker } from '../GoogleAnalytics/googleAnalytics.jsx';
+import LandingPageConnected from '../LandingPage/landingPage';
+import ScrollToTop from '../lib/scrollToTop';
+import NavbarConnected from '../Navbar/navbar';
 import 'bootstrap';
 import History from './history';
-import NavbarConnected from '../Navbar/navbar';
-import FooterConnected from '../Footer/footer';
-import LandingPageConnected from '../LandingPage/landingPage';
-import DashboardConnected from '../Dashboard/dashboard';
-import UploadScreenConnected from '../UploadPage/uploadScreen';
-import LinkoutPageConnected from '../LinkoutPage/linkoutPage';
-import AnalysisHomePageConnected from '../AnalysisPage/analysisHomePage';
-import DownloadPageConnected from '../DownloadPage/downloadPage';
-import MethodsConnected from '../MethodsPage/methods';
-import TeamPageConnected from '../TeamPage/teamPage';
-import ContactConnected from '../ContactPage/contact';
-import ErrorPageConnected from '../ErrorPage/error';
-import SearchPageConnected from '../Search/searchPage';
-import ReleasePageConnected from '../ReleasePage/releasePage';
-import DataSummaryPageConnected from '../DataSummaryPage/dataSummaryPage';
-import DataAccessPageConnected from '../DataAccess/dataAccessPage';
-import AnnouncementsPageConnected from '../AnnouncementsPage/announcementsPage';
-import CallbackConnected from '../Auth/callback';
-import SidebarConnected from '../Sidebar/sidebar';
-import { withTracker } from '../GoogleAnalytics/googleAnalytics';
 
-const store = configureStore();
+const LinkoutPage = lazy(() => import('../LinkoutPage/linkoutPage'));
+const AnalysisHomePageConnected = lazy(
+  () => import('../AnalysisPage/analysisHomePage'),
+);
+const MethodsConnected = lazy(() => import('../MethodsPage/methods'));
+const TeamPage = lazy(() => import('../TeamPage/teamPage'));
+const Contact = lazy(() => import('../ContactPage/contact'));
+const ErrorPageConnected = lazy(() => import('../ErrorPage/error'));
+const ReleasePageConnected = lazy(() => import('../ReleasePage/releasePage'));
+const DataStatusPageConnected = lazy(
+  () => import('../DataStatusPage/dataStatusPage'),
+);
+const DataSummaryPageConnected = lazy(
+  () => import('../DataSummaryPage/dataSummaryPage'),
+);
+const DataAccessPageConnected = lazy(
+  () => import('../DataAccess/dataAccessPage'),
+);
+const RelatedStudy = lazy(() => import('../RelatedStudy/relatedStudy'));
+const HeritageProteomics = lazy(
+  () => import('../RelatedStudy/heritageProteomics'),
+);
+const AnnouncementsPage = lazy(
+  () => import('../AnnouncementsPage/announcementsPage'),
+);
+const BrowseDataPageConnected = lazy(
+  () => import('../BrowseDataPage/browseDataPage'),
+);
+const SearchPageConnected = lazy(() => import('../Search/searchPage'));
+const GeneCentricViewConnected = lazy(
+  () => import('../AnalysisPage/GeneCentricViewRat/geneCentricViewPage'),
+);
+const DashboardConnected = lazy(() => import('../Dashboard/dashboard'));
+const GraphicalClustering = lazy(
+  () => import('../AnalysisPage/GraphicalClustering/graphicalClusteringPage'),
+);
+const CodeRepositories = lazy(() => import('../CodeRepoPage/codeRepoPage'));
+const ProjectOverview = lazy(() => import('../MainStudy/overview'));
+const Tutorials = lazy(() => import('../Tutorials/tutorials'));
+const Publications = lazy(() => import('../Publications/publications'));
+const MultiOmicsWorkingGroups = lazy(
+  () => import('../MultiOmicsWorkingGroups/multiOmicsWorkingGroups'),
+);
+const FullTableEnduranceTraining = lazy(
+  () =>
+    import('../Publications/Data/Animal/Phenotype/fullTableEnduranceTraining'),
+);
+const SupplementalData = lazy(
+  () => import('../Publications/Data/Animal/Supplemental/supplementalData'),
+);
+const Pass1b06PhenotypeAnimalConnected = lazy(
+  () => import('../AnalysisPage/pass1b06PhenotypeAnimal'),
+);
+const License = lazy(() => import('../License/licensePage'));
+const DataDeposition = lazy(() => import('../DataDeposition/dataDepositionPage'));
+const StudyAssays = lazy(() => import('../MainStudy/studyAssays'));
+const ExerciseBenefits = lazy(() => import('../MainStudy/exerciseBenefits'));
+const Phenotype = lazy(() => import('../TechnicalGuides/phenotype'));
 
 function App({ history = History }) {
   return (
-    <Provider store={store}>
-      <Router history={history}>
-        <div className="App container-fluid">
-          <header>
-            <NavbarConnected />
-          </header>
-          <div className="row justify-content-center">
-            <SidebarConnected />
-            <Switch>
-              <Route path="/callback" component={withTracker(CallbackConnected)} />
-              <Route path="/" exact component={withTracker(LandingPageConnected)} />
-              <Route path="/dashboard" component={withTracker(DashboardConnected)} />
-              <Route path="/upload" component={withTracker(UploadScreenConnected)} />
-              <Route path="/external-links" component={withTracker(LinkoutPageConnected)} />
-              <Route path="/download" component={withTracker(DownloadPageConnected)} />
-              <Route path="/analysis/:subjectType" component={withTracker(AnalysisHomePageConnected)} />
-              <Route path="/methods" component={withTracker(MethodsConnected)} />
-              <Route path="/team" component={withTracker(TeamPageConnected)} />
-              <Route path="/contact" component={withTracker(ContactConnected)} />
-              <Route path="/announcements" component={withTracker(AnnouncementsPageConnected)} />
-              <Route path="/error" component={withTracker(ErrorPageConnected)} />
-              <Route path="/search" component={withTracker(SearchPageConnected)} />
-              <Route path="/summary" component={withTracker(DataSummaryPageConnected)} />
-              <Route path="/releases" component={withTracker(ReleasePageConnected)} />
-              <Route path="/data-access" component={withTracker(DataAccessPageConnected)} />
-            </Switch>
-          </div>
+    <BrowserRouter history={history} future={{ v7_relativeSplatPath: true, v7_startTransitions: true }}>
+      <ScrollToTop/>
+      <div className="App container-fluid">
+        <header>
+          <NavbarConnected/>
+        </header>
+        <div className="row justify-content-center">
+          <Suspense fallback={<div/>}>
+            <Routes>
+              <Route element={<PageTracker/>}>
+                <Route
+                  path="/callback"
+                  element={<Callback />}
+                />
+                <Route
+                  path="/"
+                  exact
+                  element={<LandingPageConnected/>}
+                />
+                <Route
+                  path="/external-links"
+                  element={<LinkoutPage/>}
+                />
+                <Route
+                  path="/methods"
+                  element={<MethodsConnected/>}
+                />
+                <Route path="/team" element={<TeamPage/>}/>
+                <Route path="/contact" element={<Contact/>}/>
+                <Route
+                  path="/announcements"
+                  element={<AnnouncementsPage/>}
+                />
+                <Route path="/error" element={<ErrorPageConnected/>}/>
+                <Route element={<AuthWrapper/>}>
+                  <Route
+                    path="/analysis/:subjectType"
+                    element={<AnalysisHomePageConnected/>}
+                  />
+                  <Route
+                    path="/summary"
+                    element={<DataSummaryPageConnected/>}
+                  />
+                  <Route
+                    path="/releases"
+                    element={<ReleasePageConnected/>}
+                  />
+                  <Route
+                    path="/qc-data-monitor"
+                    element={<DataStatusPageConnected/>}
+                  />
+                  <Route
+                    path="/analysis-phenotype"
+                    element={<Pass1b06PhenotypeAnimalConnected/>}
+                  />
+                  <Route
+                    path="/multiomics-working-groups"
+                    element={<MultiOmicsWorkingGroups/>}
+                  />
+                  <Route
+                    path="/dashboard"
+                    exact
+                    element={<DashboardConnected/>}
+                  />
+                </Route>
+                <Route
+                  path="/data-download"
+                  element={<BrowseDataPageConnected/>}
+                />
+                <Route
+                  path="/data-download/file-browser"
+                  element={<BrowseDataPageConnected/>}
+                />
+                <Route
+                  path="/data-access"
+                  element={<DataAccessPageConnected/>}
+                />
+                <Route
+                  path="/related-studies"
+                  exact
+                  element={<RelatedStudy/>}
+                />
+                <Route
+                  path="/related-studies/heritage-proteomics"
+                  exact
+                  element={<HeritageProteomics/>}
+                />
+                <Route
+                  path="/search"
+                  element={<SearchPageConnected/>}
+                />
+                <Route
+                  path="/gene-centric"
+                  element={<GeneCentricViewConnected/>}
+                />
+                <Route
+                  path="/graphical-clustering"
+                  element={<GraphicalClustering/>}
+                />
+                <Route
+                  path="/code-repositories"
+                  element={<CodeRepositories/>}
+                />
+                <Route
+                  path="/project-overview"
+                  element={<ProjectOverview/>}
+                />
+                <Route path="/tutorials" element={<Tutorials/>}/>
+                <Route
+                  path="/publications"
+                  exact
+                  element={<Publications/>}
+                />
+                <Route
+                    path="/publications/data/supplemental"
+                    exact
+                    element={<SupplementalData/>}
+                  />
+                <Route
+                  path="/publications/data/animal/phenotype/full-table-endurance-training"
+                  exact
+                  element={<FullTableEnduranceTraining/>}
+                />
+                <Route path="/license" element={<License/>}/>
+                <Route path="/data-deposition" element={<DataDeposition/>}/>
+                <Route path="/study-assays" element={<StudyAssays/>}/>
+                <Route path="/exercise-benefits" element={<ExerciseBenefits/>}/>
+                <Route path="/technical-guides/phenotype" element={<Phenotype/>}/>
+              </Route>
+            </Routes>
+          </Suspense>
         </div>
-      </Router>
-      <FooterConnected />
-    </Provider>
+      </div>
+      <Footer/>
+    </BrowserRouter>
   );
 }
 

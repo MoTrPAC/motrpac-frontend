@@ -1,14 +1,52 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { Dashboard } from '../dashboard';
 import { Navbar } from '../../Navbar/navbar';
-import { Footer } from '../../Footer/footer';
+import Footer from '../../Footer/footer';
 import { Sidebar } from '../../Sidebar/sidebar';
 
-const testUser = require('../../testData/testUser');
-const previousUploads = require('../../testData/testPreviousUploads');
-const allUploads = require('../../testData/testAllUploads');
+import internalUser from '../../testData/testUser';
+
+const externalUser = {
+  ...internalUser,
+  user_metadata: {
+    name: 'Test User',
+    givenName: 'TestUser',
+    siteName: 'Stanford',
+    hasAccess: true,
+    userType: 'external',
+  },
+};
+
+const internalLoggedInState = {
+  isAuthenticated: true,
+  profile: internalUser,
+  expanded: false,
+  release: 'internal',
+  phase: 'pass1a_06',
+  plot: 'tissue_name',
+  sort: 'default',
+  showQC: true,
+};
+
+const externalLoggedInState = {
+  isAuthenticated: true,
+  profile: externalUser,
+  expanded: false,
+  release: 'external',
+  phase: 'pass1a_06',
+  plot: 'tissue_name',
+  sort: 'default',
+  showQC: true,
+};
+
+const defaultActions = {
+  toggleRelease: action('toggle release filter'),
+  togglePhase: action('toggle phase filter'),
+  togglePlot: action('toggle plot selection'),
+  toggleSort: action('toggle sort selection'),
+  toggleQC: action('toggle QC checkbox'),
+};
 
 const navbarAction = {
   logout: action('logging out'),
@@ -18,40 +56,47 @@ const footerAction = {
   login: action('logging in'),
 };
 
-const uploadAction = {
-  clearForm: action('clearing form'),
-};
-
 const sidebarActions = {
   clearForm: action('clearing form'),
   resetDepth: action('resetting depth'),
+  toggleSidebar: action('toggling sidebar'),
 };
 
-storiesOf('Dashboard', module)
-  .addDecorator(story => (
-    <div className="App">
-      <header>
-        <Navbar isAuthenticated {...navbarAction} profile={testUser} />
-      </header>
-      <div className="componentHolder">
-        <div className="container-fluid">
-          <div className="row">
-            <Sidebar isAuthenticated profile={testUser} {...sidebarActions} />
-            {story()}
+export default {
+  title: 'Dashboard',
+
+  decorators: [
+    (story) => (
+      <div className="App">
+        <header>
+          <Navbar isAuthenticated {...navbarAction} profile={internalUser} />
+        </header>
+        <div className="componentHolder">
+          <div className="container-fluid">
+            <div className="row mt-5 pt-1">
+              <Sidebar
+                isAuthenticated
+                profile={internalUser}
+                {...sidebarActions}
+              />
+              {story()}
+            </div>
           </div>
         </div>
+        <Footer isAuthenticated profile={internalUser} {...footerAction} />
       </div>
-      <Footer isAuthenticated profile={testUser} {...footerAction} />
-    </div>
+    ),
+  ],
+};
 
-  ))
-  .add('With Test Data', () => (
-    <Dashboard
-      previousUploads={previousUploads}
-      allUploads={allUploads}
-      profile={testUser}
-      disconnectComponents
-      isAuthenticated
-      {...uploadAction}
-    />
-  ));
+export const InternalUserView = {
+  render: () => <Dashboard {...internalLoggedInState} {...defaultActions} />,
+
+  name: 'Internal user view',
+};
+
+export const ExternalUserView = {
+  render: () => <Dashboard {...externalLoggedInState} {...defaultActions} />,
+
+  name: 'External user view',
+};

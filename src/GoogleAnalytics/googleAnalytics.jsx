@@ -1,79 +1,53 @@
 import React, { useEffect } from 'react';
-import ReactGA from 'react-ga';
+import gtag from 'ga-gtag';
+import { Outlet, useLocation } from "react-router-dom";
 
-export const initializeReactGA = () => {
+const trackingId = () => {
   // available tracking Ids for motrpac apps
   const trackers = {
-    'dev.motrpac-data.org': 'UA-137588878-5',
-    'test.motrpac-data.org': 'UA-137588878-4',
-    'alpha.motrpac-data.org': 'UA-137588878-2',
-    'beta.motrpac-data.org': 'UA-137588878-3',
-    'www.motrpac-data.org': 'UA-137588878-1',
+    'dev.motrpac-data.org': 'G-7BNN8B1GLP',
+    'www.motrpac-data.org': 'G-KC38NC4JGY',
   };
 
   //  determine current hostname
   let analyticsTrackerHostname = document.location.hostname;
 
   // match hostname to google analytics domain identified for tracker
-  if (/^(www\.)?motrpac(-[a-z]+)?.org/.test(analyticsTrackerHostname)) {
+  if (/^(www\.)?motrpac(-[a-z]+)?.org$/.test(analyticsTrackerHostname)) {
     // production app
     analyticsTrackerHostname = 'www.motrpac-data.org';
-  } else if (/^beta.motrpac(-[a-z]+)?.org/.test(analyticsTrackerHostname)) {
-    // beta app
-    analyticsTrackerHostname = 'beta.motrpac-data.org';
-  } else if (/^alpha.motrpac(-[a-z]+)?.org/.test(analyticsTrackerHostname)) {
-    // alpha app
-    analyticsTrackerHostname = 'alpha.motrpac-data.org';
-  } else if (/^test.motrpac(-[a-z]+)?.org/.test(analyticsTrackerHostname)) {
-    // test app
-    analyticsTrackerHostname = 'test.motrpac-data.org';
   } else {
     // catch-all
     analyticsTrackerHostname = 'dev.motrpac-data.org';
   }
 
   // use correct tracking Id based on hostname
-  const tracker = trackers[analyticsTrackerHostname];
-
-  ReactGA.initialize(tracker, {
-    gaOptions: {
-      cookieDomain: 'none',
-      siteSpeedSampleRate: 100,
-    },
-  });
+  return trackers[analyticsTrackerHostname];
 };
 
-export const withTracker = (WrappedComponent, options = {}) => {
+export const PageTracker = () => {
+  const location = useLocation()
+
   const trackPage = (page) => {
-    ReactGA.set({
-      page,
-      ...options,
+    gtag('config', trackingId(), {
+      page_path: page,
+      site_speed_sample_rate: 100,
     });
-    ReactGA.pageview(page);
   };
 
-  const HOC = (props) => {
-    const { location } = props;
-    useEffect(() => trackPage(location.pathname), [
-      location.pathname,
-    ]);
+  useEffect(() => {
+    if (location && location.pathname) trackPage(location.pathname);
+  }, [location]);
 
-    return <WrappedComponent {...props} />;
-  };
-
-  return HOC;
+  return <Outlet />;
 };
 
-/**
- * TrackEvent - Add custom tracking event.
- * @param {string} category
- * @param {string} action
- * @param {string} label
- */
-export const TrackEvent = (category, action, label) => {
-  ReactGA.event({
-    category,
-    action,
-    label,
+export const trackEvent = (category, action, label, target) => {
+  gtag('event', action, {
+    event_category: category,
+    event_label: label,
+    event_target: target,
   });
 };
+
+export default trackingId;

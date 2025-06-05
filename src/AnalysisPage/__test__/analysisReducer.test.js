@@ -1,16 +1,15 @@
+import { describe, test, expect } from 'vitest';
 import AnalysisReducer, { defaultAnalysisState } from '../analysisReducer';
 
 const analysisSelectAction = {
   type: 'ANALYSIS_SELECT',
-  analysis: 'PDMA',
+  analysis: 'PHENOTYPE',
 };
-const subAnalysisSelectAction = {
-  type: 'SUBANALYSIS_SELECT',
-  analysis: 'MA_G',
-};
+
 const goBackAction = {
   type: 'GO_BACK',
 };
+
 describe('Analysis Reducer', () => {
   test('Return initial state if no action', () => {
     expect(AnalysisReducer(defaultAnalysisState, {})).toEqual(defaultAnalysisState);
@@ -19,14 +18,10 @@ describe('Analysis Reducer', () => {
     expect(AnalysisReducer(defaultAnalysisState, analysisSelectAction).currentAnalysis)
       .toEqual(analysisSelectAction.analysis);
   });
-  test('Selecting subanalysis changes current subanalysis', () => {
-    expect(AnalysisReducer(defaultAnalysisState, subAnalysisSelectAction).subAnalysis)
-      .toEqual(subAnalysisSelectAction.subAnalysis);
-  });
   test('Depth decreases by 1', () => {
     const deepState = {
       ...defaultAnalysisState,
-      depth: 3,
+      depth: 2,
     };
     expect(AnalysisReducer(deepState, goBackAction).depth)
       .toEqual(deepState.depth - 1);

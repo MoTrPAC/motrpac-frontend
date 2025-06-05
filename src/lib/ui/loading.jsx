@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconSet from '../iconSet';
+
+import '@styles/loader.scss';
 
 /**
  * Renders the animated loading SVG icon
- * 
+ *
  * @param {Boolean} isFetching  Redux state for data fetching status.
- * 
+ *
  * @returns {Object} JSX representation of the animated loading UI.
  */
 function AnimatedLoadingIcon({ isFetching }) {
@@ -14,7 +15,20 @@ function AnimatedLoadingIcon({ isFetching }) {
 
   return (
     <div className="col w-100 mt-5 pt-5 text-center animated-loading-icon">
-      <img src={IconSet.Loading} className="loading-icon" alt="Loading..." />
+      <div className="lds-spinner">
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+      </div>
     </div>
   );
 }

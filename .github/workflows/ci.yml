@@ -1,0 +1,59 @@
+name: ci
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+  push:
+    branches:
+      - main
+      - dev
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run corepack enable
+        run: corepack enable
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+#          cache: yarn
+
+      - name: Install project
+        run: yarn install --frozen-lockfile
+
+      - name: Test site
+        env:
+          ESLINT_NO_DEV_ERRORS: true
+          DISABLE_ESLINT_PLUGIN: true
+          VITE_AUTH0_CLIENT_ID: "${{secrets.VITE_AUTH0_CLIENT_ID}}"
+          VITE_RECAPTCHA_SITE_KEY: "${{secrets.VITE_RECAPTCHA_SITE_KEY}}"
+        run: yarn test
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run corepack enable
+        run: corepack enable
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+#          cache: yarn
+
+      - name: Install project
+        run: yarn install --frozen-lockfile
+
+      - name: Test site
+        env:
+          ESLINT_NO_DEV_ERRORS: true
+          DISABLE_ESLINT_PLUGIN: true
+        run: yarn build

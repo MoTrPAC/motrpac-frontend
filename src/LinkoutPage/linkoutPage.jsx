@@ -1,30 +1,59 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import MOTRLogo from '../assets/MoTrPAC_horizontal.png';
-import NIHLogo from '../assets/ExternalLogos/NIHCommonFund.png';
-import ENCODELogo from '../assets/ExternalLogos/ENCODE.png';
-import MWLogo from '../assets/ExternalLogos/MetabolomicsWorkbench.jpeg';
-import GTExLogo from '../assets/ExternalLogos/GTEx.png';
+import { Helmet } from 'react-helmet';
+import ExternalLink from '../lib/ui/externalLink';
+import PageTitle from '../lib/ui/pageTitle';
 
-const linkList = [
-/* Currently not desired to be on this page
+import '@styles/linkoutPage.scss';
+
+import metaAnalysisGeneIcon from '../assets/analysisIcons/MetaAnalysisGene.svg';
+import CFDELogo from '../assets/ExternalLogos/CFDE_WORKBENCH.png';
+import ENCODELogo from '../assets/ExternalLogos/ENCODE.png';
+import GTExLogo from '../assets/ExternalLogos/GTEx.png';
+import MWLogo from '../assets/ExternalLogos/MetabolomicsWorkbench.jpeg';
+import MoTrPACRecruitmentLogo from '../assets/ExternalLogos/MoTrPAC_Recruitment_logo.png';
+import NIHLogo from '../assets/ExternalLogos/NIHCommonFund.png';
+import OmicsPipelinesImage from '../assets/ExternalLogos/omicspipelines_dashboard.png';
+import WuTsaiHumanPerformanceAllianceStanfordSiteLogo from '../assets/ExternalLogos/WuTsai_Human_Performance_Alliace.jpg';
+import MOTRLogo from '../assets/MoTrPAC_horizontal.png';
+
+const featured = [
   {
-    name: 'Source Code',
+    name: 'Featured',
     links: [
       {
         protocol: 'https',
-        url: 'Github.com/AshleyLab/motrpac-frontend',
-        text: 'Github Repository for code creating this sites front end',
+        url: 'MoTrPAC.org',
+        text: 'Primary entrance point for overarching MoTrPAC study of which the Bioinformatic Data Hub is a component.',
+        image: MOTRLogo,
+        title: 'MoTrPAC Consortium Site',
       },
       {
         protocol: 'https',
-        url: 'Github.com/AshleyLab/motrpac_metaanalysis',
-        text: 'Github Repository for code used in meta-analysis',
+        url: 'motrpac.org/join/volunteerHome.cfm',
+        text: 'The MoTrPAC Study is recruiting volunteers to participate in the research study. More information and details available at the MoTrPAC Consortium Site.',
+        image: MoTrPACRecruitmentLogo,
+        title: 'Volunteer',
+      },
+      {
+        protocol: 'https',
+        url: 'extrameta.org',
+        text: 'A database comprising meta-analysis results from 43 publicly available exercise transcriptome datasets from human skeletal muscle and blood.',
+        image: metaAnalysisGeneIcon,
+        title: 'Exercise Transcriptome Meta-analysis',
+      },
+      {
+        protocol: 'https',
+        url: 'omicspipelines.org',
+        text: 'OmicsPipelines is a user-friendly set of applications built by the MoTRPAC Bioinformatics Center, designed to run proteomics and genomics data analysis pipelines in the cloud, requiring minimal knowledge of cloud computing. It features two main components: an installer that sets up the necessary infrastructure on selected cloud platforms and a dashboard that facilitates the creation, execution, and monitoring of various scientific workflows, promoting collaboration through multi-user access and extensive support resources.',
+        image: OmicsPipelinesImage,
+        title: 'OmicsPipelines',
       },
     ],
   },
-*/
+];
+
+const partners = [
   {
     name: 'Partners',
     links: [
@@ -37,14 +66,14 @@ const linkList = [
       },
       {
         protocol: 'https',
-        url: 'ENCODEProject.org',
-        text: 'ENCODE project website',
-        image: ENCODELogo,
-        title: 'ENCODE Project',
+        url: 'info.cfde.cloud',
+        text: 'CFDE Information Portal',
+        image: CFDELogo,
+        title: 'CFDE Workbench',
       },
       {
-        protocol: 'http',
-        url: 'METABOLOMICSworkbench.org',
+        protocol: 'https',
+        url: 'metabolomicsworkbench.org',
         text: 'UCSD Metabolomics Workbench',
         image: MWLogo,
         title: 'Metabolomics Workbench',
@@ -56,6 +85,20 @@ const linkList = [
         image: GTExLogo,
         title: 'GTEx',
       },
+      {
+        protocol: 'https',
+        url: 'ENCODEProject.org',
+        text: 'ENCODE project website',
+        image: ENCODELogo,
+        title: 'ENCODE Project',
+      },
+      {
+        protocol: 'https',
+        url: 'humanperformance.stanford.edu',
+        text: 'The Wu Tsai Human Performance Alliance at Stanford University',
+        image: WuTsaiHumanPerformanceAllianceStanfordSiteLogo,
+        title: 'Wu Tsai Human Performance Alliance at Stanford',
+      },
     ],
   },
 ];
@@ -64,71 +107,80 @@ const linkList = [
  * Renders the External Links page in both
  * unauthenticated and authenticated states.
  *
- * @param {Boolean} isAuthenticated Redux state for user's authentication status.
- *
  * @returns {Object} JSX representation of the External Links page.
  */
-export function LinkoutPage({ isAuthenticated }) {
-  const links = linkList.map(category => (
-    <div key={category.name} className="LinkCategory">
-      <h4>{category.name}</h4>
-      <div className="card-deck">
-        {
-          category.links.map(link => <UsefulLink key={link.url} link={link} />)
-        }
+function LinkoutPage() {
+  // Render featured links
+  const featuredLinks = featured.map((item) => (
+    <div key={item.name} className="featured-link">
+      <div className="row row-cols-1 row-cols-md-2">
+        {item.links.map((link) => (
+          <div key={link.url} className="col mb-4 mt-2 py-3">
+            <div className="card">
+              <div
+                className="card-img-top"
+                style={{ backgroundImage: `url("${link.image}")` }}
+              />
+              <div className="card-body">
+                <h5 className="card-title text-center">
+                  <ExternalLink
+                    to={`${link.protocol}://${link.url}`}
+                    label={link.title}
+                  />
+                </h5>
+                <p className="card-text">{link.text}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  ));
+
+  // Render partner links
+  const partnerLinks = partners.map((partner) => (
+    <div key={partner.name} className="partner-link">
+      <h3>{partner.name}</h3>
+      <div className="row row-cols-1 row-cols-md-4">
+        {partner.links.map((link) => (
+          <UsefulLink key={link.url} link={link} />
+        ))}
       </div>
     </div>
   ));
 
   return (
-    <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 linkoutPage`}>
-      <div className={`${!isAuthenticated ? 'container' : ''}`}>
-        <div className="page-title pt-3 pb-2 border-bottom">
-          <h3>Useful Links</h3>
-        </div>
-        <div className="row align-items-center justify-content-center motrLink">
-          <div className="col-12 col-md-5 centered">
-            <img src={MOTRLogo} className="img-fluid" alt="MoTrPAC Logo" />
-          </div>
-          <div className="col MoTrLinkInfo h5">
-            <a href="http://MoTrPAC.org">
-              MoTrPAC Main Site
-              &nbsp;
-              <span className="oi oi-external-link" />
-            </a>
-            <p>
-              Primary entrance point for overarching MoTrPAC study of which the
-              Bioinformatic Datahub is a component.
-            </p>
-          </div>
-        </div>
-        <div className="externalLinks">
-          {links}
-        </div>
+    <div className="linkoutPage px-3 px-md-4 mb-3 container">
+      <Helmet>
+        <html lang="en" />
+        <title>Useful Links - MoTrPAC Data Hub</title>
+      </Helmet>
+      <div>
+        <PageTitle title="Useful Links" />
+        <div className="externalLinks">{featuredLinks}</div>
+        <div className="externalLinks">{partnerLinks}</div>
       </div>
     </div>
   );
 }
 
 function UsefulLink({ link }) {
-  let imgUrl = 'https://via.placeholder.com/200';
-  if (link.image) {
-    imgUrl = link.image;
-  }
   return (
-    <div className="card mb-4 shadow-sm">
-      <div className="card-img-top" style={{ backgroundImage: `url("${imgUrl}")` }} />
-      <div className="card-body">
-        <h6 className="card-title">
-          <a href={`${link.protocol}://www.${link.url}`} target="_new">
-            {link.title}
-            &nbsp;
-            <span className="oi oi-external-link" />
-          </a>
-        </h6>
-        <p className="card-text">
-          {link.text}
-        </p>
+    <div className="col mb-4">
+      <div className="card h-100 shadow-sm">
+        <div
+          className="card-img-top"
+          style={{ backgroundImage: `url("${link.image}")` }}
+        />
+        <div className="card-body">
+          <h5 className="card-title">
+            <ExternalLink
+              to={`${link.protocol}://${link.url}`}
+              label={link.title}
+            />
+          </h5>
+          <p className="card-text">{link.text}</p>
+        </div>
       </div>
     </div>
   );
@@ -142,16 +194,4 @@ UsefulLink.propTypes = {
   }).isRequired,
 };
 
-LinkoutPage.propTypes = {
-  isAuthenticated: PropTypes.bool,
-};
-
-LinkoutPage.defaultProps = {
-  isAuthenticated: false,
-};
-
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
-
-export default connect(mapStateToProps)(LinkoutPage);
+export default LinkoutPage;

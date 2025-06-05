@@ -1,60 +1,27 @@
+@use 'fonts';
+@use 'bootstrapCustom';
+
 html, body {
-  color: $stanford-black;
-  font-family: $opensans;
   height: 100%;
   min-height: 100%;
   margin: 0;
   padding: 0;
 }
 
-:root {
-  font-size: 17px;
-}
-
-h1, h2, h3, h4, h5 {
-  color: $stanford-cool-grey;
-  font-weight: $semibold-weight;
-}
-
 .titleRow {
   margin-top: 1rem;
 
   h2 {
-    font-weight: $light-weight;
+    font-weight: fonts.$light-weight;
   }
 }
 
 .light {
-  font-weight: $light-weight;
+  font-weight: fonts.$light-weight;
 }
 
 .heavy {
-  font-weight: $bold-weight;
-}
-
-a {
-  color: $primary-blue;
-
-  &:hover {
-    color: $primary-blue-shade-medium;
-    text-decoration: none;
-  }
-}
-
-button {
-  background-color: $primary-blue;
-  color: #fff;
-  font-weight: $regular-weight;
-}
-
-label {
-  color: $stanford-cool-grey;
-  font-size: 0.75rem;
-}
-
-p {
-  color: $stanford-black;
-  font-size: 0.85rem;
+  font-weight: fonts.$bold-weight;
 }
 
 #root {
@@ -67,18 +34,184 @@ p {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  margin-top: 1.75rem;
+}
 
-  &.test-version {
-    background: url(../src/assets/background-img-test-version.gif);
+body.homepage {
+  background-image: url(./assets/LandingPageGraphics/background_hero_image.jpg);
+  background-position-x: center;
+  background-position-y: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+
+  &.loaded {
+    background-image: none;
+    height: 100%;
+  }
+
+  .App {
+    margin-top: 0;
   }
 }
 
-@include media-breakpoint-up(lg) {
+@include bootstrapCustom.media-breakpoint-up(lg) {
   body {
-    padding-top: 5.60rem;
+    padding-top: 4.30rem;
 
     &.authenticated {
-      padding-top: 4.50rem;
+      padding-top: 4.30rem;
     }
+
+    &.homepage {
+      padding-top: 0;
+    }
+  }
+}
+
+.loggedInContentContainer {
+  .sidebarLayoutBlock {
+    &.sidebar-expanded {
+      width: 15.0rem;
+    }
+  
+    &.sidebar-collapsed {
+      width: 3.75rem;
+    }
+  }
+
+  .sidebar-expanded {
+    width: calc(100% - 15.0rem);
+  }
+
+  .sidebar-collapsed {
+    width: calc(100% - 3.75rem);
+  }
+}
+
+@media (max-width: 800px) {
+  .loggedInContentContainer {
+    .sidebar-expanded {
+      width: calc(100% - 10.0rem);
+    }
+  }
+
+  .sidebarLayoutBlock {
+    .sidebar-expanded {
+      width: 10.0rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .loggedInContentContainer {
+    .sidebar-expanded {
+      width: 100%;
+    }
+
+    .sidebar-collapsed {
+      width: 100%;
+    }
+  }
+}
+
+@include bootstrapCustom.media-breakpoint-down(xs) {
+  .announcementsPage,
+  .browseDataPage,
+  .codeRepoPage,
+  .contactPage,
+  .dataAccessPage,
+  .errorPage,
+  .geneCentricViewPage,
+  .graphicalClusteringPage,
+  .linkoutPage,
+  .mainStudyPage,
+  .methodsPage,
+  .relatedStudyPage,
+  .searchPage,
+  .teamPage,
+  .tutorialsPage {
+    padding-top: 8.50rem;
+  }
+}
+
+
+/*
+$primary:       $blue !default;
+$secondary:     $gray-600 !default;
+$success:       $green !default;
+$info:          $cyan !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         $gray-100 !default;
+$dark:          $gray-800 !default;
+ */
+
+.bd-callout {
+  padding: 1.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid #eee;
+  border-left-width: .25rem;
+  border-radius: .25rem;
+  h2,h3,h4,h5 {
+    margin-top: 0;
+    margin-bottom: .75rem
+  }
+  p:last-child {
+    margin-bottom: 0
+  }
+  code {
+    border-radius: .25rem
+  }
+}
+
+.bd-callout-primary{
+  border-left-color: bootstrapCustom.$primary;
+  h2,h3,h4,h5 {
+    color: bootstrapCustom.$primary
+  }
+}
+
+.bd-callout-secondary{
+  border-left-color: bootstrapCustom.$secondary;
+  h2,h3,h4,h5 {
+    color: bootstrapCustom.$secondary
+  }
+}
+.bd-callout-success {
+  border-left-color: bootstrapCustom.$success;
+  h2,h3,h4,h5 {
+    color: bootstrapCustom.$success
+  }
+}
+.bd-callout-info {
+  border-left-color: bootstrapCustom.$info;
+  h2,h3,h4,h5 {
+    color: bootstrapCustom.$info
+  }
+}
+.bd-callout-warning {
+  border-left-color: bootstrapCustom.$warning;
+  h2,h3,h4,h5 {
+    color: bootstrapCustom.$warning
+  }
+}
+.bd-callout-danger {
+  border-left-color: bootstrapCustom.$danger;
+  h2,h3,h4,h5 {
+    color: bootstrapCustom.$danger
+  }
+}
+.bd-callout-light {
+  border-left-color: bootstrapCustom.$light;
+  h2,h3,h4,h5 {
+    color: bootstrapCustom.$light
+  }
+}
+.bd-callout-dark {
+  border-left-color: bootstrapCustom.$dark;
+  h2,h3,h4,h5 {
+    color: bootstrapCustom.$dark
   }
 }

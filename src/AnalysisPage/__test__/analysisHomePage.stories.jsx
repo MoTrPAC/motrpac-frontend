@@ -1,20 +1,19 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+import { Provider } from 'react-redux';
 import { action } from '@storybook/addon-actions';
+import configureStore from '../../App/configureStore';
 import { AnalysisHomePage } from '../analysisHomePage';
 import { Navbar } from '../../Navbar/navbar';
-import { Footer } from '../../Footer/footer';
+import Footer from '../../Footer/footer';
 import { Sidebar } from '../../Sidebar/sidebar';
 import { defaultAnalysisState } from '../analysisReducer';
 
-const testUser = require('../../testData/testUser');
+const store = configureStore();
+
+import testUser from '../../testData/testUser';
 
 const navbarAction = {
   logout: action('logging out'),
-};
-
-const footerAction = {
-  login: action('logging in'),
 };
 
 const sidebarActions = {
@@ -25,7 +24,6 @@ const sidebarActions = {
 const AnalysisActions = {
   goBack: action('Back'),
   onPickAnalysis: action('Pick Analysis'),
-  onPickSubAnalysis: action('Pick SubAnalysis'),
 };
 
 const animalMatch = {
@@ -38,46 +36,57 @@ const humanMatch = {
     subjectType: 'human',
   },
 };
-const depth1StateHuman = {
-  ...defaultAnalysisState,
-  match: humanMatch,
-  depth: 1,
-  currentAnalysis: 'PDMA',
-};
 const depth1StateAnimal = {
   ...defaultAnalysisState,
   match: animalMatch,
   depth: 1,
-  currentAnalysis: 'PD',
+  currentAnalysis: 'PHENOTYPE',
+  currentAnalysisTitle: 'Phenotypic Data',
 };
-const depth2StateAnimal = {
-  ...defaultAnalysisState,
-  match: animalMatch,
-  depth: 2,
-  currentAnalysis: 'PD',
-  currentSubAnalysis: 'APD',
-};
-storiesOf('Analysis Page', module)
-  .addDecorator((story) => (
-    <>
-      <div className="App">
-        <header>
-          <Navbar isAuthenticated {...navbarAction} profile={testUser} />
-        </header>
-        <div className="componentHolder">
-          <div className="container-fluid">
-            <div className="row">
-              <Sidebar isAuthenticated profile={testUser} {...sidebarActions} />
-              {story()}
+
+export default {
+  title: 'Analysis Page',
+
+  decorators: [
+    (story) => (
+      <Provider store={store}>
+        <div className="App">
+          <header>
+            <Navbar isAuthenticated {...navbarAction} profile={testUser} />
+          </header>
+          <div className="componentHolder">
+            <div className="container-fluid">
+              <div className="row mt-5 pt-1">
+                <Sidebar
+                  isAuthenticated
+                  profile={testUser}
+                  {...sidebarActions}
+                />
+                {story()}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <Footer isAuthenticated profile={testUser} {...footerAction} />
-    </>
-  ))
-  .add('Animal', () => <AnalysisHomePage isAuthenticated {...defaultAnalysisState} match={animalMatch} {...AnalysisActions} />)
-  .add('Animal Depth 1', () => <AnalysisHomePage isAuthenticated {...depth1StateAnimal} {...AnalysisActions} />)
-  .add('Animal Depth 2', () => <AnalysisHomePage isAuthenticated {...depth2StateAnimal} {...AnalysisActions} />)
-  .add('Human', () => <AnalysisHomePage isAuthenticated {...defaultAnalysisState} match={humanMatch} {...AnalysisActions} />)
-  .add('Human Depth 1', () => <AnalysisHomePage isAuthenticated {...depth1StateHuman} {...AnalysisActions} />);
+        <Footer isAuthenticated profile={testUser} />
+      </Provider>
+    ),
+  ],
+};
+
+export const Animal = () => (
+  <AnalysisHomePage
+    {...defaultAnalysisState}
+    match={animalMatch}
+    {...AnalysisActions}
+  />
+);
+export const AnimalDepth1 = () => (
+  <AnalysisHomePage {...depth1StateAnimal} {...AnalysisActions} />
+);
+export const Human = () => (
+  <AnalysisHomePage
+    {...defaultAnalysisState}
+    match={humanMatch}
+    {...AnalysisActions}
+  />
+);

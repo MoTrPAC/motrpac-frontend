@@ -4,7 +4,6 @@ import Flask from '../assets/icons/flask.png';
 import Gender from '../assets/icons/gender.png';
 import Globe from '../assets/icons/globe.png';
 import Heart from '../assets/icons/heart.png';
-import Loading from '../assets/icons/loading.svg';
 import Metabolite from '../assets/icons/metabolite.png';
 import Protein from '../assets/icons/protein.png';
 import Rat from '../assets/icons/rat.png';
@@ -14,6 +13,12 @@ import Spinner from '../assets/icons/spinner.gif';
 import Sync from '../assets/icons/sync.png';
 import Archive from '../assets/icons/archive.png';
 import InternalDataRelease from '../assets/icons/data-release-internal.png';
+import ArrowRightAnimated from '../assets/icons/arrow-right-animated.svg';
+import ArrowDownAnimated from '../assets/icons/arrow-down-animated.svg';
+import ArrowDownAnimatedDark from '../assets/icons/arrow-down-animated-dark.svg';
+import GitHub from '../assets/icons/github.svg';
+import GoogleCloud from '../assets/icons/google-cloud.svg';
+import GoogleDrive from '../assets/icons/google-drive.svg';
 
 const IconSet = {
   Clinic,
@@ -22,7 +27,6 @@ const IconSet = {
   Gender,
   Globe,
   Heart,
-  Loading,
   Metabolite,
   Protein,
   Rat,
@@ -32,6 +36,12 @@ const IconSet = {
   Sync,
   Archive,
   InternalDataRelease,
+  ArrowRightAnimated,
+  ArrowDownAnimated,
+  ArrowDownAnimatedDark,
+  GitHub,
+  GoogleCloud,
+  GoogleDrive,
 };
 
 export default IconSet;

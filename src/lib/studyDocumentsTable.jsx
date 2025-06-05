@@ -1,8 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import IconSet from './iconSet';
-import StudyDocuments from '../DataAccess/studyDocuments';
+import { AnimalStudyDocuments } from '../DataAccess/studyDocuments';
 
-function StudyDocumentsTable() {
+import '@styles/studyDocumentsTable.scss';
+
+function StudyDocumentsTable({ currentView = '' }) {
+  const newArray = [...AnimalStudyDocuments];
+  if (currentView === 'internal') {
+    newArray.pop();
+  }
   // Handler to render study documents table rows
   function renderStudyDocumentsTableRow(item) {
     return (
@@ -22,7 +29,7 @@ function StudyDocumentsTable() {
 
   return (
     <div className="card mb-3 border-secondary motrpac-study-documents">
-      <div className="card-header bg-secondary text-light">MoTrPAC study documents</div>
+      <h5 className="card-header bg-secondary text-light">MoTrPAC animal study documents</h5>
       <div className="card-body">
         <div className="table-responsive">
           <div className="table table-document-list">
@@ -30,12 +37,16 @@ function StudyDocumentsTable() {
               <div className="table-cell-document-list">Title</div>
               <div className="table-cell-document-list">Description</div>
             </div>
-            {StudyDocuments.map((item) => renderStudyDocumentsTableRow(item))}
+            {newArray.map((item) => renderStudyDocumentsTableRow(item))}
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+StudyDocumentsTable.propTypes = {
+  currentView: PropTypes.string,
+};
 
 export default StudyDocumentsTable;

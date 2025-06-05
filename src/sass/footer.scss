@@ -1,0 +1,32 @@
+@use 'colors';
+@use 'fonts';
+
+footer {
+  position: relative;
+  z-index: 200;
+
+  .footer-disclaimers {
+    background-color: colors.$primary-blue;
+    color: #fff;
+    line-height: 1.25rem;
+    padding: 0.85rem 0;
+    text-align: center;
+
+    .footer-content {
+      font-size: 0.75em;
+      margin-left: 1.0rem;
+      margin-right: 1.0rem;
+      margin-bottom: 0;
+
+      a {
+        color: #fff;
+        text-decoration: underline;
+      }
+
+      &.compliance-review-notice {
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+    }
+  }
+}

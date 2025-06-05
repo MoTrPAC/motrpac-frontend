@@ -1,143 +1,99 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import PreviousUploadsTableConnected, { PreviousUploadsTable } from '../Widgets/previousUploadsTable';
-import PreviousUploadsGraph from '../Widgets/previousUploadsGraph';
-import AllUploadsDoughnut from '../Widgets/allUploadsDoughnut';
-import AllUploadStats from '../Widgets/allUploadStats';
-import actions from '../UploadPage/uploadActions';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import FeatureLinks from '../Search/featureLinks';
+import DataStatusActions from '../DataStatusPage/dataStatusActions';
 
-const allUploads = require('../testData/testAllUploads');
+import '@styles/dashboard.scss';
 
 /**
  * Renders the Dashboard page.
  *
- * @param {Boolean}   isAuthenticated Redux state for user's authentication status.
- * @param {Boolean}   isPending       Redux state for user's authentication progress.
- * @param {Object}    profile         Redux state for authenticated user's info.
+ * @param {Object} profile  Redux state of authenticated user profile
  *
- * @returns {object} JSX representation of the global footer.
+ * @returns {object} JSX representation of the Dashboard
  */
-export function Dashboard({
-  profile,
-  isAuthenticated,
-  isPending,
-  featureAvailable,
-  previousUploads,
-  disconnectComponents,
-  clearForm,
-}) {
-  const editBtn = (
-    <div className="col-auto">
-      <Link className="editBtn btn btn-light disabled" to="/edit-dashboard">Edit Dashboard</Link>
+export function Dashboard({ profile = {}, handleQCDataFetch, lastModified = '' }) {
+  const userType = profile.user_metadata && profile.user_metadata.userType;
+
+  return (
+    <div className="dashboardPage px-3 px-md-4 mb-3">
+      <Helmet>
+        <html lang="en" />
+        <title>Dashboard - MoTrPAC Data Hub</title>
+      </Helmet>
+      {userType && userType === 'internal' && (
+        <div className="jumbotron jumbotron-fluid alert-data-release">
+          <div className="container">
+            <h1 className="office-hour-title display-2">
+              <i className="bi bi-rocket-takeoff mr-3" />
+              <span>It's here!</span>
+            </h1>
+            <div className="w-100 lead">
+              <span className="data-release-text">
+                The pre-COVID human sedentary adults dataset is now available to consortium
+                users. You may
+                {' '}
+                <Link to="/data-download">download them</Link>
+                {' '}
+                or
+                {' '}
+                <Link to="/search">explore the differential abundance</Link>
+                {' '}
+                in the dataset. Please refer to the
+                {' '}
+                <a href={import.meta.env.VITE_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
+                  Consortium Release document
+                </a>
+                {' '}
+                for more information on this dataset.
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+      {userType && userType === 'external' && (
+        <div className="alert-data-release">
+          <h1 className="office-hour-title display-4 mb-4">
+            <span>
+              Welcome,
+              {' '}
+              {profile.user_metadata.givenName}
+            </span>
+          </h1>
+        </div>
+      )}
+      <div className="w-100">
+        {userType && (
+          <FeatureLinks
+            handleQCDataFetch={handleQCDataFetch}
+            lastModified={lastModified}
+            userType={userType}
+          />
+        )}
+      </div>
     </div>
   );
-
-  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
-
-  // FIXME: temp workaround to handle callback redirect
-  if (isPending) {
-    const pendingMsg = 'Authenticating...';
-
-    return (
-      <div className="authLoading">
-        <span className="oi oi-shield" />
-        <h3>{pendingMsg}</h3>
-      </div>
-    );
-  }
-
-  if (isAuthenticated) {
-    if (!hasAccess) {
-      return (<Redirect to="/error" />);
-    }
-
-    return (
-      <div className="col-md-9 ml-sm-auto col-lg-10 px-4 Dashboard">
-        <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <div className="page-title">
-            <h3>Dashboard</h3>
-          </div>
-          <div className="btn-toolbar">
-            <div className="btn-group">
-              <Link className="uploadBtn btn btn-sm btn-outline-primary" to="/upload" onClick={clearForm}>Upload Data</Link>
-              <Link className="downloadBtn btn btn-sm btn-outline-primary" to="/download">Download/View Data</Link>
-            </div>
-          </div>
-          {featureAvailable.dashboardEditable ? editBtn : ''}
-        </div>
-        <div className="previous-uploads-table">
-          <div className="card">
-            <h5 className="card-header">Uploads</h5>
-            <div className="card-body">
-              { disconnectComponents ? <PreviousUploadsTable previousUploads={previousUploads} /> : <PreviousUploadsTableConnected /> }
-            </div>
-          </div>
-        </div>
-        <div className="previous-uploads-graph">
-          <div className="card">
-            <h5 className="card-header">Assay Categories</h5>
-            <div className="card-body">
-              <PreviousUploadsGraph previousUploads={previousUploads} />
-            </div>
-          </div>
-        </div>
-        <div className="total-uploads-graph">
-          <div className="card">
-            <h5 className="card-header">Total Uploads By All Sites</h5>
-            <div className="card-body">
-              <div className="row justify-content-center">
-                <AllUploadsDoughnut allUploads={allUploads} />
-                <AllUploadStats />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (<Redirect to="/" />);
 }
 
 Dashboard.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
   }),
-  isAuthenticated: PropTypes.bool,
-  isPending: PropTypes.bool,
-  featureAvailable: PropTypes.shape({
-    dashboardEditable: PropTypes.bool,
-  }),
-  previousUploads: PropTypes.arrayOf(PropTypes.shape({
-    identifier: PropTypes.string,
-  })).isRequired,
-  disconnectComponents: PropTypes.bool,
-  clearForm: PropTypes.func.isRequired,
+  handleQCDataFetch: PropTypes.func.isRequired,
+  lastModified: PropTypes.string,
 };
 
-Dashboard.defaultProps = {
-  profile: {},
-  isAuthenticated: false,
-  isPending: false,
-  featureAvailable: {
-    dashboardEditable: false,
-  },
-  disconnectComponents: false,
-};
-
-const mapStateToProps = state => ({
-  profile: state.auth.profile,
-  isAuthenticated: state.auth.isAuthenticated,
-  isPending: state.auth.isPending,
-  previousUploads: state.upload.previousUploads,
+const mapStateToProps = (state) => ({
+  ...state.auth,
+  ...state.dashboard,
+  lastModified: state.dataStatus.qcData.lastModified,
 });
 
-// Need to clear the upload form values and recently uploaded files
-// if user navigates away from and returns to the upload page
-const mapDispatchToProps = dispatch => ({
-  clearForm: () => dispatch(actions.clearForm()),
+const mapDispatchToProps = (dispatch) => ({
+  handleQCDataFetch: () => dispatch(DataStatusActions.fetchData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

@@ -1,76 +1,57 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import ContactHelpdesk from '../lib/ui/contactHelpdesk';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import PageTitle from '../lib/ui/pageTitle';
+import ContactForm from './contactForm';
+
+import '@styles/contact.scss';
 
 /**
  * Renders the Contact Us page in both
  * unauthenticated and authenticated states.
  *
  * @param {Boolean} isAuthenticated Redux state for user's authentication status.
+ * @param {Boolean} expanded        Redux state for sidebar
  *
  * @returns {Object} JSX representation of the Contact Us page.
  */
-export function Contact({ isAuthenticated }) {
+function Contact() {
   return (
-    <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 contactPage`}>
-      <div className={`${!isAuthenticated ? 'container' : ''}`}>
-        <div className="page-title pt-3 pb-2 border-bottom">
-          <h3>Contact Us</h3>
+    <div className="contactPage px-3 px-md-4 mb-3 container">
+      <Helmet>
+        <html lang="en" />
+        <title>Contact Form - MoTrPAC Data Hub</title>
+      </Helmet>
+      <PageTitle title="Contact Us" />
+      <div className="contact-content-container">
+        <div className="contact-summary-container row mb-4">
+          <div className="lead col-12">
+            Please use the form below, or via{' '}
+            <a href="mailto:motrpac-helpdesk@lists.stanford.edu">email</a>, to
+            get in touch with the MoTrPAC Bioinformatics Center helpdesk for any
+            questions and inquiries.
+          </div>
         </div>
-        <div className="card-deck contact-content-container">
-          <div className="card mb-4 shadow-sm">
-            <h5 className="card-header">Accessing Data</h5>
-            <div className="card-body">
-              <p className="card-text">
-                The first MoTrPAC public data release is now available. Please agree to
-                the data use agreement and register for an account on the&nbsp;
-                <a href="/data-access" className="inline-link">Data Access</a>
-                &nbsp;page if you are interested in obtaining access to the data. For updates when
-                subsequent publicly accessible data become available, please
-                {' '}
-                <ContactHelpdesk />
-              </p>
-            </div>
-          </div>
-          <div className="card mb-4 shadow-sm">
-            <h5 className="card-header">Uploading Study Data</h5>
-            <div className="card-body">
-              <p className="card-text">
-                If you are a member of one of the sites involved with MoTrPAC, please sign in using your
-                login credentials via the &quot;Submitter Login&quot; link at the top and bottom right of this website. If you have issues
-                logging in, please
-                {' '}
-                <ContactHelpdesk />
-              </p>
-            </div>
-          </div>
-          <div className="card mb-4 shadow-sm">
-            <h5 className="card-header">Questions and Inquiries</h5>
-            <div className="card-body">
-              <p className="card-text">
-                For general inquiries about the MoTrPAC Data Hub, please
-                {' '}
-                <ContactHelpdesk />
-              </p>
-            </div>
-          </div>
+        <ContactForm />
+        <div className="alert alert-secondary" role="alert">
+          The MoTrPAC{' '}
+          <Link to="/data-download">
+            young adult rat endurance training study data
+          </Link>{' '}
+          is now available to the public. This is in addition to the{' '}
+          <Link to="/data-access">
+            limited young adult rat acute exercise study data
+          </Link>{' '}
+          made publicly available in the past. Please agree to the data usage
+          terms and register for an account on the{' '}
+          <Link to="/data-access">Data Access</Link> page if you are interested
+          in obtaining access to the limited rat acute exercise data. To receive
+          updates when subsequent publicly accessible data become available,
+          please reach out to us using either one of the contact methods above.
         </div>
       </div>
     </div>
   );
 }
 
-Contact.propTypes = {
-  isAuthenticated: PropTypes.bool,
-};
-
-Contact.defaultProps = {
-  isAuthenticated: false,
-};
-
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
-
-export default connect(mapStateToProps)(Contact);
+export default Contact;

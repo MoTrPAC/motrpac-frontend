@@ -1,0 +1,57 @@
+@use 'colors';
+
+.multiOmicsWorkingGroupsPage {
+    .multi-omics-wg-tab-content {
+        .pre-cawg, .dawg-pac {
+            .resources-table {
+                th {
+                    text-align: center;
+                    width: 33.33%;
+                }
+
+                td {
+                    text-align: center;
+                    vertical-align: top;
+
+                    img {
+                        width: 6.0em;
+                    }
+                }
+            }
+
+            .release-notes-table {
+                td {
+                    dl {
+                        dt {
+                            float: left; 
+                            clear: left;
+                            margin-right: 0.5rem;
+                        }
+                    }
+                }
+            }
+
+            .nested-order-list {
+                list-style-type: lower-alpha;
+            }
+        }
+    }
+
+    .multi-omics-wg-tabs {
+        border-bottom: 1px solid colors.$gray-semi-transparent;
+
+        .nav-item {
+            .nav-link {
+                font-size: 1.25rem;
+                padding: 0.45rem 1.15rem;
+    
+                &.active {
+                    background: linear-gradient(#dedede, #fff);
+                    border-top-color: colors.$gray-semi-transparent;
+                    border-right-color: colors.$gray-semi-transparent;
+                    border-left-color: colors.$gray-semi-transparent;
+                }
+            }
+        }
+    }
+}

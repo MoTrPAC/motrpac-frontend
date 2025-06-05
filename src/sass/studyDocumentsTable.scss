@@ -1,0 +1,94 @@
+@use 'bootstrapCustom';
+
+.motrpac-study-documents {
+  .card-body {
+    padding: 0;
+  }
+
+  .table-document-list {
+    display: table;
+    margin-bottom: 0;
+    width: 100%;
+
+    .table-cell-document-list {
+      display: table-cell;
+      padding: 0.45rem 0.65rem;
+      vertical-align: middle;
+    }
+
+    .table-header-document-list {
+      display: table-row;
+
+      .table-cell-document-list {
+        border-bottom: 1px solid #dee2e6;
+        font-weight: bold;
+      }
+    }
+
+    .table-row-document-list {
+      display: table-row;
+
+      &:nth-of-type(even) {
+        background-color: rgba(0,0,0,.05);
+      }
+
+      .table-cell-document-list {
+        border-top: 1px solid #dee2e6;
+      }
+    }
+
+    img {
+      margin-right: 0.35rem;
+      width: auto;
+      height: 1.0rem;
+      opacity: 0.75;
+    }
+
+    a {
+      white-space: nowrap;
+    }
+  }
+}
+
+@include bootstrapCustom.media-breakpoint-down(sm) {
+  .motrpac-study-documents {
+    .table-document-list,
+    .table-header-document-list,
+    .table-row-document-list,
+    .table-cell-document-list {
+      display: block !important;
+    }
+
+    .table-header-document-list {
+      border-bottom: 1px solid #dee2e6;
+
+      .table-cell-document-list {
+        border-bottom: none !important;
+
+        &:first-child {
+          padding-bottom: 0;
+        }
+
+        &:last-child {
+          padding-top: 0;
+        }
+      }
+    }
+
+    .table-row-document-list {
+      border-top: 1px solid #dee2e6;
+
+      .table-cell-document-list {
+        border-top: none !important;
+
+        &:first-child {
+          padding-bottom: 3px;
+        }
+
+        &:last-child {
+          padding-top: 0;
+        }
+      }
+    }
+  }
+}

@@ -10,9 +10,14 @@ import PropTypes from 'prop-types';
  *
  * @returns {Object} JSX representation of a link.
  */
-function ExternalLink({ to, label }) {
+function ExternalLink({ to, label = null }) {
   return (
-    <a href={to} className="inline-link-with-icon" target="_blank" rel="noopener noreferrer">
+    <a
+      href={to}
+      className="inline-link-with-icon"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       {label && label.length ? label : to}
       <i className="material-icons external-linkout-icon">open_in_new</i>
     </a>
@@ -22,10 +27,6 @@ function ExternalLink({ to, label }) {
 ExternalLink.propTypes = {
   to: PropTypes.string.isRequired,
   label: PropTypes.string,
-};
-
-ExternalLink.defaultProps = {
-  label: null,
 };
 
 export default ExternalLink;

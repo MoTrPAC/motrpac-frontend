@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import ContactHelpdesk from '../lib/ui/contactHelpdesk';
+
+import '@styles/errorPage.scss'
 
 /**
  * Renders the Error page.
  *
  * @returns {Object} JSX representation of the Error page.
  */
-export function ErrorPage({ isAuthenticated, profile }) {
-  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
-
-  if (isAuthenticated && hasAccess) {
-    return <Redirect to="/releases" />;
+export function ErrorPage({ isAuthenticated = {}, profile = false }) {
+  if (isAuthenticated && profile.user_metadata) {
+    return <Navigate to="/dashboard" />
   }
 
   return (
@@ -63,14 +63,8 @@ ErrorPage.propTypes = {
   isAuthenticated: PropTypes.bool,
 };
 
-ErrorPage.defaultProps = {
-  profile: {},
-  isAuthenticated: false,
-};
-
 const mapStateToProps = (state) => ({
-  profile: state.auth.profile,
-  isAuthenticated: state.auth.isAuthenticated,
+  ...state.auth,
 });
 
 export default connect(mapStateToProps)(ErrorPage);

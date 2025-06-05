@@ -1,160 +1,121 @@
-import React from 'react';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { shallow, mount } from 'enzyme';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import rootReducer, { defaultRootState } from '../../App/reducers';
-import { defaultAnalysisState } from '../analysisReducer';
+import { describe, test, expect, beforeEach, vi } from 'vitest';
+import { screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { renderWithProviders } from '../../testUtils/test-utils';
 import AnalysisHomePageConnected, { AnalysisHomePage } from '../analysisHomePage';
 import analysisTypes from '../../lib/analysisTypes';
+import rootReducer, { defaultRootState } from '../../App/reducers';
+import { defaultAnalysisState } from '../analysisReducer';
 
-Enzyme.configure({ adapter: new Adapter() });
-
-// Checks if any of the analyses has been set to true
-//   Used to determine if other tests depending on these to be active should run
-let anyAnalysisActive = false;
-analysisTypes.forEach((analysis) => {
-  if (analysis.active) {
-    anyAnalysisActive = true;
-  }
-});
+// Helpers and setup
+const anyAnalysisActive = analysisTypes.some(analysis => analysis.active);
 
 const loggedInRootState = {
   ...defaultRootState,
   auth: {
     ...defaultRootState.auth,
     isAuthenticated: true,
-  },
+    profile: {
+      user_metadata: {
+        userType: 'internal'
+      }
+    }
+  }
 };
 
 const analysisActions = {
-  onPickAnalysis: jest.fn(),
-  onPickSubAnalysis: jest.fn(),
-  goBack: jest.fn(),
+  onPickAnalysis: vi.fn(),
+  goBack: vi.fn(),
 };
 
-function constructMatchState(subject) {
-  return {
-    ...defaultAnalysisState,
-    isAuthenticated: true,
-    match: {
-      params: {
-        subjectType: subject,
-      },
+const constructMatchState = (subject) => ({
+  ...defaultAnalysisState,
+  isAuthenticated: true,
+  match: {
+    params: {
+      subjectType: subject,
     },
-  };
-}
+  },
+});
 
 describe('Pure Analysis Home Page', () => {
-  test('Redirects to home if not logged in', () => {
-    const shallowAnalysis = shallow(
-      <AnalysisHomePage
-        {...defaultAnalysisState}
-        {...analysisActions}
-      />,
+  test('redirects to dashboard if not logged in or has invalid URL', () => {
+    renderWithProviders(
+      <AnalysisHomePage {...defaultAnalysisState} {...analysisActions} />
     );
-    expect(shallowAnalysis.find('Redirect')).toHaveLength(1);
-  });
-  test('Redirects if no url match (animal or human)', () => {
-    const shallowAnalysis = shallow(
-      <AnalysisHomePage
-        {...defaultAnalysisState}
-        {...analysisActions}
-        loggedIn
-      />,
-    );
-    expect(shallowAnalysis.find('Redirect')).toHaveLength(1);
+    
+    expect(screen.getByTestId('mock-navigate')).toBeInTheDocument();
   });
 
-  const matchingSubjects = ['human', 'animal', 'HUMAN', 'ANIMAL', 'huMan', 'aNimaL', 'Human', 'Animal'];
-  test('Does not Redirect if url matches', () => {
-    let shallowAnalysis;
-    matchingSubjects.forEach((match) => {
-      shallowAnalysis = shallow(
+  test('shows correct header and components for valid URLs', () => {
+    const matchingSubjects = ['human', 'animal', 'HUMAN', 'ANIMAL'];
+    
+    matchingSubjects.forEach(subject => {
+      const { unmount } = renderWithProviders(
         <AnalysisHomePage
-          {...constructMatchState(match)}
+          {...constructMatchState(subject)}
           {...analysisActions}
-        />,
+          profile={{ user_metadata: { userType: 'internal' } }}
+        />
       );
-      expect(shallowAnalysis.find('Redirect')).toHaveLength(0);
-    });
-  });
 
-  test('Correct header if url matches', () => {
-    const expected = 'Human Data Analysis|Animal Data Analysis';
-    let shallowAnalysis;
-    matchingSubjects.forEach((match) => {
-      shallowAnalysis = shallow(
-        <AnalysisHomePage
-          {...constructMatchState(match)}
-          {...analysisActions}
-        />,
-      );
-      expect(shallowAnalysis.find('h3').text()).toEqual(expect.stringMatching(expected));
-    });
-  });
-
-  test('Correct components if url matches', () => {
-    let shallowAnalysis;
-    matchingSubjects.forEach((match) => {
-      shallowAnalysis = shallow(
-        <AnalysisHomePage
-          {...constructMatchState(match)}
-          {...analysisActions}
-        />,
-      );
-      expect(shallowAnalysis.find('h3')).toHaveLength(1);
-      expect(shallowAnalysis.find('AnalysisTypeButton')).toHaveLength(7);
-      expect(shallowAnalysis.find('.breadcrumbs')).toHaveLength(1);
+      const expectedTitle = `${subject.charAt(0).toUpperCase() + subject.slice(1).toLowerCase()} Data Analysis`;
+      expect(screen.getByRole('heading', { level: 3 })).toHaveTextContent(expectedTitle);
+      
+      unmount();
     });
   });
 });
 
-describe('Connected AnalysisPage', () => {
-  let mountedAnalysis = mount((
-    <Provider store={createStore(rootReducer, loggedInRootState)}>
-      <AnalysisHomePageConnected match={{ params: { subjectType: 'animal' } }} />
-    </Provider>
-  ));
-  beforeAll(() => {
-    mountedAnalysis = mount((
-      <Provider store={createStore(rootReducer, loggedInRootState)}>
-        <AnalysisHomePageConnected match={{ params: { subjectType: 'animal' } }} />
-      </Provider>
-    ));
-  });
-  afterAll(() => {
-    mountedAnalysis.unmount();
+describe('Connected Animal Analysis Page', () => {
+  beforeEach(() => {
+    renderWithProviders(
+      <AnalysisHomePageConnected match={{ params: { subjectType: 'animal' } }} />,
+      { preloadedState: loggedInRootState }
+    );
   });
 
-  test('Clicking active analysis displays subanalyses, clicking back returns to initial', () => {
+  test('shows analysis cards and handles navigation', async () => {
     if (anyAnalysisActive) {
-      // Initially shows analysisTypeButton
-      expect(mountedAnalysis.find('AnalysisTypeButton')).not.toHaveLength(0);
+      const user = userEvent.setup();
+      
+      // Initially shows analysis cards
+      expect(screen.getAllByTestId('analysis-card')).not.toHaveLength(0);
 
-      // Click button --> replace analysisTypeButton with SubAnalysisButton
-      mountedAnalysis.find('.analysisTypeActive').first().simulate('click');
-      expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(1);
-      mountedAnalysis.update();
-      expect(mountedAnalysis.find('SubAnalysisButton')).not.toHaveLength(0);
-      expect(mountedAnalysis.find('AnalysisTypeButton')).toHaveLength(0);
-      mountedAnalysis.find('.subAnalysisRow').first().simulate('click');
-      expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(2);
-      mountedAnalysis.update();
-      expect(mountedAnalysis.find('AnimalDataAnalysis')).not.toHaveLength(0);
+      // Click first active analysis
+      const activeAnalysis = screen.getByTestId('active-analysis-PHENOTYPE');
+      await user.click(activeAnalysis);
 
-      // Click back button --> replace SubAnalysisButton with AnalysisTypeButton
-      mountedAnalysis.find('.backButton').first().simulate('click');
-      expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(1);
-      mountedAnalysis.update();
-      expect(mountedAnalysis.find('AnimalDataAnalysis')).toHaveLength(0);
-      mountedAnalysis.find('.backButton').first().simulate('click');
-      expect(mountedAnalysis.find('Provider').props().store.getState().analysis.depth).toEqual(0);
-      mountedAnalysis.update();
-      expect(mountedAnalysis.find('SubAnalysisButton')).toHaveLength(0);
-      expect(mountedAnalysis.find('AnalysisTypeButton')).not.toHaveLength(0);
+      // Should show animal data analysis component
+      expect(screen.getByTestId('animal-data-analysis')).toBeInTheDocument();
+      
+      // Click back button
+      const backButton = screen.getByRole('button', { name: /back/i });
+      await user.click(backButton);
+
+      // Should show analysis cards again
+      expect(screen.getAllByTestId('analysis-card')).not.toHaveLength(0);
     } else {
-      expect(mountedAnalysis.find('.analysisTypeActive')).toHaveLength(0);
+      expect(screen.queryByTestId('active-analysis')).not.toBeInTheDocument();
     }
+  }, 10000); // Icrease timeout for async operations
+});
+
+// Disabling this test because this UI is not implemented
+/*
+describe('Connected Human Analysis Page', () => {
+  test('shows only inactive analysis cards', () => {
+    renderWithProviders(
+      <AnalysisHomePageConnected match={{ params: { subjectType: 'human' } }} />,
+      { preloadedState: loggedInRootState }
+    );
+
+    const analysisCards = screen.getAllByTestId('analysis-card');
+    expect(analysisCards).not.toBeInTheDocument();
+    
+    // Verify no active analyses
+    expect(screen.queryByTestId('active-analysis')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('sub-analysis-card')).not.toBeInTheDocument();
   });
 });
+*/

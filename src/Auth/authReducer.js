@@ -1,6 +1,5 @@
 import {
   LOGIN_REQUEST,
-  LOGIN_PENDING,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT_SUCCESS,
@@ -12,7 +11,6 @@ export const defaultAuthState = {
   profile: {},
   message: '',
   isFetching: false,
-  isPending: false,
   isAuthenticated: false,
 };
 
@@ -24,17 +22,10 @@ export function AuthReducer(state = defaultAuthState, action) {
         isFetching: true,
         isAuthenticated: false,
       };
-    case LOGIN_PENDING:
-      return {
-        ...state,
-        isPending: true,
-        isAuthenticated: false,
-      };
     case LOGIN_SUCCESS:
       return {
         ...state,
         isFetching: false,
-        isPending: false,
         isAuthenticated: true,
         payload: action.payload,
       };
@@ -42,7 +33,6 @@ export function AuthReducer(state = defaultAuthState, action) {
       return {
         ...state,
         isFetching: false,
-        isPending: false,
         isAuthenticated: false,
         message: action.message,
       };
@@ -53,12 +43,19 @@ export function AuthReducer(state = defaultAuthState, action) {
         payload: {},
         profile: {},
       };
-    case PROFILE_RECEIVE:
+    case PROFILE_RECEIVE: {
+      const { profile } = action;
+      const { payload } = state;
+      const profileObj = { ...profile };
+      profileObj.userid =
+        payload && payload.idTokenPayload ? payload.idTokenPayload.sub : '';
+
       return {
         ...state,
         payload: {},
-        profile: action.profile,
+        profile: profileObj,
       };
+    }
     default:
       return state;
   }

@@ -1,3 +1,7 @@
+@use '../colors';
+@use '../fonts';
+@use '../bootstrapCustom';
+
 .searchPage {
   .adv-search-example-searches {
     .example-search-link:not(:first-child)::before {
@@ -35,7 +39,7 @@
           padding: 0 0.15rem;
     
           .material-icons {
-            font-weight: $bold-weight;
+            font-weight: fonts.$bold-weight;
           }
         }
     
@@ -76,7 +80,7 @@
     .backButton {
       background-color: #fff;
       border: none;
-      color: $primary-blue;
+      color: colors.$primary-blue;
       font-size: 1.0rem;
       margin-top: 0;
       margin-bottom: 0;
@@ -85,7 +89,7 @@
   
       &:hover, &:focus, &:active, &.active {
         background-color: #fff;
-        color: $primary-blue;
+        color: colors.$primary-blue;
       }
   
       &:focus {
@@ -95,7 +99,7 @@
   }
 }
 
-@include media-breakpoint-down(md) {
+@include bootstrapCustom.media-breakpoint-down(md) {
   .searchPage {
     .param-item {
       select {

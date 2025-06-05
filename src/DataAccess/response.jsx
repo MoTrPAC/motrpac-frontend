@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
  *
  * @returns {object} JSX representation of the registration response page
  */
-function RegistrationResponse({ status, errMsg }) {
+function RegistrationResponse({ status = null, errMsg = null }) {
   // Render Auth0-specific 'user already exists' message
   function renderAuth0Error() {
     return (
@@ -41,20 +41,20 @@ function RegistrationResponse({ status, errMsg }) {
   // Render error message if the Auth0 post request fails
   if (status === 'error' || status === 'internal-error') {
     return (
-      <React.Fragment>
+      <>
         <div className="page-title pt-3 pb-2 border-bottom">
           <h3>Registration Incomplete</h3>
         </div>
         <div className="data-access-content">
           {errMsg && errMsg === 'user already exists' ? renderAuth0Error() : renderGenericError()}
         </div>
-      </React.Fragment>
+      </>
     );
   }
 
   // Render success message upon creating user's Auth0 account
   return (
-    <React.Fragment>
+    <>
       <div className="page-title pt-3 pb-2 border-bottom">
         <h3>Registration Completed</h3>
       </div>
@@ -71,7 +71,7 @@ function RegistrationResponse({ status, errMsg }) {
           </a>
         </p>
       </div>
-    </React.Fragment>
+    </>
   );
 }
 
@@ -80,9 +80,5 @@ RegistrationResponse.propTypes = {
   errMsg: PropTypes.string,
 };
 
-RegistrationResponse.defaultProps = {
-  status: null,
-  errMsg: null,
-};
 
 export default RegistrationResponse;

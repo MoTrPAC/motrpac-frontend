@@ -1,131 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import analysisTypes from '../lib/analysisTypes';
+import AuthContentContainer from '../lib/ui/authContentContainer';
+import AnalysisCard from './analysisCard';
 import AnimalDataAnalysis from './animalDataAnalysis';
-import HumanDataAnalysis from './humanDataAnalysis';
+
+import '@styles/analysisPage.scss';
 
 // TODO: Add animation of transitions potentially with CSSTransitions package
 
 export function AnalysisHomePage({
-  match, // match object from react-router used to find human vs animal in route
-  isAuthenticated,
+  match = {
+    params: {
+      subjectType: '',
+    },
+  }, // match object from react-router used to find human vs animal in route
   depth,
   currentAnalysis,
   currentAnalysisTitle,
-  currentSubAnalysis,
-  currentSubAnalysisTitle,
   onPickAnalysis,
-  onPickSubAnalysis,
   goBack,
+  profile = {},
 }) {
-  let subjectType = match.params.subjectType.slice(0).toLowerCase();
+  const subjectType = match.params.subjectType.slice(0).toLowerCase();
+  const userType = profile.user_metadata && profile.user_metadata.userType;
 
   // Redirects to dashboard if incorrect url
-  if (!(subjectType === 'animal' || subjectType === 'human') || !isAuthenticated) {
-    return <Redirect to="/dashboard" />;
+  if (
+    !(subjectType === 'animal' || subjectType === 'human') ||
+    userType === 'external'
+  ) {
+    return <Navigate to="/dashboard" />;
   }
-  // Button to select inital analysis category
-  function AnalysisTypeButton({ analysisType }) {
-    if (analysisType.active) {
-      return (
-        <div
-          id={analysisType.shortName}
-          onClick={onPickAnalysis}
-          onKeyPress={onPickAnalysis}
-          tabIndex={0}
-          role="button"
-          className={`col-5 col-sm-3 m-3 analysisType analysisTypeActive ${subjectType}`}
-          title={analysisType.title}
-        >
-          <p className="centered">{analysisType.title}</p>
-          <img src={analysisType.icon} className="align-self-end" alt={`${analysisType.title} Icon`} />
-        </div>
-      );
-    }
-    return (
-      <div id={analysisType.shortName} className="col-sm-3 col-5 m-3 analysisType inactiveAnalysis">
-        <p className="centered">{analysisType.title}</p>
-        <img src={analysisType.inactiveIcon} className="align-self-end" alt={`${analysisType.title} Icon`} />
-        <div className="comingSoon align-self-center centered">
-          <p>Coming Soon!</p>
-        </div>
-      </div>
-    );
-  }
-  AnalysisTypeButton.propTypes = {
-    analysisType: PropTypes.shape({
-      title: PropTypes.string,
-      shortName: PropTypes.string,
-      icon: PropTypes.string,
-      subAnalysis: PropTypes.arrayOf(PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        icon: PropTypes.string.isRequired,
-      })),
-    }).isRequired,
-  };
-  // Button to select sub analysis category
-  function SubAnalysisButton({ subAnalysis }) {
-    if (subAnalysis.active) {
-      return (
-        <div
-          className="row subAnalysisRow justify-content-center m-1 m-sm-4"
-          onClick={onPickSubAnalysis}
-          onKeyPress={onPickSubAnalysis}
-          tabIndex={0}
-          role="button"
-          id={subAnalysis.shortName}
-          title={subAnalysis.title}
-        >
-          <div className="col-11 col-md-5 m-1 my-2 align-self-center imgCont">
-            <img src={subAnalysis.icon} className="align-self-end" alt={`${subAnalysis.title} Icon`} />
-          </div>
-          <div className="col-11 col-md-6 p-2 align-self-center">
-            <h3>{subAnalysis.title}</h3>
-            <p>
-              <strong>Input: </strong>
-              {subAnalysis.input}
-            </p>
-            <p>
-              {subAnalysis.description}
-            </p>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div className="row subAnalysisRow justify-content-center m-1 m-sm-4 inactiveSubAnalysisRow" id={subAnalysis.shortName}>
-        <div className="col-11 col-md-5 m-1 my-2 align-self-center imgCont">
-          <img src={subAnalysis.inactiveIcon} className="align-self-end" alt={`${subAnalysis.title} Icon`} />
-        </div>
-        <div className="col-11 col-md-5 p-2 align-self-center">
-          <h3>{subAnalysis.title}</h3>
-          <p>
-            <strong>Input: </strong>
-            {subAnalysis.input}
-          </p>
-          <p>
-            {subAnalysis.description}
-          </p>
-        </div>
-        <div className="comingSoon align-self-center centered">
-          <p>Coming Soon!</p>
-        </div>
-      </div>
-    );
-  }
-  SubAnalysisButton.propTypes = {
-    subAnalysis: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      input: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      shortName: PropTypes.string.isRequired,
-      icon: PropTypes.string.isRequired,
-      inactiveIcon: PropTypes.string.isRequired,
-      active: PropTypes.bool.isRequired,
-    }).isRequired,
-  };
+
   // Button to return 1 depth level
   function BackButton() {
     return (
@@ -135,69 +44,52 @@ export function AnalysisHomePage({
     );
   }
 
-  const analyses = analysisTypes
-    .map(analysisType => (
-      <AnalysisTypeButton
-        key={analysisType.shortName}
-        analysisType={analysisType}
-      />
-    ));
-
-  let selectedAnalysis;
-  let selectSubAnalyses;
-  if (depth === 1 && currentAnalysis) {
-    selectedAnalysis = (analysisTypes.filter(analysis => analysis.shortName === currentAnalysis));
-    selectSubAnalyses = selectedAnalysis[0].subAnalyses
-      .map(analysis => <SubAnalysisButton key={analysis.shortName} subAnalysis={analysis} />);
-  }
-
-  const selectAnalysis = (
-    <div className="row justify-content-center">
-      {analyses}
-    </div>
+  // Return a subset of top level analyses by selected species
+  const analysesBySpecies = analysisTypes.filter(
+    (item) => item.species.indexOf(subjectType) > -1
   );
+  // Render a subset of top level analyses
+  const selectAnalysis = analysesBySpecies.map((analysisType) => (
+    <AnalysisCard
+      key={analysisType.shortName}
+      analysisType={analysisType}
+      onPickAnalysis={onPickAnalysis}
+    />
+  ));
 
-  // Sets subject type to title case
-  subjectType = subjectType
+  // Sets subject label for title display
+  const titleSubjectLabel = subjectType
     .split(' ')
-    .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
     .join(' ');
-
-  let selectedDataAnalysis;
-  if (depth === 2 && currentAnalysis && currentSubAnalysis) {
-    selectedDataAnalysis = (
-      subjectType.toLowerCase() === 'animal'
-        ? <AnimalDataAnalysis analysis={currentAnalysis} subAnalysis={currentSubAnalysis} />
-        : <HumanDataAnalysis analysis={currentAnalysis} subAnalysis={currentSubAnalysis} />
-    );
-  }
-
   // Render header title
-  const renderHeaderTitle = () => {
-    if (depth === 0) return `${subjectType} Data Analysis`;
-    if (depth === 1) return `${currentAnalysisTitle} (${subjectType})`;
-    if (depth === 2) return `${currentSubAnalysisTitle} (${subjectType})`;
-  };
+  function renderHeaderTitle() {
+    let headerTitle;
+
+    if (depth === 0) headerTitle = `${titleSubjectLabel} Data Analysis`;
+    if (depth === 1)
+      headerTitle = `${currentAnalysisTitle} (${titleSubjectLabel})`;
+
+    return headerTitle;
+  }
 
   return (
-    <div className="analysisPage col-md-9 ml-sm-auto col-lg-10 px-4">
-      <div className="page-title pt-3 pb-2 border-bottom">
+    <AuthContentContainer classes="analysisPage">
+      <div className="page-title pt-3 pb-2 mb-3 border-bottom">
         <h3>
-          {(depth > 0) ? <BackButton /> : ''}
+          {depth > 0 ? <BackButton /> : ''}
           {renderHeaderTitle()}
         </h3>
       </div>
-      {(depth === 2) ? selectedDataAnalysis : ''}
-      {(depth === 1) ? selectSubAnalyses : ''}
-      {(depth === 0) ? selectAnalysis : ''}
-      <div className="row breadcrumbs justify-content-center">
-        <div className="col centered">
-          <span className={`oi oi-media-record ${depth === 0 ? 'active' : ''}`} />
-          <span className={`oi oi-media-record ${depth === 1 ? 'active' : ''}`} />
-          <span className={`oi oi-media-record ${depth === 2 ? 'active' : ''}`} />
+      {depth === 0 && (
+        <div className="row row-cols-1 row-cols-lg-2 row-cols-xl-3 mt-4">
+          {selectAnalysis}
         </div>
-      </div>
-    </div>
+      )}
+      {depth === 1 && subjectType === 'animal' && (
+        <AnimalDataAnalysis analysis={currentAnalysis} />
+      )}
+    </AuthContentContainer>
   );
 }
 
@@ -208,48 +100,34 @@ AnalysisHomePage.propTypes = {
     }).isRequired,
   }),
   depth: PropTypes.number.isRequired,
-  isAuthenticated: PropTypes.bool,
   currentAnalysis: PropTypes.string.isRequired,
   currentAnalysisTitle: PropTypes.string.isRequired,
-  currentSubAnalysis: PropTypes.string.isRequired,
-  currentSubAnalysisTitle: PropTypes.string.isRequired,
   goBack: PropTypes.func.isRequired,
   onPickAnalysis: PropTypes.func.isRequired,
-  onPickSubAnalysis: PropTypes.func.isRequired,
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.object,
+  }),
 };
 
-AnalysisHomePage.defaultProps = {
-  match: {
-    params: {
-      subjectType: '',
-    },
-  },
-  isAuthenticated: false,
-};
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   depth: state.analysis.depth,
   currentAnalysis: state.analysis.currentAnalysis,
   currentAnalysisTitle: state.analysis.currentAnalysisTitle,
-  currentSubAnalysis: state.analysis.currentSubAnalysis,
-  currentSubAnalysisTitle: state.analysis.currentSubAnalysisTitle,
-  isAuthenticated: state.auth.isAuthenticated,
+  profile: state.auth.profile,
 });
 
-const mapDispatchToProps = dispatch => ({
-  onPickAnalysis: e => dispatch({
-    type: 'ANALYSIS_SELECT',
-    analysis: e.currentTarget.id,
-    analysisTitle: e.currentTarget.title,
-  }),
-  goBack: () => dispatch({
-    type: 'GO_BACK',
-  }),
-  onPickSubAnalysis: e => dispatch({
-    type: 'SUBANALYSIS_SELECT',
-    subAnalysis: e.currentTarget.id,
-    subAnalysisTitle: e.currentTarget.title,
-  }),
+const mapDispatchToProps = (dispatch) => ({
+  onPickAnalysis: (analysis, analysisTitle) =>
+    dispatch({
+      type: 'ANALYSIS_SELECT',
+      analysis,
+      analysisTitle,
+    }),
+  goBack: () =>
+    dispatch({
+      type: 'GO_BACK',
+    }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnalysisHomePage);

@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import dayjs from 'dayjs';
-import ReCAPTCHA from 'react-google-recaptcha';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import RegistrationResponse from './response';
+import dayjs from 'dayjs';
+import PropTypes from 'prop-types';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { Helmet } from 'react-helmet';
+import { connect } from 'react-redux';
+import { Link, Navigate } from 'react-router-dom';
 import IconSet from '../lib/iconSet';
+import StudyDocumentsTable from '../lib/studyDocumentsTable';
 import EmailLink from '../lib/ui/emailLink';
 import ExternalLink from '../lib/ui/externalLink';
-import StudyDocumentsTable from '../lib/studyDocumentsTable';
+import PageTitle from '../lib/ui/pageTitle';
+import RegistrationResponse from './response';
+
+import '@styles/dataAccessPage.scss';
 
 const defaultFormValues = {
   dataUseAgreement1: false,
@@ -36,7 +40,7 @@ const defaultFormValues = {
  *
  * @returns {object} JSX representation of the data access page
  */
-export function DataAccessPage({ isAuthenticated, profile }) {
+export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
   const [reCaptcha, setReCaptcha] = useState('');
   const [auth0Status, setAuth0Status] = useState();
   const [auth0Error, setAuth0Error] = useState();
@@ -44,6 +48,17 @@ export function DataAccessPage({ isAuthenticated, profile }) {
   const [checkboxAlert, setCheckboxAlert] = useState(false);
   const [formValues, setFormValues] = useState(defaultFormValues);
   const [requestPending, setRequestPending] = useState(false);
+
+  const api =
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+      : import.meta.env.VITE_API_SERVICE_ADDRESS;
+  const endpoint = import.meta.env.VITE_USER_REGISTRATION_ENDPOINT;
+  const key =
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+      : import.meta.env.VITE_API_SERVICE_KEY;
+  const recaptchaKey = import.meta.env.VITE_reCAPTCHA_SITE_KEY;
 
   useEffect(() => {
     // validate REQUIRED form values by subscribing to changes
@@ -78,7 +93,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
 
   if (isAuthenticated && hasAccess) {
-    return <Redirect to="/releases" />;
+    return <Navigate to="/releases" />;
   }
 
   // Render registration response view if auth0 post request is successful
@@ -186,12 +201,12 @@ export function DataAccessPage({ isAuthenticated, profile }) {
       principalInvestigatorName: formValues.PIName,
       dataUseIntent: formValues.dataUseIntent,
       eSignature: formValues.eSignature,
-      embargoAgreementVersion: 'E1.0',
+      embargoAgreementVersion: 'E1.1',
       embargoAgreementDate: dayjs().format(timeFormat),
     };
 
     // post request configs
-    const serviceUrl = 'https://service-apis.motrpac-data.org/new_user';
+    const serviceUrl = `${api}${endpoint}?key=${key}`;
     const timeOutConfig = { timeout: 5000 };
 
     return axios.post(serviceUrl, userObj, timeOutConfig).then((response) => {
@@ -212,12 +227,21 @@ export function DataAccessPage({ isAuthenticated, profile }) {
 
   return (
     <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 dataAccessPage`}>
+      <Helmet>
+        <html lang="en" />
+        <title>Limited Acute Exercise Data Access Signup - MoTrPAC Data Hub</title>
+      </Helmet>
       <div className={`${!isAuthenticated ? 'container' : ''}`}>
         <form id="dataAccessRegistration" name="dataAccessRegistration" noValidate>
-          <div className="page-title pt-3 pb-2 border-bottom">
-            <h3>MoTrPAC External Data Release</h3>
+          <PageTitle title="MoTrPAC External Data Release" />
+          <div className="alert alert-info alert-limited-acute-exercise-date mt-4" role="alert">
+            A limited data set from adult rats (6-month old) that performed an acute
+            bout of endurance exercise is available to registered users. Please
+            see the <Link to="/data-download">data download page</Link> if you
+            are interested in the full experimental data set from endurance
+            trained (1wk, 2wks, 4wks or 8wks) compared to untrained adult rats.
           </div>
-          <div className="alert alert-dark alert-consortia-members-access" role="alert">
+          <div className="alert alert-dark alert-consortia-members-access mt-4" role="alert">
             MoTrPAC consortium members are not required to fill out the following data use
             agreement and registration. Consortium members who already have registered
             accounts may access the released data upon login. Consortium members who don't
@@ -251,9 +275,12 @@ export function DataAccessPage({ isAuthenticated, profile }) {
               MoTrPAC Data Hub.
               {' '}
               <strong>
-                Please note that during the embargo period, until January 15th 2021, data can
-                only be used for analyses supporting grant submissions, and not be used in
-                abstracts, manuscripts, preprints or presentations.
+                Please note that there is a publication embargo on the MoTrPAC data until the
+                release of additional control data necessary to fully control the analysis for
+                non-exercise induced molecular changes in the current dataset (<em>e.g.</em> changes
+                due to sampling and fasting time post exercise). Until then, data can only be used
+                for analyses supporting grant submissions, and cannot be used in abstracts,
+                manuscripts, preprints or presentations.
               </strong>
             </p>
           </div>
@@ -273,9 +300,9 @@ export function DataAccessPage({ isAuthenticated, profile }) {
               and targeted and untargeted metabolomics.
             </p>
           </div>
-          <StudyDocumentsTable />
+          <StudyDocumentsTable currentView="external" />
           <div className="card mb-3 border-secondary">
-            <div className="card-header bg-secondary text-light">Data Use Agreement and Registration</div>
+            <h5 className="card-header bg-secondary text-light">Data Use Agreement and Registration</h5>
             <div className="card-body">
               {/* Data use agreement section */}
               <h5 className="card-title pt-1 pb-2">Data Use Agreement</h5>
@@ -324,7 +351,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         &nbsp;be used for&nbsp;
                         <strong>submission</strong>
                         &nbsp;of abstracts, manuscripts, preprints or
-                        presentations before the embargo deadline.
+                        presentations before the embargo expires.
                       </label>
                     </div>
                   </div>
@@ -343,7 +370,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                       <label className="form-check-label" htmlFor="dataUseAgreement2">
                         Data&nbsp;
                         <strong>CANNOT</strong>
-                        &nbsp;be publicly hosted or disseminated before the embargo deadline.
+                        &nbsp;be publicly hosted or disseminated before the embargo expires.
                       </label>
                     </div>
                   </div>
@@ -361,9 +388,9 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                       />
                       <label className="form-check-label" htmlFor="dataUseAgreement3">
                         The embargo period for any type of publication of MoTrPAC
-                        External Release 1 data is 15 months after external release 1: through&nbsp;
-                        <strong>January 15, 2021</strong>
-                        .
+                        External Release 1 data is until release of additional control
+                        data necessary for full control of non-exercise induced
+                        molecular effects.
                       </label>
                     </div>
                   </div>
@@ -383,7 +410,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         Data&nbsp;
                         <strong>CAN</strong>
                         &nbsp;be used for analyses supporting grant submissions prior
-                        to the embargo deadline.
+                        to the embargo expiration.
                       </label>
                     </div>
                   </div>
@@ -400,7 +427,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                         checked={formValues.dataUseAgreement5}
                       />
                       <label className="form-check-label" htmlFor="dataUseAgreement5">
-                        After the embargo period, Recipients and their Agents agree
+                        After the embargo expires, Recipients and their Agents agree
                         that in publications using&nbsp;
                         <strong>any</strong>
                         &nbsp;data from MoTrPAC public use data sets they will
@@ -447,7 +474,7 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                   Data Release.&nbsp;
                   <em>MoTrPAC Data Hub</em>
                   . MoTrPAC Bioinformatics Center. October 15, 2019. Version 1.0.&nbsp;
-                  motrpac-data.org/data-access
+                  https://motrpac-data.org
                 </p>
                 <p className="card-text">
                   <em>Optional:</em>
@@ -631,8 +658,9 @@ export function DataAccessPage({ isAuthenticated, profile }) {
                 <div className="mt-3 d-flex justify-content-between align-items-end form-footer">
                   <div className="reCAPTCHA-container">
                     <ReCAPTCHA
-                      sitekey="6Lf8oboUAAAAAB6SoflqfgfHvwHrV62gaPaL2-BL"
+                      sitekey={recaptchaKey}
                       onChange={handleReCAPTCHA}
+                      data-testid="recaptcha"
                     />
                   </div>
                   <div className="registration-button-group">
@@ -671,11 +699,6 @@ DataAccessPage.propTypes = {
     user_metadata: PropTypes.object,
   }),
   isAuthenticated: PropTypes.bool,
-};
-
-DataAccessPage.defaultProps = {
-  profile: {},
-  isAuthenticated: false,
 };
 
 const mapStateToProps = state => ({

@@ -1,135 +1,212 @@
 import axios from 'axios';
-import history from '../App/history';
 
-export const SEARCH_FORM_CHANGE = 'SEARCH_FORM_CHANGE';
-export const SEARCH_FORM_ADD_PARAM = 'SEARCH_FORM_ADD_PARAM';
-export const SEARCH_FORM_REMOVE_PARAM = 'SEARCH_FORM_REMOVE_PARAM';
-export const SEARCH_FORM_UPDATE_PARAM = 'SEARCH_FORM_UPDATE_PARAM';
-export const SEARCH_FORM_SUBMIT = 'SEARCH_FORM_SUBMIT';
-export const SEARCH_FORM_SUBMIT_FAILURE = 'SEARCH_FORM_SUBMIT_FAILURE';
-export const SEARCH_FORM_SUBMIT_SUCCESS = 'SEARCH_FORM_SUBMIT_SUCCESS';
-export const SEARCH_FORM_RESET = 'SEARCH_FORM_RESET';
-export const GET_SEARCH_FORM = 'GET_SEARCH_FORM';
+export const CHANGE_RESULT_FILTER = 'CHANGE_RESULT_FILTER';
+export const CHANGE_PARAM = 'CHANGE_PARAM';
+export const SEARCH_SUBMIT = 'SEARCH_SUBMIT';
+export const SEARCH_FAILURE = 'SEARCH_FAILURE';
+export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
+export const SEARCH_RESET = 'SEARCH_RESET';
+export const DOWNLOAD_SUBMIT = 'DOWNLOAD_SUBMIT';
+export const DOWNLOAD_FAILURE = 'DOWNLOAD_FAILURE';
+export const DOWNLOAD_SUCCESS = 'DOWNLOAD_SUCCESS';
 
-function searchFormChange(index, field, e) {
+function changeResultFilter(field, filterValue, bound) {
   return {
-    type: SEARCH_FORM_CHANGE,
-    index,
+    type: CHANGE_RESULT_FILTER,
     field,
-    inputValue: e.target.value,
+    filterValue,
+    bound,
   };
 }
 
-function searchFormAddParam() {
+function changeParam(field, paramValue) {
   return {
-    type: SEARCH_FORM_ADD_PARAM,
+    type: CHANGE_PARAM,
+    field,
+    paramValue,
   };
 }
 
-function searchFormRemoveParam(index) {
+function searchSubmit(params, scope) {
   return {
-    type: SEARCH_FORM_REMOVE_PARAM,
-    index,
-  };
-}
-
-function searchFormUpdateParam(params) {
-  return {
-    type: SEARCH_FORM_UPDATE_PARAM,
+    type: SEARCH_SUBMIT,
     params,
+    scope,
   };
 }
 
-function searchFormSubmit(params) {
+function searchFailure(searchError = '') {
   return {
-    type: SEARCH_FORM_SUBMIT,
-    params,
-  };
-}
-
-function searchFormSubmitFailure(searchError = '') {
-  return {
-    type: SEARCH_FORM_SUBMIT_FAILURE,
+    type: SEARCH_FAILURE,
     searchError,
   };
 }
 
-function searchFormSubmitSuccess(searchPayload) {
+function searchSuccess(searchResults, scope) {
   return {
-    type: SEARCH_FORM_SUBMIT_SUCCESS,
-    searchPayload,
+    type: SEARCH_SUCCESS,
+    searchResults,
+    scope,
   };
 }
 
-function searchFormReset() {
+function searchReset(scope) {
   return {
-    type: SEARCH_FORM_RESET,
+    type: SEARCH_RESET,
+    scope,
   };
 }
 
-function getSearchForm() {
+function downloadSubmit() {
   return {
-    type: GET_SEARCH_FORM,
+    type: DOWNLOAD_SUBMIT,
   };
 }
 
-// Append search query to URL
-function pushHistoryWithQuery(params) {
-  const query = params.map((item) => {
-    const operator = item.operator && item.operator.length ? item.operator : '';
-    return `${operator} (${item.term}:${encodeURI(item.value)})`;
-  }).join(' ');
-
-  history.push(`/search?q=${query}`);
+function downloadFailure(downloadError = '') {
+  return {
+    type: DOWNLOAD_FAILURE,
+    downloadError,
+  };
 }
 
-// FIXME: This function is not yet properly implemented
-function handleSearchFormSubmit(params) {
+function downloadSuccess(downloadResults) {
+  return {
+    type: DOWNLOAD_SUCCESS,
+    downloadResults,
+  };
+}
+
+const accessToken = import.meta.env.DEV
+  ? import.meta.env.VITE_ES_ACCESS_TOKEN_DEV
+  : import.meta.env.VITE_ES_ACCESS_TOKEN;
+const ratDataHost = import.meta.env.DEV
+  ? import.meta.env.VITE_ES_PROXY_HOST_DEV
+  : import.meta.env.VITE_ES_PROXY_HOST;
+const humanDataHost = import.meta.env.DEV
+  ? import.meta.env.VITE_ES_PROXY_PRECAWG_HOST_DEV
+  : import.meta.env.VITE_ES_PROXY_PRECAWG_HOST;
+const endpoint = import.meta.env.VITE_ES_ENDPOINT;
+
+const headersConfig = {
+  headers: {
+    Authorization: `bearer ${accessToken}`,
+  },
+};
+
+// Handle search and results filtering events
+function handleSearch(params, inputValue, scope) {
+  params.keys = inputValue;
+  // Reset all filters if scope is 'all'
+  if (scope === 'all') {
+    params.filters = {
+      tissue: [],
+      assay: [],
+      sex: [],
+      comparison_group: [],
+      contrast1_timepoint: [],
+      adj_p_value: { min: '', max: '' },
+      logFC: { min: '', max: '' },
+      p_value: { min: '', max: '' },
+    };
+  }
+  // insert 'is_meta" field to fields array if ktype is 'metab'
+  // and delete 'protein_name' field if it exists
+  if (params.ktype === 'metab') {
+    if (!params.fields.includes('is_meta')) {
+      params.fields = ['is_meta', ...params.fields];
+    }
+    if (params.fields.includes('protein_name')) {
+      const index = params.fields.indexOf('protein_name');
+      params.fields.splice(index, 1);
+    }
+  }
+  // delete 'is_meta' flag from fields array (if it exists)
+  // if ktype is 'protein' or 'gene'
+  if (params.ktype === 'protein' || params.ktype === 'gene') {
+    if (params.fields.includes('is_meta')) {
+      const index = params.fields.indexOf('is_meta');
+      params.fields.splice(index, 1);
+    }
+  }
+
+  let host = ratDataHost;
+
+  const requestParams = { ...params };
+  // handle params differently between human and rat
+  if (requestParams.species === 'human') {
+    delete requestParams.species;
+    delete requestParams.convert_assay_code;
+    requestParams.study = 'precawg';
+    requestParams.filters.must_not = {
+      assay: ['epigen-atac-seq', 'epigen-methylcap-seq'],
+    };
+    host = humanDataHost;
+  } else if (requestParams.species === 'rat') {
+    delete requestParams.species;
+    host = ratDataHost;
+  }
+
   return (dispatch) => {
-    dispatch(searchFormSubmit(params));
-    return axios.get('https://api.github.com/search/repositories', {
-      params: {
-        q: 'reactjs',
-        sort: 'stars',
-        order: 'desc',
-      },
-    }).then((response) => {
-      dispatch(searchFormSubmitSuccess(response));
-      pushHistoryWithQuery(params);
-    }).catch((err) => {
-      dispatch(searchFormSubmitFailure(`${err.error}: ${err.errorDescription}`));
-    });
+    dispatch(searchSubmit(params, scope));
+    return axios
+      .post(`${host}${endpoint}`, requestParams, headersConfig)
+      .then((response) => {
+        if (response.data.error) {
+          dispatch(searchFailure(response.data.error));
+        }
+        dispatch(searchSuccess(response.data, scope));
+      })
+      .catch((err) => {
+        dispatch(searchFailure(`${err.name}: ${err.message}`));
+      });
   };
 }
 
-// Handler for predefined searches
-function handlePredefinedSearch(params) {
+// Handle download search results event
+function handleSearchDownload(params, analysis) {
+  const downloadSearchParams = { ...params };
+  downloadSearchParams.fields = [];
+  downloadSearchParams.save = true;
+  downloadSearchParams.analysis = analysis;
+  downloadSearchParams.size = 0;
+
+  let host = ratDataHost;
+
+  if (downloadSearchParams.species === 'human') {
+    delete downloadSearchParams.species;
+    delete downloadSearchParams.convert_assay_code;
+    downloadSearchParams.study = 'precawg';
+    downloadSearchParams.filters.must_not = {
+      assay: ['epigen-atac-seq', 'epigen-methylcap-seq'],
+    };
+    host = humanDataHost;
+  } else if (downloadSearchParams.species === 'rat') {
+    delete downloadSearchParams.species;
+    host = ratDataHost;
+  }
   return (dispatch) => {
-    dispatch(searchFormUpdateParam(params));
-    dispatch(searchFormSubmit(params));
-    return axios.get('https://api.github.com/search/repositories', {
-      params: {
-        q: 'reactjs',
-        sort: 'stars',
-        order: 'desc',
-      },
-    }).then((response) => {
-      dispatch(searchFormSubmitSuccess(response));
-      pushHistoryWithQuery(params);
-    }).catch((err) => {
-      dispatch(searchFormSubmitFailure(`${err.error}: ${err.errorDescription}`));
-    });
+    dispatch(downloadSubmit());
+    return axios
+      .post(`${host}${endpoint}`, downloadSearchParams, headersConfig)
+      .then((response) => {
+        if (response.data.error) {
+          dispatch(downloadFailure(response.data.error));
+        }
+        dispatch(downloadSuccess(response.data));
+      })
+      .catch((err) => {
+        dispatch(downloadFailure(`${err.name}: ${err.message}`));
+      });
   };
 }
 
 const SearchActions = {
-  handleSearchFormSubmit,
-  handlePredefinedSearch,
-  searchFormChange,
-  searchFormAddParam,
-  searchFormRemoveParam,
-  searchFormReset,
-  getSearchForm,
+  changeParam,
+  handleSearch,
+  handleSearchDownload,
+  searchReset,
+  changeResultFilter,
 };
 
 export default SearchActions;

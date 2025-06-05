@@ -1,13 +1,11 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { LinkoutPage } from '../linkoutPage';
+import LinkoutPage from '../linkoutPage';
 import { Navbar } from '../../Navbar/navbar';
-import { Footer } from '../../Footer/footer';
+import Footer from '../../Footer/footer';
 
-const testUser = require('../../testData/testUser');
-
-const navAction = {
+const navbarAction = {
+  login: action('logging in'),
   logout: action('logging out'),
 };
 
@@ -15,18 +13,20 @@ const footerAction = {
   login: action('logging in'),
 };
 
-storiesOf('Linkout Page', module)
-  .addDecorator(story => (
-    <React.Fragment>
+export default {
+  title: 'Linkout Page',
+
+  decorators: [
+    (story) => (
       <div className="App">
         <header>
-          <Navbar isAuthenticated {...navAction} profile={testUser} />
+          <Navbar {...navbarAction} />
         </header>
-        <div className="row justify-content-center">
-          {story()}
-        </div>
+        <div className="row justify-content-center mt-5 pt-4">{story()}</div>
+        <Footer {...footerAction} />
       </div>
-      <Footer isAuthenticated profile={testUser} {...footerAction} />
-    </React.Fragment>
-  ))
-  .add('Default', () => <LinkoutPage />);
+    ),
+  ],
+};
+
+export const Default = () => <LinkoutPage />;
