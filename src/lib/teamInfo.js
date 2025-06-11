@@ -30,6 +30,8 @@ import SamImg from '../assets/teamMemberPhotos/Sam.jpg';
 import DanImg from '../assets/teamMemberPhotos/Dan.jpg';
 import MiaImg from '../assets/teamMemberPhotos/Mia.jpg';
 import PaulineImg from '../assets/teamMemberPhotos/Pauline.jpg';
+import JerenImg from '../assets/teamMemberPhotos/Jeren.jpg';
+import EricImg from '../assets/teamMemberPhotos/Eric.jpg';
 
 const teamInfo = {
   PIs: [
@@ -86,6 +88,11 @@ const teamInfo = {
       image: MihirImg,
     },
     {
+      name: 'Jeren Olsen',
+      title: 'Bioinformatics Engineer',
+      image: JerenImg,
+    },
+    {
       name: 'Laurens van de Wiel, Ph.D.',
       title: 'Postdoctoral Scholar',
       image: LaurensImg,
@@ -99,6 +106,11 @@ const teamInfo = {
       name: 'Pauline Brochet',
       title: 'Postdoctoral Scholar',
       image: PaulineImg,
+    },
+    {
+      name: 'Eric Leslie',
+      title: 'Postdoctoral Scholar',
+      image: EricImg,
     },
     {
       name: 'Jimmy Zhen',
