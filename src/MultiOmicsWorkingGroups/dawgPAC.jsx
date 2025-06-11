@@ -212,7 +212,7 @@ function DawgPAC({ profile = {} }) {
                     href="#"
                     data-toggle="modal"
                     data-target="#html-report-modal"
-                    onClick={(e) => handleClickReport('metabolomics/pass1ac-6-metabolomics-analysis-report.html', 'pass1ac-6-metabolomics-analysis-report.html')}
+                    onClick={(e) => { e.preventDefault(); handleClickReport('metabolomics/pass1ac-6-metabolomics-analysis-report.html', 'pass1ac-6-metabolomics-analysis-report.html'); }}
                   >
                     pass1ac-6-metabolomics-analysis-report.html
                   </a>
