@@ -234,7 +234,7 @@ export const transformData = (arr) => {
     // Transform metabolomics assay value
     if (item.assay) {
       const newMetabAssayVal = Array.isArray(item.assay) ? item.assay.join(', ') : item.assay;
-      // Applicable to PASS1B-06 and HUMAN-PRECOVID-SED-ADU
+      // Applicable to PASS1A-06, PASS1B-06 and HUMAN-PRECOVID-SED-ADU
       if (newMetabAssayVal.includes('Targeted') && newMetabAssayVal.includes('Untargeted')) {
         item.assay = 'Merged';
       }
@@ -257,7 +257,7 @@ export const transformData = (arr) => {
     }
     if (item.omics) {
       const newOmicsVal = (Array.isArray(item.omics)) ? item.omics.join(', ') : item.omics;
-      // Applicable to HUMAN-PRECOVID-SED-ADU
+      // Applicable to PASS1A-06 and HUMAN-PRECOVID-SED-ADU
       if (
         newOmicsVal.includes('Metabolomics Targeted')
         && newOmicsVal.includes('Metabolomics Untargeted')
