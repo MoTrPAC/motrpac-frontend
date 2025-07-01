@@ -1,215 +1,187 @@
-import EuanImg from '../assets/teamMemberPhotos/Euan.jpg';
-import MattImg from '../assets/teamMemberPhotos/Matt.jpg';
-import SteveImg from '../assets/teamMemberPhotos/Steve.png';
-import MaleneImg from '../assets/teamMemberPhotos/Malene.jpg';
-import KarenImg from '../assets/teamMemberPhotos/Karen.png';
-import JimmyImg from '../assets/teamMemberPhotos/Jimmy.jpg';
-import DavidJMImg from '../assets/teamMemberPhotos/DavidJM.png';
-import ShrutiImg from '../assets/teamMemberPhotos/Shruti.jpg';
-import DavidAImg from '../assets/teamMemberPhotos/DavidA.jpg';
-import ArchanaImg from '../assets/teamMemberPhotos/Archana.png';
-import SamirImg from '../assets/teamMemberPhotos/Samir.png';
-import JeffImg from '../assets/teamMemberPhotos/Jeff.jpg';
-import TerraImg from '../assets/teamMemberPhotos/Terra.jpg';
-import BrookeImg from '../assets/teamMemberPhotos/Brooke.jpg';
-import MannyImg from '../assets/teamMemberPhotos/Manny.jpg';
-import RobImg from '../assets/teamMemberPhotos/Rob.jpg';
-import TrevorImg from '../assets/teamMemberPhotos/Trevor.jpg';
-import KellyImg from '../assets/teamMemberPhotos/Kelly.jpg';
-import JonImg from '../assets/teamMemberPhotos/Jon.jpg';
-import LizImg from '../assets/teamMemberPhotos/Liz.jpg';
-import YoungImg from '../assets/teamMemberPhotos/Young.png';
-import ChrisImg from '../assets/teamMemberPhotos/Chris.png';
-import MihirImg from '../assets/teamMemberPhotos/Mihir.jpg';
-import SamiyaImg from '../assets/teamMemberPhotos/Samiya.jpg';
-import AdityaImg from '../assets/teamMemberPhotos/Aditya.jpg';
-import LaurensImg from '../assets/teamMemberPhotos/Laurens.jpg';
-import ChelseaImg from '../assets/teamMemberPhotos/Chelsea.jpg';
-import JayImg from '../assets/teamMemberPhotos/Jay.jpg';
-import SamImg from '../assets/teamMemberPhotos/Sam.jpg';
-import DanImg from '../assets/teamMemberPhotos/Dan.jpg';
-import MiaImg from '../assets/teamMemberPhotos/Mia.jpg';
-import PaulineImg from '../assets/teamMemberPhotos/Pauline.jpg';
-import JerenImg from '../assets/teamMemberPhotos/Jeren.jpg';
-import EricImg from '../assets/teamMemberPhotos/Eric.jpg';
+const imgSourceUrl = 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/team_members/';
 
 const teamInfo = {
   PIs: [
     {
       name: 'Euan Ashley, M.D., Ph.D.',
       title: 'Principal Investigator',
-      image: EuanImg,
+      image: `${imgSourceUrl}Euan.jpg`,
     },
     {
       name: 'Matthew Wheeler, M.D., Ph.D',
       title: 'Principal Investigator',
-      image: MattImg,
+      image: `${imgSourceUrl}Matt.jpg`,
     },
   ],
   Staff: [
     {
       name: 'Jeff Christle, Ph.D.',
       title: 'Clinical Exercise Physiologist',
-      image: JeffImg,
+      image: `${imgSourceUrl}Jeff.jpg`,
     },
     {
       name: 'Malene Lindholm, Ph.D.',
-      title: 'Instructor',
-      image: MaleneImg,
+      title: 'Co-Investigator',
+      image: `${imgSourceUrl}Malene.jpg`,
     },
     {
       name: 'Daniel Katz, M.D.',
-      title: 'Instructor',
-      image: DanImg,
+      title: 'Co-Investigator',
+      image: `${imgSourceUrl}Dan.jpg`,
     },
     {
       name: 'David Jimenez-Morales, Ph.D.',
       title: 'Bioinformatics Lead',
-      image: DavidJMImg,
-    },
-    {
-      name: 'Archana Raja, M.S.',
-      title: 'Computational Biologist',
-      image: ArchanaImg,
+      image: `${imgSourceUrl}DavidJM.png`,
     },
     {
       name: 'Shruti Marwaha, Ph.D.',
       title: 'Research Engineer',
-      image: ShrutiImg,
+      image: `${imgSourceUrl}Shruti.jpg`,
     },
     {
       name: 'David Amar, Ph.D.',
-      title: 'Biostatistician',
-      image: DavidAImg,
+      title: 'Consultant',
+      image: `${imgSourceUrl}DavidA.jpg`,
     },
     {
       name: 'Mihir Samdarshi',
       title: 'Bioinformatics/Software Engineer',
-      image: MihirImg,
+      image: `${imgSourceUrl}Mihir.jpg`,
     },
     {
       name: 'Jeren Olsen',
       title: 'Bioinformatics Engineer',
-      image: JerenImg,
+      image: `${imgSourceUrl}Jeren.jpg`,
     },
     {
       name: 'Laurens van de Wiel, Ph.D.',
       title: 'Postdoctoral Scholar',
-      image: LaurensImg,
+      image: `${imgSourceUrl}Laurens.jpg`,
     },
     {
       name: 'Samuel Montalvo Hernandez, Ph.D.',
-      title: 'Postdoctoral Research Fellow',
-      image: SamImg,
+      title: 'Postdoctoral Scholar',
+      image: `${imgSourceUrl}Sam.jpg`,
     },
     {
       name: 'Pauline Brochet',
       title: 'Postdoctoral Scholar',
-      image: PaulineImg,
+      image: `${imgSourceUrl}Pauline.jpg`,
     },
     {
       name: 'Eric Leslie',
       title: 'Postdoctoral Scholar',
-      image: EricImg,
+      image: `${imgSourceUrl}Eric.jpg`,
+    },
+    {
+      name: 'Nick Lashinsky',
+      title: 'Postdoctoral Scholar',
+      image: `${imgSourceUrl}Nik.jpg`,
     },
     {
       name: 'Jimmy Zhen',
       title: 'Software Developer',
-      image: JimmyImg,
+      image: `${imgSourceUrl}Jimmy.jpg`,
     },
     {
       name: 'Jay Yu',
       title: 'Software Developer',
-      image: JayImg,
+      image: `${imgSourceUrl}Jay.jpg`,
     },
     {
       name: 'Terra Coakley',
       title: 'Administrative Director',
-      image: TerraImg,
+      image: `${imgSourceUrl}Terra.jpg`,
     },
     {
       name: 'Brooke Gazzoli',
       title: 'Administrative Supervisor',
-      image: BrookeImg,
+      image: `${imgSourceUrl}Brooke.jpg`,
     },
     {
       name: 'Mia Levanto',
       title: 'CRCA/Program Manager',
-      image: MiaImg,
+      image: `${imgSourceUrl}Mia.jpg`,
     },
   ],
   CoIs: [
     {
       name: 'Rob Tibshirani, Ph.D.',
       title: 'Co-Investigator',
-      image: RobImg,
+      image: `${imgSourceUrl}Rob.jpg`,
     },
     {
       name: 'Trevor Hastie, Ph.D.',
       title: 'Co-Investigator',
-      image: TrevorImg,
+      image: `${imgSourceUrl}Trevor.jpg`,
     },
     {
       name: 'Jonathan N. Myers, Ph.D.',
       title: 'Advisor',
-      image: JonImg,
+      image: `${imgSourceUrl}Jon.jpg`,
     },
   ],
   Alumni: [
     {
+      name: 'Archana Raja, M.S.',
+      title: 'Alumni',
+      image: `${imgSourceUrl}Archana.png`,
+    },
+    {
       name: 'Chris Teng',
       title: 'Alumni',
-      image: ChrisImg,
+      image: `${imgSourceUrl}Chris.png`,
     },
     {
       name: 'Manuel A. Rivas, Ph.D.',
       title: 'Alumni',
-      image: MannyImg,
+      image: `${imgSourceUrl}Manny.jpg`,
     },
     {
       name: 'Kelly E. Ormond, M.S., CGC',
       title: 'Alumni',
-      image: KellyImg,
+      image: `${imgSourceUrl}Kelly.jpg`,
     },
     {
       name: 'Steven Hershman, Ph.D.',
       title: 'Alumni',
-      image: SteveImg,
+      image: `${imgSourceUrl}Steve.png`,
     },
     {
       name: 'Chelsea Harris',
       title: 'Alumni',
-      image: ChelseaImg,
+      image: `${imgSourceUrl}Chelsea.jpg`,
     },
     {
       name: 'Samiya Shimly, Ph.D.',
       title: 'Alumni',
-      image: SamiyaImg,
+      image: `${imgSourceUrl}Samiya.jpg`,
     },
     {
       name: 'Aditya Singh, Ph.D.',
       title: 'Alumni',
-      image: AdityaImg,
+      image: `${imgSourceUrl}Aditya.jpg`,
     },
     {
       name: 'Elizabeth Chin',
       title: 'Alumni',
-      image: LizImg,
+      image: `${imgSourceUrl}Liz.jpg`,
     },
     {
       name: 'Karen Dalton',
       title: 'Alumni',
-      image: KarenImg,
+      image: `${imgSourceUrl}Karen.png`,
     },
     {
       name: 'Young Kim',
       title: 'Alumni',
-      image: YoungImg,
+      image: `${imgSourceUrl}Young.png`,
     },
     {
       name: 'Samir Akre',
       title: 'Alumni',
-      image: SamirImg,
+      image: `${imgSourceUrl}Samir.png`,
     },
   ],
 };
