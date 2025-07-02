@@ -6,16 +6,7 @@ import PageTitle from '../lib/ui/pageTitle';
 
 import '@styles/linkoutPage.scss';
 
-import metaAnalysisGeneIcon from '../assets/analysisIcons/MetaAnalysisGene.svg';
-import CFDELogo from '../assets/ExternalLogos/CFDE_WORKBENCH.png';
-import ENCODELogo from '../assets/ExternalLogos/ENCODE.png';
-import GTExLogo from '../assets/ExternalLogos/GTEx.png';
-import MWLogo from '../assets/ExternalLogos/MetabolomicsWorkbench.jpeg';
-import MoTrPACRecruitmentLogo from '../assets/ExternalLogos/MoTrPAC_Recruitment_logo.png';
-import NIHLogo from '../assets/ExternalLogos/NIHCommonFund.png';
-import OmicsPipelinesImage from '../assets/ExternalLogos/omicspipelines_dashboard.png';
-import WuTsaiHumanPerformanceAllianceStanfordSiteLogo from '../assets/ExternalLogos/WuTsai_Human_Performance_Alliace.jpg';
-import MOTRLogo from '../assets/MoTrPAC_horizontal.png';
+const imgSourceUrl = 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/external_resources/';
 
 const featured = [
   {
@@ -25,28 +16,28 @@ const featured = [
         protocol: 'https',
         url: 'MoTrPAC.org',
         text: 'Primary entrance point for overarching MoTrPAC study of which the Bioinformatic Data Hub is a component.',
-        image: MOTRLogo,
+        image: `${imgSourceUrl}MoTrPAC_horizontal.png`,
         title: 'MoTrPAC Consortium Site',
       },
       {
         protocol: 'https',
         url: 'motrpac.org/join/volunteerHome.cfm',
         text: 'The MoTrPAC Study is recruiting volunteers to participate in the research study. More information and details available at the MoTrPAC Consortium Site.',
-        image: MoTrPACRecruitmentLogo,
+        image: `${imgSourceUrl}MoTrPAC_Recruitment_logo.png`,
         title: 'Volunteer',
       },
       {
         protocol: 'https',
         url: 'extrameta.org',
         text: 'A database comprising meta-analysis results from 43 publicly available exercise transcriptome datasets from human skeletal muscle and blood.',
-        image: metaAnalysisGeneIcon,
+        image: `${imgSourceUrl}MetaAnalysisGene.svg`,
         title: 'Exercise Transcriptome Meta-analysis',
       },
       {
         protocol: 'https',
         url: 'omicspipelines.org',
         text: 'OmicsPipelines is a user-friendly set of applications built by the MoTRPAC Bioinformatics Center, designed to run proteomics and genomics data analysis pipelines in the cloud, requiring minimal knowledge of cloud computing. It features two main components: an installer that sets up the necessary infrastructure on selected cloud platforms and a dashboard that facilitates the creation, execution, and monitoring of various scientific workflows, promoting collaboration through multi-user access and extensive support resources.',
-        image: OmicsPipelinesImage,
+        image: `${imgSourceUrl}omicspipelines_dashboard.png`,
         title: 'OmicsPipelines',
       },
     ],
@@ -61,42 +52,42 @@ const partners = [
         protocol: 'https',
         url: 'Commonfund.nih.gov',
         text: 'The primary funding source for the MoTrPAC Initiative',
-        image: NIHLogo,
+        image: `${imgSourceUrl}NIHCommonFund.png`,
         title: 'NIH Common Fund',
       },
       {
         protocol: 'https',
         url: 'info.cfde.cloud',
         text: 'CFDE Information Portal',
-        image: CFDELogo,
+        image: `${imgSourceUrl}CFDE_WORKBENCH.png`,
         title: 'CFDE Workbench',
       },
       {
         protocol: 'https',
         url: 'metabolomicsworkbench.org',
         text: 'UCSD Metabolomics Workbench',
-        image: MWLogo,
+        image: `${imgSourceUrl}MetabolomicsWorkbench.jpeg`,
         title: 'Metabolomics Workbench',
       },
       {
         protocol: 'https',
         url: 'GTExPortal.org',
         text: 'The Genotype-Tissue Expression (GTEx) project',
-        image: GTExLogo,
+        image: `${imgSourceUrl}GTEx.png`,
         title: 'GTEx',
       },
       {
         protocol: 'https',
         url: 'ENCODEProject.org',
         text: 'ENCODE project website',
-        image: ENCODELogo,
+        image: `${imgSourceUrl}ENCODE.png`,
         title: 'ENCODE Project',
       },
       {
         protocol: 'https',
         url: 'humanperformance.stanford.edu',
         text: 'The Wu Tsai Human Performance Alliance at Stanford University',
-        image: WuTsaiHumanPerformanceAllianceStanfordSiteLogo,
+        image: `${imgSourceUrl}WuTsai_Human_Performance_Alliace.jpg`,
         title: 'Wu Tsai Human Performance Alliance at Stanford',
       },
     ],
