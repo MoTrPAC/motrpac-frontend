@@ -50,17 +50,17 @@ function FigureAssayLegends() {
           </span>
           <ul className="assay-legend-sub-list list-unstyled pl-3">
             <li className="assay-legend-item d-flex align-items-center">
-              <img className="legend-symbol" src={`${imgSourceUrl}symbols/prot-ph.svg}`} alt="prot-ph" />
+              <img className="legend-symbol" src={`${imgSourceUrl}symbols/prot-ph.svg`} alt="prot-ph" />
               <span className="legend-label ml-1">
                 Phosphorylation (PHOSPHO)
               </span>
             </li>
             <li className="assay-legend-item d-flex align-items-center">
-              <img className="legend-symbol" src={`${imgSourceUrl}symbols/prot-ac.svg}`} alt="prot-ac" />
+              <img className="legend-symbol" src={`${imgSourceUrl}symbols/prot-ac.svg`} alt="prot-ac" />
               <span className="legend-label ml-1">Acetylation (ACETYL)</span>
             </li>
             <li className="assay-legend-item d-flex align-items-center">
-              <img className="legend-symbol" src={`${imgSourceUrl}symbols/prot-ub.svg}`} alt="prot-ub" />
+              <img className="legend-symbol" src={`${imgSourceUrl}symbols/prot-ub.svg`} alt="prot-ub" />
               <span className="legend-label ml-1">Ubiquitination (UBIQ)</span>
             </li>
           </ul>
@@ -69,7 +69,7 @@ function FigureAssayLegends() {
       <h5 className="font-weight-bold pb-1 border-bottom">Metabolomics</h5>
       <ul className="assay-legend-list list-unstyled">
         <li className="assay-legend-item d-flex align-items-start">
-          <img className="legend-symbol mt-2" src={`${imgSourceUrl}symbols/metab.svg}`} alt="metab" />
+          <img className="legend-symbol mt-2" src={`${imgSourceUrl}symbols/metab.svg`} alt="metab" />
           <span className="legend-label ml-1">
             Metabolites: named (N-METAB) and unnamed (U-METAB)
           </span>
@@ -78,7 +78,7 @@ function FigureAssayLegends() {
       <h5 className="font-weight-bold pb-1 border-bottom">Cytokines</h5>
       <ul className="assay-legend-list list-unstyled">
         <li className="assay-legend-item d-flex align-items-center">
-          <img className="legend-symbol" src={`${imgSourceUrl}symbols/cytokine.svg}`} alt="cytokine" />
+          <img className="legend-symbol" src={`${imgSourceUrl}symbols/cytokine.svg`} alt="cytokine" />
           <span className="legend-label ml-1">Cytokine immunoassays</span>
         </li>
       </ul>
