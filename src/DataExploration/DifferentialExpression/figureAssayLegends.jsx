@@ -1,13 +1,6 @@
 import React from 'react';
-import symbolRRBS from '../../assets/figures/symbols/rrbs.svg';
-import symbolATACSeq from '../../assets/figures/symbols/atac-seq.svg';
-import symbolRNASeq from '../../assets/figures/symbols/rna-seq.svg';
-import symbolProtPr from '../../assets/figures/symbols/prot-pr.svg';
-import symbolProtPh from '../../assets/figures/symbols/prot-ph.svg';
-import symbolProtAc from '../../assets/figures/symbols/prot-ac.svg';
-import symbolProtUb from '../../assets/figures/symbols/prot-ub.svg';
-import symbolMetab from '../../assets/figures/symbols/metab.svg';
-import symbolCytokine from '../../assets/figures/symbols/cytokine.svg';
+
+const imgSourceUrl = 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/figures/';
 
 /**
  * Render static assay legends panel
@@ -21,7 +14,7 @@ function FigureAssayLegends() {
           <span className="sub-list-title font-weight-bold">Epigenomics</span>
           <ul className="assay-legend-sub-list list-unstyled pl-3">
             <li className="assay-legend-item d-flex align-items-center">
-              <img className="legend-symbol" src={symbolRRBS} alt="rrbs" />
+              <img className="legend-symbol" src={`${imgSourceUrl}symbols/rrbs.svg`} alt="rrbs" />
               <span className="legend-label ml-1">
                 DNA methylation - RRBS (METHYL)
               </span>
@@ -29,7 +22,7 @@ function FigureAssayLegends() {
             <li className="assay-legend-item d-flex align-items-center">
               <img
                 className="legend-symbol"
-                src={symbolATACSeq}
+                src={`${imgSourceUrl}symbols/atac-seq.svg`}
                 alt="atac-seq"
               />
               <span className="legend-label ml-1">
@@ -39,14 +32,14 @@ function FigureAssayLegends() {
           </ul>
         </li>
         <li className="assay-legend-item d-flex align-items-center">
-          <img className="legend-symbol" src={symbolRNASeq} alt="rna-seq" />
+          <img className="legend-symbol" src={`${imgSourceUrl}symbols/rna-seq.svg`} alt="rna-seq" />
           <span className="legend-label ml-1">RNA-seq (TRANSCRPT, SPLICE)</span>
         </li>
       </ul>
       <h5 className="font-weight-bold pb-1 border-bottom">Proteomics</h5>
       <ul className="assay-legend-list list-unstyled">
         <li className="assay-legend-item d-flex align-items-center">
-          <img className="legend-symbol" src={symbolProtPr} alt="prot-pr" />
+          <img className="legend-symbol" src={`${imgSourceUrl}symbols/prot-pr.svg}`} alt="prot-pr" />
           <span className="legend-label ml-1">
             Global protein expression (PROT)
           </span>
@@ -57,17 +50,17 @@ function FigureAssayLegends() {
           </span>
           <ul className="assay-legend-sub-list list-unstyled pl-3">
             <li className="assay-legend-item d-flex align-items-center">
-              <img className="legend-symbol" src={symbolProtPh} alt="prot-ph" />
+              <img className="legend-symbol" src={`${imgSourceUrl}symbols/prot-ph.svg}`} alt="prot-ph" />
               <span className="legend-label ml-1">
                 Phosphorylation (PHOSPHO)
               </span>
             </li>
             <li className="assay-legend-item d-flex align-items-center">
-              <img className="legend-symbol" src={symbolProtAc} alt="prot-ac" />
+              <img className="legend-symbol" src={`${imgSourceUrl}symbols/prot-ac.svg}`} alt="prot-ac" />
               <span className="legend-label ml-1">Acetylation (ACETYL)</span>
             </li>
             <li className="assay-legend-item d-flex align-items-center">
-              <img className="legend-symbol" src={symbolProtUb} alt="prot-ub" />
+              <img className="legend-symbol" src={`${imgSourceUrl}symbols/prot-ub.svg}`} alt="prot-ub" />
               <span className="legend-label ml-1">Ubiquitination (UBIQ)</span>
             </li>
           </ul>
@@ -76,7 +69,7 @@ function FigureAssayLegends() {
       <h5 className="font-weight-bold pb-1 border-bottom">Metabolomics</h5>
       <ul className="assay-legend-list list-unstyled">
         <li className="assay-legend-item d-flex align-items-start">
-          <img className="legend-symbol mt-2" src={symbolMetab} alt="metab" />
+          <img className="legend-symbol mt-2" src={`${imgSourceUrl}symbols/metab.svg}`} alt="metab" />
           <span className="legend-label ml-1">
             Metabolites: named (N-METAB) and unnamed (U-METAB)
           </span>
@@ -85,7 +78,7 @@ function FigureAssayLegends() {
       <h5 className="font-weight-bold pb-1 border-bottom">Cytokines</h5>
       <ul className="assay-legend-list list-unstyled">
         <li className="assay-legend-item d-flex align-items-center">
-          <img className="legend-symbol" src={symbolCytokine} alt="cytokine" />
+          <img className="legend-symbol" src={`${imgSourceUrl}symbols/cytokine.svg}`} alt="cytokine" />
           <span className="legend-label ml-1">Cytokine immunoassays</span>
         </li>
       </ul>
