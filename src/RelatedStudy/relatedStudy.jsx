@@ -2,17 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
-import HeritageFamilyStudyLogo from '../assets/ExternalLogos/HeritageFamilyStudy.png';
-import StanfordMedicineLogo from '../assets/ExternalLogos/StanfordMedicine.png';
 
 import '@styles/relatedStudy.scss';
+
+const imgSourceUrl = 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/external_resources/';
 
 const relatedStudies = [
   {
     id: 'heritage-proteomics',
     url: '/related-studies/heritage-proteomics',
     text: 'The HERITAGE Family Study is a multicenter project whose main goal is to study the role of the genotype in the cardiovascular and metabolic responses to aerobic exercise training and the changes brought about by regular exercise for several cardiovascular disease and diabetes risk factors.',
-    image: HeritageFamilyStudyLogo,
+    image: `${imgSourceUrl}HeritageFamilyStudy.png`,
     title: 'HERITAGE Proteomics',
     newWin: false,
   },
@@ -20,7 +20,7 @@ const relatedStudies = [
     id: 'exercise-transcriptome-meta-analysis',
     url: 'https://extrameta.org',
     text: 'A database comprising meta-analysis results from 43 publicly available exercise transcriptome datasets from human skeletal muscle and blood.',
-    image: StanfordMedicineLogo,
+    image: `${imgSourceUrl}StanfordMedicine.png`,
     title: 'Exercise Transcriptome Meta-analysis',
     newWin: true,
     pubTitle:
