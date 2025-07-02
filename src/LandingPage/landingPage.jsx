@@ -12,11 +12,6 @@ import VisNetworkReactComponent from './components/visNetwork';
 import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
 import IconSet from '../lib/iconSet';
 import ComplianceReviewNotice from '../lib/ui/complianceReviewNotice';
-
-import LayerRunner from '../assets/LandingPageGraphics/Data_Layer_Runner.png';
-import LogoMoTrPACWhite from '../assets/LandingPageGraphics/logo-motrpac-white.png';
-// import RatFigurePaass1b from '../assets/LandingPageGraphics/rat-figure-pass1b.svg';
-import NatureIssueCover from '../assets/LandingPageGraphics/nature_issue_cover.jpg';
 import BackgroundVideo from './components/backgroundVideo';
 import Figure1C from './components/figure1c';
 
@@ -24,6 +19,8 @@ import Figure1C from './components/figure1c';
 import landscapeFigure4eNetworkData from '../data/landscape_figure_4e';
 
 import '@styles/landingPage.scss'
+
+const imgSourceUrl = 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/landing_page/';
 
 // animated down arrow icon
 function AnimatedDownArrow() {
@@ -112,7 +109,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
           {!isMobile && <BackgroundVideo/>}
           <div className="section-content-container container text-center">
             <div className="logo-container">
-              <img src={LogoMoTrPACWhite} alt="MoTrPAC Logo"/>
+              <img src={`${imgSourceUrl}logo-motrpac-white.png`} alt="MoTrPAC Logo"/>
             </div>
             <h3 className="display-3">The Molecular Map of</h3>
             <h2 className="display-2">Exercise</h2>
@@ -185,7 +182,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
               <div className="feature-image-content-container col-12 col-md-6 mx-auto">
                 <div className="feature-image" onClick={goToExternalLink}>
                   <img
-                    src={NatureIssueCover}
+                    src={`${imgSourceUrl}nature_issue_cover.jpg`}
                     className="img-fluid lanascape-paper-abstract"
                     alt="Landscape Paper Abstract"
                     loading="lazy"
@@ -279,7 +276,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
             <div className="row content-code-repository d-flex align-items-center">
               <div className="feature-image col-12 col-md-6 mx-auto">
                 <img
-                  src={LayerRunner}
+                  src={`${imgSourceUrl}Data_Layer_Runner.png`}
                   className="img-fluid data-layer-runner"
                   alt="Data Layer Runner"
                   loading="lazy"
