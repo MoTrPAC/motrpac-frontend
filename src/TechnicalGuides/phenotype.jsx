@@ -202,7 +202,7 @@ function Phenotype() {
           <div className="vial-label-linkage-example mt-4 w-100">
             <img
               src={`${imgSourceUrl}vial_label_data_linkage_example.svg`}
-              alt="Example data linkage via vial lables and pids"
+              alt="Example data linkage via vial labels and pids"
             />
           </div>
         </div>
