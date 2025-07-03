@@ -1,9 +1,10 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
-import VialLabelExample from '../assets/figures/vial_label_data_linkage_example.svg';
 
 import '@styles/technicalGuides.scss';
+
+const imgSourceUrl = 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/figures/';
 
 /**
  * React component that displays the phenotype technical guide.
@@ -200,8 +201,8 @@ function Phenotype() {
           <h5 className="mt-4">Example data linkage via vial labels and pids</h5>
           <div className="vial-label-linkage-example mt-4 w-100">
             <img
-              src={VialLabelExample}
-              alt="Example data linkage via vial lables and pids"
+              src={`${imgSourceUrl}vial_label_data_linkage_example.svg`}
+              alt="Example data linkage via vial labels and pids"
             />
           </div>
         </div>

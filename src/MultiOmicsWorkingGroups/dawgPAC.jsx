@@ -198,7 +198,14 @@ function DawgPAC({ profile = {} }) {
                 <li>
                   QC + DEA:
                   {' '}
-                  pass1ac-6-rna-seq-analysis-report.html
+                  <a
+                    href="#"
+                    data-toggle="modal"
+                    data-target="#html-report-modal"
+                    onClick={(e) => { e.preventDefault(); handleClickReport('transcriptomics/pass1ac-6-rna-seq-analysis-report.html', 'pass1ac-6-rna-seq-analysis-report.html'); }}
+                  >
+                    pass1ac-6-rna-seq-analysis-report.html
+                  </a>
                 </li>
               </ul>
             </li>

@@ -7,8 +7,7 @@ import ToggleShowHide from './components/toggleShowHide';
 
 import '@styles/mainStudyPage.scss';
 
-import PASS1B06Profiling from '../assets/figures/pass1b-06-molecular-profiling.svg';
-import PASS1B06TimeCourse from '../assets/figures/pass1b-06-time-course.png';
+const imgSourceUrl = 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/figures/';
 
 function ProjectOverview() {
   const [showSummary, setShowSummary] = useState(true);
@@ -188,7 +187,7 @@ function ProjectOverview() {
               id="project-overview-experiment-design"
             >
               <img
-                src={PASS1B06TimeCourse}
+                src={`${imgSourceUrl}pass1b-06-time-course.png`}
                 alt="Endurance Exercise Time Course Intervention"
               />
             </div>
@@ -218,7 +217,7 @@ function ProjectOverview() {
                 only perform transcriptomics (rna-seq).
               </p>
               <img
-                src={PASS1B06Profiling}
+                src={`${imgSourceUrl}pass1b-06-molecular-profiling.svg`}
                 className="mb-2"
                 alt="Endurance Exercise Tissues / Molecular Profiling"
               />
