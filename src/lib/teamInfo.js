@@ -46,7 +46,7 @@ const teamInfo = {
     },
     {
       name: 'Mihir Samdarshi',
-      title: 'Bioinformatics/Software Engineer',
+      title: 'Consultant',
       image: `${imgSourceUrl}Mihir.jpg`,
     },
     {
