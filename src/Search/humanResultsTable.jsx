@@ -136,45 +136,58 @@ function HumanDataTable({
               className="table table-sm deaResultsTable"
             >
               <thead>
-                {headerGroups.map((headerGroup) => (
-                  <tr
-                    {...headerGroup.getHeaderGroupProps()}
-                    className="table-head"
-                  >
-                    {headerGroup.headers.map((column) => (
-                      <th
-                        {...column.getHeaderProps(
-                          column.getSortByToggleProps({ title: '' })
-                        )}
-                      >
-                        <div className="d-flex align-items-center justify-content-between">
-                          {column.render('Header')}
-                          <span>
-                            {column.isSorted
-                              ? column.isSortedDesc
-                                ? <i className="material-icons">expand_more</i>
-                                : <i className="material-icons">expand_less</i>
-                              : <i className="material-icons">unfold_more</i>}
-                          </span>
-                        </div>
-                      </th>
-                    ))}
-                  </tr>
-                ))}
+                {headerGroups.map((headerGroup) => {
+                  // Destructure key and rest of the header group props
+                  // to avoid passing key as a prop to the table row
+                  const { key, ...restHeaderGroups } = headerGroup.getHeaderGroupProps();
+                  return (
+                    <tr key={key} {...restHeaderGroups} className="table-head">
+                      {headerGroup.headers.map((column) => {
+                        // Destructure key and rest of the column header props
+                        // to avoid passing key as a prop to the table header
+                        const { key, ...rest } = column.getHeaderProps();
+                        return (
+                          <th
+                            key={key}
+                            {...rest}
+                            {...column.getSortByToggleProps({ title: '' })}
+                          >
+                            <div className="d-flex align-items-center justify-content-between">
+                              {column.render('Header')}
+                              <span>
+                                {column.isSorted
+                                  ? column.isSortedDesc
+                                    ? <i className="material-icons">expand_more</i>
+                                    : <i className="material-icons">expand_less</i>
+                                  : <i className="material-icons">unfold_more</i>}
+                              </span>
+                            </div>
+                          </th>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </thead>
               <tbody {...getTableBodyProps()}>
                 {page.map((row) => {
                   prepareRow(row);
                   return (
                     <tr {...row.getRowProps()}>
-                      {row.cells.map((cell) => (
-                        <td
-                          {...cell.getCellProps()}
-                          className={cell.value ? cell.value : ''}
-                        >
-                          {cell.render('Cell')}
-                        </td>
-                      ))}
+                      {row.cells.map((cell) => {
+                        // Destructure key and rest of the cell props
+                        // to avoid passing key as a prop to the table cell
+                        const { key, ...restCellProps } = cell.getCellProps();
+                        return (
+                          <td
+                            key={key}
+                            {...restCellProps}
+                            className={cell.value ? cell.value : ''}
+                          >
+                            {cell.render('Cell')}
+                          </td>
+                        );
+                      })}
                     </tr>
                   );
                 })}
