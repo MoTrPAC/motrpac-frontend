@@ -11,6 +11,7 @@ export const searchParamsDefaultProps = {
   keys: [] || '',
   omics: 'all',
   species: 'rat',
+  study: 'pass1b06',
   analysis: 'all',
   filters: {
     tissue: [],
@@ -56,6 +57,7 @@ export const searchParamsPropType = {
   keys: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   omics: PropTypes.string,
   species: PropTypes.string,
+  study: PropTypes.string,
   analysis: PropTypes.string,
   filters: PropTypes.shape({
     tissue: PropTypes.arrayOf(PropTypes.string),
@@ -707,23 +709,23 @@ export const transformData = (arr) => {
       const matchedAssay = assayListHuman.find(
         (filter) => filter.filter_value === item.assay
       );
-      item.assay = matchedAssay && matchedAssay.filter_label;
+      item.assay = matchedAssay ? matchedAssay.filter_label : item.assay;
     }
     // Transform randomGroupCode values
     if (item.contrast1_randomGroupCode && item.contrast1_randomGroupCode.length) {
       const matchedRnadomGroupCode = randomGroupList.find(
         (filter) => filter.filter_value === item.contrast1_randomGroupCode,
       );
-      item.contrast1_randomGroupCode = matchedRnadomGroupCode
-        && matchedRnadomGroupCode.filter_label;
+      item.contrast1_randomGroupCode = matchedRnadomGroupCode ? matchedRnadomGroupCode.filter_label
+        : item.contrast1_randomGroupCode;
     }
     // Transform human timepoint values
     if (item.contrast1_timepoint && item.contrast1_timepoint.length) {
       const matchedHumanTimepoint = timepointListHuman.find(
         (filter) => filter.filter_value === item.contrast1_timepoint,
       );
-      item.contrast1_timepoint = matchedHumanTimepoint
-        && matchedHumanTimepoint.filter_label;
+      item.contrast1_timepoint = matchedHumanTimepoint ? matchedHumanTimepoint.filter_label
+        : item.contrast1_timepoint;
     }
     // Transform human type values
     if (item.contrast_type && item.contrast_type.length) {
@@ -732,16 +734,16 @@ export const transformData = (arr) => {
     // Transform sex values
     if (item.sex && item.sex.length) {
       const matchedSex = sexList.find(
-        (filter) => filter.filter_value.toLowerCase() === item.sex
+        (filter) => filter.filter_value.toLowerCase() === item.sex.toLowerCase()
       );
-      item.sex = matchedSex && matchedSex.filter_label;
+      item.sex = matchedSex ? matchedSex.filter_label : item.sex;
     }
     // Transform timepoint values
     if (item.comparison_group && item.comparison_group.length) {
       const matchedTimepoint = timepointList.find(
         (filter) => filter.filter_value === item.comparison_group
       );
-      item.comparison_group = matchedTimepoint && matchedTimepoint.filter_label;
+      item.comparison_group = matchedTimepoint ? matchedTimepoint.filter_label : item.comparison_group;
     }
     // Round values
     if (item.p_value && item.p_value.length && item.p_value !== 'NA') {
