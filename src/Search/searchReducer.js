@@ -17,6 +17,7 @@ export const defaultSearchState = {
     keys: [],
     omics: 'all',
     species: 'rat',
+    study: 'pass1b06',
     analysis: 'all',
     filters: {
       tissue: [],
@@ -126,6 +127,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         ktype,
         keys,
         species,
+        study,
         omics,
         analysis,
         filters,
@@ -141,6 +143,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
           ktype,
           keys,
           species,
+          study,
           omics,
           analysis,
           filters,
@@ -208,6 +211,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       const defaultParams = { ...defaultSearchState.searchParams };
       defaultParams.keys = [];
       defaultParams.species = 'rat';
+      defaultParams.study = 'pass1b06';
       defaultParams.filters = {
         tissue: [],
         assay: [],
