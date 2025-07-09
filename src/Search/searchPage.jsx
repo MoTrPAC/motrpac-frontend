@@ -95,6 +95,7 @@ export function SearchPage({
   }
 
   // get options based on selected search context
+  // for automatic suggestions in the primary search input field
   function getOptions() {
     if (searchParams.species === 'rat') {
       switch (searchParams.ktype) {
@@ -180,15 +181,20 @@ export function SearchPage({
     }
   };
 
-  const handleSpeciesChange = (value) => {
+  const handleStudyChange = (value) => {
     resetSearch('all');
     clearSearchTermInput();
     setMultiSelections([]);
     if (inputEl && inputEl.value && inputEl.value.length) {
       inputEl.value = '';
     }
-    // this gets called last to ensure that species param is updated
-    changeParam('species', value);
+    // Set study type and automatically determine species
+    changeParam('study', value);
+    if (value === 'precawg') {
+      changeParam('species', 'human');
+    } else {
+      changeParam('species', 'rat');
+    }
   };
 
   return (
@@ -203,7 +209,7 @@ export function SearchPage({
       <form id="searchForm" name="searchForm">
         <PageTitle title="Search differential abundance data" />
         <div className="search-content-container">
-          <DifferentialAbundanceSummary userType={userType} species={searchParams.species} />
+          <DifferentialAbundanceSummary userType={userType} species={searchParams.species} study={searchParams.study} />
           <div className="search-form-container mt-3 mb-4 border shadow-sm rounded px-4 pt-2 pb-3">
             <div className="search-summary-toggle-container row">
               <a
@@ -218,12 +224,13 @@ export function SearchPage({
               </a>
             </div>
             {userType && userType === 'internal' && (
-              <SpeciesToggleSwitch
-                onChange={handleSpeciesChange}
-                defaultSelected={searchParams.species}
+              <StudySelectButtonGroup
+                onChange={handleStudyChange}
+                defaultSelected={searchParams.study}
               />
             )}
             <div className="es-search-ui-container d-flex align-items-center w-100 mt-3 pb-2">
+
               <RadioButton
                 searchParams={searchParams}
                 changeParam={changeParam}
@@ -236,9 +243,9 @@ export function SearchPage({
               <div className="search-box-input-group d-flex align-items-center flex-grow-1">
                 <div className="input-group">
                   <div className="input-group-prepend">
-                    <span className="input-group-text material-icons">
-                      {searchParams.species === 'human' ? 'person' : 'pest_control_rodent'}
-                    </span>
+                    <div className="input-group-text search-icon">
+                      <img src={searchParams.ktype === 'gene' ? IconSet.DNA : (searchParams.ktype === 'protein' ? IconSet.Protein : IconSet.Metabolite)} alt="" />
+                    </div>
                   </div>
                   {searchParams.ktype === 'protein' && searchParams.species === 'human' ? (
                     <input
@@ -543,7 +550,7 @@ function RadioButton({
     {
       keyType: 'protein',
       id: 'inlineRadioProtein',
-      label: 'Protein name',
+      label: searchParams.study === 'pass1b06' ? 'Protein name' : 'Protein ID', // Adjust label based on study type
     },
     {
       keyType: 'metab',
@@ -600,7 +607,7 @@ function RadioButton({
   );
 }
 
-function PrimaryOmicsFilter({ omics, toggleOmics }) {
+function PrimaryOmicsFilter({ omics = 'all', toggleOmics }) {
   const omicsDictionary = {
     all: 'All omics',
     epigenomics: 'Epigenomics',
@@ -648,12 +655,10 @@ function PrimaryOmicsFilter({ omics, toggleOmics }) {
   );
 }
 
-// Render species selection filter
-function SpeciesToggleSwitch({
+// Render study selection button group
+function StudySelectButtonGroup({
   onChange,
-  defaultSelected = 'rat',
-  ratLabel = 'Rat',
-  humanLabel = 'Human',
+  defaultSelected = 'pass1b06',
   disabled = false,
 }) {
   const [selected, setSelected] = useState(defaultSelected);
@@ -662,7 +667,7 @@ function SpeciesToggleSwitch({
     setSelected(defaultSelected);
   }, [defaultSelected]);
 
-  const handleToggle = (value) => {
+  const handleSelect = (value) => {
     if (disabled) return;
 
     setSelected(value);
@@ -671,31 +676,41 @@ function SpeciesToggleSwitch({
     }
   };
 
+  const studyOptions = [
+    { value: 'pass1b06', label: 'Endurance Trained Young Adult Rats' },
+    { value: 'pass1a06', label: 'Acute Exercise Young Adult Rats' },
+    { value: 'precawg', label: 'Pre-COVID Human Sedentary Adults' }
+  ];
+
   return (
-    <div className={`slide-toggle-container row mt-2 ${disabled ? 'disabled' : ''}`}>
-      <div className="slide-toggle-switch mx-auto">
-        <div
-          className={`slide-toggle-option ${selected === 'rat' ? 'selected' : ''}`}
-          onClick={() => handleToggle('rat')}
-        >
-          {ratLabel}
+    <div className="search-study-select-container row">
+      <div className="col-12 d-flex justify-content-center">
+        <div className="btn-group" role="group" aria-label="Study selection">
+          {studyOptions.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              className={`d-flex align-items-center btn ${selected === option.value ? 'active' : ''}`}
+              onClick={() => handleSelect(option.value)}
+              disabled={disabled}
+            >
+              <span className="btn-icon material-icons mr-1">
+                {option.value === 'precawg' ? 'person' : 'pest_control_rodent'}
+              </span>
+              <span className="btn-label">{option.label}</span>
+            </button>
+          ))}
         </div>
-        <div
-          className={`slide-toggle-option ${selected === 'human' ? 'selected' : ''}`}
-          onClick={() => handleToggle('human')}
-        >
-          {humanLabel}
-        </div>
-        <div
-          className={`slide-toggle-slider ${selected === 'human' ? 'right' : 'left'}`}
-        />
       </div>
     </div>
   );
 }
 
+
 // Render modal message
-function ResultsDownloadLink({ downloadPath, downloadError, profile, species }) {
+function ResultsDownloadLink({
+  downloadPath = '', downloadError = '', profile = {}, species = 'rat'
+}) {
   const dispatch = useDispatch();
 
   // track event when user clicks download link
@@ -751,11 +766,11 @@ function ResultsDownloadLink({ downloadPath, downloadError, profile, species }) 
 
 // Render modal
 function ResultsDownloadModal({
-  downloadPath,
-  downloadError,
-  downloading,
-  profile,
-  species,
+  downloadPath = '',
+  downloadError = '',
+  downloading = false,
+  profile = {},
+  species = 'rat',
 }) {
   const dispatch = useDispatch();
 
