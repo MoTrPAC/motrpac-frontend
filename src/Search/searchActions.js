@@ -133,17 +133,21 @@ function handleSearch(params, inputValue, scope) {
   let host = ratDataHost;
 
   const requestParams = { ...params };
+  // remove 'species' field from requestParams
+  delete requestParams.species;
   // handle params differently between human and rat
-  if (requestParams.species === 'human') {
-    delete requestParams.species;
+  if (requestParams.study === 'precawg') {
     delete requestParams.convert_assay_code;
-    requestParams.study = 'precawg';
     requestParams.filters.must_not = {
       assay: ['epigen-atac-seq', 'epigen-methylcap-seq'],
     };
     host = humanDataHost;
-  } else if (requestParams.species === 'rat') {
-    delete requestParams.species;
+  } else if (requestParams.study === 'pass1a06') {
+    // pass1a-06 search host is temporarily on precawg
+    host = humanDataHost;
+  } else if (requestParams.study === 'pass1b06') {
+    // pass1b-06 search param does not support 'study' field
+    delete requestParams.study;
     host = ratDataHost;
   }
 
@@ -172,19 +176,22 @@ function handleSearchDownload(params, analysis) {
   downloadSearchParams.size = 0;
 
   let host = ratDataHost;
+  delete downloadSearchParams.species;
 
-  if (downloadSearchParams.species === 'human') {
-    delete downloadSearchParams.species;
+  if (downloadSearchParams.study === 'precawg') {
     delete downloadSearchParams.convert_assay_code;
-    downloadSearchParams.study = 'precawg';
     downloadSearchParams.filters.must_not = {
       assay: ['epigen-atac-seq', 'epigen-methylcap-seq'],
     };
     host = humanDataHost;
-  } else if (downloadSearchParams.species === 'rat') {
-    delete downloadSearchParams.species;
+  } else if (downloadSearchParams.study === 'pass1a06') {
+    host = humanDataHost;
+  } else {
+    // pass1b-06 search param does not support 'study' field
+    delete downloadSearchParams.study;
     host = ratDataHost;
   }
+
   return (dispatch) => {
     dispatch(downloadSubmit());
     return axios
