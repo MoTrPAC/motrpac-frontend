@@ -155,6 +155,17 @@ export const timepointListHuman = [
   { filter_value: 'post_24_hr', filter_label: 'Post 24 Hour' },
 ];
 
+export const timepointListRatsAcute = [
+  { filter_value: '00.0h', filter_label: '0 Hour' },
+  { filter_value: '00.5h', filter_label: '0.5 hour' },
+  { filter_value: '01.0h', filter_label: '1 hour' },
+  { filter_value: '04.0h', filter_label: '4 hour' },
+  { filter_value: '07.0h', filter_label: '7 hour' },
+  { filter_value: '24.0h', filter_label: '24 hour' },
+  { filter_value: '48.0h', filter_label: '48 Hour' },
+  { filter_value: 'IPE', filter_label: 'Immediate Post Exercise' },
+];
+
 export const rangeList = [
   { filter_value: null, filter_label: 'Min' },
   { filter_value: null, filter_label: 'Max' },
