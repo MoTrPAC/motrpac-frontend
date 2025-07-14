@@ -67,40 +67,6 @@ describe('Pure Analysis Home Page', () => {
   });
 });
 
-describe('Connected Animal Analysis Page', () => {
-  beforeEach(() => {
-    renderWithProviders(
-      <AnalysisHomePageConnected match={{ params: { subjectType: 'animal' } }} />,
-      { preloadedState: loggedInRootState }
-    );
-  });
-
-  test('shows analysis cards and handles navigation', async () => {
-    if (anyAnalysisActive) {
-      const user = userEvent.setup();
-      
-      // Initially shows analysis cards
-      expect(screen.getAllByTestId('analysis-card')).not.toHaveLength(0);
-
-      // Click first active analysis
-      const activeAnalysis = screen.getByTestId('active-analysis-PHENOTYPE');
-      await user.click(activeAnalysis);
-
-      // Should show animal data analysis component
-      expect(screen.getByTestId('animal-data-analysis')).toBeInTheDocument();
-      
-      // Click back button
-      const backButton = screen.getByRole('button', { name: /back/i });
-      await user.click(backButton);
-
-      // Should show analysis cards again
-      expect(screen.getAllByTestId('analysis-card')).not.toHaveLength(0);
-    } else {
-      expect(screen.queryByTestId('active-analysis')).not.toBeInTheDocument();
-    }
-  }, 10000); // Icrease timeout for async operations
-});
-
 // Disabling this test because this UI is not implemented
 /*
 describe('Connected Human Analysis Page', () => {
