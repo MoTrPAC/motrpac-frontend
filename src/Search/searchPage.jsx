@@ -24,6 +24,9 @@ import { metabolites } from '../data/metabolites';
 import { proteins } from '../data/proteins';
 import { humanGenes } from '../data/human_genes';
 import { humanMetabolites } from '../data/human_metabolites';
+import { ratAcuteGenes } from '../data/rat_acute_genes';
+import { ratAcuteMetabolites } from '../data/rat_acute_metabolites';
+import { ratAcuteProteins } from '../data/rat_acute_proteins';
 import DifferentialAbundanceSummary from './components/differentialAbundanceSummary';
 
 import '@styles/search.scss';
@@ -102,7 +105,7 @@ export function SearchPage({
   // get options based on selected search context
   // for automatic suggestions in the primary search input field
   function getOptions() {
-    if (searchParams.study === 'pass1b06' || searchParams.study === 'pass1a06') {
+    if (searchParams.study === 'pass1b06') {
       switch (searchParams.ktype) {
         case 'gene':
           return genes;
@@ -110,6 +113,18 @@ export function SearchPage({
           return metabolites;
         case 'protein':
           return proteins;
+        default:
+          return [];
+      }
+    }
+    if (searchParams.study === 'pass1a06') {
+      switch (searchParams.ktype) {
+        case 'gene':
+          return ratAcuteGenes;
+        case 'metab':
+          return ratAcuteMetabolites;
+        case 'protein':
+          return ratAcuteProteins;
         default:
           return [];
       }
