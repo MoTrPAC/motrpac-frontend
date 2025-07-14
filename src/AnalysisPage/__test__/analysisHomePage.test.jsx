@@ -66,22 +66,3 @@ describe('Pure Analysis Home Page', () => {
     });
   });
 });
-
-// Disabling this test because this UI is not implemented
-/*
-describe('Connected Human Analysis Page', () => {
-  test('shows only inactive analysis cards', () => {
-    renderWithProviders(
-      <AnalysisHomePageConnected match={{ params: { subjectType: 'human' } }} />,
-      { preloadedState: loggedInRootState }
-    );
-
-    const analysisCards = screen.getAllByTestId('analysis-card');
-    expect(analysisCards).not.toBeInTheDocument();
-    
-    // Verify no active analyses
-    expect(screen.queryByTestId('active-analysis')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('sub-analysis-card')).not.toBeInTheDocument();
-  });
-});
-*/
