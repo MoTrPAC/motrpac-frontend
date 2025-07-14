@@ -1,4 +1,4 @@
-export const tissueList = [
+export const tissueListRatEndurance = [
   { filter_value: 'adrenal', filter_label: 'Adrenal' },
   { filter_value: 'blood rna', filter_label: 'Blood RNA' },
   { filter_value: 'brown adipose', filter_label: 'Brown Adipose' },
@@ -18,6 +18,29 @@ export const tissueList = [
   { filter_value: 'testes', filter_label: 'Testes' },
   { filter_value: 'vastus lateralis', filter_label: 'Vastus Lateralis' },
   { filter_value: 'vena cava', filter_label: 'Vena Cava' },
+  { filter_value: 'white adipose', filter_label: 'White Adipose' },
+];
+
+export const tissueListRatAcute = [
+  { filter_value: 'adrenal', filter_label: 'Adrenal' },
+  { filter_value: 'aorta', filter_label: 'Aorta' },
+  { filter_value: 'blood rna', filter_label: 'Blood RNA' },
+  { filter_value: 'brown adipose', filter_label: 'Brown Adipose' },
+  { filter_value: 'colon', filter_label: 'Colon' },
+  { filter_value: 'cortex', filter_label: 'Cortex' },
+  { filter_value: 'gastrocnemius', filter_label: 'Gastrocnemius' },
+  { filter_value: 'heart', filter_label: 'Heart' },
+  { filter_value: 'hippocampus', filter_label: 'Hippocampus' },
+  { filter_value: 'hypothalamus', filter_label: 'Hypothalamus' },
+  { filter_value: 'kidney', filter_label: 'Kidney' },
+  { filter_value: 'liver', filter_label: 'Liver' },
+  { filter_value: 'lung', filter_label: 'Lung' },
+  { filter_value: 'ovaries', filter_label: 'Ovaries' },
+  { filter_value: 'plasma', filter_label: 'Plasma' },
+  { filter_value: 'small intestine', filter_label: 'Small Intestine' },
+  { filter_value: 'spleen', filter_label: 'Spleen' },
+  { filter_value: 'testes', filter_label: 'Testes' },
+  { filter_value: 'vastus lateralis', filter_label: 'Vastus Lateralis' },
   { filter_value: 'white adipose', filter_label: 'White Adipose' },
 ];
 
@@ -76,7 +99,7 @@ const assays = [
   },
 ];
 
-export const assayList = assays.sort((a, b) =>
+export const assayListRat = assays.sort((a, b) =>
   a.filter_label.toLowerCase().localeCompare(b.filter_label.toLowerCase()),
 );
 
@@ -138,7 +161,7 @@ export const sexList = [
   { filter_value: 'Female', filter_label: 'Female' },
 ];
 
-export const timepointList = [
+export const timepointListRatEndurance = [
   { filter_value: '1w', filter_label: '1 week' },
   { filter_value: '2w', filter_label: '2 week' },
   { filter_value: '4w', filter_label: '4 week' },
@@ -155,7 +178,7 @@ export const timepointListHuman = [
   { filter_value: 'post_24_hr', filter_label: 'Post 24 Hour' },
 ];
 
-export const timepointListRatsAcute = [
+export const timepointListRatAcute = [
   { filter_value: '00.0h', filter_label: '0 Hour' },
   { filter_value: '00.5h', filter_label: '0.5 hour' },
   { filter_value: '01.0h', filter_label: '1 hour' },
@@ -169,47 +192,6 @@ export const timepointListRatsAcute = [
 export const rangeList = [
   { filter_value: null, filter_label: 'Min' },
   { filter_value: null, filter_label: 'Max' },
-];
-
-export const commonSearchFiltersRat = [
-  {
-    keyName: 'tissue',
-    name: 'Tissue',
-    filters: tissueList,
-  },
-  {
-    keyName: 'assay',
-    name: 'Assay',
-    filters: assayList,
-  },
-  {
-    keyName: 'sex',
-    name: 'Sex',
-    filters: sexList,
-  },
-  {
-    keyName: 'comparison_group',
-    name: 'Timepoint',
-    filters: timepointList,
-  },
-];
-
-export const commonSearchFiltersHuman = [
-  {
-    keyName: 'tissue',
-    name: 'Tissue',
-    filters: tissueList,
-  },
-  {
-    keyName: 'assay',
-    name: 'Assay',
-    filters: assayList,
-  },
-  {
-    keyName: 'contrast1_timepoint',
-    name: 'Timepoint',
-    filters: timepointListHuman,
-  },
 ];
 
 export const rangeSearchFilters = [
@@ -234,11 +216,11 @@ export const geneCentricSearchFilters = [
   {
     keyName: 'tissue',
     name: 'Tissue',
-    filters: tissueList,
+    filters: tissueListRatEndurance,
   },
   {
     keyName: 'assay',
     name: 'Assay',
-    filters: assayList,
+    filters: assayListRat,
   },
 ];
