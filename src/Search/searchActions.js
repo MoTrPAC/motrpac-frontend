@@ -137,7 +137,6 @@ function handleSearch(params, inputValue, scope) {
   delete requestParams.species;
   // handle params differently between human and rat
   if (requestParams.study === 'precawg') {
-    delete requestParams.convert_assay_code;
     requestParams.filters.must_not = {
       assay: ['epigen-atac-seq', 'epigen-methylcap-seq'],
     };
@@ -179,7 +178,6 @@ function handleSearchDownload(params, analysis) {
   delete downloadSearchParams.species;
 
   if (downloadSearchParams.study === 'precawg') {
-    delete downloadSearchParams.convert_assay_code;
     downloadSearchParams.filters.must_not = {
       assay: ['epigen-atac-seq', 'epigen-methylcap-seq'],
     };
