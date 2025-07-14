@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   geneCentricSearchFilters,
-  tissueList,
-  assayList,
+  tissueListRatEndurance,
+  assayListRat,
 } from '../../lib/searchFilters';
 import { geneSearchParamsPropType } from './sharedlib';
 
@@ -18,11 +18,11 @@ function GeneCentricSearchResultFilters({
   // FIXME - this is a hack to get the search filters such as tissue and assay
   // to render accordingly to the ktype (gene)
   function customizeTissueList() {
-    return tissueList.filter((t) => t.filter_value !== 'plasma');
+    return tissueListRatEndurance.filter((t) => t.filter_value !== 'plasma');
   }
 
   function customizeAssayList() {
-    return assayList.filter((t) =>
+    return assayListRat.filter((t) =>
       t.filter_value.match(
         /^(transcript-rna-seq|prot-pr|prot-ph|prot-ac|prot-ub|immunoassay)$/
       )
