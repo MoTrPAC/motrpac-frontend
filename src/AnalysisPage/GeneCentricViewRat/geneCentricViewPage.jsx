@@ -15,6 +15,7 @@ import { genes } from '../../data/genes';
 import { trackEvent } from '../../GoogleAnalytics/googleAnalytics';
 
 import '@styles/analysisPage.scss';
+import '@styles/search.scss';
 
 function GeneCentricView({
   geneSearchResults = {},
