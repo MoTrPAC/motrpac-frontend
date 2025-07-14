@@ -9,6 +9,7 @@ import PageTitle from '../lib/ui/pageTitle';
 import TimewiseResultsTable from './timewiseTable';
 import TrainingResultsTable from './trainingResultsTable';
 import HumanResultsTable from './humanResultsTable';
+import RatsAcuteExerciseResultsTable from './ratsAcuteResultsTable';
 import SearchActions from './searchActions';
 import surveyModdalActions from '../UserSurvey/userSurveyActions';
 import SearchResultFilters from './deaSearchResultFilters';
@@ -81,7 +82,8 @@ export function SearchPage({
   const timewiseResults = [];
   const trainingResults = [];
   const humanResults = [];
-  if (searchParams.species === 'rat' && searchResults.result && Object.keys(searchResults.result).length > 0) {
+  const ratAcuteExerciseResults = [];
+  if (searchParams.study === 'pass1b06' && searchResults.result && Object.keys(searchResults.result).length > 0) {
     Object.keys(searchResults.result).forEach((key) => {
       if (key.indexOf('timewise') > -1) {
         timewiseResults.push(...mapKeyToValue(searchResults.result[key]));
@@ -90,14 +92,17 @@ export function SearchPage({
       }
     });
   }
-  if (searchParams.species === 'human' && searchResults.result && Object.keys(searchResults.result).length > 0) {
+  if (searchParams.study === 'pass1a06' && searchResults.result && Object.keys(searchResults.result).length > 0) {
+    ratAcuteExerciseResults.push(...mapKeyToValue(searchResults.result));
+  }
+  if (searchParams.study === 'precawg' && searchResults.result && Object.keys(searchResults.result).length > 0) {
     humanResults.push(...mapKeyToValue(searchResults.result));
   }
 
   // get options based on selected search context
   // for automatic suggestions in the primary search input field
   function getOptions() {
-    if (searchParams.species === 'rat') {
+    if (searchParams.study === 'pass1b06' || searchParams.study === 'pass1a06') {
       switch (searchParams.ktype) {
         case 'gene':
           return genes;
@@ -109,7 +114,7 @@ export function SearchPage({
           return [];
       }
     }
-    if (searchParams.species === 'human') {
+    if (searchParams.study === 'precawg') {
       switch (searchParams.ktype) {
         case 'gene':
           return humanGenes;
@@ -124,7 +129,7 @@ export function SearchPage({
 
   // render placeholder text in primary search input field
   function renderPlaceholder() {
-    if (searchParams.species === 'human') {
+    if (searchParams.study === 'precawg') {
       if (searchParams.ktype === 'protein') {
         return 'Example: p14854, q8tep8_s76s';
       }
@@ -350,8 +355,8 @@ export function SearchPage({
                         profile={profile}
                       />
                     </div>
-                    {/* render search results for human or rat */}
-                    {searchParams.species === 'rat' && (
+                    {/* render search results for rats endurance training */}
+                    {searchParams.study === 'pass1b06' && (
                       <div className="tabbed-content col-md-9">
                         {/* nav tabs */}
                         <ul className="nav nav-tabs" id="dataTab" role="tablist">
@@ -461,7 +466,40 @@ export function SearchPage({
                         </div>
                       </div>
                     )}
-                    {searchParams.species === 'human' && (
+                    {/* render search results for rats acute exercise study */}
+                    {searchParams.study === 'pass1a06' && (
+                      <div className="rats-acute-exercise-results-content-container tabbed-content col-md-9">
+                        <div className="tab-content mt-3">
+                          {ratAcuteExerciseResults.length ? (
+                            <RatsAcuteExerciseResultsTable
+                              ratsAcuteExerciseData={ratAcuteExerciseResults}
+                              searchParams={searchParams}
+                              handleSearchDownload={handleSearchDownload}
+                            />
+                          ) : (
+                            scope === 'filters' && (
+                              <p className="mt-4">
+                                {searchResults.errors
+                                && searchResults.errors.indexOf('No results found') !== -1 ? (
+                                  <span>
+                                    No matches found for the selected filters.
+                                    Please refer to the
+                                    {' '}
+                                    <Link to="/summary">Summary Table</Link>
+                                    {' '}
+                                    for data that are available.
+                                  </span>
+                                  ) : (
+                                    searchResults.errors
+                                  )}
+                              </p>
+                            )
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    {/* render search results for pre-covid human sed adults study */}
+                    {searchParams.study === 'precawg' && (
                       <div className="human-da-results-content-container tabbed-content col-md-9">
                         <div className="tab-content mt-3">
                           {humanResults.length ? (
@@ -541,7 +579,7 @@ function RadioButton({
   setMultiSelections,
   inputEl,
 }) {
-  const ratOptions = [
+  const radioButtonOptions = [
     {
       keyType: 'gene',
       id: 'inlineRadioGene',
@@ -550,7 +588,7 @@ function RadioButton({
     {
       keyType: 'protein',
       id: 'inlineRadioProtein',
-      label: searchParams.study === 'pass1b06' ? 'Protein name' : 'Protein ID', // Adjust label based on study type
+      label: searchParams.study === 'precawg' ? 'Protein ID' : 'Protein name',
     },
     {
       keyType: 'metab',
@@ -558,29 +596,10 @@ function RadioButton({
       label: 'Metabolite name',
     },
   ];
-
-  const humanOptions = [
-    {
-      keyType: 'gene',
-      id: 'inlineRadioGene',
-      label: 'Gene symbol',
-    },
-    {
-      keyType: 'protein',
-      id: 'inlineRadioProtein',
-      label: 'Protein ID',
-    },
-    {
-      keyType: 'metab',
-      id: 'inlineRadioMetab',
-      label: 'Metabolite name',
-    },
-  ];
-
-  const radioButtons = searchParams.species === 'human' ? humanOptions : ratOptions;
 
   const handleRadioChange = (e) => {
     const selectedSpecis = searchParams.species;
+    const selectedStudy = searchParams.study;
     resetSearch('all');
     clearInput();
     setMultiSelections([]);
@@ -589,11 +608,12 @@ function RadioButton({
       inputEl.value = '';
     }
     changeParam('species', selectedSpecis);
+    changeParam('study', selectedStudy);
   };
 
   return (
     <div className="search-context">
-      {radioButtons.map((item) => (
+      {radioButtonOptions.map((item) => (
         <RadioButtonComponent
           key={item.id}
           ktype={ktype}
