@@ -3,7 +3,16 @@ import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tooltip';
 import roundNumbers from '../lib/utils/roundNumbers';
 import {
-  sexList, timepointList, assayListHuman, timepointListHuman, randomGroupList,
+  sexList,
+  randomGroupList,
+  tissueListRatEndurance,
+  tissueListRatAcute,
+  tissueListHuman,
+  assayListRat,
+  assayListHuman,
+  timepointListRatEndurance,
+  timepointListRatAcute,
+  timepointListHuman,
 } from '../lib/searchFilters';
 
 export const searchParamsDefaultProps = {
@@ -18,6 +27,7 @@ export const searchParamsDefaultProps = {
     assay: [],
     sex: [],
     comparison_group: [],
+    contrast1_timepoint: [],
     p_value: { min: '', max: '' },
     adj_p_value: { min: '', max: '' },
     logFC: { min: '', max: '' },
@@ -42,14 +52,15 @@ export const searchParamsDefaultProps = {
     'contrast1_randomGroupCode',
     'contrast1_timepoint',
     'contrast_type',
+    'contrast',
   ],
   unique_fields: ['tissue', 'assay', 'sex', 'comparison_group', 'contrast1_timepoint'],
   size: 10000,
   start: 0,
   debug: true,
   save: false,
-  convert_assay_code: 1,
-  convert_tissue_code: 1,
+  convert_assay_code: 0,
+  convert_tissue_code: 0,
 };
 
 export const searchParamsPropType = {
@@ -64,6 +75,7 @@ export const searchParamsPropType = {
     assay: PropTypes.arrayOf(PropTypes.string),
     sex: PropTypes.arrayOf(PropTypes.string),
     comparison_group: PropTypes.arrayOf(PropTypes.string),
+    contrast1_timepoint: PropTypes.arrayOf(PropTypes.string),
     p_value: PropTypes.shape({
       min: PropTypes.string,
       max: PropTypes.string,
@@ -121,6 +133,21 @@ export const trainingResultsTablePropType = {
   adj_p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   p_value_male: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   p_value_female: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
+
+export const ratsAcuteResultsTablePropType = {
+  gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  protein_name: PropTypes.string,
+  refmet_name: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  feature_id: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  tissue: PropTypes.string,
+  assay: PropTypes.string,
+  omics: PropTypes.string,
+  logFC: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  adj_p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  contrast1_timepoint: PropTypes.string,
+  contrast_type: PropTypes.string,
 };
 
 export const humanResultsTablePropType = {
@@ -365,6 +392,86 @@ export const metabTrainingTableColumns = [
 ];
 
 /**
+ * column headers common to rats acute exercise gene and metabolite search results
+ */
+const commonRatsAcuteColumns = [
+  {
+    Header: 'Feature ID',
+    accessor: 'feature_id',
+  },
+  {
+    Header: 'Tissue',
+    accessor: 'tissue',
+  },
+  {
+    Header: 'Assay',
+    accessor: 'assay',
+  },
+  {
+    Header: 'Sex',
+    accessor: 'sex',
+  },
+  {
+    Header: 'logFC',
+    accessor: 'logFC',
+    sortType: 'basic',
+  },
+  {
+    Header: 'P-value',
+    accessor: 'p_value',
+    sortType: 'basic',
+  },
+  {
+    Header: 'Adj p-value',
+    accessor: 'adj_p_value',
+    sortType: 'basic',
+  },
+  {
+    Header: 'Timepoint',
+    accessor: 'contrast1_timepoint',
+  },
+  {
+    Header: 'Type',
+    accessor: 'contrast_type',
+  },
+];
+
+export const geneRatsAcuteTableColumns = [
+  {
+    Header: 'Gene',
+    accessor: 'gene_symbol',
+  },
+  ...commonRatsAcuteColumns,
+];
+
+export const proteinRatsAcuteTableColumns = [
+  {
+    Header: 'Protein Name',
+    accessor: 'protein_name',
+  },
+  ...commonRatsAcuteColumns,
+];
+
+export const metabRatsAcuteTableColumns = [
+  {
+    Header: () => (
+      <div className="d-flex align-items-center timewise-refmet-col-header">
+        <span>RefMet Name</span>
+        <span className="material-icons col-header-info timewise-refmet-tooltip">
+          info
+        </span>
+        <Tooltip anchorSelect=".timewise-refmet-tooltip" place="right">
+          Reference nomenclature for metabolite names
+        </Tooltip>
+      </div>
+    ),
+    accessor: 'refmet_name',
+    sortType: 'basic',
+  },
+  ...commonRatsAcuteColumns,
+];
+
+/**
  * column headers common to human gene and metabolite search results
  */
 const commonHumanColumns = [
@@ -445,7 +552,7 @@ export const metaboliteHumanTableColumns = [
  * page count and page index rendering function
  * common to all data qc status reports
  */
-export function PageIndex({ pageIndex, pageOptions }) {
+export function PageIndex({ pageIndex = 0, pageOptions = [] }) {
   return (
     <span className="page-index">
       Showing Page
@@ -462,11 +569,6 @@ export function PageIndex({ pageIndex, pageOptions }) {
 PageIndex.propTypes = {
   pageIndex: PropTypes.number,
   pageOptions: PropTypes.arrayOf(PropTypes.number),
-};
-
-PageIndex.defaultProps = {
-  pageIndex: 0,
-  pageOptions: [],
 };
 
 /**
@@ -710,6 +812,26 @@ export const transformData = (arr) => {
         (filter) => filter.filter_value === item.assay
       );
       item.assay = matchedAssay ? matchedAssay.filter_label : item.assay;
+    } else if (item.assay && item.assay.length) {
+      const matchedAssay = assayListRat.find(
+        (filter) => filter.filter_value === item.assay
+      );
+      item.assay = matchedAssay ? matchedAssay.filter_label : item.assay;
+    }
+    // Transform tissue values
+    if (item.tissue && item.tissue.length && item.contrast1_randomGroupCode && item.contrast1_randomGroupCode !== 'NA') {
+      const matchedTissue = tissueListHuman.find(
+        (filter) => filter.filter_value === item.tissue
+      );
+      item.tissue = matchedTissue ? matchedTissue.filter_label : (item.tissue === 'plasma' || item.tissue === 'blood-rna' ? 'Blood' : item.tissue);
+    } else if (item.tissue && item.tissue.length) {
+      const tissueList = item.contrast1_timepoint && item.contrast1_timepoint !== 'NA'
+        ? tissueListRatAcute
+        : tissueListRatEndurance;
+      const matchedTissue = tissueList.find(
+        (filter) => filter.filter_value === item.tissue
+      );
+      item.tissue = matchedTissue ? matchedTissue.filter_label : item.tissue;
     }
     // Transform randomGroupCode values
     if (item.contrast1_randomGroupCode && item.contrast1_randomGroupCode.length) {
@@ -719,12 +841,18 @@ export const transformData = (arr) => {
       item.contrast1_randomGroupCode = matchedRnadomGroupCode ? matchedRnadomGroupCode.filter_label
         : item.contrast1_randomGroupCode;
     }
-    // Transform human timepoint values
-    if (item.contrast1_timepoint && item.contrast1_timepoint.length) {
+    // Transform human timepoint and pass1a06 timepoint values
+    if (item.contrast1_timepoint && item.contrast1_timepoint.length && item.contrast1_randomGroupCode && item.contrast1_randomGroupCode !== 'NA') {
       const matchedHumanTimepoint = timepointListHuman.find(
         (filter) => filter.filter_value === item.contrast1_timepoint,
       );
       item.contrast1_timepoint = matchedHumanTimepoint ? matchedHumanTimepoint.filter_label
+        : item.contrast1_timepoint;
+    } else if (item.contrast1_timepoint && item.contrast1_timepoint.length) {
+      const matchedTimepoint = timepointListRatAcute.find(
+        (filter) => filter.filter_value === item.contrast1_timepoint,
+      );
+      item.contrast1_timepoint = matchedTimepoint ? matchedTimepoint.filter_label
         : item.contrast1_timepoint;
     }
     // Transform human type values
@@ -738,9 +866,9 @@ export const transformData = (arr) => {
       );
       item.sex = matchedSex ? matchedSex.filter_label : item.sex;
     }
-    // Transform timepoint values
+    // Transform pass1b-06 timepoint values
     if (item.comparison_group && item.comparison_group.length) {
-      const matchedTimepoint = timepointList.find(
+      const matchedTimepoint = timepointListRatEndurance.find(
         (filter) => filter.filter_value === item.comparison_group
       );
       item.comparison_group = matchedTimepoint ? matchedTimepoint.filter_label : item.comparison_group;
