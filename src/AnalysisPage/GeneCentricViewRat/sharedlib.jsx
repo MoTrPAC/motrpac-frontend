@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tooltip';
 import roundNumbers from '../../lib/utils/roundNumbers';
-import { tissueList, assayList } from '../../lib/searchFilters';
+import { tissueListRatEndurance, assayListRat } from '../../lib/searchFilters';
 
 export const geneSearchParamsPropType = {
   ktype: PropTypes.string,
@@ -261,17 +261,17 @@ export const transformData = (arr) => {
     }
     // Transform tissue values
     if (item.tissue && item.tissue.length) {
-      const matchedTissue = tissueList.find(
+      const matchedTissue = tissueListRatEndurance.find(
         (filter) => filter.filter_value === item.tissue
       );
-      item.tissue = matchedTissue && matchedTissue.filter_label;
+      item.tissue = matchedTissue ? matchedTissue.filter_label : item.tissue;
     }
     // Transform assay values
     if (item.assay && item.assay.length) {
-      const matchedAssay = assayList.find(
+      const matchedAssay = assayListRat.find(
         (filter) => filter.filter_value === item.assay
       );
-      item.assay = matchedAssay && matchedAssay.filter_label;
+      item.assay = matchedAssay ? matchedAssay.filter_label : item.assay;
     }
     // Round values
     if (item.p_value && item.p_value.length && item.p_value !== 'NA') {
