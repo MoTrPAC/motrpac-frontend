@@ -89,7 +89,7 @@ function TrainingDataTable({
       initialState: {
         pageIndex: 0,
         pageSize: 50,
-        pageCount: Math.ceil(data / 50),
+        pageCount: Math.ceil(data.length / 50),
       },
     },
     useFilters,

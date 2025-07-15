@@ -89,7 +89,7 @@ function RatsDataTable({
       initialState: {
         pageIndex: 0,
         pageSize: 50,
-        pageCount: Math.ceil(data / 50),
+        pageCount: Math.ceil(data.length / 50),
       },
     },
     useFilters,
@@ -120,7 +120,7 @@ function RatsDataTable({
             data-target=".data-download-modal"
             onClick={(e) => {
               e.preventDefault();
-              handleSearchDownload(searchParams, 'precawg');
+              handleSearchDownload(searchParams, 'pass1a06');
             }}
           >
             <span className="material-icons">file_download</span>
