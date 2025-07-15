@@ -144,7 +144,7 @@ function handleSearch(params, inputValue, scope) {
   } else if (requestParams.study === 'pass1a06') {
     // pass1a-06 search host is temporarily on precawg
     host = humanDataHost;
-  } else if (requestParams.study === 'pass1b06') {
+  } else {
     // pass1b-06 search param does not support 'study' field
     delete requestParams.study;
     host = ratDataHost;
