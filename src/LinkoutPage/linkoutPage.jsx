@@ -21,13 +21,6 @@ const featured = [
       },
       {
         protocol: 'https',
-        url: 'motrpac.org/join/volunteerHome.cfm',
-        text: 'The MoTrPAC Study is recruiting volunteers to participate in the research study. More information and details available at the MoTrPAC Consortium Site.',
-        image: `${imgSourceUrl}MoTrPAC_Recruitment_logo.png`,
-        title: 'Volunteer',
-      },
-      {
-        protocol: 'https',
         url: 'extrameta.org',
         text: 'A database comprising meta-analysis results from 43 publicly available exercise transcriptome datasets from human skeletal muscle and blood.',
         image: `${imgSourceUrl}MetaAnalysisGene.svg`,
