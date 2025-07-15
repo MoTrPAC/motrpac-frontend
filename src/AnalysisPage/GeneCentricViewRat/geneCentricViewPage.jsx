@@ -32,6 +32,8 @@ function GeneCentricView({
   const [multiSelections, setMultiSelections] = useState([]);
   const inputRef = useRef(null);
 
+  const userType = profile.user_metadata && profile.user_metadata.userType;
+
   // Function to map array of keys to each array of values for each row
   function mapKeyToValue(indexObj) {
     const newArray = [];
@@ -114,6 +116,18 @@ function GeneCentricView({
               protein, protein phosphorylation/acetylation and promoter
               methylation) for that gene over 8 weeks of training in adult rats.
             </div>
+            {userType === 'internal' && (
+              <div className="lead col-12 mt-3">
+                Go to the {' '}
+                <Link
+                  to="/search"
+                >
+                  differential abundance search page
+                </Link>{' '}
+                to explore the available data from the young adult rats acute exercise
+                and pre-COVID human sedentary adults studies.
+              </div>
+            )}
             <Tooltip anchorSelect=".timewise-definition" place="top">
               Select time-point-specific differential analytes
             </Tooltip>
