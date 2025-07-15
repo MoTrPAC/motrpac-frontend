@@ -552,7 +552,7 @@ export function SearchPage({
               downloadError={downloadError}
               downloading={downloading}
               profile={profile}
-              species={searchParams.species}
+              study={searchParams.study}
             />
           </div>
         </div>
@@ -744,7 +744,7 @@ function StudySelectButtonGroup({
 
 // Render modal message
 function ResultsDownloadLink({
-  downloadPath = '', downloadError = '', profile = {}, species = 'rat'
+  downloadPath = '', downloadError = '', profile = {}, study = 'pass1b06',
 }) {
   const dispatch = useDispatch();
 
@@ -773,7 +773,7 @@ function ResultsDownloadLink({
       ? import.meta.env.VITE_ES_PROXY_PRECAWG_HOST_DEV
       : import.meta.env.VITE_ES_PROXY_PRECAWG_HOST;
 
-  const host = species === 'human' ? humanDataHost : ratDataHost;
+  const host = study === 'pass1b06' ? ratDataHost : humanDataHost;
 
   const resultDownloadFilePath =
     downloadPath &&
@@ -805,7 +805,7 @@ function ResultsDownloadModal({
   downloadError = '',
   downloading = false,
   profile = {},
-  species = 'rat',
+  study = 'pass1b06',
 }) {
   const dispatch = useDispatch();
 
@@ -857,7 +857,7 @@ function ResultsDownloadModal({
                 downloadPath={downloadPath}
                 downloadError={downloadError}
                 profile={profile}
-                species={species}
+                study={study}
               />
             ) : (
               <div className="loading-spinner w-100 text-center my-3">
