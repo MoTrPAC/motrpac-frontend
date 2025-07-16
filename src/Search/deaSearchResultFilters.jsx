@@ -91,7 +91,7 @@ function SearchResultFilters({
     }
     if (searchParams.ktype === 'protein') {
       return assayListRat.filter((t) =>
-        t.filter_value.match(/^(prot-pr|prot-ph|prot-ac|prot-ub)$/),
+        t.filter_value.match(/^(transcript-rna-seq|epigen-atac-seq|epigen-rrbs|prot-pr|prot-ph|prot-ac|prot-ub)$/),
       );
     }
     if (searchParams.ktype === 'metab') {
