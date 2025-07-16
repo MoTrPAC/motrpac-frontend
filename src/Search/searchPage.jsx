@@ -356,6 +356,14 @@ export function SearchPage({
                   try again.
                 </div>
               ) : null}
+            {!searching && !searchResults.result && searchResults.total === 0 ? (
+              <div className="alert alert-warning">
+                  {searchResults.errors}
+                  {' '}
+                  No matches found. Please modify your search
+                  parameters and try again.
+                </div>
+              ) : null}
             {!searching
               && (searchResults.result
                 || (searchResults.errors && scope === 'filters')) ? (
