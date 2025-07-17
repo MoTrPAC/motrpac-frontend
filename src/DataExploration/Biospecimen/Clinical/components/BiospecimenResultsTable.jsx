@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useAdvancedPagination } from '../hooks/useAdvancedPagination';
 import AdvancedPagination from './AdvancedPagination';
+import roundNumbers from '../../../../lib/utils/roundNumbers';
 
 import '@styles/biospecimenSummary.scss';
 
@@ -17,7 +18,7 @@ function BiospecimenResultsTable({ data = [] }) {
   // Reset pagination when data changes (e.g., when filters change)
   useEffect(() => {
     pagination.resetPagination();
-  }, [data]);
+  }, [data, pagination.resetPagination]);
 
   if (!data || data.length === 0) {
     return (
@@ -28,27 +29,6 @@ function BiospecimenResultsTable({ data = [] }) {
     );
   }
 
-  // transform tissue code to human-readable values
-  function transformTissueCode(code) {
-    const tissueMap = {
-      'BLO': 'Blood',
-      'MUS': 'Muscle',
-      'ADI': 'Adipose',
-    };
-    return tissueMap[code] || code;
-  }
-
-  function transformTrancheCode(code) {
-    const trancheMap = {
-      'TR00': 'Tranche 0',
-      'TR01': 'Tranche 1',
-      'TR02': 'Tranche 2',
-      'TR03': 'Tranche 3',
-      'TR04': 'Tranche 4',
-    };
-    return trancheMap[code] || code;
-  }
-
   return (
     <div className="biospecimen-results-container">
       <h5 className="mb-3">
@@ -57,7 +37,7 @@ function BiospecimenResultsTable({ data = [] }) {
       </h5>
       
       {/* Pagination controls - top */}
-      <AdvancedPagination {...pagination} />
+      <AdvancedPagination {...pagination} data={data} />
       
       <div className="biospecimen-lookup-table table-responsive mt-3">
         <table className="table table-striped table-hover table-bordered">
@@ -72,7 +52,7 @@ function BiospecimenResultsTable({ data = [] }) {
               <th scope="col">Timepoint</th>
               <th scope="col">Sample Group</th>
               <th scope="col">Sex</th>
-              <th scope="col">Age</th>
+              <th scope="col">Age Group</th>
               <th scope="col">BMI</th>
               <th scope="col">CAS Received</th>
             </tr>
@@ -95,8 +75,8 @@ function BiospecimenResultsTable({ data = [] }) {
                     {specimen.sex}
                   </span>
                 </td>
-                <td>{specimen.calculatedAge}</td>
-                <td>{specimen.bmi}</td>
+                <td>{specimen.age_groups}</td>
+                <td>{roundNumbers(specimen.bmi, 1)}</td>
                 <td>
                   <span className="badge badge-success">
                     {Number(specimen.receivedCAS) === 1 ? 'Yes' : 'No'}
@@ -109,7 +89,7 @@ function BiospecimenResultsTable({ data = [] }) {
       </div>
       
       {/* Pagination controls - bottom */}
-      <AdvancedPagination {...pagination} />
+      <AdvancedPagination {...pagination} data={data} />
     </div>
   );
 }
@@ -125,10 +105,31 @@ BiospecimenResultsTable.propTypes = {
     timepoint: PropTypes.string,
     sampleGroupCode: PropTypes.string,
     sex: PropTypes.string,
-    calculatedAge: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    age_groups: PropTypes.string,
     bmi: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     receivedCAS: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   })),
 };
 
 export default BiospecimenResultsTable;
+
+// transform tissue code to human-readable values
+function transformTissueCode(code) {
+  const tissueMap = {
+    'BLO': 'Blood',
+    'MUS': 'Muscle',
+    'ADI': 'Adipose',
+  };
+  return tissueMap[code] || code;
+}
+
+function transformTrancheCode(code) {
+  const trancheMap = {
+    'TR00': 'Tranche 0',
+    'TR01': 'Tranche 1',
+    'TR02': 'Tranche 2',
+    'TR03': 'Tranche 3',
+    'TR04': 'Tranche 4',
+  };
+  return trancheMap[code] || code;
+}
