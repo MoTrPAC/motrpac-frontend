@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const AdvancedPagination = ({
+  data,
   currentPage,
   totalPages,
   totalItems,
@@ -27,7 +28,7 @@ const AdvancedPagination = ({
   // Handle jump to page
   const handleJumpToPage = (e) => {
     e.preventDefault();
-    const page = parseInt(jumpToPage);
+    const page = parseInt(jumpToPage, 10);
     if (page >= 1 && page <= totalPages) {
       goToPage(page);
       setJumpToPage('');
@@ -70,12 +71,15 @@ const AdvancedPagination = ({
           className="btn btn-secondary btn-sm"
           onClick={() => {
             // Export current page data
-            const csvData = 'data:text/csv;charset=utf-8,' + 
-              'Vial Label,Participant ID,Tranche,Randomized Group,Visit Code,Sample Group,Sex,Age,BMI,CAS Received\n';
+            const header = 'Vial Label,Participant ID,Tranche,Temp Sample Profile,Randomized Group,Visit Code,Timepoint,Tissue,Sex,Age Groups,BMI,CAS Received\n';
+            const rows = data.map(item => 
+              `${item.vial_label},${item.pid},${item.tranche},${item.tempSampProfile},${item.randomGroupCode},${item.visitcode},${item.timepoint},${item.sampleGroupCode},${item.sex},${item.age_groups},${item.bmi},${item.receivedCAS}`
+            ).join('\n');
+            const csvData = 'data:text/csv;charset=utf-8,' + header + rows;
             const encodedUri = encodeURI(csvData);
             const link = document.createElement('a');
             link.setAttribute('href', encodedUri);
-            link.setAttribute('download', `biospecimen_page_${currentPage}.csv`);
+            link.setAttribute('download', `biospecimen_data_export.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
