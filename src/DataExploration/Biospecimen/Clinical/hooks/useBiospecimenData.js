@@ -73,7 +73,7 @@ export const useBiospecimenData = () => {
         const cacheExpiry = 24 * 60 * 60 * 1000; // 24 hours
 
         if (cachedData && cachedTimestamp && 
-            Date.now() - parseInt(cachedTimestamp) < cacheExpiry) {
+            Date.now() - parseInt(cachedTimestamp, 10) < cacheExpiry) {
           setData(JSON.parse(cachedData));
           setLoading(false);
           return;
