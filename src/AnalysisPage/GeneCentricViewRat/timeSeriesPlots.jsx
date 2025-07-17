@@ -8,7 +8,7 @@ import {
   VictoryAxis,
 } from 'victory';
 import { geneSearchTimewisePlotPropType } from './sharedlib';
-import { tissueList, assayList } from '../../lib/searchFilters';
+import { tissueListRatEndurance, assayListRat } from '../../lib/searchFilters';
 import roundNumbers from '../../lib/utils/roundNumbers';
 import colors from '../../lib/colors';
 
@@ -21,7 +21,7 @@ import colors from '../../lib/colors';
 function TimeSeriesPlots({ plotData, selectedFeatures }) {
   // Convert tissue value from raw data to display value
   function transformTissueName(tissueName) {
-    const match = tissueList.find(
+    const match = tissueListRatEndurance.find(
       (filter) => filter.filter_value === tissueName
     );
     return match ? match.filter_label : tissueName;
@@ -29,7 +29,7 @@ function TimeSeriesPlots({ plotData, selectedFeatures }) {
 
   // Convert assay value from raw data to display value
   function transformAssayName(assayName) {
-    const match = assayList.find((filter) => filter.filter_value === assayName);
+    const match = assayListRat.find((filter) => filter.filter_value === assayName);
     return match ? match.filter_label : assayName;
   }
 

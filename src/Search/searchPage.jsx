@@ -9,6 +9,7 @@ import PageTitle from '../lib/ui/pageTitle';
 import TimewiseResultsTable from './timewiseTable';
 import TrainingResultsTable from './trainingResultsTable';
 import HumanResultsTable from './humanResultsTable';
+import RatsAcuteExerciseResultsTable from './ratsAcuteResultsTable';
 import SearchActions from './searchActions';
 import surveyModdalActions from '../UserSurvey/userSurveyActions';
 import SearchResultFilters from './deaSearchResultFilters';
@@ -23,6 +24,9 @@ import { metabolites } from '../data/metabolites';
 import { proteins } from '../data/proteins';
 import { humanGenes } from '../data/human_genes';
 import { humanMetabolites } from '../data/human_metabolites';
+import { ratAcuteGenes } from '../data/rat_acute_genes';
+import { ratAcuteMetabolites } from '../data/rat_acute_metabolites';
+import { ratAcuteProteins } from '../data/rat_acute_proteins';
 import DifferentialAbundanceSummary from './components/differentialAbundanceSummary';
 
 import '@styles/search.scss';
@@ -81,7 +85,8 @@ export function SearchPage({
   const timewiseResults = [];
   const trainingResults = [];
   const humanResults = [];
-  if (searchParams.species === 'rat' && searchResults.result && Object.keys(searchResults.result).length > 0) {
+  const ratAcuteExerciseResults = [];
+  if (searchParams.study === 'pass1b06' && searchResults.result && Object.keys(searchResults.result).length > 0) {
     Object.keys(searchResults.result).forEach((key) => {
       if (key.indexOf('timewise') > -1) {
         timewiseResults.push(...mapKeyToValue(searchResults.result[key]));
@@ -90,13 +95,17 @@ export function SearchPage({
       }
     });
   }
-  if (searchParams.species === 'human' && searchResults.result && Object.keys(searchResults.result).length > 0) {
+  if (searchParams.study === 'pass1a06' && searchResults.result && Object.keys(searchResults.result).length > 0) {
+    ratAcuteExerciseResults.push(...mapKeyToValue(searchResults.result));
+  }
+  if (searchParams.study === 'precawg' && searchResults.result && Object.keys(searchResults.result).length > 0) {
     humanResults.push(...mapKeyToValue(searchResults.result));
   }
 
   // get options based on selected search context
+  // for automatic suggestions in the primary search input field
   function getOptions() {
-    if (searchParams.species === 'rat') {
+    if (searchParams.study === 'pass1b06') {
       switch (searchParams.ktype) {
         case 'gene':
           return genes;
@@ -108,7 +117,19 @@ export function SearchPage({
           return [];
       }
     }
-    if (searchParams.species === 'human') {
+    if (searchParams.study === 'pass1a06') {
+      switch (searchParams.ktype) {
+        case 'gene':
+          return ratAcuteGenes;
+        case 'metab':
+          return ratAcuteMetabolites;
+        case 'protein':
+          return ratAcuteProteins;
+        default:
+          return [];
+      }
+    }
+    if (searchParams.study === 'precawg') {
       switch (searchParams.ktype) {
         case 'gene':
           return humanGenes;
@@ -123,7 +144,7 @@ export function SearchPage({
 
   // render placeholder text in primary search input field
   function renderPlaceholder() {
-    if (searchParams.species === 'human') {
+    if (searchParams.study === 'precawg') {
       if (searchParams.ktype === 'protein') {
         return 'Example: p14854, q8tep8_s76s';
       }
@@ -180,15 +201,20 @@ export function SearchPage({
     }
   };
 
-  const handleSpeciesChange = (value) => {
+  const handleStudyChange = (value) => {
     resetSearch('all');
     clearSearchTermInput();
     setMultiSelections([]);
     if (inputEl && inputEl.value && inputEl.value.length) {
       inputEl.value = '';
     }
-    // this gets called last to ensure that species param is updated
-    changeParam('species', value);
+    // Set study type and automatically determine species
+    changeParam('study', value);
+    if (value === 'precawg') {
+      changeParam('species', 'human');
+    } else {
+      changeParam('species', 'rat');
+    }
   };
 
   return (
@@ -203,7 +229,7 @@ export function SearchPage({
       <form id="searchForm" name="searchForm">
         <PageTitle title="Search differential abundance data" />
         <div className="search-content-container">
-          <DifferentialAbundanceSummary userType={userType} species={searchParams.species} />
+          <DifferentialAbundanceSummary userType={userType} species={searchParams.species} study={searchParams.study} />
           <div className="search-form-container mt-3 mb-4 border shadow-sm rounded px-4 pt-2 pb-3">
             <div className="search-summary-toggle-container row">
               <a
@@ -218,12 +244,13 @@ export function SearchPage({
               </a>
             </div>
             {userType && userType === 'internal' && (
-              <SpeciesToggleSwitch
-                onChange={handleSpeciesChange}
-                defaultSelected={searchParams.species}
+              <StudySelectButtonGroup
+                onChange={handleStudyChange}
+                defaultSelected={searchParams.study}
               />
             )}
             <div className="es-search-ui-container d-flex align-items-center w-100 mt-3 pb-2">
+
               <RadioButton
                 searchParams={searchParams}
                 changeParam={changeParam}
@@ -236,9 +263,9 @@ export function SearchPage({
               <div className="search-box-input-group d-flex align-items-center flex-grow-1">
                 <div className="input-group">
                   <div className="input-group-prepend">
-                    <span className="input-group-text material-icons">
-                      {searchParams.species === 'human' ? 'person' : 'pest_control_rodent'}
-                    </span>
+                    <div className="input-group-text search-icon">
+                      <img src={searchParams.ktype === 'gene' ? IconSet.DNA : (searchParams.ktype === 'protein' ? IconSet.Protein : IconSet.Metabolite)} alt="" />
+                    </div>
                   </div>
                   {searchParams.ktype === 'protein' && searchParams.species === 'human' ? (
                     <input
@@ -329,6 +356,14 @@ export function SearchPage({
                   try again.
                 </div>
               ) : null}
+            {!searching && !searchResults.result && searchResults.total === 0 ? (
+              <div className="alert alert-warning">
+                  {searchResults.errors}
+                  {' '}
+                  No matches found. Please modify your search
+                  parameters and try again.
+                </div>
+              ) : null}
             {!searching
               && (searchResults.result
                 || (searchResults.errors && scope === 'filters')) ? (
@@ -343,8 +378,8 @@ export function SearchPage({
                         profile={profile}
                       />
                     </div>
-                    {/* render search results for human or rat */}
-                    {searchParams.species === 'rat' && (
+                    {/* render search results for rats endurance training */}
+                    {searchParams.study === 'pass1b06' && (
                       <div className="tabbed-content col-md-9">
                         {/* nav tabs */}
                         <ul className="nav nav-tabs" id="dataTab" role="tablist">
@@ -454,7 +489,40 @@ export function SearchPage({
                         </div>
                       </div>
                     )}
-                    {searchParams.species === 'human' && (
+                    {/* render search results for rats acute exercise study */}
+                    {searchParams.study === 'pass1a06' && (
+                      <div className="rats-acute-exercise-results-content-container tabbed-content col-md-9">
+                        <div className="tab-content mt-3">
+                          {ratAcuteExerciseResults.length ? (
+                            <RatsAcuteExerciseResultsTable
+                              ratsAcuteExerciseData={ratAcuteExerciseResults}
+                              searchParams={searchParams}
+                              handleSearchDownload={handleSearchDownload}
+                            />
+                          ) : (
+                            scope === 'filters' && (
+                              <p className="mt-4">
+                                {searchResults.errors
+                                && searchResults.errors.indexOf('No results found') !== -1 ? (
+                                  <span>
+                                    No matches found for the selected filters.
+                                    Please refer to the
+                                    {' '}
+                                    <Link to="/summary">Summary Table</Link>
+                                    {' '}
+                                    for data that are available.
+                                  </span>
+                                  ) : (
+                                    searchResults.errors
+                                  )}
+                              </p>
+                            )
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    {/* render search results for pre-covid human sed adults study */}
+                    {searchParams.study === 'precawg' && (
                       <div className="human-da-results-content-container tabbed-content col-md-9">
                         <div className="tab-content mt-3">
                           {humanResults.length ? (
@@ -492,7 +560,7 @@ export function SearchPage({
               downloadError={downloadError}
               downloading={downloading}
               profile={profile}
-              species={searchParams.species}
+              study={searchParams.study}
             />
           </div>
         </div>
@@ -534,7 +602,7 @@ function RadioButton({
   setMultiSelections,
   inputEl,
 }) {
-  const ratOptions = [
+  const radioButtonOptions = [
     {
       keyType: 'gene',
       id: 'inlineRadioGene',
@@ -543,7 +611,7 @@ function RadioButton({
     {
       keyType: 'protein',
       id: 'inlineRadioProtein',
-      label: 'Protein name',
+      label: searchParams.study === 'precawg' ? 'Protein ID' : 'Protein name',
     },
     {
       keyType: 'metab',
@@ -551,29 +619,10 @@ function RadioButton({
       label: 'Metabolite name',
     },
   ];
-
-  const humanOptions = [
-    {
-      keyType: 'gene',
-      id: 'inlineRadioGene',
-      label: 'Gene symbol',
-    },
-    {
-      keyType: 'protein',
-      id: 'inlineRadioProtein',
-      label: 'Protein ID',
-    },
-    {
-      keyType: 'metab',
-      id: 'inlineRadioMetab',
-      label: 'Metabolite name',
-    },
-  ];
-
-  const radioButtons = searchParams.species === 'human' ? humanOptions : ratOptions;
 
   const handleRadioChange = (e) => {
     const selectedSpecis = searchParams.species;
+    const selectedStudy = searchParams.study;
     resetSearch('all');
     clearInput();
     setMultiSelections([]);
@@ -582,11 +631,12 @@ function RadioButton({
       inputEl.value = '';
     }
     changeParam('species', selectedSpecis);
+    changeParam('study', selectedStudy);
   };
 
   return (
     <div className="search-context">
-      {radioButtons.map((item) => (
+      {radioButtonOptions.map((item) => (
         <RadioButtonComponent
           key={item.id}
           ktype={ktype}
@@ -600,7 +650,7 @@ function RadioButton({
   );
 }
 
-function PrimaryOmicsFilter({ omics, toggleOmics }) {
+function PrimaryOmicsFilter({ omics = 'all', toggleOmics }) {
   const omicsDictionary = {
     all: 'All omics',
     epigenomics: 'Epigenomics',
@@ -648,12 +698,10 @@ function PrimaryOmicsFilter({ omics, toggleOmics }) {
   );
 }
 
-// Render species selection filter
-function SpeciesToggleSwitch({
+// Render study selection button group
+function StudySelectButtonGroup({
   onChange,
-  defaultSelected = 'rat',
-  ratLabel = 'Rat',
-  humanLabel = 'Human',
+  defaultSelected = 'pass1b06',
   disabled = false,
 }) {
   const [selected, setSelected] = useState(defaultSelected);
@@ -662,7 +710,7 @@ function SpeciesToggleSwitch({
     setSelected(defaultSelected);
   }, [defaultSelected]);
 
-  const handleToggle = (value) => {
+  const handleSelect = (value) => {
     if (disabled) return;
 
     setSelected(value);
@@ -671,31 +719,41 @@ function SpeciesToggleSwitch({
     }
   };
 
+  const studyOptions = [
+    { value: 'pass1b06', label: 'Endurance Trained Young Adult Rats' },
+    { value: 'pass1a06', label: 'Acute Exercise Young Adult Rats' },
+    { value: 'precawg', label: 'Pre-COVID Human Sedentary Adults' }
+  ];
+
   return (
-    <div className={`slide-toggle-container row mt-2 ${disabled ? 'disabled' : ''}`}>
-      <div className="slide-toggle-switch mx-auto">
-        <div
-          className={`slide-toggle-option ${selected === 'rat' ? 'selected' : ''}`}
-          onClick={() => handleToggle('rat')}
-        >
-          {ratLabel}
+    <div className="search-study-select-container row">
+      <div className="col-12 d-flex justify-content-center">
+        <div className="btn-group" role="group" aria-label="Study selection">
+          {studyOptions.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              className={`d-flex align-items-center btn ${selected === option.value ? 'active' : ''}`}
+              onClick={() => handleSelect(option.value)}
+              disabled={disabled}
+            >
+              <span className="btn-icon material-icons mr-1">
+                {option.value === 'precawg' ? 'person' : 'pest_control_rodent'}
+              </span>
+              <span className="btn-label">{option.label}</span>
+            </button>
+          ))}
         </div>
-        <div
-          className={`slide-toggle-option ${selected === 'human' ? 'selected' : ''}`}
-          onClick={() => handleToggle('human')}
-        >
-          {humanLabel}
-        </div>
-        <div
-          className={`slide-toggle-slider ${selected === 'human' ? 'right' : 'left'}`}
-        />
       </div>
     </div>
   );
 }
 
+
 // Render modal message
-function ResultsDownloadLink({ downloadPath, downloadError, profile, species }) {
+function ResultsDownloadLink({
+  downloadPath = '', downloadError = '', profile = {}, study = 'pass1b06',
+}) {
   const dispatch = useDispatch();
 
   // track event when user clicks download link
@@ -723,7 +781,7 @@ function ResultsDownloadLink({ downloadPath, downloadError, profile, species }) 
       ? import.meta.env.VITE_ES_PROXY_PRECAWG_HOST_DEV
       : import.meta.env.VITE_ES_PROXY_PRECAWG_HOST;
 
-  const host = species === 'human' ? humanDataHost : ratDataHost;
+  const host = study === 'pass1b06' ? ratDataHost : humanDataHost;
 
   const resultDownloadFilePath =
     downloadPath &&
@@ -751,11 +809,11 @@ function ResultsDownloadLink({ downloadPath, downloadError, profile, species }) 
 
 // Render modal
 function ResultsDownloadModal({
-  downloadPath,
-  downloadError,
-  downloading,
-  profile,
-  species,
+  downloadPath = '',
+  downloadError = '',
+  downloading = false,
+  profile = {},
+  study = 'pass1b06',
 }) {
   const dispatch = useDispatch();
 
@@ -807,7 +865,7 @@ function ResultsDownloadModal({
                 downloadPath={downloadPath}
                 downloadError={downloadError}
                 profile={profile}
-                species={species}
+                study={study}
               />
             ) : (
               <div className="loading-spinner w-100 text-center my-3">

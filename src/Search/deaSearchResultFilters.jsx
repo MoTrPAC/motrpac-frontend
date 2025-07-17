@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  commonSearchFiltersRat,
-  commonSearchFiltersHuman,
+  sexList,
   rangeSearchFilters,
-  tissueList,
-  assayList,
+  tissueListRatEndurance,
+  tissueListRatAcute,
   tissueListHuman,
+  assayListRat,
   assayListHuman,
+  timepointListRatEndurance,
+  timepointListRatAcute,
+  timepointListHuman,
 } from '../lib/searchFilters';
 import { searchParamsPropType } from './sharedlib';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
@@ -22,70 +25,103 @@ function SearchResultFilters({
 }) {
   const [inputError, setInputError] = useState(false);
 
-  const commonSearchFilters = searchParams.species === 'rat' ? commonSearchFiltersRat : commonSearchFiltersHuman;
-
   // FIXME - this is a hack to get the search filters such as tissue and assay
   // to render accordingly to the ktype (gene, protein, metabolite)
   function customizeTissueList() {
-    if (searchParams.species === 'rat' && searchParams.ktype === 'protein') {
+    if (searchParams.study === 'precawg') {
+      return tissueListHuman;
+    }
+
+    // customize tissues if species is rat
+    const tissueList = searchParams.study === 'pass1b06' ? tissueListRatEndurance : tissueListRatAcute;
+    // plasma is not available for get data in rats
+    if (searchParams.ktype === 'gene') {
+      return tissueList.filter((t) =>
+        !t.filter_value.match(/^(plasma)$/),
+      );
+    }
+    // only keep tissues available for proteomics in rats
+    if (searchParams.ktype === 'protein') {
       return tissueList.filter((t) =>
         t.filter_value.match(
           /^(cortex|gastrocnemius|heart|kidney|lung|liver|white adipose)$/,
         ),
       );
     }
-    if (searchParams.species === 'rat' && searchParams.ktype === 'metab') {
+    // blood rna is not available for metabolomics in rats
+    if (searchParams.ktype === 'metab') {
       return tissueList.filter((t) => t.filter_value !== 'blood rna');
     }
-    if (searchParams.species === 'human') {
-      return tissueListHuman;
-    }
+    
     return tissueList;
   }
 
   function customizeAssayList() {
-    if (searchParams.species === 'rat' && searchParams.ktype === 'gene') {
-      return assayList.filter((t) =>
+    // customize assays if species is human
+    if (searchParams.study === 'precawg') {
+      if (searchParams.ktype === 'gene') {
+        return assayListHuman.filter((t) =>
+          t.filter_value.match(
+            /^(transcript-rna-seq|prot-pr|prot-ph|prot-ol)$/,
+          ),
+        );
+      }
+      if (searchParams.ktype === 'protein') {
+        return assayListHuman.filter((t) =>
+          t.filter_value.match(/^(prot-pr|prot-ph|prot-ol)$/),
+        );
+      }
+      if (searchParams.ktype === 'metab') {
+        return assayListHuman.filter(
+          (t) =>
+            !t.filter_value.match(
+              /^(transcript-rna-seq|prot-pr|prot-ph|prot-ol)$/,
+            )
+        );
+      }
+      return assayListHuman;
+    }
+    // customize assays if species is rat
+    if (searchParams.ktype === 'gene') {
+      return assayListRat.filter((t) =>
         t.filter_value.match(
           /^(transcript-rna-seq|epigen-atac-seq|epigen-rrbs|immunoassay|prot-pr|prot-ph|prot-ac|prot-ub)$/,
         ),
       );
     }
-    if (searchParams.species === 'rat' && searchParams.ktype === 'protein') {
-      return assayList.filter((t) =>
-        t.filter_value.match(/^(prot-pr|prot-ph|prot-ac|prot-ub)$/),
+    if (searchParams.ktype === 'protein') {
+      return assayListRat.filter((t) =>
+        t.filter_value.match(/^(transcript-rna-seq|epigen-atac-seq|epigen-rrbs|prot-pr|prot-ph|prot-ac|prot-ub)$/),
       );
     }
-    if (searchParams.species === 'rat' && searchParams.ktype === 'metab') {
-      return assayList.filter(
+    if (searchParams.ktype === 'metab') {
+      return assayListRat.filter(
         (t) =>
           !t.filter_value.match(
             /^(transcript-rna-seq|epigen-atac-seq|epigen-rrbs|epigen-methylcap-seq|immunoassay|prot-pr|prot-ph|prot-ac|prot-ub|prot-ub-protein-corrected)$/,
           )
       );
     }
-    if (searchParams.species === 'human' && searchParams.ktype === 'gene') {
-      return assayListHuman.filter((t) =>
-        t.filter_value.match(
-          /^(transcript-rna-seq|prot-pr|prot-ph|prot-ol)$/,
-        ),
-      );
-    }
-    if (searchParams.species === 'human' && searchParams.ktype === 'protein') {
-      return assayListHuman.filter((t) =>
-        t.filter_value.match(/^(prot-pr|prot-ph|prot-ol)$/),
-      );
-    }
-    if (searchParams.species === 'human' && searchParams.ktype === 'metab') {
-      return assayListHuman.filter(
-        (t) =>
-          !t.filter_value.match(
-            /^(transcript-rna-seq|prot-pr|prot-ph|prot-ol)$/,
-          )
-      );
-    }
-    return assayList;
+    return assayListRat;
   }
+
+  const commonSearchFilters = [
+    {
+      keyName: 'tissue',
+      name: 'Tissue',
+      filters: searchParams.study === 'precawg' ? tissueListHuman : (searchParams.study === 'pass1b06' ? tissueListRatEndurance : tissueListRatAcute),
+    },
+    {
+      keyName: 'assay',
+      name: 'Assay',
+      filters: searchParams.study === 'precawg' ? assayListHuman : assayListRat,
+    },
+    {
+      keyName: searchParams.study === 'pass1b06' ? 'comparison_group' : 'contrast1_timepoint',
+      name: 'Timepoint',
+      filters: searchParams.study === 'precawg' ? timepointListHuman : (searchParams.study === 'pass1b06' ? timepointListRatEndurance : timepointListRatAcute),
+    },
+  ];
 
   commonSearchFilters.find(
     (f) => f.keyName === 'tissue'
@@ -94,6 +130,16 @@ function SearchResultFilters({
   commonSearchFilters.find(
     (f) => f.keyName === 'assay'
   ).filters = customizeAssayList();
+
+  // if species is rat, append sex filter
+  const sexFilter = {
+    keyName: 'sex',
+    name: 'Sex',
+    filters: sexList,
+  };
+  if (searchParams.study !== 'precawg') {
+    commonSearchFilters.push(sexFilter);
+  }
 
   const commonSearchResultFilters = commonSearchFilters.map((item) => (
     <div key={item.name} className="card filter-module mb-3">

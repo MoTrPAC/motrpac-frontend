@@ -17,6 +17,7 @@ export const defaultSearchState = {
     keys: [],
     omics: 'all',
     species: 'rat',
+    study: 'pass1b06',
     analysis: 'all',
     filters: {
       tissue: [],
@@ -48,13 +49,14 @@ export const defaultSearchState = {
       'contrast1_randomGroupCode',
       'contrast1_timepoint',
       'contrast_type',
+      'contrast',
     ],
     unique_fields: ['tissue', 'assay', 'sex', 'comparison_group', 'contrast1_timepoint'],
     size: 10000,
     start: 0,
     save: false,
-    convert_assay_code: 1,
-    convert_tissue_code: 1,
+    convert_assay_code: 0,
+    convert_tissue_code: 0,
   },
   scope: 'all',
   searching: false,
@@ -126,6 +128,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         ktype,
         keys,
         species,
+        study,
         omics,
         analysis,
         filters,
@@ -141,6 +144,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
           ktype,
           keys,
           species,
+          study,
           omics,
           analysis,
           filters,
@@ -150,8 +154,8 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
           start,
           debug: true,
           save: false,
-          convert_assay_code: 1,
-          convert_tissue_code: 1,
+          convert_assay_code: 0,
+          convert_tissue_code: 0,
         },
         scope: action.scope,
         searching: true,
@@ -208,6 +212,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       const defaultParams = { ...defaultSearchState.searchParams };
       defaultParams.keys = [];
       defaultParams.species = 'rat';
+      defaultParams.study = 'pass1b06';
       defaultParams.filters = {
         tissue: [],
         assay: [],

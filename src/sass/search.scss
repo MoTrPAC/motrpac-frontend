@@ -73,10 +73,11 @@
 
     .search-box-input-group {
       .input-group-prepend {
-        .material-icons {
-          color: colors.$stanford-black;
-          font-size: 1.75rem;
-          line-height: 0;
+        .input-group-text {
+          img {
+            height: 1.25rem;
+            width: auto;
+          }
         }
       }
       .rbt {
@@ -324,62 +325,28 @@
   }
 }
 
-.slide-toggle-container {
-  margin: 0 0 25px 0;
-}
+.search-study-select-container {
+  margin-top: 1em;
+  margin-bottom: 2.25em;
 
-.slide-toggle-switch {
-  display: flex;
-  position: relative;
-  background-color: #f1f1f1;
-  border-radius: 28px;
-  width: 200px;
-  height: 40px;
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+  .btn {
+    border: solid 1px #cdcdcd;
+    background-color: #efefef;
+    border-radius: 6px;
+    color: #666;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
 
-.slide-toggle-option {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 2;
-  transition: color 0.3s;
-  user-select: none;
-  color: #777;
-  font-weight: 500;
-}
+    &:hover {
+      background-color: #dfdfdf;
+    }
 
-.slide-toggle-option.selected {
-  color: #fff;
-}
-
-.slide-toggle-slider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  border-radius: 25px;
-  transition: transform 0.3s ease;
-  background: -webkit-linear-gradient(45deg, #a64d79, #1c4587);
-  -webkit-background-clip: border-box;
-  -webkit-text-fill-color: transparent;
-}
-
-.slide-toggle-slider.right {
-  transform: translateX(100%);
-}
-
-.slide-toggle-container.disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.slide-toggle-container.disabled .slide-toggle-option {
-  cursor: not-allowed;
+    &.active {
+      background: -webkit-linear-gradient(45deg, #a64d79, #1c4587);
+      -webkit-background-clip: border-box;
+      color: #fff;
+    }
+  }
 }
 
 .modal.fade {

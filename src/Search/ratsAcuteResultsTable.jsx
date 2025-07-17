@@ -9,10 +9,10 @@ import {
 } from 'react-table';
 import {
   searchParamsPropType,
-  trainingResultsTablePropType,
-  trainingTableColumns,
-  proteinTrainingTableColumns,
-  metabTrainingTableColumns,
+  ratsAcuteResultsTablePropType,
+  geneRatsAcuteTableColumns,
+  metabRatsAcuteTableColumns,
+  proteinRatsAcuteTableColumns,
   PageIndex,
   PageSize,
   PageNavigationControl,
@@ -24,8 +24,8 @@ import {
  *
  * @returns {object} The data qc status table component
  */
-function TrainingResultsTable({
-  trainingData,
+function RatsAcuteExerciseResultsTable({
+  ratsAcuteExerciseData,
   searchParams,
   handleSearchDownload,
 }) {
@@ -33,16 +33,16 @@ function TrainingResultsTable({
   const columns = useMemo(() => {
     switch (searchParams.ktype) {
       case 'metab':
-        return metabTrainingTableColumns;
+        return metabRatsAcuteTableColumns;
       case 'protein':
-        return proteinTrainingTableColumns;
+        return proteinRatsAcuteTableColumns;
       default:
-        return trainingTableColumns;
+        return geneRatsAcuteTableColumns;
     }
   }, [searchParams.ktype]);
-  const data = useMemo(() => transformData(trainingData), [trainingData]);
+  const data = useMemo(() => transformData(ratsAcuteExerciseData), [ratsAcuteExerciseData]);
   return (
-    <TrainingDataTable
+    <RatsDataTable
       columns={columns}
       data={data}
       searchParams={searchParams}
@@ -58,7 +58,7 @@ function TrainingResultsTable({
  *
  * @returns {object} JSX representation of table on data qc status
  */
-function TrainingDataTable({
+function RatsDataTable({
   columns,
   data,
   searchParams,
@@ -120,7 +120,7 @@ function TrainingDataTable({
             data-target=".data-download-modal"
             onClick={(e) => {
               e.preventDefault();
-              handleSearchDownload(searchParams, 'training');
+              handleSearchDownload(searchParams, 'pass1a06');
             }}
           >
             <span className="material-icons">file_download</span>
@@ -214,26 +214,26 @@ function TrainingDataTable({
   );
 }
 
-TrainingResultsTable.propTypes = {
-  trainingData: PropTypes.arrayOf(
-    PropTypes.shape({ ...trainingResultsTablePropType })
+RatsAcuteExerciseResultsTable.propTypes = {
+  ratsAcuteExerciseData: PropTypes.arrayOf(
+    PropTypes.shape({ ...ratsAcuteResultsTablePropType }),
   ).isRequired,
   searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
   handleSearchDownload: PropTypes.func.isRequired,
 };
 
-TrainingDataTable.propTypes = {
+RatsDataTable.propTypes = {
   columns: PropTypes.arrayOf(
     PropTypes.shape({
       Header: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
         .isRequired,
       accessor: PropTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
-  data: PropTypes.arrayOf(PropTypes.shape({ ...trainingResultsTablePropType }))
+  data: PropTypes.arrayOf(PropTypes.shape({ ...ratsAcuteResultsTablePropType }))
     .isRequired,
   searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
   handleSearchDownload: PropTypes.func.isRequired,
 };
 
-export default TrainingResultsTable;
+export default RatsAcuteExerciseResultsTable;

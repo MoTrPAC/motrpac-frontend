@@ -15,11 +15,6 @@ const teamInfo = {
   ],
   Staff: [
     {
-      name: 'Jeff Christle, Ph.D.',
-      title: 'Clinical Exercise Physiologist',
-      image: `${imgSourceUrl}Jeff.jpg`,
-    },
-    {
       name: 'Malene Lindholm, Ph.D.',
       title: 'Co-Investigator',
       image: `${imgSourceUrl}Malene.jpg`,
@@ -35,9 +30,34 @@ const teamInfo = {
       image: `${imgSourceUrl}DavidJM.png`,
     },
     {
+      name: 'Jimmy Zhen',
+      title: 'Software Developer',
+      image: `${imgSourceUrl}Jimmy.jpg`,
+    },
+    {
+      name: 'Jay Yu',
+      title: 'Software Developer',
+      image: `${imgSourceUrl}Jay.jpg`,
+    },
+    {
+      name: 'Jeff Christle, Ph.D.',
+      title: 'Clinical Exercise Physiologist',
+      image: `${imgSourceUrl}Jeff.jpg`,
+    },
+    {
       name: 'Shruti Marwaha, Ph.D.',
       title: 'Research Engineer',
       image: `${imgSourceUrl}Shruti.jpg`,
+    },
+    {
+      name: 'Jeren Olsen',
+      title: 'Bioinformatics Engineer',
+      image: `${imgSourceUrl}Jeren.jpg`,
+    },
+    {
+      name: 'Alex Miller',
+      title: 'Bioinformatics Engineer',
+      image: `${imgSourceUrl}Alex.jpg`,
     },
     {
       name: 'David Amar, Ph.D.',
@@ -48,16 +68,6 @@ const teamInfo = {
       name: 'Mihir Samdarshi',
       title: 'Consultant',
       image: `${imgSourceUrl}Mihir.jpg`,
-    },
-    {
-      name: 'Jeren Olsen',
-      title: 'Bioinformatics Engineer',
-      image: `${imgSourceUrl}Jeren.jpg`,
-    },
-    {
-      name: 'Laurens van de Wiel, Ph.D.',
-      title: 'Postdoctoral Scholar',
-      image: `${imgSourceUrl}Laurens.jpg`,
     },
     {
       name: 'Samuel Montalvo Hernandez, Ph.D.',
@@ -80,14 +90,9 @@ const teamInfo = {
       image: `${imgSourceUrl}Nik.jpg`,
     },
     {
-      name: 'Jimmy Zhen',
-      title: 'Software Developer',
-      image: `${imgSourceUrl}Jimmy.jpg`,
-    },
-    {
-      name: 'Jay Yu',
-      title: 'Software Developer',
-      image: `${imgSourceUrl}Jay.jpg`,
+      name: 'Laurens van de Wiel, Ph.D.',
+      title: 'Postdoctoral Scholar',
+      image: `${imgSourceUrl}Laurens.jpg`,
     },
     {
       name: 'Terra Coakley',

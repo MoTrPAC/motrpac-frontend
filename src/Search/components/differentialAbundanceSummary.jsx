@@ -6,13 +6,13 @@ function DifferentialAbundanceSummary({ userType = '', species = 'rat' }) {
   return (
     <div className="search-summary-container row mb-3 collapse show" id="collapseDifferentialAbundanceSummary">
       <div className="lead col-12">
-        {userType === 'internal' ? (
+        {userType && userType === 'internal' ? (
           <span>
-            Search by gene symbol, protein name (for rats) or metabolite name to
-            examine the timewise endurance training response over 8 weeks of
-            training in young adult rats, or the pre-COVID human sedentary adults
-            randomized to endurance exercise training (EE), resistance exercise
-            training (RE), or no-exercise control groups. To ensure the best
+            Search by gene, protein or metabolite to examine the timewise endurance
+            training response over 8 weeks of training or the training responses to
+            acute exercise intervention in young adult rats, or the pre-COVID human
+            sedentary adults randomized to endurance exercise training (EE), resistance
+            exercise training (RE), or no-exercise control groups. To ensure the best
             search results, please use the following guidelines:
           </span>
         ) : (
@@ -51,7 +51,7 @@ function DifferentialAbundanceSummary({ userType = '', species = 'rat' }) {
           </li>
         </ol>
         <p>
-          The endurance trained young adult rats dataset is made available
+          The endurance trained young adult rats dataset is available to the community
           under the
           {' '}
           <Link to="/license">CC BY 4.0 license</Link>

@@ -125,6 +125,26 @@ function FeatureLinks({
       title: 'MoTrPAC Collab',
       eventHandler: null,
     },
+    {
+      name: 'motrpac-data-status-overview',
+      route:
+        'https://docs.google.com/spreadsheets/d/1f8A5zlQyzNfSJP33t0dZvdT2jTlBIcdaBEF0c197Mtw/edit?gid=1293449257#gid=1293449257',
+      description:
+        'A document exhibiting the data milestones, timelines and statuses pertaining to the MoTrPAC studies.',
+      icon: 'view_timeline',
+      title: 'Data Status Overview',
+      eventHandler: null,
+    },
+    {
+      name: 'motrpac-consortium-and-external-data-releases-timing',
+      route:
+        'https://docs.google.com/document/d/1zqdXGvtsBdBZlQ1Kdzeap3Nt5twGbqibffu20Ce5pM4/edit?pli=1&tab=t.0',
+      description:
+        'A document consisting of both consortium and external data release schedules pertaining to the MoTrPAC studies.',
+      icon: 'calendar_month',
+      title: 'Consortium and External Data Releases Timing',
+      eventHandler: null,
+    },
   ];
 
   const featuresToRender = userType === 'internal' ? features : features.slice(0, 5);
