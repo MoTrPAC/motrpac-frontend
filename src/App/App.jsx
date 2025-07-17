@@ -68,6 +68,9 @@ const DataDeposition = lazy(() => import('../DataDeposition/dataDepositionPage')
 const StudyAssays = lazy(() => import('../MainStudy/studyAssays'));
 const ExerciseBenefits = lazy(() => import('../MainStudy/exerciseBenefits'));
 const Phenotype = lazy(() => import('../TechnicalGuides/phenotype'));
+const BiospecimenSummary = lazy(
+  () => import('../DataExploration/Biospecimen/Clinical/summaryStatistics'),
+);
 
 function App({ history = History }) {
   return (
@@ -134,6 +137,10 @@ function App({ history = History }) {
                     path="/dashboard"
                     exact
                     element={<DashboardConnected/>}
+                  />
+                  <Route
+                    path="/biospecimen-summary"
+                    element={<BiospecimenSummary/>}
                   />
                 </Route>
                 <Route

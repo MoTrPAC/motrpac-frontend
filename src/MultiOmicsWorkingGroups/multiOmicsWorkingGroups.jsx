@@ -17,7 +17,7 @@ function MultiOmicsWorkingGroups() {
     userProfile.user_metadata && userProfile.user_metadata.userType;
 
   if (userType !== 'internal') {
-    return <Navigate to="/search" />;
+    return <Navigate to="/dashboard" />;
   }
 
   return (
