@@ -145,6 +145,16 @@ function FeatureLinks({
       title: 'Consortium and External Data Releases Timing',
       eventHandler: null,
     },
+    {
+      name: 'clinical-biospecimen-summary',
+      route:
+        'biospecimen-summary',
+      description:
+        'Look up biospecimen data in the pre-COVID human sedentary adults and the human main highly active adults studies.',
+      icon: 'assessment',
+      title: 'Clinical Biospecimen Lookup',
+      eventHandler: null,
+    },
   ];
 
   const featuresToRender = userType === 'internal' ? features : features.slice(0, 5);
