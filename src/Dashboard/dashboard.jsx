@@ -39,7 +39,7 @@ export function Dashboard({
             <div className="row">
               <div className="col-md-6 lead d-flex align-items-start">
                 <div className="data-release-icon mr-2">
-                  <span class="material-icons">
+                  <span className="material-icons">
                     person
                   </span>
                 </div>
@@ -66,7 +66,7 @@ export function Dashboard({
               </div>
               <div className="col-md-6 lead d-flex align-items-start">
                 <div className="data-release-icon mr-2">
-                  <span class="material-icons">
+                  <span className="material-icons">
                     pest_control_rodent
                   </span>
                 </div>
