@@ -4,7 +4,8 @@ import { Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Dropdown from './components/form/dropdown';
 import BiospecimenResultsTable from './components/BiospecimenResultsTable';
-import { useBiospecimenData, useFilteredBiospecimenData } from './hooks/useBiospecimenData';
+import SampleOverlapHeatmap from './components/SampleOverlapHeatmap';
+import { useBiospecimenData } from './hooks/useBiospecimenData';
 
 // Loading component
 const DataLoadingIndicator = ({ progress }) => (
@@ -47,17 +48,32 @@ const dropdownOptions = {
     { value: 'ATHResist', label: 'Highly Active Resistance' },
   ],
   collectionVisit: [
-    { value: 'ADU_BAS', label: 'Adult Baseline Biospecimen Assessment Sequence' },
-    { value: 'ADU_PAS', label: 'Adult Post Intervention Biospecimen Assessment Sequence' },
-    { value: 'PED_BAS', label: 'Pediatric Baseline Biospecimen Assessment Sequence' },
-    { value: 'PED_PAS', label: 'Pediatric Post Intervention Biospecimen Assessment Sequence' },
+    {
+      value: 'ADU_BAS',
+      label: 'Adult Baseline Biospecimen Assessment Sequence',
+    },
+    {
+      value: 'ADU_PAS',
+      label: 'Adult Post Intervention Biospecimen Assessment Sequence',
+    },
+    {
+      value: 'PED_BAS',
+      label: 'Pediatric Baseline Biospecimen Assessment Sequence',
+    },
+    {
+      value: 'PED_PAS',
+      label: 'Pediatric Post Intervention Biospecimen Assessment Sequence',
+    },
   ],
   timepoint: [
     { value: 'pre_exercise', label: 'Pre-exercise or Rest 1' },
     { value: 'during_20_min', label: '20 minutes during exercise' },
     { value: 'during_40_min', label: '40 minutes during exercise' },
     { value: 'post_10_min', label: '10 minutes post-exercise' },
-    { value: 'post_15_30_45_min', label: '15, 30, or 45 minutes post-exercise' },
+    {
+      value: 'post_15_30_45_min',
+      label: '15, 30, or 45 minutes post-exercise',
+    },
     { value: 'post_3.5_4_hr', label: '3.5 or 4 hours post-exercise' },
     { value: 'post_24_hr', label: '24 hours post-exercise' },
   ],
@@ -74,11 +90,12 @@ const dropdownOptions = {
 
 function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
   // get states from redux store
-    const userProfile = useSelector((state) => state.auth.profile);
-    const userType = userProfile.user_metadata && userProfile.user_metadata.userType;
-    if (userType !== 'internal') {
-      return <Navigate to="/dashboard" />;
-    }
+  const userProfile = useSelector((state) => state.auth.profile);
+  const userType =
+    userProfile.user_metadata && userProfile.user_metadata.userType;
+  if (userType !== 'internal') {
+    return <Navigate to="/dashboard" />;
+  }
 
   // Local state for biospecimen filters
   const [biospecimenFilters, setBiospecimenFilters] = useState({
@@ -90,18 +107,21 @@ function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
     sex: '',
   });
 
-  // Load biospecimen data with optimized hook
-  const { data: biospecimenData, loading, error, progress } = useBiospecimenData();
-  
-  // Get filtered data with memoization
-  const filteredData = useFilteredBiospecimenData(biospecimenData, biospecimenFilters);
+  // Load biospecimen data with API-based filtering
+  const {
+    data: filteredData,
+    loading,
+    error,
+    progress,
+    hasActiveFilters,
+    refresh,
+  } = useBiospecimenData(biospecimenFilters);
 
-  // Check if any filter has a value
-  const hasActiveFilters = Object.values(biospecimenFilters).some(value => value && value !== '');
+  // hasActiveFilters is now provided by the hook
 
   // Handle filter changes
   const handleFilterChange = (filterType, value) => {
-    setBiospecimenFilters(prev => ({
+    setBiospecimenFilters((prev) => ({
       ...prev,
       [filterType]: value,
     }));
@@ -131,7 +151,8 @@ function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
         <span>Biospecimen Lookup</span>
       </h1>
       <div className="lead mb-4">
-        Use this tool to look up biospecimen data curated from pre-COVID human sedentary adults and the highly active adults in the human main study.
+        Use this tool to look up biospecimen data curated from pre-COVID human
+        sedentary adults and the highly active adults in the human main study.
       </div>
       <div className="biospecimen-lookup-container border shadow-sm px-4 pt-3 pb-2 mb-4">
         {/* Show loading indicator while data is being loaded */}
@@ -142,14 +163,24 @@ function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
           <div className="alert alert-danger" role="alert">
             <h5 className="alert-heading">Data Loading Error</h5>
             <p>{error}</p>
-            <button className="btn btn-outline-danger" onClick={() => window.location.reload()}>
-              Retry
-            </button>
+            <div className="d-flex gap-2">
+              <button className="btn btn-outline-danger" onClick={refresh}>
+                <i className="bi bi-arrow-clockwise mr-1" />
+                Retry
+              </button>
+              <button
+                className="btn btn-outline-secondary"
+                onClick={handleResetFilters}
+              >
+                <i className="bi bi-x-circle mr-1" />
+                Clear Filters
+              </button>
+            </div>
           </div>
         )}
 
-        {/* Show filters and table only when data is loaded */}
-        {!loading && !error && biospecimenData.length > 0 && (
+        {/* Show filters and table only when not loading and no error */}
+        {!loading && !error && (
           <>
             <div className="lookup-form-container">
               <div className="form-row">
@@ -169,7 +200,9 @@ function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
                     label="Randomized Group"
                     options={dropdownOptions.randomizedGroup}
                     selectedOption={biospecimenFilters.randomizedGroup || ''}
-                    onChange={(value) => handleFilterChange('randomizedGroup', value)}
+                    onChange={(value) =>
+                      handleFilterChange('randomizedGroup', value)
+                    }
                     placeholder="Select group"
                   />
                 </div>
@@ -179,7 +212,9 @@ function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
                     label="Collection Visit"
                     options={dropdownOptions.collectionVisit}
                     selectedOption={biospecimenFilters.collectionVisit || ''}
-                    onChange={(value) => handleFilterChange('collectionVisit', value)}
+                    onChange={(value) =>
+                      handleFilterChange('collectionVisit', value)
+                    }
                     placeholder="Select visit"
                   />
                 </div>
@@ -215,8 +250,8 @@ function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
                 </div>
               </div>
               <div className="d-flex justify-content-end mt-3">
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="btn btn-secondary"
                   onClick={handleResetFilters}
                   disabled={!hasActiveFilters}
@@ -226,7 +261,18 @@ function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
                 </button>
               </div>
             </div>
-        
+
+            {/* Visualization section */}
+            {hasActiveFilters && (
+              <div className="mt-4">
+                <SampleOverlapHeatmap
+                  data={filteredData}
+                  loading={loading}
+                  error={error}
+                />
+              </div>
+            )}
+
             {/* Results section */}
             {hasActiveFilters && (
               <div className="mt-4">
@@ -235,11 +281,39 @@ function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
             )}
 
             {/* Data info */}
-            <div className="mt-3 text-muted small">
-              <i className="bi bi-info-circle mr-1" />
-              Total {biospecimenData.length.toLocaleString()} biospecimen records
+            <div className="mt-3 text-muted small d-flex justify-content-between align-items-center">
+              <div>
+                <i className="bi bi-info-circle mr-1" />
+                {hasActiveFilters
+                  ? `${filteredData.length.toLocaleString()} biospecimen records found`
+                  : 'Apply filters to query biospecimen data'}
+              </div>
+              {hasActiveFilters && (
+                <button
+                  className="btn btn-link btn-sm text-muted p-0"
+                  onClick={refresh}
+                  title="Refresh data"
+                >
+                  <i className="bi bi-arrow-clockwise" />
+                </button>
+              )}
             </div>
           </>
+        )}
+
+        {/* Show message when no filters are applied */}
+        {!loading && !error && !hasActiveFilters && (
+          <div className="text-center py-5">
+            <i
+              className="bi bi-funnel text-muted"
+              style={{ fontSize: '3rem' }}
+            />
+            <h5 className="text-muted mt-3">Apply Filters to Query Data</h5>
+            <p className="text-muted">
+              Select one or more filter criteria above to search the biospecimen
+              database.
+            </p>
+          </div>
         )}
       </div>
     </div>

@@ -1,169 +1,199 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { biospecimenService } from '../../../../lib/api/biospecimenService';
 
-// Web Worker for parsing TSV data
-const createTSVWorker = () => {
-  const workerCode = `
-    self.onmessage = function(e) {
-      const { tsvText } = e.data;
-      
-      try {
-        const lines = tsvText.trim().split('\\n');
-        const headers = lines[0].split('\\t');
-        const data = [];
-        
-        // Parse rows in chunks to avoid blocking
-        const parseChunk = (startIndex, endIndex) => {
-          for (let i = startIndex; i < endIndex && i < lines.length; i++) {
-            const values = lines[i].split('\\t');
-            const row = {};
-            
-            headers.forEach((header, index) => {
-              row[header] = values[index] || '';
-            });
-            
-            data.push(row);
-          }
-        };
-        
-        // Process in chunks of 1000 rows
-        const chunkSize = 1000;
-        for (let i = 1; i < lines.length; i += chunkSize) {
-          parseChunk(i, i + chunkSize);
-          
-          // Send progress updates
-          self.postMessage({
-            type: 'progress',
-            processed: Math.min(i + chunkSize - 1, lines.length - 1),
-            total: lines.length - 1
-          });
-        }
-        
-        self.postMessage({
-          type: 'complete',
-          data: data
-        });
-      } catch (error) {
-        self.postMessage({
-          type: 'error',
-          error: error.message
-        });
-      }
+// Debounce utility
+const useDebounce = (value, delay) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
     };
-  `;
-  
-  return new Worker(URL.createObjectURL(new Blob([workerCode], { type: 'application/javascript' })));
+  }, [value, delay]);
+
+  return debouncedValue;
 };
 
-export const useBiospecimenData = () => {
+// Cache key generator
+const generateCacheKey = (filters) => {
+  const sortedFilters = Object.keys(filters)
+    .sort()
+    .reduce((sorted, key) => {
+      if (filters[key] && filters[key] !== '') {
+        sorted[key] = filters[key];
+      }
+      return sorted;
+    }, {});
+
+  return 'biospecimen-' + JSON.stringify(sortedFilters);
+};
+
+export const useBiospecimenData = (filters = {}, options = {}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState(0);
+  const abortControllerRef = useRef(null);
 
-  useEffect(() => {
-    const loadData = async () => {
+  // Debounce filters to avoid excessive API calls
+  const debouncedFilters = useDebounce(filters, 300);
+
+  // Check if any filters are active
+  const hasActiveFilters = useMemo(() => {
+    return Object.values(debouncedFilters).some(
+      (value) => value && value !== '',
+    );
+  }, [debouncedFilters]);
+
+  const loadData = useCallback(
+    async (filtersToUse = {}) => {
+      // Don't load if no active filters
+      if (!Object.values(filtersToUse).some((value) => value && value !== '')) {
+        setData([]);
+        setLoading(false);
+        setError(null);
+        return;
+      }
+
+      // Cancel previous request
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+
+      abortControllerRef.current = new AbortController();
+
       setLoading(true);
       setError(null);
-      setProgress(0);
+      setProgress(10);
 
       try {
-        // Check if data is cached in localStorage
-        const cachedData = localStorage.getItem('biospecimen-data');
-        const cachedTimestamp = localStorage.getItem('biospecimen-data-timestamp');
-        const cacheExpiry = 24 * 60 * 60 * 1000; // 24 hours
+        // Check cache first
+        const cacheKey = generateCacheKey(filtersToUse);
+        const cachedData = localStorage.getItem(cacheKey);
+        const cachedTimestamp = localStorage.getItem(cacheKey + '-timestamp');
+        const cacheExpiry = 5 * 60 * 1000; // 5 minutes cache for filtered results
 
-        if (cachedData && cachedTimestamp && 
-            Date.now() - parseInt(cachedTimestamp, 10) < cacheExpiry) {
+        if (
+          cachedData &&
+          cachedTimestamp &&
+          Date.now() - parseInt(cachedTimestamp, 10) < cacheExpiry
+        ) {
           setData(JSON.parse(cachedData));
+          setProgress(100);
           setLoading(false);
           return;
         }
 
-        // Dynamically import the TSV file
-        const { default: tsvPath } = await import('../../../../data/human_clinical_biospecimen_curated.tsv?url');
-        
-        // Fetch the TSV file
-        const response = await fetch(tsvPath);
-        if (!response.ok) {
-          throw new Error(`Failed to load data: ${response.statusText}`);
+        setProgress(30);
+
+        // Make API request
+        const response = await biospecimenService.queryBiospecimens(
+          filtersToUse,
+          { ...options, signal: abortControllerRef.current.signal },
+        );
+
+        setProgress(70);
+
+        // Set data
+        setData(response.data);
+
+        // Cache the result
+        try {
+          localStorage.setItem(cacheKey, JSON.stringify(response.data));
+          localStorage.setItem(cacheKey + '-timestamp', Date.now().toString());
+        } catch (e) {
+          console.warn('Failed to cache filtered data:', e);
         }
-        
-        const tsvText = await response.text();
-        
-        // Use Web Worker to parse the data
-        const worker = createTSVWorker();
-        
-        worker.onmessage = (e) => {
-          const { type, data: workerData, error: workerError, processed, total } = e.data;
-          
-          switch (type) {
-            case 'progress':
-              setProgress(Math.round((processed / total) * 100));
-              break;
-              
-            case 'complete':
-              setData(workerData);
-              setLoading(false);
-              
-              // Cache the parsed data
-              try {
-                localStorage.setItem('biospecimen-data', JSON.stringify(workerData));
-                localStorage.setItem('biospecimen-data-timestamp', Date.now().toString());
-              } catch (e) {
-                console.warn('Failed to cache data:', e);
-              }
-              
-              worker.terminate();
-              break;
-              
-            case 'error':
-              setError(workerError);
-              setLoading(false);
-              worker.terminate();
-              break;
-          }
-        };
-        
-        worker.onerror = (error) => {
-          setError(error.message);
-          setLoading(false);
-          worker.terminate();
-        };
-        
-        worker.postMessage({ tsvText });
-        
-      } catch (err) {
-        setError(err.message);
+
+        setProgress(100);
         setLoading(false);
+      } catch (err) {
+        if (err.name === 'AbortError') {
+          return; // Request was cancelled, don't update state
+        }
+
+        console.error('Error loading biospecimen data:', err);
+        setError(err.message || 'Failed to load biospecimen data');
+        setLoading(false);
+        setData([]);
+      }
+    },
+    [options],
+  );
+
+  useEffect(() => {
+    loadData(debouncedFilters);
+
+    return () => {
+      // Cleanup: abort any pending requests
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
       }
     };
+  }, [debouncedFilters, loadData]);
 
-    loadData();
-  }, []);
+  // Manual refresh function
+  const refresh = useCallback(() => {
+    // Clear cache for current filters
+    const cacheKey = generateCacheKey(debouncedFilters);
+    localStorage.removeItem(cacheKey);
+    localStorage.removeItem(cacheKey + '-timestamp');
 
-  return { data, loading, error, progress };
+    // Reload data
+    loadData(debouncedFilters);
+  }, [debouncedFilters, loadData]);
+
+  return {
+    data,
+    loading,
+    error,
+    progress,
+    hasActiveFilters,
+    refresh,
+  };
 };
 
-// Hook for filtered data with optimized search
+// Legacy hook for backward compatibility - now just returns the data since filtering is server-side
 export const useFilteredBiospecimenData = (data, filters) => {
+  // Since filtering is now done server-side via the API, we just return the data
+  // This hook is kept for backward compatibility but could be removed in the future
   return useMemo(() => {
-    if (!data || data.length === 0) return [];
+    return data || [];
+  }, [data]);
+};
 
-    const { tranche, randomizedGroup, collectionVisit, timepoint, tissue, sex } = filters;
-    
-    // Early return if no filters
-    if (!tranche && !randomizedGroup && !collectionVisit && !timepoint && !tissue && !sex) {
-      return [];
+// Export cache utilities for testing/debugging
+export const biospecimenDataUtils = {
+  generateCacheKey,
+  clearCache: (filters = null) => {
+    if (filters) {
+      const cacheKey = generateCacheKey(filters);
+      localStorage.removeItem(cacheKey);
+      localStorage.removeItem(cacheKey + '-timestamp');
+    } else {
+      // Clear all biospecimen cache
+      const keys = Object.keys(localStorage).filter((key) =>
+        key.startsWith('biospecimen-'),
+      );
+      keys.forEach((key) => localStorage.removeItem(key));
     }
+  },
+  getCacheInfo: (filters) => {
+    const cacheKey = generateCacheKey(filters);
+    const cachedData = localStorage.getItem(cacheKey);
+    const cachedTimestamp = localStorage.getItem(cacheKey + '-timestamp');
 
-    // Use efficient filtering
-    return data.filter((item) => {
-      return (!tranche || item.tranche === tranche) &&
-        (!randomizedGroup || item.randomGroupCode === randomizedGroup) &&
-        (!collectionVisit || item.visitcode === collectionVisit) &&
-        (!timepoint || item.timepoint === timepoint) &&
-        (!tissue || item.sampleGroupCode === tissue) &&
-        (!sex || item.sex === sex);
-    });
-  }, [data, filters]);
+    return {
+      key: cacheKey,
+      hasData: !!cachedData,
+      timestamp: cachedTimestamp
+        ? new Date(parseInt(cachedTimestamp, 10))
+        : null,
+      size: cachedData ? cachedData.length : 0,
+    };
+  },
 };
