@@ -183,7 +183,7 @@ export const chartConfigFactory = {
     const config = {
       chart: {
         type: 'column',
-        height: 500,
+        height: 450,
         animation: false, // Disable animation to prevent timing issues
       },
       title: {
