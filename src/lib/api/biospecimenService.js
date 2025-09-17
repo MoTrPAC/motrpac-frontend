@@ -114,25 +114,34 @@ function CreateBiospecimenService() {
     /**
      * Query biospecimen data with filters
      * @param {Object} filters - Filter parameters
-     * @param {Object} options - Additional options (limit, offset, etc.)
+     * @param {Object} options - Additional options (limit, offset, signal, etc.)
      * @returns {Promise<Object>} API response with biospecimen data
      */
     async queryBiospecimens(filters = {}, options = {}) {
       try {
+        // Extract signal from options - it should go to axios config, not query params
+        const { signal, ...requestOptions } = options;
+        
         const params = {
           ...formatFilters(filters),
-          ...options,
+          ...requestOptions, // This now excludes signal
         };
 
         // Add pagination if specified
-        if (options.limit) {
-          params.limit = options.limit;
+        if (requestOptions.limit) {
+          params.limit = requestOptions.limit;
         }
-        if (options.offset) {
-          params.offset = options.offset;
+        if (requestOptions.offset) {
+          params.offset = requestOptions.offset;
         }
 
-        const response = await client.get('/', { params });
+        // Create axios config with signal if provided
+        const axiosConfig = { params };
+        if (signal) {
+          axiosConfig.signal = signal;
+        }
+
+        const response = await client.get('/', axiosConfig);
 
         // Validate response structure
         if (
@@ -159,19 +168,30 @@ function CreateBiospecimenService() {
      * Export filtered data in various formats
      * @param {Object} filters - Filter parameters
      * @param {string} format - Export format (csv, tsv, json)
+     * @param {Object} options - Additional options including signal
      * @returns {Promise<Blob>} File blob for download
      */
-    async exportData(filters = {}, format = 'csv') {
+    async exportData(filters = {}, format = 'csv', options = {}) {
       try {
+        // Extract signal from options
+        const { signal, ...requestOptions } = options;
+        
         const params = {
           ...formatFilters(filters),
+          ...requestOptions,
           format,
         };
 
-        const response = await client.get('/export', {
+        // Create axios config with signal if provided
+        const axiosConfig = {
           params,
           responseType: 'blob',
-        });
+        };
+        if (signal) {
+          axiosConfig.signal = signal;
+        }
+
+        const response = await client.get('/export', axiosConfig);
 
         return new Blob([response.data], {
           type: format === 'json' ? 'application/json' : 'text/csv',
@@ -184,11 +204,18 @@ function CreateBiospecimenService() {
 
     /**
      * Health check for the API
+     * @param {Object} options - Additional options including signal
      * @returns {Promise<boolean>} API health status
      */
-    async healthCheck() {
+    async healthCheck(options = {}) {
       try {
-        const response = await client.get('/health');
+        const { signal } = options;
+        const axiosConfig = {};
+        if (signal) {
+          axiosConfig.signal = signal;
+        }
+        
+        const response = await client.get('/health', axiosConfig);
         return response.status === 200;
       } catch (error) {
         console.warn('API health check failed:', error);
