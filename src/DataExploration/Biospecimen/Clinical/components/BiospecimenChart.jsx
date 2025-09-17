@@ -96,26 +96,41 @@ const BiospecimenChart = ({ data, loading, error, onBarClick, axisMode = DEFAULT
     let series, categories;
 
     if (isTimepoint) {
-      // Grouping by timepoint: X-axis = timepoints, Series = tissues, Stack by intervention phase
-      series = TISSUE_TYPES.map((tissue) => {
-        return INTERVENTION_PHASES.map((phase) => ({
-          name: `${tissue} - ${phase}`,
-          color: getColorForTissue(tissue),
-          stack: tissue, // Stack by tissue
-          data: TIMEPOINT_TYPES.map((timepoint) => {
+      // Grouping by timepoint: X-axis = timepoints, Series = tissues (aggregated across phases)
+      series = TISSUE_TYPES.map((tissue) => ({
+        name: tissue,
+        color: getColorForTissue(tissue),
+        data: TIMEPOINT_TYPES.map((timepoint) => {
+          // Sum all phases for this tissue and timepoint
+          const totalSamples = INTERVENTION_PHASES.reduce((sum, phase) => {
             const key = `${phase}_${tissue}_${timepoint}`;
             const group = groups[key];
-            return {
-              y: group ? group.samples.length : 0,
-              phase,
-              tissue,
-              timepoint,
-              samples: group ? group.samples : [],
-              assayTypes: group ? Array.from(group.assayTypes) : [],
-            };
-          }),
-        }));
-      }).flat();
+            return sum + (group ? group.samples.length : 0);
+          }, 0);
+
+          // Collect all samples and assay types for this tissue and timepoint across phases
+          const allSamples = [];
+          const allAssayTypes = new Set();
+          
+          INTERVENTION_PHASES.forEach((phase) => {
+            const key = `${phase}_${tissue}_${timepoint}`;
+            const group = groups[key];
+            if (group) {
+              allSamples.push(...group.samples);
+              group.assayTypes.forEach(assay => allAssayTypes.add(assay));
+            }
+          });
+
+          return {
+            y: totalSamples,
+            phase: null, // No specific phase when aggregated
+            tissue,
+            timepoint,
+            samples: allSamples,
+            assayTypes: Array.from(allAssayTypes),
+          };
+        }),
+      }));
 
       categories = TIMEPOINT_TYPES.map(t => getLabelForTimepoint(t));
     } else {
