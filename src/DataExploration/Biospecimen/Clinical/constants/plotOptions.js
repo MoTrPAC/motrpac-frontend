@@ -9,6 +9,48 @@ export const TISSUE_COLORS = {
   'Muscle': '#3498db',  // Blue
 };
 
+// Timepoint color mapping for stacked visualization
+export const TIMEPOINT_COLORS = {
+  'pre_exercise': '#8B4513',           // SaddleBrown
+  'during_20_min': '#DAA520',          // GoldenRod
+  'during_40_min': '#FFA500',          // Orange
+  'post_10_min': '#32CD32',            // LimeGreen
+  'post_15_30_45_min': '#00CED1',      // DarkTurquoise
+  'post_3.5_4_hr': '#4169E1',          // RoyalBlue
+  'post_24_hr': '#9370DB',             // MediumPurple
+};
+
+// Timepoint display configuration
+export const TIMEPOINT_CONFIG = {
+  'pre_exercise': { label: 'Pre-Exercise', order: 0 },
+  'during_20_min': { label: 'During 20 Min', order: 1 },
+  'during_40_min': { label: 'During 40 Min', order: 2 },
+  'post_10_min': { label: 'Post 10 Min', order: 3 },
+  'post_15_30_45_min': { label: 'Post 15-45 Min', order: 4 },
+  'post_3.5_4_hr': { label: 'Post 3.5-4 Hour', order: 5 },
+  'post_24_hr': { label: 'Post 24 Hour', order: 6 },
+};
+
+// Available timepoints for consistency
+export const TIMEPOINT_TYPES = Object.keys(TIMEPOINT_CONFIG).sort((a, b) => 
+  TIMEPOINT_CONFIG[a].order - TIMEPOINT_CONFIG[b].order
+);
+
+// Chart axis configuration options
+export const CHART_AXIS_OPTIONS = {
+  INTERVENTION_PHASE: 'intervention_phase',
+  TIMEPOINT: 'timepoint'
+};
+
+// Chart axis configuration labels
+export const CHART_AXIS_LABELS = {
+  [CHART_AXIS_OPTIONS.INTERVENTION_PHASE]: 'Group by Intervention Phase',
+  [CHART_AXIS_OPTIONS.TIMEPOINT]: 'Group by Exercise Timepoint'
+};
+
+// Default chart axis setting
+export const DEFAULT_CHART_AXIS = CHART_AXIS_OPTIONS.INTERVENTION_PHASE;
+
 /**
 * Default filter configurations for biospecimen data
 * Centralized default values and filter options
@@ -80,6 +122,16 @@ export const getColorForTissue = (tissue) => {
   return TISSUE_COLORS[tissue] || '#7f8c8d'; // Default gray if not found
 };
 
+// Helper function to get color for a timepoint
+export const getColorForTimepoint = (timepoint) => {
+  return TIMEPOINT_COLORS[timepoint] || '#7f8c8d'; // Default gray if not found
+};
+
+// Helper function to get label for a timepoint
+export const getLabelForTimepoint = (timepoint) => {
+  return TIMEPOINT_CONFIG[timepoint]?.label || timepoint;
+};
+
 // Mappings:
 // `ADU_BAS' AND `PED_BAS' TO `Pre-Intervention'
 // `ADU_PAS' AND `PED_PAS' TO `Post-Intervention'
@@ -125,7 +177,9 @@ export const generateCacheKey = (filters) => {
 
 // Export chart configuration factory
 export const chartConfigFactory = {
-  createBiospecimenChart: ({ title, subtitle, onBarClick, series, categories }) => {
+  createBiospecimenChart: ({ title, subtitle, onBarClick, series, categories, axisMode = DEFAULT_CHART_AXIS }) => {
+    const isTimepoint = axisMode === CHART_AXIS_OPTIONS.TIMEPOINT;
+    
     const config = {
       chart: {
         type: 'column',
@@ -147,14 +201,20 @@ export const chartConfigFactory = {
         },
       },
       xAxis: {
-        categories: categories || ['Pre-Intervention', 'Post-Intervention'],
+        categories: categories || (isTimepoint ? TIMEPOINT_TYPES.map(t => getLabelForTimepoint(t)) : INTERVENTION_PHASES),
         title: {
-          text: 'Intervention Phase',
+          text: isTimepoint ? 'Exercise Timepoint' : 'Intervention Phase',
           style: {
             fontSize: '14px',
             fontWeight: 'bold',
           },
           margin: 30,
+        },
+        labels: {
+          rotation: isTimepoint ? -45 : 0, // Rotate labels for timepoints to prevent overlap
+          style: {
+            fontSize: '12px',
+          },
         },
       },
       yAxis: {
@@ -181,6 +241,7 @@ export const chartConfigFactory = {
           borderWidth: 0,
           cursor: 'pointer',
           animation: false, // Disable animation
+          stacking: isTimepoint ? 'normal' : undefined, // Stack only when grouping by timepoint
         },
         series: {
           point: {
@@ -209,13 +270,42 @@ export const chartConfigFactory = {
         formatter: function () {
           try {
             let tooltip = `<b>${this.x}</b><br/>`;
+            
             if (this.points) {
-              this.points.forEach((point) => {
-                const assayInfo = point.point.assayTypes && point.point.assayTypes.length > 0 
-                  ? `<br/><small>Assays: ${point.point.assayTypes.join(', ')}</small>`
-                  : '';
-                tooltip += `<span style="color:${point.color}">●</span> ${point.series.name}: <b>${point.y}</b> samples${assayInfo}<br/>`;
-              });
+              if (isTimepoint) {
+                // When grouping by timepoint, show stacked breakdown by tissue and phase
+                const stacks = {};
+                this.points.forEach((point) => {
+                  const stackName = point.series.stack || 'default';
+                  if (!stacks[stackName]) {
+                    stacks[stackName] = [];
+                  }
+                  stacks[stackName].push(point);
+                });
+
+                // Display each stack with its points
+                Object.keys(stacks).forEach((stackName) => {
+                  const stackPoints = stacks[stackName];
+                  const totalSamples = stackPoints.reduce((sum, point) => sum + point.y, 0);
+                  
+                  tooltip += `<br/><b>${stackName}: ${totalSamples} samples</b><br/>`;
+                  
+                  stackPoints.forEach((point) => {
+                    const assayInfo = point.point.assayTypes && point.point.assayTypes.length > 0 
+                      ? `<br/><small>Assays: ${point.point.assayTypes.join(', ')}</small>`
+                      : '';
+                    tooltip += `<span style="color:${point.color}">●</span> ${point.series.name}: <b>${point.y}</b> samples${assayInfo}<br/>`;
+                  });
+                });
+              } else {
+                // When grouping by intervention phase, show simple tissue breakdown
+                this.points.forEach((point) => {
+                  const assayInfo = point.point.assayTypes && point.point.assayTypes.length > 0 
+                    ? `<br/><small>Assays: ${point.point.assayTypes.join(', ')}</small>`
+                    : '';
+                  tooltip += `<span style="color:${point.color}">●</span> ${point.series.name}: <b>${point.y}</b> samples${assayInfo}<br/>`;
+                });
+              }
             }
             return tooltip;
           } catch (error) {
