@@ -4,11 +4,17 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import {
   getColorForTissue,
+  getColorForTimepoint,
+  getLabelForTimepoint,
   chartConfigFactory,
   VISIT_CODE_TO_PHASE,
   TISSUE_CODE_TO_NAME,
   TISSUE_TYPES,
   INTERVENTION_PHASES,
+  TIMEPOINT_TYPES,
+  TIMEPOINT_CONFIG,
+  CHART_AXIS_OPTIONS,
+  DEFAULT_CHART_AXIS,
 } from '../constants/plotOptions';
 
 // Ensure Highcharts is properly initialized
@@ -23,11 +29,12 @@ if (typeof Highcharts === 'object') {
 /**
  * Interactive Biospecimen Bar Chart component
  * Features:
- * - Vertical grouped bar chart: Pre/Post intervention × Tissue types
+ * - Configurable x-axis: can group by intervention phase or timepoint
+ * - Vertical grouped/stacked bar chart depending on axis mode
  * - Click-to-drill-down functionality
  * - Assay information in tooltips
  */
-const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
+const BiospecimenChart = ({ data, loading, error, onBarClick, axisMode = DEFAULT_CHART_AXIS }) => {
   // Chart reference for proper cleanup
   const chartRef = useRef(null);
 
@@ -44,16 +51,19 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
     };
   }, []);
 
-  // Transform data for chart - optimized memoization with proper dependencies
+  // Transform data for chart - supports both axis modes
   const chartData = useMemo(() => {
     if (!data || !data.length) return null;
 
-    // Group data by intervention phase and tissue
+    const isTimepoint = axisMode === CHART_AXIS_OPTIONS.TIMEPOINT;
+    
+    // Group data by intervention phase, tissue, and timepoint
     const groups = {};
 
     data.forEach((record) => {
       const visitCode = record.visit_code;
       const tissue = record.sample_group_code;
+      const timepoint = record.timepoint;
       const assays = record.raw_assays_with_results || '';
 
       // Map visit codes to intervention phases using constants
@@ -61,12 +71,13 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
       // Map tissue codes to readable names using constants
       const tissueName = TISSUE_CODE_TO_NAME[tissue];
 
-      if (phase && tissueName) {
-        const key = `${phase}_${tissueName}`;
+      if (phase && tissueName && timepoint) {
+        const key = `${phase}_${tissueName}_${timepoint}`;
         if (!groups[key]) {
           groups[key] = {
             phase,
             tissue: tissueName,
+            timepoint,
             samples: [],
             assayTypes: new Set(),
           };
@@ -82,44 +93,105 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
       }
     });
 
-    // Create series data using constants for consistency
-    const series = TISSUE_TYPES.map((tissue) => ({
-      name: tissue,
-      data: INTERVENTION_PHASES.map((phase) => {
-        const key = `${phase}_${tissue}`;
-        const group = groups[key];
-        return {
-          y: group ? group.samples.length : 0,
-          phase,
-          tissue,
-          samples: group ? group.samples : [],
-          assayTypes: group ? Array.from(group.assayTypes) : [],
-          color: getColorForTissue(tissue),
-        };
-      }),
-      color: getColorForTissue(tissue),
-    }));
+    let series, categories;
 
-    return { series, phases: INTERVENTION_PHASES, groups };
-  }, [data]);
+    if (isTimepoint) {
+      // Grouping by timepoint: X-axis = timepoints, Series = tissues, Stack by intervention phase
+      series = TISSUE_TYPES.map((tissue) => {
+        return INTERVENTION_PHASES.map((phase) => ({
+          name: `${tissue} - ${phase}`,
+          color: getColorForTissue(tissue),
+          stack: tissue, // Stack by tissue
+          data: TIMEPOINT_TYPES.map((timepoint) => {
+            const key = `${phase}_${tissue}_${timepoint}`;
+            const group = groups[key];
+            return {
+              y: group ? group.samples.length : 0,
+              phase,
+              tissue,
+              timepoint,
+              samples: group ? group.samples : [],
+              assayTypes: group ? Array.from(group.assayTypes) : [],
+            };
+          }),
+        }));
+      }).flat();
+
+      categories = TIMEPOINT_TYPES.map(t => getLabelForTimepoint(t));
+    } else {
+      // Grouping by intervention phase: X-axis = phases, Series = tissues, Stack by timepoint
+      series = TISSUE_TYPES.map((tissue) => ({
+        name: tissue,
+        color: getColorForTissue(tissue),
+        data: INTERVENTION_PHASES.map((phase) => {
+          // Sum all timepoints for this phase and tissue
+          const totalSamples = TIMEPOINT_TYPES.reduce((sum, timepoint) => {
+            const key = `${phase}_${tissue}_${timepoint}`;
+            const group = groups[key];
+            return sum + (group ? group.samples.length : 0);
+          }, 0);
+
+          // Collect all samples and assay types for this phase and tissue
+          const allSamples = [];
+          const allAssayTypes = new Set();
+          
+          TIMEPOINT_TYPES.forEach((timepoint) => {
+            const key = `${phase}_${tissue}_${timepoint}`;
+            const group = groups[key];
+            if (group) {
+              allSamples.push(...group.samples);
+              group.assayTypes.forEach(assay => allAssayTypes.add(assay));
+            }
+          });
+
+          return {
+            y: totalSamples,
+            phase,
+            tissue,
+            timepoint: null, // No specific timepoint when grouped by phase
+            samples: allSamples,
+            assayTypes: Array.from(allAssayTypes),
+          };
+        }),
+      }));
+
+      categories = INTERVENTION_PHASES;
+    }
+
+    // Filter out series with no data
+    const filteredSeries = series.filter(s => 
+      s.data.some(d => d.y > 0)
+    );
+
+    return { 
+      series: filteredSeries, 
+      categories,
+      groups,
+      axisMode
+    };
+  }, [data, axisMode]);
 
   // Chart configuration using factory function for consistency
   // Memoized with optimized dependencies
   const chartOptions = useMemo(() => {
     if (!chartData || !data) return null;
 
+    const isTimepoint = axisMode === CHART_AXIS_OPTIONS.TIMEPOINT;
+    const axisLabel = isTimepoint ? 'timepoint' : 'intervention phase';
+
     const config = chartConfigFactory.createBiospecimenChart({
-      title: 'Biospecimen Sample Distribution',
-      subtitle: `${data.length.toLocaleString()} samples • Click bars for detailed breakdown`,
+      title: `Biospecimen Sample Distribution by ${axisLabel}`,
+      subtitle: `${data.length.toLocaleString()} samples • Grouped by ${axisLabel} • Click for details`,
       onBarClick,
       series: chartData.series,
-      categories: chartData.phases,
+      categories: chartData.categories,
+      axisMode,
     });
     
     // Debug log to ensure proper Highcharts config
     console.log('Chart config:', config);
     return config;
-  }, [chartData, data, onBarClick]);
+  }, [chartData, data, onBarClick, axisMode]);
 
   // Render different states based on conditions
   if (loading) {
@@ -193,6 +265,7 @@ BiospecimenChart.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.string,
   onBarClick: PropTypes.func.isRequired,
+  axisMode: PropTypes.string,
 };
 
 export default BiospecimenChart;
