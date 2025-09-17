@@ -241,7 +241,7 @@ export const chartConfigFactory = {
           borderWidth: 0,
           cursor: 'pointer',
           animation: false, // Disable animation
-          stacking: isTimepoint ? 'normal' : undefined, // Stack only when grouping by timepoint
+          // No stacking needed - both modes now use simple grouped columns
         },
         series: {
           point: {
@@ -272,40 +272,13 @@ export const chartConfigFactory = {
             let tooltip = `<b>${this.x}</b><br/>`;
             
             if (this.points) {
-              if (isTimepoint) {
-                // When grouping by timepoint, show stacked breakdown by tissue and phase
-                const stacks = {};
-                this.points.forEach((point) => {
-                  const stackName = point.series.stack || 'default';
-                  if (!stacks[stackName]) {
-                    stacks[stackName] = [];
-                  }
-                  stacks[stackName].push(point);
-                });
-
-                // Display each stack with its points
-                Object.keys(stacks).forEach((stackName) => {
-                  const stackPoints = stacks[stackName];
-                  const totalSamples = stackPoints.reduce((sum, point) => sum + point.y, 0);
-                  
-                  tooltip += `<br/><b>${stackName}: ${totalSamples} samples</b><br/>`;
-                  
-                  stackPoints.forEach((point) => {
-                    const assayInfo = point.point.assayTypes && point.point.assayTypes.length > 0 
-                      ? `<br/><small>Assays: ${point.point.assayTypes.join(', ')}</small>`
-                      : '';
-                    tooltip += `<span style="color:${point.color}">●</span> ${point.series.name}: <b>${point.y}</b> samples${assayInfo}<br/>`;
-                  });
-                });
-              } else {
-                // When grouping by intervention phase, show simple tissue breakdown
-                this.points.forEach((point) => {
-                  const assayInfo = point.point.assayTypes && point.point.assayTypes.length > 0 
-                    ? `<br/><small>Assays: ${point.point.assayTypes.join(', ')}</small>`
-                    : '';
-                  tooltip += `<span style="color:${point.color}">●</span> ${point.series.name}: <b>${point.y}</b> samples${assayInfo}<br/>`;
-                });
-              }
+              // Both modes now use simple grouped columns, so same tooltip format
+              this.points.forEach((point) => {
+                const assayInfo = point.point.assayTypes && point.point.assayTypes.length > 0 
+                  ? `<br/><small>Assays: ${point.point.assayTypes.join(', ')}</small>`
+                  : '';
+                tooltip += `<span style="color:${point.color}">●</span> ${point.series.name}: <b>${point.y}</b> samples${assayInfo}<br/>`;
+              });
             }
             return tooltip;
           } catch (error) {
