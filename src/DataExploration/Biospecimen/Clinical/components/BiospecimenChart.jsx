@@ -192,7 +192,7 @@ const BiospecimenChart = ({ data, loading, error, onBarClick, axisMode = DEFAULT
     if (!chartData || !data) return null;
 
     const isTimepoint = axisMode === CHART_AXIS_OPTIONS.TIMEPOINT;
-    const axisLabel = isTimepoint ? 'timepoint' : 'intervention phase';
+    const axisLabel = isTimepoint ? 'exercise timepoint' : 'intervention phase';
 
     const config = chartConfigFactory.createBiospecimenChart({
       title: `Biospecimen Sample Distribution by ${axisLabel}`,
@@ -252,7 +252,7 @@ const BiospecimenChart = ({ data, loading, error, onBarClick, axisMode = DEFAULT
   }
 
   return (
-    <div className="card h-100">
+    <div className="card">
       <div className="card-body">
         {chartOptions && Object.keys(chartOptions).length > 0 && (
           <HighchartsReact
