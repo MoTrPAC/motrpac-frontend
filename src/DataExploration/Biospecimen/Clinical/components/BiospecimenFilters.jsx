@@ -14,7 +14,6 @@ const BiospecimenFilters = ({
   filterOptions,
   onCheckboxChange,
   onRadioChange,
-  onResetFilters,
   loading = false,
 }) => {
   // Check if filters differ from default state using utility function
@@ -23,8 +22,6 @@ const BiospecimenFilters = ({
     () => filterUtils.isDefaultState(filters),
     [filters],
   );
-
-  const hasActiveFilters = !isDefaultState;
 
   return (
     <div className="card h-100">
@@ -114,16 +111,6 @@ const BiospecimenFilters = ({
                 </div>
               ))}
             </div>
-
-            {/* Reset Button */}
-            <button
-              className="btn btn-outline-secondary btn-sm"
-              onClick={onResetFilters}
-              disabled={!hasActiveFilters}
-            >
-              <i className="bi bi-arrow-clockwise mr-2" />
-              Reset to Defaults
-            </button>
           </>
         )}
       </div>
@@ -144,7 +131,6 @@ BiospecimenFilters.propTypes = {
   }).isRequired,
   onCheckboxChange: PropTypes.func.isRequired,
   onRadioChange: PropTypes.func.isRequired,
-  onResetFilters: PropTypes.func.isRequired,
   loading: PropTypes.bool,
 };
 
