@@ -3,12 +3,13 @@ import axios from 'axios';
 /**
  * Create biospecimen API service with configuration
  */
-const createBiospecimenService = () => {
-  const baseURL = import.meta.env.VITE_BIOSPECIMEN_DATA_ENDPOINT;
+function CreateBiospecimenService() {
+  const apiURL = import.meta.env.VITE_API_SERVICE_ADDRESS_DEV;
+  const endpoint = import.meta.env.VITE_BIOSPECIMEN_DATA_ENDPOINT;
   const apiKey = import.meta.env.VITE_API_SERVICE_KEY_DEV;
 
-  if (!baseURL) {
-    throw new Error('VITE_BIOSPECIMEN_DATA_ENDPOINT is not configured');
+  if (!apiURL) {
+    throw new Error('VITE_API_SERVICE_ADDRESS_DEV is not configured');
   }
 
   if (!apiKey) {
@@ -17,7 +18,7 @@ const createBiospecimenService = () => {
 
   // Create axios instance with default config
   const client = axios.create({
-    baseURL,
+    baseURL: apiURL + endpoint,
     timeout: 30000, // 30 seconds timeout
     headers: {
       'Content-Type': 'application/json',
@@ -198,9 +199,9 @@ const createBiospecimenService = () => {
 };
 
 // Create and export singleton instance
-export const biospecimenService = createBiospecimenService();
+export const BiospecimenService = CreateBiospecimenService();
 
 // Export factory function for testing
-export { createBiospecimenService };
+export { CreateBiospecimenService };
 
-export default biospecimenService;
+export default BiospecimenService;
