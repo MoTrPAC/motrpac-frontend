@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import Dropdown from './components/form/dropdown';
+import InteractiveBiospecimenChart from './components/InteractiveBiospecimenChart';
+import BiospecimenFilters from './components/BiospecimenFilters';
 import BiospecimenResultsTable from './components/BiospecimenResultsTable';
-import SampleOverlapHeatmap from './components/SampleOverlapHeatmap';
 import { useBiospecimenData } from './hooks/useBiospecimenData';
 
 // Loading component
@@ -31,8 +31,6 @@ const DataLoadingIndicator = ({ progress }) => (
   </div>
 );
 
-
-
 function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
   // get states from redux store
   const userProfile = useSelector((state) => state.auth.profile);
@@ -44,12 +42,9 @@ function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
 
   // Local state for biospecimen filters
   const [biospecimenFilters, setBiospecimenFilters] = useState({
-    tranche: '',
-    randomizedGroup: '',
-    collectionVisit: '',
-    timepoint: '',
-    tissue: '',
-    sex: '',
+    randomizedGroup: ['ADUControl', 'PEDControl'],
+    ageGroup: ['10-13', '14-17', '18-39', '40-59', '60+'],
+    sex: ['Male', 'Female'],
   });
 
   // Load biospecimen data with API-based filtering
@@ -75,12 +70,9 @@ function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
   // Reset all filters
   const handleResetFilters = () => {
     setBiospecimenFilters({
-      tranche: '',
-      randomizedGroup: '',
-      collectionVisit: '',
-      timepoint: '',
-      tissue: '',
-      sex: '',
+      randomizedGroup: ['ADUControl', 'PEDControl'],
+      ageGroup: ['10-13', '14-17', '18-39', '40-59', '60+'],
+      sex: ['Male', 'Female'],
     });
   };
 
@@ -127,96 +119,8 @@ function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
         {/* Show filters and table only when not loading and no error */}
         {!loading && !error && (
           <>
-            <div className="lookup-form-container">
-              <div className="form-row">
-                <div className="col-md-2">
-                  <Dropdown
-                    id="tranche-select"
-                    label="Tranche"
-                    options={dropdownOptions.tranche}
-                    selectedOption={biospecimenFilters.tranche || ''}
-                    onChange={(value) => handleFilterChange('tranche', value)}
-                    placeholder="Select tranche"
-                  />
-                </div>
-                <div className="col-md-2">
-                  <Dropdown
-                    id="randomized-group-select"
-                    label="Randomized Group"
-                    options={dropdownOptions.randomizedGroup}
-                    selectedOption={biospecimenFilters.randomizedGroup || ''}
-                    onChange={(value) =>
-                      handleFilterChange('randomizedGroup', value)
-                    }
-                    placeholder="Select group"
-                  />
-                </div>
-                <div className="col-md-2">
-                  <Dropdown
-                    id="collection-visit-select"
-                    label="Collection Visit"
-                    options={dropdownOptions.collectionVisit}
-                    selectedOption={biospecimenFilters.collectionVisit || ''}
-                    onChange={(value) =>
-                      handleFilterChange('collectionVisit', value)
-                    }
-                    placeholder="Select visit"
-                  />
-                </div>
-                <div className="col-md-2">
-                  <Dropdown
-                    id="timepoint-select"
-                    label="Timepoint"
-                    options={dropdownOptions.timepoint}
-                    selectedOption={biospecimenFilters.timepoint || ''}
-                    onChange={(value) => handleFilterChange('timepoint', value)}
-                    placeholder="Select timepoint"
-                  />
-                </div>
-                <div className="col-md-2">
-                  <Dropdown
-                    id="tissue-select"
-                    label="Tissue"
-                    options={dropdownOptions.tissue}
-                    selectedOption={biospecimenFilters.tissue || ''}
-                    onChange={(value) => handleFilterChange('tissue', value)}
-                    placeholder="Select tissue"
-                  />
-                </div>
-                <div className="col-md-2">
-                  <Dropdown
-                    id="sex-select"
-                    label="Sex"
-                    options={dropdownOptions.sex}
-                    selectedOption={biospecimenFilters.sex || ''}
-                    onChange={(value) => handleFilterChange('sex', value)}
-                    placeholder="Select sex"
-                  />
-                </div>
-              </div>
-              <div className="d-flex justify-content-end mt-3">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={handleResetFilters}
-                  disabled={!hasActiveFilters}
-                >
-                  <i className="bi bi-arrow-clockwise mr-2" />
-                  Reset
-                </button>
-              </div>
-            </div>
-
             {/* Visualization section */}
-            {hasActiveFilters && (
-              <div className="mt-4">
-                <SampleOverlapHeatmap
-                  data={filteredData}
-                  loading={loading}
-                  error={error}
-                />
-              </div>
-            )}
+            <InteractiveBiospecimenChart />
 
             {/* Results section */}
             {hasActiveFilters && (
