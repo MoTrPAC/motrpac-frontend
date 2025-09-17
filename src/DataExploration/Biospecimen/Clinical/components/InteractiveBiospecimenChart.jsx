@@ -104,12 +104,6 @@ const InteractiveBiospecimenChart = () => {
     setSelectedBar(null);
   }, []);
 
-  // Reset filters to default selections using utility function
-  const handleResetFilters = useCallback(() => {
-    setFilters(filterUtils.resetToDefaults());
-    setSelectedBar(null);
-  }, []);
-
   // Handle bar click for drill-down
   const handleBarClick = useCallback((event) => {
     const point = event.point;
@@ -127,19 +121,18 @@ const InteractiveBiospecimenChart = () => {
       {/* Side-by-Side Layout: Filters on Left, Chart on Right */}
       <div className="row mb-4">
         {/* Filter Controls - Left Side */}
-        <div className="col-lg-3">
+        <div className="col-lg-2">
           <BiospecimenFilters
             filters={filters}
             filterOptions={filterOptions}
             onCheckboxChange={handleCheckboxChange}
             onRadioChange={handleRadioChange}
-            onResetFilters={handleResetFilters}
             loading={loading}
           />
         </div>
 
         {/* Chart - Right Side */}
-        <div className="col-lg-9">
+        <div className="col-lg-10">
           <BiospecimenChart
             data={data}
             loading={loading}
@@ -148,6 +141,66 @@ const InteractiveBiospecimenChart = () => {
           />
         </div>
       </div>
+
+      {/* Drill-down table when a bar is clicked */}
+      {selectedBar && (
+        <div className="row">
+          <div className="col-12">
+            <div className="card">
+              <div className="card-header d-flex justify-content-between align-items-center">
+                <h6 className="mb-0">
+                  <i className="bi bi-table mr-2" />
+                  {selectedBar.tissue} - {selectedBar.phase} ({selectedBar.count} samples)
+                </h6>
+                <button
+                  className="btn btn-sm btn-outline-secondary"
+                  onClick={() => setSelectedBar(null)}
+                >
+                  <i className="bi bi-x" />
+                </button>
+              </div>
+              <div className="card-body">
+                {selectedBar.assayTypes.length > 0 && (
+                  <p className="mb-3">
+                    <strong>Available Assays:</strong> {selectedBar.assayTypes.join(', ')}
+                  </p>
+                )}
+                <div className="table-responsive">
+                  <table className="table table-sm table-striped">
+                    <thead>
+                      <tr>
+                        <th>Sample ID</th>
+                        <th>Subject ID</th>
+                        <th>Visit Code</th>
+                        <th>Random Group</th>
+                        <th>Sex</th>
+                        <th>Age Group</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {selectedBar.samples.slice(0, 100).map((sample, index) => (
+                        <tr key={index}>
+                          <td>{sample.aliquot_id || 'N/A'}</td>
+                          <td>{sample.subject_id || 'N/A'}</td>
+                          <td>{sample.visit_code || 'N/A'}</td>
+                          <td>{sample.random_group_code || 'N/A'}</td>
+                          <td>{sample.sex || 'N/A'}</td>
+                          <td>{sample.dmaqc_age_groups || 'N/A'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {selectedBar.samples.length > 100 && (
+                    <p className="text-muted small">
+                      Showing first 100 of {selectedBar.samples.length} samples
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
