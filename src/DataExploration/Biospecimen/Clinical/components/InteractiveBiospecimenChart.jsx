@@ -7,7 +7,6 @@ import {
   DEFAULT_FILTERS,
   FILTER_OPTIONS,
   RANDOMIZED_GROUP_MAPPING,
-  filterUtils,
 } from '../constants/plotOptions';
 
 /**
