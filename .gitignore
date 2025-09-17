@@ -153,3 +153,9 @@ stats.html
 .codegpt
 .cursor
 .cursorrules
+
+# JetBrains IDEs
+.idea
+
+# Claude Code files
+_claude_code_export_
