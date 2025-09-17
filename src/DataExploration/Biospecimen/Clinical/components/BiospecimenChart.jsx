@@ -21,9 +21,23 @@ import {
 const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
   // Chart reference for proper cleanup
   const chartRef = useRef(null);
+
+  // Cleanup chart instance on unmount to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      if (chartRef.current && chartRef.current.chart) {
+        try {
+          chartRef.current.chart.destroy();
+        } catch (e) {
+          console.warn('Error destroying chart:', e);
+        }
+      }
+    };
+  }, []);
+
   // Transform data for chart - optimized memoization with proper dependencies
   const chartData = useMemo(() => {
-    if (!data.length) return null;
+    if (!data || !data.length) return null;
 
     // Group data by intervention phase and tissue
     const groups = {};
@@ -83,7 +97,7 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
   // Chart configuration using factory function for consistency
   // Memoized with optimized dependencies
   const chartOptions = useMemo(() => {
-    if (!chartData) return null;
+    if (!chartData || !data) return null;
 
     return chartConfigFactory.createBiospecimenChart({
       title: 'Biospecimen Sample Distribution',
@@ -92,8 +106,9 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
       series: chartData.series,
       categories: chartData.phases,
     });
-  }, [chartData, data.length, onBarClick]);
+  }, [chartData, data, onBarClick]);
 
+  // Render different states based on conditions
   if (loading) {
     return (
       <div className="card h-100">
@@ -122,7 +137,7 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
     );
   }
 
-  if (!data.length) {
+  if (!data || !data.length) {
     return (
       <div className="card h-100">
         <div className="card-body">
@@ -135,19 +150,6 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
       </div>
     );
   }
-
-  // Cleanup chart instance on unmount to prevent memory leaks
-  useEffect(() => {
-    return () => {
-      if (chartRef.current && chartRef.current.chart) {
-        try {
-          chartRef.current.chart.destroy();
-        } catch (e) {
-          console.warn('Error destroying chart:', e);
-        }
-      }
-    };
-  }, []);
 
   return (
     <div className="card h-100">
