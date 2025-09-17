@@ -1,35 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import InteractiveBiospecimenChart from './components/InteractiveBiospecimenChart';
-import BiospecimenFilters from './components/BiospecimenFilters';
-import BiospecimenResultsTable from './components/BiospecimenResultsTable';
-import { useBiospecimenData } from './hooks/useBiospecimenData';
-
-// Loading component
-const DataLoadingIndicator = ({ progress }) => (
-  <div className="d-flex justify-content-center align-items-center p-4">
-    <div className="text-center">
-      <div className="spinner-border text-primary mb-3" role="status">
-        <span className="sr-only">Loading...</span>
-      </div>
-      <div className="progress" style={{ width: '300px' }}>
-        <div
-          className="progress-bar"
-          role="progressbar"
-          style={{ width: `${progress}%` }}
-          aria-valuenow={progress}
-          aria-valuemin="0"
-          aria-valuemax="100"
-        >
-          {progress}%
-        </div>
-      </div>
-      <p className="mt-2 text-muted">Loading biospecimen data...</p>
-    </div>
-  </div>
-);
 
 function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
   // get states from redux store
@@ -39,42 +12,6 @@ function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
   if (userType !== 'internal') {
     return <Navigate to="/dashboard" />;
   }
-
-  // Local state for biospecimen filters
-  const [biospecimenFilters, setBiospecimenFilters] = useState({
-    randomizedGroup: ['ADUControl', 'PEDControl'],
-    ageGroup: ['10-13', '14-17', '18-39', '40-59', '60+'],
-    sex: ['Male', 'Female'],
-  });
-
-  // Load biospecimen data with API-based filtering
-  const {
-    data: filteredData,
-    loading,
-    error,
-    progress,
-    hasActiveFilters,
-    refresh,
-  } = useBiospecimenData(biospecimenFilters);
-
-  // hasActiveFilters is now provided by the hook
-
-  // Handle filter changes
-  const handleFilterChange = (filterType, value) => {
-    setBiospecimenFilters((prev) => ({
-      ...prev,
-      [filterType]: value,
-    }));
-  };
-
-  // Reset all filters
-  const handleResetFilters = () => {
-    setBiospecimenFilters({
-      randomizedGroup: ['ADUControl', 'PEDControl'],
-      ageGroup: ['10-13', '14-17', '18-39', '40-59', '60+'],
-      sex: ['Male', 'Female'],
-    });
-  };
 
   // render JSX
   return (
@@ -92,78 +29,8 @@ function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
         sedentary adults and the highly active adults in the human main study.
       </div>
       <div className="biospecimen-lookup-container border shadow-sm px-4 pt-3 pb-2 mb-4">
-        {/* Show loading indicator while data is being loaded */}
-        {loading && <DataLoadingIndicator progress={progress} />}
-
-        {/* Show error if data loading failed */}
-        {error && (
-          <div className="alert alert-danger" role="alert">
-            <h5 className="alert-heading">Data Loading Error</h5>
-            <p>{error}</p>
-            <div className="d-flex gap-2">
-              <button className="btn btn-outline-danger" onClick={refresh}>
-                <i className="bi bi-arrow-clockwise mr-1" />
-                Retry
-              </button>
-              <button
-                className="btn btn-outline-secondary"
-                onClick={handleResetFilters}
-              >
-                <i className="bi bi-x-circle mr-1" />
-                Clear Filters
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Show filters and table only when not loading and no error */}
-        {!loading && !error && (
-          <>
-            {/* Visualization section */}
-            <InteractiveBiospecimenChart />
-
-            {/* Results section */}
-            {hasActiveFilters && (
-              <div className="mt-4">
-                <BiospecimenResultsTable data={filteredData} />
-              </div>
-            )}
-
-            {/* Data info */}
-            <div className="mt-3 text-muted small d-flex justify-content-between align-items-center">
-              <div>
-                <i className="bi bi-info-circle mr-1" />
-                {hasActiveFilters
-                  ? `${filteredData.length.toLocaleString()} biospecimen records found`
-                  : 'Apply filters to query biospecimen data'}
-              </div>
-              {hasActiveFilters && (
-                <button
-                  className="btn btn-link btn-sm text-muted p-0"
-                  onClick={refresh}
-                  title="Refresh data"
-                >
-                  <i className="bi bi-arrow-clockwise" />
-                </button>
-              )}
-            </div>
-          </>
-        )}
-
-        {/* Show message when no filters are applied */}
-        {!loading && !error && !hasActiveFilters && (
-          <div className="text-center py-5">
-            <i
-              className="bi bi-funnel text-muted"
-              style={{ fontSize: '3rem' }}
-            />
-            <h5 className="text-muted mt-3">Apply Filters to Query Data</h5>
-            <p className="text-muted">
-              Select one or more filter criteria above to search the biospecimen
-              database.
-            </p>
-          </div>
-        )}
+        {/* Interactive Biospecimen Chart Component - handles all filtering and visualization */}
+        <InteractiveBiospecimenChart />
       </div>
     </div>
   );
