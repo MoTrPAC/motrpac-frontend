@@ -126,9 +126,11 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
         setLoading(false);
       } catch (err) {
         if (err.name === 'AbortError') {
+          console.log('Request was cancelled (this is normal when filters change quickly)');
           return; // Request was cancelled, don't update state
         }
 
+        // Only log actual errors, not cancellations
         console.error('Error loading biospecimen data:', err);
         setError(err.message || 'Failed to load biospecimen data');
         setLoading(false);
