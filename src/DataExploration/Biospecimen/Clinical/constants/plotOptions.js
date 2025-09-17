@@ -29,17 +29,8 @@ export const RANDOMIZED_GROUP_MAPPING = {
 
 // Available filter options for user selection
 export const FILTER_OPTIONS = {
-  sexOptions: [
-    { value: 'Male', label: 'Male' },
-    { value: 'Female', label: 'Female' },
-  ],
-  ageGroupOptions: [
-    { value: '10-13', label: '10 to 13 years old' },
-    { value: '14-17', label: '14 to 17 years old' },
-    { value: '18-39', label: '18 to 39 years old' },
-    { value: '40-59', label: '40 to 59 years old' },
-    { value: '60+', label: '60 years and older' },
-  ],
+  sexOptions: ['Male', 'Female'],
+  ageGroupOptions: ['10-13', '14-17', '18-39', '40-59', '60+'],
   randomGroupOptions: ['Control', 'Endurance', 'Resistance'],
 };
 
@@ -72,6 +63,15 @@ export const filterUtils = {
       }
       return filters[key] === defaultFilters[key];
     });
+  },
+
+  // Reset filters to default values
+  resetToDefaults: () => {
+    return {
+      sex: [...DEFAULT_FILTERS.sex],
+      dmaqc_age_groups: [...DEFAULT_FILTERS.dmaqc_age_groups],
+      random_group_code: DEFAULT_FILTERS.random_group_code,
+    };
   },
 };
 
@@ -166,7 +166,7 @@ export const TISSUE_CODE_TO_NAME = {
 };
 
 // Define intervention phases and tissue types for consistency
-export const INTERVENTION_PHASES = ['Intervention', 'Intervention'];
+export const INTERVENTION_PHASES = ['Pre-Intervention', 'Post-Intervention'];
 export const TISSUE_TYPES = ['Adipose', 'Blood', 'Muscle']; // Consistent tissue types
 
 
@@ -191,55 +191,92 @@ export const generateCacheKey = (filters) => {
 // const cacheKey = generateCacheKey
 // console.log('Generated Cache Key:', cacheKey);
 
-// Export
-export function chartConfigFactory() {
-  return {
-    createBiospecimenChart: ({ series, phases }) => {
-      return {
-        ...PLOT_OPTIONS,
+// Export chart configuration factory
+export const chartConfigFactory = {
+  createBiospecimenChart: ({ title, subtitle, onBarClick, series, categories }) => {
+    return {
+      chart: {
+        type: 'column',
+        height: 400,
+      },
+      title: {
+        text: title || 'Biospecimen Distribution',
+        style: {
+          fontSize: '18px',
+          fontWeight: 'bold',
+        },
+      },
+      subtitle: {
+        text: subtitle || '',
+        style: {
+          fontSize: '14px',
+          color: '#666',
+        },
+      },
+      xAxis: {
+        categories: categories || ['Pre-Intervention', 'Post-Intervention'],
         title: {
-          display: true,
-          text: 'Biospecimen Distribution by Tissue and Intervention Phase',
-          font: { size: 20, weight: 'bold' },
-        },
-        xaxis: {
-          categories: phases,
-          title: {
-            text: 'Intervention Phase',
-            style: { fontSize: '16px', fontWeight: 'bold' },
+          text: 'Intervention Phase',
+          style: {
+            fontSize: '14px',
+            fontWeight: 'bold',
           },
         },
-        yaxis: {
-          title: {
-            text: 'Number of Biospecimens',
-            style: { fontSize: '16px', fontWeight: 'bold' },
-          },
-          min: 0,
-          tickAmount: 5,
-        },
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            columnWidth: '55%',
-            endingShape: 'rounded',
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Number of Biospecimens',
+          style: {
+            fontSize: '14px',
+            fontWeight: 'bold',
           },
         },
-        fill: {
-          opacity: 1,
-        },
-        series: series.map((s) => ({
-          name: s.tissue,
-          data: s.data.map((d) => d.y),
-          color: getColorForTissue(s.tissue),
-        })),
-        tooltip: {
-          y: {
-            formatter: function (val) {
-              return val + ' biospecimens';
+        allowDecimals: false,
+      },
+      legend: {
+        align: 'center',
+        verticalAlign: 'bottom',
+        layout: 'horizontal',
+      },
+      plotOptions: {
+        column: {
+          grouping: true,
+          shadow: false,
+          borderWidth: 0,
+          cursor: 'pointer',
+          point: {
+            events: {
+              click: function (event) {
+                if (onBarClick) {
+                  onBarClick({
+                    point: this,
+                    event: event.browserEvent,
+                  });
+                }
+              },
             },
           },
         },
-      };
-    },
-  };
-}
+      },
+      series: series || [],
+      tooltip: {
+        shared: true,
+        useHTML: true,
+        formatter: function () {
+          let tooltip = `<b>${this.x}</b><br/>`;
+          this.points.forEach((point) => {
+            const assayInfo = point.point.assayTypes && point.point.assayTypes.length > 0 
+              ? `<br/><small>Assays: ${point.point.assayTypes.join(', ')}</small>`
+              : '';
+            tooltip += `<span style="color:${point.color}">●</span> ${point.series.name}: <b>${point.y}</b> samples${assayInfo}<br/>`;
+          });
+          return tooltip;
+        },
+      },
+      credits: {
+        enabled: false,
+      },
+    };
+  },
+};
