@@ -8,6 +8,11 @@ function CreateBiospecimenService() {
   const endpoint = import.meta.env.VITE_BIOSPECIMEN_DATA_ENDPOINT;
   const apiKey = import.meta.env.VITE_API_SERVICE_KEY_DEV;
 
+  console.log('Biospecimen Service Configuration:');
+  console.log('API URL:', apiURL);
+  console.log('Endpoint:', endpoint);
+  console.log('API Key present:', !!apiKey);
+
   if (!apiURL) {
     throw new Error('VITE_API_SERVICE_ADDRESS_DEV is not configured');
   }
@@ -16,9 +21,12 @@ function CreateBiospecimenService() {
     throw new Error('VITE_API_SERVICE_KEY_DEV is not configured');
   }
 
+  const baseURL = apiURL + (endpoint || '');
+  console.log('Full base URL:', baseURL);
+
   // Create axios instance with default config
   const client = axios.create({
-    baseURL: apiURL + endpoint,
+    baseURL,
     timeout: 30000, // 30 seconds timeout
     headers: {
       'Content-Type': 'application/json',
@@ -44,6 +52,9 @@ function CreateBiospecimenService() {
 
       if (error.response) {
         const { status, data } = error.response;
+        console.error('Response status:', status);
+        console.error('Response data:', data);
+        
         switch (status) {
           case 401:
             throw new Error('Unauthorized: Invalid API key');
@@ -57,16 +68,18 @@ function CreateBiospecimenService() {
             throw new Error('Server error. Please try again later.');
           default:
             throw new Error(
-              data?.message || `HTTP ${status}: ${error.message}`,
+              data?.message || data?.error || `HTTP ${status}: ${error.message}`,
             );
         }
       }
 
       if (error.request) {
+        console.error('Request made but no response received:', error.request);
         throw new Error('Network error. Please check your connection.');
       }
 
-      throw new Error('An unexpected error occurred.');
+      console.error('Error setting up request:', error.message);
+      throw new Error(`Request setup error: ${error.message}`);
     },
   );
 
@@ -79,12 +92,19 @@ function CreateBiospecimenService() {
 
     // Map component filter names to API parameter names
     const filterMapping = {
+      // Direct mappings - these keys match what components send
+      sex: 'sex',
+      dmaqc_age_groups: 'dmaqc_age_groups',
+      random_group_code: 'random_group_code',
+      visit_code: 'visit_code',
+      sample_group_code: 'sample_group_code',
+      
+      // Legacy mappings for backward compatibility
       tranche: 'tranche',
       randomizedGroup: 'random_group_code',
       collectionVisit: 'visit_code',
       timepoint: 'timepoint',
       tissue: 'sample_group_code',
-      sex: 'sex',
       tempSampProfile: 'temp_samp_profile',
       bmiGroups: 'bmi_groups',
       ageGroups: 'dmaqc_age_groups',
@@ -93,8 +113,9 @@ function CreateBiospecimenService() {
 
     // Convert filters to API parameters
     Object.entries(filters).forEach(([key, value]) => {
-      if (value && value !== '' && filterMapping[key]) {
-        const apiParam = filterMapping[key];
+      if (value && value !== '') {
+        // Use direct key if no mapping exists, otherwise use mapped key
+        const apiParam = filterMapping[key] || key;
 
         // Handle array values (convert comma-separated strings to arrays if needed)
         if (Array.isArray(value)) {
@@ -160,6 +181,9 @@ function CreateBiospecimenService() {
         };
       } catch (error) {
         console.error('Error querying biospecimens:', error);
+        console.error('Request filters:', filters);
+        console.error('Formatted params:', params);
+        console.error('Axios config:', axiosConfig);
         throw error;
       }
     },
