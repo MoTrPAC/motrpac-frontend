@@ -139,29 +139,29 @@ function CreateBiospecimenService() {
      * @returns {Promise<Object>} API response with biospecimen data
      */
     async queryBiospecimens(filters = {}, options = {}) {
+      // Extract signal from options - it should go to axios config, not query params
+      const { signal, ...requestOptions } = options;
+      
+      const params = {
+        ...formatFilters(filters),
+        ...requestOptions, // This now excludes signal
+      };
+
+      // Add pagination if specified
+      if (requestOptions.limit) {
+        params.limit = requestOptions.limit;
+      }
+      if (requestOptions.offset) {
+        params.offset = requestOptions.offset;
+      }
+
+      // Create axios config with signal if provided
+      const axiosConfig = { params };
+      if (signal) {
+        axiosConfig.signal = signal;
+      }
+
       try {
-        // Extract signal from options - it should go to axios config, not query params
-        const { signal, ...requestOptions } = options;
-        
-        const params = {
-          ...formatFilters(filters),
-          ...requestOptions, // This now excludes signal
-        };
-
-        // Add pagination if specified
-        if (requestOptions.limit) {
-          params.limit = requestOptions.limit;
-        }
-        if (requestOptions.offset) {
-          params.offset = requestOptions.offset;
-        }
-
-        // Create axios config with signal if provided
-        const axiosConfig = { params };
-        if (signal) {
-          axiosConfig.signal = signal;
-        }
-
         const response = await client.get('/', axiosConfig);
 
         // Validate response structure
@@ -180,6 +180,12 @@ function CreateBiospecimenService() {
           previous: response.data.previous || null,
         };
       } catch (error) {
+        if (error.name === 'AbortError') {
+          console.log('Biospecimen request cancelled (normal behavior)');
+          // Re-throw the abort error as-is, don't wrap it
+          throw error;
+        }
+        
         console.error('Error querying biospecimens:', error);
         console.error('Request filters:', filters);
         console.error('Formatted params:', params);
