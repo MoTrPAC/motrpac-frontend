@@ -127,7 +127,6 @@ const InteractiveBiospecimenChart = () => {
             filterOptions={filterOptions}
             onCheckboxChange={handleCheckboxChange}
             onRadioChange={handleRadioChange}
-            loading={loading}
           />
         </div>
 
