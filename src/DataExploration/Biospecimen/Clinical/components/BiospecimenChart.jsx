@@ -11,6 +11,15 @@ import {
   INTERVENTION_PHASES,
 } from '../constants/plotOptions';
 
+// Ensure Highcharts is properly initialized
+if (typeof Highcharts === 'object') {
+  Highcharts.setOptions({
+    lang: {
+      thousandsSep: ','
+    }
+  });
+}
+
 /**
  * Interactive Biospecimen Bar Chart component
  * Features:
@@ -99,13 +108,17 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
   const chartOptions = useMemo(() => {
     if (!chartData || !data) return null;
 
-    return chartConfigFactory.createBiospecimenChart({
+    const config = chartConfigFactory.createBiospecimenChart({
       title: 'Biospecimen Sample Distribution',
       subtitle: `${data.length.toLocaleString()} samples • Click bars for detailed breakdown`,
       onBarClick,
       series: chartData.series,
       categories: chartData.phases,
     });
+    
+    // Debug log to ensure proper Highcharts config
+    console.log('Chart config:', config);
+    return config;
   }, [chartData, data, onBarClick]);
 
   // Render different states based on conditions
@@ -154,13 +167,21 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
   return (
     <div className="card h-100">
       <div className="card-body">
-        {chartOptions && (
+        {chartOptions && Object.keys(chartOptions).length > 0 && (
           <HighchartsReact
             ref={chartRef}
             highcharts={Highcharts}
             options={chartOptions}
             immutable={false}
           />
+        )}
+        {(!chartOptions || Object.keys(chartOptions).length === 0) && (
+          <div className="text-center py-5 text-muted">
+            <div className="spinner-border text-primary" role="status">
+              <span className="sr-only">Preparing chart...</span>
+            </div>
+            <p className="mt-2">Setting up chart configuration...</p>
+          </div>
         )}
       </div>
     </div>
