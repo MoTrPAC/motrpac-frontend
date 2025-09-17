@@ -37,10 +37,14 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState(0);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
   const abortControllerRef = useRef(null);
 
   // Debounce filters to avoid excessive API calls
   const debouncedFilters = useDebounce(filters, 300);
+
+  // Memoize options to prevent unnecessary re-renders
+  const memoizedOptions = useMemo(() => options, [JSON.stringify(options)]);
 
   // Check if any filters are active
   const hasActiveFilters = useMemo(() => {
@@ -49,10 +53,10 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
     );
   }, [debouncedFilters]);
 
-  const loadData = useCallback(
-    async (filtersToUse = {}) => {
+  useEffect(() => {
+    const loadBiospecimenData = async () => {
       // Don't load if no active filters
-      if (!Object.values(filtersToUse).some((value) => value && value !== '')) {
+      if (!Object.values(debouncedFilters).some((value) => value && value !== '')) {
         setData([]);
         setLoading(false);
         setError(null);
@@ -72,7 +76,7 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
 
       try {
         // Check cache first
-        const cacheKey = generateCacheKey(filtersToUse);
+        const cacheKey = generateCacheKey(debouncedFilters);
         const cachedData = localStorage.getItem(cacheKey);
         const cachedTimestamp = localStorage.getItem(cacheKey + '-timestamp');
         const cacheExpiry = 5 * 60 * 1000; // 5 minutes cache for filtered results
@@ -92,8 +96,8 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
 
         // Make API request
         const response = await BiospecimenService.queryBiospecimens(
-          filtersToUse,
-          { ...options, signal: abortControllerRef.current.signal },
+          debouncedFilters,
+          { ...memoizedOptions, signal: abortControllerRef.current.signal },
         );
 
         setProgress(70);
@@ -121,12 +125,9 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
         setLoading(false);
         setData([]);
       }
-    },
-    [options],
-  );
+    };
 
-  useEffect(() => {
-    loadData(debouncedFilters);
+    loadBiospecimenData();
 
     return () => {
       // Cleanup: abort any pending requests
@@ -134,7 +135,7 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
         abortControllerRef.current.abort();
       }
     };
-  }, [debouncedFilters, loadData]);
+  }, [debouncedFilters, memoizedOptions, refreshTrigger]);
 
   // Manual refresh function
   const refresh = useCallback(() => {
@@ -143,9 +144,9 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
     localStorage.removeItem(cacheKey);
     localStorage.removeItem(cacheKey + '-timestamp');
 
-    // Reload data
-    loadData(debouncedFilters);
-  }, [debouncedFilters, loadData]);
+    // Trigger refresh by incrementing the trigger
+    setRefreshTrigger(prev => prev + 1);
+  }, [debouncedFilters]);
 
   return {
     data,
