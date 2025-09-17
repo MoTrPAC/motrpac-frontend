@@ -44,7 +44,11 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
   const debouncedFilters = useDebounce(filters, 300);
 
   // Memoize options to prevent unnecessary re-renders
-  const memoizedOptions = useMemo(() => options, [JSON.stringify(options)]);
+  // Exclude 'signal' from user options as we manage it internally
+  const memoizedOptions = useMemo(() => {
+    const { signal, ...optionsWithoutSignal } = options;
+    return optionsWithoutSignal;
+  }, [JSON.stringify(options)]);
 
   // Check if any filters are active
   const hasActiveFilters = useMemo(() => {
@@ -94,10 +98,15 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
 
         setProgress(30);
 
-        // Make API request
+        // Make API request - separate signal from user options to avoid conflicts
+        const requestOptions = {
+          ...memoizedOptions,
+          signal: abortControllerRef.current.signal,
+        };
+        
         const response = await BiospecimenService.queryBiospecimens(
           debouncedFilters,
-          { ...memoizedOptions, signal: abortControllerRef.current.signal },
+          requestOptions,
         );
 
         setProgress(70);
