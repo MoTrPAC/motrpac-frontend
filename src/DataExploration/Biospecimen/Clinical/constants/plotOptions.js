@@ -75,74 +75,6 @@ export const filterUtils = {
   },
 };
 
-/**
-* Plot options for biospecimen charts
-* Centralized configuration for chart appearance and behavior
-*/
-export const PLOT_OPTIONS = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      position: 'top',
-      labels: {
-        boxWidth: 20,
-        padding: 15,
-        font: {
-          size: 14,
-        },
-      },
-    },
-    tooltip: {
-      enabled: true,
-      mode: 'index',
-      intersect: false,
-      backgroundColor: 'rgba(0,0,0,0.7)',
-      titleFont: { size: 16, weight: 'bold' },
-      bodyFont: { size: 14 },
-      padding: 10,
-    },
-    title: {
-      display: false,
-      text: '',
-      font: { size: 18, weight: 'bold' },
-    },
-  },
-  scales: {
-    x: {
-      title: {
-        display: true,
-        text: 'Tissue Type',
-        font: { size: 16, weight: 'bold' },
-      },
-      ticks: {
-        font: { size: 14 },
-      },
-      grid: {
-        display: false,
-      },
-    },
-    y: {
-      title: {
-        display: true,
-        text: 'Number of Biospecimens',
-        font: { size: 16, weight: 'bold' },
-      },
-      ticks: {
-        font: { size: 14 },
-        beginAtZero: true,
-        stepSize: 1,
-      },
-      grid: {
-        color: '#e0e0e0',
-      },
-    },
-  },
-};
-
-// Export default plot options
-export default PLOT_OPTIONS;
-
 // Helper function to get color for a tissue type
 export const getColorForTissue = (tissue) => {
   return TISSUE_COLORS[tissue] || '#7f8c8d'; // Default gray if not found
@@ -194,10 +126,11 @@ export const generateCacheKey = (filters) => {
 // Export chart configuration factory
 export const chartConfigFactory = {
   createBiospecimenChart: ({ title, subtitle, onBarClick, series, categories }) => {
-    return {
+    const config = {
       chart: {
         type: 'column',
         height: 400,
+        animation: false, // Disable animation to prevent timing issues
       },
       title: {
         text: title || 'Biospecimen Distribution',
@@ -221,22 +154,24 @@ export const chartConfigFactory = {
             fontSize: '14px',
             fontWeight: 'bold',
           },
+          margin: 30,
         },
       },
       yAxis: {
         min: 0,
         title: {
-          text: 'Number of Biospecimens',
+          text: 'Sample Count',
           style: {
             fontSize: '14px',
             fontWeight: 'bold',
           },
+          margin: 30,
         },
         allowDecimals: false,
       },
       legend: {
-        align: 'center',
-        verticalAlign: 'bottom',
+        align: 'right',
+        verticalAlign: 'top',
         layout: 'horizontal',
       },
       plotOptions: {
@@ -245,14 +180,22 @@ export const chartConfigFactory = {
           shadow: false,
           borderWidth: 0,
           cursor: 'pointer',
+          animation: false, // Disable animation
+        },
+        series: {
           point: {
             events: {
               click: function (event) {
-                if (onBarClick) {
-                  onBarClick({
-                    point: this,
-                    event: event.browserEvent,
-                  });
+                try {
+                  console.log('Bar clicked:', this, event);
+                  if (typeof onBarClick === 'function') {
+                    onBarClick({
+                      point: this,
+                      event: event,
+                    });
+                  }
+                } catch (error) {
+                  console.error('Error in click handler:', error);
                 }
               },
             },
@@ -264,19 +207,34 @@ export const chartConfigFactory = {
         shared: true,
         useHTML: true,
         formatter: function () {
-          let tooltip = `<b>${this.x}</b><br/>`;
-          this.points.forEach((point) => {
-            const assayInfo = point.point.assayTypes && point.point.assayTypes.length > 0 
-              ? `<br/><small>Assays: ${point.point.assayTypes.join(', ')}</small>`
-              : '';
-            tooltip += `<span style="color:${point.color}">●</span> ${point.series.name}: <b>${point.y}</b> samples${assayInfo}<br/>`;
-          });
-          return tooltip;
+          try {
+            let tooltip = `<b>${this.x}</b><br/>`;
+            if (this.points) {
+              this.points.forEach((point) => {
+                const assayInfo = point.point.assayTypes && point.point.assayTypes.length > 0 
+                  ? `<br/><small>Assays: ${point.point.assayTypes.join(', ')}</small>`
+                  : '';
+                tooltip += `<span style="color:${point.color}">●</span> ${point.series.name}: <b>${point.y}</b> samples${assayInfo}<br/>`;
+              });
+            }
+            return tooltip;
+          } catch (error) {
+            console.error('Error in tooltip formatter:', error);
+            return `<b>${this.x || 'Data'}</b>`;
+          }
         },
       },
       credits: {
         enabled: false,
       },
     };
+    
+    // Validate the configuration before returning
+    if (!config.chart || !config.series) {
+      console.error('Invalid chart configuration:', config);
+      return null;
+    }
+    
+    return config;
   },
 };
