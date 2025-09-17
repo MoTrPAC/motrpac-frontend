@@ -129,7 +129,7 @@ export const chartConfigFactory = {
     const config = {
       chart: {
         type: 'column',
-        height: 400,
+        height: 500,
         animation: false, // Disable animation to prevent timing issues
       },
       title: {
