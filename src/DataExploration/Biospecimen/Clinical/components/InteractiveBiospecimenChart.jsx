@@ -7,6 +7,9 @@ import {
   DEFAULT_FILTERS,
   FILTER_OPTIONS,
   RANDOMIZED_GROUP_MAPPING,
+  CHART_AXIS_OPTIONS,
+  CHART_AXIS_LABELS,
+  DEFAULT_CHART_AXIS,
 } from '../constants/plotOptions';
 
 /**
@@ -22,6 +25,9 @@ const InteractiveBiospecimenChart = () => {
 
   // Selected bar state for drill-down
   const [selectedBar, setSelectedBar] = useState(null);
+
+  // Chart axis mode state
+  const [axisMode, setAxisMode] = useState(DEFAULT_CHART_AXIS);
 
   // Convert filter arrays to API format (comma-separated strings)
   // Memoized with proper dependencies to prevent unnecessary recalculations
@@ -103,12 +109,19 @@ const InteractiveBiospecimenChart = () => {
     setSelectedBar(null);
   }, []);
 
+  // Handle axis mode change
+  const handleAxisModeChange = useCallback((newAxisMode) => {
+    setAxisMode(newAxisMode);
+    setSelectedBar(null); // Clear selection when changing axis mode
+  }, []);
+
   // Handle bar click for drill-down
   const handleBarClick = useCallback((event) => {
     const point = event.point;
     setSelectedBar({
       phase: point.phase,
       tissue: point.tissue,
+      timepoint: point.timepoint,
       samples: point.samples,
       count: point.y,
       assayTypes: point.assayTypes,
@@ -131,11 +144,37 @@ const InteractiveBiospecimenChart = () => {
 
         {/* Chart - Right Side */}
         <div className="col-lg-10">
+          {/* Chart Axis Mode Toggle */}
+          <div className="card mb-3">
+            <div className="card-body py-2">
+              <div className="row align-items-center">
+                <div className="col-auto">
+                  <small className="text-muted fw-bold">Chart View:</small>
+                </div>
+                <div className="col-auto">
+                  <div className="btn-group btn-group-sm" role="group" aria-label="Chart axis mode">
+                    {Object.values(CHART_AXIS_OPTIONS).map((mode) => (
+                      <button
+                        key={mode}
+                        type="button"
+                        className={`btn btn-outline-primary ${axisMode === mode ? 'active' : ''}`}
+                        onClick={() => handleAxisModeChange(mode)}
+                      >
+                        {CHART_AXIS_LABELS[mode]}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <BiospecimenChart
             data={data}
             loading={loading}
             error={error}
             onBarClick={handleBarClick}
+            axisMode={axisMode}
           />
         </div>
       </div>
@@ -148,7 +187,8 @@ const InteractiveBiospecimenChart = () => {
               <div className="card-header d-flex justify-content-between align-items-center">
                 <h6 className="mb-0">
                   <i className="bi bi-table mr-2" />
-                  {selectedBar.tissue} - {selectedBar.phase} ({selectedBar.count} samples)
+                  {selectedBar.tissue} - {selectedBar.phase}
+                  {selectedBar.timepoint && ` - ${selectedBar.timepoint}`} ({selectedBar.count} samples)
                 </h6>
                 <button
                   className="btn btn-sm btn-outline-secondary"
@@ -170,6 +210,7 @@ const InteractiveBiospecimenChart = () => {
                         <th>Sample ID</th>
                         <th>Subject ID</th>
                         <th>Visit Code</th>
+                        <th>Timepoint</th>
                         <th>Random Group</th>
                         <th>Sex</th>
                         <th>Age Group</th>
@@ -181,6 +222,7 @@ const InteractiveBiospecimenChart = () => {
                           <td>{sample.aliquot_id || 'N/A'}</td>
                           <td>{sample.subject_id || 'N/A'}</td>
                           <td>{sample.visit_code || 'N/A'}</td>
+                          <td>{sample.timepoint || 'N/A'}</td>
                           <td>{sample.random_group_code || 'N/A'}</td>
                           <td>{sample.sex || 'N/A'}</td>
                           <td>{sample.dmaqc_age_groups || 'N/A'}</td>
