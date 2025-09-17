@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { biospecimenService } from '../../../../lib/api/biospecimenService';
+import { BiospecimenService } from '../../../../lib/api/biospecimenService';
 
 // Debounce utility
 const useDebounce = (value, delay) => {
@@ -91,7 +91,7 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
         setProgress(30);
 
         // Make API request
-        const response = await biospecimenService.queryBiospecimens(
+        const response = await BiospecimenService.queryBiospecimens(
           filtersToUse,
           { ...options, signal: abortControllerRef.current.signal },
         );
