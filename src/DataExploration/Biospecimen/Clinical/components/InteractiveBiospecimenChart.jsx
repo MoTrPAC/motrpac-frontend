@@ -199,11 +199,13 @@ const InteractiveBiospecimenChart = () => {
                 </button>
               </div>
               <div className="card-body">
+                {/*
                 {selectedBar.assayTypes.length > 0 && (
                   <p className="mb-3">
                     <strong>Available Assays:</strong> {selectedBar.assayTypes.join(', ')}
                   </p>
                 )}
+                */}
                 <div className="biospecimen-lookup-table table-responsive mt-3">
                   <table className="table table-striped table-hover table-bordered">
                     <thead className="thead-dark">
