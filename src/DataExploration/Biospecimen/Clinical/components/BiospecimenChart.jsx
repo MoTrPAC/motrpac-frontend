@@ -18,12 +18,16 @@ import {
 } from '../constants/plotOptions';
 
 // Ensure Highcharts is properly initialized
-if (typeof Highcharts === 'object') {
-  Highcharts.setOptions({
-    lang: {
-      thousandsSep: ','
-    }
-  });
+if (typeof Highcharts === 'object' && Highcharts.setOptions) {
+  try {
+    Highcharts.setOptions({
+      lang: {
+        thousandsSep: ','
+      }
+    });
+  } catch (error) {
+    console.warn('Error setting Highcharts options:', error);
+  }
 }
 
 /**
@@ -258,6 +262,7 @@ const BiospecimenChart = ({ data, loading, error, onBarClick, axisMode = DEFAULT
             highcharts={Highcharts}
             options={chartOptions}
             immutable={false}
+            containerProps={{ style: { height: '450px' } }}
           />
         )}
         {(!chartOptions || Object.keys(chartOptions).length === 0) && (
