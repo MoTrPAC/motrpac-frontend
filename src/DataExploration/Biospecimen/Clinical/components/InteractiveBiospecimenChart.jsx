@@ -207,25 +207,33 @@ const InteractiveBiospecimenChart = () => {
                   <table className="table table-sm table-striped">
                     <thead>
                       <tr>
-                        <th>Sample ID</th>
-                        <th>Subject ID</th>
+                        <th>Vial Label</th>
+                        <th>Tranche</th>
                         <th>Visit Code</th>
-                        <th>Timepoint</th>
-                        <th>Random Group</th>
+                        <th>Randomized Group</th>
+                        <th>Tissue</th>
                         <th>Sex</th>
                         <th>Age Group</th>
+                        <th>Timepoint</th>
+                        <th>BMI</th>
+                        <th>Temp Sample Profile</th>
+                        <th>CAS Received</th>
                       </tr>
                     </thead>
                     <tbody>
                       {selectedBar.samples.slice(0, 100).map((sample, index) => (
                         <tr key={index}>
-                          <td>{sample.aliquot_id || 'N/A'}</td>
-                          <td>{sample.subject_id || 'N/A'}</td>
+                          <td>{sample.vial_label || 'N/A'}</td>
+                          <td>{sample.tranche || 'N/A'}</td>
                           <td>{sample.visit_code || 'N/A'}</td>
-                          <td>{sample.timepoint || 'N/A'}</td>
                           <td>{sample.random_group_code || 'N/A'}</td>
+                          <td>{sample.sample_group_code || 'N/A'}</td>
                           <td>{sample.sex || 'N/A'}</td>
                           <td>{sample.dmaqc_age_groups || 'N/A'}</td>
+                          <td>{sample.timepoint || 'N/A'}</td>
+                          <td>{sample.bmi || 'N/A'}</td>
+                          <td>{sample.temp_samp_profile || 'N/A'}</td>
+                          <td>{sample.received_cas || 'N/A'}</td>
                         </tr>
                       ))}
                     </tbody>
