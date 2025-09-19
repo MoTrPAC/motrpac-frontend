@@ -11,6 +11,7 @@ import {
   CHART_AXIS_LABELS,
   DEFAULT_CHART_AXIS,
 } from '../constants/plotOptions';
+import roundNumbers from '../../../../lib/utils/roundNumbers';
 
 /**
  * Main Interactive Biospecimen Visualization component
@@ -185,13 +186,13 @@ const InteractiveBiospecimenChart = () => {
           <div className="col-12">
             <div className="card">
               <div className="card-header d-flex justify-content-between align-items-center">
-                <h6 className="mb-0">
+                <h5 className="mb-0">
                   <i className="bi bi-table mr-2" />
-                  {selectedBar.tissue} - {selectedBar.phase}
+                  {selectedBar.tissue} - {selectedBar.phase} Results
                   {selectedBar.timepoint && ` - ${selectedBar.timepoint}`} ({selectedBar.count} samples)
-                </h6>
+                </h5>
                 <button
-                  className="btn btn-sm btn-outline-secondary"
+                  className="btn btn-sm btn-secondary"
                   onClick={() => setSelectedBar(null)}
                 >
                   <i className="bi bi-x" />
@@ -203,37 +204,49 @@ const InteractiveBiospecimenChart = () => {
                     <strong>Available Assays:</strong> {selectedBar.assayTypes.join(', ')}
                   </p>
                 )}
-                <div className="table-responsive">
-                  <table className="table table-sm table-striped">
-                    <thead>
+                <div className="biospecimen-lookup-table table-responsive mt-3">
+                  <table className="table table-striped table-hover table-bordered">
+                    <thead className="thead-dark">
                       <tr>
-                        <th>Vial Label</th>
-                        <th>Tranche</th>
-                        <th>Visit Code</th>
-                        <th>Randomized Group</th>
-                        <th>Tissue</th>
-                        <th>Sex</th>
-                        <th>Age Group</th>
-                        <th>Timepoint</th>
-                        <th>BMI</th>
-                        <th>Temp Sample Profile</th>
-                        <th>CAS Received</th>
+                        <th scope="col">Vial Label</th>
+                        <th scope="col">Participant ID</th>
+                        <th scope="col">Tranche</th>
+                        <th scope="col">Visit Code</th>
+                        <th scope="col">Randomized Group</th>
+                        <th scope="col">Tissue</th>
+                        <th scope="col">Sex</th>
+                        <th scope="col">Age Group</th>
+                        <th scope="col">Timepoint</th>
+                        <th scope="col">BMI</th>
+                        <th scope="col">Temp Sample Profile</th>
+                        <th scope="col">CAS Received</th>
                       </tr>
                     </thead>
                     <tbody>
                       {selectedBar.samples.slice(0, 100).map((sample, index) => (
                         <tr key={index}>
-                          <td>{sample.vial_label || 'N/A'}</td>
-                          <td>{sample.tranche || 'N/A'}</td>
+                          <td>{sample.vial_label}</td>
+                          <td>{sample.pid}</td>
+                          <td>
+                            <span className="badge badge-secondary">{transformTrancheCode(sample.tranche)}</span>
+                          </td>
                           <td>{sample.visit_code || 'N/A'}</td>
                           <td>{sample.random_group_code || 'N/A'}</td>
-                          <td>{sample.sample_group_code || 'N/A'}</td>
-                          <td>{sample.sex || 'N/A'}</td>
+                          <td>{transformTissueCode(sample.sample_group_code)}</td>
+                          <td>
+                            <span className={`badge ${sample.sex === 'Male' ? 'badge-info' : 'badge-warning'}`}>
+                              {sample.sex}
+                            </span>
+                          </td>
                           <td>{sample.dmaqc_age_groups || 'N/A'}</td>
                           <td>{sample.timepoint || 'N/A'}</td>
-                          <td>{sample.bmi || 'N/A'}</td>
+                          <td>{roundNumbers(sample.bmi, 1)}</td>
                           <td>{sample.temp_samp_profile || 'N/A'}</td>
-                          <td>{sample.received_cas || 'N/A'}</td>
+                          <td>
+                            <span className="badge badge-success">
+                              {Number(sample.received_cas) === 1 ? 'Yes' : 'No'}
+                            </span>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -256,3 +269,24 @@ const InteractiveBiospecimenChart = () => {
 InteractiveBiospecimenChart.propTypes = {};
 
 export default InteractiveBiospecimenChart;
+
+// transform tissue code to human-readable values
+function transformTissueCode(code) {
+  const tissueMap = {
+    'BLO': 'Blood',
+    'MUS': 'Muscle',
+    'ADI': 'Adipose',
+  };
+  return tissueMap[code] || code;
+}
+
+function transformTrancheCode(code) {
+  const trancheMap = {
+    'TR00': 'Tranche 0',
+    'TR01': 'Tranche 1',
+    'TR02': 'Tranche 2',
+    'TR03': 'Tranche 3',
+    'TR04': 'Tranche 4',
+  };
+  return trancheMap[code] || code;
+}
