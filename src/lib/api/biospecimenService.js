@@ -1,6 +1,62 @@
 import axios from 'axios';
 
 /**
+ * Create mock biospecimen service for development when environment variables are missing
+ */
+function createMockService() {
+  console.log('Using mock biospecimen service - configure environment variables for real API');
+  
+  const mockData = [
+    {
+      visit_code: 'ADU_BAS',
+      sample_group_code: 'ADI',
+      timepoint: 'pre_exercise',
+      vial_label: 'MOCK001',
+      tranche: 'MOCK',
+      random_group_code: 'ADUControl',
+      sex: 'Male',
+      dmaqc_age_groups: '18-39',
+      raw_assays_with_results: 'METAB,PROT',
+    },
+    {
+      visit_code: 'ADU_PAS',
+      sample_group_code: 'BLO',
+      timepoint: 'post_10_min',
+      vial_label: 'MOCK002',
+      tranche: 'MOCK',
+      random_group_code: 'ADUEndur',
+      sex: 'Female',
+      dmaqc_age_groups: '40-59',
+      raw_assays_with_results: 'METAB,RNA',
+    },
+  ];
+
+  return {
+    async queryBiospecimens(filters = {}, options = {}) {
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      return {
+        data: mockData,
+        total: mockData.length,
+        count: mockData.length,
+        next: null,
+        previous: null,
+      };
+    },
+
+    async exportData(filters = {}, format = 'csv', options = {}) {
+      const csvContent = 'visit_code,sample_group_code,timepoint\nADU_BAS,ADI,pre_exercise\n';
+      return new Blob([csvContent], { type: 'text/csv' });
+    },
+
+    async healthCheck(options = {}) {
+      return true;
+    },
+  };
+}
+
+/**
  * Create biospecimen API service with configuration
  */
 function CreateBiospecimenService() {
@@ -13,12 +69,15 @@ function CreateBiospecimenService() {
   console.log('Endpoint:', endpoint);
   console.log('API Key present:', !!apiKey);
 
+  // For development, allow graceful degradation if environment variables are missing
   if (!apiURL) {
-    throw new Error('VITE_API_SERVICE_ADDRESS_DEV is not configured');
+    console.warn('VITE_API_SERVICE_ADDRESS_DEV is not configured - using placeholder');
+    return createMockService();
   }
 
   if (!apiKey) {
-    throw new Error('VITE_API_SERVICE_KEY_DEV is not configured');
+    console.warn('VITE_API_SERVICE_KEY_DEV is not configured - using placeholder');
+    return createMockService();
   }
 
   const baseURL = apiURL + (endpoint || '');
@@ -187,17 +246,13 @@ function CreateBiospecimenService() {
       } catch (error) {
         if (error.name === 'AbortError' || error.code === 'ERR_CANCELED' || error.message?.includes('canceled')) {
           console.log('Biospecimen request cancelled (normal behavior)');
-          // Re-throw the abort error as-is, don't wrap it, and preserve the type
-          const abortError = new Error('AbortError');
-          abortError.name = 'AbortError';
-          abortError.code = 'ERR_CANCELED';
-          throw abortError;
+          // Re-throw the abort error as-is to preserve its identity
+          throw error;
         }
         
         console.error('Error querying biospecimens:', error);
         console.error('Request filters:', filters);
         console.error('Formatted params:', params);
-        console.error('Axios config:', axiosConfig);
         throw error;
       }
     },
