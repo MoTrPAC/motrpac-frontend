@@ -203,8 +203,6 @@ const BiospecimenChart = ({ data, loading, error, onBarClick, axisMode = DEFAULT
       axisMode,
     });
     
-    // Debug log to ensure proper Highcharts config
-    console.log('Chart config:', config);
     return config;
   }, [chartData, data, onBarClick, axisMode]);
 

@@ -78,6 +78,11 @@ function CreateBiospecimenService() {
         throw new Error('Network error. Please check your connection.');
       }
 
+      // Don't wrap cancellation errors - let them through as-is
+      if (error.name === 'AbortError' || error.code === 'ERR_CANCELED' || error.message?.includes('canceled')) {
+        throw error;
+      }
+
       console.error('Error setting up request:', error.message);
       throw new Error(`Request setup error: ${error.message}`);
     },
@@ -180,10 +185,13 @@ function CreateBiospecimenService() {
           previous: response.data.previous || null,
         };
       } catch (error) {
-        if (error.name === 'AbortError') {
+        if (error.name === 'AbortError' || error.code === 'ERR_CANCELED' || error.message?.includes('canceled')) {
           console.log('Biospecimen request cancelled (normal behavior)');
-          // Re-throw the abort error as-is, don't wrap it
-          throw error;
+          // Re-throw the abort error as-is, don't wrap it, and preserve the type
+          const abortError = new Error('AbortError');
+          abortError.name = 'AbortError';
+          abortError.code = 'ERR_CANCELED';
+          throw abortError;
         }
         
         console.error('Error querying biospecimens:', error);

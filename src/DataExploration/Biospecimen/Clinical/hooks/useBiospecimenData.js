@@ -48,7 +48,7 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
   const memoizedOptions = useMemo(() => {
     const { signal, ...optionsWithoutSignal } = options;
     return optionsWithoutSignal;
-  }, [JSON.stringify(options)]);
+  }, [JSON.stringify(options)]); // Use JSON.stringify for deep comparison to avoid reference changes
 
   // Check if any filters are active
   const hasActiveFilters = useMemo(() => {
@@ -67,11 +67,13 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
         return;
       }
 
-      // Cancel previous request
+      // Cancel previous request if it exists
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
+        abortControllerRef.current = null; // Clear the reference
       }
 
+      // Create new abort controller for this request
       abortControllerRef.current = new AbortController();
 
       setLoading(true);
@@ -125,8 +127,15 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
         setProgress(100);
         setLoading(false);
       } catch (err) {
-        if (err.name === 'AbortError') {
+        // Improved abort error detection to handle different cancellation scenarios
+        if (
+          err.name === 'AbortError' || 
+          err.code === 'ERR_CANCELED' || 
+          err.message?.includes('canceled') ||
+          err.message?.includes('AbortError')
+        ) {
           console.log('Request was cancelled (this is normal when filters change quickly)');
+          // Don't update loading state here - let the new request handle it
           return; // Request was cancelled, don't update state
         }
 
@@ -134,6 +143,7 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
         console.error('Error loading biospecimen data:', err);
         setError(err.message || 'Failed to load biospecimen data');
         setLoading(false);
+        setProgress(0);
         setData([]);
       }
     };
