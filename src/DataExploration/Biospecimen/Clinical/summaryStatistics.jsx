@@ -28,7 +28,7 @@ function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
         Use this tool to look up biospecimen data curated from pre-COVID human
         sedentary adults and the highly active adults in the human main study.
       </div>
-      <div className="biospecimen-lookup-container border shadow-sm px-4 pt-3 pb-2 mb-4">
+      <div className="biospecimen-lookup-container mb-4">
         {/* Interactive Biospecimen Chart Component - handles all filtering and visualization */}
         <InteractiveBiospecimenChart />
       </div>
