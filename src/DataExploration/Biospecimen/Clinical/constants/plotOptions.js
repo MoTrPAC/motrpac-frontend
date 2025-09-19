@@ -274,10 +274,7 @@ export const chartConfigFactory = {
             if (this.points) {
               // Both modes now use simple grouped columns, so same tooltip format
               this.points.forEach((point) => {
-                const assayInfo = point.point.assayTypes && point.point.assayTypes.length > 0 
-                  ? `<br/><small>Assays: ${point.point.assayTypes.join(', ')}</small>`
-                  : '';
-                tooltip += `<span style="color:${point.color}">●</span> ${point.series.name}: <b>${point.y}</b> samples${assayInfo}<br/>`;
+                tooltip += `<span style="color:${point.color}">●</span> ${point.series.name}: <b>${point.y}</b> samples<br/>`;
               });
             }
             return tooltip;
