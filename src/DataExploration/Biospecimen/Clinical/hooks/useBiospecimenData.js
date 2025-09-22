@@ -18,7 +18,7 @@ const useDebounce = (value, delay) => {
   return debouncedValue;
 };
 
-// Cache key generator
+// Cache key generator (legacy - now uses ETag caching)
 const generateCacheKey = (filters) => {
   const sortedFilters = Object.keys(filters)
     .sort()
@@ -81,26 +81,7 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
       setProgress(10);
 
       try {
-        // Check cache first
-        const cacheKey = generateCacheKey(debouncedFilters);
-        const cachedData = localStorage.getItem(cacheKey);
-        const cachedTimestamp = localStorage.getItem(cacheKey + '-timestamp');
-        const cacheExpiry = 5 * 60 * 1000; // 5 minutes cache for filtered results
-
-        if (
-          cachedData &&
-          cachedTimestamp &&
-          Date.now() - parseInt(cachedTimestamp, 10) < cacheExpiry
-        ) {
-          setData(JSON.parse(cachedData));
-          setProgress(100);
-          setLoading(false);
-          return;
-        }
-
-        setProgress(30);
-
-        // Make API request - separate signal from user options to avoid conflicts
+        // Make API request with ETag caching - the service handles all caching logic
         const requestOptions = {
           ...memoizedOptions,
           signal: abortControllerRef.current.signal,
@@ -113,16 +94,8 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
 
         setProgress(70);
 
-        // Set data
+        // Set data from response (service handles ETag caching internally)
         setData(response.data);
-
-        // Cache the result
-        try {
-          localStorage.setItem(cacheKey, JSON.stringify(response.data));
-          localStorage.setItem(cacheKey + '-timestamp', Date.now().toString());
-        } catch (e) {
-          console.warn('Failed to cache filtered data:', e);
-        }
 
         setProgress(100);
         setLoading(false);
@@ -160,10 +133,13 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
 
   // Manual refresh function
   const refresh = useCallback(() => {
-    // Clear cache for current filters
-    const cacheKey = generateCacheKey(debouncedFilters);
-    localStorage.removeItem(cacheKey);
-    localStorage.removeItem(cacheKey + '-timestamp');
+    // Clear ETag cache for current filters
+    try {
+      const etagCache = BiospecimenService.getETagCache();
+      etagCache.clearCache(debouncedFilters);
+    } catch (error) {
+      console.warn('Failed to clear cache during refresh:', error);
+    }
 
     // Trigger refresh by incrementing the trigger
     setRefreshTrigger(prev => prev + 1);
@@ -190,32 +166,41 @@ export const useFilteredBiospecimenData = (data, filters) => {
 
 // Export cache utilities for testing/debugging
 export const biospecimenDataUtils = {
-  generateCacheKey,
+  // ETag cache operations (primary)
   clearCache: (filters = null) => {
-    if (filters) {
-      const cacheKey = generateCacheKey(filters);
-      localStorage.removeItem(cacheKey);
-      localStorage.removeItem(cacheKey + '-timestamp');
-    } else {
-      // Clear all biospecimen cache
-      const keys = Object.keys(localStorage).filter((key) =>
-        key.startsWith('biospecimen-'),
-      );
-      keys.forEach((key) => localStorage.removeItem(key));
+    try {
+      const etagCache = BiospecimenService.getETagCache();
+      etagCache.clearCache(filters);
+    } catch (error) {
+      console.warn('Failed to clear ETag cache:', error);
     }
   },
-  getCacheInfo: (filters) => {
-    const cacheKey = generateCacheKey(filters);
-    const cachedData = localStorage.getItem(cacheKey);
-    const cachedTimestamp = localStorage.getItem(cacheKey + '-timestamp');
 
-    return {
-      key: cacheKey,
-      hasData: !!cachedData,
-      timestamp: cachedTimestamp
-        ? new Date(parseInt(cachedTimestamp, 10))
-        : null,
-      size: cachedData ? cachedData.length : 0,
-    };
+  getCacheInfo: (filters) => {
+    try {
+      const etagCache = BiospecimenService.getETagCache();
+      const etag = etagCache.getETag(filters);
+      const { data, timestamp } = etagCache.getCachedData(filters);
+      
+      return {
+        etag,
+        hasData: !!data,
+        hasETag: !!etag,
+        timestamp: timestamp ? new Date(timestamp) : null,
+        dataSize: data ? JSON.stringify(data).length : 0,
+      };
+    } catch (error) {
+      console.warn('Failed to get ETag cache info:', error);
+      return {
+        etag: null,
+        hasData: false,
+        hasETag: false,
+        timestamp: null,
+        dataSize: 0,
+      };
+    }
   },
+
+  // Legacy support (for backward compatibility only)
+  generateCacheKey,
 };
