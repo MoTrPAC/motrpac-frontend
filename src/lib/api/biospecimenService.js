@@ -118,6 +118,11 @@ function CreateBiospecimenService() {
       return response;
     },
     (error) => {
+      // Check for cancellation errors first - don't log these as they're normal
+      if (error.name === 'AbortError' || error.code === 'ERR_CANCELED' || error.name === 'CanceledError' || error.message?.includes('canceled')) {
+        throw error;
+      }
+
       console.error('Biospecimen API Error:', error);
 
       if (error.code === 'ECONNABORTED') {
@@ -166,11 +171,6 @@ function CreateBiospecimenService() {
       if (error.request) {
         console.error('Request made but no response received:', error.request);
         throw new Error('Network error. Please check your connection.');
-      }
-
-      // Don't wrap cancellation errors - let them through as-is
-      if (error.name === 'AbortError' || error.code === 'ERR_CANCELED' || error.message?.includes('canceled')) {
-        throw error;
       }
 
       console.error('Error setting up request:', error.message);
@@ -427,7 +427,7 @@ function CreateBiospecimenService() {
           etag: response.etag,
         };
       } catch (error) {
-        if (error.name === 'AbortError' || error.code === 'ERR_CANCELED' || error.message?.includes('canceled')) {
+        if (error.name === 'AbortError' || error.code === 'ERR_CANCELED' || error.name === 'CanceledError' || error.message?.includes('canceled')) {
           console.log('Biospecimen request cancelled (normal behavior)');
           // Re-throw the abort error as-is to preserve its identity
           throw error;
