@@ -104,6 +104,7 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
         if (
           err.name === 'AbortError' || 
           err.code === 'ERR_CANCELED' || 
+          err.name === 'CanceledError' ||
           err.message?.includes('canceled') ||
           err.message?.includes('AbortError')
         ) {
