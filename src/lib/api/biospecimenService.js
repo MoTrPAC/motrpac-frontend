@@ -92,16 +92,31 @@ function CreateBiospecimenService() {
     },
   });
 
-  // Add request interceptor to include API key
+  // Add request interceptor to include API key and ETag headers
   client.interceptors.request.use((config) => {
     config.params = config.params || {};
     config.params.key = apiKey;
+    
+    // Add ETag conditional request headers if available
+    if (config.etag) {
+      config.headers['If-None-Match'] = config.etag;
+      // Remove etag from config to avoid sending it as a parameter
+      delete config.etag;
+    }
+    
     return config;
   });
 
-  // Add response interceptor for error handling
+  // Add response interceptor for error handling and ETag caching
   client.interceptors.response.use(
-    (response) => response,
+    (response) => {
+      // Store ETag from response headers (normalize case)
+      const etag = response.headers.etag || response.headers.ETag || response.headers['e-tag'];
+      if (etag) {
+        response.etag = etag;
+      }
+      return response;
+    },
     (error) => {
       console.error('Biospecimen API Error:', error);
 
@@ -113,6 +128,22 @@ function CreateBiospecimenService() {
         const { status, data } = error.response;
         console.error('Response status:', status);
         console.error('Response data:', data);
+        
+        // Handle 304 Not Modified responses - this is not an error
+        if (status === 304) {
+          // Create a special response object to indicate cache hit
+          const etag = error.response.headers.etag || error.response.headers.ETag || error.response.headers['e-tag'];
+          const notModifiedResponse = {
+            status: 304,
+            statusText: 'Not Modified',
+            data: null,
+            headers: error.response.headers,
+            config: error.config,
+            etag,
+            fromCache: true,
+          };
+          return notModifiedResponse;
+        }
         
         switch (status) {
           case 401:
@@ -146,6 +177,118 @@ function CreateBiospecimenService() {
       throw new Error(`Request setup error: ${error.message}`);
     },
   );
+
+  /**
+   * ETag cache utilities for efficient HTTP caching
+   */
+  const etagCache = {
+    /**
+     * Generate cache key for ETag storage
+     */
+    generateCacheKey: (filters, endpoint = 'biospecimen') => {
+      const sortedFilters = Object.keys(filters || {})
+        .sort()
+        .reduce((sorted, key) => {
+          if (filters[key] && filters[key] !== '') {
+            sorted[key] = filters[key];
+          }
+          return sorted;
+        }, {});
+
+      return `${endpoint}-etag-${JSON.stringify(sortedFilters)}`;
+    },
+
+    /**
+     * Get stored ETag for given filters
+     */
+    getETag: (filters, endpoint = 'biospecimen') => {
+      try {
+        const cacheKey = etagCache.generateCacheKey(filters, endpoint);
+        return localStorage.getItem(cacheKey);
+      } catch (error) {
+        console.warn('Failed to retrieve ETag from cache:', error);
+        return null;
+      }
+    },
+
+    /**
+     * Store ETag for given filters
+     */
+    setETag: (filters, etag, endpoint = 'biospecimen') => {
+      try {
+        const cacheKey = etagCache.generateCacheKey(filters, endpoint);
+        localStorage.setItem(cacheKey, etag);
+      } catch (error) {
+        console.warn('Failed to store ETag in cache:', error);
+      }
+    },
+
+    /**
+     * Get cached data for given filters (optimized single operation)
+     */
+    getCachedData: (filters, endpoint = 'biospecimen') => {
+      try {
+        const cacheKey = etagCache.generateCacheKey(filters, endpoint).replace('-etag-', '-data-');
+        const cachedEntry = localStorage.getItem(cacheKey);
+        
+        if (cachedEntry) {
+          const parsed = JSON.parse(cachedEntry);
+          return {
+            data: parsed.data,
+            timestamp: parsed.timestamp,
+          };
+        }
+        
+        return { data: null, timestamp: null };
+      } catch (error) {
+        console.warn('Failed to retrieve cached data:', error);
+        return { data: null, timestamp: null };
+      }
+    },
+
+    /**
+     * Store data in cache with timestamp (optimized single operation)
+     */
+    setCachedData: (filters, data, endpoint = 'biospecimen') => {
+      try {
+        const cacheKey = etagCache.generateCacheKey(filters, endpoint).replace('-etag-', '-data-');
+        const cacheEntry = {
+          data,
+          timestamp: Date.now(),
+        };
+        localStorage.setItem(cacheKey, JSON.stringify(cacheEntry));
+      } catch (error) {
+        console.warn('Failed to store data in cache:', error);
+      }
+    },
+
+    /**
+     * Clear cache entries for given filters (optimized)
+     */
+    clearCache: (filters = null, endpoint = 'biospecimen') => {
+      try {
+        if (filters) {
+          // Clear specific cache entries
+          const etagKey = etagCache.generateCacheKey(filters, endpoint);
+          const dataKey = etagKey.replace('-etag-', '-data-');
+          localStorage.removeItem(etagKey);
+          localStorage.removeItem(dataKey);
+        } else {
+          // Batch clear all cache entries for this endpoint
+          const keysToRemove = [];
+          for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && (key.startsWith(`${endpoint}-etag-`) || key.startsWith(`${endpoint}-data-`))) {
+              keysToRemove.push(key);
+            }
+          }
+          keysToRemove.forEach((key) => localStorage.removeItem(key));
+        }
+      } catch (error) {
+        console.warn('Failed to clear cache:', error);
+      }
+    },
+  };
 
   /**
    * Format filter parameters for the API
@@ -197,7 +340,7 @@ function CreateBiospecimenService() {
 
   return {
     /**
-     * Query biospecimen data with filters
+     * Query biospecimen data with filters and ETag caching
      * @param {Object} filters - Filter parameters
      * @param {Object} options - Additional options (limit, offset, signal, etc.)
      * @returns {Promise<Object>} API response with biospecimen data
@@ -219,16 +362,39 @@ function CreateBiospecimenService() {
         params.offset = requestOptions.offset;
       }
 
+      // Check for cached ETag to enable conditional requests
+      const cachedETag = etagCache.getETag(filters);
+      const { data: cachedData, timestamp: cachedTimestamp } = etagCache.getCachedData(filters);
+
       // Create axios config with signal if provided
       const axiosConfig = { params };
       if (signal) {
         axiosConfig.signal = signal;
       }
 
+      // Add ETag for conditional request if available
+      if (cachedETag) {
+        axiosConfig.etag = cachedETag;
+      }
+
       try {
         const response = await client.get('/', axiosConfig);
 
-        // Validate response structure
+        // Handle 304 Not Modified response (from cache)
+        if (response.status === 304 && cachedData) {
+          console.log('ETag cache hit - using cached data');
+          return {
+            data: cachedData.results || cachedData,
+            total: cachedData.total || cachedData.length,
+            count: cachedData.count || cachedData.length,
+            next: cachedData.next || null,
+            previous: cachedData.previous || null,
+            fromCache: true,
+            etag: cachedETag,
+          };
+        }
+
+        // Validate response structure for new data
         if (
           !response.data ||
           !Array.isArray(response.data.results || response.data)
@@ -236,12 +402,29 @@ function CreateBiospecimenService() {
           throw new Error('Invalid response format from API');
         }
 
-        return {
-          data: response.data.results || response.data,
+        // Store new ETag if present
+        if (response.etag) {
+          etagCache.setETag(filters, response.etag);
+        }
+
+        // Cache the new data
+        const responseData = {
+          results: response.data.results || response.data,
           total: response.data.total || response.data.length,
           count: response.data.count || response.data.length,
           next: response.data.next || null,
           previous: response.data.previous || null,
+        };
+        etagCache.setCachedData(filters, responseData);
+
+        return {
+          data: responseData.results,
+          total: responseData.total,
+          count: responseData.count,
+          next: responseData.next,
+          previous: responseData.previous,
+          fromCache: false,
+          etag: response.etag,
         };
       } catch (error) {
         if (error.name === 'AbortError' || error.code === 'ERR_CANCELED' || error.message?.includes('canceled')) {
@@ -253,6 +436,22 @@ function CreateBiospecimenService() {
         console.error('Error querying biospecimens:', error);
         console.error('Request filters:', filters);
         console.error('Formatted params:', params);
+        
+        // Fallback to cached data if available during network errors
+        if (cachedData && (error.message?.includes('Network') || error.message?.includes('timeout'))) {
+          console.warn('Network error - falling back to cached data');
+          return {
+            data: cachedData.results || cachedData,
+            total: cachedData.total || cachedData.length,
+            count: cachedData.count || cachedData.length,
+            next: cachedData.next || null,
+            previous: cachedData.previous || null,
+            fromCache: true,
+            etag: cachedETag,
+            networkError: true,
+          };
+        }
+        
         throw error;
       }
     },
@@ -315,6 +514,12 @@ function CreateBiospecimenService() {
         return false;
       }
     },
+
+    /**
+     * Get ETag cache utilities for advanced cache management
+     * @returns {Object} ETag cache utilities
+     */
+    getETagCache: () => etagCache,
   };
 };
 
