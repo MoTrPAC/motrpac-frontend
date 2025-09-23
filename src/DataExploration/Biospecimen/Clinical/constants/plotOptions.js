@@ -59,7 +59,7 @@ export const DEFAULT_CHART_AXIS = CHART_AXIS_OPTIONS.INTERVENTION_PHASE;
 export const DEFAULT_FILTERS = {
   sex: ['Male', 'Female'], // Both selected by default
   dmaqc_age_groups: ['10-13', '14-17', '18-39', '40-59', '60+'], // All selected by default
-  random_group_code: 'Control', // Control selected by default
+  random_group_code: ['Control', 'Endurance', 'Resistance'], // All selected by default (changed from single value to array)
 };
 
 // Randomized group code mapping for API queries
@@ -112,7 +112,7 @@ export const filterUtils = {
     return {
       sex: [...DEFAULT_FILTERS.sex],
       dmaqc_age_groups: [...DEFAULT_FILTERS.dmaqc_age_groups],
-      random_group_code: DEFAULT_FILTERS.random_group_code,
+      random_group_code: [...DEFAULT_FILTERS.random_group_code], // Now an array
     };
   },
 };
