@@ -6,6 +6,8 @@ import {
   getColorForTissue,
   getColorForTimepoint,
   getLabelForTimepoint,
+  getColorForAssay,
+  parseAssayTypes,
   chartConfigFactory,
   VISIT_CODE_TO_PHASE,
   TISSUE_CODE_TO_NAME,
@@ -55,11 +57,22 @@ const BiospecimenChart = ({ data, loading, error, onBarClick, axisMode = DEFAULT
     };
   }, []);
 
-  // Transform data for chart - supports both axis modes
+  // Transform data for chart - supports all three axis modes
   const chartData = useMemo(() => {
     if (!data || !data.length) return null;
 
     const isTimepoint = axisMode === CHART_AXIS_OPTIONS.TIMEPOINT;
+    const isAssay = axisMode === CHART_AXIS_OPTIONS.ASSAY;
+    
+    // First, collect all unique assay types from the data for assay mode
+    const allAssayTypes = new Set();
+    if (isAssay) {
+      data.forEach((record) => {
+        const assays = parseAssayTypes(record.raw_assays_with_results);
+        assays.forEach(assay => allAssayTypes.add(assay));
+      });
+    }
+    const assayTypesList = Array.from(allAssayTypes).sort();
     
     // Group data by intervention phase, tissue, and timepoint
     const groups = {};
@@ -88,18 +101,56 @@ const BiospecimenChart = ({ data, loading, error, onBarClick, axisMode = DEFAULT
         }
         groups[key].samples.push(record);
 
-        // Track assay types
-        if (assays) {
-          assays.split(',').forEach((assay) => {
-            if (assay.trim()) groups[key].assayTypes.add(assay.trim());
-          });
-        }
+        // Track assay types using the new parse function
+        const parsedAssays = parseAssayTypes(assays);
+        parsedAssays.forEach(assay => groups[key].assayTypes.add(assay));
       }
     });
 
     let series, categories;
 
-    if (isTimepoint) {
+    if (isAssay) {
+      // Grouping by assay: X-axis = assays, Series = tissues (aggregated across phases and timepoints)
+      series = TISSUE_TYPES.map((tissue) => ({
+        name: tissue,
+        color: getColorForTissue(tissue),
+        data: assayTypesList.map((assayType) => {
+          let totalSamples = 0;
+          const allSamples = [];
+          const allAssayTypes = new Set();
+          
+          // Sum across all phases and timepoints for this tissue and assay
+          INTERVENTION_PHASES.forEach((phase) => {
+            TIMEPOINT_TYPES.forEach((timepoint) => {
+              const key = `${phase}_${tissue}_${timepoint}`;
+              const group = groups[key];
+              if (group && group.assayTypes.has(assayType)) {
+                // Count samples that have this specific assay type
+                const samplesWithAssay = group.samples.filter(sample => {
+                  const sampleAssays = parseAssayTypes(sample.raw_assays_with_results);
+                  return sampleAssays.includes(assayType);
+                });
+                totalSamples += samplesWithAssay.length;
+                allSamples.push(...samplesWithAssay);
+                group.assayTypes.forEach(assay => allAssayTypes.add(assay));
+              }
+            });
+          });
+
+          return {
+            y: totalSamples,
+            phase: null, // No specific phase when aggregated
+            tissue,
+            timepoint: null, // No specific timepoint when aggregated
+            assay: assayType, // New property for assay type
+            samples: allSamples,
+            assayTypes: Array.from(allAssayTypes),
+          };
+        }),
+      }));
+
+      categories = assayTypesList;
+    } else if (isTimepoint) {
       // Grouping by timepoint: X-axis = timepoints, Series = tissues (aggregated across phases)
       series = TISSUE_TYPES.map((tissue) => ({
         name: tissue,
@@ -186,7 +237,8 @@ const BiospecimenChart = ({ data, loading, error, onBarClick, axisMode = DEFAULT
       series: filteredSeries, 
       categories,
       groups,
-      axisMode
+      axisMode,
+      assayTypesList
     };
   }, [data, axisMode]);
 
@@ -196,7 +248,16 @@ const BiospecimenChart = ({ data, loading, error, onBarClick, axisMode = DEFAULT
     if (!chartData || !data) return null;
 
     const isTimepoint = axisMode === CHART_AXIS_OPTIONS.TIMEPOINT;
-    const axisLabel = isTimepoint ? 'exercise timepoint' : 'intervention phase';
+    const isAssay = axisMode === CHART_AXIS_OPTIONS.ASSAY;
+    
+    let axisLabel;
+    if (isAssay) {
+      axisLabel = 'assay type';
+    } else if (isTimepoint) {
+      axisLabel = 'exercise timepoint';
+    } else {
+      axisLabel = 'intervention phase';
+    }
 
     const config = chartConfigFactory.createBiospecimenChart({
       title: `Biospecimen Sample Distribution by ${axisLabel}`,
