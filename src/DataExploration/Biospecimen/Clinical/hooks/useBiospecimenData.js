@@ -1,71 +1,23 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { BiospecimenService } from '../../../../lib/api/biospecimenService';
 
-// Debounce utility
-const useDebounce = (value, delay) => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
-
-  return debouncedValue;
-};
-
-// Cache key generator (legacy - now uses ETag caching)
-const generateCacheKey = (filters) => {
-  const sortedFilters = Object.keys(filters)
-    .sort()
-    .reduce((sorted, key) => {
-      if (filters[key] && filters[key] !== '') {
-        sorted[key] = filters[key];
-      }
-      return sorted;
-    }, {});
-
-  return 'biospecimen-' + JSON.stringify(sortedFilters);
-};
-
-export const useBiospecimenData = (filters = {}, options = {}) => {
-  const [data, setData] = useState([]);
+/**
+ * Simplified biospecimen data hook that loads all data once and filters client-side
+ * Much more efficient than making API calls for every filter combination
+ */
+export const useBiospecimenData = () => {
+  const [allData, setAllData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [progress, setProgress] = useState(0);
-  const [refreshTrigger, setRefreshTrigger] = useState(0);
   const abortControllerRef = useRef(null);
 
-  // Debounce filters to avoid excessive API calls
-  const debouncedFilters = useDebounce(filters, 300);
-
-  // Memoize options to prevent unnecessary re-renders
-  // Exclude 'signal' from user options as we manage it internally
-  const memoizedOptions = useMemo(() => {
-    const { signal, ...optionsWithoutSignal } = options;
-    return optionsWithoutSignal;
-  }, [JSON.stringify(options)]); // Use JSON.stringify for deep comparison to avoid reference changes
-
-  // Check if any filters are active (used for UI feedback, not for controlling data loading)
-  const hasActiveFilters = useMemo(() => {
-    return Object.values(debouncedFilters).some(
-      (value) => value && value !== '',
-    );
-  }, [debouncedFilters]);
-
+  // Load all data once on mount
   useEffect(() => {
-    const loadBiospecimenData = async () => {
-      // Always load data - even with empty filters (which will only include the API key)
-      // This allows the default API query to load all data when the page first loads
-      
+    const loadAllBiospecimenData = async () => {
       // Cancel previous request if it exists
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
-        abortControllerRef.current = null; // Clear the reference
+        abortControllerRef.current = null;
       }
 
       // Create new abort controller for this request
@@ -73,29 +25,20 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
 
       setLoading(true);
       setError(null);
-      setProgress(10);
 
       try {
-        // Make API request with ETag caching - the service handles all caching logic
-        const requestOptions = {
-          ...memoizedOptions,
-          signal: abortControllerRef.current.signal,
-        };
+        console.log('Loading all biospecimen data (one-time load)');
         
         const response = await BiospecimenService.queryBiospecimens(
-          debouncedFilters,
-          requestOptions,
+          {}, // Empty filters to get all data
+          { signal: abortControllerRef.current.signal }
         );
 
-        setProgress(70);
-
-        // Set data from response (service handles ETag caching internally)
-        setData(response.data);
-
-        setProgress(100);
+        console.log(`Loaded ${response.data.length} total biospecimen records`);
+        setAllData(response.data);
         setLoading(false);
       } catch (err) {
-        // Improved abort error detection to handle different cancellation scenarios
+        // Handle cancellation
         if (
           err.name === 'AbortError' || 
           err.code === 'ERR_CANCELED' || 
@@ -103,21 +46,18 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
           err.message?.includes('canceled') ||
           err.message?.includes('AbortError')
         ) {
-          console.log('Request was cancelled (this is normal when filters change quickly)');
-          // Don't update loading state here - let the new request handle it
-          return; // Request was cancelled, don't update state
+          console.log('Data loading was cancelled');
+          return;
         }
 
-        // Only log actual errors, not cancellations
         console.error('Error loading biospecimen data:', err);
         setError(err.message || 'Failed to load biospecimen data');
         setLoading(false);
-        setProgress(0);
-        setData([]);
+        setAllData([]);
       }
     };
 
-    loadBiospecimenData();
+    loadAllBiospecimenData();
 
     return () => {
       // Cleanup: abort any pending requests
@@ -125,78 +65,105 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
         abortControllerRef.current.abort();
       }
     };
-  }, [debouncedFilters, memoizedOptions, refreshTrigger]);
+  }, []); // Empty dependency array - only load once
 
   // Manual refresh function
-  const refresh = useCallback(() => {
-    // Clear ETag cache for current filters
-    try {
-      const etagCache = BiospecimenService.getETagCache();
-      etagCache.clearCache(debouncedFilters);
-    } catch (error) {
-      console.warn('Failed to clear cache during refresh:', error);
+  const refresh = useCallback(async () => {
+    // Simply reload all data
+    setAllData([]);
+    
+    // Cancel previous request if it exists
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
     }
 
-    // Trigger refresh by incrementing the trigger
-    setRefreshTrigger(prev => prev + 1);
-  }, [debouncedFilters]);
+    // Create new abort controller for this request
+    abortControllerRef.current = new AbortController();
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await BiospecimenService.queryBiospecimens(
+        {},
+        { signal: abortControllerRef.current.signal }
+      );
+
+      setAllData(response.data);
+      setLoading(false);
+    } catch (err) {
+      if (
+        err.name === 'AbortError' || 
+        err.code === 'ERR_CANCELED' || 
+        err.name === 'CanceledError' ||
+        err.message?.includes('canceled')
+      ) {
+        return;
+      }
+
+      console.error('Error refreshing biospecimen data:', err);
+      setError(err.message || 'Failed to refresh biospecimen data');
+      setLoading(false);
+    }
+  }, []);
 
   return {
-    data,
+    allData,
     loading,
     error,
-    progress,
-    hasActiveFilters,
     refresh,
   };
 };
 
-// Legacy hook for backward compatibility - now just returns the data since filtering is server-side
-export const useFilteredBiospecimenData = (data, filters) => {
-  // Since filtering is now done server-side via the API, we just return the data
-  // This hook is kept for backward compatibility but could be removed in the future
+/**
+ * Client-side filtering hook - filters the loaded data in memory
+ * This is much faster than making API calls for each filter combination
+ */
+export const useFilteredBiospecimenData = (allData, filters) => {
   return useMemo(() => {
-    return data || [];
-  }, [data]);
-};
-
-// Export cache utilities for testing/debugging
-export const biospecimenDataUtils = {
-  // ETag cache operations (primary)
-  clearCache: (filters = null) => {
-    try {
-      const etagCache = BiospecimenService.getETagCache();
-      etagCache.clearCache(filters);
-    } catch (error) {
-      console.warn('Failed to clear ETag cache:', error);
+    if (!allData || allData.length === 0) {
+      return [];
     }
-  },
 
-  getCacheInfo: (filters) => {
-    try {
-      const etagCache = BiospecimenService.getETagCache();
-      const etag = etagCache.getETag(filters);
-      const { data, timestamp } = etagCache.getCachedData(filters);
-      
-      return {
-        etag,
-        hasData: !!data,
-        hasETag: !!etag,
-        timestamp: timestamp ? new Date(timestamp) : null,
-        dataSize: data ? JSON.stringify(data).length : 0,
-      };
-    } catch (error) {
-      console.warn('Failed to get ETag cache info:', error);
-      return {
-        etag: null,
-        hasData: false,
-        hasETag: false,
-        timestamp: null,
-        dataSize: 0,
-      };
+    // If no filters are applied, return all data
+    if (!filters || Object.keys(filters).length === 0) {
+      return allData;
     }
-  },
 
-  // Legacy support (for backward compatibility only)
-  generateCacheKey,
+    return allData.filter(item => {
+      // Filter by sex
+      if (filters.sex && filters.sex.length > 0) {
+        if (!filters.sex.includes(item.sex)) {
+          return false;
+        }
+      }
+
+      // Filter by age groups
+      if (filters.dmaqc_age_groups && filters.dmaqc_age_groups.length > 0) {
+        if (!filters.dmaqc_age_groups.includes(item.dmaqc_age_groups)) {
+          return false;
+        }
+      }
+
+      // Filter by randomized group
+      if (filters.random_group_code && filters.random_group_code.length > 0) {
+        // Map the filter values to actual API values for comparison
+        const mappedValues = filters.random_group_code.flatMap(option => {
+          switch (option) {
+            case 'Control': return ['ADUControl', 'PEDControl'];
+            case 'Endurance': return ['ADUEndur', 'ATHEndur', 'PEDEndur'];
+            case 'Resistance': return ['ADUResist', 'ATHResist'];
+            default: return [];
+          }
+        });
+
+        if (!mappedValues.includes(item.random_group_code)) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  }, [allData, filters]);
 };
