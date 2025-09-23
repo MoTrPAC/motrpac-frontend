@@ -54,13 +54,19 @@ const InteractiveBiospecimenChart = () => {
       filters_obj.dmaqc_age_groups = filters.dmaqc_age_groups.join(',');
     }
 
-    // Always include randomized group with proper mapping from constants
+    // Only include randomized group filter if not all options are selected (user has made a selection)
     if (
-      filters.random_group_code &&
-      RANDOMIZED_GROUP_MAPPING[filters.random_group_code]
+      filters.random_group_code.length > 0 &&
+      filters.random_group_code.length < FILTER_OPTIONS.randomGroupOptions.length
     ) {
-      filters_obj.random_group_code =
-        RANDOMIZED_GROUP_MAPPING[filters.random_group_code];
+      // Map the selected options to their API values using the mapping
+      const apiValues = filters.random_group_code.map(
+        option => RANDOMIZED_GROUP_MAPPING[option]
+      ).filter(Boolean).join(',');
+      
+      if (apiValues) {
+        filters_obj.random_group_code = apiValues;
+      }
     }
 
     return filters_obj;
@@ -96,7 +102,7 @@ const InteractiveBiospecimenChart = () => {
   // Static filter options from constants - memoized to prevent recreating object
   const filterOptions = useMemo(() => FILTER_OPTIONS, []);
 
-  // Handle checkbox filter changes (sex, age groups)
+  // Handle checkbox filter changes (sex, age groups, and now randomized group)
   // Optimized with stable callback to prevent unnecessary rerenders
   const handleCheckboxChange = useCallback((filterType, value, checked) => {
     setFilters((prev) => {
@@ -117,15 +123,6 @@ const InteractiveBiospecimenChart = () => {
         };
       }
     });
-    setSelectedBar(null);
-  }, []);
-
-  // Handle radio button filter change (random_group_code)
-  const handleRadioChange = useCallback((value) => {
-    setFilters((prev) => ({
-      ...prev,
-      random_group_code: value,
-    }));
     setSelectedBar(null);
   }, []);
 
@@ -176,7 +173,6 @@ const InteractiveBiospecimenChart = () => {
             filters={filters}
             filterOptions={filterOptions}
             onCheckboxChange={handleCheckboxChange}
-            onRadioChange={handleRadioChange}
           />
         </div>
 
