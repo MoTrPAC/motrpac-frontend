@@ -29,17 +29,55 @@ function createMockService() {
       dmaqc_age_groups: '40-59',
       raw_assays_with_results: 'METAB,RNA',
     },
+    // Add more mock data for better testing
+    {
+      visit_code: 'ADU_BAS',
+      sample_group_code: 'MUS',
+      timepoint: 'pre_exercise',
+      vial_label: 'MOCK003',
+      tranche: 'MOCK',
+      random_group_code: 'ADUResist',
+      sex: 'Female',
+      dmaqc_age_groups: '18-39',
+      raw_assays_with_results: 'PROT,RNA',
+    },
+    {
+      visit_code: 'PED_PAS',
+      sample_group_code: 'BLO',
+      timepoint: 'post_24_hr',
+      vial_label: 'MOCK004',
+      tranche: 'MOCK',
+      random_group_code: 'PEDControl',
+      sex: 'Male',
+      dmaqc_age_groups: '14-17',
+      raw_assays_with_results: 'METAB,EPIGEN',
+    },
   ];
 
   return {
     async queryBiospecimens(filters = {}, options = {}) {
       // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
+      // Apply basic filtering to mock data for testing
+      let filteredData = mockData;
+      
+      if (filters.sex) {
+        const sexValues = filters.sex.split(',');
+        filteredData = filteredData.filter(item => sexValues.includes(item.sex));
+      }
+      
+      if (filters.random_group_code) {
+        const groupValues = filters.random_group_code.split(',');
+        filteredData = filteredData.filter(item => groupValues.includes(item.random_group_code));
+      }
+      
+      console.log(`Mock service returning ${filteredData.length} filtered records`);
       
       return {
-        data: mockData,
-        total: mockData.length,
-        count: mockData.length,
+        data: filteredData,
+        total: filteredData.length,
+        count: filteredData.length,
         next: null,
         previous: null,
       };
@@ -53,6 +91,16 @@ function createMockService() {
     async healthCheck(options = {}) {
       return true;
     },
+
+    // Mock ETag cache for consistency
+    getETagCache: () => ({
+      generateCacheKey: () => 'mock-cache-key',
+      getETag: () => null,
+      setETag: () => {},
+      getCachedData: () => ({ data: null, timestamp: null }),
+      setCachedData: () => {},
+      clearCache: () => {},
+    }),
   };
 }
 
@@ -184,13 +232,23 @@ function CreateBiospecimenService() {
   const etagCache = {
     /**
      * Generate cache key for ETag storage
+     * Improved to handle empty filters and normalize keys for better cache hits
      */
     generateCacheKey: (filters, endpoint = 'biospecimen') => {
-      const sortedFilters = Object.keys(filters || {})
+      // Normalize empty filters to a consistent representation
+      const normalizedFilters = filters && Object.keys(filters).length > 0 ? filters : { __all__: true };
+      
+      const sortedFilters = Object.keys(normalizedFilters)
         .sort()
         .reduce((sorted, key) => {
-          if (filters[key] && filters[key] !== '') {
-            sorted[key] = filters[key];
+          const value = normalizedFilters[key];
+          if (value !== null && value !== undefined && value !== '') {
+            // Normalize array values for consistent cache keys
+            if (Array.isArray(value)) {
+              sorted[key] = value.sort().join(',');
+            } else {
+              sorted[key] = value;
+            }
           }
           return sorted;
         }, {});
@@ -378,6 +436,10 @@ function CreateBiospecimenService() {
       }
 
       try {
+        // Add request validation and logging for debugging
+        console.log('Making biospecimen API request with filters:', filters);
+        console.log('Formatted params:', params);
+        
         const response = await client.get('/', axiosConfig);
 
         // Handle 304 Not Modified response (from cache)
@@ -395,11 +457,19 @@ function CreateBiospecimenService() {
         }
 
         // Validate response structure for new data
-        if (
-          !response.data ||
-          !Array.isArray(response.data.results || response.data)
-        ) {
-          throw new Error('Invalid response format from API');
+        if (!response.data) {
+          throw new Error('Empty response from API');
+        }
+
+        // Handle different response formats
+        let responseResults;
+        if (Array.isArray(response.data)) {
+          responseResults = response.data;
+        } else if (response.data.results && Array.isArray(response.data.results)) {
+          responseResults = response.data.results;
+        } else {
+          console.warn('Unexpected response format:', response.data);
+          responseResults = [];
         }
 
         // Store new ETag if present
@@ -407,18 +477,20 @@ function CreateBiospecimenService() {
           etagCache.setETag(filters, response.etag);
         }
 
-        // Cache the new data
+        // Cache the new data with improved structure
         const responseData = {
-          results: response.data.results || response.data,
-          total: response.data.total || response.data.length,
-          count: response.data.count || response.data.length,
+          results: responseResults,
+          total: response.data.total || responseResults.length,
+          count: response.data.count || responseResults.length,
           next: response.data.next || null,
           previous: response.data.previous || null,
         };
         etagCache.setCachedData(filters, responseData);
 
+        console.log(`Successfully loaded ${responseResults.length} biospecimen records`);
+
         return {
-          data: responseData.results,
+          data: responseResults,
           total: responseData.total,
           count: responseData.count,
           next: responseData.next,
@@ -427,18 +499,40 @@ function CreateBiospecimenService() {
           etag: response.etag,
         };
       } catch (error) {
+        // Check for cancellation errors first - don't log these as they're normal
         if (error.name === 'AbortError' || error.code === 'ERR_CANCELED' || error.name === 'CanceledError' || error.message?.includes('canceled')) {
           console.log('Biospecimen request cancelled (normal behavior)');
-          // Re-throw the abort error as-is to preserve its identity
           throw error;
         }
         
-        console.error('Error querying biospecimens:', error);
-        console.error('Request filters:', filters);
-        console.error('Formatted params:', params);
+        // Enhanced error logging for debugging
+        console.error('Error querying biospecimens:', {
+          message: error.message,
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          data: error.response?.data,
+          filters: filters,
+          params: params,
+          url: error.config?.url,
+        });
+        
+        // Handle specific error cases with better messages
+        if (error.code === 'ECONNREFUSED') {
+          console.error('Connection refused - API server may be down');
+        } else if (error.code === 'ENOTFOUND') {
+          console.error('DNS resolution failed - check API URL configuration');
+        } else if (error.code === 'ECONNABORTED') {
+          console.error('Request timed out');
+        }
         
         // Fallback to cached data if available during network errors
-        if (cachedData && (error.message?.includes('Network') || error.message?.includes('timeout'))) {
+        if (cachedData && (
+          error.message?.includes('Network') || 
+          error.message?.includes('timeout') ||
+          error.code === 'ECONNREFUSED' ||
+          error.code === 'ENOTFOUND' ||
+          !error.response // Network error without response
+        )) {
           console.warn('Network error - falling back to cached data');
           return {
             data: cachedData.results || cachedData,
@@ -452,7 +546,13 @@ function CreateBiospecimenService() {
           };
         }
         
-        throw error;
+        // If no cached data available, provide a more informative error
+        const errorMessage = error.response?.data?.message || 
+                           error.response?.data?.error || 
+                           error.message || 
+                           'Failed to load biospecimen data';
+        
+        throw new Error(errorMessage);
       }
     },
 
