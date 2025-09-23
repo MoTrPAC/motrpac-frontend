@@ -50,7 +50,7 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
     return optionsWithoutSignal;
   }, [JSON.stringify(options)]); // Use JSON.stringify for deep comparison to avoid reference changes
 
-  // Check if any filters are active
+  // Check if any filters are active (used for UI feedback, not for controlling data loading)
   const hasActiveFilters = useMemo(() => {
     return Object.values(debouncedFilters).some(
       (value) => value && value !== '',
@@ -59,14 +59,9 @@ export const useBiospecimenData = (filters = {}, options = {}) => {
 
   useEffect(() => {
     const loadBiospecimenData = async () => {
-      // Don't load if no active filters
-      if (!Object.values(debouncedFilters).some((value) => value && value !== '')) {
-        setData([]);
-        setLoading(false);
-        setError(null);
-        return;
-      }
-
+      // Always load data - even with empty filters (which will only include the API key)
+      // This allows the default API query to load all data when the page first loads
+      
       // Cancel previous request if it exists
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
