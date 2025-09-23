@@ -184,7 +184,10 @@ export const chartConfigFactory = {
       chart: {
         type: 'column',
         height: 450,
-        animation: false, // Disable animation to prevent timing issues
+        animation: {
+          duration: 400,
+          easing: 'easeOutQuart'
+        },
       },
       title: {
         text: title || 'Biospecimen Distribution',
@@ -240,10 +243,19 @@ export const chartConfigFactory = {
           shadow: false,
           borderWidth: 0,
           cursor: 'pointer',
-          animation: false, // Disable animation
+          animation: {
+            duration: 500,
+            easing: 'easeOutCubic'
+          },
           // No stacking needed - both modes now use simple grouped columns
         },
         series: {
+          animation: {
+            duration: 350,
+            defer: function(series) {
+              return series.index * 50; // Stagger series by 50ms
+            }
+          },
           point: {
             events: {
               click: function (event) {
