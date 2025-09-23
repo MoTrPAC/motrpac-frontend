@@ -104,7 +104,7 @@ const InteractiveBiospecimenChart = () => {
     const encodedUri = encodeURI(csvData);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `biospecimen_drilldown_${selectedBar.tissue}_${selectedBar.phase || selectedBar.timepoint}.csv`);
+    link.setAttribute('download', `biospecimen_drilldown_${selectedBar.tissue}_${selectedBar.phase || selectedBar.timepoint || selectedBar.assay}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -117,6 +117,7 @@ const InteractiveBiospecimenChart = () => {
       phase: point.phase,
       tissue: point.tissue,
       timepoint: point.timepoint,
+      assay: point.assay, // New field for assay mode
       samples: point.samples,
       count: point.y,
       assayTypes: point.assayTypes,
@@ -222,7 +223,8 @@ const InteractiveBiospecimenChart = () => {
                 <h5 className="mb-0">
                   <i className="bi bi-table mr-2" />
                   {selectedBar.tissue} {selectedBar.phase && ` - ${selectedBar.phase}`}
-                  {selectedBar.timepoint && ` - ${selectedBar.timepoint}`} ({selectedBar.count} samples)
+                  {selectedBar.timepoint && ` - ${selectedBar.timepoint}`}
+                  {selectedBar.assay && ` - ${selectedBar.assay}`} ({selectedBar.count} samples)
                 </h5>
                 <button
                   className="btn btn-sm btn-secondary"
