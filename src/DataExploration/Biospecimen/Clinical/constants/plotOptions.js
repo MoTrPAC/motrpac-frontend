@@ -36,16 +36,29 @@ export const TIMEPOINT_TYPES = Object.keys(TIMEPOINT_CONFIG).sort((a, b) =>
   TIMEPOINT_CONFIG[a].order - TIMEPOINT_CONFIG[b].order
 );
 
+// Assay color mapping for visualization consistency
+export const ASSAY_COLORS = {
+  'IMMUNO': '#e74c3c',      // Red
+  'METAB': '#3498db',       // Blue
+  'PROT': '#2ecc71',        // Green
+  'TRNSCRPT': '#f39c12',    // Orange
+  'PHOSPHOPROT': '#9b59b6', // Purple
+  'EPIGEN': '#1abc9c',      // Teal
+  'GENO': '#34495e',        // Dark Gray
+};
+
 // Chart axis configuration options
 export const CHART_AXIS_OPTIONS = {
   INTERVENTION_PHASE: 'intervention_phase',
-  TIMEPOINT: 'timepoint'
+  TIMEPOINT: 'timepoint',
+  ASSAY: 'assay'
 };
 
 // Chart axis configuration labels
 export const CHART_AXIS_LABELS = {
   [CHART_AXIS_OPTIONS.INTERVENTION_PHASE]: 'Group by Intervention Phase',
-  [CHART_AXIS_OPTIONS.TIMEPOINT]: 'Group by Exercise Timepoint'
+  [CHART_AXIS_OPTIONS.TIMEPOINT]: 'Group by Exercise Timepoint',
+  [CHART_AXIS_OPTIONS.ASSAY]: 'Group by Assay Type'
 };
 
 // Default chart axis setting
@@ -132,6 +145,18 @@ export const getLabelForTimepoint = (timepoint) => {
   return TIMEPOINT_CONFIG[timepoint]?.label || timepoint;
 };
 
+// Helper function to get color for an assay type
+export const getColorForAssay = (assay) => {
+  return ASSAY_COLORS[assay] || '#7f8c8d'; // Default gray if not found
+};
+
+// Helper function to parse and normalize assay types from raw data
+export const parseAssayTypes = (rawAssays) => {
+  if (!rawAssays) return [];
+  // Handle both comma and semicolon separators for flexibility
+  return rawAssays.split(/[,;]/).map(assay => assay.trim()).filter(assay => assay);
+};
+
 // Mappings:
 // `ADU_BAS' AND `PED_BAS' TO `Pre-Intervention'
 // `ADU_PAS' AND `PED_PAS' TO `Post-Intervention'
@@ -179,6 +204,23 @@ export const generateCacheKey = (filters) => {
 export const chartConfigFactory = {
   createBiospecimenChart: ({ title, subtitle, onBarClick, series, categories, axisMode = DEFAULT_CHART_AXIS }) => {
     const isTimepoint = axisMode === CHART_AXIS_OPTIONS.TIMEPOINT;
+    const isAssay = axisMode === CHART_AXIS_OPTIONS.ASSAY;
+    
+    // Determine appropriate axis title and categories
+    let xAxisTitle, defaultCategories, shouldRotateLabels;
+    if (isAssay) {
+      xAxisTitle = 'Assay Type';
+      defaultCategories = []; // Will be dynamically determined from data
+      shouldRotateLabels = true; // Rotate labels for better readability
+    } else if (isTimepoint) {
+      xAxisTitle = 'Exercise Timepoint';
+      defaultCategories = TIMEPOINT_TYPES.map(t => getLabelForTimepoint(t));
+      shouldRotateLabels = true; // Timepoint labels can be long
+    } else {
+      xAxisTitle = 'Intervention Phase';
+      defaultCategories = INTERVENTION_PHASES;
+      shouldRotateLabels = false; // Phase names are short
+    }
     
     const config = {
       chart: {
@@ -204,9 +246,9 @@ export const chartConfigFactory = {
         },
       },
       xAxis: {
-        categories: categories || (isTimepoint ? TIMEPOINT_TYPES.map(t => getLabelForTimepoint(t)) : INTERVENTION_PHASES),
+        categories: categories || defaultCategories,
         title: {
-          text: isTimepoint ? 'Exercise Timepoint' : 'Intervention Phase',
+          text: xAxisTitle,
           style: {
             fontSize: '14px',
             fontWeight: 'bold',
@@ -214,7 +256,7 @@ export const chartConfigFactory = {
           margin: 30,
         },
         labels: {
-          rotation: isTimepoint ? -45 : 0, // Rotate labels for timepoints to prevent overlap
+          rotation: shouldRotateLabels ? -45 : 0,
           style: {
             fontSize: '12px',
           },
