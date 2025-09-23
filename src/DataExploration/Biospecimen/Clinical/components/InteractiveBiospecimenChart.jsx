@@ -1,13 +1,12 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useBiospecimenData } from '../hooks/useBiospecimenData';
+import { useBiospecimenData, useFilteredBiospecimenData } from '../hooks/useBiospecimenData';
 import { useAdvancedPagination } from '../hooks/useAdvancedPagination';
 import BiospecimenFilters from './BiospecimenFilters';
 import BiospecimenChart from './BiospecimenChart';
 import {
   DEFAULT_FILTERS,
   FILTER_OPTIONS,
-  RANDOMIZED_GROUP_MAPPING,
   CHART_AXIS_OPTIONS,
   CHART_AXIS_LABELS,
   DEFAULT_CHART_AXIS,
@@ -18,10 +17,7 @@ import '@styles/biospecimenSummary.scss';
 
 /**
  * Main Interactive Biospecimen Visualization component
- * Features:
- * - Side-by-side: Filters box on left, chart on right
- * - Modular component structure
- * - Click-to-drill-down table functionality
+ * Simplified approach: Load all data once, filter client-side for instant performance
  */
 const InteractiveBiospecimenChart = () => {
   // Filter state management with default selections from constants
@@ -33,47 +29,11 @@ const InteractiveBiospecimenChart = () => {
   // Chart axis mode state
   const [axisMode, setAxisMode] = useState(DEFAULT_CHART_AXIS);
 
-  // Convert filter arrays to API format (comma-separated strings)
-  // Memoized with proper dependencies to prevent unnecessary recalculations
-  const apiFilters = useMemo(() => {
-    const filters_obj = {};
+  // Load all data once (simplified approach)
+  const { allData, loading, error, refresh } = useBiospecimenData();
 
-    // Only include sex filter if not all options are selected (user has made a selection)
-    if (
-      filters.sex.length > 0 &&
-      filters.sex.length < FILTER_OPTIONS.sexOptions.length
-    ) {
-      filters_obj.sex = filters.sex.join(',');
-    }
-
-    // Only include age groups filter if not all options are selected (user has made a selection)
-    if (
-      filters.dmaqc_age_groups.length > 0 &&
-      filters.dmaqc_age_groups.length < FILTER_OPTIONS.ageGroupOptions.length
-    ) {
-      filters_obj.dmaqc_age_groups = filters.dmaqc_age_groups.join(',');
-    }
-
-    // Only include randomized group filter if not all options are selected (user has made a selection)
-    if (
-      filters.random_group_code.length > 0 &&
-      filters.random_group_code.length < FILTER_OPTIONS.randomGroupOptions.length
-    ) {
-      // Map the selected options to their API values using the mapping
-      const apiValues = filters.random_group_code.map(
-        option => RANDOMIZED_GROUP_MAPPING[option]
-      ).filter(Boolean).join(',');
-      
-      if (apiValues) {
-        filters_obj.random_group_code = apiValues;
-      }
-    }
-
-    return filters_obj;
-  }, [filters.sex, filters.dmaqc_age_groups, filters.random_group_code]);
-
-  // Load filtered data
-  const { data, loading, error } = useBiospecimenData(apiFilters);
+  // Client-side filtering (instant, no API calls)
+  const filteredData = useFilteredBiospecimenData(allData, filters);
 
   // Pagination for drill-down table
   const tablePagination = useAdvancedPagination(selectedBar?.samples || [], {
@@ -102,7 +62,7 @@ const InteractiveBiospecimenChart = () => {
   // Static filter options from constants - memoized to prevent recreating object
   const filterOptions = useMemo(() => FILTER_OPTIONS, []);
 
-  // Handle checkbox filter changes (sex, age groups, and now randomized group)
+  // Handle checkbox filter changes (all filters now use checkboxes)
   // Optimized with stable callback to prevent unnecessary rerenders
   const handleCheckboxChange = useCallback((filterType, value, checked) => {
     setFilters((prev) => {
@@ -178,38 +138,78 @@ const InteractiveBiospecimenChart = () => {
 
         {/* Chart - Right Side */}
         <div className="col-lg-10">
-          {/* Chart Axis Mode Toggle */}
-          <div className="card mb-3">
-            <div className="card-body py-2">
-              <div className="row align-items-center">
-                <div className="col-auto">
-                  <small className="text-muted fw-bold">Chart View:</small>
+          {/* Show loading state during initial data load */}
+          {loading && (
+            <div className="card mb-3 border-info">
+              <div className="card-body text-center py-4">
+                <div className="spinner-border text-primary mb-3" role="status">
+                  <span className="sr-only">Loading...</span>
                 </div>
-                <div className="col-auto">
-                  <div className="btn-group btn-group-sm" role="group" aria-label="Chart axis mode">
-                    {Object.values(CHART_AXIS_OPTIONS).map((mode) => (
-                      <button
-                        key={mode}
-                        type="button"
-                        className={`btn btn-outline-primary ${axisMode === mode ? 'active' : ''}`}
-                        onClick={() => handleAxisModeChange(mode)}
-                      >
-                        {CHART_AXIS_LABELS[mode]}
-                      </button>
-                    ))}
+                <h5 className="text-muted mb-2">Loading biospecimen data...</h5>
+                <p className="text-muted mb-0">Please wait while we fetch all available data.</p>
+              </div>
+            </div>
+          )}
+
+          {/* Show error state */}
+          {error && (
+            <div className="card mb-3 border-danger">
+              <div className="card-body text-center py-4">
+                <h5 className="text-danger mb-3">
+                  <i className="bi bi-exclamation-triangle mr-2" />
+                  Error Loading Data
+                </h5>
+                <p className="text-muted mb-3">{error}</p>
+                <button className="btn btn-outline-primary" onClick={refresh}>
+                  <i className="bi bi-arrow-clockwise mr-2" />
+                  Try Again
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Chart controls and chart - only show when data is loaded */}
+          {!loading && !error && allData.length > 0 && (
+            <>
+              {/* Chart Axis Mode Toggle */}
+              <div className="card mb-3">
+                <div className="card-body py-2">
+                  <div className="row align-items-center">
+                    <div className="col-auto">
+                      <small className="text-muted fw-bold">Chart View:</small>
+                    </div>
+                    <div className="col-auto">
+                      <div className="btn-group btn-group-sm" role="group" aria-label="Chart axis mode">
+                        {Object.values(CHART_AXIS_OPTIONS).map((mode) => (
+                          <button
+                            key={mode}
+                            type="button"
+                            className={`btn btn-outline-primary ${axisMode === mode ? 'active' : ''}`}
+                            onClick={() => handleAxisModeChange(mode)}
+                          >
+                            {CHART_AXIS_LABELS[mode]}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="col-auto ml-auto">
+                      <small className="text-muted">
+                        Showing {filteredData.length.toLocaleString()} of {allData.length.toLocaleString()} samples
+                      </small>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <BiospecimenChart
-            data={data}
-            loading={loading}
-            error={error}
-            onBarClick={handleBarClick}
-            axisMode={axisMode}
-          />
+              <BiospecimenChart
+                data={filteredData}
+                loading={false} // Data is already loaded
+                error={null}
+                onBarClick={handleBarClick}
+                axisMode={axisMode}
+              />
+            </>
+          )}
         </div>
       </div>
 
