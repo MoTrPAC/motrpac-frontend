@@ -4,15 +4,13 @@ import PropTypes from 'prop-types';
 /**
  * Biospecimen filter controls component
  * Features:
- * - Checkbox filters for sex and age groups (multi-select)
- * - Radio button filters for random_group_code (single-select)
+ * - Checkbox filters for sex, age groups, and randomized groups (multi-select)
  * - Persistent UI that remains stable during data loading
  */
 const BiospecimenFilters = ({
   filters,
   filterOptions,
   onCheckboxChange,
-  onRadioChange,
 }) => {
   return (
     <div className="card h-100">
@@ -69,18 +67,23 @@ const BiospecimenFilters = ({
           ))}
         </div>
 
-        {/* Randomized Group Filters - Radio Buttons */}
+        {/* Randomized Group Filters - Checkboxes (changed from radio buttons) */}
         <div className="mb-4">
           <h6 className="mb-2">Randomized Group</h6>
           {filterOptions.randomGroupOptions.map((option) => (
             <div key={option} className="form-check">
               <input
                 className="form-check-input"
-                type="radio"
-                name="randomGroup"
+                type="checkbox"
                 id={`group-${option}`}
-                checked={filters.random_group_code === option}
-                onChange={() => onRadioChange(option)}
+                checked={filters.random_group_code.includes(option)}
+                onChange={(e) =>
+                  onCheckboxChange(
+                    'random_group_code',
+                    option,
+                    e.target.checked,
+                  )
+                }
               />
               <label
                 className="form-check-label"
@@ -100,7 +103,7 @@ BiospecimenFilters.propTypes = {
   filters: PropTypes.shape({
     sex: PropTypes.array.isRequired,
     dmaqc_age_groups: PropTypes.array.isRequired,
-    random_group_code: PropTypes.string.isRequired,
+    random_group_code: PropTypes.array.isRequired, // Changed from string to array
   }).isRequired,
   filterOptions: PropTypes.shape({
     sexOptions: PropTypes.array.isRequired,
@@ -108,7 +111,6 @@ BiospecimenFilters.propTypes = {
     randomGroupOptions: PropTypes.array.isRequired,
   }).isRequired,
   onCheckboxChange: PropTypes.func.isRequired,
-  onRadioChange: PropTypes.func.isRequired,
 };
 
 export default BiospecimenFilters;
