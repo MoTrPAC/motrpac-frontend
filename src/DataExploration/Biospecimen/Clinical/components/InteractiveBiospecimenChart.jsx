@@ -193,11 +193,13 @@ const InteractiveBiospecimenChart = () => {
                         ))}
                       </div>
                     </div>
+                    {/*
                     <div className="col-auto ml-auto">
                       <small className="text-muted">
                         Showing {filteredData.length.toLocaleString()} of {allData.length.toLocaleString()} samples
                       </small>
                     </div>
+                    */}
                   </div>
                 </div>
               </div>
