@@ -109,6 +109,11 @@ const teamInfo = {
       title: 'CRCA/Program Manager',
       image: `${imgSourceUrl}Mia.jpg`,
     },
+    {
+      name: 'Sasha Gladkikh',
+      title: 'Bioinformatics Engineer',
+      image: `${imgSourceUrl}Sasha.jpg`,
+    },
   ],
   CoIs: [
     {
