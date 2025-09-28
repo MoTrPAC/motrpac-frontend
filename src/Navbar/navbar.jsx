@@ -184,19 +184,13 @@ export function Navbar({
             <ul className="navbar-nav">
               {isAuthenticated && hasAccess && (
                 <li className="nnav-item navItem">
-                  <Link
-                    to="/dashboard"
-                    className="nav-link"
-                  >
+                  <Link to="/dashboard" className="nav-link">
                     Dashboard
                   </Link>
                 </li>
               )}
               <li className="nnav-item navItem">
-                <Link
-                  to="/data-download"
-                  className="nav-link"
-                >
+                <Link to="/data-download" className="nav-link">
                   Downloads
                 </Link>
               </li>
@@ -250,10 +244,7 @@ export function Navbar({
                   className="dropdown-menu"
                   aria-labelledby="dataAccessNavbarItemMenuLink"
                 >
-                  <Link
-                    to="/data-download"
-                    className="dropdown-item"
-                  >
+                  <Link to="/data-download" className="dropdown-item">
                     {isAuthenticated && hasAccess && userType === 'internal'
                       ? 'Rat and Human Data'
                       : 'Endurance Training Data'}
@@ -372,9 +363,6 @@ export function Navbar({
                   <Link to="/tutorials" className="dropdown-item">
                     Tutorials
                   </Link>
-                  <Link to="/license" className="dropdown-item">
-                    License
-                  </Link>
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
@@ -398,6 +386,12 @@ export function Navbar({
                   </Link>
                   <Link to="/external-links" className="dropdown-item">
                     Useful Links
+                  </Link>
+                  <Link to="/license" className="dropdown-item">
+                    License
+                  </Link>
+                  <Link to="/citation" className="dropdown-item">
+                    Cite Us
                   </Link>
                   <Link
                     id="send_email"
