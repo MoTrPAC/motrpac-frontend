@@ -104,6 +104,7 @@
     }
 
     .show-data-download-info-link {
+      .btn.btn-link {
         font-size: inherit;
         font-weight: 500;
         color: #007bff;
@@ -115,6 +116,20 @@
           text-decoration: none;
         }
       }
+
+      .dropdown-menu {
+        background-color: #fff;
+        border: solid 1px colors.$gray-semi-transparent;
+        box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.1);
+        font-size: 0.9rem;
+        padding: 0.75rem;
+        width: 400px;
+      }
+
+      .dropdown-toggle::after {
+        display: none;
+      }
+    }
   }
 
   label {

@@ -40,10 +40,29 @@ function SelectiveDataDownloads({
         <div className="page-title">
           <h1 className="mb-0 flex-grow-1">Data Download - Endurance Training Rats</h1>
         </div>
-        <button type="button" className="btn btn-link show-data-download-info-link">
-          <i className="bi bi-info-circle-fill"></i>
-          <span className="ml-1">Show Info</span>
-        </button>
+        <div className="btn-group show-data-download-info-link">
+          <button type="button" className="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <i className="bi bi-info-circle-fill"></i>
+            <span className="ml-1">Show Info</span>
+          </button>
+          <div className="dropdown-menu dropdown-menu-right">
+            <p>Data available for download on this page includes:</p>
+            <h6 className="border-bottom mb-2 pb-2">Raw "Results"</h6>
+            <ul className="pl-3">
+              <li><b>Untargeted Metabolomics:</b> MS intensities</li>
+              <li><b>Targeted Metabolomics</b>: Absolute concentrations</li>
+              <li><b>Proteomics:</b> Reporter ion intensities and log ratios</li>
+              <li><b>ATAC-seq:</b> Peak counts</li>
+              <li><b>RRBS:</b> CpG methylation counts (or methylation beta values)</li>
+              <li><b>Immunoassay (Luminex):</b> Protein concentrations</li>
+            </ul>
+            <h6 className="border-bottom mb-2 pb-2">"Analysis" Results</h6>
+            <ul className="pl-3">
+              <li>Normalized data tables</li>
+              <li>Differential analysis results (e.g., log2 fold-change, p-values, adjusted p-values)</li>
+            </ul>
+          </div>
+        </div>
       </>
     );
   }
