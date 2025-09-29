@@ -20,37 +20,63 @@ function SelectiveDataDownloads({
 
   // set page title based on selected data
   function renderPageTitle() {
-    let titleStr = 'Data Download';
-    if (dataDownload.pass1b06DataSelected) {
-      titleStr = 'Data Download - Endurance Training Rats';
-    }
     if (dataDownload.pass1a06DataSelected) {
-      titleStr = 'Data Download - Acute Exercise Rats';
+      return (
+        <div className="page-title">
+          <h1 className="mb-0">Data Download - Acute Exercise Rats</h1>
+        </div>
+      );
     }
     if (dataDownload.humanPrecovidSedAduDataSelected) {
-      titleStr = 'Data Download - Human Sedentary Adults';
+      return (
+        <div className="page-title">
+          <h1 className="mb-0">Data Download - Human Sedentary Adults</h1>
+        </div>
+      )
     }
 
-    return titleStr;
+    return (
+      <>
+        <div className="page-title">
+          <h1 className="mb-0 flex-grow-1">Data Download - Endurance Training Rats</h1>
+        </div>
+        <button type="button" className="btn btn-link show-data-download-info-link">
+          <i className="bi bi-info-circle-fill"></i>
+          <span className="ml-1">Show Info</span>
+        </button>
+      </>
+    );
   }
 
   // set page summary based on selected data
   function renderStudySummary() {
-    let summary = '';
-    if (dataDownload.pass1b06DataSelected) {
-      summary =
-        'Experimental data from endurance trained (1 week, 2 weeks, 4 weeks or 8 weeks) compared to untrained young adult rats (6 months old).';
-    }
     if (dataDownload.pass1a06DataSelected) {
-      summary =
-        'Experimental data from acute exercise study on young adult rats for a comprehensive analysis of the physiological responses following a single exercise session in 6-month-old F344 rats.';
+      return (
+        <p className="lead">
+          Experimental data from acute exercise study on young adult rats for a comprehensive analysis of the physiological responses following a single exercise session in 6-month-old F344 rats.
+        </p>
+      );
     }
     if (dataDownload.humanPrecovidSedAduDataSelected) {
-      summary =
-        'Differential analysis results data for differences in changes during the acute bout, comparing the change from pre-exercise baseline at any given timepoint during the acute bout as compared to resting control.';
+      return (
+        <p className="lead">
+          Differential analysis results data for differences in changes during the acute bout, comparing the change from pre-exercise baseline at any given timepoint during the acute bout as compared to resting control.
+        </p>
+      );
     }
 
-    return summary;
+    return (
+      <p className="lead">
+        This study investigates the long-term adaptive effects of endurance training in young
+        adult rats by analyzing multi-omics profiles across 18 tissues and blood at 1, 2, 4,
+        and 8 weeks of treadmill training.{' '}
+        <Link to="/project-overview#endurance-training" className="link">
+          Learn more
+        </Link>
+        {' '}
+        about this study.
+      </p>
+    );
   }
 
   return (
@@ -65,8 +91,10 @@ function SelectiveDataDownloads({
           <span>Back</span>
         </Link>
       </div>
-      <PageTitle title={renderPageTitle()} />
-      <p className="lead mb-4">{renderStudySummary()}</p>
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3">
+        {renderPageTitle()}
+      </div>
+      <div className="browse-data-summary-container mb-4">{renderStudySummary()}</div>
       <div className="browse-data-container row">
         <div className="tab-content mx-3">
           <SelectiveDataDownloadFileBrowser

@@ -102,6 +102,19 @@
         width: fit-content;
       }
     }
+
+    .show-data-download-info-link {
+        font-size: inherit;
+        font-weight: 500;
+        color: #007bff;
+        padding: 0;
+  
+        &:focus, &:active {
+          box-shadow: none;
+          outline: none;
+          text-decoration: none;
+        }
+      }
   }
 
   label {
