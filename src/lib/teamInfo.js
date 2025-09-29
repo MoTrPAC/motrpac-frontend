@@ -55,11 +55,6 @@ const teamInfo = {
       image: `${imgSourceUrl}Jeren.jpg`,
     },
     {
-      name: 'Alex Miller',
-      title: 'Bioinformatics Engineer',
-      image: `${imgSourceUrl}Alex.jpg`,
-    },
-    {
       name: 'David Amar, Ph.D.',
       title: 'Consultant',
       image: `${imgSourceUrl}DavidA.jpg`,
