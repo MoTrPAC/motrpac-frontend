@@ -19,7 +19,8 @@ function Citation() {
             When referencing MoTrPAC, please cite it as follows:
           </p>
           <ul className="lead">
-            <li>Please cite the indicated paper for any dataset you used.</li>
+            <li>All works using MoTrPAC data should reference the MoTrPAC Marker Paper (see below).</li>
+            <li>For each public dataset used in your work, please cite the associated work indicated below.</li>
             <li>Cite any R package used for data access.</li>
             <li>
               If data were downloaded directly from{' '}
