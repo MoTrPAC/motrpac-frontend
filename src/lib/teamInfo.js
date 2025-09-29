@@ -105,6 +105,11 @@ const teamInfo = {
       image: `${imgSourceUrl}Mia.jpg`,
     },
     {
+      name: 'Vidal Arroyo',
+      title: 'Graduate Student',
+      image: `${imgSourceUrl}Vidal.jpg`,
+    },
+    {
       name: 'Sasha Gladkikh',
       title: 'Bioinformatics Engineer',
       image: `${imgSourceUrl}Sasha.jpg`,
