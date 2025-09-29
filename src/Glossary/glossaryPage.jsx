@@ -40,7 +40,7 @@ function Glossary() {
           </h3>
           
           <div className="glossary-filter-container mb-3">
-            <div className="input-group my-3 d-flect align-items-center">
+            <div className="input-group my-3 d-flex align-items-center">
               <div className="glossary-filter-label mr-2">
                 <b>Search glossary terms:</b>
               </div>
@@ -66,7 +66,7 @@ function Glossary() {
               </thead>
               <tbody>
                 {filteredData.map((item, index) => (
-                  <tr key={`glossary-item-${index}-${item.variable_name}`}>
+                  <tr key={`glossary-item-${item.variable_name}`}>
                     <th scope="row">{item.variable_name}</th>
                     <td>{item.definition}</td>
                   </tr>
