@@ -72,6 +72,7 @@ const BiospecimenSummary = lazy(
   () => import('../DataExploration/Biospecimen/Clinical/summaryStatistics'),
 );
 const Citation = lazy(() => import('../Citation/citationPage'));
+const Glossary = lazy(() => import('../Glossary/glossaryPage'));
 
 function App({ history = History }) {
   return (
@@ -208,6 +209,7 @@ function App({ history = History }) {
                 <Route path="/exercise-benefits" element={<ExerciseBenefits/>}/>
                 <Route path="/technical-guides/phenotype" element={<Phenotype/>}/>
                 <Route path="/citation" element={<Citation/>}/>
+                <Route path="/glossary" element={<Glossary/>}/>
               </Route>
             </Routes>
           </Suspense>
