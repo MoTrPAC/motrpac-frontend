@@ -26,7 +26,7 @@ function Tutorials() {
         <div className="tutorials-summary-container row mb-4">
           <div className="col-12">
             <div className="section-title-container d-flex align-items-center justify-content-between mt-3 mb-2">
-              <h3 className="mb-0">{language === 'English' ? 'MoTrPAC Data Hub Overview' : 'Descripción general de MoTrPAC Data Hub'}</h3>
+              <h3 className="mb-0">{language === 'English' ? 'MoTrPAC Data Hub Overview' : 'Descripción General del Centro de Datos de MoTrPAC'}</h3>
               <button type="button" className="btn btn-link" onClick={toggleLanguage}>
                 <i className="bi bi-translate"></i>
                 <span className="ml-1">{language === 'English' ? 'Spanish' : 'English'}</span>
