@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import PageTitle from '../../lib/ui/pageTitle';
 import BrowseDataFilter from '../browseDataFilter';
 import SelectiveDataDownloadFileBrowser from './selectiveDataDownloadFileBrowser';
 
