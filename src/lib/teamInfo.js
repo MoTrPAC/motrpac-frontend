@@ -55,11 +55,6 @@ const teamInfo = {
       image: `${imgSourceUrl}Jeren.jpg`,
     },
     {
-      name: 'Alex Miller',
-      title: 'Bioinformatics Engineer',
-      image: `${imgSourceUrl}Alex.jpg`,
-    },
-    {
       name: 'David Amar, Ph.D.',
       title: 'Consultant',
       image: `${imgSourceUrl}DavidA.jpg`,
@@ -108,6 +103,16 @@ const teamInfo = {
       name: 'Mia Levanto',
       title: 'CRCA/Program Manager',
       image: `${imgSourceUrl}Mia.jpg`,
+    },
+    {
+      name: 'Vidal Arroyo',
+      title: 'Graduate Student',
+      image: `${imgSourceUrl}Vidal.jpg`,
+    },
+    {
+      name: 'Sasha Gladkikh',
+      title: 'Bioinformatics Engineer',
+      image: `${imgSourceUrl}Sasha.jpg`,
     },
   ],
   CoIs: [

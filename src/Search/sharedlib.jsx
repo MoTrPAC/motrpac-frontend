@@ -772,7 +772,7 @@ export const transformData = (arr) => {
       const newGeneVal = item.gene_symbol;
       item.gene_symbol = (
         <a
-          href={`https://www.ncbi.nlm.nih.gov/gene/?term=rat+${newGeneVal.toLowerCase()}`}
+          href={`https://cfdeknowledge.org/r/kc_entity_gene?entity=gene&gene=${newGeneVal.toUpperCase()}`}
           target="_blank"
           rel="noreferrer"
         >
