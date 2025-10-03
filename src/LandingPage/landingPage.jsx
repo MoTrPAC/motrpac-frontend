@@ -11,7 +11,6 @@ import SubscribeDataUpdates from './components/subscribeDataUpdates';
 import VisNetworkReactComponent from './components/visNetwork';
 import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
 import IconSet from '../lib/iconSet';
-import ComplianceReviewNotice from '../lib/ui/complianceReviewNotice';
 import BackgroundVideo from './components/backgroundVideo';
 import Figure1C from './components/figure1c';
 
@@ -154,6 +153,12 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
               <a href="#join-office-hour" className="office-hour-anchor-link">
                 Join our monthly open office event to learn more
               </a>
+            </div>
+            <div className="compliance-review-notice">
+              <span>
+                This repository is under review for potential modification in
+                compliance with Administration directives.
+              </span>
             </div>
           </div>
         </div>
@@ -317,7 +322,6 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
           </div>
         </div>
       </section>
-      <ComplianceReviewNotice />
     </div>
   );
 }
