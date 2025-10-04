@@ -93,14 +93,8 @@ function pass1ac06AnalysisCategoryOptionChange(category, option) {
   };
 }
 
-const accessToken =
-  import.meta.env.DEV
-    ? import.meta.env.VITE_ES_ACCESS_TOKEN_DEV
-    : import.meta.env.VITE_ES_ACCESS_TOKEN;
-const host =
-  import.meta.env.DEV
-    ? import.meta.env.VITE_ES_PROXY_HOST_DEV
-    : import.meta.env.VITE_ES_PROXY_HOST;
+const accessToken = import.meta.env.VITE_ES_ACCESS_TOKEN;
+const searchServiceHost = import.meta.env.VITE_ES_PROXY_HOST;
 const endpoint = import.meta.env.VITE_ES_ENDPOINT;
 
 const headersConfig = {
@@ -122,7 +116,7 @@ function handleGeneCentricSearch(params, geneInputValue, scope) {
   return (dispatch) => {
     dispatch(geneSearchSubmit(scope, geneInputValue));
     return axios
-      .post(`${host}${endpoint}`, params, headersConfig)
+      .post(`${searchServiceHost}${endpoint}`, params, headersConfig)
       .then((response) => {
         if (response.data.error) {
           dispatch(geneSearchFailure(response.data.error));
