@@ -271,6 +271,7 @@ GeneCentricView.propTypes = {
     ktype: PropTypes.string,
     keys: PropTypes.string,
     omics: PropTypes.arrayOf(PropTypes.string),
+    study: PropTypes.string,
     filters: PropTypes.shape({
       assay: PropTypes.arrayOf(PropTypes.string),
       tissue: PropTypes.arrayOf(PropTypes.string),
