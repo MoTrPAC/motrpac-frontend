@@ -16,6 +16,7 @@ export const defaultGeneSearchParams = {
   ktype: 'gene',
   keys: '',
   omics: ['transcriptomics', 'proteomics'],
+  study: 'pass1b06',
   filters: {
     assay: [],
     tissue: [],
