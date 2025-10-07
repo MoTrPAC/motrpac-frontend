@@ -94,6 +94,111 @@ const BiospecimenFilters = ({
             </div>
           ))}
         </div>
+
+        {/* BMI Group Filters - Checkboxes */}
+        <div className="mb-4">
+          <h6 className="mb-2">BMI Group</h6>
+          {filterOptions.bmiGroupOptions.map((option) => (
+            <div key={option} className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id={`bmi-${option}`}
+                checked={filters.bmi_group.includes(option)}
+                onChange={(e) =>
+                  onCheckboxChange('bmi_group', option, e.target.checked)
+                }
+              />
+              <label className="form-check-label" htmlFor={`bmi-${option}`}>
+                {option}
+              </label>
+            </div>
+          ))}
+        </div>
+
+        {/* Race Filters - Checkboxes */}
+        <div className="mb-4">
+          <h6 className="mb-2">Race</h6>
+          {filterOptions.raceOptions.map((option) => (
+            <div key={option} className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id={`race-${option}`}
+                checked={filters.race.includes(option)}
+                onChange={(e) =>
+                  onCheckboxChange('race', option, e.target.checked)
+                }
+              />
+              <label className="form-check-label" htmlFor={`race-${option}`}>
+                {option}
+              </label>
+            </div>
+          ))}
+        </div>
+
+        {/* Ethnicity Filters - Checkboxes */}
+        <div className="mb-4">
+          <h6 className="mb-2">Ethnicity</h6>
+          {filterOptions.ethnicityOptions.map((option) => (
+            <div key={option} className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id={`ethnicity-${option}`}
+                checked={filters.ethnicity.includes(option)}
+                onChange={(e) =>
+                  onCheckboxChange('ethnicity', option, e.target.checked)
+                }
+              />
+              <label className="form-check-label" htmlFor={`ethnicity-${option}`}>
+                {option}
+              </label>
+            </div>
+          ))}
+        </div>
+
+        {/* Tissue Filters - Checkboxes */}
+        <div className="mb-4">
+          <h6 className="mb-2">Tissue</h6>
+          {filterOptions.tissueOptions.map((option) => (
+            <div key={option} className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id={`tissue-${option}`}
+                checked={filters.tissue.includes(option)}
+                onChange={(e) =>
+                  onCheckboxChange('tissue', option, e.target.checked)
+                }
+              />
+              <label className="form-check-label" htmlFor={`tissue-${option}`}>
+                {option}
+              </label>
+            </div>
+          ))}
+        </div>
+
+        {/* Ome Filters - Checkboxes */}
+        <div className="mb-4">
+          <h6 className="mb-2">Ome</h6>
+          {filterOptions.omeOptions.map((option) => (
+            <div key={option} className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id={`ome-${option}`}
+                checked={filters.ome.includes(option)}
+                onChange={(e) =>
+                  onCheckboxChange('ome', option, e.target.checked)
+                }
+              />
+              <label className="form-check-label" htmlFor={`ome-${option}`}>
+                {option}
+              </label>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -103,12 +208,22 @@ BiospecimenFilters.propTypes = {
   filters: PropTypes.shape({
     sex: PropTypes.array.isRequired,
     dmaqc_age_groups: PropTypes.array.isRequired,
-    random_group_code: PropTypes.array.isRequired, // Changed from string to array
+    random_group_code: PropTypes.array.isRequired,
+    bmi_group: PropTypes.array.isRequired,
+    race: PropTypes.array.isRequired,
+    ethnicity: PropTypes.array.isRequired,
+    tissue: PropTypes.array.isRequired,
+    ome: PropTypes.array.isRequired,
   }).isRequired,
   filterOptions: PropTypes.shape({
     sexOptions: PropTypes.array.isRequired,
     ageGroupOptions: PropTypes.array.isRequired,
     randomGroupOptions: PropTypes.array.isRequired,
+    bmiGroupOptions: PropTypes.array.isRequired,
+    raceOptions: PropTypes.array.isRequired,
+    ethnicityOptions: PropTypes.array.isRequired,
+    tissueOptions: PropTypes.array.isRequired,
+    omeOptions: PropTypes.array.isRequired,
   }).isRequired,
   onCheckboxChange: PropTypes.func.isRequired,
 };
