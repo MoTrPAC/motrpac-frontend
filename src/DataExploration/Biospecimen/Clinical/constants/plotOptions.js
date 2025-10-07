@@ -73,6 +73,11 @@ export const DEFAULT_FILTERS = {
   sex: ['Male', 'Female'], // Both selected by default
   dmaqc_age_groups: ['10-13', '14-17', '18-39', '40-59', '60+'], // All selected by default
   random_group_code: ['Control', 'Endurance', 'Resistance'], // All selected by default (changed from single value to array)
+  bmi_group: ['0-25', '25-30', '30+'], // All selected by default
+  race: ['African America/Black', 'Asian', 'Hawaiian/Pacific Islander', 'Native American', 'Caucasian', 'Other', 'Unknown'], // All selected by default
+  ethnicity: ['Hispanic/Latino/Spanish Origin', 'Not Hispanic/Latino/Spanish Origin', 'Unknown'], // All selected by default
+  tissue: ['Adipose', 'Blood', 'Muscle'], // All selected by default
+  ome: ['Epigenomic', 'Transcriptomic', 'Proteomic', 'Metabolomic'], // All selected by default
 };
 
 // Randomized group code mapping for API queries
@@ -87,6 +92,17 @@ export const FILTER_OPTIONS = {
   sexOptions: ['Male', 'Female'],
   ageGroupOptions: ['10-13', '14-17', '18-39', '40-59', '60+'],
   randomGroupOptions: ['Control', 'Endurance', 'Resistance'],
+  bmiGroupOptions: ['0-25', '25-30', '30+'],
+  raceOptions: ['African America/Black', 'Asian', 'Hawaiian/Pacific Islander', 'Native American', 'Caucasian', 'Other', 'Unknown'],
+  ethnicityOptions: ['Hispanic/Latino/Spanish Origin', 'Not Hispanic/Latino/Spanish Origin', 'Unknown'],
+  tissueOptions: ['Adipose', 'Blood', 'Muscle'],
+  omeOptions: ['Epigenomic', 'Transcriptomic', 'Proteomic', 'Metabolomic'],
+};
+
+export const BMI_GROUP_MAPPING = {
+  '0-25': 'BMI 0-25',
+  '25-30': 'BMI 25-30',
+  '30+': 'BMI 30+',
 };
 
 /**
