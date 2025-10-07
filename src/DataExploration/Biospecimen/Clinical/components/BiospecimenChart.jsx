@@ -3,20 +3,10 @@ import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import {
-  getColorForTissue,
-  getColorForTimepoint,
-  getLabelForTimepoint,
-  getColorForAssay,
   parseAssayTypes,
-  chartConfigFactory,
   VISIT_CODE_TO_PHASE,
   TISSUE_CODE_TO_NAME,
-  TISSUE_TYPES,
   INTERVENTION_PHASES,
-  TIMEPOINT_TYPES,
-  TIMEPOINT_CONFIG,
-  CHART_AXIS_OPTIONS,
-  DEFAULT_CHART_AXIS,
 } from '../constants/plotOptions';
 
 // Ensure Highcharts is properly initialized
@@ -35,12 +25,12 @@ if (typeof Highcharts === 'object' && Highcharts.setOptions) {
 /**
  * Interactive Biospecimen Bar Chart component
  * Features:
- * - Configurable x-axis: can group by intervention phase or timepoint
- * - Vertical grouped/stacked bar chart depending on axis mode
+ * - Horizontal bar chart with phases on x-axis and assays on y-axis
+ * - Bars sorted by total count (longest at top, shortest at bottom)
  * - Click-to-drill-down functionality
  * - Assay information in tooltips
  */
-const BiospecimenChart = ({ data, loading, error, onBarClick, axisMode = DEFAULT_CHART_AXIS }) => {
+const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
   // Chart reference for proper cleanup
   const chartRef = useRef(null);
 
@@ -57,219 +47,175 @@ const BiospecimenChart = ({ data, loading, error, onBarClick, axisMode = DEFAULT
     };
   }, []);
 
-  // Transform data for chart - supports all three axis modes
+  // Transform data for chart - separate charts for Pre and Post phases
   const chartData = useMemo(() => {
     if (!data || !data.length) return null;
 
-    const isTimepoint = axisMode === CHART_AXIS_OPTIONS.TIMEPOINT;
-    const isAssay = axisMode === CHART_AXIS_OPTIONS.ASSAY;
-    
-    // First, collect all unique assay types from the data for assay mode
-    const allAssayTypes = new Set();
-    if (isAssay) {
-      data.forEach((record) => {
-        const assays = parseAssayTypes(record.raw_assays_with_results);
-        assays.forEach(assay => allAssayTypes.add(assay));
-      });
-    }
-    const assayTypesList = Array.from(allAssayTypes).sort();
-    
-    // Group data by intervention phase, tissue, and timepoint
-    const groups = {};
+    // Collect all unique assay types and group data
+    const assayData = {};
 
     data.forEach((record) => {
       const visitCode = record.visit_code;
       const tissue = record.sample_group_code;
       const timepoint = record.timepoint;
-      const assays = record.raw_assays_with_results || '';
-
-      // Map visit codes to intervention phases using constants
       const phase = VISIT_CODE_TO_PHASE[visitCode];
-      // Map tissue codes to readable names using constants
       const tissueName = TISSUE_CODE_TO_NAME[tissue];
 
-      if (phase && tissueName && timepoint) {
-        const key = `${phase}_${tissueName}_${timepoint}`;
-        if (!groups[key]) {
-          groups[key] = {
-            phase,
-            tissue: tissueName,
-            timepoint,
-            samples: [],
-            assayTypes: new Set(),
-          };
-        }
-        groups[key].samples.push(record);
+      if (!phase || !tissueName || !timepoint) return;
 
-        // Track assay types using the new parse function
-        const parsedAssays = parseAssayTypes(assays);
-        parsedAssays.forEach(assay => groups[key].assayTypes.add(assay));
-      }
+      const assays = parseAssayTypes(record.raw_assays_with_results);
+      
+      assays.forEach(assay => {
+        if (!assayData[assay]) {
+          assayData[assay] = {
+            name: assay,
+            total: 0,
+            byPhase: {},
+          };
+          INTERVENTION_PHASES.forEach(p => {
+            assayData[assay].byPhase[p] = {
+              count: 0,
+              samples: [],
+              assayTypes: new Set(),
+            };
+          });
+        }
+
+        assayData[assay].byPhase[phase].count++;
+        assayData[assay].byPhase[phase].samples.push(record);
+        assayData[assay].byPhase[phase].assayTypes.add(assay);
+        assayData[assay].total++;
+      });
     });
 
-    let series, categories;
+    // Sort assays by total count (descending)
+    const sortedAssays = Object.values(assayData)
+      .sort((a, b) => b.total - a.total);
 
-    if (isAssay) {
-      // Grouping by assay: X-axis = assays, Series = tissues (aggregated across phases and timepoints)
-      series = TISSUE_TYPES.map((tissue) => ({
-        name: tissue,
-        color: getColorForTissue(tissue),
-        data: assayTypesList.map((assayType) => {
-          let totalSamples = 0;
-          const allSamples = [];
-          const allAssayTypes = new Set();
-          
-          // Sum across all phases and timepoints for this tissue and assay
-          INTERVENTION_PHASES.forEach((phase) => {
-            TIMEPOINT_TYPES.forEach((timepoint) => {
-              const key = `${phase}_${tissue}_${timepoint}`;
-              const group = groups[key];
-              if (group && group.assayTypes.has(assayType)) {
-                // Count samples that have this specific assay type
-                const samplesWithAssay = group.samples.filter(sample => {
-                  const sampleAssays = parseAssayTypes(sample.raw_assays_with_results);
-                  return sampleAssays.includes(assayType);
-                });
-                totalSamples += samplesWithAssay.length;
-                allSamples.push(...samplesWithAssay);
-                group.assayTypes.forEach(assay => allAssayTypes.add(assay));
-              }
-            });
-          });
+    const categories = sortedAssays.map(a => a.name);
 
-          return {
-            y: totalSamples,
-            phase: null, // No specific phase when aggregated
-            tissue,
-            timepoint: null, // No specific timepoint when aggregated
-            assay: assayType, // New property for assay type
-            samples: allSamples,
-            assayTypes: Array.from(allAssayTypes),
-          };
-        }),
-      }));
-
-      categories = assayTypesList;
-    } else if (isTimepoint) {
-      // Grouping by timepoint: X-axis = timepoints, Series = tissues (aggregated across phases)
-      series = TISSUE_TYPES.map((tissue) => ({
-        name: tissue,
-        color: getColorForTissue(tissue),
-        data: TIMEPOINT_TYPES.map((timepoint) => {
-          // Sum all phases for this tissue and timepoint
-          const totalSamples = INTERVENTION_PHASES.reduce((sum, phase) => {
-            const key = `${phase}_${tissue}_${timepoint}`;
-            const group = groups[key];
-            return sum + (group ? group.samples.length : 0);
-          }, 0);
-
-          // Collect all samples and assay types for this tissue and timepoint across phases
-          const allSamples = [];
-          const allAssayTypes = new Set();
-          
-          INTERVENTION_PHASES.forEach((phase) => {
-            const key = `${phase}_${tissue}_${timepoint}`;
-            const group = groups[key];
-            if (group) {
-              allSamples.push(...group.samples);
-              group.assayTypes.forEach(assay => allAssayTypes.add(assay));
-            }
-          });
-
-          return {
-            y: totalSamples,
-            phase: null, // No specific phase when aggregated
-            tissue,
-            timepoint,
-            samples: allSamples,
-            assayTypes: Array.from(allAssayTypes),
-          };
-        }),
-      }));
-
-      categories = TIMEPOINT_TYPES.map(t => getLabelForTimepoint(t));
-    } else {
-      // Grouping by intervention phase: X-axis = phases, Series = tissues, Stack by timepoint
-      series = TISSUE_TYPES.map((tissue) => ({
-        name: tissue,
-        color: getColorForTissue(tissue),
-        data: INTERVENTION_PHASES.map((phase) => {
-          // Sum all timepoints for this phase and tissue
-          const totalSamples = TIMEPOINT_TYPES.reduce((sum, timepoint) => {
-            const key = `${phase}_${tissue}_${timepoint}`;
-            const group = groups[key];
-            return sum + (group ? group.samples.length : 0);
-          }, 0);
-
-          // Collect all samples and assay types for this phase and tissue
-          const allSamples = [];
-          const allAssayTypes = new Set();
-          
-          TIMEPOINT_TYPES.forEach((timepoint) => {
-            const key = `${phase}_${tissue}_${timepoint}`;
-            const group = groups[key];
-            if (group) {
-              allSamples.push(...group.samples);
-              group.assayTypes.forEach(assay => allAssayTypes.add(assay));
-            }
-          });
-
-          return {
-            y: totalSamples,
-            phase,
-            tissue,
-            timepoint: null, // No specific timepoint when grouped by phase
-            samples: allSamples,
-            assayTypes: Array.from(allAssayTypes),
-          };
-        }),
-      }));
-
-      categories = INTERVENTION_PHASES;
-    }
-
-    // Filter out series with no data
-    const filteredSeries = series.filter(s => 
-      s.data.some(d => d.y > 0)
-    );
-
-    return { 
-      series: filteredSeries, 
+    // Create separate chart data for Pre-Intervention and Post-Intervention phases
+    const chartsData = INTERVENTION_PHASES.map((phase, index) => ({
+      phase,
       categories,
-      groups,
-      axisMode,
-      assayTypesList
-    };
-  }, [data, axisMode]);
+      series: [{
+        name: phase,
+        color: index === 0 ? '#4e79a7' : '#e15759', // Blue for Pre, Red for Post
+        data: sortedAssays.map(assay => {
+          const phaseData = assay.byPhase[phase];
+          return {
+            y: phaseData ? phaseData.count : 0,
+            phase,
+            assay: assay.name,
+            samples: phaseData ? phaseData.samples : [],
+            assayTypes: phaseData ? Array.from(phaseData.assayTypes) : [],
+          };
+        }),
+      }],
+    }));
 
-  // Chart configuration using factory function for consistency
-  // Memoized with optimized dependencies
-  const chartOptions = useMemo(() => {
+    return chartsData;
+  }, [data]);
+
+  // Chart configurations for both Pre and Post phases
+  const chartOptionsArray = useMemo(() => {
     if (!chartData || !data) return null;
 
-    const isTimepoint = axisMode === CHART_AXIS_OPTIONS.TIMEPOINT;
-    const isAssay = axisMode === CHART_AXIS_OPTIONS.ASSAY;
-    
-    let axisLabel;
-    if (isAssay) {
-      axisLabel = 'assay type';
-    } else if (isTimepoint) {
-      axisLabel = 'exercise timepoint';
-    } else {
-      axisLabel = 'intervention phase';
-    }
-
-    const config = chartConfigFactory.createBiospecimenChart({
-      title: `Biospecimen Sample Distribution by ${axisLabel}`,
-      subtitle: `${data.length.toLocaleString()} samples • Grouped by ${axisLabel} • Click for details`,
-      onBarClick,
-      series: chartData.series,
-      categories: chartData.categories,
-      axisMode,
-    });
-    
-    return config;
-  }, [chartData, data, onBarClick, axisMode]);
+    return chartData.map(({ phase, categories, series }) => ({
+        chart: {
+          type: 'bar',
+          height: Math.max(400, categories.length * 40 + 100),
+          marginBottom: 80,
+        },
+      title: {
+        text: phase,
+        align: 'center',
+        verticalAlign: 'bottom',
+        y: -10,
+        style: { fontSize: '16px', fontWeight: 'bold' }
+      },
+      subtitle: {
+        text: null,
+      },
+      xAxis: {
+        categories: categories,
+        title: {
+          text: 'Assay Type',
+          style: { fontSize: '12px', fontWeight: 'bold' }
+        },
+        labels: {
+          style: { fontSize: '11px' }
+        }
+      },
+      yAxis: {
+        min: 0,
+        allowDecimals: false,
+        title: {
+          text: null,
+        },
+        labels: {
+          style: { fontSize: '11px' }
+        }
+      },
+      legend: {
+        enabled: false,
+      },
+      tooltip: {
+        useHTML: true,
+        formatter: function () {
+          const point = this.point;
+          const assayList = point.assayTypes && point.assayTypes.length > 0
+            ? point.assayTypes.join(', ')
+            : 'N/A';
+          
+          return `
+            <div style="padding: 8px;">
+              <strong>${point.assay}</strong><br/>
+              <strong>Phase:</strong> ${point.phase}<br/>
+              <strong>Samples:</strong> ${point.y.toLocaleString()}<br/>
+              <strong>Assays:</strong> ${assayList}<br/>
+              <em style="color: #666; font-size: 11px;">Click to view details</em>
+            </div>
+          `;
+        }
+      },
+      plotOptions: {
+        bar: {
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: true,
+            format: '{point.y}',
+            style: { fontSize: '10px' }
+          },
+          groupPadding: 0.1,
+          pointPadding: 0.05,
+        },
+        series: {
+          stacking: undefined,
+          cursor: 'pointer',
+          point: {
+            events: {
+              click: function () {
+                if (onBarClick && this.samples) {
+                  onBarClick({ point: this });
+                }
+              }
+            }
+          }
+        }
+      },
+      series: series,
+      credits: { enabled: false },
+      exporting: { 
+        enabled: true,
+        buttons: {
+          contextButton: {
+            menuItems: ['downloadPNG', 'downloadJPEG', 'downloadPDF', 'downloadSVG']
+          }
+        }
+      },
+    }));
+  }, [chartData, data, onBarClick]);
 
   // Render different states based on conditions
   if (loading) {
@@ -317,19 +263,29 @@ const BiospecimenChart = ({ data, loading, error, onBarClick, axisMode = DEFAULT
   return (
     <div className="card">
       <div className="card-body">
-        {chartOptions && Object.keys(chartOptions).length > 0 && (
-          <HighchartsReact
-            ref={chartRef}
-            highcharts={Highcharts}
-            options={chartOptions}
-            immutable={false}
-            containerProps={{ style: { height: '450px' } }}
-          />
-        )}
-        {(!chartOptions || Object.keys(chartOptions).length === 0) && (
+        {chartOptionsArray && chartOptionsArray.length === 2 ? (
+          <div className="row">
+            <div className="col-md-6">
+              {/* Pre-intervention sample counts by assay bar chart */}
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={chartOptionsArray[0]}
+                immutable={false}
+              />
+            </div>
+            <div className="col-md-6">
+              {/* Post-intervention sample counts by assay bar chart */}
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={chartOptionsArray[1]}
+                immutable={false}
+              />
+            </div>
+          </div>
+        ) : (
           <div className="text-center py-5 text-muted">
             <div className="spinner-border text-primary" role="status">
-              <span className="sr-only">Preparing chart...</span>
+              <span className="sr-only">Preparing charts...</span>
             </div>
             <p className="mt-2">Setting up chart configuration...</p>
           </div>
@@ -344,7 +300,6 @@ BiospecimenChart.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.string,
   onBarClick: PropTypes.func.isRequired,
-  axisMode: PropTypes.string,
 };
 
 export default BiospecimenChart;
