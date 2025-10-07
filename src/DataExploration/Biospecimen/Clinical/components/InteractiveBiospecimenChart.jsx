@@ -129,7 +129,7 @@ const InteractiveBiospecimenChart = () => {
       {/* Side-by-Side Layout: Filters on Left, Chart on Right */}
       <div className="row mb-4">
         {/* Filter Controls - Left Side */}
-        <div className="col-lg-2">
+        <div className="col-lg-3">
           <BiospecimenFilters
             filters={filters}
             filterOptions={filterOptions}
@@ -138,7 +138,7 @@ const InteractiveBiospecimenChart = () => {
         </div>
 
         {/* Chart - Right Side */}
-        <div className="col-lg-10">
+        <div className="col-lg-9">
           {/* Show loading state during initial data load */}
           {loading && (
             <div className="card mb-3 border-info">
