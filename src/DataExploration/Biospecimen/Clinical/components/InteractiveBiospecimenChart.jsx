@@ -7,9 +7,6 @@ import BiospecimenChart from './BiospecimenChart';
 import {
   DEFAULT_FILTERS,
   FILTER_OPTIONS,
-  CHART_AXIS_OPTIONS,
-  CHART_AXIS_LABELS,
-  DEFAULT_CHART_AXIS,
 } from '../constants/plotOptions';
 import roundNumbers from '../../../../lib/utils/roundNumbers';
 
@@ -25,9 +22,6 @@ const InteractiveBiospecimenChart = () => {
 
   // Selected bar state for drill-down
   const [selectedBar, setSelectedBar] = useState(null);
-
-  // Chart axis mode state
-  const [axisMode, setAxisMode] = useState(DEFAULT_CHART_AXIS);
 
   // Load all data once (simplified approach)
   const { allData, loading, error, refresh } = useBiospecimenData();
@@ -84,12 +78,6 @@ const InteractiveBiospecimenChart = () => {
       }
     });
     setSelectedBar(null);
-  }, []);
-
-  // Handle axis mode change
-  const handleAxisModeChange = useCallback((newAxisMode) => {
-    setAxisMode(newAxisMode);
-    setSelectedBar(null); // Clear selection when changing axis mode
   }, []);
 
   // Custom export function for drill-down table data
@@ -169,47 +157,14 @@ const InteractiveBiospecimenChart = () => {
             </div>
           )}
 
-          {/* Chart controls and chart - only show when data is loaded */}
+          {/* Chart - only show when data is loaded */}
           {!loading && !error && allData.length > 0 && (
             <>
-              {/* Chart Axis Mode Toggle */}
-              <div className="card mb-3">
-                <div className="card-body py-2">
-                  <div className="row align-items-center">
-                    <div className="col-auto">
-                      <small className="text-muted fw-bold">Chart View:</small>
-                    </div>
-                    <div className="col-auto">
-                      <div className="btn-group btn-group-sm" role="group" aria-label="Chart axis mode">
-                        {Object.values(CHART_AXIS_OPTIONS).map((mode) => (
-                          <button
-                            key={mode}
-                            type="button"
-                            className={`btn btn-outline-primary ${axisMode === mode ? 'active' : ''}`}
-                            onClick={() => handleAxisModeChange(mode)}
-                          >
-                            {CHART_AXIS_LABELS[mode]}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    {/*
-                    <div className="col-auto ml-auto">
-                      <small className="text-muted">
-                        Showing {filteredData.length.toLocaleString()} of {allData.length.toLocaleString()} samples
-                      </small>
-                    </div>
-                    */}
-                  </div>
-                </div>
-              </div>
-
               <BiospecimenChart
                 data={filteredData}
                 loading={false} // Data is already loaded
                 error={null}
                 onBarClick={handleBarClick}
-                axisMode={axisMode}
               />
             </>
           )}

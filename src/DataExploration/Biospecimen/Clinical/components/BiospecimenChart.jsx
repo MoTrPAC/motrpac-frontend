@@ -140,7 +140,7 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
       xAxis: {
         categories: categories,
         title: {
-          text: 'Assay Type',
+          text: 'Assay',
           style: { fontSize: '12px', fontWeight: 'bold' }
         },
         labels: {
