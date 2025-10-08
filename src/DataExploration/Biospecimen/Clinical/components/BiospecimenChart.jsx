@@ -53,6 +53,7 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
 
     // Collect all unique assay types and group data
     const assayData = {};
+    let maxCount = 0;
 
     data.forEach((record) => {
       const visitCode = record.visit_code;
@@ -85,6 +86,11 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
         assayData[assay].byPhase[phase].samples.push(record);
         assayData[assay].byPhase[phase].assayTypes.add(assay);
         assayData[assay].total++;
+        
+        // Track maximum count for fixed y-axis scale
+        if (assayData[assay].byPhase[phase].count > maxCount) {
+          maxCount = assayData[assay].byPhase[phase].count;
+        }
       });
     });
 
@@ -98,6 +104,7 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
     const chartsData = INTERVENTION_PHASES.map((phase, index) => ({
       phase,
       categories,
+      maxCount,
       series: [{
         name: phase,
         color: index === 0 ? '#4e79a7' : '#e15759', // Blue for Pre, Red for Post
@@ -121,7 +128,7 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
   const chartOptionsArray = useMemo(() => {
     if (!chartData || !data) return null;
 
-    return chartData.map(({ phase, categories, series }) => ({
+    return chartData.map(({ phase, categories, maxCount, series }) => ({
         chart: {
           type: 'bar',
           height: Math.max(400, categories.length * 40 + 100),
@@ -149,6 +156,7 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
       },
       yAxis: {
         min: 0,
+        max: maxCount,
         allowDecimals: false,
         title: {
           text: 'Sample Count',
