@@ -130,12 +130,12 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
       title: {
         text: phase,
         align: 'center',
-        verticalAlign: 'bottom',
-        y: -10,
         style: { fontSize: '16px', fontWeight: 'bold' }
       },
       subtitle: {
-        text: null,
+        text: 'Click bars for details',
+        align: 'center',
+        style: { fontSize: '12px', fontStyle: 'italic', color: '#666' }
       },
       xAxis: {
         categories: categories,
@@ -151,7 +151,9 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
         min: 0,
         allowDecimals: false,
         title: {
-          text: null,
+          text: 'Sample Count',
+          y: 15,
+          style: { fontSize: '12px', fontWeight: 'bold' }
         },
         labels: {
           style: { fontSize: '11px' }
