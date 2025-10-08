@@ -84,6 +84,56 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     return maxCount;
   }, [allData]);
 
+  // Calculate participant counts by sex
+  const participantBySex = useMemo(() => {
+    if (!data || !data.length) return null;
+
+    const uniqueParticipants = new Map();
+    data.forEach((record) => {
+      if (record.pid && record.sex) {
+        uniqueParticipants.set(record.pid, record.sex);
+      }
+    });
+
+    const sexCounts = { Male: 0, Female: 0 };
+    uniqueParticipants.forEach((sex) => {
+      if (sex === 'Male') sexCounts.Male++;
+      else if (sex === 'Female') sexCounts.Female++;
+    });
+
+    return [
+      { name: 'Male', y: sexCounts.Male, color: '#4e79a7' },
+      { name: 'Female', y: sexCounts.Female, color: '#e15759' },
+    ];
+  }, [data]);
+
+  // Calculate participant counts by age group
+  const participantByAgeGroup = useMemo(() => {
+    if (!data || !data.length) return null;
+
+    const uniqueParticipants = new Map();
+    data.forEach((record) => {
+      if (record.pid && record.dmaqc_age_groups) {
+        uniqueParticipants.set(record.pid, record.dmaqc_age_groups);
+      }
+    });
+
+    const ageGroups = ['10-13', '14-17', '18-39', '40-59', '60+'];
+    const ageCounts = {};
+    ageGroups.forEach(group => ageCounts[group] = 0);
+
+    uniqueParticipants.forEach((ageGroup) => {
+      if (ageCounts.hasOwnProperty(ageGroup)) {
+        ageCounts[ageGroup]++;
+      }
+    });
+
+    return {
+      categories: ageGroups,
+      data: ageGroups.map(group => ageCounts[group]),
+    };
+  }, [data]);
+
   // Transform data for chart - separate charts for Pre and Post phases
   const chartData = useMemo(() => {
     if (!data || !data.length) return null;
@@ -153,6 +203,102 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
 
     return chartsData;
   }, [data]);
+
+  // Pie chart configuration for sex distribution
+  const sexPieChartOptions = useMemo(() => {
+    if (!participantBySex) return null;
+
+    return {
+      chart: {
+        type: 'pie',
+        height: 300,
+      },
+      title: {
+        text: 'Sex Distribution',
+        style: { fontSize: '14px', fontWeight: 'bold' }
+      },
+      tooltip: {
+        pointFormat: '<b>{point.y}</b> participants ({point.percentage:.1f}%)'
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}</b>: {point.y}',
+            style: { fontSize: '11px' },
+            distance: 10,
+            connectorWidth: 1,
+          },
+          showInLegend: false,
+        }
+      },
+      series: [{
+        name: 'Participants',
+        data: participantBySex,
+      }],
+      credits: { enabled: false },
+    };
+  }, [participantBySex]);
+
+  // Bar chart configuration for age group distribution
+  const ageBarChartOptions = useMemo(() => {
+    if (!participantByAgeGroup) return null;
+
+    return {
+      chart: {
+        type: 'column',
+        height: 300,
+      },
+      title: {
+        text: 'Age Group Distribution',
+        style: { fontSize: '14px', fontWeight: 'bold' }
+      },
+      xAxis: {
+        categories: participantByAgeGroup.categories,
+        title: {
+          text: 'Age Group',
+          style: { fontSize: '12px', fontWeight: 'bold' }
+        },
+        labels: {
+          style: { fontSize: '11px' }
+        }
+      },
+      yAxis: {
+        min: 0,
+        allowDecimals: false,
+        title: {
+          text: 'Participant Count',
+          style: { fontSize: '12px', fontWeight: 'bold' }
+        },
+        labels: {
+          style: { fontSize: '11px' }
+        }
+      },
+      legend: {
+        enabled: false,
+      },
+      tooltip: {
+        pointFormat: '<b>{point.y}</b> participants'
+      },
+      plotOptions: {
+        column: {
+          dataLabels: {
+            enabled: true,
+            format: '{point.y}',
+            style: { fontSize: '10px' }
+          },
+          color: '#9b59b6',
+        }
+      },
+      series: [{
+        name: 'Participants',
+        data: participantByAgeGroup.data,
+      }],
+      credits: { enabled: false },
+    };
+  }, [participantByAgeGroup]);
 
   // Chart configurations for both Pre and Post phases
   const chartOptionsArray = useMemo(() => {
@@ -301,35 +447,85 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
   }
 
   return (
-    <div className="card">
-      <div className="card-body">
-        {chartOptionsArray && chartOptionsArray.length === 2 ? (
-          <div className="row">
-            <div className="col-md-6">
-              {/* Pre-intervention sample counts by assay bar chart */}
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={chartOptionsArray[0]}
-                immutable={false}
-              />
-            </div>
-            <div className="col-md-6">
-              {/* Post-intervention sample counts by assay bar chart */}
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={chartOptionsArray[1]}
-                immutable={false}
-              />
+    <div className="charts-container row">
+      <div className="card-containner col-md-6">
+        <div className="card">
+          <div className="card-header">
+            <h5 className="mb-0">
+              Participants
+            </h5>
+          </div>
+          <div className="card-body">
+            <div className="row">
+              <div className="col-md-6">
+                {/* Pie chart of participant count in each sex */}
+                {sexPieChartOptions ? (
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={sexPieChartOptions}
+                    immutable={false}
+                  />
+                ) : (
+                  <div className="text-center py-3 text-muted">
+                    <p>No data available</p>
+                  </div>
+                )}
+              </div>
+              <div className="col-md-6">
+                {/* Bar chart of participant count in each age group */}
+                {ageBarChartOptions ? (
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={ageBarChartOptions}
+                    immutable={false}
+                  />
+                ) : (
+                  <div className="text-center py-3 text-muted">
+                    <p>No data available</p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        ) : (
-          <div className="text-center py-5 text-muted">
-            <div className="spinner-border text-primary" role="status">
-              <span className="sr-only">Preparing charts...</span>
-            </div>
-            <p className="mt-2">Setting up chart configuration...</p>
+        </div>
+      </div>
+      <div className="card-containner col-md-6">
+        <div className="card">
+          <div className="card-header">
+            <h5 className="mb-0">
+              Biospecimen Sample Counts
+            </h5>
           </div>
-        )}
+          <div className="card-body">
+            {chartOptionsArray && chartOptionsArray.length === 2 ? (
+              <div className="row">
+                <div className="col-md-6">
+                  {/* Pre-intervention sample counts by assay bar chart */}
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={chartOptionsArray[0]}
+                    immutable={false}
+                  />
+                </div>
+                <div className="col-md-6">
+                  {/* Post-intervention sample counts by assay bar chart */}
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={chartOptionsArray[1]}
+                    immutable={false}
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="text-center py-5 text-muted">
+                <div className="spinner-border text-primary" role="status">
+                  <span className="sr-only">Preparing charts...</span>
+                </div>
+                <p className="mt-2">Setting up chart configuration...</p>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
