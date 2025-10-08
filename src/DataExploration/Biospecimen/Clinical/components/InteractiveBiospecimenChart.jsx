@@ -162,6 +162,7 @@ const InteractiveBiospecimenChart = () => {
             <>
               <BiospecimenChart
                 data={filteredData}
+                allData={allData}
                 loading={false} // Data is already loaded
                 error={null}
                 onBarClick={handleBarClick}

@@ -30,7 +30,7 @@ if (typeof Highcharts === 'object' && Highcharts.setOptions) {
  * - Click-to-drill-down functionality
  * - Assay information in tooltips
  */
-const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
+const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
   // Chart reference for proper cleanup
   const chartRef = useRef(null);
 
@@ -47,13 +47,49 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
     };
   }, []);
 
+  // Calculate fixed maximum from ALL unfiltered data (only once)
+  const fixedMaxCount = useMemo(() => {
+    if (!allData || !allData.length) return 0;
+
+    const assayData = {};
+    let maxCount = 0;
+
+    allData.forEach((record) => {
+      const visitCode = record.visit_code;
+      const tissue = record.sample_group_code;
+      const timepoint = record.timepoint;
+      const phase = VISIT_CODE_TO_PHASE[visitCode];
+      const tissueName = TISSUE_CODE_TO_NAME[tissue];
+
+      if (!phase || !tissueName || !timepoint) return;
+
+      const assays = parseAssayTypes(record.raw_assays_with_results);
+      
+      assays.forEach(assay => {
+        if (!assayData[assay]) {
+          assayData[assay] = { byPhase: {} };
+          INTERVENTION_PHASES.forEach(p => {
+            assayData[assay].byPhase[p] = { count: 0 };
+          });
+        }
+
+        assayData[assay].byPhase[phase].count++;
+        
+        if (assayData[assay].byPhase[phase].count > maxCount) {
+          maxCount = assayData[assay].byPhase[phase].count;
+        }
+      });
+    });
+
+    return maxCount;
+  }, [allData]);
+
   // Transform data for chart - separate charts for Pre and Post phases
   const chartData = useMemo(() => {
     if (!data || !data.length) return null;
 
     // Collect all unique assay types and group data
     const assayData = {};
-    let maxCount = 0;
 
     data.forEach((record) => {
       const visitCode = record.visit_code;
@@ -86,11 +122,6 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
         assayData[assay].byPhase[phase].samples.push(record);
         assayData[assay].byPhase[phase].assayTypes.add(assay);
         assayData[assay].total++;
-        
-        // Track maximum count for fixed y-axis scale
-        if (assayData[assay].byPhase[phase].count > maxCount) {
-          maxCount = assayData[assay].byPhase[phase].count;
-        }
       });
     });
 
@@ -104,7 +135,6 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
     const chartsData = INTERVENTION_PHASES.map((phase, index) => ({
       phase,
       categories,
-      maxCount,
       series: [{
         name: phase,
         color: index === 0 ? '#4e79a7' : '#e15759', // Blue for Pre, Red for Post
@@ -128,7 +158,7 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
   const chartOptionsArray = useMemo(() => {
     if (!chartData || !data) return null;
 
-    return chartData.map(({ phase, categories, maxCount, series }) => ({
+    return chartData.map(({ phase, categories, series }) => ({
         chart: {
           type: 'bar',
           height: Math.max(400, categories.length * 40 + 100),
@@ -156,7 +186,7 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
       },
       yAxis: {
         min: 0,
-        max: maxCount,
+        max: fixedMaxCount,
         allowDecimals: false,
         title: {
           text: 'Sample Count',
@@ -225,7 +255,7 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
         }
       },
     }));
-  }, [chartData, data, onBarClick]);
+  }, [chartData, data, fixedMaxCount, onBarClick]);
 
   // Render different states based on conditions
   if (loading) {
@@ -307,6 +337,7 @@ const BiospecimenChart = ({ data, loading, error, onBarClick }) => {
 
 BiospecimenChart.propTypes = {
   data: PropTypes.array.isRequired,
+  allData: PropTypes.array.isRequired,
   loading: PropTypes.bool,
   error: PropTypes.string,
   onBarClick: PropTypes.func.isRequired,
