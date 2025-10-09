@@ -134,6 +134,82 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     };
   }, [data]);
 
+  // Calculate participant counts by race
+  const participantByRace = useMemo(() => {
+    if (!data || !data.length) return null;
+
+    const uniqueParticipants = new Map();
+    data.forEach((record) => {
+      if (record.pid && record.race) {
+        uniqueParticipants.set(record.pid, record.race);
+      }
+    });
+
+    const raceGroups = [
+      'African America/Black',
+      'Asian',
+      'Hawaiian/Pacific Islander',
+      'Native American',
+      'Caucasian',
+      'Other',
+      'Unknown'
+    ];
+    const raceCounts = {};
+    raceGroups.forEach(group => raceCounts[group] = 0);
+
+    uniqueParticipants.forEach((race) => {
+      if (raceCounts.hasOwnProperty(race)) {
+        raceCounts[race]++;
+      }
+    });
+
+    return {
+      categories: raceGroups,
+      data: raceGroups.map(group => raceCounts[group]),
+    };
+  }, [data]);
+
+  // Calculate participant counts by BMI group
+  const participantByBMI = useMemo(() => {
+    if (!data || !data.length) return null;
+
+    // Helper function to categorize BMI value into group
+    const getBMIGroup = (bmi) => {
+      const bmiValue = parseFloat(bmi);
+      if (isNaN(bmiValue)) return null;
+      if (bmiValue < 25) return '0-25';
+      if (bmiValue < 30) return '25-30';
+      return '30+';
+    };
+
+    const uniqueParticipants = new Map();
+    data.forEach((record) => {
+      if (record.pid && record.bmi) {
+        const bmiGroup = getBMIGroup(record.bmi);
+        if (bmiGroup) {
+          uniqueParticipants.set(record.pid, bmiGroup);
+        }
+      }
+    });
+
+    const bmiGroups = ['0-25', '25-30', '30+'];
+    const bmiCounts = {};
+    bmiGroups.forEach(group => bmiCounts[group] = 0);
+
+    uniqueParticipants.forEach((bmiGroup) => {
+      if (bmiCounts.hasOwnProperty(bmiGroup)) {
+        bmiCounts[bmiGroup]++;
+      }
+    });
+
+    const colors = ['#2ecc71', '#f39c12', '#e74c3c']; // Green, Orange, Red
+    return bmiGroups.map((group, index) => ({
+      name: `BMI ${group}`,
+      y: bmiCounts[group],
+      color: colors[index],
+    }));
+  }, [data]);
+
   // Transform data for chart - separate charts for Pre and Post phases
   const chartData = useMemo(() => {
     if (!data || !data.length) return null;
@@ -299,6 +375,103 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       credits: { enabled: false },
     };
   }, [participantByAgeGroup]);
+
+  // Bar chart configuration for race distribution
+  const raceBarChartOptions = useMemo(() => {
+    if (!participantByRace) return null;
+
+    return {
+      chart: {
+        type: 'column',
+        height: 300,
+      },
+      title: {
+        text: 'Race Distribution',
+        style: { fontSize: '14px', fontWeight: 'bold' }
+      },
+      xAxis: {
+        categories: participantByRace.categories,
+        title: {
+          text: 'Race',
+          style: { fontSize: '12px', fontWeight: 'bold' }
+        },
+        labels: {
+          rotation: -45,
+          style: { fontSize: '10px' }
+        }
+      },
+      yAxis: {
+        min: 0,
+        allowDecimals: false,
+        title: {
+          text: 'Participant Count',
+          style: { fontSize: '12px', fontWeight: 'bold' }
+        },
+        labels: {
+          style: { fontSize: '11px' }
+        }
+      },
+      legend: {
+        enabled: false,
+      },
+      tooltip: {
+        pointFormat: '<b>{point.y}</b> participants'
+      },
+      plotOptions: {
+        column: {
+          dataLabels: {
+            enabled: true,
+            format: '{point.y}',
+            style: { fontSize: '10px' }
+          },
+          color: '#3498db',
+        }
+      },
+      series: [{
+        name: 'Participants',
+        data: participantByRace.data,
+      }],
+      credits: { enabled: false },
+    };
+  }, [participantByRace]);
+
+  // Pie chart configuration for BMI group distribution
+  const bmiPieChartOptions = useMemo(() => {
+    if (!participantByBMI) return null;
+
+    return {
+      chart: {
+        type: 'pie',
+        height: 300,
+      },
+      title: {
+        text: 'BMI Group Distribution',
+        style: { fontSize: '14px', fontWeight: 'bold' }
+      },
+      tooltip: {
+        pointFormat: '<b>{point.y}</b> participants ({point.percentage:.1f}%)'
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}</b>: {point.y}',
+            style: { fontSize: '11px' },
+            distance: 10,
+            connectorWidth: 1,
+          },
+          showInLegend: false,
+        }
+      },
+      series: [{
+        name: 'Participants',
+        data: participantByBMI,
+      }],
+      credits: { enabled: false },
+    };
+  }, [participantByBMI]);
 
   // Chart configurations for both Pre and Post phases
   const chartOptionsArray = useMemo(() => {
@@ -477,6 +650,36 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
                   <HighchartsReact
                     highcharts={Highcharts}
                     options={ageBarChartOptions}
+                    immutable={false}
+                  />
+                ) : (
+                  <div className="text-center py-3 text-muted">
+                    <p>No data available</p>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                {/* Bar chart of participant count in each race group */}
+                {raceBarChartOptions ? (
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={raceBarChartOptions}
+                    immutable={false}
+                  />
+                ) : (
+                  <div className="text-center py-3 text-muted">
+                    <p>No data available</p>
+                  </div>
+                )}
+              </div>
+              <div className="col-md-6">
+                {/* Pie chart of participant count in each BMI group */}
+                {bmiPieChartOptions ? (
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={bmiPieChartOptions}
                     immutable={false}
                   />
                 ) : (
