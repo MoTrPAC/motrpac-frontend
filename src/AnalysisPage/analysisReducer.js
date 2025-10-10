@@ -23,7 +23,7 @@ export const defaultGeneSearchParams = {
   },
   fields: [
     'gene_symbol',
-    'feature_ID',
+    'feature_id',
     'tissue',
     'assay',
     'sex',
