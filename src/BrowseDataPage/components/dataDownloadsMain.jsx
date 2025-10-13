@@ -98,7 +98,7 @@ function DataDownloadsMain({
         <div className="col-12 mt-2">
           <h2>Study Data</h2>
           <p>
-            Browse and customize the data of your interest to download by tissue,
+            Browse and select the data of your interest to download by tissue,
             ome, or assay types. It is recommended to download the phenotypic data
             along with the omics data for a comprehensive analysis. Learn more
             about the
@@ -107,6 +107,12 @@ function DataDownloadsMain({
             {' '}
             in MoTrPAC studies.
           </p>
+          <div className="bd-callout bd-callout-primary">
+            <span className="font-weight-bold">
+              The endurance trained young adult rats study data are now available for
+              both RN6 and RN7 reference genomes.
+            </span>
+          </div>
           <div className="card-deck mb-3 text-center">
             <SelectiveDataDownloadsCard
               cardIcon="pest_control_rodent"
