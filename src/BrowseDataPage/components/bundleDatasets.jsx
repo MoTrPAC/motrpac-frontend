@@ -13,6 +13,7 @@ const tagColors = {
   adult: 'badge-dark',
   preCovid: 'badge-danger',
   sedentary: 'badge-purple',
+  refGenome: 'badge-dark',
 };
 
 function BundleDatasets({
@@ -66,6 +67,13 @@ function BundleDatasets({
                       className={`badge badge-pill ${item.study_group === 'Pre-COVID' && tagColors.preCovid} mr-1`}
                     >
                       {item.study_group}
+                    </span>
+                  )}
+                  {item.reference_genome && (
+                    <span
+                      className={`badge badge-pill ${tagColors.refGenome} mr-1`}
+                    >
+                      {item.reference_genome}
                     </span>
                   )}
                 </div>
