@@ -18,6 +18,7 @@ export const browseDataPropType = {
   sub_category: PropTypes.string,
   object_size: PropTypes.number,
   external_release: PropTypes.bool,
+  reference_genome: PropTypes.string,
 };
 
 function formatBytes(bytes, decimals) {
@@ -38,41 +39,54 @@ function formatBytes(bytes, decimals) {
 /**
  * column headers
  */
-export const tableColumns = [
-  {
-    Header: 'Tissue',
-    accessor: 'tissue_name',
-    sortType: 'basic',
-  },
-  {
-    Header: 'Assay',
-    accessor: 'assay',
-    sortType: 'basic',
-  },
-  {
-    Header: 'Omics',
-    accessor: 'omics',
-    sortType: 'basic',
-  },
-  {
-    Header: 'Intervention',
-    accessor: 'study',
-  },
-  {
-    Header: 'Category',
-    accessor: 'category',
-  },
-  {
-    Header: 'File',
-    accessor: 'filename',
-  },
-  {
-    id: 'filesize',
-    Header: 'Size',
-    accessor: 'object_size',
-    Cell: (row) => formatBytes(row.value),
-  },
-];
+export const tableColumns = (userType = null, isPass1b06 = false) => {
+  const columns = [
+    {
+      Header: 'Tissue',
+      accessor: 'tissue_name',
+      sortType: 'basic',
+    },
+    {
+      Header: 'Assay',
+      accessor: 'assay',
+      sortType: 'basic',
+    },
+    {
+      Header: 'Omics',
+      accessor: 'omics',
+      sortType: 'basic',
+    },
+    {
+      Header: 'Intervention',
+      accessor: 'study',
+    },
+    {
+      Header: 'Category',
+      accessor: 'category',
+    },
+    {
+      Header: 'File',
+      accessor: 'filename',
+    },
+    {
+      id: 'filesize',
+      Header: 'Size',
+      accessor: 'object_size',
+      Cell: (row) => formatBytes(row.value),
+    },
+  ];
+
+  // Add reference genome column if user is internal and viewing pass1b-06 data
+  if (userType === 'internal' && isPass1b06) {
+    columns.splice(4, 0, {
+      Header: 'Assembly',
+      accessor: 'reference_genome',
+      sortType: 'basic',
+    });
+  }
+
+  return columns;
+};
 
 /**
  * Global filter rendering function
