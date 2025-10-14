@@ -1,5 +1,6 @@
 import React, { useMemo, useEffect, forwardRef, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import {
   useTable,
   useFilters,
@@ -43,8 +44,14 @@ function BrowseDataTable({
   downloadRequestResponse,
   profile = {},
 }) {
+  const dataDownload = useSelector((state) => state.browseData);
+  const userType = profile?.user_metadata?.userType;
+
   // Define table column headers
-  const columns = useMemo(() => tableColumns, []);
+  const columns = useMemo(
+    () => tableColumns(userType, dataDownload.pass1b06DataSelected),
+    [userType, dataDownload.pass1b06DataSelected]
+  );
   const data = useMemo(() => transformData(filteredFiles), [filteredFiles]);
   return (
     <DataTable
