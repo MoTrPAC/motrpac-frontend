@@ -150,7 +150,7 @@ function App({ history = History }) {
                   element={<BrowseDataPageConnected/>}
                 />
                 <Route
-                  path="/data-download/file-browser"
+                  path="/data-download/file-browser/:selectedData"
                   element={<BrowseDataPageConnected/>}
                 />
                 <Route
