@@ -15,7 +15,23 @@ function SelectiveDataDownloadsCard({
   function handleDataSelect(e) {
     e.preventDefault();
     dataSelectHandler();
-    navigate('/data-download/file-browser', {
+
+    let studyData = '';
+    switch (selectedData) {
+      case 'pass1b-06':
+        studyData = 'rat-training-06';
+        break;
+      case 'pass1a-06':
+        studyData = 'rat-acute-06';
+        break;
+      case 'human-precovid-sed-adu':
+        studyData = 'human-precovid';
+        break;
+      default:
+        studyData = 'rat-training-06';
+    }
+
+    navigate(`/data-download/file-browser/${studyData}`, {
       state: { selectedData },
     });
   }
