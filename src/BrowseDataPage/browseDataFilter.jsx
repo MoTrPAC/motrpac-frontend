@@ -9,6 +9,8 @@ import '@styles/tooltip.scss';
 
 function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name: [], category: [], reference_genome: [] }, onChangeFilter, onResetFilters }) {
   const dataDownload = useSelector((state) => state.browseData);
+  const profile = useSelector((state) => state.auth.profile);
+  const userType = profile?.user_metadata?.userType;
 
   const fileFilters = [...browseDataFilters];
   // Remove phenotype filter if human-precovid-sed-adu data tab is selected
@@ -66,6 +68,10 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
     .filter((item) => {
       // Hide reference genome filter if no options available
       if (item.keyName === 'reference_genome' && (!item.filters || item.filters.length === 0)) {
+        return false;
+      }
+      // Hide reference genome filter if user is not internal
+      if (item.keyName === 'reference_genome' && userType !== 'internal') {
         return false;
       }
       return true;
