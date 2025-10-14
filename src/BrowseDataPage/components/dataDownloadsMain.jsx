@@ -29,7 +29,7 @@ function DataDownloadsMain({
   // anonymous user or authenticated user
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
-  if (location.pathname === '/data-download/file-browser') {
+  if (location.pathname.startsWith('/data-download/file-browser')) {
     return (
       <SelectiveDataDownloads
         profile={profile}
