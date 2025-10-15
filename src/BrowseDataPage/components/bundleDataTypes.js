@@ -22,20 +22,24 @@ const BundleDataTypes = {
       description:
         'Analyses, sample-level metadata, QC, and quantitative results across tissues for RNA-seq.',
       object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_transcriptomics.zip',
-      object_zipfile_size: '540.44 MB',
+      object_zipfile_size: 'v1, RN6, 540.44 MB',
+      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_transcriptomics_v2.zip',
+      object_rn7_zipfile_size: 'v2, RN7, 474.69 MB',
     },
     {
-      type: 'metabolomics-targeted',
+      type: 'proteomics-untargeted',
       phase: 'pass1b-06',
-      title: 'Metabolomics-targeted',
+      title: 'Proteomics-untargeted',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across tissues for metabolomics-targeted assays.',
+        'Analyses, sample-level metadata, QC, and quantitative results across tissues for the Acetyl Proteomics, Global Proteomics, Phosphoproteomics, and Protein Ubiquitination.',
       object_zipfile:
-        'pass1b-06/bundles/motrpac_pass1b-06_metabolomics-targeted.zip',
-      object_zipfile_size: '27.58 MB',
+        'pass1b-06/bundles/motrpac_pass1b-06_proteomics-untargeted.zip',
+      object_zipfile_size: 'v1, RN6, 975.70 MB',
+      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_proteomics-untargeted_v2.zip',
+      object_rn7_zipfile_size: 'v2, RN7, 1.40 GB',
     },
     {
       type: 'metabolomics-untargeted',
@@ -51,17 +55,17 @@ const BundleDataTypes = {
       object_zipfile_size: '272.42 MB',
     },
     {
-      type: 'proteomics-untargeted',
+      type: 'metabolomics-targeted',
       phase: 'pass1b-06',
-      title: 'Proteomics-untargeted',
+      title: 'Metabolomics-targeted',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across tissues for the Acetyl Proteomics, Global Proteomics, Phosphoproteomics, and Protein Ubiquitination.',
+        'Analyses, sample-level metadata, QC, and quantitative results across tissues for metabolomics-targeted assays.',
       object_zipfile:
-        'pass1b-06/bundles/motrpac_pass1b-06_proteomics-untargeted.zip',
-      object_zipfile_size: '975.70 MB',
+        'pass1b-06/bundles/motrpac_pass1b-06_metabolomics-targeted.zip',
+      object_zipfile_size: '27.58 MB',
     },
     {
       type: 'proteomics-targeted',
@@ -86,7 +90,9 @@ const BundleDataTypes = {
       description:
         'Analyses, sample-level metadata, QC, and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for gastrocnemius.',
       object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_gastrocnemius.zip',
-      object_zipfile_size: '151.41 MB',
+      object_zipfile_size: 'v1, RN6, 151.41 MB',
+      object_rn7_zipfile: 'bundles/motrpac_rat-training-o6_gastrocnemius_v2.zip',
+      object_rn7_zipfile_size: 'v2, RN7, 175.85 MB',
     },
     {
       type: 'tissue-heart',
@@ -98,7 +104,9 @@ const BundleDataTypes = {
       description:
         'Analyses, sample-level metadata, QC, and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for heart.',
       object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_heart.zip',
-      object_zipfile_size: '187.387 MB',
+      object_zipfile_size: 'v1, RN6, 187.387 MB',
+      object_rn7_zipfile: 'bundles/motrpac_rat-training-o6_heart_v2.zip',
+      object_rn7_zipfile_size: 'v2, RN7, 261.52 MB',
     },
     {
       type: 'tissue-liver',
@@ -110,7 +118,9 @@ const BundleDataTypes = {
       description:
         'Analyses, sample-level metadata, QC and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for liver.',
       object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_liver.zip',
-      object_zipfile_size: '214.00 MB',
+      object_zipfile_size: 'v1, RN6, 214.00 MB',
+      object_rn7_zipfile: 'bundles/motrpac_rat-training-o6_liver_v2.zip',
+      object_rn7_zipfile_size: 'v2, RN7, 310.06 MB',
     },
     {
       type: 'tissue-lung',
