@@ -91,7 +91,7 @@ const BundleDataTypes = {
         'Analyses, sample-level metadata, QC, and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for gastrocnemius.',
       object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_gastrocnemius.zip',
       object_zipfile_size: 'v1, RN6, 151.41 MB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-o6_gastrocnemius_v2.zip',
+      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_gastrocnemius_v2.zip',
       object_rn7_zipfile_size: 'v2, RN7, 175.85 MB',
     },
     {
@@ -105,7 +105,7 @@ const BundleDataTypes = {
         'Analyses, sample-level metadata, QC, and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for heart.',
       object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_heart.zip',
       object_zipfile_size: 'v1, RN6, 187.387 MB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-o6_heart_v2.zip',
+      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_heart_v2.zip',
       object_rn7_zipfile_size: 'v2, RN7, 261.52 MB',
     },
     {
@@ -119,7 +119,7 @@ const BundleDataTypes = {
         'Analyses, sample-level metadata, QC and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for liver.',
       object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_liver.zip',
       object_zipfile_size: 'v1, RN6, 214.00 MB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-o6_liver_v2.zip',
+      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_liver_v2.zip',
       object_rn7_zipfile_size: 'v2, RN7, 310.06 MB',
     },
     {
@@ -132,7 +132,9 @@ const BundleDataTypes = {
       description:
         'Analyses, sample-level metadata, QC, and quantitative results across omes/assays, except epigenomics (e.g. ATAC-seq, RRBS), for lung.',
       object_zipfile: 'pass1b-06/bundles/motrpac_pass1b-06_lung.zip',
-      object_zipfile_size: '242.33 MB',
+      object_zipfile_size: 'v1, RN6, 242.33 MB',
+      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_lung_v2.zip',
+      object_rn7_zipfile_size: 'v2, RN7, 295.70 MB',
     },
     {
       type: 'tissue-kidney',
