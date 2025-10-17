@@ -1,0 +1,17 @@
+[
+  {
+    "object_size": 719330,
+    "object": "human-precovid/results/epigenomics/qa-qc/motrpac_human-precovid_epigen-atac-seq_qa-qc-metrics_v1.0.csv",
+    "phase": "HUMAN-PRECOVID-SED-ADU",
+    "study": "Acute Exercise",
+    "omics": "Epigenomics",
+    "category": "Results",
+    "tissue_code": null,
+    "tissue_name": null,
+    "tissue_superclass": null,
+    "assay": "ATAC-seq",
+    "species": "Human",
+    "uuid": "26c12ae1-d338-4ee7-926b-eba7a508d4a2",
+    "external_release": false
+  }
+]
