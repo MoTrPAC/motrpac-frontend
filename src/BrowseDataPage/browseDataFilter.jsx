@@ -21,7 +21,10 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
   fileFilters.forEach((item) => {
     if (item.keyName === 'reference_genome') {
       if (dataDownload.pass1b06DataSelected) {
-        item.filters = referenceGenomes.pass1b_06;
+        // Filter out RN7 for non-internal users
+        item.filters = userType === 'internal' 
+          ? referenceGenomes.pass1b_06 
+          : referenceGenomes.pass1b_06.filter(genome => genome !== 'RN7');
       }
       if (dataDownload.pass1a06DataSelected) {
         item.filters = referenceGenomes.pass1a_06;
