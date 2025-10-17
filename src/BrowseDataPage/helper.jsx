@@ -21,19 +21,42 @@ export const browseDataPropType = {
   reference_genome: PropTypes.string,
 };
 
-function formatBytes(bytes, decimals) {
-  if (bytes === 0) return '0 Bytes';
-  const k = 1024;
-  const dm = decimals || 2;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return (
-    <div className="text-right">
-      <span className="text-nowrap">
-        {parseFloat((bytes / k ** i).toFixed(dm)) + ' ' + sizes[i]}
-      </span>
-    </div>
+function formatBytes(bytes, decimals = 2) {
+  // Type checking and coercion
+  const numBytes = Number(bytes);
+
+  // Handle invalid inputs
+  if (!Number.isFinite(numBytes)) {
+    return 'Invalid size';
+  }
+
+  // Handle zero
+  if (numBytes === 0) {
+    return '0 Bytes';
+  }
+
+  // Handle negative (defensive)
+  const sign = numBytes < 0 ? '-' : '';
+  const absoluteBytes = Math.abs(numBytes);
+
+  // Constants
+  const UNITS = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  const BASE = 1024;
+
+  // Calculate unit index (with bounds checking)
+  const exponent = Math.min(
+    Math.floor(Math.log(absoluteBytes) / Math.log(BASE)),
+    UNITS.length - 1
   );
+
+  // Calculate value
+  const value = absoluteBytes / Math.pow(BASE, exponent);
+
+  // Format with decimals
+  const dm = Math.max(0, Math.min(decimals, 20)); // Clamp decimals between 0-20
+  const formattedValue = value.toFixed(dm);
+
+  return `${sign}${formattedValue} ${UNITS[exponent]}`;
 }
 
 /**
