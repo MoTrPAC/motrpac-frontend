@@ -83,7 +83,7 @@ export const referenceGenomes = {
 const browseDataFilters = [
   {
     keyName: 'reference_genome',
-    name: 'Reference Genome Assembly',
+    name: 'Genome Assembly',
     filters: referenceGenomes,
   },
   {
