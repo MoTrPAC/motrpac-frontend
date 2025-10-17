@@ -95,6 +95,17 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
               </span>
             </div>
           )}
+          {item.keyName === 'reference_genome' && (
+            <a
+              href="https://docs.google.com/document/d/1eAN_d2zupQj1kzq24uffDZTIdmRDiZnNqKrPgFTPJDQ/edit?tab=t.0#heading=h.wan96vj4ji0t"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-auto pass1b-06-version-doc-link d-flex align-items-center"
+            >
+              <span className="font-weight-normal mr-1">Documentation</span>
+              <i className="material-icons">open_in_new</i>
+            </a>
+          )}
         </div>
         <div className="card-body">
           {item.filters.map((filter) => {
