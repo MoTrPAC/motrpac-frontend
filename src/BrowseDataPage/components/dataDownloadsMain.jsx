@@ -117,7 +117,7 @@ function DataDownloadsMain({
             <SelectiveDataDownloadsCard
               cardIcon="pest_control_rodent"
               cardTitle="Young Adult Rats"
-              dataSelectHandler={() => dispatch(actions.selectPass1B06Data())}
+              dataSelectHandler={() => dispatch(actions.selectPass1B06Data(userType))}
               selectedData="pass1b-06"
               cssSelector={
                 !userType || (userType && userType === 'external')
