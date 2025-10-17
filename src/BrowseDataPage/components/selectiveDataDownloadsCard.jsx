@@ -53,7 +53,7 @@ function SelectiveDataDownloadsCard({
           className="btn btn-lg btn-block btn-primary"
           onClick={(e) => handleDataSelect(e)}
         >
-          Get Started
+          Browse Files
         </button>
       </div>
     </div>
