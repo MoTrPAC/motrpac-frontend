@@ -107,12 +107,14 @@ function DataDownloadsMain({
             {' '}
             in MoTrPAC studies.
           </p>
-          <div className="bd-callout bd-callout-primary">
-            <span className="font-weight-bold">
-              The endurance trained young adult rats study data are now available for
-              both RN6 and RN7 reference genomes.
-            </span>
-          </div>
+          {profile && profile.user_metadata && profile.user_metadata.userType === 'internal' && (
+            <div className="bd-callout bd-callout-primary">
+              <span className="font-weight-bold">
+                The endurance trained young adult rats study data are now available for
+                both RN6 and RN7 reference genome assemblies.
+              </span>
+            </div>
+          )}
           <div className="card-deck mb-3 text-center">
             <SelectiveDataDownloadsCard
               cardIcon="pest_control_rodent"
