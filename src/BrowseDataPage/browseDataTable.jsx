@@ -44,7 +44,7 @@ function BrowseDataTable({
   downloadRequestResponse,
   profile = {},
 }) {
-  const dataDownload = useSelector((state) => state.browseData);
+  const dataDownload = useSelector((state) => state.browseData || {});
   const userType = profile?.user_metadata?.userType;
 
   // Define table column headers
