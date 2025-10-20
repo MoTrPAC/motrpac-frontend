@@ -24,7 +24,7 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
         // Filter out RN7 for non-internal users
         item.filters = userType === 'internal' 
           ? referenceGenomes.pass1b_06 
-          : referenceGenomes.pass1b_06.filter(genome => genome !== 'RN7');
+          : [];
       }
       if (dataDownload.pass1a06DataSelected) {
         item.filters = referenceGenomes.pass1a_06;
@@ -71,10 +71,6 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
     .filter((item) => {
       // Hide reference genome filter if no options available
       if (item.keyName === 'reference_genome' && (!item.filters || item.filters.length === 0)) {
-        return false;
-      }
-      // Hide reference genome filter if user is not internal
-      if (item.keyName === 'reference_genome' && userType !== 'internal') {
         return false;
       }
       return true;
