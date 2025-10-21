@@ -10,6 +10,7 @@ import BundleDataTypes from './bundleDataTypes';
 import actions from '../browseDataActions';
 import SelectiveDataDownloads from './selectiveDataDownloads';
 import SelectiveDataDownloadsCard from './selectiveDataDownloadsCard';
+import ExternalLink from '../../lib/ui/externalLink';
 
 function DataDownloadsMain({
   profile = {},
@@ -45,9 +46,49 @@ function DataDownloadsMain({
     );
   }
 
+  // Custom render page title with info button
+  function renderPageTitle() {
+    return (
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3">
+        <div className="page-title">
+          <h1 className="mb-0 flex-grow-1">Data Download</h1>
+        </div>
+        <div className="btn-group show-main-data-download-info-link">
+          <button type="button" className="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <i className="bi bi-info-circle-fill"></i>
+            <span className="ml-1">Show Info</span>
+          </button>
+          <div className="dropdown-menu dropdown-menu-right">
+            <h5 className="border-bottom mt-1 mb-2 pb-2">Data types available to download:</h5>
+            <ul className="pl-3">
+              <li>
+                "Raw" results including assay-specific quantitative results, experiment
+                metadata and QA/QC reports
+              </li>
+              <li>
+                "Analysis" results including normalized data tables, differential analysis
+                results (e.g., log2 fold-change, p-values, adjusted p-values), and
+                cross-platform merged metabolomics data tables for named metabolites
+              </li>
+              <li>Phenotypic data</li>
+            </ul>
+            <p>
+              <span className="font-weight-bold">Note:</span> Raw files are not
+              currently available for direct download through the Data Hub portal.
+              Please{' '}
+              <Link to="/contact">submit your requests to our helpdesk</Link> and
+              specify the relevant tissues/assays if you would like to get access
+              to the raw files.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="data-download-overview container">
-      <PageTitle title="Data Download" />
+      {renderPageTitle()}
       <div className="browse-data-summary-container row mb-4">
         <div className="col-12">
           <p className="lead mb-2">
@@ -63,39 +104,21 @@ function DataDownloadsMain({
               ? 'The young rat acute exercise and human precovid sedentary adult datasets are currently available to consortium members only in the early preview phase. '
               : null}
             For a summary of all the ongoing studies in MoTrPAC (data available
-            soon), please visit our
+            soon), study designs, and protocols, visit our
             {' '}
             <Link to="/project-overview">Project Overview</Link>
-            .
+            {' '}
+            page. Read more about the
+            {' '}
+            <ExternalLink
+              to="https://www.nature.com/articles/s41586-023-06877-w"
+              label="endurance trained young adult rats study"
+            />
+            {' '}
+            in our Nature publication.
           </p>
-          <div className="row">
-            <DataTypeInfo grid="col-7 col-md-7" />
-            <div className="browse-data-summary-content col-5 col-md-5">
-              <div className="bd-callout bd-callout-info">
-                <h4>Learn more about MoTrPAC studies</h4>
-                <ul className="mb-0">
-                  <li>
-                    <a
-                      href="https://www.nature.com/articles/s41586-023-06877-w"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      MoTrPAC Endurance Exercise Training Animal Study
-                    </a>
-                    {' '}
-                    in Nature
-                  </li>
-                  <li>
-                    <Link to="/project-overview">Project overview</Link>
-                    {' '}
-                    covering the study design and study protocols
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
         </div>
-        <div className="col-12 mt-2">
+        <div className="col-12 mt-3">
           <h2>Study Data</h2>
           <p>
             Browse and select the data of your interest to download by tissue,
@@ -115,7 +138,7 @@ function DataDownloadsMain({
               </span>
             </div>
           )}
-          <div className="card-deck mb-3 text-center">
+          <div className="card-deck mt-4 mb-3 text-center">
             <SelectiveDataDownloadsCard
               cardIcon="pest_control_rodent"
               cardTitle="Young Adult Rats"
