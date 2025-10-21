@@ -2,7 +2,7 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
@@ -11,6 +11,10 @@ jobs:
     steps:
       - checkout
 
+      - run:
+          name: Enable Corepack
+          command: sudo corepack enable
+
       - restore_cache:
           name: Restore core JS dependencies cache
           keys:
@@ -18,22 +22,18 @@ jobs:
             # TODO: uncomment to explicicitly load the cache from the latest yarn.lock
             # - v1-js-dependencies-{{ checksum "yarn.lock" }}
             # comment to prevent fallback to using the latest cache if no exact match is found
+            - v2-js-dependencies-{{ checksum "yarn.lock" }}
             - v2-js-dependencies-
-          paths:
-            - ~/.cache/yarn
-
-      - run:
-          name: Enable Corepack
-          command: sudo corepack enable
 
       - run:
           name: Install JS dependencies
-          command: yarn install
+          command: yarn install --frozen-lockfile
 
       - save_cache:
           name: Cache core JS dependencies
           key: v2-js-dependencies-{{ checksum "yarn.lock" }}
           paths:
+            - node_modules
             - ~/.cache/yarn
 
       - run:
