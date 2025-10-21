@@ -18,7 +18,7 @@ jobs:
             # TODO: uncomment to explicicitly load the cache from the latest yarn.lock
             # - v1-js-dependencies-{{ checksum "yarn.lock" }}
             # comment to prevent fallback to using the latest cache if no exact match is found
-            - v1-js-dependencies-
+            - v2-js-dependencies-
           paths:
             - ~/.cache/yarn
 
@@ -32,7 +32,7 @@ jobs:
 
       - save_cache:
           name: Cache core JS dependencies
-          key: v1-js-dependencies-{{ checksum "yarn.lock" }}
+          key: v2-js-dependencies-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
 
