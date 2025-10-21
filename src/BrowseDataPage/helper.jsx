@@ -56,7 +56,13 @@ function formatBytes(bytes, decimals = 2) {
   const dm = Math.max(0, Math.min(decimals, 20)); // Clamp decimals between 0-20
   const formattedValue = value.toFixed(dm);
 
-  return `${sign}${formattedValue} ${UNITS[exponent]}`;
+  return (
+    <div className="text-right">
+      <span className="text-nowrap">
+        {`${sign}${formattedValue} ${UNITS[exponent]}`}
+      </span>
+    </div>
+  );
 }
 
 /**
