@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: cimg/node:20.11.0-browsers
+      - image: cimg/node:20.19.5-browsers
 
     steps:
       - checkout
