@@ -18,39 +18,22 @@ jobs:
       - restore_cache:
           name: Restore core JS dependencies cache
           keys:
-            # TODO: enable and version control yarn.lock for production builds
-            # TODO: uncomment to explicicitly load the cache from the latest yarn.lock
-            # - v1-js-dependencies-{{ checksum "yarn.lock" }}
-            # comment to prevent fallback to using the latest cache if no exact match is found
-            - v2-js-dependencies-{{ checksum "yarn.lock" }}
-            - v2-js-dependencies-
+            # Yarn 4 uses PnP mode - cache .yarn/cache and .pnp files
+            - v3-yarn-pnp-{{ checksum "yarn.lock" }}
+            - v3-yarn-pnp-
 
       - run:
           name: Install JS dependencies
-          command: yarn install --frozen-lockfile
+          command: yarn install --immutable
 
       - save_cache:
           name: Cache core JS dependencies
-          key: v2-js-dependencies-{{ checksum "yarn.lock" }}
+          key: v3-yarn-pnp-{{ checksum "yarn.lock" }}
           paths:
-            - node_modules
-            - ~/.cache/yarn
-
-      - run:
-          name: Debug - Check installations
-          command: |
-            echo "=== Current directory ==="
-            pwd
-            echo "=== Directory contents ==="
-            ls -la
-            echo "=== node_modules exists? ==="
-            ls -la node_modules || echo "NO node_modules!"
-            echo "=== Bootstrap installed? ==="
-            ls -la node_modules/bootstrap/scss || echo "NO Bootstrap SCSS!"
-            echo "=== Sass installed? ==="
-            ls -la node_modules/sass || echo "NO Sass!"
-            echo "=== package.json dependencies ==="
-            cat package.json | grep -A 20 "dependencies"
+            - .yarn/cache
+            - .yarn/install-state.gz
+            - .pnp.cjs
+            - .pnp.loader.mjs
 
       - run:
           name: Compile CSS
