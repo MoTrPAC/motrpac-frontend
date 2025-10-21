@@ -25,11 +25,9 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
         item.filters = userType === 'internal' 
           ? referenceGenomes.pass1b_06 
           : [];
-      }
-      if (dataDownload.pass1a06DataSelected) {
+      } else if (dataDownload.pass1a06DataSelected) {
         item.filters = referenceGenomes.pass1a_06;
-      }
-      if (dataDownload.humanPrecovidSedAduDataSelected) {
+      } else if (dataDownload.humanPrecovidSedAduDataSelected) {
         item.filters = referenceGenomes.human_sed_adu;
       }
     }
