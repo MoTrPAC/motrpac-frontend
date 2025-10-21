@@ -37,6 +37,22 @@ jobs:
             - ~/.cache/yarn
 
       - run:
+          name: Debug - Check installations
+          command: |
+            echo "=== Current directory ==="
+            pwd
+            echo "=== Directory contents ==="
+            ls -la
+            echo "=== node_modules exists? ==="
+            ls -la node_modules || echo "NO node_modules!"
+            echo "=== Bootstrap installed? ==="
+            ls -la node_modules/bootstrap/scss || echo "NO Bootstrap SCSS!"
+            echo "=== Sass installed? ==="
+            ls -la node_modules/sass || echo "NO Sass!"
+            echo "=== package.json dependencies ==="
+            cat package.json | grep -A 20 "dependencies"
+
+      - run:
           name: Compile CSS
           command: npx sass src/sass/main.scss src/main.css --load-path=node_modules
 
