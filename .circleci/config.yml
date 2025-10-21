@@ -21,6 +21,9 @@ jobs:
             - v1-js-dependencies-
           paths:
             - ~/.cache/yarn
+      - run:
+          name: Enable Corepack
+          command: corepack enable
 
       - run:
           name: Install JS dependencies
