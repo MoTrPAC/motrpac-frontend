@@ -36,10 +36,6 @@ jobs:
             - .pnp.loader.mjs
 
       - run:
-          name: Compile CSS
-          command: npx sass src/sass/main.scss src/main.css --load-path=node_modules
-
-      - run:
           name: Run Frontend tests
           command: yarn test
           # use this line instead if we version control snapshots
