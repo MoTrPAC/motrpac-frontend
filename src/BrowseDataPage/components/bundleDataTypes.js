@@ -35,7 +35,7 @@ const BundleDataTypes = {
       intervention: 'Endurance Training',
       description:
         'Analyses, sample-level metadata, QC, and quantitative results across tissues for RNA-seq.',
-      object_zipfile: 'bundles/motrpac_rat-training-06_transcriptomics.zip',
+      object_zipfile: 'bundles/motrpac_rat-training-06_transcriptomics_v1.zip',
       object_zipfile_size: 'v1.0, RN6, 566.97 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_transcriptomics_v2.zip',
       object_rn7_zipfile_size: 'v2.0, RN7, 474.69 MB',
@@ -49,7 +49,7 @@ const BundleDataTypes = {
       intervention: 'Endurance Training',
       description:
         'Analyses, sample-level metadata, QC, and quantitative results across tissues for the Acetyl Proteomics, Global Proteomics, Phosphoproteomics, and Protein Ubiquitination.',
-      object_zipfile: 'bundles/motrpac_rat-training-06_proteomics-untargeted.zip',
+      object_zipfile: 'bundles/motrpac_rat-training-06_proteomics-untargeted_v1.zip',
       object_zipfile_size: 'v1.0, RN6, 1.02 GB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_proteomics-untargeted_v2.zip',
       object_rn7_zipfile_size: 'v2.0, RN7, 1.40 GB',
@@ -99,7 +99,7 @@ const BundleDataTypes = {
       intervention: 'Endurance Training',
       description:
         'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the gastrocnemius tissue (excluding RRBS quantitative results).',
-      object_zipfile: 'bundles/motrpac_rat-training-06_gastrocnemius.zip',
+      object_zipfile: 'bundles/motrpac_rat-training-06_gastrocnemius_v1.zip',
       object_zipfile_size: 'v1.0, RN6, 159.07 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_gastrocnemius_v2.zip',
       object_rn7_zipfile_size: 'v2.0, RN7, 2.26 GB',
@@ -113,7 +113,7 @@ const BundleDataTypes = {
       intervention: 'Endurance Training',
       description:
         'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the heart tissue (excluding RRBS quantitative results).',
-      object_zipfile: 'bundles/motrpac_rat-training-06_heart.zip',
+      object_zipfile: 'bundles/motrpac_rat-training-06_heart_v1.zip',
       object_zipfile_size: 'v1.0, RN6, 196.71 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_heart_v2.zip',
       object_rn7_zipfile_size: 'v2.0, RN7, 1.93 GB',
@@ -127,7 +127,7 @@ const BundleDataTypes = {
       intervention: 'Endurance Training',
       description:
         'Analyses, sample-level metadata, QC and quantitative results across omes/assays for the liver tissue (excluding RRBS quantitative results).',
-      object_zipfile: 'bundles/motrpac_rat-training-06_liver.zip',
+      object_zipfile: 'bundles/motrpac_rat-training-06_liver_v1.zip',
       object_zipfile_size: 'v1.0, RN6, 224.71 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_liver_v2.zip',
       object_rn7_zipfile_size: 'v2.0, RN7, 1.82 GB',
@@ -141,7 +141,7 @@ const BundleDataTypes = {
       intervention: 'Endurance Training',
       description:
         'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the lung tissue (excluding RRBS quantitative results).',
-      object_zipfile: 'bundles/motrpac_rat-training-06_lung.zip',
+      object_zipfile: 'bundles/motrpac_rat-training-06_lung_v1.zip',
       object_zipfile_size: 'v1.0, RN6, 254.39 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_lung_v2.zip',
       object_rn7_zipfile_size: 'v2.0, RN7, 2.36 GB',
@@ -155,7 +155,7 @@ const BundleDataTypes = {
       intervention: 'Endurance Training',
       description:
         'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the kidney tissue (excluding RRBS quantitative results).',
-      object_zipfile: 'bundles/motrpac_rat-training-06_kidney.zip',
+      object_zipfile: 'bundles/motrpac_rat-training-06_kidney_v1.zip',
       object_zipfile_size: 'v1.0, RN6, 188.64 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_kidney_v2.zip',
       object_rn7_zipfile_size: 'v2.0, RN7, 1.82 GB',
@@ -169,7 +169,7 @@ const BundleDataTypes = {
       intervention: 'Endurance Training',
       description:
         'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the brown adipose tissue (excluding RRBS quantitative results).',
-      object_zipfile: 'bundles/motrpac_rat-training-06_brown-adipose.zip',
+      object_zipfile: 'bundles/motrpac_rat-training-06_brown-adipose_v1.zip',
       object_zipfile_size: 'v1.0, RN6, 61.03 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_brown-adipose_v2.zip',
       object_rn7_zipfile_size: 'v2.0, RN7, 2.36 GB',
@@ -183,7 +183,7 @@ const BundleDataTypes = {
       intervention: 'Endurance Training',
       description:
         'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the white adipose tissue (excluding RRBS quantitative results).',
-      object_zipfile: 'bundles/motrpac_rat-training-06_white-adipose.zip',
+      object_zipfile: 'bundles/motrpac_rat-training-06_white-adipose_v1.zip',
       object_zipfile_size: 'v1.0, RN6, 199.13 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_white-adipose_v2.zip',
       object_rn7_zipfile_size: 'v2.0, RN7, 2.04 GB',
@@ -197,7 +197,7 @@ const BundleDataTypes = {
       intervention: 'Endurance Training',
       description:
         'Analyses, sample-level metadata, QC, and quantitative results in RNA-seq for blood RNA.',
-      object_zipfile: 'bundles/motrpac_rat-training-06_blood.zip',
+      object_zipfile: 'bundles/motrpac_rat-training-06_blood_v1.zip',
       object_zipfile_size: 'v1.0, RN6, 19.08 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_blood_v2.zip',
       object_rn7_zipfile_size: 'v2.0, RN7, 22.13 MB',
