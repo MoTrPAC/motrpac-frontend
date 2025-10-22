@@ -138,15 +138,45 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
   const participantByRace = useMemo(() => {
     if (!data || !data.length) return null;
 
+    // Helper function to derive race category from boolean indicator fields
+    const getRaceCategory = (record) => {
+      // Map boolean fields to race categories
+      if (record.aablack_psca === '1' || record.aablack_psca === 1 || record.aablack_psca === true) {
+        return 'African American/Black';
+      }
+      if (record.asian_psca === '1' || record.asian_psca === 1 || record.asian_psca === true) {
+        return 'Asian';
+      }
+      if (record.hawaii_psca === '1' || record.hawaii_psca === 1 || record.hawaii_psca === true) {
+        return 'Hawaiian/Pacific Islander';
+      }
+      if (record.natamer_psca === '1' || record.natamer_psca === 1 || record.natamer_psca === true) {
+        return 'Native American';
+      }
+      if (record.cauc_psca === '1' || record.cauc_psca === 1 || record.cauc_psca === true) {
+        return 'Caucasian';
+      }
+      if (record.raceoth_psca === '1' || record.raceoth_psca === 1 || record.raceoth_psca === true) {
+        return 'Other';
+      }
+      if (record.raceref_psca === '1' || record.raceref_psca === 1 || record.raceref_psca === true) {
+        return 'Unknown';
+      }
+      return null; // No race indicator found
+    };
+
     const uniqueParticipants = new Map();
     data.forEach((record) => {
-      if (record.pid && record.race) {
-        uniqueParticipants.set(record.pid, record.race);
+      if (record.pid) {
+        const raceCategory = getRaceCategory(record);
+        if (raceCategory) {
+          uniqueParticipants.set(record.pid, raceCategory);
+        }
       }
     });
 
     const raceGroups = [
-      'African America/Black',
+      'African American/Black',
       'Asian',
       'Hawaiian/Pacific Islander',
       'Native American',
