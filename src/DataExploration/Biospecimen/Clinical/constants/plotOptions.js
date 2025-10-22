@@ -93,7 +93,7 @@ export const FILTER_OPTIONS = {
   ageGroupOptions: ['10-13', '14-17', '18-39', '40-59', '60+'],
   randomGroupOptions: ['Control', 'Endurance', 'Resistance'],
   bmiGroupOptions: ['0-25', '25-30', '30+'],
-  raceOptions: ['African America/Black', 'Asian', 'Hawaiian/Pacific Islander', 'Native American', 'Caucasian', 'Other', 'Unknown'],
+  raceOptions: ['African American/Black', 'Asian', 'Hawaiian/Pacific Islander', 'Native American', 'Caucasian', 'Other', 'Unknown'],
   ethnicityOptions: ['Hispanic/Latino/Spanish Origin', 'Not Hispanic/Latino/Spanish Origin', 'Unknown'],
   tissueOptions: ['Adipose', 'Blood', 'Muscle'],
   omeOptions: ['Epigenomic', 'Transcriptomic', 'Proteomic', 'Metabolomic'],
