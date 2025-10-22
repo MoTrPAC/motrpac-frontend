@@ -1,0 +1,17 @@
+[
+  {
+    "object": "pass1a-06/results/epigenomics/qa-qc/motrpac_pass1ac-06_epigen-atac-seq_qa-qc-metrics_v2.0.csv",
+    "phase": "PASS1A-06",
+    "study": "Acute Exercise",
+    "species": "Rat",
+    "omics": "Epigenomics",
+    "assay": "ATAC-seq",
+    "tissue_name": null,
+    "tissue_code": null,
+    "category": "Results",
+    "sub_category": "QA-QC",
+    "object_size": 934428,
+    "external_release": false,
+    "uuid": "b752efc9-a273-4dc9-997b-ca7403fff764"
+  }
+]

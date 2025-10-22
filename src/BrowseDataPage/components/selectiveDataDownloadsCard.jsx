@@ -15,7 +15,15 @@ function SelectiveDataDownloadsCard({
   function handleDataSelect(e) {
     e.preventDefault();
     dataSelectHandler();
-    navigate('/data-download/file-browser', {
+
+    const studyDataMap = {
+      'pass1b-06': 'rat-training-06',
+      'pass1a-06': 'rat-acute-06',
+      'human-precovid-sed-adu': 'human-precovid',
+    };
+    const studyData = studyDataMap[selectedData] || 'rat-training-06';
+
+    navigate(`/data-download/file-browser/${studyData}`, {
       state: { selectedData },
     });
   }
@@ -37,7 +45,7 @@ function SelectiveDataDownloadsCard({
           className="btn btn-lg btn-block btn-primary"
           onClick={(e) => handleDataSelect(e)}
         >
-          Get Started
+          Browse Files
         </button>
       </div>
     </div>
