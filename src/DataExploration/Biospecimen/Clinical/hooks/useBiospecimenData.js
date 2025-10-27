@@ -131,38 +131,6 @@ export const useFilteredBiospecimenData = (allData, filters) => {
       return allData;
     }
 
-    // Debug: Log tissue distribution before filtering
-    if (filters.tissue && filters.tissue.length < 3) { // Only when some tissues are unchecked
-      const tissueByParticipant = new Map();
-      allData.forEach(item => {
-        if (item.pid) {
-          if (!tissueByParticipant.has(item.pid)) {
-            tissueByParticipant.set(item.pid, new Set());
-          }
-          const tissueMap = { 'ADI': 'Adipose', 'BLO': 'Blood', 'MUS': 'Muscle' };
-          const tissue = tissueMap[item.sample_group_code];
-          if (tissue) {
-            tissueByParticipant.get(item.pid).add(tissue);
-          }
-        }
-      });
-      
-      const participantsWithOnlyAdipose = Array.from(tissueByParticipant.entries())
-        .filter(([pid, tissues]) => tissues.size === 1 && tissues.has('Adipose')).length;
-      const participantsWithOnlyMuscle = Array.from(tissueByParticipant.entries())
-        .filter(([pid, tissues]) => tissues.size === 1 && tissues.has('Muscle')).length;
-      const participantsWithOnlyBlood = Array.from(tissueByParticipant.entries())
-        .filter(([pid, tissues]) => tissues.size === 1 && tissues.has('Blood')).length;
-      
-      console.log('Tissue distribution:', {
-        selectedTissues: filters.tissue,
-        totalParticipants: tissueByParticipant.size,
-        participantsWithOnlyAdipose,
-        participantsWithOnlyMuscle,
-        participantsWithOnlyBlood,
-      });
-    }
-
     return allData.filter(item => {
       // Filter by sex
       if (filters.sex && filters.sex.length > 0) {
@@ -317,6 +285,18 @@ export const useFilteredBiospecimenData = (allData, filters) => {
         };
 
         const omeCategories = getOmeCategories(item.temp_samp_profile);
+        
+        // Debug logging - remove after testing
+        if (Math.random() < 0.001) { // Log ~0.1% of records to avoid spam
+          console.log('Ome filter debug:', {
+            temp_samp_profile: item.temp_samp_profile,
+            omeCategories,
+            selectedOmes: filters.ome,
+            willKeep: omeCategories.length === 0 || omeCategories.some(cat => filters.ome.includes(cat)),
+            pid: item.pid
+          });
+        }
+        
         // If record has ome categories, at least one must match the selected filters
         // If record has no ome categories, keep it (don't filter based on missing data)
         if (omeCategories.length > 0 && !omeCategories.some(cat => filters.ome.includes(cat))) {
