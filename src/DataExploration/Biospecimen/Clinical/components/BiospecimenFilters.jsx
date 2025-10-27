@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -6,12 +6,32 @@ import PropTypes from 'prop-types';
  * Features:
  * - Checkbox filters for sex, age groups, and randomized groups (multi-select)
  * - Persistent UI that remains stable during data loading
+ * - Collapsible filter groups with animated expand/collapse icons
  */
 const BiospecimenFilters = ({
   filters,
   filterOptions,
   onCheckboxChange,
 }) => {
+  // Track expanded/collapsed state for each filter group
+  const [expandedGroups, setExpandedGroups] = useState({
+    sex: false,
+    dmaqc_age_groups: false,
+    random_group_code: false,
+    bmi_group: false,
+    race: false,
+    ethnicity: false,
+    tissue: false,
+    ome: false,
+  });
+
+  const toggleGroup = (groupKey) => {
+    setExpandedGroups(prev => ({
+      ...prev,
+      [groupKey]: !prev[groupKey]
+    }));
+  };
+
   return (
     <div className="card h-100">
       <div className="card-header">
@@ -23,8 +43,25 @@ const BiospecimenFilters = ({
       <div className="card-body">
         {/* Sex Filters - Checkboxes */}
         <div className="mb-4">
-          <h6 className="mb-2">Sex</h6>
-          {filterOptions.sexOptions.map((option) => (
+          <h6 
+            className="mb-2 d-flex justify-content-between align-items-center" 
+            style={{ cursor: 'pointer', userSelect: 'none' }}
+            onClick={() => toggleGroup('sex')}
+          >
+            <span>Sex</span>
+            <span 
+              className="filter-toggle-icon"
+              style={{
+                transition: 'transform 0.2s ease-in-out',
+                transform: expandedGroups.sex ? 'rotate(45deg)' : 'rotate(0deg)',
+                fontSize: '1.2rem',
+                fontWeight: 'bold'
+              }}
+            >
+              +
+            </span>
+          </h6>
+          {expandedGroups.sex && filterOptions.sexOptions.map((option) => (
             <div key={option} className="form-check">
               <input
                 className="form-check-input"
@@ -44,8 +81,25 @@ const BiospecimenFilters = ({
 
         {/* Age Group Filters - Checkboxes */}
         <div className="mb-4">
-          <h6 className="mb-2">Age Groups</h6>
-          {filterOptions.ageGroupOptions.map((option) => (
+          <h6 
+            className="mb-2 d-flex justify-content-between align-items-center" 
+            style={{ cursor: 'pointer', userSelect: 'none' }}
+            onClick={() => toggleGroup('dmaqc_age_groups')}
+          >
+            <span>Age Groups</span>
+            <span 
+              className="filter-toggle-icon"
+              style={{
+                transition: 'transform 0.2s ease-in-out',
+                transform: expandedGroups.dmaqc_age_groups ? 'rotate(45deg)' : 'rotate(0deg)',
+                fontSize: '1.2rem',
+                fontWeight: 'bold'
+              }}
+            >
+              +
+            </span>
+          </h6>
+          {expandedGroups.dmaqc_age_groups && filterOptions.ageGroupOptions.map((option) => (
             <div key={option} className="form-check">
               <input
                 className="form-check-input"
@@ -69,8 +123,25 @@ const BiospecimenFilters = ({
 
         {/* Randomized Group Filters - Checkboxes (changed from radio buttons) */}
         <div className="mb-4">
-          <h6 className="mb-2">Randomized Group</h6>
-          {filterOptions.randomGroupOptions.map((option) => (
+          <h6 
+            className="mb-2 d-flex justify-content-between align-items-center" 
+            style={{ cursor: 'pointer', userSelect: 'none' }}
+            onClick={() => toggleGroup('random_group_code')}
+          >
+            <span>Randomized Group</span>
+            <span 
+              className="filter-toggle-icon"
+              style={{
+                transition: 'transform 0.2s ease-in-out',
+                transform: expandedGroups.random_group_code ? 'rotate(45deg)' : 'rotate(0deg)',
+                fontSize: '1.2rem',
+                fontWeight: 'bold'
+              }}
+            >
+              +
+            </span>
+          </h6>
+          {expandedGroups.random_group_code && filterOptions.randomGroupOptions.map((option) => (
             <div key={option} className="form-check">
               <input
                 className="form-check-input"
@@ -97,8 +168,25 @@ const BiospecimenFilters = ({
 
         {/* BMI Group Filters - Checkboxes */}
         <div className="mb-4">
-          <h6 className="mb-2">BMI Group</h6>
-          {filterOptions.bmiGroupOptions.map((option) => (
+          <h6 
+            className="mb-2 d-flex justify-content-between align-items-center" 
+            style={{ cursor: 'pointer', userSelect: 'none' }}
+            onClick={() => toggleGroup('bmi_group')}
+          >
+            <span>BMI Group</span>
+            <span 
+              className="filter-toggle-icon"
+              style={{
+                transition: 'transform 0.2s ease-in-out',
+                transform: expandedGroups.bmi_group ? 'rotate(45deg)' : 'rotate(0deg)',
+                fontSize: '1.2rem',
+                fontWeight: 'bold'
+              }}
+            >
+              +
+            </span>
+          </h6>
+          {expandedGroups.bmi_group && filterOptions.bmiGroupOptions.map((option) => (
             <div key={option} className="form-check">
               <input
                 className="form-check-input"
@@ -118,8 +206,25 @@ const BiospecimenFilters = ({
 
         {/* Race Filters - Checkboxes */}
         <div className="mb-4">
-          <h6 className="mb-2">Race</h6>
-          {filterOptions.raceOptions.map((option) => (
+          <h6 
+            className="mb-2 d-flex justify-content-between align-items-center" 
+            style={{ cursor: 'pointer', userSelect: 'none' }}
+            onClick={() => toggleGroup('race')}
+          >
+            <span>Race</span>
+            <span 
+              className="filter-toggle-icon"
+              style={{
+                transition: 'transform 0.2s ease-in-out',
+                transform: expandedGroups.race ? 'rotate(45deg)' : 'rotate(0deg)',
+                fontSize: '1.2rem',
+                fontWeight: 'bold'
+              }}
+            >
+              +
+            </span>
+          </h6>
+          {expandedGroups.race && filterOptions.raceOptions.map((option) => (
             <div key={option} className="form-check">
               <input
                 className="form-check-input"
@@ -139,8 +244,25 @@ const BiospecimenFilters = ({
 
         {/* Ethnicity Filters - Checkboxes */}
         <div className="mb-4">
-          <h6 className="mb-2">Ethnicity</h6>
-          {filterOptions.ethnicityOptions.map((option) => (
+          <h6 
+            className="mb-2 d-flex justify-content-between align-items-center" 
+            style={{ cursor: 'pointer', userSelect: 'none' }}
+            onClick={() => toggleGroup('ethnicity')}
+          >
+            <span>Ethnicity</span>
+            <span 
+              className="filter-toggle-icon"
+              style={{
+                transition: 'transform 0.2s ease-in-out',
+                transform: expandedGroups.ethnicity ? 'rotate(45deg)' : 'rotate(0deg)',
+                fontSize: '1.2rem',
+                fontWeight: 'bold'
+              }}
+            >
+              +
+            </span>
+          </h6>
+          {expandedGroups.ethnicity && filterOptions.ethnicityOptions.map((option) => (
             <div key={option} className="form-check">
               <input
                 className="form-check-input"
@@ -160,8 +282,25 @@ const BiospecimenFilters = ({
 
         {/* Tissue Filters - Checkboxes */}
         <div className="mb-4">
-          <h6 className="mb-2">Tissue</h6>
-          {filterOptions.tissueOptions.map((option) => (
+          <h6 
+            className="mb-2 d-flex justify-content-between align-items-center" 
+            style={{ cursor: 'pointer', userSelect: 'none' }}
+            onClick={() => toggleGroup('tissue')}
+          >
+            <span>Tissue</span>
+            <span 
+              className="filter-toggle-icon"
+              style={{
+                transition: 'transform 0.2s ease-in-out',
+                transform: expandedGroups.tissue ? 'rotate(45deg)' : 'rotate(0deg)',
+                fontSize: '1.2rem',
+                fontWeight: 'bold'
+              }}
+            >
+              +
+            </span>
+          </h6>
+          {expandedGroups.tissue && filterOptions.tissueOptions.map((option) => (
             <div key={option} className="form-check">
               <input
                 className="form-check-input"
@@ -181,8 +320,25 @@ const BiospecimenFilters = ({
 
         {/* Ome Filters - Checkboxes */}
         <div className="mb-4">
-          <h6 className="mb-2">Ome</h6>
-          {filterOptions.omeOptions.map((option) => (
+          <h6 
+            className="mb-2 d-flex justify-content-between align-items-center" 
+            style={{ cursor: 'pointer', userSelect: 'none' }}
+            onClick={() => toggleGroup('ome')}
+          >
+            <span>Ome</span>
+            <span 
+              className="filter-toggle-icon"
+              style={{
+                transition: 'transform 0.2s ease-in-out',
+                transform: expandedGroups.ome ? 'rotate(45deg)' : 'rotate(0deg)',
+                fontSize: '1.2rem',
+                fontWeight: 'bold'
+              }}
+            >
+              +
+            </span>
+          </h6>
+          {expandedGroups.ome && filterOptions.omeOptions.map((option) => (
             <div key={option} className="form-check">
               <input
                 className="form-check-input"
