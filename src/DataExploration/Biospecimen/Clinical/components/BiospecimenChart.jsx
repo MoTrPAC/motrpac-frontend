@@ -240,6 +240,96 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     }));
   }, [data]);
 
+  // Calculate participant counts by ethnicity
+  const participantByEthnicity = useMemo(() => {
+    if (!data || !data.length) return null;
+
+    // Helper function to derive ethnicity category from latino_psca field
+    const getEthnicityCategory = (record) => {
+      const latinoValue = record.latino_psca;
+      // Check for value 1 (Latino/Hispanic/Spanish)
+      if (latinoValue === '1' || latinoValue === 1) {
+        return 'Latino, Hispanic, or Spanish origin/ethnicity';
+      }
+      // Check for value 0 (Not Latino/Hispanic/Spanish)
+      if (latinoValue === '0' || latinoValue === 0) {
+        return 'Not Latino, Hispanic, or Spanish origin/ethnicity';
+      }
+      // Check for value -7 (Refused/Unknown)
+      if (latinoValue === '-7' || latinoValue === -7) {
+        return 'Refused/Unknown';
+      }
+      return null;
+    };
+
+    const uniqueParticipants = new Map();
+    data.forEach((record) => {
+      if (record.pid) {
+        const ethnicityCategory = getEthnicityCategory(record);
+        if (ethnicityCategory) {
+          uniqueParticipants.set(record.pid, ethnicityCategory);
+        }
+      }
+    });
+
+    const ethnicityCounts = {
+      'Latino, Hispanic, or Spanish origin/ethnicity': 0,
+      'Not Latino, Hispanic, or Spanish origin/ethnicity': 0,
+      'Refused/Unknown': 0,
+    };
+
+    uniqueParticipants.forEach((ethnicity) => {
+      if (ethnicityCounts.hasOwnProperty(ethnicity)) {
+        ethnicityCounts[ethnicity]++;
+      }
+    });
+
+    return [
+      { 
+        name: 'Latino, Hispanic, or Spanish', 
+        y: ethnicityCounts['Latino, Hispanic, or Spanish origin/ethnicity'], 
+        color: '#16a085' 
+      },
+      { 
+        name: 'Not Latino, Hispanic, or Spanish', 
+        y: ethnicityCounts['Not Latino, Hispanic, or Spanish origin/ethnicity'], 
+        color: '#95a5a6' 
+      },
+      { 
+        name: 'Refused/Unknown', 
+        y: ethnicityCounts['Refused/Unknown'], 
+        color: '#bdc3c7' 
+      },
+    ];
+  }, [data]);
+
+  // Calculate participant counts by randomized group
+  const participantByRandomGroup = useMemo(() => {
+    if (!data || !data.length) return null;
+
+    const uniqueParticipants = new Map();
+    data.forEach((record) => {
+      if (record.pid && record.random_group_code) {
+        uniqueParticipants.set(record.pid, record.random_group_code);
+      }
+    });
+
+    const randomGroups = ['Control', 'Endurance', 'Resistance'];
+    const groupCounts = {};
+    randomGroups.forEach(group => groupCounts[group] = 0);
+
+    uniqueParticipants.forEach((group) => {
+      if (groupCounts.hasOwnProperty(group)) {
+        groupCounts[group]++;
+      }
+    });
+
+    return {
+      categories: randomGroups,
+      data: randomGroups.map(group => groupCounts[group]),
+    };
+  }, [data]);
+
   // Transform data for chart - separate charts for Pre and Post phases
   const chartData = useMemo(() => {
     if (!data || !data.length) return null;
@@ -503,6 +593,102 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     };
   }, [participantByBMI]);
 
+  // Pie chart configuration for ethnicity distribution
+  const ethnicityPieChartOptions = useMemo(() => {
+    if (!participantByEthnicity) return null;
+
+    return {
+      chart: {
+        type: 'pie',
+        height: 300,
+      },
+      title: {
+        text: 'Ethnicity Distribution',
+        style: { fontSize: '14px', fontWeight: 'bold' }
+      },
+      tooltip: {
+        pointFormat: '<b>{point.y}</b> participants ({point.percentage:.1f}%)'
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}</b>: {point.y}',
+            style: { fontSize: '11px' },
+            distance: 10,
+            connectorWidth: 1,
+          },
+          showInLegend: false,
+        }
+      },
+      series: [{
+        name: 'Participants',
+        data: participantByEthnicity,
+      }],
+      credits: { enabled: false },
+    };
+  }, [participantByEthnicity]);
+
+  // Bar chart configuration for randomized group distribution
+  const randomGroupBarChartOptions = useMemo(() => {
+    if (!participantByRandomGroup) return null;
+
+    return {
+      chart: {
+        type: 'column',
+        height: 300,
+      },
+      title: {
+        text: 'Randomized Group Distribution',
+        style: { fontSize: '14px', fontWeight: 'bold' }
+      },
+      xAxis: {
+        categories: participantByRandomGroup.categories,
+        title: {
+          text: 'Randomized Group',
+          style: { fontSize: '12px', fontWeight: 'bold' }
+        },
+        labels: {
+          style: { fontSize: '11px' }
+        }
+      },
+      yAxis: {
+        min: 0,
+        allowDecimals: false,
+        title: {
+          text: 'Participant Count',
+          style: { fontSize: '12px', fontWeight: 'bold' }
+        },
+        labels: {
+          style: { fontSize: '11px' }
+        }
+      },
+      legend: {
+        enabled: false,
+      },
+      tooltip: {
+        pointFormat: '<b>{point.y}</b> participants'
+      },
+      plotOptions: {
+        column: {
+          dataLabels: {
+            enabled: true,
+            format: '{point.y}',
+            style: { fontSize: '10px' }
+          },
+          color: '#e67e22',
+        }
+      },
+      series: [{
+        name: 'Participants',
+        data: participantByRandomGroup.data,
+      }],
+      credits: { enabled: false },
+    };
+  }, [participantByRandomGroup]);
+
   // Chart configurations for both Pre and Post phases
   const chartOptionsArray = useMemo(() => {
     if (!chartData || !data) return null;
@@ -710,6 +896,36 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
                   <HighchartsReact
                     highcharts={Highcharts}
                     options={bmiPieChartOptions}
+                    immutable={false}
+                  />
+                ) : (
+                  <div className="text-center py-3 text-muted">
+                    <p>No data available</p>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                {/* Pie chart of participant count in each ethnic group */}
+                {ethnicityPieChartOptions ? (
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={ethnicityPieChartOptions}
+                    immutable={false}
+                  />
+                ) : (
+                  <div className="text-center py-3 text-muted">
+                    <p>No data available</p>
+                  </div>
+                )}
+              </div>
+              <div className="col-md-6">
+                {/* Bar chart of participant count in each randomized group */}
+                {randomGroupBarChartOptions ? (
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={randomGroupBarChartOptions}
                     immutable={false}
                   />
                 ) : (
