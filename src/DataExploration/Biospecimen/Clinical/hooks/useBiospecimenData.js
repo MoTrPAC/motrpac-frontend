@@ -180,6 +180,40 @@ export const useFilteredBiospecimenData = (allData, filters) => {
         }
       }
 
+      // Filter by race
+      if (filters.race && filters.race.length > 0) {
+        // Helper function to derive race category from boolean indicator fields
+        const getRaceCategory = (record) => {
+          if (record.aablack_psca === '1' || record.aablack_psca === 1 || record.aablack_psca === true) {
+            return 'African American/Black';
+          }
+          if (record.asian_psca === '1' || record.asian_psca === 1 || record.asian_psca === true) {
+            return 'Asian';
+          }
+          if (record.hawaii_psca === '1' || record.hawaii_psca === 1 || record.hawaii_psca === true) {
+            return 'Hawaiian/Pacific Islander';
+          }
+          if (record.natamer_psca === '1' || record.natamer_psca === 1 || record.natamer_psca === true) {
+            return 'Native American';
+          }
+          if (record.cauc_psca === '1' || record.cauc_psca === 1 || record.cauc_psca === true) {
+            return 'Caucasian';
+          }
+          if (record.raceoth_psca === '1' || record.raceoth_psca === 1 || record.raceoth_psca === true) {
+            return 'Other';
+          }
+          if (record.raceref_psca === '1' || record.raceref_psca === 1 || record.raceref_psca === true) {
+            return 'Unknown';
+          }
+          return null;
+        };
+
+        const itemRaceCategory = getRaceCategory(item);
+        if (!itemRaceCategory || !filters.race.includes(itemRaceCategory)) {
+          return false;
+        }
+      }
+
       return true;
     });
   }, [allData, filters]);
