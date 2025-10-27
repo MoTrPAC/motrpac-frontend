@@ -262,36 +262,54 @@ export const useFilteredBiospecimenData = (allData, filters) => {
         }
       }
 
-      // Filter by ome (assay type from temp_samp_profile field)
+      // Filter by ome (assay type from raw_assays_with_results field)
       if (filters.ome && filters.ome.length > 0) {
-        // Helper function to map assay codes to ome categories
-        const getOmeCategories = (tempSampProfile) => {
-          if (!tempSampProfile) return [];
+        // Helper function to map assay codes to ome categories using prefix patterns
+        const getOmeCategories = (assayData) => {
+          if (!assayData) return [];
+          
+          // Special case: "All" means the sample applies to all ome types
+          if (assayData.trim().toLowerCase() === 'all') {
+            return ['Epigenomic', 'Transcriptomic', 'Proteomic', 'Metabolomic'];
+          }
           
           // Parse the comma/semicolon-separated assay codes
-          const assayCodes = tempSampProfile.split(/[,;]/).map(code => code.trim()).filter(code => code);
+          const assayCodes = assayData.split(/[,;]/).map(code => code.trim().toLowerCase()).filter(code => code);
           
-          // Map assay codes to ome categories
+          // Map assay codes to ome categories using substring matching
           const omeCategories = new Set();
           assayCodes.forEach(code => {
-            if (code === 'EPIGEN') omeCategories.add('Epigenomic');
-            if (code === 'TRNSCRPT' || code === 'RNA') omeCategories.add('Transcriptomic');
-            if (code === 'PROT' || code === 'PHOSPHOPROT') omeCategories.add('Proteomic');
-            if (code === 'METAB') omeCategories.add('Metabolomic');
-            if (code === 'IMMUNO') omeCategories.add('Immunoassay'); // Add immunoassay mapping
+            // Epigenomic: contains 'epigen-' or 'genomic-wgs'
+            if (code.includes('epigen-') || code.includes('genomic-wgs')) {
+              omeCategories.add('Epigenomic');
+            }
+            // Transcriptomic: contains 'transcript-'
+            if (code.includes('transcript-')) {
+              omeCategories.add('Transcriptomic');
+            }
+            // Proteomic: contains 'prot-'
+            if (code.includes('prot-')) {
+              omeCategories.add('Proteomic');
+            }
+            // Metabolomic: contains 'metab-' or 'lab-'
+            if (code.includes('metab-') || code.includes('lab-')) {
+              omeCategories.add('Metabolomic');
+            }
           });
           
           return Array.from(omeCategories);
         };
 
-        const omeCategories = getOmeCategories(item.temp_samp_profile);
+        const omeCategories = getOmeCategories(item.raw_assays_with_results);
         
-        // Debug logging - remove after testing
+        // Debug logging
         if (Math.random() < 0.001) { // Log ~0.1% of records to avoid spam
           console.log('Ome filter debug:', {
-            temp_samp_profile: item.temp_samp_profile,
+            raw_assays_with_results: item.raw_assays_with_results,
             omeCategories,
             selectedOmes: filters.ome,
+            hasCategories: omeCategories.length > 0,
+            matchesFilter: omeCategories.some(cat => filters.ome.includes(cat)),
             willKeep: omeCategories.length === 0 || omeCategories.some(cat => filters.ome.includes(cat)),
             pid: item.pid
           });
