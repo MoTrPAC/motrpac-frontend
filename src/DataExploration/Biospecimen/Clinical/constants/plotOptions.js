@@ -75,7 +75,7 @@ export const DEFAULT_FILTERS = {
   random_group_code: ['Control', 'Endurance', 'Resistance'], // All selected by default (changed from single value to array)
   bmi_group: ['0-25', '25-30', '30+'], // All selected by default
   race: ['African America/Black', 'Asian', 'Hawaiian/Pacific Islander', 'Native American', 'Caucasian', 'Other', 'Unknown'], // All selected by default
-  ethnicity: ['Hispanic/Latino/Spanish Origin', 'Not Hispanic/Latino/Spanish Origin', 'Unknown'], // All selected by default
+  ethnicity: ['Latino, Hispanic, or Spanish origin/ethnicity', 'Not Latino, Hispanic, or Spanish origin/ethnicity', 'Refused/Unknown'], // All selected by default - must match BiospecimenChart.jsx strings
   tissue: ['Adipose', 'Blood', 'Muscle'], // All selected by default
   ome: ['Epigenomic', 'Transcriptomic', 'Proteomic', 'Metabolomic'], // All selected by default
 };
@@ -94,7 +94,7 @@ export const FILTER_OPTIONS = {
   randomGroupOptions: ['Control', 'Endurance', 'Resistance'],
   bmiGroupOptions: ['0-25', '25-30', '30+'],
   raceOptions: ['African American/Black', 'Asian', 'Hawaiian/Pacific Islander', 'Native American', 'Caucasian', 'Other', 'Unknown'],
-  ethnicityOptions: ['Hispanic/Latino/Spanish Origin', 'Not Hispanic/Latino/Spanish Origin', 'Unknown'],
+  ethnicityOptions: ['Latino, Hispanic, or Spanish origin/ethnicity', 'Not Latino, Hispanic, or Spanish origin/ethnicity', 'Refused/Unknown'], // Must match BiospecimenChart.jsx and DEFAULT_FILTERS
   tissueOptions: ['Adipose', 'Blood', 'Muscle'],
   omeOptions: ['Epigenomic', 'Transcriptomic', 'Proteomic', 'Metabolomic'],
 };

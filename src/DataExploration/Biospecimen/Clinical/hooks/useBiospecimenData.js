@@ -214,6 +214,33 @@ export const useFilteredBiospecimenData = (allData, filters) => {
         }
       }
 
+      // Filter by ethnicity
+      if (filters.ethnicity && filters.ethnicity.length > 0) {
+        // Helper function to derive ethnicity category from latino_psca field
+        // MUST match the exact strings used in BiospecimenChart.jsx
+        const getEthnicityCategory = (record) => {
+          const latinoValue = record.latino_psca;
+          // Check for value 1 (Latino/Hispanic/Spanish)
+          if (latinoValue === '1' || latinoValue === 1) {
+            return 'Latino, Hispanic, or Spanish origin/ethnicity';
+          }
+          // Check for value 0 (Not Latino/Hispanic/Spanish)
+          if (latinoValue === '0' || latinoValue === 0) {
+            return 'Not Latino, Hispanic, or Spanish origin/ethnicity';
+          }
+          // Check for value -7 (Refused/Unknown)
+          if (latinoValue === '-7' || latinoValue === -7) {
+            return 'Refused/Unknown';
+          }
+          return null;
+        };
+
+        const itemEthnicityCategory = getEthnicityCategory(item);
+        if (!itemEthnicityCategory || !filters.ethnicity.includes(itemEthnicityCategory)) {
+          return false;
+        }
+      }
+
       return true;
     });
   }, [allData, filters]);
