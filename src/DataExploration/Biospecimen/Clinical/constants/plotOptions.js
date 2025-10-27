@@ -74,7 +74,7 @@ export const DEFAULT_FILTERS = {
   dmaqc_age_groups: ['10-13', '14-17', '18-39', '40-59', '60+'], // All selected by default
   random_group_code: ['Control', 'Endurance', 'Resistance'], // All selected by default (changed from single value to array)
   bmi_group: ['0-25', '25-30', '30+'], // All selected by default
-  race: ['African America/Black', 'Asian', 'Hawaiian/Pacific Islander', 'Native American', 'Caucasian', 'Other', 'Unknown'], // All selected by default
+  race: ['African American/Black', 'Asian', 'Hawaiian/Pacific Islander', 'Native American', 'Caucasian', 'Other', 'Unknown'], // All selected by default - must match exact strings
   ethnicity: ['Latino, Hispanic, or Spanish origin/ethnicity', 'Not Latino, Hispanic, or Spanish origin/ethnicity', 'Refused/Unknown'], // All selected by default - must match BiospecimenChart.jsx strings
   tissue: ['Adipose', 'Blood', 'Muscle'], // All selected by default
   ome: ['Epigenomic', 'Transcriptomic', 'Proteomic', 'Metabolomic'], // All selected by default
