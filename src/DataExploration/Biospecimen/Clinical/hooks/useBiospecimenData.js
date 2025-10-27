@@ -163,6 +163,23 @@ export const useFilteredBiospecimenData = (allData, filters) => {
         }
       }
 
+      // Filter by BMI group
+      if (filters.bmi_group && filters.bmi_group.length > 0) {
+        // Helper function to categorize BMI value into group (same logic as chart)
+        const getBMIGroup = (bmi) => {
+          const bmiValue = parseFloat(bmi);
+          if (isNaN(bmiValue)) return null;
+          if (bmiValue < 25) return '0-25';
+          if (bmiValue < 30) return '25-30';
+          return '30+';
+        };
+
+        const itemBMIGroup = getBMIGroup(item.bmi);
+        if (!itemBMIGroup || !filters.bmi_group.includes(itemBMIGroup)) {
+          return false;
+        }
+      }
+
       return true;
     });
   }, [allData, filters]);
