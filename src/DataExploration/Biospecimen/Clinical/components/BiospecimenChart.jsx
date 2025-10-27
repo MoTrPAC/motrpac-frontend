@@ -307,10 +307,42 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
   const participantByRandomGroup = useMemo(() => {
     if (!data || !data.length) return null;
 
+    // Helper function to derive randomized group from random_group_code and enroll_random_group_code
+    const getRandomizedGroup = (record) => {
+      const randomGroupCode = record.random_group_code;
+      const enrollRandomGroupCode = record.enroll_random_group_code;
+
+      // Control group
+      if (randomGroupCode === 'ADUControl' || randomGroupCode === 'PEDControl') {
+        return 'Control';
+      }
+
+      // Endurance group
+      if (
+        randomGroupCode === 'ADUEndur' ||
+        randomGroupCode === 'ATHEndur' ||
+        randomGroupCode === 'PEDEndur' ||
+        enrollRandomGroupCode === 'PEDEndur' ||
+        enrollRandomGroupCode === 'PEDEnrollEndur'
+      ) {
+        return 'Endurance';
+      }
+
+      // Resistance group
+      if (randomGroupCode === 'ADUResist' || randomGroupCode === 'ATHResist') {
+        return 'Resistance';
+      }
+
+      return null;
+    };
+
     const uniqueParticipants = new Map();
     data.forEach((record) => {
-      if (record.pid && record.random_group_code) {
-        uniqueParticipants.set(record.pid, record.random_group_code);
+      if (record.pid) {
+        const group = getRandomizedGroup(record);
+        if (group) {
+          uniqueParticipants.set(record.pid, group);
+        }
       }
     });
 
