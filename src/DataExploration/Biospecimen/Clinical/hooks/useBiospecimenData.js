@@ -241,6 +241,56 @@ export const useFilteredBiospecimenData = (allData, filters) => {
         }
       }
 
+      // Filter by tissue
+      if (filters.tissue && filters.tissue.length > 0) {
+        // Helper function to map tissue codes to readable names (same as TISSUE_CODE_TO_NAME)
+        const getTissueName = (code) => {
+          if (!code) return null;
+          const tissueMap = {
+            'ADI': 'Adipose',
+            'BLO': 'Blood',
+            'MUS': 'Muscle',
+          };
+          return tissueMap[code] || null;
+        };
+
+        const tissueName = getTissueName(item.sample_group_code);
+        // Only filter out if we have a tissue name and it's not in the selected filters
+        if (tissueName && !filters.tissue.includes(tissueName)) {
+          return false;
+        }
+        // If no tissue name (null/undefined), don't filter - keep the record
+      }
+
+      // Filter by ome (assay type from temp_samp_profile field)
+      if (filters.ome && filters.ome.length > 0) {
+        // Helper function to map assay codes to ome categories
+        const getOmeCategories = (tempSampProfile) => {
+          if (!tempSampProfile) return [];
+          
+          // Parse the comma/semicolon-separated assay codes
+          const assayCodes = tempSampProfile.split(/[,;]/).map(code => code.trim()).filter(code => code);
+          
+          // Map assay codes to ome categories
+          const omeCategories = new Set();
+          assayCodes.forEach(code => {
+            if (code === 'EPIGEN') omeCategories.add('Epigenomic');
+            if (code === 'TRNSCRPT') omeCategories.add('Transcriptomic');
+            if (code === 'PROT' || code === 'PHOSPHOPROT') omeCategories.add('Proteomic');
+            if (code === 'METAB') omeCategories.add('Metabolomic');
+          });
+          
+          return Array.from(omeCategories);
+        };
+
+        const omeCategories = getOmeCategories(item.temp_samp_profile);
+        // Only filter out if we have ome categories and none match the selected filters
+        if (omeCategories.length > 0 && !omeCategories.some(cat => filters.ome.includes(cat))) {
+          return false;
+        }
+        // If no ome categories (empty field), don't filter - keep the record
+      }
+
       return true;
     });
   }, [allData, filters]);
