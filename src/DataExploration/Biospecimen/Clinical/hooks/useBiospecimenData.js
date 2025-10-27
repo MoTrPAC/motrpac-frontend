@@ -131,6 +131,38 @@ export const useFilteredBiospecimenData = (allData, filters) => {
       return allData;
     }
 
+    // Debug: Log tissue distribution before filtering
+    if (filters.tissue && filters.tissue.length < 3) { // Only when some tissues are unchecked
+      const tissueByParticipant = new Map();
+      allData.forEach(item => {
+        if (item.pid) {
+          if (!tissueByParticipant.has(item.pid)) {
+            tissueByParticipant.set(item.pid, new Set());
+          }
+          const tissueMap = { 'ADI': 'Adipose', 'BLO': 'Blood', 'MUS': 'Muscle' };
+          const tissue = tissueMap[item.sample_group_code];
+          if (tissue) {
+            tissueByParticipant.get(item.pid).add(tissue);
+          }
+        }
+      });
+      
+      const participantsWithOnlyAdipose = Array.from(tissueByParticipant.entries())
+        .filter(([pid, tissues]) => tissues.size === 1 && tissues.has('Adipose')).length;
+      const participantsWithOnlyMuscle = Array.from(tissueByParticipant.entries())
+        .filter(([pid, tissues]) => tissues.size === 1 && tissues.has('Muscle')).length;
+      const participantsWithOnlyBlood = Array.from(tissueByParticipant.entries())
+        .filter(([pid, tissues]) => tissues.size === 1 && tissues.has('Blood')).length;
+      
+      console.log('Tissue distribution:', {
+        selectedTissues: filters.tissue,
+        totalParticipants: tissueByParticipant.size,
+        participantsWithOnlyAdipose,
+        participantsWithOnlyMuscle,
+        participantsWithOnlyBlood,
+      });
+    }
+
     return allData.filter(item => {
       // Filter by sex
       if (filters.sex && filters.sex.length > 0) {
@@ -255,11 +287,11 @@ export const useFilteredBiospecimenData = (allData, filters) => {
         };
 
         const tissueName = getTissueName(item.sample_group_code);
-        // Only filter out if we have a tissue name and it's not in the selected filters
+        // If record has a tissue value, it must match one of the selected filters
+        // If record has no tissue value, keep it (don't filter based on missing data)
         if (tissueName && !filters.tissue.includes(tissueName)) {
           return false;
         }
-        // If no tissue name (null/undefined), don't filter - keep the record
       }
 
       // Filter by ome (assay type from temp_samp_profile field)
@@ -275,20 +307,21 @@ export const useFilteredBiospecimenData = (allData, filters) => {
           const omeCategories = new Set();
           assayCodes.forEach(code => {
             if (code === 'EPIGEN') omeCategories.add('Epigenomic');
-            if (code === 'TRNSCRPT') omeCategories.add('Transcriptomic');
+            if (code === 'TRNSCRPT' || code === 'RNA') omeCategories.add('Transcriptomic');
             if (code === 'PROT' || code === 'PHOSPHOPROT') omeCategories.add('Proteomic');
             if (code === 'METAB') omeCategories.add('Metabolomic');
+            if (code === 'IMMUNO') omeCategories.add('Immunoassay'); // Add immunoassay mapping
           });
           
           return Array.from(omeCategories);
         };
 
         const omeCategories = getOmeCategories(item.temp_samp_profile);
-        // Only filter out if we have ome categories and none match the selected filters
+        // If record has ome categories, at least one must match the selected filters
+        // If record has no ome categories, keep it (don't filter based on missing data)
         if (omeCategories.length > 0 && !omeCategories.some(cat => filters.ome.includes(cat))) {
           return false;
         }
-        // If no ome categories (empty field), don't filter - keep the record
       }
 
       return true;
