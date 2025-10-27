@@ -302,22 +302,9 @@ export const useFilteredBiospecimenData = (allData, filters) => {
 
         const omeCategories = getOmeCategories(item.raw_assays_with_results);
         
-        // Debug logging
-        if (Math.random() < 0.001) { // Log ~0.1% of records to avoid spam
-          console.log('Ome filter debug:', {
-            raw_assays_with_results: item.raw_assays_with_results,
-            omeCategories,
-            selectedOmes: filters.ome,
-            hasCategories: omeCategories.length > 0,
-            matchesFilter: omeCategories.some(cat => filters.ome.includes(cat)),
-            willKeep: omeCategories.length === 0 || omeCategories.some(cat => filters.ome.includes(cat)),
-            pid: item.pid
-          });
-        }
-        
-        // If record has ome categories, at least one must match the selected filters
-        // If record has no ome categories, keep it (don't filter based on missing data)
-        if (omeCategories.length > 0 && !omeCategories.some(cat => filters.ome.includes(cat))) {
+        // Strict filtering: record must have at least one ome category that matches the selected filters
+        // Records with no ome categories or no matching categories are filtered out
+        if (omeCategories.length === 0 || !omeCategories.some(cat => filters.ome.includes(cat))) {
           return false;
         }
       }
