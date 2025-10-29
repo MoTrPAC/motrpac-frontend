@@ -37,7 +37,7 @@ const BiospecimenFilters = ({
       <div className="card-header">
         <h5 className="mb-0">
           <i className="bi bi-funnel mr-2" />
-          Filters
+          Cohort Selector
         </h5>
       </div>
       <div className="card-body">
