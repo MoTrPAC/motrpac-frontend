@@ -71,6 +71,8 @@ const Phenotype = lazy(() => import('../TechnicalGuides/phenotype'));
 const BiospecimenSummary = lazy(
   () => import('../DataExploration/Biospecimen/Clinical/summaryStatistics'),
 );
+const Citation = lazy(() => import('../Citation/citationPage'));
+const Glossary = lazy(() => import('../Glossary/glossaryPage'));
 
 function App({ history = History }) {
   return (
@@ -148,7 +150,7 @@ function App({ history = History }) {
                   element={<BrowseDataPageConnected/>}
                 />
                 <Route
-                  path="/data-download/file-browser"
+                  path="/data-download/file-browser/:selectedData"
                   element={<BrowseDataPageConnected/>}
                 />
                 <Route
@@ -206,6 +208,8 @@ function App({ history = History }) {
                 <Route path="/study-assays" element={<StudyAssays/>}/>
                 <Route path="/exercise-benefits" element={<ExerciseBenefits/>}/>
                 <Route path="/technical-guides/phenotype" element={<Phenotype/>}/>
+                <Route path="/citation" element={<Citation/>}/>
+                <Route path="/glossary" element={<Glossary/>}/>
               </Route>
             </Routes>
           </Suspense>

@@ -8,3 +8,46 @@
     }
   }
 }
+
+.citationPage {
+  margin-bottom: 1.25rem;
+
+  .citation-content-container {
+    .material-icons {
+      font-size: 1.25rem;
+      line-height: 1.65;
+    }
+
+    .citation-item{
+      .material-icons {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+.tutorialsPage {
+  margin-bottom: 1.25rem;
+
+  .tutorials-content-container {
+    .section-title-container {
+      .btn.btn-link {
+        font-size: inherit;
+        font-weight: 500;
+        color: #007bff;
+        padding: 0;
+  
+        &:focus, &:active {
+          box-shadow: none;
+          outline: none;
+          text-decoration: none;
+        }
+      }
+    }
+
+    .material-icons {
+      font-size: 1.25rem;
+      line-height: 1.65;
+    }
+  }
+}

@@ -273,8 +273,11 @@ function TrainingDataTable({ columns, data, plotData }) {
               <tbody {...getTableBodyProps()}>
                 {page.map((row) => {
                   prepareRow(row);
+                  // Destructure key and rest of the row props
+                  // to avoid passing key as a prop to the table row
+                  const { key, ...restRowProps } = row.getRowProps();
                   return (
-                    <tr {...row.getRowProps()}>
+                    <tr key={key} {...restRowProps}>
                       {row.cells.map((cell) => {
                         // Destructure key and rest of the cell props
                         // to avoid passing key as a prop to the table cell

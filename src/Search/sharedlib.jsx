@@ -107,7 +107,7 @@ export const timewiseResultsTablePropType = {
   gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   protein_name: PropTypes.string,
   metabolite_refmet: PropTypes.string,
-  feature_ID: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  feature_id: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tissue: PropTypes.string,
   assay: PropTypes.string,
   sex: PropTypes.string,
@@ -126,7 +126,7 @@ export const trainingResultsTablePropType = {
   gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   protein_name: PropTypes.string,
   metabolite_refmet: PropTypes.string,
-  feature_ID: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  feature_id: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tissue: PropTypes.string,
   assay_name: PropTypes.string,
   p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -172,7 +172,7 @@ export const humanResultsTablePropType = {
 const commonTimewiseColumns = [
   {
     Header: 'Feature ID',
-    accessor: 'feature_ID',
+    accessor: 'feature_id',
   },
   {
     Header: 'Tissue',
@@ -271,7 +271,7 @@ export const metabTimewiseTableColumns = [
         </Tooltip>
       </div>
     ),
-    accessor: 'metabolite_refmet',
+    accessor: 'refmet_name',
     sortType: 'basic',
   },
   ...commonTimewiseColumns,
@@ -284,7 +284,7 @@ export const metabTimewiseTableColumns = [
 const commonTrainingColumns = [
   {
     Header: 'Feature ID',
-    accessor: 'feature_ID',
+    accessor: 'feature_id',
   },
   {
     Header: 'Tissue',
@@ -385,7 +385,7 @@ export const metabTrainingTableColumns = [
         </Tooltip>
       </div>
     ),
-    accessor: 'metabolite_refmet',
+    accessor: 'refmet_name',
     sortType: 'basic',
   },
   ...commonTrainingColumns,
@@ -772,7 +772,7 @@ export const transformData = (arr) => {
       const newGeneVal = item.gene_symbol;
       item.gene_symbol = (
         <a
-          href={`https://www.ncbi.nlm.nih.gov/gene/?term=rat+${newGeneVal.toLowerCase()}`}
+          href={`https://cfdeknowledge.org/r/kc_entity_gene?entity=gene&gene=${newGeneVal.toUpperCase()}`}
           target="_blank"
           rel="noreferrer"
         >

@@ -8,6 +8,7 @@ export const geneSearchParamsPropType = {
   ktype: PropTypes.string,
   keys: PropTypes.string,
   omics: PropTypes.arrayOf(PropTypes.string),
+  study: PropTypes.string,
   filters: PropTypes.shape({
     assay: PropTypes.arrayOf(PropTypes.string),
     tissue: PropTypes.arrayOf(PropTypes.string),
@@ -25,7 +26,7 @@ export const geneSearchParamsPropType = {
  */
 export const geneSearchTrainingResultsTablePropType = {
   gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  feature_ID: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  feature_id: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tissue: PropTypes.string,
   assay: PropTypes.string,
   p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -36,7 +37,7 @@ export const geneSearchTrainingResultsTablePropType = {
 
 export const geneSearchTimewisePlotPropType = {
   gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  feature_ID: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  feature_id: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tissue: PropTypes.string,
   assay: PropTypes.string,
   sex: PropTypes.string,
@@ -55,7 +56,7 @@ export const geneSearchTrainingTableColumns = [
   },
   {
     Header: 'Feature ID',
-    accessor: 'feature_ID',
+    accessor: 'feature_id',
   },
   {
     Header: 'Tissue',
@@ -251,7 +252,7 @@ export const transformData = (arr) => {
       const newGeneVal = item.gene_symbol;
       item.gene_symbol = (
         <a
-          href={`https://www.ncbi.nlm.nih.gov/gene/?term=${newGeneVal.toLowerCase()}`}
+          href={`https://cfdeknowledge.org/r/kc_entity_gene?entity=gene&gene=${newGeneVal.toUpperCase()}`}
           target="_blank"
           rel="noreferrer"
         >

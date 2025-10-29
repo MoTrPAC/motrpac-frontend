@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
-import pass1b06 from '../data/file_download_metadata/rat_endurance_training_6mo_minified.json';
-import pass1a06 from '../data/file_download_metadata/rat_acute_exercise_6mo_minified.json';
-import humanPrecovidSedAdu from '../data/file_download_metadata/human_precovid_sed_adu_minified.json';
+import pass1b06 from '../data/file_download_metadata/rat-training-06-all-version-files-minified.json';
+import pass1a06 from '../data/file_download_metadata/rat-acute-06-files-minified.json';
+import humanPrecovidSedAdu from '../data/file_download_metadata/human-precovid-files-minified.json';
 
 const CHANGE_FILTER = 'CHANGE_FILTER';
 const SORT_CHANGE = 'SORT_CHANGE';
@@ -128,10 +128,15 @@ function resetBrowseState() {
   };
 }
 
-function selectPass1B06Data(files = pass1b06) {
+function selectPass1B06Data(userType = null, files = pass1b06) {
+  // Filter out RN7 files for non-internal users
+  const filteredFiles = userType === 'internal' 
+    ? files 
+    : files.filter((file) => file.reference_genome !== 'RN7');
+  
   return {
     type: SELECT_PASS1B_06_DATA,
-    files,
+    files: filteredFiles,
   };
 }
 

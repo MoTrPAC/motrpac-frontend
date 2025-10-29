@@ -80,7 +80,7 @@
         "links": [
             {
                 "label": "Molecular Transducers of Physical Activity Consortium (MoTrPAC): Mapping the Dynamic Responses to Exercise",
-                "url": "https://www.cell.com/cell/fulltext/S0092-8674(20)30691-7",
+                "url": "https://doi.org/10.1016/j.cell.2020.06.004",
                 "gaEventCategory": "MoTrPAC Marker Paper",
                 "gaEventAction": "Cell Publication"
             },
@@ -232,7 +232,7 @@
         "links": [
             {
                 "label": "Temporal dynamics of the multi-omic response to endurance exercise training",
-                "url": "https://www.nature.com/articles/s41586-023-06877-w",
+                "url": "https://doi.org/10.1038/s41586-023-06877-w",
                 "gaEventCategory": "MoTrPAC Landscape Paper",
                 "gaEventAction": "Nature Publication"
             },

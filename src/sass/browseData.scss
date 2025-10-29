@@ -2,6 +2,36 @@
 @use 'fonts';
 
 .browseDataPage {
+  .data-download-overview {
+    .show-main-data-download-info-link {
+      .btn.btn-link {
+        font-size: inherit;
+        font-weight: 500;
+        color: #007bff;
+        padding: 0;
+  
+        &:focus, &:active {
+          box-shadow: none;
+          outline: none;
+          text-decoration: none;
+        }
+      }
+
+      .dropdown-menu {
+        background-color: #fff;
+        border: solid 1px colors.$gray-semi-transparent;
+        box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.1);
+        font-size: 0.9rem;
+        padding: 0.75rem;
+        width: 400px;
+      }
+
+      .dropdown-toggle::after {
+        display: none;
+      }
+    }
+  }
+
   .browse-data-summary-container {
     .browse-data-summary-content {
       .show-collapse-summary-link {
@@ -43,6 +73,17 @@
 
     .bundle-datasets-item {
       .card {
+        transition-property: border;
+        transition-delay: .05s;
+
+        &:hover {
+          border: 1px solid #777;
+          background-color: hsla(54.26470588235339, 91%, 97%, 1);
+          background-image: radial-gradient(circle at 92% 6%, hsla(165.44117647058837, 73%, 96%, 0.92) 0%, transparent 58.06622751776674%), radial-gradient(circle at 0% 50%, hsla(42.35294117647056, 100%, 97%, 1) 0%, transparent 50%), radial-gradient(circle at 83% 89%, hsla(37.0588235294118, 88%, 95%, 1) 0%, transparent 78.77377033233643%), radial-gradient(circle at 0% 100%, hsla(38.38235294117625, 100%, 86%, 1) 0%, transparent 50%), radial-gradient(circle at 0% 0%, hsla(56.9117647058825, 100%, 99%, 1) 0%, transparent 50%);
+          background-blend-mode: normal, normal, normal, normal, normal;
+          box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15) !important;
+        }
+
         .bundle-dataset-tags {
           .badge.badge-pill.badge-purple {
             background-color: #6f42c1;
@@ -51,7 +92,7 @@
         }
 
         .card-footer {
-          background-color: #fff;
+          background-color: transparent;
           border-top: none;
 
           .ready-to-download-link {
@@ -100,6 +141,34 @@
       a {
         text-decoration: none;
         width: fit-content;
+      }
+    }
+
+    .show-data-download-info-link {
+      .btn.btn-link {
+        font-size: inherit;
+        font-weight: 500;
+        color: #007bff;
+        padding: 0;
+  
+        &:focus, &:active {
+          box-shadow: none;
+          outline: none;
+          text-decoration: none;
+        }
+      }
+
+      .dropdown-menu {
+        background-color: #fff;
+        border: solid 1px colors.$gray-semi-transparent;
+        box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.1);
+        font-size: 0.9rem;
+        padding: 0.75rem;
+        width: 400px;
+      }
+
+      .dropdown-toggle::after {
+        display: none;
       }
     }
   }
@@ -206,6 +275,12 @@
           font-size: 1.1rem;
           cursor: pointer;
         }
+
+        .pass1b-06-version-doc-link {
+          .material-icons {
+            font-size: 1.25rem;
+          }
+        }
       }
 
       .card-body {
@@ -286,6 +361,10 @@
       }
 
       &.omics.not-available {
+        background-color: #f3f3f3;
+      }
+
+      &.reference_genome.not-available {
         background-color: #f3f3f3;
       }
 

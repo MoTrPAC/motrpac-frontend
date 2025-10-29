@@ -77,15 +77,8 @@ function downloadSuccess(downloadResults) {
   };
 }
 
-const accessToken = import.meta.env.DEV
-  ? import.meta.env.VITE_ES_ACCESS_TOKEN_DEV
-  : import.meta.env.VITE_ES_ACCESS_TOKEN;
-const ratDataHost = import.meta.env.DEV
-  ? import.meta.env.VITE_ES_PROXY_HOST_DEV
-  : import.meta.env.VITE_ES_PROXY_HOST;
-const humanDataHost = import.meta.env.DEV
-  ? import.meta.env.VITE_ES_PROXY_PRECAWG_HOST_DEV
-  : import.meta.env.VITE_ES_PROXY_PRECAWG_HOST;
+const accessToken = import.meta.env.VITE_ES_ACCESS_TOKEN;
+const searchServiceHost = import.meta.env.VITE_ES_PROXY_HOST;
 const endpoint = import.meta.env.VITE_ES_ENDPOINT;
 
 const headersConfig = {
@@ -130,8 +123,6 @@ function handleSearch(params, inputValue, scope) {
     }
   }
 
-  let host = ratDataHost;
-
   const requestParams = { ...params };
   // remove 'species' field from requestParams
   delete requestParams.species;
@@ -140,20 +131,12 @@ function handleSearch(params, inputValue, scope) {
     requestParams.filters.must_not = {
       assay: ['epigen-atac-seq', 'epigen-methylcap-seq'],
     };
-    host = humanDataHost;
-  } else if (requestParams.study === 'pass1a06') {
-    // pass1a-06 search host is temporarily on precawg
-    host = humanDataHost;
-  } else {
-    // pass1b-06 search param does not support 'study' field
-    delete requestParams.study;
-    host = ratDataHost;
   }
 
   return (dispatch) => {
     dispatch(searchSubmit(params, scope));
     return axios
-      .post(`${host}${endpoint}`, requestParams, headersConfig)
+      .post(`${searchServiceHost}${endpoint}`, requestParams, headersConfig)
       .then((response) => {
         if (response.data.error) {
           dispatch(searchFailure(response.data.error));
@@ -174,26 +157,18 @@ function handleSearchDownload(params, analysis) {
   downloadSearchParams.analysis = analysis;
   downloadSearchParams.size = 0;
 
-  let host = ratDataHost;
   delete downloadSearchParams.species;
 
   if (downloadSearchParams.study === 'precawg') {
     downloadSearchParams.filters.must_not = {
       assay: ['epigen-atac-seq', 'epigen-methylcap-seq'],
     };
-    host = humanDataHost;
-  } else if (downloadSearchParams.study === 'pass1a06') {
-    host = humanDataHost;
-  } else {
-    // pass1b-06 search param does not support 'study' field
-    delete downloadSearchParams.study;
-    host = ratDataHost;
   }
 
   return (dispatch) => {
     dispatch(downloadSubmit());
     return axios
-      .post(`${host}${endpoint}`, downloadSearchParams, headersConfig)
+      .post(`${searchServiceHost}${endpoint}`, downloadSearchParams, headersConfig)
       .then((response) => {
         if (response.data.error) {
           dispatch(downloadFailure(response.data.error));

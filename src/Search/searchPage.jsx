@@ -771,17 +771,7 @@ function ResultsDownloadLink({
     );
   }
 
-  const ratDataHost =
-    import.meta.env.DEV
-      ? import.meta.env.VITE_ES_PROXY_HOST_DEV
-      : import.meta.env.VITE_ES_PROXY_HOST;
-
-  const humanDataHost =
-    import.meta.env.DEV
-      ? import.meta.env.VITE_ES_PROXY_PRECAWG_HOST_DEV
-      : import.meta.env.VITE_ES_PROXY_PRECAWG_HOST;
-
-  const host = study === 'pass1b06' ? ratDataHost : humanDataHost;
+  const searchServiceHost = import.meta.env.VITE_ES_PROXY_HOST;
 
   const resultDownloadFilePath =
     downloadPath &&
@@ -796,7 +786,7 @@ function ResultsDownloadLink({
       {resultDownloadFilePath ? (
         <a
           id={resultDownloadFilePath}
-          href={`${host}/${resultDownloadFilePath}`}
+          href={`${searchServiceHost}/${resultDownloadFilePath}`}
           download
           onClick={handleSearchResultsDownload}
         >
