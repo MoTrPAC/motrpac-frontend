@@ -42,9 +42,9 @@ const BiospecimenFilters = ({
       </div>
       <div className="card-body">
         {/* Sex Filters - Checkboxes */}
-        <div className="mb-4">
+        <div className="mb-3">
           <h6 
-            className="mb-2 d-flex justify-content-between align-items-center" 
+            className="mb-1 d-flex justify-content-between align-items-center" 
             style={{ cursor: 'pointer', userSelect: 'none' }}
             onClick={() => toggleGroup('sex')}
           >
@@ -80,9 +80,9 @@ const BiospecimenFilters = ({
         </div>
 
         {/* Age Group Filters - Checkboxes */}
-        <div className="mb-4">
+        <div className="mb-3">
           <h6 
-            className="mb-2 d-flex justify-content-between align-items-center" 
+            className="mb-1 d-flex justify-content-between align-items-center" 
             style={{ cursor: 'pointer', userSelect: 'none' }}
             onClick={() => toggleGroup('dmaqc_age_groups')}
           >
@@ -122,9 +122,9 @@ const BiospecimenFilters = ({
         </div>
 
         {/* Randomized Group Filters - Checkboxes (changed from radio buttons) */}
-        <div className="mb-4">
+        <div className="mb-3">
           <h6 
-            className="mb-2 d-flex justify-content-between align-items-center" 
+            className="mb-1 d-flex justify-content-between align-items-center" 
             style={{ cursor: 'pointer', userSelect: 'none' }}
             onClick={() => toggleGroup('random_group_code')}
           >
@@ -167,9 +167,9 @@ const BiospecimenFilters = ({
         </div>
 
         {/* BMI Group Filters - Checkboxes */}
-        <div className="mb-4">
+        <div className="mb-3">
           <h6 
-            className="mb-2 d-flex justify-content-between align-items-center" 
+            className="mb-1 d-flex justify-content-between align-items-center" 
             style={{ cursor: 'pointer', userSelect: 'none' }}
             onClick={() => toggleGroup('bmi_group')}
           >
@@ -205,9 +205,9 @@ const BiospecimenFilters = ({
         </div>
 
         {/* Race Filters - Checkboxes */}
-        <div className="mb-4">
+        <div className="mb-3">
           <h6 
-            className="mb-2 d-flex justify-content-between align-items-center" 
+            className="mb-1 d-flex justify-content-between align-items-center" 
             style={{ cursor: 'pointer', userSelect: 'none' }}
             onClick={() => toggleGroup('race')}
           >
@@ -243,9 +243,9 @@ const BiospecimenFilters = ({
         </div>
 
         {/* Ethnicity Filters - Checkboxes */}
-        <div className="mb-4">
+        <div className="mb-3">
           <h6 
-            className="mb-2 d-flex justify-content-between align-items-center" 
+            className="mb-1 d-flex justify-content-between align-items-center" 
             style={{ cursor: 'pointer', userSelect: 'none' }}
             onClick={() => toggleGroup('ethnicity')}
           >
@@ -281,9 +281,9 @@ const BiospecimenFilters = ({
         </div>
 
         {/* Tissue Filters - Checkboxes */}
-        <div className="mb-4">
+        <div className="mb-3">
           <h6 
-            className="mb-2 d-flex justify-content-between align-items-center" 
+            className="mb-1 d-flex justify-content-between align-items-center" 
             style={{ cursor: 'pointer', userSelect: 'none' }}
             onClick={() => toggleGroup('tissue')}
           >
@@ -319,9 +319,9 @@ const BiospecimenFilters = ({
         </div>
 
         {/* Ome Filters - Checkboxes */}
-        <div className="mb-4">
+        <div className="mb-3">
           <h6 
-            className="mb-2 d-flex justify-content-between align-items-center" 
+            className="mb-1 d-flex justify-content-between align-items-center" 
             style={{ cursor: 'pointer', userSelect: 'none' }}
             onClick={() => toggleGroup('ome')}
           >
