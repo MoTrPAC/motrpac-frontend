@@ -2,6 +2,7 @@ import React, { useMemo, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { Tooltip } from 'react-tooltip';
 import {
   parseAssayTypes,
   VISIT_CODE_TO_PHASE,
@@ -1134,7 +1135,17 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
         <div className="card">
           <div className="card-header">
             <h5 className="mb-0">
-              Participants
+              <span className="mr-2">Participants</span>
+              <i 
+                className="bi bi-info-circle-fill text-secondary" 
+                style={{ cursor: 'pointer' }}
+                data-tooltip-id="participants-info-tooltip"
+                data-tooltip-content="Participant distributions by different demographics"
+              />
+              <Tooltip 
+                id="participants-info-tooltip" 
+                style={{ fontSize: '0.95rem', maxWidth: '250px' }}
+              />
             </h5>
           </div>
           <div className="card-body">
@@ -1235,7 +1246,17 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
         <div className="card">
           <div className="card-header">
             <h5 className="mb-0">
-              Biospecimen sample counts (per currently available data)
+              <span className="mr-2">Biospecimen sample counts (per currently available data)</span>
+              <i 
+                className="bi bi-info-circle-fill text-secondary" 
+                style={{ cursor: 'pointer' }}
+                data-tooltip-id="biospecimen-sample-count-info-tooltip"
+                data-tooltip-content="Biospecimens associated with participants by assays"
+              />
+              <Tooltip 
+                id="biospecimen-sample-count-info-tooltip" 
+                style={{ fontSize: '0.95rem', maxWidth: '250px' }}
+              />
             </h5>
           </div>
           <div className="card-body">
