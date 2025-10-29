@@ -364,50 +364,6 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
   const chartData = useMemo(() => {
     if (!data || !data.length) return null;
 
-    // Debug: Count genomic-wgs records in allData vs filtered data
-    const allGenomicWgsRecords = allData.filter(record => {
-      const visitCode = record.visit_code;
-      const isPreIntervention = visitCode === 'ADU_BAS' || visitCode === 'PED_BAS';
-      const hasGenomicWgs = record.raw_assays_with_results && 
-                           record.raw_assays_with_results.toLowerCase().includes('genomic-wgs');
-      return isPreIntervention && hasGenomicWgs;
-    });
-    
-    const filteredGenomicWgsRecords = data.filter(record => {
-      const visitCode = record.visit_code;
-      const isPreIntervention = visitCode === 'ADU_BAS' || visitCode === 'PED_BAS';
-      const hasGenomicWgs = record.raw_assays_with_results && 
-                           record.raw_assays_with_results.toLowerCase().includes('genomic-wgs');
-      return isPreIntervention && hasGenomicWgs;
-    });
-    
-    console.log('DEBUG: genomic-wgs in allData (unfiltered):', allGenomicWgsRecords.length);
-    console.log('DEBUG: genomic-wgs in filtered data:', filteredGenomicWgsRecords.length);
-    console.log('DEBUG: Difference (filtered out):', allGenomicWgsRecords.length - filteredGenomicWgsRecords.length);
-    
-    // Check unique sample_group_code values in the missing records
-    const missingRecords = allGenomicWgsRecords.filter(r1 => 
-      !filteredGenomicWgsRecords.some(r2 => r1 === r2)
-    );
-    const tissueCodesInMissing = new Set(missingRecords.map(r => r.sample_group_code));
-    console.log('DEBUG: Unique tissue codes in missing records:', Array.from(tissueCodesInMissing));
-    console.log('DEBUG: Sample missing record details:', missingRecords.slice(0, 1).map(r => ({
-      visit_code: r.visit_code,
-      sample_group_code: r.sample_group_code,
-      sex: r.sex,
-      dmaqc_age_groups: r.dmaqc_age_groups,
-      random_group_code: r.random_group_code,
-      pid: r.pid,
-      timepoint: r.timepoint,
-      raw_assays_with_results: r.raw_assays_with_results
-    })));
-    
-    // CRITICAL: Check if allData itself is incomplete
-    console.log('DEBUG: Total records in allData:', allData.length);
-    console.log('DEBUG: Total records in filtered data:', data.length);
-    console.log('IMPORTANT: If allData only has 675 genomic-wgs records but you expect 959,');
-    console.log('IMPORTANT: then the API or data source is not providing all records!');
-
     // Collect all unique assay types and group data
     const assayData = {};
 
