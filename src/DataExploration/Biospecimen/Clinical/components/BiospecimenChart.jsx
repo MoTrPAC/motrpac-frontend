@@ -9,6 +9,7 @@ import {
   TISSUE_CODE_TO_NAME,
   INTERVENTION_PHASES,
 } from '../constants/plotOptions';
+import { getAssayName, getAssayNames } from '../utils/assayCodeMapping';
 
 // Ensure Highcharts is properly initialized
 if (typeof Highcharts === 'object' && Highcharts.setOptions) {
@@ -998,11 +999,6 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
         align: 'center',
         style: { fontSize: '16px', fontWeight: 'bold' }
       },
-      subtitle: {
-        text: 'Click bars for details',
-        align: 'center',
-        style: { fontSize: '12px', fontStyle: 'italic', color: '#666' }
-      },
       xAxis: {
         categories: categories,
         title: {
@@ -1033,16 +1029,16 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
         useHTML: true,
         formatter: function () {
           const point = this.point;
+          // Convert assay codes to human-readable names
           const assayList = point.assayTypes && point.assayTypes.length > 0
-            ? point.assayTypes.join(', ')
+            ? getAssayNames(point.assayTypes).join(', ')
             : 'N/A';
           
           return `
             <div style="padding: 8px;">
-              <strong>${point.assay}</strong><br/>
+              <strong>Assay:</strong> ${getAssayName(point.assay)}<br/>
               <strong>Phase:</strong> ${point.phase}<br/>
               <strong>Samples:</strong> ${point.y.toLocaleString()}<br/>
-              <strong>Assays:</strong> ${assayList}<br/>
               <em style="color: #666; font-size: 11px;">Click to view details</em>
             </div>
           `;
