@@ -180,9 +180,15 @@ const InteractiveBiospecimenChart = () => {
               <div className="card-header d-flex justify-content-between align-items-center">
                 <h5 className="mb-0">
                   <i className="bi bi-table mr-2" />
-                  {selectedBar.tissue} {selectedBar.phase && ` - ${selectedBar.phase}`}
-                  {selectedBar.timepoint && ` - ${selectedBar.timepoint}`}
-                  {selectedBar.assay && ` - ${selectedBar.assay}`} ({selectedBar.count} samples)
+                  {selectedBar.demographicType ? (
+                    // Demographic chart clicked (sex, age, race, BMI, ethnicity, randomized group)
+                    <>{selectedBar.demographicType}: {selectedBar.category} ({selectedBar.count} samples)</>
+                  ) : (
+                    // Biospecimen chart clicked (assay/phase/timepoint)
+                    <>{selectedBar.tissue} {selectedBar.phase && ` - ${selectedBar.phase}`}
+                    {selectedBar.timepoint && ` - ${selectedBar.timepoint}`}
+                    {selectedBar.assay && ` - ${selectedBar.assay}`} ({selectedBar.count} samples)</>
+                  )}
                 </h5>
                 <button
                   className="btn btn-sm btn-secondary"
