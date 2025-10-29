@@ -82,6 +82,30 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     return maxCount;
   }, [allData]);
 
+  // Calculate fixed maximum for age group chart from ALL unfiltered data
+  const fixedMaxAgeGroupCount = useMemo(() => {
+    if (!allData || !allData.length) return 0;
+
+    const uniqueParticipants = new Map();
+    allData.forEach((record) => {
+      if (record.pid && record.dmaqc_age_groups) {
+        uniqueParticipants.set(record.pid, record.dmaqc_age_groups);
+      }
+    });
+
+    const ageGroups = ['10-13', '14-17', '18-39', '40-59', '60+'];
+    const ageCounts = {};
+    ageGroups.forEach(group => ageCounts[group] = 0);
+
+    uniqueParticipants.forEach((ageGroup) => {
+      if (ageCounts.hasOwnProperty(ageGroup)) {
+        ageCounts[ageGroup]++;
+      }
+    });
+
+    return Math.max(...Object.values(ageCounts));
+  }, [allData]);
+
   // Calculate participant counts by sex
   const participantBySex = useMemo(() => {
     if (!data || !data.length) return null;
@@ -126,6 +150,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }
     });
 
+    // Keep all age groups for smooth animation (bars animate to 0 instead of disappearing)
     return {
       categories: ageGroups,
       data: ageGroups.map(group => ageCounts[group]),
@@ -491,6 +516,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       },
       yAxis: {
         min: 0,
+        max: fixedMaxAgeGroupCount, // Fixed max for consistent scale across filter changes
         allowDecimals: false,
         title: {
           text: 'Participant Count',
@@ -522,7 +548,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }],
       credits: { enabled: false },
     };
-  }, [participantByAgeGroup]);
+  }, [participantByAgeGroup, fixedMaxAgeGroupCount]);
 
   // Bar chart configuration for race distribution
   const raceBarChartOptions = useMemo(() => {
