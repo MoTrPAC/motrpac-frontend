@@ -82,28 +82,99 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     return maxCount;
   }, [allData]);
 
-  // Calculate fixed maximum for age group chart from ALL unfiltered data
-  const fixedMaxAgeGroupCount = useMemo(() => {
-    if (!allData || !allData.length) return 0;
+  // Calculate fixed maximums for all demographic charts in a single pass (performance optimization)
+  const { fixedMaxAgeGroupCount, fixedMaxRaceCount, fixedMaxRandomGroupCount } = useMemo(() => {
+    if (!allData || !allData.length) {
+      return { fixedMaxAgeGroupCount: 0, fixedMaxRaceCount: 0, fixedMaxRandomGroupCount: 0 };
+    }
 
-    const uniqueParticipants = new Map();
+    // Store unique participants with their demographics (single Map per PID)
+    const participantDemographics = new Map();
+
     allData.forEach((record) => {
-      if (record.pid && record.dmaqc_age_groups) {
-        uniqueParticipants.set(record.pid, record.dmaqc_age_groups);
+      if (record.pid && !participantDemographics.has(record.pid)) {
+        participantDemographics.set(record.pid, {
+          age: record.dmaqc_age_groups,
+          race: getRaceCategory(record),
+          randomGroup: getRandomizedGroup(record),
+        });
       }
     });
 
-    const ageGroups = ['10-13', '14-17', '18-39', '40-59', '60+'];
-    const ageCounts = {};
-    ageGroups.forEach(group => ageCounts[group] = 0);
+    // Initialize count objects
+    const ageCounts = { '10-13': 0, '14-17': 0, '18-39': 0, '40-59': 0, '60+': 0 };
+    const raceCounts = {
+      'African American/Black': 0,
+      'Asian': 0,
+      'Hawaiian/Pacific Islander': 0,
+      'Native American': 0,
+      'Caucasian': 0,
+      'Other': 0,
+      'Unknown': 0,
+    };
+    const randomGroupCounts = { 'Control': 0, 'Endurance': 0, 'Resistance': 0 };
 
-    uniqueParticipants.forEach((ageGroup) => {
-      if (ageCounts.hasOwnProperty(ageGroup)) {
-        ageCounts[ageGroup]++;
-      }
+    // Count participants in each category
+    participantDemographics.forEach(({ age, race, randomGroup }) => {
+      if (age && ageCounts.hasOwnProperty(age)) ageCounts[age]++;
+      if (race && raceCounts.hasOwnProperty(race)) raceCounts[race]++;
+      if (randomGroup && randomGroupCounts.hasOwnProperty(randomGroup)) randomGroupCounts[randomGroup]++;
     });
 
-    return Math.max(...Object.values(ageCounts));
+    return {
+      fixedMaxAgeGroupCount: Math.max(...Object.values(ageCounts)),
+      fixedMaxRaceCount: Math.max(...Object.values(raceCounts)),
+      fixedMaxRandomGroupCount: Math.max(...Object.values(randomGroupCounts)),
+    };
+
+    // Helper function to derive race category from boolean indicator fields
+    function getRaceCategory(record) {
+      if (record.aablack_psca === '1' || record.aablack_psca === 1 || record.aablack_psca === true) {
+        return 'African American/Black';
+      }
+      if (record.asian_psca === '1' || record.asian_psca === 1 || record.asian_psca === true) {
+        return 'Asian';
+      }
+      if (record.hawaii_psca === '1' || record.hawaii_psca === 1 || record.hawaii_psca === true) {
+        return 'Hawaiian/Pacific Islander';
+      }
+      if (record.natamer_psca === '1' || record.natamer_psca === 1 || record.natamer_psca === true) {
+        return 'Native American';
+      }
+      if (record.cauc_psca === '1' || record.cauc_psca === 1 || record.cauc_psca === true) {
+        return 'Caucasian';
+      }
+      if (record.raceoth_psca === '1' || record.raceoth_psca === 1 || record.raceoth_psca === true) {
+        return 'Other';
+      }
+      if (record.raceref_psca === '1' || record.raceref_psca === 1 || record.raceref_psca === true) {
+        return 'Unknown';
+      }
+      return null;
+    }
+
+    // Helper function to derive randomized group
+    function getRandomizedGroup(record) {
+      const randomGroupCode = record.random_group_code;
+      const enrollRandomGroupCode = record.enroll_random_group_code;
+
+      if (randomGroupCode === 'ADUControl' || randomGroupCode === 'PEDControl') {
+        return 'Control';
+      }
+      if (
+        randomGroupCode === 'ADUEndur' ||
+        randomGroupCode === 'ATHEndur' ||
+        randomGroupCode === 'PEDEndur' ||
+        enrollRandomGroupCode === 'PEDEndur' ||
+        enrollRandomGroupCode === 'PEDEnrollEndur'
+      ) {
+        return 'Endurance';
+      }
+      if (randomGroupCode === 'ADUResist' || randomGroupCode === 'ATHResist') {
+        return 'Resistance';
+      }
+      return null;
+    }
   }, [allData]);
 
   // Calculate participant counts by sex
@@ -216,6 +287,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }
     });
 
+    // Keep all race groups for smooth animation (bars animate to 0 instead of disappearing)
     return {
       categories: raceGroups,
       data: raceGroups.map(group => raceCounts[group]),
@@ -379,6 +451,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }
     });
 
+    // Keep all groups for smooth animation (bars animate to 0 instead of disappearing)
     return {
       categories: randomGroups,
       data: randomGroups.map(group => groupCounts[group]),
@@ -576,6 +649,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       },
       yAxis: {
         min: 0,
+        max: fixedMaxRaceCount, // Fixed max for consistent scale across filter changes
         allowDecimals: false,
         title: {
           text: 'Participant Count',
@@ -607,7 +681,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }],
       credits: { enabled: false },
     };
-  }, [participantByRace]);
+  }, [participantByRace, fixedMaxRaceCount]);
 
   // Pie chart configuration for BMI group distribution
   const bmiPieChartOptions = useMemo(() => {
@@ -710,6 +784,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       },
       yAxis: {
         min: 0,
+        max: fixedMaxRandomGroupCount, // Fixed max for consistent scale across filter changes
         allowDecimals: false,
         title: {
           text: 'Participant Count',
@@ -741,7 +816,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }],
       credits: { enabled: false },
     };
-  }, [participantByRandomGroup]);
+  }, [participantByRandomGroup, fixedMaxRandomGroupCount]);
 
   // Chart configurations for both Pre and Post phases
   const chartOptionsArray = useMemo(() => {
