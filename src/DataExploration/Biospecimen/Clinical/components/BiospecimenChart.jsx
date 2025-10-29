@@ -540,7 +540,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
         style: { fontSize: '14px', fontWeight: 'bold' }
       },
       tooltip: {
-        pointFormat: '<b>{point.y}</b> participants ({point.percentage:.1f}%)'
+        pointFormat: '<b>{point.y}</b> participants ({point.percentage:.1f}%)<br/><em style="font-size: 10px;">Click to view samples</em>'
       },
       plotOptions: {
         pie: {
@@ -554,6 +554,24 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
             connectorWidth: 1,
           },
           showInLegend: false,
+          point: {
+            events: {
+              click: function () {
+                if (onBarClick) {
+                  // Filter data to samples matching this sex
+                  const sexSamples = data.filter(record => record.sex === this.name);
+                  onBarClick({
+                    point: {
+                      category: this.name,
+                      y: sexSamples.length,
+                      samples: sexSamples,
+                      demographicType: 'Sex',
+                    }
+                  });
+                }
+              }
+            }
+          }
         }
       },
       series: [{
@@ -562,7 +580,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }],
       credits: { enabled: false },
     };
-  }, [participantBySex]);
+  }, [participantBySex, data, onBarClick]);
 
   // Bar chart configuration for age group distribution
   const ageBarChartOptions = useMemo(() => {
@@ -603,16 +621,36 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
         enabled: false,
       },
       tooltip: {
-        pointFormat: '<b>{point.y}</b> participants'
+        pointFormat: '<b>{point.y}</b> participants<br/><em style="font-size: 10px;">Click to view samples</em>'
       },
       plotOptions: {
         column: {
+          cursor: 'pointer',
           dataLabels: {
             enabled: true,
             format: '{point.y}',
             style: { fontSize: '10px' }
           },
           color: '#9b59b6',
+          point: {
+            events: {
+              click: function () {
+                if (onBarClick) {
+                  const ageGroup = participantByAgeGroup.categories[this.index];
+                  // Filter data to samples matching this age group
+                  const ageSamples = data.filter(record => record.dmaqc_age_groups === ageGroup);
+                  onBarClick({
+                    point: {
+                      category: ageGroup,
+                      y: ageSamples.length,
+                      samples: ageSamples,
+                      demographicType: 'Age Group',
+                    }
+                  });
+                }
+              }
+            }
+          }
         }
       },
       series: [{
@@ -621,11 +659,23 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }],
       credits: { enabled: false },
     };
-  }, [participantByAgeGroup, fixedMaxAgeGroupCount]);
+  }, [participantByAgeGroup, fixedMaxAgeGroupCount, data, onBarClick]);
 
   // Bar chart configuration for race distribution
   const raceBarChartOptions = useMemo(() => {
     if (!participantByRace) return null;
+
+    // Helper to match race from record (reuse logic from fixedMaxRaceCount)
+    const getRaceCategory = (record) => {
+      if (record.aablack_psca === '1' || record.aablack_psca === 1 || record.aablack_psca === true) return 'African American/Black';
+      if (record.asian_psca === '1' || record.asian_psca === 1 || record.asian_psca === true) return 'Asian';
+      if (record.hawaii_psca === '1' || record.hawaii_psca === 1 || record.hawaii_psca === true) return 'Hawaiian/Pacific Islander';
+      if (record.natamer_psca === '1' || record.natamer_psca === 1 || record.natamer_psca === true) return 'Native American';
+      if (record.cauc_psca === '1' || record.cauc_psca === 1 || record.cauc_psca === true) return 'Caucasian';
+      if (record.raceoth_psca === '1' || record.raceoth_psca === 1 || record.raceoth_psca === true) return 'Other';
+      if (record.raceref_psca === '1' || record.raceref_psca === 1 || record.raceref_psca === true) return 'Unknown';
+      return null;
+    };
 
     return {
       chart: {
@@ -663,16 +713,36 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
         enabled: false,
       },
       tooltip: {
-        pointFormat: '<b>{point.y}</b> participants'
+        pointFormat: '<b>{point.y}</b> participants<br/><em style="font-size: 10px;">Click to view samples</em>'
       },
       plotOptions: {
         column: {
+          cursor: 'pointer',
           dataLabels: {
             enabled: true,
             format: '{point.y}',
             style: { fontSize: '10px' }
           },
           color: '#3498db',
+          point: {
+            events: {
+              click: function () {
+                if (onBarClick) {
+                  const raceCategory = participantByRace.categories[this.index];
+                  // Filter data to samples matching this race
+                  const raceSamples = data.filter(record => getRaceCategory(record) === raceCategory);
+                  onBarClick({
+                    point: {
+                      category: raceCategory,
+                      y: raceSamples.length,
+                      samples: raceSamples,
+                      demographicType: 'Race',
+                    }
+                  });
+                }
+              }
+            }
+          }
         }
       },
       series: [{
@@ -681,11 +751,20 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }],
       credits: { enabled: false },
     };
-  }, [participantByRace, fixedMaxRaceCount]);
+  }, [participantByRace, fixedMaxRaceCount, data, onBarClick]);
 
   // Pie chart configuration for BMI group distribution
   const bmiPieChartOptions = useMemo(() => {
     if (!participantByBMI) return null;
+
+    // Helper to get BMI group from BMI value
+    const getBMIGroup = (bmi) => {
+      const bmiValue = parseFloat(bmi);
+      if (isNaN(bmiValue)) return null;
+      if (bmiValue < 25) return '0-25';
+      if (bmiValue < 30) return '25-30';
+      return '30+';
+    };
 
     return {
       chart: {
@@ -697,7 +776,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
         style: { fontSize: '14px', fontWeight: 'bold' }
       },
       tooltip: {
-        pointFormat: '<b>{point.y}</b> participants ({point.percentage:.1f}%)'
+        pointFormat: '<b>{point.y}</b> participants ({point.percentage:.1f}%)<br/><em style="font-size: 10px;">Click to view samples</em>'
       },
       plotOptions: {
         pie: {
@@ -711,6 +790,26 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
             connectorWidth: 1,
           },
           showInLegend: false,
+          point: {
+            events: {
+              click: function () {
+                if (onBarClick) {
+                  // Extract BMI group from name (e.g., "BMI 0-25" -> "0-25")
+                  const bmiGroup = this.name.replace('BMI ', '');
+                  // Filter data to samples matching this BMI group
+                  const bmiSamples = data.filter(record => getBMIGroup(record.bmi) === bmiGroup);
+                  onBarClick({
+                    point: {
+                      category: this.name,
+                      y: bmiSamples.length,
+                      samples: bmiSamples,
+                      demographicType: 'BMI Group',
+                    }
+                  });
+                }
+              }
+            }
+          }
         }
       },
       series: [{
@@ -719,11 +818,20 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }],
       credits: { enabled: false },
     };
-  }, [participantByBMI]);
+  }, [participantByBMI, data, onBarClick]);
 
   // Pie chart configuration for ethnicity distribution
   const ethnicityPieChartOptions = useMemo(() => {
     if (!participantByEthnicity) return null;
+
+    // Helper to get ethnicity category
+    const getEthnicityCategory = (record) => {
+      const latinoValue = record.latino_psca;
+      if (latinoValue === '1' || latinoValue === 1) return 'Latino, Hispanic, or Spanish origin/ethnicity';
+      if (latinoValue === '0' || latinoValue === 0) return 'Not Latino, Hispanic, or Spanish origin/ethnicity';
+      if (latinoValue === '-7' || latinoValue === -7) return 'Refused/Unknown';
+      return null;
+    };
 
     return {
       chart: {
@@ -735,7 +843,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
         style: { fontSize: '14px', fontWeight: 'bold' }
       },
       tooltip: {
-        pointFormat: '<b>{point.y}</b> participants ({point.percentage:.1f}%)'
+        pointFormat: '<b>{point.y}</b> participants ({point.percentage:.1f}%)<br/><em style="font-size: 10px;">Click to view samples</em>'
       },
       plotOptions: {
         pie: {
@@ -749,6 +857,31 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
             connectorWidth: 1,
           },
           showInLegend: false,
+          point: {
+            events: {
+              click: function () {
+                if (onBarClick) {
+                  // Map display name to full ethnicity category for filtering
+                  const ethnicityMap = {
+                    'Latino, Hispanic, or Spanish': 'Latino, Hispanic, or Spanish origin/ethnicity',
+                    'Not Latino, Hispanic, or Spanish': 'Not Latino, Hispanic, or Spanish origin/ethnicity',
+                    'Refused/Unknown': 'Refused/Unknown',
+                  };
+                  const fullEthnicityName = ethnicityMap[this.name] || this.name;
+                  // Filter data to samples matching this ethnicity
+                  const ethnicitySamples = data.filter(record => getEthnicityCategory(record) === fullEthnicityName);
+                  onBarClick({
+                    point: {
+                      category: this.name,
+                      y: ethnicitySamples.length,
+                      samples: ethnicitySamples,
+                      demographicType: 'Ethnicity',
+                    }
+                  });
+                }
+              }
+            }
+          }
         }
       },
       series: [{
@@ -757,11 +890,22 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }],
       credits: { enabled: false },
     };
-  }, [participantByEthnicity]);
+  }, [participantByEthnicity, data, onBarClick]);
 
   // Bar chart configuration for randomized group distribution
   const randomGroupBarChartOptions = useMemo(() => {
     if (!participantByRandomGroup) return null;
+
+    // Helper to get randomized group
+    const getRandomizedGroup = (record) => {
+      const randomGroupCode = record.random_group_code;
+      const enrollRandomGroupCode = record.enroll_random_group_code;
+      if (randomGroupCode === 'ADUControl' || randomGroupCode === 'PEDControl') return 'Control';
+      if (randomGroupCode === 'ADUEndur' || randomGroupCode === 'ATHEndur' || randomGroupCode === 'PEDEndur' ||
+          enrollRandomGroupCode === 'PEDEndur' || enrollRandomGroupCode === 'PEDEnrollEndur') return 'Endurance';
+      if (randomGroupCode === 'ADUResist' || randomGroupCode === 'ATHResist') return 'Resistance';
+      return null;
+    };
 
     return {
       chart: {
@@ -798,16 +942,36 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
         enabled: false,
       },
       tooltip: {
-        pointFormat: '<b>{point.y}</b> participants'
+        pointFormat: '<b>{point.y}</b> participants<br/><em style="font-size: 10px;">Click to view samples</em>'
       },
       plotOptions: {
         column: {
+          cursor: 'pointer',
           dataLabels: {
             enabled: true,
             format: '{point.y}',
             style: { fontSize: '10px' }
           },
           color: '#e67e22',
+          point: {
+            events: {
+              click: function () {
+                if (onBarClick) {
+                  const groupCategory = participantByRandomGroup.categories[this.index];
+                  // Filter data to samples matching this randomized group
+                  const groupSamples = data.filter(record => getRandomizedGroup(record) === groupCategory);
+                  onBarClick({
+                    point: {
+                      category: groupCategory,
+                      y: groupSamples.length,
+                      samples: groupSamples,
+                      demographicType: 'Randomized Group',
+                    }
+                  });
+                }
+              }
+            }
+          }
         }
       },
       series: [{
@@ -816,7 +980,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }],
       credits: { enabled: false },
     };
-  }, [participantByRandomGroup, fixedMaxRandomGroupCount]);
+  }, [participantByRandomGroup, fixedMaxRandomGroupCount, data, onBarClick]);
 
   // Chart configurations for both Pre and Post phases
   const chartOptionsArray = useMemo(() => {
