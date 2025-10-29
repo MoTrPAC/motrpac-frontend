@@ -970,7 +970,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
         <div className="card">
           <div className="card-header">
             <h5 className="mb-0">
-              Biospecimen Sample Counts
+              Biospecimen sample counts (per currently available data)
             </h5>
           </div>
           <div className="card-body">
