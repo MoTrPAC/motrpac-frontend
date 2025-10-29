@@ -903,7 +903,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
                 )}
               </div>
             </div>
-            <div className="row">
+            <div className="row mt-4">
               <div className="col-md-6">
                 {/* Bar chart of participant count in each race group */}
                 {raceBarChartOptions ? (
@@ -933,7 +933,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
                 )}
               </div>
             </div>
-            <div className="row">
+            <div className="row mt-4">
               <div className="col-md-6">
                 {/* Pie chart of participant count in each ethnic group */}
                 {ethnicityPieChartOptions ? (
