@@ -1044,7 +1044,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
           </div>
         </div>
       </div>
-      <div className="card-containner col-md-6">
+      <div className="card-container col-md-6">
         <div className="card">
           <div className="card-header">
             <h5 className="mb-0">
