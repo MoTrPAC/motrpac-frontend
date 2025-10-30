@@ -294,6 +294,4 @@ const InteractiveBiospecimenChart = () => {
   );
 };
 
-InteractiveBiospecimenChart.propTypes = {};
-
 export default InteractiveBiospecimenChart;
