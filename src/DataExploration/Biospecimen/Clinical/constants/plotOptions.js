@@ -125,6 +125,11 @@ export const filterUtils = {
       sex: [...DEFAULT_FILTERS.sex],
       dmaqc_age_groups: [...DEFAULT_FILTERS.dmaqc_age_groups],
       random_group_code: [...DEFAULT_FILTERS.random_group_code], // Now an array
+      bmi_group: [...DEFAULT_FILTERS.bmi_group],
+      race: [...DEFAULT_FILTERS.race],
+      ethnicity: [...DEFAULT_FILTERS.ethnicity],
+      tissue: [...DEFAULT_FILTERS.tissue],
+      ome: [...DEFAULT_FILTERS.ome],
     };
   },
 };
