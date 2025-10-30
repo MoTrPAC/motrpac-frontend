@@ -4,6 +4,7 @@ import { useBiospecimenData, useFilteredBiospecimenData } from '../hooks/useBios
 import { useAdvancedPagination } from '../hooks/useAdvancedPagination';
 import BiospecimenFilters from './BiospecimenFilters';
 import BiospecimenChart from './BiospecimenChart';
+import PaginationControls from './PaginationControls';
 import {
   DEFAULT_FILTERS,
   FILTER_OPTIONS,
@@ -199,126 +200,10 @@ const InteractiveBiospecimenChart = () => {
               </div>
               <div className="card-body">
                 {/* Pagination controls - top */}
-                <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center mt-3 p-3 bg-light rounded">
-                  <div className="d-flex align-items-center mb-2 mb-lg-0">
-                    <span className="text-muted small mr-3">
-                      <strong>
-                        {tablePagination.startIndex.toLocaleString()} - {tablePagination.endIndex.toLocaleString()}
-                      </strong>
-                      {' of '}
-                      <strong>{tablePagination.totalItems.toLocaleString()}</strong>
-                      {' samples'}
-                    </span>
-                    
-                    <button
-                      className="btn btn-secondary btn-sm"
-                      onClick={exportDrillDownData}
-                      title="Export all drill-down data to CSV"
-                    >
-                      <i className="bi bi-download mr-1" />
-                      Export
-                    </button>
-                  </div>
-
-                  {tablePagination.totalPages > 1 && (
-                    <div className="d-flex align-items-center mb-2 mb-lg-0">
-                      <nav aria-label="Drill-down table pagination">
-                        <ul className="pagination pagination-sm mb-0">
-                          <li className={`page-item ${!tablePagination.hasPreviousPage ? 'disabled' : ''}`}>
-                            <button
-                              className="page-link"
-                              onClick={tablePagination.goToFirstPage}
-                              disabled={!tablePagination.hasPreviousPage || tablePagination.isNavigating}
-                              aria-label="First page"
-                            >
-                              <i className="bi bi-chevron-double-left" />
-                            </button>
-                          </li>
-
-                          <li className={`page-item ${!tablePagination.hasPreviousPage ? 'disabled' : ''}`}>
-                            <button
-                              className="page-link"
-                              onClick={tablePagination.goToPreviousPage}
-                              disabled={!tablePagination.hasPreviousPage || tablePagination.isNavigating}
-                              aria-label="Previous page"
-                            >
-                              <i className="bi bi-chevron-left" />
-                            </button>
-                          </li>
-
-                          {tablePagination.getPageNumbers().map((page, index) => (
-                            <li
-                              key={index}
-                              className={`page-item ${
-                                page === tablePagination.currentPage ? 'active' : ''
-                              } ${page === '...' ? 'disabled' : ''}`}
-                            >
-                              {page === '...' ? (
-                                <span className="page-link">...</span>
-                              ) : (
-                                <button
-                                  className="page-link"
-                                  onClick={() => tablePagination.goToPage(page)}
-                                  disabled={tablePagination.isNavigating}
-                                  aria-label={`Go to page ${page}`}
-                                  aria-current={page === tablePagination.currentPage ? 'page' : undefined}
-                                >
-                                  {page}
-                                </button>
-                              )}
-                            </li>
-                          ))}
-
-                          <li className={`page-item ${!tablePagination.hasNextPage ? 'disabled' : ''}`}>
-                            <button
-                              className="page-link"
-                              onClick={tablePagination.goToNextPage}
-                              disabled={!tablePagination.hasNextPage || tablePagination.isNavigating}
-                              aria-label="Next page"
-                            >
-                              <i className="bi bi-chevron-right" />
-                            </button>
-                          </li>
-
-                          <li className={`page-item ${!tablePagination.hasNextPage ? 'disabled' : ''}`}>
-                            <button
-                              className="page-link"
-                              onClick={tablePagination.goToLastPage}
-                              disabled={!tablePagination.hasNextPage || tablePagination.isNavigating}
-                              aria-label="Last page"
-                            >
-                              <i className="bi bi-chevron-double-right" />
-                            </button>
-                          </li>
-                        </ul>
-                      </nav>
-                    </div>
-                  )}
-
-                  <div className="d-flex align-items-center">
-                    {tablePagination.isNavigating && (
-                      <div className="spinner-border spinner-border-sm text-primary mr-3" role="status">
-                        <span className="sr-only">Loading...</span>
-                      </div>
-                    )}
-                    
-                    <div className="d-flex align-items-center text-muted small">
-                      <span className="mr-2">Show:</span>
-                      <select
-                        className="form-control form-control-sm"
-                        style={{ width: 'auto' }}
-                        value={tablePagination.itemsPerPage}
-                        onChange={(e) => tablePagination.changePageSize(parseInt(e.target.value))}
-                        disabled={tablePagination.isNavigating}
-                      >
-                        {[10, 20, 50, 100].map(size => (
-                          <option key={size} value={size}>{size}</option>
-                        ))}
-                      </select>
-                      <span className="ml-2">per page</span>
-                    </div>
-                  </div>
-                </div>
+                <PaginationControls 
+                  pagination={tablePagination}
+                  onExport={exportDrillDownData}
+                />
                 
                 <div className="biospecimen-lookup-table table-responsive mt-3">
                   <table className="table table-striped table-hover table-bordered">
@@ -370,126 +255,10 @@ const InteractiveBiospecimenChart = () => {
                 </div>
                 
                 {/* Pagination controls - bottom */}
-                <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center mt-3 p-3 bg-light rounded">
-                  <div className="d-flex align-items-center mb-2 mb-lg-0">
-                    <span className="text-muted small mr-3">
-                      <strong>
-                        {tablePagination.startIndex.toLocaleString()} - {tablePagination.endIndex.toLocaleString()}
-                      </strong>
-                      {' of '}
-                      <strong>{tablePagination.totalItems.toLocaleString()}</strong>
-                      {' samples'}
-                    </span>
-                    
-                    <button
-                      className="btn btn-secondary btn-sm"
-                      onClick={exportDrillDownData}
-                      title="Export all drill-down data to CSV"
-                    >
-                      <i className="bi bi-download mr-1" />
-                      Export
-                    </button>
-                  </div>
-
-                  {tablePagination.totalPages > 1 && (
-                    <div className="d-flex align-items-center mb-2 mb-lg-0">
-                      <nav aria-label="Drill-down table pagination">
-                        <ul className="pagination pagination-sm mb-0">
-                          <li className={`page-item ${!tablePagination.hasPreviousPage ? 'disabled' : ''}`}>
-                            <button
-                              className="page-link"
-                              onClick={tablePagination.goToFirstPage}
-                              disabled={!tablePagination.hasPreviousPage || tablePagination.isNavigating}
-                              aria-label="First page"
-                            >
-                              <i className="bi bi-chevron-double-left" />
-                            </button>
-                          </li>
-
-                          <li className={`page-item ${!tablePagination.hasPreviousPage ? 'disabled' : ''}`}>
-                            <button
-                              className="page-link"
-                              onClick={tablePagination.goToPreviousPage}
-                              disabled={!tablePagination.hasPreviousPage || tablePagination.isNavigating}
-                              aria-label="Previous page"
-                            >
-                              <i className="bi bi-chevron-left" />
-                            </button>
-                          </li>
-
-                          {tablePagination.getPageNumbers().map((page, index) => (
-                            <li
-                              key={index}
-                              className={`page-item ${
-                                page === tablePagination.currentPage ? 'active' : ''
-                              } ${page === '...' ? 'disabled' : ''}`}
-                            >
-                              {page === '...' ? (
-                                <span className="page-link">...</span>
-                              ) : (
-                                <button
-                                  className="page-link"
-                                  onClick={() => tablePagination.goToPage(page)}
-                                  disabled={tablePagination.isNavigating}
-                                  aria-label={`Go to page ${page}`}
-                                  aria-current={page === tablePagination.currentPage ? 'page' : undefined}
-                                >
-                                  {page}
-                                </button>
-                              )}
-                            </li>
-                          ))}
-
-                          <li className={`page-item ${!tablePagination.hasNextPage ? 'disabled' : ''}`}>
-                            <button
-                              className="page-link"
-                              onClick={tablePagination.goToNextPage}
-                              disabled={!tablePagination.hasNextPage || tablePagination.isNavigating}
-                              aria-label="Next page"
-                            >
-                              <i className="bi bi-chevron-right" />
-                            </button>
-                          </li>
-
-                          <li className={`page-item ${!tablePagination.hasNextPage ? 'disabled' : ''}`}>
-                            <button
-                              className="page-link"
-                              onClick={tablePagination.goToLastPage}
-                              disabled={!tablePagination.hasNextPage || tablePagination.isNavigating}
-                              aria-label="Last page"
-                            >
-                              <i className="bi bi-chevron-double-right" />
-                            </button>
-                          </li>
-                        </ul>
-                      </nav>
-                    </div>
-                  )}
-
-                  <div className="d-flex align-items-center">
-                    {tablePagination.isNavigating && (
-                      <div className="spinner-border spinner-border-sm text-primary mr-3" role="status">
-                        <span className="sr-only">Loading...</span>
-                      </div>
-                    )}
-                    
-                    <div className="d-flex align-items-center text-muted small">
-                      <span className="mr-2">Show:</span>
-                      <select
-                        className="form-control form-control-sm"
-                        style={{ width: 'auto' }}
-                        value={tablePagination.itemsPerPage}
-                        onChange={(e) => tablePagination.changePageSize(parseInt(e.target.value))}
-                        disabled={tablePagination.isNavigating}
-                      >
-                        {[10, 20, 50, 100].map(size => (
-                          <option key={size} value={size}>{size}</option>
-                        ))}
-                      </select>
-                      <span className="ml-2">per page</span>
-                    </div>
-                  </div>
-                </div>
+                <PaginationControls 
+                  pagination={tablePagination}
+                  onExport={exportDrillDownData}
+                />
               </div>
             </div>
           </div>
