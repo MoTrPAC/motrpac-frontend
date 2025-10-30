@@ -6,7 +6,6 @@ import { Tooltip } from 'react-tooltip';
 import {
   parseAssayTypes,
   VISIT_CODE_TO_PHASE,
-  TISSUE_CODE_TO_NAME,
   INTERVENTION_PHASES,
 } from '../constants/plotOptions';
 import { getAssayName, getAssayNames } from '../utils/assayCodeMapping';
