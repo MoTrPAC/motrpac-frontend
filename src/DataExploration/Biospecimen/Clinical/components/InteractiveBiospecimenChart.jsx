@@ -9,6 +9,7 @@ import {
   DEFAULT_FILTERS,
   FILTER_OPTIONS,
 } from '../constants/plotOptions';
+import { transformTissueCode, transformTrancheCode, transformCASReceived } from '../utils/dataTransformUtils';
 import roundNumbers from '../../../../lib/utils/roundNumbers';
 
 import '@styles/biospecimenSummary.scss';
@@ -39,20 +40,18 @@ const InteractiveBiospecimenChart = () => {
     debounceDelay: 100,
   });
 
-  // Cleanup on unmount to prevent memory leaks
-  useEffect(() => {
-    return () => {
-      // Clear any selected bar state to prevent stale references
-      setSelectedBar(null);
-    };
-  }, []);
-
   // Reset table pagination when selectedBar changes
+  // Combined cleanup and pagination reset in single effect for efficiency
   useEffect(() => {
     if (selectedBar) {
       tablePagination.resetPagination();
     }
-  }, [selectedBar, tablePagination.resetPagination]);
+    
+    // Cleanup on unmount to prevent memory leaks
+    return () => {
+      setSelectedBar(null);
+    };
+  }, [selectedBar, tablePagination]);
 
   // Static filter options from constants - memoized to prevent recreating object
   const filterOptions = useMemo(() => FILTER_OPTIONS, []);
@@ -82,34 +81,62 @@ const InteractiveBiospecimenChart = () => {
   }, []);
 
   // Custom export function for drill-down table data
+  // Optimized with helper function for row formatting and centralized transforms
   const exportDrillDownData = useCallback(() => {
-    if (!selectedBar || !selectedBar.samples) return;
+    if (!selectedBar?.samples) return;
     
+    // CSV header
     const header = 'Vial Label,Participant ID,Tranche,Visit Code,Randomized Group,Tissue,Sex,Age Group,Timepoint,BMI,Temp Sample Profile,CAS Received\n';
-    const rows = selectedBar.samples.map(sample => 
-      `${sample.vial_label || ''},${sample.pid || ''},${transformTrancheCode(sample.tranche) || ''},${sample.visit_code || ''},${sample.random_group_code || ''},${transformTissueCode(sample.sample_group_code) || ''},${sample.sex || ''},${sample.dmaqc_age_groups || ''},${sample.timepoint || ''},${roundNumbers(sample.bmi, 1) || ''},${sample.temp_samp_profile || ''},${Number(sample.received_cas) === 1 ? 'Yes' : 'No'}`
-    ).join('\n');
-    const csvData = 'data:text/csv;charset=utf-8,' + header + rows;
-    const encodedUri = encodeURI(csvData);
+    
+    // Format a single row with all transformations
+    const formatRow = (sample) => [
+      sample.vial_label || '',
+      sample.pid || '',
+      transformTrancheCode(sample.tranche) || '',
+      sample.visit_code || '',
+      sample.random_group_code || '',
+      transformTissueCode(sample.sample_group_code) || '',
+      sample.sex || '',
+      sample.dmaqc_age_groups || '',
+      sample.timepoint || '',
+      roundNumbers(sample.bmi, 1) || '',
+      sample.temp_samp_profile || '',
+      transformCASReceived(sample.received_cas),
+    ].join(',');
+    
+    // Generate CSV content
+    const rows = selectedBar.samples.map(formatRow).join('\n');
+    const csvContent = header + rows;
+    
+    // Create and trigger download
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `biospecimen_drilldown_${selectedBar.tissue}_${selectedBar.phase || selectedBar.timepoint || selectedBar.assay}.csv`);
+    const filename = `biospecimen_drilldown_${selectedBar.tissue || 'data'}_${selectedBar.phase || selectedBar.timepoint || selectedBar.assay || 'export'}.csv`;
+    
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    link.style.display = 'none';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    URL.revokeObjectURL(url); // Clean up the URL object
   }, [selectedBar]);
 
   // Handle bar click for drill-down
+  // Optimized to extract only necessary data from event
   const handleBarClick = useCallback((event) => {
-    const point = event.point;
+    const { point } = event;
     setSelectedBar({
       phase: point.phase,
       tissue: point.tissue,
       timepoint: point.timepoint,
-      assay: point.assay, // New field for assay mode
-      samples: point.samples,
-      count: point.y,
+      assay: point.assay,
+      samples: point.samples || [],
+      count: point.y || 0,
       assayTypes: point.assayTypes,
+      demographicType: point.demographicType,
+      category: point.category,
     });
   }, []);
 
@@ -225,7 +252,7 @@ const InteractiveBiospecimenChart = () => {
                     </thead>
                     <tbody>
                       {tablePagination.currentPageData.map((sample, index) => (
-                        <tr key={index}>
+                        <tr key={`${sample.vial_label}-${index}`}>
                           <td className="vial-label text-dark">{sample.vial_label}</td>
                           <td>{sample.pid}</td>
                           <td>
@@ -245,7 +272,7 @@ const InteractiveBiospecimenChart = () => {
                           <td>{sample.temp_samp_profile || 'N/A'}</td>
                           <td>
                             <span className="badge badge-success">
-                              {Number(sample.received_cas) === 1 ? 'Yes' : 'No'}
+                              {transformCASReceived(sample.received_cas)}
                             </span>
                           </td>
                         </tr>
@@ -271,24 +298,3 @@ const InteractiveBiospecimenChart = () => {
 InteractiveBiospecimenChart.propTypes = {};
 
 export default InteractiveBiospecimenChart;
-
-// transform tissue code to human-readable values
-function transformTissueCode(code) {
-  const tissueMap = {
-    'BLO': 'Blood',
-    'MUS': 'Muscle',
-    'ADI': 'Adipose',
-  };
-  return tissueMap[code] || code;
-}
-
-function transformTrancheCode(code) {
-  const trancheMap = {
-    'TR00': 'Tranche 0',
-    'TR01': 'Tranche 1',
-    'TR02': 'Tranche 2',
-    'TR03': 'Tranche 3',
-    'TR04': 'Tranche 4',
-  };
-  return trancheMap[code] || code;
-}
