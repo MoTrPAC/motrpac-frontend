@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
@@ -43,22 +43,6 @@ if (typeof Highcharts === 'object' && Highcharts.setOptions) {
  * - Assay information in tooltips
  */
 const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
-  // Chart reference for proper cleanup
-  const chartRef = useRef(null);
-
-  // Cleanup chart instance on unmount to prevent memory leaks
-  useEffect(() => {
-    return () => {
-      if (chartRef.current && chartRef.current.chart) {
-        try {
-          chartRef.current.chart.destroy();
-        } catch (e) {
-          console.warn('Error destroying chart:', e);
-        }
-      }
-    };
-  }, []);
-
   // Calculate fixed maximum from ALL unfiltered data (only once)
   const fixedMaxCount = useMemo(() => {
     if (!allData || !allData.length) return 0;
