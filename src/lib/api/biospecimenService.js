@@ -422,7 +422,7 @@ function CreateBiospecimenService() {
 
       // Check for cached ETag to enable conditional requests
       const cachedETag = etagCache.getETag(filters);
-      const { data: cachedData, timestamp: cachedTimestamp } = etagCache.getCachedData(filters);
+      const { data: cachedData } = etagCache.getCachedData(filters);
 
       // Create axios config with signal if provided
       const axiosConfig = { params };
