@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useBiospecimenData, useFilteredBiospecimenData } from '../hooks/useBiospecimenData';
 import { useAdvancedPagination } from '../hooks/useAdvancedPagination';
 import BiospecimenFilters from './BiospecimenFilters';
