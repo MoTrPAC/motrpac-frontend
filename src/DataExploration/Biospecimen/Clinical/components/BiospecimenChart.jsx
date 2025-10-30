@@ -10,6 +10,16 @@ import {
   INTERVENTION_PHASES,
 } from '../constants/plotOptions';
 import { getAssayName, getAssayNames } from '../utils/assayCodeMapping';
+import {
+  getRaceCategory,
+  getRandomizedGroup,
+  getBMIGroup,
+  getEthnicityCategory,
+  AGE_GROUPS,
+  RACE_GROUPS,
+  BMI_GROUPS,
+  RANDOMIZED_GROUPS,
+} from '../utils/demographicUtils';
 
 // Ensure Highcharts is properly initialized
 if (typeof Highcharts === 'object' && Highcharts.setOptions) {
@@ -103,18 +113,15 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }
     });
 
-    // Initialize count objects
-    const ageCounts = { '10-13': 0, '14-17': 0, '18-39': 0, '40-59': 0, '60+': 0 };
-    const raceCounts = {
-      'African American/Black': 0,
-      'Asian': 0,
-      'Hawaiian/Pacific Islander': 0,
-      'Native American': 0,
-      'Caucasian': 0,
-      'Other': 0,
-      'Unknown': 0,
-    };
-    const randomGroupCounts = { 'Control': 0, 'Endurance': 0, 'Resistance': 0 };
+    // Initialize count objects using imported constants
+    const ageCounts = {};
+    AGE_GROUPS.forEach(group => ageCounts[group] = 0);
+    
+    const raceCounts = {};
+    RACE_GROUPS.forEach(group => raceCounts[group] = 0);
+    
+    const randomGroupCounts = {};
+    RANDOMIZED_GROUPS.forEach(group => randomGroupCounts[group] = 0);
 
     // Count participants in each category
     participantDemographics.forEach(({ age, race, randomGroup }) => {
@@ -128,55 +135,6 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       fixedMaxRaceCount: Math.max(...Object.values(raceCounts)),
       fixedMaxRandomGroupCount: Math.max(...Object.values(randomGroupCounts)),
     };
-
-    // Helper function to derive race category from boolean indicator fields
-    function getRaceCategory(record) {
-      if (record.aablack_psca === '1' || record.aablack_psca === 1 || record.aablack_psca === true) {
-        return 'African American/Black';
-      }
-      if (record.asian_psca === '1' || record.asian_psca === 1 || record.asian_psca === true) {
-        return 'Asian';
-      }
-      if (record.hawaii_psca === '1' || record.hawaii_psca === 1 || record.hawaii_psca === true) {
-        return 'Hawaiian/Pacific Islander';
-      }
-      if (record.natamer_psca === '1' || record.natamer_psca === 1 || record.natamer_psca === true) {
-        return 'Native American';
-      }
-      if (record.cauc_psca === '1' || record.cauc_psca === 1 || record.cauc_psca === true) {
-        return 'Caucasian';
-      }
-      if (record.raceoth_psca === '1' || record.raceoth_psca === 1 || record.raceoth_psca === true) {
-        return 'Other';
-      }
-      if (record.raceref_psca === '1' || record.raceref_psca === 1 || record.raceref_psca === true) {
-        return 'Unknown';
-      }
-      return null;
-    }
-
-    // Helper function to derive randomized group
-    function getRandomizedGroup(record) {
-      const randomGroupCode = record.random_group_code;
-      const enrollRandomGroupCode = record.enroll_random_group_code;
-
-      if (randomGroupCode === 'ADUControl' || randomGroupCode === 'PEDControl') {
-        return 'Control';
-      }
-      if (
-        randomGroupCode === 'ADUEndur' ||
-        randomGroupCode === 'ATHEndur' ||
-        randomGroupCode === 'PEDEndur' ||
-        enrollRandomGroupCode === 'PEDEndur' ||
-        enrollRandomGroupCode === 'PEDEnrollEndur'
-      ) {
-        return 'Endurance';
-      }
-      if (randomGroupCode === 'ADUResist' || randomGroupCode === 'ATHResist') {
-        return 'Resistance';
-      }
-      return null;
-    }
   }, [allData]);
 
   // Calculate participant counts by sex
@@ -213,9 +171,8 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }
     });
 
-    const ageGroups = ['10-13', '14-17', '18-39', '40-59', '60+'];
     const ageCounts = {};
-    ageGroups.forEach(group => ageCounts[group] = 0);
+    AGE_GROUPS.forEach(group => ageCounts[group] = 0);
 
     uniqueParticipants.forEach((ageGroup) => {
       if (ageCounts.hasOwnProperty(ageGroup)) {
@@ -225,41 +182,14 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
 
     // Keep all age groups for smooth animation (bars animate to 0 instead of disappearing)
     return {
-      categories: ageGroups,
-      data: ageGroups.map(group => ageCounts[group]),
+      categories: AGE_GROUPS,
+      data: AGE_GROUPS.map(group => ageCounts[group]),
     };
   }, [data]);
 
   // Calculate participant counts by race
   const participantByRace = useMemo(() => {
     if (!data || !data.length) return null;
-
-    // Helper function to derive race category from boolean indicator fields
-    const getRaceCategory = (record) => {
-      // Map boolean fields to race categories
-      if (record.aablack_psca === '1' || record.aablack_psca === 1 || record.aablack_psca === true) {
-        return 'African American/Black';
-      }
-      if (record.asian_psca === '1' || record.asian_psca === 1 || record.asian_psca === true) {
-        return 'Asian';
-      }
-      if (record.hawaii_psca === '1' || record.hawaii_psca === 1 || record.hawaii_psca === true) {
-        return 'Hawaiian/Pacific Islander';
-      }
-      if (record.natamer_psca === '1' || record.natamer_psca === 1 || record.natamer_psca === true) {
-        return 'Native American';
-      }
-      if (record.cauc_psca === '1' || record.cauc_psca === 1 || record.cauc_psca === true) {
-        return 'Caucasian';
-      }
-      if (record.raceoth_psca === '1' || record.raceoth_psca === 1 || record.raceoth_psca === true) {
-        return 'Other';
-      }
-      if (record.raceref_psca === '1' || record.raceref_psca === 1 || record.raceref_psca === true) {
-        return 'Unknown';
-      }
-      return null; // No race indicator found
-    };
 
     const uniqueParticipants = new Map();
     data.forEach((record) => {
@@ -271,17 +201,8 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }
     });
 
-    const raceGroups = [
-      'African American/Black',
-      'Asian',
-      'Hawaiian/Pacific Islander',
-      'Native American',
-      'Caucasian',
-      'Other',
-      'Unknown'
-    ];
     const raceCounts = {};
-    raceGroups.forEach(group => raceCounts[group] = 0);
+    RACE_GROUPS.forEach(group => raceCounts[group] = 0);
 
     uniqueParticipants.forEach((race) => {
       if (raceCounts.hasOwnProperty(race)) {
@@ -291,23 +212,14 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
 
     // Keep all race groups for smooth animation (bars animate to 0 instead of disappearing)
     return {
-      categories: raceGroups,
-      data: raceGroups.map(group => raceCounts[group]),
+      categories: RACE_GROUPS,
+      data: RACE_GROUPS.map(group => raceCounts[group]),
     };
   }, [data]);
 
   // Calculate participant counts by BMI group
   const participantByBMI = useMemo(() => {
     if (!data || !data.length) return null;
-
-    // Helper function to categorize BMI value into group
-    const getBMIGroup = (bmi) => {
-      const bmiValue = parseFloat(bmi);
-      if (isNaN(bmiValue)) return null;
-      if (bmiValue < 25) return '0-25';
-      if (bmiValue < 30) return '25-30';
-      return '30+';
-    };
 
     const uniqueParticipants = new Map();
     data.forEach((record) => {
@@ -319,9 +231,8 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }
     });
 
-    const bmiGroups = ['0-25', '25-30', '30+'];
     const bmiCounts = {};
-    bmiGroups.forEach(group => bmiCounts[group] = 0);
+    BMI_GROUPS.forEach(group => bmiCounts[group] = 0);
 
     uniqueParticipants.forEach((bmiGroup) => {
       if (bmiCounts.hasOwnProperty(bmiGroup)) {
@@ -330,7 +241,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     });
 
     const colors = ['#2ecc71', '#f39c12', '#e74c3c']; // Green, Orange, Red
-    return bmiGroups.map((group, index) => ({
+    return BMI_GROUPS.map((group, index) => ({
       name: `BMI ${group}`,
       y: bmiCounts[group],
       color: colors[index],
@@ -340,24 +251,6 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
   // Calculate participant counts by ethnicity
   const participantByEthnicity = useMemo(() => {
     if (!data || !data.length) return null;
-
-    // Helper function to derive ethnicity category from latino_psca field
-    const getEthnicityCategory = (record) => {
-      const latinoValue = record.latino_psca;
-      // Check for value 1 (Latino/Hispanic/Spanish)
-      if (latinoValue === '1' || latinoValue === 1) {
-        return 'Latino, Hispanic, or Spanish origin/ethnicity';
-      }
-      // Check for value 0 (Not Latino/Hispanic/Spanish)
-      if (latinoValue === '0' || latinoValue === 0) {
-        return 'Not Latino, Hispanic, or Spanish origin/ethnicity';
-      }
-      // Check for value -7 (Refused/Unknown)
-      if (latinoValue === '-7' || latinoValue === -7) {
-        return 'Refused/Unknown';
-      }
-      return null;
-    };
 
     const uniqueParticipants = new Map();
     data.forEach((record) => {
@@ -404,35 +297,6 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
   const participantByRandomGroup = useMemo(() => {
     if (!data || !data.length) return null;
 
-    // Helper function to derive randomized group from random_group_code and enroll_random_group_code
-    const getRandomizedGroup = (record) => {
-      const randomGroupCode = record.random_group_code;
-      const enrollRandomGroupCode = record.enroll_random_group_code;
-
-      // Control group
-      if (randomGroupCode === 'ADUControl' || randomGroupCode === 'PEDControl') {
-        return 'Control';
-      }
-
-      // Endurance group
-      if (
-        randomGroupCode === 'ADUEndur' ||
-        randomGroupCode === 'ATHEndur' ||
-        randomGroupCode === 'PEDEndur' ||
-        enrollRandomGroupCode === 'PEDEndur' ||
-        enrollRandomGroupCode === 'PEDEnrollEndur'
-      ) {
-        return 'Endurance';
-      }
-
-      // Resistance group
-      if (randomGroupCode === 'ADUResist' || randomGroupCode === 'ATHResist') {
-        return 'Resistance';
-      }
-
-      return null;
-    };
-
     const uniqueParticipants = new Map();
     data.forEach((record) => {
       if (record.pid) {
@@ -443,9 +307,8 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }
     });
 
-    const randomGroups = ['Control', 'Endurance', 'Resistance'];
     const groupCounts = {};
-    randomGroups.forEach(group => groupCounts[group] = 0);
+    RANDOMIZED_GROUPS.forEach(group => groupCounts[group] = 0);
 
     uniqueParticipants.forEach((group) => {
       if (groupCounts.hasOwnProperty(group)) {
@@ -455,8 +318,8 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
 
     // Keep all groups for smooth animation (bars animate to 0 instead of disappearing)
     return {
-      categories: randomGroups,
-      data: randomGroups.map(group => groupCounts[group]),
+      categories: RANDOMIZED_GROUPS,
+      data: RANDOMIZED_GROUPS.map(group => groupCounts[group]),
     };
   }, [data]);
 
@@ -667,18 +530,6 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
   const raceBarChartOptions = useMemo(() => {
     if (!participantByRace) return null;
 
-    // Helper to match race from record (reuse logic from fixedMaxRaceCount)
-    const getRaceCategory = (record) => {
-      if (record.aablack_psca === '1' || record.aablack_psca === 1 || record.aablack_psca === true) return 'African American/Black';
-      if (record.asian_psca === '1' || record.asian_psca === 1 || record.asian_psca === true) return 'Asian';
-      if (record.hawaii_psca === '1' || record.hawaii_psca === 1 || record.hawaii_psca === true) return 'Hawaiian/Pacific Islander';
-      if (record.natamer_psca === '1' || record.natamer_psca === 1 || record.natamer_psca === true) return 'Native American';
-      if (record.cauc_psca === '1' || record.cauc_psca === 1 || record.cauc_psca === true) return 'Caucasian';
-      if (record.raceoth_psca === '1' || record.raceoth_psca === 1 || record.raceoth_psca === true) return 'Other';
-      if (record.raceref_psca === '1' || record.raceref_psca === 1 || record.raceref_psca === true) return 'Unknown';
-      return null;
-    };
-
     return {
       chart: {
         type: 'column',
@@ -759,15 +610,6 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
   const bmiPieChartOptions = useMemo(() => {
     if (!participantByBMI) return null;
 
-    // Helper to get BMI group from BMI value
-    const getBMIGroup = (bmi) => {
-      const bmiValue = parseFloat(bmi);
-      if (isNaN(bmiValue)) return null;
-      if (bmiValue < 25) return '0-25';
-      if (bmiValue < 30) return '25-30';
-      return '30+';
-    };
-
     return {
       chart: {
         type: 'pie',
@@ -825,15 +667,6 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
   // Pie chart configuration for ethnicity distribution
   const ethnicityPieChartOptions = useMemo(() => {
     if (!participantByEthnicity) return null;
-
-    // Helper to get ethnicity category
-    const getEthnicityCategory = (record) => {
-      const latinoValue = record.latino_psca;
-      if (latinoValue === '1' || latinoValue === 1) return 'Latino, Hispanic, or Spanish origin/ethnicity';
-      if (latinoValue === '0' || latinoValue === 0) return 'Not Latino, Hispanic, or Spanish origin/ethnicity';
-      if (latinoValue === '-7' || latinoValue === -7) return 'Refused/Unknown';
-      return null;
-    };
 
     return {
       chart: {
@@ -897,17 +730,6 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
   // Bar chart configuration for randomized group distribution
   const randomGroupBarChartOptions = useMemo(() => {
     if (!participantByRandomGroup) return null;
-
-    // Helper to get randomized group
-    const getRandomizedGroup = (record) => {
-      const randomGroupCode = record.random_group_code;
-      const enrollRandomGroupCode = record.enroll_random_group_code;
-      if (randomGroupCode === 'ADUControl' || randomGroupCode === 'PEDControl') return 'Control';
-      if (randomGroupCode === 'ADUEndur' || randomGroupCode === 'ATHEndur' || randomGroupCode === 'PEDEndur' ||
-          enrollRandomGroupCode === 'PEDEndur' || enrollRandomGroupCode === 'PEDEnrollEndur') return 'Endurance';
-      if (randomGroupCode === 'ADUResist' || randomGroupCode === 'ATHResist') return 'Resistance';
-      return null;
-    };
 
     return {
       chart: {
