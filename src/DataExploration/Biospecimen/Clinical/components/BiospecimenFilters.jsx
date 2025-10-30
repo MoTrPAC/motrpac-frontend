@@ -32,6 +32,104 @@ const BiospecimenFilters = ({
     }));
   };
 
+  // Data-driven filter configuration
+  // Each filter group is defined once with its key, label, and options
+  const filterConfigs = [
+    {
+      key: 'sex',
+      label: 'Sex',
+      filterKey: 'sex',
+      optionsKey: 'sexOptions',
+    },
+    {
+      key: 'dmaqc_age_groups',
+      label: 'Age Groups',
+      filterKey: 'dmaqc_age_groups',
+      optionsKey: 'ageGroupOptions',
+    },
+    {
+      key: 'random_group_code',
+      label: 'Randomized Group',
+      filterKey: 'random_group_code',
+      optionsKey: 'randomGroupOptions',
+    },
+    {
+      key: 'bmi_group',
+      label: 'BMI Group',
+      filterKey: 'bmi_group',
+      optionsKey: 'bmiGroupOptions',
+    },
+    {
+      key: 'race',
+      label: 'Race',
+      filterKey: 'race',
+      optionsKey: 'raceOptions',
+    },
+    {
+      key: 'ethnicity',
+      label: 'Ethnicity',
+      filterKey: 'ethnicity',
+      optionsKey: 'ethnicityOptions',
+    },
+    {
+      key: 'tissue',
+      label: 'Tissue',
+      filterKey: 'tissue',
+      optionsKey: 'tissueOptions',
+    },
+    {
+      key: 'ome',
+      label: 'Ome',
+      filterKey: 'ome',
+      optionsKey: 'omeOptions',
+    },
+  ];
+
+  // Reusable filter group renderer
+  const renderFilterGroup = ({ key, label, filterKey, optionsKey }) => {
+    const options = filterOptions[optionsKey] || [];
+    const selectedFilters = filters[filterKey] || [];
+
+    return (
+      <div key={key} className="mb-3">
+        <h6 
+          className="mb-1 d-flex justify-content-between align-items-center" 
+          style={{ cursor: 'pointer', userSelect: 'none' }}
+          onClick={() => toggleGroup(key)}
+        >
+          <span>{label}</span>
+          <span 
+            className="filter-toggle-icon"
+            style={{
+              transition: 'transform 0.2s ease-in-out',
+              transform: expandedGroups[key] ? 'rotate(45deg)' : 'rotate(0deg)',
+              fontSize: '1.2rem',
+              fontWeight: 'bold'
+            }}
+          >
+            +
+          </span>
+        </h6>
+        {expandedGroups[key] && options.map((option) => (
+          <div key={option} className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id={`${key}-${option}`}
+              checked={selectedFilters.includes(option)}
+              onChange={(e) =>
+                onCheckboxChange(filterKey, option, e.target.checked)
+              }
+            />
+            <label className="form-check-label" htmlFor={`${key}-${option}`}>
+              {option}
+            </label>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className="card h-100">
       <div className="card-header">
@@ -41,320 +139,8 @@ const BiospecimenFilters = ({
         </h5>
       </div>
       <div className="card-body">
-        {/* Sex Filters - Checkboxes */}
-        <div className="mb-3">
-          <h6 
-            className="mb-1 d-flex justify-content-between align-items-center" 
-            style={{ cursor: 'pointer', userSelect: 'none' }}
-            onClick={() => toggleGroup('sex')}
-          >
-            <span>Sex</span>
-            <span 
-              className="filter-toggle-icon"
-              style={{
-                transition: 'transform 0.2s ease-in-out',
-                transform: expandedGroups.sex ? 'rotate(45deg)' : 'rotate(0deg)',
-                fontSize: '1.2rem',
-                fontWeight: 'bold'
-              }}
-            >
-              +
-            </span>
-          </h6>
-          {expandedGroups.sex && filterOptions.sexOptions.map((option) => (
-            <div key={option} className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id={`sex-${option}`}
-                checked={filters.sex.includes(option)}
-                onChange={(e) =>
-                  onCheckboxChange('sex', option, e.target.checked)
-                }
-              />
-              <label className="form-check-label" htmlFor={`sex-${option}`}>
-                {option}
-              </label>
-            </div>
-          ))}
-        </div>
-
-        {/* Age Group Filters - Checkboxes */}
-        <div className="mb-3">
-          <h6 
-            className="mb-1 d-flex justify-content-between align-items-center" 
-            style={{ cursor: 'pointer', userSelect: 'none' }}
-            onClick={() => toggleGroup('dmaqc_age_groups')}
-          >
-            <span>Age Groups</span>
-            <span 
-              className="filter-toggle-icon"
-              style={{
-                transition: 'transform 0.2s ease-in-out',
-                transform: expandedGroups.dmaqc_age_groups ? 'rotate(45deg)' : 'rotate(0deg)',
-                fontSize: '1.2rem',
-                fontWeight: 'bold'
-              }}
-            >
-              +
-            </span>
-          </h6>
-          {expandedGroups.dmaqc_age_groups && filterOptions.ageGroupOptions.map((option) => (
-            <div key={option} className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id={`age-${option}`}
-                checked={filters.dmaqc_age_groups.includes(option)}
-                onChange={(e) =>
-                  onCheckboxChange(
-                    'dmaqc_age_groups',
-                    option,
-                    e.target.checked,
-                  )
-                }
-              />
-              <label className="form-check-label" htmlFor={`age-${option}`}>
-                {option}
-              </label>
-            </div>
-          ))}
-        </div>
-
-        {/* Randomized Group Filters - Checkboxes (changed from radio buttons) */}
-        <div className="mb-3">
-          <h6 
-            className="mb-1 d-flex justify-content-between align-items-center" 
-            style={{ cursor: 'pointer', userSelect: 'none' }}
-            onClick={() => toggleGroup('random_group_code')}
-          >
-            <span>Randomized Group</span>
-            <span 
-              className="filter-toggle-icon"
-              style={{
-                transition: 'transform 0.2s ease-in-out',
-                transform: expandedGroups.random_group_code ? 'rotate(45deg)' : 'rotate(0deg)',
-                fontSize: '1.2rem',
-                fontWeight: 'bold'
-              }}
-            >
-              +
-            </span>
-          </h6>
-          {expandedGroups.random_group_code && filterOptions.randomGroupOptions.map((option) => (
-            <div key={option} className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id={`group-${option}`}
-                checked={filters.random_group_code.includes(option)}
-                onChange={(e) =>
-                  onCheckboxChange(
-                    'random_group_code',
-                    option,
-                    e.target.checked,
-                  )
-                }
-              />
-              <label
-                className="form-check-label"
-                htmlFor={`group-${option}`}
-              >
-                {option}
-              </label>
-            </div>
-          ))}
-        </div>
-
-        {/* BMI Group Filters - Checkboxes */}
-        <div className="mb-3">
-          <h6 
-            className="mb-1 d-flex justify-content-between align-items-center" 
-            style={{ cursor: 'pointer', userSelect: 'none' }}
-            onClick={() => toggleGroup('bmi_group')}
-          >
-            <span>BMI Group</span>
-            <span 
-              className="filter-toggle-icon"
-              style={{
-                transition: 'transform 0.2s ease-in-out',
-                transform: expandedGroups.bmi_group ? 'rotate(45deg)' : 'rotate(0deg)',
-                fontSize: '1.2rem',
-                fontWeight: 'bold'
-              }}
-            >
-              +
-            </span>
-          </h6>
-          {expandedGroups.bmi_group && filterOptions.bmiGroupOptions.map((option) => (
-            <div key={option} className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id={`bmi-${option}`}
-                checked={filters.bmi_group.includes(option)}
-                onChange={(e) =>
-                  onCheckboxChange('bmi_group', option, e.target.checked)
-                }
-              />
-              <label className="form-check-label" htmlFor={`bmi-${option}`}>
-                {option}
-              </label>
-            </div>
-          ))}
-        </div>
-
-        {/* Race Filters - Checkboxes */}
-        <div className="mb-3">
-          <h6 
-            className="mb-1 d-flex justify-content-between align-items-center" 
-            style={{ cursor: 'pointer', userSelect: 'none' }}
-            onClick={() => toggleGroup('race')}
-          >
-            <span>Race</span>
-            <span 
-              className="filter-toggle-icon"
-              style={{
-                transition: 'transform 0.2s ease-in-out',
-                transform: expandedGroups.race ? 'rotate(45deg)' : 'rotate(0deg)',
-                fontSize: '1.2rem',
-                fontWeight: 'bold'
-              }}
-            >
-              +
-            </span>
-          </h6>
-          {expandedGroups.race && filterOptions.raceOptions.map((option) => (
-            <div key={option} className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id={`race-${option}`}
-                checked={filters.race.includes(option)}
-                onChange={(e) =>
-                  onCheckboxChange('race', option, e.target.checked)
-                }
-              />
-              <label className="form-check-label" htmlFor={`race-${option}`}>
-                {option}
-              </label>
-            </div>
-          ))}
-        </div>
-
-        {/* Ethnicity Filters - Checkboxes */}
-        <div className="mb-3">
-          <h6 
-            className="mb-1 d-flex justify-content-between align-items-center" 
-            style={{ cursor: 'pointer', userSelect: 'none' }}
-            onClick={() => toggleGroup('ethnicity')}
-          >
-            <span>Ethnicity</span>
-            <span 
-              className="filter-toggle-icon"
-              style={{
-                transition: 'transform 0.2s ease-in-out',
-                transform: expandedGroups.ethnicity ? 'rotate(45deg)' : 'rotate(0deg)',
-                fontSize: '1.2rem',
-                fontWeight: 'bold'
-              }}
-            >
-              +
-            </span>
-          </h6>
-          {expandedGroups.ethnicity && filterOptions.ethnicityOptions.map((option) => (
-            <div key={option} className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id={`ethnicity-${option}`}
-                checked={filters.ethnicity.includes(option)}
-                onChange={(e) =>
-                  onCheckboxChange('ethnicity', option, e.target.checked)
-                }
-              />
-              <label className="form-check-label" htmlFor={`ethnicity-${option}`}>
-                {option}
-              </label>
-            </div>
-          ))}
-        </div>
-
-        {/* Tissue Filters - Checkboxes */}
-        <div className="mb-3">
-          <h6 
-            className="mb-1 d-flex justify-content-between align-items-center" 
-            style={{ cursor: 'pointer', userSelect: 'none' }}
-            onClick={() => toggleGroup('tissue')}
-          >
-            <span>Tissue</span>
-            <span 
-              className="filter-toggle-icon"
-              style={{
-                transition: 'transform 0.2s ease-in-out',
-                transform: expandedGroups.tissue ? 'rotate(45deg)' : 'rotate(0deg)',
-                fontSize: '1.2rem',
-                fontWeight: 'bold'
-              }}
-            >
-              +
-            </span>
-          </h6>
-          {expandedGroups.tissue && filterOptions.tissueOptions.map((option) => (
-            <div key={option} className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id={`tissue-${option}`}
-                checked={filters.tissue.includes(option)}
-                onChange={(e) =>
-                  onCheckboxChange('tissue', option, e.target.checked)
-                }
-              />
-              <label className="form-check-label" htmlFor={`tissue-${option}`}>
-                {option}
-              </label>
-            </div>
-          ))}
-        </div>
-
-        {/* Ome Filters - Checkboxes */}
-        <div className="mb-3">
-          <h6 
-            className="mb-1 d-flex justify-content-between align-items-center" 
-            style={{ cursor: 'pointer', userSelect: 'none' }}
-            onClick={() => toggleGroup('ome')}
-          >
-            <span>Ome</span>
-            <span 
-              className="filter-toggle-icon"
-              style={{
-                transition: 'transform 0.2s ease-in-out',
-                transform: expandedGroups.ome ? 'rotate(45deg)' : 'rotate(0deg)',
-                fontSize: '1.2rem',
-                fontWeight: 'bold'
-              }}
-            >
-              +
-            </span>
-          </h6>
-          {expandedGroups.ome && filterOptions.omeOptions.map((option) => (
-            <div key={option} className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id={`ome-${option}`}
-                checked={filters.ome.includes(option)}
-                onChange={(e) =>
-                  onCheckboxChange('ome', option, e.target.checked)
-                }
-              />
-              <label className="form-check-label" htmlFor={`ome-${option}`}>
-                {option}
-              </label>
-            </div>
-          ))}
-        </div>
+        {/* Render all filter groups using the data-driven configuration */}
+        {filterConfigs.map(renderFilterGroup)}
       </div>
     </div>
   );
