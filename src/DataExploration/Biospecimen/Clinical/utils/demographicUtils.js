@@ -134,6 +134,28 @@ export const BMI_GROUPS = ['0-25', '25-30', '30+'];
 export const RANDOMIZED_GROUPS = ['Control', 'Endurance', 'Resistance'];
 
 /**
+ * Map filter values to actual API values for randomized group comparison
+ * @param {Array<string>} filterValues - Array of filter values (e.g., ['Control', 'Endurance'])
+ * @returns {Array<string>} Array of API values (e.g., ['ADUControl', 'PEDControl', 'ADUEndur', ...])
+ */
+export const mapRandomizedGroupFiltersToAPIValues = (filterValues) => {
+  if (!filterValues || filterValues.length === 0) return [];
+  
+  return filterValues.flatMap(option => {
+    switch (option) {
+      case 'Control':
+        return ['ADUControl', 'PEDControl'];
+      case 'Endurance':
+        return ['ADUEndur', 'ATHEndur', 'PEDEndur'];
+      case 'Resistance':
+        return ['ADUResist', 'ATHResist'];
+      default:
+        return [];
+    }
+  });
+};
+
+/**
  * Ethnicity categories
  */
 export const ETHNICITY_CATEGORIES = [
