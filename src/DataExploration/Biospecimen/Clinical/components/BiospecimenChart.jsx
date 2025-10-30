@@ -933,7 +933,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
 
   return (
     <div className="charts-container row">
-      <div className="card-containner col-md-6">
+      <div className="card-container col-md-6">
         <div className="card">
           <div className="card-header">
             <h5 className="mb-0">
