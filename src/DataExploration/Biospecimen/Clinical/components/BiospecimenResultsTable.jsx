@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useAdvancedPagination } from '../hooks/useAdvancedPagination';
 import AdvancedPagination from './AdvancedPagination';
+import { transformTissueCode, transformTrancheCode, transformCASReceived } from '../utils/dataTransformUtils';
 import roundNumbers from '../../../../lib/utils/roundNumbers';
 
 import '@styles/biospecimenSummary.scss';
@@ -95,41 +96,7 @@ function BiospecimenResultsTable({ data = [] }) {
 }
 
 BiospecimenResultsTable.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
-    vial_label: PropTypes.string,
-    pid: PropTypes.string,
-    tranche: PropTypes.string,
-    tempSampProfile: PropTypes.string,
-    randomGroupCode: PropTypes.string,
-    visitcode: PropTypes.string,
-    timepoint: PropTypes.string,
-    sampleGroupCode: PropTypes.string,
-    sex: PropTypes.string,
-    age_groups: PropTypes.string,
-    bmi: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    receivedCAS: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  })),
+  data: PropTypes.array,
 };
 
 export default BiospecimenResultsTable;
-
-// transform tissue code to human-readable values
-function transformTissueCode(code) {
-  const tissueMap = {
-    'BLO': 'Blood',
-    'MUS': 'Muscle',
-    'ADI': 'Adipose',
-  };
-  return tissueMap[code] || code;
-}
-
-function transformTrancheCode(code) {
-  const trancheMap = {
-    'TR00': 'Tranche 0',
-    'TR01': 'Tranche 1',
-    'TR02': 'Tranche 2',
-    'TR03': 'Tranche 3',
-    'TR04': 'Tranche 4',
-  };
-  return trancheMap[code] || code;
-}

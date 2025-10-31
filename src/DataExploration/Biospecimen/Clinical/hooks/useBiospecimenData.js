@@ -1,169 +1,206 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { BiospecimenService } from '../../../../lib/api/biospecimenService';
+import {
+  getRaceCategory,
+  getEthnicityCategory,
+  getBMIGroup,
+  mapRandomizedGroupFiltersToAPIValues,
+} from '../utils/demographicUtils';
+import { getTissueName } from '../utils/tissueUtils';
+import { matchesOmeCategories } from '../utils/omeUtils';
 
-// Web Worker for parsing TSV data
-const createTSVWorker = () => {
-  const workerCode = `
-    self.onmessage = function(e) {
-      const { tsvText } = e.data;
-      
-      try {
-        const lines = tsvText.trim().split('\\n');
-        const headers = lines[0].split('\\t');
-        const data = [];
-        
-        // Parse rows in chunks to avoid blocking
-        const parseChunk = (startIndex, endIndex) => {
-          for (let i = startIndex; i < endIndex && i < lines.length; i++) {
-            const values = lines[i].split('\\t');
-            const row = {};
-            
-            headers.forEach((header, index) => {
-              row[header] = values[index] || '';
-            });
-            
-            data.push(row);
-          }
-        };
-        
-        // Process in chunks of 1000 rows
-        const chunkSize = 1000;
-        for (let i = 1; i < lines.length; i += chunkSize) {
-          parseChunk(i, i + chunkSize);
-          
-          // Send progress updates
-          self.postMessage({
-            type: 'progress',
-            processed: Math.min(i + chunkSize - 1, lines.length - 1),
-            total: lines.length - 1
-          });
-        }
-        
-        self.postMessage({
-          type: 'complete',
-          data: data
-        });
-      } catch (error) {
-        self.postMessage({
-          type: 'error',
-          error: error.message
-        });
-      }
-    };
-  `;
-  
-  return new Worker(URL.createObjectURL(new Blob([workerCode], { type: 'application/javascript' })));
-};
-
+/**
+ * Simplified biospecimen data hook that loads all data once and filters client-side
+ * Much more efficient than making API calls for every filter combination
+ */
 export const useBiospecimenData = () => {
-  const [data, setData] = useState([]);
+  const [allData, setAllData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [progress, setProgress] = useState(0);
+  const abortControllerRef = useRef(null);
 
-  useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      setError(null);
-      setProgress(0);
-
-      try {
-        // Check if data is cached in localStorage
-        const cachedData = localStorage.getItem('biospecimen-data');
-        const cachedTimestamp = localStorage.getItem('biospecimen-data-timestamp');
-        const cacheExpiry = 24 * 60 * 60 * 1000; // 24 hours
-
-        if (cachedData && cachedTimestamp && 
-            Date.now() - parseInt(cachedTimestamp, 10) < cacheExpiry) {
-          setData(JSON.parse(cachedData));
-          setLoading(false);
-          return;
-        }
-
-        // Dynamically import the TSV file
-        const { default: tsvPath } = await import('../../../../data/human_clinical_biospecimen_curated.tsv?url');
-        
-        // Fetch the TSV file
-        const response = await fetch(tsvPath);
-        if (!response.ok) {
-          throw new Error(`Failed to load data: ${response.statusText}`);
-        }
-        
-        const tsvText = await response.text();
-        
-        // Use Web Worker to parse the data
-        const worker = createTSVWorker();
-        
-        worker.onmessage = (e) => {
-          const { type, data: workerData, error: workerError, processed, total } = e.data;
-          
-          switch (type) {
-            case 'progress':
-              setProgress(Math.round((processed / total) * 100));
-              break;
-              
-            case 'complete':
-              setData(workerData);
-              setLoading(false);
-              
-              // Cache the parsed data
-              try {
-                localStorage.setItem('biospecimen-data', JSON.stringify(workerData));
-                localStorage.setItem('biospecimen-data-timestamp', Date.now().toString());
-              } catch (e) {
-                console.warn('Failed to cache data:', e);
-              }
-              
-              worker.terminate();
-              break;
-              
-            case 'error':
-              setError(workerError);
-              setLoading(false);
-              worker.terminate();
-              break;
-          }
-        };
-        
-        worker.onerror = (error) => {
-          setError(error.message);
-          setLoading(false);
-          worker.terminate();
-        };
-        
-        worker.postMessage({ tsvText });
-        
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
-
-    loadData();
+  // Centralized function to check if error is a cancellation
+  const isCancellationError = useCallback((err) => {
+    return err.name === 'AbortError' || 
+           err.code === 'ERR_CANCELED' || 
+           err.name === 'CanceledError' ||
+           err.message?.includes('canceled') ||
+           err.message?.includes('AbortError');
   }, []);
 
-  return { data, loading, error, progress };
+  // Centralized function to load data (used by both initial load and refresh)
+  const loadData = useCallback(async () => {
+    // Cancel previous request if it exists
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+
+    // Create new abort controller for this request
+    abortControllerRef.current = new AbortController();
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      console.log('Loading all biospecimen data (one-time load)');
+      const startTime = performance.now();
+      
+      const response = await BiospecimenService.queryBiospecimens(
+        {}, // Empty filters to get all data
+        { signal: abortControllerRef.current.signal }
+      );
+
+      const endTime = performance.now();
+      console.log(
+        `Loaded ${response.data.length} total biospecimen records in ${(endTime - startTime).toFixed(2)}ms`
+      );
+      
+      setAllData(response.data);
+      setLoading(false);
+    } catch (err) {
+      // Handle cancellation - don't update state if request was cancelled
+      if (isCancellationError(err)) {
+        console.log('Data loading was cancelled');
+        return;
+      }
+
+      // Handle actual errors
+      console.error('Error loading biospecimen data:', err);
+      setError(err.message || 'Failed to load biospecimen data');
+      setLoading(false);
+      setAllData([]);
+    }
+  }, [isCancellationError]);
+
+  // Load all data once on mount
+  useEffect(() => {
+    loadData();
+
+    // Cleanup: abort any pending requests on unmount
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, [loadData]); // loadData is memoized with useCallback
+
+  // Manual refresh function - reuses the centralized loadData logic
+  const refresh = useCallback(async () => {
+    console.log('Refreshing biospecimen data...');
+    // Clear existing data
+    setAllData([]);
+    // Reload data using centralized function
+    await loadData();
+  }, [loadData]);
+
+  return {
+    allData,
+    loading,
+    error,
+    refresh,
+  };
 };
 
-// Hook for filtered data with optimized search
-export const useFilteredBiospecimenData = (data, filters) => {
-  return useMemo(() => {
-    if (!data || data.length === 0) return [];
+/**
+ * Client-side filtering hook - filters the loaded data in memory
+ * This is much faster than making API calls for each filter combination
+ * 
+ * Performance optimizations:
+ * - Pre-computes mapped filter values outside the filter loop
+ * - Uses early returns for better performance
+ * - Extracts all helper functions to external utilities
+ * - Minimizes function calls inside the filter callback
+ */
+export const useFilteredBiospecimenData = (allData, filters) => {
+  // Pre-compute filter conditions outside the filter loop for better performance
+  const hasFilters = useMemo(() => {
+    return filters && Object.keys(filters).some(key => {
+      const value = filters[key];
+      return Array.isArray(value) ? value.length > 0 : !!value;
+    });
+  }, [filters]);
 
-    const { tranche, randomizedGroup, collectionVisit, timepoint, tissue, sex } = filters;
-    
-    // Early return if no filters
-    if (!tranche && !randomizedGroup && !collectionVisit && !timepoint && !tissue && !sex) {
+  // Pre-compute mapped randomized group values (expensive operation done once)
+  const mappedRandomGroupValues = useMemo(() => {
+    if (!filters?.random_group_code || filters.random_group_code.length === 0) {
+      return null;
+    }
+    return mapRandomizedGroupFiltersToAPIValues(filters.random_group_code);
+  }, [filters?.random_group_code]);
+
+  return useMemo(() => {
+    // Early returns for edge cases
+    if (!allData || allData.length === 0) {
       return [];
     }
 
-    // Use efficient filtering
-    return data.filter((item) => {
-      return (!tranche || item.tranche === tranche) &&
-        (!randomizedGroup || item.randomGroupCode === randomizedGroup) &&
-        (!collectionVisit || item.visitcode === collectionVisit) &&
-        (!timepoint || item.timepoint === timepoint) &&
-        (!tissue || item.sampleGroupCode === tissue) &&
-        (!sex || item.sex === sex);
+    // If no filters are applied, return all data without processing
+    if (!hasFilters) {
+      return allData;
+    }
+
+    // Filter data with optimized logic
+    return allData.filter(item => {
+      // Filter by sex - simple string comparison
+      if (filters.sex?.length > 0 && !filters.sex.includes(item.sex)) {
+        return false;
+      }
+
+      // Filter by age groups - simple string comparison
+      if (filters.dmaqc_age_groups?.length > 0 && 
+          !filters.dmaqc_age_groups.includes(item.dmaqc_age_groups)) {
+        return false;
+      }
+
+      // Filter by randomized group - using pre-computed mapped values
+      if (mappedRandomGroupValues && 
+          !mappedRandomGroupValues.includes(item.random_group_code)) {
+        return false;
+      }
+
+      // Filter by BMI group - using centralized utility
+      if (filters.bmi_group?.length > 0) {
+        const itemBMIGroup = getBMIGroup(item.bmi);
+        if (!itemBMIGroup || !filters.bmi_group.includes(itemBMIGroup)) {
+          return false;
+        }
+      }
+
+      // Filter by race - using centralized utility
+      if (filters.race?.length > 0) {
+        const itemRaceCategory = getRaceCategory(item);
+        if (!itemRaceCategory || !filters.race.includes(itemRaceCategory)) {
+          return false;
+        }
+      }
+
+      // Filter by ethnicity - using centralized utility
+      if (filters.ethnicity?.length > 0) {
+        const itemEthnicityCategory = getEthnicityCategory(item);
+        if (!itemEthnicityCategory || !filters.ethnicity.includes(itemEthnicityCategory)) {
+          return false;
+        }
+      }
+
+      // Filter by tissue - using centralized utility
+      if (filters.tissue?.length > 0) {
+        const tissueName = getTissueName(item.sample_group_code);
+        // If record has a tissue value, it must match one of the selected filters
+        // If record has no tissue value, keep it (don't filter based on missing data)
+        if (tissueName && !filters.tissue.includes(tissueName)) {
+          return false;
+        }
+      }
+
+      // Filter by ome - using centralized utility
+      if (filters.ome?.length > 0) {
+        if (!matchesOmeCategories(item.raw_assays_with_results, filters.ome)) {
+          return false;
+        }
+      }
+
+      return true;
     });
-  }, [data, filters]);
+  }, [allData, filters, hasFilters, mappedRandomGroupValues]);
 };

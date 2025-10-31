@@ -17,7 +17,7 @@ function FeatureLinks({
 
   // Call to invoke Redux action to fetch QC data
   // if timestamp is empty or older than 24 hours
-  const fecthQCData = () => {
+  const fetchQCData = () => {
     if (
       !lastModified ||
       !lastModified.length ||
@@ -95,7 +95,7 @@ function FeatureLinks({
         'Track and visualize the sample-level data submissions and their QC statuses by omics or assays.',
       icon: 'fact_check',
       title: 'QC Data Monitor',
-      eventHandler: fecthQCData,
+      eventHandler: fetchQCData,
     },
     {
       name: 'precovid-human-data-visualization',
