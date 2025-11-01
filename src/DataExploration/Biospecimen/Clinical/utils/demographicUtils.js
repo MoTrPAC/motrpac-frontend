@@ -69,17 +69,17 @@ export const getRandomizedGroup = (record) => {
 /**
  * Categorize BMI value into group
  * @param {string|number} bmi - BMI value
- * @returns {string|null} BMI group (Underweight, Normal, Overweight, Obese I, Obese II) or null if invalid
+ * @returns {string|null} BMI group (<18.5, 18.5-24.9, 25.0-29.9, 30.0-34.9, 35.0-39.9) or null if invalid
  */
 export const getBMIGroup = (bmi) => {
   const bmiValue = parseFloat(bmi);
   if (isNaN(bmiValue)) return null;
-  if (bmiValue < 18.5) return 'Underweight (<18.5)';
-  if (bmiValue < 25) return 'Normal (18.5-24.9)';
-  if (bmiValue < 30) return 'Overweight (25.0-29.9)';
-  if (bmiValue < 35) return 'Obese I (30.0-34.9)';
-  // Note: BMI >= 35 (including values >= 40) are grouped into Obese II as per requirements
-  return 'Obese II (35.0-39.9)';
+  if (bmiValue < 18.5) return '<18.5';
+  if (bmiValue < 25) return '18.5-24.9';
+  if (bmiValue < 30) return '25.0-29.9';
+  if (bmiValue < 35) return '30.0-34.9';
+  // Note: BMI >= 35 (including values >= 40) are grouped into the 35.0-39.9 category as per requirements
+  return '35.0-39.9';
 };
 
 /**
@@ -130,11 +130,11 @@ export const AGE_GROUPS = ['10-13', '14-17', '18-39', '40-59', '60+'];
  * BMI groups used for categorization
  */
 export const BMI_GROUPS = [
-  'Underweight (<18.5)',
-  'Normal (18.5-24.9)',
-  'Overweight (25.0-29.9)',
-  'Obese I (30.0-34.9)',
-  'Obese II (35.0-39.9)'
+  '<18.5',
+  '18.5-24.9',
+  '25.0-29.9',
+  '30.0-34.9',
+  '35.0-39.9'
 ];
 
 /**
