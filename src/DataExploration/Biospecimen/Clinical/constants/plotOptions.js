@@ -82,13 +82,7 @@ export const FILTER_OPTIONS = {
   omeOptions: ['Epigenomic', 'Transcriptomic', 'Proteomic', 'Metabolomic'],
 };
 
-export const BMI_GROUP_MAPPING = {
-  'Underweight (<18.5)': 'Underweight (<18.5)',
-  'Normal (18.5-24.9)': 'Normal (18.5-24.9)',
-  'Overweight (25.0-29.9)': 'Overweight (25.0-29.9)',
-  'Obese I (30.0-34.9)': 'Obese I (30.0-34.9)',
-  'Obese II (35.0-39.9)': 'Obese II (35.0-39.9)',
-};
+
 
 /**
 * Utility functions for filter management

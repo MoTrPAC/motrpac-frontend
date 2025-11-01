@@ -78,8 +78,8 @@ export const getBMIGroup = (bmi) => {
   if (bmiValue < 25) return 'Normal (18.5-24.9)';
   if (bmiValue < 30) return 'Overweight (25.0-29.9)';
   if (bmiValue < 35) return 'Obese I (30.0-34.9)';
-  if (bmiValue < 40) return 'Obese II (35.0-39.9)';
-  return 'Obese II (35.0-39.9)'; // BMI >= 40 also falls under Obese II category
+  // Note: BMI >= 35 (including values >= 40) are grouped into Obese II as per requirements
+  return 'Obese II (35.0-39.9)';
 };
 
 /**
