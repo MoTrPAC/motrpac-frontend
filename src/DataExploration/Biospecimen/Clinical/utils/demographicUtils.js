@@ -78,7 +78,8 @@ export const getBMIGroup = (bmi) => {
   if (bmiValue < 25) return '18.5-24.9';
   if (bmiValue < 30) return '25.0-29.9';
   if (bmiValue < 35) return '30.0-34.9';
-  return '35.0-39.9';
+  if (bmiValue < 40) return '35.0-39.9';
+  return null;
 };
 
 /**
