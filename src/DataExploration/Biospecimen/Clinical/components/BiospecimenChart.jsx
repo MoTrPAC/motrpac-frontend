@@ -621,7 +621,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
             events: {
               click: function () {
                 if (onBarClick) {
-                  // Use the group name directly (e.g., "Normal (18.5-24.9)")
+                  // Use the group name directly (e.g., "18.5-24.9")
                   const bmiGroup = this.name;
                   // Filter data to samples matching this BMI group
                   const bmiSamples = data.filter(record => getBMIGroup(record.bmi) === bmiGroup);
