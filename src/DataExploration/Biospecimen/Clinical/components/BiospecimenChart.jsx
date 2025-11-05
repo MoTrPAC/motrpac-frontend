@@ -349,7 +349,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     const sortedAssays = Object.values(assayData)
       .sort((a, b) => b.total - a.total);
 
-    const categories = sortedAssays.map(a => a.name);
+    const categories = sortedAssays.map(a => getAssayName(a.name));
 
     // Create separate chart data for Pre-Intervention and Post-Intervention phases
     const chartsData = INTERVENTION_PHASES.map((phase, index) => ({
