@@ -8,7 +8,7 @@ import {
   VISIT_CODE_TO_PHASE,
   INTERVENTION_PHASES,
 } from '../constants/plotOptions';
-import { getAssayName, getAssayNames } from '../utils/assayCodeMapping';
+import { getAssayShortName, getAssayFullName, getAssayFullNames } from '../utils/assayCodeMapping';
 import {
   getRaceCategory,
   getRandomizedGroup,
@@ -349,7 +349,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     const sortedAssays = Object.values(assayData)
       .sort((a, b) => b.total - a.total);
 
-    const categories = sortedAssays.map(a => getAssayName(a.name));
+    const categories = sortedAssays.map(a => getAssayShortName(a.name));
 
     // Create separate chart data for Pre-Intervention and Post-Intervention phases
     const chartsData = INTERVENTION_PHASES.map((phase, index) => ({
@@ -836,12 +836,12 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
           const point = this.point;
           // Convert assay codes to human-readable names
           const assayList = point.assayTypes && point.assayTypes.length > 0
-            ? getAssayNames(point.assayTypes).join(', ')
+            ? getAssayFullNames(point.assayTypes).join(', ')
             : 'N/A';
           
           return `
             <div style="padding: 8px;">
-              <strong>Assay:</strong> ${getAssayName(point.assay)}<br/>
+              <strong>Assay:</strong> ${getAssayFullName(point.assay)}<br/>
               <strong>Phase:</strong> ${point.phase}<br/>
               <strong>Samples:</strong> ${point.y.toLocaleString()}<br/>
               <em style="color: #666; font-size: 11px;">Click to view details</em>
