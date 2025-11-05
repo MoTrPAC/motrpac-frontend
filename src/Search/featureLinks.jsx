@@ -61,6 +61,15 @@ function FeatureLinks({
       eventHandler: null,
     },
     {
+      name: 'precovid-human-data-visualization',
+      route: dataVizHost,
+      description:
+        'An interactive data visualization tool for the analysis of pre-COVID human sedentary adults study data.',
+      icon: 'airline_seat_recline_normal',
+      title: 'Pre-COVID Human Data Visualization',
+      eventHandler: null,
+    },
+    {
       name: 'code-repositories',
       route: 'code-repositories',
       description:
@@ -96,15 +105,6 @@ function FeatureLinks({
       icon: 'fact_check',
       title: 'QC Data Monitor',
       eventHandler: fetchQCData,
-    },
-    {
-      name: 'precovid-human-data-visualization',
-      route: dataVizHost,
-      description:
-        'An interactive data visualization tool for the analysis of pre-COVID human sedentary adults study data.',
-      icon: 'airline_seat_recline_normal',
-      title: 'Pre-COVID Human Data Visualization',
-      eventHandler: null,
     },
     {
       name: 'multiomics-working-groups',
