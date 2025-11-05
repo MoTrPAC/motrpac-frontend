@@ -32,7 +32,7 @@ function FeatureLinks({
 
   const dataVizHost = process.env.NODE_ENV !== 'production'
     ? `https://data-viz-dev.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`
-    : `https://data-viz-dev.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`;
+    : `https://data-viz.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`;
 
   const features = [
     {
@@ -58,15 +58,6 @@ function FeatureLinks({
         'An interactive data visualization tool for the graphical clustering analysis of endurance training response in young adult rats.',
       icon: 'data_exploration',
       title: 'Endurance Trained Young Adult Rats Data Visualization',
-      eventHandler: null,
-    },
-    {
-      name: 'precovid-human-data-visualization',
-      route: dataVizHost,
-      description:
-        'An interactive data visualization tool for the analysis of pre-COVID human sedentary adults study data.',
-      icon: 'airline_seat_recline_normal',
-      title: 'Pre-COVID Human Data Visualization',
       eventHandler: null,
     },
     {
@@ -105,6 +96,15 @@ function FeatureLinks({
       icon: 'fact_check',
       title: 'QC Data Monitor',
       eventHandler: fetchQCData,
+    },
+    {
+      name: 'precovid-human-data-visualization',
+      route: dataVizHost,
+      description:
+        'An interactive data visualization tool for the analysis of pre-COVID human sedentary adults study data.',
+      icon: 'airline_seat_recline_normal',
+      title: 'Pre-COVID Human Data Visualization',
+      eventHandler: null,
     },
     {
       name: 'multiomics-working-groups',
