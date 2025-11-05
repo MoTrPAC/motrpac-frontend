@@ -45,18 +45,18 @@ const ASSAY_CODE_TO_NAME = {
 };
 
 /**
- * Get the full assay name from an assay code
+ * Get the assay short name from an assay code
  * @param {string} assayCode - The assay code (e.g., 'prot-pr')
- * @returns {string} The full assay name or the original code if not found
+ * @returns {string} The assay short name or the original code if not found
  */
 export const getAssayName = (assayCode) => {
   return ASSAY_CODE_TO_NAME[assayCode] || assayCode;
 };
 
 /**
- * Convert an array of assay codes to assay names
+ * Convert an array of assay codes to assay short names
  * @param {Array<string>} assayCodes - Array of assay codes
- * @returns {Array<string>} Array of assay names
+ * @returns {Array<string>} Array of assay short names
  */
 export const getAssayNames = (assayCodes) => {
   return assayCodes.map(code => ASSAY_CODE_TO_NAME[code] || code);
