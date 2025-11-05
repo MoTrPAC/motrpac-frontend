@@ -32,7 +32,7 @@ function FeatureLinks({
 
   const dataVizHost = process.env.NODE_ENV !== 'production'
     ? `https://data-viz-dev.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`
-    : `https://data-viz.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`;
+    : `https://data-viz-dev.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`;
 
   const features = [
     {
