@@ -223,9 +223,9 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }
     });
 
-    const colors = ['#2ecc71', '#f39c12', '#e74c3c']; // Green, Orange, Red
+    const colors = ['#3498db', '#2ecc71', '#f39c12', '#e67e22', '#e74c3c']; // Blue, Green, Yellow-Orange, Orange, Red
     return BMI_GROUPS.map((group, index) => ({
-      name: `BMI ${group}`,
+      name: group,
       y: bmiCounts[group],
       color: colors[index],
     }));
@@ -621,8 +621,8 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
             events: {
               click: function () {
                 if (onBarClick) {
-                  // Extract BMI group from name (e.g., "BMI 0-25" -> "0-25")
-                  const bmiGroup = this.name.replace('BMI ', '');
+                  // Use the group name directly (e.g., "18.5-24.9")
+                  const bmiGroup = this.name;
                   // Filter data to samples matching this BMI group
                   const bmiSamples = data.filter(record => getBMIGroup(record.bmi) === bmiGroup);
                   onBarClick({

@@ -69,14 +69,17 @@ export const getRandomizedGroup = (record) => {
 /**
  * Categorize BMI value into group
  * @param {string|number} bmi - BMI value
- * @returns {string|null} BMI group (0-25, 25-30, 30+) or null if invalid
+ * @returns {string|null} BMI group (<18.5, 18.5-24.9, 25.0-29.9, 30.0-34.9, 35.0-39.9) or null if invalid
  */
 export const getBMIGroup = (bmi) => {
   const bmiValue = parseFloat(bmi);
   if (isNaN(bmiValue)) return null;
-  if (bmiValue < 25) return '0-25';
-  if (bmiValue < 30) return '25-30';
-  return '30+';
+  if (bmiValue < 18.5) return '<18.5';
+  if (bmiValue < 25) return '18.5-24.9';
+  if (bmiValue < 30) return '25.0-29.9';
+  if (bmiValue < 35) return '30.0-34.9';
+  if (bmiValue < 40) return '35.0-39.9';
+  return null;
 };
 
 /**
@@ -126,7 +129,13 @@ export const AGE_GROUPS = ['10-13', '14-17', '18-39', '40-59', '60+'];
 /**
  * BMI groups used for categorization
  */
-export const BMI_GROUPS = ['0-25', '25-30', '30+'];
+export const BMI_GROUPS = [
+  '<18.5',
+  '18.5-24.9',
+  '25.0-29.9',
+  '30.0-34.9',
+  '35.0-39.9'
+];
 
 /**
  * Randomized groups used for categorization

@@ -56,7 +56,7 @@ export const DEFAULT_FILTERS = {
   sex: ['Male', 'Female'], // Both selected by default
   dmaqc_age_groups: ['10-13', '14-17', '18-39', '40-59', '60+'], // All selected by default
   random_group_code: ['Control', 'Endurance', 'Resistance'], // All selected by default (changed from single value to array)
-  bmi_group: ['0-25', '25-30', '30+'], // All selected by default
+  bmi_group: ['<18.5', '18.5-24.9', '25.0-29.9', '30.0-34.9', '35.0-39.9'], // All selected by default
   race: ['African American/Black', 'Asian', 'Hawaiian/Pacific Islander', 'Native American', 'Caucasian', 'Other', 'Unknown'], // All selected by default - must match exact strings
   ethnicity: ['Latino, Hispanic, or Spanish origin/ethnicity', 'Not Latino, Hispanic, or Spanish origin/ethnicity', 'Refused/Unknown'], // All selected by default - must match BiospecimenChart.jsx strings
   tissue: ['Adipose', 'Blood', 'Muscle'], // All selected by default
@@ -75,18 +75,14 @@ export const FILTER_OPTIONS = {
   sexOptions: ['Male', 'Female'],
   ageGroupOptions: ['10-13', '14-17', '18-39', '40-59', '60+'],
   randomGroupOptions: ['Control', 'Endurance', 'Resistance'],
-  bmiGroupOptions: ['0-25', '25-30', '30+'],
+  bmiGroupOptions: ['<18.5', '18.5-24.9', '25.0-29.9', '30.0-34.9', '35.0-39.9'],
   raceOptions: ['African American/Black', 'Asian', 'Hawaiian/Pacific Islander', 'Native American', 'Caucasian', 'Other', 'Unknown'],
   ethnicityOptions: ['Latino, Hispanic, or Spanish origin/ethnicity', 'Not Latino, Hispanic, or Spanish origin/ethnicity', 'Refused/Unknown'], // Must match BiospecimenChart.jsx and DEFAULT_FILTERS
   tissueOptions: ['Adipose', 'Blood', 'Muscle'],
   omeOptions: ['Epigenomic', 'Transcriptomic', 'Proteomic', 'Metabolomic'],
 };
 
-export const BMI_GROUP_MAPPING = {
-  '0-25': 'BMI 0-25',
-  '25-30': 'BMI 25-30',
-  '30+': 'BMI 30+',
-};
+
 
 /**
 * Utility functions for filter management
