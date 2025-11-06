@@ -40,16 +40,10 @@ const InteractiveBiospecimenChart = () => {
   });
 
   // Reset table pagination when selectedBar changes
-  // Combined cleanup and pagination reset in single effect for efficiency
   useEffect(() => {
     if (selectedBar) {
       tablePagination.resetPagination();
     }
-    
-    // Cleanup on unmount to prevent memory leaks
-    return () => {
-      setSelectedBar(null);
-    };
   }, [selectedBar, tablePagination]);
 
   // Static filter options from constants - memoized to prevent recreating object
@@ -126,7 +120,8 @@ const InteractiveBiospecimenChart = () => {
   // Optimized to extract only necessary data from event
   const handleBarClick = useCallback((event) => {
     const { point } = event;
-    setSelectedBar({
+    
+    const barData = {
       phase: point.phase,
       tissue: point.tissue,
       timepoint: point.timepoint,
@@ -136,7 +131,9 @@ const InteractiveBiospecimenChart = () => {
       assayTypes: point.assayTypes,
       demographicType: point.demographicType,
       category: point.category,
-    });
+    };
+    
+    setSelectedBar(barData);
   }, []);
 
   return (
