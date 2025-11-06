@@ -569,7 +569,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }],
       credits: { enabled: false },
     };
-  }, [participantByAgeGroup, fixedMaxAgeGroupCount, data, onBarClick]);
+  }, [participantByAgeGroup, fixedMaxAgeGroupCount, onBarClick]);
 
   // Bar chart configuration for race distribution
   const raceBarChartOptions = useMemo(() => {
@@ -647,7 +647,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }],
       credits: { enabled: false },
     };
-  }, [participantByRace, fixedMaxRaceCount, data, onBarClick]);
+  }, [participantByRace, fixedMaxRaceCount, onBarClick]);
 
   // Pie chart configuration for BMI group distribution
   const bmiPieChartOptions = useMemo(() => {
@@ -701,7 +701,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }],
       credits: { enabled: false },
     };
-  }, [participantByBMI, data, onBarClick]);
+  }, [participantByBMI, onBarClick]);
 
   // Pie chart configuration for ethnicity distribution
   const ethnicityPieChartOptions = useMemo(() => {
@@ -755,7 +755,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }],
       credits: { enabled: false },
     };
-  }, [participantByEthnicity, data, onBarClick]);
+  }, [participantByEthnicity, onBarClick]);
 
   // Bar chart configuration for randomized group distribution
   const randomGroupBarChartOptions = useMemo(() => {
@@ -832,7 +832,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }],
       credits: { enabled: false },
     };
-  }, [participantByRandomGroup, fixedMaxRandomGroupCount, data, onBarClick]);
+  }, [participantByRandomGroup, fixedMaxRandomGroupCount, onBarClick]);
 
   // Chart configurations for both Pre and Post phases
   const chartOptionsArray = useMemo(() => {
