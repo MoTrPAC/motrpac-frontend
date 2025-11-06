@@ -120,7 +120,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     };
   }, [allData]);
 
-    // Calculate participant counts by sex
+  // Calculate participant counts by sex
   const participantBySex = useMemo(() => {
     if (!data || !data.length) return null;
 
@@ -132,7 +132,10 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
         if (!uniqueParticipants.has(record.pid)) {
           uniqueParticipants.set(record.pid, record.sex);
         }
-        samplesBySex[record.sex].push(record);
+        // Guard against unexpected sex values
+        if (samplesBySex[record.sex]) {
+          samplesBySex[record.sex].push(record);
+        }
       }
     });
 
