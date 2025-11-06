@@ -158,8 +158,9 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     
     data.forEach((record) => {
       if (record.pid && record.dmaqc_age_groups) {
-        uniqueParticipants.set(record.pid, record.dmaqc_age_groups);
-        // Collect all samples for this age group
+        if (!uniqueParticipants.has(record.pid)) {
+          uniqueParticipants.set(record.pid, record.dmaqc_age_groups);
+        }
         samplesByAgeGroup[record.dmaqc_age_groups].push(record);
       }
     });
@@ -195,8 +196,9 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       if (record.pid) {
         const raceCategory = getRaceCategory(record);
         if (raceCategory) {
-          uniqueParticipants.set(record.pid, raceCategory);
-          // Collect all samples for this race category
+          if (!uniqueParticipants.has(record.pid)) {
+            uniqueParticipants.set(record.pid, raceCategory);
+          }
           samplesByRace[raceCategory].push(record);
         }
       }
@@ -233,8 +235,9 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       if (record.pid && record.bmi) {
         const bmiGroup = getBMIGroup(record.bmi);
         if (bmiGroup) {
-          uniqueParticipants.set(record.pid, bmiGroup);
-          // Collect all samples for this BMI group
+          if (!uniqueParticipants.has(record.pid)) {
+            uniqueParticipants.set(record.pid, bmiGroup);
+          }
           samplesByBMIGroup[bmiGroup].push(record);
         }
       }
@@ -273,8 +276,9 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       if (record.pid) {
         const ethnicityCategory = getEthnicityCategory(record);
         if (ethnicityCategory) {
-          uniqueParticipants.set(record.pid, ethnicityCategory);
-          // Collect all samples for this ethnicity
+          if (!uniqueParticipants.has(record.pid)) {
+            uniqueParticipants.set(record.pid, ethnicityCategory);
+          }
           samplesByEthnicity[ethnicityCategory].push(record);
         }
       }
@@ -326,8 +330,9 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       if (record.pid) {
         const group = getRandomizedGroup(record);
         if (group) {
-          uniqueParticipants.set(record.pid, group);
-          // Collect all samples for this randomized group
+          if (!uniqueParticipants.has(record.pid)) {
+            uniqueParticipants.set(record.pid, group);
+          }
           samplesByGroup[group].push(record);
         }
       }
