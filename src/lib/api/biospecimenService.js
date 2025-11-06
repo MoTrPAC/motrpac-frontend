@@ -108,9 +108,9 @@ function createMockService() {
  * Create biospecimen API service with configuration
  */
 function CreateBiospecimenService() {
-  const apiURL = import.meta.env.VITE_API_SERVICE_ADDRESS_DEV;
+  const apiURL = import.meta.env.VITE_API_SERVICE_ADDRESS;
   const endpoint = import.meta.env.VITE_BIOSPECIMEN_DATA_ENDPOINT;
-  const apiKey = import.meta.env.VITE_API_SERVICE_KEY_DEV;
+  const apiKey = import.meta.env.VITE_API_SERVICE_KEY;
 
   console.log('Biospecimen Service Configuration:');
   console.log('API URL:', apiURL);
@@ -119,12 +119,12 @@ function CreateBiospecimenService() {
 
   // For development, allow graceful degradation if environment variables are missing
   if (!apiURL) {
-    console.warn('VITE_API_SERVICE_ADDRESS_DEV is not configured - using placeholder');
+    console.warn('VITE_API_SERVICE_ADDRESS is not configured - using placeholder');
     return createMockService();
   }
 
   if (!apiKey) {
-    console.warn('VITE_API_SERVICE_KEY_DEV is not configured - using placeholder');
+    console.warn('VITE_API_SERVICE_KEY is not configured - using placeholder');
     return createMockService();
   }
 
