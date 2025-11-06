@@ -120,26 +120,31 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     };
   }, [allData]);
 
-  // Calculate participant counts by sex
+    // Calculate participant counts by sex
   const participantBySex = useMemo(() => {
     if (!data || !data.length) return null;
 
     const uniqueParticipants = new Map();
+    const samplesBySex = { Male: [], Female: [] };
+    
     data.forEach((record) => {
       if (record.pid && record.sex) {
-        uniqueParticipants.set(record.pid, record.sex);
+        if (!uniqueParticipants.has(record.pid)) {
+          uniqueParticipants.set(record.pid, record.sex);
+        }
+        samplesBySex[record.sex].push(record);
       }
     });
 
     const sexCounts = { Male: 0, Female: 0 };
     uniqueParticipants.forEach((sex) => {
       if (sex === 'Male') sexCounts.Male++;
-      else if (sex === 'Female') sexCounts.Female++;
+      else sexCounts.Female++;
     });
 
     return [
-      { name: 'Male', y: sexCounts.Male, color: '#4e79a7' },
-      { name: 'Female', y: sexCounts.Female, color: '#e15759' },
+      { name: 'Male', y: sexCounts.Male, color: '#4e79a7', samples: samplesBySex.Male },
+      { name: 'Female', y: sexCounts.Female, color: '#e15759', samples: samplesBySex.Female },
     ];
   }, [data]);
 
@@ -148,9 +153,14 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     if (!data || !data.length) return null;
 
     const uniqueParticipants = new Map();
+    const samplesByAgeGroup = {};
+    AGE_GROUPS.forEach(group => samplesByAgeGroup[group] = []);
+    
     data.forEach((record) => {
       if (record.pid && record.dmaqc_age_groups) {
         uniqueParticipants.set(record.pid, record.dmaqc_age_groups);
+        // Collect all samples for this age group
+        samplesByAgeGroup[record.dmaqc_age_groups].push(record);
       }
     });
 
@@ -166,7 +176,10 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     // Keep all age groups for smooth animation (bars animate to 0 instead of disappearing)
     return {
       categories: AGE_GROUPS,
-      data: AGE_GROUPS.map(group => ageCounts[group]),
+      data: AGE_GROUPS.map(group => ({
+        y: ageCounts[group],
+        samples: samplesByAgeGroup[group], // Attach samples to each data point
+      })),
     };
   }, [data]);
 
@@ -175,11 +188,16 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     if (!data || !data.length) return null;
 
     const uniqueParticipants = new Map();
+    const samplesByRace = {};
+    RACE_GROUPS.forEach(group => samplesByRace[group] = []);
+    
     data.forEach((record) => {
       if (record.pid) {
         const raceCategory = getRaceCategory(record);
         if (raceCategory) {
           uniqueParticipants.set(record.pid, raceCategory);
+          // Collect all samples for this race category
+          samplesByRace[raceCategory].push(record);
         }
       }
     });
@@ -196,7 +214,10 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     // Keep all race groups for smooth animation (bars animate to 0 instead of disappearing)
     return {
       categories: RACE_GROUPS,
-      data: RACE_GROUPS.map(group => raceCounts[group]),
+      data: RACE_GROUPS.map(group => ({
+        y: raceCounts[group],
+        samples: samplesByRace[group], // Attach samples to each data point
+      })),
     };
   }, [data]);
 
@@ -205,11 +226,16 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     if (!data || !data.length) return null;
 
     const uniqueParticipants = new Map();
+    const samplesByBMIGroup = {};
+    BMI_GROUPS.forEach(group => samplesByBMIGroup[group] = []);
+
     data.forEach((record) => {
       if (record.pid && record.bmi) {
         const bmiGroup = getBMIGroup(record.bmi);
         if (bmiGroup) {
           uniqueParticipants.set(record.pid, bmiGroup);
+          // Collect all samples for this BMI group
+          samplesByBMIGroup[bmiGroup].push(record);
         }
       }
     });
@@ -228,6 +254,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       name: group,
       y: bmiCounts[group],
       color: colors[index],
+      samples: samplesByBMIGroup[group], // Attach samples directly to data point
     }));
   }, [data]);
 
@@ -236,11 +263,19 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     if (!data || !data.length) return null;
 
     const uniqueParticipants = new Map();
+    const samplesByEthnicity = {
+      'Latino, Hispanic, or Spanish origin/ethnicity': [],
+      'Not Latino, Hispanic, or Spanish origin/ethnicity': [],
+      'Refused/Unknown': [],
+    };
+    
     data.forEach((record) => {
       if (record.pid) {
         const ethnicityCategory = getEthnicityCategory(record);
         if (ethnicityCategory) {
           uniqueParticipants.set(record.pid, ethnicityCategory);
+          // Collect all samples for this ethnicity
+          samplesByEthnicity[ethnicityCategory].push(record);
         }
       }
     });
@@ -261,17 +296,20 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       { 
         name: 'Latino, Hispanic, or Spanish', 
         y: ethnicityCounts['Latino, Hispanic, or Spanish origin/ethnicity'], 
-        color: '#16a085' 
+        color: '#16a085',
+        samples: samplesByEthnicity['Latino, Hispanic, or Spanish origin/ethnicity'],
       },
       { 
         name: 'Not Latino, Hispanic, or Spanish', 
         y: ethnicityCounts['Not Latino, Hispanic, or Spanish origin/ethnicity'], 
-        color: '#95a5a6' 
+        color: '#95a5a6',
+        samples: samplesByEthnicity['Not Latino, Hispanic, or Spanish origin/ethnicity'],
       },
       { 
         name: 'Refused/Unknown', 
         y: ethnicityCounts['Refused/Unknown'], 
-        color: '#bdc3c7' 
+        color: '#bdc3c7',
+        samples: samplesByEthnicity['Refused/Unknown'],
       },
     ];
   }, [data]);
@@ -281,11 +319,16 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     if (!data || !data.length) return null;
 
     const uniqueParticipants = new Map();
+    const samplesByGroup = {};
+    RANDOMIZED_GROUPS.forEach(group => samplesByGroup[group] = []);
+    
     data.forEach((record) => {
       if (record.pid) {
         const group = getRandomizedGroup(record);
         if (group) {
           uniqueParticipants.set(record.pid, group);
+          // Collect all samples for this randomized group
+          samplesByGroup[group].push(record);
         }
       }
     });
@@ -302,7 +345,10 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     // Keep all groups for smooth animation (bars animate to 0 instead of disappearing)
     return {
       categories: RANDOMIZED_GROUPS,
-      data: RANDOMIZED_GROUPS.map(group => groupCounts[group]),
+      data: RANDOMIZED_GROUPS.map(group => ({
+        y: groupCounts[group],
+        samples: samplesByGroup[group], // Attach samples to each data point
+      })),
     };
   }, [data]);
 
@@ -405,14 +451,12 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
           point: {
             events: {
               click: function () {
-                if (onBarClick) {
-                  // Filter data to samples matching this sex
-                  const sexSamples = data.filter(record => record.sex === this.name);
+                if (onBarClick && this.samples) {
                   onBarClick({
                     point: {
                       category: this.name,
-                      y: sexSamples.length,
-                      samples: sexSamples,
+                      y: this.samples.length,
+                      samples: this.samples,
                       demographicType: 'Sex',
                     }
                   });
@@ -428,7 +472,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
       }],
       credits: { enabled: false },
     };
-  }, [participantBySex, data, onBarClick]);
+  }, [participantBySex, onBarClick]);
 
   // Bar chart configuration for age group distribution
   const ageBarChartOptions = useMemo(() => {
@@ -483,15 +527,13 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
           point: {
             events: {
               click: function () {
-                if (onBarClick) {
+                if (onBarClick && this.samples) {
                   const ageGroup = participantByAgeGroup.categories[this.index];
-                  // Filter data to samples matching this age group
-                  const ageSamples = data.filter(record => record.dmaqc_age_groups === ageGroup);
                   onBarClick({
                     point: {
                       category: ageGroup,
-                      y: ageSamples.length,
-                      samples: ageSamples,
+                      y: this.samples.length,
+                      samples: this.samples,
                       demographicType: 'Age Group',
                     }
                   });
@@ -563,15 +605,13 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
           point: {
             events: {
               click: function () {
-                if (onBarClick) {
+                if (onBarClick && this.samples) {
                   const raceCategory = participantByRace.categories[this.index];
-                  // Filter data to samples matching this race
-                  const raceSamples = data.filter(record => getRaceCategory(record) === raceCategory);
                   onBarClick({
                     point: {
                       category: raceCategory,
-                      y: raceSamples.length,
-                      samples: raceSamples,
+                      y: this.samples.length,
+                      samples: this.samples,
                       demographicType: 'Race',
                     }
                   });
@@ -620,16 +660,12 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
           point: {
             events: {
               click: function () {
-                if (onBarClick) {
-                  // Use the group name directly (e.g., "18.5-24.9")
-                  const bmiGroup = this.name;
-                  // Filter data to samples matching this BMI group
-                  const bmiSamples = data.filter(record => getBMIGroup(record.bmi) === bmiGroup);
+                if (onBarClick && this.samples) {
                   onBarClick({
                     point: {
                       category: this.name,
-                      y: bmiSamples.length,
-                      samples: bmiSamples,
+                      y: this.samples.length,
+                      samples: this.samples,
                       demographicType: 'BMI Group',
                     }
                   });
@@ -678,21 +714,12 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
           point: {
             events: {
               click: function () {
-                if (onBarClick) {
-                  // Map display name to full ethnicity category for filtering
-                  const ethnicityMap = {
-                    'Latino, Hispanic, or Spanish': 'Latino, Hispanic, or Spanish origin/ethnicity',
-                    'Not Latino, Hispanic, or Spanish': 'Not Latino, Hispanic, or Spanish origin/ethnicity',
-                    'Refused/Unknown': 'Refused/Unknown',
-                  };
-                  const fullEthnicityName = ethnicityMap[this.name] || this.name;
-                  // Filter data to samples matching this ethnicity
-                  const ethnicitySamples = data.filter(record => getEthnicityCategory(record) === fullEthnicityName);
+                if (onBarClick && this.samples) {
                   onBarClick({
                     point: {
                       category: this.name,
-                      y: ethnicitySamples.length,
-                      samples: ethnicitySamples,
+                      y: this.samples.length,
+                      samples: this.samples,
                       demographicType: 'Ethnicity',
                     }
                   });
@@ -763,15 +790,13 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
           point: {
             events: {
               click: function () {
-                if (onBarClick) {
+                if (onBarClick && this.samples) {
                   const groupCategory = participantByRandomGroup.categories[this.index];
-                  // Filter data to samples matching this randomized group
-                  const groupSamples = data.filter(record => getRandomizedGroup(record) === groupCategory);
                   onBarClick({
                     point: {
                       category: groupCategory,
-                      y: groupSamples.length,
-                      samples: groupSamples,
+                      y: this.samples.length,
+                      samples: this.samples,
                       demographicType: 'Randomized Group',
                     }
                   });
