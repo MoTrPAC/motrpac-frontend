@@ -49,12 +49,12 @@ const ASSAY_CODE_TO_SHORT_NAME = {
  * This provides full descriptive names for assay codes used in tooltips
  */
 const ASSAY_CODE_TO_FULL_NAME = {
-  'transcript-rna-seq': 'rna-seq',
-  'transcript-rna-seq-splicing': 'rna-seq',
+  'transcript-rna-seq': 'RNA-seq',
+  'transcript-rna-seq-splicing': 'RNA-seq',
   'epigen-rrbs': 'RRBS',
   'epigen-methylcap-seq': 'Methyl Capture',
-  'epigen-atac-seq': 'atac-seq',
-  'genomic-wgs': 'wgs',
+  'epigen-atac-seq': 'ATAC-seq',
+  'genomic-wgs': 'WGS',
   'prot-pr': 'Global Proteomics',
   'prot-ph': 'Phosphoproteomics',
   'prot-ac': 'Acetyl proteomics',
