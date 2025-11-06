@@ -1,14 +1,60 @@
 /**
- * Mapping of assay codes to assay names from assay_codes.csv
- * This provides human-readable names for assay codes used in the biospecimen data
+ * Mapping of assay codes to assay short names from assay_codes.csv
+ * This provides human-readable short names for assay codes used in the biospecimen data
  */
-const ASSAY_CODE_TO_NAME = {
-  'transcript-rna-seq': 'rna-seq',
-  'transcript-rna-seq-splicing': 'rna-seq',
+const ASSAY_CODE_TO_SHORT_NAME = {
+  'transcript-rna-seq': 'RNA-seq',
+  'transcript-rna-seq-splicing': 'RNA-seq Splice',
+  'epigen-rrbs': 'RRBS',
+  'epigen-methylcap-seq': 'MethylCap-seq',
+  'epigen-atac-seq': 'ATAC-seq',
+  'genomic-wgs': 'WGS',
+  'prot-pr': 'Prot(MS)',
+  'prot-ph': 'Phospho',
+  'prot-ac': 'Acetyl',
+  'prot-ub': 'Ubiq',
+  'metab-t-3hib': '3-HIB(T)',
+  'metab-t-aa': 'AA(T)',
+  'metab-t-ac-duke': 'Acyl(T)',
+  'metab-t-acoa': 'Acyl-CoA(T)',
+  'metab-t-baiba': 'BAIBA(T)',
+  'metab-t-cer-duke': 'Cer(T)',
+  'lab-conv': 'Conv(T)',
+  'metab-t-ka': 'KA(T)',
+  'metab-t-nuc': 'Nuc(T)',
+  'metab-t-oa': 'Org Acids(T)',
+  'metab-t-sphm': 'Sphingo(T)',
+  'metab-t-oxylipneg': 'Oxylipin(T)',
+  'metab-t-etamidpos': 'Ethanolamide(T)',
+  'metab-t-ac-mayo': 'Acyl(T)',
+  'metab-t-amines': 'Amines(T)',
+  'metab-t-cer-mayo': 'Cer(T)',
+  'metab-t-tca': 'TCA(T)',
+  'metab-u-hilicpos': 'HILIC(U)',
+  'metab-u-lrpneg': 'Lipid RPN(U)',
+  'metab-u-lrppos': 'Lipid RPP(U)',
+  'metab-u-rppos': 'RPP(U)',
+  'metab-u-rpneg': 'RPN(U)',
+  'metab-u-ionpneg': 'IPN(U)',
+  'immunoassay': 'Immuno',
+  'lab-ck': 'CK',
+  'lab-glc': 'Glucagon',
+  'lab-ins': 'Insulin',
+  'prot-ol': 'Olink',
+  'lab-crt': 'Cortisol',
+};
+
+/**
+ * Mapping of assay codes to full assay names from assay_codes.csv
+ * This provides full descriptive names for assay codes used in tooltips
+ */
+const ASSAY_CODE_TO_FULL_NAME = {
+  'transcript-rna-seq': 'RNA-seq',
+  'transcript-rna-seq-splicing': 'RNA-seq',
   'epigen-rrbs': 'RRBS',
   'epigen-methylcap-seq': 'Methyl Capture',
-  'epigen-atac-seq': 'atac-seq',
-  'genomic-wgs': 'wgs',
+  'epigen-atac-seq': 'ATAC-seq',
+  'genomic-wgs': 'WGS',
   'prot-pr': 'Global Proteomics',
   'prot-ph': 'Phosphoproteomics',
   'prot-ac': 'Acetyl proteomics',
@@ -45,19 +91,41 @@ const ASSAY_CODE_TO_NAME = {
 };
 
 /**
- * Get the full assay name from an assay code
+ * Get the assay short name from an assay code (for y-axis labels)
  * @param {string} assayCode - The assay code (e.g., 'prot-pr')
- * @returns {string} The full assay name or the original code if not found
+ * @returns {string} The assay short name or the original code if not found
  */
-export const getAssayName = (assayCode) => {
-  return ASSAY_CODE_TO_NAME[assayCode] || assayCode;
+export const getAssayShortName = (assayCode) => {
+  return ASSAY_CODE_TO_SHORT_NAME[assayCode] || assayCode;
 };
 
 /**
- * Convert an array of assay codes to assay names
- * @param {Array<string>} assayCodes - Array of assay codes
- * @returns {Array<string>} Array of assay names
+ * Get the full assay name from an assay code (for tooltips)
+ * @param {string} assayCode - The assay code (e.g., 'prot-pr')
+ * @returns {string} The full assay name or the original code if not found
  */
-export const getAssayNames = (assayCodes) => {
-  return assayCodes.map(code => ASSAY_CODE_TO_NAME[code] || code);
+export const getAssayFullName = (assayCode) => {
+  return ASSAY_CODE_TO_FULL_NAME[assayCode] || assayCode;
 };
+
+/**
+ * Convert an array of assay codes to assay short names
+ * @param {Array<string>} assayCodes - Array of assay codes
+ * @returns {Array<string>} Array of assay short names
+ */
+export const getAssayShortNames = (assayCodes) => {
+  return assayCodes.map(code => ASSAY_CODE_TO_SHORT_NAME[code] || code);
+};
+
+/**
+ * Convert an array of assay codes to full assay names
+ * @param {Array<string>} assayCodes - Array of assay codes
+ * @returns {Array<string>} Array of full assay names
+ */
+export const getAssayFullNames = (assayCodes) => {
+  return assayCodes.map(code => ASSAY_CODE_TO_FULL_NAME[code] || code);
+};
+
+// Legacy exports for backward compatibility (deprecated - use getAssayShortName instead)
+export const getAssayName = getAssayShortName;
+export const getAssayNames = getAssayShortNames;
