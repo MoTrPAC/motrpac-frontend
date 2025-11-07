@@ -449,7 +449,8 @@ export function getTranslations(lang) {
  * @returns {boolean} True if the language is supported
  */
 export function isLanguageSupported(lang) {
-  return lang && Object.prototype.hasOwnProperty.call(SUPPORTED_LANGUAGES, lang.toLowerCase());
+  if (!lang) return false;
+  return Object.prototype.hasOwnProperty.call(SUPPORTED_LANGUAGES, lang.toLowerCase());
 }
 
 /**
