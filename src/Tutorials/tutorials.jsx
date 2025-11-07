@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import PageTitle from '../lib/ui/pageTitle';
@@ -8,31 +8,77 @@ import ExternalLink from '../lib/ui/externalLink';
 import '@styles/license.scss';
 
 function Tutorials() {
-  const [language, setLanguage] = useState('English');
+  const location = useLocation();
+  const history = useHistory();
 
-  // Function to handle language toggle
-  const toggleLanguage = () => {
-    setLanguage((prevLanguage) => (prevLanguage === 'English' ? 'Spanish' : 'English'));
+  // Get initial language from URL param, default to 'en'
+  const getInitialLanguage = () => {
+    const params = new URLSearchParams(location.search);
+    const langParam = params.get('lang');
+    return langParam === 'es' ? 'es' : 'en';
+  };
+
+  const [language, setLanguage] = useState(getInitialLanguage);
+
+  // Update URL when language changes
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+
+    if (language === 'en') {
+      // Remove lang param for English (default)
+      params.delete('lang');
+    } else {
+      params.set('lang', language);
+    }
+
+    const newSearch = params.toString();
+    const newUrl = newSearch ? `?${newSearch}` : location.pathname;
+
+    // Only update if the URL actually changed
+    if (location.search !== (newSearch ? `?${newSearch}` : '')) {
+      history.replace(newUrl);
+    }
+  }, [language, location.pathname, location.search, history]);
+
+  const toggleLanguage = (lang) => {
+    setLanguage(lang);
   };
 
   return (
     <div className="tutorialsPage px-3 px-md-4 mb-3 container">
       <Helmet>
-        <html lang="en" />
+        <html lang={language} />
         <title>Tutorials - MoTrPAC Data Hub</title>
       </Helmet>
       <PageTitle title="Tutorials" />
+
+      {/* Language Toggle */}
+      <div className="mb-4">
+        <div className="btn-group" role="group" aria-label="Language selection">
+          <button
+            type="button"
+            className={`btn ${language === 'en' ? 'btn-primary' : 'btn-outline-primary'}`}
+            onClick={() => toggleLanguage('en')}
+          >
+            English
+          </button>
+          <button
+            type="button"
+            className={`btn ${language === 'es' ? 'btn-primary' : 'btn-outline-primary'}`}
+            onClick={() => toggleLanguage('es')}
+          >
+            Español
+          </button>
+        </div>
+      </div>
+
       <div className="tutorials-content-container">
         <div className="tutorials-summary-container row mb-4">
           <div className="col-12">
             <div className="section-title-container d-flex align-items-center justify-content-between mt-3 mb-2">
-              <h3 className="mb-0">{language === 'English' ? 'MoTrPAC Data Hub Overview' : 'Descripción General del Centro de Datos de MoTrPAC'}</h3>
-              <button type="button" className="btn btn-link" onClick={toggleLanguage}>
-                <i className="bi bi-translate"></i>
-                <span className="ml-1">{language === 'English' ? 'Spanish' : 'English'}</span>
-              </button>
+              <h3 className="mb-0">{language === 'en' ? 'MoTrPAC Data Hub Overview' : 'Descripción General del Centro de Datos de MoTrPAC'}</h3>
             </div>
-            {language === 'English' ? (
+            {language === 'en' ? (
               <div className="video-tutorial-container">
                 <p className="lead">
                   The following tutorial video (also available in Spanish) is designed
