@@ -1,38 +1,65 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import ReactWordcloud from 'react-wordcloud';
 import PageTitle from '../lib/ui/pageTitle';
 import ExternalLink from '../lib/ui/externalLink';
-import exerciseBenefitsData from './exerciseBenefitsData';
 import exerciseBenefitsReferenceData from './exerciseBenefitsReferenceData';
+import {
+  getTranslations,
+  getLanguageFromURL,
+  DEFAULT_LANGUAGE,
+} from './exerciseBenefitsTranslations';
+import LanguageSelector from './components/LanguageSelector';
 
 import '@styles/mainStudyPage.scss';
 
-const exerciseBenefits = [
-  'Improved immune system',
-  'Younger-looking skin',
-  'Reduced risk of cancer ',
-  'Reduced risk of metabolic disease',
-  'Better temperature regulation',
-  'Better sex',
-  'Improved sleep',
-  'Reduced risk for depression',
-  'Improved insulin sensitivity',
-  'Improved blood lipid profile',
-  'Better self-esteem',
-  'Better oxygen transport',
-  'More, larger, and more efficient mitochondria',
-  'Increased reliance on lipid metabolism',
-  'Stronger skeleton, joints and tendons',
-  'Reduced risk of all-cause mortality',
-  'Reduced risk of cardiovascular diseases',
-  'Improved cognition',
-  'Reduced stress response',
-  'Reduced risk for dementia',
-];
-
+/**
+ * ExerciseBenefits Component
+ * 
+ * Displays the benefits of exercise with multi-language support (English, Spanish, French).
+ * Language can be selected via dropdown or URL parameter (?lang=en|es|fr).
+ */
 function ExerciseBenefits() {
-  const options = {
+  const [searchParams, setSearchParams] = useSearchParams();
+  
+  // Get initial language from URL or default to English
+  const [currentLanguage, setCurrentLanguage] = useState(() => 
+    getLanguageFromURL(searchParams)
+  );
+
+  // Get translations for current language (memoized for performance)
+  const translations = useMemo(() => 
+    getTranslations(currentLanguage),
+    [currentLanguage]
+  );
+
+  // Update language when URL changes
+  useEffect(() => {
+    const urlLang = getLanguageFromURL(searchParams);
+    if (urlLang !== currentLanguage) {
+      setCurrentLanguage(urlLang);
+    }
+  }, [searchParams, currentLanguage]);
+
+  /**
+   * Handle language change from selector
+   */
+  const handleLanguageChange = (newLanguage) => {
+    setCurrentLanguage(newLanguage);
+    
+    // Update URL with new language parameter
+    const newSearchParams = new URLSearchParams(searchParams);
+    if (newLanguage === DEFAULT_LANGUAGE) {
+      // Remove lang parameter for default language (cleaner URLs)
+      newSearchParams.delete('lang');
+    } else {
+      newSearchParams.set('lang', newLanguage);
+    }
+    setSearchParams(newSearchParams, { replace: true });
+  };
+  // Word cloud configuration
+  const wordCloudOptions = {
     rotations: 0,
     rotationAngles: [0],
     fontFamily: 'sans-serif',
@@ -46,46 +73,56 @@ function ExerciseBenefits() {
     transitionDuration: 1000,
   };
 
-  function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+  // Generate random value for word cloud (memoized to avoid unnecessary recalculations)
+  const getRandomInt = (min, max) => 
+    Math.floor(Math.random() * (max - min + 1)) + min;
 
-  const words = exerciseBenefits.map((benefit) => ({
-    text: benefit,
-    value: getRandomInt(100, 800),
-  }));
+  // Prepare words for word cloud (memoized for performance)
+  const words = useMemo(() => 
+    translations.benefits.map((benefit) => ({
+      text: benefit,
+      value: getRandomInt(100, 800),
+    })),
+    [translations.benefits]
+  );
 
   return (
     <div className="exerciseBenefitsPage px-3 px-md-4 mb-3 container">
       <Helmet>
-        <html lang="en" />
-        <title>Benefits of Exercise - MoTrPAC Data Hub</title>
+        <html lang={currentLanguage} />
+        <title>{translations.metaTitle}</title>
       </Helmet>
-      <PageTitle title="Benefits of Exercise" />
+      
+      <div className="d-flex justify-content-between align-items-start mb-3">
+        <PageTitle title={translations.pageTitle} />
+        <LanguageSelector 
+          currentLanguage={currentLanguage}
+          onLanguageChange={handleLanguageChange}
+        />
+      </div>
+      
       <div className="exercise-benefits-page-container">
-        <div
-          className="exercise-benefits-page-content-container row mb-4"
-        >
+        <div className="exercise-benefits-page-content-container row mb-4">
           <div className="col-12">
             <p className="lead">
-              Regular physical activity is associated with many health benefits,
-              supported by extensive evidence in the medical literature.
+              {translations.leadText}
             </p>
           </div>
           <div className="exercise-benefits-cloud col-12">
-            <ReactWordcloud words={words} options={options} />
+            <ReactWordcloud words={words} options={wordCloudOptions} />
           </div>
         </div>
+        
         <div className="table-responsive">
           <table className="table table-bordered table-striped">
             <thead>
               <tr>
-                <th scope="col">Health Benefit</th>
-                <th scope="col">Evidence</th>
+                <th scope="col">{translations.tableHeaders.healthBenefit}</th>
+                <th scope="col">{translations.tableHeaders.evidence}</th>
               </tr>
             </thead>
             <tbody>
-              {exerciseBenefitsData.map((benefit) => (
+              {translations.benefitsData.map((benefit) => (
                 <tr key={`${benefit.title}`}>
                   <th scope="row">{benefit.title}</th>
                   <td>
@@ -103,14 +140,14 @@ function ExerciseBenefits() {
             </tbody>
           </table>
           <p>
-            These benefits underscore the importance of regular physical activity
-            as a cornerstone of preventive health care.
+            {translations.conclusionText}
           </p>
         </div>
+        
         <div className="exercise-benefits-page-content-container row mt-3 mb-4">
           <div className="col-12">
             <h5 className="border-bottom mb-3 pb-2">
-              References:
+              {translations.referencesTitle}
             </h5>
             <ol className="cexercise-benefits-itation-list">
               {exerciseBenefitsReferenceData.map((reference) => (
