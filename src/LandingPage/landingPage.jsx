@@ -13,6 +13,7 @@ import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
 import IconSet from '../lib/iconSet';
 import BackgroundVideo from './components/backgroundVideo';
 import Figure1C from './components/figure1c';
+import FeaturedCarousel from './components/featuredCarousel';
 
 // import network figure 4e visualization dataset
 import landscapeFigure4eNetworkData from '../data/landscape_figure_4e';
@@ -119,36 +120,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
                 a molecular map of the effects of exercise and training.
               </a>
             </p>
-            <div className="highlighted-links-container">
-              <Link
-                to="/data-download"
-                className="btn btn-primary btn-lg mt-4"
-                role="button"
-              >
-                DATA DOWNLOAD
-              </Link>
-              <Link
-                to="/tutorials"
-                className="btn btn-primary btn-lg mt-4"
-                role="button"
-              >
-                VIDEO TUTORIALS
-              </Link>
-              <Link
-                to="/graphical-clustering"
-                className="btn btn-primary btn-lg mt-4"
-                role="button"
-              >
-                EXPLORE DATA
-              </Link>
-              <Link
-                to="/publications"
-                className="btn btn-primary btn-lg mt-4"
-                role="button"
-              >
-                PUBLICATIONS
-              </Link>
-            </div>
+            <FeaturedCarousel />
             <div className="office-hour-anchor-link-container">
               <a href="#join-office-hour" className="office-hour-anchor-link">
                 Join our monthly open office event to learn more
