@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { DotButton, useDotButton } from './featuredCarouselButton';
+import Autoplay from 'embla-carousel-autoplay';
+import useEmblaCarousel from 'embla-carousel-react';
 
 import '@styles/featuredCarousel.scss';
 
@@ -9,8 +12,38 @@ import '@styles/featuredCarousel.scss';
  * Auto-advances every 5 seconds with fade transitions
  */
 function FeaturedCarousel() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  // Embla Carousel configuration
+  const emblaOptions = { 
+    loop: true, 
+    duration: 20  // Transition duration in ms (was incorrectly using 'speed')
+  };
+  // Autoplay plugin configuration
+  const autoplayOptions = {
+    delay: 5000,                    // 5 seconds between slides
+    stopOnInteraction: false,       // Continue after user interaction
+    stopOnMouseEnter: true          // Pause on hover
+  };
+  const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions, [
+    Autoplay(autoplayOptions)
+  ]);
+
+  const onNavButtonClick = useCallback((emblaApi) => {
+    const autoplay = emblaApi?.plugins()?.autoplay
+    if (!autoplay) return
+
+    // Stop autoplay when user manually navigates
+    autoplay.stop()
+
+    // Resume autoplay after 5 seconds
+    setTimeout(() => {
+      autoplay.play()
+    }, 5000)
+  }, []);
+
+  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(
+    emblaApi,
+    onNavButtonClick
+  );
 
   const carouselItems = [
     {
@@ -43,77 +76,47 @@ function FeaturedCarousel() {
     },
   ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setActiveIndex((current) => (current + 1) % carouselItems.length);
-        setIsTransitioning(false);
-      }, 300); // Half of transition duration for crossfade
-    }, 5000); // Change slide every 5 seconds
-
-    return () => clearInterval(interval);
-  }, [carouselItems.length]);
-
-  const goToSlide = (index) => {
-    if (index !== activeIndex) {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setActiveIndex(index);
-        setIsTransitioning(false);
-      }, 300);
-    }
-  };
-
   return (
-    <div className="featured-carousel-container">
-      <div className="carousel-wrapper">
-        {carouselItems.map((item, index) => (
-          <div
-            key={index}
-            className={`carousel-item-content ${
-              index === activeIndex ? 'active' : ''
-            } ${isTransitioning && index === activeIndex ? 'transitioning' : ''}`}
-          >
-            <div className="carousel-item-inner">
-              <div className="carousel-icon">
-                <i className={`bi ${item.icon}`}></i>
+    <div className="embla featured-carousel-wrapper mt-4">
+      <div className="embla__viewport" ref={emblaRef}>
+        {/* Carousel items */}
+        <div className="embla__container featured-carousel-container">
+          {carouselItems.map((item, index) => (
+            <div className="embla__slide featured-carousel-item" key={index}>
+              <div className="featured-carousel-item-header d-flex align-items-center justify-content-center">
+                <div className="featured-carousel-item-icon">
+                  <i className={`bi ${item.icon}`}></i>
+                </div>
+                <h3 className="featured-carousel-item-title">{item.title}</h3>
               </div>
-              <div className="carousel-text">
-                <h3 className="carousel-title">{item.title}</h3>
-                <p className="carousel-description">{item.description}</p>
-              </div>
-              <Link
-                to={item.link}
-                className="btn btn-primary btn-lg carousel-cta"
-                role="button"
-              >
-                {item.buttonText}
-                <i className="bi bi-arrow-right ms-2"></i>
-              </Link>
+                <div className="featured-carousel-item-description">
+                  <span>{item.description}</span>
+                </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
-      {/* Carousel indicators */}
-      <div className="carousel-indicators">
-        {carouselItems.map((_, index) => (
-          <button
-            key={index}
-            type="button"
-            className={index === activeIndex ? 'active' : ''}
-            onClick={() => goToSlide(index)}
-            aria-label={`Go to slide ${index + 1}`}
-          >
-            <span className="indicator-dot"></span>
-          </button>
-        ))}
+      <div className="embla__controls mt-4">
+        <div className="embla__dots">
+          {scrollSnaps.map((_, index) => (
+            <DotButton
+              key={index}
+              onClick={() => onDotButtonClick(index)}
+              className={'btn btn-primary mx-2 embla__dot'.concat(
+                index === selectedIndex ? ' embla__dot--selected' : ''
+              )}
+            >
+              {index === 0 && 'What\'s New'}
+              {index === 1 && 'Browse by Gene'}
+              {index === 2 && 'Data Download'}
+              {index === 3 && 'Working with MoTrPAC Data'}
+            </DotButton>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
-
-FeaturedCarousel.propTypes = {};
 
 export default FeaturedCarousel;
