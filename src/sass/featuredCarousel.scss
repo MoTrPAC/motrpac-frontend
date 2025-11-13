@@ -7,7 +7,7 @@
   --slide-spacing: 1rem;
   --slide-size: 100%;
   --text-body: #000000;
-  --detail-medium-contrast: rgba(255, 255, 255, 0.6);
+  --detail-medium-contrast: rgba(255, 255, 255, 0.1);
 
   .embla__viewport {
     overflow: hidden;
@@ -57,16 +57,12 @@
       user-select: none;
     }
 
-    .carousel-item-inner-cta {
-      flex-shrink: 0;
-      display: inline-flex;
+    .featured-carousel-item-cta {
       align-items: center;
-      padding: 0.75rem 2rem;
-      font-size: 1rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      font-size: 1.10rem;
+      font-weight: 500;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      margin-top: 1.25rem;
       transition: all 0.3s ease;
       white-space: nowrap;
 
@@ -97,13 +93,17 @@
   }
 
   .embla__dot {
-    background-color: #2094e8;
+    background-color: var(--detail-medium-contrast);
+    border: solid 1px #ffffff;
+    border-radius: 1.4rem;
+    color: #fff;
     touch-action: manipulation;
     cursor: pointer;
   }
 
   .embla__dot--selected {
-    background-color: darken(#2094e8, 15%);
+    background-color: #ffffff;
+    color: darken(#2094e8, 15%);
   }
 }
 
