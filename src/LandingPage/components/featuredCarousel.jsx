@@ -57,7 +57,7 @@ function FeaturedCarousel() {
       title: 'Browse by Gene',
       description: 'Search and analyze gene-centric exercise response data across multiple species, tissues and omes',
       icon: 'bi-search',
-      link: '/graphical-clustering',
+      link: '/search',
       buttonText: 'Explore Data',
     },
     {
@@ -69,7 +69,7 @@ function FeaturedCarousel() {
     },
     {
       title: 'Working with MoTrPAC Data',
-      description: 'Look up clinical biospecimen data curated from human adults and pediatrics across multiple interventions and demographics',
+      description: 'Analyze clinical biospecimen data of adults and pediatric across multiple interventions and demographics',
       icon: 'bi-bar-chart-line-fill',
       link: '/biospecimen-summary',
       buttonText: 'Get Started',
@@ -89,15 +89,22 @@ function FeaturedCarousel() {
                 </div>
                 <h3 className="featured-carousel-item-title">{item.title}</h3>
               </div>
-                <div className="featured-carousel-item-description">
-                  <span>{item.description}</span>
-                </div>
+              <div className="featured-carousel-item-description">
+                <span>{item.description}</span>
+              </div>
+              <Link
+                to={item.link}
+                className="btn btn-primary featured-carousel-item-cta mt-3"
+                role="button"
+              >
+                {item.buttonText}
+              </Link>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="embla__controls mt-4">
+      <div className="embla__controls">
         <div className="embla__dots">
           {scrollSnaps.map((_, index) => (
             <DotButton
