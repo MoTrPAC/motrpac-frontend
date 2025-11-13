@@ -4,6 +4,28 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import FeaturedCarousel from '../components/featuredCarousel';
 
+// Mock Embla Carousel
+vi.mock('embla-carousel-react', () => ({
+  default: vi.fn(() => [vi.fn(), null]),
+}));
+
+vi.mock('embla-carousel-autoplay', () => ({
+  default: vi.fn(() => ({})),
+}));
+
+vi.mock('../components/featuredCarouselButton', () => ({
+  DotButton: ({ children, onClick, className }) => (
+    <button onClick={onClick} className={className}>
+      {children}
+    </button>
+  ),
+  useDotButton: () => ({
+    selectedIndex: 0,
+    scrollSnaps: [0, 1, 2, 3],
+    onDotButtonClick: vi.fn(),
+  }),
+}));
+
 // Wrapper component for tests
 const TestWrapper = ({ children }) => (
   <BrowserRouter>{children}</BrowserRouter>
@@ -11,112 +33,64 @@ const TestWrapper = ({ children }) => (
 
 describe('FeaturedCarousel Component', () => {
   beforeEach(() => {
-    vi.useFakeTimers();
+    vi.clearAllMocks();
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
-    vi.useRealTimers();
   });
 
-  test('renders first carousel item by default', () => {
+  test('renders carousel wrapper with embla classes', () => {
     render(
       <TestWrapper>
         <FeaturedCarousel />
       </TestWrapper>
     );
 
-    expect(screen.getByText("What's New")).toBeInTheDocument();
+    expect(document.querySelector('.embla')).toBeInTheDocument();
+    expect(document.querySelector('.embla__viewport')).toBeInTheDocument();
+    expect(document.querySelector('.embla__container')).toBeInTheDocument();
+  });
+
+  test('renders all 4 carousel items', () => {
+    render(
+      <TestWrapper>
+        <FeaturedCarousel />
+      </TestWrapper>
+    );
+
+    expect(screen.getAllByText("What's New")).toHaveLength(2); // Title + button
+    expect(screen.getAllByText('Browse by Gene')).toHaveLength(2);
+    expect(screen.getAllByText('Data Download')).toHaveLength(2);
+    expect(screen.getAllByText('Working with MoTrPAC Data')).toHaveLength(2);
+  });
+
+  test('renders all carousel items with descriptions', () => {
+    render(
+      <TestWrapper>
+        <FeaturedCarousel />
+      </TestWrapper>
+    );
+
     expect(screen.getByText(/Stay up-to-date on the latest research findings/i)).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /Learn More/i })).toBeInTheDocument();
+    expect(screen.getByText(/Search and analyze gene-centric exercise response data/i)).toBeInTheDocument();
+    expect(screen.getByText(/Access comprehensive, publicly available datasets/i)).toBeInTheDocument();
+    expect(screen.getByText(/Look up clinical biospecimen data curated/i)).toBeInTheDocument();
   });
 
-  test('renders all carousel indicators', () => {
+  test('renders all carousel navigation buttons', () => {
     render(
       <TestWrapper>
         <FeaturedCarousel />
       </TestWrapper>
     );
 
-    const indicators = screen.getAllByRole('button', { name: /Go to slide/i });
-    expect(indicators).toHaveLength(4);
-  });
-
-  test('first indicator is active by default', () => {
-    render(
-      <TestWrapper>
-        <FeaturedCarousel />
-      </TestWrapper>
-    );
-
-    const indicators = screen.getAllByRole('button', { name: /Go to slide/i });
-    expect(indicators[0]).toHaveClass('active');
-  });
-
-  test('clicking indicator changes active slide', async () => {
-    const user = userEvent.setup({ delay: null });
-    render(
-      <TestWrapper>
-        <FeaturedCarousel />
-      </TestWrapper>
-    );
-
-    const indicators = screen.getAllByRole('button', { name: /Go to slide/i });
-    
-    await user.click(indicators[2]);
-    
-    vi.advanceTimersByTime(400);
-
-    await waitFor(() => {
-      expect(screen.getByText('Data Download')).toBeInTheDocument();
-    });
-  });
-
-  test('carousel auto-advances after 5 seconds', async () => {
-    render(
-      <TestWrapper>
-        <FeaturedCarousel />
-      </TestWrapper>
-    );
-
-    // Initially shows first slide
-    expect(screen.getByText("What's New")).toBeInTheDocument();
-
-    // Advance time by 5 seconds + transition
-    vi.advanceTimersByTime(5300);
-
-    await waitFor(() => {
-      expect(screen.getByText('Browse by Gene')).toBeInTheDocument();
-    });
-  });
-
-  test('carousel loops back to first item after last item', async () => {
-    render(
-      <TestWrapper>
-        <FeaturedCarousel />
-      </TestWrapper>
-    );
-
-    // Advance through all 4 slides (5 seconds each + transitions)
-    vi.advanceTimersByTime(5300); // Slide 2
-    vi.advanceTimersByTime(5000); // Slide 3
-    vi.advanceTimersByTime(5000); // Slide 4
-    vi.advanceTimersByTime(5300); // Back to Slide 1
-
-    await waitFor(() => {
-      expect(screen.getByText("What's New")).toBeInTheDocument();
-    });
-  });
-
-  test('renders correct link for each carousel item', () => {
-    render(
-      <TestWrapper>
-        <FeaturedCarousel />
-      </TestWrapper>
-    );
-
-    const link = screen.getByRole('link', { name: /Learn More/i });
-    expect(link).toHaveAttribute('href', '/announcements');
+    const navButtons = screen.getAllByRole('button');
+    expect(navButtons).toHaveLength(4);
+    expect(screen.getByText("What's New", { selector: 'button' })).toBeInTheDocument();
+    expect(screen.getByText('Browse by Gene', { selector: 'button' })).toBeInTheDocument();
+    expect(screen.getByText('Data Download', { selector: 'button' })).toBeInTheDocument();
+    expect(screen.getByText('Working with MoTrPAC Data', { selector: 'button' })).toBeInTheDocument();
   });
 
   test('renders Bootstrap icons for each carousel item', () => {
@@ -126,8 +100,10 @@ describe('FeaturedCarousel Component', () => {
       </TestWrapper>
     );
 
-    const icon = document.querySelector('.bi-stars');
-    expect(icon).toBeInTheDocument();
+    expect(document.querySelector('.bi-stars')).toBeInTheDocument();
+    expect(document.querySelector('.bi-search')).toBeInTheDocument();
+    expect(document.querySelector('.bi-cloud-arrow-down-fill')).toBeInTheDocument();
+    expect(document.querySelector('.bi-bar-chart-line-fill')).toBeInTheDocument();
   });
 
   test('carousel items have correct structure', () => {
@@ -137,7 +113,29 @@ describe('FeaturedCarousel Component', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByText("What's New")).toHaveClass('carousel-title');
-    expect(screen.getByRole('link', { name: /View Updates/i })).toHaveClass('carousel-cta');
+    const carouselItems = document.querySelectorAll('.embla__slide');
+    expect(carouselItems).toHaveLength(4);
+
+    carouselItems.forEach(item => {
+      expect(item.querySelector('.featured-carousel-item-header')).toBeInTheDocument();
+      expect(item.querySelector('.featured-carousel-item-icon')).toBeInTheDocument();
+      expect(item.querySelector('.featured-carousel-item-title')).toBeInTheDocument();
+      expect(item.querySelector('.featured-carousel-item-description')).toBeInTheDocument();
+    });
+  });
+
+  test('navigation buttons can be clicked', async () => {
+    const user = userEvent.setup();
+    render(
+      <TestWrapper>
+        <FeaturedCarousel />
+      </TestWrapper>
+    );
+
+    const browseByGeneButton = screen.getByText('Browse by Gene', { selector: 'button' });
+    await user.click(browseByGeneButton);
+    
+    // Verify the button click doesn't throw errors
+    expect(browseByGeneButton).toBeInTheDocument();
   });
 });

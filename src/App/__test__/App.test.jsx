@@ -44,12 +44,15 @@ describe('<App /> routing (Unauthenticated)', () => {
 
   test('loads the search page at /search', async () => {
     renderWithRouterAndStore(<App />, { route: '/search' });
-    await waitFor(() => expect(screen.getByText(/search/i)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/differential abundance/i)).toBeInTheDocument());
   });
 
   test('loads the browse data page at /data-download', async () => {
     renderWithRouterAndStore(<App />, { route: '/data-download' });
-    await waitFor(() => expect(screen.getByText(/data download/i)).toBeInTheDocument());
+    await waitFor(() => {
+      const elements = screen.getAllByText(/data download/i);
+      expect(elements.length).toBeGreaterThan(0);
+    });
   });
 
   test('loads the code repositories page at /code-repositories', async () => {
@@ -92,12 +95,15 @@ describe('<App /> routing (Authenticated)', () => {
 
   test('loads the search page at /search for authenticated user', async () => {
     renderWithRouterAndStore(<App />, { route: '/search', preloadedState: preloadedAuthState });
-    await waitFor(() => expect(screen.getByText(/search/i)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/differential abundance/i)).toBeInTheDocument());
   });
 
   test('loads the prior releases page at /releases for authenticated user', async () => {
     renderWithRouterAndStore(<App />, { route: '/releases', preloadedState: preloadedAuthState });
-    await waitFor(() => expect(screen.getByText(/data releases/i)).toBeInTheDocument());
+    await waitFor(() => {
+      const elements = screen.getAllByText(/data releases/i);
+      expect(elements.length).toBeGreaterThan(0);
+    });
   });
 
   test('loads the methods page at /methods for authenticated user', async () => {
