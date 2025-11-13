@@ -75,7 +75,7 @@ describe('FeaturedCarousel Component', () => {
     expect(screen.getByText(/Stay up-to-date on the latest research findings/i)).toBeInTheDocument();
     expect(screen.getByText(/Search and analyze gene-centric exercise response data/i)).toBeInTheDocument();
     expect(screen.getByText(/Access comprehensive, publicly available datasets/i)).toBeInTheDocument();
-    expect(screen.getByText(/Look up clinical biospecimen data curated/i)).toBeInTheDocument();
+    expect(screen.getByText(/Analyze clinical biospecimen data/i)).toBeInTheDocument();
   });
 
   test('renders all carousel navigation buttons', () => {
@@ -86,7 +86,7 @@ describe('FeaturedCarousel Component', () => {
     );
 
     const navButtons = screen.getAllByRole('button');
-    expect(navButtons).toHaveLength(4);
+    expect(navButtons).toHaveLength(8);
     expect(screen.getByText("What's New", { selector: 'button' })).toBeInTheDocument();
     expect(screen.getByText('Browse by Gene', { selector: 'button' })).toBeInTheDocument();
     expect(screen.getByText('Data Download', { selector: 'button' })).toBeInTheDocument();
