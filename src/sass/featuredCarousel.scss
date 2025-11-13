@@ -1,151 +1,112 @@
 // Featured Carousel Styles
-.featured-carousel-container {
+.embla {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1rem;
-  position: relative;
+  --slide-height: 3rem;
+  --slide-spacing: 1rem;
+  --slide-size: 100%;
+  --text-body: #000000;
+  --detail-medium-contrast: rgba(255, 255, 255, 0.6);
 
-  .carousel-wrapper {
-    position: relative;
-    min-height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .embla__viewport {
     overflow: hidden;
-  }
 
-  .carousel-item-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    opacity: 0;
-    transform: translateX(100vw); // Start from far right edge of viewport
-    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
-    pointer-events: none;
-    width: 100%;
+    .embla__container {
+      display: flex;
+      touch-action: pan-y pinch-zoom;
+      margin-left: calc(var(--slide-spacing) * -1);
+    }
 
-    &.active {
-      opacity: 1;
-      transform: translateX(0);
-      pointer-events: auto;
+    .embla__slide {
+      transform: translate3d(0, 0, 0);
+      flex: 0 0 var(--slide-size);
+      min-width: 0;
+      padding-left: var(--slide-spacing);
+    }
 
-      &.transitioning {
-        opacity: 0;
-        transform: translateX(-100vw); // Exit to far left edge of viewport
+    .featured-carousel-item-header {
+      height: var(--slide-height);
+      user-select: none;
+    }
+
+    .featured-carousel-item-icon {
+      font-size: 2rem;
+      color: #ffffff;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      margin-right: 1rem;
+
+      i {
+        display: inline-block;
+      }
+    }
+
+    .featured-carousel-item-title {
+      font-size: 2rem;
+      font-weight: 500;
+      color: #ffffff;
+      text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.5);
+    }
+
+    .featured-carousel-item-description {
+      font-size: 1.25rem;
+      color: #ffffff;
+      margin-bottom: 0;
+      line-height: 1.5;
+      text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.5);
+      user-select: none;
+    }
+
+    .carousel-item-inner-cta {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      white-space: nowrap;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+      }
+
+      i {
+        transition: transform 0.3s ease;
+      }
+
+      &:hover i {
+        transform: translateX(4px);
       }
     }
   }
 
-  .carousel-item-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    padding: 1rem;
-    width: 100%;
+  .embla__controls {
+    margin-top: 1.8rem;
   }
 
-  .carousel-icon {
-    flex-shrink: 0;
-    font-size: 4rem;
-    color: #ffffff;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    width: 80px;
+  .embla__dots {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    i {
-      display: inline-block;
-    }
+    margin: 0 auto;
   }
 
-  .carousel-text {
-    flex: 1;
-    text-align: left;
+  .embla__dot {
+    background-color: #2094e8;
+    touch-action: manipulation;
+    cursor: pointer;
   }
 
-  .carousel-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    line-height: 1.2;
-  }
-
-  .carousel-description {
-    font-size: 1.125rem;
-    color: #ffffff;
-    margin-bottom: 0;
-    line-height: 1.5;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  }
-
-  .carousel-cta {
-    flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    padding: 0.75rem 2rem;
-    font-size: 1rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-    white-space: nowrap;
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-    }
-
-    i {
-      transition: transform 0.3s ease;
-    }
-
-    &:hover i {
-      transform: translateX(4px);
-    }
-  }
-
-  .carousel-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 0.75rem;
-    margin-top: 2rem;
-
-    button {
-      background: transparent;
-      border: none;
-      padding: 0.5rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-
-      &:hover .indicator-dot {
-        transform: scale(1.2);
-        opacity: 0.8;
-      }
-
-      &.active .indicator-dot {
-        background-color: #ffffff;
-        width: 2rem;
-        border-radius: 6px;
-      }
-    }
-
-    .indicator-dot {
-      display: block;
-      width: 0.75rem;
-      height: 0.75rem;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.5);
-      transition: all 0.3s ease;
-    }
+  .embla__dot--selected {
+    background-color: darken(#2094e8, 15%);
   }
 }
+
 
 // Responsive adjustments
 @media (max-width: 992px) {
