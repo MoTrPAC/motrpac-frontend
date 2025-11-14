@@ -21,6 +21,7 @@ export function Dashboard({
   lastModified = '',
 }) {
   const userType = profile.user_metadata && profile.user_metadata.userType;
+  const userRole = profile.app_metadata && profile.app_metadata.role;
 
   return (
     <div className="dashboardPage px-3 px-md-4 mb-3">
@@ -96,7 +97,7 @@ export function Dashboard({
         </div>
       )}
 
-      {userType && userType === 'external' && (
+      {userType && userType === 'external' && !userRole && (
         <div className="alert-data-release">
           <h1 className="office-hour-title display-4 mb-4">
             <span>
@@ -107,12 +108,23 @@ export function Dashboard({
           </h1>
         </div>
       )}
+      {/* Welcome message for external users with reviewer role */}
+      {userType && userType === 'external' && userRole && userRole === 'reviewer' && (
+        <div className="alert-data-release">
+          <h1 className="office-hour-title display-4 mb-4">
+            <span>
+              {`Hi there, ${profile.user_metadata.name}!`}
+            </span>
+          </h1>
+        </div>
+      )}
       <div className="w-100">
         {userType && (
           <FeatureLinks
             handleQCDataFetch={handleQCDataFetch}
             lastModified={lastModified}
             userType={userType}
+            userRole={userRole ? userRole : '' }
           />
         )}
       </div>
