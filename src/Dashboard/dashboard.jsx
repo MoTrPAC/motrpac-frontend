@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import FeatureLinks from '../Search/featureLinks';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
+import ReviewerDownloadButton from './reviewerDownloadButton';
 
 import '@styles/dashboard.scss';
 
@@ -99,7 +100,7 @@ export function Dashboard({
 
       {userType && userType === 'external' && !userRole && (
         <div className="alert-data-release">
-          <h1 className="office-hour-title display-4 mb-4">
+          <h1 className="dashboard-title display-4 mb-4">
             <span>
               Welcome,
               {' '}
@@ -111,11 +112,33 @@ export function Dashboard({
       {/* Welcome message for external users with reviewer role */}
       {userType && userType === 'external' && userRole && userRole === 'reviewer' && (
         <div className="alert-data-release">
-          <h1 className="office-hour-title display-4 mb-4">
+          <h1 className="dashboard-title display-4 mb-4">
             <span>
-              {`Hi there, ${profile.user_metadata.name}!`}
+              {`Hello, Reviewer!`}
             </span>
           </h1>
+          <div className="bd-callout bd-callout-primary shadow-sm mb-4">
+            <div className="lead">
+              As a reviewer, you have been granted access to the pre-publication
+              human data in R packages and the visualization tool. If you have
+              any questions or need assistance, feel free to reach out to the
+              MoTrPAC team.
+            </div>
+            <div className="lead reviewer-data-download-links-container mt-3">
+              <ReviewerDownloadButton
+                filename="bundles/motrpac_human-precovid-sed-adu_analysis.zip"
+                label="Analysis R Package"
+                icon="bi-file-zip-fill"
+                profile={profile}
+              />
+              <ReviewerDownloadButton
+                filename="bundles/motrpac_human-precovid-sed-adu_data.zip"
+                label="Data R Package"
+                icon="bi-file-zip-fill"
+                profile={profile}
+              />
+            </div>
+          </div>
         </div>
       )}
       <div className="w-100">
