@@ -12,14 +12,11 @@ function Tutorials() {
   const history = useHistory();
 
   // Get initial language from URL param, default to 'en'
-  const getInitialLanguage = () => {
+  const [language, setLanguage] = useState(() => {
     const params = new URLSearchParams(location.search);
     const langParam = params.get('lang');
     return langParam === 'es' ? 'es' : 'en';
-  };
-
-  const [language, setLanguage] = useState(getInitialLanguage);
-
+  });
   // Sync language state from URL param
   useEffect(() => {
     const params = new URLSearchParams(location.search);
