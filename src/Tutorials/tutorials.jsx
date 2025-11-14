@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import PageTitle from '../lib/ui/pageTitle';
@@ -11,40 +11,17 @@ const LANG_EN = 'en';
 const LANG_ES = 'es';
 
 function Tutorials() {
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  // Get initial language from URL param, default to 'en'
-  const getInitialLanguage = () => {
-    const params = new URLSearchParams(location.search);
-    const langParam = params.get('lang');
-    return langParam === LANG_ES ? LANG_ES : LANG_EN;
-  };
-
-  const [language, setLanguage] = useState(getInitialLanguage);
-
-  // Update URL when language changes
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-
-    if (language === LANG_EN) {
-      // Remove lang param for English (default)
-      params.delete('lang');
-    } else {
-      params.set('lang', language);
-    }
-
-    const newSearch = params.toString();
-    const newUrl = newSearch ? `?${newSearch}` : location.pathname;
-
-    // Only update if the URL actually changed
-    if (location.search !== (newSearch ? `?${newSearch}` : '')) {
-      navigate(newUrl);
-    }
-  }, [language, location.pathname, location.search, navigate]);
-
+ const [searchParams, setSearchParams] = useSearchParams();
+  const language = searchParams.get('lang') === LANG_ES ? LANG_ES : LANG_EN;
   const toggleLanguage = (lang) => {
-    setLanguage(lang);
+    setSearchParams(prev => {
+      if (lang === LANG_EN) {
+        prev.delete('lang');
+      } else {
+        prev.set('lang', lang);
+      }
+      return prev;
+    });
   };
 
   return (
