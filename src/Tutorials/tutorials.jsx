@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import PageTitle from '../lib/ui/pageTitle';
@@ -9,7 +9,7 @@ import '@styles/license.scss';
 
 function Tutorials() {
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Get initial language from URL param, default to 'en'
   const getInitialLanguage = () => {
@@ -36,9 +36,9 @@ function Tutorials() {
 
     // Only update if the URL actually changed
     if (location.search !== (newSearch ? `?${newSearch}` : '')) {
-      history.replace(newUrl);
+      navigate(newUrl, { replace: true });
     }
-  }, [language, location.pathname, location.search, history]);
+  }, [language, location.pathname, location.search, navigate]);
 
   const toggleLanguage = (lang) => {
     setLanguage(lang);
