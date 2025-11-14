@@ -12,6 +12,7 @@ function FeatureLinks({
   handleQCDataFetch,
   lastModified = '',
   userType = '',
+  userRole = '',
 }) {
   const navigate = useNavigate();
 
@@ -34,7 +35,8 @@ function FeatureLinks({
     ? `https://data-viz-dev.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`
     : `https://data-viz.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`;
 
-  const features = [
+  // Feature links by groups
+  const commonEssentialFeaturedLinks = [
     {
       name: 'data-download',
       route: 'data-download',
@@ -60,6 +62,9 @@ function FeatureLinks({
       title: 'Endurance Trained Young Adult Rats Data Visualization',
       eventHandler: null,
     },
+  ];
+
+  const commonGeneralFeaturedLinks = [
     {
       name: 'code-repositories',
       route: 'code-repositories',
@@ -74,20 +79,49 @@ function FeatureLinks({
       route: 'summary',
       description:
         'A dashboard to visualize sample counts by tissue, assay, or omics in the young adult rat endurance training and acute exercise studies.',
-      icon: 'assessment',
+      icon: 'pie_chart',
       title: 'Sample Summary',
       eventHandler: null,
     },
-    /*
+  ];
+
+  const precawgDataVizFeaturedLink = [
     {
-      route: 'releases',
+      name: 'precovid-human-data-visualization',
+      route: dataVizHost,
       description:
-        'Access prior versions of the data sets in the young adult rat endurance training and acute exercise studies.',
-      icon: 'rocket_launch',
-      title: 'Data Releases',
+        'An interactive data visualization tool for the analysis of pre-COVID human sedentary adults study data.',
+      icon: 'analytics',
+      title: 'Pre-COVID Human Data Visualization',
       eventHandler: null,
     },
-    */
+  ];
+
+  const externalFeaturedLinks = [
+    ...commonEssentialFeaturedLinks,
+    ...commonGeneralFeaturedLinks,
+  ];
+
+  const reviewerFeaturedLinks = [
+    ...commonEssentialFeaturedLinks,
+    ...precawgDataVizFeaturedLink,
+    ...commonGeneralFeaturedLinks,
+  ];
+  
+  const internalFeaturedLinks = [
+    ...commonEssentialFeaturedLinks,
+    ...precawgDataVizFeaturedLink,
+    ...commonGeneralFeaturedLinks,
+    {
+      name: 'clinical-biospecimen-summary',
+      route:
+        'biospecimen-summary',
+      description:
+        'Look up biospecimen data in the pre-COVID human sedentary adults and the human main highly active adults studies.',
+      icon: 'stacked_bar_chart',
+      title: 'Clinical Biospecimen Data Lookup',
+      eventHandler: null,
+    },
     {
       name: 'qc-data-monitor',
       route: 'qc-data-monitor',
@@ -96,15 +130,6 @@ function FeatureLinks({
       icon: 'fact_check',
       title: 'QC Data Monitor',
       eventHandler: fetchQCData,
-    },
-    {
-      name: 'precovid-human-data-visualization',
-      route: dataVizHost,
-      description:
-        'An interactive data visualization tool for the analysis of pre-COVID human sedentary adults study data.',
-      icon: 'airline_seat_recline_normal',
-      title: 'Pre-COVID Human Data Visualization',
-      eventHandler: null,
     },
     {
       name: 'multiomics-working-groups',
@@ -145,19 +170,19 @@ function FeatureLinks({
       title: 'Consortium and External Data Releases Timing',
       eventHandler: null,
     },
+    /*
     {
-      name: 'clinical-biospecimen-summary',
-      route:
-        'biospecimen-summary',
+      route: 'releases',
       description:
-        'Look up biospecimen data in the pre-COVID human sedentary adults and the human main highly active adults studies.',
-      icon: 'assessment',
-      title: 'Clinical Biospecimen Lookup',
+        'Access prior versions of the data sets in the young adult rat endurance training and acute exercise studies.',
+      icon: 'rocket_launch',
+      title: 'Data Releases',
       eventHandler: null,
     },
+    */
   ];
 
-  const featuresToRender = userType === 'internal' ? features : features.slice(0, 5);
+  const featuresToRender = userType === 'internal' ? internalFeaturedLinks : (userRole === 'reviewer' ? reviewerFeaturedLinks : externalFeaturedLinks);
 
   // handle click event for external links
   function handleFeatureLinkClick(e, item) {
@@ -209,6 +234,7 @@ FeatureLinks.propTypes = {
   handleQCDataFetch: PropTypes.func.isRequired,
   lastModified: PropTypes.string,
   userType: PropTypes.string,
+  userRole: PropTypes.string,
 };
 
 export default FeatureLinks;
