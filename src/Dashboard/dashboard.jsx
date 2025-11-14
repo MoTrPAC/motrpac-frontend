@@ -9,6 +9,9 @@ import ReviewerDownloadButton from './reviewerDownloadButton';
 
 import '@styles/dashboard.scss';
 
+const PACK_ANALYSIS = 'bundles/motrpac_human-precovid-sed-adu_analysis.zip';
+const PACK_DATA = 'bundles/motrpac_human-precovid-sed-adu_data.zip';
+
 /**
  * Renders the Dashboard page
  *
@@ -126,13 +129,13 @@ export function Dashboard({
             </div>
             <div className="lead reviewer-data-download-links-container mt-3">
               <ReviewerDownloadButton
-                filename="bundles/motrpac_human-precovid-sed-adu_analysis.zip"
+                filename={PACK_ANALYSIS}
                 label="Analysis R Package"
                 icon="bi-file-zip-fill"
                 profile={profile}
               />
               <ReviewerDownloadButton
-                filename="bundles/motrpac_human-precovid-sed-adu_data.zip"
+                filename={PACK_DATA}
                 label="Data R Package"
                 icon="bi-file-zip-fill"
                 profile={profile}
@@ -147,7 +150,7 @@ export function Dashboard({
             handleQCDataFetch={handleQCDataFetch}
             lastModified={lastModified}
             userType={userType}
-            userRole={userRole ? userRole : '' }
+            userRole={userRole || ''}
           />
         )}
       </div>
