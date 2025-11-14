@@ -56,6 +56,7 @@ function Tutorials() {
             type="button"
             className={`btn ${language === 'en' ? 'btn-primary' : 'btn-outline-primary'}`}
             onClick={() => toggleLanguage('en')}
+            aria-pressed={language === 'en'}
           >
             English
           </button>
@@ -63,6 +64,7 @@ function Tutorials() {
             type="button"
             className={`btn ${language === 'es' ? 'btn-primary' : 'btn-outline-primary'}`}
             onClick={() => toggleLanguage('es')}
+            aria-pressed={language === 'es'}
           >
             Español
           </button>
