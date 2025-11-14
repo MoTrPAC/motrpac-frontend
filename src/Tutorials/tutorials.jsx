@@ -7,46 +7,44 @@ import ExternalLink from '../lib/ui/externalLink';
 
 import '@styles/license.scss';
 
+const LANG_EN = 'en';
+const LANG_ES = 'es';
+
 function Tutorials() {
   const location = useLocation();
   const navigate = useNavigate();
 
   // Get initial language from URL param, default to 'en'
-  const [language, setLanguage] = useState(() => {
+  const getInitialLanguage = () => {
     const params = new URLSearchParams(location.search);
     const langParam = params.get('lang');
-    return langParam === 'es' ? 'es' : 'en';
-  });
-  // Sync language state from URL param
+    return langParam === LANG_ES ? LANG_ES : LANG_EN;
+  };
+
+  const [language, setLanguage] = useState(getInitialLanguage);
+
+  // Update URL when language changes
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const langParam = params.get('lang');
-    const urlLang = langParam === 'es' ? 'es' : 'en';
-    if (language !== urlLang) {
-      setLanguage(urlLang);
+
+    if (language === LANG_EN) {
+      // Remove lang param for English (default)
+      params.delete('lang');
+    } else {
+      params.set('lang', language);
     }
-  }, [location.search]);
 
     const newSearch = params.toString();
     const newUrl = newSearch ? `?${newSearch}` : location.pathname;
 
     // Only update if the URL actually changed
     if (location.search !== (newSearch ? `?${newSearch}` : '')) {
-      navigate(newUrl, { replace: true });
+      navigate(newUrl);
     }
   }, [language, location.pathname, location.search, navigate]);
 
   const toggleLanguage = (lang) => {
     setLanguage(lang);
-    const params = new URLSearchParams(location.search);
-    if (lang === 'en') {
-      params.delete('lang');
-    } else {
-      params.set('lang', lang);
-    }
-    const newSearch = params.toString();
-    const newUrl = newSearch ? `?${newSearch}` : location.pathname;
-    history.replace(newUrl);
   };
 
   return (
@@ -56,34 +54,32 @@ function Tutorials() {
         <title>Tutorials - MoTrPAC Data Hub</title>
       </Helmet>
       <PageTitle title="Tutorials" />
-
-      {/* Language Toggle */}
-      <div className="mb-4">
-        <div className="btn-group" role="group" aria-label="Language selection">
-          <button
-            type="button"
-            className={`btn ${language === 'en' ? 'btn-primary' : 'btn-outline-primary'}`}
-            onClick={() => toggleLanguage('en')}
-          >
-            English
-          </button>
-          <button
-            type="button"
-            className={`btn ${language === 'es' ? 'btn-primary' : 'btn-outline-primary'}`}
-            onClick={() => toggleLanguage('es')}
-          >
-            Español
-          </button>
-        </div>
-      </div>
-
       <div className="tutorials-content-container">
         <div className="tutorials-summary-container row mb-4">
           <div className="col-12">
             <div className="section-title-container d-flex align-items-center justify-content-between mt-3 mb-2">
-              <h3 className="mb-0">{language === 'en' ? 'MoTrPAC Data Hub Overview' : 'Descripción General del Centro de Datos de MoTrPAC'}</h3>
+              <h3 className="mb-0">{language === LANG_EN ? 'MoTrPAC Data Hub Overview' : 'Descripción General del Centro de Datos de MoTrPAC'}</h3>
+              {/* Language Toggle */}
+              <div className="btn-group" role="group" aria-label="Language selection">
+                <button
+                  type="button"
+                  className={`btn btn-sm ${language === LANG_EN ? 'btn-primary' : 'btn-outline-primary'}`}
+                  onClick={() => toggleLanguage(LANG_EN)}
+                  aria-pressed={language === LANG_EN}
+                >
+                  English
+                </button>
+                <button
+                  type="button"
+                  className={`btn btn-sm ${language === LANG_ES ? 'btn-primary' : 'btn-outline-primary'}`}
+                  onClick={() => toggleLanguage(LANG_ES)}
+                  aria-pressed={language === LANG_ES}
+                >
+                  Español
+                </button>
+              </div>
             </div>
-            {language === 'en' ? (
+            {language === LANG_EN ? (
               <div className="video-tutorial-container">
                 <p className="lead">
                   The following tutorial video (also available in Spanish) is designed
