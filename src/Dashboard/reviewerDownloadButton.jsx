@@ -11,8 +11,8 @@ import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
  * VITE_REVIEWER_PACKAGE_BUCKET environment variable (falls back to VITE_DATA_FILE_BUCKET).
  * 
  * Expected file naming in GCP bucket:
- * - Analysis R Package: motrpac-analysis-package-reviewer.zip
- * - Data R Package: motrpac-data-package-reviewer.zip
+ * - Analysis R Package: bundles/motrpac_human-precovid-sed-adu_analysis.zip
+ * - Data R Package: bundles/motrpac_human-precovid-sed-adu_data.zip
  *
  * @param {String} filename - The filename in the GCP bucket
  * @param {String} label - The display label for the button
