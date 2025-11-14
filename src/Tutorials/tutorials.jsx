@@ -20,28 +20,28 @@ function Tutorials() {
 
   const [language, setLanguage] = useState(getInitialLanguage);
 
-  // Update URL when language changes
+  // Sync language state from URL param
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-
-    if (language === 'en') {
-      // Remove lang param for English (default)
-      params.delete('lang');
-    } else {
-      params.set('lang', language);
+    const langParam = params.get('lang');
+    const urlLang = langParam === 'es' ? 'es' : 'en';
+    if (language !== urlLang) {
+      setLanguage(urlLang);
     }
+  }, [location.search]);
 
-    const newSearch = params.toString();
-    const newUrl = newSearch ? `?${newSearch}` : location.pathname;
-
-    // Only update if the URL actually changed
-    if (location.search !== (newSearch ? `?${newSearch}` : '')) {
-      history.replace(newUrl);
-    }
-  }, [language, location.pathname, location.search, history]);
-
+  // Update URL when language changes via UI
   const toggleLanguage = (lang) => {
     setLanguage(lang);
+    const params = new URLSearchParams(location.search);
+    if (lang === 'en') {
+      params.delete('lang');
+    } else {
+      params.set('lang', lang);
+    }
+    const newSearch = params.toString();
+    const newUrl = newSearch ? `?${newSearch}` : location.pathname;
+    history.replace(newUrl);
   };
 
   return (
