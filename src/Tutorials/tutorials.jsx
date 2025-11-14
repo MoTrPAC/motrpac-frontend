@@ -11,7 +11,7 @@ const LANG_EN = 'en';
 const LANG_ES = 'es';
 
 function Tutorials() {
- const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const language = searchParams.get('lang') === LANG_ES ? LANG_ES : LANG_EN;
   const toggleLanguage = (lang) => {
     setSearchParams(prev => {
