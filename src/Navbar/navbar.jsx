@@ -117,6 +117,14 @@ export function Navbar({
 
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   const userType = profile.user_metadata && profile.user_metadata.userType;
+  const userRole = profile.app_metadata && profile.app_metadata.role;
+
+  // Get localStorage item
+  const token = localStorage.getItem('ut');
+
+  const dataVizHost = process.env.NODE_ENV !== 'production'
+    ? `https://data-viz-dev.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`
+    : `https://data-viz.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`;
 
   // Call to invoke Redux action to fetch QC data
   // if timestamp is empty or older than 24 hours
@@ -224,10 +232,30 @@ export function Navbar({
                   >
                     Interactive Data Visualization
                   </a>
+                  {isAuthenticated && hasAccess && userType !== 'internal' && userRole && userRole === 'reviewer' ? (
+                    <a
+                      href={dataVizHost}
+                      className="dropdown-item"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Human Data Visualization
+                    </a>
+                  ) : null}
                   {isAuthenticated && hasAccess && userType === 'internal' ? (
-                    <Link to="/analysis-phenotype" className="dropdown-item">
-                      Phenotype
-                    </Link>
+                    <>
+                      <a
+                        href={dataVizHost}
+                        className="dropdown-item"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Human Data Visualization
+                      </a>
+                      <Link to="/analysis-phenotype" className="dropdown-item">
+                        Phenotype
+                      </Link>
+                    </>
                   ) : null}
                 </div>
               </li>
