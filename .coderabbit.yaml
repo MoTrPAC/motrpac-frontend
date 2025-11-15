@@ -28,7 +28,7 @@ reviews:
   in_progress_fortune: true
   poem: true
   path_filters:
-    - '!**/.xml'
+    - '!**/*.xml'
     - '!**/*.json'
     - '!**/*.md'
     - '!**/*.yml'
