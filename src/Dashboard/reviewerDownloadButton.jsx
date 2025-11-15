@@ -29,7 +29,7 @@ function ReviewerDownloadButton({ filename, label, icon, profile = {} }) {
   });
 
   // Fetch signed URL from the API
-  function handleFileFetch(e) {
+    async function handleFileFetch(e) {
     e.preventDefault();
 
     setFetchStatus({
@@ -41,26 +41,26 @@ function ReviewerDownloadButton({ filename, label, icon, profile = {} }) {
     const api = import.meta.env.VITE_API_SERVICE_ADDRESS;
     const endpoint = import.meta.env.VITE_SIGNED_URL_ENDPOINT;
     const key = import.meta.env.VITE_API_SERVICE_KEY;
-    const bucket = import.meta.env.VITE_REVIEWER_PACKAGE_BUCKET || import.meta.env.VITE_DATA_FILE_BUCKET;
+    const bucket = import.meta.env.VITE_DATA_FILE_BUCKET;
 
-    return axios
-      .get(`${api}${endpoint}?bucket=${bucket}&object=${filename}&key=${key}`)
-      .then((response) => {
-        setFetchStatus({
-          status: 'success',
-          fileUrl: response.data.url,
-          fetching: false,
-        });
-      })
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log(`${err.error}: ${err.errorDescription}`);
-        setFetchStatus({
-          status: 'error',
-          fileUrl: null,
-          fetching: false,
-        });
+    try {
+      const response = await axios.get(
+        `${api}${endpoint}?bucket=${bucket}&object=${filename}&key=${key}`,
+      );
+      setFetchStatus({
+        status: 'success',
+        fileUrl: response.data.url,
+        fetching: false,
       });
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(`${err.error}: ${err.errorDescription}`);
+      setFetchStatus({
+        status: 'error',
+        fileUrl: null,
+        fetching: false,
+      });
+    }
   }
 
   // Reset state upon user clicking download link
