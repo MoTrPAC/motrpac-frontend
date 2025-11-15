@@ -42,7 +42,7 @@ reviews:
         'Review the CSS code against the google css style guide and point out any mismatches. Ensure that:
         - The code adheres to best practices associated with CSS.
         - The code adheres to best practices recommended by lighthouse or similar tools for performance.
-        - The code adheres to similar naming conventions for classes, ids.''
+        - The code adheres to similar naming conventions for classes, ids.'
     - path: '**/*.{js,jsx,ts,tsx}'
       instructions: |
         'Focus on code quality, performance, and security best practices for JavaScript and TypeScript files. Ensure that:
