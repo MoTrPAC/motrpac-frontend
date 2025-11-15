@@ -180,7 +180,14 @@ function FeatureLinks({
     */
   ];
 
-  const featuresToRender = userType === 'internal' ? internalFeaturedLinks : (userRole === 'reviewer' ? reviewerFeaturedLinks : externalFeaturedLinks);
+  let featuresToRender;
+  if (userType === 'internal') {
+    featuresToRender = internalFeaturedLinks;
+  } else if (userRole === 'reviewer') {
+    featuresToRender = reviewerFeaturedLinks;
+  } else {
+    featuresToRender = externalFeaturedLinks;
+  }
 
   // handle click event for external links
   function handleFeatureLinkClick(e, item) {
