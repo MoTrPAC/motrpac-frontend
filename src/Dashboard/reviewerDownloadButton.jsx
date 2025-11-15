@@ -54,7 +54,11 @@ function ReviewerDownloadButton({ filename, label, icon, profile = {} }) {
       });
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.log(`${err.error}: ${err.errorDescription}`);
+      if (err.response && err.response.data) {
+        console.log('Error:', err.response.data);
+      } else {
+        console.log('Error:', err.message);
+      }
       setFetchStatus({
         status: 'error',
         fileUrl: null,
