@@ -230,7 +230,7 @@ export function Navbar({
                   >
                     Interactive Data Visualization
                   </a>
-                  {isAuthenticated && hasAccess && userType !== 'internal' && userRole && userRole === 'reviewer' ? (
+                  {isAuthenticated && hasAccess && (userType === 'internal' || (userRole && userRole === 'reviewer')) && (
                     <a
                       href={dataVizURL}
                       className="dropdown-item"
@@ -239,22 +239,12 @@ export function Navbar({
                     >
                       Human Data Visualization
                     </a>
-                  ) : null}
-                  {isAuthenticated && hasAccess && userType === 'internal' ? (
-                    <>
-                      <a
-                        href={dataVizURL}
-                        className="dropdown-item"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        Human Data Visualization
-                      </a>
-                      <Link to="/analysis-phenotype" className="dropdown-item">
-                        Phenotype
-                      </Link>
-                    </>
-                  ) : null}
+                  )}
+                  {isAuthenticated && hasAccess && userType === 'internal' && (
+                    <Link to="/analysis-phenotype" className="dropdown-item">
+                      Phenotype
+                    </Link>
+                  )}
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
