@@ -30,10 +30,8 @@ function FeatureLinks({
 
   // Get localStorage item
   const token = localStorage.getItem('ut');
-
-  const dataVizHost = process.env.NODE_ENV !== 'production'
-    ? `https://data-viz-dev.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`
-    : `https://data-viz.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`;
+  const dataVizHost = process.env.NODE_ENV !== 'production' ? 'data-viz-dev' : 'data-viz';
+  const dataVizURL = `https://${dataVizHost}.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`;
 
   // Feature links by groups
   const commonEssentialFeaturedLinks = [
@@ -88,7 +86,7 @@ function FeatureLinks({
   const precawgDataVizFeaturedLink = [
     {
       name: 'precovid-human-data-visualization',
-      route: dataVizHost,
+      route: dataVizURL,
       description:
         'An interactive data visualization tool for the analysis of pre-COVID human sedentary adults study data.',
       icon: 'analytics',
