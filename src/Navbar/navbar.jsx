@@ -121,10 +121,8 @@ export function Navbar({
 
   // Get localStorage item
   const token = localStorage.getItem('ut');
-
-  const dataVizHost = process.env.NODE_ENV !== 'production'
-    ? `https://data-viz-dev.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`
-    : `https://data-viz.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`;
+  const dataVizHost = process.env.NODE_ENV !== 'production' ? 'data-viz-dev' : 'data-viz';
+  const dataVizURL = `https://${dataVizHost}.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`;
 
   // Call to invoke Redux action to fetch QC data
   // if timestamp is empty or older than 24 hours
@@ -234,7 +232,7 @@ export function Navbar({
                   </a>
                   {isAuthenticated && hasAccess && userType !== 'internal' && userRole && userRole === 'reviewer' ? (
                     <a
-                      href={dataVizHost}
+                      href={dataVizURL}
                       className="dropdown-item"
                       target="_blank"
                       rel="noreferrer"
@@ -245,7 +243,7 @@ export function Navbar({
                   {isAuthenticated && hasAccess && userType === 'internal' ? (
                     <>
                       <a
-                        href={dataVizHost}
+                        href={dataVizURL}
                         className="dropdown-item"
                         target="_blank"
                         rel="noreferrer"
