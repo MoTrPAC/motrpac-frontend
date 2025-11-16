@@ -10,6 +10,7 @@ import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
 import LoginButton from '../lib/loginButton';
 import onVisibilityChange from '../lib/utils/pageVisibility';
+import { getDataVizURL } from '../lib/utils/dataVizUrl';
 
 import '@styles/navbar.scss';
 
@@ -119,11 +120,6 @@ export function Navbar({
   const userType = profile.user_metadata && profile.user_metadata.userType;
   const userRole = profile.app_metadata && profile.app_metadata.role;
 
-  // Get localStorage item
-  const token = localStorage.getItem('ut');
-  const dataVizHost = process.env.NODE_ENV !== 'production' ? 'data-viz-dev' : 'data-viz';
-  const dataVizURL = `https://${dataVizHost}.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`;
-
   // Call to invoke Redux action to fetch QC data
   // if timestamp is empty or older than 24 hours
   const fecthQCData = () => {
@@ -223,7 +219,7 @@ export function Navbar({
                     Graphical Clustering
                   </Link>
                   <a
-                    href="https://data-viz.motrpac-data.org"
+                    href={getDataVizURL('rat-training-06')}
                     className="dropdown-item"
                     target="_blank"
                     rel="noreferrer"
@@ -232,7 +228,7 @@ export function Navbar({
                   </a>
                   {isAuthenticated && hasAccess && (userType === 'internal' || (userRole && userRole === 'reviewer')) && (
                     <a
-                      href={dataVizURL}
+                      href={getDataVizURL('human-precovid')}
                       className="dropdown-item"
                       target="_blank"
                       rel="noreferrer"
