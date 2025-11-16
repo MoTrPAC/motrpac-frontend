@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { getDataVizURL } from '../lib/utils/dataVizUrl';
 
 /**
  * Renders the feature links on  search page
@@ -28,11 +29,6 @@ function FeatureLinks({
     }
   };
 
-  // Get localStorage item
-  const token = localStorage.getItem('ut');
-  const dataVizHost = process.env.NODE_ENV !== 'production' ? 'data-viz-dev' : 'data-viz';
-  const dataVizURL = `https://${dataVizHost}.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`;
-
   // Feature links by groups
   const commonEssentialFeaturedLinks = [
     {
@@ -53,7 +49,7 @@ function FeatureLinks({
     },
     {
       name: 'pass1b-06-data-visualization',
-      route: process.env.NODE_ENV !== 'production' ? 'https://data-viz-dev.motrpac-data.org/' : 'https://data-viz.motrpac-data.org/',
+      route: getDataVizURL('rat-training-06'),
       description:
         'An interactive data visualization tool for the graphical clustering analysis of endurance training response in young adult rats.',
       icon: 'data_exploration',
@@ -86,7 +82,7 @@ function FeatureLinks({
   const precawgDataVizFeaturedLink = [
     {
       name: 'precovid-human-data-visualization',
-      route: dataVizURL,
+      route: getDataVizURL('human-precovid'),
       description:
         'An interactive data visualization tool for the analysis of pre-COVID human sedentary adults study data.',
       icon: 'analytics',
