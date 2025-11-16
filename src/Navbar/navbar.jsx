@@ -445,6 +445,10 @@ Navbar.propTypes = {
       hasAccess: PropTypes.bool,
       name: PropTypes.string,
       siteName: PropTypes.string,
+      userType: PropTypes.string,
+    }),
+    app_metadata: PropTypes.shape({
+      role: PropTypes.string,
     }),
   }),
   isAuthenticated: PropTypes.bool,
