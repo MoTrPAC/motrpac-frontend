@@ -14,6 +14,7 @@ import {
   timepointListRatAcute,
   timepointListHuman,
 } from '../lib/searchFilters';
+import { getDataVizURL } from '../lib/utils/dataVizUrl';
 
 export const searchParamsDefaultProps = {
   ktype: 'gene',
@@ -689,12 +690,8 @@ function normalizeString(str) {
 export const transformData = (arr) => {
   const tranformArray = [...arr];
 
-  // Get localStorage item
-  const token = localStorage.getItem('ut');
-
-  const dataVizHost = process.env.NODE_ENV !== 'production'
-    ? `https://data-viz-dev.motrpac-data.org/precawg/?${token && token.length ? `ut=${token}&` : ''}`
-    : `https://data-viz.motrpac-data.org/precawg/?${token && token.length ? `ut=${token}&` : ''}`;
+  // Get precawg data viz URL
+  const dataVizHost = getDataVizURL('human-precovid');
 
   tranformArray.forEach((item) => {
     // Determine if the data is human or rat
