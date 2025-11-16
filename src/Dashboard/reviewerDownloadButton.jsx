@@ -8,7 +8,7 @@ import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
  * 
  * This component fetches signed URLs from GCP buckets for downloading reviewer-specific
  * R packages. The files should be stored in the GCP bucket specified by the
- * VITE_REVIEWER_PACKAGE_BUCKET environment variable (falls back to VITE_DATA_FILE_BUCKET).
+ * VITE_DATA_FILE_BUCKET environment variable.
  * 
  * Expected file naming in GCP bucket:
  * - Analysis R Package: bundles/motrpac_human-precovid-sed-adu_analysis.zip
@@ -42,6 +42,12 @@ function ReviewerDownloadButton({ filename, label, icon, profile = {} }) {
     const endpoint = import.meta.env.VITE_SIGNED_URL_ENDPOINT;
     const key = import.meta.env.VITE_API_SERVICE_KEY;
     const bucket = import.meta.env.VITE_DATA_FILE_BUCKET;
+
+    if (!api || !endpoint || !key || !bucket) {
+      console.error('Missing required environment variables for file download');
+      setFetchStatus({ status: 'error', fileUrl: null, fetching: false });
+      return Promise.reject(new Error('Configuration error'));
+    }
 
     try {
       const response = await axios.get(
@@ -157,6 +163,7 @@ ReviewerDownloadButton.propTypes = {
   profile: PropTypes.shape({
     userid: PropTypes.string,
     user_metadata: PropTypes.object,
+    app_metadata: PropTypes.object,
   }),
 };
 
