@@ -21,7 +21,12 @@ import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
  *
  * @returns {object} JSX representation of the download button
  */
-function ReviewerDownloadButton({ filename, label, icon, profile = {} }) {
+function ReviewerDownloadButton({
+  filename,
+  label,
+  icon = 'bi-file-zip-fill',
+  profile = {}
+}) {
   const [fetchStatus, setFetchStatus] = useState({
     status: null,
     fileUrl: null,
@@ -165,10 +170,6 @@ ReviewerDownloadButton.propTypes = {
     user_metadata: PropTypes.object,
     app_metadata: PropTypes.object,
   }),
-};
-
-ReviewerDownloadButton.defaultProps = {
-  icon: 'bi-file-zip-fill',
 };
 
 export default ReviewerDownloadButton;
