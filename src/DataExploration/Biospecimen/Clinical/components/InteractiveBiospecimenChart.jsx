@@ -190,6 +190,7 @@ const InteractiveBiospecimenChart = () => {
                 loading={false} // Data is already loaded
                 error={null}
                 onBarClick={handleBarClick}
+                activeFilters={filters}
               />
             </>
           )}
