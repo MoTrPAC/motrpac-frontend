@@ -7,8 +7,10 @@ import {
   parseAssayTypes,
   VISIT_CODE_TO_PHASE,
   INTERVENTION_PHASES,
+  TISSUE_COLORS,
 } from '../constants/plotOptions';
 import { getAssayShortName, getAssayFullName, getAssayFullNames } from '../utils/assayCodeMapping';
+import { getTissueName } from '../utils/tissueUtils';
 import {
   getRaceCategory,
   getRandomizedGroup,
@@ -40,8 +42,9 @@ if (typeof Highcharts === 'object' && Highcharts.setOptions) {
  * - Bars sorted by total count (longest at top, shortest at bottom)
  * - Click-to-drill-down functionality
  * - Assay information in tooltips
+ * - Tissue-based stacked bars when tissue filters are active
  */
-const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
+const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFilters }) => {
   // Calculate fixed maximum from ALL unfiltered data (only once)
   const fixedMaxCount = useMemo(() => {
     if (!allData || !allData.length) return 0;
@@ -376,20 +379,32 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
   }, [data]);
 
   // Transform data for chart - separate charts for Pre and Post phases
+  // Always displays tissue-based stacked bars
   const chartData = useMemo(() => {
     if (!data || !data.length) return null;
 
-    // Collect all unique assay types and group data
+    // Determine which tissues to show in the chart
+    // If no tissue filters are active (length 0), show all tissues (default behavior)
+    // Otherwise, show only the selected tissues
+    const selectedTissues = activeFilters?.tissue?.length > 0 
+      ? activeFilters.tissue 
+      : ['Adipose', 'Blood', 'Muscle'];
+
+    // Always maintain consistent tissue order: Adipose, Blood, Muscle
+    const tissueOrder = ['Adipose', 'Blood', 'Muscle'];
+    const orderedSelectedTissues = tissueOrder.filter(t => selectedTissues.includes(t));
+
+    // Collect all unique assay types and group data by tissue
     const assayData = {};
 
     data.forEach((record) => {
       const visitCode = record.visit_code;
       const phase = VISIT_CODE_TO_PHASE[visitCode];
 
-      // Only require phase - tissue and timepoint are not needed for this chart
       if (!phase) return;
 
       const assays = parseAssayTypes(record.raw_assays_with_results);
+      const tissueName = getTissueName(record.sample_group_code);
       
       assays.forEach(assay => {
         if (!assayData[assay]) {
@@ -403,13 +418,30 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
               count: 0,
               samples: [],
               assayTypes: new Set(),
+              byTissue: {},
             };
           });
         }
 
-        assayData[assay].byPhase[phase].count++;
-        assayData[assay].byPhase[phase].samples.push(record);
-        assayData[assay].byPhase[phase].assayTypes.add(assay);
+        const phaseData = assayData[assay].byPhase[phase];
+
+        // Always track tissue-specific data for stacking
+        if (tissueName) {
+          if (!phaseData.byTissue[tissueName]) {
+            phaseData.byTissue[tissueName] = {
+              count: 0,
+              samples: [],
+              assayTypes: new Set(),
+            };
+          }
+          phaseData.byTissue[tissueName].count++;
+          phaseData.byTissue[tissueName].samples.push(record);
+          phaseData.byTissue[tissueName].assayTypes.add(assay);
+        }
+
+        phaseData.count++;
+        phaseData.samples.push(record);
+        phaseData.assayTypes.add(assay);
         assayData[assay].total++;
       });
     });
@@ -421,27 +453,40 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
     const categories = sortedAssays.map(a => getAssayShortName(a.name));
 
     // Create separate chart data for Pre-Intervention and Post-Intervention phases
-    const chartsData = INTERVENTION_PHASES.map((phase, index) => ({
-      phase,
-      categories,
-      series: [{
-        name: phase,
-        color: index === 0 ? '#4e79a7' : '#e15759', // Blue for Pre, Red for Post
-        data: sortedAssays.map(assay => {
-          const phaseData = assay.byPhase[phase];
+    // Always use stacked series by tissue in consistent order
+    const chartsData = INTERVENTION_PHASES.map((phase) => {
+      // Create stacked series - one per selected tissue, in consistent order
+      // Only include tissues that have at least one non-zero data point
+      const series = orderedSelectedTissues
+        .map(tissueName => {
+          const dataPoints = sortedAssays.map(assay => {
+            const phaseData = assay.byPhase[phase];
+            const tissueData = phaseData?.byTissue?.[tissueName];
+            const count = tissueData ? tissueData.count : 0;
+            
+            return {
+              // Use null for zero values so Highcharts doesn't render them
+              y: count === 0 ? null : count,
+              phase,
+              assay: assay.name,
+              tissue: tissueName,
+              samples: tissueData ? tissueData.samples : [],
+              assayTypes: tissueData ? Array.from(tissueData.assayTypes) : [],
+            };
+          });
+          
           return {
-            y: phaseData ? phaseData.count : 0,
-            phase,
-            assay: assay.name,
-            samples: phaseData ? phaseData.samples : [],
-            assayTypes: phaseData ? Array.from(phaseData.assayTypes) : [],
+            name: tissueName,
+            color: TISSUE_COLORS[tissueName],
+            data: dataPoints,
           };
-        }),
-      }],
-    }));
+        });
+        
+      return { phase, categories, series };
+    });
 
     return chartsData;
-  }, [data]);
+  }, [data, activeFilters]);
 
   // Pie chart configuration for sex distribution
   const sexPieChartOptions = useMemo(() => {
@@ -838,6 +883,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
   }, [participantByRandomGroup, fixedMaxRandomGroupCount, onBarClick]);
 
   // Chart configurations for both Pre and Post phases
+  // Always display stacked bars by tissue
   const chartOptionsArray = useMemo(() => {
     if (!chartData || !data) return null;
 
@@ -868,7 +914,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
         allowDecimals: false,
         title: {
           text: 'Sample Count',
-          y: 15,
+          y: 30,
           style: { fontSize: '12px', fontWeight: 'bold' }
         },
         labels: {
@@ -876,7 +922,13 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
         }
       },
       legend: {
-        enabled: false,
+        enabled: true,
+        align: 'center',
+        verticalAlign: 'bottom',
+        layout: 'horizontal',
+        itemStyle: {
+          fontSize: '11px'
+        }
       },
       tooltip: {
         useHTML: true,
@@ -890,6 +942,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
           return `
             <div style="padding: 8px;">
               <strong>Assay:</strong> ${getAssayFullName(point.assay)}<br/>
+              <strong>Tissue:</strong> ${point.tissue}<br/>
               <strong>Phase:</strong> ${point.phase}<br/>
               <strong>Samples:</strong> ${point.y.toLocaleString()}<br/>
               <em style="color: #666; font-size: 11px;">Click to view details</em>
@@ -902,20 +955,28 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick }) => {
           cursor: 'pointer',
           dataLabels: {
             enabled: true,
-            format: '{point.y}',
+            formatter: function() {
+              // Don't show label for null values (used to hide zero-count segments)
+              return this.y === null ? null : this.y;
+            },
             style: { fontSize: '10px' }
           },
           groupPadding: 0.1,
           pointPadding: 0.05,
         },
         series: {
-          stacking: undefined,
+          stacking: 'normal',
           cursor: 'pointer',
           point: {
             events: {
               click: function () {
                 if (onBarClick && this.samples) {
-                  onBarClick({ point: this });
+                  onBarClick({ 
+                    point: {
+                      ...this,
+                      tissue: this.tissue || this.series.name
+                    }
+                  });
                 }
               }
             }
@@ -1149,6 +1210,7 @@ BiospecimenChart.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.string,
   onBarClick: PropTypes.func.isRequired,
+  activeFilters: PropTypes.object,
 };
 
 export default BiospecimenChart;
