@@ -12,6 +12,7 @@ const BiospecimenFilters = ({
   filters,
   filterOptions,
   onCheckboxChange,
+  onResetFilters,
 }) => {
   // Track expanded/collapsed state for each filter group
   const [expandedGroups, setExpandedGroups] = useState({
@@ -132,11 +133,20 @@ const BiospecimenFilters = ({
 
   return (
     <div className="card h-100">
-      <div className="card-header">
+      <div className="card-header d-flex justify-content-between align-items-center">
         <h5 className="mb-0">
-          <i className="bi bi-funnel mr-2" />
-          Cohort Selector
+          <i className="bi bi-funnel-fill mr-1" />
+          Filters
         </h5>
+        <button
+          type="button"
+          className="btn btn-secondary btn-sm"
+          onClick={onResetFilters}
+          title="Reset all filters to default values"
+          aria-label="Reset filters"
+        >
+          Reset
+        </button>
       </div>
       <div className="card-body">
         {/* Render all filter groups using the data-driven configuration */}
@@ -168,6 +178,7 @@ BiospecimenFilters.propTypes = {
     omeOptions: PropTypes.array.isRequired,
   }).isRequired,
   onCheckboxChange: PropTypes.func.isRequired,
+  onResetFilters: PropTypes.func.isRequired,
 };
 
 export default BiospecimenFilters;
