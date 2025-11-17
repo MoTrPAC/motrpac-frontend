@@ -160,25 +160,31 @@ export const useFilteredBiospecimenData = (allData, filters) => {
       }
 
       // Filter by BMI group - using centralized utility
+      // Only filter out if record HAS a BMI value that doesn't match selected filters
+      // Records with null/unmapped BMI values are kept (don't filter based on missing data)
       if (filters.bmi_group?.length > 0) {
         const itemBMIGroup = getBMIGroup(item.bmi);
-        if (!itemBMIGroup || !filters.bmi_group.includes(itemBMIGroup)) {
+        if (itemBMIGroup && !filters.bmi_group.includes(itemBMIGroup)) {
           return false;
         }
       }
 
       // Filter by race - using centralized utility
+      // Only filter out if record HAS a race value that doesn't match selected filters
+      // Records with null/unmapped race values are kept (don't filter based on missing data)
       if (filters.race?.length > 0) {
         const itemRaceCategory = getRaceCategory(item);
-        if (!itemRaceCategory || !filters.race.includes(itemRaceCategory)) {
+        if (itemRaceCategory && !filters.race.includes(itemRaceCategory)) {
           return false;
         }
       }
 
       // Filter by ethnicity - using centralized utility
+      // Only filter out if record HAS an ethnicity value that doesn't match selected filters
+      // Records with null/unmapped ethnicity values are kept (don't filter based on missing data)
       if (filters.ethnicity?.length > 0) {
         const itemEthnicityCategory = getEthnicityCategory(item);
-        if (!itemEthnicityCategory || !filters.ethnicity.includes(itemEthnicityCategory)) {
+        if (itemEthnicityCategory && !filters.ethnicity.includes(itemEthnicityCategory)) {
           return false;
         }
       }
