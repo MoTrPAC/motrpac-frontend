@@ -456,7 +456,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     // Always use stacked series by tissue in consistent order
     const chartsData = INTERVENTION_PHASES.map((phase) => {
       // Create stacked series - one per selected tissue, in consistent order
-      // Only include tissues that have at least one non-zero data point
+      // Zero-count data points are set to null so Highcharts doesn't render them
       const series = orderedSelectedTissues
         .map(tissueName => {
           const dataPoints = sortedAssays.map(assay => {
