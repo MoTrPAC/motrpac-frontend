@@ -118,8 +118,8 @@ const InteractiveBiospecimenChart = () => {
     
     // Dynamic filename based on mode
     const filename = selectedBar
-      ? `biospecimen_drilldown_${selectedBar.tissue || 'data'}_${selectedBar.phase || selectedBar.timepoint || selectedBar.assay || 'export'}.csv`
-      : `biospecimen_filtered_${new Date().toISOString().split('T')[0]}.csv`;
+      ? `biospecimen_filtered_${selectedBar.tissue || 'data'}_${selectedBar.phase || selectedBar.timepoint || selectedBar.assay || selectedBar.demographicType || 'export'}.csv`
+      : `biospecimen_all_${new Date().toISOString().split('T')[0]}.csv`;
     
     link.setAttribute('href', url);
     link.setAttribute('download', filename);
