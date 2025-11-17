@@ -1904,7 +1904,7 @@ This comprehensive guide covers the MoTrPAC Data Hub architecture, patterns, and
 
 - Never mutate Redux state
 
-- Node 16.20.x required for local dev
+- Node 20.19.x required for local dev
 
 **Testing:**
 
