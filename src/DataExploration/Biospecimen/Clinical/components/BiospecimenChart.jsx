@@ -8,6 +8,7 @@ import {
   VISIT_CODE_TO_PHASE,
   INTERVENTION_PHASES,
   TISSUE_COLORS,
+  TISSUE_TYPES,
 } from '../constants/plotOptions';
 import { getAssayShortName, getAssayFullName, getAssayFullNames } from '../utils/assayCodeMapping';
 import { getTissueName } from '../utils/tissueUtils';
@@ -388,11 +389,10 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     // Otherwise, show only the selected tissues
     const selectedTissues = activeFilters?.tissue?.length > 0 
       ? activeFilters.tissue 
-      : ['Adipose', 'Blood', 'Muscle'];
+      : TISSUE_TYPES;
 
     // Always maintain consistent tissue order: Adipose, Blood, Muscle
-    const tissueOrder = ['Adipose', 'Blood', 'Muscle'];
-    const orderedSelectedTissues = tissueOrder.filter(t => selectedTissues.includes(t));
+    const orderedSelectedTissues = TISSUE_TYPES.filter(t => selectedTissues.includes(t));
 
     // Collect all unique assay types and group data by tissue
     const assayData = {};
