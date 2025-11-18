@@ -21,6 +21,13 @@ export default [
       '*.html',
     ],
   },
+  // GitHub plugin recommended and browser configs (load plugins first)
+  // These provide security and best practice rules
+  // NOTE: The GitHub plugin configs are placed before the main configuration
+  // so that the main config can override any rules from the plugin configs.
+  github.getFlatConfigs().browser,
+  github.getFlatConfigs().recommended,
+  github.getFlatConfigs().react,
   // Main configuration
   {
     files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
@@ -88,11 +95,6 @@ export default [
       react: { version: '18.3' },
     },
   },
-  // GitHub plugin recommended and browser configs
-  // These provide security and best practice rules
-  github.getFlatConfigs().browser,
-  github.getFlatConfigs().recommended,
-  github.getFlatConfigs().react,
   // Prettier config must be last to disable conflicting formatting rules
   prettierConfig,
 ];
