@@ -1,0 +1,66 @@
+name: Super-Linter
+
+on:
+  pull_request:
+    branches:
+      - master
+      - dev
+  push:
+    branches:
+      - master
+      - dev
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      statuses: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run Super-Linter
+        uses: super-linter/super-linter@2bdd90ed3262e023ac84bf8fe35dc480721fc1f2  # v8.2.1
+        env:
+          DEFAULT_BRANCH: master
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          # Validate only changed files in PRs, all files on push
+          VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' }}
+
+          # JavaScript
+          VALIDATE_JAVASCRIPT_ES: true
+          VALIDATE_JSX: true
+
+          # CSS/SCSS (CSS validator handles both)
+          VALIDATE_CSS: true
+
+          # HTML validation
+          VALIDATE_HTML: true
+
+          # Markdown
+          VALIDATE_MARKDOWN: true
+
+          # JSON
+          VALIDATE_JSON: true
+
+          # YAML (for GitHub Actions workflows)
+          VALIDATE_YAML: true
+
+          # Exclude patterns - single regex string
+          FILTER_REGEX_EXCLUDE: '.*/node_modules/.*|.*/dist/.*|.*/build/.*|.*/coverage/.*|.*/.cache/.*|.*/public/.*'
