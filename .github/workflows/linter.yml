@@ -43,10 +43,9 @@ jobs:
           # Validate only changed files in PRs, all files on push
           VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' }}
 
-          # JavaScript/TypeScript
+          # JavaScript
           VALIDATE_JAVASCRIPT_ES: true
           VALIDATE_JSX: true
-          VALIDATE_TYPESCRIPT_ES: false
 
           # CSS/SCSS (CSS validator handles both)
           VALIDATE_CSS: true
@@ -62,9 +61,6 @@ jobs:
 
           # YAML (for GitHub Actions workflows)
           VALIDATE_YAML: true
-
-          # Disable noisy linters
-          VALIDATE_JSCPD: false
 
           # Exclude patterns - single regex string
           FILTER_REGEX_EXCLUDE: '.*/node_modules/.*|.*/dist/.*|.*/build/.*|.*/coverage/.*|.*/.cache/.*|.*/public/.*'
