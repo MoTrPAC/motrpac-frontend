@@ -48,7 +48,7 @@ const InteractiveBiospecimenChart = () => {
   // Fixed: Only depend on data length, not the pagination object itself
   useEffect(() => {
     tablePagination.resetPagination();
-  }, [tableData.length]);
+  }, [tableData.length, tablePagination.resetPagination]);
 
   // Static filter options from constants - memoized to prevent recreating object
   const filterOptions = useMemo(() => FILTER_OPTIONS, []);
