@@ -36,7 +36,6 @@ function BundleDownloadButton({ bundlefile, bundlefileSize, profile = {} }) {
         });
       })
       .catch((err) => {
-        // eslint-disable-next-line no-console
         console.log(`${err.error}: ${err.errorDescription}`);
         setFetchStatus({
           status: 'error',

@@ -34,7 +34,11 @@ export default [
     files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        ...globals.node, // Add Node globals for build files
+        ...globals.es2021,
+      },
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },
@@ -59,7 +63,10 @@ export default [
       'react/prop-types': 'off', // Not using prop-types in this project
       'no-unused-vars': [
         'warn',
-        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+        { 
+          argsIgnorePattern: '^_', 
+          varsIgnorePattern: '^_|^React$', // Allow unused React (JSX transform)
+        },
       ],
 
       // React Refresh configuration
@@ -76,7 +83,16 @@ export default [
       'github/unescaped-html-literal': 'off', // Allow JSX literals
       'github/filenames-match-regex': 'off', // Don't enforce filename conventions
       'import/no-unresolved': 'off', // Disabled due to Vite path aliases
-      'camelcase': 'off', // Some APIs use snake_case
+      'import/no-commonjs': 'off', // Allow CommonJS for config files
+      'import/no-nodejs-modules': 'off', // Allow Node.js modules in config
+      'import/no-namespace': 'off', // Allow namespace imports
+      'import/named': 'off', // Disabled due to false positives with PnP
+      'import/namespace': 'off', // Disabled due to false positives
+      'import/no-deprecated': 'off', // Disabled due to false positives
+      camelcase: 'off', // Some APIs use snake_case
+      'i18n-text/no-en': 'off', // Allow English text in this project
+      'eslint-comments/no-use': 'off', // Allow eslint directive comments
+      'prefer-template': 'off', // Allow string concatenation
 
       // Allow console for debugging
       'no-console': 'off',

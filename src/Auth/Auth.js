@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import auth0 from 'auth0-js';
 import * as jose from 'jose';
 import AUTH0_CONFIG from './auth0-variables';

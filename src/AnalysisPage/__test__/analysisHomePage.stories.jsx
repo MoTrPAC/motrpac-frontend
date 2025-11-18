@@ -8,9 +8,9 @@ import Footer from '../../Footer/footer';
 import { Sidebar } from '../../Sidebar/sidebar';
 import { defaultAnalysisState } from '../analysisReducer';
 
-const store = configureStore();
-
 import testUser from '../../testData/testUser';
+
+const store = configureStore();
 
 const navbarAction = {
   logout: action('logging out'),

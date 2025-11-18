@@ -116,7 +116,6 @@ function DifferentialExpression() {
       });
   }
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     renderFigure();
   }, []);

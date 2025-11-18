@@ -556,8 +556,8 @@ function CreateBiospecimenService() {
           status: error.response?.status,
           statusText: error.response?.statusText,
           data: error.response?.data,
-          filters: filters,
-          params: params,
+          filters,
+          params,
           url: error.config?.url,
         });
 

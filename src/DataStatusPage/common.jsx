@@ -635,9 +635,8 @@ export function retrieveReport(e, filename) {
       window.open(response.data.url, '_target');
     })
     .catch((err) => {
-      // eslint-disable-next-line no-console
       console.log(`${err.error}: ${err.errorDescription}`);
-      // eslint-disable-next-line no-alert
+
       alert(
         'An error has occurred. Please try again later, or contact motrpac-helpdesks@lists.stanford.edu to report this problem.',
       );

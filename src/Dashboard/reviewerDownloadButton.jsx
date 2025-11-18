@@ -64,7 +64,6 @@ function ReviewerDownloadButton({
         fetching: false,
       });
     } catch (err) {
-      // eslint-disable-next-line no-console
       if (err.response && err.response.data) {
         console.log('Error:', err.response.data);
       } else {

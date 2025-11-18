@@ -70,7 +70,6 @@ function ReleaseEntry({ profile, currentView }) {
         setFetching(false);
       })
       .catch((err) => {
-        // eslint-disable-next-line no-console
         console.log(`${err.error}: ${err.errorDescription}`);
         setModalStatus({
           status: 'error',
@@ -214,7 +213,6 @@ function ReleaseEntry({ profile, currentView }) {
     let entries;
     const defaultEntries = currentView === 'external' ? 1 : visibleReleases;
     if (releases && releases.length) {
-      // eslint-disable-next-line arrow-body-style
       entries = releases.slice(0, defaultEntries).map((release, idx) => {
         return (
           <div
@@ -302,7 +300,6 @@ function ReleaseEntry({ profile, currentView }) {
                       release.version === '2.0' ? (
                         <ReleaseDataTableInternalByPhase
                           release={release}
-                          // eslint-disable-next-line react/jsx-no-bind
                           renderDataTypeRow={renderDataTypeRow}
                         />
                       ) : null}
@@ -310,7 +307,6 @@ function ReleaseEntry({ profile, currentView }) {
                       release.version.match(/1.0|1.1|1.2|1.2.1/g) ? (
                         <ReleaseDataTableInternal
                           release={release}
-                          // eslint-disable-next-line react/jsx-no-bind
                           renderDataTypeRow={renderDataTypeRow}
                         />
                       ) : null}
@@ -318,7 +314,6 @@ function ReleaseEntry({ profile, currentView }) {
                       release.version === '1.0' ? (
                         <ReleaseDataTableExternal
                           release={release}
-                          // eslint-disable-next-line react/jsx-no-bind
                           renderDataTypeRow={renderDataTypeRow}
                         />
                       ) : null}

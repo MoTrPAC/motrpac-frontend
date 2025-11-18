@@ -181,8 +181,7 @@ function DawgPAC({ profile = {} }) {
               <strong>Phenotypes:</strong> Comprehensive analysis of key
               variables from the rat phenotypic data, including summary
               statistics, correlation analysis, statistical testing, and
-              regression models:{' '}
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+              regression models: {}
               <a
                 href="#"
                 data-toggle="modal"
@@ -275,8 +274,7 @@ function DawgPAC({ profile = {} }) {
                   Metabolomics
                   <ul className="list-style mb-2">
                     <li>
-                      QC:{' '}
-                      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                      QC: {}
                       <a
                         href="#"
                         data-toggle="modal"
@@ -292,8 +290,7 @@ function DawgPAC({ profile = {} }) {
                       </a>
                     </li>
                     <li>
-                      DA:{' '}
-                      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                      DA: {}
                       <a
                         href="#"
                         data-toggle="modal"
@@ -318,7 +315,7 @@ function DawgPAC({ profile = {} }) {
                       <ul className="list-style mb-2">
                         {proteomics1A1CIndependentAnalyses.map((report) => (
                           <li key={report}>
-                            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                            {}
                             <a
                               href="#"
                               data-toggle="modal"
@@ -341,7 +338,7 @@ function DawgPAC({ profile = {} }) {
                       <ul className="list-style mb-2">
                         {proteomicsReportsDA.map((report) => (
                           <li key={report}>
-                            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                            {}
                             <a
                               href="#"
                               data-toggle="modal"
@@ -364,7 +361,7 @@ function DawgPAC({ profile = {} }) {
                       <ul className="list-style mb-2">
                         {proteomicsReportsQCNorm.map((report) => (
                           <li key={report}>
-                            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                            {}
                             <a
                               href="#"
                               data-toggle="modal"

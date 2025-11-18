@@ -551,7 +551,7 @@ const BiospecimenChart = ({
           showInLegend: false,
           point: {
             events: {
-              click: function () {
+              click() {
                 if (onBarClick && this.samples) {
                   onBarClick({
                     point: {
@@ -630,7 +630,7 @@ const BiospecimenChart = ({
           color: '#9b59b6',
           point: {
             events: {
-              click: function () {
+              click() {
                 if (onBarClick && this.samples) {
                   const ageGroup = participantByAgeGroup.categories[this.index];
                   onBarClick({
@@ -711,7 +711,7 @@ const BiospecimenChart = ({
           color: '#3498db',
           point: {
             events: {
-              click: function () {
+              click() {
                 if (onBarClick && this.samples) {
                   const raceCategory = participantByRace.categories[this.index];
                   onBarClick({
@@ -769,7 +769,7 @@ const BiospecimenChart = ({
           showInLegend: false,
           point: {
             events: {
-              click: function () {
+              click() {
                 if (onBarClick && this.samples) {
                   onBarClick({
                     point: {
@@ -826,7 +826,7 @@ const BiospecimenChart = ({
           showInLegend: false,
           point: {
             events: {
-              click: function () {
+              click() {
                 if (onBarClick && this.samples) {
                   onBarClick({
                     point: {
@@ -905,7 +905,7 @@ const BiospecimenChart = ({
           color: '#e67e22',
           point: {
             events: {
-              click: function () {
+              click() {
                 if (onBarClick && this.samples) {
                   const groupCategory =
                     participantByRandomGroup.categories[this.index];
@@ -950,7 +950,7 @@ const BiospecimenChart = ({
         style: { fontSize: '16px', fontWeight: 'bold' },
       },
       xAxis: {
-        categories: categories,
+        categories,
         title: {
           text: 'Assay',
           style: { fontSize: '12px', fontWeight: 'bold' },
@@ -983,7 +983,7 @@ const BiospecimenChart = ({
       },
       tooltip: {
         useHTML: true,
-        formatter: function () {
+        formatter() {
           const point = this.point;
           // Convert assay codes to human-readable names
           const assayList =
@@ -1007,7 +1007,7 @@ const BiospecimenChart = ({
           cursor: 'pointer',
           dataLabels: {
             enabled: true,
-            formatter: function () {
+            formatter() {
               // Don't show label for null values (used to hide zero-count segments)
               return this.y === null ? null : this.y;
             },
@@ -1021,7 +1021,7 @@ const BiospecimenChart = ({
           cursor: 'pointer',
           point: {
             events: {
-              click: function () {
+              click() {
                 if (onBarClick && this.samples) {
                   onBarClick({
                     point: {
@@ -1035,7 +1035,7 @@ const BiospecimenChart = ({
           },
         },
       },
-      series: series,
+      series,
       credits: { enabled: false },
       exporting: {
         enabled: true,

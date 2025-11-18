@@ -1,4 +1,3 @@
-/* eslint-disable no-else-return */
 import fromExponential from 'from-exponential';
 /**
  * Utility function - simple Math.round method
