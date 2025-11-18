@@ -63,8 +63,8 @@ export default [
       'react/prop-types': 'off', // Not using prop-types in this project
       'no-unused-vars': [
         'warn',
-        { 
-          argsIgnorePattern: '^_', 
+        {
+          argsIgnorePattern: '^_',
           varsIgnorePattern: '^_|^React$', // Allow unused React (JSX transform)
         },
       ],

@@ -30,6 +30,7 @@ We use ESLint v9 with the modern flat config format to catch code quality issues
 **Configuration:** `eslint.config.js`
 
 **Plugins:**
+
 - `@eslint/js` - Core ESLint recommended rules
 - `eslint-plugin-react` - React-specific linting
 - `eslint-plugin-react-hooks` - Enforce React Hooks rules
@@ -41,6 +42,7 @@ We use ESLint v9 with the modern flat config format to catch code quality issues
 - `eslint-plugin-vitest` - Vitest test framework support
 
 **Key Features:**
+
 - Security rules from GitHub plugin
 - Accessibility checks
 - React best practices
@@ -54,6 +56,7 @@ Prettier handles all code formatting automatically.
 **Configuration:** `.prettierrc.json`
 
 **Settings:**
+
 ```json
 {
   "arrowParens": "always",
@@ -80,11 +83,13 @@ StyleLint checks SCSS files for best practices and consistency.
 ### VS Code
 
 Install these extensions:
+
 - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 - [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
 
 Add to your `.vscode/settings.json`:
+
 ```json
 {
   "editor.formatOnSave": true,
@@ -92,16 +97,14 @@ Add to your `.vscode/settings.json`:
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact"
-  ]
+  "eslint.validate": ["javascript", "javascriptreact"]
 }
 ```
 
 ## Pre-commit Workflow
 
 Before committing:
+
 1. Format your code: `yarn format`
 2. Fix linting issues: `yarn lint:fix`
 3. Check remaining issues: `yarn lint`
@@ -169,15 +172,12 @@ After this refactoring, ~291 linting issues remain. These are legitimate code qu
 
 1. **Accessibility** (high priority)
    - `github/a11y-role-supports-aria-props` - Fix incorrect ARIA attributes
-   
 2. **Security** (high priority)
    - `github/no-inner-html` - Replace innerHTML with safer alternatives
-   
 3. **Code Quality** (medium priority)
    - `no-shadow` - Fix variable shadowing
    - `no-useless-escape` - Remove unnecessary escape characters
    - `react/no-unescaped-entities` - Escape special characters in JSX
-   
 4. **Performance** (low priority)
    - `github/prefer-observers` - Use ResizeObserver instead of resize events
 
