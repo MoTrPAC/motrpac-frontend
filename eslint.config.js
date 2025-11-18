@@ -21,16 +21,11 @@ export default [
       '*.html',
     ],
   },
-  // GitHub plugin recommended and browser configs
-  // These provide security and best practice rules
-  github.getFlatConfigs().browser,
-  github.getFlatConfigs().recommended,
-  github.getFlatConfigs().react,
   // Main configuration
   {
     files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 'latest',
       globals: {
         ...globals.browser,
         ...globals.node, // Add Node globals for build files
@@ -68,7 +63,7 @@ export default [
       'prefer-template': 'off', // Allow string concatenation
 
       // React plugin rules
-      'react/jsx-no-target-blank': 'off', // Disable conflicting or overly strict rules for this codebase
+      'react/jsx-no-target-blank': 'warn', // Warn about missing rel attributes with target="_blank"
       'react/prop-types': 'off', // Not using prop-types in this project
 
       // React Refresh configuration
@@ -85,15 +80,6 @@ export default [
       'github/unescaped-html-literal': 'off', // Allow JSX literals
       'github/filenames-match-regex': 'off', // Don't enforce filename conventions
 
-      // Import plugin rules (via GitHub plugin)
-      'import/no-unresolved': 'off', // Disabled due to Vite path aliases
-      'import/no-commonjs': 'off', // Allow CommonJS for config files
-      'import/no-nodejs-modules': 'off', // Allow Node.js modules in config
-      'import/no-namespace': 'off', // Allow namespace imports
-      'import/named': 'off', // Disabled due to false positives with PnP
-      'import/namespace': 'off', // Disabled due to false positives
-      'import/no-deprecated': 'off', // Disabled due to false positives
-      
       // Other plugin rules
       'i18n-text/no-en': 'off', // Allow English text in this project
       'eslint-comments/no-use': 'off', // Allow eslint directive comments
@@ -102,6 +88,11 @@ export default [
       react: { version: '18.3' },
     },
   },
+  // GitHub plugin recommended and browser configs
+  // These provide security and best practice rules
+  github.getFlatConfigs().browser,
+  github.getFlatConfigs().recommended,
+  github.getFlatConfigs().react,
   // Prettier config must be last to disable conflicting formatting rules
   prettierConfig,
 ];
