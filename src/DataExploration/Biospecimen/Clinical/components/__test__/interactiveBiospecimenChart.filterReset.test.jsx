@@ -84,8 +84,10 @@ vi.mock('../../hooks/useBiospecimenData', () => ({
     // Keep records with null/unmapped values (don't filter based on missing data)
     return allData.filter(item => {
       // Filter by sex
-      if (filters.sex?.length > 0 && !filters.sex.includes(item.sex)) {
-        return false;
+      if (filters.sex?.length > 0) {
+        if (item.sex && !filters.sex.includes(item.sex)) {
+          return false;
+        }
       }
       
       // Filter by tissue - only exclude if HAS tissue that doesn't match
