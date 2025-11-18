@@ -61,14 +61,15 @@ export const getOmeCategories = (assayData) => {
  * Check if an item matches any of the selected ome categories
  * @param {string} assayData - Comma or semicolon-separated assay codes
  * @param {Array<string>} selectedCategories - Array of selected ome categories to filter by
- * @returns {boolean} True if item matches at least one selected category
+ * @returns {boolean} True if item matches at least one selected category OR has no assay data
  */
 export const matchesOmeCategories = (assayData, selectedCategories) => {
   if (!selectedCategories || selectedCategories.length === 0) return true;
   
   const itemCategories = getOmeCategories(assayData);
   
-  // Record must have at least one ome category that matches the selected filters
-  return itemCategories.length > 0 && 
+  // If record has no ome categories, keep it (don't filter based on missing data)
+  // If record has ome categories, it must match at least one selected filter
+  return itemCategories.length === 0 || 
          itemCategories.some(cat => selectedCategories.includes(cat));
 };

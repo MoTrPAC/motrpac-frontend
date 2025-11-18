@@ -7,9 +7,11 @@ import PaginationControls from './PaginationControls';
 import {
   DEFAULT_FILTERS,
   FILTER_OPTIONS,
+  filterUtils,
 } from '../constants/plotOptions';
 import { transformTissueCode, transformTrancheCode, transformCASReceived } from '../utils/dataTransformUtils';
 import roundNumbers from '../../../../lib/utils/roundNumbers';
+import { getAssayFullName } from '../utils/assayCodeMapping';
 
 import '@styles/biospecimenSummary.scss';
 
@@ -30,8 +32,11 @@ const InteractiveBiospecimenChart = () => {
   // Client-side filtering (instant, no API calls)
   const filteredData = useFilteredBiospecimenData(allData, filters);
 
-  // Pagination for drill-down table
-  const tablePagination = useAdvancedPagination(selectedBar?.samples || [], {
+  // Table data: show drill-down samples when bar is selected, otherwise show filtered data
+  const tableData = useMemo(() => selectedBar?.samples || filteredData, [selectedBar, filteredData]);
+
+  // Pagination for table (works with both drill-down and filtered data)
+  const tablePagination = useAdvancedPagination(tableData, {
     initialPageSize: 20,
     enableUrlSync: false,
     enableAnalytics: false,
@@ -39,15 +44,20 @@ const InteractiveBiospecimenChart = () => {
     debounceDelay: 100,
   });
 
-  // Reset table pagination when selectedBar changes
+  // Reset table pagination when table data changes
+  // Fixed: Only depend on data length, not the pagination object itself
   useEffect(() => {
-    if (selectedBar) {
-      tablePagination.resetPagination();
-    }
-  }, [selectedBar, tablePagination]);
+    tablePagination.resetPagination();
+  }, [tableData.length, tablePagination.resetPagination]);
 
   // Static filter options from constants - memoized to prevent recreating object
   const filterOptions = useMemo(() => FILTER_OPTIONS, []);
+
+  // Reset filters to defaults and clear drill-down selection
+  const handleResetFilters = useCallback(() => {
+    setFilters(filterUtils.resetToDefaults());
+    setSelectedBar(null);
+  }, []);
 
   // Handle checkbox filter changes (all filters now use checkboxes)
   // Optimized with stable callback to prevent unnecessary rerenders
@@ -73,10 +83,10 @@ const InteractiveBiospecimenChart = () => {
     setSelectedBar(null);
   }, []);
 
-  // Custom export function for drill-down table data
+  // Export table data (works for both drill-down and filtered views)
   // Optimized with helper function for row formatting and centralized transforms
-  const exportDrillDownData = useCallback(() => {
-    if (!selectedBar?.samples) return;
+  const exportTableData = useCallback(() => {
+    if (!tableData || tableData.length === 0) return;
     
     // CSV header
     const header = 'Vial Label,Participant ID,Tranche,Visit Code,Randomized Group,Tissue,Sex,Age Group,Timepoint,BMI,Temp Sample Profile,CAS Received\n';
@@ -98,14 +108,18 @@ const InteractiveBiospecimenChart = () => {
     ].join(',');
     
     // Generate CSV content
-    const rows = selectedBar.samples.map(formatRow).join('\n');
+    const rows = tableData.map(formatRow).join('\n');
     const csvContent = header + rows;
     
     // Create and trigger download
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    const filename = `biospecimen_drilldown_${selectedBar.tissue || 'data'}_${selectedBar.phase || selectedBar.timepoint || selectedBar.assay || 'export'}.csv`;
+    
+    // Dynamic filename based on mode
+    const filename = selectedBar
+      ? `biospecimen_filtered_${selectedBar.tissue || 'data'}_${selectedBar.phase || selectedBar.timepoint || selectedBar.assay || selectedBar.demographicType || 'export'}.csv`
+      : `biospecimen_all_${new Date().toISOString().split('T')[0]}.csv`;
     
     link.setAttribute('href', url);
     link.setAttribute('download', filename);
@@ -114,7 +128,7 @@ const InteractiveBiospecimenChart = () => {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url); // Clean up the URL object
-  }, [selectedBar]);
+  }, [tableData, selectedBar]);
 
   // Handle bar click for drill-down
   // Optimized to extract only necessary data from event
@@ -146,6 +160,7 @@ const InteractiveBiospecimenChart = () => {
             filters={filters}
             filterOptions={filterOptions}
             onCheckboxChange={handleCheckboxChange}
+            onResetFilters={handleResetFilters}
           />
         </div>
 
@@ -197,36 +212,48 @@ const InteractiveBiospecimenChart = () => {
         </div>
       </div>
 
-      {/* Drill-down table when a bar is clicked */}
-      {selectedBar && (
+      {/* Always-visible table: shows filtered results or drill-down data */}
+      {!loading && !error && (
         <div className="row">
           <div className="col-12">
             <div className="card">
               <div className="card-header d-flex justify-content-between align-items-center">
                 <h5 className="mb-0">
-                  <i className="bi bi-table mr-2" />
-                  {selectedBar.demographicType ? (
-                    // Demographic chart clicked (sex, age, race, BMI, ethnicity, randomized group)
-                    <>{selectedBar.demographicType}: {selectedBar.category} ({selectedBar.count} samples)</>
+                  {selectedBar ? (
+                    <>
+                      <i className="bi bi-bar-chart-fill mr-2" />
+                      {selectedBar.demographicType ? (
+                        // Demographic chart clicked (sex, age, race, BMI, ethnicity, randomized group)
+                        <>{selectedBar.demographicType}: {selectedBar.category} ({selectedBar.count} samples)</>
+                      ) : (
+                        // Biospecimen chart clicked (assay/phase/timepoint)
+                        <>{selectedBar.tissue} {selectedBar.phase && ` - ${selectedBar.phase}`}
+                        {selectedBar.timepoint && ` - ${selectedBar.timepoint}`}
+                        {selectedBar.assay && ` - ${getAssayFullName(selectedBar.assay)}`} ({selectedBar.count} samples)</>
+                      )}
+                    </>
                   ) : (
-                    // Biospecimen chart clicked (assay/phase/timepoint)
-                    <>{selectedBar.tissue} {selectedBar.phase && ` - ${selectedBar.phase}`}
-                    {selectedBar.timepoint && ` - ${selectedBar.timepoint}`}
-                    {selectedBar.assay && ` - ${selectedBar.assay}`} ({selectedBar.count} samples)</>
+                    <>
+                      <i className="bi bi-table mr-2" />
+                      Biospecimen Records ({tableData.length} samples)
+                    </>
                   )}
                 </h5>
                 <button
+                  type="button"
                   className="btn btn-sm btn-secondary"
                   onClick={() => setSelectedBar(null)}
+                  aria-label="Clear drill-down selection"
+                  disabled={!selectedBar}
                 >
-                  <i className="bi bi-x" />
+                  Reset
                 </button>
               </div>
               <div className="card-body">
                 {/* Pagination controls - top */}
                 <PaginationControls 
                   pagination={tablePagination}
-                  onExport={exportDrillDownData}
+                  onExport={exportTableData}
                 />
                 
                 <div className="biospecimen-lookup-table table-responsive mt-3">
@@ -281,7 +308,7 @@ const InteractiveBiospecimenChart = () => {
                 {/* Pagination controls - bottom */}
                 <PaginationControls 
                   pagination={tablePagination}
-                  onExport={exportDrillDownData}
+                  onExport={exportTableData}
                 />
               </div>
             </div>

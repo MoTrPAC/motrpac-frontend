@@ -21,6 +21,8 @@ vi.mock('react-router-dom', async () => {
   return {
     ...actual,
     useNavigate: () => vi.fn(),
+    useLocation: () => ({ pathname: '/', search: '', hash: '', state: null }),
+    useSearchParams: () => [new URLSearchParams(), vi.fn()],
     Navigate: ({ to }) => <div data-testid="mock-navigate">Navigate to {to}</div>,
   };
 });
@@ -49,6 +51,18 @@ vi.mock('ga-gtag');
 
 // Mock window.scrollTo
 window.scrollTo = vi.fn();
+
+// Suppress jsdom navigation warnings (jsdom limitation - doesn't support full navigation)
+const originalError = console.error;
+console.error = (...args) => {
+  if (
+    typeof args[0] === 'string' &&
+    args[0].includes('Not implemented: navigation')
+  ) {
+    return; // Suppress jsdom navigation warnings
+  }
+  originalError.call(console, ...args);
+};
 
 // Mock IntersectionObserver
 class IntersectionObserver {
