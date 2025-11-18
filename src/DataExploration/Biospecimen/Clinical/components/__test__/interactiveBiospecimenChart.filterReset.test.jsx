@@ -1,7 +1,7 @@
 import { describe, test, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import InteractiveBiospecimenChart from '../InteractiveBiospecimenChart';
-import { DEFAULT_FILTERS, filterUtils } from '../../constants/plotOptions';
+import { filterUtils } from '../../constants/plotOptions';
 
 // Mock child components
 vi.mock('../BiospecimenFilters', () => ({
@@ -143,7 +143,8 @@ describe('InteractiveBiospecimenChart - Filter Reset & Table Display', () => {
   test('filters keep records with unmapped values (BMI >= 40)', () => {
     render(<InteractiveBiospecimenChart />);
     
-    // With DEFAULT_FILTERS (all options selected), all 4 records should show
+    // Component initializes with default filters (all options selected)
+    // All 4 records should show, including those with unmapped values
     const pagination = screen.getAllByTestId('pagination-total')[0];
     expect(pagination).toHaveTextContent('4');
     
