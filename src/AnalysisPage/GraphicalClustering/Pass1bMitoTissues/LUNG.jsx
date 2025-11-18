@@ -72,10 +72,7 @@ function MitoGraphicalAnalysisLung() {
             </div>
           </div>
           <div className="section level2">
-            <PathwayNetworkDescription
-              tissue="Lung"
-              clusterName="1w_F-1_M-1"
-            />
+            <PathwayNetworkDescription tissue="Lung" clusterName="1w_F-1_M-1" />
             <div className="section level3">
               <h3 id="selected-nodes">Selected nodes</h3>
               <div className="section level4">

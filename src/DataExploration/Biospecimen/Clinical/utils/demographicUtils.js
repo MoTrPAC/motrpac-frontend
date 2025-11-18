@@ -9,25 +9,53 @@
  * @returns {string|null} Race category or null if no race indicator found
  */
 export const getRaceCategory = (record) => {
-  if (record.aablack_psca === '1' || record.aablack_psca === 1 || record.aablack_psca === true) {
+  if (
+    record.aablack_psca === '1' ||
+    record.aablack_psca === 1 ||
+    record.aablack_psca === true
+  ) {
     return 'African American/Black';
   }
-  if (record.asian_psca === '1' || record.asian_psca === 1 || record.asian_psca === true) {
+  if (
+    record.asian_psca === '1' ||
+    record.asian_psca === 1 ||
+    record.asian_psca === true
+  ) {
     return 'Asian';
   }
-  if (record.hawaii_psca === '1' || record.hawaii_psca === 1 || record.hawaii_psca === true) {
+  if (
+    record.hawaii_psca === '1' ||
+    record.hawaii_psca === 1 ||
+    record.hawaii_psca === true
+  ) {
     return 'Hawaiian/Pacific Islander';
   }
-  if (record.natamer_psca === '1' || record.natamer_psca === 1 || record.natamer_psca === true) {
+  if (
+    record.natamer_psca === '1' ||
+    record.natamer_psca === 1 ||
+    record.natamer_psca === true
+  ) {
     return 'Native American';
   }
-  if (record.cauc_psca === '1' || record.cauc_psca === 1 || record.cauc_psca === true) {
+  if (
+    record.cauc_psca === '1' ||
+    record.cauc_psca === 1 ||
+    record.cauc_psca === true
+  ) {
     return 'Caucasian';
   }
-  if (record.raceoth_psca === '1' || record.raceoth_psca === 1 || record.raceoth_psca === true) {
+  if (
+    record.raceoth_psca === '1' ||
+    record.raceoth_psca === 1 ||
+    record.raceoth_psca === true
+  ) {
     return 'Other';
   }
-  if (record.raceref_psca === '1' || record.raceref_psca === 1 || record.raceref_psca === true) {
+  if (
+    record.raceref_psca === '1' ||
+    record.raceref_psca === 1 ||
+    record.raceref_psca === true
+  ) {
     return 'Unknown';
   }
   return null;
@@ -89,22 +117,22 @@ export const getBMIGroup = (bmi) => {
  */
 export const getEthnicityCategory = (record) => {
   const latinoValue = record.latino_psca;
-  
+
   // Check for value 1 (Latino/Hispanic/Spanish)
   if (latinoValue === '1' || latinoValue === 1) {
     return 'Latino, Hispanic, or Spanish origin/ethnicity';
   }
-  
+
   // Check for value 0 (Not Latino/Hispanic/Spanish)
   if (latinoValue === '0' || latinoValue === 0) {
     return 'Not Latino, Hispanic, or Spanish origin/ethnicity';
   }
-  
+
   // Check for value -7 (Refused/Unknown)
   if (latinoValue === '-7' || latinoValue === -7) {
     return 'Refused/Unknown';
   }
-  
+
   return null;
 };
 
@@ -118,7 +146,7 @@ export const RACE_GROUPS = [
   'Native American',
   'Caucasian',
   'Other',
-  'Unknown'
+  'Unknown',
 ];
 
 /**
@@ -134,7 +162,7 @@ export const BMI_GROUPS = [
   '18.5-24.9',
   '25.0-29.9',
   '30.0-34.9',
-  '35.0-39.9'
+  '35.0-39.9',
 ];
 
 /**
@@ -149,8 +177,8 @@ export const RANDOMIZED_GROUPS = ['Control', 'Endurance', 'Resistance'];
  */
 export const mapRandomizedGroupFiltersToAPIValues = (filterValues) => {
   if (!filterValues || filterValues.length === 0) return [];
-  
-  return filterValues.flatMap(option => {
+
+  return filterValues.flatMap((option) => {
     switch (option) {
       case 'Control':
         return ['ADUControl', 'PEDControl'];
@@ -170,5 +198,5 @@ export const mapRandomizedGroupFiltersToAPIValues = (filterValues) => {
 export const ETHNICITY_CATEGORIES = [
   'Latino, Hispanic, or Spanish origin/ethnicity',
   'Not Latino, Hispanic, or Spanish origin/ethnicity',
-  'Refused/Unknown'
+  'Refused/Unknown',
 ];

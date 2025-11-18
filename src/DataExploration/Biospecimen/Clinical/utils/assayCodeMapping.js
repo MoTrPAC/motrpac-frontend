@@ -36,7 +36,7 @@ const ASSAY_CODE_TO_SHORT_NAME = {
   'metab-u-rppos': 'RPP(U)',
   'metab-u-rpneg': 'RPN(U)',
   'metab-u-ionpneg': 'IPN(U)',
-  'immunoassay': 'Immuno',
+  immunoassay: 'Immuno',
   'lab-ck': 'CK',
   'lab-glc': 'Glucagon',
   'lab-ins': 'Insulin',
@@ -82,11 +82,12 @@ const ASSAY_CODE_TO_FULL_NAME = {
   'metab-u-rppos': 'Untargeted Reversed-Phase Positive',
   'metab-u-rpneg': 'Untargeted Reversed-Phase Negative',
   'metab-u-ionpneg': 'Untargeted Ion-Pair Negative',
-  'immunoassay': 'Multiplexed immunoassays',
+  immunoassay: 'Multiplexed immunoassays',
   'lab-ck': 'Clinical Chemistry, Activity Assay Creatine Kinase (CK)',
   'lab-glc': 'Clinical Chemistry, Immunoassay Glucagon (GLC)',
   'lab-ins': 'Clinical Chemistry, Immunoassay Insulin (INS)',
-  'prot-ol': 'Proximity extension assay-based technology for multiplexed protein analysis',
+  'prot-ol':
+    'Proximity extension assay-based technology for multiplexed protein analysis',
   'lab-crt': 'Clinical Chemistry, Immunoassay Cortisol (CRT)',
 };
 
@@ -114,7 +115,7 @@ export const getAssayFullName = (assayCode) => {
  * @returns {Array<string>} Array of assay short names
  */
 export const getAssayShortNames = (assayCodes) => {
-  return assayCodes.map(code => ASSAY_CODE_TO_SHORT_NAME[code] || code);
+  return assayCodes.map((code) => ASSAY_CODE_TO_SHORT_NAME[code] || code);
 };
 
 /**
@@ -123,7 +124,7 @@ export const getAssayShortNames = (assayCodes) => {
  * @returns {Array<string>} Array of full assay names
  */
 export const getAssayFullNames = (assayCodes) => {
-  return assayCodes.map(code => ASSAY_CODE_TO_FULL_NAME[code] || code);
+  return assayCodes.map((code) => ASSAY_CODE_TO_FULL_NAME[code] || code);
 };
 
 // Legacy exports for backward compatibility (deprecated - use getAssayShortName instead)

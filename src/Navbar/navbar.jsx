@@ -132,16 +132,14 @@ export function Navbar({
     }
   };
 
-  const api =
-    import.meta.env.DEV
-      ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
-      : import.meta.env.VITE_API_SERVICE_ADDRESS;
+  const api = import.meta.env.DEV
+    ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+    : import.meta.env.VITE_API_SERVICE_ADDRESS;
   const endpointRegUser = import.meta.env.VITE_USER_REGISTRATION_ENDPOINT;
   const endpointSendEmail = import.meta.env.VITE_SEND_EMAIL_ENDPOINT;
-  const key =
-    import.meta.env.DEV
-      ? import.meta.env.VITE_API_SERVICE_KEY_DEV
-      : import.meta.env.VITE_API_SERVICE_KEY;
+  const key = import.meta.env.DEV
+    ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+    : import.meta.env.VITE_API_SERVICE_KEY;
 
   // Send GET request to endpoint to 'warm up' CF backend service
   function checkServiceStatus(e) {
@@ -226,16 +224,19 @@ export function Navbar({
                   >
                     Interactive Data Visualization
                   </a>
-                  {isAuthenticated && hasAccess && (userType === 'internal' || (userRole && userRole === 'reviewer')) && (
-                    <a
-                      href={getDataVizURL('human-precovid')}
-                      className="dropdown-item"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Human Data Visualization
-                    </a>
-                  )}
+                  {isAuthenticated &&
+                    hasAccess &&
+                    (userType === 'internal' ||
+                      (userRole && userRole === 'reviewer')) && (
+                      <a
+                        href={getDataVizURL('human-precovid')}
+                        className="dropdown-item"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Human Data Visualization
+                      </a>
+                    )}
                   {isAuthenticated && hasAccess && userType === 'internal' && (
                     <Link to="/analysis-phenotype" className="dropdown-item">
                       Phenotype

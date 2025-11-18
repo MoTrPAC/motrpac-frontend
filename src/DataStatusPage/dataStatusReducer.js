@@ -26,7 +26,7 @@ export const defaultDataStatusState = {
 // Reducer to handle actions sent from components pertinent to data QC status page
 export function DataStatusReducer(
   state = { ...defaultDataStatusState },
-  action
+  action,
 ) {
   // Handle states given the action types
   switch (action.type) {

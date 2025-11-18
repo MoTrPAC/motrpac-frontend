@@ -112,17 +112,13 @@ export function CodeRepositories() {
           </p>
           <p className="lead col-12">
             The MoTrPAC open source repositories are hosted on GitHub and
-            provided under the
-            {' '}
+            provided under the{' '}
             <ExternalLink
               to="https://opensource.org/license/mit"
               label="MIT License"
             />
-            . The data available through the MoTrPAC Data Hub portal is
-            provided under the
-            {' '}
-            <Link to="/license">CC BY 4.0 license</Link>
-            .
+            . The data available through the MoTrPAC Data Hub portal is provided
+            under the <Link to="/license">CC BY 4.0 license</Link>.
           </p>
         </div>
         <div className="code-repo-content-container d-flex align-items-start justify-content-between">

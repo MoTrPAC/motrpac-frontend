@@ -16,8 +16,8 @@ function ReleaseDataTableInternal({ release, renderDataTypeRow }) {
             renderDataTypeRow(
               release.result_files.bucket_name,
               item,
-              release.version
-            )
+              release.version,
+            ),
           )}
         </tbody>
       </table>

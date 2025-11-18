@@ -33,12 +33,13 @@ function SearchResultFilters({
     }
 
     // customize tissues if species is rat
-    const tissueList = searchParams.study === 'pass1b06' ? tissueListRatEndurance : tissueListRatAcute;
+    const tissueList =
+      searchParams.study === 'pass1b06'
+        ? tissueListRatEndurance
+        : tissueListRatAcute;
     // plasma is not available for get data in rats
     if (searchParams.ktype === 'gene') {
-      return tissueList.filter((t) =>
-        !t.filter_value.match(/^(plasma)$/),
-      );
+      return tissueList.filter((t) => !t.filter_value.match(/^(plasma)$/));
     }
     // only keep tissues available for proteomics in rats
     if (searchParams.ktype === 'protein') {
@@ -52,7 +53,7 @@ function SearchResultFilters({
     if (searchParams.ktype === 'metab') {
       return tissueList.filter((t) => t.filter_value !== 'blood rna');
     }
-    
+
     return tissueList;
   }
 
@@ -76,7 +77,7 @@ function SearchResultFilters({
           (t) =>
             !t.filter_value.match(
               /^(transcript-rna-seq|prot-pr|prot-ph|prot-ol)$/,
-            )
+            ),
         );
       }
       return assayListHuman;
@@ -91,7 +92,9 @@ function SearchResultFilters({
     }
     if (searchParams.ktype === 'protein') {
       return assayListRat.filter((t) =>
-        t.filter_value.match(/^(transcript-rna-seq|epigen-atac-seq|epigen-rrbs|prot-pr|prot-ph|prot-ac|prot-ub)$/),
+        t.filter_value.match(
+          /^(transcript-rna-seq|epigen-atac-seq|epigen-rrbs|prot-pr|prot-ph|prot-ac|prot-ub)$/,
+        ),
       );
     }
     if (searchParams.ktype === 'metab') {
@@ -99,7 +102,7 @@ function SearchResultFilters({
         (t) =>
           !t.filter_value.match(
             /^(transcript-rna-seq|epigen-atac-seq|epigen-rrbs|epigen-methylcap-seq|immunoassay|prot-pr|prot-ph|prot-ac|prot-ub|prot-ub-protein-corrected)$/,
-          )
+          ),
       );
     }
     return assayListRat;
@@ -109,7 +112,12 @@ function SearchResultFilters({
     {
       keyName: 'tissue',
       name: 'Tissue',
-      filters: searchParams.study === 'precawg' ? tissueListHuman : (searchParams.study === 'pass1b06' ? tissueListRatEndurance : tissueListRatAcute),
+      filters:
+        searchParams.study === 'precawg'
+          ? tissueListHuman
+          : searchParams.study === 'pass1b06'
+            ? tissueListRatEndurance
+            : tissueListRatAcute,
     },
     {
       keyName: 'assay',
@@ -117,19 +125,25 @@ function SearchResultFilters({
       filters: searchParams.study === 'precawg' ? assayListHuman : assayListRat,
     },
     {
-      keyName: searchParams.study === 'pass1b06' ? 'comparison_group' : 'contrast1_timepoint',
+      keyName:
+        searchParams.study === 'pass1b06'
+          ? 'comparison_group'
+          : 'contrast1_timepoint',
       name: 'Timepoint',
-      filters: searchParams.study === 'precawg' ? timepointListHuman : (searchParams.study === 'pass1b06' ? timepointListRatEndurance : timepointListRatAcute),
+      filters:
+        searchParams.study === 'precawg'
+          ? timepointListHuman
+          : searchParams.study === 'pass1b06'
+            ? timepointListRatEndurance
+            : timepointListRatAcute,
     },
   ];
 
-  commonSearchFilters.find(
-    (f) => f.keyName === 'tissue'
-  ).filters = customizeTissueList();
+  commonSearchFilters.find((f) => f.keyName === 'tissue').filters =
+    customizeTissueList();
 
-  commonSearchFilters.find(
-    (f) => f.keyName === 'assay'
-  ).filters = customizeAssayList();
+  commonSearchFilters.find((f) => f.keyName === 'assay').filters =
+    customizeAssayList();
 
   // if species is rat, append sex filter
   const sexFilter = {

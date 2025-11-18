@@ -11,7 +11,7 @@ import QcReportMetabTabContent from './qcReportMetabTabContent';
  *
  * @returns {object} JSX representation of metabolomics QC report
  */
-function QcReportMetabolomics({ qcData = [], qcDataRaw= [] }) {
+function QcReportMetabolomics({ qcData = [], qcDataRaw = [] }) {
   // Render metabolomics QC report with sub tabs
   function renderQcReportMetabTabs() {
     return (

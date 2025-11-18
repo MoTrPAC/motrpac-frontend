@@ -55,7 +55,13 @@ export const searchParamsDefaultProps = {
     'contrast_type',
     'contrast',
   ],
-  unique_fields: ['tissue', 'assay', 'sex', 'comparison_group', 'contrast1_timepoint'],
+  unique_fields: [
+    'tissue',
+    'assay',
+    'sex',
+    'comparison_group',
+    'contrast1_timepoint',
+  ],
   size: 10000,
   start: 0,
   debug: true,
@@ -66,7 +72,10 @@ export const searchParamsDefaultProps = {
 
 export const searchParamsPropType = {
   ktype: PropTypes.string,
-  keys: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+  keys: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
   omics: PropTypes.string,
   species: PropTypes.string,
   study: PropTypes.string,
@@ -556,13 +565,7 @@ export const metaboliteHumanTableColumns = [
 export function PageIndex({ pageIndex = 0, pageOptions = [] }) {
   return (
     <span className="page-index">
-      Showing Page
-      {' '}
-      {pageIndex + 1}
-      {' '}
-      of
-      {' '}
-      {pageOptions.length}
+      Showing Page {pageIndex + 1} of {pageOptions.length}
     </span>
   );
 }
@@ -628,8 +631,7 @@ export function PageNavigationControl({
         disabled={!canPreviousPage}
       >
         First
-      </button>
-      {' '}
+      </button>{' '}
       <button
         type="button"
         className={`btn btn-sm btn-outline-primary ${
@@ -639,8 +641,7 @@ export function PageNavigationControl({
         disabled={!canPreviousPage}
       >
         Previous
-      </button>
-      {' '}
+      </button>{' '}
       <button
         type="button"
         className={`btn btn-sm btn-outline-primary ${
@@ -650,8 +651,7 @@ export function PageNavigationControl({
         disabled={!canNextPage}
       >
         Next
-      </button>
-      {' '}
+      </button>{' '}
       <button
         type="button"
         className={`btn btn-sm btn-outline-primary ${
@@ -677,11 +677,13 @@ PageNavigationControl.propTypes = {
 
 /** normalize string */
 function normalizeString(str) {
-  return str
-    // Step 1: Capitalize the first letter of the first word
-    .replace(/^([a-z])/, (match, firstChar) => firstChar.toUpperCase())
-    // Step 2: Replace underscores with spaces
-    .replace(/_/g, ' ');
+  return (
+    str
+      // Step 1: Capitalize the first letter of the first word
+      .replace(/^([a-z])/, (match, firstChar) => firstChar.toUpperCase())
+      // Step 2: Replace underscores with spaces
+      .replace(/_/g, ' ')
+  );
 }
 
 /**
@@ -696,7 +698,8 @@ export const transformData = (arr) => {
 
   tranformArray.forEach((item) => {
     // Determine if the data is human or rat
-    const isHumanData = item.contrast1_randomGroupCode && item.contrast1_randomGroupCode !== 'NA';
+    const isHumanData =
+      item.contrast1_randomGroupCode && item.contrast1_randomGroupCode !== 'NA';
 
     if (isHumanData && item.feature_id && item.feature_id.length) {
       const omicsValue = item.omics;
@@ -757,11 +760,7 @@ export const transformData = (arr) => {
       }
       // Transform feature_id values into links
       item.feature_id = (
-        <a
-          href={featureLink}
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a href={featureLink} target="_blank" rel="noreferrer">
           {newFeatureId}
         </a>
       );
@@ -805,52 +804,78 @@ export const transformData = (arr) => {
     }
     */
     // Transform assay values
-    if (item.assay && item.assay.length && item.contrast1_randomGroupCode && item.contrast1_randomGroupCode !== 'NA') {
+    if (
+      item.assay &&
+      item.assay.length &&
+      item.contrast1_randomGroupCode &&
+      item.contrast1_randomGroupCode !== 'NA'
+    ) {
       const matchedAssay = assayListHuman.find(
-        (filter) => filter.filter_value === item.assay
+        (filter) => filter.filter_value === item.assay,
       );
       item.assay = matchedAssay ? matchedAssay.filter_label : item.assay;
     } else if (item.assay && item.assay.length) {
       const matchedAssay = assayListRat.find(
-        (filter) => filter.filter_value === item.assay
+        (filter) => filter.filter_value === item.assay,
       );
       item.assay = matchedAssay ? matchedAssay.filter_label : item.assay;
     }
     // Transform tissue values
-    if (item.tissue && item.tissue.length && item.contrast1_randomGroupCode && item.contrast1_randomGroupCode !== 'NA') {
+    if (
+      item.tissue &&
+      item.tissue.length &&
+      item.contrast1_randomGroupCode &&
+      item.contrast1_randomGroupCode !== 'NA'
+    ) {
       const matchedTissue = tissueListHuman.find(
-        (filter) => filter.filter_value === item.tissue
+        (filter) => filter.filter_value === item.tissue,
       );
-      item.tissue = matchedTissue ? matchedTissue.filter_label : (item.tissue === 'plasma' || item.tissue === 'blood-rna' ? 'Blood' : item.tissue);
+      item.tissue = matchedTissue
+        ? matchedTissue.filter_label
+        : item.tissue === 'plasma' || item.tissue === 'blood-rna'
+          ? 'Blood'
+          : item.tissue;
     } else if (item.tissue && item.tissue.length) {
-      const tissueList = item.contrast1_timepoint && item.contrast1_timepoint !== 'NA'
-        ? tissueListRatAcute
-        : tissueListRatEndurance;
+      const tissueList =
+        item.contrast1_timepoint && item.contrast1_timepoint !== 'NA'
+          ? tissueListRatAcute
+          : tissueListRatEndurance;
       const matchedTissue = tissueList.find(
-        (filter) => filter.filter_value === item.tissue
+        (filter) => filter.filter_value === item.tissue,
       );
       item.tissue = matchedTissue ? matchedTissue.filter_label : item.tissue;
     }
     // Transform randomGroupCode values
-    if (item.contrast1_randomGroupCode && item.contrast1_randomGroupCode.length) {
+    if (
+      item.contrast1_randomGroupCode &&
+      item.contrast1_randomGroupCode.length
+    ) {
       const matchedRnadomGroupCode = randomGroupList.find(
         (filter) => filter.filter_value === item.contrast1_randomGroupCode,
       );
-      item.contrast1_randomGroupCode = matchedRnadomGroupCode ? matchedRnadomGroupCode.filter_label
+      item.contrast1_randomGroupCode = matchedRnadomGroupCode
+        ? matchedRnadomGroupCode.filter_label
         : item.contrast1_randomGroupCode;
     }
     // Transform human timepoint and pass1a06 timepoint values
-    if (item.contrast1_timepoint && item.contrast1_timepoint.length && item.contrast1_randomGroupCode && item.contrast1_randomGroupCode !== 'NA') {
+    if (
+      item.contrast1_timepoint &&
+      item.contrast1_timepoint.length &&
+      item.contrast1_randomGroupCode &&
+      item.contrast1_randomGroupCode !== 'NA'
+    ) {
       const matchedHumanTimepoint = timepointListHuman.find(
         (filter) => filter.filter_value === item.contrast1_timepoint,
       );
-      item.contrast1_timepoint = matchedHumanTimepoint ? matchedHumanTimepoint.filter_label
+      item.contrast1_timepoint = matchedHumanTimepoint
+        ? matchedHumanTimepoint.filter_label
         : item.contrast1_timepoint;
     } else if (item.contrast1_timepoint && item.contrast1_timepoint.length) {
       const matchedTimepoint = timepointListRatAcute.find(
         (filter) => filter.filter_value === item.contrast1_timepoint,
       );
-      item.contrast1_timepoint = matchedTimepoint ? matchedTimepoint.filter_label
+      item.contrast1_timepoint = matchedTimepoint
+        ? matchedTimepoint.filter_label
         : item.contrast1_timepoint;
     }
     // Transform human type values
@@ -860,16 +885,19 @@ export const transformData = (arr) => {
     // Transform sex values
     if (item.sex && item.sex.length) {
       const matchedSex = sexList.find(
-        (filter) => filter.filter_value.toLowerCase() === item.sex.toLowerCase()
+        (filter) =>
+          filter.filter_value.toLowerCase() === item.sex.toLowerCase(),
       );
       item.sex = matchedSex ? matchedSex.filter_label : item.sex;
     }
     // Transform pass1b-06 timepoint values
     if (item.comparison_group && item.comparison_group.length) {
       const matchedTimepoint = timepointListRatEndurance.find(
-        (filter) => filter.filter_value === item.comparison_group
+        (filter) => filter.filter_value === item.comparison_group,
       );
-      item.comparison_group = matchedTimepoint ? matchedTimepoint.filter_label : item.comparison_group;
+      item.comparison_group = matchedTimepoint
+        ? matchedTimepoint.filter_label
+        : item.comparison_group;
     }
     // Round values
     if (item.p_value && item.p_value.length && item.p_value !== 'NA') {

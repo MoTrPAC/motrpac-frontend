@@ -16,19 +16,19 @@ function CategoryCorrelationAnalyses() {
     <div className="w-100 analysis-category-content-container">
       <h2>Correlation Analyses</h2>
       <p>
-        In this section, we explore the relationships between key variables within
-        the rat phenotypic data using correlation analyses. By examining how variables
-        such as weight, distance, lactate change, and electric shocks are related to
-        each other, we aim to identify patterns and potential dependencies. This helps
-        to better understand the associations between these variables, which can inform
-        further analysis of biological significance. The analyses include overall
-        correlation matrices and detailed pairwise comparisons visualized through
-        scatter plots and heatmaps.
+        In this section, we explore the relationships between key variables
+        within the rat phenotypic data using correlation analyses. By examining
+        how variables such as weight, distance, lactate change, and electric
+        shocks are related to each other, we aim to identify patterns and
+        potential dependencies. This helps to better understand the associations
+        between these variables, which can inform further analysis of biological
+        significance. The analyses include overall correlation matrices and
+        detailed pairwise comparisons visualized through scatter plots and
+        heatmaps.
       </p>
       {/* weight distribution section */}
-      {analysisState.pass1ac06AnalysisCategoryOptions.correlationAnalysis.overall_correlation_matrix && (
-        <SectionOverallCorrelationMatrix />
-      )}
+      {analysisState.pass1ac06AnalysisCategoryOptions.correlationAnalysis
+        .overall_correlation_matrix && <SectionOverallCorrelationMatrix />}
     </div>
   );
 }

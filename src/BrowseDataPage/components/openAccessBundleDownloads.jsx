@@ -5,7 +5,7 @@ import BundleDownloadButton from './bundleDownloadButton';
 
 function OpenAccessBundleDownloads({
   sets = '',
-  profile =  {},
+  profile = {},
   handleUserSurveyOpenOnBundledDownload = null,
 }) {
   const numOfSets = sets === 'all' ? BundleDataTypes.length : 2;

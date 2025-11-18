@@ -35,7 +35,7 @@ function QcReportDataTable({ columns, data }) {
             : true;
         }),
     }),
-    []
+    [],
   );
 
   // Use the useTable hook to create your table configuration
@@ -54,7 +54,7 @@ function QcReportDataTable({ columns, data }) {
     useFilters,
     useGlobalFilter,
     useSortBy,
-    usePagination
+    usePagination,
   );
   // Use the state and functions returned from useTable to build your UI
   const {
@@ -115,17 +115,21 @@ function QcReportDataTable({ columns, data }) {
                     {headerGroup.headers.map((column) => (
                       <th
                         {...column.getHeaderProps(
-                          column.getSortByToggleProps()
+                          column.getSortByToggleProps(),
                         )}
                       >
                         <div className="d-flex align-items-center justify-content-between">
                           {column.render('Header')}
                           <span>
-                            {column.isSorted
-                              ? column.isSortedDesc
-                                ? <i className="material-icons">expand_more</i>
-                                : <i className="material-icons">expand_less</i>
-                              : <i className="material-icons">unfold_more</i>}
+                            {column.isSorted ? (
+                              column.isSortedDesc ? (
+                                <i className="material-icons">expand_more</i>
+                              ) : (
+                                <i className="material-icons">expand_less</i>
+                              )
+                            ) : (
+                              <i className="material-icons">unfold_more</i>
+                            )}
                           </span>
                         </div>
                       </th>
@@ -184,7 +188,7 @@ QcReportDataTable.propTypes = {
     PropTypes.shape({
       Header: PropTypes.string,
       accessor: PropTypes.string,
-    })
+    }),
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

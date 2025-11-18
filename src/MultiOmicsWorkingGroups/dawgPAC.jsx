@@ -125,7 +125,8 @@ function DawgPAC({ profile = {} }) {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    MoTrPAC MAWG Teamdrive &gt; PASS1A-1C-06 &gt; Writing Methods
+                    MoTrPAC MAWG Teamdrive &gt; PASS1A-1C-06 &gt; Writing
+                    Methods
                   </a>
                 </p>
               </td>
@@ -134,9 +135,12 @@ function DawgPAC({ profile = {} }) {
         </table>
       </div>
       <div className="bd-callout bd-callout-warning mb-4">
-        <b>2025JUN09 Consortium Data Release →</b>
-        {' '}
-        <a href="https://docs.google.com/document/d/1PlWzZ6SPMX7SeW8TxeDKEfnACrG2YOiZclDsw2UBs84/edit?tab=t.0#heading=h.nizg0n7kpig1" target="_blank" rel="noopener noreferrer">
+        <b>2025JUN09 Consortium Data Release →</b>{' '}
+        <a
+          href="https://docs.google.com/document/d/1PlWzZ6SPMX7SeW8TxeDKEfnACrG2YOiZclDsw2UBs84/edit?tab=t.0#heading=h.nizg0n7kpig1"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Read Notes
         </a>
       </div>
@@ -160,8 +164,7 @@ function DawgPAC({ profile = {} }) {
           </a>
         </li>
         <li>
-          Source code:
-          {' '}
+          Source code:{' '}
           <a
             href="https://github.com/MoTrPAC/motrpac-rat-acute-6m"
             target="_blank"
@@ -171,23 +174,25 @@ function DawgPAC({ profile = {} }) {
           </a>
         </li>
         <li>
-          <strong>Integrated R Notebooks for Omics Data Analysis</strong>
-          {' '}
-          (HTML format)
+          <strong>Integrated R Notebooks for Omics Data Analysis</strong> (HTML
+          format)
           <ul className="list-style mt-2">
             <li className="mb-2">
-              <strong>Phenotypes:</strong>
-              {' '}
-              Comprehensive analysis of key variables from the rat phenotypic data,
-              including summary statistics, correlation analysis, statistical testing,
-              and regression models:
-              {' '}
+              <strong>Phenotypes:</strong> Comprehensive analysis of key
+              variables from the rat phenotypic data, including summary
+              statistics, correlation analysis, statistical testing, and
+              regression models:{' '}
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a
                 href="#"
                 data-toggle="modal"
                 data-target="#html-report-modal"
-                onClick={(e) => handleClickReport('phenotypes/pass1ac-6-pheno-analysis.html', 'pass1ac-6-pheno-analysis.html')}
+                onClick={(e) =>
+                  handleClickReport(
+                    'phenotypes/pass1ac-6-pheno-analysis.html',
+                    'pass1ac-6-pheno-analysis.html',
+                  )
+                }
               >
                 pass1ac-6-pheno-analysis.html
               </a>
@@ -196,13 +201,18 @@ function DawgPAC({ profile = {} }) {
               <strong>Transcriptomics</strong>
               <ul className="list-style mb-2">
                 <li>
-                  QC + DEA:
-                  {' '}
+                  QC + DEA:{' '}
                   <a
                     href="#"
                     data-toggle="modal"
                     data-target="#html-report-modal"
-                    onClick={(e) => { e.preventDefault(); handleClickReport('transcriptomics/pass1ac-6-rna-seq-analysis-report.html', 'pass1ac-6-rna-seq-analysis-report.html'); }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleClickReport(
+                        'transcriptomics/pass1ac-6-rna-seq-analysis-report.html',
+                        'pass1ac-6-rna-seq-analysis-report.html',
+                      );
+                    }}
                   >
                     pass1ac-6-rna-seq-analysis-report.html
                   </a>
@@ -213,13 +223,18 @@ function DawgPAC({ profile = {} }) {
               <strong>Metabolomics</strong>
               <ul className="list-style mb-2">
                 <li>
-                  QC + DA:
-                  {' '}
+                  QC + DA:{' '}
                   <a
                     href="#"
                     data-toggle="modal"
                     data-target="#html-report-modal"
-                    onClick={(e) => { e.preventDefault(); handleClickReport('metabolomics/pass1ac-6-metabolomics-analysis-report.html', 'pass1ac-6-metabolomics-analysis-report.html'); }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleClickReport(
+                        'metabolomics/pass1ac-6-metabolomics-analysis-report.html',
+                        'pass1ac-6-metabolomics-analysis-report.html',
+                      );
+                    }}
                   >
                     pass1ac-6-metabolomics-analysis-report.html
                   </a>
@@ -229,17 +244,13 @@ function DawgPAC({ profile = {} }) {
             <li>
               <strong>Proteomics</strong>
               <ul className="list-style mb-2">
-                <li>
-                  Coming soon
-                </li>
+                <li>Coming soon</li>
               </ul>
             </li>
             <li>
               <strong>ATAC-seq</strong>
               <ul className="list-style mb-2">
-                <li>
-                  Coming soon
-                </li>
+                <li>Coming soon</li>
               </ul>
             </li>
           </ul>
@@ -254,8 +265,7 @@ function DawgPAC({ profile = {} }) {
                 rel="noopener noreferrer"
               >
                 Link to the report
-              </a>
-              {' '}
+              </a>{' '}
               (Google Doc)
             </li>
             <li>
@@ -265,27 +275,35 @@ function DawgPAC({ profile = {} }) {
                   Metabolomics
                   <ul className="list-style mb-2">
                     <li>
-                      QC:
-                      {' '}
+                      QC:{' '}
                       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                       <a
                         href="#"
                         data-toggle="modal"
                         data-target="#html-report-modal"
-                        onClick={(e) => handleClickReport('metabolomics/metabolomics-qc.html', 'metabolomics-qc.html')}
+                        onClick={(e) =>
+                          handleClickReport(
+                            'metabolomics/metabolomics-qc.html',
+                            'metabolomics-qc.html',
+                          )
+                        }
                       >
                         metabolomics-qc.html
                       </a>
                     </li>
                     <li>
-                      DA:
-                      {' '}
+                      DA:{' '}
                       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                       <a
                         href="#"
                         data-toggle="modal"
                         data-target="#html-report-modal"
-                        onClick={(e) => handleClickReport('metabolomics/metabolomics-da.html', 'metabolomics-da.html')}
+                        onClick={(e) =>
+                          handleClickReport(
+                            'metabolomics/metabolomics-da.html',
+                            'metabolomics-da.html',
+                          )
+                        }
                       >
                         metabolomics-da.html
                       </a>
@@ -305,7 +323,12 @@ function DawgPAC({ profile = {} }) {
                               href="#"
                               data-toggle="modal"
                               data-target="#html-report-modal"
-                              onClick={(e) => handleClickReport(`proteomics/1a1c-independent-analyses/${report}`, report)}
+                              onClick={(e) =>
+                                handleClickReport(
+                                  `proteomics/1a1c-independent-analyses/${report}`,
+                                  report,
+                                )
+                              }
                             >
                               {report}
                             </a>
@@ -323,7 +346,12 @@ function DawgPAC({ profile = {} }) {
                               href="#"
                               data-toggle="modal"
                               data-target="#html-report-modal"
-                              onClick={(e) => handleClickReport(`proteomics/da/${report}`, report)}
+                              onClick={(e) =>
+                                handleClickReport(
+                                  `proteomics/da/${report}`,
+                                  report,
+                                )
+                              }
                             >
                               {report}
                             </a>
@@ -341,7 +369,12 @@ function DawgPAC({ profile = {} }) {
                               href="#"
                               data-toggle="modal"
                               data-target="#html-report-modal"
-                              onClick={(e) => handleClickReport(`proteomics/qc-norm/${report}`, report)}
+                              onClick={(e) =>
+                                handleClickReport(
+                                  `proteomics/qc-norm/${report}`,
+                                  report,
+                                )
+                              }
                             >
                               {report}
                             </a>

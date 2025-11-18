@@ -10,7 +10,7 @@ import selectOmicPrefix from './sharelib/qcReportByPhaseOmicPrefix';
  *
  * @returns {object} JSX representation of QC report samples by phase page content
  */
-function qcReportByPhaseTabContent({ data= {}, phases = [] }) {
+function qcReportByPhaseTabContent({ data = {}, phases = [] }) {
   // FIXME: current implementation needs to be refactored to reduce the number of
   //       functions and variables for parsing and transforming data
   //       to be more readable and maintainable
@@ -23,7 +23,9 @@ function qcReportByPhaseTabContent({ data= {}, phases = [] }) {
     const filteredData = {};
     Object.keys(data).forEach((key) => {
       const filteredList = data[key].filter(
-        (item) => item.phase.toUpperCase().indexOf(phase.toUpperCase()) > -1 && !item.raw_files_fm
+        (item) =>
+          item.phase.toUpperCase().indexOf(phase.toUpperCase()) > -1 &&
+          !item.raw_files_fm,
       );
       filteredData[key] = filteredList;
     });
@@ -42,7 +44,7 @@ function qcReportByPhaseTabContent({ data= {}, phases = [] }) {
         const filteredSet = dataObj[phase][key].filter(
           (item) =>
             !item.sample_category ||
-            (item.sample_category && item.sample_category !== 'ref')
+            (item.sample_category && item.sample_category !== 'ref'),
         );
         filteredSet.forEach((item) => {
           newSampleObj = {
@@ -73,7 +75,7 @@ function qcReportByPhaseTabContent({ data= {}, phases = [] }) {
     });
     if (uniqueTissues.length > 1) {
       uniqueTissues.sort(
-        (a, b) => Number(a.slice(1, 3)) - Number(b.slice(1, 3))
+        (a, b) => Number(a.slice(1, 3)) - Number(b.slice(1, 3)),
       );
     }
     return uniqueTissues;
@@ -85,7 +87,7 @@ function qcReportByPhaseTabContent({ data= {}, phases = [] }) {
     const labels = [];
     mergedData.forEach((item) => {
       const labelStr = `${selectOmicPrefix(
-        item.assay
+        item.assay,
       )}-${item.cas.toUpperCase()}-${item.assay.toUpperCase()}`;
       if (labels.indexOf(labelStr) === -1) {
         labels.push(labelStr);
@@ -103,8 +105,8 @@ function qcReportByPhaseTabContent({ data= {}, phases = [] }) {
       const filteredData = mergedData.filter(
         (item) =>
           `${selectOmicPrefix(
-            item.assay
-          )}-${item.cas.toUpperCase()}-${item.assay.toUpperCase()}` === label
+            item.assay,
+          )}-${item.cas.toUpperCase()}-${item.assay.toUpperCase()}` === label,
       );
       groupedSamplesObj[label] = filteredData;
     });

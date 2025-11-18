@@ -4,13 +4,17 @@
  */
 module.exports = {
   framework: {
-    name: "@storybook/react-vite",
+    name: '@storybook/react-vite',
   },
-  stories: ["../src/**/*.stories.@(js|jsx|ts|tsx)"],
+  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
 
   docs: {
-    autodocs: true
+    autodocs: true,
   },
 
-  addons: ['storybook-addon-remix-react-router', '@storybook/addon-actions', "@storybook/addon-links"]
-}
+  addons: [
+    'storybook-addon-remix-react-router',
+    '@storybook/addon-actions',
+    '@storybook/addon-links',
+  ],
+};

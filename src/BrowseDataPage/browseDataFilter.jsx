@@ -1,13 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import browseDataFilters, { tissues, omes, referenceGenomes } from '../lib/browseDataFilters';
+import browseDataFilters, {
+  tissues,
+  omes,
+  referenceGenomes,
+} from '../lib/browseDataFilters';
 import assayList from '../lib/assayList';
 
 import '@styles/browseData.scss';
 import '@styles/tooltip.scss';
 
-function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name: [], category: [], reference_genome: [] }, onChangeFilter, onResetFilters }) {
+function BrowseDataFilter({
+  activeFilters = {
+    assay: [],
+    omics: [],
+    tissue_name: [],
+    category: [],
+    reference_genome: [],
+  },
+  onChangeFilter,
+  onResetFilters,
+}) {
   const dataDownload = useSelector((state) => state.browseData);
   const profile = useSelector((state) => state.auth.profile);
   const userType = profile?.user_metadata?.userType;
@@ -22,9 +36,8 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
     if (item.keyName === 'reference_genome') {
       if (dataDownload.pass1b06DataSelected) {
         // Filter out RN7 for non-internal users
-        item.filters = userType === 'internal' 
-          ? referenceGenomes.pass1b_06 
-          : [];
+        item.filters =
+          userType === 'internal' ? referenceGenomes.pass1b_06 : [];
       } else if (dataDownload.pass1a06DataSelected) {
         item.filters = referenceGenomes.pass1a_06;
       } else if (dataDownload.humanPrecovidSedAduDataSelected) {
@@ -68,7 +81,10 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
   const filters = fileFilters
     .filter((item) => {
       // Hide reference genome filter if no options available
-      if (item.keyName === 'reference_genome' && (!item.filters || item.filters.length === 0)) {
+      if (
+        item.keyName === 'reference_genome' &&
+        (!item.filters || item.filters.length === 0)
+      ) {
         return false;
       }
       return true;
@@ -82,8 +98,8 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
               <i className="material-icons data-filter-info-icon ml-1">info</i>
               <span className="tooltip-on-right" id="data-filter-info-tooltip">
                 <span>
-                  <strong>Analysis</strong> - Differential analysis and normalized
-                  data tables.
+                  <strong>Analysis</strong> - Differential analysis and
+                  normalized data tables.
                   <br />
                   <strong>Results</strong> - Quantitative results,
                   experimental/sample metadata, and QA/QC reports.

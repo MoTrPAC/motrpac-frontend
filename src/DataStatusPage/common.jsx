@@ -438,14 +438,7 @@ GlobalFilter.propTypes = {
  */
 export const PageIndex = ({ pageIndex = 0, pageOptions = [] }) => (
   <span className="page-index">
-    Showing Page
-    {' '}
-    {pageIndex + 1}
-    {' '}
-    of
-    {' '}
-    {pageOptions.length}
-    {' '}
+    Showing Page {pageIndex + 1} of {pageOptions.length}{' '}
   </span>
 );
 
@@ -505,8 +498,7 @@ export const PageNavigationControl = ({
       disabled={!canPreviousPage}
     >
       First
-    </button>
-    {' '}
+    </button>{' '}
     <button
       type="button"
       className={`btn btn-sm btn-outline-primary ${!canPreviousPage ? 'disabled-btn' : ''}`}
@@ -514,8 +506,7 @@ export const PageNavigationControl = ({
       disabled={!canPreviousPage}
     >
       Previous
-    </button>
-    {' '}
+    </button>{' '}
     <button
       type="button"
       className={`btn btn-sm btn-outline-primary ${!canNextPage ? 'disabled-btn' : ''}`}
@@ -523,8 +514,7 @@ export const PageNavigationControl = ({
       disabled={!canNextPage}
     >
       Next
-    </button>
-    {' '}
+    </button>{' '}
     <button
       type="button"
       className={`btn btn-sm btn-outline-primary ${!canNextPage ? 'disabled-btn' : ''}`}
@@ -629,19 +619,16 @@ export const transformData = (arr, qcFiles, omicType) => {
  */
 export function retrieveReport(e, filename) {
   e.preventDefault();
-  const api =
-    import.meta.env.DEV
-      ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
-      : import.meta.env.VITE_API_SERVICE_ADDRESS;
+  const api = import.meta.env.DEV
+    ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+    : import.meta.env.VITE_API_SERVICE_ADDRESS;
   const endpoint = import.meta.env.VITE_SIGNED_URL_ENDPOINT;
-  const key =
-    import.meta.env.DEV
-      ? import.meta.env.VITE_API_SERVICE_KEY_DEV
-      : import.meta.env.VITE_API_SERVICE_KEY;
-  const bucket =
-    import.meta.env.DEV
-      ? import.meta.env.VITE_QC_REPORT_BUCKET_DEV
-      : import.meta.env.VITE_QC_REPORT_BUCKET;
+  const key = import.meta.env.DEV
+    ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+    : import.meta.env.VITE_API_SERVICE_KEY;
+  const bucket = import.meta.env.DEV
+    ? import.meta.env.VITE_QC_REPORT_BUCKET_DEV
+    : import.meta.env.VITE_QC_REPORT_BUCKET;
   return axios
     .get(`${api}${endpoint}?bucket=${bucket}&object=${filename}&key=${key}`)
     .then((response) => {
@@ -652,7 +639,7 @@ export function retrieveReport(e, filename) {
       console.log(`${err.error}: ${err.errorDescription}`);
       // eslint-disable-next-line no-alert
       alert(
-        'An error has occurred. Please try again later, or contact motrpac-helpdesks@lists.stanford.edu to report this problem.'
+        'An error has occurred. Please try again later, or contact motrpac-helpdesks@lists.stanford.edu to report this problem.',
       );
     });
 }

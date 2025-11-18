@@ -26,7 +26,8 @@ function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
       </h1>
       <div className="lead mb-4">
         Use this tool to look up clinical biospecimen data curated from human
-        adults and pediatrics across multiple interventions, timepoints and assays.
+        adults and pediatrics across multiple interventions, timepoints and
+        assays.
       </div>
       <div className="biospecimen-lookup-container mb-4">
         {/* Interactive Biospecimen Chart Component - handles all filtering and visualization */}

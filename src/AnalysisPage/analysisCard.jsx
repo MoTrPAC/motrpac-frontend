@@ -55,12 +55,12 @@ function AnalysisCard({ analysisType, onPickAnalysis }) {
         onClick={onPickAnalysis.bind(
           this,
           analysisType.shortName,
-          analysisType.preferredTitle || analysisType.title
+          analysisType.preferredTitle || analysisType.title,
         )}
         onKeyPress={onPickAnalysis.bind(
           this,
           analysisType.shortName,
-          analysisType.title
+          analysisType.title,
         )}
         tabIndex={0}
         role="button"
@@ -86,7 +86,7 @@ AnalysisCard.propTypes = {
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         icon: PropTypes.string.isRequired,
-      })
+      }),
     ),
   }).isRequired,
   onPickAnalysis: PropTypes.func.isRequired,

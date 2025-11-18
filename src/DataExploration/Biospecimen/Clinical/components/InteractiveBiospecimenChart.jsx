@@ -1,5 +1,8 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { useBiospecimenData, useFilteredBiospecimenData } from '../hooks/useBiospecimenData';
+import {
+  useBiospecimenData,
+  useFilteredBiospecimenData,
+} from '../hooks/useBiospecimenData';
 import { useAdvancedPagination } from '../hooks/useAdvancedPagination';
 import BiospecimenFilters from './BiospecimenFilters';
 import BiospecimenChart from './BiospecimenChart';
@@ -9,7 +12,11 @@ import {
   FILTER_OPTIONS,
   filterUtils,
 } from '../constants/plotOptions';
-import { transformTissueCode, transformTrancheCode, transformCASReceived } from '../utils/dataTransformUtils';
+import {
+  transformTissueCode,
+  transformTrancheCode,
+  transformCASReceived,
+} from '../utils/dataTransformUtils';
 import roundNumbers from '../../../../lib/utils/roundNumbers';
 import { getAssayFullName } from '../utils/assayCodeMapping';
 
@@ -33,7 +40,10 @@ const InteractiveBiospecimenChart = () => {
   const filteredData = useFilteredBiospecimenData(allData, filters);
 
   // Table data: show drill-down samples when bar is selected, otherwise show filtered data
-  const tableData = useMemo(() => selectedBar?.samples || filteredData, [selectedBar, filteredData]);
+  const tableData = useMemo(
+    () => selectedBar?.samples || filteredData,
+    [selectedBar, filteredData],
+  );
 
   // Pagination for table (works with both drill-down and filtered data)
   const tablePagination = useAdvancedPagination(tableData, {
@@ -87,40 +97,42 @@ const InteractiveBiospecimenChart = () => {
   // Optimized with helper function for row formatting and centralized transforms
   const exportTableData = useCallback(() => {
     if (!tableData || tableData.length === 0) return;
-    
+
     // CSV header
-    const header = 'Vial Label,Participant ID,Tranche,Visit Code,Randomized Group,Tissue,Sex,Age Group,Timepoint,BMI,Temp Sample Profile,CAS Received\n';
-    
+    const header =
+      'Vial Label,Participant ID,Tranche,Visit Code,Randomized Group,Tissue,Sex,Age Group,Timepoint,BMI,Temp Sample Profile,CAS Received\n';
+
     // Format a single row with all transformations
-    const formatRow = (sample) => [
-      sample.vial_label || '',
-      sample.pid || '',
-      transformTrancheCode(sample.tranche) || '',
-      sample.visit_code || '',
-      sample.random_group_code || '',
-      transformTissueCode(sample.sample_group_code) || '',
-      sample.sex || '',
-      sample.dmaqc_age_groups || '',
-      sample.timepoint || '',
-      roundNumbers(sample.bmi, 1) || '',
-      sample.temp_samp_profile || '',
-      transformCASReceived(sample.received_cas),
-    ].join(',');
-    
+    const formatRow = (sample) =>
+      [
+        sample.vial_label || '',
+        sample.pid || '',
+        transformTrancheCode(sample.tranche) || '',
+        sample.visit_code || '',
+        sample.random_group_code || '',
+        transformTissueCode(sample.sample_group_code) || '',
+        sample.sex || '',
+        sample.dmaqc_age_groups || '',
+        sample.timepoint || '',
+        roundNumbers(sample.bmi, 1) || '',
+        sample.temp_samp_profile || '',
+        transformCASReceived(sample.received_cas),
+      ].join(',');
+
     // Generate CSV content
     const rows = tableData.map(formatRow).join('\n');
     const csvContent = header + rows;
-    
+
     // Create and trigger download
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    
+
     // Dynamic filename based on mode
     const filename = selectedBar
       ? `biospecimen_filtered_${selectedBar.tissue || 'data'}_${selectedBar.phase || selectedBar.timepoint || selectedBar.assay || selectedBar.demographicType || 'export'}.csv`
       : `biospecimen_all_${new Date().toISOString().split('T')[0]}.csv`;
-    
+
     link.setAttribute('href', url);
     link.setAttribute('download', filename);
     link.style.display = 'none';
@@ -134,7 +146,7 @@ const InteractiveBiospecimenChart = () => {
   // Optimized to extract only necessary data from event
   const handleBarClick = useCallback((event) => {
     const { point } = event;
-    
+
     const barData = {
       phase: point.phase,
       tissue: point.tissue,
@@ -146,7 +158,7 @@ const InteractiveBiospecimenChart = () => {
       demographicType: point.demographicType,
       category: point.category,
     };
-    
+
     setSelectedBar(barData);
   }, []);
 
@@ -174,7 +186,9 @@ const InteractiveBiospecimenChart = () => {
                   <span className="sr-only">Loading...</span>
                 </div>
                 <h5 className="text-muted mb-2">Loading biospecimen data...</h5>
-                <p className="text-muted mb-0">Please wait while we fetch all available data.</p>
+                <p className="text-muted mb-0">
+                  Please wait while we fetch all available data.
+                </p>
               </div>
             </div>
           )}
@@ -224,12 +238,21 @@ const InteractiveBiospecimenChart = () => {
                       <i className="bi bi-bar-chart-fill mr-2" />
                       {selectedBar.demographicType ? (
                         // Demographic chart clicked (sex, age, race, BMI, ethnicity, randomized group)
-                        <>{selectedBar.demographicType}: {selectedBar.category} ({selectedBar.count} samples)</>
+                        <>
+                          {selectedBar.demographicType}: {selectedBar.category}{' '}
+                          ({selectedBar.count} samples)
+                        </>
                       ) : (
                         // Biospecimen chart clicked (assay/phase/timepoint)
-                        <>{selectedBar.tissue} {selectedBar.phase && ` - ${selectedBar.phase}`}
-                        {selectedBar.timepoint && ` - ${selectedBar.timepoint}`}
-                        {selectedBar.assay && ` - ${getAssayFullName(selectedBar.assay)}`} ({selectedBar.count} samples)</>
+                        <>
+                          {selectedBar.tissue}{' '}
+                          {selectedBar.phase && ` - ${selectedBar.phase}`}
+                          {selectedBar.timepoint &&
+                            ` - ${selectedBar.timepoint}`}
+                          {selectedBar.assay &&
+                            ` - ${getAssayFullName(selectedBar.assay)}`}{' '}
+                          ({selectedBar.count} samples)
+                        </>
                       )}
                     </>
                   ) : (
@@ -251,11 +274,11 @@ const InteractiveBiospecimenChart = () => {
               </div>
               <div className="card-body">
                 {/* Pagination controls - top */}
-                <PaginationControls 
+                <PaginationControls
                   pagination={tablePagination}
                   onExport={exportTableData}
                 />
-                
+
                 <div className="biospecimen-lookup-table table-responsive mt-3">
                   <table className="table table-striped table-hover table-bordered">
                     <thead className="thead-dark">
@@ -277,16 +300,24 @@ const InteractiveBiospecimenChart = () => {
                     <tbody>
                       {tablePagination.currentPageData.map((sample, index) => (
                         <tr key={`${sample.vial_label}-${index}`}>
-                          <td className="vial-label text-dark">{sample.vial_label}</td>
+                          <td className="vial-label text-dark">
+                            {sample.vial_label}
+                          </td>
                           <td>{sample.pid}</td>
                           <td>
-                            <span className="badge badge-secondary">{transformTrancheCode(sample.tranche)}</span>
+                            <span className="badge badge-secondary">
+                              {transformTrancheCode(sample.tranche)}
+                            </span>
                           </td>
                           <td>{sample.visit_code || 'N/A'}</td>
                           <td>{sample.random_group_code || 'N/A'}</td>
-                          <td>{transformTissueCode(sample.sample_group_code)}</td>
                           <td>
-                            <span className={`badge ${sample.sex === 'Male' ? 'badge-info' : 'badge-warning'}`}>
+                            {transformTissueCode(sample.sample_group_code)}
+                          </td>
+                          <td>
+                            <span
+                              className={`badge ${sample.sex === 'Male' ? 'badge-info' : 'badge-warning'}`}
+                            >
                               {sample.sex}
                             </span>
                           </td>
@@ -304,9 +335,9 @@ const InteractiveBiospecimenChart = () => {
                     </tbody>
                   </table>
                 </div>
-                
+
                 {/* Pagination controls - bottom */}
-                <PaginationControls 
+                <PaginationControls
                   pagination={tablePagination}
                   onExport={exportTableData}
                 />

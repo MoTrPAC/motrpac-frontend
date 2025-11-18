@@ -168,7 +168,11 @@ function handleSearchDownload(params, analysis) {
   return (dispatch) => {
     dispatch(downloadSubmit());
     return axios
-      .post(`${searchServiceHost}${endpoint}`, downloadSearchParams, headersConfig)
+      .post(
+        `${searchServiceHost}${endpoint}`,
+        downloadSearchParams,
+        headersConfig,
+      )
       .then((response) => {
         if (response.data.error) {
           dispatch(downloadFailure(response.data.error));

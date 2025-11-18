@@ -10,7 +10,7 @@ import PhenotypePlotControls from '../plots/phenotypePlotControls';
 
 function PhenotypePass1b06Rats({
   weightPlot = 'one_week_program',
-  bodyFatPlot =  'one_week_program',
+  bodyFatPlot = 'one_week_program',
   vo2Plot = 'one_week_program',
   lactatePlot = 'one_week_program',
   toggleWeightPlot,
@@ -23,14 +23,9 @@ function PhenotypePass1b06Rats({
       <div className="analysis-phenotype-summary-container row mb-4">
         <div className="lead col-12">
           Examine the effect of training through a variety of phenotypic data
-          collected from the Endurance Exercise Training young adult (6
-          {' '}
-          months) rats.
-          {' '}
-          <span className="font-weight-bold">Input:</span>
-          {' '}
-          Sex,
-          Weight, % Body Fat and VO2 Max.
+          collected from the Endurance Exercise Training young adult (6 months)
+          rats. <span className="font-weight-bold">Input:</span> Sex, Weight, %
+          Body Fat and VO2 Max.
         </div>
       </div>
       <div className="card-container-phenotype-animal row mb-4">
@@ -149,10 +144,13 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleWeightPlot: (weightPlot) => dispatch(AnalysisActions.toggleWeightPlot(weightPlot)),
-  toggleBodyFatPlot: (bodyFatPlot) => dispatch(AnalysisActions.toggleBodyFatPlot(bodyFatPlot)),
+  toggleWeightPlot: (weightPlot) =>
+    dispatch(AnalysisActions.toggleWeightPlot(weightPlot)),
+  toggleBodyFatPlot: (bodyFatPlot) =>
+    dispatch(AnalysisActions.toggleBodyFatPlot(bodyFatPlot)),
   toggleVo2Plot: (vo2Plot) => dispatch(AnalysisActions.toggleVo2Plot(vo2Plot)),
-  toggleLactatePlot: (lactatePlot) => dispatch(AnalysisActions.toggleLactatePlot(lactatePlot)),
+  toggleLactatePlot: (lactatePlot) =>
+    dispatch(AnalysisActions.toggleLactatePlot(lactatePlot)),
 });
 
 export default connect(

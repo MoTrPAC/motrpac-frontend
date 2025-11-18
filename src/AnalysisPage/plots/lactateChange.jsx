@@ -29,7 +29,7 @@ function LactateChangePlot({ plot }) {
         const matchFound = searchRat(rat, plot);
         if (matchFound) {
           matches = plotConfig.pass1b06PhenoVo2MaxAnimal.filter(
-            (item) => item.pid === matchFound.pid
+            (item) => item.pid === matchFound.pid,
           );
           if (matches.length && matches.length > 1) {
             if (+matches[0].days_visit < +matches[1].days_visit) {
@@ -54,7 +54,7 @@ function LactateChangePlot({ plot }) {
         const matchFound = searchRat(rat, plot);
         if (matchFound) {
           matches = plotConfig.pass1b06PhenoVo2MaxAnimal.filter(
-            (item) => item.pid === matchFound.pid
+            (item) => item.pid === matchFound.pid,
           );
           if (matches.length && matches.length > 1) {
             if (+matches[0].days_visit < +matches[1].days_visit) {
@@ -108,22 +108,55 @@ function LactateChangePlot({ plot }) {
 
   // custom plot data config
   const singleVisitData = [
-    { x: 'Train-begin females', y: postTrainData('female', 'visit-1').lactate_begin },
-    { x: 'Train-end females', y: postTrainData('female', 'visit-1').lactate_end },
-    { x: 'Train-begin males', y: postTrainData('male', 'visit-1').lactate_begin },
+    {
+      x: 'Train-begin females',
+      y: postTrainData('female', 'visit-1').lactate_begin,
+    },
+    {
+      x: 'Train-end females',
+      y: postTrainData('female', 'visit-1').lactate_end,
+    },
+    {
+      x: 'Train-begin males',
+      y: postTrainData('male', 'visit-1').lactate_begin,
+    },
     { x: 'Train-end males', y: postTrainData('male', 'visit-1').lactate_end },
   ];
 
   // custom plot data config
   const multiVisitsData = [
-    { x: '1st\ntrain-begin\nfemales', y: postTrainData('female', 'visit-1').lactate_begin },
-    { x: '1st\ntrain-end\nfemales', y: postTrainData('female', 'visit-1').lactate_end },
-    { x: '2nd\ntrain-begin\nfemales', y: postTrainData('female', 'visit-2').lactate_begin },
-    { x: '2nd\ntrain-end\nfemales', y: postTrainData('female', 'visit-2').lactate_end },
-    { x: '1st\ntrain-begin\nmales', y: postTrainData('male', 'visit-1').lactate_begin },
-    { x: '1st\ntrain-end\nmales', y: postTrainData('male', 'visit-1').lactate_end },
-    { x: '2nd\ntrain-begin\nmales', y: postTrainData('male', 'visit-1').lactate_begin },
-    { x: '2nd\ntrain-end\nmales', y: postTrainData('female', 'visit-1').lactate_end },
+    {
+      x: '1st\ntrain-begin\nfemales',
+      y: postTrainData('female', 'visit-1').lactate_begin,
+    },
+    {
+      x: '1st\ntrain-end\nfemales',
+      y: postTrainData('female', 'visit-1').lactate_end,
+    },
+    {
+      x: '2nd\ntrain-begin\nfemales',
+      y: postTrainData('female', 'visit-2').lactate_begin,
+    },
+    {
+      x: '2nd\ntrain-end\nfemales',
+      y: postTrainData('female', 'visit-2').lactate_end,
+    },
+    {
+      x: '1st\ntrain-begin\nmales',
+      y: postTrainData('male', 'visit-1').lactate_begin,
+    },
+    {
+      x: '1st\ntrain-end\nmales',
+      y: postTrainData('male', 'visit-1').lactate_end,
+    },
+    {
+      x: '2nd\ntrain-begin\nmales',
+      y: postTrainData('male', 'visit-1').lactate_begin,
+    },
+    {
+      x: '2nd\ntrain-end\nmales',
+      y: postTrainData('female', 'visit-1').lactate_end,
+    },
   ];
 
   const plotCategories =
@@ -147,15 +180,30 @@ function LactateChangePlot({ plot }) {
             duration: 400,
             onLoad: { duration: 200 },
           }}
-          boxWidth={plot === 'four_week_program' || plot === 'eight_week_program' ? 30 : 40}
+          boxWidth={
+            plot === 'four_week_program' || plot === 'eight_week_program'
+              ? 30
+              : 40
+          }
           categories={plotCategories}
           data={plotData}
           domain={{ y: [0, 20] }}
           style={{
             min: { stroke: colors.graphs.lgray },
             max: { stroke: colors.graphs.lgray },
-            q1: { fill: ({ datum }) => datum.x.indexOf('females') > -1 ? colors.gender.female : colors.gender.male, fillOpacity: 0.6 },
-            q3: { fill: ({ datum }) => datum.x.indexOf('females') > -1 ? colors.gender.female : colors.gender.male },
+            q1: {
+              fill: ({ datum }) =>
+                datum.x.indexOf('females') > -1
+                  ? colors.gender.female
+                  : colors.gender.male,
+              fillOpacity: 0.6,
+            },
+            q3: {
+              fill: ({ datum }) =>
+                datum.x.indexOf('females') > -1
+                  ? colors.gender.female
+                  : colors.gender.male,
+            },
             median: { stroke: '#fff', strokeWidth: 2 },
           }}
         />
@@ -177,7 +225,8 @@ function LactateChangePlot({ plot }) {
         />
       </VictoryChart>
       <p className="card-text remark">
-        Datasets used as input: <em>Animal Registration</em>, <em>Animal Key</em>, <em>Animal VO2 Max Test</em>.
+        Datasets used as input: <em>Animal Registration</em>,{' '}
+        <em>Animal Key</em>, <em>Animal VO2 Max Test</em>.
         <br />
         Data is shown as mean +- SD.
       </p>

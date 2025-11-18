@@ -71,7 +71,7 @@ function TrainingDataTable({ columns, data, plotData }) {
             : true;
         }),
     }),
-    []
+    [],
   );
 
   // Use the useTable hook to create your table configuration
@@ -113,7 +113,7 @@ function TrainingDataTable({ columns, data, plotData }) {
         },
         ...columns,
       ]);
-    }
+    },
   );
   // Use the state and functions returned from useTable to build your UI
   const {
@@ -240,7 +240,8 @@ function TrainingDataTable({ columns, data, plotData }) {
                 {headerGroups.map((headerGroup) => {
                   // Destructure key and rest of the header group props
                   // to avoid passing key as a prop to the table row
-                  const { key, ...restHeaderGroups } = headerGroup.getHeaderGroupProps();
+                  const { key, ...restHeaderGroups } =
+                    headerGroup.getHeaderGroupProps();
                   return (
                     <tr key={key} {...restHeaderGroups} className="table-head">
                       {headerGroup.headers.map((column) => {
@@ -256,11 +257,19 @@ function TrainingDataTable({ columns, data, plotData }) {
                             <div className="d-flex align-items-center justify-content-between">
                               {column.render('Header')}
                               <span>
-                                {column.isSorted
-                                  ? column.isSortedDesc
-                                    ? <i className="material-icons">expand_more</i>
-                                    : <i className="material-icons">expand_less</i>
-                                  : <i className="material-icons">unfold_more</i>}
+                                {column.isSorted ? (
+                                  column.isSortedDesc ? (
+                                    <i className="material-icons">
+                                      expand_more
+                                    </i>
+                                  ) : (
+                                    <i className="material-icons">
+                                      expand_less
+                                    </i>
+                                  )
+                                ) : (
+                                  <i className="material-icons">unfold_more</i>
+                                )}
                               </span>
                             </div>
                           </th>
@@ -317,10 +326,10 @@ function TrainingDataTable({ columns, data, plotData }) {
 
 GeneCentricTrainingResultsTable.propTypes = {
   trainingData: PropTypes.arrayOf(
-    PropTypes.shape({ ...geneSearchTrainingResultsTablePropType })
+    PropTypes.shape({ ...geneSearchTrainingResultsTablePropType }),
   ).isRequired,
   timewiseData: PropTypes.arrayOf(
-    PropTypes.shape({ ...geneSearchTimewisePlotPropType })
+    PropTypes.shape({ ...geneSearchTimewisePlotPropType }),
   ).isRequired,
 };
 
@@ -330,13 +339,13 @@ TrainingDataTable.propTypes = {
       Header: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
         .isRequired,
       accessor: PropTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
   data: PropTypes.arrayOf(
-    PropTypes.shape({ ...geneSearchTrainingResultsTablePropType })
+    PropTypes.shape({ ...geneSearchTrainingResultsTablePropType }),
   ).isRequired,
   plotData: PropTypes.arrayOf(
-    PropTypes.shape({ ...geneSearchTimewisePlotPropType })
+    PropTypes.shape({ ...geneSearchTimewisePlotPropType }),
   ).isRequired,
 };
 

@@ -66,15 +66,19 @@ const AdvancedPagination = ({
           <strong>{totalItems.toLocaleString()}</strong>
           {' results'}
         </span>
-        
+
         <button
           className="btn btn-secondary btn-sm"
           onClick={() => {
             // Export current page data
-            const header = 'Vial Label,Participant ID,Tranche,Temp Sample Profile,Randomized Group,Visit Code,Timepoint,Tissue,Sex,Age Groups,BMI,CAS Received\n';
-            const rows = data.map(item => 
-              `${item.vial_label},${item.pid},${item.tranche},${item.tempSampProfile},${item.randomGroupCode},${item.visitcode},${item.timepoint},${item.sampleGroupCode},${item.sex},${item.age_groups},${item.bmi},${item.receivedCAS}`
-            ).join('\n');
+            const header =
+              'Vial Label,Participant ID,Tranche,Temp Sample Profile,Randomized Group,Visit Code,Timepoint,Tissue,Sex,Age Groups,BMI,CAS Received\n';
+            const rows = data
+              .map(
+                (item) =>
+                  `${item.vial_label},${item.pid},${item.tranche},${item.tempSampProfile},${item.randomGroupCode},${item.visitcode},${item.timepoint},${item.sampleGroupCode},${item.sex},${item.age_groups},${item.bmi},${item.receivedCAS}`,
+              )
+              .join('\n');
             const csvData = 'data:text/csv;charset=utf-8,' + header + rows;
             const encodedUri = encodeURI(csvData);
             const link = document.createElement('a');
@@ -216,11 +220,14 @@ const AdvancedPagination = ({
       {/* Page size selector and loading indicator */}
       <div className="d-flex align-items-center">
         {isNavigating && (
-          <div className="spinner-border spinner-border-sm text-primary mr-3" role="status">
+          <div
+            className="spinner-border spinner-border-sm text-primary mr-3"
+            role="status"
+          >
             <span className="sr-only">Loading...</span>
           </div>
         )}
-        
+
         <div className="d-flex align-items-center text-muted small">
           <span className="mr-2">Show:</span>
           <select
@@ -230,8 +237,10 @@ const AdvancedPagination = ({
             onChange={(e) => changePageSize(parseInt(e.target.value))}
             disabled={isNavigating}
           >
-            {pageSizeOptions.map(size => (
-              <option key={size} value={size}>{size}</option>
+            {pageSizeOptions.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
             ))}
           </select>
           <span className="ml-2">per page</span>

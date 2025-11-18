@@ -14,7 +14,10 @@ function RegistrationResponse({ status = null, errMsg = null }) {
     return (
       <p>
         User already exists. Please contact&nbsp;
-        <a href="mailto:motrpac-helpdesk@lists.stanford.edu" className="inline-link-with-icon">
+        <a
+          href="mailto:motrpac-helpdesk@lists.stanford.edu"
+          className="inline-link-with-icon"
+        >
           motrpac-helpdesk@lists.stanford.edu
           <i className="material-icons email-icon">mail</i>
         </a>
@@ -27,9 +30,11 @@ function RegistrationResponse({ status = null, errMsg = null }) {
   function renderGenericError() {
     return (
       <p>
-        An error occurred in the registration process.
-        Please contact&nbsp;
-        <a href="mailto:motrpac-helpdesk@lists.stanford.edu" className="inline-link-with-icon">
+        An error occurred in the registration process. Please contact&nbsp;
+        <a
+          href="mailto:motrpac-helpdesk@lists.stanford.edu"
+          className="inline-link-with-icon"
+        >
           motrpac-helpdesk@lists.stanford.edu
           <i className="material-icons email-icon">mail</i>
         </a>
@@ -46,7 +51,9 @@ function RegistrationResponse({ status = null, errMsg = null }) {
           <h3>Registration Incomplete</h3>
         </div>
         <div className="data-access-content">
-          {errMsg && errMsg === 'user already exists' ? renderAuth0Error() : renderGenericError()}
+          {errMsg && errMsg === 'user already exists'
+            ? renderAuth0Error()
+            : renderGenericError()}
         </div>
       </>
     );
@@ -61,11 +68,15 @@ function RegistrationResponse({ status = null, errMsg = null }) {
       <div className="data-access-content">
         <p>
           Thank you for registering! An email has been sent to you from MoTrPAC
-          requesting you to set up your password. You will also be receiving
-          a confirmation email with the data use terms you consented to. You will
-          be able to access the released MoTrPAC data upon setting up your password.
-          If you have further questions regarding the registration, please contact&nbsp;
-          <a href="mailto:motrpac-helpdesk@lists.stanford.edu" className="inline-link-with-icon">
+          requesting you to set up your password. You will also be receiving a
+          confirmation email with the data use terms you consented to. You will
+          be able to access the released MoTrPAC data upon setting up your
+          password. If you have further questions regarding the registration,
+          please contact&nbsp;
+          <a
+            href="mailto:motrpac-helpdesk@lists.stanford.edu"
+            className="inline-link-with-icon"
+          >
             motrpac-helpdesk@lists.stanford.edu
             <i className="material-icons email-icon">mail</i>
           </a>
@@ -79,6 +90,5 @@ RegistrationResponse.propTypes = {
   status: PropTypes.string,
   errMsg: PropTypes.string,
 };
-
 
 export default RegistrationResponse;

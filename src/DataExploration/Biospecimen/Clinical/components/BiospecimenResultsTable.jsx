@@ -2,7 +2,11 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useAdvancedPagination } from '../hooks/useAdvancedPagination';
 import AdvancedPagination from './AdvancedPagination';
-import { transformTissueCode, transformTrancheCode, transformCASReceived } from '../utils/dataTransformUtils';
+import {
+  transformTissueCode,
+  transformTrancheCode,
+  transformCASReceived,
+} from '../utils/dataTransformUtils';
 import roundNumbers from '../../../../lib/utils/roundNumbers';
 
 import '@styles/biospecimenSummary.scss';
@@ -15,7 +19,7 @@ function BiospecimenResultsTable({ data = [] }) {
     maxPagesToShow: 7,
     debounceDelay: 300,
   });
-  
+
   // Reset pagination when data changes (e.g., when filters change)
   useEffect(() => {
     pagination.resetPagination();
@@ -25,7 +29,10 @@ function BiospecimenResultsTable({ data = [] }) {
     return (
       <div className="alert alert-info" role="alert">
         <h5 className="alert-heading">No matches found</h5>
-        <p>No biospecimens match the selected criteria. Please try different filter combinations.</p>
+        <p>
+          No biospecimens match the selected criteria. Please try different
+          filter combinations.
+        </p>
       </div>
     );
   }
@@ -36,10 +43,10 @@ function BiospecimenResultsTable({ data = [] }) {
         <i className="bi bi-table mr-2" />
         Biospecimen Results ({pagination.totalItems} matches)
       </h5>
-      
+
       {/* Pagination controls - top */}
       <AdvancedPagination {...pagination} data={data} />
-      
+
       <div className="biospecimen-lookup-table table-responsive mt-3">
         <table className="table table-striped table-hover table-bordered">
           <thead className="thead-dark">
@@ -64,7 +71,9 @@ function BiospecimenResultsTable({ data = [] }) {
                 <td className="vial-label text-dark">{specimen.vial_label}</td>
                 <td>{specimen.pid}</td>
                 <td>
-                  <span className="badge badge-secondary">{transformTrancheCode(specimen.tranche)}</span>
+                  <span className="badge badge-secondary">
+                    {transformTrancheCode(specimen.tranche)}
+                  </span>
                 </td>
                 <td>{specimen.tempSampProfile}</td>
                 <td>{specimen.randomGroupCode}</td>
@@ -72,7 +81,9 @@ function BiospecimenResultsTable({ data = [] }) {
                 <td>{specimen.timepoint}</td>
                 <td>{transformTissueCode(specimen.sampleGroupCode)}</td>
                 <td>
-                  <span className={`badge ${specimen.sex === 'Male' ? 'badge-info' : 'badge-warning'}`}>
+                  <span
+                    className={`badge ${specimen.sex === 'Male' ? 'badge-info' : 'badge-warning'}`}
+                  >
                     {specimen.sex}
                   </span>
                 </td>
@@ -88,7 +99,7 @@ function BiospecimenResultsTable({ data = [] }) {
           </tbody>
         </table>
       </div>
-      
+
       {/* Pagination controls - bottom */}
       <AdvancedPagination {...pagination} data={data} />
     </div>

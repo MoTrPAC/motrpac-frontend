@@ -43,7 +43,7 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
   switch (action.type) {
     case types.CHANGE_FILTER: {
       const isActiveFilter = state.activeFilters[action.category].indexOf(
-        action.filter
+        action.filter,
       );
       const newActiveFilters = { ...state.activeFilters };
 
@@ -68,10 +68,22 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
         return files.filter((file) => {
           return Object.keys(filters).every((cat) => {
             if (!filters[cat].length) return true;
-            if (action.category === 'assay' && action.filter.match(/Targeted|Untargeted/)) {
-              return filters[cat].some((filter) => filter.includes(file[cat]) || file[cat] === 'Merged');
-            } else if (action.category === 'omics' && action.filter.match(/Metabolomics/)) {
-              return filters[cat].some((filter) => filter.includes(file[cat]) || file[cat] === 'Metabolomics');
+            if (
+              action.category === 'assay' &&
+              action.filter.match(/Targeted|Untargeted/)
+            ) {
+              return filters[cat].some(
+                (filter) =>
+                  filter.includes(file[cat]) || file[cat] === 'Merged',
+              );
+            } else if (
+              action.category === 'omics' &&
+              action.filter.match(/Metabolomics/)
+            ) {
+              return filters[cat].some(
+                (filter) =>
+                  filter.includes(file[cat]) || file[cat] === 'Metabolomics',
+              );
             } else {
               return filters[cat].some((filter) => filter.includes(file[cat]));
             }
@@ -90,7 +102,10 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
         // return matching files, including 'merged' files (e.g. omics, assays, tissues)
         // FIXME: deselect phenotype filter if tissue, assay, or ome is selected
         if (newActiveFilters.category.indexOf('Phenotype') !== -1) {
-          newActiveFilters.category.splice(newActiveFilters.category.indexOf('Phenotype'), 1);
+          newActiveFilters.category.splice(
+            newActiveFilters.category.indexOf('Phenotype'),
+            1,
+          );
         }
         filtered = filterFiles(newActiveFilters, filtered);
       } else {
@@ -109,7 +124,10 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
       Object.keys(state.activeFilters).forEach((cat) => {
         if (state.activeFilters[cat].length) {
           filtered = filtered.filter(
-            (file) => !(state.activeFilters[cat].indexOf(file[cat.toLowerCase()]) === -1),
+            (file) =>
+              !(
+                state.activeFilters[cat].indexOf(file[cat.toLowerCase()]) === -1
+              ),
           );
         }
       });

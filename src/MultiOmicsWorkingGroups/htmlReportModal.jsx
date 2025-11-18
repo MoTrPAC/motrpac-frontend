@@ -2,7 +2,11 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
-function HtmlReportModal({ selectedReport = null, selectedReportLabel = null, profile = {} }) {
+function HtmlReportModal({
+  selectedReport = null,
+  selectedReportLabel = null,
+  profile = {},
+}) {
   const iframeRef = useRef(null);
   const [iframeLoaded, setIframeLoaded] = useState(false);
 

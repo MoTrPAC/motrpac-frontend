@@ -4,7 +4,9 @@ import * as jose from 'jose';
 import AUTH0_CONFIG from './auth0-variables';
 
 async function createJWT(email) {
-  const secretKey = new TextEncoder().encode(import.meta.env.VITE_JWT_SIGNING_SECRET);
+  const secretKey = new TextEncoder().encode(
+    import.meta.env.VITE_JWT_SIGNING_SECRET,
+  );
 
   const jwt = await new jose.SignJWT({ email })
     .setProtectedHeader({ alg: 'HS256' })
@@ -62,7 +64,8 @@ class Auth {
           authResult.expiresIn * 1000 + new Date().getTime(),
         );
         localStorage.setItem('expires_at', this.expiresAt);
-        const { userType, email } = this.idTokenPayload['https://motrpac.org/user_metadata'];
+        const { userType, email } =
+          this.idTokenPayload['https://motrpac.org/user_metadata'];
         // Create a date object for cookie expiration
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 1);

@@ -38,7 +38,12 @@ function SelectiveDataDownloads({
         </div>
         {showInfo && (
           <div className="btn-group show-data-download-info-link">
-            <button type="button" className="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <button
+              type="button"
+              className="btn btn-link dropdown-toggle"
+              data-toggle="dropdown"
+              aria-expanded="false"
+            >
               <i className="bi bi-info-circle-fill"></i>
               <span className="ml-1">Show Info</span>
             </button>
@@ -46,17 +51,33 @@ function SelectiveDataDownloads({
               <p>Data available for download on this page includes:</p>
               <h6 className="border-bottom mb-2 pb-2">Raw "Results"</h6>
               <ul className="pl-3">
-                <li><b>Untargeted Metabolomics:</b> MS intensities</li>
-                <li><b>Targeted Metabolomics</b>: Absolute concentrations</li>
-                <li><b>Proteomics:</b> Reporter ion intensities and log ratios</li>
-                <li><b>ATAC-seq:</b> Peak counts</li>
-                <li><b>RRBS:</b> CpG methylation counts (or methylation beta values)</li>
-                <li><b>Immunoassay (Luminex):</b> Protein concentrations</li>
+                <li>
+                  <b>Untargeted Metabolomics:</b> MS intensities
+                </li>
+                <li>
+                  <b>Targeted Metabolomics</b>: Absolute concentrations
+                </li>
+                <li>
+                  <b>Proteomics:</b> Reporter ion intensities and log ratios
+                </li>
+                <li>
+                  <b>ATAC-seq:</b> Peak counts
+                </li>
+                <li>
+                  <b>RRBS:</b> CpG methylation counts (or methylation beta
+                  values)
+                </li>
+                <li>
+                  <b>Immunoassay (Luminex):</b> Protein concentrations
+                </li>
               </ul>
               <h6 className="border-bottom mb-2 pb-2">"Analysis" Results</h6>
               <ul className="pl-3">
                 <li>Normalized data tables</li>
-                <li>Differential analysis results (e.g., log2 fold-change, p-values, adjusted p-values)</li>
+                <li>
+                  Differential analysis results (e.g., log2 fold-change,
+                  p-values, adjusted p-values)
+                </li>
               </ul>
             </div>
           </div>
@@ -70,27 +91,30 @@ function SelectiveDataDownloads({
     if (dataDownload.pass1a06DataSelected) {
       return (
         <p className="lead">
-          Experimental data from acute exercise study on young adult rats for a comprehensive analysis of the physiological responses following a single exercise session in 6-month-old F344 rats.
+          Experimental data from acute exercise study on young adult rats for a
+          comprehensive analysis of the physiological responses following a
+          single exercise session in 6-month-old F344 rats.
         </p>
       );
     }
     if (dataDownload.humanPrecovidSedAduDataSelected) {
       return (
         <p className="lead">
-          Differential analysis results data for differences in changes during the acute bout, comparing the change from pre-exercise baseline at any given timepoint during the acute bout as compared to resting control.
+          Differential analysis results data for differences in changes during
+          the acute bout, comparing the change from pre-exercise baseline at any
+          given timepoint during the acute bout as compared to resting control.
         </p>
       );
     }
 
     return (
       <p className="lead">
-        This study investigates the long-term adaptive effects of endurance training in young
-        adult rats by analyzing multi-omics profiles across 18 tissues and blood at 1, 2, 4,
-        and 8 weeks of treadmill training.{' '}
+        This study investigates the long-term adaptive effects of endurance
+        training in young adult rats by analyzing multi-omics profiles across 18
+        tissues and blood at 1, 2, 4, and 8 weeks of treadmill training.{' '}
         <Link to="/project-overview#endurance-training" className="link">
           Learn more
-        </Link>
-        {' '}
+        </Link>{' '}
         about this study.
       </p>
     );
@@ -111,7 +135,9 @@ function SelectiveDataDownloads({
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3">
         {renderPageTitle()}
       </div>
-      <div className="browse-data-summary-container mb-4">{renderStudySummary()}</div>
+      <div className="browse-data-summary-container mb-4">
+        {renderStudySummary()}
+      </div>
       <div className="browse-data-container row">
         <div className="tab-content mx-3">
           <SelectiveDataDownloadFileBrowser

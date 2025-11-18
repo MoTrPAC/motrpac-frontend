@@ -54,31 +54,39 @@ function DataDownloadsMain({
           <h1 className="mb-0 flex-grow-1">Data Download</h1>
         </div>
         <div className="btn-group show-main-data-download-info-link">
-          <button type="button" className="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          <button
+            type="button"
+            className="btn btn-link dropdown-toggle"
+            data-toggle="dropdown"
+            aria-expanded="false"
+          >
             <i className="bi bi-info-circle-fill"></i>
             <span className="ml-1">Show Info</span>
           </button>
           <div className="dropdown-menu dropdown-menu-right">
-            <h5 className="border-bottom mt-1 mb-2 pb-2">Data types available to download:</h5>
+            <h5 className="border-bottom mt-1 mb-2 pb-2">
+              Data types available to download:
+            </h5>
             <ul className="pl-3">
               <li>
-                "Raw" results including assay-specific quantitative results, experiment
-                metadata and QA/QC reports
+                "Raw" results including assay-specific quantitative results,
+                experiment metadata and QA/QC reports
               </li>
               <li>
-                "Analysis" results including normalized data tables, differential analysis
-                results (e.g., log2 fold-change, p-values, adjusted p-values), and
-                cross-platform merged metabolomics data tables for named metabolites
+                "Analysis" results including normalized data tables,
+                differential analysis results (e.g., log2 fold-change, p-values,
+                adjusted p-values), and cross-platform merged metabolomics data
+                tables for named metabolites
               </li>
               <li>Phenotypic data</li>
             </ul>
             <p>
               <span className="font-weight-bold">Note:</span> Raw files are not
-              currently available for direct download through the Data Hub portal.
-              Please{' '}
-              <Link to="/contact">submit your requests to our helpdesk</Link> and
-              specify the relevant tissues/assays if you would like to get access
-              to the raw files.
+              currently available for direct download through the Data Hub
+              portal. Please{' '}
+              <Link to="/contact">submit your requests to our helpdesk</Link>{' '}
+              and specify the relevant tissues/assays if you would like to get
+              access to the raw files.
             </p>
           </div>
         </div>
@@ -94,27 +102,20 @@ function DataDownloadsMain({
           <p className="lead mb-2">
             Explore and download the MoTrPAC multi-omics datasets, which
             includes quantitative results and analyses of molecular changes from
-            exercise across tissues. Currently, the complete young adult rat endurance
-            training dataset is publicly available and provided under the
-            {' '}
-            <Link to="/license">CC BY 4.0 license</Link>
-            .
-            {' '}
+            exercise across tissues. Currently, the complete young adult rat
+            endurance training dataset is publicly available and provided under
+            the <Link to="/license">CC BY 4.0 license</Link>.{' '}
             {userType && userType === 'internal'
               ? 'The young rat acute exercise and human precovid sedentary adult datasets are currently available to consortium members only in the early preview phase. '
               : null}
             For a summary of all the ongoing studies in MoTrPAC (data available
-            soon), study designs, and protocols, visit our
-            {' '}
-            <Link to="/project-overview">Project Overview</Link>
-            {' '}
-            page. Read more about the
-            {' '}
+            soon), study designs, and protocols, visit our{' '}
+            <Link to="/project-overview">Project Overview</Link> page. Read more
+            about the{' '}
             <ExternalLink
               to="https://www.nature.com/articles/s41586-023-06877-w"
               label="endurance trained young adult rats study"
-            />
-            {' '}
+            />{' '}
             in our Nature publication.
           </p>
         </div>
@@ -122,13 +123,11 @@ function DataDownloadsMain({
           <h2>Study Data</h2>
           <p>
             Browse and select the data of your interest to download by tissue,
-            ome, or assay types. It is recommended to download the phenotypic data
-            along with the omics data for a comprehensive analysis. Learn more
-            about the
-            {' '}
-            <Link to="/technical-guides/phenotype">phenotypic data</Link>
-            {' '}
-            in MoTrPAC studies.
+            ome, or assay types. It is recommended to download the phenotypic
+            data along with the omics data for a comprehensive analysis. Learn
+            more about the{' '}
+            <Link to="/technical-guides/phenotype">phenotypic data</Link> in
+            MoTrPAC studies.
           </p>
           {userType && userType === 'internal' && (
             <div className="bd-callout bd-callout-primary">
@@ -142,7 +141,9 @@ function DataDownloadsMain({
             <SelectiveDataDownloadsCard
               cardIcon="pest_control_rodent"
               cardTitle="Young Adult Rats"
-              dataSelectHandler={() => dispatch(actions.selectPass1B06Data(userType))}
+              dataSelectHandler={() =>
+                dispatch(actions.selectPass1B06Data(userType))
+              }
               selectedData="pass1b-06"
               cssSelector={
                 !userType || (userType && userType === 'external')
@@ -182,7 +183,9 @@ function DataDownloadsMain({
               <SelectiveDataDownloadsCard
                 cardIcon="person"
                 cardTitle="Human Adults"
-                dataSelectHandler={() => dispatch(actions.selectHumanPreCovidSedAduData())}
+                dataSelectHandler={() =>
+                  dispatch(actions.selectHumanPreCovidSedAduData())
+                }
                 selectedData="human-precovid-sed-adu"
               >
                 <h3 className="card-title phase-card-title">
@@ -193,7 +196,11 @@ function DataDownloadsMain({
                   <li>4 tissues</li>
                   <li>22 assays across different omes</li>
                   <li>
-                    <a href={import.meta.env.VITE_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={import.meta.env.VITE_DATA_RELEASE_README}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <i className="bi bi-file-earmark-fill mr-1" />
                       <span>Release README</span>
                     </a>
@@ -312,8 +319,7 @@ function DataDownloadsMain({
                 phenotypic data sets have also been updated since then.
               </p>
               <p>
-                Please refer to this
-                {' '}
+                Please refer to this{' '}
                 <a
                   href="https://docs.google.com/document/d/1bdXcYQLZ65GpJKTjf9XwRxhrfHJSD9NIqCxhG6icL8U"
                   className="inline-link-with-icon"
@@ -321,13 +327,10 @@ function DataDownloadsMain({
                   rel="noopener noreferrer"
                 >
                   README
-                  <i className="material-icons readme-file-icon">
-                    description
-                  </i>
-                </a>
-                {' '}
-                document for the data included in the very last consortium
-                data release.
+                  <i className="material-icons readme-file-icon">description</i>
+                </a>{' '}
+                document for the data included in the very last consortium data
+                release.
               </p>
             </div>
           </div>

@@ -63,9 +63,7 @@ function ExerciseBenefits() {
       </Helmet>
       <PageTitle title="Benefits of Exercise" />
       <div className="exercise-benefits-page-container">
-        <div
-          className="exercise-benefits-page-content-container row mb-4"
-        >
+        <div className="exercise-benefits-page-content-container row mb-4">
           <div className="col-12">
             <p className="lead">
               Regular physical activity is associated with many health benefits,
@@ -103,29 +101,28 @@ function ExerciseBenefits() {
             </tbody>
           </table>
           <p>
-            These benefits underscore the importance of regular physical activity
-            as a cornerstone of preventive health care.
+            These benefits underscore the importance of regular physical
+            activity as a cornerstone of preventive health care.
           </p>
         </div>
         <div className="exercise-benefits-page-content-container row mt-3 mb-4">
           <div className="col-12">
-            <h5 className="border-bottom mb-3 pb-2">
-              References:
-            </h5>
+            <h5 className="border-bottom mb-3 pb-2">References:</h5>
             <ol className="cexercise-benefits-itation-list">
               {exerciseBenefitsReferenceData.map((reference) => (
-                <li key={`${reference.doi}`} id={`cite-${reference.citationNo}`}>
+                <li
+                  key={`${reference.doi}`}
+                  id={`cite-${reference.citationNo}`}
+                >
                   <p>
                     <span className="font-weight-bold">{reference.title}</span>
                     <br />
                     {`${reference.author}.`}
                     <br />
-                    {`${reference.journal}.`}
-                    {' '}
+                    {`${reference.journal}.`}{' '}
                     <em>{`${reference.publicationIssue}.`}</em>
                     <br />
-                    doi:
-                    {' '}
+                    doi:{' '}
                     <ExternalLink
                       to={`https://doi.org/${reference.doi}`}
                       label={reference.doi}

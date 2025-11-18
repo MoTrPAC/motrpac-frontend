@@ -118,14 +118,10 @@ function GeneCentricView({
             </div>
             {userType === 'internal' && (
               <div className="lead col-12 mt-3">
-                Go to the {' '}
-                <Link
-                  to="/search"
-                >
-                  differential abundance search page
-                </Link>{' '}
-                to explore the available data from the young adult rats acute exercise
-                and pre-COVID human sedentary adults studies.
+                Go to the{' '}
+                <Link to="/search">differential abundance search page</Link> to
+                explore the available data from the young adult rats acute
+                exercise and pre-COVID human sedentary adults studies.
               </div>
             )}
             <Tooltip anchorSelect=".timewise-definition" place="top">

@@ -17,34 +17,49 @@ import Figure1C from './components/figure1c';
 // import network figure 4e visualization dataset
 import landscapeFigure4eNetworkData from '../data/landscape_figure_4e';
 
-import '@styles/landingPage.scss'
+import '@styles/landingPage.scss';
 
-const imgSourceUrl = 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/landing_page/';
+const imgSourceUrl =
+  'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/landing_page/';
 
 // animated down arrow icon
 function AnimatedDownArrow() {
-  return (<div className="animated-down-arrow pb-4 w-100">
-      <img src={IconSet.ArrowDownAnimated} alt="down-arrow"/>
-    </div>);
+  return (
+    <div className="animated-down-arrow pb-4 w-100">
+      <img src={IconSet.ArrowDownAnimated} alt="down-arrow" />
+    </div>
+  );
 }
 
 function AnimatedDownArrowDark() {
-  return (<div className="animated-down-arrow pb-4 w-100">
-      <img src={IconSet.ArrowDownAnimatedDark} alt="down-arrow"/>
-    </div>);
+  return (
+    <div className="animated-down-arrow pb-4 w-100">
+      <img src={IconSet.ArrowDownAnimatedDark} alt="down-arrow" />
+    </div>
+  );
 }
 
 // configs for visjs network visualization rendering
 const options = {
-  height: '100%', width: '100%', nodes: {
-    shape: 'dot', size: 30, font: {
-      size: 25, color: '#ffffff',
-    }, borderWidth: 4,
-  }, edges: {
+  height: '100%',
+  width: '100%',
+  nodes: {
+    shape: 'dot',
+    size: 30,
+    font: {
+      size: 25,
+      color: '#ffffff',
+    },
+    borderWidth: 4,
+  },
+  edges: {
     width: 4,
-  }, interaction: {
-    hover: true, zoomView: false,
-  }, physics: {
+  },
+  interaction: {
+    hover: true,
+    zoomView: false,
+  },
+  physics: {
     enabled: false,
   },
 };
@@ -79,13 +94,16 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
   }, []);
 
   const goToExternalLink = useCallback(() => {
-    window.open('https://www.nature.com/nature/volumes/629/issues/8010', '_blank');
+    window.open(
+      'https://www.nature.com/nature/volumes/629/issues/8010',
+      '_blank',
+    );
   }, []);
 
   // Redirect authenticated users to protected route
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   if (isAuthenticated && hasAccess) {
-    return <Navigate to="/dashboard" replace={true}/>;
+    return <Navigate to="/dashboard" replace={true} />;
   }
 
   const backgroundVideo = document.querySelector('video');
@@ -95,9 +113,10 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
     };
   }
 
-  return (<div className="row marketing content-container">
+  return (
+    <div className="row marketing content-container">
       <Helmet>
-        <html lang="en"/>
+        <html lang="en" />
         <title>Welcome to MoTrPAC Data Hub</title>
         <script type="application/ld+json">
           {JSON.stringify(landingPageStructuredData)}
@@ -105,18 +124,22 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
       </Helmet>
       <section className="first">
         <div className="w-100 h-100 d-flex align-items-center">
-          {!isMobile && <BackgroundVideo/>}
+          {!isMobile && <BackgroundVideo />}
           <div className="section-content-container container text-center">
             <div className="logo-container">
-              <img src={`${imgSourceUrl}logo-motrpac-white.png`} alt="MoTrPAC Logo"/>
+              <img
+                src={`${imgSourceUrl}logo-motrpac-white.png`}
+                alt="MoTrPAC Logo"
+              />
             </div>
             <h3 className="display-3">The Molecular Map of</h3>
             <h2 className="display-2">Exercise</h2>
             <p className="lead hero">
               <a href="https://motrpac.org/" target="_blank" rel="noreferrer">
-                Welcome to the data repository for the Molecular Transducers of Physical
-                Activity Consortium; a national research initiative that aims to generate
-                a molecular map of the effects of exercise and training.
+                Welcome to the data repository for the Molecular Transducers of
+                Physical Activity Consortium; a national research initiative
+                that aims to generate a molecular map of the effects of exercise
+                and training.
               </a>
             </p>
             <div className="highlighted-links-container">
@@ -162,7 +185,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
             </div>
           </div>
         </div>
-        <AnimatedDownArrow/>
+        <AnimatedDownArrow />
       </section>
       <section className="fifth">
         <div className="w-100 h-100 d-flex align-items-center">
@@ -170,9 +193,8 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
             <div className="row content-landscape-paper d-flex align-items-center">
               <div className="content col-12 col-md-6">
                 <h1>
-                  MoTrPAC animal endurance training exercise study paper now published in
-                  {' '}
-                  <span className="font-italic">Nature</span>
+                  MoTrPAC animal endurance training exercise study paper now
+                  published in <span className="font-italic">Nature</span>
                 </h1>
                 <a
                   href="https://www.nature.com/articles/s41586-023-06877-w"
@@ -193,12 +215,14 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
                     loading="lazy"
                   />
                 </div>
-                <div className="feature-image-attribution mt-1">Cover image by Nik Spencer/Nature</div>
+                <div className="feature-image-attribution mt-1">
+                  Cover image by Nik Spencer/Nature
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <AnimatedDownArrow/>
+        <AnimatedDownArrow />
       </section>
       {/*
       <section className="second">
@@ -235,12 +259,12 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
             </div>
           </div>
         </div>
-        <AnimatedDownArrow/>
+        <AnimatedDownArrow />
       </section>
       <section className="fourth">
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container-fluid text-center">
-            <Figure1C/>
+            <Figure1C />
             <div className="container text-center">
               <h1 className="py-4">
                 Visualize the number of training-differential features whose
@@ -249,7 +273,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
             </div>
           </div>
         </div>
-        <AnimatedDownArrow/>
+        <AnimatedDownArrow />
       </section>
       <section className="sixth">
         <div className="w-100 h-100 d-flex align-items-center">
@@ -273,7 +297,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
             </div>
           </div>
         </div>
-        <AnimatedDownArrow/>
+        <AnimatedDownArrow />
       </section>
       <section className="seventh">
         <div className="w-100 h-100 d-flex align-items-center">
@@ -307,18 +331,18 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
             </div>
           </div>
         </div>
-        <AnimatedDownArrowDark/>
+        <AnimatedDownArrowDark />
       </section>
       <section className="eighth">
         <div className="w-100 h-100">
           <div className="section-content-container container text-center d-flex align-items-center">
             <div className="panel-content-container">
-              <OpenOfficeHour/>
-              <SubscribeDataUpdates/>
+              <OpenOfficeHour />
+              <SubscribeDataUpdates />
             </div>
           </div>
           <div className="w-100 homepage-footer-container">
-            <Footer/>
+            <Footer />
           </div>
         </div>
       </section>
@@ -329,7 +353,8 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
 LandingPage.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
-  }), isAuthenticated: PropTypes.bool,
+  }),
+  isAuthenticated: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

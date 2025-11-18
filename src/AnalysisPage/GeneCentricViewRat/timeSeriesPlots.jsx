@@ -22,14 +22,16 @@ function TimeSeriesPlots({ plotData, selectedFeatures }) {
   // Convert tissue value from raw data to display value
   function transformTissueName(tissueName) {
     const match = tissueListRatEndurance.find(
-      (filter) => filter.filter_value === tissueName
+      (filter) => filter.filter_value === tissueName,
     );
     return match ? match.filter_label : tissueName;
   }
 
   // Convert assay value from raw data to display value
   function transformAssayName(assayName) {
-    const match = assayListRat.find((filter) => filter.filter_value === assayName);
+    const match = assayListRat.find(
+      (filter) => filter.filter_value === assayName,
+    );
     return match ? match.filter_label : assayName;
   }
 
@@ -289,7 +291,7 @@ function TimeSeriesPlots({ plotData, selectedFeatures }) {
 
 TimeSeriesPlots.propTypes = {
   plotData: PropTypes.arrayOf(
-    PropTypes.shape({ ...geneSearchTimewisePlotPropType })
+    PropTypes.shape({ ...geneSearchTimewisePlotPropType }),
   ).isRequired,
   selectedFeatures: PropTypes.arrayOf(
     PropTypes.shape({
@@ -298,7 +300,7 @@ TimeSeriesPlots.propTypes = {
       assay: PropTypes.string,
       gene_symbol: PropTypes.string,
       p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    })
+    }),
   ).isRequired,
 };
 

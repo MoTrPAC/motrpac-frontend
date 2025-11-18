@@ -11,7 +11,7 @@ import QcReportProtTabContent from './qcReportProtTabContent';
  *
  * @returns {object} JSX representation of proteomics QC report
  */
-function QcReportProteomics({ qcData= [], qcDataRaw = [] }) {
+function QcReportProteomics({ qcData = [], qcDataRaw = [] }) {
   // Render proteomics QC report with sub tabs
   function renderQcReportProtTabs() {
     return (

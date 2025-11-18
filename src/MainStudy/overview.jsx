@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import ExternalLink from '../lib/ui/externalLink';
 import ToggleShowHide from './components/toggleShowHide';
 
 import '@styles/mainStudyPage.scss';
 
-const imgSourceUrl = 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/figures/';
+const imgSourceUrl =
+  'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/figures/';
 
 function ProjectOverview() {
   const [showSummary, setShowSummary] = useState(true);
@@ -152,9 +153,7 @@ function ProjectOverview() {
         >
           <h3>Endurance Training in Young Adult Rats</h3>
           <h6>
-            Species:
-            {' '}
-            <span className="font-italic">Rattus norvegicus</span>
+            Species: <span className="font-italic">Rattus norvegicus</span>
           </h6>
           <p>
             In this intervention, we're specifically interested in the long term
@@ -164,13 +163,11 @@ function ProjectOverview() {
             tissues. Rats were endurance-exercise trained on treadmills and
             tissue samples were collected at either 1, 2, 4, or 8 weeks of
             training, with a 48 hour rest or wash out period before samples were
-            collected. See the
-            {' '}
+            collected. See the{' '}
             <ExternalLink
               to="https://motrpac.org/actDocumentDownload.cfm?docGUID=A31CDD1F-8A59-41D9-BABA-125B37A39BF5"
               label="animal protocol"
-            />
-            {' '}
+            />{' '}
             to learn more.
           </p>
           <div className="main-study-content-container mt-5">
@@ -230,11 +227,7 @@ function ProjectOverview() {
               >
                 Download Data
               </Link>
-              <Link
-                className="btn btn-primary ml-3"
-                to="/search"
-                role="button"
-              >
+              <Link className="btn btn-primary ml-3" to="/search" role="button">
                 Explore Data
               </Link>
             </div>

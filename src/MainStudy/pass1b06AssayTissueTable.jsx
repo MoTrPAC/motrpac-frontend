@@ -22,11 +22,22 @@ function Pass1b06AssayTissueTable() {
               <tr key={item.id}>
                 <td>{item.assay}</td>
                 <td>
-                  {pass1b06AssayTissueJson['epigenomics'][item.id].map((tissue) => (
-                    <span key={`${item.id}-${tissue}`} className="badge badge-pill badge-light mr-1">
-                      {capitalize(tissue.split('-').slice(1).join('-').replace(/-/g, ' '))}
-                    </span>
-                  ))}
+                  {pass1b06AssayTissueJson['epigenomics'][item.id].map(
+                    (tissue) => (
+                      <span
+                        key={`${item.id}-${tissue}`}
+                        className="badge badge-pill badge-light mr-1"
+                      >
+                        {capitalize(
+                          tissue
+                            .split('-')
+                            .slice(1)
+                            .join('-')
+                            .replace(/-/g, ' '),
+                        )}
+                      </span>
+                    ),
+                  )}
                 </td>
               </tr>
             ))}
@@ -48,11 +59,22 @@ function Pass1b06AssayTissueTable() {
               <tr key={item.id}>
                 <td>{item.assay}</td>
                 <td>
-                  {pass1b06AssayTissueJson['transcriptomics'][item.id].map((tissue) => (
-                    <span key={`${item.id}-${tissue}`} className="badge badge-pill badge-light mr-1">
-                      {capitalize(tissue.split('-').slice(1).join('-').replace(/-/g, ' '))}
-                    </span>
-                  ))}
+                  {pass1b06AssayTissueJson['transcriptomics'][item.id].map(
+                    (tissue) => (
+                      <span
+                        key={`${item.id}-${tissue}`}
+                        className="badge badge-pill badge-light mr-1"
+                      >
+                        {capitalize(
+                          tissue
+                            .split('-')
+                            .slice(1)
+                            .join('-')
+                            .replace(/-/g, ' '),
+                        )}
+                      </span>
+                    ),
+                  )}
                 </td>
               </tr>
             ))}
@@ -74,9 +96,16 @@ function Pass1b06AssayTissueTable() {
               <tr key={item.id}>
                 <td>{item.assay}</td>
                 <td>
-                  {pass1b06AssayTissueJson['proteomics-untargeted'][item.id].map((tissue) => (
-                    <span key={`${item.id}-${tissue}`} className="badge badge-pill badge-light mr-1">
-                      {capitalize(tissue.split('-').slice(1).join('-').replace(/-/g, ' '))}
+                  {pass1b06AssayTissueJson['proteomics-untargeted'][
+                    item.id
+                  ].map((tissue) => (
+                    <span
+                      key={`${item.id}-${tissue}`}
+                      className="badge badge-pill badge-light mr-1"
+                    >
+                      {capitalize(
+                        tissue.split('-').slice(1).join('-').replace(/-/g, ' '),
+                      )}
                     </span>
                   ))}
                 </td>
@@ -100,9 +129,16 @@ function Pass1b06AssayTissueTable() {
               <tr key={item.id}>
                 <td>{item.assay}</td>
                 <td>
-                  {pass1b06AssayTissueJson['metabolomics-untargeted'][item.id].map((tissue) => (
-                    <span key={`${item.id}-${tissue}`} className="badge badge-pill badge-light mr-1">
-                      {capitalize(tissue.split('-').slice(1).join('-').replace(/-/g, ' '))}
+                  {pass1b06AssayTissueJson['metabolomics-untargeted'][
+                    item.id
+                  ].map((tissue) => (
+                    <span
+                      key={`${item.id}-${tissue}`}
+                      className="badge badge-pill badge-light mr-1"
+                    >
+                      {capitalize(
+                        tissue.split('-').slice(1).join('-').replace(/-/g, ' '),
+                      )}
                     </span>
                   ))}
                 </td>
@@ -126,9 +162,16 @@ function Pass1b06AssayTissueTable() {
               <tr key={item.id}>
                 <td>{item.assay}</td>
                 <td>
-                  {pass1b06AssayTissueJson['metabolomics-targeted'][item.id].map((tissue) => (
-                    <span key={`${item.id}-${tissue}`} className="badge badge-pill badge-light mr-1">
-                      {capitalize(tissue.split('-').slice(1).join('-').replace(/-/g, ' '))}
+                  {pass1b06AssayTissueJson['metabolomics-targeted'][
+                    item.id
+                  ].map((tissue) => (
+                    <span
+                      key={`${item.id}-${tissue}`}
+                      className="badge badge-pill badge-light mr-1"
+                    >
+                      {capitalize(
+                        tissue.split('-').slice(1).join('-').replace(/-/g, ' '),
+                      )}
                     </span>
                   ))}
                 </td>

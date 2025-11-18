@@ -21,11 +21,13 @@ export const useBiospecimenData = () => {
 
   // Centralized function to check if error is a cancellation
   const isCancellationError = useCallback((err) => {
-    return err.name === 'AbortError' || 
-           err.code === 'ERR_CANCELED' || 
-           err.name === 'CanceledError' ||
-           err.message?.includes('canceled') ||
-           err.message?.includes('AbortError');
+    return (
+      err.name === 'AbortError' ||
+      err.code === 'ERR_CANCELED' ||
+      err.name === 'CanceledError' ||
+      err.message?.includes('canceled') ||
+      err.message?.includes('AbortError')
+    );
   }, []);
 
   // Centralized function to load data (used by both initial load and refresh)
@@ -45,17 +47,17 @@ export const useBiospecimenData = () => {
     try {
       console.log('Loading all biospecimen data (one-time load)');
       const startTime = performance.now();
-      
+
       const response = await BiospecimenService.queryBiospecimens(
         {}, // Empty filters to get all data
-        { signal: abortControllerRef.current.signal }
+        { signal: abortControllerRef.current.signal },
       );
 
       const endTime = performance.now();
       console.log(
-        `Loaded ${response.data.length} total biospecimen records in ${(endTime - startTime).toFixed(2)}ms`
+        `Loaded ${response.data.length} total biospecimen records in ${(endTime - startTime).toFixed(2)}ms`,
       );
-      
+
       setAllData(response.data);
       setLoading(false);
     } catch (err) {
@@ -105,7 +107,7 @@ export const useBiospecimenData = () => {
 /**
  * Client-side filtering hook - filters the loaded data in memory
  * This is much faster than making API calls for each filter combination
- * 
+ *
  * Performance optimizations:
  * - Pre-computes mapped filter values outside the filter loop
  * - Uses early returns for better performance
@@ -115,10 +117,13 @@ export const useBiospecimenData = () => {
 export const useFilteredBiospecimenData = (allData, filters) => {
   // Pre-compute filter conditions outside the filter loop for better performance
   const hasFilters = useMemo(() => {
-    return filters && Object.keys(filters).some(key => {
-      const value = filters[key];
-      return Array.isArray(value) ? value.length > 0 : !!value;
-    });
+    return (
+      filters &&
+      Object.keys(filters).some((key) => {
+        const value = filters[key];
+        return Array.isArray(value) ? value.length > 0 : !!value;
+      })
+    );
   }, [filters]);
 
   // Pre-compute mapped randomized group values (expensive operation done once)
@@ -141,7 +146,7 @@ export const useFilteredBiospecimenData = (allData, filters) => {
     }
 
     // Filter data with optimized logic
-    return allData.filter(item => {
+    return allData.filter((item) => {
       // Filter by sex - only filter out if record HAS a sex value that doesn't match
       // Records with null/undefined sex values are kept (don't filter based on missing data)
       if (filters.sex?.length > 0) {
@@ -153,7 +158,10 @@ export const useFilteredBiospecimenData = (allData, filters) => {
       // Filter by age groups - only filter out if record HAS an age group that doesn't match
       // Records with null/undefined age groups are kept (don't filter based on missing data)
       if (filters.dmaqc_age_groups?.length > 0) {
-        if (item.dmaqc_age_groups && !filters.dmaqc_age_groups.includes(item.dmaqc_age_groups)) {
+        if (
+          item.dmaqc_age_groups &&
+          !filters.dmaqc_age_groups.includes(item.dmaqc_age_groups)
+        ) {
           return false;
         }
       }
@@ -161,7 +169,10 @@ export const useFilteredBiospecimenData = (allData, filters) => {
       // Filter by randomized group - only filter out if record HAS a group code that doesn't match
       // Records with null/undefined randomized groups are kept (don't filter based on missing data)
       if (mappedRandomGroupValues) {
-        if (item.random_group_code && !mappedRandomGroupValues.includes(item.random_group_code)) {
+        if (
+          item.random_group_code &&
+          !mappedRandomGroupValues.includes(item.random_group_code)
+        ) {
           return false;
         }
       }
@@ -191,7 +202,10 @@ export const useFilteredBiospecimenData = (allData, filters) => {
       // Records with null/unmapped ethnicity values are kept (don't filter based on missing data)
       if (filters.ethnicity?.length > 0) {
         const itemEthnicityCategory = getEthnicityCategory(item);
-        if (itemEthnicityCategory && !filters.ethnicity.includes(itemEthnicityCategory)) {
+        if (
+          itemEthnicityCategory &&
+          !filters.ethnicity.includes(itemEthnicityCategory)
+        ) {
           return false;
         }
       }

@@ -12,10 +12,10 @@ function AuthWrapper({ children }) {
     <>
       {isFetching ? (
         <div className="mt-5 py-5">
-          <AnimatedLoadingIcon isFetching={isFetching}/>
+          <AnimatedLoadingIcon isFetching={isFetching} />
         </div>
       ) : !isAuthenticated && !profile.user_metadata ? (
-        <Navigate exact to="/"/>
+        <Navigate exact to="/" />
       ) : (
         <Outlet />
       )}

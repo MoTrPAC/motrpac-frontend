@@ -5,11 +5,26 @@ import PropTypes from 'prop-types';
  * BrowseDataTable props
  */
 export const browseDataPropType = {
-  tissue_name: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-  tissue_superclass: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-  tissue_code: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-  assay: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-  omics: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+  tissue_name: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  tissue_superclass: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  tissue_code: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  assay: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  omics: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
   phase: PropTypes.string,
   study: PropTypes.string,
   species: PropTypes.string,
@@ -46,7 +61,7 @@ function formatBytes(bytes, decimals = 2) {
   // Calculate unit index (with bounds checking)
   const exponent = Math.min(
     Math.floor(Math.log(absoluteBytes) / Math.log(BASE)),
-    UNITS.length - 1
+    UNITS.length - 1,
   );
 
   // Calculate value
@@ -146,7 +161,7 @@ export const GlobalFilter = ({
 
 GlobalFilter.propTypes = {
   preGlobalFilteredRows: PropTypes.arrayOf(
-    PropTypes.shape({ ...browseDataPropType })
+    PropTypes.shape({ ...browseDataPropType }),
   ),
   globalFilter: PropTypes.string,
   setGlobalFilter: PropTypes.func.isRequired,
@@ -276,9 +291,14 @@ export const transformData = (arr) => {
     item.filename = splits.pop();
     // Transform metabolomics assay value
     if (item.assay) {
-      const newMetabAssayVal = Array.isArray(item.assay) ? item.assay.join(', ') : item.assay;
+      const newMetabAssayVal = Array.isArray(item.assay)
+        ? item.assay.join(', ')
+        : item.assay;
       // Applicable to PASS1A-06, PASS1B-06 and HUMAN-PRECOVID-SED-ADU
-      if (newMetabAssayVal.includes('Targeted') && newMetabAssayVal.includes('Untargeted')) {
+      if (
+        newMetabAssayVal.includes('Targeted') &&
+        newMetabAssayVal.includes('Untargeted')
+      ) {
         item.assay = 'Merged';
       }
     }
@@ -286,24 +306,35 @@ export const transformData = (arr) => {
     if (item.tissue_name) {
       if (Array.isArray(item.tissue_name) && item.tissue_name.length) {
         item.tissue_name = '';
-      } else if (typeof item.tissue_name === 'string' && item.tissue_name.length) {
+      } else if (
+        typeof item.tissue_name === 'string' &&
+        item.tissue_name.length
+      ) {
         if (
           // Applicable to PASS1A-06 and HUMAN-PRECOVID-SED-ADU
-          item.tissue_name.includes('EDTA Plasma') && item.omics.includes('Metabolomics') && item.study.includes('Acute Exercise')
+          item.tissue_name.includes('EDTA Plasma') &&
+          item.omics.includes('Metabolomics') &&
+          item.study.includes('Acute Exercise')
         ) {
           item.tissue_name = 'Plasma';
-        } else if (item.phase.includes('HUMAN-PRECOVID-SED-ADU') && item.study.includes('Acute Exercise') && item.tissue_superclass) {
+        } else if (
+          item.phase.includes('HUMAN-PRECOVID-SED-ADU') &&
+          item.study.includes('Acute Exercise') &&
+          item.tissue_superclass
+        ) {
           // Applicable to HUMAN-PRECOVID-SED-ADU
           item.tissue_name = item.tissue_superclass;
         }
       }
     }
     if (item.omics) {
-      const newOmicsVal = (Array.isArray(item.omics)) ? item.omics.join(', ') : item.omics;
+      const newOmicsVal = Array.isArray(item.omics)
+        ? item.omics.join(', ')
+        : item.omics;
       // Applicable to PASS1A-06 and HUMAN-PRECOVID-SED-ADU
       if (
-        newOmicsVal.includes('Metabolomics Targeted')
-        && newOmicsVal.includes('Metabolomics Untargeted')
+        newOmicsVal.includes('Metabolomics Targeted') &&
+        newOmicsVal.includes('Metabolomics Untargeted')
       ) {
         item.omics = 'Metabolomics';
       }

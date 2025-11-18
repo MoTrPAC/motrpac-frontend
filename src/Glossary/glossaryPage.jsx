@@ -13,11 +13,12 @@ function Glossary() {
     if (filterKeywords.length < 2) {
       return variableNamesPass1b06;
     }
-    
+
     const keywords = filterKeywords.toLowerCase();
-    return variableNamesPass1b06.filter(item => 
-      item.variable_name.toLowerCase().includes(keywords) ||
-      item.definition.toLowerCase().includes(keywords)
+    return variableNamesPass1b06.filter(
+      (item) =>
+        item.variable_name.toLowerCase().includes(keywords) ||
+        item.definition.toLowerCase().includes(keywords),
     );
   }, [filterKeywords]);
 
@@ -35,10 +36,14 @@ function Glossary() {
       <div className="glossary-content-container row mb-4">
         <div className="col-12">
           <h3 className="study-title-species-icon mr-1 d-flex align-items-center mt-4">
-            <span className="material-icons study-title-species-icon mr-1">pest_control_rodent</span>
-            <span>Variable names in the endurance trained young adult rats study</span>
+            <span className="material-icons study-title-species-icon mr-1">
+              pest_control_rodent
+            </span>
+            <span>
+              Variable names in the endurance trained young adult rats study
+            </span>
           </h3>
-          
+
           <div className="glossary-filter-container mb-3">
             <div className="input-group my-3 d-flex align-items-center">
               <div className="glossary-filter-label mr-2">

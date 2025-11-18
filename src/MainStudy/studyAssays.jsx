@@ -125,10 +125,16 @@ function StudyAssays() {
           <div className="study-assays-content-container study-assays w-100">
             <div className="col-12 d-flex align-items-center">
               <h3 className="study-title-species-icon mr-1 d-flex align-items-center">
-                <span className="material-icons study-title-species-icon mr-1">pest_control_rodent</span>
+                <span className="material-icons study-title-species-icon mr-1">
+                  pest_control_rodent
+                </span>
                 <span>Endurance trained young adult rats study</span>
               </h3>
-              <div className="btn-group ml-3" role="group" aria-label="Assay View Select Button Group">
+              <div
+                className="btn-group ml-3"
+                role="group"
+                aria-label="Assay View Select Button Group"
+              >
                 <button
                   type="button"
                   className={`btn btn-outline-primary btn-sm ${
@@ -166,7 +172,9 @@ function StudyAssays() {
                   <HighchartsReact
                     highcharts={Highcharts}
                     options={chartOptions}
-                    containerProps={{ className: 'assay-tissue-treegraph-container' }}
+                    containerProps={{
+                      className: 'assay-tissue-treegraph-container',
+                    }}
                   />
                 </div>
               </div>

@@ -15,20 +15,20 @@ import QcReportDataTable from './sharelib/qcReportDataTable';
  *
  * @returns {object} The data qc status table component
  */
-function QcReportMetabTabContent({ qcData, qcDataRaw, qcFiles =  'processed' }) {
+function QcReportMetabTabContent({ qcData, qcDataRaw, qcFiles = 'processed' }) {
   // Define table column headers
   const processedDataColumns = useMemo(
     () => metabProcessedDataTableColumns,
-    []
+    [],
   );
   const processedQcData = useMemo(
     () => transformData(qcData, 'processed', 'metab'),
-    [qcData]
+    [qcData],
   );
   const rawDataColumns = useMemo(() => metabRawDataTableColumns, []);
   const rawQcData = useMemo(
     () => transformData(qcDataRaw, 'raw', 'metab'),
-    [qcDataRaw]
+    [qcDataRaw],
   );
   return (
     <QcReportDataTable
@@ -43,13 +43,13 @@ QcReportMetabTabContent.propTypes = {
     PropTypes.shape({
       ...commonReportPropType,
       ...metabProtReportPropType,
-    })
+    }),
   ).isRequired,
   qcDataRaw: PropTypes.arrayOf(
     PropTypes.shape({
       ...commonReportPropType,
       ...metabProtRawDataReportPropType,
-    })
+    }),
   ).isRequired,
   qcFiles: PropTypes.string,
 };

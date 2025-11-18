@@ -50,7 +50,7 @@ function BrowseDataTable({
   // Define table column headers
   const columns = useMemo(
     () => tableColumns(userType, dataDownload.pass1b06DataSelected),
-    [userType, dataDownload.pass1b06DataSelected]
+    [userType, dataDownload.pass1b06DataSelected],
   );
   const data = useMemo(() => transformData(filteredFiles), [filteredFiles]);
   return (
@@ -92,7 +92,7 @@ function DataTable({
             : true;
         }),
     }),
-    []
+    [],
   );
 
   // Use the useTable hook to create your table configuration
@@ -135,7 +135,7 @@ function DataTable({
         },
         ...columns,
       ]);
-    }
+    },
   );
   // Use the state and functions returned from useTable to build your UI
   const {
@@ -203,17 +203,18 @@ function DataTable({
             >
               <thead>
                 {headerGroups.map((headerGroup) => {
-                  const { key, ...restHeaderGroups } = headerGroup.getHeaderGroupProps();
+                  const { key, ...restHeaderGroups } =
+                    headerGroup.getHeaderGroupProps();
                   return (
                     <tr key={key} {...restHeaderGroups} className="table-head">
                       {headerGroup.headers.map((column) => {
                         const { key, ...rest } = column.getHeaderProps();
                         return (
                           <th key={key} {...rest}>
-                          <div className="d-flex align-items-center justify-content-between">
-                            {column.render('Header')}
-                          </div>
-                        </th>
+                            <div className="d-flex align-items-center justify-content-between">
+                              {column.render('Header')}
+                            </div>
+                          </th>
                         );
                       })}
                     </tr>
@@ -284,7 +285,7 @@ DataTable.propTypes = {
     PropTypes.shape({
       Header: PropTypes.string.isRequired,
       accessor: PropTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({ ...browseDataPropType }))
     .isRequired,

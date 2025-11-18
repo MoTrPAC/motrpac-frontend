@@ -17,17 +17,16 @@ function License() {
         <div className="col-12">
           <p className="lead">
             The data available through the MoTrPAC Data Hub portal is provided
-            under the Creative Commons Attribution 4.0 International License
-            (CC BY 4.0). This license allows users to use, share, adapt, distribute,
+            under the Creative Commons Attribution 4.0 International License (CC
+            BY 4.0). This license allows users to use, share, adapt, distribute,
             and reproduce the data in any medium or format, provided appropriate
-            credit is given to the original author(s) and the source, a link to the
-            Creative Commons license is included, and any modifications are clearly
-            indicated.
+            credit is given to the original author(s) and the source, a link to
+            the Creative Commons license is included, and any modifications are
+            clearly indicated.
           </p>
           <p className="lead">
-            To view the full terms of this license, please visit Creative Commons
-            Attribution 4.0 International License (CC BY 4.0) at
-            {' '}
+            To view the full terms of this license, please visit Creative
+            Commons Attribution 4.0 International License (CC BY 4.0) at{' '}
             <ExternalLink
               to="https://creativecommons.org/licenses/by/4.0/"
               label="https://creativecommons.org/licenses/by/4.0/"

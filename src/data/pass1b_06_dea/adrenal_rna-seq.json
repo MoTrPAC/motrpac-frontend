@@ -1,16 +1,16 @@
 [
-    {
-        "adj_p_value": "0.0001001001001001001",
-        "assay": "transcript-rna-seq",
-        "ensembl_gene": "ENSRNOG00000016041",
-        "entrez_gene": "308266",
-        "feature_ID": "ENSRNOG00000016041",
-        "gene_symbol": "Zc3h12d",
-        "human_ensembl_gene": "ENSG00000178199",
-        "human_gene_symbol": "ZC3H12D",
-        "p_value": "0.0001001001001001001",
-        "tissue": "t60-adrenal",
-        "tissue_abbreviation": "ADRNL",
-        "tissue_label": "Adrenal"
-    }
+  {
+    "adj_p_value": "0.0001001001001001001",
+    "assay": "transcript-rna-seq",
+    "ensembl_gene": "ENSRNOG00000016041",
+    "entrez_gene": "308266",
+    "feature_ID": "ENSRNOG00000016041",
+    "gene_symbol": "Zc3h12d",
+    "human_ensembl_gene": "ENSG00000178199",
+    "human_gene_symbol": "ZC3H12D",
+    "p_value": "0.0001001001001001001",
+    "tissue": "t60-adrenal",
+    "tissue_abbreviation": "ADRNL",
+    "tissue_label": "Adrenal"
+  }
 ]

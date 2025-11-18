@@ -69,44 +69,58 @@ export const useAdvancedPagination = (data, options = {}) => {
       return data.slice(paginationData.startIndex, paginationData.endIndex);
     }
     return data.slice(paginationData.startIndex, paginationData.endIndex);
-  }, [data, paginationData.startIndex, paginationData.endIndex, enableVirtualization]);
+  }, [
+    data,
+    paginationData.startIndex,
+    paginationData.endIndex,
+    enableVirtualization,
+  ]);
 
   // Analytics tracking
-  const trackNavigation = useCallback((action, page) => {
-    if (!enableAnalytics) return;
-    
-    // Track pagination events
-    if (window.gtag) {
-      window.gtag('event', 'pagination_navigate', {
-        action,
-        page,
-        total_pages: paginationData.totalPages,
-        items_per_page: itemsPerPage,
-      });
-    }
-  }, [paginationData.totalPages, itemsPerPage, enableAnalytics]);
+  const trackNavigation = useCallback(
+    (action, page) => {
+      if (!enableAnalytics) return;
+
+      // Track pagination events
+      if (window.gtag) {
+        window.gtag('event', 'pagination_navigate', {
+          action,
+          page,
+          total_pages: paginationData.totalPages,
+          items_per_page: itemsPerPage,
+        });
+      }
+    },
+    [paginationData.totalPages, itemsPerPage, enableAnalytics],
+  );
 
   // Debounced navigation
-  const debouncedNavigation = useCallback((action, page) => {
-    if (debounceTimer.current) {
-      clearTimeout(debounceTimer.current);
-    }
+  const debouncedNavigation = useCallback(
+    (action, page) => {
+      if (debounceTimer.current) {
+        clearTimeout(debounceTimer.current);
+      }
 
-    setIsNavigating(true);
-    debounceTimer.current = setTimeout(() => {
-      setCurrentPage(page);
-      setIsNavigating(false);
-      trackNavigation(action, page);
-    }, debounceDelay);
-  }, [debounceDelay, trackNavigation]);
+      setIsNavigating(true);
+      debounceTimer.current = setTimeout(() => {
+        setCurrentPage(page);
+        setIsNavigating(false);
+        trackNavigation(action, page);
+      }, debounceDelay);
+    },
+    [debounceDelay, trackNavigation],
+  );
 
   // Navigation functions with analytics
-  const goToPage = useCallback((page) => {
-    const validPage = Math.max(1, Math.min(page, paginationData.totalPages));
-    if (validPage !== currentPage) {
-      debouncedNavigation('go_to_page', validPage);
-    }
-  }, [currentPage, paginationData.totalPages, debouncedNavigation]);
+  const goToPage = useCallback(
+    (page) => {
+      const validPage = Math.max(1, Math.min(page, paginationData.totalPages));
+      if (validPage !== currentPage) {
+        debouncedNavigation('go_to_page', validPage);
+      }
+    },
+    [currentPage, paginationData.totalPages, debouncedNavigation],
+  );
 
   const goToNextPage = useCallback(() => {
     if (paginationData.hasNextPage) {
@@ -130,14 +144,21 @@ export const useAdvancedPagination = (data, options = {}) => {
     if (!paginationData.isLastPage) {
       debouncedNavigation('last_page', paginationData.totalPages);
     }
-  }, [paginationData.isLastPage, paginationData.totalPages, debouncedNavigation]);
+  }, [
+    paginationData.isLastPage,
+    paginationData.totalPages,
+    debouncedNavigation,
+  ]);
 
   // Advanced page size change with analytics
-  const changePageSize = useCallback((newPageSize) => {
-    setItemsPerPage(newPageSize);
-    setCurrentPage(1);
-    trackNavigation('change_page_size', newPageSize);
-  }, [trackNavigation]);
+  const changePageSize = useCallback(
+    (newPageSize) => {
+      setItemsPerPage(newPageSize);
+      setCurrentPage(1);
+      trackNavigation('change_page_size', newPageSize);
+    },
+    [trackNavigation],
+  );
 
   // Reset pagination
   const resetPagination = useCallback(() => {
@@ -149,26 +170,29 @@ export const useAdvancedPagination = (data, options = {}) => {
   const getPageNumbers = useCallback(() => {
     const pages = [];
     const { totalPages } = paginationData;
-    
+
     if (totalPages <= maxPagesToShow) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
-      const startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+      const startPage = Math.max(
+        1,
+        currentPage - Math.floor(maxPagesToShow / 2),
+      );
       const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
-      
+
       if (startPage > 1) {
         pages.push(1);
         if (startPage > 2) {
           pages.push('...');
         }
       }
-      
+
       for (let i = startPage; i <= endPage; i++) {
         pages.push(i);
       }
-      
+
       if (endPage < totalPages) {
         if (endPage < totalPages - 1) {
           pages.push('...');
@@ -176,33 +200,36 @@ export const useAdvancedPagination = (data, options = {}) => {
         pages.push(totalPages);
       }
     }
-    
+
     return pages;
   }, [currentPage, paginationData.totalPages, maxPagesToShow]);
 
   // Keyboard navigation
-  const handleKeyPress = useCallback((event) => {
-    if (event.target.tagName === 'INPUT') return; // Don't interfere with input fields
-    
-    switch (event.key) {
-      case 'ArrowLeft':
-        event.preventDefault();
-        goToPreviousPage();
-        break;
-      case 'ArrowRight':
-        event.preventDefault();
-        goToNextPage();
-        break;
-      case 'Home':
-        event.preventDefault();
-        goToFirstPage();
-        break;
-      case 'End':
-        event.preventDefault();
-        goToLastPage();
-        break;
-    }
-  }, [goToPreviousPage, goToNextPage, goToFirstPage, goToLastPage]);
+  const handleKeyPress = useCallback(
+    (event) => {
+      if (event.target.tagName === 'INPUT') return; // Don't interfere with input fields
+
+      switch (event.key) {
+        case 'ArrowLeft':
+          event.preventDefault();
+          goToPreviousPage();
+          break;
+        case 'ArrowRight':
+          event.preventDefault();
+          goToNextPage();
+          break;
+        case 'Home':
+          event.preventDefault();
+          goToFirstPage();
+          break;
+        case 'End':
+          event.preventDefault();
+          goToLastPage();
+          break;
+      }
+    },
+    [goToPreviousPage, goToNextPage, goToFirstPage, goToLastPage],
+  );
 
   // Cleanup on unmount
   useEffect(() => {

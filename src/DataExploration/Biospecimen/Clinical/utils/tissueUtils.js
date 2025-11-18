@@ -7,9 +7,9 @@
  * Tissue code to name mapping
  */
 const TISSUE_CODE_TO_NAME = {
-  'ADI': 'Adipose',
-  'BLO': 'Blood',
-  'MUS': 'Muscle',
+  ADI: 'Adipose',
+  BLO: 'Blood',
+  MUS: 'Muscle',
 };
 
 /**

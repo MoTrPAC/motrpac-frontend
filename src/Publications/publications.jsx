@@ -6,7 +6,8 @@ import ExternalLink from '../lib/ui/externalLink';
 
 import '@styles/publications.scss';
 
-const imgSourceUrl = 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/publications/';
+const imgSourceUrl =
+  'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/publications/';
 
 const landscapePublications = [
   {
@@ -191,13 +192,9 @@ function LandscapePublication({ pub }) {
           </a>
         </div>
         <div className="pub-title-authors-container col-12 col-md-8">
-          <h3 className="pub-title ml-3">
-            {pub.title}
-          </h3>
+          <h3 className="pub-title ml-3">{pub.title}</h3>
           <p className="authors-cite ml-3 mb-1">
-            <span className="pub-authors">
-              {truncatedAuthors}
-            </span>
+            <span className="pub-authors">{truncatedAuthors}</span>
           </p>
           <p className="authors-cite ml-3">
             <span className="pub-cite font-italic ml-1">{pub.cite}</span>
@@ -208,7 +205,8 @@ function LandscapePublication({ pub }) {
               <a
                 href="#"
                 onClick={() => setShowAllAuthors(!showAllAuthors)}
-                className="show-authors-control">
+                className="show-authors-control"
+              >
                 {showAllAuthors ? 'Show less authors' : 'Show all authors'}
               </a>
             </span>
@@ -230,9 +228,7 @@ function CompanionPublication({ pub }) {
           </a>
         </div>
         <div className="pub-title-authors-container col-12 col-md-8">
-          <h3 className="pub-title ml-3">
-            {pub.title}
-          </h3>
+          <h3 className="pub-title ml-3">{pub.title}</h3>
           <p className="authors-cite ml-3">
             <span className="pub-authors">{pub.authors}</span>
             <span className="pub-cite font-italic ml-1">{pub.cite}</span>

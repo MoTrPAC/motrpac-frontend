@@ -33,7 +33,7 @@ function ReleasedSamplePlot({ data, plot }) {
       // Get new set of tissues from source of truth
       // by mapping to tissues present in the data
       const tissue = tissues.find(
-        (item) => item.bic_tissue_code === tissueSample.tissue_code
+        (item) => item.bic_tissue_code === tissueSample.tissue_code,
       );
       // Get total sample count by combining all assays
       // for each tissue present in the data
@@ -103,19 +103,19 @@ function ReleasedSamplePlot({ data, plot }) {
     switch (arg) {
       case 'tissue_name':
         return datasetOfTissues.sort((a, b) =>
-          a.tissue_name.localeCompare(b.tissue_name)
+          a.tissue_name.localeCompare(b.tissue_name),
         );
       case 'tissue_count':
         return datasetOfTissues.sort((a, b) => b.total_count - a.total_count);
       case 'assay_name':
         return datasetOfAssays.sort((a, b) =>
-          a.assay_name.localeCompare(b.assay_name)
+          a.assay_name.localeCompare(b.assay_name),
         );
       case 'assay_count':
         return datasetOfAssays.sort((a, b) => b.total_count - a.total_count);
       default:
         return datasetOfTissues.sort((a, b) =>
-          a.tissue_name.localeCompare(b.tissue_name)
+          a.tissue_name.localeCompare(b.tissue_name),
         );
     }
   }
@@ -123,7 +123,7 @@ function ReleasedSamplePlot({ data, plot }) {
   // Input to chartJS bar chart
   const plotData = {
     labels: sortedDataset(plot).map((item) =>
-      plot.indexOf('tissue') >= 0 ? item.tissue_name : item.assay_name
+      plot.indexOf('tissue') >= 0 ? item.tissue_name : item.assay_name,
     ),
     datasets: [
       {
@@ -200,7 +200,7 @@ ReleasedSamplePlot.propTypes = {
     PropTypes.shape({
       tissue_code: PropTypes.string.isRequired,
       sample_data: PropTypes.array.isRequired,
-    })
+    }),
   ).isRequired,
   plot: PropTypes.string.isRequired,
 };

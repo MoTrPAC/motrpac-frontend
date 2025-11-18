@@ -21,7 +21,7 @@ function roundNumbers(number, decimals) {
     return Number.parseFloat(number).toExponential(decimals);
   } else {
     return Number(
-      Math.round(parseFloat(number) + ('e' + decimals)) + ('e-' + decimals)
+      Math.round(parseFloat(number) + ('e' + decimals)) + ('e-' + decimals),
     );
   }
 }

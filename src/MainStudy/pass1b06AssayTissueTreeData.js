@@ -1,7 +1,12 @@
 const pass1b06AssayTissueTreeData = [
   { id: '0.0', parent: '', name: 'Rats: Endurance Training' },
   { id: '1.0', parent: '0.0', name: 'Targeted Metabolomics', collapsed: true },
-  { id: '1.1', parent: '0.0', name: 'Untargeted Metabolomics', collapsed: true },
+  {
+    id: '1.1',
+    parent: '0.0',
+    name: 'Untargeted Metabolomics',
+    collapsed: true,
+  },
   { id: '1.2', parent: '0.0', name: 'Untargeted Proteomics', collapsed: true },
   { id: '1.3', parent: '0.0', name: 'Transcriptomics' },
   { id: '1.4', parent: '0.0', name: 'Epigenomics', collapsed: true },
@@ -16,8 +21,16 @@ const pass1b06AssayTissueTreeData = [
   { id: '2.8', parent: '1.0', name: 'Targeted Acyl-CoA' },
   { id: '2.9', parent: '1.1', name: 'Untargeted Reversed-Phase Positive' },
   { id: '2.10', parent: '1.1', name: 'Untargeted Reversed-Phase Negative' },
-  { id: '2.11', parent: '1.1', name: 'Untargeted Lipidomics Reversed-Phase Positive' },
-  { id: '2.12', parent: '1.1', name: 'Untargeted Lipidomics Reversed-Phase Negative' },
+  {
+    id: '2.11',
+    parent: '1.1',
+    name: 'Untargeted Lipidomics Reversed-Phase Positive',
+  },
+  {
+    id: '2.12',
+    parent: '1.1',
+    name: 'Untargeted Lipidomics Reversed-Phase Negative',
+  },
   { id: '2.13', parent: '1.1', name: 'Untargeted Ion-Pair Negative' },
   { id: '2.14', parent: '1.1', name: 'Untargeted HILIC-Positive' },
   { id: '2.15', parent: '1.2', name: 'Protein Ubiquitination' },

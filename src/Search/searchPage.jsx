@@ -86,7 +86,11 @@ export function SearchPage({
   const trainingResults = [];
   const humanResults = [];
   const ratAcuteExerciseResults = [];
-  if (searchParams.study === 'pass1b06' && searchResults.result && Object.keys(searchResults.result).length > 0) {
+  if (
+    searchParams.study === 'pass1b06' &&
+    searchResults.result &&
+    Object.keys(searchResults.result).length > 0
+  ) {
     Object.keys(searchResults.result).forEach((key) => {
       if (key.indexOf('timewise') > -1) {
         timewiseResults.push(...mapKeyToValue(searchResults.result[key]));
@@ -95,10 +99,18 @@ export function SearchPage({
       }
     });
   }
-  if (searchParams.study === 'pass1a06' && searchResults.result && Object.keys(searchResults.result).length > 0) {
+  if (
+    searchParams.study === 'pass1a06' &&
+    searchResults.result &&
+    Object.keys(searchResults.result).length > 0
+  ) {
     ratAcuteExerciseResults.push(...mapKeyToValue(searchResults.result));
   }
-  if (searchParams.study === 'precawg' && searchResults.result && Object.keys(searchResults.result).length > 0) {
+  if (
+    searchParams.study === 'precawg' &&
+    searchResults.result &&
+    Object.keys(searchResults.result).length > 0
+  ) {
     humanResults.push(...mapKeyToValue(searchResults.result));
   }
 
@@ -193,7 +205,11 @@ export function SearchPage({
   // Clear manually entered gene/protein/metabolite input
   const clearSearchTermInput = () => {
     if (searchParams.ktype === 'protein' && searchParams.species === 'human') {
-      if (inputElProteinId && inputElProteinId.value && inputElProteinId.value.length) {
+      if (
+        inputElProteinId &&
+        inputElProteinId.value &&
+        inputElProteinId.value.length
+      ) {
         inputElProteinId.value = '';
       }
     } else if (inputEl && inputEl.value && inputEl.value.length) {
@@ -229,7 +245,11 @@ export function SearchPage({
       <form id="searchForm" name="searchForm">
         <PageTitle title="Search differential abundance data" />
         <div className="search-content-container">
-          <DifferentialAbundanceSummary userType={userType} species={searchParams.species} study={searchParams.study} />
+          <DifferentialAbundanceSummary
+            userType={userType}
+            species={searchParams.species}
+            study={searchParams.study}
+          />
           <div className="search-form-container mt-3 mb-4 border shadow-sm rounded px-4 pt-2 pb-3">
             <div className="search-summary-toggle-container row">
               <a
@@ -250,7 +270,6 @@ export function SearchPage({
               />
             )}
             <div className="es-search-ui-container d-flex align-items-center w-100 mt-3 pb-2">
-
               <RadioButton
                 searchParams={searchParams}
                 changeParam={changeParam}
@@ -264,10 +283,20 @@ export function SearchPage({
                 <div className="input-group">
                   <div className="input-group-prepend">
                     <div className="input-group-text search-icon">
-                      <img src={searchParams.ktype === 'gene' ? IconSet.DNA : (searchParams.ktype === 'protein' ? IconSet.Protein : IconSet.Metabolite)} alt="" />
+                      <img
+                        src={
+                          searchParams.ktype === 'gene'
+                            ? IconSet.DNA
+                            : searchParams.ktype === 'protein'
+                              ? IconSet.Protein
+                              : IconSet.Metabolite
+                        }
+                        alt=""
+                      />
                     </div>
                   </div>
-                  {searchParams.ktype === 'protein' && searchParams.species === 'human' ? (
+                  {searchParams.ktype === 'protein' &&
+                  searchParams.species === 'human' ? (
                     <input
                       type="text"
                       id="keys"
@@ -303,8 +332,8 @@ export function SearchPage({
                       e.preventDefault();
                       handleSearch(
                         searchParams,
-                        (multiSelections && multiSelections.length)
-                          || (inputEl && inputEl.value && inputEl.value.length)
+                        (multiSelections && multiSelections.length) ||
+                          (inputEl && inputEl.value && inputEl.value.length)
                           ? formatSearchInput()
                           : searchParams.keys,
                         'all',
@@ -314,10 +343,12 @@ export function SearchPage({
                         'Differential Abundance Search',
                         'keyword_search',
                         profile && profile.userid
-                          ? profile.userid.substring(profile.userid.indexOf('|') + 1)
+                          ? profile.userid.substring(
+                              profile.userid.indexOf('|') + 1,
+                            )
                           : 'anonymous',
-                        (multiSelections && multiSelections.length)
-                          || (inputEl && inputEl.value && inputEl.value.length)
+                        (multiSelections && multiSelections.length) ||
+                          (inputEl && inputEl.value && inputEl.value.length)
                           ? formatSearchInput()
                           : searchParams.keys,
                       );
@@ -345,216 +376,220 @@ export function SearchPage({
             {!searching && searchError ? (
               <div className="alert alert-danger">{searchError}</div>
             ) : null}
-            {!searching
-              && !searchResults.result
-              && searchResults.errors
-              && scope === 'all' ? (
-                <div className="alert alert-warning">
-                  {searchResults.errors}
-                  {' '}
-                  Please modify your search parameters and
-                  try again.
-                </div>
-              ) : null}
-            {!searching && !searchResults.result && searchResults.total === 0 ? (
+            {!searching &&
+            !searchResults.result &&
+            searchResults.errors &&
+            scope === 'all' ? (
               <div className="alert alert-warning">
-                  {searchResults.errors}
-                  {' '}
-                  No matches found. Please modify your search
-                  parameters and try again.
+                {searchResults.errors} Please modify your search parameters and
+                try again.
+              </div>
+            ) : null}
+            {!searching &&
+            !searchResults.result &&
+            searchResults.total === 0 ? (
+              <div className="alert alert-warning">
+                {searchResults.errors} No matches found. Please modify your
+                search parameters and try again.
+              </div>
+            ) : null}
+            {!searching &&
+            (searchResults.result ||
+              (searchResults.errors && scope === 'filters')) ? (
+              <div className="search-results-wrapper-container row">
+                <div className="search-sidebar-container col-md-3">
+                  <SearchResultFilters
+                    searchParams={searchParams}
+                    changeResultFilter={changeResultFilter}
+                    handleSearch={handleSearch}
+                    resetSearch={resetSearch}
+                    hasResultFilters={hasResultFilters}
+                    profile={profile}
+                  />
                 </div>
-              ) : null}
-            {!searching
-              && (searchResults.result
-                || (searchResults.errors && scope === 'filters')) ? (
-                  <div className="search-results-wrapper-container row">
-                    <div className="search-sidebar-container col-md-3">
-                      <SearchResultFilters
-                        searchParams={searchParams}
-                        changeResultFilter={changeResultFilter}
-                        handleSearch={handleSearch}
-                        resetSearch={resetSearch}
-                        hasResultFilters={hasResultFilters}
-                        profile={profile}
-                      />
+                {/* render search results for rats endurance training */}
+                {searchParams.study === 'pass1b06' && (
+                  <div className="tabbed-content col-md-9">
+                    {/* nav tabs */}
+                    <ul className="nav nav-tabs" id="dataTab" role="tablist">
+                      <li
+                        className="nav-item font-weight-bold"
+                        role="presentation"
+                      >
+                        <a
+                          className="nav-link active timewise-definition"
+                          id="timewise_dea_tab"
+                          data-toggle="pill"
+                          href="#timewise_dea"
+                          role="tab"
+                          aria-controls="timewise_dea"
+                          aria-selected="true"
+                        >
+                          Timewise
+                        </a>
+                        <Tooltip
+                          anchorSelect=".timewise-definition"
+                          place="top"
+                        >
+                          Select time-point-specific differential analytes
+                        </Tooltip>
+                      </li>
+                      <li
+                        className="nav-item font-weight-bold"
+                        role="presentation"
+                      >
+                        <a
+                          className="nav-link training-definition"
+                          id="training_dea_tab"
+                          data-toggle="pill"
+                          href="#training_dea"
+                          role="tab"
+                          aria-controls="training_dea"
+                          aria-selected="false"
+                        >
+                          Training
+                        </a>
+                        <Tooltip
+                          anchorSelect=".training-definition"
+                          place="top"
+                        >
+                          Select overall training differential analytes
+                        </Tooltip>
+                      </li>
+                    </ul>
+                    {/* tab panes */}
+                    <div className="tab-content mt-3">
+                      <div
+                        className="tab-pane fade show active"
+                        id="timewise_dea"
+                        role="tabpanel"
+                        aria-labelledby="timewise_dea_tab"
+                      >
+                        {timewiseResults.length ? (
+                          <TimewiseResultsTable
+                            timewiseData={timewiseResults}
+                            searchParams={searchParams}
+                            handleSearchDownload={handleSearchDownload}
+                          />
+                        ) : (
+                          scope === 'filters' && (
+                            <p className="mt-4">
+                              {searchResults.errors &&
+                              searchResults.errors.indexOf(
+                                'No results found',
+                              ) !== -1 ? (
+                                <span>
+                                  No matches found for the selected filters.
+                                  Please refer to the{' '}
+                                  <Link to="/summary">Summary Table</Link> for
+                                  data that are available.
+                                </span>
+                              ) : (
+                                searchResults.errors
+                              )}
+                            </p>
+                          )
+                        )}
+                      </div>
+                      <div
+                        className="tab-pane fade"
+                        id="training_dea"
+                        role="tabpanel"
+                        aria-labelledby="training_dea_tab"
+                      >
+                        {trainingResults.length ? (
+                          <TrainingResultsTable
+                            trainingData={trainingResults}
+                            searchParams={searchParams}
+                            handleSearchDownload={handleSearchDownload}
+                          />
+                        ) : (
+                          scope === 'filters' && (
+                            <p className="mt-4">
+                              {searchResults.errors &&
+                              searchResults.errors.indexOf(
+                                'No results found',
+                              ) !== -1 ? (
+                                <span>
+                                  No matches found for the selected filters.
+                                  Please refer to the{' '}
+                                  <Link to="/summary">Summary Table</Link> for
+                                  data that are available.
+                                </span>
+                              ) : (
+                                searchResults.errors
+                              )}
+                            </p>
+                          )
+                        )}
+                      </div>
                     </div>
-                    {/* render search results for rats endurance training */}
-                    {searchParams.study === 'pass1b06' && (
-                      <div className="tabbed-content col-md-9">
-                        {/* nav tabs */}
-                        <ul className="nav nav-tabs" id="dataTab" role="tablist">
-                          <li
-                            className="nav-item font-weight-bold"
-                            role="presentation"
-                          >
-                            <a
-                              className="nav-link active timewise-definition"
-                              id="timewise_dea_tab"
-                              data-toggle="pill"
-                              href="#timewise_dea"
-                              role="tab"
-                              aria-controls="timewise_dea"
-                              aria-selected="true"
-                            >
-                              Timewise
-                            </a>
-                            <Tooltip anchorSelect=".timewise-definition" place="top">
-                              Select time-point-specific differential analytes
-                            </Tooltip>
-                          </li>
-                          <li
-                            className="nav-item font-weight-bold"
-                            role="presentation"
-                          >
-                            <a
-                              className="nav-link training-definition"
-                              id="training_dea_tab"
-                              data-toggle="pill"
-                              href="#training_dea"
-                              role="tab"
-                              aria-controls="training_dea"
-                              aria-selected="false"
-                            >
-                              Training
-                            </a>
-                            <Tooltip anchorSelect=".training-definition" place="top">
-                              Select overall training differential analytes
-                            </Tooltip>
-                          </li>
-                        </ul>
-                        {/* tab panes */}
-                        <div className="tab-content mt-3">
-                          <div
-                            className="tab-pane fade show active"
-                            id="timewise_dea"
-                            role="tabpanel"
-                            aria-labelledby="timewise_dea_tab"
-                          >
-                            {timewiseResults.length ? (
-                              <TimewiseResultsTable
-                                timewiseData={timewiseResults}
-                                searchParams={searchParams}
-                                handleSearchDownload={handleSearchDownload}
-                              />
-                            ) : (
-                              scope === 'filters' && (
-                                <p className="mt-4">
-                                  {searchResults.errors &&
-                                  searchResults.errors.indexOf('No results found') !==
-                                    -1 ? (
-                                    <span>
-                                      No matches found for the selected filters.
-                                      Please refer to the{' '}
-                                      <Link to="/summary">Summary Table</Link> for
-                                      data that are available.
-                                    </span>
-                                  ) : (
-                                    searchResults.errors
-                                  )}
-                                </p>
-                              )
-                            )}
-                          </div>
-                          <div
-                            className="tab-pane fade"
-                            id="training_dea"
-                            role="tabpanel"
-                            aria-labelledby="training_dea_tab"
-                          >
-                            {trainingResults.length ? (
-                              <TrainingResultsTable
-                                trainingData={trainingResults}
-                                searchParams={searchParams}
-                                handleSearchDownload={handleSearchDownload}
-                              />
-                            ) : (
-                              scope === 'filters' && (
-                                <p className="mt-4">
-                                  {searchResults.errors &&
-                                  searchResults.errors.indexOf('No results found') !==
-                                    -1 ? (
-                                    <span>
-                                      No matches found for the selected filters.
-                                      Please refer to the{' '}
-                                      <Link to="/summary">Summary Table</Link> for
-                                      data that are available.
-                                    </span>
-                                  ) : (
-                                    searchResults.errors
-                                  )}
-                                </p>
-                              )
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    {/* render search results for rats acute exercise study */}
-                    {searchParams.study === 'pass1a06' && (
-                      <div className="rats-acute-exercise-results-content-container tabbed-content col-md-9">
-                        <div className="tab-content mt-3">
-                          {ratAcuteExerciseResults.length ? (
-                            <RatsAcuteExerciseResultsTable
-                              ratsAcuteExerciseData={ratAcuteExerciseResults}
-                              searchParams={searchParams}
-                              handleSearchDownload={handleSearchDownload}
-                            />
-                          ) : (
-                            scope === 'filters' && (
-                              <p className="mt-4">
-                                {searchResults.errors
-                                && searchResults.errors.indexOf('No results found') !== -1 ? (
-                                  <span>
-                                    No matches found for the selected filters.
-                                    Please refer to the
-                                    {' '}
-                                    <Link to="/summary">Summary Table</Link>
-                                    {' '}
-                                    for data that are available.
-                                  </span>
-                                  ) : (
-                                    searchResults.errors
-                                  )}
-                              </p>
-                            )
-                          )}
-                        </div>
-                      </div>
-                    )}
-                    {/* render search results for pre-covid human sed adults study */}
-                    {searchParams.study === 'precawg' && (
-                      <div className="human-da-results-content-container tabbed-content col-md-9">
-                        <div className="tab-content mt-3">
-                          {humanResults.length ? (
-                            <HumanResultsTable
-                              humanData={humanResults}
-                              searchParams={searchParams}
-                              handleSearchDownload={handleSearchDownload}
-                            />
-                          ) : (
-                            scope === 'filters' && (
-                              <p className="mt-4">
-                                {searchResults.errors
-                                && searchResults.errors.indexOf('No results found') !== -1 ? (
-                                  <span>
-                                    No matches found for the selected filters.
-                                    Please refer to the
-                                    {' '}
-                                    <Link to="/summary">Summary Table</Link>
-                                    {' '}
-                                    for data that are available.
-                                  </span>
-                                  ) : (
-                                    searchResults.errors
-                                  )}
-                              </p>
-                            )
-                          )}
-                        </div>
-                      </div>
-                    )}
                   </div>
-              ) : null}
+                )}
+                {/* render search results for rats acute exercise study */}
+                {searchParams.study === 'pass1a06' && (
+                  <div className="rats-acute-exercise-results-content-container tabbed-content col-md-9">
+                    <div className="tab-content mt-3">
+                      {ratAcuteExerciseResults.length ? (
+                        <RatsAcuteExerciseResultsTable
+                          ratsAcuteExerciseData={ratAcuteExerciseResults}
+                          searchParams={searchParams}
+                          handleSearchDownload={handleSearchDownload}
+                        />
+                      ) : (
+                        scope === 'filters' && (
+                          <p className="mt-4">
+                            {searchResults.errors &&
+                            searchResults.errors.indexOf('No results found') !==
+                              -1 ? (
+                              <span>
+                                No matches found for the selected filters.
+                                Please refer to the{' '}
+                                <Link to="/summary">Summary Table</Link> for
+                                data that are available.
+                              </span>
+                            ) : (
+                              searchResults.errors
+                            )}
+                          </p>
+                        )
+                      )}
+                    </div>
+                  </div>
+                )}
+                {/* render search results for pre-covid human sed adults study */}
+                {searchParams.study === 'precawg' && (
+                  <div className="human-da-results-content-container tabbed-content col-md-9">
+                    <div className="tab-content mt-3">
+                      {humanResults.length ? (
+                        <HumanResultsTable
+                          humanData={humanResults}
+                          searchParams={searchParams}
+                          handleSearchDownload={handleSearchDownload}
+                        />
+                      ) : (
+                        scope === 'filters' && (
+                          <p className="mt-4">
+                            {searchResults.errors &&
+                            searchResults.errors.indexOf('No results found') !==
+                              -1 ? (
+                              <span>
+                                No matches found for the selected filters.
+                                Please refer to the{' '}
+                                <Link to="/summary">Summary Table</Link> for
+                                data that are available.
+                              </span>
+                            ) : (
+                              searchResults.errors
+                            )}
+                          </p>
+                        )
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : null}
             <ResultsDownloadModal
               downloadPath={downloadResults.path}
               downloadError={downloadError}
@@ -565,7 +600,13 @@ export function SearchPage({
           </div>
         </div>
         <UserSurveyModal
-          userID={profile && profile.email ? profile.email : (surveyId ? surveyId : 'anonymous')}
+          userID={
+            profile && profile.email
+              ? profile.email
+              : surveyId
+                ? surveyId
+                : 'anonymous'
+          }
           dataContext="search_results"
         />
       </form>
@@ -722,7 +763,7 @@ function StudySelectButtonGroup({
   const studyOptions = [
     { value: 'pass1b06', label: 'Endurance Trained Young Adult Rats' },
     { value: 'pass1a06', label: 'Acute Exercise Young Adult Rats' },
-    { value: 'precawg', label: 'Pre-COVID Human Sedentary Adults' }
+    { value: 'precawg', label: 'Pre-COVID Human Sedentary Adults' },
   ];
 
   return (
@@ -749,10 +790,12 @@ function StudySelectButtonGroup({
   );
 }
 
-
 // Render modal message
 function ResultsDownloadLink({
-  downloadPath = '', downloadError = '', profile = {}, study = 'pass1b06',
+  downloadPath = '',
+  downloadError = '',
+  profile = {},
+  study = 'pass1b06',
 }) {
   const dispatch = useDispatch();
 

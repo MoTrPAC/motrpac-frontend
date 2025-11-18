@@ -5,11 +5,11 @@ import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
 /**
  * Renders a download button for reviewer R packages with signed URL fetching
- * 
+ *
  * This component fetches signed URLs from GCP buckets for downloading reviewer-specific
  * R packages. The files should be stored in the GCP bucket specified by the
  * VITE_DATA_FILE_BUCKET environment variable.
- * 
+ *
  * Expected file naming in GCP bucket:
  * - Analysis R Package: bundles/motrpac_human-precovid-sed-adu_analysis.zip
  * - Data R Package: bundles/motrpac_human-precovid-sed-adu_data.zip
@@ -25,7 +25,7 @@ function ReviewerDownloadButton({
   filename,
   label,
   icon = 'bi-file-zip-fill',
-  profile = {}
+  profile = {},
 }) {
   const [fetchStatus, setFetchStatus] = useState({
     status: null,
@@ -34,7 +34,7 @@ function ReviewerDownloadButton({
   });
 
   // Fetch signed URL from the API
-    async function handleFileFetch(e) {
+  async function handleFileFetch(e) {
     e.preventDefault();
 
     setFetchStatus({

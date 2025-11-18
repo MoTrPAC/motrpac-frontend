@@ -23,7 +23,7 @@ function BodyFatChangePlot({ plot }) {
         const matchFound = searchRat(rat, plot);
         if (matchFound) {
           matches = plotConfig.pass1b06PhenoNmrTestingAnimal.filter(
-            (item) => item.pid === matchFound.pid
+            (item) => item.pid === matchFound.pid,
           );
           if (matches.length && matches.length > 1) {
             if (+matches[0].days_visit < +matches[1].days_visit) {
@@ -43,7 +43,7 @@ function BodyFatChangePlot({ plot }) {
         const matchFound = searchRat(rat, plot);
         if (matchFound) {
           matches = plotConfig.pass1b06PhenoNmrTestingAnimal.filter(
-            (item) => item.pid === matchFound.pid
+            (item) => item.pid === matchFound.pid,
           );
           if (matches.length && matches.length > 1) {
             if (+matches[0].days_visit < +matches[1].days_visit) {
@@ -107,8 +107,19 @@ function BodyFatChangePlot({ plot }) {
           style={{
             min: { stroke: colors.graphs.lgray },
             max: { stroke: colors.graphs.lgray },
-            q1: { fill: ({ datum }) => datum.x.indexOf('females') > -1 ? colors.gender.female : colors.gender.male, fillOpacity: 0.6 },
-            q3: { fill: ({ datum }) => datum.x.indexOf('females') > -1 ? colors.gender.female : colors.gender.male },
+            q1: {
+              fill: ({ datum }) =>
+                datum.x.indexOf('females') > -1
+                  ? colors.gender.female
+                  : colors.gender.male,
+              fillOpacity: 0.6,
+            },
+            q3: {
+              fill: ({ datum }) =>
+                datum.x.indexOf('females') > -1
+                  ? colors.gender.female
+                  : colors.gender.male,
+            },
             median: { stroke: '#fff', strokeWidth: 2 },
           }}
         />
@@ -130,7 +141,8 @@ function BodyFatChangePlot({ plot }) {
         />
       </VictoryChart>
       <p className="card-text remark">
-        Datasets used as input: <em>Animal Registration</em>, <em>Animal Key</em>, <em>Animal NMR Testing</em>.
+        Datasets used as input: <em>Animal Registration</em>,{' '}
+        <em>Animal Key</em>, <em>Animal NMR Testing</em>.
         <br />
         Data is shown as mean +- SD.
       </p>

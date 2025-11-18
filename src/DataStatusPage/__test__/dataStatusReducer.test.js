@@ -26,8 +26,8 @@ describe('QC Reports Reducer', () => {
     expect(
       DataStatusReducer(
         { ...defaultDataStatusState, qcReportView: 'phase' },
-        {}
-      )
+        {},
+      ),
     ).toEqual({ ...defaultDataStatusState, qcReportView: 'phase' });
   });
 
@@ -39,10 +39,10 @@ describe('QC Reports Reducer', () => {
     };
     const dataReportViewState = DataStatusReducer(
       defaultDataStatusState,
-      qcReportViewChangeAction
+      qcReportViewChangeAction,
     );
     expect(dataReportViewState.qcReportView).toEqual(
-      qcReportViewChangeAction.value
+      qcReportViewChangeAction.value,
     );
   });
 
@@ -57,7 +57,7 @@ describe('QC Reports Reducer', () => {
     };
     const dataFetchRequestState = DataStatusReducer(
       newState,
-      dataFetchRequestAction
+      dataFetchRequestAction,
     );
     expect(dataFetchRequestState.isFetchingQcData).toBeTruthy();
   });
@@ -74,7 +74,7 @@ describe('QC Reports Reducer', () => {
     };
     const dataFetchRequestState = DataStatusReducer(
       newState,
-      dataFetchRequestFailureAction
+      dataFetchRequestFailureAction,
     );
     expect(dataFetchRequestState.isFetchingQcData).toBeFalsy();
     expect(dataFetchRequestState.errMsg).toEqual('Error 404');
@@ -92,7 +92,7 @@ describe('QC Reports Reducer', () => {
     };
     const dataFetchRequestState = DataStatusReducer(
       newState,
-      dataFetchRequestSuccessAction
+      dataFetchRequestSuccessAction,
     );
     expect(dataFetchRequestState.qcData.metabolomics.length).toBeGreaterThan(0);
     expect(dataFetchRequestState.isFetchingQcData).toBeFalsy();

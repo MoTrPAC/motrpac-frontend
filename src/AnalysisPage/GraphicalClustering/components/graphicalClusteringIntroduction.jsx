@@ -30,18 +30,15 @@ function GraphicalClusteringIntroduction({ currentView }) {
       <p>
         A graphical approach with
         <code>repfdr</code>
-        has replaced multi-omics clustering as the primary method to characterize
-        and explore main patterns of training-differential analytes in the endurance
-        trained young adult rats (PASS1B) study data. To learn more about this
-        approach, see presentations by David Amar
-        {' '}
+        has replaced multi-omics clustering as the primary method to
+        characterize and explore main patterns of training-differential analytes
+        in the endurance trained young adult rats (PASS1B) study data. To learn
+        more about this approach, see presentations by David Amar{' '}
         <ExternalLink
           to="https://d1yw74buhe0ts0.cloudfront.net/docs/MoTrPAC_PASS1B_Graphical_Clustering_Analysis_MAWG_Dec_2021.pdf"
           label="here"
-        />
-        {' '}
-        and
-        {' '}
+        />{' '}
+        and{' '}
         <ExternalLink
           to="https://d1yw74buhe0ts0.cloudfront.net/docs/MoTrPAC_PASS1B_Graphical_Clustering_Analysis_MAWG_Update_12122021.pdf"
           label="here"

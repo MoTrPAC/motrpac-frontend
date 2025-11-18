@@ -10,7 +10,7 @@ function UserSurveyModal({
   userID = '',
   dataContext = '',
   showUserSurveyModal = false,
-  surveySubmitted  = false,
+  surveySubmitted = false,
   waitingForResponse = false,
   statusMsg = '',
   errorMsg = '',

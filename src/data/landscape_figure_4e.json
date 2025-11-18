@@ -5,10 +5,7 @@
       "label": "Got1",
       "title": "<pre><b>Response to mechanical stimulus</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics, Transcriptomics</pre>",
       "group": "ResponseToMechanicalStimulus",
-      "omes": [
-        "Proteomics",
-        "Transcriptomics"
-      ],
+      "omes": ["Proteomics", "Transcriptomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -17,10 +14,7 @@
       "label": "Mdh1",
       "title": "<pre><b>Other</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics, Phosphoproteomics</pre>",
       "group": "Other",
-      "omes": [
-        "Proteomics",
-        "Phosphoproteomics"
-      ],
+      "omes": ["Proteomics", "Phosphoproteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -29,9 +23,7 @@
       "label": "Jun",
       "title": "<pre><b>Response to mechanical stimulus</b><br/>Tissue: Gastrocnemius<br/>Omes: ATAC-seq</pre>",
       "group": "ResponseToMechanicalStimulus",
-      "omes": [
-        "ATAC-seq"
-      ],
+      "omes": ["ATAC-seq"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -40,9 +32,7 @@
       "label": "Prkab1",
       "title": "<pre><b>Longevity</b><br/>Tissue: Gastrocnemius<br/>Omes: Phosphoproteomics</pre>",
       "group": "Longevity",
-      "omes": [
-        "Phosphoproteomics"
-      ],
+      "omes": ["Phosphoproteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -51,9 +41,7 @@
       "label": "Sod2",
       "title": "<pre><b>Longevity</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics</pre>",
       "group": "Longevity",
-      "omes": [
-        "Proteomics"
-      ],
+      "omes": ["Proteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -62,9 +50,7 @@
       "label": "Asb2",
       "title": "<pre><b>Muscle system process</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics</pre>",
       "group": "MuscleSystemProcess",
-      "omes": [
-        "Proteomics"
-      ],
+      "omes": ["Proteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -73,10 +59,7 @@
       "label": "Hsp90aa1",
       "title": "<pre><b>Muscle system process</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics, Phosphoproteomics</pre>",
       "group": "MuscleSystemProcess",
-      "omes": [
-        "Proteomics",
-        "Phosphoproteomics"
-      ],
+      "omes": ["Proteomics", "Phosphoproteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -85,9 +68,7 @@
       "label": "Camk2g",
       "title": "<pre><b>Muscle system process</b><br/>Tissue: Gastrocnemius<br/>Omes: Phosphoproteomics</pre>",
       "group": "MuscleSystemProcess",
-      "omes": [
-        "Phosphoproteomics"
-      ],
+      "omes": ["Phosphoproteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -96,10 +77,7 @@
       "label": "Dld",
       "title": "<pre><b>Other</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics, Phosphoproteomics</pre>",
       "group": "Other",
-      "omes": [
-        "Proteomics",
-        "Phosphoproteomics"
-      ],
+      "omes": ["Proteomics", "Phosphoproteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -108,10 +86,7 @@
       "label": "Slc2a4",
       "title": "<pre><b>Other</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics, Phosphoproteomics</pre>",
       "group": "Other",
-      "omes": [
-        "Proteomics",
-        "Phosphoproteomics"
-      ],
+      "omes": ["Proteomics", "Phosphoproteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -120,9 +95,7 @@
       "label": "Mef2c",
       "title": "<pre><b>Other</b><br/>Tissue: Gastrocnemius<br/>Omes: Phosphoproteomics</pre>",
       "group": "Other",
-      "omes": [
-        "Phosphoproteomics"
-      ],
+      "omes": ["Phosphoproteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -131,9 +104,7 @@
       "label": "Hdac4",
       "title": "<pre><b>Response to mechanical stimulus</b><br/>Tissue: Gastrocnemius<br/>Omes: Phosphoproteomics</pre>",
       "group": "ResponseToMechanicalStimulus",
-      "omes": [
-        "Phosphoproteomics"
-      ],
+      "omes": ["Phosphoproteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -142,10 +113,7 @@
       "label": "Hspa1b",
       "title": "<pre><b>Response to mechanical stimulus</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics, Phosphoproteomics</pre>",
       "group": "ResponseToMechanicalStimulus",
-      "omes": [
-        "Proteomics",
-        "Phosphoproteomics"
-      ],
+      "omes": ["Proteomics", "Phosphoproteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -154,10 +122,7 @@
       "label": "Bag3",
       "title": "<pre><b>Response to mechanical stimulus</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics, Phosphoproteomics</pre>",
       "group": "ResponseToMechanicalStimulus",
-      "omes": [
-        "Proteomics",
-        "Phosphoproteomics"
-      ],
+      "omes": ["Proteomics", "Phosphoproteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -166,10 +131,7 @@
       "label": "Fhl1",
       "title": "<pre><b>Other</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics, Phosphoproteomics</pre>",
       "group": "Other",
-      "omes": [
-        "Proteomics",
-        "Phosphoproteomics"
-      ],
+      "omes": ["Proteomics", "Phosphoproteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -178,9 +140,7 @@
       "label": "Clpb",
       "title": "<pre><b>Longevity</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics</pre>",
       "group": "Longevity",
-      "omes": [
-        "Proteomics"
-      ],
+      "omes": ["Proteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -189,10 +149,7 @@
       "label": "Timm13",
       "title": "<pre><b>Other</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics, Phosphoproteomics</pre>",
       "group": "Other",
-      "omes": [
-        "Proteomics",
-        "Phosphoproteomics"
-      ],
+      "omes": ["Proteomics", "Phosphoproteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -201,10 +158,7 @@
       "label": "Hspb6",
       "title": "<pre><b>Muscle system process</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics, Phosphoproteomics</pre>",
       "group": "MuscleSystemProcess",
-      "omes": [
-        "Proteomics",
-        "Phosphoproteomics"
-      ],
+      "omes": ["Proteomics", "Phosphoproteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -213,9 +167,7 @@
       "label": "Txnip",
       "title": "<pre><b>Response to mechanical stimulus</b><br/>Tissue: Gastrocnemius<br/>Omes: ATAC-seq</pre>",
       "group": "ResponseToMechanicalStimulus",
-      "omes": [
-        "ATAC-seq"
-      ],
+      "omes": ["ATAC-seq"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -224,11 +176,7 @@
       "label": "Atp1a2",
       "title": "<pre><b>Response to mechanical stimulus</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics, Phosphoproteomics, Transcriptomics</pre>",
       "group": "ResponseToMechanicalStimulus",
-      "omes": [
-        "Proteomics",
-        "Phosphoproteomics",
-        "Transcriptomics"
-      ],
+      "omes": ["Proteomics", "Phosphoproteomics", "Transcriptomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -237,9 +185,7 @@
       "label": "Ank2",
       "title": "<pre><b>Muscle system process</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics</pre>",
       "group": "MuscleSystemProcess",
-      "omes": [
-        "Proteomics"
-      ],
+      "omes": ["Proteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -248,10 +194,7 @@
       "label": "Map1lc3a",
       "title": "<pre><b>Other</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics, Transcriptomics</pre>",
       "group": "Other",
-      "omes": [
-        "Proteomics",
-        "Transcriptomics"
-      ],
+      "omes": ["Proteomics", "Transcriptomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -260,10 +203,7 @@
       "label": "Timm8a1",
       "title": "<pre><b>Other</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics, Phosphoproteomics</pre>",
       "group": "Other",
-      "omes": [
-        "Proteomics",
-        "Phosphoproteomics"
-      ],
+      "omes": ["Proteomics", "Phosphoproteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -272,10 +212,7 @@
       "label": "Hspa4l",
       "title": "<pre><b>Other</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics, Transcriptomics</pre>",
       "group": "Other",
-      "omes": [
-        "Proteomics",
-        "Transcriptomics"
-      ],
+      "omes": ["Proteomics", "Transcriptomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -284,9 +221,7 @@
       "label": "Homer1",
       "title": "<pre><b>Muscle system process</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics</pre>",
       "group": "MuscleSystemProcess",
-      "omes": [
-        "Proteomics"
-      ],
+      "omes": ["Proteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     },
@@ -295,48 +230,45 @@
       "label": "Tbc1d1",
       "title": "<pre><b>Other</b><br/>Tissue: Gastrocnemius<br/>Omes: Proteomics, Phosphoproteomics</pre>",
       "group": "Other",
-      "omes": [
-        "Proteomics",
-        "Phosphoproteomics"
-      ],
+      "omes": ["Proteomics", "Phosphoproteomics"],
       "tissue": "Gastrocnemius",
       "type": "gene"
     }
   ],
   "edges": [
-    {"from": 2, "to": 1},
-    {"from": 2, "to": 4},
-    {"from": 2, "to": 5},
-    {"from": 2, "to": 9},
-    {"from": 9, "to": 5},
-    {"from": 9, "to": 10},
-    {"from": 9, "to": 12},
-    {"from": 9, "to": 17},
-    {"from": 7, "to": 2},
-    {"from": 7, "to": 3},
-    {"from": 7, "to": 4},
-    {"from": 7, "to": 6},
-    {"from": 7, "to": 8},
-    {"from": 7, "to": 10},
-    {"from": 7, "to": 12},
-    {"from": 7, "to": 13},
-    {"from": 7, "to": 14},
-    {"from": 12, "to": 11},
-    {"from": 12, "to": 13},
-    {"from": 12, "to": 16},
-    {"from": 12, "to": 17},
-    {"from": 12, "to": 24},
-    {"from": 13, "to": 14},
-    {"from": 13, "to": 19},
-    {"from": 13, "to": 22},
-    {"from": 14, "to": 18},
-    {"from": 16, "to": 17},
-    {"from": 17, "to": 23},
-    {"from": 19, "to": 15},
-    {"from": 19, "to": 24},
-    {"from": 19, "to": 25},
-    {"from": 21, "to": 20},
-    {"from": 22, "to": 21},
-    {"from": 22, "to": 26}
+    { "from": 2, "to": 1 },
+    { "from": 2, "to": 4 },
+    { "from": 2, "to": 5 },
+    { "from": 2, "to": 9 },
+    { "from": 9, "to": 5 },
+    { "from": 9, "to": 10 },
+    { "from": 9, "to": 12 },
+    { "from": 9, "to": 17 },
+    { "from": 7, "to": 2 },
+    { "from": 7, "to": 3 },
+    { "from": 7, "to": 4 },
+    { "from": 7, "to": 6 },
+    { "from": 7, "to": 8 },
+    { "from": 7, "to": 10 },
+    { "from": 7, "to": 12 },
+    { "from": 7, "to": 13 },
+    { "from": 7, "to": 14 },
+    { "from": 12, "to": 11 },
+    { "from": 12, "to": 13 },
+    { "from": 12, "to": 16 },
+    { "from": 12, "to": 17 },
+    { "from": 12, "to": 24 },
+    { "from": 13, "to": 14 },
+    { "from": 13, "to": 19 },
+    { "from": 13, "to": 22 },
+    { "from": 14, "to": 18 },
+    { "from": 16, "to": 17 },
+    { "from": 17, "to": 23 },
+    { "from": 19, "to": 15 },
+    { "from": 19, "to": 24 },
+    { "from": 19, "to": 25 },
+    { "from": 21, "to": 20 },
+    { "from": 22, "to": 21 },
+    { "from": 22, "to": 26 }
   ]
 }

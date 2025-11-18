@@ -263,14 +263,14 @@ export const transformData = (arr) => {
     // Transform tissue values
     if (item.tissue && item.tissue.length) {
       const matchedTissue = tissueListRatEndurance.find(
-        (filter) => filter.filter_value === item.tissue
+        (filter) => filter.filter_value === item.tissue,
       );
       item.tissue = matchedTissue ? matchedTissue.filter_label : item.tissue;
     }
     // Transform assay values
     if (item.assay && item.assay.length) {
       const matchedAssay = assayListRat.find(
-        (filter) => filter.filter_value === item.assay
+        (filter) => filter.filter_value === item.assay,
       );
       item.assay = matchedAssay ? matchedAssay.filter_label : item.assay;
     }

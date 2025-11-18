@@ -6,7 +6,8 @@ import PageTitle from '../lib/ui/pageTitle';
 
 import '@styles/linkoutPage.scss';
 
-const imgSourceUrl = 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/external_resources/';
+const imgSourceUrl =
+  'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/external_resources/';
 
 const featured = [
   {

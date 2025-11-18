@@ -14,8 +14,9 @@ function SectionRatWork() {
     <div className="analysis-section-content-container w-100">
       <h3>Rat Work</h3>
       <p>
-        The rats ran on the treadmill set to 5 degrees, which equals an incline of
-        8.7%. Therefore, the work is calculated in joules using 8.7% as the slope.
+        The rats ran on the treadmill set to 5 degrees, which equals an incline
+        of 8.7%. Therefore, the work is calculated in joules using 8.7% as the
+        slope.
       </p>
       <p>
         <span className="font-weight-bold">Equation - </span>
@@ -26,9 +27,7 @@ function SectionRatWork() {
       <p>
         <span className="font-weight-bold">Example - </span>
         <span>For a rat weighing 0.200 kg running 500 meters: </span>
-        <code>
-          Work = 0.200 x 500 x 0.087 x 9.80665 = 85.318 joules
-        </code>
+        <code>Work = 0.200 x 500 x 0.087 x 9.80665 = 85.318 joules</code>
       </p>
       <div className="analysis-section-plot-container row mb-4">
         {/* phenotypic data analysis plots */}

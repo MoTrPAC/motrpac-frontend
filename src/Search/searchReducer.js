@@ -51,7 +51,13 @@ export const defaultSearchState = {
       'contrast_type',
       'contrast',
     ],
-    unique_fields: ['tissue', 'assay', 'sex', 'comparison_group', 'contrast1_timepoint'],
+    unique_fields: [
+      'tissue',
+      'assay',
+      'sex',
+      'comparison_group',
+      'contrast1_timepoint',
+    ],
     size: 10000,
     start: 0,
     save: false,
@@ -93,14 +99,18 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       const newFilters = { ...filters };
 
       // Handle selection of a filter value
-      if (action.field.match(/^(tissue|assay|sex|comparison_group|contrast1_timepoint)$/)) {
+      if (
+        action.field.match(
+          /^(tissue|assay|sex|comparison_group|contrast1_timepoint)$/,
+        )
+      ) {
         if (isActiveFilter === -1) {
           // Adds filter if new
           newFilters[action.field].push(action.filterValue);
         } else {
           // Removes filter if already exists
           const newArr = newFilters[action.field].filter(
-            (value) => !(value === action.filterValue)
+            (value) => !(value === action.filterValue),
           );
           newFilters[action.field] = newArr;
         }
@@ -177,9 +187,9 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         searchResults:
           action.searchResults.message || action.searchResults.errors
             ? {
-              errors:
+                errors:
                   action.searchResults.message || action.searchResults.errors,
-            }
+              }
             : action.searchResults,
         searching: false,
         hasResultFilters:
@@ -253,10 +263,10 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         downloadResults:
           action.downloadResults.message || action.downloadResults.errors
             ? {
-              errors:
-                  action.downloadResults.message
-                  || action.downloadResults.errors,
-            }
+                errors:
+                  action.downloadResults.message ||
+                  action.downloadResults.errors,
+              }
             : action.downloadResults,
         downloading: false,
       };

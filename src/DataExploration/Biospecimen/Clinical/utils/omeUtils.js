@@ -10,7 +10,7 @@ export const OME_CATEGORIES = [
   'Epigenomic',
   'Transcriptomic',
   'Proteomic',
-  'Metabolomic'
+  'Metabolomic',
 ];
 
 /**
@@ -20,22 +20,22 @@ export const OME_CATEGORIES = [
  */
 export const getOmeCategories = (assayData) => {
   if (!assayData) return [];
-  
+
   // Special case: "All" means the sample applies to all ome types
   if (assayData.trim().toLowerCase() === 'all') {
     return [...OME_CATEGORIES];
   }
-  
+
   // Parse the comma/semicolon-separated assay codes
   const assayCodes = assayData
     .split(/[,;]/)
-    .map(code => code.trim().toLowerCase())
-    .filter(code => code);
-  
+    .map((code) => code.trim().toLowerCase())
+    .filter((code) => code);
+
   // Map assay codes to ome categories using substring matching
   const omeCategories = new Set();
-  
-  assayCodes.forEach(code => {
+
+  assayCodes.forEach((code) => {
     // Epigenomic: contains 'epigen-' or 'genomic-wgs'
     if (code.includes('epigen-') || code.includes('genomic-wgs')) {
       omeCategories.add('Epigenomic');
@@ -53,7 +53,7 @@ export const getOmeCategories = (assayData) => {
       omeCategories.add('Metabolomic');
     }
   });
-  
+
   return Array.from(omeCategories);
 };
 
@@ -65,11 +65,13 @@ export const getOmeCategories = (assayData) => {
  */
 export const matchesOmeCategories = (assayData, selectedCategories) => {
   if (!selectedCategories || selectedCategories.length === 0) return true;
-  
+
   const itemCategories = getOmeCategories(assayData);
-  
+
   // If record has no ome categories, keep it (don't filter based on missing data)
   // If record has ome categories, it must match at least one selected filter
-  return itemCategories.length === 0 || 
-         itemCategories.some(cat => selectedCategories.includes(cat));
+  return (
+    itemCategories.length === 0 ||
+    itemCategories.some((cat) => selectedCategories.includes(cat))
+  );
 };

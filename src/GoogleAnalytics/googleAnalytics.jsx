@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import gtag from 'ga-gtag';
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation } from 'react-router-dom';
 
 const trackingId = () => {
   // available tracking Ids for motrpac apps
@@ -26,7 +26,7 @@ const trackingId = () => {
 };
 
 export const PageTracker = () => {
-  const location = useLocation()
+  const location = useLocation();
 
   const trackPage = (page) => {
     gtag('config', trackingId(), {

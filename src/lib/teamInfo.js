@@ -1,4 +1,5 @@
-const imgSourceUrl = 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/team_members/';
+const imgSourceUrl =
+  'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/team_members/';
 
 const teamInfo = {
   PIs: [

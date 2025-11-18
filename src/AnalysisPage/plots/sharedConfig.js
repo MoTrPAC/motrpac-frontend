@@ -5,26 +5,26 @@ import pass1b06PhenoVo2MaxAnimal from '../../data/pass1b_06_pheno_vo2_max_animal
 
 // animal sets by 1-week, 2-week, 4-week, and 8-week
 const oneWeekRats = pass1b06PhenoKeyAnimal.filter(
-  (item) => item.ANIRandGroup.indexOf('One-week') > -1
+  (item) => item.ANIRandGroup.indexOf('One-week') > -1,
 );
 const twoWeekRats = pass1b06PhenoKeyAnimal.filter(
-  (item) => item.ANIRandGroup.indexOf('Two-week') > -1
+  (item) => item.ANIRandGroup.indexOf('Two-week') > -1,
 );
 const fourWeekRats = pass1b06PhenoKeyAnimal.filter(
-  (item) => item.ANIRandGroup.indexOf('Four-week') > -1
+  (item) => item.ANIRandGroup.indexOf('Four-week') > -1,
 );
 const eightWeekRats = pass1b06PhenoKeyAnimal.filter(
-  (item) => item.ANIRandGroup.indexOf('Eight-week') > -1
+  (item) => item.ANIRandGroup.indexOf('Eight-week') > -1,
 );
 
 // female set
 const femaleRats = pass1b06PhenoRegistrationAnimal.filter(
-  (item) => item.sex === 'female'
+  (item) => item.sex === 'female',
 );
 
 // male set
 const maleRats = pass1b06PhenoRegistrationAnimal.filter(
-  (item) => item.sex === 'male'
+  (item) => item.sex === 'male',
 );
 
 // find the rat in a given gender group and a given program group

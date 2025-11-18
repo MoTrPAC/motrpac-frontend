@@ -11,7 +11,10 @@ import PhenotypePass1a06Rats from './Phenotype/pass1a06Rats';
  */
 function Pass1b06PhenotypeAnimal() {
   return (
-    <div className="analysisPhenotypePage px-3 px-md-4 mb-3 w-100" data-testid="animal-data-analysis">
+    <div
+      className="analysisPhenotypePage px-3 px-md-4 mb-3 w-100"
+      data-testid="animal-data-analysis"
+    >
       <Helmet>
         <html lang="en" />
         <title>Phenotypic Data Analysis - MoTrPAC Data Hub</title>
@@ -19,7 +22,11 @@ function Pass1b06PhenotypeAnimal() {
       <PageTitle title="Phenotypic Data Analysis" />
       <div className="phenotype-data-analysis-container">
         {/* nav tabs */}
-        <ul className="nav nav-pills phenotype-data-nav mt-3 border-bottom" id="pills-tab" role="tablist">
+        <ul
+          className="nav nav-pills phenotype-data-nav mt-3 border-bottom"
+          id="pills-tab"
+          role="tablist"
+        >
           <li className="nav-item font-weight-bold" role="presentation">
             <button
               type="button"
@@ -32,7 +39,9 @@ function Pass1b06PhenotypeAnimal() {
               aria-selected="true"
             >
               <span className="material-icons mr-1">pest_control_rodent</span>
-              <span className="nav-label">Endurance Trained Young Adult Rats</span>
+              <span className="nav-label">
+                Endurance Trained Young Adult Rats
+              </span>
             </button>
           </li>
           <li className="nav-item font-weight-bold" role="presentation">

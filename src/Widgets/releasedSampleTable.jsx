@@ -16,7 +16,7 @@ function ReleasedSampleTable({ data, sort, showQC }) {
     const clonedData = [...data];
     clonedData.forEach((tissueSample) => {
       const tissue = tissues.find(
-        (item) => item.bic_tissue_code === tissueSample.tissue_code
+        (item) => item.bic_tissue_code === tissueSample.tissue_code,
       );
       return Object.assign(tissueSample, {
         tissue_name: tissue.bic_tissue_name,
@@ -31,19 +31,19 @@ function ReleasedSampleTable({ data, sort, showQC }) {
     switch (arg) {
       case 'default':
         return newDataset.sort((a, b) =>
-          a.tissue_code.localeCompare(b.tissue_code)
+          a.tissue_code.localeCompare(b.tissue_code),
         );
       case 'ascending':
         return newDataset.sort((a, b) =>
-          a.tissue_name.localeCompare(b.tissue_name)
+          a.tissue_name.localeCompare(b.tissue_name),
         );
       case 'descending':
         return newDataset.sort((a, b) =>
-          b.tissue_name.localeCompare(a.tissue_name)
+          b.tissue_name.localeCompare(a.tissue_name),
         );
       default:
         return newDataset.sort((a, b) =>
-          a.tissue_code.localeCompare(b.tissue_code)
+          a.tissue_code.localeCompare(b.tissue_code),
         );
     }
   }
@@ -112,7 +112,7 @@ ReleasedSampleTable.propTypes = {
     PropTypes.shape({
       tissue_code: PropTypes.string.isRequired,
       sample_data: PropTypes.array.isRequired,
-    })
+    }),
   ).isRequired,
   sort: PropTypes.string.isRequired,
   showQC: PropTypes.bool.isRequired,

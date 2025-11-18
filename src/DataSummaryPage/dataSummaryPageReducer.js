@@ -16,7 +16,7 @@ export const defaultDataSummaryState = {
 
 export function DataSummaryPageReducer(
   state = { ...defaultDataSummaryState },
-  action
+  action,
 ) {
   switch (action.type) {
     case TOGGLE_RELEASE:

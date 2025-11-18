@@ -6,6 +6,6 @@ module.exports = function (app) {
     createProxyMiddleware({
       target: import.meta.env.VITE_ES_PROXY_HOST,
       changeOrigin: true,
-    })
+    }),
   );
 };

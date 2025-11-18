@@ -10,20 +10,25 @@ import PropTypes from 'prop-types';
  * - Page size selector
  * - Loading indicator during navigation
  */
-const PaginationControls = ({ pagination, onExport, exportLabel = 'Export' }) => {
+const PaginationControls = ({
+  pagination,
+  onExport,
+  exportLabel = 'Export',
+}) => {
   return (
     <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center mt-3 p-3 bg-light rounded">
       {/* Left section: Item range and export button */}
       <div className="d-flex align-items-center mb-2 mb-lg-0">
         <span className="text-muted small mr-3">
           <strong>
-            {pagination.startIndex.toLocaleString()} - {pagination.endIndex.toLocaleString()}
+            {pagination.startIndex.toLocaleString()} -{' '}
+            {pagination.endIndex.toLocaleString()}
           </strong>
           {' of '}
           <strong>{pagination.totalItems.toLocaleString()}</strong>
           {' samples'}
         </span>
-        
+
         {onExport && (
           <button
             className="btn btn-secondary btn-sm"
@@ -42,11 +47,15 @@ const PaginationControls = ({ pagination, onExport, exportLabel = 'Export' }) =>
           <nav aria-label="Drill-down table pagination">
             <ul className="pagination pagination-sm mb-0">
               {/* First page button */}
-              <li className={`page-item ${!pagination.hasPreviousPage ? 'disabled' : ''}`}>
+              <li
+                className={`page-item ${!pagination.hasPreviousPage ? 'disabled' : ''}`}
+              >
                 <button
                   className="page-link"
                   onClick={pagination.goToFirstPage}
-                  disabled={!pagination.hasPreviousPage || pagination.isNavigating}
+                  disabled={
+                    !pagination.hasPreviousPage || pagination.isNavigating
+                  }
                   aria-label="First page"
                 >
                   <i className="bi bi-chevron-double-left" />
@@ -54,11 +63,15 @@ const PaginationControls = ({ pagination, onExport, exportLabel = 'Export' }) =>
               </li>
 
               {/* Previous page button */}
-              <li className={`page-item ${!pagination.hasPreviousPage ? 'disabled' : ''}`}>
+              <li
+                className={`page-item ${!pagination.hasPreviousPage ? 'disabled' : ''}`}
+              >
                 <button
                   className="page-link"
                   onClick={pagination.goToPreviousPage}
-                  disabled={!pagination.hasPreviousPage || pagination.isNavigating}
+                  disabled={
+                    !pagination.hasPreviousPage || pagination.isNavigating
+                  }
                   aria-label="Previous page"
                 >
                   <i className="bi bi-chevron-left" />
@@ -81,7 +94,9 @@ const PaginationControls = ({ pagination, onExport, exportLabel = 'Export' }) =>
                       onClick={() => pagination.goToPage(page)}
                       disabled={pagination.isNavigating}
                       aria-label={`Go to page ${page}`}
-                      aria-current={page === pagination.currentPage ? 'page' : undefined}
+                      aria-current={
+                        page === pagination.currentPage ? 'page' : undefined
+                      }
                     >
                       {page}
                     </button>
@@ -90,7 +105,9 @@ const PaginationControls = ({ pagination, onExport, exportLabel = 'Export' }) =>
               ))}
 
               {/* Next page button */}
-              <li className={`page-item ${!pagination.hasNextPage ? 'disabled' : ''}`}>
+              <li
+                className={`page-item ${!pagination.hasNextPage ? 'disabled' : ''}`}
+              >
                 <button
                   className="page-link"
                   onClick={pagination.goToNextPage}
@@ -102,7 +119,9 @@ const PaginationControls = ({ pagination, onExport, exportLabel = 'Export' }) =>
               </li>
 
               {/* Last page button */}
-              <li className={`page-item ${!pagination.hasNextPage ? 'disabled' : ''}`}>
+              <li
+                className={`page-item ${!pagination.hasNextPage ? 'disabled' : ''}`}
+              >
                 <button
                   className="page-link"
                   onClick={pagination.goToLastPage}
@@ -120,22 +139,29 @@ const PaginationControls = ({ pagination, onExport, exportLabel = 'Export' }) =>
       {/* Right section: Loading indicator and page size selector */}
       <div className="d-flex align-items-center">
         {pagination.isNavigating && (
-          <div className="spinner-border spinner-border-sm text-primary mr-3" role="status">
+          <div
+            className="spinner-border spinner-border-sm text-primary mr-3"
+            role="status"
+          >
             <span className="sr-only">Loading...</span>
           </div>
         )}
-        
+
         <div className="d-flex align-items-center text-muted small">
           <span className="mr-2">Show:</span>
           <select
             className="form-control form-control-sm"
             style={{ width: 'auto' }}
             value={pagination.itemsPerPage}
-            onChange={(e) => pagination.changePageSize(parseInt(e.target.value))}
+            onChange={(e) =>
+              pagination.changePageSize(parseInt(e.target.value))
+            }
             disabled={pagination.isNavigating}
           >
-            {[10, 20, 50, 100].map(size => (
-              <option key={size} value={size}>{size}</option>
+            {[10, 20, 50, 100].map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
             ))}
           </select>
           <span className="ml-2">per page</span>

@@ -10,7 +10,11 @@ import {
   TISSUE_COLORS,
   TISSUE_TYPES,
 } from '../constants/plotOptions';
-import { getAssayShortName, getAssayFullName, getAssayFullNames } from '../utils/assayCodeMapping';
+import {
+  getAssayShortName,
+  getAssayFullName,
+  getAssayFullNames,
+} from '../utils/assayCodeMapping';
 import { getTissueName } from '../utils/tissueUtils';
 import {
   getRaceCategory,
@@ -28,8 +32,8 @@ if (typeof Highcharts === 'object' && Highcharts.setOptions) {
   try {
     Highcharts.setOptions({
       lang: {
-        thousandsSep: ','
-      }
+        thousandsSep: ',',
+      },
     });
   } catch (error) {
     console.warn('Error setting Highcharts options:', error);
@@ -45,7 +49,14 @@ if (typeof Highcharts === 'object' && Highcharts.setOptions) {
  * - Assay information in tooltips
  * - Tissue-based stacked bars when tissue filters are active
  */
-const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFilters }) => {
+const BiospecimenChart = ({
+  data,
+  allData,
+  loading,
+  error,
+  onBarClick,
+  activeFilters,
+}) => {
   // Calculate fixed maximum from ALL unfiltered data (only once)
   const fixedMaxCount = useMemo(() => {
     if (!allData || !allData.length) return 0;
@@ -61,17 +72,17 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
       if (!phase) return;
 
       const assays = parseAssayTypes(record.raw_assays_with_results);
-      
-      assays.forEach(assay => {
+
+      assays.forEach((assay) => {
         if (!assayData[assay]) {
           assayData[assay] = { byPhase: {} };
-          INTERVENTION_PHASES.forEach(p => {
+          INTERVENTION_PHASES.forEach((p) => {
             assayData[assay].byPhase[p] = { count: 0 };
           });
         }
 
         assayData[assay].byPhase[phase].count++;
-        
+
         if (assayData[assay].byPhase[phase].count > maxCount) {
           maxCount = assayData[assay].byPhase[phase].count;
         }
@@ -82,47 +93,53 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
   }, [allData]);
 
   // Calculate fixed maximums for all demographic charts in a single pass (performance optimization)
-  const { fixedMaxAgeGroupCount, fixedMaxRaceCount, fixedMaxRandomGroupCount } = useMemo(() => {
-    if (!allData || !allData.length) {
-      return { fixedMaxAgeGroupCount: 0, fixedMaxRaceCount: 0, fixedMaxRandomGroupCount: 0 };
-    }
-
-    // Store unique participants with their demographics (single Map per PID)
-    const participantDemographics = new Map();
-
-    allData.forEach((record) => {
-      if (record.pid && !participantDemographics.has(record.pid)) {
-        participantDemographics.set(record.pid, {
-          age: record.dmaqc_age_groups,
-          race: getRaceCategory(record),
-          randomGroup: getRandomizedGroup(record),
-        });
+  const { fixedMaxAgeGroupCount, fixedMaxRaceCount, fixedMaxRandomGroupCount } =
+    useMemo(() => {
+      if (!allData || !allData.length) {
+        return {
+          fixedMaxAgeGroupCount: 0,
+          fixedMaxRaceCount: 0,
+          fixedMaxRandomGroupCount: 0,
+        };
       }
-    });
 
-    // Initialize count objects using imported constants
-    const ageCounts = {};
-    AGE_GROUPS.forEach(group => ageCounts[group] = 0);
-    
-    const raceCounts = {};
-    RACE_GROUPS.forEach(group => raceCounts[group] = 0);
-    
-    const randomGroupCounts = {};
-    RANDOMIZED_GROUPS.forEach(group => randomGroupCounts[group] = 0);
+      // Store unique participants with their demographics (single Map per PID)
+      const participantDemographics = new Map();
 
-    // Count participants in each category
-    participantDemographics.forEach(({ age, race, randomGroup }) => {
-      if (age && ageCounts.hasOwnProperty(age)) ageCounts[age]++;
-      if (race && raceCounts.hasOwnProperty(race)) raceCounts[race]++;
-      if (randomGroup && randomGroupCounts.hasOwnProperty(randomGroup)) randomGroupCounts[randomGroup]++;
-    });
+      allData.forEach((record) => {
+        if (record.pid && !participantDemographics.has(record.pid)) {
+          participantDemographics.set(record.pid, {
+            age: record.dmaqc_age_groups,
+            race: getRaceCategory(record),
+            randomGroup: getRandomizedGroup(record),
+          });
+        }
+      });
 
-    return {
-      fixedMaxAgeGroupCount: Math.max(...Object.values(ageCounts)),
-      fixedMaxRaceCount: Math.max(...Object.values(raceCounts)),
-      fixedMaxRandomGroupCount: Math.max(...Object.values(randomGroupCounts)),
-    };
-  }, [allData]);
+      // Initialize count objects using imported constants
+      const ageCounts = {};
+      AGE_GROUPS.forEach((group) => (ageCounts[group] = 0));
+
+      const raceCounts = {};
+      RACE_GROUPS.forEach((group) => (raceCounts[group] = 0));
+
+      const randomGroupCounts = {};
+      RANDOMIZED_GROUPS.forEach((group) => (randomGroupCounts[group] = 0));
+
+      // Count participants in each category
+      participantDemographics.forEach(({ age, race, randomGroup }) => {
+        if (age && ageCounts.hasOwnProperty(age)) ageCounts[age]++;
+        if (race && raceCounts.hasOwnProperty(race)) raceCounts[race]++;
+        if (randomGroup && randomGroupCounts.hasOwnProperty(randomGroup))
+          randomGroupCounts[randomGroup]++;
+      });
+
+      return {
+        fixedMaxAgeGroupCount: Math.max(...Object.values(ageCounts)),
+        fixedMaxRaceCount: Math.max(...Object.values(raceCounts)),
+        fixedMaxRandomGroupCount: Math.max(...Object.values(randomGroupCounts)),
+      };
+    }, [allData]);
 
   // Calculate participant counts by sex
   const participantBySex = useMemo(() => {
@@ -130,7 +147,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
 
     const uniqueParticipants = new Map();
     const samplesBySex = { Male: [], Female: [] };
-    
+
     data.forEach((record) => {
       if (record.pid && record.sex) {
         if (!uniqueParticipants.has(record.pid)) {
@@ -150,8 +167,18 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     });
 
     return [
-      { name: 'Male', y: sexCounts.Male, color: '#4e79a7', samples: samplesBySex.Male },
-      { name: 'Female', y: sexCounts.Female, color: '#e15759', samples: samplesBySex.Female },
+      {
+        name: 'Male',
+        y: sexCounts.Male,
+        color: '#4e79a7',
+        samples: samplesBySex.Male,
+      },
+      {
+        name: 'Female',
+        y: sexCounts.Female,
+        color: '#e15759',
+        samples: samplesBySex.Female,
+      },
     ];
   }, [data]);
 
@@ -161,8 +188,8 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
 
     const uniqueParticipants = new Map();
     const samplesByAgeGroup = {};
-    AGE_GROUPS.forEach(group => samplesByAgeGroup[group] = []);
-    
+    AGE_GROUPS.forEach((group) => (samplesByAgeGroup[group] = []));
+
     data.forEach((record) => {
       if (record.pid && record.dmaqc_age_groups) {
         if (!uniqueParticipants.has(record.pid)) {
@@ -176,7 +203,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     });
 
     const ageCounts = {};
-    AGE_GROUPS.forEach(group => ageCounts[group] = 0);
+    AGE_GROUPS.forEach((group) => (ageCounts[group] = 0));
 
     uniqueParticipants.forEach((ageGroup) => {
       if (ageCounts.hasOwnProperty(ageGroup)) {
@@ -187,7 +214,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     // Keep all age groups for smooth animation (bars animate to 0 instead of disappearing)
     return {
       categories: AGE_GROUPS,
-      data: AGE_GROUPS.map(group => ({
+      data: AGE_GROUPS.map((group) => ({
         y: ageCounts[group],
         samples: samplesByAgeGroup[group], // Attach samples to each data point
       })),
@@ -200,8 +227,8 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
 
     const uniqueParticipants = new Map();
     const samplesByRace = {};
-    RACE_GROUPS.forEach(group => samplesByRace[group] = []);
-    
+    RACE_GROUPS.forEach((group) => (samplesByRace[group] = []));
+
     data.forEach((record) => {
       if (record.pid) {
         const raceCategory = getRaceCategory(record);
@@ -218,7 +245,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     });
 
     const raceCounts = {};
-    RACE_GROUPS.forEach(group => raceCounts[group] = 0);
+    RACE_GROUPS.forEach((group) => (raceCounts[group] = 0));
 
     uniqueParticipants.forEach((race) => {
       if (raceCounts.hasOwnProperty(race)) {
@@ -229,7 +256,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     // Keep all race groups for smooth animation (bars animate to 0 instead of disappearing)
     return {
       categories: RACE_GROUPS,
-      data: RACE_GROUPS.map(group => ({
+      data: RACE_GROUPS.map((group) => ({
         y: raceCounts[group],
         samples: samplesByRace[group], // Attach samples to each data point
       })),
@@ -242,7 +269,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
 
     const uniqueParticipants = new Map();
     const samplesByBMIGroup = {};
-    BMI_GROUPS.forEach(group => samplesByBMIGroup[group] = []);
+    BMI_GROUPS.forEach((group) => (samplesByBMIGroup[group] = []));
 
     data.forEach((record) => {
       if (record.pid && record.bmi) {
@@ -260,7 +287,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     });
 
     const bmiCounts = {};
-    BMI_GROUPS.forEach(group => bmiCounts[group] = 0);
+    BMI_GROUPS.forEach((group) => (bmiCounts[group] = 0));
 
     uniqueParticipants.forEach((bmiGroup) => {
       if (bmiCounts.hasOwnProperty(bmiGroup)) {
@@ -287,7 +314,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
       'Not Latino, Hispanic, or Spanish origin/ethnicity': [],
       'Refused/Unknown': [],
     };
-    
+
     data.forEach((record) => {
       if (record.pid) {
         const ethnicityCategory = getEthnicityCategory(record);
@@ -316,21 +343,25 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     });
 
     return [
-      { 
-        name: 'Latino, Hispanic, or Spanish', 
-        y: ethnicityCounts['Latino, Hispanic, or Spanish origin/ethnicity'], 
+      {
+        name: 'Latino, Hispanic, or Spanish',
+        y: ethnicityCounts['Latino, Hispanic, or Spanish origin/ethnicity'],
         color: '#16a085',
-        samples: samplesByEthnicity['Latino, Hispanic, or Spanish origin/ethnicity'],
+        samples:
+          samplesByEthnicity['Latino, Hispanic, or Spanish origin/ethnicity'],
       },
-      { 
-        name: 'Not Latino, Hispanic, or Spanish', 
-        y: ethnicityCounts['Not Latino, Hispanic, or Spanish origin/ethnicity'], 
+      {
+        name: 'Not Latino, Hispanic, or Spanish',
+        y: ethnicityCounts['Not Latino, Hispanic, or Spanish origin/ethnicity'],
         color: '#95a5a6',
-        samples: samplesByEthnicity['Not Latino, Hispanic, or Spanish origin/ethnicity'],
+        samples:
+          samplesByEthnicity[
+            'Not Latino, Hispanic, or Spanish origin/ethnicity'
+          ],
       },
-      { 
-        name: 'Refused/Unknown', 
-        y: ethnicityCounts['Refused/Unknown'], 
+      {
+        name: 'Refused/Unknown',
+        y: ethnicityCounts['Refused/Unknown'],
         color: '#bdc3c7',
         samples: samplesByEthnicity['Refused/Unknown'],
       },
@@ -343,8 +374,8 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
 
     const uniqueParticipants = new Map();
     const samplesByGroup = {};
-    RANDOMIZED_GROUPS.forEach(group => samplesByGroup[group] = []);
-    
+    RANDOMIZED_GROUPS.forEach((group) => (samplesByGroup[group] = []));
+
     data.forEach((record) => {
       if (record.pid) {
         const group = getRandomizedGroup(record);
@@ -361,7 +392,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     });
 
     const groupCounts = {};
-    RANDOMIZED_GROUPS.forEach(group => groupCounts[group] = 0);
+    RANDOMIZED_GROUPS.forEach((group) => (groupCounts[group] = 0));
 
     uniqueParticipants.forEach((group) => {
       if (groupCounts.hasOwnProperty(group)) {
@@ -372,7 +403,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     // Keep all groups for smooth animation (bars animate to 0 instead of disappearing)
     return {
       categories: RANDOMIZED_GROUPS,
-      data: RANDOMIZED_GROUPS.map(group => ({
+      data: RANDOMIZED_GROUPS.map((group) => ({
         y: groupCounts[group],
         samples: samplesByGroup[group], // Attach samples to each data point
       })),
@@ -387,12 +418,13 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     // Determine which tissues to show in the chart
     // If no tissue filters are active (length 0), show all tissues (default behavior)
     // Otherwise, show only the selected tissues
-    const selectedTissues = activeFilters?.tissue?.length > 0 
-      ? activeFilters.tissue 
-      : TISSUE_TYPES;
+    const selectedTissues =
+      activeFilters?.tissue?.length > 0 ? activeFilters.tissue : TISSUE_TYPES;
 
     // Always maintain consistent tissue order: Adipose, Blood, Muscle
-    const orderedSelectedTissues = TISSUE_TYPES.filter(t => selectedTissues.includes(t));
+    const orderedSelectedTissues = TISSUE_TYPES.filter((t) =>
+      selectedTissues.includes(t),
+    );
 
     // Collect all unique assay types and group data by tissue
     const assayData = {};
@@ -405,15 +437,15 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
 
       const assays = parseAssayTypes(record.raw_assays_with_results);
       const tissueName = getTissueName(record.sample_group_code);
-      
-      assays.forEach(assay => {
+
+      assays.forEach((assay) => {
         if (!assayData[assay]) {
           assayData[assay] = {
             name: assay,
             total: 0,
             byPhase: {},
           };
-          INTERVENTION_PHASES.forEach(p => {
+          INTERVENTION_PHASES.forEach((p) => {
             assayData[assay].byPhase[p] = {
               count: 0,
               samples: [],
@@ -447,41 +479,41 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     });
 
     // Sort assays by total count (descending)
-    const sortedAssays = Object.values(assayData)
-      .sort((a, b) => b.total - a.total);
+    const sortedAssays = Object.values(assayData).sort(
+      (a, b) => b.total - a.total,
+    );
 
-    const categories = sortedAssays.map(a => getAssayShortName(a.name));
+    const categories = sortedAssays.map((a) => getAssayShortName(a.name));
 
     // Create separate chart data for Pre-Intervention and Post-Intervention phases
     // Always use stacked series by tissue in consistent order
     const chartsData = INTERVENTION_PHASES.map((phase) => {
       // Create stacked series - one per selected tissue, in consistent order
       // Zero-count data points are set to null so Highcharts doesn't render them
-      const series = orderedSelectedTissues
-        .map(tissueName => {
-          const dataPoints = sortedAssays.map(assay => {
-            const phaseData = assay.byPhase[phase];
-            const tissueData = phaseData?.byTissue?.[tissueName];
-            const count = tissueData ? tissueData.count : 0;
-            
-            return {
-              // Use null for zero values so Highcharts doesn't render them
-              y: count === 0 ? null : count,
-              phase,
-              assay: assay.name,
-              tissue: tissueName,
-              samples: tissueData ? tissueData.samples : [],
-              assayTypes: tissueData ? Array.from(tissueData.assayTypes) : [],
-            };
-          });
-          
+      const series = orderedSelectedTissues.map((tissueName) => {
+        const dataPoints = sortedAssays.map((assay) => {
+          const phaseData = assay.byPhase[phase];
+          const tissueData = phaseData?.byTissue?.[tissueName];
+          const count = tissueData ? tissueData.count : 0;
+
           return {
-            name: tissueName,
-            color: TISSUE_COLORS[tissueName],
-            data: dataPoints,
+            // Use null for zero values so Highcharts doesn't render them
+            y: count === 0 ? null : count,
+            phase,
+            assay: assay.name,
+            tissue: tissueName,
+            samples: tissueData ? tissueData.samples : [],
+            assayTypes: tissueData ? Array.from(tissueData.assayTypes) : [],
           };
         });
-        
+
+        return {
+          name: tissueName,
+          color: TISSUE_COLORS[tissueName],
+          data: dataPoints,
+        };
+      });
+
       return { phase, categories, series };
     });
 
@@ -499,10 +531,11 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
       },
       title: {
         text: 'Sex Distribution',
-        style: { fontSize: '14px', fontWeight: 'bold' }
+        style: { fontSize: '14px', fontWeight: 'bold' },
       },
       tooltip: {
-        pointFormat: '<b>{point.y}</b> participants ({point.percentage:.1f}%)<br/><em style="font-size: 10px;">Click to view samples</em>'
+        pointFormat:
+          '<b>{point.y}</b> participants ({point.percentage:.1f}%)<br/><em style="font-size: 10px;">Click to view samples</em>',
       },
       plotOptions: {
         pie: {
@@ -526,18 +559,20 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
                       y: this.samples.length,
                       samples: this.samples,
                       demographicType: 'Sex',
-                    }
+                    },
                   });
                 }
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       },
-      series: [{
-        name: 'Participants',
-        data: participantBySex,
-      }],
+      series: [
+        {
+          name: 'Participants',
+          data: participantBySex,
+        },
+      ],
       credits: { enabled: false },
     };
   }, [participantBySex, onBarClick]);
@@ -553,17 +588,17 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
       },
       title: {
         text: 'Age Group Distribution',
-        style: { fontSize: '14px', fontWeight: 'bold' }
+        style: { fontSize: '14px', fontWeight: 'bold' },
       },
       xAxis: {
         categories: participantByAgeGroup.categories,
         title: {
           text: 'Age Group',
-          style: { fontSize: '12px', fontWeight: 'bold' }
+          style: { fontSize: '12px', fontWeight: 'bold' },
         },
         labels: {
-          style: { fontSize: '11px' }
-        }
+          style: { fontSize: '11px' },
+        },
       },
       yAxis: {
         min: 0,
@@ -571,17 +606,18 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
         allowDecimals: false,
         title: {
           text: 'Participant Count',
-          style: { fontSize: '12px', fontWeight: 'bold' }
+          style: { fontSize: '12px', fontWeight: 'bold' },
         },
         labels: {
-          style: { fontSize: '11px' }
-        }
+          style: { fontSize: '11px' },
+        },
       },
       legend: {
         enabled: false,
       },
       tooltip: {
-        pointFormat: '<b>{point.y}</b> participants<br/><em style="font-size: 10px;">Click to view samples</em>'
+        pointFormat:
+          '<b>{point.y}</b> participants<br/><em style="font-size: 10px;">Click to view samples</em>',
       },
       plotOptions: {
         column: {
@@ -589,7 +625,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
           dataLabels: {
             enabled: true,
             format: '{point.y}',
-            style: { fontSize: '10px' }
+            style: { fontSize: '10px' },
           },
           color: '#9b59b6',
           point: {
@@ -603,18 +639,20 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
                       y: this.samples.length,
                       samples: this.samples,
                       demographicType: 'Age Group',
-                    }
+                    },
                   });
                 }
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       },
-      series: [{
-        name: 'Participants',
-        data: participantByAgeGroup.data,
-      }],
+      series: [
+        {
+          name: 'Participants',
+          data: participantByAgeGroup.data,
+        },
+      ],
       credits: { enabled: false },
     };
   }, [participantByAgeGroup, fixedMaxAgeGroupCount, onBarClick]);
@@ -630,18 +668,18 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
       },
       title: {
         text: 'Race Distribution',
-        style: { fontSize: '14px', fontWeight: 'bold' }
+        style: { fontSize: '14px', fontWeight: 'bold' },
       },
       xAxis: {
         categories: participantByRace.categories,
         title: {
           text: 'Race',
-          style: { fontSize: '12px', fontWeight: 'bold' }
+          style: { fontSize: '12px', fontWeight: 'bold' },
         },
         labels: {
           rotation: -45,
-          style: { fontSize: '10px' }
-        }
+          style: { fontSize: '10px' },
+        },
       },
       yAxis: {
         min: 0,
@@ -649,17 +687,18 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
         allowDecimals: false,
         title: {
           text: 'Participant Count',
-          style: { fontSize: '12px', fontWeight: 'bold' }
+          style: { fontSize: '12px', fontWeight: 'bold' },
         },
         labels: {
-          style: { fontSize: '11px' }
-        }
+          style: { fontSize: '11px' },
+        },
       },
       legend: {
         enabled: false,
       },
       tooltip: {
-        pointFormat: '<b>{point.y}</b> participants<br/><em style="font-size: 10px;">Click to view samples</em>'
+        pointFormat:
+          '<b>{point.y}</b> participants<br/><em style="font-size: 10px;">Click to view samples</em>',
       },
       plotOptions: {
         column: {
@@ -667,7 +706,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
           dataLabels: {
             enabled: true,
             format: '{point.y}',
-            style: { fontSize: '10px' }
+            style: { fontSize: '10px' },
           },
           color: '#3498db',
           point: {
@@ -681,18 +720,20 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
                       y: this.samples.length,
                       samples: this.samples,
                       demographicType: 'Race',
-                    }
+                    },
                   });
                 }
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       },
-      series: [{
-        name: 'Participants',
-        data: participantByRace.data,
-      }],
+      series: [
+        {
+          name: 'Participants',
+          data: participantByRace.data,
+        },
+      ],
       credits: { enabled: false },
     };
   }, [participantByRace, fixedMaxRaceCount, onBarClick]);
@@ -708,10 +749,11 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
       },
       title: {
         text: 'BMI Group Distribution',
-        style: { fontSize: '14px', fontWeight: 'bold' }
+        style: { fontSize: '14px', fontWeight: 'bold' },
       },
       tooltip: {
-        pointFormat: '<b>{point.y}</b> participants ({point.percentage:.1f}%)<br/><em style="font-size: 10px;">Click to view samples</em>'
+        pointFormat:
+          '<b>{point.y}</b> participants ({point.percentage:.1f}%)<br/><em style="font-size: 10px;">Click to view samples</em>',
       },
       plotOptions: {
         pie: {
@@ -735,18 +777,20 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
                       y: this.samples.length,
                       samples: this.samples,
                       demographicType: 'BMI Group',
-                    }
+                    },
                   });
                 }
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       },
-      series: [{
-        name: 'Participants',
-        data: participantByBMI,
-      }],
+      series: [
+        {
+          name: 'Participants',
+          data: participantByBMI,
+        },
+      ],
       credits: { enabled: false },
     };
   }, [participantByBMI, onBarClick]);
@@ -762,10 +806,11 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
       },
       title: {
         text: 'Ethnicity Distribution',
-        style: { fontSize: '14px', fontWeight: 'bold' }
+        style: { fontSize: '14px', fontWeight: 'bold' },
       },
       tooltip: {
-        pointFormat: '<b>{point.y}</b> participants ({point.percentage:.1f}%)<br/><em style="font-size: 10px;">Click to view samples</em>'
+        pointFormat:
+          '<b>{point.y}</b> participants ({point.percentage:.1f}%)<br/><em style="font-size: 10px;">Click to view samples</em>',
       },
       plotOptions: {
         pie: {
@@ -789,18 +834,20 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
                       y: this.samples.length,
                       samples: this.samples,
                       demographicType: 'Ethnicity',
-                    }
+                    },
                   });
                 }
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       },
-      series: [{
-        name: 'Participants',
-        data: participantByEthnicity,
-      }],
+      series: [
+        {
+          name: 'Participants',
+          data: participantByEthnicity,
+        },
+      ],
       credits: { enabled: false },
     };
   }, [participantByEthnicity, onBarClick]);
@@ -816,17 +863,17 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
       },
       title: {
         text: 'Randomized Group Distribution',
-        style: { fontSize: '14px', fontWeight: 'bold' }
+        style: { fontSize: '14px', fontWeight: 'bold' },
       },
       xAxis: {
         categories: participantByRandomGroup.categories,
         title: {
           text: 'Randomized Group',
-          style: { fontSize: '12px', fontWeight: 'bold' }
+          style: { fontSize: '12px', fontWeight: 'bold' },
         },
         labels: {
-          style: { fontSize: '11px' }
-        }
+          style: { fontSize: '11px' },
+        },
       },
       yAxis: {
         min: 0,
@@ -834,17 +881,18 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
         allowDecimals: false,
         title: {
           text: 'Participant Count',
-          style: { fontSize: '12px', fontWeight: 'bold' }
+          style: { fontSize: '12px', fontWeight: 'bold' },
         },
         labels: {
-          style: { fontSize: '11px' }
-        }
+          style: { fontSize: '11px' },
+        },
       },
       legend: {
         enabled: false,
       },
       tooltip: {
-        pointFormat: '<b>{point.y}</b> participants<br/><em style="font-size: 10px;">Click to view samples</em>'
+        pointFormat:
+          '<b>{point.y}</b> participants<br/><em style="font-size: 10px;">Click to view samples</em>',
       },
       plotOptions: {
         column: {
@@ -852,32 +900,35 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
           dataLabels: {
             enabled: true,
             format: '{point.y}',
-            style: { fontSize: '10px' }
+            style: { fontSize: '10px' },
           },
           color: '#e67e22',
           point: {
             events: {
               click: function () {
                 if (onBarClick && this.samples) {
-                  const groupCategory = participantByRandomGroup.categories[this.index];
+                  const groupCategory =
+                    participantByRandomGroup.categories[this.index];
                   onBarClick({
                     point: {
                       category: groupCategory,
                       y: this.samples.length,
                       samples: this.samples,
                       demographicType: 'Randomized Group',
-                    }
+                    },
                   });
                 }
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       },
-      series: [{
-        name: 'Participants',
-        data: participantByRandomGroup.data,
-      }],
+      series: [
+        {
+          name: 'Participants',
+          data: participantByRandomGroup.data,
+        },
+      ],
       credits: { enabled: false },
     };
   }, [participantByRandomGroup, fixedMaxRandomGroupCount, onBarClick]);
@@ -888,25 +939,25 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     if (!chartData || !data) return null;
 
     return chartData.map(({ phase, categories, series }) => ({
-        chart: {
-          type: 'bar',
-          height: Math.max(400, categories.length * 40 + 100),
-          marginBottom: 80,
-        },
+      chart: {
+        type: 'bar',
+        height: Math.max(400, categories.length * 40 + 100),
+        marginBottom: 80,
+      },
       title: {
         text: phase,
         align: 'center',
-        style: { fontSize: '16px', fontWeight: 'bold' }
+        style: { fontSize: '16px', fontWeight: 'bold' },
       },
       xAxis: {
         categories: categories,
         title: {
           text: 'Assay',
-          style: { fontSize: '12px', fontWeight: 'bold' }
+          style: { fontSize: '12px', fontWeight: 'bold' },
         },
         labels: {
-          style: { fontSize: '11px' }
-        }
+          style: { fontSize: '11px' },
+        },
       },
       yAxis: {
         min: 0,
@@ -915,11 +966,11 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
         title: {
           text: 'Sample Count',
           y: 30,
-          style: { fontSize: '12px', fontWeight: 'bold' }
+          style: { fontSize: '12px', fontWeight: 'bold' },
         },
         labels: {
-          style: { fontSize: '11px' }
-        }
+          style: { fontSize: '11px' },
+        },
       },
       legend: {
         enabled: true,
@@ -927,18 +978,19 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
         verticalAlign: 'bottom',
         layout: 'horizontal',
         itemStyle: {
-          fontSize: '11px'
-        }
+          fontSize: '11px',
+        },
       },
       tooltip: {
         useHTML: true,
         formatter: function () {
           const point = this.point;
           // Convert assay codes to human-readable names
-          const assayList = point.assayTypes && point.assayTypes.length > 0
-            ? getAssayFullNames(point.assayTypes).join(', ')
-            : 'N/A';
-          
+          const assayList =
+            point.assayTypes && point.assayTypes.length > 0
+              ? getAssayFullNames(point.assayTypes).join(', ')
+              : 'N/A';
+
           return `
             <div style="padding: 8px;">
               <strong>Assay:</strong> ${getAssayFullName(point.assay)}<br/>
@@ -948,18 +1000,18 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
               <em style="color: #666; font-size: 11px;">Click to view details</em>
             </div>
           `;
-        }
+        },
       },
       plotOptions: {
         bar: {
           cursor: 'pointer',
           dataLabels: {
             enabled: true,
-            formatter: function() {
+            formatter: function () {
               // Don't show label for null values (used to hide zero-count segments)
               return this.y === null ? null : this.y;
             },
-            style: { fontSize: '10px' }
+            style: { fontSize: '10px' },
           },
           groupPadding: 0.1,
           pointPadding: 0.05,
@@ -971,27 +1023,32 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
             events: {
               click: function () {
                 if (onBarClick && this.samples) {
-                  onBarClick({ 
+                  onBarClick({
                     point: {
                       ...this,
-                      tissue: this.tissue || this.series.name
-                    }
+                      tissue: this.tissue || this.series.name,
+                    },
                   });
                 }
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       },
       series: series,
       credits: { enabled: false },
-      exporting: { 
+      exporting: {
         enabled: true,
         buttons: {
           contextButton: {
-            menuItems: ['downloadPNG', 'downloadJPEG', 'downloadPDF', 'downloadSVG']
-          }
-        }
+            menuItems: [
+              'downloadPNG',
+              'downloadJPEG',
+              'downloadPDF',
+              'downloadSVG',
+            ],
+          },
+        },
       },
     }));
   }, [chartData, data, fixedMaxCount, onBarClick]);
@@ -1046,14 +1103,14 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
           <div className="card-header">
             <h5 className="mb-0">
               <span className="mr-2">Participants</span>
-              <i 
-                className="bi bi-info-circle-fill text-secondary" 
+              <i
+                className="bi bi-info-circle-fill text-secondary"
                 style={{ cursor: 'pointer' }}
                 data-tooltip-id="participants-info-tooltip"
                 data-tooltip-content="Participant distributions by different demographics"
               />
-              <Tooltip 
-                id="participants-info-tooltip" 
+              <Tooltip
+                id="participants-info-tooltip"
                 style={{ fontSize: '0.95rem', maxWidth: '250px' }}
               />
             </h5>
@@ -1156,15 +1213,17 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
         <div className="card">
           <div className="card-header">
             <h5 className="mb-0">
-              <span className="mr-2">Biospecimen sample counts (per currently available data)</span>
-              <i 
-                className="bi bi-info-circle-fill text-secondary" 
+              <span className="mr-2">
+                Biospecimen sample counts (per currently available data)
+              </span>
+              <i
+                className="bi bi-info-circle-fill text-secondary"
                 style={{ cursor: 'pointer' }}
                 data-tooltip-id="biospecimen-sample-count-info-tooltip"
                 data-tooltip-content="Biospecimens associated with participants by assays"
               />
-              <Tooltip 
-                id="biospecimen-sample-count-info-tooltip" 
+              <Tooltip
+                id="biospecimen-sample-count-info-tooltip"
                 style={{ fontSize: '0.95rem', maxWidth: '250px' }}
               />
             </h5>

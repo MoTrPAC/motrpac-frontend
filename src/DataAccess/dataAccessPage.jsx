@@ -40,7 +40,7 @@ const defaultFormValues = {
  *
  * @returns {object} JSX representation of the data access page
  */
-export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
+export function DataAccessPage({ isAuthenticated = false, profile = {} }) {
   const [reCaptcha, setReCaptcha] = useState('');
   const [auth0Status, setAuth0Status] = useState();
   const [auth0Error, setAuth0Error] = useState();
@@ -49,15 +49,13 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
   const [formValues, setFormValues] = useState(defaultFormValues);
   const [requestPending, setRequestPending] = useState(false);
 
-  const api =
-    import.meta.env.DEV
-      ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
-      : import.meta.env.VITE_API_SERVICE_ADDRESS;
+  const api = import.meta.env.DEV
+    ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+    : import.meta.env.VITE_API_SERVICE_ADDRESS;
   const endpoint = import.meta.env.VITE_USER_REGISTRATION_ENDPOINT;
-  const key =
-    import.meta.env.DEV
-      ? import.meta.env.VITE_API_SERVICE_KEY_DEV
-      : import.meta.env.VITE_API_SERVICE_KEY;
+  const key = import.meta.env.DEV
+    ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+    : import.meta.env.VITE_API_SERVICE_KEY;
   const recaptchaKey = import.meta.env.VITE_reCAPTCHA_SITE_KEY;
 
   useEffect(() => {
@@ -75,7 +73,10 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
     const invalidValues = [];
 
     Object.entries(newObj).forEach(([key, value]) => {
-      if ((typeof value === 'string' && !value.length) || (typeof value === 'boolean' && value === false)) {
+      if (
+        (typeof value === 'string' && !value.length) ||
+        (typeof value === 'boolean' && value === false)
+      ) {
         invalidValues.push(key);
       }
     });
@@ -99,7 +100,9 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
   // Render registration response view if auth0 post request is successful
   if (auth0Status && auth0Status.length) {
     return (
-      <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 dataAccessPage`}>
+      <div
+        className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 dataAccessPage`}
+      >
         <div className={`${!isAuthenticated ? 'container' : ''}`}>
           <RegistrationResponse status={auth0Status} errMsg={auth0Error} />
         </div>
@@ -159,7 +162,7 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
       'dataUseAgreement5',
       'dataUseAgreement6',
     ];
-    const uncheckboxes = checkboxes.filter(checkbox => !formValues[checkbox]);
+    const uncheckboxes = checkboxes.filter((checkbox) => !formValues[checkbox]);
     if (uncheckboxes.length) {
       setCheckboxAlert(true);
     } else {
@@ -180,7 +183,9 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
     setCheckboxAlert(false);
     setFormValidated(false);
     fields.forEach((field) => {
-      document.querySelector(`#${field}`).classList.remove('is-valid', 'is-invalid');
+      document
+        .querySelector(`#${field}`)
+        .classList.remove('is-valid', 'is-invalid');
     });
   }
 
@@ -209,59 +214,85 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
     const serviceUrl = `${api}${endpoint}?key=${key}`;
     const timeOutConfig = { timeout: 5000 };
 
-    return axios.post(serviceUrl, userObj, timeOutConfig).then((response) => {
-      setAuth0Status(response.data.status);
-      // handle default Auth0 error returned by backend service
-      if (response.data.auth0) {
-        setAuth0Error(response.data.auth0);
-      }
-      // revert submit button to default state
-      setRequestPending(false);
-    }).catch((err) => {
-      setAuth0Status('internal-error');
-      // revert submit button to default state
-      setRequestPending(false);
-      console.log(`${err.error}: ${err.errorDescription}`);
-    });
+    return axios
+      .post(serviceUrl, userObj, timeOutConfig)
+      .then((response) => {
+        setAuth0Status(response.data.status);
+        // handle default Auth0 error returned by backend service
+        if (response.data.auth0) {
+          setAuth0Error(response.data.auth0);
+        }
+        // revert submit button to default state
+        setRequestPending(false);
+      })
+      .catch((err) => {
+        setAuth0Status('internal-error');
+        // revert submit button to default state
+        setRequestPending(false);
+        console.log(`${err.error}: ${err.errorDescription}`);
+      });
   }
 
   return (
-    <div className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 dataAccessPage`}>
+    <div
+      className={`col-md-9 ${isAuthenticated ? 'ml-sm-auto' : ''} col-lg-10 px-4 dataAccessPage`}
+    >
       <Helmet>
         <html lang="en" />
-        <title>Limited Acute Exercise Data Access Signup - MoTrPAC Data Hub</title>
+        <title>
+          Limited Acute Exercise Data Access Signup - MoTrPAC Data Hub
+        </title>
       </Helmet>
       <div className={`${!isAuthenticated ? 'container' : ''}`}>
-        <form id="dataAccessRegistration" name="dataAccessRegistration" noValidate>
+        <form
+          id="dataAccessRegistration"
+          name="dataAccessRegistration"
+          noValidate
+        >
           <PageTitle title="MoTrPAC External Data Release" />
-          <div className="alert alert-info alert-limited-acute-exercise-date mt-4" role="alert">
-            A limited data set from adult rats (6-month old) that performed an acute
-            bout of endurance exercise is available to registered users. Please
-            see the <Link to="/data-download">data download page</Link> if you
-            are interested in the full experimental data set from endurance
-            trained (1wk, 2wks, 4wks or 8wks) compared to untrained adult rats.
+          <div
+            className="alert alert-info alert-limited-acute-exercise-date mt-4"
+            role="alert"
+          >
+            A limited data set from adult rats (6-month old) that performed an
+            acute bout of endurance exercise is available to registered users.
+            Please see the <Link to="/data-download">data download page</Link>{' '}
+            if you are interested in the full experimental data set from
+            endurance trained (1wk, 2wks, 4wks or 8wks) compared to untrained
+            adult rats.
           </div>
-          <div className="alert alert-dark alert-consortia-members-access mt-4" role="alert">
-            MoTrPAC consortium members are not required to fill out the following data use
-            agreement and registration. Consortium members who already have registered
-            accounts may access the released data upon login. Consortium members who don't
-            have registered accounts and wish to access the data, please contact
-            {' '}
-            <EmailLink mailto="motrpac-helpdesk@lists.stanford.edu" label="MoTrPAC Helpdesk" />
+          <div
+            className="alert alert-dark alert-consortia-members-access mt-4"
+            role="alert"
+          >
+            MoTrPAC consortium members are not required to fill out the
+            following data use agreement and registration. Consortium members
+            who already have registered accounts may access the released data
+            upon login. Consortium members who don't have registered accounts
+            and wish to access the data, please contact{' '}
+            <EmailLink
+              mailto="motrpac-helpdesk@lists.stanford.edu"
+              label="MoTrPAC Helpdesk"
+            />
           </div>
           <div className="data-access-content">
             <p>
-              <ExternalLink to="https://commonfund.nih.gov/moleculartransducers" label="MoTrPAC" />
-              {' '}
-              (Molecular Transducers of Physical Activity Consortium) is a national research
-              consortium funded by the
-              {' '}
-              <ExternalLink to="https://commonfund.nih.gov" label="NIH Common Fund" />
-              . MoTrPAC is designed to discover and perform
-              preliminary characterization of the range of molecular transducers
-              (the "molecular map") that underlie the effects of physical activity. The study
-              consists of acute and long-term exercise interventions in humans and rats, where
-              multiple tissues are collected at multiple time points.
+              <ExternalLink
+                to="https://commonfund.nih.gov/moleculartransducers"
+                label="MoTrPAC"
+              />{' '}
+              (Molecular Transducers of Physical Activity Consortium) is a
+              national research consortium funded by the{' '}
+              <ExternalLink
+                to="https://commonfund.nih.gov"
+                label="NIH Common Fund"
+              />
+              . MoTrPAC is designed to discover and perform preliminary
+              characterization of the range of molecular transducers (the
+              "molecular map") that underlie the effects of physical activity.
+              The study consists of acute and long-term exercise interventions
+              in humans and rats, where multiple tissues are collected at
+              multiple time points.
             </p>
           </div>
           <div className="section-title mt-4 mb-2">
@@ -269,18 +300,19 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
           </div>
           <div className="data-access-content">
             <p>
-              To access MoTrPAC data, please register and fill out the data use agreement here
-              (see below). Assay-specific results and associated metadata, QC reports and animal
-              phenotype data can be downloaded as separate files or as a combined file from the
-              MoTrPAC Data Hub.
-              {' '}
+              To access MoTrPAC data, please register and fill out the data use
+              agreement here (see below). Assay-specific results and associated
+              metadata, QC reports and animal phenotype data can be downloaded
+              as separate files or as a combined file from the MoTrPAC Data Hub.{' '}
               <strong>
-                Please note that there is a publication embargo on the MoTrPAC data until the
-                release of additional control data necessary to fully control the analysis for
-                non-exercise induced molecular changes in the current dataset (<em>e.g.</em> changes
-                due to sampling and fasting time post exercise). Until then, data can only be used
-                for analyses supporting grant submissions, and cannot be used in abstracts,
-                manuscripts, preprints or presentations.
+                Please note that there is a publication embargo on the MoTrPAC
+                data until the release of additional control data necessary to
+                fully control the analysis for non-exercise induced molecular
+                changes in the current dataset (<em>e.g.</em> changes due to
+                sampling and fasting time post exercise). Until then, data can
+                only be used for analyses supporting grant submissions, and
+                cannot be used in abstracts, manuscripts, preprints or
+                presentations.
               </strong>
             </p>
           </div>
@@ -290,49 +322,60 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
           <div className="data-access-content">
             <p>
               <span className="subhead">Release 1.0:</span>
-              This release contains data from 6-month old rats that performed an acute bout
-              of endurance exercise. For a full description of this study, see the animal
-              protocol (Phase 1A) study documentation. There is data from 5 different tissues
-              collected at multiple different time points after exercise. Untrained control
-              animals from 2 time points are also included. The data includes phenotypic
-              and -omic data from multiple assays, including RNA sequencing, Reduced Representation
-              Bisulfite Sequencing (RRBS), proteomics, phosphoproteomics, acetylproteomics,
-              and targeted and untargeted metabolomics.
+              This release contains data from 6-month old rats that performed an
+              acute bout of endurance exercise. For a full description of this
+              study, see the animal protocol (Phase 1A) study documentation.
+              There is data from 5 different tissues collected at multiple
+              different time points after exercise. Untrained control animals
+              from 2 time points are also included. The data includes phenotypic
+              and -omic data from multiple assays, including RNA sequencing,
+              Reduced Representation Bisulfite Sequencing (RRBS), proteomics,
+              phosphoproteomics, acetylproteomics, and targeted and untargeted
+              metabolomics.
             </p>
           </div>
           <StudyDocumentsTable currentView="external" />
           <div className="card mb-3 border-secondary">
-            <h5 className="card-header bg-secondary text-light">Data Use Agreement and Registration</h5>
+            <h5 className="card-header bg-secondary text-light">
+              Data Use Agreement and Registration
+            </h5>
             <div className="card-body">
               {/* Data use agreement section */}
               <h5 className="card-title pt-1 pb-2">Data Use Agreement</h5>
               <div className="data-access-content data-use-agreement-container">
                 <p className="card-text">
-                  Use of MoTrPAC external release data is subject to the terms specified in this
-                  Data Use Agreement. The terms establish and maintain an appropriate balance
-                  between the interests data users have in rapid access to data and needs that
-                  data producers have to publish and receive recognition for their work.
+                  Use of MoTrPAC external release data is subject to the terms
+                  specified in this Data Use Agreement. The terms establish and
+                  maintain an appropriate balance between the interests data
+                  users have in rapid access to data and needs that data
+                  producers have to publish and receive recognition for their
+                  work.
                 </p>
                 <p className="card-text">
-                  MoTrPAC is a community research project; the goal is to make data available
-                  rapidly after generation for community research use. MoTrPAC consortium
-                  members have plans for several publications and to avoid duplicate efforts and
-                  promote collaborations between MoTrPAC internal and external investigators, external
-                  researchers are encouraged to coordinate their independent efforts with the
-                  MoTrPAC publication schedule.This may be done by contacting MoTrPAC through
-                  {' '}
-                  <ExternalLink to="https://www.motrpac.org/ancillarystudyguidelines.cfm" label="submitting a proposal" />
-                  {' '}
-                  or
-                  {' '}
-                  <EmailLink mailto="MoTrPAC-ACC@aging.ufl.edu" label="MoTrPAC ACC" />
-                  {' '}
+                  MoTrPAC is a community research project; the goal is to make
+                  data available rapidly after generation for community research
+                  use. MoTrPAC consortium members have plans for several
+                  publications and to avoid duplicate efforts and promote
+                  collaborations between MoTrPAC internal and external
+                  investigators, external researchers are encouraged to
+                  coordinate their independent efforts with the MoTrPAC
+                  publication schedule.This may be done by contacting MoTrPAC
+                  through{' '}
+                  <ExternalLink
+                    to="https://www.motrpac.org/ancillarystudyguidelines.cfm"
+                    label="submitting a proposal"
+                  />{' '}
+                  or{' '}
+                  <EmailLink
+                    mailto="MoTrPAC-ACC@aging.ufl.edu"
+                    label="MoTrPAC ACC"
+                  />{' '}
                   (Administrative Coordinating Center).
                 </p>
                 <p className="card-text">
-                  MoTrPAC data is available for exploration by external researchers
-                  agreeing to the terms of this DUA. The terms for use of MoTrPAC
-                  data include:
+                  MoTrPAC data is available for exploration by external
+                  researchers agreeing to the terms of this DUA. The terms for
+                  use of MoTrPAC data include:
                 </p>
                 <div className="form-row user-agreement-item">
                   <div className="form-group col-md-12">
@@ -342,10 +385,15 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
                         type="checkbox"
                         id="dataUseAgreement1"
                         required
-                        onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
+                        onChange={(e) =>
+                          handleCheckboxClick(e.currentTarget.checked, e)
+                        }
                         checked={formValues.dataUseAgreement1}
                       />
-                      <label className="form-check-label" htmlFor="dataUseAgreement1">
+                      <label
+                        className="form-check-label"
+                        htmlFor="dataUseAgreement1"
+                      >
                         Data&nbsp;
                         <strong>CANNOT</strong>
                         &nbsp;be used for&nbsp;
@@ -364,13 +412,19 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
                         type="checkbox"
                         id="dataUseAgreement2"
                         required
-                        onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
+                        onChange={(e) =>
+                          handleCheckboxClick(e.currentTarget.checked, e)
+                        }
                         checked={formValues.dataUseAgreement2}
                       />
-                      <label className="form-check-label" htmlFor="dataUseAgreement2">
+                      <label
+                        className="form-check-label"
+                        htmlFor="dataUseAgreement2"
+                      >
                         Data&nbsp;
                         <strong>CANNOT</strong>
-                        &nbsp;be publicly hosted or disseminated before the embargo expires.
+                        &nbsp;be publicly hosted or disseminated before the
+                        embargo expires.
                       </label>
                     </div>
                   </div>
@@ -383,14 +437,19 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
                         type="checkbox"
                         id="dataUseAgreement3"
                         required
-                        onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
+                        onChange={(e) =>
+                          handleCheckboxClick(e.currentTarget.checked, e)
+                        }
                         checked={formValues.dataUseAgreement3}
                       />
-                      <label className="form-check-label" htmlFor="dataUseAgreement3">
-                        The embargo period for any type of publication of MoTrPAC
-                        External Release 1 data is until release of additional control
-                        data necessary for full control of non-exercise induced
-                        molecular effects.
+                      <label
+                        className="form-check-label"
+                        htmlFor="dataUseAgreement3"
+                      >
+                        The embargo period for any type of publication of
+                        MoTrPAC External Release 1 data is until release of
+                        additional control data necessary for full control of
+                        non-exercise induced molecular effects.
                       </label>
                     </div>
                   </div>
@@ -403,14 +462,19 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
                         type="checkbox"
                         id="dataUseAgreement4"
                         required
-                        onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
+                        onChange={(e) =>
+                          handleCheckboxClick(e.currentTarget.checked, e)
+                        }
                         checked={formValues.dataUseAgreement4}
                       />
-                      <label className="form-check-label" htmlFor="dataUseAgreement4">
+                      <label
+                        className="form-check-label"
+                        htmlFor="dataUseAgreement4"
+                      >
                         Data&nbsp;
                         <strong>CAN</strong>
-                        &nbsp;be used for analyses supporting grant submissions prior
-                        to the embargo expiration.
+                        &nbsp;be used for analyses supporting grant submissions
+                        prior to the embargo expiration.
                       </label>
                     </div>
                   </div>
@@ -423,12 +487,17 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
                         type="checkbox"
                         id="dataUseAgreement5"
                         required
-                        onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
+                        onChange={(e) =>
+                          handleCheckboxClick(e.currentTarget.checked, e)
+                        }
                         checked={formValues.dataUseAgreement5}
                       />
-                      <label className="form-check-label" htmlFor="dataUseAgreement5">
-                        After the embargo expires, Recipients and their Agents agree
-                        that in publications using&nbsp;
+                      <label
+                        className="form-check-label"
+                        htmlFor="dataUseAgreement5"
+                      >
+                        After the embargo expires, Recipients and their Agents
+                        agree that in publications using&nbsp;
                         <strong>any</strong>
                         &nbsp;data from MoTrPAC public use data sets they will
                         acknowledge MoTrPAC as the source of data, including the
@@ -438,8 +507,8 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
                             Data used in the preparation of this article were
                             obtained from the Molecular Transducers of Physical
                             Activity Consortium (MoTrPAC) database, which is
-                            available for public access at motrpac-data.org. Specific
-                            datasets used are [version numbers].
+                            available for public access at motrpac-data.org.
+                            Specific datasets used are [version numbers].
                           </li>
                         </ul>
                       </label>
@@ -454,46 +523,60 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
                         type="checkbox"
                         id="dataUseAgreement6"
                         required
-                        onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
+                        onChange={(e) =>
+                          handleCheckboxClick(e.currentTarget.checked, e)
+                        }
                         checked={formValues.dataUseAgreement6}
                       />
-                      <label className="form-check-label" htmlFor="dataUseAgreement6">
+                      <label
+                        className="form-check-label"
+                        htmlFor="dataUseAgreement6"
+                      >
                         Recipients agree to notify MoTrPAC of articles published
                         using MoTrPAC data so that publications can be tracked
                         and referenced on the MoTrPAC public website. Please
-                        contact MoTrPAC at
-                        {' '}
+                        contact MoTrPAC at{' '}
                         <EmailLink mailto="MoTrPAC-ACC@aging.ufl.edu" />
                       </label>
                     </div>
                   </div>
                 </div>
                 <p className="card-text">
-                  <span className="subhead">Citing MoTrPAC data in publications example:</span>
-                  The Molecular Transducers of Physical Activity Consortium (MoTrPAC). External
-                  Data Release.&nbsp;
-                  <em>MoTrPAC Data Hub</em>
-                  . MoTrPAC Bioinformatics Center. October 15, 2019. Version 1.0.&nbsp;
-                  https://motrpac-data.org
+                  <span className="subhead">
+                    Citing MoTrPAC data in publications example:
+                  </span>
+                  The Molecular Transducers of Physical Activity Consortium
+                  (MoTrPAC). External Data Release.&nbsp;
+                  <em>MoTrPAC Data Hub</em>. MoTrPAC Bioinformatics Center.
+                  October 15, 2019. Version 1.0.&nbsp; https://motrpac-data.org
                 </p>
                 <p className="card-text">
                   <em>Optional:</em>
-                  &nbsp;MoTrPAC investigators welcome collaboration with external
-                  investigators. To be able to identify common analysis interests,
-                  please provide an outline of your plans for the data.
+                  &nbsp;MoTrPAC investigators welcome collaboration with
+                  external investigators. To be able to identify common analysis
+                  interests, please provide an outline of your plans for the
+                  data.
                 </p>
                 <p className="card-text">
-                  If you have questions, please contact
-                  {' '}
-                  <EmailLink mailto="motrpac-helpdesk@lists.stanford.edu" label="MoTrPAC Helpdesk" />
+                  If you have questions, please contact{' '}
+                  <EmailLink
+                    mailto="motrpac-helpdesk@lists.stanford.edu"
+                    label="MoTrPAC Helpdesk"
+                  />
                 </p>
-                <div className={`d-flex align-items-center alert-missing-checkbox text-danger ${checkboxAlert ? 'visible' : ''}`}>
+                <div
+                  className={`d-flex align-items-center alert-missing-checkbox text-danger ${checkboxAlert ? 'visible' : ''}`}
+                >
                   <i className="material-icons error-icon">error</i>
-                  <span>Please indicate that you agree to all terms above.</span>
+                  <span>
+                    Please indicate that you agree to all terms above.
+                  </span>
                 </div>
                 <div className="card mb-4 w-50 e-signature">
                   <div className="card-body">
-                    <label htmlFor="eSignature" className="e-signature-label">E-Signature:</label>
+                    <label htmlFor="eSignature" className="e-signature-label">
+                      E-Signature:
+                    </label>
                     <input
                       type="text"
                       className="form-control e-signature-input"
@@ -501,7 +584,9 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
                       placeholder="Type full name here"
                       autoComplete="off"
                       required
-                      onChange={e => handleFormChange(e.currentTarget.value, e)}
+                      onChange={(e) =>
+                        handleFormChange(e.currentTarget.value, e)
+                      }
                       value={formValues.eSignature}
                       pattern="^[A-Za-z\,\.\'\- ]{2,80}$"
                       onBlur={validateOnBlur}
@@ -531,14 +616,18 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
                     </div>
                     <div className="form-row mx-lg-n5">
                       <div className="form-group col-md-6 px-lg-5">
-                        <label htmlFor="firstName" className="required-field">First Name</label>
+                        <label htmlFor="firstName" className="required-field">
+                          First Name
+                        </label>
                         <input
                           type="text"
                           className="form-control"
                           id="firstName"
                           autoComplete="off"
                           required
-                          onChange={e => handleFormChange(e.currentTarget.value, e)}
+                          onChange={(e) =>
+                            handleFormChange(e.currentTarget.value, e)
+                          }
                           value={formValues.firstName}
                           pattern="^[A-Za-z\,\.\'\- ]{2,30}$"
                           onBlur={validateOnBlur}
@@ -548,14 +637,18 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
                         </div>
                       </div>
                       <div className="form-group col-md-6 px-lg-5">
-                        <label htmlFor="lastName" className="required-field">Last Name</label>
+                        <label htmlFor="lastName" className="required-field">
+                          Last Name
+                        </label>
                         <input
                           type="text"
                           className="form-control"
                           id="lastName"
                           autoComplete="off"
                           required
-                          onChange={e => handleFormChange(e.currentTarget.value, e)}
+                          onChange={(e) =>
+                            handleFormChange(e.currentTarget.value, e)
+                          }
                           value={formValues.lastName}
                           pattern="^[A-Za-z\,\.\'\- ]{2,30}$"
                           onBlur={validateOnBlur}
@@ -567,14 +660,21 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
                     </div>
                     <div className="form-row mx-lg-n5">
                       <div className="form-group col-md-6 px-lg-5">
-                        <label htmlFor="emailAddress" className="required-field">Email Address</label>
+                        <label
+                          htmlFor="emailAddress"
+                          className="required-field"
+                        >
+                          Email Address
+                        </label>
                         <input
                           type="email"
                           className="form-control"
                           id="emailAddress"
                           autoComplete="off"
                           required
-                          onChange={e => handleFormChange(e.currentTarget.value, e)}
+                          onChange={(e) =>
+                            handleFormChange(e.currentTarget.value, e)
+                          }
                           value={formValues.emailAddress}
                           onBlur={validateEmailOnBlur}
                         />
@@ -597,14 +697,18 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
                     </div>
                     <div className="form-row mx-lg-n5">
                       <div className="form-group col-md-6 px-lg-5">
-                        <label htmlFor="institution" className="required-field">Institution</label>
+                        <label htmlFor="institution" className="required-field">
+                          Institution
+                        </label>
                         <input
                           type="text"
                           className="form-control"
                           id="institution"
                           autoComplete="off"
                           required
-                          onChange={e => handleFormChange(e.currentTarget.value, e)}
+                          onChange={(e) =>
+                            handleFormChange(e.currentTarget.value, e)
+                          }
                           value={formValues.institution}
                           pattern="^[A-Za-z\,\.\'\- ]{2,80}$"
                           onBlur={validateOnBlur}
@@ -620,7 +724,9 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
                           className="form-control"
                           id="PIName"
                           autoComplete="off"
-                          onChange={e => handleFormChange(e.currentTarget.value, e)}
+                          onChange={(e) =>
+                            handleFormChange(e.currentTarget.value, e)
+                          }
                           value={formValues.PIName}
                           pattern="^[A-Za-z\,\.\'\- ]{2,80}$"
                           disabled={formValues.isPrincipalInvestigator}
@@ -634,21 +740,30 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
                             className="form-check-input"
                             type="checkbox"
                             id="isPrincipalInvestigator"
-                            onChange={e => handleCheckboxClick(e.currentTarget.checked, e)}
+                            onChange={(e) =>
+                              handleCheckboxClick(e.currentTarget.checked, e)
+                            }
                             checked={formValues.isPrincipalInvestigator}
                           />
-                          <label className="form-check-label" htmlFor="isPrincipalInvestigator">
+                          <label
+                            className="form-check-label"
+                            htmlFor="isPrincipalInvestigator"
+                          >
                             I am a principal investigator
                           </label>
                         </div>
                       </div>
                       <div className="form-group col-md-6 px-lg-5">
-                        <label htmlFor="dataUseIntent">Intent of data use (optional)</label>
+                        <label htmlFor="dataUseIntent">
+                          Intent of data use (optional)
+                        </label>
                         <textarea
                           className="form-control"
                           id="dataUseIntent"
                           row="3"
-                          onChange={e => handleFormChange(e.currentTarget.value, e)}
+                          onChange={(e) =>
+                            handleFormChange(e.currentTarget.value, e)
+                          }
                           value={formValues.dataUseIntent}
                         />
                       </div>
@@ -674,14 +789,21 @@ export function DataAccessPage({ isAuthenticated = false, profile= {} }) {
                     <button
                       type="button"
                       className="btn btn-primary registration-submit ml-3"
-                      onClick={(e) => { e.preventDefault(); handleSubmit(); }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleSubmit();
+                      }}
                       disabled={!formValidated || requestPending}
                     >
-                      {requestPending
-                        ? (
-                          <img src={IconSet.Sync} className="in-progress-spinner" alt="Request in progress" />
-                        )
-                        : 'Submit'}
+                      {requestPending ? (
+                        <img
+                          src={IconSet.Sync}
+                          className="in-progress-spinner"
+                          alt="Request in progress"
+                        />
+                      ) : (
+                        'Submit'
+                      )}
                     </button>
                   </div>
                 </div>
@@ -701,7 +823,7 @@ DataAccessPage.propTypes = {
   isAuthenticated: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
 });

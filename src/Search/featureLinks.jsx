@@ -101,7 +101,7 @@ function FeatureLinks({
     ...precawgDataVizFeaturedLink,
     ...commonGeneralFeaturedLinks,
   ];
-  
+
   const internalFeaturedLinks = [
     ...commonEssentialFeaturedLinks,
     ...precawgDataVizFeaturedLink,
@@ -109,8 +109,7 @@ function FeatureLinks({
 
     {
       name: 'clinical-biospecimen-summary',
-      route:
-        'biospecimen-summary',
+      route: 'biospecimen-summary',
       description:
         'Look up biospecimen data in the pre-COVID human sedentary adults and the human main highly active adults studies.',
       icon: 'stacked_bar_chart',

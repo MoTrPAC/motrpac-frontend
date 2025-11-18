@@ -13,11 +13,11 @@ function PhenotypePass1a06Rats() {
     <div className="analysis-phenotype-container pass1ac-06">
       <div className="analysis-phenotype-summary-container row mb-4">
         <div className="lead col-12">
-          This analysis aims to investigate the phenotypic data collected from the
-          MoTrPAC PASS1A/1C study, focusing on key variables that may impact
-          differential analysis results. Understanding these variables is crucial
-          for ensuring that our statistical models accurately reflect the biological
-          processes underlying exercise response and adaptation.
+          This analysis aims to investigate the phenotypic data collected from
+          the MoTrPAC PASS1A/1C study, focusing on key variables that may impact
+          differential analysis results. Understanding these variables is
+          crucial for ensuring that our statistical models accurately reflect
+          the biological processes underlying exercise response and adaptation.
         </div>
       </div>
       <div className="analysis-phenotype-plot-container row mb-4">

@@ -37,7 +37,8 @@ const BundleDataTypes = {
         'Analyses, sample-level metadata, QC, and quantitative results across tissues for RNA-seq.',
       object_zipfile: 'bundles/motrpac_rat-training-06_transcriptomics_v1.zip',
       object_zipfile_size: 'v1.0, RN6, 566.97 MB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_transcriptomics_v2.zip',
+      object_rn7_zipfile:
+        'bundles/motrpac_rat-training-06_transcriptomics_v2.zip',
       object_rn7_zipfile_size: 'v2.0, RN7, 474.69 MB',
     },
     {
@@ -49,9 +50,11 @@ const BundleDataTypes = {
       intervention: 'Endurance Training',
       description:
         'Analyses, sample-level metadata, QC, and quantitative results across tissues for the Acetyl Proteomics, Global Proteomics, Phosphoproteomics, and Protein Ubiquitination.',
-      object_zipfile: 'bundles/motrpac_rat-training-06_proteomics-untargeted_v1.zip',
+      object_zipfile:
+        'bundles/motrpac_rat-training-06_proteomics-untargeted_v1.zip',
       object_zipfile_size: 'v1.0, RN6, 1.02 GB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_proteomics-untargeted_v2.zip',
+      object_rn7_zipfile:
+        'bundles/motrpac_rat-training-06_proteomics-untargeted_v2.zip',
       object_rn7_zipfile_size: 'v2.0, RN7, 1.40 GB',
     },
     {
@@ -63,7 +66,8 @@ const BundleDataTypes = {
       intervention: 'Endurance Training',
       description:
         'Analyses, sample-level metadata, QC, and quantitative results across tissues for metabolomics-untargeted assays.',
-      object_zipfile: 'bundles/motrpac_rat-training-06_metabolomics-untargeted.zip',
+      object_zipfile:
+        'bundles/motrpac_rat-training-06_metabolomics-untargeted.zip',
       object_zipfile_size: '272.42 MB',
     },
     {
@@ -75,7 +79,8 @@ const BundleDataTypes = {
       intervention: 'Endurance Training',
       description:
         'Analyses, sample-level metadata, QC, and quantitative results across tissues for metabolomics-targeted assays.',
-      object_zipfile: 'bundles/motrpac_rat-training-06_metabolomics-targeted.zip',
+      object_zipfile:
+        'bundles/motrpac_rat-training-06_metabolomics-targeted.zip',
       object_zipfile_size: '27.58 MB',
     },
     {
@@ -101,7 +106,8 @@ const BundleDataTypes = {
         'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the gastrocnemius tissue (excluding RRBS quantitative results).',
       object_zipfile: 'bundles/motrpac_rat-training-06_gastrocnemius_v1.zip',
       object_zipfile_size: 'v1.0, RN6, 159.07 MB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_gastrocnemius_v2.zip',
+      object_rn7_zipfile:
+        'bundles/motrpac_rat-training-06_gastrocnemius_v2.zip',
       object_rn7_zipfile_size: 'v2.0, RN7, 2.26 GB',
     },
     {
@@ -171,7 +177,8 @@ const BundleDataTypes = {
         'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the brown adipose tissue (excluding RRBS quantitative results).',
       object_zipfile: 'bundles/motrpac_rat-training-06_brown-adipose_v1.zip',
       object_zipfile_size: 'v1.0, RN6, 61.03 MB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_brown-adipose_v2.zip',
+      object_rn7_zipfile:
+        'bundles/motrpac_rat-training-06_brown-adipose_v2.zip',
       object_rn7_zipfile_size: 'v2.0, RN7, 2.36 GB',
     },
     {
@@ -185,7 +192,8 @@ const BundleDataTypes = {
         'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the white adipose tissue (excluding RRBS quantitative results).',
       object_zipfile: 'bundles/motrpac_rat-training-06_white-adipose_v1.zip',
       object_zipfile_size: 'v1.0, RN6, 199.13 MB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_white-adipose_v2.zip',
+      object_rn7_zipfile:
+        'bundles/motrpac_rat-training-06_white-adipose_v2.zip',
       object_rn7_zipfile_size: 'v2.0, RN7, 2.04 GB',
     },
     {
@@ -223,7 +231,8 @@ const BundleDataTypes = {
       intervention: 'Endurance Training',
       description:
         'Miscellaneous resource files for R objects used in the data analysis of young adult rats performing endurance exercise training.',
-      object_zipfile: 'bundles/motrpac_rat-training-06_misc-analysis-resources.zip',
+      object_zipfile:
+        'bundles/motrpac_rat-training-06_misc-analysis-resources.zip',
       object_zipfile_size: '166.93 MB',
     },
   ],
@@ -273,7 +282,8 @@ const BundleDataTypes = {
       intervention: 'Acute Exercise',
       description:
         'Sample-level metadata, QC, and quantitative results across tissues for metabolomics-untargeted assays.',
-      object_zipfile: 'bundles/motrpac_rat-acute-06_metabolomics-untargeted.zip',
+      object_zipfile:
+        'bundles/motrpac_rat-acute-06_metabolomics-untargeted.zip',
       object_zipfile_size: '217.79 MB',
     },
     {
@@ -300,8 +310,7 @@ const BundleDataTypes = {
       study_group: 'Pre-COVID',
       description:
         'Phenotypic data from human sedentary adults performing acute exercise prior to COVID-19.',
-      object_zipfile:
-        'bundles/motrpac_human-precovid-sed-adu_phenotype.zip',
+      object_zipfile: 'bundles/motrpac_human-precovid-sed-adu_phenotype.zip',
       object_zipfile_size: '96.15 MB',
     },
     {
@@ -314,8 +323,7 @@ const BundleDataTypes = {
       study_group: 'Pre-COVID',
       description:
         'Differential analysis, metadata, QC normalized data across human tissues for ATAC-seq and Methylcap-seq assays.',
-      object_zipfile:
-        'bundles/motrpac_human-precovid-sed-adu_epigenomics.zip',
+      object_zipfile: 'bundles/motrpac_human-precovid-sed-adu_epigenomics.zip',
       object_zipfile_size: '6.12 GB',
     },
     {
@@ -342,8 +350,7 @@ const BundleDataTypes = {
       study_group: 'Pre-COVID',
       description:
         'Differential analysis, metadata, QC normalized data across human tissues for Global Proteomics, Phosphoproteomics, and OLink.',
-      object_zipfile:
-        'bundles/motrpac_human-precovid-sed-adu_proteomics.zip',
+      object_zipfile: 'bundles/motrpac_human-precovid-sed-adu_proteomics.zip',
       object_zipfile_size: '407.27 MB',
     },
     {

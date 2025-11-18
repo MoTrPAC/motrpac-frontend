@@ -37,15 +37,13 @@ function useNull() {
   return null;
 }
 
-const api =
-  import.meta.env.DEV
-    ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
-    : import.meta.env.VITE_API_SERVICE_ADDRESS;
+const api = import.meta.env.DEV
+  ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+  : import.meta.env.VITE_API_SERVICE_ADDRESS;
 const endpoint = import.meta.env.VITE_QC_DATA_ENDPOINT;
-const key =
-  import.meta.env.DEV
-    ? import.meta.env.VITE_API_SERVICE_KEY_DEV
-    : import.meta.env.VITE_API_SERVICE_KEY;
+const key = import.meta.env.DEV
+  ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+  : import.meta.env.VITE_API_SERVICE_KEY;
 
 // Handler for predefined searches
 function fetchData() {
@@ -82,7 +80,7 @@ function fetchData() {
             rnaSeq,
             rrbs,
             methylcapSeq,
-            atacSeq
+            atacSeq,
           ) => {
             const payload = {
               metabolomics: metabolomics.data,
@@ -97,8 +95,8 @@ function fetchData() {
               lastModified: dayjs().format(),
             };
             dispatch(dataFetchSuccess(payload));
-          }
-        )
+          },
+        ),
       )
       .catch((err) => {
         dispatch(dataFetchFailure(`${err.error}: ${err.errorDescription}`));

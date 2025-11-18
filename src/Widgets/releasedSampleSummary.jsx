@@ -86,105 +86,105 @@ function ReleasedSampleSummary({ data, release, userType = '' }) {
       // internal pass1a_06 'study' samples for each omic
       const internalPass1A06TranscriptCount = countSamples(
         data.internal.pass1a_06,
-        'transcriptomics'
+        'transcriptomics',
       );
       const internalPass1A06EpigenCount = countSamples(
         data.internal.pass1a_06,
-        'epigenomics'
+        'epigenomics',
       );
       const internalPass1A06MetaTargCount = countSamples(
         data.internal.pass1a_06,
-        'metabolomics-targeted'
+        'metabolomics-targeted',
       );
       const internalPass1A06MetaUntargCount = countSamples(
         data.internal.pass1a_06,
-        'metabolomics-untargeted'
+        'metabolomics-untargeted',
       );
       const internalPass1A06ProtCount = countSamples(
         data.internal.pass1a_06,
-        'proteomics'
+        'proteomics',
       );
       // internal pass1a_06 'QC' samples for each omic
       const internalPass1A06TranscriptCountQC = countSamples(
         data.internal.pass1a_06,
         'transcriptomics',
-        'qcCount'
+        'qcCount',
       );
       const internalPass1A06EpigenCountQC = countSamples(
         data.internal.pass1a_06,
         'epigenomics',
-        'qcCount'
+        'qcCount',
       );
       const internalPass1A06MetaTargCountQC = countSamples(
         data.internal.pass1a_06,
         'metabolomics-targeted',
-        'qcCount'
+        'qcCount',
       );
       const internalPass1A06MetaUntargCountQC = countSamples(
         data.internal.pass1a_06,
         'metabolomics-untargeted',
-        'qcCount'
+        'qcCount',
       );
       const internalPass1A06ProtCountQC = countSamples(
         data.internal.pass1a_06,
         'proteomics',
-        'qcCount'
+        'qcCount',
       );
       // internal pass1b_06 'study' samples for each omic
       const internalPass1B06TranscriptCount = countSamples(
         data.external.pass1b_06,
-        'transcriptomics'
+        'transcriptomics',
       );
       const internalPass1B06EpigenCount = countSamples(
         data.external.pass1b_06,
-        'epigenomics'
+        'epigenomics',
       );
       const internalPass1B06MetaTargCount = countSamples(
         data.external.pass1b_06,
-        'metabolomics-targeted'
+        'metabolomics-targeted',
       );
       const internalPass1B06MetaUntargCount = countSamples(
         data.external.pass1b_06,
-        'metabolomics-untargeted'
+        'metabolomics-untargeted',
       );
       const internalPass1B06ProtCount = countSamples(
         data.external.pass1b_06,
-        'proteomics'
+        'proteomics',
       );
       const internalPass1B06ImmunoassayCount = countSamples(
         data.external.pass1b_06,
-        'immunoassay'
+        'immunoassay',
       );
       // internal pass1b_06 'QC' samples for each omic
       const internalPass1B06TranscriptCountQC = countSamples(
         data.external.pass1b_06,
         'transcriptomics',
-        'qcCount'
+        'qcCount',
       );
       const internalPass1B06EpigenCountQC = countSamples(
         data.external.pass1b_06,
         'epigenomics',
-        'qcCount'
+        'qcCount',
       );
       const internalPass1B06MetaTargCountQC = countSamples(
         data.external.pass1b_06,
         'metabolomics-targeted',
-        'qcCount'
+        'qcCount',
       );
       const internalPass1B06MetaUntargCountQC = countSamples(
         data.external.pass1b_06,
         'metabolomics-untargeted',
-        'qcCount'
+        'qcCount',
       );
       const internalPass1B06ProtCountQC = countSamples(
         data.external.pass1b_06,
         'proteomics',
-        'qcCount'
+        'qcCount',
       );
       const internalPass1B06ImmunoassayCountQC = countSamples(
         data.external.pass1b_06,
         'immunoassay',
-        'qcCount'
+        'qcCount',
       );
       // assign internal release 'study' sample counts
       countObject.transcriptomics.studyCount =
@@ -240,105 +240,105 @@ function ReleasedSampleSummary({ data, release, userType = '' }) {
       // external pass1a_06 'study' samples for each omic
       const externalPass1A06TranscriptCount = countSamples(
         data.external.pass1a_06,
-        'transcriptomics'
+        'transcriptomics',
       );
       const externalPass1A06EpigenCount = countSamples(
         data.external.pass1a_06,
-        'epigenomics'
+        'epigenomics',
       );
       const externalPass1A06MetaTargCount = countSamples(
         data.external.pass1a_06,
-        'metabolomics-targeted'
+        'metabolomics-targeted',
       );
       const externalPass1A06MetaUntargCount = countSamples(
         data.external.pass1a_06,
-        'metabolomics-untargeted'
+        'metabolomics-untargeted',
       );
       const externalPass1A06ProtCount = countSamples(
         data.external.pass1a_06,
-        'proteomics'
+        'proteomics',
       );
       // external pass1a_06 'QC' samples for each omic
       const externalPass1A06TranscriptCountQC = countSamples(
         data.external.pass1a_06,
         'transcriptomics',
-        'qcCount'
+        'qcCount',
       );
       const externalPass1A06EpigenCountQC = countSamples(
         data.external.pass1a_06,
         'epigenomics',
-        'qcCount'
+        'qcCount',
       );
       const externalPass1A06MetaTargCountQC = countSamples(
         data.external.pass1a_06,
         'metabolomics-targeted',
-        'qcCount'
+        'qcCount',
       );
       const externalPass1A06MetaUntargCountQC = countSamples(
         data.external.pass1a_06,
         'metabolomics-untargeted',
-        'qcCount'
+        'qcCount',
       );
       const externalPass1A06ProtCountQC = countSamples(
         data.external.pass1a_06,
         'proteomics',
-        'qcCount'
+        'qcCount',
       );
       // internal pass1b_06 'study' samples for each omic
       const externalPass1B06TranscriptCount = countSamples(
         data.external.pass1b_06,
-        'transcriptomics'
+        'transcriptomics',
       );
       const externalPass1B06EpigenCount = countSamples(
         data.external.pass1b_06,
-        'epigenomics'
+        'epigenomics',
       );
       const externalPass1B06MetaTargCount = countSamples(
         data.external.pass1b_06,
-        'metabolomics-targeted'
+        'metabolomics-targeted',
       );
       const externalPass1B06MetaUntargCount = countSamples(
         data.external.pass1b_06,
-        'metabolomics-untargeted'
+        'metabolomics-untargeted',
       );
       const externalPass1B06ProtCount = countSamples(
         data.external.pass1b_06,
-        'proteomics'
+        'proteomics',
       );
       const externalPass1B06ImmunoassayCount = countSamples(
         data.external.pass1b_06,
-        'immunoassay'
+        'immunoassay',
       );
       // internal pass1b_06 'QC' samples for each omic
       const externalPass1B06TranscriptCountQC = countSamples(
         data.external.pass1b_06,
         'transcriptomics',
-        'qcCount'
+        'qcCount',
       );
       const externalPass1B06EpigenCountQC = countSamples(
         data.external.pass1b_06,
         'epigenomics',
-        'qcCount'
+        'qcCount',
       );
       const externalPass1B06MetaTargCountQC = countSamples(
         data.external.pass1b_06,
         'metabolomics-targeted',
-        'qcCount'
+        'qcCount',
       );
       const externalPass1B06MetaUntargCountQC = countSamples(
         data.external.pass1b_06,
         'metabolomics-untargeted',
-        'qcCount'
+        'qcCount',
       );
       const externalPass1B06ProtCountQC = countSamples(
         data.external.pass1b_06,
         'proteomics',
-        'qcCount'
+        'qcCount',
       );
       const externalPass1B06ImmunoassayCountQC = countSamples(
         data.external.pass1b_06,
         'immunoassay',
-        'qcCount'
+        'qcCount',
       );
       // assign external release sample counts
       countObject.transcriptomics.studyCount =
@@ -529,15 +529,15 @@ ReleasedSampleSummary.propTypes = {
   data: PropTypes.shape({
     internal: PropTypes.shape({
       pass1a_06: PropTypes.arrayOf(
-        PropTypes.shape({ ...tissueSamplePropType })
+        PropTypes.shape({ ...tissueSamplePropType }),
       ),
     }),
     external: PropTypes.shape({
       pass1a_06: PropTypes.arrayOf(
-        PropTypes.shape({ ...tissueSamplePropType })
+        PropTypes.shape({ ...tissueSamplePropType }),
       ),
       pass1b_06: PropTypes.arrayOf(
-        PropTypes.shape({ ...tissueSamplePropType })
+        PropTypes.shape({ ...tissueSamplePropType }),
       ),
     }),
   }).isRequired,

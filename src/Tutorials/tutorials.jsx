@@ -14,7 +14,7 @@ function Tutorials() {
   const [searchParams, setSearchParams] = useSearchParams();
   const language = searchParams.get('lang') === LANG_ES ? LANG_ES : LANG_EN;
   const toggleLanguage = (lang) => {
-    setSearchParams(prev => {
+    setSearchParams((prev) => {
       if (lang === LANG_EN) {
         prev.delete('lang');
       } else {
@@ -35,9 +35,17 @@ function Tutorials() {
         <div className="tutorials-summary-container row mb-4">
           <div className="col-12">
             <div className="section-title-container d-flex align-items-center justify-content-between mt-3 mb-2">
-              <h3 className="mb-0">{language === LANG_EN ? 'MoTrPAC Data Hub Overview' : 'Descripción General del Centro de Datos de MoTrPAC'}</h3>
+              <h3 className="mb-0">
+                {language === LANG_EN
+                  ? 'MoTrPAC Data Hub Overview'
+                  : 'Descripción General del Centro de Datos de MoTrPAC'}
+              </h3>
               {/* Language Toggle */}
-              <div className="btn-group" role="group" aria-label="Language selection">
+              <div
+                className="btn-group"
+                role="group"
+                aria-label="Language selection"
+              >
                 <button
                   type="button"
                   className={`btn btn-sm ${language === LANG_EN ? 'btn-primary' : 'btn-outline-primary'}`}
@@ -59,18 +67,15 @@ function Tutorials() {
             {language === LANG_EN ? (
               <div className="video-tutorial-container">
                 <p className="lead">
-                  The following tutorial video (also available in Spanish) is designed
-                  to help you get started with the MoTrPAC study and the exploration
-                  of the Data Hub. Please check out our{' '}
+                  The following tutorial video (also available in Spanish) is
+                  designed to help you get started with the MoTrPAC study and
+                  the exploration of the Data Hub. Please check out our{' '}
                   <ExternalLink
                     to="https://www.youtube.com/@MoTrPAC-Data-Hub"
                     label="collection of videos on YouTube"
-                  />
-                  {' '}
-                  and reach out to us with any
-                  {' '}
-                  <Link to="/contact">questions or comments</Link>
-                  .
+                  />{' '}
+                  and reach out to us with any{' '}
+                  <Link to="/contact">questions or comments</Link>.
                 </p>
                 <div
                   className="embedContainer embed-responsive"
@@ -88,18 +93,16 @@ function Tutorials() {
             ) : (
               <div className="video-tutorial-container">
                 <p className="lead">
-                  El siguiente video tutorial (también disponible en inglés) está diseñado
-                  para ayudarte a comenzar con el estudio MoTrPAC y la exploración del
-                  Centro de Datos. Por favor, consulta nuestra{' '}
+                  El siguiente video tutorial (también disponible en inglés)
+                  está diseñado para ayudarte a comenzar con el estudio MoTrPAC
+                  y la exploración del Centro de Datos. Por favor, consulta
+                  nuestra{' '}
                   <ExternalLink
                     to="https://www.youtube.com/@MoTrPAC-Data-Hub"
                     label="colección de videos en YouTube"
-                  />
-                  {' '}
-                  y contáctanos si tienes alguna
-                  {' '}
-                  <Link to="/contact">pregunta o comentario</Link>
-                  .
+                  />{' '}
+                  y contáctanos si tienes alguna{' '}
+                  <Link to="/contact">pregunta o comentario</Link>.
                 </p>
                 <div
                   className="embedContainer embed-responsive"

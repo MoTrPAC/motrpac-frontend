@@ -101,7 +101,7 @@ function loadRnaSeqDataset(tissue) {
  *
  * @returns {Object} JSX representation of the htop 50 DE genes heatmap
  */
-function Heatmap({ tissue = '', assay= '' }) {
+function Heatmap({ tissue = '', assay = '' }) {
   const modalRef = useRef();
 
   let dataset = [];
@@ -154,7 +154,7 @@ function Heatmap({ tissue = '', assay= '' }) {
       .style('text-anchor', 'end')
       .style('font-size', '12px')
       .style('font-weight', (d) =>
-        d.indexOf(figureTissueProps[tissue].label) > -1 ? '700' : '400'
+        d.indexOf(figureTissueProps[tissue].label) > -1 ? '700' : '400',
       );
 
     svg.call(d3.axisBottom(x).tickSize(0)).select('.domain').remove();
@@ -202,7 +202,7 @@ function Heatmap({ tissue = '', assay= '' }) {
             '<br/>Human Gene Symbol: ' +
             getGeneValue(d.human_gene_symbol) +
             '<br/>Entrez Gene ID: ' +
-            getGeneValue(d.entrez_gene)
+            getGeneValue(d.entrez_gene),
         )
         .style('top', yPos - y.bandwidth() * 4 + 'px')
         .style('left', xPos + margin.left + x.bandwidth() + 'px');
@@ -220,7 +220,7 @@ function Heatmap({ tissue = '', assay= '' }) {
             '<br/>Human Gene Symbol: ' +
             getGeneValue(d.human_gene_symbol) +
             '<br/>Entrez Gene ID: ' +
-            getGeneValue(d.entrez_gene)
+            getGeneValue(d.entrez_gene),
         )
         .style('top', yPos - y.bandwidth() * 4 + 'px')
         .style('left', xPos + margin.left + x.bandwidth() + 'px');
@@ -275,10 +275,10 @@ function Heatmap({ tissue = '', assay= '' }) {
         .attr('class', 'legend-y-axis')
         .attr(
           'tranform',
-          `translate(${legendMargin.left + legendWidth}, ${legendMargin.top})`
+          `translate(${legendMargin.left + legendWidth}, ${legendMargin.top})`,
         )
         .call(
-          d3.axisRight(legendYAxisScale).ticks(10).tickSize(0).tickPadding(25)
+          d3.axisRight(legendYAxisScale).ticks(10).tickSize(0).tickPadding(25),
         );
 
     const defs = legend.append('defs');
@@ -291,7 +291,7 @@ function Heatmap({ tissue = '', assay= '' }) {
         legendColorScale.ticks().map((t, i, n) => ({
           offset: `${(100 * i) / n.length}%`,
           color: legendColorScale(t),
-        }))
+        })),
       )
       .enter()
       .append('stop')

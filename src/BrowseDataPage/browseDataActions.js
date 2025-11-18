@@ -130,10 +130,11 @@ function resetBrowseState() {
 
 function selectPass1B06Data(userType = null, files = pass1b06) {
   // Filter out RN7 files for non-internal users
-  const filteredFiles = userType === 'internal' 
-    ? files 
-    : files.filter((file) => file.reference_genome !== 'RN7');
-  
+  const filteredFiles =
+    userType === 'internal'
+      ? files
+      : files.filter((file) => file.reference_genome !== 'RN7');
+
   return {
     type: SELECT_PASS1B_06_DATA,
     files: filteredFiles,
@@ -164,7 +165,12 @@ function changePageRequest(maxRows, page) {
     dispatch(requestUpdateList());
     return setTimeout(() => {
       // assumes database returned relevant uploads and total count
-      dispatch(recieveUpdateList(fileCount, files.slice(maxRows * (page - 1), maxRows * page)));
+      dispatch(
+        recieveUpdateList(
+          fileCount,
+          files.slice(maxRows * (page - 1), maxRows * page),
+        ),
+      );
       dispatch(applyFilters());
     }, 1000);
   };
@@ -188,25 +194,21 @@ function useNull() {
 }
 
 const bucket = import.meta.env.VITE_DATA_FILE_BUCKET;
-const api =
-  import.meta.env.DEV
-    ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
-    : import.meta.env.VITE_API_SERVICE_ADDRESS;
+const api = import.meta.env.DEV
+  ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+  : import.meta.env.VITE_API_SERVICE_ADDRESS;
 const endpoint = import.meta.env.VITE_SIGNED_URL_ENDPOINT;
 const fileDownloadEndpoint = import.meta.env.VITE_FILE_DOWNLOAD_ENDPOINT;
-const key =
-  import.meta.env.DEV
-    ? import.meta.env.VITE_API_SERVICE_KEY_DEV
-    : import.meta.env.VITE_API_SERVICE_KEY;
-const searchHost =
-  import.meta.env.DEV
-    ? import.meta.env.VITE_ES_PROXY_HOST_DEV
-    : import.meta.env.VITE_ES_PROXY_HOST;
+const key = import.meta.env.DEV
+  ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+  : import.meta.env.VITE_API_SERVICE_KEY;
+const searchHost = import.meta.env.DEV
+  ? import.meta.env.VITE_ES_PROXY_HOST_DEV
+  : import.meta.env.VITE_ES_PROXY_HOST;
 const fileSearchEndpoint = import.meta.env.VITE_FILE_SEARCH_ENDPOINT;
-const accessToken =
-  import.meta.env.DEV
-    ? import.meta.env.VITE_ES_ACCESS_TOKEN_DEV
-    : import.meta.env.VITE_ES_ACCESS_TOKEN;
+const accessToken = import.meta.env.DEV
+  ? import.meta.env.VITE_ES_ACCESS_TOKEN_DEV
+  : import.meta.env.VITE_ES_ACCESS_TOKEN;
 
 const headersConfig = {
   headers: {
@@ -221,7 +223,7 @@ function handleUrlFetch(selectedFiles) {
 
   const fileUrls = selectedFiles.map(
     (file) =>
-      `${api}${endpoint}?bucket=${bucket}&object=${file.original.object}&key=${key}`
+      `${api}${endpoint}?bucket=${bucket}&object=${file.original.object}&key=${key}`,
   );
 
   return (dispatch) => {

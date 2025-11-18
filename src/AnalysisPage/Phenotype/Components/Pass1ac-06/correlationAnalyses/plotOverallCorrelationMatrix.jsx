@@ -1,8 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import * as ss from 'simple-statistics';
-import {
-  correlationMatrixChartOptions,
-} from '../sharedLib';
+import { correlationMatrixChartOptions } from '../sharedLib';
 import Chart from '../chartWrapper';
 
 import pass1ac06Data from '../../../pass1ac-animal_pheno.json';
@@ -15,8 +13,12 @@ import pass1ac06Data from '../../../pass1ac-animal_pheno.json';
 function PlotOverallCorrelationMatrix() {
   const [corrMatrixData, setCorrMatrixData] = useState(null);
   // Filter out the 'control' interventions
-  const maleAcuteData = pass1ac06Data.filter((item) => item.intervention !== 'control' && item.sex === 'male');
-  const femaleAcuteData = pass1ac06Data.filter((item) => item.intervention !== 'control' && item.sex === 'female');
+  const maleAcuteData = pass1ac06Data.filter(
+    (item) => item.intervention !== 'control' && item.sex === 'male',
+  );
+  const femaleAcuteData = pass1ac06Data.filter(
+    (item) => item.intervention !== 'control' && item.sex === 'female',
+  );
 
   // Overall Correlation Matrix chart options
   function correlationData() {
@@ -43,12 +45,23 @@ function PlotOverallCorrelationMatrix() {
   }, []);
 
   // Base chart options
-  const baseChartOptions = correlationMatrixChartOptions('Variables', 'Variables', '<b>{series.xAxis.categories.(point.x)}</b> vs <b>{series.yAxis.categories.(point.y)}</b>: {point.value}');
+  const baseChartOptions = correlationMatrixChartOptions(
+    'Variables',
+    'Variables',
+    '<b>{series.xAxis.categories.(point.x)}</b> vs <b>{series.yAxis.categories.(point.y)}</b>: {point.value}',
+  );
   const filteredData = correlationData();
 
   // Function to produce correlation matrix data
   const generateCorrelationMatrix = (data) => {
-    const variables = ['distance', 'lactate_change', 'shock_count', 'shock_duration', 'weight', 'work'];
+    const variables = [
+      'distance',
+      'lactate_change',
+      'shock_count',
+      'shock_duration',
+      'weight',
+      'work',
+    ];
     const matrix = [];
 
     const numSamples = data.length;
@@ -80,7 +93,9 @@ function PlotOverallCorrelationMatrix() {
   // Highcharts options for the plots
   const chartOptions = useMemo(() => {
     const createChartOptions = (gender, titleText) => {
-      const correlationMatrixData = generateCorrelationMatrix(filteredData[gender]);
+      const correlationMatrixData = generateCorrelationMatrix(
+        filteredData[gender],
+      );
       const { matrix, variables } = correlationMatrixData;
 
       return {
@@ -131,15 +146,24 @@ function PlotOverallCorrelationMatrix() {
     };
 
     return {
-      male: createChartOptions('male', 'Correlation Matrix Heatmap (male-acute)'),
-      female: createChartOptions('female', 'Correlation Matrix Heatmap (female-acute)'),
+      male: createChartOptions(
+        'male',
+        'Correlation Matrix Heatmap (male-acute)',
+      ),
+      female: createChartOptions(
+        'female',
+        'Correlation Matrix Heatmap (female-acute)',
+      ),
     };
   }, [baseChartOptions, corrMatrixData]);
 
   return (
     <div className="col-lg-11 h-90">
       <Chart options={chartOptions.male} className="phenotype-plot-container" />
-      <Chart options={chartOptions.female} className="phenotype-plot-container" />
+      <Chart
+        options={chartOptions.female}
+        className="phenotype-plot-container"
+      />
     </div>
   );
 }

@@ -19,8 +19,14 @@ function Citation() {
             When referencing MoTrPAC, please cite it as follows:
           </p>
           <ul className="lead">
-            <li>All works using MoTrPAC data should reference the MoTrPAC Marker Paper (see below).</li>
-            <li>For each public dataset used in your work, please cite the associated work indicated below.</li>
+            <li>
+              All works using MoTrPAC data should reference the MoTrPAC Marker
+              Paper (see below).
+            </li>
+            <li>
+              For each public dataset used in your work, please cite the
+              associated work indicated below.
+            </li>
             <li>Cite any R package used for data access.</li>
             <li>
               If data were downloaded directly from{' '}
@@ -36,10 +42,10 @@ function Citation() {
           </ul>
           <h5 className="mt-5">MoTrPAC Marker Paper</h5>
           <p className="citation-item">
-            MoTrPAC Study Group., Lead Analysts. & MoTrPAC Study Group. Molecular
-            Transducers of Physical Activity Consortium (MoTrPAC): Mapping the
-            Dynamic Responses to Exercise.
-            Cell <i>Volume 181, Issue 7</i>, P1464-1474, June 25, 2020.{' '}
+            MoTrPAC Study Group., Lead Analysts. & MoTrPAC Study Group.
+            Molecular Transducers of Physical Activity Consortium (MoTrPAC):
+            Mapping the Dynamic Responses to Exercise. Cell{' '}
+            <i>Volume 181, Issue 7</i>, P1464-1474, June 25, 2020.{' '}
             <ExternalLink
               to="https://doi.org/10.1016/j.cell.2020.06.004"
               label="https://doi.org/10.1016/j.cell.2020.06.004"

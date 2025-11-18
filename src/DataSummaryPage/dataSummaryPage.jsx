@@ -218,7 +218,6 @@ DataSummaryPage.propTypes = {
   toggleQC: PropTypes.func.isRequired,
 };
 
-
 const mapStateToProps = (state) => ({
   ...state.auth,
   ...state.dataSummary,

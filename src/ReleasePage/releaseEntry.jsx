@@ -38,7 +38,7 @@ function ReleaseEntry({ profile, currentView }) {
   const [visibleReleases, setVisibleReleases] = useState(0);
 
   const releases = releaseData.filter(
-    (release) => release.target === currentView
+    (release) => release.target === currentView,
   );
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
@@ -50,15 +50,13 @@ function ReleaseEntry({ profile, currentView }) {
 
   // Fetch file url from Google Storage API
   function fetchFile(bucket, filename, version) {
-    const api =
-      import.meta.env.DEV
-        ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
-        : import.meta.env.VITE_API_SERVICE_ADDRESS;
+    const api = import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+      : import.meta.env.VITE_API_SERVICE_ADDRESS;
     const endpoint = import.meta.env.VITE_SIGNED_URL_ENDPOINT;
-    const key =
-      import.meta.env.DEV
-        ? import.meta.env.VITE_API_SERVICE_KEY_DEV
-        : import.meta.env.VITE_API_SERVICE_KEY;
+    const key = import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+      : import.meta.env.VITE_API_SERVICE_KEY;
     return axios
       .get(`${api}${endpoint}?bucket=${bucket}&object=${filename}&key=${key}`)
       .then((response) => {
@@ -182,7 +180,7 @@ function ReleaseEntry({ profile, currentView }) {
                   this,
                   bucket,
                   item.object_zipfile,
-                  version
+                  version,
                 )}
               >
                 <i className="material-icons release-data-download-icon">
@@ -280,8 +278,9 @@ function ReleaseEntry({ profile, currentView }) {
                           Note: The data in this release is outdated and no
                           longer available for download from the Data Hub
                           portal. Please visit the{' '}
-                          <Link to="/data-download">data download</Link> page for
-                          the most up-to-date PASS1A and PASS1B data. Contact{' '}
+                          <Link to="/data-download">data download</Link> page
+                          for the most up-to-date PASS1A and PASS1B data.
+                          Contact{' '}
                           <EmailLink
                             mailto="motrpac-data-requests@lists.stanford.edu"
                             label="MoTrPAC Data Requests"

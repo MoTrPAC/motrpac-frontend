@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function DataVizLink({
-  title, tissue, plotType, minClusterSize = null, clusterName = null,
+  title,
+  tissue,
+  plotType,
+  minClusterSize = null,
+  clusterName = null,
 }) {
   let topkStr = '';
   let minClusterSizeStr = '';
@@ -16,11 +20,12 @@ function DataVizLink({
   // include 'cluster' param for pathway plots
   if (plotType === 'Pathway') {
     topkStr = '';
-    clusterNameStr = clusterName && clusterName.length ? `&cluster=${clusterName}` : '';
+    clusterNameStr =
+      clusterName && clusterName.length ? `&cluster=${clusterName}` : '';
   }
 
   // include 'min_cluster_size' param if minClusterSize is provided
-  if (minClusterSize && typeof (minClusterSize) === 'number') {
+  if (minClusterSize && typeof minClusterSize === 'number') {
     minClusterSizeStr = `&min_cluster_size=${minClusterSize}`;
   }
 
@@ -48,6 +53,5 @@ DataVizLink.propTypes = {
   minClusterSize: PropTypes.number,
   clusterName: PropTypes.string,
 };
-
 
 export default DataVizLink;

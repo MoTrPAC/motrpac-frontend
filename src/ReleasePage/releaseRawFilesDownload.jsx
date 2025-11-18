@@ -8,11 +8,14 @@ function ReleaseRawFilesDownload({ releaseVersion, files }) {
       <div className="card mb-3">
         <div className="card-body">
           <p className="card-text">
-            Due to the large sizes of raw data files, we recommend users
-            who wish to download raw data files using the
-            {' '}
-            <ExternalLink to="https://cloud.google.com/storage/docs/quickstart-gsutil" label="gsutil command" />
-            . Below are example commands for downloading raw data files of different omics.
+            Due to the large sizes of raw data files, we recommend users who
+            wish to download raw data files using the{' '}
+            <ExternalLink
+              to="https://cloud.google.com/storage/docs/quickstart-gsutil"
+              label="gsutil command"
+            />
+            . Below are example commands for downloading raw data files of
+            different omics.
           </p>
           <p className="card-text">
             Raw data files of genomics, epigenomics and transcriptomic:
@@ -35,11 +38,14 @@ function ReleaseRawFilesDownload({ releaseVersion, files }) {
     <div className="card mb-3">
       <div className="card-body">
         <p className="card-text">
-          Due to the large sizes of raw data files, we recommend users
-          who wish to download raw data files using the
-          {' '}
-          <ExternalLink to="https://cloud.google.com/storage/docs/quickstart-gsutil" label="gsutil command" />
-          . Below are example commands for downloading raw data files of different omics.
+          Due to the large sizes of raw data files, we recommend users who wish
+          to download raw data files using the{' '}
+          <ExternalLink
+            to="https://cloud.google.com/storage/docs/quickstart-gsutil"
+            label="gsutil command"
+          />
+          . Below are example commands for downloading raw data files of
+          different omics.
         </p>
         <div className="additional-download-table-container">
           <h6>Phase: PASS1A 6-month</h6>

@@ -12,11 +12,13 @@ function ReleaseDataTableExternal({ release, renderDataTypeRow }) {
           </tr>
         </thead>
         <tbody>
-          {release.result_files.data_types.map((item) => renderDataTypeRow(
-            release.result_files.bucket_name,
-            item,
-            release.version,
-          ))}
+          {release.result_files.data_types.map((item) =>
+            renderDataTypeRow(
+              release.result_files.bucket_name,
+              item,
+              release.version,
+            ),
+          )}
         </tbody>
       </table>
     </div>

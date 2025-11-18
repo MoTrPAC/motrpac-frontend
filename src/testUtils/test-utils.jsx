@@ -11,12 +11,14 @@ export function renderWithProviders(
     preloadedState = {},
     store = configureStore(preloadedState),
     ...renderOptions
-  } = {}
+  } = {},
 ) {
   function Wrapper({ children }) {
     return (
       <Provider store={store}>
-        <MemoryRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true}}>
+        <MemoryRouter
+          future={{ v7_relativeSplatPath: true, v7_startTransition: true }}
+        >
           {children}
         </MemoryRouter>
       </Provider>
@@ -34,21 +36,25 @@ export function renderWithRouter(
     route = '/',
     preloadedState = {},
     store = configureStore(preloadedState),
-  } = {}
+  } = {},
 ) {
   return render(
     <Provider store={store}>
-      <MemoryRouter initialEntries={[route]} future={{ v7_relativeSplatPath: true, v7_startTransition: true}}>
+      <MemoryRouter
+        initialEntries={[route]}
+        future={{ v7_relativeSplatPath: true, v7_startTransition: true }}
+      >
         {ui}
       </MemoryRouter>
-    </Provider>
+    </Provider>,
   );
 }
 
 // Common test data
 export const testUser = {
   email: 'email@example.com',
-  picture: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y',
+  picture:
+    'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y',
   nickname: 'testUser1',
   name: 'TestUser1',
   user_metadata: {
@@ -58,7 +64,7 @@ export const testUser = {
     hasAccess: true,
     userType: 'internal',
   },
-  userid: ''
+  userid: '',
 };
 
 // Common mock functions
@@ -70,4 +76,4 @@ export const mockActions = {
   handleAnalysisTypeChange: vi.fn(),
   handleAnalysisSelection: vi.fn(),
   handleAnalysisSubmit: vi.fn(),
-}; 
+};

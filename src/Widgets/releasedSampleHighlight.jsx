@@ -115,7 +115,7 @@ ReleasedSampleHighlight.propTypes = {
     PropTypes.shape({
       tissue_code: PropTypes.string.isRequired,
       sample_data: PropTypes.array.isRequired,
-    })
+    }),
   ).isRequired,
 };
 

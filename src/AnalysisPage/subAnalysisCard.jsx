@@ -52,12 +52,12 @@ function SubAnalysisCard({ subAnalysis, onPickSubAnalysis }) {
         onClick={onPickSubAnalysis.bind(
           this,
           subAnalysis.shortName,
-          subAnalysis.title
+          subAnalysis.title,
         )}
         onKeyPress={onPickSubAnalysis.bind(
           this,
           subAnalysis.shortName,
-          subAnalysis.title
+          subAnalysis.title,
         )}
         tabIndex={0}
         role="button"

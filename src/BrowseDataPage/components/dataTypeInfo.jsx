@@ -33,11 +33,9 @@ function DataTypeInfo({ grid }) {
         </div>
         <ul className="mt-1 mb-1">
           <li>
-            Assay-specific
-            {' '}
-            <Link to="/search">differential analysis</Link>
-            , normalized data, quantitative results, experiment metadata
-            and QA/QC reports
+            Assay-specific <Link to="/search">differential analysis</Link>,
+            normalized data, quantitative results, experiment metadata and QA/QC
+            reports
           </li>
           <li>
             Cross-platform merged metabolomics data tables for named metabolites

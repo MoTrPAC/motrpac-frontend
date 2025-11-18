@@ -5,7 +5,8 @@ function selectOmicPrefix(assay) {
   if (assay.toLowerCase().match(patternGet)) {
     omicPrefix = 'GET';
   }
-  const patternImmuno = /rat-adipokine|rat-mag27plex|rat-metabolic|rat-myokine|rat-pituitary/;
+  const patternImmuno =
+    /rat-adipokine|rat-mag27plex|rat-metabolic|rat-myokine|rat-pituitary/;
   if (assay.toLowerCase().match(patternImmuno)) {
     omicPrefix = 'IMMUNO';
   }

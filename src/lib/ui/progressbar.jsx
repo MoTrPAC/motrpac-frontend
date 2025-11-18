@@ -30,7 +30,7 @@ function ProgressBar({ currentValue, expectedValue }) {
       </div>
       <ToolTip
         content={`${Math.round(
-          valueNow
+          valueNow,
         )}%: ${expectedValue} expected; ${currentValue} received`}
       />
     </div>

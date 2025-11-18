@@ -45,10 +45,7 @@
     ]
   },
   "proteomics-untargeted": {
-    "prot-ac": [
-      "t58-heart",
-      "t68-liver"
-    ],
+    "prot-ac": ["t58-heart", "t68-liver"],
     "prot-ph": [
       "t53-cortex",
       "t55-gastrocnemius",
@@ -67,10 +64,7 @@
       "t68-liver",
       "t70-white-adipose"
     ],
-    "prot-ub": [
-      "t58-heart",
-      "t68-liver"
-    ]
+    "prot-ub": ["t58-heart", "t68-liver"]
   },
   "metabolomics-untargeted": {
     "metab-u-hilicpos": [

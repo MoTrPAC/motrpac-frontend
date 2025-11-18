@@ -6,7 +6,9 @@ import actions from './authActions';
 function Callback() {
   const location = useLocation();
 
-  const { isAuthenticated, isFetching, message } = useSelector((state) => state.auth);
+  const { isAuthenticated, isFetching, message } = useSelector(
+    (state) => state.auth,
+  );
   const dispatch = useDispatch();
   // Handle authentication if expected values are in the URL.
   if (/access_token|id_token|error/.test(location.hash)) {
@@ -17,7 +19,7 @@ function Callback() {
     <>
       {isFetching && !isAuthenticated ? (
         <div className="authLoading">
-          <span className="oi oi-shield"/>
+          <span className="oi oi-shield" />
           <h3>{message || 'Authenticating...'}</h3>
         </div>
       ) : (

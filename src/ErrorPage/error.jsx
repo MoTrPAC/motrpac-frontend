@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import ContactHelpdesk from '../lib/ui/contactHelpdesk';
 
-import '@styles/errorPage.scss'
+import '@styles/errorPage.scss';
 
 /**
  * Renders the Error page.
@@ -13,7 +13,7 @@ import '@styles/errorPage.scss'
  */
 export function ErrorPage({ isAuthenticated = {}, profile = false }) {
   if (isAuthenticated && profile.user_metadata) {
-    return <Navigate to="/dashboard" />
+    return <Navigate to="/dashboard" />;
   }
 
   return (
@@ -30,24 +30,16 @@ export function ErrorPage({ isAuthenticated = {}, profile = false }) {
             </p>
             <p>
               <i className="material-icons internal-icon">person</i>
-              <strong>MoTrPAC consortium members:</strong>
-              {' '}
-              If this is your first time attempting to log in, please
-              {' '}
-              <ContactHelpdesk />
-              {' '}
-              and verify your access to the portal.
+              <strong>MoTrPAC consortium members:</strong> If this is your first
+              time attempting to log in, please <ContactHelpdesk /> and verify
+              your access to the portal.
             </p>
             <p>
               <i className="material-icons external-icon">people_alt</i>
-              <strong>Users who are not MoTrPAC consortium members:</strong>
-              {' '}
-              To access the MoTrPAC Data Hub portal, please read and sign the data use
-              agreement, as well as complete the new user registration by visiting our
-              {' '}
-              <a href="/data-access">Data Access</a>
-              {' '}
-              page.
+              <strong>Users who are not MoTrPAC consortium members:</strong> To
+              access the MoTrPAC Data Hub portal, please read and sign the data
+              use agreement, as well as complete the new user registration by
+              visiting our <a href="/data-access">Data Access</a> page.
             </p>
           </div>
         </div>

@@ -77,16 +77,17 @@ function BundleDatasets({
                   bundlefileSize={item.object_zipfile_size}
                   profile={profile}
                 />
-                {item.object_rn7_zipfile && profile?.user_metadata?.userType === 'internal' && (
-                  <>
-                    <div className="text-center text-muted my-1">- or -</div>
-                    <BundleDownloadButton
-                      bundlefile={item.object_rn7_zipfile}
-                      bundlefileSize={item.object_rn7_zipfile_size}
-                      profile={profile}
-                    />
-                  </>
-                )}
+                {item.object_rn7_zipfile &&
+                  profile?.user_metadata?.userType === 'internal' && (
+                    <>
+                      <div className="text-center text-muted my-1">- or -</div>
+                      <BundleDownloadButton
+                        bundlefile={item.object_rn7_zipfile}
+                        bundlefileSize={item.object_rn7_zipfile_size}
+                        profile={profile}
+                      />
+                    </>
+                  )}
               </div>
             </div>
           </div>

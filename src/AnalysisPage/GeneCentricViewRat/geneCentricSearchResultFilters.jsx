@@ -24,8 +24,8 @@ function GeneCentricSearchResultFilters({
   function customizeAssayList() {
     return assayListRat.filter((t) =>
       t.filter_value.match(
-        /^(transcript-rna-seq|prot-pr|prot-ph|prot-ac|prot-ub|immunoassay)$/
-      )
+        /^(transcript-rna-seq|prot-pr|prot-ph|prot-ac|prot-ub|immunoassay)$/,
+      ),
     );
   }
 
@@ -46,7 +46,7 @@ function GeneCentricSearchResultFilters({
             const isActiveFilter =
               geneSearchParams.filters[item.keyName] &&
               geneSearchParams.filters[item.keyName].indexOf(
-                filter.filter_value
+                filter.filter_value,
               ) > -1;
             const resultCount =
               hasResultFilters &&
@@ -88,7 +88,7 @@ function GeneCentricSearchResultFilters({
               handleGeneCentricSearch(
                 geneSearchParams,
                 geneSearchInputValue,
-                'filters'
+                'filters',
               );
             }}
           >

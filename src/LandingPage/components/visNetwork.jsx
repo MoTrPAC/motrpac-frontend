@@ -4,14 +4,14 @@
  * This package is distributed as a commonjs module, so it is not compatible with Vite's default ESM module loading.
  * Therefore, I have vendored the code directly into this project.
  */
-import differenceWith from "lodash/differenceWith";
-import isEqual from "lodash/isEqual";
-import PropTypes from "prop-types";
-import React, { useEffect, useRef } from "react";
-import { DataSet } from "vis-data/peer/esm/vis-data";
-import { Network } from "vis-network/peer/esm/vis-network";
+import differenceWith from 'lodash/differenceWith';
+import isEqual from 'lodash/isEqual';
+import PropTypes from 'prop-types';
+import React, { useEffect, useRef } from 'react';
+import { DataSet } from 'vis-data/peer/esm/vis-data';
+import { Network } from 'vis-network/peer/esm/vis-network';
 
-import "vis-network/styles/vis-network.css";
+import 'vis-network/styles/vis-network.css';
 
 const defaultOptions = {
   physics: {
@@ -20,7 +20,7 @@ const defaultOptions = {
   autoResize: false,
   edges: {
     smooth: false,
-    color: "#000000",
+    color: '#000000',
     width: 0.5,
     arrows: {
       to: {
@@ -35,7 +35,7 @@ const Graph = ({
   data,
   options = defaultOptions,
   events = {},
-  style = { width: "100%", height: "100%" },
+  style = { width: '100%', height: '100%' },
   getNetwork,
   getNodes,
   getEdges,
@@ -49,7 +49,7 @@ const Graph = ({
     network.current = new Network(
       container.current,
       { nodes: nodes.current, edges: edges.current },
-      options
+      options,
     );
 
     if (getNetwork) {
@@ -74,16 +74,16 @@ const Graph = ({
       const nodesRemoved = differenceWith(
         nodes.current.get(),
         data.nodes,
-        idIsEqual
+        idIsEqual,
       );
       const nodesAdded = differenceWith(
         data.nodes,
         nodes.current.get(),
-        idIsEqual
+        idIsEqual,
       );
       const nodesChanged = differenceWith(
         differenceWith(data.nodes, nodes.current.get(), isEqual),
-        nodesAdded
+        nodesAdded,
       );
 
       nodes.current.remove(nodesRemoved);
@@ -95,16 +95,16 @@ const Graph = ({
       const edgesRemoved = differenceWith(
         edges.current.get(),
         data.edges,
-        isEqual
+        isEqual,
       );
       const edgesAdded = differenceWith(
         data.edges,
         edges.current.get(),
-        isEqual
+        isEqual,
       );
       const edgesChanged = differenceWith(
         differenceWith(data.edges, edges.current.get(), isEqual),
-        edgesAdded
+        edgesAdded,
       );
       edges.current.remove(edgesRemoved);
       edges.current.add(edgesAdded);
@@ -141,7 +141,7 @@ const Graph = ({
     };
   }, [events]);
 
-  return <div ref={container} style={style}/>;
+  return <div ref={container} style={style} />;
 };
 
 Graph.propTypes = {

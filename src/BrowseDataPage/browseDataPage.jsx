@@ -53,7 +53,13 @@ export function BrowseDataPage({
         downloadedData={downloadedData}
       />
       <UserSurveyModal
-        userID={profile && profile.email ? profile.email : (surveyId ? surveyId : 'anonymous')}
+        userID={
+          profile && profile.email
+            ? profile.email
+            : surveyId
+              ? surveyId
+              : 'anonymous'
+        }
         dataContext={
           downloadRequestResponse.length ? 'selected_files' : 'bundled_files'
         }

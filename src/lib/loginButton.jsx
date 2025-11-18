@@ -11,7 +11,11 @@ import PropTypes from 'prop-types';
 function LoginButton({ login = null }) {
   return (
     <span className="user-login-button">
-      <button type="button" onClick={login} className="logInBtn btn btn-primary">
+      <button
+        type="button"
+        onClick={login}
+        className="logInBtn btn btn-primary"
+      >
         Login
       </button>
     </span>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import '@styles/footer.scss'
+import '@styles/footer.scss';
 
 /**
  * Renders the global footer.

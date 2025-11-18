@@ -25,7 +25,7 @@ import '@styles/dataStatusPage.scss';
  * @returns {object} JSX representation of the data qc status page
  */
 export function DataStatusPage({
-    qcData = {
+  qcData = {
     atacSeq: [],
     immunoAssay: [],
     metabolomics: [],
@@ -152,13 +152,16 @@ export function DataStatusPage({
 
     switch (qcReportView) {
       case 'metabolomics':
-        link = 'https://docs.google.com/document/d/13i-EQcZ0LYylhoyaTdI4vf-BgZYAbzcGU4m9GKSJCnA/edit?usp=sharing';
+        link =
+          'https://docs.google.com/document/d/13i-EQcZ0LYylhoyaTdI4vf-BgZYAbzcGU4m9GKSJCnA/edit?usp=sharing';
         break;
       case 'proteomics':
-        link = 'https://docs.google.com/document/d/1U60mx7Wl0sNKsy_S72lJsRdEdB3HbuXQ86Hw7lLWV-w/edit?usp=sharing';
+        link =
+          'https://docs.google.com/document/d/1U60mx7Wl0sNKsy_S72lJsRdEdB3HbuXQ86Hw7lLWV-w/edit?usp=sharing';
         break;
       default:
-        link = 'https://docs.google.com/document/d/1W1b5PVp2yjam4FU2IidGagqdA7lYpkTaD_LMeaN_n_k/edit?usp=sharing';
+        link =
+          'https://docs.google.com/document/d/1W1b5PVp2yjam4FU2IidGagqdA7lYpkTaD_LMeaN_n_k/edit?usp=sharing';
     }
     return link;
   }
@@ -172,7 +175,9 @@ export function DataStatusPage({
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 page-header">
         <div className="page-title d-flex align-items-end">
           <h1 className="mb-0">QC Data Monitor</h1>
-          {qcReportView.match(/metabolomics|proteomics|rnaseq|rrbs|methylcapseq|atacseq|immunoassay/) && (
+          {qcReportView.match(
+            /metabolomics|proteomics|rnaseq|rrbs|methylcapseq|atacseq|immunoassay/,
+          ) && (
             <>
               <a
                 href={renderDataTransferGuidelinesLink()}
@@ -185,9 +190,7 @@ export function DataStatusPage({
                 onMouseEnter={() => setIsOpen(true)}
                 onClick={() => setIsOpen(false)}
               >
-                <span className="material-icons">
-                  description
-                </span>
+                <span className="material-icons">description</span>
               </a>
               <Tooltip
                 id="data-transfer-guidelines-link-tooltip"

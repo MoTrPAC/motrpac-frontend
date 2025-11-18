@@ -27,9 +27,9 @@ const BiospecimenFilters = ({
   });
 
   const toggleGroup = (groupKey) => {
-    setExpandedGroups(prev => ({
+    setExpandedGroups((prev) => ({
       ...prev,
-      [groupKey]: !prev[groupKey]
+      [groupKey]: !prev[groupKey],
     }));
   };
 
@@ -93,40 +93,41 @@ const BiospecimenFilters = ({
 
     return (
       <div key={key} className="mb-3">
-        <h6 
-          className="mb-1 d-flex justify-content-between align-items-center" 
+        <h6
+          className="mb-1 d-flex justify-content-between align-items-center"
           style={{ cursor: 'pointer', userSelect: 'none' }}
           onClick={() => toggleGroup(key)}
         >
           <span>{label}</span>
-          <span 
+          <span
             className="filter-toggle-icon"
             style={{
               transition: 'transform 0.2s ease-in-out',
               transform: expandedGroups[key] ? 'rotate(45deg)' : 'rotate(0deg)',
               fontSize: '1.2rem',
-              fontWeight: 'bold'
+              fontWeight: 'bold',
             }}
           >
             +
           </span>
         </h6>
-        {expandedGroups[key] && options.map((option) => (
-          <div key={option} className="form-check">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              id={`${key}-${option}`}
-              checked={selectedFilters.includes(option)}
-              onChange={(e) =>
-                onCheckboxChange(filterKey, option, e.target.checked)
-              }
-            />
-            <label className="form-check-label" htmlFor={`${key}-${option}`}>
-              {option}
-            </label>
-          </div>
-        ))}
+        {expandedGroups[key] &&
+          options.map((option) => (
+            <div key={option} className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id={`${key}-${option}`}
+                checked={selectedFilters.includes(option)}
+                onChange={(e) =>
+                  onCheckboxChange(filterKey, option, e.target.checked)
+                }
+              />
+              <label className="form-check-label" htmlFor={`${key}-${option}`}>
+                {option}
+              </label>
+            </div>
+          ))}
       </div>
     );
   };

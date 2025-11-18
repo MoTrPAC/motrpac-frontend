@@ -22,7 +22,7 @@ function StatusReportGetData({ qcData }) {
 
 StatusReportGetData.propTypes = {
   qcData: PropTypes.arrayOf(
-    PropTypes.shape({ ...commonReportPropType, ...getDataReportPropType })
+    PropTypes.shape({ ...commonReportPropType, ...getDataReportPropType }),
   ).isRequired,
 };
 

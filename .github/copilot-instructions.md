@@ -34,14 +34,18 @@ yarn format            # Prettier formatting
 - **Add lazy route** in `src/App/App.jsx`:
 
 ```javascript
-const NewFeaturePageConnected = lazy(() => import('../NewFeaturePage/newFeaturePage'));
+const NewFeaturePageConnected = lazy(
+  () => import('../NewFeaturePage/newFeaturePage'),
+);
 // In Routes: <Route path="/new-feature" element={<NewFeaturePageConnected/>} />
 ```
 
 - **Register reducer** in `src/App/reducers.js`:
 
 ```javascript
-import newFeatureReducer, { defaultNewFeatureState } from '../NewFeaturePage/newFeatureReducer';
+import newFeatureReducer, {
+  defaultNewFeatureState,
+} from '../NewFeaturePage/newFeatureReducer';
 // Add to combineReducers and defaultRootState
 ```
 
@@ -55,7 +59,7 @@ import newFeatureReducer, { defaultNewFeatureState } from '../NewFeaturePage/new
 import { useSelector, useDispatch } from 'react-redux';
 
 function Component() {
-  const data = useSelector(state => state.feature.data);
+  const data = useSelector((state) => state.feature.data);
   const dispatch = useDispatch();
 
   const handleAction = () => {
@@ -78,7 +82,7 @@ export function Component({ data, action }) {
   return <div>{data}</div>;
 }
 
-const mapStateToProps = state => ({ data: state.feature.data });
+const mapStateToProps = (state) => ({ data: state.feature.data });
 const mapDispatchToProps = { action: actionCreator };
 
 // Default export for app usage
@@ -101,11 +105,12 @@ export function fetchData() {
       ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
       : import.meta.env.VITE_API_SERVICE_ADDRESS;
 
-    axios.get(`${api}/endpoint`)
-      .then(response => {
+    axios
+      .get(`${api}/endpoint`)
+      .then((response) => {
         dispatch({ type: FETCH_DATA_SUCCESS, payload: response.data });
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({ type: FETCH_DATA_ERROR, payload: error.message });
       });
   };
@@ -116,8 +121,8 @@ export function fetchData() {
 
 ```javascript
 // Use these aliases (configured in vite.config.js)
-import Component from '@/ComponentName/component';  // src/ComponentName
-import '@styles/file.scss';                         // src/sass/
+import Component from '@/ComponentName/component'; // src/ComponentName
+import '@styles/file.scss'; // src/sass/
 
 // Use relative imports for sibling directories
 import './localFile';
@@ -358,11 +363,11 @@ export const TOGGLE_RELEASE = 'TOGGLE_RELEASE';
 function toggleRelease(release) {
   return {
     type: TOGGLE_RELEASE,
-    release,  // Payload
+    release, // Payload
   };
 }
 
-export default { toggleRelease, /* ... other actions */ };
+export default { toggleRelease /* ... other actions */ };
 ```
 
 **Async Thunk Actions** (typical pattern in `browseDataActions.js`):
@@ -376,17 +381,18 @@ export function fetchManifest(url) {
   return (dispatch) => {
     dispatch({ type: FETCH_MANIFEST_REQUEST });
 
-    axios.get(url)
-      .then(response => {
+    axios
+      .get(url)
+      .then((response) => {
         dispatch({
           type: FETCH_MANIFEST_SUCCESS,
-          payload: response.data
+          payload: response.data,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: FETCH_MANIFEST_ERROR,
-          payload: error.message
+          payload: error.message,
         });
       });
   };
@@ -402,8 +408,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchData } from './actions';
 
 function DataComponent() {
-  const data = useSelector(state => state.feature.data);
-  const loading = useSelector(state => state.feature.loading);
+  const data = useSelector((state) => state.feature.data);
+  const loading = useSelector((state) => state.feature.loading);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -433,7 +439,7 @@ export function DataComponent({ data, loading, fetchData }) {
   return <div>{data}</div>;
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   data: state.feature.data,
   loading: state.feature.loading,
 });
@@ -507,11 +513,11 @@ Use `<AuthWrapper/>` component in `src/App/App.jsx` to protect routes:
 import AuthWrapper from '../Auth/AuthWrapper';
 
 // In Routes:
-<Route element={<AuthWrapper/>}>
-  <Route path="/dashboard" element={<DashboardConnected/>} />
-  <Route path="/browse-data" element={<BrowseDataPageConnected/>} />
+<Route element={<AuthWrapper />}>
+  <Route path="/dashboard" element={<DashboardConnected />} />
+  <Route path="/browse-data" element={<BrowseDataPageConnected />} />
   {/* All child routes require authentication */}
-</Route>
+</Route>;
 ```
 
 ### Auth Flow Implementation
@@ -528,7 +534,7 @@ import AuthWrapper from '../Auth/AuthWrapper';
 
 ```javascript
 // Check in components
-const profile = useSelector(state => state.auth.profile);
+const profile = useSelector((state) => state.auth.profile);
 const hasAccess = profile?.user_metadata?.hasAccess;
 
 if (!hasAccess) {
@@ -567,15 +573,13 @@ export function Dashboard({ release, phase, onToggle }) {
   return (
     <div>
       <h1>Dashboard</h1>
-      <button onClick={() => onToggle('pass1b-06')}>
-        {release}
-      </button>
+      <button onClick={() => onToggle('pass1b-06')}>{release}</button>
     </div>
   );
 }
 
 // Connected component - default export for app
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   release: state.dashboard.release,
   phase: state.dashboard.phase,
 });
@@ -604,8 +608,8 @@ Create reusable hooks for common logic:
 import { useSelector } from 'react-redux';
 
 export function useAuth() {
-  const profile = useSelector(state => state.auth.profile);
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const profile = useSelector((state) => state.auth.profile);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const hasAccess = profile?.user_metadata?.hasAccess;
 
   return { profile, isAuthenticated, hasAccess };
@@ -626,10 +630,10 @@ function ProtectedFeature() {
 
 ```javascript
 function DataComponent() {
-  const { data, loading, error } = useSelector(state => state.feature);
+  const { data, loading, error } = useSelector((state) => state.feature);
 
   if (loading) {
-    return <Spinner />;  // From src/lib/ui/spinner.jsx
+    return <Spinner />; // From src/lib/ui/spinner.jsx
   }
 
   if (error) {
@@ -794,7 +798,7 @@ export const WithData = {
 ```javascript
 import { describe, test, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Component } from '../component';  // Import pure component
+import { Component } from '../component'; // Import pure component
 
 describe('Component Name', () => {
   test('renders expected elements', () => {
@@ -846,7 +850,7 @@ const store = createStore(rootReducer, defaultRootState);
 render(
   <Provider store={store}>
     <ComponentConnected />
-  </Provider>
+  </Provider>,
 );
 ```
 
@@ -901,8 +905,8 @@ const NewPage = lazy(() => import('../NewPage/newPage'));
 - **Add route inside **`<AuthWrapper/>`:
 
 ```javascript
-<Route element={<AuthWrapper/>}>
-  <Route path="/new-page" element={<NewPage/>} />
+<Route element={<AuthWrapper />}>
+  <Route path="/new-page" element={<NewPage />} />
 </Route>
 ```
 
@@ -923,15 +927,16 @@ export function fetchProtectedData() {
     const { accessToken } = getState().auth;
     const api = import.meta.env.VITE_API_SERVICE_ADDRESS;
 
-    axios.get(`${api}/protected-endpoint`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-      .then(response => {
+    axios
+      .get(`${api}/protected-endpoint`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
         dispatch({ type: FETCH_SUCCESS, payload: response.data });
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({ type: FETCH_ERROR, payload: error.message });
       });
   };
@@ -969,7 +974,7 @@ const config = import.meta.env.VITE_NEW_CONFIG;
 function reducer(state = defaultState, action) {
   switch (action.type) {
     case TOGGLE_RELEASE:
-      state.release = action.release;  // ❌ MUTATION!
+      state.release = action.release; // ❌ MUTATION!
       return state;
   }
 }
@@ -981,7 +986,7 @@ function reducer(state = defaultState, action) {
 function reducer(state = defaultState, action) {
   switch (action.type) {
     case TOGGLE_RELEASE:
-      return { ...state, release: action.release };  // ✓ New object
+      return { ...state, release: action.release }; // ✓ New object
   }
 }
 ```
@@ -993,14 +998,14 @@ function reducer(state = defaultState, action) {
 **Wrong:**
 
 ```jsx
-<a href="/dashboard">Dashboard</a>  // ❌ Full page reload!
+<a href="/dashboard">Dashboard</a> // ❌ Full page reload!
 ```
 
 **Correct:**
 
 ```jsx
 import { Link } from 'react-router-dom';
-<Link to="/dashboard">Dashboard</Link>  // ✓ Client-side navigation
+<Link to="/dashboard">Dashboard</Link>; // ✓ Client-side navigation
 ```
 
 ### 3. Forgetting `VITE_` Prefix on Environment Variables ❌
@@ -1034,21 +1039,25 @@ const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
 **Wrong:**
 
 ```javascript
-function Dashboard({ data }) { /* ... */ }
-export default connect(mapStateToProps)(Dashboard);  // ❌ Can't test pure component
+function Dashboard({ data }) {
+  /* ... */
+}
+export default connect(mapStateToProps)(Dashboard); // ❌ Can't test pure component
 ```
 
 **Correct:**
 
 ```javascript
-export function Dashboard({ data }) { /* ... */ }  // ✓ Named export for tests
-export default connect(mapStateToProps)(Dashboard);  // ✓ Default export for app
+export function Dashboard({ data }) {
+  /* ... */
+} // ✓ Named export for tests
+export default connect(mapStateToProps)(Dashboard); // ✓ Default export for app
 ```
 
 **In tests:**
 
 ```javascript
-import { Dashboard } from '../dashboard';  // Test pure component
+import { Dashboard } from '../dashboard'; // Test pure component
 ```
 
 ### 5. Incorrect Import Paths ❌
@@ -1058,13 +1067,13 @@ import { Dashboard } from '../dashboard';  // Test pure component
 **Wrong:**
 
 ```javascript
-import Component from '../../../lib/ui/component';  // ❌ Hard to refactor
+import Component from '../../../lib/ui/component'; // ❌ Hard to refactor
 ```
 
 **Correct:**
 
 ```javascript
-import Component from '@/lib/ui/component';  // ✓ Use configured alias
+import Component from '@/lib/ui/component'; // ✓ Use configured alias
 ```
 
 ### 6. Inline Styles with SCSS ❌
@@ -1074,7 +1083,7 @@ import Component from '@/lib/ui/component';  // ✓ Use configured alias
 **Wrong:**
 
 ```javascript
-import './styles.scss';  // ❌ Not compiled by Vite in this project
+import './styles.scss'; // ❌ Not compiled by Vite in this project
 ```
 
 **Correct:**
@@ -1120,7 +1129,7 @@ function Component() {
 ```javascript
 // src/App/reducers.js
 export default combineReducers({
-  newFeature: newFeatureReducer,  // ✓ Added here
+  newFeature: newFeatureReducer, // ✓ Added here
   // ... other reducers
 });
 
@@ -1132,14 +1141,16 @@ export const defaultRootState = {
 **Correct:**
 
 ```javascript
-import newFeatureReducer, { defaultNewFeatureState } from '../NewFeature/newFeatureReducer';
+import newFeatureReducer, {
+  defaultNewFeatureState,
+} from '../NewFeature/newFeatureReducer';
 
 export default combineReducers({
   newFeature: newFeatureReducer,
 });
 
 export const defaultRootState = {
-  newFeature: defaultNewFeatureState,  // ✓ Added here too
+  newFeature: defaultNewFeatureState, // ✓ Added here too
 };
 ```
 
@@ -1306,7 +1317,7 @@ const options = {
   plugins: {
     decimation: {
       enabled: true,
-      algorithm: 'lttb',  // Largest Triangle Three Bucket
+      algorithm: 'lttb', // Largest Triangle Three Bucket
       samples: 500,
     },
   },
@@ -1333,7 +1344,7 @@ const options = {
 
 ```javascript
 const filteredData = useMemo(() => {
-  return largeDataset.filter(item => item.category === filter);
+  return largeDataset.filter((item) => item.category === filter);
 }, [largeDataset, filter]);
 ```
 
@@ -1344,9 +1355,12 @@ const filteredData = useMemo(() => {
 - Functions used in dependency arrays
 
 ```javascript
-const handleSort = useCallback((column) => {
-  dispatch(setSortColumn(column));
-}, [dispatch]);
+const handleSort = useCallback(
+  (column) => {
+    dispatch(setSortColumn(column));
+  },
+  [dispatch],
+);
 ```
 
 **Don't use when:**
@@ -1386,8 +1400,8 @@ const handleSort = useCallback((column) => {
 Configured in `vite.config.js`:
 
 ```javascript
-import Component from '@/ComponentName/component';  // src/ComponentName
-import '@styles/file.scss';                         // src/sass/
+import Component from '@/ComponentName/component'; // src/ComponentName
+import '@styles/file.scss'; // src/sass/
 ```
 
 **Guidelines:**
@@ -1676,13 +1690,15 @@ export default {
 const NewFeaturePage = lazy(() => import('../NewFeaturePage/newFeaturePage'));
 
 // In <Routes>:
-<Route path="/new-feature" element={<NewFeaturePage/>} />
+<Route path="/new-feature" element={<NewFeaturePage />} />;
 ```
 
 - **Register reducer** in `src/App/reducers.js`:
 
 ```javascript
-import newFeatureReducer, { defaultNewFeatureState } from '../NewFeaturePage/newFeatureReducer';
+import newFeatureReducer, {
+  defaultNewFeatureState,
+} from '../NewFeaturePage/newFeatureReducer';
 
 export default combineReducers({
   newFeature: newFeatureReducer,
@@ -1739,7 +1755,7 @@ export const defaultRootState = {
 import { useSelector } from 'react-redux';
 
 function ProtectedFeature() {
-  const profile = useSelector(state => state.auth.profile);
+  const profile = useSelector((state) => state.auth.profile);
   const hasAccess = profile?.user_metadata?.hasAccess;
 
   if (!hasAccess) {

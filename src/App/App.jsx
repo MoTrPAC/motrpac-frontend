@@ -64,7 +64,9 @@ const Pass1b06PhenotypeAnimalConnected = lazy(
   () => import('../AnalysisPage/pass1b06PhenotypeAnimal'),
 );
 const License = lazy(() => import('../License/licensePage'));
-const DataDeposition = lazy(() => import('../DataDeposition/dataDepositionPage'));
+const DataDeposition = lazy(
+  () => import('../DataDeposition/dataDepositionPage'),
+);
 const StudyAssays = lazy(() => import('../MainStudy/studyAssays'));
 const ExerciseBenefits = lazy(() => import('../MainStudy/exerciseBenefits'));
 const Phenotype = lazy(() => import('../TechnicalGuides/phenotype'));
@@ -76,146 +78,126 @@ const Glossary = lazy(() => import('../Glossary/glossaryPage'));
 
 function App({ history = History }) {
   return (
-    <BrowserRouter history={history} future={{ v7_relativeSplatPath: true, v7_startTransitions: true }}>
-      <ScrollToTop/>
+    <BrowserRouter
+      history={history}
+      future={{ v7_relativeSplatPath: true, v7_startTransitions: true }}
+    >
+      <ScrollToTop />
       <div className="App container-fluid">
         <header>
-          <NavbarConnected/>
+          <NavbarConnected />
         </header>
         <div className="row justify-content-center">
-          <Suspense fallback={<div/>}>
+          <Suspense fallback={<div />}>
             <Routes>
-              <Route element={<PageTracker/>}>
-                <Route
-                  path="/callback"
-                  element={<Callback />}
-                />
-                <Route
-                  path="/"
-                  exact
-                  element={<LandingPageConnected/>}
-                />
-                <Route
-                  path="/external-links"
-                  element={<LinkoutPage/>}
-                />
-                <Route
-                  path="/methods"
-                  element={<MethodsConnected/>}
-                />
-                <Route path="/team" element={<TeamPage/>}/>
-                <Route path="/contact" element={<Contact/>}/>
-                <Route
-                  path="/announcements"
-                  element={<AnnouncementsPage/>}
-                />
-                <Route path="/error" element={<ErrorPageConnected/>}/>
-                <Route element={<AuthWrapper/>}>
+              <Route element={<PageTracker />}>
+                <Route path="/callback" element={<Callback />} />
+                <Route path="/" exact element={<LandingPageConnected />} />
+                <Route path="/external-links" element={<LinkoutPage />} />
+                <Route path="/methods" element={<MethodsConnected />} />
+                <Route path="/team" element={<TeamPage />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/announcements" element={<AnnouncementsPage />} />
+                <Route path="/error" element={<ErrorPageConnected />} />
+                <Route element={<AuthWrapper />}>
                   <Route
                     path="/analysis/:subjectType"
-                    element={<AnalysisHomePageConnected/>}
+                    element={<AnalysisHomePageConnected />}
                   />
                   <Route
                     path="/summary"
-                    element={<DataSummaryPageConnected/>}
+                    element={<DataSummaryPageConnected />}
                   />
-                  <Route
-                    path="/releases"
-                    element={<ReleasePageConnected/>}
-                  />
+                  <Route path="/releases" element={<ReleasePageConnected />} />
                   <Route
                     path="/qc-data-monitor"
-                    element={<DataStatusPageConnected/>}
+                    element={<DataStatusPageConnected />}
                   />
                   <Route
                     path="/analysis-phenotype"
-                    element={<Pass1b06PhenotypeAnimalConnected/>}
+                    element={<Pass1b06PhenotypeAnimalConnected />}
                   />
                   <Route
                     path="/multiomics-working-groups"
-                    element={<MultiOmicsWorkingGroups/>}
+                    element={<MultiOmicsWorkingGroups />}
                   />
                   <Route
                     path="/dashboard"
                     exact
-                    element={<DashboardConnected/>}
+                    element={<DashboardConnected />}
                   />
                   <Route
                     path="/biospecimen-summary"
-                    element={<BiospecimenSummary/>}
+                    element={<BiospecimenSummary />}
                   />
                 </Route>
                 <Route
                   path="/data-download"
-                  element={<BrowseDataPageConnected/>}
+                  element={<BrowseDataPageConnected />}
                 />
                 <Route
                   path="/data-download/file-browser/:selectedData"
-                  element={<BrowseDataPageConnected/>}
+                  element={<BrowseDataPageConnected />}
                 />
                 <Route
                   path="/data-access"
-                  element={<DataAccessPageConnected/>}
+                  element={<DataAccessPageConnected />}
                 />
                 <Route
                   path="/related-studies"
                   exact
-                  element={<RelatedStudy/>}
+                  element={<RelatedStudy />}
                 />
                 <Route
                   path="/related-studies/heritage-proteomics"
                   exact
-                  element={<HeritageProteomics/>}
+                  element={<HeritageProteomics />}
                 />
-                <Route
-                  path="/search"
-                  element={<SearchPageConnected/>}
-                />
+                <Route path="/search" element={<SearchPageConnected />} />
                 <Route
                   path="/gene-centric"
-                  element={<GeneCentricViewConnected/>}
+                  element={<GeneCentricViewConnected />}
                 />
                 <Route
                   path="/graphical-clustering"
-                  element={<GraphicalClustering/>}
+                  element={<GraphicalClustering />}
                 />
                 <Route
                   path="/code-repositories"
-                  element={<CodeRepositories/>}
+                  element={<CodeRepositories />}
                 />
+                <Route path="/project-overview" element={<ProjectOverview />} />
+                <Route path="/tutorials" element={<Tutorials />} />
+                <Route path="/publications" exact element={<Publications />} />
                 <Route
-                  path="/project-overview"
-                  element={<ProjectOverview/>}
-                />
-                <Route path="/tutorials" element={<Tutorials/>}/>
-                <Route
-                  path="/publications"
+                  path="/publications/data/supplemental"
                   exact
-                  element={<Publications/>}
+                  element={<SupplementalData />}
                 />
-                <Route
-                    path="/publications/data/supplemental"
-                    exact
-                    element={<SupplementalData/>}
-                  />
                 <Route
                   path="/publications/data/animal/phenotype/full-table-endurance-training"
                   exact
-                  element={<FullTableEnduranceTraining/>}
+                  element={<FullTableEnduranceTraining />}
                 />
-                <Route path="/license" element={<License/>}/>
-                <Route path="/data-deposition" element={<DataDeposition/>}/>
-                <Route path="/study-assays" element={<StudyAssays/>}/>
-                <Route path="/exercise-benefits" element={<ExerciseBenefits/>}/>
-                <Route path="/technical-guides/phenotype" element={<Phenotype/>}/>
-                <Route path="/citation" element={<Citation/>}/>
-                <Route path="/glossary" element={<Glossary/>}/>
+                <Route path="/license" element={<License />} />
+                <Route path="/data-deposition" element={<DataDeposition />} />
+                <Route path="/study-assays" element={<StudyAssays />} />
+                <Route
+                  path="/exercise-benefits"
+                  element={<ExerciseBenefits />}
+                />
+                <Route
+                  path="/technical-guides/phenotype"
+                  element={<Phenotype />}
+                />
+                <Route path="/citation" element={<Citation />} />
+                <Route path="/glossary" element={<Glossary />} />
               </Route>
             </Routes>
           </Suspense>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </BrowserRouter>
   );
 }

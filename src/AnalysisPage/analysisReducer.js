@@ -76,7 +76,7 @@ export const defaultAnalysisState = {
 
 export default function AnalysisReducer(
   state = { ...defaultAnalysisState },
-  action
+  action,
 ) {
   switch (action.type) {
     case 'ANALYSIS_SELECT':
@@ -220,7 +220,7 @@ export default function AnalysisReducer(
         } else {
           // Removes filter if already exists
           const newArr = newFilters[action.field].filter(
-            (value) => !(value === action.filterValue)
+            (value) => !(value === action.filterValue),
           );
           newFilters[action.field] = newArr;
         }

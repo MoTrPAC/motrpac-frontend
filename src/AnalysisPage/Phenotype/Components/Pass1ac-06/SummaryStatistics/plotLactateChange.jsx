@@ -14,14 +14,25 @@ import Chart from '../chartWrapper';
  */
 function PlotLactateChange() {
   // Base chart options
-  const baseChartOptions = defaultChartOptions('Intervention', 'Lactate Change', 'Lactate Change: {point.y}');
+  const baseChartOptions = defaultChartOptions(
+    'Intervention',
+    'Lactate Change',
+    'Lactate Change: {point.y}',
+  );
 
   // Function to collect lactate change data for box plot
-  const getLactateChangeData = (data) => data.map((item) => parseFloat(item.lactate_change));
-  const boxPlotData = useMemo(() => allBoxPlotDataByPhaseSexIntervention(getLactateChangeData), []);
+  const getLactateChangeData = (data) =>
+    data.map((item) => parseFloat(item.lactate_change));
+  const boxPlotData = useMemo(
+    () => allBoxPlotDataByPhaseSexIntervention(getLactateChangeData),
+    [],
+  );
 
   // Scatter plot data for pass1a and pass1c (both male and female)
-  const scatterData = useMemo(() => allScatterPlotDataByPhaseSex(getLactateChangeData), []);
+  const scatterData = useMemo(
+    () => allScatterPlotDataByPhaseSex(getLactateChangeData),
+    [],
+  );
 
   // Highcharts options for the plots
   const chartOptions = useMemo(() => {
@@ -97,15 +108,24 @@ function PlotLactateChange() {
     };
 
     return {
-      male: createChartOptions('Male', 'Distribution of LACTATE CHANGE by INTERVENTION and MALE'),
-      female: createChartOptions('Female', 'Distribution of LACTATE CHANGE by INTERVENTION and FEMALE'),
+      male: createChartOptions(
+        'Male',
+        'Distribution of LACTATE CHANGE by INTERVENTION and MALE',
+      ),
+      female: createChartOptions(
+        'Female',
+        'Distribution of LACTATE CHANGE by INTERVENTION and FEMALE',
+      ),
     };
   }, [baseChartOptions, boxPlotData, scatterData]);
 
   return (
     <div className="col-lg-11 h-90">
       <Chart options={chartOptions.male} className="phenotype-plot-container" />
-      <Chart options={chartOptions.female} className="phenotype-plot-container" />
+      <Chart
+        options={chartOptions.female}
+        className="phenotype-plot-container"
+      />
     </div>
   );
 }

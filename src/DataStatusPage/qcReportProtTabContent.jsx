@@ -15,23 +15,27 @@ import QcReportDataTable from './sharelib/qcReportDataTable';
  *
  * @returns {object} The data qc status table component
  */
-function QcReportProtTabContent({ qcData, qcDataRaw, qcFiles = 'processed_by_bic' }) {
+function QcReportProtTabContent({
+  qcData,
+  qcDataRaw,
+  qcFiles = 'processed_by_bic',
+}) {
   // Define table column headers
   const processedDataColumns = useMemo(() => protProcessedDataTableColumns, []);
   const processedQcData = useMemo(
     () => transformData(qcData, 'processed', 'prot'),
-    [qcData]
+    [qcData],
   );
   const processedByCasQcData = processedQcData.filter(
-    (item) => item.run_by_bic === false
+    (item) => item.run_by_bic === false,
   );
   const processedByBicQcData = processedQcData.filter(
-    (item) => item.run_by_bic === true
+    (item) => item.run_by_bic === true,
   );
   const rawDataColumns = useMemo(() => protRawDataTableColumns, []);
   const rawQcData = useMemo(
     () => transformData(qcDataRaw, 'raw', 'prot'),
-    [qcDataRaw]
+    [qcDataRaw],
   );
   return (
     <QcReportDataTable
@@ -40,8 +44,8 @@ function QcReportProtTabContent({ qcData, qcDataRaw, qcFiles = 'processed_by_bic
         qcFiles === 'raw'
           ? rawQcData
           : qcFiles === 'processed_by_cas'
-          ? processedByCasQcData
-          : processedByBicQcData
+            ? processedByCasQcData
+            : processedByBicQcData
       }
     />
   );
@@ -52,13 +56,13 @@ QcReportProtTabContent.propTypes = {
     PropTypes.shape({
       ...commonReportPropType,
       ...metabProtReportPropType,
-    })
+    }),
   ).isRequired,
   qcDataRaw: PropTypes.arrayOf(
     PropTypes.shape({
       ...commonReportPropType,
       ...metabProtRawDataReportPropType,
-    })
+    }),
   ).isRequired,
   qcFiles: PropTypes.string,
 };

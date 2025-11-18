@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
 import react from '@vitejs/plugin-react-swc';
-import * as path from "node:path";
+import * as path from 'node:path';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
@@ -14,10 +14,10 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'vis': ['vis-network', 'vis-data'],
-        }
-      }
-    }
+          vis: ['vis-network', 'vis-data'],
+        },
+      },
+    },
   },
   css: {
     preprocessorOptions: {

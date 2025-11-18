@@ -5,7 +5,8 @@ import HeatmapModal from './heatmapModal';
 
 import '@styles/differentialExpression.scss';
 
-const imgSourceUrl = 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/figures/';
+const imgSourceUrl =
+  'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/figures/';
 
 /**
  * Renders the data exploration page in both
@@ -90,8 +91,8 @@ function DifferentialExpression() {
         // handle click event on assay legend symbols
         const assaySymbols = Array.from(
           document.querySelectorAll(
-            '#AssayLegends rect, #AssayLegends circle, #AssayLegends polygon'
-          )
+            '#AssayLegends rect, #AssayLegends circle, #AssayLegends polygon',
+          ),
         );
         assaySymbols.forEach((symbol) => {
           const selectedAssay = d3.select(symbol);
@@ -99,7 +100,7 @@ function DifferentialExpression() {
             selectedAssay.on('click', (event) => {
               activateModal(
                 d3.select(event.currentTarget.parentNode).attr('class'),
-                selectedAssay.attr('class')
+                selectedAssay.attr('class'),
               );
             });
           } else {

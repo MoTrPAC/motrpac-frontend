@@ -9,11 +9,11 @@ import { getTissueName } from './tissueUtils';
  * Tranche code to name mapping
  */
 const TRANCHE_CODE_TO_NAME = {
-  'TR00': 'Tranche 0',
-  'TR01': 'Tranche 1',
-  'TR02': 'Tranche 2',
-  'TR03': 'Tranche 3',
-  'TR04': 'Tranche 4',
+  TR00: 'Tranche 0',
+  TR01: 'Tranche 1',
+  TR02: 'Tranche 2',
+  TR03: 'Tranche 3',
+  TR04: 'Tranche 4',
 };
 
 /**

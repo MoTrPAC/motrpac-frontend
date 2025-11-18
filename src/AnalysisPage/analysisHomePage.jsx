@@ -46,7 +46,7 @@ export function AnalysisHomePage({
 
   // Return a subset of top level analyses by selected species
   const analysesBySpecies = analysisTypes.filter(
-    (item) => item.species.indexOf(subjectType) > -1
+    (item) => item.species.indexOf(subjectType) > -1,
   );
   // Render a subset of top level analyses
   const selectAnalysis = analysesBySpecies.map((analysisType) => (
@@ -108,7 +108,6 @@ AnalysisHomePage.propTypes = {
     user_metadata: PropTypes.object,
   }),
 };
-
 
 const mapStateToProps = (state) => ({
   depth: state.analysis.depth,

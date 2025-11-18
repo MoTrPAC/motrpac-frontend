@@ -36,8 +36,8 @@ describe('Data access page with embargo agreement and registration form', () => 
       screen.getByLabelText(/Institution/i),
       screen.getByLabelText(/Name of PI/i),
     ];
-    
-    requiredInputs.forEach(input => {
+
+    requiredInputs.forEach((input) => {
       expect(input).toBeInTheDocument();
     });
   });
@@ -65,11 +65,11 @@ describe('Data access page with embargo agreement and registration form', () => 
       name: /I am a principal investigator/i,
     });
     const piNameInput = screen.getByLabelText(/Name of PI/i);
-    
+
     expect(piNameInput).not.toBeDisabled();
-    
+
     await user.click(piCheckbox);
-    
+
     expect(piNameInput).toBeDisabled();
   });
 });

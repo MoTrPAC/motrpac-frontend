@@ -1,16 +1,56 @@
 import pass1ac06Data from '../../pass1ac-animal_pheno.json';
 
 // male data
-export const pass1aMaleAcute = pass1ac06Data.filter((item) => item.phase === 'pass1a' && item.sex === 'male' && item.intervention === 'acute');
-export const pass1aMaleControl = pass1ac06Data.filter((item) => item.phase === 'pass1a' && item.sex === 'male' && item.intervention === 'control');
-export const pass1cMaleAcute = pass1ac06Data.filter((item) => item.phase === 'pass1c' && item.sex === 'male' && item.intervention === 'acute');
-export const pass1cMaleControl = pass1ac06Data.filter((item) => item.phase === 'pass1c' && item.sex === 'male' && item.intervention === 'control');
+export const pass1aMaleAcute = pass1ac06Data.filter(
+  (item) =>
+    item.phase === 'pass1a' &&
+    item.sex === 'male' &&
+    item.intervention === 'acute',
+);
+export const pass1aMaleControl = pass1ac06Data.filter(
+  (item) =>
+    item.phase === 'pass1a' &&
+    item.sex === 'male' &&
+    item.intervention === 'control',
+);
+export const pass1cMaleAcute = pass1ac06Data.filter(
+  (item) =>
+    item.phase === 'pass1c' &&
+    item.sex === 'male' &&
+    item.intervention === 'acute',
+);
+export const pass1cMaleControl = pass1ac06Data.filter(
+  (item) =>
+    item.phase === 'pass1c' &&
+    item.sex === 'male' &&
+    item.intervention === 'control',
+);
 
 // female data
-export const pass1aFemaleAcute = pass1ac06Data.filter((item) => item.phase === 'pass1a' && item.sex === 'female' && item.intervention === 'acute');
-export const pass1aFemaleControl = pass1ac06Data.filter((item) => item.phase === 'pass1a' && item.sex === 'female' && item.intervention === 'control');
-export const pass1cFemaleAcute = pass1ac06Data.filter((item) => item.phase === 'pass1c' && item.sex === 'female' && item.intervention === 'acute');
-export const pass1cFemaleControl = pass1ac06Data.filter((item) => item.phase === 'pass1c' && item.sex === 'female' && item.intervention === 'control');
+export const pass1aFemaleAcute = pass1ac06Data.filter(
+  (item) =>
+    item.phase === 'pass1a' &&
+    item.sex === 'female' &&
+    item.intervention === 'acute',
+);
+export const pass1aFemaleControl = pass1ac06Data.filter(
+  (item) =>
+    item.phase === 'pass1a' &&
+    item.sex === 'female' &&
+    item.intervention === 'control',
+);
+export const pass1cFemaleAcute = pass1ac06Data.filter(
+  (item) =>
+    item.phase === 'pass1c' &&
+    item.sex === 'female' &&
+    item.intervention === 'acute',
+);
+export const pass1cFemaleControl = pass1ac06Data.filter(
+  (item) =>
+    item.phase === 'pass1c' &&
+    item.sex === 'female' &&
+    item.intervention === 'control',
+);
 
 // Function to calculate box plot data
 function calculateBoxPlotData(rawData, processData) {
@@ -41,10 +81,19 @@ export function allBoxPlotDataByPhaseSexIntervention(processData) {
 
 // Function to get all scatter plot data by phase, sex, and intervention
 export function allScatterPlotDataByPhaseSex(processData) {
-  const getScatterPlots = (acuteData, controlData) => [processData(acuteData), processData(controlData)];
+  const getScatterPlots = (acuteData, controlData) => [
+    processData(acuteData),
+    processData(controlData),
+  ];
 
-  const createScatterData = (acuteData, controlData, offset) => getScatterPlots(acuteData, controlData)
-      .reduce((acc, data, x) => acc.concat(data.map((value) => [x + offset, Math.round(value * 1000) / 1000])), []);
+  const createScatterData = (acuteData, controlData, offset) =>
+    getScatterPlots(acuteData, controlData).reduce(
+      (acc, data, x) =>
+        acc.concat(
+          data.map((value) => [x + offset, Math.round(value * 1000) / 1000]),
+        ),
+      [],
+    );
 
   return {
     pass1a: {
@@ -71,7 +120,11 @@ export const COLORS = {
 };
 
 // Default chart options
-export function defaultChartOptions(xAxisTitle, yAxisTitle, scatterTooltipFormat) {
+export function defaultChartOptions(
+  xAxisTitle,
+  yAxisTitle,
+  scatterTooltipFormat,
+) {
   return {
     xAxis: {
       title: {
@@ -117,7 +170,11 @@ export function defaultChartOptions(xAxisTitle, yAxisTitle, scatterTooltipFormat
 }
 
 // correlation matrix chart options
-export function correlationMatrixChartOptions(xAxisTitle, yAxisTitle, tooltipFormat) {
+export function correlationMatrixChartOptions(
+  xAxisTitle,
+  yAxisTitle,
+  tooltipFormat,
+) {
   return {
     chart: {
       type: 'heatmap',

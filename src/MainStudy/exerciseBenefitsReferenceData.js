@@ -1,7 +1,8 @@
 const exerciseBenefitsReferenceData = [
   {
     citationNo: 1,
-    title: 'An Overview of the Beneficial Effects of Exercise on Health and Performance',
+    title:
+      'An Overview of the Beneficial Effects of Exercise on Health and Performance',
     author: 'Kramer A',
     journal: 'Advances in Experimental Medicine and Biology',
     publicationIssue: '2020;1228:3-22',
@@ -9,7 +10,8 @@ const exerciseBenefitsReferenceData = [
   },
   {
     citationNo: 2,
-    title: 'American College of Sports Medicine Position Stand. Quantity and Quality of Exercise for Developing and Maintaining Cardiorespiratory, Musculoskeletal, and Neuromotor Fitness in Apparently Healthy Adults: Guidance for Prescribing Exercise',
+    title:
+      'American College of Sports Medicine Position Stand. Quantity and Quality of Exercise for Developing and Maintaining Cardiorespiratory, Musculoskeletal, and Neuromotor Fitness in Apparently Healthy Adults: Guidance for Prescribing Exercise',
     author: 'Garber CE, Blissmer B, Deschenes MR, et al',
     journal: 'Medicine and Science in Sports and Exercise',
     publicationIssue: '2011;43(7):1334-59',
@@ -33,7 +35,8 @@ const exerciseBenefitsReferenceData = [
   },
   {
     citationNo: 5,
-    title: 'Statement on Exercise: Benefits and Recommendations for Physical Activity Programs for All Americans. A Statement for Health Professionals by the Committee on Exercise and Cardiac Rehabilitation of the Council on Clinical Cardiology, American Heart Association',
+    title:
+      'Statement on Exercise: Benefits and Recommendations for Physical Activity Programs for All Americans. A Statement for Health Professionals by the Committee on Exercise and Cardiac Rehabilitation of the Council on Clinical Cardiology, American Heart Association',
     author: 'Fletcher GF, Balady G, Blair SN, et al',
     journal: 'Circulation',
     publicationIssue: '1996;94(4):857-62',
@@ -41,7 +44,8 @@ const exerciseBenefitsReferenceData = [
   },
   {
     citationNo: 6,
-    title: 'Exercise Mitigates Age-Related Metabolic Diseases by Improving Mitochondrial Dysfunction',
+    title:
+      'Exercise Mitigates Age-Related Metabolic Diseases by Improving Mitochondrial Dysfunction',
     author: 'Jia D, Tian Z, Wang R',
     journal: 'Ageing Research Reviews',
     publicationIssue: '2023;91:102087',
@@ -49,7 +53,8 @@ const exerciseBenefitsReferenceData = [
   },
   {
     citationNo: 7,
-    title: 'Exercise as medicine - evidence for prescribing exercise as therapy in 26 different chronic diseases',
+    title:
+      'Exercise as medicine - evidence for prescribing exercise as therapy in 26 different chronic diseases',
     author: 'Pedersen BK, Saltin B',
     journal: 'Scand J Med Sci Sports',
     publicationIssue: '2015 Dec:25 Suppl 3:1-72',

@@ -36,7 +36,7 @@ describe('Search Reducer', () => {
   // No action, no state changes
   it('Returns state given if no action', () => {
     expect(
-      SearchReducer({ ...defaultSearchState, searchResults: {} }, {})
+      SearchReducer({ ...defaultSearchState, searchResults: {} }, {}),
     ).toEqual({ ...defaultSearchState, searchResults: {} });
   });
 
@@ -50,7 +50,7 @@ describe('Search Reducer', () => {
     };
     expect(
       SearchReducer(defaultSearchState, searchResultFiltereAction).searchParams
-        .filters.tissue
+        .filters.tissue,
     ).toContain(searchResultFiltereAction.filterValue);
   });
 
@@ -62,7 +62,7 @@ describe('Search Reducer', () => {
       paramValue: 'foxo1',
     };
     expect(
-      SearchReducer(defaultSearchState, searchParamAction).searchParams.keys
+      SearchReducer(defaultSearchState, searchParamAction).searchParams.keys,
     ).toEqual(searchParamAction.paramValue);
   });
 
@@ -126,7 +126,7 @@ describe('Search Reducer', () => {
       type: SEARCH_RESET,
     };
     expect(
-      SearchReducer(newState, searchResetAction).searchParams.filters.tissue
+      SearchReducer(newState, searchResetAction).searchParams.filters.tissue,
     ).toHaveLength(0);
   });
 });

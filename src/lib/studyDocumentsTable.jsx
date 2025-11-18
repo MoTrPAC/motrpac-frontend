@@ -16,8 +16,19 @@ function StudyDocumentsTable({ currentView = '' }) {
       <div key={item.title} className="table-row-document-list">
         <div className="table-cell-document-list column-file">
           <div className="d-flex align-items-center justify-content-start">
-            <img src={item.filetype === 'zip' ? IconSet.Archive : IconSet.PDF} alt={item.title} />
-            <a href={item.location} download target="_blank" rel="noopener noreferrer" className={item.filetype}>{item.title}</a>
+            <img
+              src={item.filetype === 'zip' ? IconSet.Archive : IconSet.PDF}
+              alt={item.title}
+            />
+            <a
+              href={item.location}
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+              className={item.filetype}
+            >
+              {item.title}
+            </a>
           </div>
         </div>
         <div className="table-cell-document-list column-description">
@@ -29,7 +40,9 @@ function StudyDocumentsTable({ currentView = '' }) {
 
   return (
     <div className="card mb-3 border-secondary motrpac-study-documents">
-      <h5 className="card-header bg-secondary text-light">MoTrPAC animal study documents</h5>
+      <h5 className="card-header bg-secondary text-light">
+        MoTrPAC animal study documents
+      </h5>
       <div className="card-body">
         <div className="table-responsive">
           <div className="table table-document-list">

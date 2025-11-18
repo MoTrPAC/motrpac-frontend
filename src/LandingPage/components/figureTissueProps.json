@@ -3,18 +3,13 @@
     "label": "Blood RNA",
     "hoverLabelColor": "#D92C04",
     "hoverLabelTextColor": "#FFFFFF",
-    "assays": [
-      "rna-seq"
-    ]
+    "assays": ["rna-seq"]
   },
   "PLASMA": {
     "label": "Plasma",
     "hoverLabelColor": "#F1997C",
     "hoverLabelTextColor": "#000000",
-    "assays": [
-      "metab",
-      "cytokine"
-    ]
+    "assays": ["metab", "cytokine"]
   },
   "HEART": {
     "label": "Heart",
@@ -36,19 +31,13 @@
     "label": "Vena Cava",
     "hoverLabelColor": "#A5415B",
     "hoverLabelTextColor": "#FFFFFF",
-    "assays": [
-      "rna-seq"
-    ]
+    "assays": ["rna-seq"]
   },
   "SPLEEN": {
     "label": "Spleen",
     "hoverLabelColor": "#F3C288",
     "hoverLabelTextColor": "#000000",
-    "assays": [
-      "rna-seq",
-      "metab",
-      "cytokine"
-    ]
+    "assays": ["rna-seq", "metab", "cytokine"]
   },
   "SKM-GN": {
     "label": "Gastrocnemius",
@@ -68,11 +57,7 @@
     "label": "Vastus Lateralis",
     "hoverLabelColor": "#025939",
     "hoverLabelTextColor": "#FFFFFF",
-    "assays": [
-      "rna-seq",
-      "metab",
-      "cytokine"
-    ]
+    "assays": ["rna-seq", "metab", "cytokine"]
   },
   "WAT-SC": {
     "label": "White Adipose",
@@ -92,13 +77,7 @@
     "label": "Brown Adipose",
     "hoverLabelColor": "#8C5220",
     "hoverLabelTextColor": "#FFFFFF",
-    "assays": [
-      "rrbs",
-      "atac-seq",
-      "rna-seq",
-      "metab",
-      "cytokine"
-    ]
+    "assays": ["rrbs", "atac-seq", "rna-seq", "metab", "cytokine"]
   },
   "LIVER": {
     "label": "Liver",
@@ -120,14 +99,7 @@
     "label": "Lung",
     "hoverLabelColor": "#04BF8A",
     "hoverLabelTextColor": "#FFFFFF",
-    "assays": [
-      "atac-seq",
-      "rna-seq",
-      "prot-pr",
-      "prot-ph",
-      "metab",
-      "cytokine"
-    ]
+    "assays": ["atac-seq", "rna-seq", "prot-pr", "prot-ph", "metab", "cytokine"]
   },
   "KIDNEY": {
     "label": "Kidney",
@@ -147,80 +119,48 @@
     "label": "Adrenal",
     "hoverLabelColor": "#DDA0DD",
     "hoverLabelTextColor": "#FFFFFF",
-    "assays": [
-      "rna-seq",
-      "metab",
-      "cytokine"
-    ]
+    "assays": ["rna-seq", "metab", "cytokine"]
   },
   "CORTEX": {
     "label": "Cortex",
     "hoverLabelColor": "#F2E751",
     "hoverLabelTextColor": "#000000",
-    "assays": [
-      "rna-seq",
-      "metab",
-      "cytokine"
-    ]
+    "assays": ["rna-seq", "metab", "cytokine"]
   },
   "HYPOTH": {
     "label": "Hypothalamus",
     "hoverLabelColor": "#F2B443",
     "hoverLabelTextColor": "#000000",
-    "assays": [
-      "rna-seq",
-      "metab"
-    ]
+    "assays": ["rna-seq", "metab"]
   },
   "HIPPOC": {
     "label": "Hippocampus",
     "hoverLabelColor": "#BF7534",
     "hoverLabelTextColor": "#FFFFFF",
-    "assays": [
-      "atac-seq",
-      "rna-seq",
-      "metab",
-      "cytokine"
-    ]
+    "assays": ["atac-seq", "rna-seq", "metab", "cytokine"]
   },
   "SMLINT": {
     "label": "Small Intestine",
     "hoverLabelColor": "#A18277",
     "hoverLabelTextColor": "#FFFFFF",
-    "assays": [
-      "rna-seq",
-      "metab",
-      "cytokine"
-    ]
+    "assays": ["rna-seq", "metab", "cytokine"]
   },
   "COLON": {
     "label": "Colon",
     "hoverLabelColor": "#5A2E15",
     "hoverLabelTextColor": "#FFFFFF",
-    "assays": [
-      "rna-seq",
-      "metab",
-      "cytokine"
-    ]
+    "assays": ["rna-seq", "metab", "cytokine"]
   },
   "OVARY": {
     "label": "Ovary",
     "hoverLabelColor": "#F2CED0",
     "hoverLabelTextColor": "#000000",
-    "assays": [
-      "rna-seq",
-      "metab",
-      "cytokine"
-    ]
+    "assays": ["rna-seq", "metab", "cytokine"]
   },
   "TESTES": {
     "label": "Testes",
     "hoverLabelColor": "#6D86A5",
     "hoverLabelTextColor": "#FFFFFF",
-    "assays": [
-      "rna-seq",
-      "metab",
-      "cytokine"
-    ]
+    "assays": ["rna-seq", "metab", "cytokine"]
   }
 }

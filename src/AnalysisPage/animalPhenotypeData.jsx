@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-import '@styles/graph.scss'
+import '@styles/graph.scss';
 
 import dataAcuteTest from '../data/testAnimalAcuteTest';
 import dataRegistration from '../data/testAnimalRegistration';
@@ -75,18 +75,22 @@ function AnimalPhenotypeData() {
     });
 
     // scale the range of the data in the x domain
-    const x = d3.scaleLinear()
-      .domain(d3.extent(data)).nice()
+    const x = d3
+      .scaleLinear()
+      .domain(d3.extent(data))
+      .nice()
       .range([margin.left, width - margin.right]);
 
     // invoke d3.js histogram to set up structure
-    const bins = d3.histogram()
-      .domain(x.domain())
-      .thresholds(x.ticks(50))(data);
+    const bins = d3.histogram().domain(x.domain()).thresholds(x.ticks(50))(
+      data,
+    );
 
     // scale the range of the data in the y domain
-    const y = d3.scaleLinear()
-      .domain([0, d3.max(bins, d => d.length)]).nice()
+    const y = d3
+      .scaleLinear()
+      .domain([0, d3.max(bins, (d) => d.length)])
+      .nice()
       .range([height - margin.bottom, margin.top]);
 
     // select DOM element to draw graph
@@ -104,37 +108,41 @@ function AnimalPhenotypeData() {
       .enter()
       .append('rect')
       .attr('class', 'bar')
-      .attr('x', d => x(d.x0) + 1)
-      .attr('width', d => Math.max(0, x(d.x1) - x(d.x0) - 1))
+      .attr('x', (d) => x(d.x0) + 1)
+      .attr('width', (d) => Math.max(0, x(d.x1) - x(d.x0) - 1))
       .attr('y', height - margin.bottom)
       .attr('height', 0)
       .transition()
       .delay((d, i) => i * 10)
       .duration(100)
-      .attr('y', d => y(d.length))
-      .attr('height', d => y(0) - y(d.length));
+      .attr('y', (d) => y(d.length))
+      .attr('height', (d) => y(0) - y(d.length));
 
     // add x axis
-    group.append('g')
+    group
+      .append('g')
       .attr('transform', `translate(0, ${height - margin.bottom})`)
       .call(d3.axisBottom(x).tickSizeOuter(0));
 
     // text label for x axis
-    group.append('text')
+    group
+      .append('text')
       .attr('transform', `translate(${width / 2}, ${height + margin.top + 5})`)
       .style('text-anchor', 'middle')
       .text(target === 'Distance' ? `${target} (m)` : `${target} (gm)`);
 
     // add y axis
-    group.append('g')
+    group
+      .append('g')
       .attr('transform', `translate(${margin.left}, 0)`)
       .call(d3.axisLeft(y));
 
     // text label for y axis
-    group.append('text')
+    group
+      .append('text')
       .attr('transform', 'rotate(-90)')
       .attr('y', 0 - margin.left)
-      .attr('x', 0 - (height / 2))
+      .attr('x', 0 - height / 2)
       .attr('dy', '1em')
       .style('text-anchor', 'middle')
       .text('Frequency');
@@ -148,36 +156,40 @@ function AnimalPhenotypeData() {
     width = 480; // Custom plot width for this demo
 
     function boxQuartiles(d) {
-      return [
-        d3.quantile(d, 0.25),
-        d3.quantile(d, 0.5),
-        d3.quantile(d, 0.75),
-      ];
+      return [d3.quantile(d, 0.25), d3.quantile(d, 0.5), d3.quantile(d, 0.75)];
     }
 
     // extract acute test data into new array of objects (e.g. pid, distance)
-    const distanceData = dataAcuteTest.filter((obj) => {
-      return obj.distance && obj.distance.length;
-    }).map((obj) => {
-      return {
-        pid: obj.pid,
-        distance: +obj.distance,
-      };
-    });
+    const distanceData = dataAcuteTest
+      .filter((obj) => {
+        return obj.distance && obj.distance.length;
+      })
+      .map((obj) => {
+        return {
+          pid: obj.pid,
+          distance: +obj.distance,
+        };
+      });
 
     // extract registration data into new array of objects (e.g. pid, sex)
-    const sexData = dataRegistration.filter((obj) => {
-      return obj.sex && obj.sex.length;
-    }).map((obj) => {
-      return {
-        pid: obj.pid,
-        sex: +obj.sex,
-      };
-    });
+    const sexData = dataRegistration
+      .filter((obj) => {
+        return obj.sex && obj.sex.length;
+      })
+      .map((obj) => {
+        return {
+          pid: obj.pid,
+          sex: +obj.sex,
+        };
+      });
 
     // map distance data to sex data by pid
-    const mappedData = distanceData
-      .map(x => Object.assign(x, sexData.find(y => y.pid === x.pid)));
+    const mappedData = distanceData.map((x) =>
+      Object.assign(
+        x,
+        sexData.find((y) => y.pid === x.pid),
+      ),
+    );
 
     // extract data into separate arrays (e.g. male, female)
     // female = 1, male = 2
@@ -195,7 +207,8 @@ function AnimalPhenotypeData() {
     });
 
     // setup a color scale for filling each box
-    const colorScale = d3.scaleOrdinal(d3.schemeAccent)
+    const colorScale = d3
+      .scaleOrdinal(d3.schemeAccent)
       .domain(Object.keys(distanceRangeData));
 
     // prep data for box plot
@@ -207,7 +220,9 @@ function AnimalPhenotypeData() {
       const localMin = Math.max(d3.min(distance), localQuartile[0] - iqr * 1.5);
       const localMax = Math.min(d3.max(distance), localQuartile[2] + iqr * 1.5);
 
-      const outliersValues = distance.filter(d => d < localMin || d > localMax);
+      const outliersValues = distance.filter(
+        (d) => d < localMin || d > localMax,
+      );
       const outliersList = [];
       if (outliersValues.length) {
         outliersValues.forEach((value) => {
@@ -229,7 +244,8 @@ function AnimalPhenotypeData() {
     });
 
     // Ccompute an ordinal xScale for the keys in boxPlotData
-    const x = d3.scalePoint()
+    const x = d3
+      .scalePoint()
       .domain(Object.keys(groupDistanceData))
       .rangeRound([margin.left, width - margin.right])
       .padding([0.75]);
@@ -237,7 +253,8 @@ function AnimalPhenotypeData() {
     // Compute a global y scale based on the global counts
     const min = d3.min(distanceRangeData);
     const max = d3.max(distanceRangeData);
-    const y = d3.scaleLinear()
+    const y = d3
+      .scaleLinear()
       .domain([min - 10, max]) // Negative scale for showing outlier value of zero's
       .range([height - margin.bottom, margin.top]);
 
@@ -246,7 +263,9 @@ function AnimalPhenotypeData() {
     group.selectAll('*').remove();
 
     // bind data
-    const verticalLinesData = group.selectAll('.verticalLines').data(boxPlotData);
+    const verticalLinesData = group
+      .selectAll('.verticalLines')
+      .data(boxPlotData);
     const rectsData = group.selectAll('rect').data(boxPlotData);
     const whiskersData = group.selectAll('.whiskers').data(boxPlotData);
     const outliersData = group.selectAll('g.outlier').data(boxPlotData);
@@ -261,10 +280,10 @@ function AnimalPhenotypeData() {
     verticalLinesData
       .enter()
       .append('line')
-      .attr('x1', d => x(d.key))
-      .attr('y1', d => y(d.whiskers[0]))
-      .attr('x2', d => x(d.key))
-      .attr('y2', d => y(d.whiskers[1]))
+      .attr('x1', (d) => x(d.key))
+      .attr('y1', (d) => y(d.whiskers[0]))
+      .attr('x2', (d) => x(d.key))
+      .attr('y2', (d) => y(d.whiskers[1]))
       .attr('stroke', '#000')
       .attr('stroke-width', 1)
       .attr('fill', 'none');
@@ -274,10 +293,10 @@ function AnimalPhenotypeData() {
       .enter()
       .append('rect')
       .attr('width', boxWidth)
-      .attr('height', d => y(d.quartile[0]) - y(d.quartile[2]))
-      .attr('x', d => x(d.key) - (boxWidth / 2))
-      .attr('y', d => y(d.quartile[2]))
-      .attr('fill', d => d.color)
+      .attr('height', (d) => y(d.quartile[0]) - y(d.quartile[2]))
+      .attr('x', (d) => x(d.key) - boxWidth / 2)
+      .attr('y', (d) => y(d.quartile[2]))
+      .attr('fill', (d) => d.color)
       .attr('stroke', '#000')
       .attr('stroke-width', 1);
 
@@ -288,35 +307,35 @@ function AnimalPhenotypeData() {
       .attr('fill', 'none')
       .attr('stroke', '#000')
       .selectAll('circle')
-      .data(d => d.outliers)
+      .data((d) => d.outliers)
       .join('circle')
       .attr('class', 'outlier')
       .attr('r', 4)
-      .attr('cx', d => x(d.x))
-      .attr('cy', d => y(d.y));
+      .attr('cx', (d) => x(d.x))
+      .attr('cy', (d) => y(d.y));
 
     // Now render all the horizontal lines at once - the whiskers and the median
     const horizontalLineConfigs = [
       // top whisker
       {
-        x1: d => x(d.key) - (boxWidth / 2),
-        y1: d => y(d.whiskers[0]),
-        x2: d => x(d.key) + (boxWidth / 2),
-        y2: d => y(d.whiskers[0]),
+        x1: (d) => x(d.key) - boxWidth / 2,
+        y1: (d) => y(d.whiskers[0]),
+        x2: (d) => x(d.key) + boxWidth / 2,
+        y2: (d) => y(d.whiskers[0]),
       },
       // median line
       {
-        x1: d => x(d.key) - (boxWidth / 2),
-        y1: d => y(d.quartile[1]),
-        x2: d => x(d.key) + (boxWidth / 2),
-        y2: d => y(d.quartile[1]),
+        x1: (d) => x(d.key) - boxWidth / 2,
+        y1: (d) => y(d.quartile[1]),
+        x2: (d) => x(d.key) + boxWidth / 2,
+        y2: (d) => y(d.quartile[1]),
       },
       // bottom whisker
       {
-        x1: d => x(d.key) - (boxWidth / 2),
-        y1: d => y(d.whiskers[1]),
-        x2: d => x(d.key) + (boxWidth / 2),
-        y2: d => y(d.whiskers[1]),
+        x1: (d) => x(d.key) - boxWidth / 2,
+        y1: (d) => y(d.whiskers[1]),
+        x2: (d) => x(d.key) + boxWidth / 2,
+        y2: (d) => y(d.whiskers[1]),
       },
     ];
 
@@ -334,26 +353,30 @@ function AnimalPhenotypeData() {
     });
 
     // add x axis
-    group.append('g')
+    group
+      .append('g')
       .attr('transform', `translate(0, ${height - margin.bottom})`)
       .call(d3.axisBottom(x).tickSizeOuter(0));
 
     // text label for x axis
-    group.append('text')
+    group
+      .append('text')
       .attr('transform', `translate(${width / 2}, ${height + margin.top + 5})`)
       .style('text-anchor', 'middle')
       .text('Gender');
 
     // add y axis
-    group.append('g')
+    group
+      .append('g')
       .attr('transform', `translate(${margin.left}, 0)`)
       .call(d3.axisLeft(y));
 
     // text label for y axis
-    group.append('text')
+    group
+      .append('text')
       .attr('transform', 'rotate(-90)')
       .attr('y', 0 - margin.left)
-      .attr('x', 0 - (height / 2))
+      .attr('x', 0 - height / 2)
       .attr('dy', '1em')
       .style('text-anchor', 'middle')
       .text('Distance (m)');
@@ -362,46 +385,59 @@ function AnimalPhenotypeData() {
   // Function to render scatterplot
   function renderScatterplot() {
     // extract familiarization data into new array of objects (e.g. pid, weight, fat)
-    const weightFatData = dataFamiliarization.filter((obj) => {
-      return obj.weight && obj.weight.length && obj.fat && obj.fat.length;
-    }).map((obj) => {
-      return {
-        pid: obj.pid,
-        weight: +obj.weight,
-        fat: +obj.fat,
-      };
-    });
+    const weightFatData = dataFamiliarization
+      .filter((obj) => {
+        return obj.weight && obj.weight.length && obj.fat && obj.fat.length;
+      })
+      .map((obj) => {
+        return {
+          pid: obj.pid,
+          weight: +obj.weight,
+          fat: +obj.fat,
+        };
+      });
 
     // extract registration data into new array of objects (e.g. pid, sex)
-    const sexData = dataRegistration.filter((obj) => {
-      return obj.sex && obj.sex.length;
-    }).map((obj) => {
-      return {
-        pid: obj.pid,
-        sex: +obj.sex === 2 ? 'Male' : 'Female',
-      };
-    });
+    const sexData = dataRegistration
+      .filter((obj) => {
+        return obj.sex && obj.sex.length;
+      })
+      .map((obj) => {
+        return {
+          pid: obj.pid,
+          sex: +obj.sex === 2 ? 'Male' : 'Female',
+        };
+      });
 
     // map distance data to sex data by pid
-    const mappedData = weightFatData
-      .map(x => Object.assign(x, sexData.find(y => y.pid === x.pid)));
+    const mappedData = weightFatData.map((x) =>
+      Object.assign(
+        x,
+        sexData.find((y) => y.pid === x.pid),
+      ),
+    );
 
     // setup a color scale for filling each dot
     const colorScale = d3.scaleOrdinal(d3.schemeAccent);
-    const colorValue = d => d.sex;
+    const colorValue = (d) => d.sex;
 
     // compute linear x scale based on weight range
-    const x = d3.scaleLinear()
-      .domain(d3.extent(mappedData, d => d.weight)).nice()
+    const x = d3
+      .scaleLinear()
+      .domain(d3.extent(mappedData, (d) => d.weight))
+      .nice()
       .range([margin.left, width - margin.right]);
 
     // compute linear y scale based on fat range
-    const y = d3.scaleLinear()
-      .domain(d3.extent(mappedData, d => d.fat)).nice()
+    const y = d3
+      .scaleLinear()
+      .domain(d3.extent(mappedData, (d) => d.fat))
+      .nice()
       .range([height - margin.bottom, margin.top]);
 
     // add the tooltip area to the webpage
-    const tooltip = d3.select('body')
+    const tooltip = d3
+      .select('body')
       .append('div')
       .attr('class', 'tooltip')
       .style('opacity', 0);
@@ -422,53 +458,52 @@ function AnimalPhenotypeData() {
       .append('circle')
       .attr('class', 'dot')
       .attr('r', 5)
-      .attr('cx', d => x(d.weight))
-      .attr('cy', d => y(d.fat))
-      .attr('fill', d => colorScale(colorValue(d)))
+      .attr('cx', (d) => x(d.weight))
+      .attr('cy', (d) => y(d.fat))
+      .attr('fill', (d) => colorScale(colorValue(d)))
       .on('mouseover', (d) => {
-        tooltip
-          .transition()
-          .duration(200)
-          .style('opacity', 0.9);
+        tooltip.transition().duration(200).style('opacity', 0.9);
         tooltip
           .html(`Weight: ${d.weight}; Fat: ${d.fat}`)
           .style('left', `${d3.event.pageX + 5}px`)
           .style('top', `${d3.event.pageY - 28}px`);
       })
       .on('mouseout', () => {
-        tooltip
-          .transition()
-          .duration(500)
-          .style('opacity', 0);
+        tooltip.transition().duration(500).style('opacity', 0);
       });
 
     // add x axis
-    group.append('g')
+    group
+      .append('g')
       .attr('transform', `translate(0, ${height - margin.bottom})`)
       .call(d3.axisBottom(x).tickSizeOuter(0));
 
     // text label for x axis
-    group.append('text')
+    group
+      .append('text')
       .attr('transform', `translate(${width / 2}, ${height + margin.top + 5})`)
       .style('text-anchor', 'middle')
       .text('Weight (m)');
 
     // add y axis
-    group.append('g')
+    group
+      .append('g')
       .attr('transform', `translate(${margin.left}, 0)`)
       .call(d3.axisLeft(y));
 
     // text label for y axis
-    group.append('text')
+    group
+      .append('text')
       .attr('transform', 'rotate(-90)')
       .attr('y', 0 - margin.left)
-      .attr('x', 0 - (height / 2))
+      .attr('x', 0 - height / 2)
       .attr('dy', '1em')
       .style('text-anchor', 'middle')
       .text('Fat (%)');
 
     // draw legend
-    const legend = group.selectAll('.legend')
+    const legend = group
+      .selectAll('.legend')
       .data(colorScale.domain())
       .enter()
       .append('g')
@@ -476,7 +511,8 @@ function AnimalPhenotypeData() {
       .attr('transform', (d, i) => `translate(0, ${i * 30})`);
 
     // draw legend colored rectangles
-    legend.append('rect')
+    legend
+      .append('rect')
       .attr('x', width - 18)
       .attr('y', 9)
       .attr('width', 18)
@@ -484,34 +520,34 @@ function AnimalPhenotypeData() {
       .style('fill', colorScale);
 
     // draw legend text
-    legend.append('text')
+    legend
+      .append('text')
       .attr('x', width - 24)
       .attr('y', 9)
       .attr('dy', '.875rem')
       .style('text-anchor', 'end')
-      .text(d => d);
+      .text((d) => d);
   }
 
   // Render graph using hooks equivalent to
   // componentDidMount and componentDidUpdate
-  useEffect(
-    () => {
-      switch (graph) {
-        case 'weightDistribution':
-          return renderHistogram('Weight');
-        case 'genderDistanceMedian':
-          return renderBoxplot();
-        case 'weightFatCorrelation':
-          return renderScatterplot();
-        default:
-          return renderHistogram('Distance');
-      }
-    },
-  );
+  useEffect(() => {
+    switch (graph) {
+      case 'weightDistribution':
+        return renderHistogram('Weight');
+      case 'genderDistanceMedian':
+        return renderBoxplot();
+      case 'weightFatCorrelation':
+        return renderScatterplot();
+      default:
+        return renderHistogram('Distance');
+    }
+  });
 
   // Function to handle button click event
   function handleClick(arg, e) {
-    e.preventDefault(); e.stopPropagation();
+    e.preventDefault();
+    e.stopPropagation();
     switch (arg) {
       case 'weightDistribution':
         setGraph(arg);
@@ -559,8 +595,8 @@ function AnimalPhenotypeData() {
     <div className="animal-phenotype-data">
       <div className="text-danger warning-note">
         <span className="oi oi-warning" />
-        &nbsp;These are examples of live visualizations of MoTrPAC data
-        sets. They do not represent the complete phenotype data set.
+        &nbsp;These are examples of live visualizations of MoTrPAC data sets.
+        They do not represent the complete phenotype data set.
       </div>
       <div className="card">
         <h5 className="card-header">Phenotypic Data</h5>
