@@ -187,7 +187,7 @@ export function Navbar({
               {isAuthenticated && hasAccess && (
                 <li className="nnav-item navItem">
                   <Link to="/dashboard" className="nav-link">
-                    Dashboard
+                    {(userRole && userRole === 'reviewer') ? 'Reviewer Dashboard' : 'Dashboard'}
                   </Link>
                 </li>
               )}
