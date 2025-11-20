@@ -11,6 +11,7 @@ import '@styles/dashboard.scss';
 
 const PACK_ANALYSIS = 'bundles/motrpac_human-precovid-sed-adu_analysis.zip';
 const PACK_DATA = 'bundles/motrpac_human-precovid-sed-adu_data.zip';
+const PACK_FUNCTION = 'bundles/motrpac_human-precovid-sed-adu_function.zip';
 
 /**
  * Renders the Dashboard page
@@ -131,6 +132,12 @@ export function Dashboard({
               <ReviewerDownloadButton
                 filename={PACK_ANALYSIS}
                 label="Analysis R Package"
+                icon="bi-file-zip-fill"
+                profile={profile}
+              />
+              <ReviewerDownloadButton
+                filename={PACK_FUNCTION}
+                label="Function R Package"
                 icon="bi-file-zip-fill"
                 profile={profile}
               />
