@@ -125,8 +125,7 @@ export function Dashboard({
             <div className="lead">
               As a reviewer, you have been granted access to the pre-publication
               human data in R packages and the visualization tool. If you have
-              any questions or need assistance, feel free to reach out to the
-              MoTrPAC team.
+              any questions, please contact the journal editor directly.
             </div>
             <div className="lead reviewer-data-download-links-container mt-3">
               <ReviewerDownloadButton
