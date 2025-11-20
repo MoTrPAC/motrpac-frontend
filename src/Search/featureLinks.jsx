@@ -98,6 +98,7 @@ function FeatureLinks({
 
   const reviewerFeaturedLinks = [
     ...precawgDataVizFeaturedLink,
+
     {
       name: 'differential-abundance',
       route: 'search',
