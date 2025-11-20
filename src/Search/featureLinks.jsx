@@ -97,9 +97,24 @@ function FeatureLinks({
   ];
 
   const reviewerFeaturedLinks = [
-    ...commonEssentialFeaturedLinks,
     ...precawgDataVizFeaturedLink,
-    ...commonGeneralFeaturedLinks,
+    {
+      name: 'differential-abundance',
+      route: 'search',
+      description:
+        'Explore the differential abundance analysis results by gene, protein or metabolite in the MoTrPAC multi-omics exercise studies.',
+      icon: 'search',
+      title: 'Differential Abundance Analysis Results',
+    },
+    {
+      name: 'code-repositories',
+      route: 'code-repositories',
+      description:
+        'Explore the source code essential to the workflow for the young adult rats data in the endurance training study.',
+      icon: 'terminal',
+      title: 'Code Repositories',
+      eventHandler: null,
+    },
   ];
   
   const internalFeaturedLinks = [
