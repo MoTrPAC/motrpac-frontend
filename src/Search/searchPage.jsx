@@ -600,6 +600,14 @@ function RadioButtonComponent({ ktype, keyType, elId, label, eventHandler }) {
   );
 }
 
+RadioButtonComponent.propTypes = {
+  ktype: PropTypes.string,
+  keyType: PropTypes.string.isRequired,
+  elId: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  eventHandler: PropTypes.func.isRequired,
+};
+
 // Radio buttons for selecting the search context
 function RadioButton({
   searchParams,
@@ -657,6 +665,16 @@ function RadioButton({
     </div>
   );
 }
+
+RadioButton.propTypes = {
+  searchParams: searchParamsPropType.isRequired,
+  changeParam: PropTypes.func,
+  ktype: PropTypes.string,
+  resetSearch: PropTypes.func.isRequired,
+  clearInput: PropTypes.func.isRequired,
+  setMultiSelections: PropTypes.func.isRequired,
+  inputEl: PropTypes.object,
+};
 
 function PrimaryOmicsFilter({ omics = 'all', toggleOmics }) {
   const omicsDictionary = {
