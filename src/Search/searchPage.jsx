@@ -56,6 +56,7 @@ export function SearchPage({
   const surveyId = useSelector((state) => state.userSurvey.surveyId);
 
   const userType = profile.user_metadata && profile.user_metadata.userType;
+  const userRole = profile.app_metadata && profile.app_metadata.role;
 
   useEffect(() => {
     if (showUserSurveyModal) {
@@ -229,7 +230,12 @@ export function SearchPage({
       <form id="searchForm" name="searchForm">
         <PageTitle title="Search differential abundance data" />
         <div className="search-content-container">
-          <DifferentialAbundanceSummary userType={userType} species={searchParams.species} study={searchParams.study} />
+          <DifferentialAbundanceSummary
+            userType={userType}
+            userRole={userRole}
+            species={searchParams.species}
+            study={searchParams.study}
+          />
           <div className="search-form-container mt-3 mb-4 border shadow-sm rounded px-4 pt-2 pb-3">
             <div className="search-summary-toggle-container row">
               <a
@@ -243,10 +249,12 @@ export function SearchPage({
                 <span className="material-icons">drag_handle</span>
               </a>
             </div>
-            {userType && userType === 'internal' && (
+            {((userType && userType === 'internal') || (userRole && userRole === 'reviewer')) && (
               <StudySelectButtonGroup
                 onChange={handleStudyChange}
                 defaultSelected={searchParams.study}
+                userType={userType}
+                userRole={userRole}
               />
             )}
             <div className="es-search-ui-container d-flex align-items-center w-100 mt-3 pb-2">
@@ -703,6 +711,8 @@ function StudySelectButtonGroup({
   onChange,
   defaultSelected = 'pass1b06',
   disabled = false,
+  userType= '',
+  userRole= '',
 }) {
   const [selected, setSelected] = useState(defaultSelected);
 
@@ -719,11 +729,20 @@ function StudySelectButtonGroup({
     }
   };
 
-  const studyOptions = [
-    { value: 'pass1b06', label: 'Endurance Trained Young Adult Rats' },
-    { value: 'pass1a06', label: 'Acute Exercise Young Adult Rats' },
-    { value: 'precawg', label: 'Pre-COVID Human Sedentary Adults' }
-  ];
+  let studyOptions = [];
+
+  if (userType === 'external' && userRole === 'reviewer') {
+    studyOptions = [
+      { value: 'pass1b06', label: 'Endurance Trained Young Adult Rats' },
+      { value: 'precawg', label: 'Pre-COVID Human Sedentary Adults' }
+    ];
+  } else {
+    studyOptions = [
+      { value: 'pass1b06', label: 'Endurance Trained Young Adult Rats' },
+      { value: 'pass1a06', label: 'Acute Exercise Young Adult Rats' },
+      { value: 'precawg', label: 'Pre-COVID Human Sedentary Adults' }
+    ];
+  }
 
   return (
     <div className="search-study-select-container row">
