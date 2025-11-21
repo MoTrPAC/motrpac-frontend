@@ -25,7 +25,7 @@ function DifferentialAbundanceSummary({ userType = '', userRole = '', species = 
             search results, please use the following guidelines:
           </span>
         )}
-        {(!userType || (userType === 'external' && !userRole)) && (
+        {(!userType || (userType === 'external' && (!userRole || userRole !== 'reviewer'))) && (
           <span>
             Search by gene symbol, protein name or metabolite name to examine the
             timewise endurance training response over 8 weeks of training in
