@@ -103,7 +103,7 @@ function FeatureLinks({
     ...precawgDataVizFeaturedLink,
     findLinkByName(commonEssentialFeaturedLinks, 'differential-abundance'),
     findLinkByName(commonGeneralFeaturedLinks, 'code-repositories'),
-  ];
+  ].filter(Boolean);
   
   const internalFeaturedLinks = [
     ...commonEssentialFeaturedLinks,
