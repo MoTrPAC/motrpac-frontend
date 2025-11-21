@@ -724,6 +724,11 @@ function PrimaryOmicsFilter({ omics = 'all', toggleOmics }) {
   );
 }
 
+PrimaryOmicsFilter.propTypes = {
+  omics: PropTypes.string,
+  toggleOmics: PropTypes.func.isRequired,
+};
+
 // Render study selection button group
 function StudySelectButtonGroup({
   onChange,
@@ -784,6 +789,13 @@ function StudySelectButtonGroup({
   );
 }
 
+StudySelectButtonGroup.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  defaultSelected: PropTypes.string,
+  disabled: PropTypes.bool,
+  userType: PropTypes.string,
+  userRole: PropTypes.string,
+};
 
 // Render modal message
 function ResultsDownloadLink({
@@ -831,6 +843,15 @@ function ResultsDownloadLink({
     </span>
   );
 }
+
+ResultsDownloadLink.propTypes = {
+  downloadPath: PropTypes.string,
+  downloadError: PropTypes.string,
+  profile: PropTypes.shape({
+    userid: PropTypes.string,
+  }),
+  study: PropTypes.string,
+};
 
 // Render modal
 function ResultsDownloadModal({
@@ -913,6 +934,16 @@ function ResultsDownloadModal({
     </div>
   );
 }
+
+ResultsDownloadModal.propTypes = {
+  downloadPath: PropTypes.string,
+  downloadError: PropTypes.string,
+  downloading: PropTypes.bool,
+  profile: PropTypes.shape({
+    userid: PropTypes.string,
+  }),
+  study: PropTypes.string,
+};
 /* End: Download modal */
 
 SearchPage.propTypes = {
