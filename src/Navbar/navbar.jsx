@@ -513,6 +513,7 @@ function LogoutButton({ profile = {}, isAuthenticated = false, handleLogout = nu
 LogoutButton.propTypes = {
   profile: PropTypes.shape({
     name: PropTypes.string,
+    picture: PropTypes.string,
     user_metadata: PropTypes.shape({
       hasAccess: PropTypes.bool,
       name: PropTypes.string,
