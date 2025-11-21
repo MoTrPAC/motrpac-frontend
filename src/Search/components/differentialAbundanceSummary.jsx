@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function DifferentialAbundanceSummary({ userType = '', userRole= '', species = 'rat' }) {
+function DifferentialAbundanceSummary({ userType = '', userRole = '', species = 'rat' }) {
   return (
     <div className="search-summary-container row mb-3 collapse show" id="collapseDifferentialAbundanceSummary">
       <div className="lead col-12">
@@ -25,7 +25,7 @@ function DifferentialAbundanceSummary({ userType = '', userRole= '', species = '
             search results, please use the following guidelines:
           </span>
         )}
-        {(!userType || ((userType && userType === 'external') && !userRole)) && (
+        {(!userType || (userType === 'external' && !userRole)) && (
           <span>
             Search by gene symbol, protein name or metabolite name to examine the
             timewise endurance training response over 8 weeks of training in
