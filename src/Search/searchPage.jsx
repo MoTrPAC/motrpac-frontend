@@ -667,7 +667,7 @@ function RadioButton({
 }
 
 RadioButton.propTypes = {
-  searchParams: searchParamsPropType.isRequired,
+  searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
   changeParam: PropTypes.func,
   ktype: PropTypes.string,
   resetSearch: PropTypes.func.isRequired,
@@ -758,8 +758,9 @@ function StudySelectButtonGroup({
     { value: 'precawg', label: 'Pre-COVID Human Sedentary Adults' },
   ];
   const reviewerAllowedStudies = ['pass1b06', 'precawg'];
+  const isReviewer = userRole === 'reviewer';
   const studyOptions =
-    userType === 'external' && userRole === 'reviewer'
+    isReviewer
       ? allStudyOptions.filter((option) =>
           reviewerAllowedStudies.includes(option.value),
         )
@@ -799,7 +800,7 @@ StudySelectButtonGroup.propTypes = {
 
 // Render modal message
 function ResultsDownloadLink({
-  downloadPath = '', downloadError = '', profile = {}, study = 'pass1b06',
+  downloadPath = '', downloadError = '', profile = {},
 }) {
   const dispatch = useDispatch();
 
@@ -850,7 +851,6 @@ ResultsDownloadLink.propTypes = {
   profile: PropTypes.shape({
     userid: PropTypes.string,
   }),
-  study: PropTypes.string,
 };
 
 // Render modal
@@ -911,7 +911,6 @@ function ResultsDownloadModal({
                 downloadPath={downloadPath}
                 downloadError={downloadError}
                 profile={profile}
-                study={study}
               />
             ) : (
               <div className="loading-spinner w-100 text-center my-3">
