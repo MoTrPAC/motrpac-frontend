@@ -90,6 +90,8 @@ export default [
       // Other plugin rules
       'i18n-text/no-en': 'off', // Allow English text in this project
       'eslint-comments/no-use': 'off', // Allow eslint directive comments
+      'jsx-a11y/no-static-element-interactions': 'off', // Allow static elements with interaction handlers
+      'jsx-a11y/click-events-have-key-events': 'off', // Allow click events without key event handlers
     },
     settings: {
       react: { version: '18.3' },

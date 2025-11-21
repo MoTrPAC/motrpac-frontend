@@ -56,6 +56,7 @@ export function SearchPage({
   const surveyId = useSelector((state) => state.userSurvey.surveyId);
 
   const userType = profile.user_metadata && profile.user_metadata.userType;
+  const userRole = profile.app_metadata && profile.app_metadata.role;
 
   useEffect(() => {
     if (showUserSurveyModal) {
@@ -229,7 +230,12 @@ export function SearchPage({
       <form id="searchForm" name="searchForm">
         <PageTitle title="Search differential abundance data" />
         <div className="search-content-container">
-          <DifferentialAbundanceSummary userType={userType} species={searchParams.species} study={searchParams.study} />
+          <DifferentialAbundanceSummary
+            userType={userType}
+            userRole={userRole}
+            species={searchParams.species}
+            study={searchParams.study}
+          />
           <div className="search-form-container mt-3 mb-4 border shadow-sm rounded px-4 pt-2 pb-3">
             <div className="search-summary-toggle-container row">
               <a
@@ -243,10 +249,11 @@ export function SearchPage({
                 <span className="material-icons">drag_handle</span>
               </a>
             </div>
-            {userType && userType === 'internal' && (
+            {((userType && userType === 'internal') || (userRole && userRole === 'reviewer')) && (
               <StudySelectButtonGroup
                 onChange={handleStudyChange}
                 defaultSelected={searchParams.study}
+                userRole={userRole}
               />
             )}
             <div className="es-search-ui-container d-flex align-items-center w-100 mt-3 pb-2">
@@ -560,7 +567,6 @@ export function SearchPage({
               downloadError={downloadError}
               downloading={downloading}
               profile={profile}
-              study={searchParams.study}
             />
           </div>
         </div>
@@ -591,6 +597,14 @@ function RadioButtonComponent({ ktype, keyType, elId, label, eventHandler }) {
     </div>
   );
 }
+
+RadioButtonComponent.propTypes = {
+  ktype: PropTypes.string,
+  keyType: PropTypes.string.isRequired,
+  elId: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  eventHandler: PropTypes.func.isRequired,
+};
 
 // Radio buttons for selecting the search context
 function RadioButton({
@@ -650,6 +664,19 @@ function RadioButton({
   );
 }
 
+RadioButton.propTypes = {
+  searchParams: PropTypes.shape({
+    species: PropTypes.string,
+    study: PropTypes.string,
+  }).isRequired,
+  changeParam: PropTypes.func,
+  ktype: PropTypes.string,
+  resetSearch: PropTypes.func.isRequired,
+  clearInput: PropTypes.func.isRequired,
+  setMultiSelections: PropTypes.func.isRequired,
+  inputEl: PropTypes.object,
+};
+
 function PrimaryOmicsFilter({ omics = 'all', toggleOmics }) {
   const omicsDictionary = {
     all: 'All omics',
@@ -698,11 +725,17 @@ function PrimaryOmicsFilter({ omics = 'all', toggleOmics }) {
   );
 }
 
+PrimaryOmicsFilter.propTypes = {
+  omics: PropTypes.string,
+  toggleOmics: PropTypes.func.isRequired,
+};
+
 // Render study selection button group
 function StudySelectButtonGroup({
   onChange,
   defaultSelected = 'pass1b06',
   disabled = false,
+  userRole = '',
 }) {
   const [selected, setSelected] = useState(defaultSelected);
 
@@ -719,11 +752,19 @@ function StudySelectButtonGroup({
     }
   };
 
-  const studyOptions = [
+  const allStudyOptions = [
     { value: 'pass1b06', label: 'Endurance Trained Young Adult Rats' },
     { value: 'pass1a06', label: 'Acute Exercise Young Adult Rats' },
-    { value: 'precawg', label: 'Pre-COVID Human Sedentary Adults' }
+    { value: 'precawg', label: 'Pre-COVID Human Sedentary Adults' },
   ];
+  const reviewerAllowedStudies = ['pass1b06', 'precawg'];
+  const isReviewer = userRole === 'reviewer';
+  const studyOptions =
+    isReviewer
+      ? allStudyOptions.filter((option) =>
+          reviewerAllowedStudies.includes(option.value),
+        )
+      : allStudyOptions;
 
   return (
     <div className="search-study-select-container row">
@@ -749,10 +790,16 @@ function StudySelectButtonGroup({
   );
 }
 
+StudySelectButtonGroup.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  defaultSelected: PropTypes.string,
+  disabled: PropTypes.bool,
+  userRole: PropTypes.string,
+};
 
 // Render modal message
 function ResultsDownloadLink({
-  downloadPath = '', downloadError = '', profile = {}, study = 'pass1b06',
+  downloadPath = '', downloadError = '', profile = {},
 }) {
   const dispatch = useDispatch();
 
@@ -797,13 +844,20 @@ function ResultsDownloadLink({
   );
 }
 
+ResultsDownloadLink.propTypes = {
+  downloadPath: PropTypes.string,
+  downloadError: PropTypes.string,
+  profile: PropTypes.shape({
+    userid: PropTypes.string,
+  }),
+};
+
 // Render modal
 function ResultsDownloadModal({
   downloadPath = '',
   downloadError = '',
   downloading = false,
   profile = {},
-  study = 'pass1b06',
 }) {
   const dispatch = useDispatch();
 
@@ -855,7 +909,6 @@ function ResultsDownloadModal({
                 downloadPath={downloadPath}
                 downloadError={downloadError}
                 profile={profile}
-                study={study}
               />
             ) : (
               <div className="loading-spinner w-100 text-center my-3">
@@ -878,6 +931,15 @@ function ResultsDownloadModal({
     </div>
   );
 }
+
+ResultsDownloadModal.propTypes = {
+  downloadPath: PropTypes.string,
+  downloadError: PropTypes.string,
+  downloading: PropTypes.bool,
+  profile: PropTypes.shape({
+    userid: PropTypes.string,
+  }),
+};
 /* End: Download modal */
 
 SearchPage.propTypes = {

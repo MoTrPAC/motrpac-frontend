@@ -187,7 +187,7 @@ export function Navbar({
               {isAuthenticated && hasAccess && (
                 <li className="nnav-item navItem">
                   <Link to="/dashboard" className="nav-link">
-                    Dashboard
+                    {userRole && userRole === 'reviewer' ? 'Reviewer Dashboard' : 'Dashboard'}
                   </Link>
                 </li>
               )}
@@ -472,7 +472,7 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
 
 // Function to render login button
-function LogoutButton({ profile, isAuthenticated, handleLogout, login }) {
+function LogoutButton({ profile = {}, isAuthenticated = false, handleLogout = null, login = null }) {
   const userDisplayName =
     profile.user_metadata && profile.user_metadata.name
       ? profile.user_metadata.name
@@ -509,3 +509,19 @@ function LogoutButton({ profile, isAuthenticated, handleLogout, login }) {
 
   return <LoginButton login={login} />;
 }
+
+LogoutButton.propTypes = {
+  profile: PropTypes.shape({
+    name: PropTypes.string,
+    picture: PropTypes.string,
+    user_metadata: PropTypes.shape({
+      hasAccess: PropTypes.bool,
+      name: PropTypes.string,
+      email: PropTypes.string,
+      userType: PropTypes.string,
+    }),
+  }),
+  isAuthenticated: PropTypes.bool,
+  handleLogout: PropTypes.func,
+  login: PropTypes.func,
+};
