@@ -729,20 +729,18 @@ function StudySelectButtonGroup({
     }
   };
 
-  let studyOptions = [];
-
-  if (userType === 'external' && userRole === 'reviewer') {
-    studyOptions = [
-      { value: 'pass1b06', label: 'Endurance Trained Young Adult Rats' },
-      { value: 'precawg', label: 'Pre-COVID Human Sedentary Adults' }
-    ];
-  } else {
-    studyOptions = [
-      { value: 'pass1b06', label: 'Endurance Trained Young Adult Rats' },
-      { value: 'pass1a06', label: 'Acute Exercise Young Adult Rats' },
-      { value: 'precawg', label: 'Pre-COVID Human Sedentary Adults' }
-    ];
-  }
+  const allStudyOptions = [
+    { value: 'pass1b06', label: 'Endurance Trained Young Adult Rats' },
+    { value: 'pass1a06', label: 'Acute Exercise Young Adult Rats' },
+    { value: 'precawg', label: 'Pre-COVID Human Sedentary Adults' },
+  ];
+  const reviewerAllowedStudies = ['pass1b06', 'precawg'];
+  const studyOptions =
+    userType === 'external' && userRole === 'reviewer'
+      ? allStudyOptions.filter((option) =>
+          reviewerAllowedStudies.includes(option.value),
+        )
+      : allStudyOptions;
 
   return (
     <div className="search-study-select-container row">
