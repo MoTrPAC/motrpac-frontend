@@ -711,8 +711,8 @@ function StudySelectButtonGroup({
   onChange,
   defaultSelected = 'pass1b06',
   disabled = false,
-  userType= '',
-  userRole= '',
+  userType = '',
+  userRole = '',
 }) {
   const [selected, setSelected] = useState(defaultSelected);
 
