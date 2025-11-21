@@ -96,10 +96,13 @@ function FeatureLinks({
     ...commonGeneralFeaturedLinks,
   ];
 
+  // Helper to find link by name
+  const findLinkByName = (links, name) => links.find(link => link.name === name);
+
   const reviewerFeaturedLinks = [
     ...precawgDataVizFeaturedLink,
-    commonEssentialFeaturedLinks[1], // differential-abundance
-    commonGeneralFeaturedLinks[0],   // code-repositories
+    findLinkByName(commonEssentialFeaturedLinks, 'differential-abundance'),
+    findLinkByName(commonGeneralFeaturedLinks, 'code-repositories'),
   ];
   
   const internalFeaturedLinks = [
