@@ -112,6 +112,8 @@ function TrainingDataTable({
           setPageSize={setPageSize}
           pageSizeOptions={range(50, preGlobalFilteredRows.length)}
         />
+        {/* TODO: PASS1B-06 - Re-enable once download bug is fixed. See ticket for details. */}
+        {/*
         <div className="file-download-button">
           <button
             type="button"
@@ -127,6 +129,7 @@ function TrainingDataTable({
             <span>Download results</span>
           </button>
         </div>
+        */}
       </div>
       <div className="card mb-3">
         <div className="card-body table-ui-wrapper">
