@@ -113,6 +113,7 @@ function DataTable({
           pageSizeOptions={range(50, preGlobalFilteredRows.length)}
         />
         <div className="file-download-button">
+          {/*
           <button
             type="button"
             className="btn btn-primary d-flex align-items-center"
@@ -126,6 +127,7 @@ function DataTable({
             <span className="material-icons">file_download</span>
             <span>Download results</span>
           </button>
+          */}
         </div>
       </div>
       <div className="card mb-3">
