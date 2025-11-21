@@ -253,7 +253,6 @@ export function SearchPage({
               <StudySelectButtonGroup
                 onChange={handleStudyChange}
                 defaultSelected={searchParams.study}
-                userType={userType}
                 userRole={userRole}
               />
             )}
@@ -568,7 +567,6 @@ export function SearchPage({
               downloadError={downloadError}
               downloading={downloading}
               profile={profile}
-              study={searchParams.study}
             />
           </div>
         </div>
@@ -667,7 +665,10 @@ function RadioButton({
 }
 
 RadioButton.propTypes = {
-  searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
+  searchParams: PropTypes.shape({
+    species: PropTypes.string,
+    study: PropTypes.string,
+  }).isRequired,
   changeParam: PropTypes.func,
   ktype: PropTypes.string,
   resetSearch: PropTypes.func.isRequired,
@@ -734,7 +735,6 @@ function StudySelectButtonGroup({
   onChange,
   defaultSelected = 'pass1b06',
   disabled = false,
-  userType = '',
   userRole = '',
 }) {
   const [selected, setSelected] = useState(defaultSelected);
@@ -794,7 +794,6 @@ StudySelectButtonGroup.propTypes = {
   onChange: PropTypes.func.isRequired,
   defaultSelected: PropTypes.string,
   disabled: PropTypes.bool,
-  userType: PropTypes.string,
   userRole: PropTypes.string,
 };
 
@@ -859,7 +858,6 @@ function ResultsDownloadModal({
   downloadError = '',
   downloading = false,
   profile = {},
-  study = 'pass1b06',
 }) {
   const dispatch = useDispatch();
 
@@ -941,7 +939,6 @@ ResultsDownloadModal.propTypes = {
   profile: PropTypes.shape({
     userid: PropTypes.string,
   }),
-  study: PropTypes.string,
 };
 /* End: Download modal */
 
