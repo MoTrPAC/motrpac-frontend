@@ -208,10 +208,8 @@ function FeatureLinks({
       <div className="row row-cols-1 row-cols-xl-4 row-cols-lg-3 row-cols-sm-1">
         {featuresToRender.map((item) => (
           <div key={item.name} className="col mb-4">
-            {/*
-              eslint-disable-next-line jsx-a11y/no-static-element-interactions,
-              jsx-a11y/click-events-have-key-events
-            */}
+            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
             <div
               className={`card h-100 mb-3 p-3 shadow-sm ${item.name}`}
               onClick={(e) => handleFeatureLinkClick(e, item)}
