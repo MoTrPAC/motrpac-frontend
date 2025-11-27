@@ -13,14 +13,36 @@ const AskAssistant = () => {
   // Get Auth0 token from Redux
   const accessToken = useSelector(state => state.auth.accessToken);
 
-  // Auto-scroll to bottom when messages update
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
+  // Load chat history from sessionStorage on mount
   useEffect(() => {
-    scrollToBottom();
+    const saved = sessionStorage.getItem('motrpac-chat-history');
+    if (saved) {
+      try {
+        setMessages(JSON.parse(saved));
+      } catch (e) {
+        // Invalid saved data, ignore
+      }
+    }
+  }, []);
+
+  // Save chat history to sessionStorage on change
+  useEffect(() => {
+    if (messages.length > 0) {
+      sessionStorage.setItem('motrpac-chat-history', JSON.stringify(messages));
+    }
   }, [messages]);
+
+  // Auto-scroll to bottom when messages update
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  // Clear chat function
+  const clearChat = () => {
+    setMessages([]);
+    setError(null);
+    sessionStorage.removeItem('motrpac-chat-history');
+  };
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,28 +51,22 @@ const AskAssistant = () => {
     if (!question || isLoading) return;
     
     // Add user message to conversation history
-    const userMessage = {
-      id: Date.now(),
-      text: question,
-      sender: 'user',
-      timestamp: new Date().toISOString(),
-    };
-    setMessages(prev => [...prev, userMessage]);
+    setMessages(prev => [...prev, { 
+      role: 'user', 
+      content: question,
+      timestamp: Date.now(),
+    }]);
     setQuery('');
     setError(null);
     setIsLoading(true);
-    setHasInternalKnowledge(false);
     
-    // Create placeholder for bot response that will be updated via streaming
-    const botMessageId = Date.now() + 1;
-    const botMessage = {
-      id: botMessageId,
-      text: '',
-      sender: 'bot',
-      timestamp: new Date().toISOString(),
+    // Add empty assistant message that will be updated via streaming
+    setMessages(prev => [...prev, { 
+      role: 'assistant', 
+      content: '',
+      timestamp: Date.now(),
       hasInternalKnowledge: false,
-    };
-    setMessages(prev => [...prev, botMessage]);
+    }]);
     
     try {
       const headers = { 'Content-Type': 'application/json' };
@@ -65,14 +81,14 @@ const AskAssistant = () => {
         ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
         : import.meta.env.VITE_API_SERVICE_ADDRESS;
       
-      // Prepare conversation history for context
-      const history = messages.map(m => ({
-        role: m.sender === 'user' ? 'user' : 'model',
-        parts: [{ text: m.text }],
+      // Prepare conversation history for context (only recent messages to avoid payload bloat)
+      const history = messages.slice(-10).map(m => ({
+        role: m.role === 'user' ? 'user' : 'model',
+        parts: [{ text: m.content }],
       }));
       
-      // Use axios with streaming support via responseType: 'stream'
-      const res = await axios.post(
+      // Use axios with streaming via onDownloadProgress
+      await axios.post(
         `${apiUrl}/ask`,
         { 
           prompt: question,
@@ -81,7 +97,7 @@ const AskAssistant = () => {
         {
           headers,
           responseType: 'text',
-          adapter: 'fetch', // Use fetch adapter for streaming
+          adapter: 'fetch', // Use fetch adapter for streaming support
           onDownloadProgress: (progressEvent) => {
             const responseText = progressEvent.event.target.responseText || '';
             const lines = responseText.split('\n');
@@ -93,19 +109,17 @@ const AskAssistant = () => {
                   
                   if (data.type === 'metadata') {
                     setHasInternalKnowledge(data.hasInternalKnowledge);
-                    // Update bot message with metadata
-                    setMessages(prev => prev.map(msg => 
-                      msg.id === botMessageId 
-                        ? { ...msg, hasInternalKnowledge: data.hasInternalKnowledge }
-                        : msg
-                    ));
+                    // Update last message with metadata
+                    setMessages(prev => [
+                      ...prev.slice(0, -1),
+                      { ...prev[prev.length - 1], hasInternalKnowledge: data.hasInternalKnowledge }
+                    ]);
                   } else if (data.type === 'content') {
-                    // Update bot message incrementally
-                    setMessages(prev => prev.map(msg => 
-                      msg.id === botMessageId 
-                        ? { ...msg, text: msg.text + data.text }
-                        : msg
-                    ));
+                    // Update last message incrementally (best practice: update in place)
+                    setMessages(prev => [
+                      ...prev.slice(0, -1),
+                      { ...prev[prev.length - 1], content: prev[prev.length - 1].content + data.text }
+                    ]);
                   } else if (data.type === 'done') {
                     setIsLoading(false);
                   }
@@ -118,26 +132,18 @@ const AskAssistant = () => {
         }
       );
       
-      // If streaming didn't work, handle as regular response
-      if (res.data && typeof res.data === 'string') {
-        setMessages(prev => prev.map(msg => 
-          msg.id === botMessageId 
-            ? { ...msg, text: res.data }
-            : msg
-        ));
-      }
       setIsLoading(false);
     } catch (err) {
       setError(err.response?.data?.error || err.message || 'An unknown error occurred');
-      // Remove the placeholder bot message on error
-      setMessages(prev => prev.filter(msg => msg.id !== botMessageId));
+      // Remove the placeholder assistant message on error
+      setMessages(prev => prev.slice(0, -1));
       setIsLoading(false);
     }
   };
   
   // Render individual message
   const Message = ({ message }) => {
-    const isUser = message.sender === 'user';
+    const isUser = message.role === 'user';
     
     return (
       <div className={`d-flex align-items-start mb-3 ${isUser ? 'flex-row-reverse' : ''}`}>
@@ -161,8 +167,8 @@ const AskAssistant = () => {
           style={{ maxWidth: '75%' }}
         >
           <div style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
-            {message.text || (
-              // Show loading skeleton for empty bot messages
+            {message.content || (
+              // Show loading skeleton for empty assistant messages
               !isUser && isLoading && (
                 <div>
                   <div className="mb-2">
@@ -194,14 +200,25 @@ const AskAssistant = () => {
       <div className="row justify-content-center h-100">
         <div className="col-lg-8 col-xl-7 d-flex flex-column h-100 py-3">
           <div className="card shadow-sm d-flex flex-column" style={{ height: '100%' }}>
-            <div className="card-header bg-primary text-white">
-              <h5 className="card-title mb-0">
-                <i className="bi bi-robot mr-2" />
-                MoTrPAC AI Assistant
-              </h5>
-              <small className="text-white-50">
-                Ask questions about the MoTrPAC data repository
-              </small>
+            <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+              <div>
+                <h5 className="card-title mb-0">
+                  <i className="bi bi-robot mr-2" />
+                  MoTrPAC AI Assistant
+                </h5>
+                <small className="text-white-50">
+                  Ask questions about the MoTrPAC data repository
+                </small>
+              </div>
+              {messages.length > 0 && (
+                <button 
+                  className="btn btn-sm btn-outline-light"
+                  onClick={clearChat}
+                  title="Clear conversation"
+                >
+                  <i className="bi bi-trash" /> Clear
+                </button>
+              )}
             </div>
             
             {/* Messages area */}
@@ -214,8 +231,8 @@ const AskAssistant = () => {
                 </div>
               ) : (
                 <>
-                  {messages.map(msg => (
-                    <Message key={msg.id} message={msg} />
+                  {messages.map((msg, idx) => (
+                    <Message key={msg.timestamp || idx} message={msg} />
                   ))}
                   <div ref={messagesEndRef} />
                 </>
