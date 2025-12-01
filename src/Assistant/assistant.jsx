@@ -5,6 +5,13 @@ import InputField from './InputField.jsx';
 import ReferencePanel from './ReferencePanel.jsx';
 import { askAI } from './services/aiChatService';
 
+import '@styles/aiAssistant.scss';
+
+/**
+ * AskAssistant Component
+ * Main AI Assistant interface with chat functionality
+ */
+
 const AskAssistant = () => {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -114,8 +121,7 @@ const AskAssistant = () => {
 
   return (
     <main
-      className="container-fluid d-flex"
-      style={{ height: 'calc(100vh - 120px)' }}
+      className="container-fluid d-flex ai-assistant mb-4"
       role="main"
       aria-label="AI Assistant"
     >
@@ -129,13 +135,10 @@ const AskAssistant = () => {
           >
             <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
               <div>
-                <h1 className="h5 card-title mb-0">
+                <h1 className="h3 card-title mb-0">
                   <i className="bi bi-robot mr-2" aria-hidden="true" />
-                  MoTrPAC AI Assistant
+                  MoTrPAC Knowledge Assistant
                 </h1>
-                <small className="text-white-50">
-                  Ask questions about the MoTrPAC data repository
-                </small>
               </div>
               <div className="d-flex align-items-center">
                 {messages.length > 0 && (
@@ -212,7 +215,7 @@ const AskAssistant = () => {
             )}
 
             {/* Input form */}
-            <div className="card-footer bg-white border-top">
+            <div className="card-footer bg-white border-top pt-4 pb-3">
               <InputField
                 onSubmit={handleSubmit}
                 isLoading={isLoading}
