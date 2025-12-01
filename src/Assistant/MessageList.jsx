@@ -5,40 +5,29 @@ import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
+import '@styles/aiAssistant.scss';
+
 /**
  * MessageList Component
  * Renders conversation messages with markdown support and syntax highlighting
  */
 
-const Message = ({ message, isLoading }) => {
+const Message = ({ message, isLoading = false }) => {
   const isUser = message.role === 'user';
 
   return (
     <div
-      className={`d-flex align-items-start mb-3 ${isUser ? 'flex-row-reverse' : ''}`}
+      className={`message-item d-flex align-items-start mb-3 ${isUser ? 'flex-row-reverse user' : 'assistant'}`}
       role="article"
       aria-label={`${isUser ? 'User' : 'Assistant'} message`}
     >
       <div
-        className={`rounded-circle p-2 ${isUser ? 'ml-3' : 'mr-3'}`}
-        style={{
-          width: '40px',
-          height: '40px',
-          flexShrink: 0,
-          backgroundColor: isUser ? '#e9ecef' : '#fff',
-          border: '1px solid #dee2e6',
-        }}
+        className={`message-icon rounded-circle p-2 border ${isUser ? 'border-primary ml-3' : 'border-dark mr-3'}`}
         aria-hidden="true"
       >
-        <i
-          className={`bi ${isUser ? 'bi-person-fill' : 'bi-robot'} text-${isUser ? 'secondary' : 'primary'}`}
-          style={{ fontSize: '1.25rem' }}
-        />
+        <i className={`bi ${isUser ? 'bi-person-fill' : 'bi-robot'} text-${isUser ? 'primary' : 'secondary'}`}/>
       </div>
-      <div
-        className={`p-3 rounded ${isUser ? 'bg-primary text-white' : 'bg-light border'}`}
-        style={{ maxWidth: '75%' }}
-      >
+      <div className={`message-content-container p-3 ${isUser ? 'bg-primary text-white' : 'bg-light border'}`}>
         {message.content ? (
           isUser ? (
             // User messages: plain text with pre-wrap
@@ -89,38 +78,18 @@ const Message = ({ message, isLoading }) => {
             </div>
           )
         ) : (
-          // Show loading skeleton for empty assistant messages
+          // Show typing indicator for empty assistant messages
           !isUser &&
           isLoading && (
             <div
+              className="assistant-typing-indicator"
               role="status"
               aria-live="polite"
               aria-label="Assistant is typing"
             >
-              <div className="mb-2">
-                <div
-                  className="bg-white rounded"
-                  style={{ height: '0.75rem', width: '75%' }}
-                >
-                  &nbsp;
-                </div>
-              </div>
-              <div className="mb-2">
-                <div
-                  className="bg-white rounded"
-                  style={{ height: '0.75rem', width: '100%' }}
-                >
-                  &nbsp;
-                </div>
-              </div>
-              <div>
-                <div
-                  className="bg-white rounded"
-                  style={{ height: '0.75rem', width: '85%' }}
-                >
-                  &nbsp;
-                </div>
-              </div>
+              <span className="typing-dot"></span>
+              <span className="typing-dot"></span>
+              <span className="typing-dot"></span>
             </div>
           )
         )}
@@ -145,11 +114,7 @@ Message.propTypes = {
   isLoading: PropTypes.bool,
 };
 
-Message.defaultProps = {
-  isLoading: false,
-};
-
-const MessageList = ({ messages, isLoading, messagesEndRef }) => {
+const MessageList = ({ messages, isLoading = false, messagesEndRef = null }) => {
   return (
     <div
       role="log"
@@ -180,11 +145,6 @@ MessageList.propTypes = {
   ).isRequired,
   isLoading: PropTypes.bool,
   messagesEndRef: PropTypes.object,
-};
-
-MessageList.defaultProps = {
-  isLoading: false,
-  messagesEndRef: null,
 };
 
 export default MessageList;
