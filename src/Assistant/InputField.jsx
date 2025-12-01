@@ -88,7 +88,7 @@ const InputField = ({ onSubmit, isLoading, placeholder, debounceMs = 300 }) => {
                   role="status"
                   aria-hidden="true"
                 />
-                Sending...
+                Sending
               </>
             ) : (
               <>
