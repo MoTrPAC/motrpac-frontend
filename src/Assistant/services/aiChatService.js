@@ -6,16 +6,6 @@ import axios from 'axios';
  */
 
 /**
- * Get the appropriate API URL based on environment
- * @returns {string} API base URL
- */
-export const getApiUrl = () => {
-  return import.meta.env.DEV
-    ? import.meta.env.VITE_API_RAG_SERVICE_ADDRESS
-    : import.meta.env.VITE_API_SERVICE_ADDRESS;
-};
-
-/**
  * Send a message to the AI assistant with streaming response
  * @param {string} prompt - User's question
  * @param {Array} history - Conversation history (last 10 messages)
@@ -41,7 +31,8 @@ export const askAI = async ({
     headers['Authorization'] = `Bearer ${accessToken}`;
   }
 
-  const apiUrl = getApiUrl();
+  // Get the appropriate API URL
+  const apiUrl = import.meta.env.VITE_API_RAG_SERVICE_ADDRESS;
 
   // Limit history to last 10 messages to avoid payload bloat
   const recentHistory = history.slice(-10).map((m) => ({
