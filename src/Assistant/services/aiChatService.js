@@ -32,7 +32,9 @@ export const askAI = async ({
   }
 
   // Get the appropriate API URL
-  const apiUrl = import.meta.env.VITE_API_RAG_SERVICE_ADDRESS;
+  const apiUrl = import.meta.env.VITE_API_SERVICE_ADDRESS;
+  const apiEndpoint = import.meta.env.VITE_API_RAG_SERVICE_ENDPOINT;
+  const apiKey = import.meta.env.VITE_API_SERVICE_KEY;
 
   // Limit history to last 10 messages to avoid payload bloat
   const recentHistory = history.slice(-10).map((m) => ({
@@ -42,7 +44,7 @@ export const askAI = async ({
 
   try {
     await axios.post(
-      `${apiUrl}/ask`,
+      `${apiUrl}${apiEndpoint}?key=${apiKey}`,
       {
         prompt,
         history: recentHistory,
