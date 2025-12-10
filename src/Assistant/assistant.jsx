@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { Helmet } from 'react-helmet';
 import MessageList from './MessageList.jsx';
 import InputField from './InputField.jsx';
 import ReferencePanel from './ReferencePanel.jsx';
@@ -120,11 +121,15 @@ const AskAssistant = () => {
   };
 
   return (
-    <main
+    <div
       className="container-fluid d-flex ai-assistant mb-4"
       role="main"
       aria-label="AI Assistant"
     >
+      <Helmet>
+        <html lang="en" />
+        <title>ExerWise - MoTrPAC Data Hub</title>
+      </Helmet>
       <div className="row justify-content-center flex-grow-1 h-100">
         <div
           className={`${showReferencePanel ? 'col-lg-7' : 'col-lg-10 col-xl-8'} d-flex flex-column h-100 py-3`}
@@ -185,7 +190,7 @@ const AskAssistant = () => {
                     Start a conversation by asking a question below.
                   </p>
                   <small>
-                    Example: &ldquo;What are the latest dataset releases?&rdquo;
+                    Example: &ldquo;Give me a brief summary of the MoTrPAC rats endurance training study.&rdquo;
                   </small>
                 </div>
               ) : (
@@ -224,7 +229,7 @@ const AskAssistant = () => {
                 placeholder={
                   messages.length > 0
                     ? 'Ask a follow-up question...'
-                    : 'e.g., What are the latest dataset releases?'
+                    : 'e.g., Give me an overview of the MoTrPAC adult study design'
                 }
               />
             </div>
@@ -240,7 +245,7 @@ const AskAssistant = () => {
         isVisible={showReferencePanel}
         onToggle={() => setShowReferencePanel(false)}
       />
-    </main>
+    </div>
   );
 };
 
