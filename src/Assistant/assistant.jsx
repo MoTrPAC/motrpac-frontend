@@ -127,7 +127,7 @@ const AskAssistant = () => {
     >
       <div className="row justify-content-center flex-grow-1 h-100">
         <div
-          className={`${showReferencePanel ? 'col-lg-7' : 'col-lg-8 col-xl-7'} d-flex flex-column h-100 py-3`}
+          className={`${showReferencePanel ? 'col-lg-7' : 'col-lg-10 col-xl-8'} d-flex flex-column h-100 py-3`}
         >
           <div
             className="card shadow-sm d-flex flex-column"
@@ -143,6 +143,7 @@ const AskAssistant = () => {
               <div className="d-flex align-items-center">
                 {messages.length > 0 && (
                   <>
+                    {/*
                     <button
                       className="btn btn-sm btn-outline-light mr-2"
                       onClick={() => setShowReferencePanel(!showReferencePanel)}
@@ -154,6 +155,7 @@ const AskAssistant = () => {
                         aria-hidden="true"
                       />
                     </button>
+                    */}
                     <button
                       className="btn btn-sm btn-outline-light"
                       onClick={clearChat}
@@ -227,7 +229,9 @@ const AskAssistant = () => {
               />
             </div>
           </div>
-          <small className="text-muted mt-2">ExerWise is AI and can make mistakes. Please double-check responses.</small>
+          <div className="text-right mt-1 mb-2">
+            <small className="text-muted">ExerWise is AI and can make mistakes. Please double-check responses.</small>
+          </div>
         </div>
       </div>
 
