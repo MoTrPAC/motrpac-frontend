@@ -137,7 +137,7 @@ const AskAssistant = () => {
               <div>
                 <h1 className="h3 card-title mb-0">
                   <i className="bi bi-robot mr-2" aria-hidden="true" />
-                  MoTrPAC Knowledge Assistant
+                  MoTrPAC ExerWise
                 </h1>
               </div>
               <div className="d-flex align-items-center">
@@ -227,6 +227,7 @@ const AskAssistant = () => {
               />
             </div>
           </div>
+          <small className="text-muted mt-2">ExerWise is AI and can make mistakes. Please double-check responses.</small>
         </div>
       </div>
 
