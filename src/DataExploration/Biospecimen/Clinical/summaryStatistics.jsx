@@ -18,7 +18,7 @@ function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
     <div className="biospecimenSummary w-100 px-3 px-md-4 mb-3">
       <Helmet>
         <html lang="en" />
-        <title>Biospecimen Summary - MoTrPAC Data Hub</title>
+        <title>Biospecimen Lookup - MoTrPAC Data Hub</title>
       </Helmet>
       <h1 className="mb-4 display-4">
         <i className="bi bi-search mr-3" />
