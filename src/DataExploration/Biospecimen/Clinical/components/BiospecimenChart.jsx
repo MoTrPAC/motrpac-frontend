@@ -22,6 +22,7 @@ import {
   BMI_GROUPS,
   RANDOMIZED_GROUPS,
 } from '../utils/demographicUtils';
+import { getStudyName, STUDY_GROUPS } from '../utils/studyUtils';
 
 // Ensure Highcharts is properly initialized
 if (typeof Highcharts === 'object' && Highcharts.setOptions) {
@@ -82,9 +83,9 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
   }, [allData]);
 
   // Calculate fixed maximums for all demographic charts in a single pass (performance optimization)
-  const { fixedMaxAgeGroupCount, fixedMaxRaceCount, fixedMaxRandomGroupCount } = useMemo(() => {
+  const { fixedMaxAgeGroupCount, fixedMaxRaceCount, fixedMaxRandomGroupCount, fixedMaxStudyCount } = useMemo(() => {
     if (!allData || !allData.length) {
-      return { fixedMaxAgeGroupCount: 0, fixedMaxRaceCount: 0, fixedMaxRandomGroupCount: 0 };
+      return { fixedMaxAgeGroupCount: 0, fixedMaxRaceCount: 0, fixedMaxRandomGroupCount: 0, fixedMaxStudyCount: 0 };
     }
 
     // Store unique participants with their demographics (single Map per PID)
@@ -96,6 +97,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
           age: record.dmaqc_age_groups,
           race: getRaceCategory(record),
           randomGroup: getRandomizedGroup(record),
+          study: getStudyName(record.study),
         });
       }
     });
@@ -109,18 +111,23 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     
     const randomGroupCounts = {};
     RANDOMIZED_GROUPS.forEach(group => randomGroupCounts[group] = 0);
+    
+    const studyCounts = {};
+    STUDY_GROUPS.forEach(group => studyCounts[group] = 0);
 
     // Count participants in each category
-    participantDemographics.forEach(({ age, race, randomGroup }) => {
+    participantDemographics.forEach(({ age, race, randomGroup, study }) => {
       if (age && ageCounts.hasOwnProperty(age)) ageCounts[age]++;
       if (race && raceCounts.hasOwnProperty(race)) raceCounts[race]++;
       if (randomGroup && randomGroupCounts.hasOwnProperty(randomGroup)) randomGroupCounts[randomGroup]++;
+      if (study && studyCounts.hasOwnProperty(study)) studyCounts[study]++;
     });
 
     return {
       fixedMaxAgeGroupCount: Math.max(...Object.values(ageCounts)),
       fixedMaxRaceCount: Math.max(...Object.values(raceCounts)),
       fixedMaxRandomGroupCount: Math.max(...Object.values(randomGroupCounts)),
+      fixedMaxStudyCount: Math.max(...Object.values(studyCounts)),
     };
   }, [allData]);
 
@@ -375,6 +382,48 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
       data: RANDOMIZED_GROUPS.map(group => ({
         y: groupCounts[group],
         samples: samplesByGroup[group], // Attach samples to each data point
+      })),
+    };
+  }, [data]);
+
+  // Calculate participant counts by study
+  const participantByStudy = useMemo(() => {
+    if (!data || !data.length) return null;
+
+    const uniqueParticipants = new Map();
+    const samplesByStudy = {};
+    STUDY_GROUPS.forEach(group => samplesByStudy[group] = []);
+    
+    data.forEach((record) => {
+      if (record.pid) {
+        const study = getStudyName(record.study);
+        if (study) {
+          if (!uniqueParticipants.has(record.pid)) {
+            uniqueParticipants.set(record.pid, study);
+          }
+          // Guard against unexpected study values
+          if (samplesByStudy[study]) {
+            samplesByStudy[study].push(record);
+          }
+        }
+      }
+    });
+
+    const studyCounts = {};
+    STUDY_GROUPS.forEach(group => studyCounts[group] = 0);
+
+    uniqueParticipants.forEach((study) => {
+      if (studyCounts.hasOwnProperty(study)) {
+        studyCounts[study]++;
+      }
+    });
+
+    // Keep all groups for smooth animation (bars animate to 0 instead of disappearing)
+    return {
+      categories: STUDY_GROUPS,
+      data: STUDY_GROUPS.map(group => ({
+        y: studyCounts[group],
+        samples: samplesByStudy[group], // Attach samples to each data point
       })),
     };
   }, [data]);
@@ -882,6 +931,85 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     };
   }, [participantByRandomGroup, fixedMaxRandomGroupCount, onBarClick]);
 
+  // Bar chart configuration for study distribution
+  const studyBarChartOptions = useMemo(() => {
+    if (!participantByStudy) return null;
+
+    return {
+      chart: {
+        type: 'column',
+        height: 300,
+      },
+      title: {
+        text: 'Study Distribution',
+        style: { fontSize: '14px', fontWeight: 'bold' }
+      },
+      xAxis: {
+        categories: participantByStudy.categories,
+        title: {
+          text: 'Study',
+          style: { fontSize: '12px', fontWeight: 'bold' }
+        },
+        labels: {
+          style: { fontSize: '11px' },
+          rotation: -45,
+          align: 'right'
+        }
+      },
+      yAxis: {
+        min: 0,
+        max: fixedMaxStudyCount, // Fixed max for consistent scale across filter changes
+        allowDecimals: false,
+        title: {
+          text: 'Participant Count',
+          style: { fontSize: '12px', fontWeight: 'bold' }
+        },
+        labels: {
+          style: { fontSize: '11px' }
+        }
+      },
+      legend: {
+        enabled: false,
+      },
+      tooltip: {
+        pointFormat: '<b>{point.y}</b> participants<br/><em style="font-size: 10px;">Click to view samples</em>'
+      },
+      plotOptions: {
+        column: {
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: true,
+            format: '{point.y}',
+            style: { fontSize: '10px' }
+          },
+          color: '#16a085',
+          point: {
+            events: {
+              click: function () {
+                if (onBarClick && this.samples) {
+                  const studyCategory = participantByStudy.categories[this.index];
+                  onBarClick({
+                    point: {
+                      category: studyCategory,
+                      y: this.samples.length,
+                      samples: this.samples,
+                      demographicType: 'Study',
+                    }
+                  });
+                }
+              }
+            }
+          }
+        }
+      },
+      series: [{
+        name: 'Participants',
+        data: participantByStudy.data,
+      }],
+      credits: { enabled: false },
+    };
+  }, [participantByStudy, fixedMaxStudyCount, onBarClick]);
+
   // Chart configurations for both Pre and Post phases
   // Always display stacked bars by tissue
   const chartOptionsArray = useMemo(() => {
@@ -1140,6 +1268,22 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
                   <HighchartsReact
                     highcharts={Highcharts}
                     options={randomGroupBarChartOptions}
+                    immutable={false}
+                  />
+                ) : (
+                  <div className="text-center py-3 text-muted">
+                    <p>No data available</p>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="row mt-4">
+              <div className="col-md-6">
+                {/* Bar chart of participant count in each study */}
+                {studyBarChartOptions ? (
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={studyBarChartOptions}
                     immutable={false}
                   />
                 ) : (
