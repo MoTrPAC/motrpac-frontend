@@ -1026,6 +1026,11 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
         align: 'center',
         style: { fontSize: '16px', fontWeight: 'bold' }
       },
+      subtitle: {
+        text: 'Click bars for sample details',
+        align: 'center',
+        style: { fontSize: '12px', fontStyle: 'italic', color: '#666' }
+      },
       xAxis: {
         categories: categories,
         title: {
