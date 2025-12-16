@@ -61,6 +61,7 @@ export const DEFAULT_FILTERS = {
   ethnicity: ['Latino, Hispanic, or Spanish origin/ethnicity', 'Not Latino, Hispanic, or Spanish origin/ethnicity', 'Refused/Unknown'], // All selected by default - must match BiospecimenChart.jsx strings
   tissue: ['Adipose', 'Blood', 'Muscle'], // All selected by default
   ome: ['Epigenomic', 'Transcriptomic', 'Proteomic', 'Metabolomic'], // All selected by default
+  study: ['Adult Sedentary', 'Adult Highly Active', 'Pediatric Low Active', 'Pediatric High Active'], // All selected by default
 };
 
 // Randomized group code mapping for API queries
@@ -80,6 +81,7 @@ export const FILTER_OPTIONS = {
   ethnicityOptions: ['Latino, Hispanic, or Spanish origin/ethnicity', 'Not Latino, Hispanic, or Spanish origin/ethnicity', 'Refused/Unknown'], // Must match BiospecimenChart.jsx and DEFAULT_FILTERS
   tissueOptions: ['Adipose', 'Blood', 'Muscle'],
   omeOptions: ['Epigenomic', 'Transcriptomic', 'Proteomic', 'Metabolomic'],
+  studyOptions: ['Adult Sedentary', 'Adult Highly Active', 'Pediatric Low Active', 'Pediatric High Active'],
 };
 
 
