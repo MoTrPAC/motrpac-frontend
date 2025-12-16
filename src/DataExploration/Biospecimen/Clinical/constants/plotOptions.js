@@ -128,6 +128,7 @@ export const filterUtils = {
       ethnicity: [...DEFAULT_FILTERS.ethnicity],
       tissue: [...DEFAULT_FILTERS.tissue],
       ome: [...DEFAULT_FILTERS.ome],
+      study: [...DEFAULT_FILTERS.study],
     };
   },
 };
