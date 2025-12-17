@@ -26,7 +26,7 @@ import { getStudyName, STUDY_GROUPS } from '../utils/studyUtils';
 import { transformTrancheCode } from '../utils/dataTransformUtils';
 
 // Tranche groups for consistent categorization
-const TRANCHE_GROUPS = ['Tranche 0', 'Tranche 1', 'Tranche 2', 'Tranche 3', 'Tranche 4'];
+const TRANCHE_GROUPS = ['Tranche 0 (PreCOVID)', 'Tranche 1', 'Tranche 2', 'Tranche 3', 'Tranche 4'];
 
 // Ensure Highcharts is properly initialized
 if (typeof Highcharts === 'object' && Highcharts.setOptions) {
