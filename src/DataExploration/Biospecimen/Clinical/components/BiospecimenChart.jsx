@@ -23,6 +23,10 @@ import {
   RANDOMIZED_GROUPS,
 } from '../utils/demographicUtils';
 import { getStudyName, STUDY_GROUPS } from '../utils/studyUtils';
+import { transformTrancheCode } from '../utils/dataTransformUtils';
+
+// Tranche groups for consistent categorization
+const TRANCHE_GROUPS = ['Tranche 0', 'Tranche 1', 'Tranche 2', 'Tranche 3', 'Tranche 4'];
 
 // Ensure Highcharts is properly initialized
 if (typeof Highcharts === 'object' && Highcharts.setOptions) {
@@ -83,9 +87,9 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
   }, [allData]);
 
   // Calculate fixed maximums for all demographic charts in a single pass (performance optimization)
-  const { fixedMaxAgeGroupCount, fixedMaxRaceCount, fixedMaxRandomGroupCount, fixedMaxStudyCount } = useMemo(() => {
+  const { fixedMaxAgeGroupCount, fixedMaxRaceCount, fixedMaxRandomGroupCount, fixedMaxStudyCount, fixedMaxTrancheCount } = useMemo(() => {
     if (!allData || !allData.length) {
-      return { fixedMaxAgeGroupCount: 0, fixedMaxRaceCount: 0, fixedMaxRandomGroupCount: 0, fixedMaxStudyCount: 0 };
+      return { fixedMaxAgeGroupCount: 0, fixedMaxRaceCount: 0, fixedMaxRandomGroupCount: 0, fixedMaxStudyCount: 0, fixedMaxTrancheCount: 0 };
     }
 
     // Store unique participants with their demographics (single Map per PID)
@@ -98,6 +102,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
           race: getRaceCategory(record),
           randomGroup: getRandomizedGroup(record),
           study: getStudyName(record.study),
+          tranche: transformTrancheCode(record.tranche),
         });
       }
     });
@@ -114,13 +119,17 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     
     const studyCounts = {};
     STUDY_GROUPS.forEach(group => studyCounts[group] = 0);
+    
+    const trancheCounts = {};
+    TRANCHE_GROUPS.forEach(group => trancheCounts[group] = 0);
 
     // Count participants in each category
-    participantDemographics.forEach(({ age, race, randomGroup, study }) => {
+    participantDemographics.forEach(({ age, race, randomGroup, study, tranche }) => {
       if (age && ageCounts.hasOwnProperty(age)) ageCounts[age]++;
       if (race && raceCounts.hasOwnProperty(race)) raceCounts[race]++;
       if (randomGroup && randomGroupCounts.hasOwnProperty(randomGroup)) randomGroupCounts[randomGroup]++;
       if (study && studyCounts.hasOwnProperty(study)) studyCounts[study]++;
+      if (tranche && trancheCounts.hasOwnProperty(tranche)) trancheCounts[tranche]++;
     });
 
     return {
@@ -128,6 +137,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
       fixedMaxRaceCount: Math.max(...Object.values(raceCounts)),
       fixedMaxRandomGroupCount: Math.max(...Object.values(randomGroupCounts)),
       fixedMaxStudyCount: Math.max(...Object.values(studyCounts)),
+      fixedMaxTrancheCount: Math.max(...Object.values(trancheCounts)),
     };
   }, [allData]);
 
@@ -426,6 +436,50 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
         samples: samplesByStudy[group], // Attach samples to each data point
       })),
     };
+  }, [data]);
+
+  // Calculate participant counts by tranche
+  const participantByTranche = useMemo(() => {
+    if (!data || !data.length) return [];
+
+    const uniqueParticipants = new Map();
+    const samplesByTranche = {};
+    TRANCHE_GROUPS.forEach(group => samplesByTranche[group] = []);
+    
+    data.forEach((record) => {
+      const pid = record.pid;
+      const trancheCode = record.tranche;
+      const trancheName = transformTrancheCode(trancheCode);
+      
+      // Track unique participants by tranche
+      if (pid && trancheName && TRANCHE_GROUPS.includes(trancheName)) {
+        if (!uniqueParticipants.has(pid)) {
+          uniqueParticipants.set(pid, trancheName);
+        }
+        // Collect samples for this tranche
+        if (!samplesByTranche[trancheName].includes(record)) {
+          samplesByTranche[trancheName].push(record);
+        }
+      }
+    });
+
+    const trancheCounts = {};
+    TRANCHE_GROUPS.forEach(group => trancheCounts[group] = 0);
+
+    uniqueParticipants.forEach((tranche) => {
+      if (trancheCounts[tranche] !== undefined) {
+        trancheCounts[tranche]++;
+      }
+    });
+
+    // Return pie chart data with distinct colors for each tranche
+    const colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6']; // Red, Blue, Green, Orange, Purple
+    return TRANCHE_GROUPS.map((group, index) => ({
+      name: group,
+      y: trancheCounts[group],
+      color: colors[index],
+      samples: samplesByTranche[group],
+    }));
   }, [data]);
 
   // Transform data for chart - separate charts for Pre and Post phases
@@ -1010,6 +1064,59 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     };
   }, [participantByStudy, fixedMaxStudyCount, onBarClick]);
 
+  // Pie chart configuration for tranche distribution
+  const tranchePieChartOptions = useMemo(() => {
+    if (!participantByTranche) return null;
+
+    return {
+      chart: {
+        type: 'pie',
+        height: 300,
+      },
+      title: {
+        text: 'Tranche Distribution',
+        style: { fontSize: '14px', fontWeight: 'bold' }
+      },
+      tooltip: {
+        pointFormat: '<b>{point.y}</b> participants ({point.percentage:.1f}%)<br/><em style="font-size: 10px;">Click to view samples</em>'
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}</b>: {point.y}',
+            style: { fontSize: '11px' },
+            distance: 10,
+            connectorWidth: 1,
+          },
+          showInLegend: false,
+          point: {
+            events: {
+              click: function () {
+                const samples = this.options.samples || [];
+                if (samples.length > 0) {
+                  onBarClick({
+                    samples,
+                    assayType: 'All Assays',
+                    phase: 'All Phases',
+                    tranche: this.name,
+                  });
+                }
+              }
+            }
+          }
+        }
+      },
+      series: [{
+        name: 'Participants',
+        data: participantByTranche,
+      }],
+      credits: { enabled: false },
+    };
+  }, [participantByTranche, onBarClick]);
+
   // Chart configurations for both Pre and Post phases
   // Always display stacked bars by tissue
   const chartOptionsArray = useMemo(() => {
@@ -1289,6 +1396,20 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
                   <HighchartsReact
                     highcharts={Highcharts}
                     options={studyBarChartOptions}
+                    immutable={false}
+                  />
+                ) : (
+                  <div className="text-center py-3 text-muted">
+                    <p>No data available</p>
+                  </div>
+                )}
+              </div>
+              <div className="col-md-6">
+                {/* Pie chart of participant count in each tranche */}
+                {tranchePieChartOptions ? (
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={tranchePieChartOptions}
                     immutable={false}
                   />
                 ) : (
