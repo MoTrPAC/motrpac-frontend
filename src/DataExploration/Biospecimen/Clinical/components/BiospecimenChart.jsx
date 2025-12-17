@@ -1095,13 +1095,14 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
           point: {
             events: {
               click: function () {
-                const samples = this.options.samples || [];
-                if (samples.length > 0) {
+                if (onBarClick && this.samples) {
                   onBarClick({
-                    samples,
-                    assayType: 'All Assays',
-                    phase: 'All Phases',
-                    tranche: this.name,
+                    point: {
+                      category: this.name,
+                      y: this.samples.length,
+                      samples: this.samples,
+                      demographicType: 'Tranche',
+                    }
                   });
                 }
               }
