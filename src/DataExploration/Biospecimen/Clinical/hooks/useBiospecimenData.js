@@ -9,6 +9,7 @@ import {
 import { getTissueName } from '../utils/tissueUtils';
 import { matchesOmeCategories } from '../utils/omeUtils';
 import { getStudyName } from '../utils/studyUtils';
+import { transformTrancheCode } from '../utils/dataTransformUtils';
 
 /**
  * Simplified biospecimen data hook that loads all data once and filters client-side
@@ -220,6 +221,16 @@ export const useFilteredBiospecimenData = (allData, filters) => {
       if (filters.study?.length > 0) {
         const studyName = getStudyName(item.study);
         if (studyName && !filters.study.includes(studyName)) {
+          return false;
+        }
+      }
+
+      // Filter by tranche - using centralized utility
+      // Only filter out if record HAS a tranche code that doesn't match selected filters
+      // Records with null/unmapped tranche codes are kept (don't filter based on missing data)
+      if (filters.tranche?.length > 0) {
+        const trancheName = transformTrancheCode(item.tranche);
+        if (trancheName && !filters.tranche.includes(trancheName)) {
           return false;
         }
       }

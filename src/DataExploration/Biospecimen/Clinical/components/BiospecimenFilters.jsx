@@ -25,6 +25,7 @@ const BiospecimenFilters = ({
     tissue: false,
     ome: false,
     study: false,
+    tranche: false,
   });
 
   const toggleGroup = (groupKey) => {
@@ -90,6 +91,12 @@ const BiospecimenFilters = ({
       label: 'Study',
       filterKey: 'study',
       optionsKey: 'studyOptions',
+    },
+    {
+      key: 'tranche',
+      label: 'Tranche',
+      filterKey: 'tranche',
+      optionsKey: 'trancheOptions',
     },
   ];
 
@@ -174,6 +181,7 @@ BiospecimenFilters.propTypes = {
     tissue: PropTypes.array.isRequired,
     ome: PropTypes.array.isRequired,
     study: PropTypes.array.isRequired,
+    tranche: PropTypes.array.isRequired,
   }).isRequired,
   filterOptions: PropTypes.shape({
     sexOptions: PropTypes.array.isRequired,
@@ -185,6 +193,7 @@ BiospecimenFilters.propTypes = {
     tissueOptions: PropTypes.array.isRequired,
     omeOptions: PropTypes.array.isRequired,
     studyOptions: PropTypes.array.isRequired,
+    trancheOptions: PropTypes.array.isRequired,
   }).isRequired,
   onCheckboxChange: PropTypes.func.isRequired,
   onResetFilters: PropTypes.func.isRequired,

@@ -62,6 +62,7 @@ export const DEFAULT_FILTERS = {
   tissue: ['Adipose', 'Blood', 'Muscle'], // All selected by default
   ome: ['Epigenomic', 'Transcriptomic', 'Proteomic', 'Metabolomic'], // All selected by default
   study: ['Adult Sedentary', 'Adult Highly Active', 'Pediatric Low Active', 'Pediatric High Active'], // All selected by default
+  tranche: ['Tranche 0', 'Tranche 1', 'Tranche 2', 'Tranche 3', 'Tranche 4'], // All selected by default
 };
 
 // Randomized group code mapping for API queries
@@ -82,6 +83,7 @@ export const FILTER_OPTIONS = {
   tissueOptions: ['Adipose', 'Blood', 'Muscle'],
   omeOptions: ['Epigenomic', 'Transcriptomic', 'Proteomic', 'Metabolomic'],
   studyOptions: ['Adult Sedentary', 'Adult Highly Active', 'Pediatric Low Active', 'Pediatric High Active'],
+  trancheOptions: ['Tranche 0', 'Tranche 1', 'Tranche 2', 'Tranche 3', 'Tranche 4'],
 };
 
 
@@ -129,6 +131,7 @@ export const filterUtils = {
       tissue: [...DEFAULT_FILTERS.tissue],
       ome: [...DEFAULT_FILTERS.ome],
       study: [...DEFAULT_FILTERS.study],
+      tranche: [...DEFAULT_FILTERS.tranche],
     };
   },
 };
