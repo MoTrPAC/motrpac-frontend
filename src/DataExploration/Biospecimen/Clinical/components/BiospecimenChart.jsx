@@ -1126,7 +1126,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     return chartData.map(({ phase, categories, series }) => ({
         chart: {
           type: 'bar',
-          height: Math.max(400, categories.length * 40 + 100),
+          height: Math.max(600, categories.length * 45 + 120),
           marginBottom: 80,
         },
       title: {
@@ -1283,7 +1283,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
   return (
     <div className="charts-container row">
       <div className="card-container col-md-6">
-        <div className="card">
+        <div className="card h-100 d-flex flex-column">
           <div className="card-header">
             <h5 className="mb-0">
               <span className="mr-2">Participants</span>
@@ -1424,7 +1424,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
         </div>
       </div>
       <div className="card-container col-md-6">
-        <div className="card">
+        <div className="card h-100 d-flex flex-column">
           <div className="card-header">
             <h5 className="mb-0">
               <span className="mr-2">Biospecimen sample counts (per currently available data)</span>
