@@ -31,10 +31,11 @@ export const transformTissueCode = (code) => {
 /**
  * Transform tranche code to human-readable name
  * @param {string} code - Tranche code (e.g., 'TR00', 'TR01')
- * @returns {string} Tranche name or original code if not found
+ * @returns {string} Tranche name, 'Not yet shipped to CAS' for null/undefined, or original code if not found
  */
 export const transformTrancheCode = (code) => {
-  if (!code) return code;
+  // Handle null/undefined values - participants not yet shipped to CAS
+  if (!code) return 'Not yet shipped to CAS';
   return TRANCHE_CODE_TO_NAME[code] || code;
 };
 

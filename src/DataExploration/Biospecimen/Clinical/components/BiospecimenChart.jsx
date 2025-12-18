@@ -26,7 +26,7 @@ import { getStudyName, STUDY_GROUPS } from '../utils/studyUtils';
 import { transformTrancheCode } from '../utils/dataTransformUtils';
 
 // Tranche groups for consistent categorization
-const TRANCHE_GROUPS = ['Tranche 0 (PreCOVID)', 'Tranche 1', 'Tranche 2', 'Tranche 3', 'Tranche 4', 'Tranche 5'];
+const TRANCHE_GROUPS = ['Tranche 0 (PreCOVID)', 'Tranche 1', 'Tranche 2', 'Tranche 3', 'Tranche 4', 'Tranche 5', 'Not yet shipped to CAS'];
 
 // Ensure Highcharts is properly initialized
 if (typeof Highcharts === 'object' && Highcharts.setOptions) {
@@ -473,7 +473,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     });
 
     // Return pie chart data with distinct colors for each tranche
-    const colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c']; // Red, Blue, Green, Orange, Purple, Teal
+    const colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c', '#95a5a6']; // Red, Blue, Green, Orange, Purple, Teal, Gray
     return TRANCHE_GROUPS.map((group, index) => ({
       name: group,
       y: trancheCounts[group],

@@ -83,7 +83,7 @@ export const FILTER_OPTIONS = {
   tissueOptions: ['Adipose', 'Blood', 'Muscle'],
   omeOptions: ['Epigenomic', 'Transcriptomic', 'Proteomic', 'Metabolomic'],
   studyOptions: ['Adult Sedentary', 'Adult Highly Active', 'Pediatric Low Active', 'Pediatric High Active'],
-  trancheOptions: ['Tranche 0 (PreCOVID)', 'Tranche 1', 'Tranche 2', 'Tranche 3', 'Tranche 4', 'Tranche 5'],
+  trancheOptions: ['Tranche 0 (PreCOVID)', 'Tranche 1', 'Tranche 2', 'Tranche 3', 'Tranche 4', 'Tranche 5', 'Not yet shipped to CAS'],
 };
 
 
