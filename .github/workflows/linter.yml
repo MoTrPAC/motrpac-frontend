@@ -63,4 +63,4 @@ jobs:
           VALIDATE_YAML: true
 
           # Exclude patterns - single regex string
-          FILTER_REGEX_EXCLUDE: '.*/node_modules/.*|.*/dist/.*|.*/build/.*|.*/coverage/.*|.*/.cache/.*|.*/public/.*|.*/src/Search/timewiseTable.jsx|.*/src/Search/trainingResultsTable.jsx'
+          FILTER_REGEX_EXCLUDE: '.*/node_modules/.*|.*/dist/.*|.*/build/.*|.*/coverage/.*|.*/.cache/.*|.*/public/.*'
