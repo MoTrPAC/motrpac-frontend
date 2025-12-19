@@ -447,32 +447,30 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
   const participantByTranche = useMemo(() => {
     if (!data || !data.length) return [];
 
-    const uniqueParticipants = new Map();
+    // Track unique participants per tranche (not globally)
+    const uniqueParticipantsByTranche = {};
     const samplesByTranche = {};
-    TRANCHE_GROUPS.forEach(group => samplesByTranche[group] = []);
+    TRANCHE_GROUPS.forEach(group => {
+      uniqueParticipantsByTranche[group] = new Set();
+      samplesByTranche[group] = [];
+    });
     
     data.forEach((record) => {
       const pid = record.pid;
       const trancheCode = record.tranche;
       const trancheName = transformTrancheCode(trancheCode);
       
-      // Track unique participants by tranche
+      // Track unique participants and samples per tranche
       if (pid && trancheName && TRANCHE_GROUPS.includes(trancheName)) {
-        if (!uniqueParticipants.has(pid)) {
-          uniqueParticipants.set(pid, trancheName);
-        }
-        // Collect samples for this tranche
+        uniqueParticipantsByTranche[trancheName].add(pid);
         samplesByTranche[trancheName].push(record);
       }
     });
 
+    // Count unique participants in each tranche
     const trancheCounts = {};
-    TRANCHE_GROUPS.forEach(group => trancheCounts[group] = 0);
-
-    uniqueParticipants.forEach((tranche) => {
-      if (trancheCounts[tranche] !== undefined) {
-        trancheCounts[tranche]++;
-      }
+    TRANCHE_GROUPS.forEach(group => {
+      trancheCounts[group] = uniqueParticipantsByTranche[group].size;
     });
 
     // Return pie chart data with distinct colors for each tranche
