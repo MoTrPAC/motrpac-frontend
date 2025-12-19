@@ -226,11 +226,10 @@ export const useFilteredBiospecimenData = (allData, filters) => {
       }
 
       // Filter by tranche - using centralized utility
-      // Only filter out if record HAS a tranche code that doesn't match selected filters
-      // Records with null/unmapped tranche codes are kept (don't filter based on missing data)
+      // Null tranche codes are transformed to 'Not yet shipped to CAS' and treated as a filterable category
       if (filters.tranche?.length > 0) {
         const trancheName = transformTrancheCode(item.tranche);
-        if (trancheName && !filters.tranche.includes(trancheName)) {
+        if (!filters.tranche.includes(trancheName)) {
           return false;
         }
       }
