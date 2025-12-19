@@ -458,9 +458,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
           uniqueParticipants.set(pid, trancheName);
         }
         // Collect samples for this tranche
-        if (!samplesByTranche[trancheName].includes(record)) {
-          samplesByTranche[trancheName].push(record);
-        }
+        samplesByTranche[trancheName].push(record);
       }
     });
 
