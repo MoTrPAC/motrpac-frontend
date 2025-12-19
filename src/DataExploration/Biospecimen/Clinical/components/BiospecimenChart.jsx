@@ -29,6 +29,10 @@ import { transformTrancheCode } from '../utils/dataTransformUtils';
 // Tranche groups for consistent categorization
 const TRANCHE_GROUPS = FILTER_OPTIONS.trancheOptions;
 
+const MIN_CHART_HEIGHT = 600; // Minimum height for the chart in pixels
+const BAR_HEIGHT_PX = 45; // Height per bar in pixels
+const CHART_VERTICAL_PADDING = 120; // Extra padding for chart
+
 // Ensure Highcharts is properly initialized
 if (typeof Highcharts === 'object' && Highcharts.setOptions) {
   try {
@@ -1125,7 +1129,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     return chartData.map(({ phase, categories, series }) => ({
         chart: {
           type: 'bar',
-          height: Math.max(600, categories.length * 45 + 120),
+          height: Math.max(MIN_CHART_HEIGHT, categories.length * BAR_HEIGHT_PX + CHART_VERTICAL_PADDING),
           marginBottom: 80,
         },
       title: {
