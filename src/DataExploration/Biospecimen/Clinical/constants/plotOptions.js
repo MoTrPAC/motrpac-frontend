@@ -62,7 +62,7 @@ export const DEFAULT_FILTERS = {
   tissue: ['Adipose', 'Blood', 'Muscle'], // All selected by default
   ome: ['Epigenomic', 'Transcriptomic', 'Proteomic', 'Metabolomic'], // All selected by default
   study: ['Adult Sedentary', 'Adult Highly Active', 'Pediatric Low Active', 'Pediatric High Active'], // All selected by default
-  tranche: ['Tranche 0 (PreCOVID)', 'Tranche 1', 'Tranche 2', 'Tranche 3', 'Tranche 4', 'Tranche 5'], // All selected by default
+  tranche: ['Tranche 0 (PreCOVID)', 'Tranche 1', 'Tranche 2', 'Tranche 3', 'Tranche 4', 'Tranche 5'], // All selected by default except 'Not yet shipped to CAS'
 };
 
 // Randomized group code mapping for API queries
