@@ -9,6 +9,7 @@ import {
   INTERVENTION_PHASES,
   TISSUE_COLORS,
   TISSUE_TYPES,
+  FILTER_OPTIONS,
 } from '../constants/plotOptions';
 import { getAssayShortName, getAssayFullName, getAssayFullNames } from '../utils/assayCodeMapping';
 import { getTissueName } from '../utils/tissueUtils';
@@ -26,7 +27,7 @@ import { getStudyName, STUDY_GROUPS } from '../utils/studyUtils';
 import { transformTrancheCode } from '../utils/dataTransformUtils';
 
 // Tranche groups for consistent categorization
-const TRANCHE_GROUPS = ['Tranche 0 (PreCOVID)', 'Tranche 1', 'Tranche 2', 'Tranche 3', 'Tranche 4', 'Tranche 5', 'Not yet shipped to CAS'];
+const TRANCHE_GROUPS = FILTER_OPTIONS.trancheOptions;
 
 // Ensure Highcharts is properly initialized
 if (typeof Highcharts === 'object' && Highcharts.setOptions) {
