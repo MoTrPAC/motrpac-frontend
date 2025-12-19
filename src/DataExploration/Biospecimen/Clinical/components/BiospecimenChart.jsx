@@ -130,11 +130,11 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
 
     // Count participants in each category
     participantDemographics.forEach(({ age, race, randomGroup, study, tranche }) => {
-      if (age && ageCounts.hasOwnProperty(age)) ageCounts[age]++;
-      if (race && raceCounts.hasOwnProperty(race)) raceCounts[race]++;
-      if (randomGroup && randomGroupCounts.hasOwnProperty(randomGroup)) randomGroupCounts[randomGroup]++;
-      if (study && studyCounts.hasOwnProperty(study)) studyCounts[study]++;
-      if (tranche && trancheCounts.hasOwnProperty(tranche)) trancheCounts[tranche]++;
+      if (age && Object.hasOwn(ageCounts, age)) ageCounts[age]++;
+      if (race && Object.hasOwn(raceCounts, race)) raceCounts[race]++;
+      if (randomGroup && Object.hasOwn(randomGroupCounts, randomGroup)) randomGroupCounts[randomGroup]++;
+      if (study && Object.hasOwn(studyCounts, study)) studyCounts[study]++;
+      if (tranche && Object.hasOwn(trancheCounts, tranche)) trancheCounts[tranche]++;
     });
 
     return {
@@ -201,7 +201,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     AGE_GROUPS.forEach(group => ageCounts[group] = 0);
 
     uniqueParticipants.forEach((ageGroup) => {
-      if (ageCounts.hasOwnProperty(ageGroup)) {
+      if (Object.hasOwn(ageCounts, ageGroup)) {
         ageCounts[ageGroup]++;
       }
     });
@@ -243,7 +243,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     RACE_GROUPS.forEach(group => raceCounts[group] = 0);
 
     uniqueParticipants.forEach((race) => {
-      if (raceCounts.hasOwnProperty(race)) {
+      if (Object.hasOwn(raceCounts, race)) {
         raceCounts[race]++;
       }
     });
@@ -285,7 +285,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     BMI_GROUPS.forEach(group => bmiCounts[group] = 0);
 
     uniqueParticipants.forEach((bmiGroup) => {
-      if (bmiCounts.hasOwnProperty(bmiGroup)) {
+      if (Object.hasOwn(bmiCounts, bmiGroup)) {
         bmiCounts[bmiGroup]++;
       }
     });
@@ -332,7 +332,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     };
 
     uniqueParticipants.forEach((ethnicity) => {
-      if (ethnicityCounts.hasOwnProperty(ethnicity)) {
+      if (Object.hasOwn(ethnicityCounts, ethnicity)) {
         ethnicityCounts[ethnicity]++;
       }
     });
@@ -386,7 +386,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     RANDOMIZED_GROUPS.forEach(group => groupCounts[group] = 0);
 
     uniqueParticipants.forEach((group) => {
-      if (groupCounts.hasOwnProperty(group)) {
+      if (Object.hasOwn(groupCounts, group)) {
         groupCounts[group]++;
       }
     });
@@ -428,7 +428,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     STUDY_GROUPS.forEach(group => studyCounts[group] = 0);
 
     uniqueParticipants.forEach((study) => {
-      if (studyCounts.hasOwnProperty(study)) {
+      if (Object.hasOwn(studyCounts, study)) {
         studyCounts[study]++;
       }
     });
