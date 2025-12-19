@@ -16,22 +16,14 @@ export const STUDY_CODE_MAPPING = {
 /**
  * Reverse mapping: Display name to study code
  */
-export const STUDY_NAME_TO_CODE = {
-  'Adult Sedentary': '01',
-  'Adult Highly Active': '02',
-  'Pediatric Low Active': '03',
-  'Pediatric High Active': '04',
-};
+export const STUDY_NAME_TO_CODE = Object.fromEntries(
+  Object.entries(STUDY_CODE_MAPPING).map(([code, name]) => [name, code])
+);
 
 /**
  * Study groups used for categorization
  */
-export const STUDY_GROUPS = [
-  'Adult Sedentary',
-  'Adult Highly Active',
-  'Pediatric Low Active',
-  'Pediatric High Active',
-];
+export const STUDY_GROUPS = Object.values(STUDY_CODE_MAPPING);
 
 /**
  * Get study display name from study code
