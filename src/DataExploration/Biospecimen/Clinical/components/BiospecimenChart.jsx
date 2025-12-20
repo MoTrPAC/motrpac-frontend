@@ -92,9 +92,9 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
   }, [allData]);
 
   // Calculate fixed maximums for all demographic charts in a single pass (performance optimization)
-  const { fixedMaxAgeGroupCount, fixedMaxRaceCount, fixedMaxRandomGroupCount, fixedMaxStudyCount, fixedMaxTrancheCount } = useMemo(() => {
+  const { fixedMaxAgeGroupCount, fixedMaxRaceCount, fixedMaxRandomGroupCount, fixedMaxStudyCount } = useMemo(() => {
     if (!allData || !allData.length) {
-      return { fixedMaxAgeGroupCount: 0, fixedMaxRaceCount: 0, fixedMaxRandomGroupCount: 0, fixedMaxStudyCount: 0, fixedMaxTrancheCount: 0 };
+      return { fixedMaxAgeGroupCount: 0, fixedMaxRaceCount: 0, fixedMaxRandomGroupCount: 0, fixedMaxStudyCount: 0 };
     }
 
     // Store unique participants with their demographics (single Map per PID)
@@ -124,9 +124,6 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     
     const studyCounts = {};
     STUDY_GROUPS.forEach(group => studyCounts[group] = 0);
-    
-    const trancheCounts = {};
-    TRANCHE_GROUPS.forEach(group => trancheCounts[group] = 0);
 
     // Count participants in each category
     participantDemographics.forEach(({ age, race, randomGroup, study, tranche }) => {
@@ -134,7 +131,6 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
       if (race && Object.hasOwn(raceCounts, race)) raceCounts[race]++;
       if (randomGroup && Object.hasOwn(randomGroupCounts, randomGroup)) randomGroupCounts[randomGroup]++;
       if (study && Object.hasOwn(studyCounts, study)) studyCounts[study]++;
-      if (tranche && Object.hasOwn(trancheCounts, tranche)) trancheCounts[tranche]++;
     });
 
     return {
@@ -142,7 +138,6 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
       fixedMaxRaceCount: Math.max(...Object.values(raceCounts)),
       fixedMaxRandomGroupCount: Math.max(...Object.values(randomGroupCounts)),
       fixedMaxStudyCount: Math.max(...Object.values(studyCounts)),
-      fixedMaxTrancheCount: Math.max(...Object.values(trancheCounts)),
     };
   }, [allData]);
 
