@@ -38,14 +38,13 @@ export function Dashboard({
   // Show modal for reviewers who haven't agreed yet
   useEffect(() => {
     if (userType === 'external' && userRole === 'reviewer' && !agreement && modalRef.current) {
-      // Use Bootstrap's native JavaScript Modal API (no jQuery required)
-      import('bootstrap').then((bootstrap) => {
-        const modalInstance = new bootstrap.Modal(modalRef.current, {
-          backdrop: 'static',
-          keyboard: false
-        });
-        modalInstance.show();
-      });
+      // Use jQuery Bootstrap modal (already loaded in the app)
+      window.$(modalRef.current).modal('show');
+      
+      // Cleanup on unmount
+      return () => {
+        window.$(modalRef.current).modal('hide');
+      };
     }
   }, [userType, userRole, agreement]);
 
