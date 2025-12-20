@@ -48,7 +48,7 @@ jobs:
           VALIDATE_JSX: true
 
           # CSS/SCSS (CSS validator handles both)
-          VALIDATE_CSS: false
+          VALIDATE_CSS: true
 
           # HTML validation
           VALIDATE_HTML: true
