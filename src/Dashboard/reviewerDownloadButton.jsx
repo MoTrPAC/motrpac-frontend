@@ -25,7 +25,8 @@ function ReviewerDownloadButton({
   filename,
   label,
   icon = 'bi-file-zip-fill',
-  profile = {}
+  profile = {},
+  disabled = false,
 }) {
   const [fetchStatus, setFetchStatus] = useState({
     status: null,
@@ -154,6 +155,7 @@ function ReviewerDownloadButton({
       type="button"
       className="reviewer-data-download-link btn btn-primary mr-4"
       onClick={handleFileFetch}
+      disabled={disabled}
     >
       <i className={`bi ${icon} mr-1`}></i>
       <span>{label}</span>
@@ -164,6 +166,7 @@ function ReviewerDownloadButton({
 ReviewerDownloadButton.propTypes = {
   filename: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
   icon: PropTypes.string,
   profile: PropTypes.shape({
     userid: PropTypes.string,

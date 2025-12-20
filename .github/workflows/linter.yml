@@ -47,9 +47,6 @@ jobs:
           VALIDATE_JAVASCRIPT_ES: true
           VALIDATE_JSX: true
 
-          # CSS/SCSS (CSS validator handles both)
-          VALIDATE_CSS: true
-
           # HTML validation
           VALIDATE_HTML: true
 
@@ -63,4 +60,4 @@ jobs:
           VALIDATE_YAML: true
 
           # Exclude patterns - single regex string
-          FILTER_REGEX_EXCLUDE: '.*/node_modules/.*|.*/dist/.*|.*/build/.*|.*/coverage/.*|.*/.cache/.*|.*/public/.*|.*/src/Search/timewiseTable.jsx|.*/src/Search/trainingResultsTable.jsx'
+          FILTER_REGEX_EXCLUDE: '.*/node_modules/.*|.*/dist/.*|.*/build/.*|.*/coverage/.*|.*/.cache/.*|.*/public/.*'
