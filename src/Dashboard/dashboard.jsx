@@ -205,7 +205,7 @@ export function Dashboard({
                 </div>
                 <div className="modal-body">
                   <h5 className="font-weight-bold">PLEASE READ BEFORE DOWNLOADING DATA</h5>
-                  <p>By clicking "I agree" and downloading data from this portal, you agree to:</p>
+                  <p>By clicking &quot;I agree&quot; and downloading data from this portal, you agree to:</p>
                   <div className="my-3">
                     <span className="font-weight-bold">Review Use Only</span>
                     <ul>
