@@ -161,14 +161,13 @@ export function Dashboard({
                 human data in R packages and the visualization tool. If you have
                 any questions, please contact the journal editor directly.
               </div>
+              <div className="lead mt-2">
+                Please note, the Analysis and Clinical Analysis R packages depend
+                on the Function and Data R packages. It is recommended to download
+                and install all four of them. See the README document in each of the
+                R packages for more details.
+              </div>
               <div className="lead reviewer-data-download-links-container mt-3">
-                <ReviewerDownloadButton
-                  filename={PACK_ANALYSIS}
-                  label="Analysis R Package"
-                  icon="bi-file-zip-fill"
-                  profile={profile}
-                  disabled={!agreement}
-                />
                 <ReviewerDownloadButton
                   filename={PACK_FUNCTION}
                   label="Function R Package"
@@ -179,6 +178,13 @@ export function Dashboard({
                 <ReviewerDownloadButton
                   filename={PACK_DATA}
                   label="Data R Package"
+                  icon="bi-file-zip-fill"
+                  profile={profile}
+                  disabled={!agreement}
+                />
+                <ReviewerDownloadButton
+                  filename={PACK_ANALYSIS}
+                  label="Analysis R Package"
                   icon="bi-file-zip-fill"
                   profile={profile}
                   disabled={!agreement}
