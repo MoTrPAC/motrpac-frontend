@@ -40,6 +40,10 @@ export function Dashboard({
   useEffect(() => {
     if (userType === 'external' && userRole === 'reviewer' && !agreement) {
       $('#reviewerAgreementModal').modal('show');
+      
+      return () => {
+        $('#reviewerAgreementModal').modal('hide');
+      };
     }
   }, [userType, userRole, agreement]);
 
