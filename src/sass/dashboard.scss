@@ -6,7 +6,7 @@
     padding-top: 3.75rem;
     padding-bottom: 3.5rem;
     background-color: hsla(204, 0%, 100%, 1);
-    background-image: radial-gradient(circle at 0% 0%, hsla(295.99999999999994, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), radial-gradient(circle at 20% 0%, hsla(236.91176470588243, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), radial-gradient(circle at 40% 0%, hsla(186.61764705882354, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), radial-gradient(circle at 60% 0%, hsla(127.0588235294118, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), radial-gradient(circle at 80% 0%, hsla(62.20588235294117, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), radial-gradient(circle at 100% 0%, hsla(23.823529411764703, 77%, 74%, 0.35) 3%, transparent 40%);
+    background-image: radial-gradient(circle at 0% 0%, hsla(295.999, 77%, 74%, 0.35) 3.121%, transparent 40%), radial-gradient(circle at 20% 0%, hsla(236.912, 77%, 74%, 0.35) 3.121%, transparent 40%), radial-gradient(circle at 40% 0%, hsla(186.618, 77%, 74%, 0.35) 3.121%, transparent 40%), radial-gradient(circle at 60% 0%, hsla(127.059, 77%, 74%, 0.35) 3.121%, transparent 40%), radial-gradient(circle at 80% 0%, hsla(62.206, 77%, 74%, 0.35) 3.121%, transparent 40%), radial-gradient(circle at 100% 0%, hsla(23.824, 77%, 74%, 0.35) 3%, transparent 40%);
     background-blend-mode: normal, normal, normal, normal, normal, normal;
   }
 
@@ -19,10 +19,8 @@
     }
   }
 
-  .btn.reviewer-data-download-link {
-    &:disabled {
-      cursor: not-allowed;
-    }
+  .btn.reviewer-data-download-link:disabled {
+    cursor: not-allowed;
   }
 
   .feature-links-container {
@@ -33,33 +31,33 @@
 
       &:hover {
         border: 1px solid #777;
-        background-color: hsla(54.26470588235339, 91%, 97%, 1);
-        background-image: radial-gradient(circle at 92% 6%, hsla(165.44117647058837, 73%, 96%, 0.92) 0%, transparent 58.06622751776674%), radial-gradient(circle at 0% 50%, hsla(42.35294117647056, 100%, 97%, 1) 0%, transparent 50%), radial-gradient(circle at 83% 89%, hsla(37.0588235294118, 88%, 95%, 1) 0%, transparent 78.77377033233643%), radial-gradient(circle at 0% 100%, hsla(38.38235294117625, 100%, 86%, 1) 0%, transparent 50%), radial-gradient(circle at 0% 0%, hsla(56.9117647058825, 100%, 99%, 1) 0%, transparent 50%);
+        background-color: hsla(54.265, 91%, 97%, 1);
+        background-image: radial-gradient(circle at 92% 6%, hsla(165.441, 73%, 96%, 0.92) 0%, transparent 58.066%), radial-gradient(circle at 0% 50%, hsla(42.353, 100%, 97%, 1) 0%, transparent 50%), radial-gradient(circle at 83% 89%, hsla(37.059, 88%, 95%, 1) 0%, transparent 78.774%), radial-gradient(circle at 0% 100%, hsla(38.382, 100%, 86%, 1) 0%, transparent 50%), radial-gradient(circle at 0% 0%, hsla(56.912, 100%, 99%, 1) 0%, transparent 50%);
         background-blend-mode: normal, normal, normal, normal, normal;
         cursor: pointer;
         box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15) !important;
       }
-  
+
       .card-body {
         padding: 0.75em;
-  
+
         .feature-summary {
           h4 {
             color: colors.$stanford-cool-grey;
             font-family: 'Open Sans', sans-serif;
             font-weight: 600;
           }
-  
+
           p {
             color: colors.$stanford-cool-grey;
           }
         }
       }
-  
+
       a:hover {
         text-decoration: none;
       }
-  
+
       .material-icons {
         font-size: 5.0rem;
         background: -webkit-linear-gradient(45deg, #a64d79, #1c4587);
