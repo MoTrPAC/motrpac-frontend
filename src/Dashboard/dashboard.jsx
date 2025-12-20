@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import 'bootstrap';
+import $ from 'jquery';
 import FeatureLinks from '../Search/featureLinks';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
 import ReviewerDownloadButton from './reviewerDownloadButton';
@@ -31,20 +33,13 @@ export function Dashboard({
     const saved = sessionStorage.getItem('reviewerAgreement');
     return saved === 'true';
   });
-  const modalRef = useRef(null);
   const userType = profile.user_metadata && profile.user_metadata.userType;
   const userRole = profile.app_metadata && profile.app_metadata.role;
 
   // Show modal for reviewers who haven't agreed yet
   useEffect(() => {
-    if (userType === 'external' && userRole === 'reviewer' && !agreement && modalRef.current) {
-      // Use jQuery Bootstrap modal (already loaded in the app)
-      window.$(modalRef.current).modal('show');
-      
-      // Cleanup on unmount
-      return () => {
-        window.$(modalRef.current).modal('hide');
-      };
+    if (userType === 'external' && userRole === 'reviewer' && !agreement) {
+      $('#reviewerAgreementModal').modal('show');
     }
   }, [userType, userRole, agreement]);
 
@@ -198,7 +193,7 @@ export function Dashboard({
               </div>
             </div>
           </div>
-          <div ref={modalRef} id="reviewerAgreementModal" className="modal fade" data-backdrop="static" data-keyboard="false" tabIndex="-1" aria-hidden="true">
+          <div id="reviewerAgreementModal" className="modal fade" data-backdrop="static" data-keyboard="false" tabIndex="-1" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered modal-lg">
               <div className="modal-content">
                 <div className="modal-header">
