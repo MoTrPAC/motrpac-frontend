@@ -19,6 +19,12 @@
     }
   }
 
+  .btn.reviewer-data-download-link {
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
   .feature-links-container {
     .card {
       border-radius: 6px;
