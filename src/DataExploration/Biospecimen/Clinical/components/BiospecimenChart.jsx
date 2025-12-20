@@ -107,7 +107,6 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
           race: getRaceCategory(record),
           randomGroup: getRandomizedGroup(record),
           study: getStudyName(record.study),
-          tranche: transformTrancheCode(record.tranche),
         });
       }
     });
@@ -126,7 +125,7 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
     STUDY_GROUPS.forEach(group => studyCounts[group] = 0);
 
     // Count participants in each category
-    participantDemographics.forEach(({ age, race, randomGroup, study, tranche }) => {
+    participantDemographics.forEach(({ age, race, randomGroup, study }) => {
       if (age && Object.hasOwn(ageCounts, age)) ageCounts[age]++;
       if (race && Object.hasOwn(raceCounts, race)) raceCounts[race]++;
       if (randomGroup && Object.hasOwn(randomGroupCounts, randomGroup)) randomGroupCounts[randomGroup]++;
