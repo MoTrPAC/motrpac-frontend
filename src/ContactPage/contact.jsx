@@ -28,7 +28,13 @@ function Contact() {
           <div className="lead col-12">
             Get in touch with the MoTrPAC Bioinformatics Center team for any
             questions and inquiries via the{' '}
-            <a href="https://redcap.stanford.edu/surveys/?s=XDHKYFE9FAAC7YAF" target="_blank">Assistance Request form</a>
+            <a
+              href="https://redcap.stanford.edu/surveys/?s=XDHKYFE9FAAC7YAF"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Assistance Request form
+            </a>
             , the web form (below), or the{' '}
             <a href="mailto:motrpac-helpdesk@lists.stanford.edu">helpdesk email</a>
             .
