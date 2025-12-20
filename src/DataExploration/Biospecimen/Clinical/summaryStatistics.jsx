@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import InteractiveBiospecimenChart from './components/InteractiveBiospecimenChart';
 
-function ClinicalBiospecimenSummaryStatistics({ profile = {} }) {
+function ClinicalBiospecimenSummaryStatistics() {
   // get states from redux store
   const userProfile = useSelector((state) => state.auth.profile);
   const userType =
