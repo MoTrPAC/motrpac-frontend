@@ -11,7 +11,7 @@ import {
   TISSUE_TYPES,
   FILTER_OPTIONS,
 } from '../constants/plotOptions';
-import { getAssayShortName, getAssayFullName, getAssayFullNames } from '../utils/assayCodeMapping';
+import { getAssayShortName, getAssayFullName } from '../utils/assayCodeMapping';
 import { getTissueName } from '../utils/tissueUtils';
 import {
   getRaceCategory,
@@ -1178,10 +1178,6 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
         useHTML: true,
         formatter: function () {
           const point = this.point;
-          // Convert assay codes to human-readable names
-          const assayList = point.assayTypes && point.assayTypes.length > 0
-            ? getAssayFullNames(point.assayTypes).join(', ')
-            : 'N/A';
           
           return `
             <div style="padding: 8px;">
