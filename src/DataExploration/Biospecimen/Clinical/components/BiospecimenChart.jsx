@@ -447,30 +447,32 @@ const BiospecimenChart = ({ data, allData, loading, error, onBarClick, activeFil
   const participantByTranche = useMemo(() => {
     if (!data || !data.length) return [];
 
-    // Track unique participants per tranche (not globally)
-    const uniqueParticipantsByTranche = {};
+    const uniqueParticipants = new Map();
     const samplesByTranche = {};
-    TRANCHE_GROUPS.forEach(group => {
-      uniqueParticipantsByTranche[group] = new Set();
-      samplesByTranche[group] = [];
-    });
+    TRANCHE_GROUPS.forEach(group => samplesByTranche[group] = []);
     
     data.forEach((record) => {
-      const pid = record.pid;
-      const trancheCode = record.tranche;
-      const trancheName = transformTrancheCode(trancheCode);
-      
-      // Track unique participants and samples per tranche
-      if (pid && trancheName && TRANCHE_GROUPS.includes(trancheName)) {
-        uniqueParticipantsByTranche[trancheName].add(pid);
-        samplesByTranche[trancheName].push(record);
+      if (record.pid) {
+        const trancheName = transformTrancheCode(record.tranche);
+        if (trancheName) {
+          if (!uniqueParticipants.has(record.pid)) {
+            uniqueParticipants.set(record.pid, trancheName);
+          }
+          // Guard against unexpected tranche values
+          if (samplesByTranche[trancheName]) {
+            samplesByTranche[trancheName].push(record);
+          }
+        }
       }
     });
 
-    // Count unique participants in each tranche
     const trancheCounts = {};
-    TRANCHE_GROUPS.forEach(group => {
-      trancheCounts[group] = uniqueParticipantsByTranche[group].size;
+    TRANCHE_GROUPS.forEach(group => trancheCounts[group] = 0);
+
+    uniqueParticipants.forEach((tranche) => {
+      if (Object.hasOwn(trancheCounts, tranche)) {
+        trancheCounts[tranche]++;
+      }
     });
 
     // Return pie chart data with distinct colors for each tranche
