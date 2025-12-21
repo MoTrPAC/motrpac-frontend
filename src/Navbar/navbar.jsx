@@ -100,6 +100,8 @@ export function Navbar({
 
   const handleLogout = () => {
     logout();
+    // Clear reviewer agreement from sessionStorage
+    sessionStorage.removeItem('reviewerAgreement');
     // delay state reset so that list files do not
     // disappear from the UI prior to page change
     setTimeout(() => {

@@ -8,6 +8,8 @@ import {
 } from '../utils/demographicUtils';
 import { getTissueName } from '../utils/tissueUtils';
 import { matchesOmeCategories } from '../utils/omeUtils';
+import { getStudyName } from '../utils/studyUtils';
+import { transformTrancheCode } from '../utils/dataTransformUtils';
 
 /**
  * Simplified biospecimen data hook that loads all data once and filters client-side
@@ -209,6 +211,25 @@ export const useFilteredBiospecimenData = (allData, filters) => {
       // Filter by ome - using centralized utility
       if (filters.ome?.length > 0) {
         if (!matchesOmeCategories(item.raw_assays_with_results, filters.ome)) {
+          return false;
+        }
+      }
+
+      // Filter by study - using centralized utility
+      // Only filter out if record HAS a study code that doesn't match selected filters
+      // Records with null/unmapped study codes are kept (don't filter based on missing data)
+      if (filters.study?.length > 0) {
+        const studyName = getStudyName(item.study);
+        if (studyName && !filters.study.includes(studyName)) {
+          return false;
+        }
+      }
+
+      // Filter by tranche - using centralized utility
+      // Null tranche codes are transformed to 'Not yet shipped to CAS' and treated as a filterable category
+      if (filters.tranche?.length > 0) {
+        const trancheName = transformTrancheCode(item.tranche);
+        if (!filters.tranche.includes(trancheName)) {
           return false;
         }
       }

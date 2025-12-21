@@ -218,7 +218,10 @@ TrainingResultsTable.propTypes = {
   trainingData: PropTypes.arrayOf(
     PropTypes.shape({ ...trainingResultsTablePropType })
   ).isRequired,
-  searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
+  searchParams: PropTypes.shape({
+    ...searchParamsPropType,
+    ktype: PropTypes.string.isRequired,
+  }).isRequired,
   handleSearchDownload: PropTypes.func.isRequired,
 };
 
@@ -232,7 +235,10 @@ TrainingDataTable.propTypes = {
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({ ...trainingResultsTablePropType }))
     .isRequired,
-  searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
+  searchParams: PropTypes.shape({
+    ...searchParamsPropType,
+    ktype: PropTypes.string.isRequired,
+  }).isRequired,
   handleSearchDownload: PropTypes.func.isRequired,
 };
 
