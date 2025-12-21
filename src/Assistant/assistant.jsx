@@ -190,7 +190,8 @@ const AskAssistant = () => {
                     Start a conversation by asking a question below.
                   </p>
                   <small>
-                    Example: &ldquo;Give me a brief summary of the MoTrPAC rats endurance training study.&rdquo;
+                    Example: &ldquo;Give me a brief summary of the MoTrPAC rats
+                    endurance training study.&rdquo;
                   </small>
                 </div>
               ) : (
@@ -235,7 +236,10 @@ const AskAssistant = () => {
             </div>
           </div>
           <div className="text-right mt-1 mb-2">
-            <small className="text-muted">ExerWise is AI and can make mistakes. Please double-check responses.</small>
+            <small className="text-muted">
+              ExerWise is AI and can make mistakes. Please double-check
+              responses.
+            </small>
           </div>
         </div>
       </div>
