@@ -1,5 +1,6 @@
-export const tissueListRatEndurance = [
+export const tissuesRat = [
   { filter_value: 'adrenal', filter_label: 'Adrenal' },
+  { filter_value: 'aorta', filter_label: 'Aorta' },
   { filter_value: 'blood rna', filter_label: 'Blood RNA' },
   { filter_value: 'brown adipose', filter_label: 'Brown Adipose' },
   { filter_value: 'colon', filter_label: 'Colon' },
@@ -44,7 +45,7 @@ export const tissueListRatAcute = [
   { filter_value: 'white adipose', filter_label: 'White Adipose' },
 ];
 
-export const tissueListHuman = [
+export const tissuesHuman = [
   { filter_value: 'adipose', filter_label: 'Adipose' },
   { filter_value: 'blood', filter_label: 'Blood' },
   { filter_value: 'muscle', filter_label: 'Muscle' },
@@ -191,7 +192,6 @@ export const timepointListRatAcute = [
   { filter_value: '07.0h', filter_label: '7 hour' },
   { filter_value: '24.0h', filter_label: '24 hour' },
   { filter_value: '48.0h', filter_label: '48 Hour' },
-  { filter_value: 'IPE', filter_label: 'Immediate Post Exercise' },
 ];
 
 export const rangeList = [
@@ -221,7 +221,7 @@ export const geneCentricSearchFilters = [
   {
     keyName: 'tissue',
     name: 'Tissue',
-    filters: tissueListRatEndurance,
+    filters: tissuesRat.filter((t) => t.filter_value !== 'aorta'),
   },
   {
     keyName: 'assay',
@@ -229,3 +229,96 @@ export const geneCentricSearchFilters = [
     filters: assayListRat,
   },
 ];
+
+export const speciesList = [
+  { filter_value: 'rat', filter_label: 'Rat' },
+  { filter_value: 'human', filter_label: 'Human' },
+];
+
+export const interventionEffectList = [
+  { filter_value: 'pre-training', filter_label: 'Pre Training Acute Bout' },
+  { filter_value: 'training', filter_label: 'Training' },
+];
+
+const assaysGene = [
+  { filter_value: 'transcript-rna-seq', filter_label: 'RNA-seq' },
+  { filter_value: 'epigen-atac-seq', filter_label: 'ATAC-seq' },
+  { filter_value: 'epigen-rrbs', filter_label: 'RRBS' },
+  { filter_value: 'immunoassay', filter_label: 'Immunoassay' },
+  { filter_value: 'prot-pr', filter_label: 'Global Proteomics' },
+  { filter_value: 'prot-ph', filter_label: 'Phosphoproteomics' },
+  { filter_value: 'prot-ol', filter_label: 'Proteomics Olink' },
+  { filter_value: 'prot-ac', filter_label: 'Acetyl Proteomics' },
+  { filter_value: 'prot-ub', filter_label: 'Protein Ubiquitination' },
+  {
+    filter_value: 'prot-ub-protein-corrected',
+    filter_label: 'Protein Ubiquitination Corrected',
+  },
+];
+
+export const assayListGene = assaysGene.sort((a, b) =>
+  a.filter_label.toLowerCase().localeCompare(b.filter_label.toLowerCase()),
+);
+
+const assaysProtein = [
+  { filter_value: 'prot-pr', filter_label: 'Global Proteomics' },
+  { filter_value: 'prot-ph', filter_label: 'Phosphoproteomics' },
+  { filter_value: 'prot-ol', filter_label: 'Proteomics Olink' },
+  { filter_value: 'prot-ac', filter_label: 'Acetyl Proteomics' },
+  { filter_value: 'prot-ub', filter_label: 'Protein Ubiquitination' },
+  {
+    filter_value: 'prot-ub-protein-corrected',
+    filter_label: 'Protein Ubiquitination Corrected',
+  },
+];
+
+export const assayListProtein = assaysProtein.sort((a, b) =>
+  a.filter_label.toLowerCase().localeCompare(b.filter_label.toLowerCase()),
+);
+
+const assaysMetabolite = [
+  { filter_value: 'metab-t-3hib', filter_label: 'Targeted 3-Hydroxyisobutyric Acid (3-HIB)' },
+  { filter_value: 'metab-t-aa', filter_label: 'Targeted Amino Acids' },
+  { filter_value: 'metab-t-acoa', filter_label: 'Targeted Acyl-CoA' },
+  { filter_value: 'metab-t-amines', filter_label: 'Targeted Amines' },
+  { filter_value: 'metab-t-baiba', filter_label: 'Targeted Beta-Aminoisobutyric acid' },
+  { filter_value: 'metab-t-conv', filter_label: 'Targeted Conventional' },
+  { filter_value: 'metab-t-etamidpos', filter_label: 'Targeted Ethanolamides' },
+  { filter_value: 'metab-t-ka', filter_label: 'Targeted Keto Acids' },
+  { filter_value: 'metab-t-nuc', filter_label: 'Targeted Nucleotides' },
+  { filter_value: 'metab-t-oa', filter_label: 'Targeted Organic Acids' },
+  { filter_value: 'metab-t-oxylipneg', filter_label: 'Targeted Oxylipins' },
+  { filter_value: 'metab-t-sphm', filter_label: 'Targeted Sphingomyelin' },
+  {
+    filter_value: 'metab-t-tca',
+    filter_label: 'Targeted Tricarboxylic Acid Cycle',
+  },
+  {
+    filter_value: 'metab-u-hilicpos',
+    filter_label: 'Untargeted HILIC-Positive',
+  },
+  {
+    filter_value: 'metab-u-ionpneg',
+    filter_label: 'Untargeted Ion-Pair Negative',
+  },
+  {
+    filter_value: 'metab-u-lrpneg',
+    filter_label: 'Untargeted Lipidomics Reversed-Phase Negative',
+  },
+  {
+    filter_value: 'metab-u-lrppos',
+    filter_label: 'Untargeted Lipidomics Reversed-Phase Positive',
+  },
+  {
+    filter_value: 'metab-u-rpneg',
+    filter_label: 'Untargeted Reversed-Phase Negative',
+  },
+  {
+    filter_value: 'metab-u-rppos',
+    filter_label: 'Untargeted Reversed-Phase Positive',
+  },
+];
+
+export const assayListMetabolite = assaysMetabolite.sort((a, b) =>
+  a.filter_label.toLowerCase().localeCompare(b.filter_label.toLowerCase()),
+);
