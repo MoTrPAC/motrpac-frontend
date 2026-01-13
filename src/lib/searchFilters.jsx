@@ -22,29 +22,6 @@ export const tissuesRat = [
   { filter_value: 'white adipose', filter_label: 'White Adipose' },
 ];
 
-export const tissueListRatAcute = [
-  { filter_value: 'adrenal', filter_label: 'Adrenal' },
-  { filter_value: 'aorta', filter_label: 'Aorta' },
-  { filter_value: 'blood rna', filter_label: 'Blood RNA' },
-  { filter_value: 'brown adipose', filter_label: 'Brown Adipose' },
-  { filter_value: 'colon', filter_label: 'Colon' },
-  { filter_value: 'cortex', filter_label: 'Cortex' },
-  { filter_value: 'gastrocnemius', filter_label: 'Gastrocnemius' },
-  { filter_value: 'heart', filter_label: 'Heart' },
-  { filter_value: 'hippocampus', filter_label: 'Hippocampus' },
-  { filter_value: 'hypothalamus', filter_label: 'Hypothalamus' },
-  { filter_value: 'kidney', filter_label: 'Kidney' },
-  { filter_value: 'liver', filter_label: 'Liver' },
-  { filter_value: 'lung', filter_label: 'Lung' },
-  { filter_value: 'ovaries', filter_label: 'Ovaries' },
-  { filter_value: 'plasma', filter_label: 'Plasma' },
-  { filter_value: 'small intestine', filter_label: 'Small Intestine' },
-  { filter_value: 'spleen', filter_label: 'Spleen' },
-  { filter_value: 'testes', filter_label: 'Testes' },
-  { filter_value: 'vastus lateralis', filter_label: 'Vastus Lateralis' },
-  { filter_value: 'white adipose', filter_label: 'White Adipose' },
-];
-
 export const tissuesHuman = [
   { filter_value: 'adipose', filter_label: 'Adipose' },
   { filter_value: 'blood', filter_label: 'Blood' },
