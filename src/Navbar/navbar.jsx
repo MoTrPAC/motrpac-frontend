@@ -187,81 +187,30 @@ export function Navbar({
           >
             <ul className="navbar-nav">
               {isAuthenticated && hasAccess && (
-                <li className="nnav-item navItem">
+                <li className="nav-item navItem">
                   <Link to="/dashboard" className="nav-link">
-                    {userRole && userRole === 'reviewer' ? 'Reviewer Dashboard' : 'Dashboard'}
+                    Dashboard
                   </Link>
                 </li>
               )}
-              <li className="nnav-item navItem">
-                <Link to="/data-download" className="nav-link">
-                  Downloads
-                </Link>
-              </li>
-              <li className="nnav-item navItem dropdown">
-                <div
-                  className="nav-link dropdown-toggle"
-                  role="button"
-                  id="exploreNavbarItemMenuLink"
-                  data-toggle="dropdown"
-                >
-                  Explore
-                </div>
-                <div
-                  className="dropdown-menu"
-                  aria-labelledby="exploreNavbarItemMenuLink"
-                >
-                  <Link to="/search" className="dropdown-item">
-                    Differential Abundance
-                  </Link>
-                  <Link to="/gene-centric" className="dropdown-item">
-                    Gene-centric View
-                  </Link>
-                  <Link to="/graphical-clustering" className="dropdown-item">
-                    Graphical Clustering
-                  </Link>
-                  <a
-                    href={getDataVizURL('rat-training-06')}
-                    className="dropdown-item"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Interactive Data Visualization
-                  </a>
-                  {isAuthenticated && hasAccess && (userType === 'internal' || (userRole && userRole === 'reviewer')) && (
-                    <a
-                      href={getDataVizURL('human-precovid')}
-                      className="dropdown-item"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Human Data Visualization
-                    </a>
-                  )}
-                  {isAuthenticated && hasAccess && userType === 'internal' && (
-                    <Link to="/analysis-phenotype" className="dropdown-item">
-                      Phenotype
-                    </Link>
-                  )}
-                </div>
-              </li>
               <li className="nav-item navItem dropdown">
                 <div
                   className="nav-link dropdown-toggle"
                   role="button"
-                  id="dataAccessNavbarItemMenuLink"
+                  id="browseDataNavbarItemMenuLink"
                   data-toggle="dropdown"
                 >
-                  Data Access
+                  Browse Data
                 </div>
                 <div
                   className="dropdown-menu"
-                  aria-labelledby="dataAccessNavbarItemMenuLink"
+                  aria-labelledby="browseDataNavbarItemMenuLink"
                 >
                   <Link to="/data-download" className="dropdown-item">
-                    {isAuthenticated && hasAccess && userType === 'internal'
-                      ? 'Rat and Human Data'
-                      : 'Endurance Training Data'}
+                    Download Datasets
+                  </Link>
+                  <Link to="/search" className="dropdown-item">
+                    Browse Results
                   </Link>
                   <Link
                     id="reg_user"
@@ -273,21 +222,22 @@ export function Navbar({
                     className="dropdown-item"
                     onClick={(e) => checkServiceStatus(e)}
                   >
-                    Limited Acute Exercise Data
+                    Acute Exercise in Young Adult Rats
+                    <span className="badge badge-primary ml-2">Limited</span>
                   </Link>
                   <Link to="/data-deposition" className="dropdown-item">
                     Public Data Repositories
                   </Link>
-                  {!userType || (userType && userType !== 'internal') ? (
-                    <a
-                      href={import.meta.env.VITE_DATA_UPDATES_SIGNUP_URL}
-                      className="dropdown-item"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Data Updates Signup
-                    </a>
-                  ) : null}
+                  {isAuthenticated && hasAccess && userType === 'internal' && (
+                    <>
+                      <Link to="/biospecimen-summary" className="dropdown-item">
+                        Biospecimens
+                      </Link>
+                      <Link to="/analysis-phenotype" className="dropdown-item">
+                        Phenotype
+                      </Link>
+                    </>
+                  )}
                   {isAuthenticated && hasAccess ? (
                     <>
                       {userType === 'internal' && (
@@ -307,6 +257,42 @@ export function Navbar({
                       </Link>
                     </>
                   ) : null}
+                </div>
+              </li>
+              <li className="nav-item navItem dropdown">
+                <div
+                  className="nav-link dropdown-toggle"
+                  role="button"
+                  id="dataVisualizationNavbarItemMenuLink"
+                  data-toggle="dropdown"
+                >
+                  Data Visualization
+                </div>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="dataVisualizationNavbarItemMenuLink"
+                >
+                  <a
+                    href={getDataVizURL('rat-training-06')}
+                    className="dropdown-item external-link"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span>Endurance Training in Young Adult Rats</span>
+                    <i className="material-icons external-link-icon">open_in_new</i>
+                  </a>
+                  <a
+                    href={getDataVizURL('human-precovid')}
+                    className="dropdown-item external-link"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span>Acute Exercise in Human Sedentray Adults</span>
+                    <i className="material-icons external-link-icon">open_in_new</i>
+                  </a>
+                  <Link to="/graphical-clustering" className="dropdown-item">
+                    Graphical Clustering
+                  </Link>
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
@@ -336,20 +322,33 @@ export function Navbar({
                   </Link>
                   <a
                     href="https://omicspipelines.org/"
-                    className="dropdown-item"
+                    className="dropdown-item external-link"
                     target="_blank"
                     rel="noreferrer"
                   >
-                    OmicsPipelines
+                    <span>OmicsPipelines</span>
+                    <i className="material-icons external-link-icon">open_in_new</i>
                   </a>
                   <a
                     href="https://community.motrpac-data.org/"
-                    className="dropdown-item"
+                    className="dropdown-item external-link"
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Community
+                    <span>Community</span>
+                    <i className="material-icons external-link-icon">open_in_new</i>
                   </a>
+                  {!userType || (userType && userType !== 'internal') ? (
+                    <a
+                      href={import.meta.env.VITE_DATA_UPDATES_SIGNUP_URL}
+                      className="dropdown-item external-link"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <span>Data Updates Signup</span>
+                      <i className="material-icons external-link-icon">open_in_new</i>
+                    </a>
+                  ) : null}
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
