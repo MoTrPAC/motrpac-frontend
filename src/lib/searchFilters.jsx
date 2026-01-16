@@ -207,6 +207,12 @@ export const geneCentricSearchFilters = [
   },
 ];
 
+export const studyList = [
+  { filter_value: 'pass1b06', filter_label: 'Endurance Training in Young Adult Rats' },
+  { filter_value: 'precawg', filter_label: 'Acute Exercise in Human Sedentary Adults (Pre-Suspension)' },
+  { filter_value: 'pass1a06', filter_label: 'Acute Exercise in Young Adult Rats' },
+];
+
 export const speciesList = [
   { filter_value: 'rat', filter_label: 'Rat' },
   { filter_value: 'human', filter_label: 'Human' },
