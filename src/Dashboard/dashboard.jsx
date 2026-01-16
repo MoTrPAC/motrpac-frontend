@@ -134,129 +134,41 @@ export function Dashboard({
       )}
 
       {userType && userType === 'external' && !userRole && (
-        <div className="alert-data-release">
-          <h1 className="dashboard-title display-4 mb-4">
+        <>
+        <div className="jumbotron jumbotron-fluid alert-data-release external-user">
+          <div className="container">
+            <h1 className="highlight-title display-4 mb-4">
+              <i className="bi bi-rocket-takeoff mr-3" />
+              <span>New human dataset now available!</span>
+            </h1>
+            <div className="row">
+              <div className="col-md-12 lead d-flex align-items-start">
+                <span className="data-release-text">
+                  <a href="https://motrpac.org" target="_blank" rel="noreferrer">MoTrPAC</a>
+                    {' '}has publicly released new data
+                    collections. The Pre-Suspension Acute Exercise Study contains data from
+                    sedentary adults undergoing acute resistance or endurance exercise
+                    bouts. Visit the{' '}
+                    <Link to="/search">Browse Results</Link>
+                    {' '}page for summary-level results and the{' '}
+                    <a href="https://data-viz.motrpac-data.org/precawg" target="_blank" rel="noreferrer">Data Visualization</a>
+                    {' '}for interactive analysis. Please refer to the{' '}
+                    <Link to="/citation">Citation</Link>
+                    {' '}page for information on acknowledging MoTrPAC
+                    when using this dataset in your work.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="greeting-message">
+          <h2 className="dashboard-title mb-3">
             <span>
               Welcome,
               {' '}
               {profile.user_metadata.givenName}
             </span>
-          </h1>
-        </div>
-      )}
-      {/* Welcome message for external users with reviewer role */}
-      {userType && userType === 'external' && userRole && userRole === 'reviewer' && (
-        <>
-          <div className="alert-data-release">
-            <h1 className="dashboard-title display-4 mb-4">
-              <span>
-                {`Hello, Reviewer!`}
-              </span>
-            </h1>
-            <div className="bd-callout bd-callout-primary shadow-sm mb-4">
-              <div className="lead">
-                As a reviewer, you have been granted access to the pre-publication
-                human data in R packages and the visualization tool. If you have
-                any questions, please contact the journal editor directly.
-              </div>
-              <div className="lead mt-2">
-                Please note, the Analysis and Clinical Analysis R packages depend
-                on the Function and Data R packages. It is recommended to download
-                and install all four of them. See the README document in each of the
-                R packages for more details.
-              </div>
-              <div className="lead reviewer-data-download-links-container mt-3">
-                <ReviewerDownloadButton
-                  filename={PACK_FUNCTION}
-                  label="Function R Package"
-                  icon="bi-file-zip-fill"
-                  profile={profile}
-                  disabled={!agreement}
-                />
-                <ReviewerDownloadButton
-                  filename={PACK_DATA}
-                  label="Data R Package"
-                  icon="bi-file-zip-fill"
-                  profile={profile}
-                  disabled={!agreement}
-                />
-                <ReviewerDownloadButton
-                  filename={PACK_ANALYSIS}
-                  label="Analysis R Package"
-                  icon="bi-file-zip-fill"
-                  profile={profile}
-                  disabled={!agreement}
-                />
-                <ReviewerDownloadButton
-                  filename={PACK_CLINICAL_ANALYSIS}
-                  label="Clinical Analysis R Package"
-                  icon="bi-file-zip-fill"
-                  profile={profile}
-                  disabled={!agreement}
-                />
-              </div>
-            </div>
-          </div>
-          <div id="reviewerAgreementModal" className="modal fade" data-backdrop="static" data-keyboard="false" tabIndex="-1" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered modal-lg">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="staticBackdropLabel">Data Use Agreement</h5>
-                </div>
-                <div className="modal-body">
-                  <h5 className="font-weight-bold">PLEASE READ BEFORE DOWNLOADING DATA</h5>
-                  <p>By clicking &quot;I agree&quot; and downloading data from this portal, you agree to:</p>
-                  <div className="my-3">
-                    <span className="font-weight-bold">Review Use Only</span>
-                    <ul>
-                      <li>Use this data solely for your assigned review purposes.</li>
-                      <li>Not use the data for your own research or publications.</li>
-                    </ul>
-                  </div>
-                  <div className="my-3">
-                    <span className="font-weight-bold">Confidentiality</span>
-                    <ul>
-                      <li>Keep all data confidential.</li>
-                      <li>Not share or distribute data to others.</li>
-                      <li>Not attempt to identify individual subjects.</li>
-                    </ul>
-                  </div>
-                  <div className="my-3">
-                    <span className="font-weight-bold">Data Handling</span>
-                    <ul>
-                      <li>Store data securely while reviewing.</li>
-                      <li>Delete data when your review is complete.</li>
-                    </ul>
-                  </div>
-                  <div className="my-3">
-                    <span className="font-weight-bold">Research Integrity</span>
-                    <ul>
-                      <li>These terms are based on research integrity principles and professional responsibility.</li>
-                    </ul>
-                  </div>
-                  <p>Any questions throughout the review process should be directed to journal editors. Please do not contact the authors or the MoTrPAC helpdesk directly.</p>
-                  <p>By proceeding, you acknowledge these expectations.</p>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    data-dismiss="modal"
-                    onClick={handleCancel}
-                  >
-                    I disagree
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    data-dismiss="modal"
-                    onClick={handleAgree}
-                  >
-                    I agree
-                  </button>
-                </div>
-              </div>
-            </div>
+          </h2>
           </div>
         </>
       )}
