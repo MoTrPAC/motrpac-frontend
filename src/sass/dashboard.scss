@@ -6,13 +6,47 @@
     padding-top: 3.75rem;
     padding-bottom: 3.5rem;
     background-color: hsla(204, 0%, 100%, 1);
-    background-image: radial-gradient(circle at 0% 0%, hsla(295.999, 77%, 74%, 0.35) 3.121%, transparent 40%), radial-gradient(circle at 20% 0%, hsla(236.912, 77%, 74%, 0.35) 3.121%, transparent 40%), radial-gradient(circle at 40% 0%, hsla(186.618, 77%, 74%, 0.35) 3.121%, transparent 40%), radial-gradient(circle at 60% 0%, hsla(127.059, 77%, 74%, 0.35) 3.121%, transparent 40%), radial-gradient(circle at 80% 0%, hsla(62.206, 77%, 74%, 0.35) 3.121%, transparent 40%), radial-gradient(circle at 100% 0%, hsla(23.824, 77%, 74%, 0.35) 3%, transparent 40%);
+    background-image:
+      radial-gradient(
+        circle at 0% 0%,
+        hsla(295.999, 77%, 74%, 0.35) 3.121%,
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 20% 0%,
+        hsla(236.912, 77%, 74%, 0.35) 3.121%,
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 40% 0%,
+        hsla(186.618, 77%, 74%, 0.35) 3.121%,
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 60% 0%,
+        hsla(127.059, 77%, 74%, 0.35) 3.121%,
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 80% 0%,
+        hsla(62.206, 77%, 74%, 0.35) 3.121%,
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 100% 0%,
+        hsla(23.824, 77%, 74%, 0.35) 3%,
+        transparent 40%
+      );
     background-blend-mode: normal, normal, normal, normal, normal, normal;
+
+    &.alert-data-release.external-user h1 {
+      font-size: 4.25em;
+    }
   }
 
   .data-release-icon {
     .material-icons {
-      font-size: 3.0rem;
+      font-size: 3rem;
       background: -webkit-linear-gradient(45deg, #a64d79, #1c4587);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -27,12 +61,37 @@
     .card {
       border-radius: 6px;
       transition-property: border;
-      transition-delay: .1s;
+      transition-delay: 0.1s;
 
       &:hover {
         border: 1px solid #777;
         background-color: hsla(54.265, 91%, 97%, 1);
-        background-image: radial-gradient(circle at 92% 6%, hsla(165.441, 73%, 96%, 0.92) 0%, transparent 58.066%), radial-gradient(circle at 0% 50%, hsla(42.353, 100%, 97%, 1) 0%, transparent 50%), radial-gradient(circle at 83% 89%, hsla(37.059, 88%, 95%, 1) 0%, transparent 78.774%), radial-gradient(circle at 0% 100%, hsla(38.382, 100%, 86%, 1) 0%, transparent 50%), radial-gradient(circle at 0% 0%, hsla(56.912, 100%, 99%, 1) 0%, transparent 50%);
+        background-image:
+          radial-gradient(
+            circle at 92% 6%,
+            hsla(165.441, 73%, 96%, 0.92) 0%,
+            transparent 58.066%
+          ),
+          radial-gradient(
+            circle at 0% 50%,
+            hsla(42.353, 100%, 97%, 1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 83% 89%,
+            hsla(37.059, 88%, 95%, 1) 0%,
+            transparent 78.774%
+          ),
+          radial-gradient(
+            circle at 0% 100%,
+            hsla(38.382, 100%, 86%, 1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 0% 0%,
+            hsla(56.912, 100%, 99%, 1) 0%,
+            transparent 50%
+          );
         background-blend-mode: normal, normal, normal, normal, normal;
         cursor: pointer;
         box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15) !important;
@@ -59,7 +118,7 @@
       }
 
       .material-icons {
-        font-size: 5.0rem;
+        font-size: 5rem;
         background: -webkit-linear-gradient(45deg, #a64d79, #1c4587);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
