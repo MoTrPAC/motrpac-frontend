@@ -35,17 +35,17 @@ function FeatureLinks({
       name: 'data-download',
       route: 'data-download',
       description:
-        'Browse and download the available MoTrPAC study data in young adult rats by tissue, assay, or omics.',
+        'Browse and download the available MoTrPAC endurance training in young adult rats study data by tissue, assay, or omics.',
       icon: 'cloud_download',
-      title: 'Data Downloads',
+      title: 'Download Datasets',
     },
     {
       name: 'differential-abundance',
       route: 'search',
       description:
-        'Explore the differential abundance analysis results by gene, protein or metabolite in the MoTrPAC multi-omics exercise studies.',
+        'Search and browse the summary-level results by gene, protein or metabolite in the MoTrPAC multi-omics studies, including endurance training in young adult rats and acute exercise in human sedentary adults (pre-suspension).',
       icon: 'search',
-      title: 'Differential Abundance Analysis Results',
+      title: 'Browse Results',
     },
     {
       name: 'pass1b-06-data-visualization',
@@ -53,7 +53,7 @@ function FeatureLinks({
       description:
         'An interactive data visualization tool for the graphical clustering analysis of endurance training response in young adult rats.',
       icon: 'data_exploration',
-      title: 'Endurance Trained Young Adult Rats Data Visualization',
+      title: 'Data Visualization: Endurance Training in Young Adult Rats',
       eventHandler: null,
     },
   ];
@@ -84,15 +84,16 @@ function FeatureLinks({
       name: 'precovid-human-data-visualization',
       route: getDataVizURL('human-precovid'),
       description:
-        'An interactive data visualization tool for the analysis of pre-COVID human sedentary adults study data.',
+        'An interactive data visualization tool for the analysis of acute exercise in human sedentary adults (pre-suspension).',
       icon: 'analytics',
-      title: 'Pre-COVID Human Data Visualization',
+      title: 'Data Visualization: Acute Exercise in Human Sedentary Adults (Pre-Suspension)',
       eventHandler: null,
     },
   ];
 
   const externalFeaturedLinks = [
     ...commonEssentialFeaturedLinks,
+    ...precawgDataVizFeaturedLink,
     ...commonGeneralFeaturedLinks,
   ];
 
