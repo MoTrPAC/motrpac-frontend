@@ -351,11 +351,11 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
                 collections. The Pre-Suspension Acute Exercise Study contains data from
                 sedentary adults undergoing acute resistance or endurance exercise
                 bouts. Visit the{' '}
-                <Link to="search">Browse Results</Link>
+                <Link to="/search">Browse Results</Link>
                 {' '}page for summary-level results and the{' '}
                 <a href="https://data-viz.motrpac-data.org/precawg" target="_blank" rel="noreferrer">Data Visualization</a>
                 {' '}for interactive analysis. Please refer to the{' '}
-                <Link to="citation">Citation</Link>
+                <Link to="/citation">Citation</Link>
                 {' '}page for information on acknowledging MoTrPAC
                 when using this dataset in your work.
               </p>
