@@ -113,33 +113,35 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
             <h3 className="display-3">The Molecular Map of</h3>
             <h2 className="display-2">Exercise</h2>
             <p className="lead hero">
-              <a href="https://motrpac.org/" target="_blank" rel="noreferrer">
+              <a href="https://motrpac.org/" className="hero-text" target="_blank" rel="noreferrer">
                 Welcome to the data repository for the Molecular Transducers of Physical
                 Activity Consortium; a national research initiative that aims to generate
                 a molecular map of the effects of exercise and training.
               </a>
             </p>
+            <div className="sub-hero">
+              <div className="sub-hero-content-container d-flex align-items-center justify-content-center">
+                <h3 className="sub-hero-title">
+                  <i className="bi bi-rocket-takeoff"/>
+                  <span className="ml-2">New human dataset now available!</span>
+                </h3>
+                <button type="button" className="btn btn-link" data-target="#subHeroModal" data-toggle="modal">See details</button>
+              </div>
+            </div>
             <div className="highlighted-links-container">
               <Link
                 to="/data-download"
                 className="btn btn-primary btn-lg mt-4"
                 role="button"
               >
-                DATA DOWNLOAD
-              </Link>
-              <Link
-                to="/tutorials"
-                className="btn btn-primary btn-lg mt-4"
-                role="button"
-              >
-                VIDEO TUTORIALS
+                DOWNLOAD DATA
               </Link>
               <Link
                 to="/graphical-clustering"
                 className="btn btn-primary btn-lg mt-4"
                 role="button"
               >
-                EXPLORE DATA
+                BROWSE RESULTS
               </Link>
               <Link
                 to="/publications"
@@ -147,6 +149,13 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
                 role="button"
               >
                 PUBLICATIONS
+              </Link>
+              <Link
+                to="/tutorials"
+                className="btn btn-primary btn-lg mt-4"
+                role="button"
+              >
+                VIDEO TUTORIALS
               </Link>
             </div>
             <div className="office-hour-anchor-link-container">
@@ -322,6 +331,37 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
           </div>
         </div>
       </section>
+      <div className="sub-hero-modal modal fade" id="subHeroModal" tabIndex="-1" role="dialog"
+        aria-labelledby="subHeroModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-xl modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3 className="modal-title display-4 mt-2 mb-2" id="subHeroModalLabel">
+                <i className="bi bi-rocket-takeoff"/>
+                <span className="ml-3">New human dataset now available!</span>
+              </h3>
+              <button type="button" className="close btn-modal-close" aria-label="Close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <p className="sub-hero-text-details">
+                MoTrPAC has publicly released new data
+                collections. The Pre-Suspension Acute Exercise Study contains data from
+                sedentary adults undergoing acute resistance or endurance exercise
+                bouts. Visit the{' '}
+                <Link to="search">Browse Data</Link>
+                {' '}page for summary-level results and the{' '}
+                <a href="">Data Visualization</a>
+                {' '}for interactive analysis. Please refer to the{' '}
+                <Link to="citation">Citation</Link>
+                {' '}page for information on acknowledging
+                MoTrPAC when using this dataset in your work.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
