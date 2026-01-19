@@ -43,7 +43,7 @@ export const defaultSearchState = {
       'contrast1_randomGroupCode',
       'contrast_type',
     ],
-    unique_fields: ['tissue', 'assay', 'sex', 'timepoint'],
+    unique_fields: ['tissue', 'omics', 'assay', 'sex', 'timepoint'],
     size: 20,
     start: 0,
     save: false,
@@ -85,8 +85,8 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       const newFilters = { ...filters };
 
       // Handle selection of study filter
-      if (action.field === 'study') {
-        const isActiveParam = params.study.indexOf(action.filterValue);
+      if (action.field.match(/^(study|omics)$/)) {
+        const isActiveParam = params[action.field].indexOf(action.filterValue);
         if (isActiveParam === -1) {
           // Adds filter if new
           params[action.field].push(action.filterValue);
