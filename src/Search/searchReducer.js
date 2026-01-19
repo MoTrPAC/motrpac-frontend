@@ -15,44 +15,36 @@ export const defaultSearchState = {
   searchParams: {
     ktype: 'gene',
     keys: [],
-    omics: 'all',
-    species: 'rat',
-    study: 'pass1b06',
+    omics: [],
+    study: ["pass1b06", "precawg"],
     analysis: 'all',
     filters: {
       tissue: [],
       assay: [],
       sex: [],
-      comparison_group: [],
-      contrast1_timepoint: [],
+      timepoint: [],
       adj_p_value: { min: '', max: '' },
       logFC: { min: '', max: '' },
       p_value: { min: '', max: '' },
+      contrast_type: ['exercise_with_controls', 'acute'],
     },
     fields: [
       'gene_symbol',
-      'metabolite_refmet',
       'refmet_name',
-      'feature_ID',
       'feature_id',
       'tissue',
       'assay',
       'omics',
       'sex',
-      'comparison_group',
+      'timepoint',
       'logFC',
       'p_value',
       'adj_p_value',
-      'selection_fdr',
-      'p_value_male',
-      'p_value_female',
       'contrast1_randomGroupCode',
-      'contrast1_timepoint',
       'contrast_type',
-      'contrast',
     ],
-    unique_fields: ['tissue', 'assay', 'sex', 'comparison_group', 'contrast1_timepoint'],
-    size: 10000,
+    unique_fields: ['tissue', 'assay', 'sex', 'timepoint'],
+    size: 20,
     start: 0,
     save: false,
     convert_assay_code: 0,
@@ -83,7 +75,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       };
     }
 
-    // Handle secondary filters: tissue, assay, sex, timepoint, etc
+    // Handle secondary filters: study, tissue, assay, sex, timepoint, etc
     case CHANGE_RESULT_FILTER: {
       const params = { ...state.searchParams };
       const { filters } = params;
@@ -92,8 +84,23 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         filters[action.field].indexOf(action.filterValue);
       const newFilters = { ...filters };
 
+      // Handle selection of study filter
+      if (action.field === 'study') {
+        const isActiveParam = params.study.indexOf(action.filterValue);
+        if (isActiveParam === -1) {
+          // Adds filter if new
+          params[action.field].push(action.filterValue);
+        } else {
+          // Removes filter if already exists
+          const newArr = params[action.field].filter(
+            (value) => !(value === action.filterValue)
+          );
+          params[action.field] = newArr;
+        }
+      }
+
       // Handle selection of a filter value
-      if (action.field.match(/^(tissue|assay|sex|comparison_group|contrast1_timepoint)$/)) {
+      if (action.field.match(/^(tissue|assay|sex|timepoint)$/)) {
         if (isActiveFilter === -1) {
           // Adds filter if new
           newFilters[action.field].push(action.filterValue);
@@ -127,7 +134,6 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       const {
         ktype,
         keys,
-        species,
         study,
         omics,
         analysis,
@@ -143,7 +149,6 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         searchParams: {
           ktype,
           keys,
-          species,
           study,
           omics,
           analysis,
@@ -171,7 +176,13 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       };
 
     // Hanlde query response
-    case SEARCH_SUCCESS:
+    case SEARCH_SUCCESS: {
+      const { study } = action.params;
+      const updatedParams = {
+        ...state.searchParams,
+        study: action.scope === 'filters' ? study : [],
+      };
+
       return {
         ...state,
         searchResults:
@@ -186,7 +197,9 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
           action.searchResults.uniqs && action.scope === 'all'
             ? action.searchResults.uniqs
             : state.hasResultFilters,
+        searchParams: updatedParams,
       };
+    }
 
     // Revert param/filter values to default
     case SEARCH_RESET: {
@@ -197,8 +210,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
           tissue: [],
           assay: [],
           sex: [],
-          comparison_group: [],
-          contrast1_timepoint: [],
+          timepoint: [],
           adj_p_value: { min: '', max: '' },
           logFC: { min: '', max: '' },
           p_value: { min: '', max: '' },
@@ -211,14 +223,11 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
 
       const defaultParams = { ...defaultSearchState.searchParams };
       defaultParams.keys = [];
-      defaultParams.species = 'rat';
-      defaultParams.study = 'pass1b06';
       defaultParams.filters = {
         tissue: [],
         assay: [],
         sex: [],
-        comparison_group: [],
-        contrast1_timepoint: [],
+        timepoint: [],
         adj_p_value: { min: '', max: '' },
         logFC: { min: '', max: '' },
         p_value: { min: '', max: '' },
