@@ -98,11 +98,59 @@ function SearchResultFilters({
   // Custom search filters including both omics and assays
   const omeSearchFilters = [
     {
-      keyName: ['omics', 'array'],
+      keyName: 'ome',
       name: 'Ome',
       filters: defaultOmeList,
     },
   ];
+
+  // Custom function to render ome filter buttons
+  // Handles routing filter values to either 'omics' or 'assay' param based on filter_param
+  const omeSearchResultFilters = omeSearchFilters.map((item) => (
+    <div key={item.name} className="card filter-module mb-3">
+      <div className="card-header font-weight-bold">
+        <div className="card-header-label">{item.name}</div>
+      </div>
+      <div className="card-body-container" id={`filters-${item.keyName}`}>
+        <div className="card-body">
+          {item.filters.map((filter) => {
+            // Determine which param to check based on filter_param
+            const paramKey = filter.filter_param; // 'omics' or 'assay'
+            const isActiveFilter =
+              paramKey === 'omics'
+                ? searchParams.omics?.includes(filter.filter_value)
+                : searchParams.filters?.assay?.includes(filter.filter_value);
+
+            // Get result count from hasResultFilters based on filter_param
+            const resultCount =
+              hasResultFilters?.[paramKey] &&
+              Object.keys(hasResultFilters[paramKey]).length &&
+              hasResultFilters[paramKey][filter.filter_value.toLowerCase()];
+
+            return (
+              <button
+                key={filter.filter_label}
+                type="button"
+                className={`btn filterBtn ${isActiveFilter ? 'activeFilter' : ''}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  // Route to appropriate param based on filter_param
+                  changeResultFilter(paramKey, filter.filter_value, null);
+                  // If filter_param is 'assay', also toggle the associated filter_ome in omics array
+                  if (paramKey === 'assay' && filter.filter_ome) {
+                    changeResultFilter('omics', filter.filter_ome, null);
+                  }
+                }}
+                disabled={!resultCount}
+              >
+                {filter.filter_label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  ));
 
   const commonSearchFilters = [
     {
@@ -287,6 +335,7 @@ function SearchResultFilters({
         </div>
       )}
       {studySearchResultFilters}
+      {omeSearchResultFilters}
       {commonSearchResultFilters}
       {rangeSearchResultFilters}
     </div>
