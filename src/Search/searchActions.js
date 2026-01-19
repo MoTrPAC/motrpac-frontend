@@ -42,10 +42,11 @@ function searchFailure(searchError = '') {
   };
 }
 
-function searchSuccess(searchResults, scope) {
+function searchSuccess(searchResults, params, scope) {
   return {
     type: SEARCH_SUCCESS,
     searchResults,
+    params,
     scope,
   };
 }
@@ -88,16 +89,29 @@ const headersConfig = {
 };
 
 // Handle search and results filtering events
-function handleSearch(params, inputValue, scope) {
+function handleSearch(params, inputValue, scope, userType) {
   params.keys = inputValue;
+
+  // if user is 'internal', set 'study' to include 'pass1a06'
+  // else set 'study' to exclude 'pass1a06'
+  const includesPass1a06 = params.study.includes('pass1a06');
+  if (userType && userType === 'internal') {
+    if (!params.study.length) {
+      params.study = ['pass1b06', 'precawg', 'pass1a06'];
+    }
+  } else if (!userType || userType === 'external') {
+    if (!params.study.length) {
+      params.study = ['pass1b06', 'precawg'];
+    }
+  }
+
   // Reset all filters if scope is 'all'
   if (scope === 'all') {
     params.filters = {
       tissue: [],
       assay: [],
       sex: [],
-      comparison_group: [],
-      contrast1_timepoint: [],
+      timepoint: [],
       adj_p_value: { min: '', max: '' },
       logFC: { min: '', max: '' },
       p_value: { min: '', max: '' },
@@ -124,14 +138,17 @@ function handleSearch(params, inputValue, scope) {
   }
 
   const requestParams = { ...params };
-  // remove 'species' field from requestParams
-  delete requestParams.species;
+  requestParams.filters.must_not = {
+    assay: ['epigen-atac-seq', 'epigen-rrbs', 'epigen-methylcap-seq'],
+  };
   // handle params differently between human and rat
+  /*
   if (requestParams.study === 'precawg') {
     requestParams.filters.must_not = {
       assay: ['epigen-atac-seq', 'epigen-methylcap-seq'],
     };
   }
+  */
 
   return (dispatch) => {
     dispatch(searchSubmit(params, scope));
@@ -141,7 +158,7 @@ function handleSearch(params, inputValue, scope) {
         if (response.data.error) {
           dispatch(searchFailure(response.data.error));
         }
-        dispatch(searchSuccess(response.data, scope));
+        dispatch(searchSuccess(response.data, params, scope));
       })
       .catch((err) => {
         dispatch(searchFailure(`${err.name}: ${err.message}`));
@@ -156,14 +173,6 @@ function handleSearchDownload(params, analysis) {
   downloadSearchParams.save = true;
   downloadSearchParams.analysis = analysis;
   downloadSearchParams.size = 0;
-
-  delete downloadSearchParams.species;
-
-  if (downloadSearchParams.study === 'precawg') {
-    downloadSearchParams.filters.must_not = {
-      assay: ['epigen-atac-seq', 'epigen-methylcap-seq'],
-    };
-  }
 
   return (dispatch) => {
     dispatch(downloadSubmit());
