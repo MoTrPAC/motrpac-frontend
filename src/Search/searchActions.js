@@ -137,19 +137,6 @@ function handleSearch(params, inputValue, scope, userType) {
     }
   }
 
-  const requestParams = { ...params };
-  requestParams.filters.must_not = {
-    assay: ['epigen-atac-seq', 'epigen-rrbs', 'epigen-methylcap-seq'],
-  };
-  // handle params differently between human and rat
-  /*
-  if (requestParams.study === 'precawg') {
-    requestParams.filters.must_not = {
-      assay: ['epigen-atac-seq', 'epigen-methylcap-seq'],
-    };
-  }
-  */
-
   return (dispatch) => {
     dispatch(searchSubmit(params, scope));
     return axios
