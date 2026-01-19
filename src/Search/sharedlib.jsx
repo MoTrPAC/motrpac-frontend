@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tooltip';
 import roundNumbers from '../lib/utils/roundNumbers';
 import {
+  speciesList,
+  studyList,
   sexList,
   randomGroupList,
-  tissueListRatEndurance,
-  tissueListRatAcute,
-  tissueListHuman,
+  tissues,
   assayListRat,
   assayListHuman,
   timepointListRatEndurance,
@@ -19,44 +19,36 @@ import { getDataVizURL } from '../lib/utils/dataVizUrl';
 export const searchParamsDefaultProps = {
   ktype: 'gene',
   keys: [] || '',
-  omics: 'all',
-  species: 'rat',
-  study: 'pass1b06',
+  omics: [],
+  study: [],
   analysis: 'all',
   filters: {
     tissue: [],
     assay: [],
     sex: [],
-    comparison_group: [],
-    contrast1_timepoint: [],
+    timepoint: [],
     p_value: { min: '', max: '' },
     adj_p_value: { min: '', max: '' },
     logFC: { min: '', max: '' },
+    contrast_type: ['exercise_with_controls', 'acute'],
   },
   fields: [
     'gene_symbol',
-    'metabolite_refmet',
     'refmet_name',
-    'feature_ID',
     'feature_id',
     'tissue',
     'assay',
     'omics',
     'sex',
-    'comparison_group',
+    'timepoint',
     'logFC',
     'p_value',
     'adj_p_value',
-    'selection_fdr',
-    'p_value_male',
-    'p_value_female',
     'contrast1_randomGroupCode',
-    'contrast1_timepoint',
     'contrast_type',
-    'contrast',
   ],
-  unique_fields: ['tissue', 'assay', 'sex', 'comparison_group', 'contrast1_timepoint'],
-  size: 10000,
+  unique_fields: ['tissue', 'assay', 'sex', 'timepoint'],
+  size: 100,
   start: 0,
   debug: true,
   save: false,
@@ -67,16 +59,14 @@ export const searchParamsDefaultProps = {
 export const searchParamsPropType = {
   ktype: PropTypes.string,
   keys: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-  omics: PropTypes.string,
-  species: PropTypes.string,
-  study: PropTypes.string,
+  omics: PropTypes.arrayOf(PropTypes.string),
+  study: PropTypes.arrayOf(PropTypes.string),
   analysis: PropTypes.string,
   filters: PropTypes.shape({
     tissue: PropTypes.arrayOf(PropTypes.string),
     assay: PropTypes.arrayOf(PropTypes.string),
     sex: PropTypes.arrayOf(PropTypes.string),
-    comparison_group: PropTypes.arrayOf(PropTypes.string),
-    contrast1_timepoint: PropTypes.arrayOf(PropTypes.string),
+    timepoint: PropTypes.arrayOf(PropTypes.string),
     p_value: PropTypes.shape({
       min: PropTypes.string,
       max: PropTypes.string,
@@ -89,6 +79,7 @@ export const searchParamsPropType = {
       min: PropTypes.string,
       max: PropTypes.string,
     }),
+    contrast_type: PropTypes.arrayOf(PropTypes.string),
   }),
   fields: PropTypes.arrayOf(PropTypes.string),
   unique_fields: PropTypes.arrayOf(PropTypes.string),
@@ -100,77 +91,25 @@ export const searchParamsPropType = {
   convert_tissue_code: PropTypes.number,
 };
 
-/**
- * props common to transcriptomics, proteomics,
- * and metabolomic timewise dea results
- */
-export const timewiseResultsTablePropType = {
+export const searchResultsTablePropType = {
   gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  protein_name: PropTypes.string,
-  metabolite_refmet: PropTypes.string,
+  refmet_name: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   feature_id: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tissue: PropTypes.string,
   assay: PropTypes.string,
   sex: PropTypes.string,
-  comparison_group: PropTypes.string,
+  timepoint: PropTypes.string,
   logFC: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   adj_p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  selection_fdr: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  contrast1_randomGroupCode: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  contrast_type: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 };
 
 /**
- * props common to transcriptomics, proteomics,
- * and metabolomic training dea results
+ * column headers common to da search results across omes
  */
-export const trainingResultsTablePropType = {
-  gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  protein_name: PropTypes.string,
-  metabolite_refmet: PropTypes.string,
-  feature_id: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  tissue: PropTypes.string,
-  assay_name: PropTypes.string,
-  p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  adj_p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  p_value_male: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  p_value_female: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-};
-
-export const ratsAcuteResultsTablePropType = {
-  gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  protein_name: PropTypes.string,
-  refmet_name: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  feature_id: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  tissue: PropTypes.string,
-  assay: PropTypes.string,
-  omics: PropTypes.string,
-  logFC: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  adj_p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  contrast1_timepoint: PropTypes.string,
-  contrast_type: PropTypes.string,
-};
-
-export const humanResultsTablePropType = {
-  gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  refmet_name: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  feature_id: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  tissue: PropTypes.string,
-  assay: PropTypes.string,
-  omics: PropTypes.string,
-  logFC: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  adj_p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  contrast1_randomGroupCode: PropTypes.string,
-  contrast1_timepoint: PropTypes.string,
-  contrast_type: PropTypes.string,
-};
-
-/**
- * column headers common to transcriptomics, proteomics,
- * and metabolomic timewise dea results
- */
-const commonTimewiseColumns = [
+const commonSearchResultColumns = [
   {
     Header: 'Feature ID',
     accessor: 'feature_id',
@@ -184,12 +123,8 @@ const commonTimewiseColumns = [
     accessor: 'assay',
   },
   {
-    Header: 'Sex',
+    Header: 'Sex Stratum',
     accessor: 'sex',
-  },
-  {
-    Header: 'Timepoint',
-    accessor: 'comparison_group',
   },
   {
     Header: 'logFC',
@@ -227,233 +162,56 @@ const commonTimewiseColumns = [
     sortType: 'basic',
   },
   {
-    Header: () => (
-      <div className="d-flex align-items-center timewise-selection-fdr-col-header">
-        <span>Selection FDR</span>
-        <span className="material-icons col-header-info timewise-selection-fdr-tooltip">
-          info
-        </span>
-        <Tooltip anchorSelect=".timewise-selection-fdr-tooltip" place="left">
-          Cross-tissue, IHW FDR adjusted p-value
-        </Tooltip>
-      </div>
-    ),
-    accessor: 'selection_fdr',
-    sortType: 'basic',
-  },
-];
-
-export const timewiseTableColumns = [
-  {
-    Header: 'Gene',
-    accessor: 'gene_symbol',
-  },
-  ...commonTimewiseColumns,
-];
-
-export const proteinTimewiseTableColumns = [
-  {
-    Header: 'Protein',
-    accessor: 'protein_name',
-  },
-  ...commonTimewiseColumns,
-];
-
-export const metabTimewiseTableColumns = [
-  {
-    Header: () => (
-      <div className="d-flex align-items-center timewise-refmet-col-header">
-        <span>RefMet Name</span>
-        <span className="material-icons col-header-info timewise-refmet-tooltip">
-          info
-        </span>
-        <Tooltip anchorSelect=".timewise-refmet-tooltip" place="right">
-          Reference nomenclature for metabolite names
-        </Tooltip>
-      </div>
-    ),
-    accessor: 'refmet_name',
-    sortType: 'basic',
-  },
-  ...commonTimewiseColumns,
-];
-
-/**
- * column headers common to transcriptomics, proteomics,
- * and metabolomic training dea results
- */
-const commonTrainingColumns = [
-  {
-    Header: 'Feature ID',
-    accessor: 'feature_id',
-  },
-  {
-    Header: 'Tissue',
-    accessor: 'tissue',
-  },
-  {
-    Header: 'Assay',
-    accessor: 'assay',
-  },
-  {
-    Header: () => (
-      <div className="d-flex align-items-center training-p-value-col-header">
-        <span>P-value</span>
-        <span className="material-icons col-header-info training-p-value-tooltip">
-          info
-        </span>
-        <Tooltip anchorSelect=".training-p-value-tooltip" place="left">
-          Combined p-value (males and females)
-        </Tooltip>
-      </div>
-    ),
-    accessor: 'p_value',
-    sortType: 'basic',
-  },
-  {
-    Header: () => (
-      <div className="d-flex align-items-center training-adj-p-value-col-header">
-        <span>Adj p-value</span>
-        <span className="material-icons col-header-info training-adj-p-value-tooltip">
-          info
-        </span>
-        <Tooltip anchorSelect=".training-adj-p-value-tooltip" place="left">
-          FDR-adjusted combined p-value
-        </Tooltip>
-      </div>
-    ),
-    accessor: 'adj_p_value',
-    sortType: 'basic',
-  },
-  {
-    Header: () => (
-      <div className="d-flex align-items-center training-male-p-value-col-header">
-        <span>Male p-value</span>
-        <span className="material-icons col-header-info training-male-p-value-tooltip">
-          info
-        </span>
-        <Tooltip anchorSelect=".training-male-p-value-tooltip" place="left">
-          Training effect p-value, male data
-        </Tooltip>
-      </div>
-    ),
-    accessor: 'p_value_male',
-    sortType: 'basic',
-  },
-  {
-    Header: () => (
-      <div className="d-flex align-items-center training-female-p-value-col-header">
-        <span>Female p-value</span>
-        <span className="material-icons col-header-info training-female-p-value-tooltip">
-          info
-        </span>
-        <Tooltip anchorSelect=".training-female-p-value-tooltip" place="left">
-          Training effect p-value, female data
-        </Tooltip>
-      </div>
-    ),
-    accessor: 'p_value_female',
-    sortType: 'basic',
-  },
-];
-
-export const trainingTableColumns = [
-  {
-    Header: 'Gene',
-    accessor: 'gene_symbol',
-  },
-  ...commonTrainingColumns,
-];
-
-export const proteinTrainingTableColumns = [
-  {
-    Header: 'Protein',
-    accessor: 'protein_name',
-  },
-  ...commonTrainingColumns,
-];
-
-export const metabTrainingTableColumns = [
-  {
-    Header: () => (
-      <div className="d-flex align-items-center training-refmet-col-header">
-        <span>RefMet Name</span>
-        <span className="material-icons col-header-info training-refmet-tooltip">
-          info
-        </span>
-        <Tooltip anchorSelect=".training-refmet-tooltip" place="right">
-          Reference nomenclature for metabolite names
-        </Tooltip>
-      </div>
-    ),
-    accessor: 'refmet_name',
-    sortType: 'basic',
-  },
-  ...commonTrainingColumns,
-];
-
-/**
- * column headers common to rats acute exercise gene and metabolite search results
- */
-const commonRatsAcuteColumns = [
-  {
-    Header: 'Feature ID',
-    accessor: 'feature_id',
-  },
-  {
-    Header: 'Tissue',
-    accessor: 'tissue',
-  },
-  {
-    Header: 'Assay',
-    accessor: 'assay',
-  },
-  {
-    Header: 'Sex',
-    accessor: 'sex',
-  },
-  {
-    Header: 'logFC',
-    accessor: 'logFC',
-    sortType: 'basic',
-  },
-  {
-    Header: 'P-value',
-    accessor: 'p_value',
-    sortType: 'basic',
-  },
-  {
-    Header: 'Adj p-value',
-    accessor: 'adj_p_value',
-    sortType: 'basic',
+    Header: 'Exercise Mode',
+    // Use contrast1_randomGroupCode for human (precawg), static 'Endurance' for pass1b06, 'Acute' for pass1a06
+    accessor: (row) => {
+      // Human data (precawg) has valid contrast1_randomGroupCode
+      if (row.contrast1_randomGroupCode && row.contrast1_randomGroupCode !== 'NA') {
+        return row.contrast1_randomGroupCode;
+      }
+      // Rat acute (pass1a06) has contrast_type
+      if (row.contrast_type && row.contrast_type === 'acute') {
+        return 'Acute';
+      }
+      // Rat endurance (pass1b06) uses comparison_group
+      return 'Endurance';
+    },
+    id: 'exercise_mode',
   },
   {
     Header: 'Timepoint',
-    accessor: 'contrast1_timepoint',
+    accessor: 'timepoint',
   },
   {
-    Header: 'Type',
-    accessor: 'contrast_type',
+    Header: 'Intervention Effect',
+    // Use static 'Pre Training Acute Bout' for precawg and pass1a06 while 'Training' for pass1b06
+    accessor: (row) => {
+      if (row.contrast_type && row.contrast_type !== 'NA') {
+        return 'Pre Training Acute Bout';
+      }
+      return 'Training';
+    },
+    id: 'intervention_effect',
   },
 ];
 
-export const geneRatsAcuteTableColumns = [
+export const geneResultTableColumns = [
   {
     Header: 'Gene',
     accessor: 'gene_symbol',
   },
-  ...commonRatsAcuteColumns,
+  ...commonSearchResultColumns,
 ];
 
-export const proteinRatsAcuteTableColumns = [
+export const proteinResultTableColumns = [
   {
     Header: 'Protein Name',
     accessor: 'protein_name',
   },
-  ...commonRatsAcuteColumns,
+  ...commonSearchResultColumns,
 ];
 
-export const metabRatsAcuteTableColumns = [
+export const metaboliteResultTableColumns = [
   {
     Header: () => (
       <div className="d-flex align-items-center timewise-refmet-col-header">
@@ -469,84 +227,7 @@ export const metabRatsAcuteTableColumns = [
     accessor: 'refmet_name',
     sortType: 'basic',
   },
-  ...commonRatsAcuteColumns,
-];
-
-/**
- * column headers common to human gene and metabolite search results
- */
-const commonHumanColumns = [
-  {
-    Header: 'Tissue',
-    accessor: 'tissue',
-  },
-  {
-    Header: 'Assay',
-    accessor: 'assay',
-  },
-  {
-    Header: 'logFC',
-    accessor: 'logFC',
-    sortType: 'basic',
-  },
-  {
-    Header: 'P-value',
-    accessor: 'p_value',
-    sortType: 'basic',
-  },
-  {
-    Header: 'Adj p-value',
-    accessor: 'adj_p_value',
-    sortType: 'basic',
-  },
-  {
-    Header: 'Randomized Group',
-    accessor: 'contrast1_randomGroupCode',
-  },
-  {
-    Header: 'Timepoint',
-    accessor: 'contrast1_timepoint',
-  },
-  {
-    Header: 'Type',
-    accessor: 'contrast_type',
-  },
-];
-
-export const geneHumanTableColumns = [
-  {
-    Header: 'Gene',
-    accessor: 'gene_symbol',
-  },
-  {
-    Header: 'Feature ID',
-    accessor: 'feature_id',
-  },
-  ...commonHumanColumns,
-];
-
-export const proteinHumanTableColumns = [
-  {
-    Header: 'Gene',
-    accessor: 'gene_symbol',
-  },
-  {
-    Header: 'Protein ID',
-    accessor: 'feature_id',
-  },
-  ...commonHumanColumns,
-];
-
-export const metaboliteHumanTableColumns = [
-  {
-    Header: 'RefMet Name',
-    accessor: 'refmet_name',
-  },
-  {
-    Header: 'Feature ID',
-    accessor: 'feature_id',
-  },
-  ...commonHumanColumns,
+  ...commonSearchResultColumns,
 ];
 
 /**
@@ -818,15 +499,12 @@ export const transformData = (arr) => {
     }
     // Transform tissue values
     if (item.tissue && item.tissue.length && item.contrast1_randomGroupCode && item.contrast1_randomGroupCode !== 'NA') {
-      const matchedTissue = tissueListHuman.find(
+      const matchedTissue = tissues.find(
         (filter) => filter.filter_value === item.tissue
       );
       item.tissue = matchedTissue ? matchedTissue.filter_label : (item.tissue === 'plasma' || item.tissue === 'blood-rna' ? 'Blood' : item.tissue);
     } else if (item.tissue && item.tissue.length) {
-      const tissueList = item.contrast1_timepoint && item.contrast1_timepoint !== 'NA'
-        ? tissueListRatAcute
-        : tissueListRatEndurance;
-      const matchedTissue = tissueList.find(
+      const matchedTissue = tissues.find(
         (filter) => filter.filter_value === item.tissue
       );
       item.tissue = matchedTissue ? matchedTissue.filter_label : item.tissue;
@@ -834,42 +512,24 @@ export const transformData = (arr) => {
     // Transform randomGroupCode values
     if (item.contrast1_randomGroupCode && item.contrast1_randomGroupCode.length) {
       const matchedRnadomGroupCode = randomGroupList.find(
-        (filter) => filter.filter_value === item.contrast1_randomGroupCode,
+        (filter) => filter.filter_value.toLowerCase() === item.contrast1_randomGroupCode,
       );
       item.contrast1_randomGroupCode = matchedRnadomGroupCode ? matchedRnadomGroupCode.filter_label
         : item.contrast1_randomGroupCode;
     }
-    // Transform human timepoint and pass1a06 timepoint values
-    if (item.contrast1_timepoint && item.contrast1_timepoint.length && item.contrast1_randomGroupCode && item.contrast1_randomGroupCode !== 'NA') {
-      const matchedHumanTimepoint = timepointListHuman.find(
-        (filter) => filter.filter_value === item.contrast1_timepoint,
+    // Transform timepoint values
+    if (item.timepoint && item.timepoint.length) {
+      const matchedTimepoint = [...timepointListRatEndurance, ...timepointListHuman, ...timepointListRatAcute].find(
+        (filter) => filter.filter_value === item.timepoint,
       );
-      item.contrast1_timepoint = matchedHumanTimepoint ? matchedHumanTimepoint.filter_label
-        : item.contrast1_timepoint;
-    } else if (item.contrast1_timepoint && item.contrast1_timepoint.length) {
-      const matchedTimepoint = timepointListRatAcute.find(
-        (filter) => filter.filter_value === item.contrast1_timepoint,
-      );
-      item.contrast1_timepoint = matchedTimepoint ? matchedTimepoint.filter_label
-        : item.contrast1_timepoint;
-    }
-    // Transform human type values
-    if (item.contrast_type && item.contrast_type.length) {
-      item.contrast_type = normalizeString(item.contrast_type);
+      item.timepoint = matchedTimepoint ? matchedTimepoint.filter_label : item.timepoint;
     }
     // Transform sex values
     if (item.sex && item.sex.length) {
       const matchedSex = sexList.find(
         (filter) => filter.filter_value.toLowerCase() === item.sex.toLowerCase()
       );
-      item.sex = matchedSex ? matchedSex.filter_label : item.sex;
-    }
-    // Transform pass1b-06 timepoint values
-    if (item.comparison_group && item.comparison_group.length) {
-      const matchedTimepoint = timepointListRatEndurance.find(
-        (filter) => filter.filter_value === item.comparison_group
-      );
-      item.comparison_group = matchedTimepoint ? matchedTimepoint.filter_label : item.comparison_group;
+      item.sex = matchedSex ? matchedSex.filter_label : 'None';
     }
     // Round values
     if (item.p_value && item.p_value.length && item.p_value !== 'NA') {
@@ -887,30 +547,6 @@ export const transformData = (arr) => {
     if (item.logFC && item.logFC.length && item.logFC !== 'NA') {
       const logFCVal = roundNumbers(item.logFC, 4);
       item.logFC = logFCVal;
-    }
-    if (
-      item.selection_fdr &&
-      item.selection_fdr.length &&
-      item.selection_fdr !== 'NA'
-    ) {
-      const newSelFdrVal = roundNumbers(item.selection_fdr, 4);
-      item.selection_fdr = newSelFdrVal;
-    }
-    if (
-      item.p_value_male &&
-      item.p_value_male.length &&
-      item.p_value_male !== 'NA'
-    ) {
-      const newPValMale = roundNumbers(item.p_value_male, 4);
-      item.p_value_male = newPValMale;
-    }
-    if (
-      item.p_value_female &&
-      item.p_value_female.length &&
-      item.p_value_female !== 'NA'
-    ) {
-      const newPValFemale = roundNumbers(item.p_value_female, 4);
-      item.p_value_female = newPValFemale;
     }
   });
   return tranformArray;
