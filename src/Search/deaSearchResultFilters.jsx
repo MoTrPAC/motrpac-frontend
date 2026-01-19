@@ -136,9 +136,29 @@ function SearchResultFilters({
                   e.preventDefault();
                   // Route to appropriate param based on filter_param
                   changeResultFilter(paramKey, filter.filter_value, null);
-                  // If filter_param is 'assay', also toggle the associated filter_ome in omics array
+
+                  // Handle omics array for assay filters
                   if (paramKey === 'assay' && filter.filter_ome) {
-                    changeResultFilter('omics', filter.filter_ome, null);
+                    const isSelecting = !isActiveFilter;
+                    const omeAlreadyInArray = searchParams.omics?.includes(filter.filter_ome);
+
+                    if (isSelecting && !omeAlreadyInArray) {
+                      // Add omics when selecting assay (if not already present)
+                      changeResultFilter('omics', filter.filter_ome, null);
+                    } else if (!isSelecting && omeAlreadyInArray) {
+                      // Check if other assays with the same filter_ome are still selected
+                      const otherAssaysWithSameOme = defaultOmeList.filter(
+                        (f) =>
+                          f.filter_param === 'assay' &&
+                          f.filter_ome === filter.filter_ome &&
+                          f.filter_value !== filter.filter_value &&
+                          searchParams.filters?.assay?.includes(f.filter_value)
+                      );
+                      // Only remove omics if no other assays with same ome remain selected
+                      if (otherAssaysWithSameOme.length === 0) {
+                        changeResultFilter('omics', filter.filter_ome, null);
+                      }
+                    }
                   }
                 }}
                 disabled={!resultCount}
