@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
+  defaultOmeList,
+  optionalOmeList,
+  studyList,
   sexList,
   rangeSearchFilters,
-  tissueListRatEndurance,
-  tissueListRatAcute,
-  tissueListHuman,
-  assayListRat,
-  assayListHuman,
+  tissues,
+  assayListGene,
+  assayListProtein,
+  assayListMetabolite,
   timepointListRatEndurance,
   timepointListRatAcute,
   timepointListHuman,
@@ -25,30 +27,57 @@ function SearchResultFilters({
 }) {
   const [inputError, setInputError] = useState(false);
 
+  const userType = profile.user_metadata && profile.user_metadata.userType;
+
+  const includesPrecawg = searchParams.study.includes('precawg');
+  const includesPass1b06 = searchParams.study.includes('pass1b06');
+  const includesPass1a06 = searchParams.study.includes('pass1a06');
+
   // FIXME - this is a hack to get the search filters such as tissue and assay
   // to render accordingly to the ktype (gene, protein, metabolite)
   function customizeTissueList() {
-    if (searchParams.study === 'precawg') {
-      return tissueListHuman;
+    let tissueList = [];
+    // Exclude PASS1A06 aorta tissue for external users
+    const tissuesExternal = tissues.filter((t) => t.filter_value !== 'aorta');
+    // Determine tissue list based on selected studies
+    if (!Array.isArray(searchParams.study)) {
+      return [];
     }
 
-    // customize tissues if species is rat
-    const tissueList = searchParams.study === 'pass1b06' ? tissueListRatEndurance : tissueListRatAcute;
-    // plasma is not available for get data in rats
+    // All three studies selected
+    // Or precawg and Pass1b06 selected (exclude aorta from rat tissues)
+    // Or single study or other combinations
+    if (includesPrecawg && includesPass1b06 && includesPass1a06) {
+      tissueList = [...tissues];
+    } else if (includesPrecawg && includesPass1b06) {
+      tissueList = [...tissuesExternal];
+    } else if (!searchParams.study.length) {
+      // No study selected - show all tissues based on user type
+      // Default - no study selected
+      if (userType && userType === 'internal') {
+        tissueList = [...tissues];
+      } else {
+        tissueList = [...tissuesExternal];
+      }
+    } else {
+      tissueList = [];
+    }
+
+    // rat plasma not available in epigen and transcript
     if (searchParams.ktype === 'gene') {
       return tissueList.filter((t) =>
         !t.filter_value.match(/^(plasma)$/),
       );
     }
-    // only keep tissues available for proteomics in rats
+    // rats and human tissues available in proteomics
     if (searchParams.ktype === 'protein') {
       return tissueList.filter((t) =>
         t.filter_value.match(
-          /^(cortex|gastrocnemius|heart|kidney|lung|liver|white adipose)$/,
+          /^(cortex|gastrocnemius|heart|kidney|lung|liver|white adipose|adipose|blood|muscle)$/,
         ),
       );
     }
-    // blood rna is not available for metabolomics in rats
+    // rat blood rna not available in metabolomics
     if (searchParams.ktype === 'metab') {
       return tissueList.filter((t) => t.filter_value !== 'blood rna');
     }
@@ -56,90 +85,74 @@ function SearchResultFilters({
     return tissueList;
   }
 
-  function customizeAssayList() {
-    // customize assays if species is human
-    if (searchParams.study === 'precawg') {
-      if (searchParams.ktype === 'gene') {
-        return assayListHuman.filter((t) =>
-          t.filter_value.match(
-            /^(transcript-rna-seq|prot-pr|prot-ph|prot-ol)$/,
-          ),
-        );
-      }
-      if (searchParams.ktype === 'protein') {
-        return assayListHuman.filter((t) =>
-          t.filter_value.match(/^(prot-pr|prot-ph|prot-ol)$/),
-        );
-      }
-      if (searchParams.ktype === 'metab') {
-        return assayListHuman.filter(
-          (t) =>
-            !t.filter_value.match(
-              /^(transcript-rna-seq|prot-pr|prot-ph|prot-ol)$/,
-            )
-        );
-      }
-      return assayListHuman;
-    }
-    // customize assays if species is rat
-    if (searchParams.ktype === 'gene') {
-      return assayListRat.filter((t) =>
-        t.filter_value.match(
-          /^(transcript-rna-seq|epigen-atac-seq|epigen-rrbs|immunoassay|prot-pr|prot-ph|prot-ac|prot-ub)$/,
-        ),
-      );
-    }
-    if (searchParams.ktype === 'protein') {
-      return assayListRat.filter((t) =>
-        t.filter_value.match(/^(transcript-rna-seq|epigen-atac-seq|epigen-rrbs|prot-pr|prot-ph|prot-ac|prot-ub)$/),
-      );
-    }
-    if (searchParams.ktype === 'metab') {
-      return assayListRat.filter(
-        (t) =>
-          !t.filter_value.match(
-            /^(transcript-rna-seq|epigen-atac-seq|epigen-rrbs|epigen-methylcap-seq|immunoassay|prot-pr|prot-ph|prot-ac|prot-ub|prot-ub-protein-corrected)$/,
-          )
-      );
-    }
-    return assayListRat;
-  }
+  const defaultTimepoints = [...timepointListRatEndurance, ...timepointListHuman];
+
+  const studySearchFilters = [
+    {
+      keyName: 'study',
+      name: 'Study',
+      filters: includesPass1a06 ? studyList : studyList.filter((s) => s.filter_value !== 'pass1a06'),
+    },
+  ];
+
+  // Custom search filters including both omics and assays
+  const omeSearchFilters = [
+    {
+      keyName: ['omics', 'array'],
+      name: 'Ome',
+      filters: defaultOmeList,
+    },
+  ];
 
   const commonSearchFilters = [
     {
       keyName: 'tissue',
       name: 'Tissue',
-      filters: searchParams.study === 'precawg' ? tissueListHuman : (searchParams.study === 'pass1b06' ? tissueListRatEndurance : tissueListRatAcute),
+      filters: customizeTissueList(),
     },
     {
-      keyName: 'assay',
-      name: 'Assay',
-      filters: searchParams.study === 'precawg' ? assayListHuman : assayListRat,
-    },
-    {
-      keyName: searchParams.study === 'pass1b06' ? 'comparison_group' : 'contrast1_timepoint',
+      keyName: 'timepoint',
       name: 'Timepoint',
-      filters: searchParams.study === 'precawg' ? timepointListHuman : (searchParams.study === 'pass1b06' ? timepointListRatEndurance : timepointListRatAcute),
+      filters: includesPrecawg && includesPass1b06 && includesPass1a06 ? [...defaultTimepoints, ...timepointListRatAcute] : defaultTimepoints,
     },
+    {
+      keyName: 'sex',
+      name: 'Sex Stratum',
+      filters: sexList,
+    }
   ];
 
-  commonSearchFilters.find(
-    (f) => f.keyName === 'tissue'
-  ).filters = customizeTissueList();
-
-  commonSearchFilters.find(
-    (f) => f.keyName === 'assay'
-  ).filters = customizeAssayList();
-
-  // if species is rat, append sex filter
-  const sexFilter = {
-    keyName: 'sex',
-    name: 'Sex',
-    filters: sexList,
-  };
-  if (searchParams.study !== 'precawg') {
-    commonSearchFilters.push(sexFilter);
-  }
+  const studySearchResultFilters = studySearchFilters.map((item) => (
+    <div key={item.name} className="card filter-module mb-3">
+      <div className="card-header font-weight-bold">
+        <div className="card-header-label">{item.name}</div>
+      </div>
+      <div className="card-body-container" id={`filters-${item.keyName}`}>
+        <div className="card-body">
+          {item.filters.map((filter) => {
+            const isActiveFilter =
+              searchParams[item.keyName] &&
+              searchParams[item.keyName].indexOf(filter.filter_value) > -1;
+            return (
+              <button
+                key={filter.filter_label}
+                type="button"
+                className={`btn filterBtn ${
+                  isActiveFilter ? 'activeFilter' : ''
+                }`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  changeResultFilter(item.keyName, filter.filter_value, null);
+                }}
+              >
+                {filter.filter_label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  ));
 
   const commonSearchResultFilters = commonSearchFilters.map((item) => (
     <div key={item.name} className="card filter-module mb-3">
@@ -150,12 +163,11 @@ function SearchResultFilters({
         <div className="card-body">
           {item.filters.map((filter) => {
             const isActiveFilter =
-              searchParams.filters[item.keyName] &&
+              searchParams.filters?.[item.keyName] &&
               searchParams.filters[item.keyName].indexOf(filter.filter_value) >
                 -1;
             const resultCount =
-              hasResultFilters &&
-              hasResultFilters[item.keyName] &&
+              hasResultFilters?.[item.keyName] &&
               Object.keys(hasResultFilters[item.keyName]).length &&
               hasResultFilters[item.keyName][filter.filter_value.toLowerCase()];
             return (
@@ -172,6 +184,11 @@ function SearchResultFilters({
                 disabled={!resultCount}
               >
                 {filter.filter_label}
+                {filter.species && (
+                  <span className="filter-species-tag badge badge-secondary ml-1">
+                    {filter.species === 'rat' ? 'R' : 'H'}
+                  </span>
+                )}
               </button>
             );
           })}
@@ -205,7 +222,7 @@ function SearchResultFilters({
           <div className="d-flex align-items-center p-1 range-filter-form-controls">
             <input
               className={`form-control mr-2 custom-filter range-filter-input ${item.keyName}-min`}
-              value={searchParams.filters[item.keyName].min}
+              value={searchParams.filters?.[item.keyName]?.min ?? ''}
               type="text"
               onChange={(e) => {
                 setInputError(false);
@@ -216,7 +233,7 @@ function SearchResultFilters({
             <span>to</span>
             <input
               className={`form-control ml-2 custom-filter range-filter-input ${item.keyName}-max`}
-              value={searchParams.filters[item.keyName].max}
+              value={searchParams.filters?.[item.keyName]?.max ?? ''}
               type="text"
               onChange={(e) => {
                 setInputError(false);
@@ -240,7 +257,7 @@ function SearchResultFilters({
             className="btn btn-primary btn-sm mr-2"
             onClick={(e) => {
               e.preventDefault();
-              handleSearch(searchParams, searchParams.keys, 'filters');
+              handleSearch(searchParams, searchParams.keys, 'filters', userType);
               // track event in Google Analytics 4
               trackEvent(
                 'Differential Abundance Search',
@@ -269,6 +286,7 @@ function SearchResultFilters({
           Please correct input values above.
         </div>
       )}
+      {studySearchResultFilters}
       {commonSearchResultFilters}
       {rangeSearchResultFilters}
     </div>
@@ -281,10 +299,10 @@ SearchResultFilters.propTypes = {
   handleSearch: PropTypes.func.isRequired,
   resetSearch: PropTypes.func.isRequired,
   hasResultFilters: PropTypes.shape({
-    assay: PropTypes.object,
-    comparison_group: PropTypes.object,
-    sex: PropTypes.object,
     tissue: PropTypes.object,
+    assay: PropTypes.object,
+    timepoint: PropTypes.object,
+    sex: PropTypes.object,
   }),
   profile: PropTypes.shape({
     userid: PropTypes.string,
