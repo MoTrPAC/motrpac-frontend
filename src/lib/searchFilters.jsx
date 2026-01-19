@@ -1,31 +1,28 @@
-export const tissuesRat = [
-  { filter_value: 'adrenal', filter_label: 'Adrenal' },
-  { filter_value: 'aorta', filter_label: 'Aorta' },
-  { filter_value: 'blood rna', filter_label: 'Blood RNA' },
-  { filter_value: 'brown adipose', filter_label: 'Brown Adipose' },
-  { filter_value: 'colon', filter_label: 'Colon' },
-  { filter_value: 'cortex', filter_label: 'Cortex' },
-  { filter_value: 'gastrocnemius', filter_label: 'Gastrocnemius' },
-  { filter_value: 'heart', filter_label: 'Heart' },
-  { filter_value: 'hippocampus', filter_label: 'Hippocampus' },
-  { filter_value: 'hypothalamus', filter_label: 'Hypothalamus' },
-  { filter_value: 'kidney', filter_label: 'Kidney' },
-  { filter_value: 'liver', filter_label: 'Liver' },
-  { filter_value: 'lung', filter_label: 'Lung' },
-  { filter_value: 'ovaries', filter_label: 'Ovaries' },
-  { filter_value: 'plasma', filter_label: 'Plasma' },
-  { filter_value: 'small intestine', filter_label: 'Small Intestine' },
-  { filter_value: 'spleen', filter_label: 'Spleen' },
-  { filter_value: 'testes', filter_label: 'Testes' },
-  { filter_value: 'vastus lateralis', filter_label: 'Vastus Lateralis' },
-  { filter_value: 'vena cava', filter_label: 'Vena Cava' },
-  { filter_value: 'white adipose', filter_label: 'White Adipose' },
-];
-
-export const tissuesHuman = [
-  { filter_value: 'adipose', filter_label: 'Adipose' },
-  { filter_value: 'blood', filter_label: 'Blood' },
-  { filter_value: 'muscle', filter_label: 'Muscle' },
+export const tissues = [
+  { filter_value: 'adipose', filter_label: 'Adipose', species: 'human' },
+  { filter_value: 'brown adipose', filter_label: 'Brown Adipose', species: 'rat' },
+  { filter_value: 'white adipose', filter_label: 'White Adipose', species: 'rat' },
+  { filter_value: 'blood', filter_label: 'Blood', species: 'human' },
+  { filter_value: 'blood rna', filter_label: 'Blood RNA', species: 'rat' },
+  { filter_value: 'plasma', filter_label: 'Plasma', species: 'rat' },
+  { filter_value: 'muscle', filter_label: 'Muscle', species: 'human' },
+  { filter_value: 'gastrocnemius', filter_label: 'Gastrocnemius', species: 'rat' },
+  { filter_value: 'vastus lateralis', filter_label: 'Vastus Lateralis', species: 'rat' },
+  { filter_value: 'adrenal', filter_label: 'Adrenal', species: 'rat' },
+  { filter_value: 'aorta', filter_label: 'Aorta', species: 'rat' },
+  { filter_value: 'colon', filter_label: 'Colon', species: 'rat' },
+  { filter_value: 'cortex', filter_label: 'Cortex', species: 'rat' },
+  { filter_value: 'heart', filter_label: 'Heart', species: 'rat' },
+  { filter_value: 'hippocampus', filter_label: 'Hippocampus', species: 'rat' },
+  { filter_value: 'hypothalamus', filter_label: 'Hypothalamus', species: 'rat' },
+  { filter_value: 'kidney', filter_label: 'Kidney', species: 'rat' },
+  { filter_value: 'liver', filter_label: 'Liver', species: 'rat' },
+  { filter_value: 'lung', filter_label: 'Lung', species: 'rat' },
+  { filter_value: 'ovaries', filter_label: 'Ovaries', species: 'rat' },
+  { filter_value: 'small intestine', filter_label: 'Small Intestine', species: 'rat' },
+  { filter_value: 'spleen', filter_label: 'Spleen', species: 'rat' },
+  { filter_value: 'testes', filter_label: 'Testes', species: 'rat' },
+  { filter_value: 'vena cava', filter_label: 'Vena Cava', species: 'rat' },
 ];
 
 const assays = [
@@ -198,7 +195,7 @@ export const geneCentricSearchFilters = [
   {
     keyName: 'tissue',
     name: 'Tissue',
-    filters: tissuesRat.filter((t) => t.filter_value !== 'aorta'),
+    filters: tissues.filter((t) => t.filter_value !== 'aorta'),
   },
   {
     keyName: 'assay',
@@ -305,3 +302,20 @@ const assaysMetabolite = [
 export const assayListMetabolite = assaysMetabolite.sort((a, b) =>
   a.filter_label.toLowerCase().localeCompare(b.filter_label.toLowerCase()),
 );
+
+export const defaultOmeList = [
+  { filter_value: 'transcriptomics', filter_label: 'Transcriptomics', filter_param: 'omics' },
+  { filter_value: 'prot-pr', filter_label: 'Global Proteomics', filter_param: 'assay' },
+  { filter_value: 'prot-ph', filter_label: 'Phosphoproteomics', filter_param: 'assay' },
+  { filter_value: 'prot-ol', filter_label: 'Proteomics Olink', filter_param: 'assay' },
+  { filter_value: 'prot-ac', filter_label: 'Acetyl Proteomics', filter_param: 'assay' },
+  { filter_value: 'prot-ub', filter_label: 'Protein Ubiquitination' , filter_param: 'assay' },
+  { filter_value: 'metabolomics', filter_label: 'Metabolomics', filter_param: 'omics' },
+  { filter_value: 'immunoassay', filter_label: 'Immunoassay', filter_param: 'assay' },
+];
+
+export const optionalOmeList = [
+  { filter_value: 'epigen-atac-seq', filter_label: 'ATAC-seq', filter_param: 'assay' },
+  { filter_value: 'epigen-rrbs', filter_label: 'RRBS', filter_param: 'assay' },
+  { filter_value: 'epigen-methylcap-seq', filter_label: 'Methylcap-seq', filter_param: 'assay' },
+];
