@@ -27,6 +27,9 @@ export const defaultSearchState = {
       logFC: { min: '', max: '' },
       p_value: { min: '', max: '' },
       contrast_type: ['exercise_with_controls', 'acute'],
+      must_not: {
+        assay: ['epigen-atac-seq', 'epigen-rrbs', 'epigen-methylcap-seq'],
+      },
     },
     fields: [
       'gene_symbol',
