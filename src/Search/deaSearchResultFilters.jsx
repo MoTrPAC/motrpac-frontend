@@ -26,6 +26,7 @@ function SearchResultFilters({
   profile = {},
 }) {
   const [inputError, setInputError] = useState(false);
+  const [includeEpigenomics, setIncludeEpigenomics] = useState(false);
 
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
@@ -95,82 +96,95 @@ function SearchResultFilters({
     },
   ];
 
-  // Custom search filters including both omics and assays
-  const omeSearchFilters = [
-    {
-      keyName: 'ome',
-      name: 'Ome',
-      filters: defaultOmeList,
-    },
-  ];
+  // Helper function to render ome filter button
+  const renderOmeFilterButton = (filter, isOptional = false) => {
+    const paramKey = filter.filter_param; // 'omics' or 'assay'
+    const isActiveFilter =
+      paramKey === 'omics'
+        ? searchParams.omics?.includes(filter.filter_value)
+        : searchParams.filters?.assay?.includes(filter.filter_value);
 
-  // Custom function to render ome filter buttons
-  // Handles routing filter values to either 'omics' or 'assay' param based on filter_param
-  const omeSearchResultFilters = omeSearchFilters.map((item) => (
-    <div key={item.name} className="card filter-module mb-3">
+    const resultCount =
+      hasResultFilters?.[paramKey] &&
+      Object.keys(hasResultFilters[paramKey]).length &&
+      hasResultFilters[paramKey][filter.filter_value.toLowerCase()];
+
+    // Disable if no results, or if optional and epigenomics not enabled
+    const isDisabled = !resultCount || (isOptional && !includeEpigenomics);
+
+    return (
+      <button
+        key={filter.filter_label}
+        type="button"
+        className={`btn filterBtn ${isActiveFilter ? 'activeFilter' : ''}`}
+        onClick={(e) => {
+          e.preventDefault();
+          changeResultFilter(paramKey, filter.filter_value, null);
+
+          if (paramKey === 'assay' && filter.filter_ome) {
+            const isSelecting = !isActiveFilter;
+            const omeAlreadyInArray = searchParams.omics?.includes(filter.filter_ome);
+
+            if (isSelecting && !omeAlreadyInArray) {
+              changeResultFilter('omics', filter.filter_ome, null);
+            } else if (!isSelecting && omeAlreadyInArray) {
+              const allOmeFilters = [...defaultOmeList, ...optionalOmeList];
+              const otherAssaysWithSameOme = allOmeFilters.filter(
+                (f) =>
+                  f.filter_param === 'assay' &&
+                  f.filter_ome === filter.filter_ome &&
+                  f.filter_value !== filter.filter_value &&
+                  searchParams.filters?.assay?.includes(f.filter_value)
+              );
+              if (otherAssaysWithSameOme.length === 0) {
+                changeResultFilter('omics', filter.filter_ome, null);
+              }
+            }
+          }
+        }}
+        disabled={isDisabled}
+      >
+        {filter.filter_label}
+      </button>
+    );
+  };
+
+  // Ome filter panel with default and optional (epigenomics) filters
+  const omeSearchResultFilters = (
+    <div className="card filter-module mb-3">
       <div className="card-header font-weight-bold">
-        <div className="card-header-label">{item.name}</div>
+        <div className="card-header-label">Ome</div>
       </div>
-      <div className="card-body-container" id={`filters-${item.keyName}`}>
+      <div className="card-body-container" id="filters-ome">
         <div className="card-body">
-          {item.filters.map((filter) => {
-            // Determine which param to check based on filter_param
-            const paramKey = filter.filter_param; // 'omics' or 'assay'
-            const isActiveFilter =
-              paramKey === 'omics'
-                ? searchParams.omics?.includes(filter.filter_value)
-                : searchParams.filters?.assay?.includes(filter.filter_value);
+          {/* Default ome filters */}
+          {defaultOmeList.map((filter) => renderOmeFilterButton(filter, false))}
 
-            // Get result count from hasResultFilters based on filter_param
-            const resultCount =
-              hasResultFilters?.[paramKey] &&
-              Object.keys(hasResultFilters[paramKey]).length &&
-              hasResultFilters[paramKey][filter.filter_value.toLowerCase()];
-
-            return (
-              <button
-                key={filter.filter_label}
-                type="button"
-                className={`btn filterBtn ${isActiveFilter ? 'activeFilter' : ''}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  // Route to appropriate param based on filter_param
-                  changeResultFilter(paramKey, filter.filter_value, null);
-
-                  // Handle omics array for assay filters
-                  if (paramKey === 'assay' && filter.filter_ome) {
-                    const isSelecting = !isActiveFilter;
-                    const omeAlreadyInArray = searchParams.omics?.includes(filter.filter_ome);
-
-                    if (isSelecting && !omeAlreadyInArray) {
-                      // Add omics when selecting assay (if not already present)
-                      changeResultFilter('omics', filter.filter_ome, null);
-                    } else if (!isSelecting && omeAlreadyInArray) {
-                      // Check if other assays with the same filter_ome are still selected
-                      const otherAssaysWithSameOme = defaultOmeList.filter(
-                        (f) =>
-                          f.filter_param === 'assay' &&
-                          f.filter_ome === filter.filter_ome &&
-                          f.filter_value !== filter.filter_value &&
-                          searchParams.filters?.assay?.includes(f.filter_value)
-                      );
-                      // Only remove omics if no other assays with same ome remain selected
-                      if (otherAssaysWithSameOme.length === 0) {
-                        changeResultFilter('omics', filter.filter_ome, null);
-                      }
-                    }
-                  }
-                }}
-                disabled={!resultCount}
+          {/* Divider and epigenomics section */}
+          <hr className="my-2" />
+          <div className="d-flex align-items-center mb-2">
+            <div className="custom-control custom-switch">
+              <input
+                type="checkbox"
+                className="custom-control-input"
+                id="includeEpigenomicsSwitch"
+                checked={includeEpigenomics}
+                onChange={(e) => setIncludeEpigenomics(e.target.checked)}
+              />
+              <label
+                className="custom-control-label"
+                htmlFor="includeEpigenomicsSwitch"
               >
-                {filter.filter_label}
-              </button>
-            );
-          })}
+                Include Epigenomics
+              </label>
+            </div>
+          </div>
+          {/* Optional epigenomics filters - always visible but disabled unless toggled */}
+          {optionalOmeList.map((filter) => renderOmeFilterButton(filter, true))}
         </div>
       </div>
     </div>
-  ));
+  );
 
   const commonSearchFilters = [
     {
