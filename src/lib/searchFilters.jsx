@@ -305,17 +305,17 @@ export const assayListMetabolite = assaysMetabolite.sort((a, b) =>
 
 export const defaultOmeList = [
   { filter_value: 'transcriptomics', filter_label: 'Transcriptomics', filter_param: 'omics' },
-  { filter_value: 'prot-pr', filter_label: 'Global Proteomics', filter_param: 'assay' },
-  { filter_value: 'prot-ph', filter_label: 'Phosphoproteomics', filter_param: 'assay' },
-  { filter_value: 'prot-ol', filter_label: 'Proteomics Olink', filter_param: 'assay' },
-  { filter_value: 'prot-ac', filter_label: 'Acetyl Proteomics', filter_param: 'assay' },
-  { filter_value: 'prot-ub', filter_label: 'Protein Ubiquitination' , filter_param: 'assay' },
+  { filter_value: 'prot-pr', filter_label: 'Global Proteomics', filter_param: 'assay', filter_ome: 'proteomics' },
+  { filter_value: 'prot-ph', filter_label: 'Phosphoproteomics', filter_param: 'assay', filter_ome: 'proteomics' },
+  { filter_value: 'prot-ol', filter_label: 'Proteomics Olink', filter_param: 'assay', filter_ome: 'proteomics' },
+  { filter_value: 'prot-ac', filter_label: 'Acetyl Proteomics', filter_param: 'assay', filter_ome: 'proteomics' },
+  { filter_value: 'prot-ub', filter_label: 'Protein Ubiquitination' , filter_param: 'assay', filter_ome: 'proteomics' },
   { filter_value: 'metabolomics', filter_label: 'Metabolomics', filter_param: 'omics' },
-  { filter_value: 'immunoassay', filter_label: 'Immunoassay', filter_param: 'assay' },
+  { filter_value: 'immunoassay', filter_label: 'Immunoassay', filter_param: 'assay', filter_ome: 'proteomics' },
 ];
 
 export const optionalOmeList = [
-  { filter_value: 'epigen-atac-seq', filter_label: 'ATAC-seq', filter_param: 'assay' },
-  { filter_value: 'epigen-rrbs', filter_label: 'RRBS', filter_param: 'assay' },
-  { filter_value: 'epigen-methylcap-seq', filter_label: 'Methylcap-seq', filter_param: 'assay' },
+  { filter_value: 'epigen-atac-seq', filter_label: 'ATAC-seq', filter_param: 'assay', filter_ome: 'epigenomics' },
+  { filter_value: 'epigen-rrbs', filter_label: 'RRBS', filter_param: 'assay', filter_ome: 'epigenomics' },
+  { filter_value: 'epigen-methylcap-seq', filter_label: 'Methylcap-seq', filter_param: 'assay', filter_ome: 'epigenomics' },
 ];
