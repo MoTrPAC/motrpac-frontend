@@ -110,8 +110,9 @@ function SearchResultFilters({
       Object.keys(hasResultFilters[paramKey]).length &&
       hasResultFilters[paramKey][filter.filter_value.toLowerCase()];
 
-    // Disable if no results, or if optional and epigenomics not enabled
-    const isDisabled = !resultCount || (isOptional && !includeEpigenomics);
+    // Optional (epigenomics) filters: disabled only when epigenomics toggle is off
+    // Default filters: disabled based on result count
+    const isDisabled = isOptional ? !includeEpigenomics : !resultCount;
 
     return (
       <button
@@ -192,16 +193,83 @@ function SearchResultFilters({
       filters: customizeTissueList(),
     },
     {
-      keyName: 'timepoint',
-      name: 'Timepoint',
-      filters: includesPrecawg && includesPass1b06 && includesPass1a06 ? [...defaultTimepoints, ...timepointListRatAcute] : defaultTimepoints,
-    },
-    {
       keyName: 'sex',
       name: 'Sex Stratum',
       filters: sexList,
     }
   ];
+
+  // Get all timepoints based on selected studies
+  const allTimepoints = includesPrecawg && includesPass1b06 && includesPass1a06
+    ? [...defaultTimepoints, ...timepointListRatAcute]
+    : defaultTimepoints;
+
+  // Group timepoints by intervention
+  const groupedTimepoints = allTimepoints.reduce((acc, timepoint) => {
+    const intervention = timepoint.intervention || 'other';
+    if (!acc[intervention]) {
+      acc[intervention] = [];
+    }
+    acc[intervention].push(timepoint);
+    return acc;
+  }, {});
+
+  // Labels for intervention groups
+  const interventionLabels = {
+    'training': 'Training',
+    'acute exercise': 'Acute Exercise',
+  };
+
+  // Helper function to render timepoint filter buttons
+  const renderTimepointFilterButton = (filter) => {
+    const isActiveFilter =
+      searchParams.filters?.timepoint &&
+      searchParams.filters.timepoint.includes(filter.filter_value);
+    const resultCount =
+      hasResultFilters?.timepoint &&
+      Object.keys(hasResultFilters.timepoint).length &&
+      hasResultFilters.timepoint[filter.filter_value.toLowerCase()];
+    return (
+      <button
+        key={filter.filter_label}
+        type="button"
+        className={`btn filterBtn ${isActiveFilter ? 'activeFilter' : ''}`}
+        onClick={(e) => {
+          e.preventDefault();
+          changeResultFilter('timepoint', filter.filter_value, null);
+        }}
+        disabled={!resultCount}
+      >
+        {filter.filter_label}
+        {filter.species && (
+          <span className="filter-species-tag badge badge-secondary ml-1">
+            {filter.species === 'rat' ? 'R' : 'H'}
+          </span>
+        )}
+      </button>
+    );
+  };
+
+  // Render timepoint filters grouped by intervention
+  const timepointSearchResultFilters = (
+    <div className="card filter-module mb-3">
+      <div className="card-header font-weight-bold">
+        <div className="card-header-label">Timepoint</div>
+      </div>
+      <div className="card-body-container" id="filters-timepoint">
+        <div className="card-body">
+          {Object.entries(groupedTimepoints).map(([intervention, timepoints]) => (
+            <div key={intervention} className="timepoint-group">
+              <div className="timepoint-group-label text-muted font-weight-bold small mt-2 mb-1 mx-1">
+                {interventionLabels[intervention] || intervention}
+              </div>
+              {timepoints.map((filter) => renderTimepointFilterButton(filter))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 
   const studySearchResultFilters = studySearchFilters.map((item) => (
     <div key={item.name} className="card filter-module mb-3">
@@ -370,6 +438,7 @@ function SearchResultFilters({
       {studySearchResultFilters}
       {omeSearchResultFilters}
       {commonSearchResultFilters}
+      {timepointSearchResultFilters}
       {rangeSearchResultFilters}
     </div>
   );
