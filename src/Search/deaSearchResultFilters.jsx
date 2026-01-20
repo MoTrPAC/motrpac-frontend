@@ -242,7 +242,7 @@ function SearchResultFilters({
       >
         {filter.filter_label}
         {filter.species && (
-          <span className="filter-species-tag badge badge-secondary ml-1">
+          <span className={`filter-species-tag ml-1 badge ${filter.species === 'rat' ? 'badge-rat' : 'badge-human'}`}>
             {filter.species === 'rat' ? 'R' : 'H'}
           </span>
         )}
@@ -306,7 +306,10 @@ function SearchResultFilters({
   const commonSearchResultFilters = commonSearchFilters.map((item) => (
     <div key={item.name} className="card filter-module mb-3">
       <div className="card-header font-weight-bold">
-        <div className="card-header-label">{item.name}</div>
+        <div className="card-header-label">
+          <span>{item.name}</span>
+          <i className="bi bi-info-circle-fill ml-2 text-secondary" />
+        </div>
       </div>
       <div className="card-body-container" id={`filters-${item.keyName}`}>
         <div className="card-body">
@@ -334,7 +337,7 @@ function SearchResultFilters({
               >
                 {filter.filter_label}
                 {filter.species && (
-                  <span className="filter-species-tag badge badge-secondary ml-1">
+                  <span className={`filter-species-tag ml-1 badge ${filter.species === 'rat' ? 'badge-rat' : 'badge-human'}`}>
                     {filter.species === 'rat' ? 'R' : 'H'}
                   </span>
                 )}
