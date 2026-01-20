@@ -98,24 +98,25 @@ const headersConfig = {
 
 // Handle search and results filtering events
 function handleSearch(params, inputValue, scope, userType) {
-  params.keys = inputValue;
+  // Create a copy to avoid mutating Redux state directly
+  const searchParams = { ...params, filters: { ...params.filters } };
+  searchParams.keys = inputValue;
 
   // if user is 'internal', set 'study' to include 'pass1a06'
   // else set 'study' to exclude 'pass1a06'
-  const includesPass1a06 = params.study.includes('pass1a06');
   if (userType && userType === 'internal') {
-    if (!params.study.length) {
-      params.study = ['pass1b06', 'precawg', 'pass1a06'];
+    if (!searchParams.study.length) {
+      searchParams.study = ['pass1b06', 'precawg', 'pass1a06'];
     }
   } else if (!userType || userType === 'external') {
-    if (!params.study.length) {
-      params.study = ['pass1b06', 'precawg'];
+    if (!searchParams.study.length) {
+      searchParams.study = ['pass1b06', 'precawg'];
     }
   }
 
   // Reset all filters if scope is 'all'
   if (scope === 'all') {
-    params.filters = {
+    searchParams.filters = {
       tissue: [],
       assay: [],
       sex: [],
@@ -131,33 +132,33 @@ function handleSearch(params, inputValue, scope, userType) {
   }
   // insert 'is_meta" field to fields array if ktype is 'metab'
   // and delete 'protein_name' field if it exists
-  if (params.ktype === 'metab') {
-    if (!params.fields.includes('is_meta')) {
-      params.fields = ['is_meta', ...params.fields];
+  if (searchParams.ktype === 'metab') {
+    if (!searchParams.fields.includes('is_meta')) {
+      searchParams.fields = ['is_meta', ...searchParams.fields];
     }
-    if (params.fields.includes('protein_name')) {
-      const index = params.fields.indexOf('protein_name');
-      params.fields.splice(index, 1);
+    if (searchParams.fields.includes('protein_name')) {
+      const index = searchParams.fields.indexOf('protein_name');
+      searchParams.fields.splice(index, 1);
     }
   }
   // delete 'is_meta' flag from fields array (if it exists)
   // if ktype is 'protein' or 'gene'
-  if (params.ktype === 'protein' || params.ktype === 'gene') {
-    if (params.fields.includes('is_meta')) {
-      const index = params.fields.indexOf('is_meta');
-      params.fields.splice(index, 1);
+  if (searchParams.ktype === 'protein' || searchParams.ktype === 'gene') {
+    if (searchParams.fields.includes('is_meta')) {
+      const index = searchParams.fields.indexOf('is_meta');
+      searchParams.fields.splice(index, 1);
     }
   }
 
   return (dispatch) => {
-    dispatch(searchSubmit(params, scope));
+    dispatch(searchSubmit(searchParams, scope));
     return axios
-      .post(`${searchServiceHost}${endpoint}`, params, headersConfig)
+      .post(`${searchServiceHost}${endpoint}`, searchParams, headersConfig)
       .then((response) => {
         if (response.data.error) {
           dispatch(searchFailure(response.data.error));
         }
-        dispatch(searchSuccess(response.data, params, scope));
+        dispatch(searchSuccess(response.data, searchParams, scope));
       })
       .catch((err) => {
         dispatch(searchFailure(`${err.name}: ${err.message}`));
