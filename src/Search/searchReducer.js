@@ -22,7 +22,6 @@ export const defaultSearchState = {
     keys: [],
     omics: [],
     study: [],
-    analysis: 'all',
     filters: {
       tissue: [],
       assay: [],
@@ -52,7 +51,7 @@ export const defaultSearchState = {
       'contrast_type',
     ],
     unique_fields: ['tissue', 'omics', 'assay', 'sex', 'timepoint'],
-    size: 20,
+    size: 50,
     start: 0,
     save: false,
     convert_assay_code: 0,
