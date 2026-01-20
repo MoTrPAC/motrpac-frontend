@@ -50,9 +50,9 @@ function SearchResultFilters({
     // All three studies selected
     // Or precawg and Pass1b06 selected (exclude aorta from rat tissues)
     // Or single study or other combinations
-    if (includesPrecawg && includesPass1b06 && includesPass1a06) {
+    if ((includesPrecawg && includesPass1b06 && includesPass1a06) || (userType && userType === 'internal' && !searchParams.study.length)) {
       tissueList = [...tissues];
-    } else if (includesPrecawg && includesPass1b06) {
+    } else if ((includesPrecawg && includesPass1b06) || (!userType || userType === 'external' && !searchParams.study.length)) {
       tissueList = [...tissuesExternal];
     } else if (!searchParams.study.length) {
       // No study selected - show all tissues based on user type
