@@ -184,10 +184,13 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
 
     // Hanlde query response
     case SEARCH_SUCCESS: {
-      const { study } = action.params;
+      // Preserve user's explicit study selection from state
+      // action.params.study may contain auto-populated defaults from handleSearch
+      // Only keep study selection if scope is 'filters' (user is filtering results)
+      // and state already has user-selected studies
       const updatedParams = {
         ...state.searchParams,
-        study: action.scope === 'filters' ? study : [],
+        study: action.scope === 'filters' ? state.searchParams.study : [],
       };
 
       return {
