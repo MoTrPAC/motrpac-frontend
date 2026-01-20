@@ -5,7 +5,6 @@ import {
   useFilters,
   useGlobalFilter,
   useSortBy,
-  usePagination,
 } from 'react-table';
 import {
   searchParamsPropType,
@@ -28,6 +27,10 @@ function SearchResultsTable({
   unifiedResults,
   searchParams,
   handleSearchDownload,
+  total,
+  size,
+  start,
+  onPaginationChange,
 }) {
   // Define table column headers
   const columns = useMemo(() => {
@@ -47,6 +50,10 @@ function SearchResultsTable({
       data={data}
       searchParams={searchParams}
       handleSearchDownload={handleSearchDownload}
+      total={total}
+      size={size}
+      start={start}
+      onPaginationChange={onPaginationChange}
     />
   );
 }
@@ -63,54 +70,47 @@ function ResultsTable({
   data,
   searchParams,
   handleSearchDownload,
+  total,
+  size,
+  start,
+  onPaginationChange,
 }) {
   // Use the useTable hook to create your table configuration
-  // Use the state and functions returned from useTable to build your UI
+  // Server-side pagination: no usePagination hook, render all rows from current page
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    preGlobalFilteredRows,
-    pageOptions,
-    pageCount,
-    page,
-    state: { pageIndex, pageSize },
-    gotoPage,
-    previousPage,
-    nextPage,
-    setPageSize,
-    canPreviousPage,
-    canNextPage,
+    rows,
   } = useTable(
     {
       columns,
       data,
-      initialState: {
-        pageIndex: 0,
-        pageSize: 50,
-        pageCount: Math.ceil(data.length / 50),
-      },
     },
     useFilters,
     useGlobalFilter,
     useSortBy,
-    usePagination,
   );
 
-  // default page size options given the length of entries in the data
-  const range = (start, stop, step = 50) => Array(Math.ceil(stop / step)).fill(start).map((x, y) => x + y * step);
+  // Handle page size change - reset to first page
+  const handlePageSizeChange = (newSize) => {
+    onPaginationChange({ size: newSize, start: 0 });
+  };
+
+  // Handle page navigation
+  const handlePageChange = (newStart) => {
+    onPaginationChange({ size, start: newStart });
+  };
 
   // Render the UI for your table
-  // react-table doesn't have UI, it's headless. We just need to put the react-table
-  // props from the Hooks, and it will do its magic automatically
+  // Server-side pagination: data already contains only current page's rows
   return (
     <div className="search-results-container">
       <div className="d-flex align-items-center justify-content-between">
         <PageSize
-          pageSize={pageSize}
-          setPageSize={setPageSize}
-          pageSizeOptions={range(50, preGlobalFilteredRows.length)}
+          size={size}
+          onPageSizeChange={handlePageSizeChange}
         />
         <div className="file-download-button">
           <button
@@ -170,7 +170,7 @@ function ResultsTable({
                 })}
               </thead>
               <tbody {...getTableBodyProps()}>
-                {page.map((row) => {
+                {rows.map((row) => {
                   prepareRow(row);
                   // Destructure key and rest of the row props
                   // to avoid passing key as a prop to the table row
@@ -200,14 +200,12 @@ function ResultsTable({
         </div>
       </div>
       <div className="pagination-footer d-flex align-items-center justify-content-between">
-        <PageIndex pageIndex={pageIndex} pageOptions={pageOptions} />
+        <PageIndex total={total} size={size} start={start} />
         <PageNavigationControl
-          canPreviousPage={canPreviousPage}
-          canNextPage={canNextPage}
-          previousPage={previousPage}
-          nextPage={nextPage}
-          gotoPage={gotoPage}
-          pageCount={pageCount}
+          total={total}
+          size={size}
+          start={start}
+          onPageChange={handlePageChange}
         />
       </div>
     </div>
@@ -220,6 +218,10 @@ SearchResultsTable.propTypes = {
   ).isRequired,
   searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
   handleSearchDownload: PropTypes.func.isRequired,
+  total: PropTypes.number.isRequired,
+  size: PropTypes.number.isRequired,
+  start: PropTypes.number.isRequired,
+  onPaginationChange: PropTypes.func.isRequired,
 };
 
 ResultsTable.propTypes = {
@@ -234,6 +236,10 @@ ResultsTable.propTypes = {
     .isRequired,
   searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
   handleSearchDownload: PropTypes.func.isRequired,
+  total: PropTypes.number.isRequired,
+  size: PropTypes.number.isRequired,
+  start: PropTypes.number.isRequired,
+  onPaginationChange: PropTypes.func.isRequired,
 };
 
 export default SearchResultsTable;
