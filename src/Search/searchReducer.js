@@ -5,12 +5,17 @@ import {
   SEARCH_FAILURE,
   SEARCH_SUCCESS,
   SEARCH_RESET,
+  TOGGLE_EPIGENOMICS,
   DOWNLOAD_SUBMIT,
   DOWNLOAD_FAILURE,
   DOWNLOAD_SUCCESS,
 } from './searchActions';
 
+// Epigenomics assays to exclude by default
+const EPIGENOMICS_ASSAYS = ['epigen-atac-seq', 'epigen-rrbs', 'epigen-methylcap-seq'];
+
 export const defaultSearchState = {
+  includeEpigenomics: false,
   searchResults: {},
   searchParams: {
     ktype: 'gene',
@@ -239,6 +244,44 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         ...defaultSearchState,
         searchParams: defaultParams,
         hasResultFilters: {},
+      };
+    }
+
+    // Handle toggling epigenomics filters
+    case TOGGLE_EPIGENOMICS: {
+      const params = { ...state.searchParams };
+      const newFilters = { ...params.filters };
+      const newMustNot = { ...newFilters.must_not };
+
+      if (action.enabled) {
+        // Remove epigenomics assays from must_not when enabling
+        newMustNot.assay = (newMustNot.assay || []).filter(
+          (assay) => !EPIGENOMICS_ASSAYS.includes(assay)
+        );
+      } else {
+        // Add epigenomics assays back to must_not when disabling
+        const currentMustNot = newMustNot.assay || [];
+        newMustNot.assay = [
+          ...currentMustNot.filter((a) => !EPIGENOMICS_ASSAYS.includes(a)),
+          ...EPIGENOMICS_ASSAYS,
+        ];
+
+        // Remove any selected epigenomics assays from filters.assay
+        newFilters.assay = (newFilters.assay || []).filter(
+          (assay) => !EPIGENOMICS_ASSAYS.includes(assay)
+        );
+
+        // Remove 'epigenomics' from omics array if present
+        params.omics = (params.omics || []).filter((o) => o !== 'epigenomics');
+      }
+
+      newFilters.must_not = newMustNot;
+      params.filters = newFilters;
+
+      return {
+        ...state,
+        includeEpigenomics: action.enabled,
+        searchParams: params,
       };
     }
 
