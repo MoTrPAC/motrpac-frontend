@@ -24,9 +24,10 @@ function SearchResultFilters({
   resetSearch,
   hasResultFilters = {},
   profile = {},
+  includeEpigenomics = false,
+  toggleEpigenomics,
 }) {
   const [inputError, setInputError] = useState(false);
-  const [includeEpigenomics, setIncludeEpigenomics] = useState(false);
 
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
@@ -161,23 +162,21 @@ function SearchResultFilters({
           {defaultOmeList.map((filter) => renderOmeFilterButton(filter, false))}
 
           {/* Divider and epigenomics section */}
-          <hr className="my-2" />
-          <div className="d-flex align-items-center mb-2">
-            <div className="custom-control custom-switch">
-              <input
-                type="checkbox"
-                className="custom-control-input"
-                id="includeEpigenomicsSwitch"
-                checked={includeEpigenomics}
-                onChange={(e) => setIncludeEpigenomics(e.target.checked)}
-              />
-              <label
-                className="custom-control-label"
-                htmlFor="includeEpigenomicsSwitch"
-              >
-                Include Epigenomics
-              </label>
-            </div>
+          <hr className="my-2 mx-1" />
+          <div className="form-group form-check mb-2 mx-1">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              id="includeEpigenomicsCheckbox"
+              checked={includeEpigenomics}
+              onChange={(e) => toggleEpigenomics(e.target.checked)}
+            />
+            <label
+              className="form-check-label"
+              htmlFor="includeEpigenomicsCheckbox"
+            >
+              Include Epigenomics
+            </label>
           </div>
           {/* Optional epigenomics filters - always visible but disabled unless toggled */}
           {optionalOmeList.map((filter) => renderOmeFilterButton(filter, true))}
@@ -391,6 +390,8 @@ SearchResultFilters.propTypes = {
     userid: PropTypes.string,
     user_metadata: PropTypes.object,
   }),
+  includeEpigenomics: PropTypes.bool,
+  toggleEpigenomics: PropTypes.func.isRequired,
 };
 
 export default SearchResultFilters;
