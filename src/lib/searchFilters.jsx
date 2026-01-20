@@ -142,30 +142,30 @@ export const sexList = [
 ];
 
 export const timepointListRatEndurance = [
-  { filter_value: '1w', filter_label: '1 week' },
-  { filter_value: '2w', filter_label: '2 week' },
-  { filter_value: '4w', filter_label: '4 week' },
-  { filter_value: '8w', filter_label: '8 week' },
+  { filter_value: '1w', filter_label: '1 week', intervention: 'training', species: 'rat' },
+  { filter_value: '2w', filter_label: '2 week', intervention: 'training', species: 'rat' },
+  { filter_value: '4w', filter_label: '4 week', intervention: 'training', species: 'rat' },
+  { filter_value: '8w', filter_label: '8 week', intervention: 'training', species: 'rat' },
 ];
 
 export const timepointListHuman = [
-  { filter_value: 'pre_exercise', filter_label: 'Pre-Exercise' },
-  { filter_value: 'during_20_min', filter_label: 'During 20 Min' },
-  { filter_value: 'during_40_min', filter_label: 'During 40 Min' },
-  { filter_value: 'post_10_min', filter_label: 'Post 10 Min' },
-  { filter_value: 'post_15_30_45_min', filter_label: 'Post 15/30/45 Min' },
-  { filter_value: 'post_3.5_4_hr', filter_label: 'Post 3.5/4 Hour' },
-  { filter_value: 'post_24_hr', filter_label: 'Post 24 Hour' },
+  { filter_value: 'pre_exercise', filter_label: 'Pre-Exercise', intervention: 'acute exercise', species: 'human' },
+  { filter_value: 'during_20_min', filter_label: 'During 20 Min', intervention: 'acute exercise', species: 'human' },
+  { filter_value: 'during_40_min', filter_label: 'During 40 Min', intervention: 'acute exercise', species: 'human' },
+  { filter_value: 'post_10_min', filter_label: 'Post 10 Min', intervention: 'acute exercise', species: 'human' },
+  { filter_value: 'post_15_30_45_min', filter_label: 'Post 15/30/45 Min', intervention: 'acute exercise', species: 'human' },
+  { filter_value: 'post_3.5_4_hr', filter_label: 'Post 3.5/4 Hour', intervention: 'acute exercise', species: 'human' },
+  { filter_value: 'post_24_hr', filter_label: 'Post 24 Hour', intervention: 'acute exercise', species: 'human' },
 ];
 
 export const timepointListRatAcute = [
-  { filter_value: '00.0h', filter_label: '0 Hour' },
-  { filter_value: '00.5h', filter_label: '0.5 hour' },
-  { filter_value: '01.0h', filter_label: '1 hour' },
-  { filter_value: '04.0h', filter_label: '4 hour' },
-  { filter_value: '07.0h', filter_label: '7 hour' },
-  { filter_value: '24.0h', filter_label: '24 hour' },
-  { filter_value: '48.0h', filter_label: '48 Hour' },
+  { filter_value: '00.0h', filter_label: '0 Hour', intervention: 'acute exercise', species: 'rat' },
+  { filter_value: '00.5h', filter_label: '0.5 hour', intervention: 'acute exercise', species: 'rat' },
+  { filter_value: '01.0h', filter_label: '1 hour', intervention: 'acute exercise', species: 'rat' },
+  { filter_value: '04.0h', filter_label: '4 hour', intervention: 'acute exercise', species: 'rat' },
+  { filter_value: '07.0h', filter_label: '7 hour', intervention: 'acute exercise', species: 'rat' },
+  { filter_value: '24.0h', filter_label: '24 hour', intervention: 'acute exercise', species: 'rat' },
+  { filter_value: '48.0h', filter_label: '48 Hour', intervention: 'acute exercise', species: 'rat' },
 ];
 
 export const rangeList = [
