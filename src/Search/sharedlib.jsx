@@ -48,7 +48,7 @@ export const searchParamsDefaultProps = {
     'contrast_type',
   ],
   unique_fields: ['tissue', 'assay', 'sex', 'timepoint'],
-  size: 100,
+  size: 50,
   start: 0,
   debug: true,
   save: false,
@@ -231,47 +231,57 @@ export const metaboliteResultTableColumns = [
 ];
 
 /**
- * page count and page index rendering function
- * common to all data qc status reports
+ * Server-side pagination: page count and page index rendering function
+ * Uses total, size, and start from API response
  */
-export function PageIndex({ pageIndex = 0, pageOptions = [] }) {
+export function PageIndex({ total = 0, size = 50, start = 0 }) {
+  const pageCount = Math.ceil(total / size) || 1;
+  const currentPage = Math.floor(start / size) + 1;
+
   return (
     <span className="page-index">
       Showing Page
       {' '}
-      {pageIndex + 1}
+      {currentPage}
       {' '}
       of
       {' '}
-      {pageOptions.length}
+      {pageCount}
+      {' '}
+      ({total.toLocaleString()} total results)
     </span>
   );
 }
 
 PageIndex.propTypes = {
-  pageIndex: PropTypes.number,
-  pageOptions: PropTypes.arrayOf(PropTypes.number),
+  total: PropTypes.number,
+  size: PropTypes.number,
+  start: PropTypes.number,
 };
 
 /**
- * page size control rendering function
- * common to all data qc status reports
+ * Server-side pagination: page size control rendering function
+ * Resets to first page when page size changes
  */
-export function PageSize({ pageSize, setPageSize, pageSizeOptions }) {
+export function PageSize({
+  size,
+  onPageSizeChange,
+  pageSizeOptions = [25, 50, 100, 250],
+}) {
   return (
     <div className="pagination-page-size d-flex align-items-center justify-content-start">
       <label htmlFor="pageSizeSelect">Show:</label>
       <select
         className="form-control"
         id="pageSizeSelect"
-        value={pageSize}
+        value={size}
         onChange={(e) => {
-          setPageSize(Number(e.target.value));
+          onPageSizeChange(Number(e.target.value));
         }}
       >
-        {pageSizeOptions.map((size) => (
-          <option key={size} value={size}>
-            {size}
+        {pageSizeOptions.map((sizeOption) => (
+          <option key={sizeOption} value={sizeOption}>
+            {sizeOption}
           </option>
         ))}
       </select>
@@ -281,23 +291,43 @@ export function PageSize({ pageSize, setPageSize, pageSizeOptions }) {
 }
 
 PageSize.propTypes = {
-  pageSize: PropTypes.number.isRequired,
-  setPageSize: PropTypes.func.isRequired,
-  pageSizeOptions: PropTypes.arrayOf(PropTypes.number).isRequired,
+  size: PropTypes.number.isRequired,
+  onPageSizeChange: PropTypes.func.isRequired,
+  pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
 };
 
 /**
- * page navigation control rendering function
- * common to all data qc status reports
+ * Server-side pagination: page navigation control rendering function
+ * Calculates page state from total, size, and start
  */
 export function PageNavigationControl({
-  canPreviousPage,
-  canNextPage,
-  previousPage,
-  nextPage,
-  gotoPage,
-  pageCount,
+  total = 0,
+  size = 50,
+  start = 0,
+  onPageChange,
 }) {
+  const pageCount = Math.ceil(total / size) || 1;
+  const currentPage = Math.floor(start / size);
+  const canPreviousPage = currentPage > 0;
+  const canNextPage = currentPage < pageCount - 1;
+
+  const gotoPage = (pageIndex) => {
+    const newStart = pageIndex * size;
+    onPageChange(newStart);
+  };
+
+  const previousPage = () => {
+    if (canPreviousPage) {
+      gotoPage(currentPage - 1);
+    }
+  };
+
+  const nextPage = () => {
+    if (canNextPage) {
+      gotoPage(currentPage + 1);
+    }
+  };
+
   return (
     <div className="btn-group pagination-navigation-control" role="group">
       <button
@@ -316,7 +346,7 @@ export function PageNavigationControl({
         className={`btn btn-sm btn-outline-primary ${
           !canPreviousPage ? 'disabled-btn' : ''
         }`}
-        onClick={() => previousPage()}
+        onClick={previousPage}
         disabled={!canPreviousPage}
       >
         Previous
@@ -327,7 +357,7 @@ export function PageNavigationControl({
         className={`btn btn-sm btn-outline-primary ${
           !canNextPage ? 'disabled-btn' : ''
         }`}
-        onClick={() => nextPage()}
+        onClick={nextPage}
         disabled={!canNextPage}
       >
         Next
@@ -348,12 +378,10 @@ export function PageNavigationControl({
 }
 
 PageNavigationControl.propTypes = {
-  canPreviousPage: PropTypes.bool.isRequired,
-  canNextPage: PropTypes.bool.isRequired,
-  previousPage: PropTypes.func.isRequired,
-  nextPage: PropTypes.func.isRequired,
-  gotoPage: PropTypes.func.isRequired,
-  pageCount: PropTypes.number.isRequired,
+  total: PropTypes.number,
+  size: PropTypes.number,
+  start: PropTypes.number,
+  onPageChange: PropTypes.func.isRequired,
 };
 
 /** normalize string */
