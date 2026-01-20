@@ -6,6 +6,7 @@ export const SEARCH_SUBMIT = 'SEARCH_SUBMIT';
 export const SEARCH_FAILURE = 'SEARCH_FAILURE';
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
 export const SEARCH_RESET = 'SEARCH_RESET';
+export const TOGGLE_EPIGENOMICS = 'TOGGLE_EPIGENOMICS';
 export const DOWNLOAD_SUBMIT = 'DOWNLOAD_SUBMIT';
 export const DOWNLOAD_FAILURE = 'DOWNLOAD_FAILURE';
 export const DOWNLOAD_SUCCESS = 'DOWNLOAD_SUCCESS';
@@ -55,6 +56,13 @@ function searchReset(scope) {
   return {
     type: SEARCH_RESET,
     scope,
+  };
+}
+
+function toggleEpigenomics(enabled) {
+  return {
+    type: TOGGLE_EPIGENOMICS,
+    enabled,
   };
 }
 
@@ -115,6 +123,10 @@ function handleSearch(params, inputValue, scope, userType) {
       adj_p_value: { min: '', max: '' },
       logFC: { min: '', max: '' },
       p_value: { min: '', max: '' },
+      contrast_type: ['exercise_with_controls', 'acute'],
+      must_not: {
+        assay: ['epigen-atac-seq', 'epigen-rrbs', 'epigen-methylcap-seq'],
+      },
     };
   }
   // insert 'is_meta" field to fields array if ktype is 'metab'
@@ -140,7 +152,7 @@ function handleSearch(params, inputValue, scope, userType) {
   return (dispatch) => {
     dispatch(searchSubmit(params, scope));
     return axios
-      .post(`${searchServiceHost}${endpoint}`, requestParams, headersConfig)
+      .post(`${searchServiceHost}${endpoint}`, params, headersConfig)
       .then((response) => {
         if (response.data.error) {
           dispatch(searchFailure(response.data.error));
@@ -183,6 +195,7 @@ const SearchActions = {
   handleSearchDownload,
   searchReset,
   changeResultFilter,
+  toggleEpigenomics,
 };
 
 export default SearchActions;
