@@ -21,7 +21,7 @@ export const defaultSearchState = {
     ktype: 'gene',
     keys: [],
     omics: [],
-    study: ["pass1b06", "precawg"],
+    study: [],
     analysis: 'all',
     filters: {
       tissue: [],
