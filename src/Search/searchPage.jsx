@@ -92,29 +92,35 @@ export function SearchPage({
     });
   }, [searchResults?.result?.headers, searchResults?.result?.data]);
 
+  // Helper to concatenate arrays of objects and remove duplicates by 'id' property
+  function mergeAndDedupeById(...arrays) {
+    const combined = arrays.flat();
+    return [...new Map(combined.map((item) => [item.id, item])).values()];
+  }
+
   // get options based on selected search context
   // for automatic suggestions in the primary search input field
   function getOptions() {
-    if (includesPass1b06 && includesPrecawg) {
+    if ((includesPass1b06 && includesPrecawg) || (!userType || userType === 'external')) {
       switch (searchParams.ktype) {
         case 'gene':
-          return [...genes, ...humanGenes];
+          return mergeAndDedupeById(genes, humanGenes);
         case 'metab':
-          return [...metabolites, ...humanMetabolites];
+          return mergeAndDedupeById(metabolites, humanMetabolites);
         case 'protein':
-          return [...proteins, ...humanProteins];
+          return mergeAndDedupeById(proteins, humanProteins);
         default:
           return [];
       }
     }
-    if (includesPass1b06 && includesPrecawg && includesPass1a06) {
+    if ((includesPass1b06 && includesPrecawg && includesPass1a06) || (userType && userType === 'internal')) {
       switch (searchParams.ktype) {
         case 'gene':
-          return [...genes,...ratAcuteGenes, ...humanGenes];
+          return mergeAndDedupeById(genes, ratAcuteGenes, humanGenes);
         case 'metab':
-          return [...metabolites, ...ratAcuteMetabolites, ...humanMetabolites];
+          return mergeAndDedupeById(metabolites, ratAcuteMetabolites, humanMetabolites);
         case 'protein':
-          return [...proteins, ...ratAcuteProteins, ...humanProteins];
+          return mergeAndDedupeById(proteins, ratAcuteProteins, humanProteins);
         default:
           return [];
       }
