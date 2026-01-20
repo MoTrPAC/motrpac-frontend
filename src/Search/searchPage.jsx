@@ -175,6 +175,17 @@ export function SearchPage({
     }
   };
 
+  // Handle server-side pagination changes
+  // Re-fetches data with updated size and start params
+  const handlePaginationChange = ({ size: newSize, start: newStart }) => {
+    const updatedParams = {
+      ...searchParams,
+      size: newSize,
+      start: newStart,
+    };
+    handleSearch(updatedParams, searchParams.keys, 'filters', userType);
+  };
+
   return (
     <div className="searchPage px-3 px-md-4 mb-3 w-100">
       <Helmet>
@@ -327,6 +338,10 @@ export function SearchPage({
                             unifiedResults={unifiedResults}
                             searchParams={searchParams}
                             handleSearchDownload={handleSearchDownload}
+                            total={searchResults.total || 0}
+                            size={searchParams.size}
+                            start={searchResults.start || 0}
+                            onPaginationChange={handlePaginationChange}
                           />
                         ) : (
                           scope === 'filters' && (
