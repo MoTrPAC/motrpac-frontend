@@ -85,6 +85,7 @@ export const assayListRat = assays.sort((a, b) =>
 
 const assaysHuman = [
   { filter_value: 'transcript-rna-seq', filter_label: 'RNA-seq' },
+  { filter_value: 'epigen-methylcap-seq', filter_label: 'Methylcap-seq' },
   { filter_value: 'metab-t-acoa', filter_label: 'Targeted Acyl-CoA' },
   { filter_value: 'metab-t-amines', filter_label: 'Targeted Amines' },
   { filter_value: 'metab-t-conv', filter_label: 'Targeted Conventional' },
