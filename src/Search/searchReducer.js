@@ -141,7 +141,6 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       const {
         ktype,
         keys,
-        study,
         omics,
         analysis,
         filters,
@@ -150,13 +149,19 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         size,
         start,
       } = action.params;
+
+      // Preserve user-selected study filters from state (not action.params.study
+      // which may contain auto-populated defaults from handleSearch)
+      // Reset to empty for initial 'all' searches, preserve for 'filters' scope
+      const userSelectedStudy = action.scope === 'filters' ? state.searchParams.study : [];
+
       return {
         ...state,
         searchResults: {},
         searchParams: {
           ktype,
           keys,
-          study,
+          study: userSelectedStudy,
           omics,
           analysis,
           filters,
@@ -184,15 +189,6 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
 
     // Hanlde query response
     case SEARCH_SUCCESS: {
-      // Preserve user's explicit study selection from state
-      // action.params.study may contain auto-populated defaults from handleSearch
-      // Only keep study selection if scope is 'filters' (user is filtering results)
-      // and state already has user-selected studies
-      const updatedParams = {
-        ...state.searchParams,
-        study: action.scope === 'filters' ? state.searchParams.study : [],
-      };
-
       return {
         ...state,
         searchResults:
@@ -204,10 +200,10 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
             : action.searchResults,
         searching: false,
         hasResultFilters:
-          action.searchResults.uniqs && action.scope === 'all'
+          action.searchResults.uniqs
             ? action.searchResults.uniqs
             : state.hasResultFilters,
-        searchParams: updatedParams,
+        // searchParams.study already preserved correctly in SEARCH_SUBMIT
       };
     }
 
@@ -216,6 +212,8 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       // Action to handle secondary filter reset
       if (action.scope === 'filters') {
         const params = { ...state.searchParams };
+        params.omics = [];
+        params.study = [];
         params.filters = {
           tissue: [],
           assay: [],
@@ -224,6 +222,10 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
           adj_p_value: { min: '', max: '' },
           logFC: { min: '', max: '' },
           p_value: { min: '', max: '' },
+          contrast_type: ['exercise_with_controls', 'acute'],
+          must_not: {
+            assay: ['epigen-atac-seq', 'epigen-rrbs', 'epigen-methylcap-seq'],
+          },
         };
         return {
           ...state,
@@ -233,6 +235,8 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
 
       const defaultParams = { ...defaultSearchState.searchParams };
       defaultParams.keys = [];
+      defaultParams.omics = [];
+      defaultParams.study = [];
       defaultParams.filters = {
         tissue: [],
         assay: [],
@@ -241,6 +245,10 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         adj_p_value: { min: '', max: '' },
         logFC: { min: '', max: '' },
         p_value: { min: '', max: '' },
+        contrast_type: ['exercise_with_controls', 'acute'],
+        must_not: {
+          assay: ['epigen-atac-seq', 'epigen-rrbs', 'epigen-methylcap-seq'],
+        },
       };
       return {
         ...defaultSearchState,
