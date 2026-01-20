@@ -44,6 +44,8 @@ export function SearchPage({
   downloadError = '',
   handleSearchDownload,
   hasResultFilters,
+  includeEpigenomics = false,
+  toggleEpigenomics,
 }) {
   const [multiSelections, setMultiSelections] = useState([]);
   const inputRef = useRef(null);
@@ -307,6 +309,8 @@ export function SearchPage({
                         resetSearch={resetSearch}
                         hasResultFilters={hasResultFilters}
                         profile={profile}
+                        includeEpigenomics={includeEpigenomics}
+                        toggleEpigenomics={toggleEpigenomics}
                       />
                     </div>
                     {/* render unified search results across multiple studies */}
@@ -627,6 +631,8 @@ SearchPage.propTypes = {
     timepoint: PropTypes.object,
     sex: PropTypes.object,
   }),
+  includeEpigenomics: PropTypes.bool,
+  toggleEpigenomics: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -645,6 +651,8 @@ const mapDispatchToProps = (dispatch) => ({
   resetSearch: (scope) => dispatch(SearchActions.searchReset(scope)),
   handleSearchDownload: (params, analysis) =>
     dispatch(SearchActions.handleSearchDownload(params, analysis)),
+  toggleEpigenomics: (enabled) =>
+    dispatch(SearchActions.toggleEpigenomics(enabled)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
