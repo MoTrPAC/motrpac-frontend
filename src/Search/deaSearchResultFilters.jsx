@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Tooltip } from 'react-tooltip';
 import {
   defaultOmeList,
   optionalOmeList,
@@ -191,11 +192,13 @@ function SearchResultFilters({
       keyName: 'tissue',
       name: 'Tissue',
       filters: customizeTissueList(),
+      tooltip: 'H = Human tissue, R = Rat tissue',
     },
     {
       keyName: 'sex',
       name: 'Sex Stratum',
       filters: sexList,
+      tooltip: 'Filter by sex-stratified results. Unstratified results are indicated by "None".',
     }
   ];
 
@@ -254,7 +257,16 @@ function SearchResultFilters({
   const timepointSearchResultFilters = (
     <div className="card filter-module mb-3">
       <div className="card-header font-weight-bold">
-        <div className="card-header-label">Timepoint</div>
+        <div className="card-header-label">
+          <span>Timepoint</span>
+          <i
+            className="bi bi-info-circle-fill ml-2 text-secondary"
+            data-tooltip-id="timepoint-filter-tooltip"
+            data-tooltip-content="H = Human tissue, R = Rat tissue"
+            data-tooltip-place="right"
+          />
+          <Tooltip id="timepoint-filter-tooltip" />
+        </div>
       </div>
       <div className="card-body-container" id="filters-timepoint">
         <div className="card-body">
@@ -308,7 +320,13 @@ function SearchResultFilters({
       <div className="card-header font-weight-bold">
         <div className="card-header-label">
           <span>{item.name}</span>
-          <i className="bi bi-info-circle-fill ml-2 text-secondary" />
+          <i
+            className="bi bi-info-circle-fill ml-2 text-secondary"
+            data-tooltip-id={`${item.keyName}-filter-tooltip`}
+            data-tooltip-content={item.tooltip}
+            data-tooltip-place="right"
+          />
+          <Tooltip id={`${item.keyName}-filter-tooltip`} />
         </div>
       </div>
       <div className="card-body-container" id={`filters-${item.keyName}`}>
