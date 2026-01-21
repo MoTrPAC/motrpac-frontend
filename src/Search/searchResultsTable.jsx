@@ -229,7 +229,7 @@ ResultsTable.propTypes = {
     PropTypes.shape({
       Header: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
         .isRequired,
-      accessor: PropTypes.string.isRequired,
+      accessor: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
     }),
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({ ...searchResultsTablePropType }))
