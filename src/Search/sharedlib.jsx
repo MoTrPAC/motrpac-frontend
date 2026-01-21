@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tooltip';
 import roundNumbers from '../lib/utils/roundNumbers';
 import {
-  speciesList,
-  studyList,
   sexList,
   randomGroupList,
   tissues,
