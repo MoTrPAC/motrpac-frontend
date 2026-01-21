@@ -164,12 +164,12 @@
     .filter-module {
       .card-header {
         padding: 0.4rem 0.85rem;
-        /**
-        .filters-collapsible-btn {
-          color: #888;
-          line-height: 0;
+
+        #sex-filter-tooltip,
+        #tissue-filter-tooltip,
+        #timepoint-filter-tooltip {
+          z-index: 1000;
         }
-        **/
       }
 
       .card-body {
