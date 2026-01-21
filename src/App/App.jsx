@@ -39,9 +39,6 @@ const BrowseDataPageConnected = lazy(
   () => import('../BrowseDataPage/browseDataPage'),
 );
 const SearchPageConnected = lazy(() => import('../Search/searchPage'));
-const GeneCentricViewConnected = lazy(
-  () => import('../AnalysisPage/GeneCentricViewRat/geneCentricViewPage'),
-);
 const DashboardConnected = lazy(() => import('../Dashboard/dashboard'));
 const GraphicalClustering = lazy(
   () => import('../AnalysisPage/GraphicalClustering/graphicalClusteringPage'),
@@ -170,10 +167,6 @@ function App({ history = History }) {
                 <Route
                   path="/search"
                   element={<SearchPageConnected/>}
-                />
-                <Route
-                  path="/gene-centric"
-                  element={<GeneCentricViewConnected/>}
                 />
                 <Route
                   path="/graphical-clustering"
