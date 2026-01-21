@@ -289,7 +289,7 @@ const BundleDataTypes = {
       object_zipfile_size: '1 MB',
     },
   ],
-  human_sed_adu: [
+  human_sed_adu_internal: [
     {
       type: 'phenotype',
       phase: 'human-precovid-sed-adu',
@@ -297,7 +297,7 @@ const BundleDataTypes = {
       species: 'Human',
       participant_type: 'Adult',
       intervention: 'Sedentary',
-      study_group: 'Pre-COVID',
+      study_group: 'Pre-Suspension',
       description:
         'Phenotypic data from human sedentary adults performing acute exercise prior to COVID-19.',
       object_zipfile:
@@ -311,7 +311,7 @@ const BundleDataTypes = {
       species: 'Human',
       participant_type: 'Adult',
       intervention: 'Sedentary',
-      study_group: 'Pre-COVID',
+      study_group: 'Pre-Suspension',
       description:
         'Differential analysis, metadata, QC normalized data across human tissues for ATAC-seq and Methylcap-seq assays.',
       object_zipfile:
@@ -325,7 +325,7 @@ const BundleDataTypes = {
       species: 'Human',
       participant_type: 'Adult',
       intervention: 'Sedentary',
-      study_group: 'Pre-COVID',
+      study_group: 'Pre-Suspension',
       description:
         'Differential analysis, metadata, QC normalized data across human tissues for RNA-seq.',
       object_zipfile:
@@ -339,7 +339,7 @@ const BundleDataTypes = {
       species: 'Human',
       participant_type: 'Adult',
       intervention: 'Sedentary',
-      study_group: 'Pre-COVID',
+      study_group: 'Pre-Suspension',
       description:
         'Differential analysis, metadata, QC normalized data across human tissues for Global Proteomics, Phosphoproteomics, and OLink.',
       object_zipfile:
@@ -353,7 +353,7 @@ const BundleDataTypes = {
       species: 'Human',
       participant_type: 'Adult',
       intervention: 'Sedentary',
-      study_group: 'Pre-COVID',
+      study_group: 'Pre-Suspension',
       description:
         'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-untargeted assays.',
       object_zipfile:
@@ -367,7 +367,79 @@ const BundleDataTypes = {
       species: 'Human',
       participant_type: 'Adult',
       intervention: 'Sedentary',
-      study_group: 'Pre-COVID',
+      study_group: 'Pre-Suspension',
+      description:
+        'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-targeted assays.',
+      object_zipfile:
+        'bundles/motrpac_human-precovid-sed-adu_metabolomics-targeted.zip',
+      object_zipfile_size: '59.98 MB',
+    },
+  ],
+  human_sed_adu_external: [
+    {
+      type: 'epigenomics',
+      phase: 'human-precovid-sed-adu',
+      title: 'Epigenomics',
+      species: 'Human',
+      participant_type: 'Adult',
+      intervention: 'Sedentary',
+      study_group: 'Pre-Suspension',
+      description:
+        'Differential analysis, metadata, QC normalized data across human tissues for ATAC-seq and Methylcap-seq assays.',
+      object_zipfile:
+        'bundles/motrpac_human-precovid-sed-adu_epigenomics.zip',
+      object_zipfile_size: '6.12 GB',
+    },
+    {
+      type: 'transcriptomics',
+      phase: 'human-precovid-sed-adu',
+      title: 'Transcriptomics',
+      species: 'Human',
+      participant_type: 'Adult',
+      intervention: 'Sedentary',
+      study_group: 'Pre-Suspension',
+      description:
+        'Differential analysis, metadata, QC normalized data across human tissues for RNA-seq.',
+      object_zipfile:
+        'bundles/motrpac_human-precovid-sed-adu_transcriptomics.zip',
+      object_zipfile_size: '860.88 MB',
+    },
+    {
+      type: 'proteomics',
+      phase: 'human-precovid-sed-adu',
+      title: 'Proteomics',
+      species: 'Human',
+      participant_type: 'Adult',
+      intervention: 'Sedentary',
+      study_group: 'Pre-Suspension',
+      description:
+        'Differential analysis, metadata, QC normalized data across human tissues for Global Proteomics, Phosphoproteomics, and OLink.',
+      object_zipfile:
+        'bundles/motrpac_human-precovid-sed-adu_proteomics.zip',
+      object_zipfile_size: '407.27 MB',
+    },
+    {
+      type: 'metabolomics-untargeted',
+      phase: 'human-precovid-sed-adu',
+      title: 'Metabolomics-untargeted',
+      species: 'Human',
+      participant_type: 'Adult',
+      intervention: 'Sedentary',
+      study_group: 'Pre-Suspension',
+      description:
+        'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-untargeted assays.',
+      object_zipfile:
+        'bundles/motrpac_human-precovid-sed-adu_metabolomics-untargeted.zip',
+      object_zipfile_size: '501.32 MB',
+    },
+    {
+      type: 'metabolomics-targeted',
+      phase: 'human-precovid-sed-adu',
+      title: 'Metabolomics-targeted',
+      species: 'Human',
+      participant_type: 'Adult',
+      intervention: 'Sedentary',
+      study_group: 'Pre-Suspension',
       description:
         'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-targeted assays.',
       object_zipfile:
