@@ -135,12 +135,13 @@ const commonSearchResultColumns = [
     Header: () => (
       <div className="d-flex align-items-center timewise-p-value-col-header">
         <span>P-value</span>
-        <span className="material-icons col-header-info timewise-p-value-tooltip">
-          info
-        </span>
-        <Tooltip anchorSelect=".timewise-p-value-tooltip" place="left">
-          The p-value of the presented log fold change
-        </Tooltip>
+        <i
+          className="bi bi-info-circle-fill ml-2 text-secondary col-header-info"
+          data-tooltip-id="timewise-p-value-tooltip"
+          data-tooltip-html="<span>The p-value of the presented log fold change</span>"
+          data-tooltip-place="top"
+        />
+        <Tooltip id="timewise-p-value-tooltip" />
       </div>
     ),
     accessor: 'p_value',
@@ -150,12 +151,13 @@ const commonSearchResultColumns = [
     Header: () => (
       <div className="d-flex align-items-center timewise-adj-p-value-col-header">
         <span>Adj p-value</span>
-        <span className="material-icons col-header-info timewise-adj-p-value-tooltip">
-          info
-        </span>
-        <Tooltip anchorSelect=".timewise-adj-p-value-tooltip" place="left">
-          The FDR adjusted p-value of the presented log-fold change
-        </Tooltip>
+        <i
+          className="bi bi-info-circle-fill ml-2 text-secondary col-header-info"
+          data-tooltip-id="timewise-adj-p-value-tooltip"
+          data-tooltip-html="<span>The FDR adjusted p-value of the presented log fold change</span>"
+          data-tooltip-place="top"
+        />
+        <Tooltip id="timewise-adj-p-value-tooltip" />
       </div>
     ),
     accessor: 'adj_p_value',
