@@ -12,7 +12,7 @@ describe('Navbar', () => {
     expect(screen.getByRole('button', { name: /login/i })).toBeInTheDocument();
     
     // Should show Downloads nav link
-    expect(screen.getByText(/downloads/i)).toBeInTheDocument();
+    expect(screen.getByText(/browse data/i)).toBeInTheDocument();
   });
 
   test('displays user info and logout button when authenticated', () => {
@@ -38,11 +38,11 @@ describe('Navbar', () => {
       />
     );
 
-    expect(screen.getByText(/rat and human data/i)).toBeInTheDocument();
+    expect(screen.getByText(/biospecimen/i)).toBeInTheDocument();
     
     // Verify dropdown menus exist
-    expect(screen.getByText(/explore/i)).toBeInTheDocument();
-    expect(screen.getByText(/data access/i)).toBeInTheDocument();
+    expect(screen.getByText(/browse data/i)).toBeInTheDocument();
+    expect(screen.getByText(/data visualization/i)).toBeInTheDocument();
     expect(screen.getByText(/resources/i)).toBeInTheDocument();
     expect(screen.getByText(/learn/i)).toBeInTheDocument();
     expect(screen.getByText(/about/i)).toBeInTheDocument();
