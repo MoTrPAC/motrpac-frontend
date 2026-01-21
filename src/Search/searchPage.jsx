@@ -135,7 +135,7 @@ export function SearchPage({
     if (searchParams.ktype === 'metab') {
       return 'Example: "amino acids and peptides", "c10:2 carnitine", "aminobutyric acid", "coa(3:0, 3-oh)"';
     }
-    return 'Example: brd2, vegfa, bag3, myom2, prag1';
+    return 'Example: bag3, myom2, prag1, smad3, vegfa';
   }
 
   // selector for manually entered keyword input configured with auto-suggest
