@@ -493,32 +493,6 @@ export const transformData = (arr) => {
         </a>
       );
     }
-    // Transform protein id values
-    /*
-    if (item.assay.match(/protein|proteomics|prot-/i)) {
-      const newProteinVal = item.feature_ID;
-      item.feature_ID = (
-        <a
-          href={`https://www.ncbi.nlm.nih.gov/protein/${newProteinVal}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {newProteinVal}
-        </a>
-      );
-    } else if (item.assay.match(/transcript-rna-seq/i)) {
-      const newFidVal = item.feature_ID;
-      item.feature_ID = (
-        <a
-          href={`http://uswest.ensembl.org/Rattus_norvegicus/Gene/Idhistory?g=${newFidVal}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {newFidVal}
-        </a>
-      );
-    }
-    */
     // Transform assay values
     if (item.assay && item.assay.length && item.contrast1_randomGroupCode && item.contrast1_randomGroupCode !== 'NA') {
       const matchedAssay = assayListHuman.find(
