@@ -16,21 +16,13 @@ function DifferentialAbundanceSummary({ userType = '', userRole = '', species = 
             search results, please use the following guidelines:
           </span>
         )}
-        {((userType && userType === 'external') && (userRole && userRole === 'reviewer')) && (
+        {(!userType || (userType && userType === 'external')) && (
           <span>
-            Search by gene, protein or metabolite to examine the timewise endurance
-            training response over 8 weeks of training, or the pre-COVID human
-            sedentary adults randomized to endurance exercise training (EE), resistance
-            exercise training (RE), or no-exercise control groups. To ensure the best
-            search results, please use the following guidelines:
-          </span>
-        )}
-        {(!userType || (userType === 'external' && (!userRole || userRole !== 'reviewer'))) && (
-          <span>
-            Search by gene symbol, protein name or metabolite name to examine the
+            Search by gene, protein or metabolite names to examine the
             timewise endurance training response over 8 weeks of training in
-            young adult rats. To ensure the best search results, please use the
-            following guidelines:
+            young adult rats, as well as the pre-suspension human sedentary adults
+            randomized to acute exercise or no-exercise control groups. To ensure the
+            best search results, please use the following guidelines:
           </span>
         )}
         <ol className="mt-2">
@@ -61,9 +53,11 @@ function DifferentialAbundanceSummary({ userType = '', userRole = '', species = 
           </li>
         </ol>
         <p>
-          The endurance trained young adult rats dataset is available to the community
-          under the
-          {' '}
+          The{' '}
+          <span className="font-weight-bold">endurance training in young adult rats</span>
+          {' '}and{' '}
+          <span className="font-weight-bold">acute exercise in human sedentary adults (pre-suspension)</span>
+          {' '}datasets are available to the community under the{' '}
           <Link to="/license">CC BY 4.0 license</Link>
           .
         </p>
