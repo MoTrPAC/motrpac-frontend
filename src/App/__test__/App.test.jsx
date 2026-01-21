@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import { vi } from 'vitest';
 import { Provider } from 'react-redux';
 import App from '../App';
@@ -10,6 +9,11 @@ import testUser from '../../testData/testUser.json';
 // Optional: mock Google Analytics, scrollTo etc.
 vi.mock('ga-gtag');
 window.scrollTo = vi.fn();
+
+// Reset browser history before each test to avoid test isolation issues
+beforeEach(() => {
+  window.history.pushState({}, '', '/');
+});
 
 // Helper to render App with default wrappers
 function renderWithRouterAndStore(
@@ -21,6 +25,9 @@ function renderWithRouterAndStore(
     ...renderOptions
   } = {}
 ) {
+  // Set the initial route by manipulating window.history
+  window.history.pushState({}, 'Test page', route);
+
   function Wrapper({ children }) {
     return (
       <Provider store={store}>
@@ -44,12 +51,12 @@ describe('<App /> routing (Unauthenticated)', () => {
 
   test('loads the search page at /search', async () => {
     renderWithRouterAndStore(<App />, { route: '/search' });
-    await waitFor(() => expect(screen.getByText(/search/i)).toBeInTheDocument());
+    expect(await screen.findByText(/summary-level results/i, {}, { timeout: 5000 })).toBeInTheDocument();
   });
 
   test('loads the browse data page at /data-download', async () => {
     renderWithRouterAndStore(<App />, { route: '/data-download' });
-    await waitFor(() => expect(screen.getByText(/data download/i)).toBeInTheDocument());
+    expect(await screen.findByText(/Study Data/i)).toBeInTheDocument();
   });
 
   test('loads the code repositories page at /code-repositories', async () => {
@@ -92,12 +99,12 @@ describe('<App /> routing (Authenticated)', () => {
 
   test('loads the search page at /search for authenticated user', async () => {
     renderWithRouterAndStore(<App />, { route: '/search', preloadedState: preloadedAuthState });
-    await waitFor(() => expect(screen.getByText(/search/i)).toBeInTheDocument());
+    expect(await screen.findByText(/summary-level results/i, {}, { timeout: 5000 })).toBeInTheDocument();
   });
 
   test('loads the prior releases page at /releases for authenticated user', async () => {
     renderWithRouterAndStore(<App />, { route: '/releases', preloadedState: preloadedAuthState });
-    await waitFor(() => expect(screen.getByText(/data releases/i)).toBeInTheDocument());
+    expect(await screen.findByText(/data releases/i, {}, { timeout: 5000 })).toBeInTheDocument();
   });
 
   test('loads the methods page at /methods for authenticated user', async () => {
@@ -114,6 +121,6 @@ describe('<App /> routing (Authenticated)', () => {
 
   test('loads the external links page at /external-links for authenticated user', async () => {
     renderWithRouterAndStore(<App />, { route: '/external-links', preloadedState: preloadedAuthState });
-    await waitFor(() => expect(screen.getByText(/useful links/i)).toBeInTheDocument());
+    expect(await screen.findByRole('heading', { name: /useful links/i }, { timeout: 5000 })).toBeInTheDocument();
   });
 });
