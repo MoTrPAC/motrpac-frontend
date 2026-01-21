@@ -29,6 +29,9 @@ export const searchParamsDefaultProps = {
     adj_p_value: { min: '', max: '' },
     logFC: { min: '', max: '' },
     contrast_type: ['exercise_with_controls', 'acute'],
+    must_not: {
+      assay: ['epigen-atac-seq', 'epigen-rrbs', 'epigen-methylcap-seq'],
+    }
   },
   fields: [
     'gene_symbol',
@@ -45,7 +48,7 @@ export const searchParamsDefaultProps = {
     'contrast1_randomGroupCode',
     'contrast_type',
   ],
-  unique_fields: ['tissue', 'assay', 'sex', 'timepoint'],
+  unique_fields: ['tissue', 'omics', 'assay', 'sex', 'timepoint'],
   size: 50,
   start: 0,
   debug: true,
@@ -78,6 +81,9 @@ export const searchParamsPropType = {
       max: PropTypes.string,
     }),
     contrast_type: PropTypes.arrayOf(PropTypes.string),
+    must_not: PropTypes.shape({
+      assay: PropTypes.arrayOf(PropTypes.string),
+    }),
   }),
   fields: PropTypes.arrayOf(PropTypes.string),
   unique_fields: PropTypes.arrayOf(PropTypes.string),
