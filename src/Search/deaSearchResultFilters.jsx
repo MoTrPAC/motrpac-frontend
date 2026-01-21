@@ -192,13 +192,13 @@ function SearchResultFilters({
       keyName: 'tissue',
       name: 'Tissue',
       filters: customizeTissueList(),
-      tooltip: 'H = Human tissue, R = Rat tissue',
+      tooltip: '<span>H = Human tissue, R = Rat tissue</span>',
     },
     {
       keyName: 'sex',
       name: 'Sex Stratum',
       filters: sexList,
-      tooltip: 'Filter by sex-stratified results. Unstratified results are indicated by "None".',
+      tooltip: '<span>Filter by sex-stratified results. Unstratified<br />results are indicated by "None".</span>',
     }
   ];
 
@@ -262,7 +262,7 @@ function SearchResultFilters({
           <i
             className="bi bi-info-circle-fill ml-2 text-secondary"
             data-tooltip-id="timepoint-filter-tooltip"
-            data-tooltip-content="H = Human tissue, R = Rat tissue"
+            data-tooltip-html="<span>H = Human tissue, R = Rat tissue</span>"
             data-tooltip-place="right"
           />
           <Tooltip id="timepoint-filter-tooltip" />
@@ -323,7 +323,7 @@ function SearchResultFilters({
           <i
             className="bi bi-info-circle-fill ml-2 text-secondary"
             data-tooltip-id={`${item.keyName}-filter-tooltip`}
-            data-tooltip-content={item.tooltip}
+            data-tooltip-html={item.tooltip}
             data-tooltip-place="right"
           />
           <Tooltip id={`${item.keyName}-filter-tooltip`} />
