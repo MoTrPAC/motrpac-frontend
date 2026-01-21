@@ -55,7 +55,6 @@ export function SearchPage({
   const surveyId = useSelector((state) => state.userSurvey.surveyId);
 
   const userType = profile.user_metadata && profile.user_metadata.userType;
-  const userRole = profile.app_metadata && profile.app_metadata.role;
 
   const includesPrecawg = searchParams.study.includes('precawg');
   const includesPass1b06 = searchParams.study.includes('pass1b06');
@@ -198,11 +197,7 @@ export function SearchPage({
       <form id="searchForm" name="searchForm">
         <PageTitle title="Summary-level results" />
         <div className="search-content-container">
-          <DifferentialAbundanceSummary
-            userType={userType}
-            userRole={userRole}
-            study={searchParams.study}
-          />
+          <DifferentialAbundanceSummary userType={userType} />
           <div className="search-form-container mt-3 mb-4 border shadow-sm rounded px-4 pt-2 pb-3">
             <div className="search-summary-toggle-container row">
               <a
