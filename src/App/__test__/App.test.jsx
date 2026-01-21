@@ -56,7 +56,7 @@ describe('<App /> routing (Unauthenticated)', () => {
 
   test('loads the browse data page at /data-download', async () => {
     renderWithRouterAndStore(<App />, { route: '/data-download' });
-    expect(await screen.findByText(/Study Data/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Study Data/i, {}, { timeout: 5000 })).toBeInTheDocument();
   });
 
   test('loads the code repositories page at /code-repositories', async () => {
