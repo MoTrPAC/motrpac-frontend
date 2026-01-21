@@ -160,6 +160,33 @@ function DataDownloadsMain({
                 <li>5 time points</li>
               </ul>
             </SelectiveDataDownloadsCard>
+            {/* human-precovid-sed-adu data set */}
+            <SelectiveDataDownloadsCard
+              cardIcon="person"
+              cardTitle="Human Sedentary Adults"
+              dataSelectHandler={() => dispatch(actions.selectHumanPreCovidSedAduData())}
+              selectedData="human-precovid-sed-adu"
+              cssSelector={
+              !userType || (userType && userType === 'external')
+                ? 'external-access'
+                : ''
+              }
+              >
+              <h3 className="card-title phase-card-title">
+                Acute Exercise
+              </h3>
+              <ul className="list-unstyled mt-3 mb-4 text-muted">
+                <li>Pre-Suspension</li>
+                <li>4 tissues</li>
+                <li>22 assays across different omes</li>
+                <li>
+                  <a href={import.meta.env.VITE_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
+                    <i className="bi bi-file-earmark-fill mr-1" />
+                    <span>Release README</span>
+                  </a>
+                </li>
+              </ul>
+            </SelectiveDataDownloadsCard>
             {/* pass1a/1c-06 data set */}
             {userType && userType === 'internal' && (
               <SelectiveDataDownloadsCard
@@ -174,30 +201,6 @@ function DataDownloadsMain({
                   <li>21 tissues</li>
                   <li>30 assays across different omes</li>
                   <li>7 time points</li>
-                </ul>
-              </SelectiveDataDownloadsCard>
-            )}
-            {/* human-precovid-sed-adu data set */}
-            {userType && userType === 'internal' && (
-              <SelectiveDataDownloadsCard
-                cardIcon="person"
-                cardTitle="Human Adults"
-                dataSelectHandler={() => dispatch(actions.selectHumanPreCovidSedAduData())}
-                selectedData="human-precovid-sed-adu"
-              >
-                <h3 className="card-title phase-card-title">
-                  Pre-COVID Sedentary
-                </h3>
-                <ul className="list-unstyled mt-3 mb-4 text-muted">
-                  <li>Acute exercise adult participants</li>
-                  <li>4 tissues</li>
-                  <li>22 assays across different omes</li>
-                  <li>
-                    <a href={import.meta.env.VITE_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
-                      <i className="bi bi-file-earmark-fill mr-1" />
-                      <span>Release README</span>
-                    </a>
-                  </li>
                 </ul>
               </SelectiveDataDownloadsCard>
             )}
@@ -218,9 +221,22 @@ function DataDownloadsMain({
                 aria-controls="pass1b_06_bundle_datasets"
                 aria-selected="true"
               >
-                Endurance Training Rats
+                Rat
               </a>
             </li>
+            <li className="nav-item font-weight-bold" role="presentation">
+                <a
+                  className="nav-link"
+                  id="human_sed_adu_bundle_datasets_tab"
+                  data-toggle="pill"
+                  href="#human_sed_adu_bundle_datasets"
+                  role="tab"
+                  aria-controls="human_sed_adu_bundle_datasets"
+                  aria-selected="false"
+                >
+                  Human
+                </a>
+              </li>
             {userType && userType === 'internal' && (
               <li className="nav-item font-weight-bold" role="presentation">
                 <a
@@ -233,21 +249,6 @@ function DataDownloadsMain({
                   aria-selected="false"
                 >
                   Acute Exercise Rats
-                </a>
-              </li>
-            )}
-            {userType && userType === 'internal' && (
-              <li className="nav-item font-weight-bold" role="presentation">
-                <a
-                  className="nav-link"
-                  id="human_sed_adu_bundle_datasets_tab"
-                  data-toggle="pill"
-                  href="#human_sed_adu_bundle_datasets"
-                  role="tab"
-                  aria-controls="human_sed_adu_bundle_datasets"
-                  aria-selected="false"
-                >
-                  Human Sedentary Adults
                 </a>
               </li>
             )}
@@ -267,6 +268,19 @@ function DataDownloadsMain({
                 downloadedData={downloadedData}
               />
             </div>
+            <div
+                className="tab-pane fade"
+                id="human_sed_adu_bundle_datasets"
+                role="tabpanel"
+                aria-labelledby="human_sed_adu_bundle_datasets_tab"
+              >
+                <BundleDatasets
+                  profile={profile}
+                  bundleDatasets={userType && userType === 'internal' ? BundleDataTypes.human_sed_adu_internal : BundleDataTypes.human_sed_adu_external}
+                  surveySubmitted={surveySubmitted}
+                  downloadedData={downloadedData}
+                />
+              </div>
             {userType && userType === 'internal' && (
               <div
                 className="tab-pane fade"
@@ -277,21 +291,6 @@ function DataDownloadsMain({
                 <BundleDatasets
                   profile={profile}
                   bundleDatasets={BundleDataTypes.pass1a_06}
-                  surveySubmitted={surveySubmitted}
-                  downloadedData={downloadedData}
-                />
-              </div>
-            )}
-            {userType && userType === 'internal' && (
-              <div
-                className="tab-pane fade"
-                id="human_sed_adu_bundle_datasets"
-                role="tabpanel"
-                aria-labelledby="human_sed_adu_bundle_datasets_tab"
-              >
-                <BundleDatasets
-                  profile={profile}
-                  bundleDatasets={BundleDataTypes.human_sed_adu}
                   surveySubmitted={surveySubmitted}
                   downloadedData={downloadedData}
                 />
