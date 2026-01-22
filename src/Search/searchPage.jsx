@@ -60,14 +60,6 @@ export function SearchPage({
   const includesPass1b06 = searchParams.study.includes('pass1b06');
   const includesPass1a06 = searchParams.study.includes('pass1a06');
 
-  // add 'pass1a06` to study array if userType is 'internal'
-  // to allow searching across 3 studies instead of the default 2 studies
-  useEffect(() => {
-    if (userType === 'internal' && !includesPass1a06) {
-      changeParam('study', [...searchParams.study, 'pass1a06']);
-    }
-  }, [userType]);
-
   useEffect(() => {
     if (showUserSurveyModal) {
       const userSurveyModalRef = document.querySelector('body');
