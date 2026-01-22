@@ -33,56 +33,32 @@ function SearchResultFilters({
   const includesPass1b06 = searchParams.study.includes('pass1b06');
   const includesPass1a06 = searchParams.study.includes('pass1a06');
 
-  // FIXME - this is a hack to get the search filters such as tissue and assay
-  // to render accordingly to the ktype (gene, protein, metabolite)
+  // Customize tissue list based on user type and ktype
   function customizeTissueList() {
-    let tissueList = [];
-    // Exclude PASS1A06 aorta tissue for external users
-    const tissuesExternal = tissues.filter((t) => t.filter_value !== 'aorta');
-    // Determine tissue list based on selected studies
     if (!Array.isArray(searchParams.study)) {
       return [];
     }
 
-    // All three studies selected
-    // Or precawg and Pass1b06 selected (exclude aorta from rat tissues)
-    // Or single study or other combinations
-    if ((includesPrecawg && includesPass1b06 && includesPass1a06) || (userType && userType === 'internal' && !searchParams.study.length)) {
-      tissueList = [...tissues];
-    } else if ((includesPrecawg && includesPass1b06) || (!userType || userType === 'external' && !searchParams.study.length)) {
-      tissueList = [...tissuesExternal];
-    } else if (!searchParams.study.length) {
-      // No study selected - show all tissues based on user type
-      // Default - no study selected
-      if (userType && userType === 'internal') {
-        tissueList = [...tissues];
-      } else {
-        tissueList = [...tissuesExternal];
-      }
-    } else {
-      tissueList = [];
-    }
+    // Internal users see all tissues; external users don't see aorta (pass1a06 tissue)
+    const isInternal = userType && userType === 'internal';
+    let tissueList = isInternal ? [...tissues] : tissues.filter((t) => t.filter_value !== 'aorta');
 
-    // rat plasma not available in epigen and transcript
-    if (searchParams.ktype === 'gene') {
-      return tissueList.filter((t) =>
-        !t.filter_value.match(/^(plasma)$/),
-      );
+    // Filter tissues based on ktype (gene, protein, metabolite)
+    switch (searchParams.ktype) {
+      case 'gene':
+        // Plasma not available for transcriptomics/epigenomics
+        return tissueList.filter((t) => t.filter_value !== 'plasma');
+      case 'protein':
+        // Only specific tissues available for proteomics
+        return tissueList.filter((t) =>
+          /^(cortex|gastrocnemius|heart|kidney|lung|liver|white adipose|adipose|blood|muscle)$/.test(t.filter_value)
+        );
+      case 'metab':
+        // Blood RNA not available for metabolomics
+        return tissueList.filter((t) => t.filter_value !== 'blood rna');
+      default:
+        return tissueList;
     }
-    // rats and human tissues available in proteomics
-    if (searchParams.ktype === 'protein') {
-      return tissueList.filter((t) =>
-        t.filter_value.match(
-          /^(cortex|gastrocnemius|heart|kidney|lung|liver|white adipose|adipose|blood|muscle)$/,
-        ),
-      );
-    }
-    // rat blood rna not available in metabolomics
-    if (searchParams.ktype === 'metab') {
-      return tissueList.filter((t) => t.filter_value !== 'blood rna');
-    }
-    
-    return tissueList;
   }
 
   const defaultTimepoints = [...timepointListRatEndurance, ...timepointListHuman];
