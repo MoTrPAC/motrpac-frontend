@@ -221,7 +221,7 @@ function DataDownloadsMain({
                 aria-controls="pass1b_06_bundle_datasets"
                 aria-selected="true"
               >
-                Rat
+                Endurance Training in Rats
               </a>
             </li>
             <li className="nav-item font-weight-bold" role="presentation">
@@ -234,7 +234,7 @@ function DataDownloadsMain({
                   aria-controls="human_sed_adu_bundle_datasets"
                   aria-selected="false"
                 >
-                  Human
+                  Acute Exercise in Humans
                 </a>
               </li>
             {userType && userType === 'internal' && (
@@ -248,7 +248,7 @@ function DataDownloadsMain({
                   aria-controls="pass1a_06_bundle_datasets"
                   aria-selected="false"
                 >
-                  Acute Exercise Rats
+                  Acute Exercise in Rats
                 </a>
               </li>
             )}
