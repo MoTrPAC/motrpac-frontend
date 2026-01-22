@@ -91,7 +91,8 @@ function SearchResultFilters({
     {
       keyName: 'study',
       name: 'Study',
-      filters: includesPass1a06 ? studyList : studyList.filter((s) => s.filter_value !== 'pass1a06'),
+      // Internal users always see all study buttons; external users never see pass1a06
+      filters: (userType && userType === 'internal') ? studyList : studyList.filter((s) => s.filter_value !== 'pass1a06'),
     },
   ];
 
