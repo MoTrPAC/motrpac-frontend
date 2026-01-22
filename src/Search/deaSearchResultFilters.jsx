@@ -85,9 +85,9 @@ function SearchResultFilters({
       Object.keys(hasResultFilters[paramKey]).length &&
       hasResultFilters[paramKey][filter.filter_value.toLowerCase()];
 
-    // Optional (epigenomics) filters: disabled only when epigenomics toggle is off
-    // Default filters: disabled based on result count
-    const isDisabled = isOptional ? !includeEpigenomics : !resultCount;
+    // Optional (epigenomics) filters: disabled if toggle is off OR no results
+    // Default filters: disabled based on result count only
+    const isDisabled = isOptional ? (!includeEpigenomics || !resultCount) : !resultCount;
 
     return (
       <button
@@ -176,8 +176,10 @@ function SearchResultFilters({
     }
   ];
 
-  // Get all timepoints based on selected studies
-  const allTimepoints = includesPrecawg && includesPass1b06 && includesPass1a06
+  // Get all timepoints based on user type
+  // Internal users see all timepoints; external users see default (endurance + human) only
+  const isInternal = userType && userType === 'internal';
+  const allTimepoints = isInternal
     ? [...defaultTimepoints, ...timepointListRatAcute]
     : defaultTimepoints;
 
