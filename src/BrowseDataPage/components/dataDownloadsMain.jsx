@@ -160,6 +160,23 @@ function DataDownloadsMain({
                 <li>5 time points</li>
               </ul>
             </SelectiveDataDownloadsCard>
+            {/* pass1a/1c-06 data set */}
+            {userType && userType === 'internal' && (
+              <SelectiveDataDownloadsCard
+                cardIcon="pest_control_rodent"
+                cardTitle="Young Adult Rats"
+                dataSelectHandler={() => dispatch(actions.selectPass1A06Data())}
+                selectedData="pass1a-06"
+              >
+                <h3 className="card-title phase-card-title">Acute Exercise</h3>
+                <ul className="list-unstyled mt-3 mb-4 text-muted">
+                  <li>Male and female animals</li>
+                  <li>21 tissues</li>
+                  <li>30 assays across different omes</li>
+                  <li>7 time points</li>
+                </ul>
+              </SelectiveDataDownloadsCard>
+            )}
             {/* human-precovid-sed-adu data set */}
             <SelectiveDataDownloadsCard
               cardIcon="person"
@@ -187,23 +204,6 @@ function DataDownloadsMain({
                 </li>
               </ul>
             </SelectiveDataDownloadsCard>
-            {/* pass1a/1c-06 data set */}
-            {userType && userType === 'internal' && (
-              <SelectiveDataDownloadsCard
-                cardIcon="pest_control_rodent"
-                cardTitle="Young Adult Rats"
-                dataSelectHandler={() => dispatch(actions.selectPass1A06Data())}
-                selectedData="pass1a-06"
-              >
-                <h3 className="card-title phase-card-title">Acute Exercise</h3>
-                <ul className="list-unstyled mt-3 mb-4 text-muted">
-                  <li>Male and female animals</li>
-                  <li>21 tissues</li>
-                  <li>30 assays across different omes</li>
-                  <li>7 time points</li>
-                </ul>
-              </SelectiveDataDownloadsCard>
-            )}
           </div>
         </div>
         {/* Pre-bundled data sets */}
@@ -224,19 +224,6 @@ function DataDownloadsMain({
                 Endurance Training in Rats
               </a>
             </li>
-            <li className="nav-item font-weight-bold" role="presentation">
-                <a
-                  className="nav-link"
-                  id="human_sed_adu_bundle_datasets_tab"
-                  data-toggle="pill"
-                  href="#human_sed_adu_bundle_datasets"
-                  role="tab"
-                  aria-controls="human_sed_adu_bundle_datasets"
-                  aria-selected="false"
-                >
-                  Acute Exercise in Humans
-                </a>
-              </li>
             {userType && userType === 'internal' && (
               <li className="nav-item font-weight-bold" role="presentation">
                 <a
@@ -252,6 +239,19 @@ function DataDownloadsMain({
                 </a>
               </li>
             )}
+            <li className="nav-item font-weight-bold" role="presentation">
+              <a
+                className="nav-link"
+                id="human_sed_adu_bundle_datasets_tab"
+                data-toggle="pill"
+                href="#human_sed_adu_bundle_datasets"
+                role="tab"
+                aria-controls="human_sed_adu_bundle_datasets"
+                aria-selected="false"
+              >
+                Acute Exercise in Humans
+              </a>
+            </li>
           </ul>
           {/* tab panes */}
           <div className="tab-content mt-3">
@@ -268,19 +268,6 @@ function DataDownloadsMain({
                 downloadedData={downloadedData}
               />
             </div>
-            <div
-                className="tab-pane fade"
-                id="human_sed_adu_bundle_datasets"
-                role="tabpanel"
-                aria-labelledby="human_sed_adu_bundle_datasets_tab"
-              >
-                <BundleDatasets
-                  profile={profile}
-                  bundleDatasets={userType && userType === 'internal' ? BundleDataTypes.human_sed_adu_internal : BundleDataTypes.human_sed_adu_external}
-                  surveySubmitted={surveySubmitted}
-                  downloadedData={downloadedData}
-                />
-              </div>
             {userType && userType === 'internal' && (
               <div
                 className="tab-pane fade"
@@ -296,6 +283,19 @@ function DataDownloadsMain({
                 />
               </div>
             )}
+            <div
+              className="tab-pane fade"
+              id="human_sed_adu_bundle_datasets"
+              role="tabpanel"
+              aria-labelledby="human_sed_adu_bundle_datasets_tab"
+            >
+              <BundleDatasets
+                profile={profile}
+                bundleDatasets={userType && userType === 'internal' ? BundleDataTypes.human_sed_adu_internal : BundleDataTypes.human_sed_adu_external}
+                surveySubmitted={surveySubmitted}
+                downloadedData={downloadedData}
+              />
+            </div>
           </div>
         </div>
         {/* Additional data information */}
