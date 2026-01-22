@@ -82,7 +82,7 @@ function FeatureLinks({
   const precawgDataVizFeaturedLink = [
     {
       name: 'precovid-human-data-visualization',
-      route: getDataVizURL('human-precovid'),
+      route: getDataVizURL('human-precovid', userType),
       description:
         'An interactive data visualization tool for the analysis of acute exercise in human sedentary adults (pre-suspension).',
       icon: 'analytics',
