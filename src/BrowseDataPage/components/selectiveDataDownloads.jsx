@@ -25,7 +25,7 @@ function SelectiveDataDownloads({
     if (dataDownload.pass1a06DataSelected) {
       title = 'Data Download - Acute Exercise Rats';
     } else if (dataDownload.humanPrecovidSedAduDataSelected) {
-      title = 'Data Download - Human Sedentary Adults';
+      title = 'Data Download - Human Sedentary Adults (Pre-Suspension)';
     } else {
       title = 'Data Download - Endurance Training Rats';
       showInfo = true;
@@ -70,14 +70,18 @@ function SelectiveDataDownloads({
     if (dataDownload.pass1a06DataSelected) {
       return (
         <p className="lead">
-          Experimental data from acute exercise study on young adult rats for a comprehensive analysis of the physiological responses following a single exercise session in 6-month-old F344 rats.
+          Experimental data from acute exercise study on young adult rats for a comprehensive
+          analysis of the physiological responses following a single exercise session in
+          6-month-old F344 rats.
         </p>
       );
     }
     if (dataDownload.humanPrecovidSedAduDataSelected) {
       return (
         <p className="lead">
-          Differential analysis results data for differences in changes during the acute bout, comparing the change from pre-exercise baseline at any given timepoint during the acute bout as compared to resting control.
+          Summary-level results data for differences in changes during the acute bout, comparing
+          the change from pre-exercise baseline at any given timepoint during the acute bout as
+          compared to resting control.
         </p>
       );
     }
