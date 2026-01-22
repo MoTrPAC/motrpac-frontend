@@ -181,7 +181,7 @@ function DataDownloadsMain({
             <SelectiveDataDownloadsCard
               cardIcon="person"
               cardTitle="Human Sedentary Adults"
-              dataSelectHandler={() => dispatch(actions.selectHumanPreCovidSedAduData())}
+              dataSelectHandler={() => userType && userType === 'internal' ? dispatch(actions.selectHumanPreCovidSedAduData()) : dispatch(actions.selectHumanPreCovidSedAduExternalData())}
               selectedData="human-precovid-sed-adu"
               cssSelector={
               !userType || (userType && userType === 'external')
