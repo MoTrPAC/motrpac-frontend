@@ -3,6 +3,7 @@ import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import pass1b06 from '../data/file_download_metadata/rat-training-06-all-version-files-minified.json';
 import pass1a06 from '../data/file_download_metadata/rat-acute-06-files-minified.json';
 import humanPrecovidSedAdu from '../data/file_download_metadata/human-precovid-files-minified.json';
+import humanPrecovidSedAduExternal from '../data/file_download_metadata/human-precovid-external-files-minified.json';
 
 const CHANGE_FILTER = 'CHANGE_FILTER';
 const SORT_CHANGE = 'SORT_CHANGE';
@@ -20,6 +21,7 @@ const RESET_BROWSE_STATE = 'RESET_BROWSE_STATE';
 const SELECT_PASS1B_06_DATA = 'SELECT_PASS1B_06_DATA';
 const SELECT_PASS1A_06_DATA = 'SELECT_PASS1A_06_DATA';
 const SELECT_HUMAN_PRECOVID_SED_ADU_DATA = 'SELECT_HUMAN_PRECOVID_SED_ADU_DATA';
+const SELECT_HUMAN_PRECOVID_SED_ADU_EXTERNAL_DATA = 'SELECT_HUMAN_PRECOVID_SED_ADU_EXTERNAL_DATA';
 
 export const types = {
   CHANGE_FILTER,
@@ -38,6 +40,7 @@ export const types = {
   SELECT_PASS1B_06_DATA,
   SELECT_PASS1A_06_DATA,
   SELECT_HUMAN_PRECOVID_SED_ADU_DATA,
+  SELECT_HUMAN_PRECOVID_SED_ADU_EXTERNAL_DATA,
 };
 
 function changeFilter(category, filter) {
@@ -150,6 +153,13 @@ function selectPass1A06Data(files = pass1a06) {
 function selectHumanPreCovidSedAduData(files = humanPrecovidSedAdu) {
   return {
     type: SELECT_HUMAN_PRECOVID_SED_ADU_DATA,
+    files,
+  };
+}
+
+function selectHumanPreCovidSedAduExternalData(files = humanPrecovidSedAduExternal) {
+  return {
+    type: SELECT_HUMAN_PRECOVID_SED_ADU_EXTERNAL_DATA,
     files,
   };
 }
@@ -302,6 +312,7 @@ const actions = {
   selectPass1B06Data,
   selectPass1A06Data,
   selectHumanPreCovidSedAduData,
+  selectHumanPreCovidSedAduExternalData,
 };
 
 export default actions;
