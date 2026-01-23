@@ -99,6 +99,7 @@ export const searchResultsTablePropType = {
   gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   refmet_name: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   feature_id: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  species: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   tissue: PropTypes.string,
   assay: PropTypes.string,
   sex: PropTypes.string,
@@ -117,6 +118,17 @@ const commonSearchResultColumns = [
   {
     Header: 'Feature ID',
     accessor: 'feature_id',
+  },
+  {
+    Header: 'Species',
+    accessor: (row) => {
+      // Determine if the data is human or rat
+      if (row.contrast1_randomGroupCode && row.contrast1_randomGroupCode !== 'NA') {
+        return 'Human';
+      }
+      return 'Rat';
+    },
+    id: 'species',
   },
   {
     Header: 'Tissue',
