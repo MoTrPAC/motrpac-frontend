@@ -21,7 +21,7 @@ function LanguageSelector({ currentLanguage, onLanguageChange }) {
   return (
     <div className="language-selector">
       <label htmlFor="language-select" className="language-selector-label">
-        <span className="language-icon" aria-hidden="true">🌐</span>
+        <i className="bi bi-globe" aria-hidden="true"></i>
         <span className="sr-only">Select Language</span>
       </label>
       <select

@@ -70,9 +70,9 @@ describe('LanguageSelector Component', () => {
 
   it('should have globe icon', () => {
     const mockOnChange = vi.fn();
-    render(<LanguageSelector currentLanguage="en" onLanguageChange={mockOnChange} />);
+    const { container } = render(<LanguageSelector currentLanguage="en" onLanguageChange={mockOnChange} />);
     
-    const icon = screen.getByText('🌐');
+    const icon = container.querySelector('.bi-globe');
     expect(icon).toBeInTheDocument();
   });
 
