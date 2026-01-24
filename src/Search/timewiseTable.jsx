@@ -218,7 +218,10 @@ TimewiseResultsTable.propTypes = {
   timewiseData: PropTypes.arrayOf(
     PropTypes.shape({ ...timewiseResultsTablePropType })
   ).isRequired,
-  searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
+  searchParams: PropTypes.shape({
+    ...searchParamsPropType,
+    ktype: PropTypes.string.isRequired,
+  }).isRequired,
   handleSearchDownload: PropTypes.func.isRequired,
 };
 
@@ -232,7 +235,10 @@ DataTable.propTypes = {
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({ ...timewiseResultsTablePropType }))
     .isRequired,
-  searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
+  searchParams: PropTypes.shape({
+    ...searchParamsPropType,
+    ktype: PropTypes.string.isRequired,
+  }).isRequired,
   handleSearchDownload: PropTypes.func.isRequired,
 };
 

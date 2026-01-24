@@ -12,6 +12,7 @@ const BiospecimenFilters = ({
   filters,
   filterOptions,
   onCheckboxChange,
+  onResetFilters,
 }) => {
   // Track expanded/collapsed state for each filter group
   const [expandedGroups, setExpandedGroups] = useState({
@@ -23,6 +24,8 @@ const BiospecimenFilters = ({
     ethnicity: false,
     tissue: false,
     ome: false,
+    study: false,
+    tranche: false,
   });
 
   const toggleGroup = (groupKey) => {
@@ -83,6 +86,18 @@ const BiospecimenFilters = ({
       filterKey: 'ome',
       optionsKey: 'omeOptions',
     },
+    {
+      key: 'study',
+      label: 'Study',
+      filterKey: 'study',
+      optionsKey: 'studyOptions',
+    },
+    {
+      key: 'tranche',
+      label: 'Tranche',
+      filterKey: 'tranche',
+      optionsKey: 'trancheOptions',
+    },
   ];
 
   // Reusable filter group renderer
@@ -132,11 +147,20 @@ const BiospecimenFilters = ({
 
   return (
     <div className="card h-100">
-      <div className="card-header">
+      <div className="card-header d-flex justify-content-between align-items-center">
         <h5 className="mb-0">
-          <i className="bi bi-funnel mr-2" />
-          Cohort Selector
+          <i className="bi bi-funnel-fill mr-1" />
+          Filters
         </h5>
+        <button
+          type="button"
+          className="btn btn-secondary btn-sm"
+          onClick={onResetFilters}
+          title="Reset all filters to default values"
+          aria-label="Reset filters"
+        >
+          Reset
+        </button>
       </div>
       <div className="card-body">
         {/* Render all filter groups using the data-driven configuration */}
@@ -156,6 +180,8 @@ BiospecimenFilters.propTypes = {
     ethnicity: PropTypes.array.isRequired,
     tissue: PropTypes.array.isRequired,
     ome: PropTypes.array.isRequired,
+    study: PropTypes.array.isRequired,
+    tranche: PropTypes.array.isRequired,
   }).isRequired,
   filterOptions: PropTypes.shape({
     sexOptions: PropTypes.array.isRequired,
@@ -166,8 +192,11 @@ BiospecimenFilters.propTypes = {
     ethnicityOptions: PropTypes.array.isRequired,
     tissueOptions: PropTypes.array.isRequired,
     omeOptions: PropTypes.array.isRequired,
+    studyOptions: PropTypes.array.isRequired,
+    trancheOptions: PropTypes.array.isRequired,
   }).isRequired,
   onCheckboxChange: PropTypes.func.isRequired,
+  onResetFilters: PropTypes.func.isRequired,
 };
 
 export default BiospecimenFilters;

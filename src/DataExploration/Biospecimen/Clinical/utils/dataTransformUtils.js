@@ -9,11 +9,12 @@ import { getTissueName } from './tissueUtils';
  * Tranche code to name mapping
  */
 const TRANCHE_CODE_TO_NAME = {
-  'TR00': 'Tranche 0',
+  'TR00': 'Tranche 0 (PreCOVID)',
   'TR01': 'Tranche 1',
   'TR02': 'Tranche 2',
   'TR03': 'Tranche 3',
   'TR04': 'Tranche 4',
+  'TR05': 'Tranche 5',
 };
 
 /**
@@ -30,10 +31,11 @@ export const transformTissueCode = (code) => {
 /**
  * Transform tranche code to human-readable name
  * @param {string} code - Tranche code (e.g., 'TR00', 'TR01')
- * @returns {string} Tranche name or original code if not found
+ * @returns {string} Tranche name, 'Not yet shipped to CAS' for null/undefined, or original code if not found
  */
 export const transformTrancheCode = (code) => {
-  if (!code) return code;
+  // Handle null/undefined values - participants not yet shipped to CAS
+  if (!code) return 'Not yet shipped to CAS';
   return TRANCHE_CODE_TO_NAME[code] || code;
 };
 

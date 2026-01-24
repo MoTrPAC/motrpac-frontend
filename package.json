@@ -53,8 +53,11 @@
     "test": "vitest",
     "storybook": "storybook dev -p 9009",
     "build-storybook": "storybook build",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "sass-lint": "stylelint --config=stylelint.config.js '**/*.scss'",
-    "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
+    "format": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|css|scss|md)\"",
+    "format:check": "prettier --check \"**/*.+(js|jsx|ts|tsx|json|css|scss|md)\"",
     "inspect-branch": "yarn && yarn sass && yarn start"
   },
   "browserslist": [
@@ -64,7 +67,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@eslint/js": "^9.17.0",
+    "@eslint/js": "^9.39.1",
     "@storybook/addon-actions": "^8.0.9",
     "@storybook/addon-links": "^8.0.9",
     "@storybook/react": "^8.0.9",
@@ -80,8 +83,9 @@
     "@vitejs/plugin-react-swc": "^3.7.1",
     "@vitest/coverage-v8": "^1.4.0",
     "@vitest/ui": "2.1.8",
-    "eslint": "^9.17.0",
+    "eslint": "^9.39.1",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-github": "^6.0.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.0",
     "eslint-plugin-prettier": "^5.2.1",
@@ -94,7 +98,7 @@
     "jest-canvas-mock": "^2.2.0",
     "jsdom": "^24.0.0",
     "postcss-normalize": "^10.0.1",
-    "prettier": "^3.3.3",
+    "prettier": "^3.6.2",
     "react-error-overlay": "^6.0.11",
     "rollup-plugin-visualizer": "^5.12.0",
     "sass": "1.70.0",

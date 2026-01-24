@@ -10,6 +10,7 @@ import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
 import LoginButton from '../lib/loginButton';
 import onVisibilityChange from '../lib/utils/pageVisibility';
+import { getDataVizURL } from '../lib/utils/dataVizUrl';
 
 import '@styles/navbar.scss';
 
@@ -99,6 +100,8 @@ export function Navbar({
 
   const handleLogout = () => {
     logout();
+    // Clear reviewer agreement from sessionStorage
+    sessionStorage.removeItem('reviewerAgreement');
     // delay state reset so that list files do not
     // disappear from the UI prior to page change
     setTimeout(() => {
@@ -117,6 +120,7 @@ export function Navbar({
 
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   const userType = profile.user_metadata && profile.user_metadata.userType;
+  const userRole = profile.app_metadata && profile.app_metadata.role;
 
   // Call to invoke Redux action to fetch QC data
   // if timestamp is empty or older than 24 hours
@@ -185,7 +189,7 @@ export function Navbar({
               {isAuthenticated && hasAccess && (
                 <li className="nnav-item navItem">
                   <Link to="/dashboard" className="nav-link">
-                    Dashboard
+                    {userRole && userRole === 'reviewer' ? 'Reviewer Dashboard' : 'Dashboard'}
                   </Link>
                 </li>
               )}
@@ -217,18 +221,28 @@ export function Navbar({
                     Graphical Clustering
                   </Link>
                   <a
-                    href="https://data-viz.motrpac-data.org"
+                    href={getDataVizURL('rat-training-06')}
                     className="dropdown-item"
                     target="_blank"
                     rel="noreferrer"
                   >
                     Interactive Data Visualization
                   </a>
-                  {isAuthenticated && hasAccess && userType === 'internal' ? (
+                  {isAuthenticated && hasAccess && (userType === 'internal' || (userRole && userRole === 'reviewer')) && (
+                    <a
+                      href={getDataVizURL('human-precovid')}
+                      className="dropdown-item"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Human Data Visualization
+                    </a>
+                  )}
+                  {isAuthenticated && hasAccess && userType === 'internal' && (
                     <Link to="/analysis-phenotype" className="dropdown-item">
                       Phenotype
                     </Link>
-                  ) : null}
+                  )}
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
@@ -429,6 +443,10 @@ Navbar.propTypes = {
       hasAccess: PropTypes.bool,
       name: PropTypes.string,
       siteName: PropTypes.string,
+      userType: PropTypes.string,
+    }),
+    app_metadata: PropTypes.shape({
+      role: PropTypes.string,
     }),
   }),
   isAuthenticated: PropTypes.bool,
@@ -456,7 +474,7 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
 
 // Function to render login button
-function LogoutButton({ profile, isAuthenticated, handleLogout, login }) {
+function LogoutButton({ profile = {}, isAuthenticated = false, handleLogout = null, login = null }) {
   const userDisplayName =
     profile.user_metadata && profile.user_metadata.name
       ? profile.user_metadata.name
@@ -493,3 +511,19 @@ function LogoutButton({ profile, isAuthenticated, handleLogout, login }) {
 
   return <LoginButton login={login} />;
 }
+
+LogoutButton.propTypes = {
+  profile: PropTypes.shape({
+    name: PropTypes.string,
+    picture: PropTypes.string,
+    user_metadata: PropTypes.shape({
+      hasAccess: PropTypes.bool,
+      name: PropTypes.string,
+      email: PropTypes.string,
+      userType: PropTypes.string,
+    }),
+  }),
+  isAuthenticated: PropTypes.bool,
+  handleLogout: PropTypes.func,
+  login: PropTypes.func,
+};

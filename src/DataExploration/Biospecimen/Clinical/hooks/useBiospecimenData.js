@@ -8,6 +8,8 @@ import {
 } from '../utils/demographicUtils';
 import { getTissueName } from '../utils/tissueUtils';
 import { matchesOmeCategories } from '../utils/omeUtils';
+import { getStudyName } from '../utils/studyUtils';
+import { transformTrancheCode } from '../utils/dataTransformUtils';
 
 /**
  * Simplified biospecimen data hook that loads all data once and filters client-side
@@ -142,43 +144,56 @@ export const useFilteredBiospecimenData = (allData, filters) => {
 
     // Filter data with optimized logic
     return allData.filter(item => {
-      // Filter by sex - simple string comparison
-      if (filters.sex?.length > 0 && !filters.sex.includes(item.sex)) {
-        return false;
+      // Filter by sex - only filter out if record HAS a sex value that doesn't match
+      // Records with null/undefined sex values are kept (don't filter based on missing data)
+      if (filters.sex?.length > 0) {
+        if (item.sex && !filters.sex.includes(item.sex)) {
+          return false;
+        }
       }
 
-      // Filter by age groups - simple string comparison
-      if (filters.dmaqc_age_groups?.length > 0 && 
-          !filters.dmaqc_age_groups.includes(item.dmaqc_age_groups)) {
-        return false;
+      // Filter by age groups - only filter out if record HAS an age group that doesn't match
+      // Records with null/undefined age groups are kept (don't filter based on missing data)
+      if (filters.dmaqc_age_groups?.length > 0) {
+        if (item.dmaqc_age_groups && !filters.dmaqc_age_groups.includes(item.dmaqc_age_groups)) {
+          return false;
+        }
       }
 
-      // Filter by randomized group - using pre-computed mapped values
-      if (mappedRandomGroupValues && 
-          !mappedRandomGroupValues.includes(item.random_group_code)) {
-        return false;
+      // Filter by randomized group - only filter out if record HAS a group code that doesn't match
+      // Records with null/undefined randomized groups are kept (don't filter based on missing data)
+      if (mappedRandomGroupValues) {
+        if (item.random_group_code && !mappedRandomGroupValues.includes(item.random_group_code)) {
+          return false;
+        }
       }
 
       // Filter by BMI group - using centralized utility
+      // Only filter out if record HAS a BMI value that doesn't match selected filters
+      // Records with null/unmapped BMI values are kept (don't filter based on missing data)
       if (filters.bmi_group?.length > 0) {
         const itemBMIGroup = getBMIGroup(item.bmi);
-        if (!itemBMIGroup || !filters.bmi_group.includes(itemBMIGroup)) {
+        if (itemBMIGroup && !filters.bmi_group.includes(itemBMIGroup)) {
           return false;
         }
       }
 
       // Filter by race - using centralized utility
+      // Only filter out if record HAS a race value that doesn't match selected filters
+      // Records with null/unmapped race values are kept (don't filter based on missing data)
       if (filters.race?.length > 0) {
         const itemRaceCategory = getRaceCategory(item);
-        if (!itemRaceCategory || !filters.race.includes(itemRaceCategory)) {
+        if (itemRaceCategory && !filters.race.includes(itemRaceCategory)) {
           return false;
         }
       }
 
       // Filter by ethnicity - using centralized utility
+      // Only filter out if record HAS an ethnicity value that doesn't match selected filters
+      // Records with null/unmapped ethnicity values are kept (don't filter based on missing data)
       if (filters.ethnicity?.length > 0) {
         const itemEthnicityCategory = getEthnicityCategory(item);
-        if (!itemEthnicityCategory || !filters.ethnicity.includes(itemEthnicityCategory)) {
+        if (itemEthnicityCategory && !filters.ethnicity.includes(itemEthnicityCategory)) {
           return false;
         }
       }
@@ -196,6 +211,25 @@ export const useFilteredBiospecimenData = (allData, filters) => {
       // Filter by ome - using centralized utility
       if (filters.ome?.length > 0) {
         if (!matchesOmeCategories(item.raw_assays_with_results, filters.ome)) {
+          return false;
+        }
+      }
+
+      // Filter by study - using centralized utility
+      // Only filter out if record HAS a study code that doesn't match selected filters
+      // Records with null/unmapped study codes are kept (don't filter based on missing data)
+      if (filters.study?.length > 0) {
+        const studyName = getStudyName(item.study);
+        if (studyName && !filters.study.includes(studyName)) {
+          return false;
+        }
+      }
+
+      // Filter by tranche - using centralized utility
+      // Null tranche codes are transformed to 'Not yet shipped to CAS' and treated as a filterable category
+      if (filters.tranche?.length > 0) {
+        const trancheName = transformTrancheCode(item.tranche);
+        if (!filters.tranche.includes(trancheName)) {
           return false;
         }
       }

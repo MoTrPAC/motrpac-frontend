@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function DifferentialAbundanceSummary({ userType = '', species = 'rat' }) {
+function DifferentialAbundanceSummary({ userType = '', userRole = '', species = 'rat' }) {
   return (
     <div className="search-summary-container row mb-3 collapse show" id="collapseDifferentialAbundanceSummary">
       <div className="lead col-12">
-        {userType && userType === 'internal' ? (
+        {userType && userType === 'internal' && (
           <span>
             Search by gene, protein or metabolite to examine the timewise endurance
             training response over 8 weeks of training or the training responses to
@@ -15,7 +15,17 @@ function DifferentialAbundanceSummary({ userType = '', species = 'rat' }) {
             exercise training (RE), or no-exercise control groups. To ensure the best
             search results, please use the following guidelines:
           </span>
-        ) : (
+        )}
+        {((userType && userType === 'external') && (userRole && userRole === 'reviewer')) && (
+          <span>
+            Search by gene, protein or metabolite to examine the timewise endurance
+            training response over 8 weeks of training, or the pre-COVID human
+            sedentary adults randomized to endurance exercise training (EE), resistance
+            exercise training (RE), or no-exercise control groups. To ensure the best
+            search results, please use the following guidelines:
+          </span>
+        )}
+        {(!userType || (userType === 'external' && (!userRole || userRole !== 'reviewer'))) && (
           <span>
             Search by gene symbol, protein name or metabolite name to examine the
             timewise endurance training response over 8 weeks of training in
@@ -23,7 +33,7 @@ function DifferentialAbundanceSummary({ userType = '', species = 'rat' }) {
             following guidelines:
           </span>
         )}
-        <ol>
+        <ol className="mt-2">
           <li>
             Use
             {' '}
@@ -64,6 +74,7 @@ function DifferentialAbundanceSummary({ userType = '', species = 'rat' }) {
 
 DifferentialAbundanceSummary.propTypes = {
   userType: PropTypes.string,
+  userRole: PropTypes.string,
   species: PropTypes.string,
 };
 
