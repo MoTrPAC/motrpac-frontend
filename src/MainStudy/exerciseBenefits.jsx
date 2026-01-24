@@ -24,9 +24,7 @@ function ExerciseBenefits() {
   const [searchParams, setSearchParams] = useSearchParams();
   
   // Get initial language from URL or default to English
-  const [currentLanguage, setCurrentLanguage] = useState(() => 
-    getLanguageFromURL(searchParams)
-  );
+  const [currentLanguage, setCurrentLanguage] = useState(DEFAULT_LANGUAGE);
 
   // Get translations for current language (memoized for performance)
   const translations = useMemo(() => 
@@ -34,13 +32,11 @@ function ExerciseBenefits() {
     [currentLanguage]
   );
 
-  // Update language when URL changes
+  // Update language when URL changes (including initial load)
   useEffect(() => {
     const urlLang = getLanguageFromURL(searchParams);
-    if (urlLang !== currentLanguage) {
-      setCurrentLanguage(urlLang);
-    }
-  }, [searchParams, currentLanguage]);
+    setCurrentLanguage(urlLang);
+  }, [searchParams]);
 
   /**
    * Handle language change from selector

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import ExerciseBenefits from '../exerciseBenefits';
@@ -12,11 +12,12 @@ vi.mock('react-wordcloud', () => ({
 
 // Helper to render component with router
 function renderWithRouter(ui, { route = '/exercise-benefits' } = {}) {
-  window.history.pushState({}, 'Test page', route);
   return render(
-    <BrowserRouter>
-      {ui}
-    </BrowserRouter>
+    <MemoryRouter initialEntries={[route]}>
+      <Routes>
+        <Route path="/exercise-benefits" element={ui} />
+      </Routes>
+    </MemoryRouter>
   );
 }
 
@@ -71,9 +72,12 @@ describe('ExerciseBenefits Component', () => {
     it('should render Spanish content when lang=es in URL', async () => {
       renderWithRouter(<ExerciseBenefits />, { route: '/exercise-benefits?lang=es' });
       
+      // Wait for the component to fully render and update
       await waitFor(() => {
-        expect(screen.getByText('Beneficios del Ejercicio')).toBeInTheDocument();
-      });
+        const heading = screen.queryByRole('heading', { level: 1 });
+        expect(heading).toBeInTheDocument();
+        expect(heading.textContent).toBe('Beneficios del Ejercicio');
+      }, { timeout: 5000 });
       
       expect(screen.getByText(/evidencia extensa/i)).toBeInTheDocument();
       expect(screen.getByText('Beneficio para la Salud')).toBeInTheDocument();
@@ -92,8 +96,10 @@ describe('ExerciseBenefits Component', () => {
       await user.selectOptions(languageSelector, 'es');
       
       await waitFor(() => {
-        expect(screen.getByText('Beneficios del Ejercicio')).toBeInTheDocument();
-      });
+        const heading = screen.queryByRole('heading', { level: 1 });
+        expect(heading).toBeInTheDocument();
+        expect(heading.textContent).toBe('Beneficios del Ejercicio');
+      }, { timeout: 5000 });
     });
   });
 
@@ -102,8 +108,10 @@ describe('ExerciseBenefits Component', () => {
       renderWithRouter(<ExerciseBenefits />, { route: '/exercise-benefits?lang=fr' });
       
       await waitFor(() => {
-        expect(screen.getByText('Bienfaits de l\'Exercice')).toBeInTheDocument();
-      });
+        const heading = screen.queryByRole('heading', { level: 1 });
+        expect(heading).toBeInTheDocument();
+        expect(heading.textContent).toBe('Bienfaits de l\'Exercice');
+      }, { timeout: 5000 });
       
       expect(screen.getByText(/preuves exhaustives/i)).toBeInTheDocument();
       expect(screen.getByText('Bienfait pour la Santé')).toBeInTheDocument();
@@ -122,8 +130,10 @@ describe('ExerciseBenefits Component', () => {
       await user.selectOptions(languageSelector, 'fr');
       
       await waitFor(() => {
-        expect(screen.getByText('Bienfaits de l\'Exercice')).toBeInTheDocument();
-      });
+        const heading = screen.queryByRole('heading', { level: 1 });
+        expect(heading).toBeInTheDocument();
+        expect(heading.textContent).toBe('Bienfaits de l\'Exercice');
+      }, { timeout: 5000 });
     });
   });
 
