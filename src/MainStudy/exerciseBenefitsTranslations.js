@@ -19,7 +19,7 @@ const translations = {
     benefits: [
       'Improved immune system',
       'Younger-looking skin',
-      'Reduced risk of cancer ',
+      'Reduced risk of cancer',
       'Reduced risk of metabolic disease',
       'Better temperature regulation',
       'Better sex',
