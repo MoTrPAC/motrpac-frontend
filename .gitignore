@@ -156,3 +156,6 @@ stats.html
 
 # JetBrains IDEs
 .idea
+
+# Implementation documentation (kept locally but not committed)
+docs/EXERCISE_BENEFITS_MULTILINGUAL.md
