@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import ReactWordcloud from 'react-wordcloud';
@@ -69,9 +69,11 @@ function ExerciseBenefits() {
     transitionDuration: 1000,
   };
 
-  // Generate random value for word cloud (memoized to avoid unnecessary recalculations)
-  const getRandomInt = (min, max) => 
-    Math.floor(Math.random() * (max - min + 1)) + min;
+  // Generate random value for word cloud (memoized to ensure consistent sizing)
+  const getRandomInt = useCallback((min, max) => 
+    Math.floor(Math.random() * (max - min + 1)) + min,
+    []
+  );
 
   // Prepare words for word cloud (memoized for performance)
   const words = useMemo(() => 
@@ -79,7 +81,7 @@ function ExerciseBenefits() {
       text: benefit,
       value: getRandomInt(100, 800),
     })),
-    [translations.benefits]
+    [translations.benefits, getRandomInt]
   );
 
   return (
@@ -89,8 +91,10 @@ function ExerciseBenefits() {
         <title>{translations.metaTitle}</title>
       </Helmet>
       
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <PageTitle title={translations.pageTitle} />
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3">
+        <div className="page-title">
+          <h1 className="mb-0">{translations.pageTitle}</h1>
+        </div>
         <LanguageSelector 
           currentLanguage={currentLanguage}
           onLanguageChange={handleLanguageChange}
