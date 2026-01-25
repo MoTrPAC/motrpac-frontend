@@ -91,7 +91,7 @@ function DataDownloadsMain({
       {renderPageTitle()}
       <div className="browse-data-summary-container row mb-4">
         <div className="col-12">
-          <p className="lead mb-2">
+          <div className="lead mb-2">
             Explore and download MoTrPAC multi-omics datasets, including phenotype, quantitative
             and summary-level results of molecular changes from exercise across multiple tissues. Currently
             available under the
@@ -114,7 +114,7 @@ function DataDownloadsMain({
                 <Link to="/search">summary-level results</Link>
               </li>
             </ul>
-          </p>
+          </div>
             {userType && userType === 'internal' && (
               <p className="lead mb-2">
                 The acute exercise in young adult rats study datasets are currently available to consortium
