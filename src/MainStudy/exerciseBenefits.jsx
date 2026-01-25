@@ -24,7 +24,9 @@ function ExerciseBenefits() {
   const [searchParams, setSearchParams] = useSearchParams();
   
   // Get initial language from URL or default to English
-  const [currentLanguage, setCurrentLanguage] = useState(DEFAULT_LANGUAGE);
+  const [currentLanguage, setCurrentLanguage] = useState(() => 
+    getLanguageFromURL(searchParams)
+  );
 
   // Get translations for current language (memoized for performance)
   const translations = useMemo(() => 
@@ -42,8 +44,6 @@ function ExerciseBenefits() {
    * Handle language change from selector
    */
   const handleLanguageChange = (newLanguage) => {
-    setCurrentLanguage(newLanguage);
-    
     // Update URL with new language parameter
     const newSearchParams = new URLSearchParams(searchParams);
     if (newLanguage === DEFAULT_LANGUAGE) {
@@ -69,7 +69,8 @@ function ExerciseBenefits() {
     transitionDuration: 1000,
   };
 
-  // Generate random value for word cloud (memoized to ensure consistent sizing)
+  // Generate random value for word cloud
+  // Memoized to stabilize the function reference for React's dependency array, not the random output
   const getRandomInt = useCallback((min, max) => 
     Math.floor(Math.random() * (max - min + 1)) + min,
     []
@@ -96,9 +97,11 @@ function ExerciseBenefits() {
           <h1 className="mb-0">{translations.pageTitle}</h1>
         </div>
         <LanguageSelector 
+          id="exercise-benefits-language-select"
           currentLanguage={currentLanguage}
           languages={Object.values(SUPPORTED_LANGUAGES)}
           onLanguageChange={handleLanguageChange}
+          ariaLabel="Select page language"
         />
       </div>
       
