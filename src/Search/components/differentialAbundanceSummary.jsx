@@ -8,9 +8,9 @@ function DifferentialAbundanceSummary({ userType = '' }) {
       <div className="lead col-12">
         {userType && userType === 'internal' && (
           <span>
-            Search by gene, protein or metabolite to examine the timewise endurance
+            Search by gene, protein or metabolite names to examine the timewise endurance
             training response over 8 weeks of training or the training responses to
-            acute exercise intervention in young adult rats, or the pre-COVID human
+            acute exercise intervention in young adult rats, or the pre-suspension human
             sedentary adults randomized to endurance exercise training (EE), resistance
             exercise training (RE), or no-exercise control groups. To ensure the best
             search results, please use the following guidelines:
