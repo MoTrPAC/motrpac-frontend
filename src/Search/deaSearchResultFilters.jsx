@@ -140,7 +140,7 @@ function SearchResultFilters({
           <i
             className="bi bi-info-circle-fill ml-2 text-secondary"
             data-tooltip-id="ome-filter-tooltip"
-            data-tooltip-html="<span>H = Human assay, R = Rat assay</span>"
+            data-tooltip-html="<span>H = Human, R = Rat</span>"
             data-tooltip-place="right"
           />
           <Tooltip id="ome-filter-tooltip" />
@@ -180,7 +180,7 @@ function SearchResultFilters({
       keyName: 'tissue',
       name: 'Tissue',
       filters: customizeTissueList(),
-      tooltip: '<span>H = Human tissue, R = Rat tissue</span>',
+      tooltip: '<span>H = Human, R = Rat</span>',
     },
     {
       keyName: 'sex',
@@ -252,7 +252,7 @@ function SearchResultFilters({
           <i
             className="bi bi-info-circle-fill ml-2 text-secondary"
             data-tooltip-id="timepoint-filter-tooltip"
-            data-tooltip-html="<span>H = Human timepoint, R = Rat timepoint</span>"
+            data-tooltip-html="<span>H = Human, R = Rat</span>"
             data-tooltip-place="right"
           />
           <Tooltip id="timepoint-filter-tooltip" />
