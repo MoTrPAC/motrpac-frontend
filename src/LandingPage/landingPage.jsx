@@ -137,7 +137,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
                 DOWNLOAD DATA
               </Link>
               <Link
-                to="/graphical-clustering"
+                to="/search"
                 className="btn btn-primary btn-lg mt-4"
                 role="button"
               >
