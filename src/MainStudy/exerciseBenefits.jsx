@@ -8,8 +8,9 @@ import {
   getTranslations,
   getLanguageFromURL,
   DEFAULT_LANGUAGE,
+  SUPPORTED_LANGUAGES,
 } from './exerciseBenefitsTranslations';
-import LanguageSelector from './components/LanguageSelector';
+import LanguageSelector from '../lib/ui/languageSelector';
 
 import '@styles/mainStudyPage.scss';
 
@@ -96,6 +97,7 @@ function ExerciseBenefits() {
         </div>
         <LanguageSelector 
           currentLanguage={currentLanguage}
+          languages={Object.values(SUPPORTED_LANGUAGES)}
           onLanguageChange={handleLanguageChange}
         />
       </div>
