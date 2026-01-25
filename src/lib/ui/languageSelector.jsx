@@ -40,28 +40,33 @@ import '@styles/languageSelector.scss';
  * @param {string} [ariaLabel] - Optional custom aria-label for accessibility
  */
 function LanguageSelector({
-  currentLanguage,
-  languages,
+  id = 'language-selector',
+  currentLanguage = '',
+  languages = [],
   onLanguageChange,
-  ariaLabel,
+  ariaLabel = 'Select page language',
 }) {
   const handleLanguageChange = (event) => {
     const newLanguage = event.target.value;
     onLanguageChange(newLanguage);
   };
 
+  if (languages.length <= 1) {
+    return null; // No languages to display
+  }
+
   return (
     <div className="language-selector">
-      <label htmlFor="language-select" className="language-selector-label">
+      <label htmlFor={id} className="language-selector-label">
         <i className="bi bi-globe" aria-hidden="true" />
-        <span className="sr-only">Select Language</span>
+        <span className="sr-only">{ariaLabel}</span>
       </label>
       <select
-        id="language-select"
+        id={id}
         className="language-selector-dropdown form-control form-control-sm"
         value={currentLanguage}
         onChange={handleLanguageChange}
-        aria-label={ariaLabel || 'Select page language'}
+        aria-label={ariaLabel}
       >
         {languages.map((lang) => (
           <option key={lang.code} value={lang.code}>
@@ -74,6 +79,7 @@ function LanguageSelector({
 }
 
 LanguageSelector.propTypes = {
+  id: PropTypes.string.isRequired,
   currentLanguage: PropTypes.string.isRequired,
   languages: PropTypes.arrayOf(
     PropTypes.shape({
@@ -82,11 +88,7 @@ LanguageSelector.propTypes = {
     })
   ).isRequired,
   onLanguageChange: PropTypes.func.isRequired,
-  ariaLabel: PropTypes.string,
-};
-
-LanguageSelector.defaultProps = {
-  ariaLabel: 'Select page language',
+  ariaLabel: PropTypes.string.isRequired,
 };
 
 export default LanguageSelector;
