@@ -4,24 +4,34 @@ import { Helmet } from 'react-helmet';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import PageTitle from '../lib/ui/pageTitle';
 import ExternalLink from '../lib/ui/externalLink';
+import LanguageSelector from '../lib/ui/languageSelector';
 
 import '@styles/license.scss';
 
 const LANG_EN = 'en';
 const LANG_ES = 'es';
+const DEFAULT_LANGUAGE = LANG_EN;
+
+// Language options for the Tutorials page
+const TUTORIALS_LANGUAGES = [
+  { code: LANG_EN, nativeName: 'English' },
+  { code: LANG_ES, nativeName: 'Español' },
+];
 
 function Tutorials() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const language = searchParams.get('lang') === LANG_ES ? LANG_ES : LANG_EN;
-  const toggleLanguage = (lang) => {
-    setSearchParams(prev => {
-      if (lang === LANG_EN) {
+  const langParam = searchParams.get('lang');
+  const language = langParam === LANG_ES ? LANG_ES : LANG_EN;
+
+  const handleLanguageChange = (newLanguage) => {
+    setSearchParams((prev) => {
+      if (newLanguage === DEFAULT_LANGUAGE) {
         prev.delete('lang');
       } else {
-        prev.set('lang', lang);
+        prev.set('lang', newLanguage);
       }
       return prev;
-    });
+    }, { replace: true });
   };
 
   return (
@@ -36,25 +46,12 @@ function Tutorials() {
           <div className="col-12">
             <div className="section-title-container d-flex align-items-center justify-content-between mt-3 mb-2">
               <h3 className="mb-0">{language === LANG_EN ? 'MoTrPAC Data Hub Overview' : 'Descripción General del Centro de Datos de MoTrPAC'}</h3>
-              {/* Language Toggle */}
-              <div className="btn-group" role="group" aria-label="Language selection">
-                <button
-                  type="button"
-                  className={`btn btn-sm ${language === LANG_EN ? 'btn-primary' : 'btn-outline-primary'}`}
-                  onClick={() => toggleLanguage(LANG_EN)}
-                  aria-pressed={language === LANG_EN}
-                >
-                  English
-                </button>
-                <button
-                  type="button"
-                  className={`btn btn-sm ${language === LANG_ES ? 'btn-primary' : 'btn-outline-primary'}`}
-                  onClick={() => toggleLanguage(LANG_ES)}
-                  aria-pressed={language === LANG_ES}
-                >
-                  Español
-                </button>
-              </div>
+              {/* Language Selector */}
+              <LanguageSelector
+                currentLanguage={language}
+                languages={TUTORIALS_LANGUAGES}
+                onLanguageChange={handleLanguageChange}
+              />
             </div>
             {language === LANG_EN ? (
               <div className="video-tutorial-container">
