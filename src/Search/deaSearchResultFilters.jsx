@@ -122,6 +122,11 @@ function SearchResultFilters({
         disabled={isDisabled}
       >
         {filter.filter_label}
+        {filter.species && (
+          <span className={`filter-species-tag ml-1 badge ${filter.species === 'rat' ? 'badge-rat' : 'badge-human'}`}>
+            {filter.species === 'rat' ? 'R' : 'H'}
+          </span>
+        )}
       </button>
     );
   };
@@ -130,7 +135,16 @@ function SearchResultFilters({
   const omeSearchResultFilters = (
     <div className="card filter-module mb-3">
       <div className="card-header font-weight-bold">
-        <div className="card-header-label">Ome</div>
+        <div className="card-header-label">
+          <span>Ome</span>
+          <i
+            className="bi bi-info-circle-fill ml-2 text-secondary"
+            data-tooltip-id="ome-filter-tooltip"
+            data-tooltip-html="<span>H = Human assay, R = Rat assay</span>"
+            data-tooltip-place="right"
+          />
+          <Tooltip id="ome-filter-tooltip" />
+        </div>
       </div>
       <div className="card-body-container" id="filters-ome">
         <div className="card-body">
@@ -238,7 +252,7 @@ function SearchResultFilters({
           <i
             className="bi bi-info-circle-fill ml-2 text-secondary"
             data-tooltip-id="timepoint-filter-tooltip"
-            data-tooltip-html="<span>H = Human tissue, R = Rat tissue</span>"
+            data-tooltip-html="<span>H = Human timepoint, R = Rat timepoint</span>"
             data-tooltip-place="right"
           />
           <Tooltip id="timepoint-filter-tooltip" />
