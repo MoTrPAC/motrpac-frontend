@@ -21,8 +21,13 @@ const TUTORIALS_LANGUAGES = [
 function Tutorials() {
   const [searchParams, setSearchParams] = useSearchParams();
   const langParam = searchParams.get('lang');
-  const language = langParam === LANG_ES ? LANG_ES : LANG_EN;
+  const language = TUTORIALS_LANGUAGES.some((lang) => lang.code === langParam)
+    ? langParam
+    : DEFAULT_LANGUAGE;
 
+  /**
+   * Handle language change from selector
+   */
   const handleLanguageChange = (newLanguage) => {
     setSearchParams((prev) => {
       if (newLanguage === DEFAULT_LANGUAGE) {
@@ -48,9 +53,11 @@ function Tutorials() {
               <h3 className="mb-0">{language === LANG_EN ? 'MoTrPAC Data Hub Overview' : 'Descripción General del Centro de Datos de MoTrPAC'}</h3>
               {/* Language Selector */}
               <LanguageSelector
+                id="tutorials-language-select"
                 currentLanguage={language}
                 languages={TUTORIALS_LANGUAGES}
                 onLanguageChange={handleLanguageChange}
+                ariaLabel="Select page language"
               />
             </div>
             {language === LANG_EN ? (
