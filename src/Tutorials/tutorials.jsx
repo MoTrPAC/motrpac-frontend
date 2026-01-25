@@ -57,7 +57,7 @@ function Tutorials() {
                 currentLanguage={language}
                 languages={TUTORIALS_LANGUAGES}
                 onLanguageChange={handleLanguageChange}
-                ariaLabel="Select page language"
+                ariaLabel="Select tutorials page language"
               />
             </div>
             {language === LANG_EN ? (

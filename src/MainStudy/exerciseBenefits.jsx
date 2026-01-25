@@ -101,7 +101,7 @@ function ExerciseBenefits() {
           currentLanguage={currentLanguage}
           languages={Object.values(SUPPORTED_LANGUAGES)}
           onLanguageChange={handleLanguageChange}
-          ariaLabel="Select page language"
+          ariaLabel="Select exercise benefits page language"
         />
       </div>
       
