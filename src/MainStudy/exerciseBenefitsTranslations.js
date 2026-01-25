@@ -463,5 +463,3 @@ export function getLanguageFromURL(searchParams) {
   const langParam = searchParams.get('lang');
   return isLanguageSupported(langParam) ? langParam.toLowerCase() : DEFAULT_LANGUAGE;
 }
-
-export default translations;
