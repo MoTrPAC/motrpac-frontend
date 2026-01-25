@@ -92,30 +92,41 @@ function DataDownloadsMain({
       <div className="browse-data-summary-container row mb-4">
         <div className="col-12">
           <p className="lead mb-2">
-            Explore and download the MoTrPAC multi-omics datasets, which
-            includes quantitative results and analyses of molecular changes from
-            exercise across tissues. Currently, the complete young adult rat endurance
-            training dataset is publicly available and provided under the
+            Explore and download MoTrPAC multi-omics datasets, including phenotype, quantitative
+            and summary-level results of molecular changes from exercise across multiple tissues. Currently
+            available under the
             {' '}
             <Link to="/license">CC BY 4.0 license</Link>
-            .
+            :
             {' '}
-            {userType && userType === 'internal'
-              ? 'The young rat acute exercise and human precovid sedentary adult datasets are currently available to consortium members only in the early preview phase. '
-              : null}
-            For a summary of all the ongoing studies in MoTrPAC (data available
-            soon), study designs, and protocols, visit our
+            <ul className="mt-2">
+              <li>
+                <span className="font-weight-bold">Endurance training in young adult rats study</span> - complete dataset (
+                <ExternalLink
+                  to="https://www.nature.com/articles/s41586-023-06877-w"
+                  label="Nature publication"
+                />
+                )
+              </li>
+              <li>
+                <span className="font-weight-bold">Acute exercise in human sedentary adults study</span> -
+                {' '}
+                <Link to="/search">summary-level results</Link>
+              </li>
+            </ul>
+          </p>
+            {userType && userType === 'internal' && (
+              <p className="lead mb-2">
+                The acute exercise in young adult rats study datasets are currently available to consortium
+                members only in the early preview phase.
+              </p>
+            )}
+          <p className="lead mb-2">
+            For study designs, protocols, and updates on upcoming data releases, visit our
             {' '}
             <Link to="/project-overview">Project Overview</Link>
             {' '}
-            page. Read more about the
-            {' '}
-            <ExternalLink
-              to="https://www.nature.com/articles/s41586-023-06877-w"
-              label="endurance trained young adult rats study"
-            />
-            {' '}
-            in our Nature publication.
+            page.
           </p>
         </div>
         <div className="col-12 mt-3">
