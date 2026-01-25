@@ -225,6 +225,9 @@ export function Navbar({
                     Acute Exercise in Young Adult Rats
                     <span className="badge badge-primary ml-2">Limited</span>
                   </Link>
+                  <Link to="/code-repositories" className="dropdown-item">
+                    Code Repositories
+                  </Link>
                   <Link to="/data-deposition" className="dropdown-item">
                     Public Data Repositories
                   </Link>
@@ -310,9 +313,6 @@ export function Navbar({
                 >
                   <Link to="/publications" className="dropdown-item">
                     Publications
-                  </Link>
-                  <Link to="/code-repositories" className="dropdown-item">
-                    Code Repositories
                   </Link>
                   <Link to="/methods" className="dropdown-item">
                     Methods
