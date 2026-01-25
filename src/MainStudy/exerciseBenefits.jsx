@@ -101,7 +101,13 @@ function ExerciseBenefits() {
           currentLanguage={currentLanguage}
           languages={Object.values(SUPPORTED_LANGUAGES)}
           onLanguageChange={handleLanguageChange}
-          ariaLabel="Select exercise benefits page language"
+          ariaLabel={
+            currentLanguage === 'es'
+              ? 'Seleccionar idioma de la página de beneficios del ejercicio'
+              : currentLanguage === 'fr'
+                ? "Sélectionner la langue de la page des bienfaits de l'exercice"
+                : 'Select exercise benefits page language'
+          }
         />
       </div>
       
