@@ -64,7 +64,7 @@ function DataDownloadsMain({
                 metadata and QA/QC reports
               </li>
               <li>
-                "Analysis" results including normalized data tables, differential analysis
+                &quot;Analysis&quot; results including normalized data tables, differential analysis
                 results (e.g., log2 fold-change, p-values, adjusted p-values), and
                 cross-platform merged metabolomics data tables for named metabolites
               </li>
