@@ -13,16 +13,20 @@ const enhancer = composeEnhancers(applyMiddleware(thunkMiddleWare));
  * @return {Object} Returns a redux store configured for the application
  */
 export default function configureStore(preloadedState = {}) {
-  // Deep merge preloaded state with defaults
-  const initialState = {
-    ...defaultRootState,
-    ...preloadedState,
-    // Deep merge auth state if provided
-    auth: {
-      ...defaultRootState.auth,
-      ...(preloadedState.auth || {}),
-    },
-  };
+  // Normalize preloadedState to guard against null/undefined
+  const safePreloadedState = preloadedState != null && typeof preloadedState === 'object'
+    ? preloadedState
+    : {};
+
+  // Deep merge each slice with defaultRootState to preserve default fields
+  const initialState = Object.keys(defaultRootState).reduce((acc, sliceKey) => {
+    acc[sliceKey] = {
+      ...defaultRootState[sliceKey],
+      ...(safePreloadedState[sliceKey] || {}),
+    };
+    return acc;
+  }, {});
+
   const store = createStore(rootReducer, initialState, enhancer);
 
   return store;
