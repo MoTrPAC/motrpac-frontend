@@ -9,6 +9,7 @@ import ScrollToTop from '../lib/scrollToTop';
 import NavbarConnected from '../Navbar/navbar';
 import 'bootstrap';
 import History from './history';
+import PropTypes from 'prop-types';
 
 const LinkoutPage = lazy(() => import('../LinkoutPage/linkoutPage'));
 const AnalysisHomePageConnected = lazy(
@@ -212,5 +213,9 @@ function App({ history = History }) {
     </BrowserRouter>
   );
 }
+
+App.propTypes = {
+  history: PropTypes.object,
+};
 
 export default App;
