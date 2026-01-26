@@ -91,7 +91,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
 
   const backgroundVideo = document.querySelector('video');
   if (backgroundVideo) {
-    backgroundVideo.onloadeddata = (e) => {
+    backgroundVideo.onloadeddata = () => {
       setBackgroundVideoLoaded(true);
     };
   }
