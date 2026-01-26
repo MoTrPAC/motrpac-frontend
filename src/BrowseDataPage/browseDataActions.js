@@ -208,21 +208,6 @@ const key =
   import.meta.env.DEV
     ? import.meta.env.VITE_API_SERVICE_KEY_DEV
     : import.meta.env.VITE_API_SERVICE_KEY;
-const searchHost =
-  import.meta.env.DEV
-    ? import.meta.env.VITE_ES_PROXY_HOST_DEV
-    : import.meta.env.VITE_ES_PROXY_HOST;
-const fileSearchEndpoint = import.meta.env.VITE_FILE_SEARCH_ENDPOINT;
-const accessToken =
-  import.meta.env.DEV
-    ? import.meta.env.VITE_ES_ACCESS_TOKEN_DEV
-    : import.meta.env.VITE_ES_ACCESS_TOKEN;
-
-const headersConfig = {
-  headers: {
-    Authorization: `bearer ${accessToken}`,
-  },
-};
 
 function handleUrlFetch(selectedFiles) {
   if (selectedFiles.length === 0) {
