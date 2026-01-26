@@ -56,9 +56,12 @@ export function SearchPage({
 
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
-  const includesPrecawg = searchParams.study.includes('precawg');
-  const includesPass1b06 = searchParams.study.includes('pass1b06');
-  const includesPass1a06 = searchParams.study.includes('pass1a06');
+  const includesPrecawg =
+    Array.isArray(searchParams.study) && searchParams.study.includes('precawg');
+  const includesPass1b06 =
+    Array.isArray(searchParams.study) && searchParams.study.includes('pass1b06');
+  const includesPass1a06 =
+    Array.isArray(searchParams.study) && searchParams.study.includes('pass1a06');
 
   useEffect(() => {
     if (showUserSurveyModal) {
