@@ -19,6 +19,37 @@ import {
 } from './sharedlib';
 
 /**
+ * Sanitizes a value to be safe for use as a CSS class name.
+ * - Converts to lowercase
+ * - Replaces non-alphanumeric characters with hyphens
+ * - Collapses multiple hyphens into one
+ * - Removes leading/trailing hyphens
+ * - Prefixes with 'c-' if it starts with a digit
+ * - Returns empty string for falsy or non-string values
+ *
+ * @param {any} value - The value to sanitize
+ * @returns {string} A valid CSS class name or empty string
+ */
+function sanitizeClassName(value) {
+  if (!value || typeof value !== 'string') {
+    return '';
+  }
+
+  let sanitized = value
+    .toLowerCase()
+    .replace(/[^a-z0-9-]/g, '-') // Replace non-alphanumeric (except hyphen) with hyphen
+    .replace(/-+/g, '-') // Collapse multiple hyphens
+    .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
+
+  // CSS class names cannot start with a digit
+  if (/^[0-9]/.test(sanitized)) {
+    sanitized = `c-${sanitized}`;
+  }
+
+  return sanitized;
+}
+
+/**
  * Sets up table column headers and renders the table component
  *
  * @returns {object} The data qc status table component
@@ -185,7 +216,7 @@ function ResultsTable({
                           <td
                             key={key}
                             {...restCellProps}
-                            className={cell.value ? cell.value : ''}
+                            className={sanitizeClassName(cell.value)}
                           >
                             {cell.render('Cell')}
                           </td>
