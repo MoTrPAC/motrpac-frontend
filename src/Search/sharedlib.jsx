@@ -16,7 +16,7 @@ import { getDataVizURL } from '../lib/utils/dataVizUrl';
 
 export const searchParamsDefaultProps = {
   ktype: 'gene',
-  keys: [] || '',
+  keys: [],
   omics: [],
   study: [],
   analysis: 'all',
@@ -401,15 +401,6 @@ PageNavigationControl.propTypes = {
   start: PropTypes.number,
   onPageChange: PropTypes.func.isRequired,
 };
-
-/** normalize string */
-function normalizeString(str) {
-  return str
-    // Step 1: Capitalize the first letter of the first word
-    .replace(/^([a-z])/, (match, firstChar) => firstChar.toUpperCase())
-    // Step 2: Replace underscores with spaces
-    .replace(/_/g, ' ');
-}
 
 /**
  * Utility function to tranform some fields within each object in the array
