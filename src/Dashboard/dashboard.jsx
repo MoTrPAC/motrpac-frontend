@@ -11,11 +11,6 @@ import ExternalLink from '@/lib/ui/externalLink';
 
 import '@styles/dashboard.scss';
 
-const PACK_ANALYSIS = 'bundles/motrpac_human-precovid-sed-adu_analysis.zip';
-const PACK_DATA = 'bundles/motrpac_human-precovid-sed-adu_data.zip';
-const PACK_FUNCTION = 'bundles/motrpac_human-precovid-sed-adu_function.zip';
-const PACK_CLINICAL_ANALYSIS = 'bundles/motrpac_human-precovid-sed-adu_clinic-analysis.zip';
-
 /**
  * Renders the Dashboard page
  *
