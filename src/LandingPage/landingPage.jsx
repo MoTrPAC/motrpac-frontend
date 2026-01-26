@@ -60,6 +60,7 @@ const options = {
  */
 export function LandingPage({ isAuthenticated = false, profile = {} }) {
   const [backgroundVideoLoaded, setBackgroundVideoLoaded] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [_networkNodes, setNetwortNodes] = useState([]);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
