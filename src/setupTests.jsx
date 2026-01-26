@@ -21,6 +21,7 @@ vi.mock('react-router-dom', async () => {
   return {
     ...actual,
     useNavigate: () => vi.fn(),
+    // eslint-disable-next-line react/prop-types
     Navigate: ({ to }) => <div data-testid="mock-navigate">Navigate to {to}</div>,
   };
 });
