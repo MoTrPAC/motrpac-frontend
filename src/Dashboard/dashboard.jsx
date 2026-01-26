@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import 'bootstrap';
-import $ from 'jquery';
 import FeatureLinks from '../Search/featureLinks';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
 import ExternalLink from '@/lib/ui/externalLink';
@@ -23,24 +21,8 @@ export function Dashboard({
   handleQCDataFetch, 
   lastModified = '',
 }) {
-  // Initialize agreement state from sessionStorage to persist across page navigations
-  const [agreement, setAgreement] = useState(() => {
-    const saved = sessionStorage.getItem('reviewerAgreement');
-    return saved === 'true';
-  });
   const userType = profile.user_metadata && profile.user_metadata.userType;
   const userRole = profile.app_metadata && profile.app_metadata.role;
-
-  // Show modal for reviewers who haven't agreed yet
-  useEffect(() => {
-    if (userType === 'external' && userRole === 'reviewer' && !agreement) {
-      $('#reviewerAgreementModal').modal('show');
-      
-      return () => {
-        $('#reviewerAgreementModal').modal('hide');
-      };
-    }
-  }, [userType, userRole, agreement]);
 
   return (
     <div className="dashboardPage px-3 px-md-4 mb-3">
