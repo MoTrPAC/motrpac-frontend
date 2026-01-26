@@ -290,7 +290,7 @@ export function Navbar({
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <span>Acute Exercise in Human Sedentray Adults</span>
+                    <span>Acute Exercise in Human Sedentary Adults</span>
                     <i className="material-icons external-link-icon">open_in_new</i>
                   </a>
                   <Link to="/graphical-clustering" className="dropdown-item">
