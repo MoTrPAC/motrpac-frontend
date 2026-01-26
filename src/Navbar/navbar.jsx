@@ -120,7 +120,6 @@ export function Navbar({
 
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   const userType = profile.user_metadata && profile.user_metadata.userType;
-  const userRole = profile.app_metadata && profile.app_metadata.role;
 
   // Call to invoke Redux action to fetch QC data
   // if timestamp is empty or older than 24 hours
