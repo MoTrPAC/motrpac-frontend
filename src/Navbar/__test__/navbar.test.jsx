@@ -1,4 +1,5 @@
-import { describe, expect, test, vi } from 'vitest';
+import React from 'react';
+import { describe, expect, test } from 'vitest';
 import { screen } from '@testing-library/react';
 import { renderWithProviders, testUser, mockActions } from '../../testUtils/test-utils';
 import { Navbar } from '../navbar';
