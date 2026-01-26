@@ -532,7 +532,9 @@ export const transformData = (arr) => {
     // Transform randomGroupCode values
     if (item.contrast1_randomGroupCode && item.contrast1_randomGroupCode.length) {
       const matchedRnadomGroupCode = randomGroupList.find(
-        (filter) => filter.filter_value.toLowerCase() === item.contrast1_randomGroupCode,
+        (filter) =>
+          filter.filter_value.toLowerCase() ===
+          item.contrast1_randomGroupCode.toLowerCase(),
       );
       item.contrast1_randomGroupCode = matchedRnadomGroupCode ? matchedRnadomGroupCode.filter_label
         : item.contrast1_randomGroupCode;
