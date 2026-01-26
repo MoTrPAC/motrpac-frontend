@@ -205,12 +205,14 @@ function DataDownloadsMain({
                 <li>Pre-Suspension</li>
                 <li>4 tissues</li>
                 <li>22 assays across different omes</li>
-                <li>
-                  <a href={import.meta.env.VITE_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
-                    <i className="bi bi-file-earmark-fill mr-1" />
-                    <span>Release README</span>
-                  </a>
-                </li>
+                {import.meta.env.VITE_DATA_RELEASE_README ? (
+                  <li>
+                    <a href={import.meta.env.VITE_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
+                      <i className="bi bi-file-earmark-fill mr-1" />
+                      <span>Release README</span>
+                    </a>
+                  </li>
+                ) : null}
               </ul>
             </SelectiveDataDownloadsCard>
           </div>
