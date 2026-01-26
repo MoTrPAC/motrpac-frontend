@@ -129,7 +129,7 @@ function DataDownloadsMain({
             page.
           </p>
         </div>
-        <div className="col-12 mt-3">
+        <div className="col-12 mt-4">
           <h2>Study Data</h2>
           <p>
             Browse and select the data of your interest to download by tissue,
