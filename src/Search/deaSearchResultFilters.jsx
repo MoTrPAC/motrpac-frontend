@@ -153,7 +153,7 @@ function SearchResultFilters({
               className="form-check-input"
               id="includeEpigenomicsCheckbox"
               checked={includeEpigenomics}
-              onChange={(e) => toggleEpigenomics(e.target.checked)}
+              onChange={(e) => toggleEpigenomics?.(e.target.checked)}
             />
             <label
               className="form-check-label"
