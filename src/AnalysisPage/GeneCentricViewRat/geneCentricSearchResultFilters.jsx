@@ -45,10 +45,11 @@ function GeneCentricSearchResultFilters({
         <div className="card-body">
           {item.filters.map((filter) => {
             const isActiveFilter =
+              geneSearchParams.filters &&
               geneSearchParams.filters[item.keyName] &&
-              geneSearchParams.filters[item.keyName].indexOf(
-                filter.filter_value
-              ) > -1;
+              geneSearchParams.filters[item.keyName].includes(
+              filter.filter_value
+              );
             const resultCount =
               hasResultFilters &&
               hasResultFilters[item.keyName] &&
