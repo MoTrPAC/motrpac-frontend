@@ -204,7 +204,7 @@ const commonSearchResultColumns = [
     Header: 'Intervention Effect',
     // Use static 'Pre Training Acute Bout' for precawg and pass1a06 while 'Training' for pass1b06
     accessor: (row) => {
-      if (row.contrast_type && row.contrast_type !== 'NA') {
+      if (row.contrast_type && (row.contrast_type === 'acute' || row.contrast_type === 'exercise_with_controls')) {
         return 'Pre Training Acute Bout';
       }
       return 'Training';
