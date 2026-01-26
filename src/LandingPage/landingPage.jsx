@@ -13,6 +13,7 @@ import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
 import IconSet from '../lib/iconSet';
 import BackgroundVideo from './components/backgroundVideo';
 import Figure1C from './components/figure1c';
+import ExternalLink from '@/lib/ui/externalLink';
 
 // import network figure 4e visualization dataset
 import landscapeFigure4eNetworkData from '../data/landscape_figure_4e';
@@ -346,14 +347,20 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
             </div>
             <div className="modal-body">
               <p className="sub-hero-text-details">
-                <a href="https://motrpac.org" target="_blank" rel="noreferrer">MoTrPAC</a>
+                <ExternalLink
+                  to="https://motrpac.org"
+                  label="MoTrPAC"
+                />
                 {' '}has publicly released new data
                 collections. The Pre-Suspension Acute Exercise Study contains data from
                 sedentary adults undergoing acute resistance or endurance exercise
                 bouts. Visit the{' '}
                 <Link to="/search">Browse Results</Link>
                 {' '}page for summary-level results and the{' '}
-                <a href="https://data-viz.motrpac-data.org/precawg" target="_blank" rel="noreferrer">Data Visualization</a>
+                <ExternalLink
+                  to="https://data-viz.motrpac-data.org/precawg"
+                  label="Data Visualization"
+                />
                 {' '}for interactive analysis. Please refer to the{' '}
                 <Link to="/citation">Citation</Link>
                 {' '}page for information on acknowledging MoTrPAC
