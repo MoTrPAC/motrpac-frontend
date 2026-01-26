@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import PageTitle from '../../lib/ui/pageTitle';
 import BrowseDataFilter from '../browseDataFilter';
-import DataTypeInfo from './dataTypeInfo';
 import BundleDatasets from './bundleDatasets';
 import BundleDataTypes from './bundleDataTypes';
 import actions from '../browseDataActions';
@@ -62,7 +60,7 @@ function DataDownloadsMain({
             <h5 className="border-bottom mt-1 mb-2 pb-2">Data types available to download:</h5>
             <ul className="pl-3">
               <li>
-                "Raw" results including assay-specific quantitative results, experiment
+                &quot;Raw&quot; results including assay-specific quantitative results, experiment
                 metadata and QA/QC reports
               </li>
               <li>
