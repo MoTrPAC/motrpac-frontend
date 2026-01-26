@@ -29,10 +29,6 @@ function SearchResultFilters({
 
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
-  const includesPrecawg = searchParams.study.includes('precawg');
-  const includesPass1b06 = searchParams.study.includes('pass1b06');
-  const includesPass1a06 = searchParams.study.includes('pass1a06');
-
   // Customize tissue list based on user type and ktype
   function customizeTissueList() {
     if (!Array.isArray(searchParams.study)) {
