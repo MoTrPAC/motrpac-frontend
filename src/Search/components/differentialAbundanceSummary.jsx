@@ -3,28 +3,31 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 function DifferentialAbundanceSummary({ userType = '' }) {
+  const isInternal = userType === 'internal';
+
   return (
     <div className="search-summary-container row mb-3 collapse show" id="collapseDifferentialAbundanceSummary">
       <div className="lead col-12">
-        {userType && userType === 'internal' && (
-          <span>
-            Search by gene, protein or metabolite names to examine the timewise endurance
-            training response over 8 weeks of training or the training responses to
-            acute exercise intervention in young adult rats, or the pre-suspension human
-            sedentary adults randomized to endurance exercise training (EE), resistance
-            exercise training (RE), or no-exercise control groups. To ensure the best
-            search results, please use the following guidelines:
-          </span>
-        )}
-        {(!userType || (userType && userType === 'external')) && (
-          <span>
-            Search by gene, protein or metabolite names to examine the
-            timewise endurance training response over 8 weeks of training in
-            young adult rats, as well as the pre-suspension human sedentary adults
-            randomized to acute exercise or no-exercise control groups. To ensure the
-            best search results, please use the following guidelines:
-          </span>
-        )}
+        <span>
+          {isInternal ? (
+            <>
+              Search by gene, protein or metabolite names to examine the timewise endurance
+              training response over 8 weeks of training or the training responses to
+              acute exercise intervention in young adult rats, or the pre-suspension human
+              sedentary adults randomized to endurance exercise training (EE), resistance
+              exercise training (RE), or no-exercise control groups. To ensure the best
+              search results, please use the following guidelines:
+            </>
+          ) : (
+            <>
+              Search by gene, protein or metabolite names to examine the
+              timewise endurance training response over 8 weeks of training in
+              young adult rats, as well as the pre-suspension human sedentary adults
+              randomized to acute exercise or no-exercise control groups. To ensure the
+              best search results, please use the following guidelines:
+            </>
+          )}
+        </span>
         <ol className="mt-2">
           <li>
             Use
