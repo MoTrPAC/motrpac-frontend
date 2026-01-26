@@ -155,7 +155,7 @@ export function Dashboard({
               <span>
                 Welcome,
                 {' '}
-                {profile.user_metadata.givenName}
+                {profile.user_metadata?.givenName || 'User'}
               </span>
             </h2>
           </div>
