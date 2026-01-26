@@ -99,8 +99,7 @@ const headersConfig = {
 // Handle search and results filtering events
 function handleSearch(params, inputValue, scope, userType) {
   // Create a copy to avoid mutating Redux state directly
-  const searchParams = { ...params, filters: { ...params.filters } };
-  searchParams.keys = inputValue;
+  const searchParams = { ...params, filters: { ...params.filters }, keys: inputValue };
 
   // if user is 'internal', set 'study' to include 'pass1a06'
   // else set 'study' to exclude 'pass1a06'
