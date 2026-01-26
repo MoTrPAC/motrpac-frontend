@@ -44,7 +44,7 @@ function SelectiveDataDownloads({
             </button>
             <div className="dropdown-menu dropdown-menu-right">
               <p>Data available for download on this page includes:</p>
-              <h6 className="border-bottom mb-2 pb-2">Raw "Results"</h6>
+              <h6 className="border-bottom mb-2 pb-2">Raw &quot;Results&quot;</h6>
               <ul className="pl-3">
                 <li><b>Untargeted Metabolomics:</b> MS intensities</li>
                 <li><b>Targeted Metabolomics</b>: Absolute concentrations</li>
@@ -53,7 +53,7 @@ function SelectiveDataDownloads({
                 <li><b>RRBS:</b> CpG methylation counts (or methylation beta values)</li>
                 <li><b>Immunoassay (Luminex):</b> Protein concentrations</li>
               </ul>
-              <h6 className="border-bottom mb-2 pb-2">"Analysis" Results</h6>
+              <h6 className="border-bottom mb-2 pb-2">&quot;Analysis&quot; Results</h6>
               <ul className="pl-3">
                 <li>Normalized data tables</li>
                 <li>Differential analysis results (e.g., log2 fold-change, p-values, adjusted p-values)</li>
