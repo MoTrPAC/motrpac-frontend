@@ -11,7 +11,7 @@ const tagColors = {
   acute: 'badge-info',
   youngAdult: 'badge-secondary',
   adult: 'badge-dark',
-  preSuspection: 'badge-danger',
+  preSuspension: 'badge-danger',
   sedentary: 'badge-purple',
 };
 
@@ -63,7 +63,7 @@ function BundleDatasets({
                   </span>
                   {item.species === 'Human' && (
                     <span
-                      className={`badge badge-pill ${item.study_group === 'Pre-Suspension' && tagColors.preSuspection} mr-1`}
+                      className={`badge badge-pill ${item.study_group === 'Pre-Suspension' && tagColors.preSuspension} mr-1`}
                     >
                       {item.study_group}
                     </span>
