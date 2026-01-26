@@ -42,18 +42,6 @@ export function Dashboard({
     }
   }, [userType, userRole, agreement]);
 
-  // Handler to save agreement to sessionStorage
-  const handleAgree = () => {
-    setAgreement(true);
-    sessionStorage.setItem('reviewerAgreement', 'true');
-  };
-
-  // Handler to dismiss modal without agreeing - keeps buttons disabled
-  const handleCancel = () => {
-    setAgreement(false);
-    sessionStorage.setItem('reviewerAgreement', 'false');
-  };
-
   return (
     <div className="dashboardPage px-3 px-md-4 mb-3">
       <Helmet>
@@ -130,46 +118,46 @@ export function Dashboard({
 
       {userType && userType === 'external' && !userRole && (
         <>
-        <div className="jumbotron jumbotron-fluid alert-data-release external-user">
-          <div className="container">
-            <h1 className="highlight-title display-4 mb-4">
-              <i className="bi bi-rocket-takeoff mr-3" />
-              <span>New human dataset now available!</span>
-            </h1>
-            <div className="row">
-              <div className="col-md-12 lead d-flex align-items-start">
-                <span className="data-release-text">
-                  <ExternalLink
-                    to="https://motrpac.org"
-                    label="MoTrPAC"
-                  />
-                  {' '}has publicly released new data
-                  collections. The Pre-Suspension Acute Exercise Study contains data from
-                  sedentary adults undergoing acute resistance or endurance exercise
-                  bouts. Visit the{' '}
-                  <Link to="/search">Browse Results</Link>
-                  {' '}page for summary-level results and the{' '}
-                  <ExternalLink
-                    to="https://data-viz.motrpac-data.org/precawg"
-                    label="Data Visualization"
-                  />
-                  {' '}for interactive analysis. Please refer to the{' '}
-                  <Link to="/citation">Citation</Link>
-                  {' '}page for information on acknowledging MoTrPAC
-                  when using this dataset in your work.
-                </span>
+          <div className="jumbotron jumbotron-fluid alert-data-release external-user">
+            <div className="container">
+              <h1 className="highlight-title display-4 mb-4">
+                <i className="bi bi-rocket-takeoff mr-3" />
+                <span>New human dataset now available!</span>
+              </h1>
+              <div className="row">
+                <div className="col-md-12 lead d-flex align-items-start">
+                  <span className="data-release-text">
+                    <ExternalLink
+                      to="https://motrpac.org"
+                      label="MoTrPAC"
+                    />
+                    {' '}has publicly released new data
+                    collections. The Pre-Suspension Acute Exercise Study contains data from
+                    sedentary adults undergoing acute resistance or endurance exercise
+                    bouts. Visit the{' '}
+                    <Link to="/search">Browse Results</Link>
+                    {' '}page for summary-level results and the{' '}
+                    <ExternalLink
+                      to="https://data-viz.motrpac-data.org/precawg"
+                      label="Data Visualization"
+                    />
+                    {' '}for interactive analysis. Please refer to the{' '}
+                    <Link to="/citation">Citation</Link>
+                    {' '}page for information on acknowledging MoTrPAC
+                    when using this dataset in your work.
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="greeting-message">
-          <h2 className="dashboard-title mb-3">
-            <span>
-              Welcome,
-              {' '}
-              {profile.user_metadata.givenName}
-            </span>
-          </h2>
+          <div className="greeting-message">
+            <h2 className="dashboard-title mb-3">
+              <span>
+                Welcome,
+                {' '}
+                {profile.user_metadata.givenName}
+              </span>
+            </h2>
           </div>
         </>
       )}
