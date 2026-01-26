@@ -16,7 +16,7 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
   // When human-precovid-sed-adu data tab is selected
   if (dataDownload.humanPrecovidSedAduDataSelected) {
     // Remove category only if logged-in user is internal
-    if (userType && userType == 'internal') {
+    if (userType && userType === 'internal') {
       fileFilters.splice(4, 1);
     } else {
       // Remove category and metadata filters if user is not internal
