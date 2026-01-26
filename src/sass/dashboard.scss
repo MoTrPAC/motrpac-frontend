@@ -42,6 +42,15 @@
     &.alert-data-release.external-user h1 {
       font-size: 4.25em;
     }
+
+    &.alert-data-release.external-user {
+      .data-release-text {
+        .external-linkout-icon {
+          font-size: 1.35rem;
+          line-height: 1.35;
+        }
+      }
+    }
   }
 
   .data-release-icon {
