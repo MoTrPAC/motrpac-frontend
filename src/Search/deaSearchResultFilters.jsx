@@ -452,7 +452,10 @@ function SearchResultFilters({
 }
 
 SearchResultFilters.propTypes = {
-  searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
+  searchParams: PropTypes.shape({
+    ...searchParamsPropType,
+    study: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
   changeResultFilter: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
   resetSearch: PropTypes.func.isRequired,
