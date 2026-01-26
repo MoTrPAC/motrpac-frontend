@@ -60,7 +60,7 @@ const options = {
  */
 export function LandingPage({ isAuthenticated = false, profile = {} }) {
   const [backgroundVideoLoaded, setBackgroundVideoLoaded] = useState(false);
-  const [networkNodes, setNetwortNodes] = useState([]);
+  const [_networkNodes, setNetwortNodes] = useState([]);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   useEffect(() => {
