@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { render, screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import { Provider } from 'react-redux';
@@ -52,6 +53,9 @@ function renderWithRouterAndStore(
       </Provider>
     );
   }
+  Wrapper.propTypes = {
+    children: PropTypes.node.isRequired,
+  };
   return {
     store,
     ...render(ui, { wrapper: Wrapper, ...renderOptions }),
