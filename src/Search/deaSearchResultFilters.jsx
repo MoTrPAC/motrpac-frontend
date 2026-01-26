@@ -31,9 +31,7 @@ function SearchResultFilters({
 
   // Customize tissue list based on user type and ktype
   function customizeTissueList() {
-    if (!Array.isArray(searchParams.study)) {
-      return [];
-    }
+    // If study isn't set yet, still show tissues
 
     // Internal users see all tissues; external users don't see aorta (pass1a06 tissue)
     const isInternal = userType && userType === 'internal';
@@ -455,6 +453,7 @@ SearchResultFilters.propTypes = {
   searchParams: PropTypes.shape({
     ...searchParamsPropType,
     ktype: PropTypes.string,
+    keys: PropTypes.arrayOf(PropTypes.string),
     study: PropTypes.arrayOf(PropTypes.string),
     omics: PropTypes.arrayOf(PropTypes.string),
     filters: PropTypes.shape({
