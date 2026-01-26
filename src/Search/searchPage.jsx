@@ -95,18 +95,6 @@ export function SearchPage({
   // get options based on selected search context
   // for automatic suggestions in the primary search input field
   function getOptions() {
-    if ((includesPass1b06 && includesPrecawg) || (!userType || userType === 'external')) {
-      switch (searchParams.ktype) {
-        case 'gene':
-          return mergeAndDedupeById(genes, humanGenes);
-        case 'metab':
-          return mergeAndDedupeById(metabolites, humanMetabolites);
-        case 'protein':
-          return mergeAndDedupeById(proteins, humanProteins);
-        default:
-          return [];
-      }
-    }
     if ((includesPass1b06 && includesPrecawg && includesPass1a06) || (userType && userType === 'internal')) {
       switch (searchParams.ktype) {
         case 'gene':
@@ -115,6 +103,18 @@ export function SearchPage({
           return mergeAndDedupeById(metabolites, ratAcuteMetabolites, humanMetabolites);
         case 'protein':
           return mergeAndDedupeById(proteins, ratAcuteProteins, humanProteins);
+        default:
+          return [];
+      }
+    }
+    if ((includesPass1b06 && includesPrecawg) || (!userType || userType === 'external')) {
+      switch (searchParams.ktype) {
+        case 'gene':
+          return mergeAndDedupeById(genes, humanGenes);
+        case 'metab':
+          return mergeAndDedupeById(metabolites, humanMetabolites);
+        case 'protein':
+          return mergeAndDedupeById(proteins, humanProteins);
         default:
           return [];
       }
