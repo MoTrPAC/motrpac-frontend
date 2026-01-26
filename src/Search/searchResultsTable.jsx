@@ -247,7 +247,10 @@ SearchResultsTable.propTypes = {
   unifiedResults: PropTypes.arrayOf(
     PropTypes.shape({ ...searchResultsTablePropType }),
   ).isRequired,
-  searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
+  searchParams: PropTypes.shape({
+    ...searchParamsPropType,
+    ktype: PropTypes.string,
+  }).isRequired,
   handleSearchDownload: PropTypes.func.isRequired,
   total: PropTypes.number.isRequired,
   size: PropTypes.number.isRequired,
@@ -265,7 +268,10 @@ ResultsTable.propTypes = {
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({ ...searchResultsTablePropType }))
     .isRequired,
-  searchParams: PropTypes.shape({ ...searchParamsPropType }).isRequired,
+  searchParams: PropTypes.shape({
+    ...searchParamsPropType,
+    ktype: PropTypes.string,
+  }).isRequired,
   handleSearchDownload: PropTypes.func.isRequired,
   total: PropTypes.number.isRequired,
   size: PropTypes.number.isRequired,
