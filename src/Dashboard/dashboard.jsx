@@ -7,7 +7,7 @@ import 'bootstrap';
 import $ from 'jquery';
 import FeatureLinks from '../Search/featureLinks';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
-import ReviewerDownloadButton from './reviewerDownloadButton';
+import ExternalLink from '@/lib/ui/externalLink';
 
 import '@styles/dashboard.scss';
 
@@ -144,18 +144,24 @@ export function Dashboard({
             <div className="row">
               <div className="col-md-12 lead d-flex align-items-start">
                 <span className="data-release-text">
-                  <a href="https://motrpac.org" target="_blank" rel="noreferrer">MoTrPAC</a>
-                    {' '}has publicly released new data
-                    collections. The Pre-Suspension Acute Exercise Study contains data from
-                    sedentary adults undergoing acute resistance or endurance exercise
-                    bouts. Visit the{' '}
-                    <Link to="/search">Browse Results</Link>
-                    {' '}page for summary-level results and the{' '}
-                    <a href="https://data-viz.motrpac-data.org/precawg" target="_blank" rel="noreferrer">Data Visualization</a>
-                    {' '}for interactive analysis. Please refer to the{' '}
-                    <Link to="/citation">Citation</Link>
-                    {' '}page for information on acknowledging MoTrPAC
-                    when using this dataset in your work.
+                  <ExternalLink
+                    to="https://motrpac.org"
+                    label="MoTrPAC"
+                  />
+                  {' '}has publicly released new data
+                  collections. The Pre-Suspension Acute Exercise Study contains data from
+                  sedentary adults undergoing acute resistance or endurance exercise
+                  bouts. Visit the{' '}
+                  <Link to="/search">Browse Results</Link>
+                  {' '}page for summary-level results and the{' '}
+                  <ExternalLink
+                    to="https://data-viz.motrpac-data.org/precawg"
+                    label="Data Visualization"
+                  />
+                  {' '}for interactive analysis. Please refer to the{' '}
+                  <Link to="/citation">Citation</Link>
+                  {' '}page for information on acknowledging MoTrPAC
+                  when using this dataset in your work.
                 </span>
               </div>
             </div>
