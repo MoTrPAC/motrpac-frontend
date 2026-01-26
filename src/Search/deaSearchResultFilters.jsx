@@ -454,7 +454,15 @@ function SearchResultFilters({
 SearchResultFilters.propTypes = {
   searchParams: PropTypes.shape({
     ...searchParamsPropType,
+    ktype: PropTypes.string,
     study: PropTypes.arrayOf(PropTypes.string),
+    omics: PropTypes.arrayOf(PropTypes.string),
+    filters: PropTypes.shape({
+      assay: PropTypes.arrayOf(PropTypes.string),
+      tissue: PropTypes.arrayOf(PropTypes.string),
+      timepoint: PropTypes.arrayOf(PropTypes.string),
+      sex: PropTypes.arrayOf(PropTypes.string),
+    }),
   }).isRequired,
   changeResultFilter: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
