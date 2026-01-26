@@ -111,7 +111,13 @@ function GeneCentricSearchResultFilters({
 }
 
 GeneCentricSearchResultFilters.propTypes = {
-  geneSearchParams: PropTypes.shape({ ...geneSearchParamsPropType }).isRequired,
+  geneSearchParams: PropTypes.shape({
+    ...geneSearchParamsPropType,
+    filters: PropTypes.shape({
+      assay: PropTypes.arrayOf(PropTypes.string),
+      tissue: PropTypes.arrayOf(PropTypes.string),
+    }),
+  }).isRequired,
   handleGeneCentricSearch: PropTypes.func.isRequired,
   geneSearchChangeFilter: PropTypes.func.isRequired,
   geneSearchInputValue: PropTypes.string.isRequired,
