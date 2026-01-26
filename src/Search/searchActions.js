@@ -109,11 +109,11 @@ function handleSearch(params, inputValue, scope, userType) {
   // if user is 'internal', set 'study' to include 'pass1a06'
   // else set 'study' to exclude 'pass1a06'
   if (userType && userType === 'internal') {
-    if (!searchParams.study.length) {
+    if (!Array.isArray(searchParams.study) || !searchParams.study.length) {
       searchParams.study = ['pass1b06', 'precawg', 'pass1a06'];
     }
   } else if (!userType || userType === 'external') {
-    if (!searchParams.study.length) {
+    if (!Array.isArray(searchParams.study) || !searchParams.study.length) {
       searchParams.study = ['pass1b06', 'precawg'];
     }
   }
