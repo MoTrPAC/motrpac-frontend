@@ -459,6 +459,7 @@ SearchResultFilters.propTypes = {
   hasResultFilters: PropTypes.shape({
     tissue: PropTypes.object,
     assay: PropTypes.object,
+    omics: PropTypes.object,
     timepoint: PropTypes.object,
     sex: PropTypes.object,
   }),
