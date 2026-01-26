@@ -144,7 +144,7 @@ const translations = {
   es: {
     pageTitle: 'Beneficios del Ejercicio',
     metaTitle: 'Beneficios del Ejercicio - MoTrPAC Data Hub',
-    leadText: 'La actividad física regular se asocia con muchos beneficios para la salud, respaldados por evidencia extensa en la literatura médica.',
+    leadText: 'La actividad física frecuente aporta múltiples beneficios para la salud, respaldados por una amplia evidencia médica.',
     tableHeaders: {
       healthBenefit: 'Beneficio para la Salud',
       evidence: 'Evidencia',
