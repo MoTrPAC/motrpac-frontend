@@ -412,6 +412,11 @@
 
       a {
         color: colors.$accent-yellow;
+
+        .external-linkout-icon {
+          font-size: 1.5rem;
+          line-height: 1.5;
+        }
       }
     }
   }
