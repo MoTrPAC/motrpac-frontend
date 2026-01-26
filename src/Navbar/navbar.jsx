@@ -285,7 +285,7 @@ export function Navbar({
                     <i className="material-icons external-link-icon">open_in_new</i>
                   </a>
                   <a
-                    href={getDataVizURL('human-precovid')}
+                    href={getDataVizURL('human-precovid', userType)}
                     className="dropdown-item external-link"
                     target="_blank"
                     rel="noreferrer"
