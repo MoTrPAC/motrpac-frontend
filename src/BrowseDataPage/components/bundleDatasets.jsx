@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import BundleDownloadButton from './bundleDownloadButton';
@@ -22,6 +22,7 @@ function BundleDatasets({
   downloadedData,
 }) {
   const dispatch = useDispatch();
+  const [filterKeywords, setFilterKeywords] = useState('');
 
   useEffect(() => {
     // show user survey modal if user has not submitted survey after downloading data
@@ -34,9 +35,65 @@ function BundleDatasets({
     }
   }, [dispatch, downloadedData, surveySubmitted]);
 
+  // Filter datasets based on keywords (title, description, species, intervention, etc.)
+  const filteredDatasets = useMemo(() => {
+    if (filterKeywords.length < 2) {
+      return bundleDatasets;
+    }
+
+    const keywords = filterKeywords.toLowerCase();
+    return bundleDatasets.filter((item) =>
+      item.title?.toLowerCase().includes(keywords) ||
+      item.description?.toLowerCase().includes(keywords) ||
+      item.species?.toLowerCase().includes(keywords) ||
+      item.intervention?.toLowerCase().includes(keywords) ||
+      item.participant_type?.toLowerCase().includes(keywords) ||
+      item.study_group?.toLowerCase().includes(keywords)
+    );
+  }, [filterKeywords, bundleDatasets]);
+
+  const handleFilterChange = (e) => {
+    setFilterKeywords(e.target.value);
+  };
+
   return (
-    <div className="row row-cols-1 row-cols-md-3 bundle-datasets">
-      {bundleDatasets.map((item) => {
+    <div className="bundle-datasets-container">
+      <div className="bundle-datasets-filter-container mb-3">
+        <div className="input-group d-flex align-items-center">
+          <div className="input-group-prepend">
+            <span className="input-group-text">
+              <span className="material-icons">search</span>
+            </span>
+          </div>
+          <input
+            id="bundle-datasets-filter"
+            type="text"
+            className="form-control"
+            placeholder="Search datasets (enter at least 2 characters)"
+            value={filterKeywords}
+            onChange={handleFilterChange}
+          />
+          {filterKeywords.length > 0 && (
+            <div className="input-group-append">
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => setFilterKeywords('')}
+                aria-label="Clear search"
+              >
+                <span className="material-icons">close</span>
+              </button>
+            </div>
+          )}
+        </div>
+        {filterKeywords.length >= 2 && (
+          <small className="text-muted mt-1">
+            Showing {filteredDatasets.length} of {bundleDatasets.length} datasets
+          </small>
+        )}
+      </div>
+      <div className="row row-cols-1 row-cols-md-3 bundle-datasets">
+        {filteredDatasets.map((item) => {
         return (
           <div
             key={`${item.type}-${item.object_zipfile}`}
@@ -92,6 +149,7 @@ function BundleDatasets({
           </div>
         );
       })}
+      </div>
     </div>
   );
 }
