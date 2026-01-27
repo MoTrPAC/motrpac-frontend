@@ -8,7 +8,7 @@ function DifferentialAbundanceSummary({ userType = '' }) {
   return (
     <div className="search-summary-container row mb-3 collapse show" id="collapseDifferentialAbundanceSummary">
       <div className="lead col-12">
-        <span>
+        <p>
           {isInternal ? (
             <>
               Search by gene, protein or metabolite names to examine the timewise endurance
@@ -24,37 +24,17 @@ function DifferentialAbundanceSummary({ userType = '' }) {
               timewise endurance training response over 8 weeks of training in
               young adult rats, as well as the pre-suspension human sedentary adults
               randomized to acute exercise or no-exercise control groups. To ensure the
-              best search results, please use the following guidelines:
+              best search results, please use
+              {' '}
+              <span className="font-weight-bold">
+                auto-suggested search terms
+              </span>
+              {' '}
+              by typing the first few
+              characters of the gene symbol, protein or metabolite names.
             </>
           )}
-        </span>
-        <ol className="mt-2">
-          <li>
-            Use
-            {' '}
-            <span className="font-weight-bold">
-              auto-suggested search terms
-            </span>
-            {' '}
-            by typing the first few
-            characters of the gene symbol, protein or metabolite names.
-          </li>
-          <li>
-            Separate multiple search terms using a comma followed by a space. For example:
-            {' '}
-            <code>
-              bag3, myom2, prag1, smad3, vegfa
-            </code>
-          </li>
-          <li>
-            Use double quotes to enclose search terms containing commas,
-            spaces or commas followed by spaces. For example:
-            {' '}
-            <code>
-              {`"capric acid", "5,6-dihet", "cl(70:7)>cl(16:1_18:2_18:2_18:2)", "cer(d18:1/18:0)"`}
-            </code>
-          </li>
-        </ol>
+        </p>
         <p>
           The{' '}
           <span className="font-weight-bold">endurance training in young adult rats</span>
