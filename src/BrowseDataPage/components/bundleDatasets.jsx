@@ -60,16 +60,14 @@ function BundleDatasets({
     <div className="bundle-datasets-container">
       <div className="bundle-datasets-filter-container mb-3">
         <div className="input-group d-flex align-items-center">
-          <div className="input-group-prepend">
-            <span className="input-group-text">
-              <span className="material-icons">search</span>
-            </span>
+          <div className="glossary-filter-label mr-2">
+            <b>Search bundled datasets:</b>
           </div>
           <input
             id="bundle-datasets-filter"
             type="search"
             className="form-control"
-            placeholder="Search datasets (enter at least 2 characters)"
+            placeholder="Enter at least 2 characters to filter results"
             value={filterKeywords}
             onChange={handleFilterChange}
           />
