@@ -151,7 +151,7 @@ function ResultsTable({
             data-target=".data-download-modal"
             onClick={(e) => {
               e.preventDefault();
-              handleSearchDownload(searchParams, 'precawg');
+              handleSearchDownload(searchParams);
             }}
           >
             <span className="material-icons">file_download</span>
