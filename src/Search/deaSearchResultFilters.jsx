@@ -66,6 +66,27 @@ function SearchResultFilters({
     },
   ];
 
+  // Helper function to get result count, accounting for ome variations like
+  // 'metabolomics'/'metabolomics-untargeted' or 'proteomics'/'proteomics-untargeted'
+  const getResultCount = (paramKey, filterValue) => {
+    if (!hasResultFilters?.[paramKey] || !Object.keys(hasResultFilters[paramKey]).length) {
+      return 0;
+    }
+
+    const filterValueLower = filterValue.toLowerCase();
+
+    // For 'omics' param, sum counts from all keys that start with the filter value
+    // e.g., 'metabolomics' matches both 'metabolomics' and 'metabolomics-untargeted'
+    if (paramKey === 'omics') {
+      return Object.entries(hasResultFilters[paramKey])
+        .filter(([key]) => key.startsWith(filterValueLower))
+        .reduce((sum, [, count]) => sum + (count || 0), 0);
+    }
+
+    // For other params, do exact match
+    return hasResultFilters[paramKey][filterValueLower] || 0;
+  };
+
   // Helper function to render ome filter button
   const renderOmeFilterButton = (filter, isOptional = false) => {
     const paramKey = filter.filter_param; // 'omics' or 'assay'
@@ -74,10 +95,7 @@ function SearchResultFilters({
         ? searchParams.omics?.includes(filter.filter_value)
         : searchParams.filters?.assay?.includes(filter.filter_value);
 
-    const resultCount =
-      hasResultFilters?.[paramKey] &&
-      Object.keys(hasResultFilters[paramKey]).length &&
-      hasResultFilters[paramKey][filter.filter_value.toLowerCase()];
+    const resultCount = getResultCount(paramKey, filter.filter_value);
 
     // Optional (epigenomics) filters: disabled if toggle is off OR no results
     // Default filters: disabled based on result count only
