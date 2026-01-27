@@ -16,7 +16,14 @@ function DifferentialAbundanceSummary({ userType = '' }) {
               acute exercise intervention in young adult rats, or the pre-suspension human
               sedentary adults randomized to endurance exercise training (EE), resistance
               exercise training (RE), or no-exercise control groups. To ensure the best
-              search results, please use the following guidelines:
+              search results, please use
+              {' '}
+              <span className="font-weight-bold">
+                auto-suggested search terms
+              </span>
+              {' '}
+              by typing the first few
+              characters of the gene symbol, protein or metabolite names.
             </>
           ) : (
             <>
