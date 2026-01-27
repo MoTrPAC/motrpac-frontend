@@ -67,24 +67,12 @@ function BundleDatasets({
           </div>
           <input
             id="bundle-datasets-filter"
-            type="text"
+            type="search"
             className="form-control"
             placeholder="Search datasets (enter at least 2 characters)"
             value={filterKeywords}
             onChange={handleFilterChange}
           />
-          {filterKeywords.length > 0 && (
-            <div className="input-group-append">
-              <button
-                type="button"
-                className="btn btn-outline-secondary"
-                onClick={() => setFilterKeywords('')}
-                aria-label="Clear search"
-              >
-                <span className="material-icons">close</span>
-              </button>
-            </div>
-          )}
         </div>
         {filterKeywords.length >= 2 && (
           <small className="text-muted mt-1">
