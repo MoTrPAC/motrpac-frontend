@@ -60,9 +60,9 @@ function BundleDatasets({
     <div className="bundle-datasets-container">
       <div className="bundle-datasets-filter-container mb-3">
         <div className="input-group d-flex align-items-center">
-          <div className="glossary-filter-label mr-2">
+          <label className="bundle-datasets-filter-label mr-2" htmlFor="bundle-datasets-filter">
             <b>Search bundled datasets:</b>
-          </div>
+          </label>
           <input
             id="bundle-datasets-filter"
             type="search"
@@ -106,7 +106,7 @@ function BundleDatasets({
                   </span>
                   {item.species === 'Human' && (
                     <span
-                      className={`badge badge-pill ${item.study_group === 'Pre-Suspension' && tagColors.preSuspension} mr-1`}
+                      className={`badge badge-pill ${item.study_group === 'Pre-Suspension' ? tagColors.preSuspension : ''} mr-1`}
                     >
                       {item.study_group}
                     </span>
