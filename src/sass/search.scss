@@ -237,6 +237,21 @@
         }
       }
     }
+
+    .auto-search-indicator {
+      animation: fadeIn 0.2s ease-in-out;
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }
 
