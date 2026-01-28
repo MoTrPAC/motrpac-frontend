@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tooltip';
 import {
@@ -26,8 +26,82 @@ function SearchResultFilters({
   toggleEpigenomics,
 }) {
   const [inputError, setInputError] = useState(false);
+  const [isAutoSearching, setIsAutoSearching] = useState(false);
+
+  // Ref to track initial mount - prevent auto-search on first render
+  const isInitialMount = useRef(true);
+  // Ref to store the debounce timer
+  const debounceTimerRef = useRef(null);
+  // Ref to store the previous fingerprint to prevent infinite loops
+  const previousFingerprintRef = useRef(null);
 
   const userType = profile.user_metadata && profile.user_metadata.userType;
+
+  // Create a fingerprint of button filters (excludes range filters)
+  // This is used to detect changes that should trigger auto-search
+  const buttonFilterFingerprint = JSON.stringify({
+    study: searchParams.study || [],
+    omics: searchParams.omics || [],
+    tissue: searchParams.filters?.tissue || [],
+    assay: searchParams.filters?.assay || [],
+    sex: searchParams.filters?.sex || [],
+    timepoint: searchParams.filters?.timepoint || [],
+  });
+
+  // Debounced auto-search when button filters change
+  useEffect(() => {
+    // Skip auto-search on initial mount
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      previousFingerprintRef.current = buttonFilterFingerprint;
+      return;
+    }
+
+    // Skip if fingerprint hasn't actually changed (prevents infinite loops)
+    if (previousFingerprintRef.current === buttonFilterFingerprint) {
+      return;
+    }
+
+    // Update the previous fingerprint
+    previousFingerprintRef.current = buttonFilterFingerprint;
+
+    // Don't auto-search if there's an input error (from range filters)
+    if (inputError) {
+      return;
+    }
+
+    // Clear any existing debounce timer
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    // Set visual feedback that search will happen
+    setIsAutoSearching(true);
+
+    // Debounce the search by 600ms to allow for multiple quick selections
+    debounceTimerRef.current = setTimeout(() => {
+      handleSearch(searchParams, searchParams.keys, 'filters', userType);
+      setIsAutoSearching(false);
+
+      // Track auto-search event in Google Analytics 4
+      trackEvent(
+        'Differential Abundance Search',
+        'search_filters_auto',
+        profile && profile.userid
+          ? profile.userid.substring(profile.userid.indexOf('|') + 1)
+          : 'anonymous',
+        searchParams.keys,
+      );
+    }, 600);
+
+    // Cleanup timer on unmount or when dependencies change
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [buttonFilterFingerprint]);
 
   // Customize tissue list based on user type and ktype
   function customizeTissueList() {
@@ -431,7 +505,14 @@ function SearchResultFilters({
   return (
     <div className="search-result-filter-group mb-4">
       <div className="search-result-filter-group-header d-flex justify-content-between align-items-center mb-3">
-        <div className="font-weight-bold">Filter results:</div>
+        <div className="font-weight-bold d-flex align-items-center">
+          Filter results:
+          {isAutoSearching && (
+            <span className="auto-search-indicator ml-2">
+              <span className="spinner-border spinner-border-sm text-secondary" role="status" aria-hidden="true" />
+            </span>
+          )}
+        </div>
         <div className="search-result-filter-submit-buttons">
           <button
             type="button"
@@ -449,7 +530,7 @@ function SearchResultFilters({
                 searchParams.keys,
               );
             }}
-            disabled={inputError}
+            disabled={inputError || isAutoSearching}
           >
             Update results
           </button>
@@ -457,6 +538,7 @@ function SearchResultFilters({
             type="button"
             className="btn btn-secondary btn-sm"
             onClick={() => resetSearch('filters')}
+            disabled={isAutoSearching}
           >
             Reset filters
           </button>
