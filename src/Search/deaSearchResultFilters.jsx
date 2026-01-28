@@ -6,7 +6,6 @@ import {
   optionalOmeList,
   studyList,
   sexList,
-  rangeSearchFilters,
   tissues,
   timepointListRatEndurance,
   timepointListRatAcute,
@@ -452,56 +451,6 @@ function SearchResultFilters({
     </div>
   ));
 
-  // Handler to validate range filter input via onBlur event
-  function handleInputValidation(e) {
-    e.preventDefault();
-    if (e.target.value.length && isNaN(e.target.value)) {
-      e.target.classList.add('error');
-      setInputError(true);
-    } else {
-      if (e.target.classList.contains('error'))
-        e.target.classList.remove('error');
-      setInputError(false);
-    }
-  }
-
-  const rangeSearchResultFilters = rangeSearchFilters.map((item) => (
-    <div key={item.name} className="card filter-module mb-4">
-      {/* filter header content */}
-      <div className="card-header font-weight-bold d-flex align-item-center justify-content-between">
-        <div className="card-header-label">{item.name}</div>
-      </div>
-      {/* filter body content */}
-      <div className="card-body-container" id={`filters-${item.keyName}`}>
-        <div className="card-body">
-          <div className="d-flex align-items-center p-1 range-filter-form-controls">
-            <input
-              className={`form-control mr-2 custom-filter range-filter-input ${item.keyName}-min`}
-              value={searchParams.filters?.[item.keyName]?.min ?? ''}
-              type="text"
-              onChange={(e) => {
-                setInputError(false);
-                changeResultFilter(item.keyName, e.target.value, 'min');
-              }}
-              onBlur={(e) => handleInputValidation(e)}
-            />
-            <span>to</span>
-            <input
-              className={`form-control ml-2 custom-filter range-filter-input ${item.keyName}-max`}
-              value={searchParams.filters?.[item.keyName]?.max ?? ''}
-              type="text"
-              onChange={(e) => {
-                setInputError(false);
-                changeResultFilter(item.keyName, e.target.value, 'max');
-              }}
-              onBlur={(e) => handleInputValidation(e)}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  ));
-
   return (
     <div className="search-result-filter-group mb-4">
       <div className="search-result-filter-group-header d-flex justify-content-between align-items-center mb-3">
@@ -553,7 +502,6 @@ function SearchResultFilters({
       {omeSearchResultFilters}
       {commonSearchResultFilters}
       {timepointSearchResultFilters}
-      {rangeSearchResultFilters}
     </div>
   );
 }
