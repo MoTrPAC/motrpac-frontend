@@ -79,9 +79,11 @@ function SelectiveDataDownloads({
     if (dataDownload.humanPrecovidSedAduDataSelected) {
       return (
         <p className="lead">
-          Summary-level results data for differences in changes during the acute bout, comparing
-          the change from pre-exercise baseline at any given timepoint during the acute bout as
-          compared to resting control.
+          The data included here are summary-level results for differences in changes during
+          the acute bout, comparing the change from pre-exercise baseline at any given
+          timepoint during the acute bout as compared to resting control. This is an initial
+          set of human data representing a subset of sedentary adults who underwent an acute
+          exercise bout before the study was suspended due to COVID-19.
         </p>
       );
     }
