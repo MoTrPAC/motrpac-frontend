@@ -45,7 +45,7 @@ function Citation() {
               label="https://doi.org/10.1016/j.cell.2020.06.004"
             />
           </p>
-          <h5 className="mt-4">Rat - 6 month old endurance training</h5>
+          <h5 className="mt-4">Endurance training in young adult rats</h5>
           <p className="citation-item">
             MoTrPAC Study Group., Lead Analysts. & MoTrPAC Study Group. Temporal
             dynamics of the multi-omic response to endurance exercise training.
@@ -54,6 +54,10 @@ function Citation() {
               to="https://doi.org/10.1038/s41586-023-06877-w"
               label="https://doi.org/10.1038/s41586-023-06877-w"
             />
+          </p>
+          <h5 className="mt-4">Acute exercise in human sedentary adults (pre-suspension)</h5>
+          <p className="citation-item">
+            Citation information will be provided once the associated manuscript is available.
           </p>
         </div>
       </div>
