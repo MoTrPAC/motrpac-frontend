@@ -110,6 +110,9 @@ function DataDownloadsMain({
                 <span className="font-weight-bold">Acute exercise in human sedentary adults study</span> -
                 {' '}
                 <Link to="/search">summary-level results</Link>
+                {' '}
+                representing a subset of participants who underwent an acute exercise bout before the study
+                was suspended due to COVID-19.
               </li>
             </ul>
           </div>
