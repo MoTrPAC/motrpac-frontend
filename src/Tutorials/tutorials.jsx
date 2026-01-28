@@ -67,17 +67,19 @@ function Tutorials() {
             {language === LANG_EN ? (
               <div className="video-tutorial-container">
                 <p className="lead">
-                  The following tutorial video (also available in Spanish) is designed
-                  to help you get started with the MoTrPAC study and the exploration
-                  of the Data Hub. Please check out our{' '}
+                  The following tutorial video (also available in Spanish) was originally
+                  created to help users get started with the MoTrPAC study and explore
+                  the Data Hub. Please note that some content may no longer reflect the
+                  latest updates. Be sure to check our
+                  {' '}
                   <ExternalLink
                     to="https://www.youtube.com/@MoTrPAC-Data-Hub"
-                    label="collection of videos on YouTube"
+                    label="YouTube channel"
                   />
                   {' '}
-                  and reach out to us with any
+                  for the latest tutorials, and feel free to contact us with any
                   {' '}
-                  <Link to="/contact">questions or comments</Link>
+                  <Link to="/contact">questions or feedback</Link>
                   .
                 </p>
                 <div
@@ -96,17 +98,20 @@ function Tutorials() {
             ) : (
               <div className="video-tutorial-container">
                 <p className="lead">
-                  El siguiente video tutorial (también disponible en inglés) está diseñado
-                  para ayudarte a comenzar con el estudio MoTrPAC y la exploración del
-                  Centro de Datos. Por favor, consulta nuestra{' '}
+                  El siguiente video tutorial (también disponible en inglés) fue creado
+                  originalmente para ayudar a los usuarios a comenzar con el estudio
+                  MoTrPAC y explorar el Data Hub. Tenga en cuenta que parte del contenido
+                  puede no reflejar las actualizaciones más recientes. Asegúrese de visitar
+                  nuestro
+                  {' '}
                   <ExternalLink
                     to="https://www.youtube.com/@MoTrPAC-Data-Hub"
-                    label="colección de videos en YouTube"
+                    label="canal de YouTube"
                   />
                   {' '}
-                  y contáctanos si tienes alguna
+                  para ver los tutoriales más actualizados, y no dude en contactarnos si tiene
                   {' '}
-                  <Link to="/contact">pregunta o comentario</Link>
+                  <Link to="/contact">preguntas o comentarios</Link>
                   .
                 </p>
                 <div
@@ -129,7 +134,7 @@ function Tutorials() {
             <p className="lead">
               <ExternalLink
                 to="https://motrpac.github.io/MotrpacWorkshops/docs/articles/rat-endurance-6m.html"
-                label="MoTrPAC R Packages from the Endurance Training in Young Rats Study"
+                label="MoTrPAC R Packages from the Endurance Training in Young Adult Rats study"
               />
             </p>
           </div>
