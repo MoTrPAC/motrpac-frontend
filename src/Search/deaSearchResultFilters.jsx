@@ -288,7 +288,16 @@ function SearchResultFilters({
   const studySearchResultFilters = studySearchFilters.map((item) => (
     <div key={item.name} className="card filter-module mb-3">
       <div className="card-header font-weight-bold">
-        <div className="card-header-label">{item.name}</div>
+        <div className="card-header-label">
+          <span>{item.name}</span>
+          <i
+            className="bi bi-info-circle-fill ml-2 text-secondary"
+            data-tooltip-id="study-filter-tooltip"
+            data-tooltip-html="<span>The human data included here are<br />limited to a subset of sedentary adults<br />who underwent an acute exercise bout<br />prior to study suspension for Covid-19.</span>"
+            data-tooltip-place="right"
+          />
+          <Tooltip id="study-filter-tooltip" />
+        </div>
       </div>
       <div className="card-body-container" id={`filters-${item.keyName}`}>
         <div className="card-body">
