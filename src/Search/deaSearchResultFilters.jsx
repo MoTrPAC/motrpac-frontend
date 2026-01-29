@@ -4,6 +4,7 @@ import { Tooltip } from 'react-tooltip';
 import {
   defaultOmeList,
   optionalOmeList,
+  omeToAssayMapping,
   studyList,
   sexList,
   tissues,
@@ -156,10 +157,33 @@ function SearchResultFilters({
         className={`btn filterBtn ${isActiveFilter ? 'activeFilter' : ''}`}
         onClick={(e) => {
           e.preventDefault();
+          const isSelecting = !isActiveFilter;
           changeResultFilter(paramKey, filter.filter_value, null);
 
+          // When selecting/deselecting an ome filter, also add/remove corresponding assays
+          if (paramKey === 'omics' && omeToAssayMapping[filter.filter_value]) {
+            const correspondingAssays = omeToAssayMapping[filter.filter_value];
+            const currentAssays = searchParams.filters?.assay || [];
+
+            if (isSelecting) {
+              // Add all corresponding assays that aren't already selected
+              correspondingAssays.forEach((assayValue) => {
+                if (!currentAssays.includes(assayValue)) {
+                  changeResultFilter('assay', assayValue, null);
+                }
+              });
+            } else {
+              // Remove all corresponding assays when deselecting the ome
+              correspondingAssays.forEach((assayValue) => {
+                if (currentAssays.includes(assayValue)) {
+                  changeResultFilter('assay', assayValue, null);
+                }
+              });
+            }
+          }
+
+          // When selecting/deselecting an assay filter, also update the corresponding ome
           if (paramKey === 'assay' && filter.filter_ome) {
-            const isSelecting = !isActiveFilter;
             const omeAlreadyInArray = searchParams.omics?.includes(filter.filter_ome);
 
             if (isSelecting && !omeAlreadyInArray) {
