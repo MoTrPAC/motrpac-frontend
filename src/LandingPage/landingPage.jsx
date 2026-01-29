@@ -211,24 +211,6 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
         </div>
         <AnimatedDownArrow/>
       </section>
-      {/*
-      <section className="second">
-        <div className="w-100 h-100 d-flex align-items-center">
-          <div className="section-content-container container text-center">
-            <img
-              src={RatFigurePaass1b}
-              className="img-fluid mb-4"
-              alt="Rat Figure - Endurance Training"
-            />
-            <h1 className="py-4">
-              Explore the molecular datasets included in the study of 6 month
-              old rats performing endurance training exercisse
-            </h1>
-          </div>
-        </div>
-        <AnimatedDownArrow />
-      </section>
-      */}
       <section className="third">
         <div className="w-100 h-100 d-flex align-items-start direction-column">
           <div className="section-content-container container-fluid text-center">
