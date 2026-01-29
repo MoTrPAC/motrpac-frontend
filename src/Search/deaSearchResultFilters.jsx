@@ -139,27 +139,6 @@ function SearchResultFilters({
     },
   ];
 
-  // Helper function to get result count, accounting for ome variations like
-  // 'metabolomics'/'metabolomics-untargeted' or 'proteomics'/'proteomics-untargeted'
-  const getResultCount = (paramKey, filterValue) => {
-    if (!hasResultFilters?.[paramKey] || !Object.keys(hasResultFilters[paramKey]).length) {
-      return 0;
-    }
-
-    const filterValueLower = filterValue.toLowerCase();
-
-    // For 'omics' param, sum counts from all keys that start with the filter value
-    // e.g., 'metabolomics' matches both 'metabolomics' and 'metabolomics-untargeted'
-    if (paramKey === 'omics') {
-      return Object.entries(hasResultFilters[paramKey])
-        .filter(([key]) => key.startsWith(filterValueLower))
-        .reduce((sum, [, count]) => sum + (count || 0), 0);
-    }
-
-    // For other params, do exact match
-    return hasResultFilters[paramKey][filterValueLower] || 0;
-  };
-
   // Helper function to render ome filter button
   const renderOmeFilterButton = (filter, isOptional = false) => {
     const paramKey = filter.filter_param; // 'omics' or 'assay'
@@ -168,11 +147,8 @@ function SearchResultFilters({
         ? searchParams.omics?.includes(filter.filter_value)
         : searchParams.filters?.assay?.includes(filter.filter_value);
 
-    const resultCount = getResultCount(paramKey, filter.filter_value);
-
-    // Optional (epigenomics) filters: disabled if toggle is off OR no results
-    // Default filters: disabled based on result count only
-    const isDisabled = isOptional ? (!includeEpigenomics || !resultCount) : !resultCount;
+    // Simplified: Always enabled, except epigenomics filters require the toggle
+    const isDisabled = isOptional && !includeEpigenomics;
 
     return (
       <button
@@ -303,10 +279,7 @@ function SearchResultFilters({
     const isActiveFilter =
       searchParams.filters?.timepoint &&
       searchParams.filters.timepoint.includes(filter.filter_value);
-    const resultCount =
-      hasResultFilters?.timepoint &&
-      Object.keys(hasResultFilters.timepoint).length &&
-      hasResultFilters.timepoint[filter.filter_value.toLowerCase()];
+
     return (
       <button
         key={filter.filter_label}
@@ -316,7 +289,6 @@ function SearchResultFilters({
           e.preventDefault();
           changeResultFilter('timepoint', filter.filter_value, null);
         }}
-        disabled={!resultCount}
       >
         {filter.filter_label}
         {filter.species && (
@@ -378,6 +350,7 @@ function SearchResultFilters({
             const isActiveFilter =
               searchParams[item.keyName] &&
               searchParams[item.keyName].indexOf(filter.filter_value) > -1;
+
             return (
               <button
                 key={filter.filter_label}
@@ -420,10 +393,7 @@ function SearchResultFilters({
               searchParams.filters?.[item.keyName] &&
               searchParams.filters[item.keyName].indexOf(filter.filter_value) >
                 -1;
-            const resultCount =
-              hasResultFilters?.[item.keyName] &&
-              Object.keys(hasResultFilters[item.keyName]).length &&
-              hasResultFilters[item.keyName][filter.filter_value.toLowerCase()];
+
             return (
               <button
                 key={filter.filter_label}
@@ -435,7 +405,6 @@ function SearchResultFilters({
                   e.preventDefault();
                   changeResultFilter(item.keyName, filter.filter_value, null);
                 }}
-                disabled={!resultCount}
               >
                 {filter.filter_label}
                 {filter.species && (
