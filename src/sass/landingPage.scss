@@ -184,53 +184,6 @@
       }
     }
     &.second {
-      background-image: url(https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/landing_page/background_wave.jpg);
-    }
-    &.third {
-      background-image: url(https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/landing_page/background_wave_gradient.jpg);
-
-      .section-content-container {
-        height: 75vh;
-        padding-top: 72px;
-        padding-bottom: 15px;
-
-        .vis-tooltip {
-          background-color: #000;
-          border: none;
-          border-radius: 0.5rem;
-          padding: 0.5rem 1rem;
-          text-align: left;
-          vertical-align: middle;
-
-          div span {
-            color: #fff;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 1rem;
-            margin-bottom: 0;
-            text-align: left;
-          }
-        }
-      }
-    }
-    &.fourth {
-      background-image: url(https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/landing_page/background_molecule_network_horizontal_wave.jpg);
-
-      .section-content-container {
-        padding-top: 15px;
-        padding-bottom: 15px;
-
-        img {
-          margin-left: 15em;
-          margin-right: 15em;
-
-          &.img-fluid {
-            max-width: 70%;
-            height: auto;
-          }
-        }
-      }
-    }
-    &.fifth {
       background-image: url(https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/landing_page/background_molecule_network_vertical_wave.jpg);
 
       .section-content-container {
@@ -275,20 +228,7 @@
         }
       }
     }
-    &.sixth {
-      background-image: url(https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/landing_page/background_molecules_gradient.jpg);
-
-      #youtube-tutorial-video-container {
-        border: 1px solid #000;
-        border-radius: 0.5rem;
-        box-shadow: 0 2em 3em rgba(0, 0, 0, 0.5);
-      }
-
-      .embed-youtube-video-container {
-        border-radius: 0.5rem;
-      }
-    }
-    &.seventh {
+    &.third {
       background-color: #fff;
 
       .section-content-container {
@@ -325,7 +265,7 @@
         }
       }
     }
-    &.eighth {
+    &.forth {
       background-color: #fff;
 
       .section-content-container {
