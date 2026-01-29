@@ -4,19 +4,13 @@ import { connect } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { useMediaQuery } from 'react-responsive';
-import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import Footer from '../Footer/footer';
 import OpenOfficeHour from './openOfficeHour';
 import SubscribeDataUpdates from './components/subscribeDataUpdates';
-import VisNetworkReactComponent from './components/visNetwork';
 import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
 import IconSet from '../lib/iconSet';
 import BackgroundVideo from './components/backgroundVideo';
-import Figure1C from './components/figure1c';
 import ExternalLink from '@/lib/ui/externalLink';
-
-// import network figure 4e visualization dataset
-import landscapeFigure4eNetworkData from '../data/landscape_figure_4e';
 
 import '@styles/landingPage.scss'
 
@@ -35,21 +29,6 @@ function AnimatedDownArrowDark() {
     </div>);
 }
 
-// configs for visjs network visualization rendering
-const options = {
-  height: '100%', width: '100%', nodes: {
-    shape: 'dot', size: 30, font: {
-      size: 25, color: '#ffffff',
-    }, borderWidth: 4,
-  }, edges: {
-    width: 4,
-  }, interaction: {
-    hover: true, zoomView: false,
-  }, physics: {
-    enabled: false,
-  },
-};
-
 /**
  * Renders the landing page in unauthenticated state.
  *
@@ -60,8 +39,6 @@ const options = {
  */
 export function LandingPage({ isAuthenticated = false, profile = {} }) {
   const [backgroundVideoLoaded, setBackgroundVideoLoaded] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [_networkNodes, setNetwortNodes] = useState([]);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   useEffect(() => {
@@ -72,13 +49,6 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
       }
     }
   }, [backgroundVideoLoaded, isMobile]);
-
-  // vis-network-react event object
-  const events = {};
-  // vis-network-react event handlers
-  const getNodes = useCallback((a) => {
-    setNetwortNodes(a);
-  }, []);
 
   const goToExternalLink = useCallback(() => {
     window.open('https://www.nature.com/nature/volumes/629/issues/8010', '_blank');
@@ -175,7 +145,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
         </div>
         <AnimatedDownArrow/>
       </section>
-      <section className="fifth">
+      <section className="second">
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container text-center">
             <div className="row content-landscape-paper d-flex align-items-center">
@@ -211,7 +181,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
         </div>
         <AnimatedDownArrow/>
       </section>
-      <section className="seventh">
+      <section className="third">
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container text-center">
             <div className="row content-code-repository d-flex align-items-center">
@@ -246,7 +216,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
         </div>
         <AnimatedDownArrowDark/>
       </section>
-      <section className="eighth">
+      <section className="forth">
         <div className="w-100 h-100">
           <div className="section-content-container container text-center d-flex align-items-center">
             <div className="panel-content-container">
