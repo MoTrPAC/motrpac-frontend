@@ -211,25 +211,6 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
         </div>
         <AnimatedDownArrow/>
       </section>
-      <section className="third">
-        <div className="w-100 h-100 d-flex align-items-start direction-column">
-          <div className="section-content-container container-fluid text-center">
-            <VisNetworkReactComponent
-              data={landscapeFigure4eNetworkData}
-              options={options}
-              events={events}
-              getNodes={getNodes}
-            />
-            <div className="container text-center">
-              <h1 className="py-3 text-white">
-                A network of genes functionally related to longevity, muscle
-                system processes, and response to mechanical stimulus
-              </h1>
-            </div>
-          </div>
-        </div>
-        <AnimatedDownArrow/>
-      </section>
       <section className="fourth">
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container-fluid text-center">
