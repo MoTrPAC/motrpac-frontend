@@ -211,20 +211,6 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
         </div>
         <AnimatedDownArrow/>
       </section>
-      <section className="fourth">
-        <div className="w-100 h-100 d-flex align-items-center">
-          <div className="section-content-container container-fluid text-center">
-            <Figure1C/>
-            <div className="container text-center">
-              <h1 className="py-4">
-                Visualize the number of training-differential features whose
-                abundances significantly changed over the training time course
-              </h1>
-            </div>
-          </div>
-        </div>
-        <AnimatedDownArrow/>
-      </section>
       <section className="sixth">
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container text-center">
