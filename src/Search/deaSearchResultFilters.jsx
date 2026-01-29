@@ -19,7 +19,6 @@ function SearchResultFilters({
   changeResultFilter,
   handleSearch,
   resetSearch,
-  hasResultFilters = {},
   profile = {},
   includeEpigenomics = false,
   toggleEpigenomics,
@@ -247,7 +246,7 @@ function SearchResultFilters({
       keyName: 'sex',
       name: 'Sex Stratum',
       filters: sexList,
-      tooltip: '<span>Filter by sex-stratified results. Unstratified<br />results are indicated by "None".</span>',
+      tooltip: '<span>Filter by sex-stratified results. Unstratified<br />results are indicated by "None".<br />H = Human, R = Rat</span>',
     }
   ];
 
@@ -338,7 +337,7 @@ function SearchResultFilters({
           <i
             className="bi bi-info-circle-fill ml-2 text-secondary"
             data-tooltip-id="study-filter-tooltip"
-            data-tooltip-html="<span>The human data included here are<br />limited to a subset of sedentary adults<br />who underwent an acute exercise bout<br />prior to study suspension for Covid-19.</span>"
+            data-tooltip-html="<span>The human data included here are<br />limited to a subset of sedentary adults<br />who underwent an acute exercise bout<br />prior to study suspension for Covid-19.<br />H = Human, R = Rat</span>"
             data-tooltip-place="right"
           />
           <Tooltip id="study-filter-tooltip" />
@@ -364,6 +363,11 @@ function SearchResultFilters({
                 }}
               >
                 {filter.filter_label}
+                {filter.species && (
+                  <span className={`filter-species-tag ml-1 badge ${filter.species === 'rat' ? 'badge-rat' : 'badge-human'}`}>
+                    {filter.species === 'rat' ? 'R' : 'H'}
+                  </span>
+                )}
               </button>
             );
           })}
@@ -492,13 +496,6 @@ SearchResultFilters.propTypes = {
   changeResultFilter: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
   resetSearch: PropTypes.func.isRequired,
-  hasResultFilters: PropTypes.shape({
-    tissue: PropTypes.object,
-    assay: PropTypes.object,
-    omics: PropTypes.object,
-    timepoint: PropTypes.object,
-    sex: PropTypes.object,
-  }),
   profile: PropTypes.shape({
     userid: PropTypes.string,
     user_metadata: PropTypes.object,
