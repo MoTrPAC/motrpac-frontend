@@ -129,6 +129,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       }
 
       params.filters = newFilters;
+      params.start = 0; // Reset to first page on filter change
 
       return {
         ...state,
