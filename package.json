@@ -33,7 +33,6 @@
     "react-just-parallax": "^3.1.16",
     "react-lite-youtube-embed": "2.4.0",
     "react-redux": "^9.1.2",
-    "react-responsive": "^10.0.0",
     "react-router-dom": "^6.27.0",
     "react-table": "^7.7.0",
     "react-tooltip": "^5.11.2",
@@ -43,8 +42,6 @@
     "simple-statistics": "^7.8.7",
     "tocbot": "^4.25.0",
     "victory": "37.0.2",
-    "vis-data": "^7.1.9",
-    "vis-network": "^9.1.9",
     "vite": "^5.4.8"
   },
   "scripts": {
