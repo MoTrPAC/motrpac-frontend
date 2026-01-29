@@ -138,8 +138,8 @@ export const randomGroupList = [
 ];
 
 export const sexList = [
-  { filter_value: 'Male', filter_label: 'Male' },
-  { filter_value: 'Female', filter_label: 'Female' },
+  { filter_value: 'Male', filter_label: 'Male', species: 'rat' },
+  { filter_value: 'Female', filter_label: 'Female', species: 'rat' },
 ];
 
 export const timepointListRatEndurance = [
@@ -206,9 +206,9 @@ export const geneCentricSearchFilters = [
 ];
 
 export const studyList = [
-  { filter_value: 'pass1b06', filter_label: 'Endurance Training in Young Adult Rats' },
-  { filter_value: 'precawg', filter_label: 'Acute Exercise in Human Sedentary Adults' },
-  { filter_value: 'pass1a06', filter_label: 'Acute Exercise in Young Adult Rats' },
+  { filter_value: 'pass1b06', filter_label: 'Endurance Training in Young Adult Rats', species: 'rat' },
+  { filter_value: 'precawg', filter_label: 'Acute Exercise in Human Sedentary Adults', species: 'human' },
+  { filter_value: 'pass1a06', filter_label: 'Acute Exercise in Young Adult Rats', species: 'rat' },
 ];
 
 export const speciesList = [
