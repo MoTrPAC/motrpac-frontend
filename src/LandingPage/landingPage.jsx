@@ -228,8 +228,9 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
                   <span className="material-icons">terminal</span>
                 </h1>
                 <p>
-                  Deep dive into the source code essential to the MoTrPAC 6
-                  month old rats performing endurance training exercise study,
+                  Deep dive into the source code essential to the MoTrPAC
+                  endurance training in young adult rats and acute exercise
+                  in human sedentary adults studies, covering everything
                   from ingestion to QC, and from processing to analysis.
                 </p>
                 <Link
