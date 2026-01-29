@@ -245,6 +245,41 @@
     }
   }
 
+  // User-friendly error alert styling
+  .search-error-alert {
+    border-left: 4px solid #ffc107;
+    
+    strong {
+      display: flex;
+      align-items: center;
+      
+      i {
+        font-size: 1.1rem;
+      }
+    }
+    
+    p {
+      margin-left: 1.5rem;
+    }
+  }
+
+  // Filter error message in results area
+  .filter-error-message {
+    border-color: #dee2e6 !important;
+    
+    p {
+      line-height: 1.5;
+      
+      i {
+        color: #6c757d;
+      }
+      
+      strong {
+        color: #495057;
+      }
+    }
+  }
+
   @keyframes fadeIn {
     from {
       opacity: 0;
