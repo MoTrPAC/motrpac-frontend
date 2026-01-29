@@ -304,6 +304,14 @@ export const assayListMetabolite = assaysMetabolite.sort((a, b) =>
   a.filter_label.toLowerCase().localeCompare(b.filter_label.toLowerCase()),
 );
 
+// Mapping of ome values to their corresponding assay values
+// Used to automatically add/remove assays when ome filter is selected/deselected
+export const omeToAssayMapping = {
+  transcriptomics: ['transcript-rna-seq'],
+  metabolomics: assaysMetabolite.map((a) => a.filter_value),
+  // proteomics and epigenomics are handled via individual assay buttons in defaultOmeList/optionalOmeList
+};
+
 export const defaultOmeList = [
   { filter_value: 'transcriptomics', filter_label: 'Transcriptomics', filter_param: 'omics' },
   { filter_value: 'prot-pr', filter_label: 'Global Proteomics', filter_param: 'assay', filter_ome: 'proteomics' },
