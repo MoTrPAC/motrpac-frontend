@@ -211,30 +211,6 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
         </div>
         <AnimatedDownArrow/>
       </section>
-      <section className="sixth">
-        <div className="w-100 h-100 d-flex align-items-center">
-          <div className="section-content-container container text-center">
-            <div
-              className="embedContainer embed-responsive mt-lg-4"
-              id="youtube-tutorial-video-container"
-            >
-              <LiteYouTubeEmbed
-                id="3zHnzUMo_vw"
-                params="autoplay=0&cc_load_policy=1"
-                poster="maxresdefault"
-                title="Data Hub Tutorial Video"
-                iframeClass="embed-responsive-item border border-dark"
-              />
-            </div>
-            <div className="container text-center mt-4">
-              <h1 className="py-4">
-                Watch our tutorial video to learn how to use the MoTrPAC Data
-              </h1>
-            </div>
-          </div>
-        </div>
-        <AnimatedDownArrow/>
-      </section>
       <section className="seventh">
         <div className="w-100 h-100 d-flex align-items-center">
           <div className="section-content-container container text-center">
