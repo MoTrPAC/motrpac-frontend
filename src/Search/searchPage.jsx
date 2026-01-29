@@ -11,6 +11,7 @@ import surveyModdalActions from '../UserSurvey/userSurveyActions';
 import SearchResultFilters from './deaSearchResultFilters';
 import AnimatedLoadingIcon from '../lib/ui/loading';
 import { searchParamsDefaultProps, searchParamsPropType } from './sharedlib';
+import { getFriendlyErrorMessage, isFilterMismatchError, isNoResultsError } from './searchErrorMessages';
 import IconSet from '../lib/iconSet';
 import searchStructuredData from '../lib/searchStructuredData/search';
 import UserSurveyModal from '../UserSurvey/userSurveyModal';
@@ -283,30 +284,55 @@ export function SearchPage({
           <div className="search-body-container mt-4 mb-2">
             {searching && <AnimatedLoadingIcon isFetching={searching} />}
             {!searching && searchError ? (
-              <div className="alert alert-danger">{searchError}</div>
+              <div className="alert alert-danger">
+                <strong>
+                  <i className="bi bi-exclamation-triangle-fill mr-2" />
+                  Search Error
+                </strong>
+                <p className="mb-0 mt-2">{getFriendlyErrorMessage(searchError, scope).friendlyMessage}</p>
+                {getFriendlyErrorMessage(searchError, scope).suggestion && (
+                  <p className="mb-0 mt-1 small">{getFriendlyErrorMessage(searchError, scope).suggestion}</p>
+                )}
+              </div>
             ) : null}
             {!searching
               && !searchResults.data
               && searchResults.errors
               && scope === 'all' ? (
-                <div className="alert alert-warning">
-                  {searchResults.errors}
-                  {' '}
-                  Please modify your search parameters and
-                  try again.
+                <div className="alert alert-warning search-error-alert">
+                  <strong>
+                    <i className="bi bi-info-circle-fill mr-2" />
+                    {isFilterMismatchError(searchResults.errors)
+                      ? 'No Data Available'
+                      : 'Search Notice'}
+                  </strong>
+                  <p className="mb-0 mt-2">
+                    {getFriendlyErrorMessage(searchResults.errors, scope).friendlyMessage}
+                  </p>
+                  {getFriendlyErrorMessage(searchResults.errors, scope).suggestion && (
+                    <p className="mb-0 mt-1 small">
+                      {getFriendlyErrorMessage(searchResults.errors, scope).suggestion}
+                    </p>
+                  )}
                 </div>
               ) : null}
-            {!searching && !searchResults.data && searchResults.total === 0 ? (
-              <div className="alert alert-warning">
-                  {searchResults.errors}
-                  {' '}
-                  No matches found. Please modify your search
-                  parameters and try again.
-                </div>
+            {!searching && !searchResults.data && searchResults.total === 0 && scope === 'all' ? (
+              <div className="alert alert-warning search-error-alert">
+                <strong>
+                  <i className="bi bi-search mr-2" />
+                  No Matches Found
+                </strong>
+                <p className="mb-0 mt-2">
+                  Your search did not return any results.
+                </p>
+                <p className="mb-0 mt-1 small">
+                  Try using different keywords or check the spelling of your search terms.
+                </p>
+              </div>
               ) : null}
             {!searching
               && (searchResults.result
-                || (searchResults.errors && scope === 'filters')) ? (
+                || ((searchResults.errors || searchResults.total === 0) && scope === 'filters')) ? (
                   <div className="search-results-wrapper-container row">
                     <div className="search-sidebar-container col-md-3">
                       <SearchResultFilters
@@ -335,21 +361,10 @@ export function SearchPage({
                           />
                         ) : (
                           scope === 'filters' && (
-                            <p className="mt-4">
-                              {searchResults.errors
-                              && searchResults.errors.indexOf('No results found') !== -1 ? (
-                                <span>
-                                  No matches found for the selected filters.
-                                  Please refer to the
-                                  {' '}
-                                  <Link to="/summary">Summary Table</Link>
-                                  {' '}
-                                  for data that are available.
-                                </span>
-                                ) : (
-                                  searchResults.errors
-                                )}
-                            </p>
+                            <FilterResultsEmptyState
+                              error={searchResults.errors}
+                              total={searchResults.total}
+                            />
                           )
                         )}
                       </div>
@@ -372,6 +387,49 @@ export function SearchPage({
     </div>
   );
 }
+
+/**
+ * Empty state shown when filter selections return no results
+ */
+function FilterResultsEmptyState({ error, total }) {
+  // Expected empty: no error, or known "no results" errors, or total is 0
+  const isExpectedEmpty = !error || total === 0 || isNoResultsError(error) || isFilterMismatchError(error);
+
+  return (
+    <div className="filter-error-message mt-5 p-3 alert alert-warning">
+      {isExpectedEmpty ? (
+        <>
+          <h5 className="mb-2">
+            <i className="bi bi-exclamation-diamond-fill mr-2" />
+            No matches found for the selected filters
+          </h5>
+          <p className="mb-0">
+            Try adjusting your filter selections or refer to the
+            {' '}
+            <Link to="/summary">Summary Table</Link>
+            {' '}
+            to see what data is available.
+          </p>
+        </>
+      ) : (
+        <>
+          <p className="mb-2">
+            <i className="bi bi-exclamation-circle mr-2" />
+            <strong>Unable to retrieve results</strong>
+          </p>
+          <p className="mb-0 small text-muted">
+            {getFriendlyErrorMessage(error, 'filters').friendlyMessage}
+          </p>
+        </>
+      )}
+    </div>
+  );
+}
+
+FilterResultsEmptyState.propTypes = {
+  error: PropTypes.string,
+  total: PropTypes.number,
+};
 
 function RadioButtonComponent({ ktype, keyType, elId, label, eventHandler }) {
   return (
