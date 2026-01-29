@@ -2571,6 +2571,7 @@ __metadata:
     react-error-overlay: "npm:^6.0.11"
     react-google-recaptcha: "npm:^3.1.0"
     react-helmet: "npm:^6.1.0"
+    react-just-parallax: "npm:^3.1.16"
     react-lite-youtube-embed: "npm:2.4.0"
     react-redux: "npm:^9.1.2"
     react-responsive: "npm:^10.0.0"
@@ -5678,6 +5679,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"framesync@npm:6.1.0":
+  version: 6.1.0
+  resolution: "framesync@npm:6.1.0"
+  dependencies:
+    tslib: "npm:^2.3.1"
+  checksum: 10c0/58e92993fbae9a65fc818f0ef0cef6cfcbb3571bab195cf93f56236c4fa249a7ef6fbe595b46fd9ceb5a3016228350837a3e49997d686452d2bca573dd13aba3
+  languageName: node
+  linkType: hard
+
 "from-exponential@npm:^1.1.1":
   version: 1.1.1
   resolution: "from-exponential@npm:1.1.1"
@@ -7159,7 +7169,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.debounce@npm:^4.0.8":
+"lodash.debounce@npm:4.0.8, lodash.debounce@npm:^4.0.8":
   version: 4.0.8
   resolution: "lodash.debounce@npm:4.0.8"
   checksum: 10c0/762998a63e095412b6099b8290903e0a8ddcb353ac6e2e0f2d7e7d03abd4275fe3c689d88960eb90b0dde4f177554d51a690f22a343932ecbc50a5d111849987
@@ -8084,6 +8094,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prefix@npm:1.0.0":
+  version: 1.0.0
+  resolution: "prefix@npm:1.0.0"
+  checksum: 10c0/ab640083d8324156370a168e7c6ff82fdbcc058bae302d610727b0a290b15b22f718fc7ab59b3aca734b0af41d199e941217474367a94f096fff194762903974
+  languageName: node
+  linkType: hard
+
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
@@ -8347,6 +8364,19 @@ __metadata:
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
   checksum: 10c0/2bdb6b93fbb1820b024b496042cce405c57e2f85e777c9aabd55f9b26d145408f9f74f5934676ffdc46f3dcff656d78413a6e43968e7b3f92eea35b3052e9053
+  languageName: node
+  linkType: hard
+
+"react-just-parallax@npm:^3.1.16":
+  version: 3.1.16
+  resolution: "react-just-parallax@npm:3.1.16"
+  dependencies:
+    framesync: "npm:6.1.0"
+    lodash.debounce: "npm:4.0.8"
+    prefix: "npm:1.0.0"
+  peerDependencies:
+    react: ">=16.8 || ^17.0.0 || ^18.0.0"
+  checksum: 10c0/43824f2e24daa439e5db597bcd699458b7cc52604f4b156b4fd54d1642975b5be00c21b926e6c34e11490a415e328b9cafa0e4ace26fa28dba946c6e2f966fcf
   languageName: node
   linkType: hard
 
@@ -9998,7 +10028,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.4.0":
+"tslib@npm:^2.3.1, tslib@npm:^2.4.0":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62

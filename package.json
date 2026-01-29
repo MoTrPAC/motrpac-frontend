@@ -30,6 +30,7 @@
     "react-dom": "^18.3.1",
     "react-google-recaptcha": "^3.1.0",
     "react-helmet": "^6.1.0",
+    "react-just-parallax": "^3.1.16",
     "react-lite-youtube-embed": "2.4.0",
     "react-redux": "^9.1.2",
     "react-responsive": "^10.0.0",
