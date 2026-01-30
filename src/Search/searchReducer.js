@@ -279,6 +279,7 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
 
       newFilters.must_not = newMustNot;
       params.filters = newFilters;
+      params.start = 0;
 
       return {
         ...state,
