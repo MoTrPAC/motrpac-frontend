@@ -99,7 +99,7 @@ function SearchResultFilters({
         clearTimeout(debounceTimerRef.current);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [buttonFilterFingerprint]);
 
   // Customize tissue list based on user type and ktype
