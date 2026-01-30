@@ -196,7 +196,7 @@ function ProjectOverview() {
           </p>
           <p>
             On the main test day, participants arrived after an overnight fast and then completed their assigned exercise
-            or rest period.Biological samples were collected from blood, skeletal muscle, and adipose (fat) tissue at
+            or rest period. Biological samples were collected from blood, skeletal muscle, and adipose (fat) tissue at
             multiple timepoints before, during, and after the intervention. All participants provided a baseline sample
             from each tissue before the session began.
           </p>
@@ -207,11 +207,11 @@ function ProjectOverview() {
           <div className="main-study-content-container mt-5">
             <div
               className="study-figure border collapse show"
-              id="project-overview-experiment-design"
+              id="project-overview-acute-exercise-figure"
             >
               <img
                 src={`${imgSourceUrl}motrpac-human-precovid-sed-adu-study-overview.png`}
-                alt="Endurance Exercise Time Course Intervention"
+                alt="Acute Exercise in Human Sedentary Adults Study Overview"
               />
             </div>
             <p className="figure-caption text-left mt-4">
