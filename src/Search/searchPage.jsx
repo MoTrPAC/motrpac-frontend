@@ -149,6 +149,7 @@ export function SearchPage({
     if (inputValue && inputValue.length) {
       // Match terms enclosed in double quotes or not containing commas
       const terms = inputValue.match(/("[^"]+"|[^, ]+)/g);
+      if (!terms) return [];
       // Remove double quotes from terms that are enclosed and trim any extra spaces
       return terms.map((term) => term.replace(/"/g, '').trim());
     }
