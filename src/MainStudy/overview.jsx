@@ -271,7 +271,7 @@ function ProjectOverview() {
             <span className="font-italic">Rattus norvegicus</span>
           </h6>
           <p>
-            In this intervention, we're specifically interested in the long term
+            In this intervention, we&apos;re specifically interested in the long term
             lasting adaptive training effects, independent of acute exercise
             effects, using rats as our model organism. Data from rats provides
             the opportunity to measure tens of thousands of biomolecules in many
