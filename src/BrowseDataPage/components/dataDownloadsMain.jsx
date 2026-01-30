@@ -208,6 +208,8 @@ function DataDownloadsMain({
                 <li>Pre-Suspension</li>
                 <li>4 tissues</li>
                 <li>22 assays across different omes</li>
+                <li><i>Release notes coming soon</i></li>
+                {/*
                 {import.meta.env.VITE_DATA_RELEASE_README ? (
                   <li>
                     <a href={import.meta.env.VITE_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
@@ -216,6 +218,7 @@ function DataDownloadsMain({
                     </a>
                   </li>
                 ) : null}
+                */}
               </ul>
             </SelectiveDataDownloadsCard>
           </div>
