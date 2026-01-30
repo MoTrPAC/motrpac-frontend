@@ -25,7 +25,7 @@ function SelectiveDataDownloads({
     if (dataDownload.pass1a06DataSelected) {
       title = 'Data Download - Acute Exercise Rats';
     } else if (dataDownload.humanPrecovidSedAduDataSelected) {
-      title = 'Data Download - Human Sedentary Adults';
+      title = 'Data Download - Human Sedentary Adults (Pre-Suspension)';
     } else {
       title = 'Data Download - Endurance Training Rats';
       showInfo = true;
@@ -44,7 +44,7 @@ function SelectiveDataDownloads({
             </button>
             <div className="dropdown-menu dropdown-menu-right">
               <p>Data available for download on this page includes:</p>
-              <h6 className="border-bottom mb-2 pb-2">Raw "Results"</h6>
+              <h6 className="border-bottom mb-2 pb-2">Raw &quot;Results&quot;</h6>
               <ul className="pl-3">
                 <li><b>Untargeted Metabolomics:</b> MS intensities</li>
                 <li><b>Targeted Metabolomics</b>: Absolute concentrations</li>
@@ -53,7 +53,7 @@ function SelectiveDataDownloads({
                 <li><b>RRBS:</b> CpG methylation counts (or methylation beta values)</li>
                 <li><b>Immunoassay (Luminex):</b> Protein concentrations</li>
               </ul>
-              <h6 className="border-bottom mb-2 pb-2">"Analysis" Results</h6>
+              <h6 className="border-bottom mb-2 pb-2">&quot;Analysis&quot; Results</h6>
               <ul className="pl-3">
                 <li>Normalized data tables</li>
                 <li>Differential analysis results (e.g., log2 fold-change, p-values, adjusted p-values)</li>
@@ -70,14 +70,20 @@ function SelectiveDataDownloads({
     if (dataDownload.pass1a06DataSelected) {
       return (
         <p className="lead">
-          Experimental data from acute exercise study on young adult rats for a comprehensive analysis of the physiological responses following a single exercise session in 6-month-old F344 rats.
+          Experimental data from acute exercise study on young adult rats for a comprehensive
+          analysis of the physiological responses following a single exercise session in
+          6-month-old F344 rats.
         </p>
       );
     }
     if (dataDownload.humanPrecovidSedAduDataSelected) {
       return (
         <p className="lead">
-          Differential analysis results data for differences in changes during the acute bout, comparing the change from pre-exercise baseline at any given timepoint during the acute bout as compared to resting control.
+          The data included here are summary-level results for differences in changes during
+          the acute bout, comparing the change from pre-exercise baseline at any given
+          timepoint during the acute bout as compared to resting control. This is an initial
+          set of human data representing a subset of sedentary adults who underwent an acute
+          exercise bout before the study was suspended due to COVID-19.
         </p>
       );
     }

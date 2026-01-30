@@ -7,3 +7,17 @@
     margin: 0 0 0 0.15rem;
   }
 }
+
+.header-navbar-items {
+  .nav-item {
+    .dropdown-item.external-link {
+      display: inline-flex;
+      align-items: center;
+
+      .external-link-icon {
+        font-size: 1.05rem;
+        margin-left: 0.35rem;
+      }
+    }
+  }
+}

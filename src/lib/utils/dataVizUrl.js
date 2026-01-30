@@ -1,10 +1,10 @@
 // src/lib/utils/dataVizUrl.js
-export function getDataVizURL(study = 'human-precovid') {
+export function getDataVizURL(study = 'human-precovid', userType = '') {
   // Get localStorage item
   const token = localStorage.getItem('ut');
-  const dataVizHost = process.env.NODE_ENV !== 'production' ? 'data-viz-dev' : 'data-viz';
+  const dataVizHost = import.meta.env.VITE_DATA_VIZ_HOST;
   if (study === 'rat-training-06') {
-    return `https://${dataVizHost}.motrpac-data.org/`;
+    return dataVizHost;
   }
-  return `https://${dataVizHost}.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`;
+  return `${dataVizHost}precawg/${userType && userType === 'internal' && token && token.length ? `?ut=${token}` : ''}`;
 }

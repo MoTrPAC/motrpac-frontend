@@ -2571,9 +2571,9 @@ __metadata:
     react-error-overlay: "npm:^6.0.11"
     react-google-recaptcha: "npm:^3.1.0"
     react-helmet: "npm:^6.1.0"
+    react-just-parallax: "npm:^3.1.16"
     react-lite-youtube-embed: "npm:2.4.0"
     react-redux: "npm:^9.1.2"
-    react-responsive: "npm:^10.0.0"
     react-router-dom: "npm:^6.27.0"
     react-table: "npm:^7.7.0"
     react-tooltip: "npm:^5.11.2"
@@ -2591,8 +2591,6 @@ __metadata:
     svgo: "npm:^3.3.2"
     tocbot: "npm:^4.25.0"
     victory: "npm:37.0.2"
-    vis-data: "npm:^7.1.9"
-    vis-network: "npm:^9.1.9"
     vite: "npm:^5.4.8"
     vite-plugin-image-optimizer: "npm:^1.1.7"
     vitest: "npm:^2.1.2"
@@ -3552,13 +3550,6 @@ __metadata:
   version: 3.2.2
   resolution: "css-functions-list@npm:3.2.2"
   checksum: 10c0/8638a63d0cf1bdc50d4a752ec1c94a57e9953c3b03eace4f5526db20bec3c061e95089f905dbb4999c44b9780ce777ba856967560f6d15119a303f6030901c10
-  languageName: node
-  linkType: hard
-
-"css-mediaquery@npm:^0.1.2":
-  version: 0.1.2
-  resolution: "css-mediaquery@npm:0.1.2"
-  checksum: 10c0/b7825a78f52ce8a8198e004fcad0d7be1d3c9a0463ecd05ba31a0f2c94fb81468ad6f4d7bf715a6ca775696e7a17500c2a339b5216a6d0f789cbf78f9454d048
   languageName: node
   linkType: hard
 
@@ -5678,6 +5669,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"framesync@npm:6.1.0":
+  version: 6.1.0
+  resolution: "framesync@npm:6.1.0"
+  dependencies:
+    tslib: "npm:^2.3.1"
+  checksum: 10c0/58e92993fbae9a65fc818f0ef0cef6cfcbb3571bab195cf93f56236c4fa249a7ef6fbe595b46fd9ceb5a3016228350837a3e49997d686452d2bca573dd13aba3
+  languageName: node
+  linkType: hard
+
 "from-exponential@npm:^1.1.1":
   version: 1.1.1
   resolution: "from-exponential@npm:1.1.1"
@@ -6218,13 +6218,6 @@ __metadata:
     agent-base: "npm:^7.1.2"
     debug: "npm:4"
   checksum: 10c0/f729219bc735edb621fa30e6e84e60ee5d00802b8247aac0d7b79b0bd6d4b3294737a337b93b86a0bd9e68099d031858a39260c976dc14cdbba238ba1f8779ac
-  languageName: node
-  linkType: hard
-
-"hyphenate-style-name@npm:^1.0.0":
-  version: 1.1.0
-  resolution: "hyphenate-style-name@npm:1.1.0"
-  checksum: 10c0/bfe88deac2414a41a0d08811e277c8c098f23993d6a1eb17f14a0f11b54c4d42865a63d3cfe1914668eefb9a188e2de58f38b55a179a238fd1fef606893e194f
   languageName: node
   linkType: hard
 
@@ -7159,7 +7152,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.debounce@npm:^4.0.8":
+"lodash.debounce@npm:4.0.8, lodash.debounce@npm:^4.0.8":
   version: 4.0.8
   resolution: "lodash.debounce@npm:4.0.8"
   checksum: 10c0/762998a63e095412b6099b8290903e0a8ddcb353ac6e2e0f2d7e7d03abd4275fe3c689d88960eb90b0dde4f177554d51a690f22a343932ecbc50a5d111849987
@@ -7312,15 +7305,6 @@ __metadata:
     promise-retry: "npm:^2.0.1"
     ssri: "npm:^12.0.0"
   checksum: 10c0/c40efb5e5296e7feb8e37155bde8eb70bc57d731b1f7d90e35a092fde403d7697c56fb49334d92d330d6f1ca29a98142036d6480a12681133a0a1453164cb2f0
-  languageName: node
-  linkType: hard
-
-"matchmediaquery@npm:^0.4.2":
-  version: 0.4.2
-  resolution: "matchmediaquery@npm:0.4.2"
-  dependencies:
-    css-mediaquery: "npm:^0.1.2"
-  checksum: 10c0/5a2d2621e18882f0a2854b830c9bf0b8e5d766cce680bd841274a37035429dc587bdf6093e70a5d04915a3f76f9e0cb2adf8582ef0dab2f56977dd5dbc88f58e
   languageName: node
   linkType: hard
 
@@ -8084,6 +8068,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prefix@npm:1.0.0":
+  version: 1.0.0
+  resolution: "prefix@npm:1.0.0"
+  checksum: 10c0/ab640083d8324156370a168e7c6ff82fdbcc058bae302d610727b0a290b15b22f718fc7ab59b3aca734b0af41d199e941217474367a94f096fff194762903974
+  languageName: node
+  linkType: hard
+
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
@@ -8144,7 +8135,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.8.1, prop-types@npm:^15.5.0, prop-types@npm:^15.5.8, prop-types@npm:^15.6.1, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:15.8.1, prop-types@npm:^15.5.0, prop-types@npm:^15.5.8, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -8350,6 +8341,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-just-parallax@npm:^3.1.16":
+  version: 3.1.16
+  resolution: "react-just-parallax@npm:3.1.16"
+  dependencies:
+    framesync: "npm:6.1.0"
+    lodash.debounce: "npm:4.0.8"
+    prefix: "npm:1.0.0"
+  peerDependencies:
+    react: ">=16.8 || ^17.0.0 || ^18.0.0"
+  checksum: 10c0/43824f2e24daa439e5db597bcd699458b7cc52604f4b156b4fd54d1642975b5be00c21b926e6c34e11490a415e328b9cafa0e4ace26fa28dba946c6e2f966fcf
+  languageName: node
+  linkType: hard
+
 "react-lifecycles-compat@npm:^3.0.4":
   version: 3.0.4
   resolution: "react-lifecycles-compat@npm:3.0.4"
@@ -8416,20 +8420,6 @@ __metadata:
     redux:
       optional: true
   checksum: 10c0/00d485f9d9219ca1507b4d30dde5f6ff8fb68ba642458f742e0ec83af052f89e65cd668249b99299e1053cc6ad3d2d8ac6cb89e2f70d2ac5585ae0d7fa0ef259
-  languageName: node
-  linkType: hard
-
-"react-responsive@npm:^10.0.0":
-  version: 10.0.0
-  resolution: "react-responsive@npm:10.0.0"
-  dependencies:
-    hyphenate-style-name: "npm:^1.0.0"
-    matchmediaquery: "npm:^0.4.2"
-    prop-types: "npm:^15.6.1"
-    shallow-equal: "npm:^3.1.0"
-  peerDependencies:
-    react: ">=16.8.0"
-  checksum: 10c0/d22932a4029183897d35908a3b9e8a5be65c975405127b8509df989d52a3c061ea3d88139cef8014fb2392317ee706616291e1cf982064599ecc78abe191d083
   languageName: node
   linkType: hard
 
@@ -9090,13 +9080,6 @@ __metadata:
     es-errors: "npm:^1.3.0"
     es-object-atoms: "npm:^1.0.0"
   checksum: 10c0/ca5c3ccbba479d07c30460e367e66337cec825560b11e8ba9c5ebe13a2a0d6021ae34eddf94ff3dfe17a3104dc1f191519cb6c48378b503e5c3f36393938776a
-  languageName: node
-  linkType: hard
-
-"shallow-equal@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "shallow-equal@npm:3.1.0"
-  checksum: 10c0/57079f8741a86b25229b58b86df5d503414aca324e486ec7ddb2423db65914c80c8282149ef66a6803092847dc0d840da8fc338ea5027bbf4fc877f944df9bf6
   languageName: node
   linkType: hard
 
@@ -9998,7 +9981,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.4.0":
+"tslib@npm:^2.3.1, tslib@npm:^2.4.0":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
@@ -10765,30 +10748,6 @@ __metadata:
   peerDependencies:
     react: ">=16.6.0"
   checksum: 10c0/6bf6ca4b5bf155f86904ec3de54b1eb5b34ea38265f89eacdfb59db5461289004e1319b70e05f7489cbc63391a2a92594d93e32c22c5eb8e194532dd0f96597f
-  languageName: node
-  linkType: hard
-
-"vis-data@npm:^7.1.9":
-  version: 7.1.9
-  resolution: "vis-data@npm:7.1.9"
-  peerDependencies:
-    uuid: ^3.4.0 || ^7.0.0 || ^8.0.0 || ^9.0.0
-    vis-util: ^5.0.1
-  checksum: 10c0/2fce50e41862133e4fcdc92d216755b544936288a8586fc2f0afdc8b586ee75acb029e3fa9bbbb48a91e4c35ebc375bdba213e836926564f899ad80e0981d304
-  languageName: node
-  linkType: hard
-
-"vis-network@npm:^9.1.9":
-  version: 9.1.10
-  resolution: "vis-network@npm:9.1.10"
-  peerDependencies:
-    "@egjs/hammerjs": ^2.0.0
-    component-emitter: ^1.3.0
-    keycharm: ^0.2.0 || ^0.3.0 || ^0.4.0
-    uuid: ^3.4.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0
-    vis-data: ^6.3.0 || ^7.0.0
-    vis-util: ^5.0.1
-  checksum: 10c0/89e514c95ca5db96e33056c28d0abaa65754731d4b73bb02bdf57ec88cc039e430068f410a1bab80415c719051d8827c9eed6d8ef758bd1f4805a9a06f2502b7
   languageName: node
   linkType: hard
 

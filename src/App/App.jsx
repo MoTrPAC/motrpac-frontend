@@ -9,6 +9,7 @@ import ScrollToTop from '../lib/scrollToTop';
 import NavbarConnected from '../Navbar/navbar';
 import 'bootstrap';
 import History from './history';
+import PropTypes from 'prop-types';
 
 const LinkoutPage = lazy(() => import('../LinkoutPage/linkoutPage'));
 const AnalysisHomePageConnected = lazy(
@@ -39,9 +40,6 @@ const BrowseDataPageConnected = lazy(
   () => import('../BrowseDataPage/browseDataPage'),
 );
 const SearchPageConnected = lazy(() => import('../Search/searchPage'));
-const GeneCentricViewConnected = lazy(
-  () => import('../AnalysisPage/GeneCentricViewRat/geneCentricViewPage'),
-);
 const DashboardConnected = lazy(() => import('../Dashboard/dashboard'));
 const GraphicalClustering = lazy(
   () => import('../AnalysisPage/GraphicalClustering/graphicalClusteringPage'),
@@ -172,10 +170,6 @@ function App({ history = History }) {
                   element={<SearchPageConnected/>}
                 />
                 <Route
-                  path="/gene-centric"
-                  element={<GeneCentricViewConnected/>}
-                />
-                <Route
                   path="/graphical-clustering"
                   element={<GraphicalClustering/>}
                 />
@@ -219,5 +213,9 @@ function App({ history = History }) {
     </BrowserRouter>
   );
 }
+
+App.propTypes = {
+  history: PropTypes.object,
+};
 
 export default App;

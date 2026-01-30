@@ -3,6 +3,7 @@ import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import pass1b06 from '../data/file_download_metadata/rat-training-06-all-version-files-minified.json';
 import pass1a06 from '../data/file_download_metadata/rat-acute-06-files-minified.json';
 import humanPrecovidSedAdu from '../data/file_download_metadata/human-precovid-files-minified.json';
+import humanPrecovidSedAduExternal from '../data/file_download_metadata/human-precovid-external-files-minified.json';
 
 const CHANGE_FILTER = 'CHANGE_FILTER';
 const SORT_CHANGE = 'SORT_CHANGE';
@@ -20,6 +21,7 @@ const RESET_BROWSE_STATE = 'RESET_BROWSE_STATE';
 const SELECT_PASS1B_06_DATA = 'SELECT_PASS1B_06_DATA';
 const SELECT_PASS1A_06_DATA = 'SELECT_PASS1A_06_DATA';
 const SELECT_HUMAN_PRECOVID_SED_ADU_DATA = 'SELECT_HUMAN_PRECOVID_SED_ADU_DATA';
+const SELECT_HUMAN_PRECOVID_SED_ADU_EXTERNAL_DATA = 'SELECT_HUMAN_PRECOVID_SED_ADU_EXTERNAL_DATA';
 
 export const types = {
   CHANGE_FILTER,
@@ -38,6 +40,7 @@ export const types = {
   SELECT_PASS1B_06_DATA,
   SELECT_PASS1A_06_DATA,
   SELECT_HUMAN_PRECOVID_SED_ADU_DATA,
+  SELECT_HUMAN_PRECOVID_SED_ADU_EXTERNAL_DATA,
 };
 
 function changeFilter(category, filter) {
@@ -154,6 +157,13 @@ function selectHumanPreCovidSedAduData(files = humanPrecovidSedAdu) {
   };
 }
 
+function selectHumanPreCovidSedAduExternalData(files = humanPrecovidSedAduExternal) {
+  return {
+    type: SELECT_HUMAN_PRECOVID_SED_ADU_EXTERNAL_DATA,
+    files,
+  };
+}
+
 // Mock Async Getting List
 const files = [];
 
@@ -198,21 +208,6 @@ const key =
   import.meta.env.DEV
     ? import.meta.env.VITE_API_SERVICE_KEY_DEV
     : import.meta.env.VITE_API_SERVICE_KEY;
-const searchHost =
-  import.meta.env.DEV
-    ? import.meta.env.VITE_ES_PROXY_HOST_DEV
-    : import.meta.env.VITE_ES_PROXY_HOST;
-const fileSearchEndpoint = import.meta.env.VITE_FILE_SEARCH_ENDPOINT;
-const accessToken =
-  import.meta.env.DEV
-    ? import.meta.env.VITE_ES_ACCESS_TOKEN_DEV
-    : import.meta.env.VITE_ES_ACCESS_TOKEN;
-
-const headersConfig = {
-  headers: {
-    Authorization: `bearer ${accessToken}`,
-  },
-};
 
 function handleUrlFetch(selectedFiles) {
   if (selectedFiles.length === 0) {
@@ -302,6 +297,7 @@ const actions = {
   selectPass1B06Data,
   selectPass1A06Data,
   selectHumanPreCovidSedAduData,
+  selectHumanPreCovidSedAduExternalData,
 };
 
 export default actions;

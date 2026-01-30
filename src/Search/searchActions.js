@@ -6,6 +6,7 @@ export const SEARCH_SUBMIT = 'SEARCH_SUBMIT';
 export const SEARCH_FAILURE = 'SEARCH_FAILURE';
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
 export const SEARCH_RESET = 'SEARCH_RESET';
+export const TOGGLE_EPIGENOMICS = 'TOGGLE_EPIGENOMICS';
 export const DOWNLOAD_SUBMIT = 'DOWNLOAD_SUBMIT';
 export const DOWNLOAD_FAILURE = 'DOWNLOAD_FAILURE';
 export const DOWNLOAD_SUCCESS = 'DOWNLOAD_SUCCESS';
@@ -42,10 +43,11 @@ function searchFailure(searchError = '') {
   };
 }
 
-function searchSuccess(searchResults, scope) {
+function searchSuccess(searchResults, params, scope) {
   return {
     type: SEARCH_SUCCESS,
     searchResults,
+    params,
     scope,
   };
 }
@@ -54,6 +56,13 @@ function searchReset(scope) {
   return {
     type: SEARCH_RESET,
     scope,
+  };
+}
+
+function toggleEpigenomics(enabled) {
+  return {
+    type: TOGGLE_EPIGENOMICS,
+    enabled,
   };
 }
 
@@ -88,60 +97,72 @@ const headersConfig = {
 };
 
 // Handle search and results filtering events
-function handleSearch(params, inputValue, scope) {
-  params.keys = inputValue;
+function handleSearch(params, inputValue, scope, userType) {
+  // Create a copy to avoid mutating Redux state directly
+  const searchParams = {
+    ...params,
+    filters: { ...params.filters },
+    fields: Array.isArray(params.fields) ? [...params.fields] : [],
+    keys: inputValue,
+  };
+
+  // if user is 'internal', set 'study' to include 'pass1a06'
+  // else set 'study' to exclude 'pass1a06'
+  if (userType && userType === 'internal') {
+    if (!Array.isArray(searchParams.study) || !searchParams.study.length) {
+      searchParams.study = ['pass1b06', 'precawg', 'pass1a06'];
+    }
+  } else if (!userType || userType === 'external') {
+    if (!Array.isArray(searchParams.study) || !searchParams.study.length) {
+      searchParams.study = ['pass1b06', 'precawg'];
+    }
+  }
+
   // Reset all filters if scope is 'all'
   if (scope === 'all') {
-    params.filters = {
+    searchParams.filters = {
       tissue: [],
       assay: [],
       sex: [],
-      comparison_group: [],
-      contrast1_timepoint: [],
+      timepoint: [],
       adj_p_value: { min: '', max: '' },
       logFC: { min: '', max: '' },
       p_value: { min: '', max: '' },
+      contrast_type: ['exercise_with_controls', 'acute'],
+      must_not: {
+        assay: ['epigen-atac-seq', 'epigen-rrbs', 'epigen-methylcap-seq'],
+      },
     };
   }
   // insert 'is_meta" field to fields array if ktype is 'metab'
   // and delete 'protein_name' field if it exists
-  if (params.ktype === 'metab') {
-    if (!params.fields.includes('is_meta')) {
-      params.fields = ['is_meta', ...params.fields];
+  if (searchParams.ktype === 'metab') {
+    if (!searchParams.fields.includes('is_meta')) {
+      searchParams.fields = ['is_meta', ...searchParams.fields];
     }
-    if (params.fields.includes('protein_name')) {
-      const index = params.fields.indexOf('protein_name');
-      params.fields.splice(index, 1);
+    if (searchParams.fields.includes('protein_name')) {
+      const index = searchParams.fields.indexOf('protein_name');
+      searchParams.fields.splice(index, 1);
     }
   }
   // delete 'is_meta' flag from fields array (if it exists)
   // if ktype is 'protein' or 'gene'
-  if (params.ktype === 'protein' || params.ktype === 'gene') {
-    if (params.fields.includes('is_meta')) {
-      const index = params.fields.indexOf('is_meta');
-      params.fields.splice(index, 1);
+  if (searchParams.ktype === 'protein' || searchParams.ktype === 'gene') {
+    if (searchParams.fields.includes('is_meta')) {
+      const index = searchParams.fields.indexOf('is_meta');
+      searchParams.fields.splice(index, 1);
     }
   }
 
-  const requestParams = { ...params };
-  // remove 'species' field from requestParams
-  delete requestParams.species;
-  // handle params differently between human and rat
-  if (requestParams.study === 'precawg') {
-    requestParams.filters.must_not = {
-      assay: ['epigen-atac-seq', 'epigen-methylcap-seq'],
-    };
-  }
-
   return (dispatch) => {
-    dispatch(searchSubmit(params, scope));
+    dispatch(searchSubmit(searchParams, scope));
     return axios
-      .post(`${searchServiceHost}${endpoint}`, requestParams, headersConfig)
+      .post(`${searchServiceHost}${endpoint}`, searchParams, headersConfig)
       .then((response) => {
         if (response.data.error) {
           dispatch(searchFailure(response.data.error));
         }
-        dispatch(searchSuccess(response.data, scope));
+        dispatch(searchSuccess(response.data, searchParams, scope));
       })
       .catch((err) => {
         dispatch(searchFailure(`${err.name}: ${err.message}`));
@@ -156,14 +177,6 @@ function handleSearchDownload(params, analysis) {
   downloadSearchParams.save = true;
   downloadSearchParams.analysis = analysis;
   downloadSearchParams.size = 0;
-
-  delete downloadSearchParams.species;
-
-  if (downloadSearchParams.study === 'precawg') {
-    downloadSearchParams.filters.must_not = {
-      assay: ['epigen-atac-seq', 'epigen-methylcap-seq'],
-    };
-  }
 
   return (dispatch) => {
     dispatch(downloadSubmit());
@@ -187,6 +200,7 @@ const SearchActions = {
   handleSearchDownload,
   searchReset,
   changeResultFilter,
+  toggleEpigenomics,
 };
 
 export default SearchActions;
