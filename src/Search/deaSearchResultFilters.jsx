@@ -24,7 +24,6 @@ function SearchResultFilters({
   includeEpigenomics = false,
   toggleEpigenomics,
 }) {
-  const [inputError, setInputError] = useState(false);
   const [isAutoSearching, setIsAutoSearching] = useState(false);
 
   // Ref to track initial mount - prevent auto-search on first render
@@ -63,11 +62,6 @@ function SearchResultFilters({
 
     // Update the previous fingerprint
     previousFingerprintRef.current = buttonFilterFingerprint;
-
-    // Don't auto-search if there's an input error (from range filters)
-    if (inputError) {
-      return;
-    }
 
     // Clear any existing debounce timer
     if (debounceTimerRef.current) {
@@ -476,7 +470,7 @@ function SearchResultFilters({
                 searchParams.keys,
               );
             }}
-            disabled={inputError || isAutoSearching}
+            disabled={isAutoSearching}
           >
             Update results
           </button>
@@ -490,11 +484,6 @@ function SearchResultFilters({
           </button>
         </div>
       </div>
-      {inputError && (
-        <div className="input-error-notify mb-2">
-          Please correct input values above.
-        </div>
-      )}
       {studySearchResultFilters}
       {omeSearchResultFilters}
       {commonSearchResultFilters}
