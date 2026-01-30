@@ -28,10 +28,10 @@ function Citation() {
                 to="https://motrpac-data.org"
                 label="motrpac-data.org"
               />
-              , please include the following acknowledgement: "Data used in the
+              , please include the following acknowledgement: &quot;Data used in the
               preparation of this article were obtained from the Molecular
               Transducers of Physical Activity Consortium (MoTrPAC) database,
-              which is available for public access at motrpac-data.org."
+              which is available for public access at motrpac-data.org.&quot;
             </li>
           </ul>
           <h5 className="mt-5">MoTrPAC Marker Paper</h5>
