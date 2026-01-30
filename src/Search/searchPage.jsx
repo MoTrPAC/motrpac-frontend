@@ -44,7 +44,6 @@ export function SearchPage({
   downloading = false,
   downloadError = '',
   handleSearchDownload,
-  hasResultFilters,
   includeEpigenomics = false,
   toggleEpigenomics,
 }) {
@@ -340,7 +339,6 @@ export function SearchPage({
                         changeResultFilter={changeResultFilter}
                         handleSearch={handleSearch}
                         resetSearch={resetSearch}
-                        hasResultFilters={hasResultFilters}
                         profile={profile}
                         includeEpigenomics={includeEpigenomics}
                         toggleEpigenomics={toggleEpigenomics}
@@ -694,12 +692,6 @@ SearchPage.propTypes = {
   downloading: PropTypes.bool,
   downloadError: PropTypes.string,
   handleSearchDownload: PropTypes.func.isRequired,
-  hasResultFilters: PropTypes.shape({
-    tissue: PropTypes.object,
-    assay: PropTypes.object,
-    timepoint: PropTypes.object,
-    sex: PropTypes.object,
-  }),
   includeEpigenomics: PropTypes.bool,
   toggleEpigenomics: PropTypes.func.isRequired,
 };
