@@ -1,9 +1,10 @@
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { ScrollParallax } from 'react-just-parallax';
+import $ from 'jquery';
 import OpenOfficeHour from './openOfficeHour';
 import SubscribeDataUpdates from './components/subscribeDataUpdates';
 import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
@@ -35,9 +36,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
 
   // Handle link clicks to close modal
   const handleLinkClick = () => {
-    // Get the Bootstrap modal instance and hide it
-    const modalInstance = Modal.getInstance(modalRef.current);
-    modalInstance?.hide();
+    $(modalRef.current).modal('hide');
   };
 
   return (
@@ -197,6 +196,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
         role="dialog"
         aria-labelledby="subHeroModalLabel"
         aria-hidden="true"
+        ref={modalRef}
       >
         <div className="modal-dialog modal-xl modal-dialog-centered">
           <div className="modal-content announcement-modal">
