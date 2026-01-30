@@ -283,7 +283,7 @@ export function SearchPage({
               </div>
             ) : null}
             {!searching
-              && !searchResults.data
+              && !searchResults.result?.data
               && searchResults.errors
               && scope === 'all' ? (
                 <div className="alert alert-warning search-error-alert">
@@ -303,7 +303,7 @@ export function SearchPage({
                   )}
                 </div>
               ) : null}
-            {!searching && !searchResults.data && searchResults.total === 0 && scope === 'all' ? (
+            {!searching && !searchResults.result?.data && searchResults.total === 0 && scope === 'all' ? (
               <div className="alert alert-warning search-error-alert">
                 <strong>
                   <i className="bi bi-search mr-2" />
