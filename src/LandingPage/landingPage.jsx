@@ -19,6 +19,7 @@ const IMG_BASE_URL = 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-
  */
 export function LandingPage({ isAuthenticated = false, profile = {} }) {
   const bodyRef = useRef(null);
+  const modalRef = useRef(null);
 
   // Mark body as loaded when component mounts
   useEffect(() => {
@@ -31,6 +32,13 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
   if (isAuthenticated && hasAccess) {
     return <Navigate to="/dashboard" replace />;
   }
+
+  // Handle link clicks to close modal
+  const handleLinkClick = () => {
+    // Get the Bootstrap modal instance and hide it
+    const modalInstance = Modal.getInstance(modalRef.current);
+    modalInstance?.hide();
+  };
 
   return (
     <div className="landing-page" ref={bodyRef}>
@@ -212,7 +220,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
                 publicly released new data collections. The Pre-Suspension Acute
                 Exercise Study contains data from sedentary adults undergoing
                 acute resistance or endurance exercise bouts. Visit the{' '}
-                <Link to="/search" reloadDocument>
+                <Link to="/search" onClick={handleLinkClick}>
                   Browse Results
                 </Link>{' '}
                 page for summary-level results and the{' '}
@@ -221,7 +229,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
                   label="Data Visualization"
                 />{' '}
                 for interactive analysis. Please refer to the{' '}
-                <Link to="/citation" reloadDocument>
+                <Link to="/citation" onClick={handleLinkClick}>
                   Citation
                 </Link>{' '}
                 page for information on acknowledging MoTrPAC when using this
