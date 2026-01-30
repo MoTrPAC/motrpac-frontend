@@ -353,7 +353,7 @@ $img-base-url: 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/im
       radial-gradient(circle at 74% 15%, hsla(324, 92%, 59%, 1) 13%, transparent 57%);
 
     .office-hour-title {
-      @include fluid-text(3.3rem, 8.8vw, 5.5remm);
+      @include fluid-text(3.3rem, 8.8vw, 5.5rem);
     }
   }
 
