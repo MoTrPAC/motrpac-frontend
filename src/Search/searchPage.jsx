@@ -125,10 +125,10 @@ export function SearchPage({
   // render placeholder text in primary search input field
   function renderPlaceholder() {
     if (searchParams.ktype === 'protein') {
-      return 'Example: "atpase inhibitor, mitochondrial", "global ischemia-induced protein 11", "17-beta-hydroxysteroid dehydrogenase 13"';
+      return 'Example: global ischemia-induced protein 11, 17-beta-hydroxysteroid dehydrogenase 13';
     }
     if (searchParams.ktype === 'metab') {
-      return 'Example: "amino acids and peptides", "c10:2 carnitine", "aminobutyric acid", "coa(3:0, 3-oh)"';
+      return 'Example: amino acids and peptides, aminobutyric acid';
     }
     return 'Example: bag3, myom2, prag1, smad3, vegfa';
   }
