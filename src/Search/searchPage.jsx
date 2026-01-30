@@ -133,11 +133,6 @@ export function SearchPage({
     return 'Example: bag3, myom2, prag1, smad3, vegfa';
   }
 
-  // selector for manually entered keyword input configured with auto-suggest
-  const inputEl = document.querySelector('.rbt-input-main');
-  // selector for manually entered any manual input
-  const inputElManual = document.querySelector('.search-input-ktype');
-
   // Transform input values
   // Keep react-bootstrap-typeahead state array as is
   // Convert manually entered gene/protein/metabolite string input to array
@@ -149,24 +144,20 @@ export function SearchPage({
       return newArr;
     }
     // Handle manually entered gene/protein/metabolite string input
-    // convert formatted string to array
-    if (inputEl.value && inputEl.value.length) {
-      const inputStr = inputEl.value;
+    // convert formatted string to array using Typeahead ref
+    const inputValue = inputRef.current?.getInput()?.value;
+    if (inputValue && inputValue.length) {
       // Match terms enclosed in double quotes or not containing commas
-      const terms = inputStr.match(/("[^"]+"|[^, ]+)/g);
+      const terms = inputValue.match(/("[^"]+"|[^, ]+)/g);
       // Remove double quotes from terms that are enclosed and trim any extra spaces
       return terms.map((term) => term.replace(/"/g, '').trim());
     }
     return newArr;
   }
 
-  // Clear manually entered gene/protein/metabolite input
+  // Clear the Typeahead input
   const clearSearchTermInput = () => {
-    if (inputElManual && inputElManual.value && inputElManual.value.length) {
-      inputElManual.value = '';
-    } else if (inputEl && inputEl.value && inputEl.value.length) {
-      inputRef.current.clear();
-    }
+    inputRef.current?.clear();
   };
 
   // Handle server-side pagination changes
@@ -213,7 +204,6 @@ export function SearchPage({
                 resetSearch={resetSearch}
                 clearInput={clearSearchTermInput}
                 setMultiSelections={setMultiSelections}
-                inputEl={inputEl}
               />
               <div className="search-box-input-group d-flex align-items-center flex-grow-1">
                 <div className="input-group">
@@ -240,12 +230,12 @@ export function SearchPage({
                     className="btn btn-primary search-submit"
                     onClick={(e) => {
                       e.preventDefault();
+                      const inputValue = inputRef.current?.getInput()?.value;
+                      const hasInput = (multiSelections && multiSelections.length)
+                        || (inputValue && inputValue.length);
                       handleSearch(
                         searchParams,
-                        (multiSelections && multiSelections.length)
-                          || (inputEl && inputEl.value && inputEl.value.length)
-                          ? formatSearchInput()
-                          : searchParams.keys,
+                        hasInput ? formatSearchInput() : searchParams.keys,
                         'all',
                         userType,
                       );
@@ -256,10 +246,7 @@ export function SearchPage({
                         profile && profile.userid
                           ? profile.userid.substring(profile.userid.indexOf('|') + 1)
                           : 'anonymous',
-                        (multiSelections && multiSelections.length)
-                          || (inputEl && inputEl.value && inputEl.value.length)
-                          ? formatSearchInput()
-                          : searchParams.keys,
+                        hasInput ? formatSearchInput() : searchParams.keys,
                       );
                     }}
                   >
@@ -463,7 +450,6 @@ function RadioButton({
   resetSearch,
   clearInput,
   setMultiSelections,
-  inputEl,
 }) {
   const radioButtonOptions = [
     {
@@ -488,9 +474,6 @@ function RadioButton({
     clearInput();
     setMultiSelections([]);
     changeParam('ktype', e.target.value);
-    if (inputEl && inputEl.value && inputEl.value.length) {
-      inputEl.value = '';
-    }
   };
 
   return (
@@ -515,7 +498,6 @@ RadioButton.propTypes = {
   resetSearch: PropTypes.func.isRequired,
   clearInput: PropTypes.func.isRequired,
   setMultiSelections: PropTypes.func.isRequired,
-  inputEl: PropTypes.object,
 };
 
 // Render modal message
