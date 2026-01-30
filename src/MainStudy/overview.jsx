@@ -129,8 +129,28 @@ function ProjectOverview() {
                     </ul>
                     <strong>Sedentary Adults</strong>
                     <ul>
-                      <li>Acute endurance exercise</li>
-                      <li>Acute resistance exercise</li>
+                      <li>
+                        <span className="intervention-title">
+                          <a
+                            className="anchorjs-link"
+                            aria-label="Anchor"
+                            href="#acute-exercise"
+                          >
+                            Acute endurance exercise
+                          </a>
+                        </span>
+                      </li>
+                      <li>
+                        <span className="intervention-title">
+                          <a
+                            className="anchorjs-link"
+                            aria-label="Anchor"
+                            href="#acute-exercise"
+                          >
+                            Acute resistance exercise
+                          </a>
+                        </span>
+                      </li>
                       <li>Endurance training</li>
                       <li>Resistance training</li>
                       <li>Control</li>
@@ -146,6 +166,100 @@ function ProjectOverview() {
             </table>
           </div>
         </div>
+        <div
+          className="main-study-content-container acute-exercise mt-5"
+          id="acute-exercise"
+        >
+          <h3>Acute Exercise Response in Sedentary Adults (Pre-Suspension)</h3>
+          <h6>
+            Species:
+            {' '}
+            <span className="font-italic">Human</span>
+          </h6>
+          <p>
+            The human <b>pre-COVID pre-suspension</b> data include an adult sedentary cohort whose multi-omics data are
+            permitted for analysis under DSMB constraints. The analysis collection focuses on the acute response to a
+            bout of exercise by comparing timepoints relative to pre-exercise baseline and comparing changes in exercise
+            groups (endurance [EE], resistance [RE]) to matched changes in controls (CON) (&quot;difference in
+            changes&quot;). Below is a visual overview of the study and the available data. See release notes and 
+            publication for details.
+          </p>
+          <p>
+            In brief, previously sedentary individuals were randomly assigned to an endurance exercise, resistance
+            exercise, or a non-exercising control group. The participant group was diverse in age, fitness, and genetic
+            background, with more females than males. The non-exercising control group was critical to separate the
+            molecular effects of exercise from other factors like fasting, circadian rhythms, or the sampling process itself.
+          </p>
+          <p>
+            Before the main experiment, all participants underwent baseline health and fitness testing. Those in the
+            exercise groups also completed familiarization sessions to practice the workouts.
+          </p>
+          <p>
+            On the main test day, participants arrived after an overnight fast and then completed their assigned exercise
+            or rest period.Biological samples were collected from blood, skeletal muscle, and adipose (fat) tissue at
+            multiple timepoints before, during, and after the intervention. All participants provided a baseline sample
+            from each tissue before the session began.
+          </p>
+          <p>
+            The exact number and timing of samples collected varied between individuals. This was intentionally designed
+            to reduce participant burden and accommodate technical limitations of different lab tests.
+          </p>
+          <div className="main-study-content-container mt-5">
+            <div
+              className="study-figure border collapse show"
+              id="project-overview-experiment-design"
+            >
+              <img
+                src={`${imgSourceUrl}motrpac-human-precovid-sed-adu-study-overview.png`}
+                alt="Endurance Exercise Time Course Intervention"
+              />
+            </div>
+            <p className="figure-caption text-left mt-4">
+              (A) Overview of the acute exercise bout. Baseline testing is completed before randomization. After
+              randomization, a familiarization period for exercise is completed. Patients arrive in the morning, fasted,
+              to complete their respective interventions. Created in{' '}
+              <ExternalLink
+                to="https://BioRender.com"
+                label="https://BioRender.com"
+              />
+              .
+            </p>
+            <p className="figure-caption text-left mt-2">
+              (B) Schematic of muscle, blood, and adipose biospecimen collection. No samples are collected during resistance
+              exercise. Created in{' '}
+              <ExternalLink
+                to="https://BioRender.com"
+                label="https://BioRender.com"
+              />
+              .
+            </p>
+            <p className="figure-caption text-left mt-2">
+              (C) Number of samples measured in each omic category (on any assay) by tissue, exercise modality and
+              timepoint. See Supplementary Figure S1 to see overlapping measurements for all participants. ATAC = Assay
+              for Transposase-Accessible Chromatin
+            </p>
+          </div>
+          <div className="main-study-content-container mt-5">
+            <div className="data-download-button-container my-5 d-flex align-items-center justify-content-center">
+              <Link
+                className="btn btn-primary mr-3"
+                to="/data-download"
+                role="button"
+              >
+                Download Datasets
+              </Link>
+              <Link
+                className="btn btn-primary ml-3"
+                to="/search"
+                role="button"
+              >
+                Browse Results
+              </Link>
+            </div>
+          </div>
+        </div>
+        {/* PASS1B-06 Section */}
+        <hr />
         <div
           className="main-study-content-container endurance-training mt-5"
           id="endurance-training"
@@ -228,14 +342,14 @@ function ProjectOverview() {
                 to="/data-download"
                 role="button"
               >
-                Download Data
+                Download Datasets
               </Link>
               <Link
                 className="btn btn-primary ml-3"
                 to="/search"
                 role="button"
               >
-                Explore Data
+                Browse Results
               </Link>
             </div>
           </div>
