@@ -312,6 +312,18 @@ function DataDownloadsMain({
                 surveySubmitted={surveySubmitted}
                 downloadedData={downloadedData}
               />
+              <div className="bd-callout bd-callout-primary mt-3">
+                <span className="font-weight-bold">
+                  <i className="bi bi-envelope-paper mr-2 text-primary" />
+                  <span>
+                    Be sure to{' '}
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScjGxwsHDDsE4P4j1VNvIUR73cEyh9SJrofxuQyHqucl0GhBg/viewform" target="_blank" rel="noopener noreferrer">
+                      subscribe
+                    </a>{' '}
+                    to receive notifications about future data updates for the acute exercise in human sedentary adults study!
+                  </span>
+                </span>
+              </div>
             </div>
           </div>
         </div>
