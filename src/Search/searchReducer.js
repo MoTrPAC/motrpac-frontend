@@ -50,7 +50,6 @@ export const defaultSearchState = {
       'contrast1_randomGroupCode',
       'contrast_type',
     ],
-    unique_fields: ['tissue', 'omics', 'assay', 'sex', 'timepoint'],
     size: 50,
     start: 0,
     save: false,
@@ -63,7 +62,6 @@ export const defaultSearchState = {
   downloadResults: {},
   downloading: false,
   downloadError: '',
-  hasResultFilters: {},
 };
 
 // Reducer to handle actions sent from components related to advanced search form
@@ -146,7 +144,6 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
         analysis,
         filters,
         fields,
-        unique_fields,
         size,
         start,
       } = action.params;
@@ -167,7 +164,6 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
           analysis,
           filters,
           fields,
-          unique_fields,
           size,
           start,
           debug: true,
@@ -200,10 +196,6 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
             }
             : action.searchResults,
         searching: false,
-        hasResultFilters:
-          action.searchResults.uniqs
-            ? action.searchResults.uniqs
-            : state.hasResultFilters,
         // searchParams.study already preserved correctly in SEARCH_SUBMIT
       };
     }
@@ -254,7 +246,6 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       return {
         ...defaultSearchState,
         searchParams: defaultParams,
-        hasResultFilters: {},
       };
     }
 
