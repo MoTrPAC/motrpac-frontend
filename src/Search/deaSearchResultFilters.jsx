@@ -456,26 +456,6 @@ function SearchResultFilters({
         <div className="search-result-filter-submit-buttons">
           <button
             type="button"
-            className="btn btn-primary btn-sm mr-2"
-            onClick={(e) => {
-              e.preventDefault();
-              handleSearch(searchParams, searchParams.keys, 'filters', userType);
-              // track event in Google Analytics 4
-              trackEvent(
-                'Differential Abundance Search',
-                'search_filters',
-                profile && profile.userid
-                  ? profile.userid.substring(profile.userid.indexOf('|') + 1)
-                  : 'anonymous',
-                searchParams.keys,
-              );
-            }}
-            disabled={isAutoSearching}
-          >
-            Update results
-          </button>
-          <button
-            type="button"
             className="btn btn-secondary btn-sm"
             onClick={() => resetSearch('filters')}
             disabled={isAutoSearching}
