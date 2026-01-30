@@ -93,28 +93,26 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       if (action.field.match(/^(study|omics)$/)) {
         const isActiveParam = params[action.field].indexOf(action.filterValue);
         if (isActiveParam === -1) {
-          // Adds filter if new
-          params[action.field].push(action.filterValue);
+          // Adds filter if new (immutable update)
+          params[action.field] = [...params[action.field], action.filterValue];
         } else {
           // Removes filter if already exists
-          const newArr = params[action.field].filter(
-            (value) => !(value === action.filterValue)
+          params[action.field] = params[action.field].filter(
+            (value) => value !== action.filterValue
           );
-          params[action.field] = newArr;
         }
       }
 
       // Handle selection of a filter value
       if (action.field.match(/^(tissue|assay|sex|timepoint)$/)) {
         if (isActiveFilter === -1) {
-          // Adds filter if new
-          newFilters[action.field].push(action.filterValue);
+          // Adds filter if new (immutable update)
+          newFilters[action.field] = [...newFilters[action.field], action.filterValue];
         } else {
           // Removes filter if already exists
-          const newArr = newFilters[action.field].filter(
-            (value) => !(value === action.filterValue)
+          newFilters[action.field] = newFilters[action.field].filter(
+            (value) => value !== action.filterValue
           );
-          newFilters[action.field] = newArr;
         }
       }
 
@@ -122,7 +120,11 @@ export function SearchReducer(state = { ...defaultSearchState }, action) {
       if (action.field.match(/^(adj_p_value|logFC|p_value)$/)) {
         const rangeFilter = newFilters[action.field];
         if (rangeFilter) {
-          rangeFilter[action.bound] = action.filterValue;
+          // Immutable update of range filter
+          newFilters[action.field] = {
+            ...rangeFilter,
+            [action.bound]: action.filterValue,
+          };
         }
       }
 
