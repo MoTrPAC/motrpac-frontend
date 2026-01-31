@@ -83,7 +83,13 @@ function SelectiveDataDownloads({
           the acute bout, comparing the change from pre-exercise baseline at any given
           timepoint during the acute bout as compared to resting control. This is an initial
           set of human data representing a subset of sedentary adults who underwent an acute
-          exercise bout before the study was suspended due to COVID-19.
+          exercise bout before the study was suspended due to COVID-19. Please refer to the
+          {' '}
+          <a href="https://d1yw74buhe0ts0.cloudfront.net/docs/MoTrPAC_Human_PreSuspension_Sed_Adu_Analysis_Data_Release_Notes.pdf" target="_blank" rel="noopener noreferrer">
+            Data Release Notes
+          </a>
+          {' '}
+          for more information on this dataset.
         </p>
       );
     }
