@@ -17,7 +17,7 @@ function DifferentialAbundanceSummary({ userType = '' }) {
               sedentary adults randomized to endurance exercise training (EE), resistance
               exercise training (RE), or no-exercise control groups. Please refer to the
               {' '}
-              <a href="https://d1yw74buhe0ts0.cloudfront.net/docs/MoTrPAC_Human_PreSuspension_Sed_Adu_Analysis_Data_Release_Notes.pdf" target="_blank" rel="noopener noreferrer">
+              <a href={import.meta.env.VITE_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
                 Data Release Notes
               </a>
               {' '}
@@ -30,7 +30,7 @@ function DifferentialAbundanceSummary({ userType = '' }) {
               young adult rats, as well as the pre-suspension human sedentary adults
               randomized to acute exercise or no-exercise control groups. Please refer to the
               {' '}
-              <a href="https://d1yw74buhe0ts0.cloudfront.net/docs/MoTrPAC_Human_PreSuspension_Sed_Adu_Analysis_Data_Release_Notes.pdf" target="_blank" rel="noopener noreferrer">
+              <a href={import.meta.env.VITE_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
                 Data Release Notes
               </a>
               {' '}

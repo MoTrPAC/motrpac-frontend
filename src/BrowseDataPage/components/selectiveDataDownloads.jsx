@@ -85,7 +85,7 @@ function SelectiveDataDownloads({
           set of human data representing a subset of sedentary adults who underwent an acute
           exercise bout before the study was suspended due to COVID-19. Please refer to the
           {' '}
-          <a href="https://d1yw74buhe0ts0.cloudfront.net/docs/MoTrPAC_Human_PreSuspension_Sed_Adu_Analysis_Data_Release_Notes.pdf" target="_blank" rel="noopener noreferrer">
+          <a href={import.meta.env.VITE_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
             Data Release Notes
           </a>
           {' '}

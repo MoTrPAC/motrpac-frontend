@@ -210,7 +210,7 @@ function DataDownloadsMain({
                 <li>22 assays across different omes</li>
                 {import.meta.env.VITE_DATA_RELEASE_README ? (
                   <li>
-                    <a href="https://d1yw74buhe0ts0.cloudfront.net/docs/MoTrPAC_Human_PreSuspension_Sed_Adu_Analysis_Data_Release_Notes.pdf" target="_blank" rel="noopener noreferrer">
+                    <a href={import.meta.env.VITE_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
                       <i className="bi bi-file-earmark-fill mr-1" />
                       <span>Data Release Notes</span>
                     </a>
