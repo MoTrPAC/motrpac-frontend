@@ -15,32 +15,37 @@ function DifferentialAbundanceSummary({ userType = '' }) {
               training response over 8 weeks of training or the training responses to
               acute exercise intervention in young adult rats, or the pre-suspension human
               sedentary adults randomized to endurance exercise training (EE), resistance
-              exercise training (RE), or no-exercise control groups. To ensure the best
-              search results, please use
+              exercise training (RE), or no-exercise control groups. Please refer to the
               {' '}
-              <span className="font-weight-bold">
-                auto-suggested search terms
-              </span>
+              <a href={import.meta.env.VITE_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
+                Data Release Notes
+              </a>
               {' '}
-              by typing the first few
-              characters of the gene symbol, protein or metabolite names.
+              for more information on the human acute exercise dataset.
             </>
           ) : (
             <>
               Search by gene, protein or metabolite names to examine the
               timewise endurance training response over 8 weeks of training in
               young adult rats, as well as the pre-suspension human sedentary adults
-              randomized to acute exercise or no-exercise control groups. To ensure the
-              best search results, please use
+              randomized to acute exercise or no-exercise control groups. Please refer to the
               {' '}
-              <span className="font-weight-bold">
-                auto-suggested search terms
-              </span>
+              <a href={import.meta.env.VITE_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
+                Data Release Notes
+              </a>
               {' '}
-              by typing the first few
-              characters of the gene symbol, protein or metabolite names.
+              for more information on the human acute exercise dataset.
             </>
           )}
+        </p>
+        <p>
+          To ensure the best search results, please use
+          {' '}
+          <span className="font-weight-bold">
+            auto-suggested search terms
+          </span>
+          {' '}
+          by typing the first few characters of the gene symbol, protein or metabolite names.
         </p>
         <p>
           The{' '}
