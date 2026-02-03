@@ -156,7 +156,7 @@ function ResultsTable({
             data-target=".data-download-modal"
             onClick={(e) => {
               e.preventDefault();
-              handleSearchDownload(searchParams);
+              handleSearchDownload(searchParams, userType);
             }}
           >
             <span className="material-icons">file_download</span>
