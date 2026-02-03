@@ -694,8 +694,8 @@ const mapDispatchToProps = (dispatch) => ({
   handleSearch: (params, geneInputValue, scope, userType) =>
     dispatch(SearchActions.handleSearch(params, geneInputValue, scope, userType)),
   resetSearch: (scope) => dispatch(SearchActions.searchReset(scope)),
-  handleSearchDownload: (params, analysis) =>
-    dispatch(SearchActions.handleSearchDownload(params, analysis)),
+  handleSearchDownload: (params, userType) =>
+    dispatch(SearchActions.handleSearchDownload(params, userType)),
   toggleEpigenomics: (enabled) =>
     dispatch(SearchActions.toggleEpigenomics(enabled)),
 });
