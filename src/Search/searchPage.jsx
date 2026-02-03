@@ -344,6 +344,7 @@ export function SearchPage({
                             size={searchParams.size}
                             start={searchResults.start || 0}
                             onPaginationChange={handlePaginationChange}
+                            profile={profile}
                           />
                         ) : (
                           scope === 'filters' && (
