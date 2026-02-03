@@ -200,10 +200,11 @@ function SearchResultFilters({
         disabled={isDisabled}
       >
         {filter.filter_label}
-        {filter.species && (
-          <span className={`filter-species-tag ml-1 badge ${filter.species === 'rat' ? 'badge-rat' : 'badge-human'}`}>
-            {filter.species === 'rat' ? 'R' : 'H'}
-          </span>
+        {filter.species && filter.species.includes('rat') && (
+          <span className="filter-species-tag ml-1 badge badge-rat">R</span>
+        )}
+        {filter.species && filter.species.includes('human') && (
+          <span className="filter-species-tag ml-1 badge badge-human">H</span>
         )}
       </button>
     );

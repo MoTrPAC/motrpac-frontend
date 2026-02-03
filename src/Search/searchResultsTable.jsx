@@ -62,6 +62,7 @@ function SearchResultsTable({
   size,
   start,
   onPaginationChange,
+  profile,
 }) {
   // Define table column headers
   const columns = useMemo(() => {
@@ -85,6 +86,7 @@ function SearchResultsTable({
       size={size}
       start={start}
       onPaginationChange={onPaginationChange}
+      profile={profile}
     />
   );
 }
@@ -105,6 +107,7 @@ function ResultsTable({
   size,
   start,
   onPaginationChange,
+  profile,
 }) {
   // Use the useTable hook to create your table configuration
   // Server-side pagination: no usePagination hook, render all rows from current page
@@ -134,6 +137,8 @@ function ResultsTable({
     onPaginationChange({ size, start: newStart });
   };
 
+  const userType = profile.user_metadata && profile.user_metadata.userType;
+
   // Render the UI for your table
   // Server-side pagination: data already contains only current page's rows
   return (
@@ -151,7 +156,7 @@ function ResultsTable({
             data-target=".data-download-modal"
             onClick={(e) => {
               e.preventDefault();
-              handleSearchDownload(searchParams);
+              handleSearchDownload(searchParams, userType);
             }}
           >
             <span className="material-icons">file_download</span>
@@ -256,6 +261,9 @@ SearchResultsTable.propTypes = {
   size: PropTypes.number.isRequired,
   start: PropTypes.number.isRequired,
   onPaginationChange: PropTypes.func.isRequired,
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.object,
+  }).isRequired,
 };
 
 ResultsTable.propTypes = {
@@ -277,6 +285,9 @@ ResultsTable.propTypes = {
   size: PropTypes.number.isRequired,
   start: PropTypes.number.isRequired,
   onPaginationChange: PropTypes.func.isRequired,
+  profile: PropTypes.shape({
+    user_metadata: PropTypes.object,
+  }).isRequired,
 };
 
 export default SearchResultsTable;

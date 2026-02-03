@@ -171,12 +171,22 @@ function handleSearch(params, inputValue, scope, userType) {
 }
 
 // Handle download search results event
-function handleSearchDownload(params, analysis) {
+function handleSearchDownload(params, userType) {
   const downloadSearchParams = { ...params };
   downloadSearchParams.fields = [];
   downloadSearchParams.save = true;
-  downloadSearchParams.analysis = analysis;
   downloadSearchParams.size = 0;
+
+  // if user is 'internal', set 'study' to include 'pass1a06'
+  // else set 'study' to exclude 'pass1a06'
+    if (!Array.isArray(downloadSearchParams.study) || !downloadSearchParams.study.length) {
+    const defaultStudies = ['pass1b06', 'precawg'];
+    if (userType === 'internal') {
+      downloadSearchParams.study = [...defaultStudies, 'pass1a06'];
+    } else {
+      downloadSearchParams.study = defaultStudies;
+    }
+  }
 
   return (dispatch) => {
     dispatch(downloadSubmit());
