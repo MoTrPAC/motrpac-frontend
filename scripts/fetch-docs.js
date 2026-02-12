@@ -281,11 +281,19 @@ function docsPathToRoute(filePath) {
   return `/knowledge-center${parts.length ? "/" + parts.join("/") : ""}`;
 }
 
-/** Clean up markdown: strip comments, HTML tags, fix whitespace. */
+/** Fix branded acronyms that get mangled by slug-to-title conversion. */
+function fixBrandNames(text) {
+  return text
+    .replace(/\bmotrpac\b/gi, "MoTrPAC")
+    .replace(/\bcfde\b/gi, "CFDE");
+}
+
+/** Clean up markdown: strip comments, HTML tags, fix whitespace, fix brands. */
 function normalizeContent(content, relativePath) {
   let result = content.replace(/<!--[\s\S]*?-->/g, "");
   result = stripHtmlTags(result);
   result = transformInternalLinks(result, relativePath);
+  result = fixBrandNames(result);
   // Trim trailing whitespace per line
   result = result.replace(/[^\S\r\n]+$/gm, "");
   // Collapse excessive blank lines (3+ → 2)
@@ -302,7 +310,9 @@ function normalizeContent(content, relativePath) {
  * e.g., "mcp-server" → "MCP Server", "analysis-results" → "Analysis Results"
  */
 function slugToTitle(slug) {
-  return slug.replace(/[-_]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  return fixBrandNames(
+    slug.replace(/[-_]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+  );
 }
 
 /**
@@ -373,7 +383,7 @@ function ensureCategory(categoriesMap, slug, manifestCategories) {
     const manifestCat = manifestCategories.get(slug);
     categoriesMap.set(slug, {
       slug,
-      label: manifestCat?.label || slugToTitle(slug),
+      label: fixBrandNames(manifestCat?.label || slugToTitle(slug)),
       order: manifestCat?.order ?? 999,
       indexContent: null,
       subcategories: [],
@@ -389,7 +399,7 @@ function ensureSubcategory(category, slug, manifestSubcategories) {
     const manifestSub = manifestSubcategories?.get(slug);
     sub = {
       slug,
-      label: manifestSub?.label || slugToTitle(slug),
+      label: fixBrandNames(manifestSub?.label || slugToTitle(slug)),
       order: manifestSub?.order ?? 999,
     };
     category.subcategories.push(sub);
@@ -469,34 +479,35 @@ function buildOutput(files, manifest) {
       continue;
     }
 
+    // Skip root-level docs without a category — all docs should be in a folder
+    if (!category) {
+      console.warn(
+        `Warning: skipping root-level doc "${file.relativePath}" (no category folder)`
+      );
+      continue;
+    }
+
     // Build manifest lookup key for this document
     const manifestKey = subcategory
       ? `${category}/${subcategory}/${slug}.md`
-      : category
-        ? `${category}/${slug}.md`
-        : `${slug}.md`;
+      : `${category}/${slug}.md`;
 
     const manifestMeta = manifestDocs[manifestKey] || {};
 
     // Merge metadata: frontmatter > manifest > defaults
+    const title = fixBrandNames(
+      frontmatter?.title || manifestMeta.title || slugToTitle(slug)
+    );
+
     documents.push({
       slug,
-      title:
-        frontmatter?.title || manifestMeta.title || slugToTitle(slug),
-      category: category || "general",
+      title,
+      category,
       subcategory,
       order: frontmatter?.order ?? manifestMeta.order ?? 999,
       tags: frontmatter?.tags || manifestMeta.tags || [],
       content: cleanContent,
     });
-  }
-
-  // Ensure "general" category exists if root-level docs were found
-  const hasGeneralDocs = documents.some((d) => d.category === "general");
-  if (hasGeneralDocs) {
-    ensureCategory(categoriesMap, "general", manifestCategories);
-    const gen = categoriesMap.get("general");
-    if (gen.order === 999) gen.order = 0;
   }
 
   // Sort categories and subcategories by order
