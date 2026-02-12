@@ -71,6 +71,7 @@ const BiospecimenSummary = lazy(
 );
 const Citation = lazy(() => import('../Citation/citationPage'));
 const Glossary = lazy(() => import('../Glossary/glossaryPage'));
+const KnowledgeCenter = lazy(() => import('../KnowledgeCenter/KnowledgeCenter'));
 
 function App({ history = History }) {
   return (
@@ -204,6 +205,10 @@ function App({ history = History }) {
                 <Route path="/technical-guides/phenotype" element={<Phenotype/>}/>
                 <Route path="/citation" element={<Citation/>}/>
                 <Route path="/glossary" element={<Glossary/>}/>
+                <Route path="/knowledge-center" element={<KnowledgeCenter />} />
+                <Route path="/knowledge-center/:category" element={<KnowledgeCenter />} />
+                <Route path="/knowledge-center/:category/:subcategoryOrDoc" element={<KnowledgeCenter />} />
+                <Route path="/knowledge-center/:category/:subcategoryOrDoc/:doc" element={<KnowledgeCenter />} />
               </Route>
             </Routes>
           </Suspense>
