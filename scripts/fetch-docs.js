@@ -626,12 +626,44 @@ function fixBrandNames(text) {
     .replace(/\bcfde\b/gi, "CFDE");
 }
 
+/**
+ * Fix brand casing in plain text while preserving original casing in
+ * markdown links, URLs, and email addresses.
+ */
+function fixBrandNamesInPlainTextOnly(text) {
+  const protectedTokens = [];
+  const patterns = [
+    /!?\[[^\]]*\]\([^)]*\)/g,                          // markdown links/images
+    /<https?:\/\/[^>]+>/gi,                                // autolink URLs
+    /<mailto:[^>]+>/gi,                                     // autolink mailto
+    /\bhttps?:\/\/[^\s)]+/gi,                              // bare URLs
+    /\bwww\.[^\s)]+/gi,                                    // bare www URLs
+    /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi,         // email addresses
+  ];
+
+  let masked = text;
+  for (const pattern of patterns) {
+    masked = masked.replace(pattern, (match) => {
+      const token = `__KB_PROTECTED_${protectedTokens.length}__`;
+      protectedTokens.push(match);
+      return token;
+    });
+  }
+
+  masked = fixBrandNames(masked);
+
+  return masked.replace(/__KB_PROTECTED_(\d+)__/g, (_, idx) => {
+    const tokenIndex = Number(idx);
+    return protectedTokens[tokenIndex] || "";
+  });
+}
+
 /** Clean up markdown: strip comments, HTML tags, fix whitespace, fix brands. */
 function normalizeContent(content, relativePath, routeByPath = null) {
   let result = content.replace(/<!--[\s\S]*?-->/g, "");
   result = stripHtmlTags(result);
   result = transformInternalLinks(result, relativePath, routeByPath);
-  result = fixBrandNames(result);
+  result = fixBrandNamesInPlainTextOnly(result);
   // Trim trailing whitespace per line
   result = result.replace(/[^\S\r\n]+$/gm, "");
   // Collapse excessive blank lines (3+ → 2)
