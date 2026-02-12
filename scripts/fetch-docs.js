@@ -166,6 +166,343 @@ async function fetchManifest() {
   }
 }
 
+/**
+ * Fetch mkdocs.yml from the docs repo root.
+ * Returns raw YAML string or null if not found.
+ */
+async function fetchMkdocsYaml() {
+  try {
+    const data = await apiFetch(
+      `${API_BASE}/repos/${REPO_SLUG}/contents/mkdocs.yml?ref=${GITHUB_DOCS_BRANCH}`
+    );
+
+    return Buffer.from(data.content, "base64").toString("utf-8");
+  } catch {
+    console.warn("No mkdocs.yml found, falling back to path-based organization.");
+    return null;
+  }
+}
+
+/**
+ * Parse mkdocs nav block into a simple tree structure.
+ * Supports the nav style used in this repository:
+ * - Label: path.md
+ * - Label:
+ *     - Child: child.md
+ */
+function parseMkdocsNav(yaml) {
+  const lines = yaml.replace(/\r\n/g, "\n").split("\n");
+  const navStart = lines.findIndex((line) => line.trim() === "nav:");
+  if (navStart === -1) return [];
+
+  const navLines = [];
+  for (let i = navStart + 1; i < lines.length; i++) {
+    const line = lines[i];
+    if (!line.trim()) continue;
+
+    // Stop at next top-level key
+    if (/^[A-Za-z0-9_-]+:\s*$/.test(line) && !line.startsWith(" ")) break;
+    if (line.trimStart().startsWith("#")) continue;
+    if (!line.trimStart().startsWith("- ")) continue;
+
+    navLines.push(line);
+  }
+
+  let idx = 0;
+
+  function lineIndent(line) {
+    const match = line.match(/^(\s*)/);
+    return match ? match[1].length : 0;
+  }
+
+  function parseList(expectedIndent) {
+    const items = [];
+
+    while (idx < navLines.length) {
+      const line = navLines[idx];
+      const indent = lineIndent(line);
+      if (indent < expectedIndent) break;
+      if (indent > expectedIndent) {
+        idx += 1;
+        continue;
+      }
+
+      const raw = line.trim().replace(/^-\s+/, "");
+      const colonPos = raw.indexOf(":");
+      if (colonPos === -1) {
+        idx += 1;
+        continue;
+      }
+
+      const label = raw.slice(0, colonPos).trim();
+      const value = raw.slice(colonPos + 1).trim();
+      idx += 1;
+
+      if (value) {
+        items.push({ label, path: value });
+      } else {
+        const children = parseList(expectedIndent + 4);
+        items.push({ label, children });
+      }
+    }
+
+    return items;
+  }
+
+  return parseList(2);
+}
+
+function slugifyLabel(label) {
+  return label
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function toDocsRelativePath(path) {
+  return path.replace(/^\.\//, "").replace(/^\/+/, "");
+}
+
+/**
+ * Convert parsed mkdocs nav to lookup maps used by output generation and
+ * internal-link routing.
+ */
+function buildNavStructure(navTree) {
+  const categories = [];
+  const categoriesMap = new Map();
+  const docsByPath = new Map();
+  const routeByPath = new Map();
+  let homePath = "index.md";
+
+  function ensureCategory(slug, label, order) {
+    if (!categoriesMap.has(slug)) {
+      const cat = {
+        slug,
+        label: fixBrandNames(label),
+        order,
+        indexPath: null,
+        subcategories: [],
+      };
+      categoriesMap.set(slug, cat);
+      categories.push(cat);
+    }
+    return categoriesMap.get(slug);
+  }
+
+  function ensureSubcategory(category, slug, label, order) {
+    let sub = category.subcategories.find((s) => s.slug === slug);
+    if (!sub) {
+      sub = { slug, label: fixBrandNames(label), order, indexPath: null };
+      category.subcategories.push(sub);
+    }
+    return sub;
+  }
+
+  function registerLeaf({
+    path,
+    title,
+    category,
+    subcategory,
+    docOrder,
+  }) {
+    const relativePath = toDocsRelativePath(path);
+    const withoutExt = relativePath.replace(/\.md$/, "");
+    const parts = withoutExt.split("/");
+    const file = parts[parts.length - 1];
+    const isIndex = file === "index";
+
+    let route = "/knowledge-center";
+    if (category) {
+      route = `/knowledge-center/${category}`;
+      if (subcategory) route += `/${subcategory}`;
+      if (!isIndex) route += `/${file}`;
+    }
+    routeByPath.set(relativePath, route);
+
+    if (!category) {
+      if (relativePath.endsWith("index.md")) homePath = relativePath;
+      return;
+    }
+
+    if (isIndex) return;
+
+    docsByPath.set(relativePath, {
+      title: fixBrandNames(title),
+      category,
+      subcategory,
+      order: docOrder,
+      slug: file,
+    });
+  }
+
+  let categoryOrder = 0;
+  let docOrder = 0;
+
+  for (const topItem of navTree) {
+    if (topItem.path) {
+      registerLeaf({
+        path: topItem.path,
+        title: topItem.label,
+        category: null,
+        subcategory: null,
+        docOrder: docOrder++,
+      });
+      continue;
+    }
+
+    if (!topItem.children || topItem.children.length === 0) continue;
+
+    const firstLeaf = topItem.children.find((child) => child.path);
+    const firstPath = toDocsRelativePath(firstLeaf?.path || "");
+    const firstSegment = firstPath.split("/")[0] || slugifyLabel(topItem.label);
+    const categorySlug = firstSegment;
+    const category = ensureCategory(categorySlug, topItem.label, categoryOrder++);
+
+    let subcategoryOrder = 0;
+
+    for (const child of topItem.children) {
+      if (child.path) {
+        const relativePath = toDocsRelativePath(child.path);
+        if (relativePath === `${categorySlug}/index.md`) {
+          category.indexPath = relativePath;
+        }
+
+        registerLeaf({
+          path: child.path,
+          title: child.label,
+          category: categorySlug,
+          subcategory: null,
+          docOrder: docOrder++,
+        });
+        continue;
+      }
+
+      if (!child.children || child.children.length === 0) continue;
+
+      const subSlug = slugifyLabel(child.label);
+      const subcategory = ensureSubcategory(
+        category,
+        subSlug,
+        child.label,
+        subcategoryOrder++
+      );
+
+      for (const grandChild of child.children) {
+        if (!grandChild.path) continue;
+
+        const relativePath = toDocsRelativePath(grandChild.path);
+        const isSubIndex =
+          relativePath.endsWith("/index.md") &&
+          relativePath.split("/")[0] === categorySlug;
+
+        if (isSubIndex && grandChild.label.toLowerCase() === "overview") {
+          subcategory.indexPath = relativePath;
+        }
+
+        registerLeaf({
+          path: grandChild.path,
+          title: grandChild.label,
+          category: categorySlug,
+          subcategory: subSlug,
+          docOrder: docOrder++,
+        });
+      }
+    }
+  }
+
+  return {
+    homePath,
+    categories,
+    docsByPath,
+    routeByPath,
+  };
+}
+
+/**
+ * Fallback structure when mkdocs.yml nav is unavailable.
+ * Uses directory-based grouping to preserve backward compatibility.
+ */
+function buildFallbackNavStructure(files) {
+  const categories = [];
+  const categoriesMap = new Map();
+  const docsByPath = new Map();
+  const routeByPath = new Map();
+  let homePath = "index.md";
+  let docOrder = 0;
+
+  function ensureCategory(slug) {
+    if (!categoriesMap.has(slug)) {
+      const category = {
+        slug,
+        label: slugToTitle(slug),
+        order: categories.length,
+        indexPath: null,
+        subcategories: [],
+      };
+      categoriesMap.set(slug, category);
+      categories.push(category);
+    }
+    return categoriesMap.get(slug);
+  }
+
+  function ensureSubcategory(category, slug) {
+    let sub = category.subcategories.find((s) => s.slug === slug);
+    if (!sub) {
+      sub = {
+        slug,
+        label: slugToTitle(slug),
+        order: category.subcategories.length,
+        indexPath: null,
+      };
+      category.subcategories.push(sub);
+    }
+    return sub;
+  }
+
+  for (const file of files) {
+    if (file.type !== "blob") continue;
+    if (!file.relativePath.endsWith(".md")) continue;
+    if (isExcluded(file.relativePath)) continue;
+
+    routeByPath.set(file.relativePath, docsPathToRoute(file.relativePath));
+
+    const { category, subcategory, slug, isIndex } = parseDocPath(file.relativePath);
+    if (!category) {
+      if (isIndex) homePath = file.relativePath;
+      continue;
+    }
+
+    const cat = ensureCategory(category);
+    if (isIndex) {
+      if (subcategory) {
+        const sub = ensureSubcategory(cat, subcategory);
+        sub.indexPath = file.relativePath;
+      } else {
+        cat.indexPath = file.relativePath;
+      }
+      continue;
+    }
+
+    if (subcategory) ensureSubcategory(cat, subcategory);
+
+    docsByPath.set(file.relativePath, {
+      title: slugToTitle(slug),
+      category,
+      subcategory,
+      order: docOrder++,
+      slug,
+    });
+  }
+
+  return {
+    homePath,
+    categories,
+    docsByPath,
+    routeByPath,
+  };
+}
+
 // ---------------------------------------------------------------------------
 // Markdown processing helpers
 // ---------------------------------------------------------------------------
@@ -229,7 +566,7 @@ function stripHtmlTags(content) {
  * Converts links like [text](./other-doc.md) or [text](../category/doc.md)
  * to [text](/knowledge-center/category/slug) based on the file's own path.
  */
-function transformInternalLinks(content, relativePath) {
+function transformInternalLinks(content, relativePath, routeByPath = null) {
   // Match markdown links: [text](url)
   return content.replace(
     /\[([^\]]+)\]\(([^)]+)\)/g,
@@ -249,7 +586,8 @@ function transformInternalLinks(content, relativePath) {
       const resolved = resolveRelativePath(fileDir, filePart);
 
       // Convert resolved docs path to a route
-      const route = docsPathToRoute(resolved);
+      const normalizedResolved = toDocsRelativePath(resolved);
+      const route = routeByPath?.get(normalizedResolved) || docsPathToRoute(resolved);
       const suffix = anchor ? `#${anchor}` : "";
       return `[${text}](${route}${suffix})`;
     }
@@ -289,10 +627,10 @@ function fixBrandNames(text) {
 }
 
 /** Clean up markdown: strip comments, HTML tags, fix whitespace, fix brands. */
-function normalizeContent(content, relativePath) {
+function normalizeContent(content, relativePath, routeByPath = null) {
   let result = content.replace(/<!--[\s\S]*?-->/g, "");
   result = stripHtmlTags(result);
-  result = transformInternalLinks(result, relativePath);
+  result = transformInternalLinks(result, relativePath, routeByPath);
   result = fixBrandNames(result);
   // Trim trailing whitespace per line
   result = result.replace(/[^\S\r\n]+$/gm, "");
@@ -377,140 +715,99 @@ function parseDocPath(relativePath) {
 // Output builder
 // ---------------------------------------------------------------------------
 
-/** Get or create a category entry in the map. */
-function ensureCategory(categoriesMap, slug, manifestCategories) {
-  if (!categoriesMap.has(slug)) {
-    const manifestCat = manifestCategories.get(slug);
-    categoriesMap.set(slug, {
-      slug,
-      label: fixBrandNames(manifestCat?.label || slugToTitle(slug)),
-      order: manifestCat?.order ?? 999,
-      indexContent: null,
-      subcategories: [],
-    });
-  }
-  return categoriesMap.get(slug);
-}
-
-/** Get or create a subcategory entry within a category. */
-function ensureSubcategory(category, slug, manifestSubcategories) {
-  let sub = category.subcategories.find((s) => s.slug === slug);
-  if (!sub) {
-    const manifestSub = manifestSubcategories?.get(slug);
-    sub = {
-      slug,
-      label: fixBrandNames(manifestSub?.label || slugToTitle(slug)),
-      order: manifestSub?.order ?? 999,
-    };
-    category.subcategories.push(sub);
-  }
-  return sub;
-}
-
 /**
  * Build the structured JSON output from raw file data and manifest.
  */
-function buildOutput(files, manifest) {
-  const categoriesMap = new Map();
+function buildOutput(files, manifest, navStructure) {
   const documents = [];
   let rootIndexContent = null;
 
-  // Pre-index manifest metadata
-  const manifestCategories = new Map();
-  const manifestSubcategories = new Map();
-  if (manifest?.categories) {
-    for (const cat of manifest.categories) {
-      manifestCategories.set(cat.slug, cat);
-      // Index subcategories from manifest if provided
-      if (cat.subcategories) {
-        for (const sub of cat.subcategories) {
-          manifestSubcategories.set(sub.slug, sub);
-        }
-      }
-    }
-  }
   const manifestDocs = manifest?.documents || {};
 
-  // First pass: discover categories & subcategories from directory entries
-  for (const file of files) {
-    if (file.type !== "tree") continue;
-    if (isExcluded(file.relativePath)) continue;
+  const categoriesMap = new Map(
+    navStructure.categories.map((cat) => [
+      cat.slug,
+      {
+        slug: cat.slug,
+        label: fixBrandNames(cat.label),
+        order: cat.order,
+        indexContent: null,
+        subcategories: cat.subcategories.map((sub) => ({
+          slug: sub.slug,
+          label: fixBrandNames(sub.label),
+          order: sub.order,
+          indexContent: null,
+        })),
+      },
+    ])
+  );
 
-    const parts = file.relativePath.split("/");
-    const cat = ensureCategory(categoriesMap, parts[0], manifestCategories);
-    if (parts.length >= 2) {
-      ensureSubcategory(cat, parts[1], manifestSubcategories);
-    }
-  }
-
-  // Second pass: process markdown files
+  // Process markdown files based on mkdocs nav mapping
   for (const file of files) {
     if (file.type !== "blob") continue;
     if (!file.relativePath.endsWith(".md")) continue;
     if (isExcluded(file.relativePath)) continue;
 
-    const { category, subcategory, slug, isIndex } = parseDocPath(
-      file.relativePath
+    const { frontmatter, body } = extractFrontmatter(file.content);
+    const cleanContent = normalizeContent(
+      body,
+      file.relativePath,
+      navStructure.routeByPath
     );
 
-    // Extract frontmatter then normalize content
-    const { frontmatter, body } = extractFrontmatter(file.content);
-    const cleanContent = normalizeContent(body, file.relativePath);
-
-    // Handle index files — attach content to category/subcategory
-    if (isIndex) {
-      if (!category) {
-        rootIndexContent = cleanContent;
-      } else {
-        const cat = categoriesMap.get(category);
-        if (cat) {
-          if (subcategory) {
-            const sub = cat.subcategories.find((s) => s.slug === subcategory);
-            if (sub) sub.indexContent = cleanContent;
-          } else {
-            cat.indexContent = cleanContent;
-          }
-        } else {
-          console.warn(
-            `Warning: index.md references unknown category "${category}" (${file.relativePath})`
-          );
-        }
-      }
+    // Root landing page from mkdocs Home entry (index.md)
+    if (file.relativePath === navStructure.homePath) {
+      rootIndexContent = cleanContent;
       continue;
     }
 
-    // Skip root-level docs without a category — all docs should be in a folder
-    if (!category) {
+    // Category/subcategory index content from nav-defined overview paths
+    let handledAsIndex = false;
+    for (const cat of navStructure.categories) {
+      if (cat.indexPath && file.relativePath === cat.indexPath) {
+        const outCat = categoriesMap.get(cat.slug);
+        if (outCat) outCat.indexContent = cleanContent;
+        handledAsIndex = true;
+        break;
+      }
+
+      for (const sub of cat.subcategories) {
+        if (sub.indexPath && file.relativePath === sub.indexPath) {
+          const outCat = categoriesMap.get(cat.slug);
+          const outSub = outCat?.subcategories.find((s) => s.slug === sub.slug);
+          if (outSub) outSub.indexContent = cleanContent;
+          handledAsIndex = true;
+          break;
+        }
+      }
+      if (handledAsIndex) break;
+    }
+    if (handledAsIndex) continue;
+
+    const navDoc = navStructure.docsByPath.get(file.relativePath);
+    if (!navDoc) {
       console.warn(
-        `Warning: skipping root-level doc "${file.relativePath}" (no category folder)`
+        `Warning: skipping doc not present in mkdocs nav: ${file.relativePath}`
       );
       continue;
     }
 
-    // Build manifest lookup key for this document
-    const manifestKey = subcategory
-      ? `${category}/${subcategory}/${slug}.md`
-      : `${category}/${slug}.md`;
-
-    const manifestMeta = manifestDocs[manifestKey] || {};
-
-    // Merge metadata: frontmatter > manifest > defaults
+    const manifestMeta = manifestDocs[file.relativePath] || {};
     const title = fixBrandNames(
-      frontmatter?.title || manifestMeta.title || slugToTitle(slug)
+      frontmatter?.title || manifestMeta.title || navDoc.title || slugToTitle(navDoc.slug)
     );
 
     documents.push({
-      slug,
+      slug: navDoc.slug,
       title,
-      category,
-      subcategory,
-      order: frontmatter?.order ?? manifestMeta.order ?? 999,
+      category: navDoc.category,
+      subcategory: navDoc.subcategory,
+      order: frontmatter?.order ?? manifestMeta.order ?? navDoc.order,
       tags: frontmatter?.tags || manifestMeta.tags || [],
       content: cleanContent,
     });
   }
 
-  // Sort categories and subcategories by order
   const categories = Array.from(categoriesMap.values())
     .sort((a, b) => a.order - b.order)
     .map((cat) => ({
@@ -518,7 +815,6 @@ function buildOutput(files, manifest) {
       subcategories: cat.subcategories.sort((a, b) => a.order - b.order),
     }));
 
-  // Sort documents: by category order → subcategory order → doc order
   const catOrderMap = new Map(categories.map((c, i) => [c.slug, i]));
   const subOrderMap = new Map();
   for (const cat of categories) {
@@ -562,11 +858,17 @@ async function main() {
     `Fetching docs from ${REPO_SLUG} (${GITHUB_DOCS_BRANCH})...`
   );
 
-  // Fetch tree and manifest in parallel
-  const [treeItems, manifest] = await Promise.all([
+  // Fetch tree, manifest, and mkdocs nav in parallel
+  const [treeItems, manifest, mkdocsYaml] = await Promise.all([
     fetchTree(),
     fetchManifest(),
+    fetchMkdocsYaml(),
   ]);
+
+  const navTree = mkdocsYaml ? parseMkdocsNav(mkdocsYaml) : [];
+  const navStructure = navTree.length > 0
+    ? buildNavStructure(navTree)
+    : buildFallbackNavStructure(treeItems);
 
   const mdFiles = treeItems.filter(
     (item) =>
@@ -594,7 +896,7 @@ async function main() {
     ...mdFiles,
   ];
 
-  const output = buildOutput(allItems, manifest);
+  const output = buildOutput(allItems, manifest, navStructure);
 
   // Ensure output directory exists and write
   mkdirSync(dirname(OUTPUT_PATH), { recursive: true });
