@@ -205,9 +205,87 @@ function extractFrontmatter(content) {
   return { frontmatter, body };
 }
 
-/** Strip HTML comments, collapse excessive blank lines, trim whitespace. */
-function normalizeContent(content) {
+/**
+ * Strip HTML tags from markdown, preserving content inside fenced code blocks.
+ * Removes tags like <div>, <p>, <span> etc. while keeping their inner text.
+ * Self-closing tags (e.g., <br/>, <hr/>) are removed entirely.
+ */
+function stripHtmlTags(content) {
+  // Split on fenced code blocks to avoid stripping inside them
+  const parts = content.split(/(```[\s\S]*?```|`[^`\n]+`)/g);
+  return parts
+    .map((part, i) => {
+      // Odd indices are code blocks — leave untouched
+      if (i % 2 === 1) return part;
+      // Remove paired tags, keep inner content: <tag ...>content</tag> → content
+      let cleaned = part.replace(/<\/?[a-zA-Z][a-zA-Z0-9]*\b[^>]*>/g, "");
+      return cleaned;
+    })
+    .join("");
+}
+
+/**
+ * Transform internal markdown links to Knowledge Center routes.
+ * Converts links like [text](./other-doc.md) or [text](../category/doc.md)
+ * to [text](/knowledge-center/category/slug) based on the file's own path.
+ */
+function transformInternalLinks(content, relativePath) {
+  // Match markdown links: [text](url)
+  return content.replace(
+    /\[([^\]]+)\]\(([^)]+)\)/g,
+    (match, text, url) => {
+      // Skip external links, anchors, and absolute paths
+      if (/^(https?:|mailto:|#|\/)/.test(url)) return match;
+      // Only transform .md links
+      if (!url.replace(/#.*$/, "").endsWith(".md")) return match;
+
+      // Split off any anchor fragment
+      const [filePart, anchor] = url.split("#", 2);
+
+      // Resolve relative path against the current file's directory
+      const fileDir = relativePath.includes("/")
+        ? relativePath.replace(/\/[^/]+$/, "")
+        : "";
+      const resolved = resolveRelativePath(fileDir, filePart);
+
+      // Convert resolved docs path to a route
+      const route = docsPathToRoute(resolved);
+      const suffix = anchor ? `#${anchor}` : "";
+      return `[${text}](${route}${suffix})`;
+    }
+  );
+}
+
+/** Resolve a relative file path against a base directory. */
+function resolveRelativePath(base, relative) {
+  // Start from the base directory segments
+  const parts = base ? base.split("/") : [];
+  for (const seg of relative.split("/")) {
+    if (seg === ".." && parts.length > 0) parts.pop();
+    else if (seg !== "." && seg !== "") parts.push(seg);
+  }
+  return parts.join("/");
+}
+
+/**
+ * Convert a docs-relative file path to a Knowledge Center route.
+ * e.g., "data-access/getting-started.md" → "/knowledge-center/data-access/getting-started"
+ *       "data-access/animal-study/overview.md" → "/knowledge-center/data-access/animal-study/overview"
+ *       "data-access/index.md" → "/knowledge-center/data-access"
+ */
+function docsPathToRoute(filePath) {
+  const withoutExt = filePath.replace(/\.md$/, "");
+  const parts = withoutExt.split("/");
+  // Drop trailing "index" — it maps to the parent route
+  if (parts[parts.length - 1] === "index") parts.pop();
+  return `/knowledge-center${parts.length ? "/" + parts.join("/") : ""}`;
+}
+
+/** Clean up markdown: strip comments, HTML tags, fix whitespace. */
+function normalizeContent(content, relativePath) {
   let result = content.replace(/<!--[\s\S]*?-->/g, "");
+  result = stripHtmlTags(result);
+  result = transformInternalLinks(result, relativePath);
   // Trim trailing whitespace per line
   result = result.replace(/[^\S\r\n]+$/gm, "");
   // Collapse excessive blank lines (3+ → 2)
@@ -367,7 +445,7 @@ function buildOutput(files, manifest) {
 
     // Extract frontmatter then normalize content
     const { frontmatter, body } = extractFrontmatter(file.content);
-    const cleanContent = normalizeContent(body);
+    const cleanContent = normalizeContent(body, file.relativePath);
 
     // Handle index files — attach content to category/subcategory
     if (isIndex) {
