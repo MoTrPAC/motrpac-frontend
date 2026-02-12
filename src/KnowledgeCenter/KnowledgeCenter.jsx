@@ -17,6 +17,7 @@ const FUSE_OPTIONS = {
   ],
   threshold: 0.3,
   ignoreLocation: true,
+  includeMatches: true,
   minMatchCharLength: 2,
 };
 
