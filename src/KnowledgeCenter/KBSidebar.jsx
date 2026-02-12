@@ -1,0 +1,205 @@
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
+const BASE_PATH = "/knowledge-center";
+
+function KBSidebar({
+  categories,
+  documents,
+  activeCategory,
+  activeSubcategory,
+  activeDoc,
+  isOpen,
+  onClose,
+}) {
+  // Track which categories and subcategories are expanded
+  const [expanded, setExpanded] = useState({});
+
+  // Auto-expand active category/subcategory on route change
+  useEffect(() => {
+    if (activeCategory) {
+      setExpanded((prev) => ({
+        ...prev,
+        [activeCategory]: true,
+        ...(activeSubcategory
+          ? { [`${activeCategory}/${activeSubcategory}`]: true }
+          : {}),
+      }));
+    }
+  }, [activeCategory, activeSubcategory]);
+
+  const toggleExpand = (key) => {
+    setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const getDocsForCategory = (catSlug, subSlug = null) =>
+    documents.filter(
+      (d) => d.category === catSlug && d.subcategory === subSlug
+    );
+
+  const isActiveDoc = (docSlug, catSlug, subSlug = null) => {
+    if (subSlug) {
+      return (
+        activeCategory === catSlug &&
+        activeSubcategory === subSlug &&
+        activeDoc === docSlug
+      );
+    }
+    return (
+      activeCategory === catSlug &&
+      !activeSubcategory &&
+      activeDoc === docSlug
+    );
+  };
+
+  return (
+    <>
+      {/* Mobile overlay */}
+      {isOpen && (
+        <div className="kb-sidebar__overlay" onClick={onClose} />
+      )}
+      <aside className={`kb-sidebar ${isOpen ? "kb-sidebar--open" : ""}`}>
+        <nav>
+          <ul className="kb-sidebar__list">
+            {categories.map((cat) => {
+              const isExpanded = expanded[cat.slug];
+              const catDocs = getDocsForCategory(cat.slug);
+              const isActiveCat = activeCategory === cat.slug;
+
+              return (
+                <li key={cat.slug} className="kb-sidebar__category">
+                  <div
+                    className={`kb-sidebar__category-header ${
+                      isActiveCat ? "kb-sidebar__category-header--active" : ""
+                    }`}
+                  >
+                    <Link
+                      to={`${BASE_PATH}/${cat.slug}`}
+                      className="kb-sidebar__category-link"
+                      onClick={onClose}
+                    >
+                      {cat.label}
+                    </Link>
+                    <button
+                      className="kb-sidebar__toggle"
+                      onClick={() => toggleExpand(cat.slug)}
+                      aria-expanded={isExpanded}
+                      aria-label={`Toggle ${cat.label}`}
+                    >
+                      <span
+                        className={`kb-sidebar__chevron ${
+                          isExpanded ? "kb-sidebar__chevron--open" : ""
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {isExpanded && (
+                    <ul className="kb-sidebar__docs">
+                      {/* Category-level documents */}
+                      {catDocs.map((doc) => (
+                        <li
+                          key={doc.slug}
+                          className={`kb-sidebar__doc ${
+                            isActiveDoc(doc.slug, cat.slug)
+                              ? "kb-sidebar__doc--active"
+                              : ""
+                          }`}
+                        >
+                          <Link
+                            to={`${BASE_PATH}/${cat.slug}/${doc.slug}`}
+                            onClick={onClose}
+                          >
+                            {doc.title}
+                          </Link>
+                        </li>
+                      ))}
+
+                      {/* Subcategories */}
+                      {cat.subcategories.map((sub) => {
+                        const subKey = `${cat.slug}/${sub.slug}`;
+                        const isSubExpanded = expanded[subKey];
+                        const subDocs = getDocsForCategory(
+                          cat.slug,
+                          sub.slug
+                        );
+
+                        return (
+                          <li
+                            key={sub.slug}
+                            className="kb-sidebar__subcategory"
+                          >
+                            <div
+                              className={`kb-sidebar__subcategory-header ${
+                                activeSubcategory === sub.slug &&
+                                isActiveCat
+                                  ? "kb-sidebar__subcategory-header--active"
+                                  : ""
+                              }`}
+                            >
+                              <Link
+                                to={`${BASE_PATH}/${cat.slug}/${sub.slug}`}
+                                className="kb-sidebar__subcategory-link"
+                                onClick={onClose}
+                              >
+                                {sub.label}
+                              </Link>
+                              {subDocs.length > 0 && (
+                                <button
+                                  className="kb-sidebar__toggle"
+                                  onClick={() => toggleExpand(subKey)}
+                                  aria-expanded={isSubExpanded}
+                                  aria-label={`Toggle ${sub.label}`}
+                                >
+                                  <span
+                                    className={`kb-sidebar__chevron ${
+                                      isSubExpanded
+                                        ? "kb-sidebar__chevron--open"
+                                        : ""
+                                    }`}
+                                  />
+                                </button>
+                              )}
+                            </div>
+
+                            {isSubExpanded && subDocs.length > 0 && (
+                              <ul className="kb-sidebar__docs kb-sidebar__docs--nested">
+                                {subDocs.map((doc) => (
+                                  <li
+                                    key={doc.slug}
+                                    className={`kb-sidebar__doc ${
+                                      isActiveDoc(
+                                        doc.slug,
+                                        cat.slug,
+                                        sub.slug
+                                      )
+                                        ? "kb-sidebar__doc--active"
+                                        : ""
+                                    }`}
+                                  >
+                                    <Link
+                                      to={`${BASE_PATH}/${cat.slug}/${sub.slug}/${doc.slug}`}
+                                      onClick={onClose}
+                                    >
+                                      {doc.title}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </aside>
+    </>
+  );
+}
+
+export default KBSidebar;
