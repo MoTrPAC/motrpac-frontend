@@ -19,11 +19,14 @@ function KBTableOfContents({
         tocSelector: ".kb-toc__list",
         contentSelector,
         headingSelector: "h2, h3",
+        ignoreSelector: ".kb-heading-anchor",
         orderedList: false,
         scrollSmooth: true,
         scrollSmoothOffset: -20,
         headingsOffset: 80,
         scrollSmoothDuration: 300,
+        // Strip the anchor link text (e.g. trailing "#") from TOC entries
+        headingLabelCallback: (text) => text.replace(/\s*#\s*$/, ""),
       });
     }, 100);
 
