@@ -17,6 +17,9 @@ $kb-transition: 0.2s ease;
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 200px); // adjust based on your header/footer height
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 
   &__header {
     padding: 0 0 1rem;
@@ -315,6 +318,70 @@ $kb-transition: 0.2s ease;
     li {
       margin-bottom: 0.25rem;
     }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Table of Contents (right sidebar)
+// ---------------------------------------------------------------------------
+
+$kb-toc-width: 220px;
+
+.kb-toc {
+  width: $kb-toc-width;
+  min-width: $kb-toc-width;
+  position: sticky;
+  top: 1rem;
+  align-self: flex-start;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  padding: 1rem 0 1rem 1rem;
+  border-left: 1px solid $kb-border-color;
+  font-size: 0.825rem;
+
+  &__heading {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6c757d;
+    margin: 0 0 0.5rem;
+    padding: 0;
+  }
+
+  // tocbot generates .toc-list and .toc-link classes
+  .toc-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+
+    .toc-list {
+      padding-left: 0.75rem;
+    }
+  }
+
+  .toc-link {
+    color: #495057;
+    text-decoration: none;
+    display: block;
+    padding: 0.2rem 0;
+    line-height: 1.4;
+    transition: color $kb-transition;
+
+    &:hover {
+      color: $kb-active-color;
+      text-decoration: none;
+    }
+  }
+
+  .is-active-link {
+    color: $kb-active-color;
+    font-weight: 500;
+  }
+
+  // Hide on screens narrower than xl (1200px)
+  @media (max-width: 1199.98px) {
+    display: none;
   }
 }
 
