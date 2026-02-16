@@ -544,8 +544,10 @@ function extractFrontmatter(content) {
 
 /**
  * Strip HTML tags from markdown, preserving content inside fenced code blocks.
- * Removes tags like <div>, <p>, <span> etc. while keeping their inner text.
- * Self-closing tags (e.g., <br/>, <hr/>) are removed entirely.
+ * Anchor tags (<a href="...">) are converted to markdown links rather than
+ * removed so that link destinations are retained.
+ * Other tags like <div>, <p>, <span> etc. are removed while keeping their
+ * inner text. Self-closing tags (e.g., <br/>, <hr/>) are removed entirely.
  */
 function stripHtmlTags(content) {
   // Split on fenced code blocks to avoid stripping inside them
@@ -554,8 +556,26 @@ function stripHtmlTags(content) {
     .map((part, i) => {
       // Odd indices are code blocks — leave untouched
       if (i % 2 === 1) return part;
-      // Remove paired tags, keep inner content: <tag ...>content</tag> → content
-      let cleaned = part.replace(/<\/?[a-zA-Z][a-zA-Z0-9]*\b[^>]*>/g, "");
+
+      // Convert <a href="url">text</a> to [text](url)
+      let cleaned = part.replace(
+        /<a\s+[^>]*href=["']([^"']*)["'][^>]*>([\s\S]*?)<\/a>/gi,
+        (_, href, text) => `[${text.trim()}](${href})`
+      );
+
+      // Convert anchor targets <a id="xxx">text</a> / <a name="xxx">text</a>
+      // to inline anchor spans that markdown renderers can use as jump targets:
+      // <span id="xxx">text</span>
+      cleaned = cleaned.replace(
+        /<a\s+(?:[^>]*?\s)?(?:id|name)=["']([^"']*)["'][^>]*>([\s\S]*?)<\/a>/gi,
+        (_, id, text) => `<span id="${id}">${text.trim()}</span>`
+      );
+
+      // Remove all remaining HTML tags except <span id="..."> anchors
+      cleaned = cleaned.replace(
+        /<\/?[a-zA-Z][a-zA-Z0-9]*\b[^>]*>/g,
+        (tag) => (/^<span\s+id=["'][^"']*["']\s*>$/i.test(tag) || tag === "</span>" ? tag : "")
+      );
       return cleaned;
     })
     .join("");
