@@ -2,6 +2,18 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+
+const AUTOLINK_OPTIONS = {
+  behavior: "append",
+  properties: { className: ["kb-heading-anchor"], ariaHidden: true, tabIndex: -1 },
+  content: {
+    type: "element",
+    tagName: "span",
+    properties: { className: ["kb-heading-anchor__icon"] },
+    children: [{ type: "text", value: "#" }],
+  },
+};
 
 function KBDocument({ title, content }) {
   if (!content) {
@@ -16,7 +28,7 @@ function KBDocument({ title, content }) {
   return (
     <article className="kb-document">
       <div className="kb-document__body">
-        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSlug]} disallowedElements={['iframe', 'script']}>{content}</ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSlug, [rehypeAutolinkHeadings, AUTOLINK_OPTIONS]]} disallowedElements={['iframe', 'script']}>{content}</ReactMarkdown>
       </div>
     </article>
   );
