@@ -1,6 +1,7 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import rehypeSlug from "rehype-slug";
 
 function KBDocument({ title, content }) {
   if (!content) {
@@ -15,7 +16,7 @@ function KBDocument({ title, content }) {
   return (
     <article className="kb-document">
       <div className="kb-document__body">
-        <ReactMarkdown remarkPlugins={[remarkGfm]} disallowedElements={['img', 'iframe', 'script', 'comment']}>{content}</ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSlug]} disallowedElements={['iframe', 'script']}>{content}</ReactMarkdown>
       </div>
     </article>
   );
