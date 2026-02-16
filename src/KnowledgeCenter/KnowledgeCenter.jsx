@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import knowledgeBase from "../data/knowledge-base.json";
 import KBSidebar from "./KBSidebar";
 import KBDocument from "./KBDocument";
+import KBTableOfContents from "./KBTableOfContents";
 import KBSearch from "./KBSearch";
 
 import '@styles/knowledgeCenter.scss';
@@ -114,7 +115,7 @@ function KnowledgeCenter() {
   };
 
   return (
-    <div className="knowledgeCenterPage knowledge-center px-3 px-md-4 mb-3 container">
+    <div className="knowledgeCenterPage knowledge-center px-3 px-md-4 mb-3 container-fluid">
       <Helmet>
         <html lang="en" />
         <title>MoTrPAC Knowledge Center - MoTrPAC Data Hub</title>
@@ -165,6 +166,9 @@ function KnowledgeCenter() {
             />
           )}
         </main>
+        {activeContent.type === "document" && (
+          <KBTableOfContents contentKey={activeContent.slug} />
+        )}
       </div>
     </div>
   );
