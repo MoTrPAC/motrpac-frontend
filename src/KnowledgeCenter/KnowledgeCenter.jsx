@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Navigate } from "react-router-dom";
 import Fuse from "fuse.js";
 import { Helmet } from 'react-helmet';
 import knowledgeBase from "../data/knowledge-base.json";
@@ -62,11 +62,22 @@ function KnowledgeCenter() {
     const sub = cat.subcategories.find((s) => s.slug === subcategoryOrDoc);
 
     if (sub && !doc) {
-      // It's a subcategory landing
+      // It's a subcategory landing — if no index content, redirect to first child doc
+      if (!sub.indexContent) {
+        const firstDoc = documents.find(
+          (d) => d.category === category && d.subcategory === subcategoryOrDoc
+        );
+        if (firstDoc) {
+          return {
+            type: "subcategory-redirect",
+            redirectTo: `/knowledge-center/${category}/${subcategoryOrDoc}/${firstDoc.slug}`,
+          };
+        }
+      }
       return {
         type: "subcategory-index",
         title: sub.label,
-        content: sub.indexContent || null,
+        content: sub.indexContent,
         category: cat,
         subcategory: sub,
       };
@@ -140,7 +151,9 @@ function KnowledgeCenter() {
           onClose={() => setSidebarOpen(false)}
         />
         <main className="knowledge-center__content">
-          {activeContent.type === "not-found" ? (
+          {activeContent.type === "subcategory-redirect" ? (
+            <Navigate to={activeContent.redirectTo} replace />
+          ) : activeContent.type === "not-found" ? (
             <div className="text-center py-5">
               <h2>Page not found</h2>
               <p>The requested documentation page could not be found.</p>
