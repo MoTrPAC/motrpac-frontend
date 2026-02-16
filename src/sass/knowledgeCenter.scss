@@ -243,6 +243,11 @@ $kb-transition: 0.2s ease;
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.75rem;
       margin-bottom: 0.75rem;
+      position: relative;
+
+      &:hover .kb-heading-anchor {
+        opacity: 1;
+      }
     }
 
     h1 { font-size: 2rem; }
@@ -317,6 +322,25 @@ $kb-transition: 0.2s ease;
 
     li {
       margin-bottom: 0.25rem;
+    }
+
+    // Heading anchor links (via rehype-autolink-headings)
+    .kb-heading-anchor {
+      text-decoration: none;
+      opacity: 0;
+      transition: opacity $kb-transition;
+      margin-left: 0.4rem;
+      vertical-align: middle;
+
+      &__icon {
+        color: #6c757d;
+        font-weight: 400;
+        font-size: 0.85em;
+      }
+
+      &:hover &__icon {
+        color: $kb-active-color;
+      }
     }
   }
 }
