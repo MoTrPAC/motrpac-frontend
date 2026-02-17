@@ -477,6 +477,11 @@ $kb-toc-width: 220px;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+
+    mark {
+      background: #f8e3a5;
+      padding: 0;
+    }
   }
 
   &__result-breadcrumb {
