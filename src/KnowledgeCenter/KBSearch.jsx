@@ -65,27 +65,78 @@ function KBSearch({ fuse, onSelect }) {
    * Extract a short snippet around the first content match.
    * Falls back to the first ~120 chars of content if no content match.
    */
-  const getSnippet = (result) => {
+  const getSnippet = (result, rawQuery) => {
     const SNIPPET_RADIUS = 60;
     const doc = result.item;
+    const queryTerm = rawQuery?.trim().toLowerCase();
 
-    // Find the first match on the "content" key
-    const contentMatch = result.matches?.find((m) => m.key === "content");
-    if (contentMatch && contentMatch.indices.length > 0) {
-      const [start] = contentMatch.indices[0];
-      const text = contentMatch.value;
+    const buildSnippetFromText = (text) => {
+      if (!text) return "";
+
+      const plain = stripMarkdown(text);
+      if (!plain) return "";
+
+      if (queryTerm && queryTerm.length >= 2) {
+        const start = plain.toLowerCase().indexOf(queryTerm);
+        if (start >= 0) {
+          const end = start + queryTerm.length;
+          const snippetStart = Math.max(0, start - SNIPPET_RADIUS);
+          const snippetEnd = Math.min(plain.length, end + SNIPPET_RADIUS);
+          const prefix = snippetStart > 0 ? "…" : "";
+          const suffix = snippetEnd < plain.length ? "…" : "";
+          return prefix + plain.slice(snippetStart, snippetEnd) + suffix;
+        }
+      }
+
+      return plain.length > 120 ? plain.slice(0, 120) + "…" : plain;
+    };
+
+    const buildSnippetFromMatch = (match) => {
+      if (!match || !match.indices || match.indices.length === 0) {
+        return "";
+      }
+
+      const text = typeof match.value === "string"
+        ? match.value
+        : Array.isArray(match.value)
+          ? match.value.join(" ")
+          : "";
+
+      if (!text) return "";
+
+      const textSnippet = buildSnippetFromText(text);
+      if (textSnippet) return textSnippet;
+
+      const [start, end] = match.indices[0];
       const snippetStart = Math.max(0, start - SNIPPET_RADIUS);
-      const snippetEnd = Math.min(text.length, start + SNIPPET_RADIUS);
+      const snippetEnd = Math.min(text.length, end + 1 + SNIPPET_RADIUS);
       const prefix = snippetStart > 0 ? "…" : "";
       const suffix = snippetEnd < text.length ? "…" : "";
       const raw = text.slice(snippetStart, snippetEnd);
+
       return prefix + stripMarkdown(raw) + suffix;
+    };
+
+    // Prefer content snippet; fall back to first available matched key (e.g., title/tags)
+    const matches = result.matches || [];
+    const contentMatch = matches.find((m) => m.key === "content");
+    if (contentMatch?.value) {
+      const contentSnippet = buildSnippetFromText(contentMatch.value);
+      if (contentSnippet) return contentSnippet;
+    }
+
+    const preferredMatch =
+      matches.find((m) => m.key === "content" && m.indices?.length > 0) ||
+      matches.find((m) => m.indices?.length > 0);
+
+    const matchSnippet = buildSnippetFromMatch(preferredMatch);
+    if (matchSnippet) {
+      return matchSnippet;
     }
 
     // Fallback: beginning of content
     if (doc.content) {
-      const plain = stripMarkdown(doc.content);
-      return plain.length > 120 ? plain.slice(0, 120) + "…" : plain;
+      return buildSnippetFromText(doc.content);
     }
 
     return "";
@@ -132,6 +183,28 @@ function KBSearch({ fuse, onSelect }) {
       .join(" › ");
   };
 
+  const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+  const highlightSnippet = (snippet, rawQuery) => {
+    const trimmedQuery = rawQuery?.trim();
+
+    if (!snippet || !trimmedQuery || trimmedQuery.length < 2) {
+      return snippet;
+    }
+
+    const regex = new RegExp(`(${escapeRegExp(trimmedQuery)})`, "ig");
+    const parts = snippet.split(regex);
+    const queryLower = trimmedQuery.toLowerCase();
+
+    return parts.map((part, index) =>
+      part.toLowerCase() === queryLower ? (
+        <mark key={`snippet-mark-${index}`}>{part}</mark>
+      ) : (
+        <React.Fragment key={`snippet-text-${index}`}>{part}</React.Fragment>
+      )
+    );
+  };
+
   // Unwrap Fuse result to get the document item
   const getDoc = (result) => result.item;
 
@@ -175,7 +248,7 @@ function KBSearch({ fuse, onSelect }) {
               >
                 <span className="kb-search__result-title">{doc.title}</span>
                 <span className="kb-search__result-snippet">
-                  {getSnippet(result)}
+                  {highlightSnippet(getSnippet(result, query), query)}
                 </span>
                 <span className="kb-search__result-breadcrumb">
                   {buildBreadcrumb(doc)}
