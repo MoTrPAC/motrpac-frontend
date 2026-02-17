@@ -424,6 +424,32 @@ $kb-toc-width: 220px;
 
   &__input {
     font-size: 0.9rem;
+    padding-right: 2rem;
+  }
+
+  &__clear-btn {
+    position: absolute;
+    top: 50%;
+    right: 0.55rem;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: #6c757d;
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: pointer;
+
+    &:hover {
+      color: #343a40;
+    }
+
+    &:focus {
+      outline: none;
+      color: #343a40;
+    }
   }
 
   &__results {

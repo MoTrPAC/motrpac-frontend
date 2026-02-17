@@ -210,4 +210,38 @@ describe('KBSearch snippet behavior', () => {
     expect(snippet.textContent).not.toContain('](');
     expect(snippet.textContent).not.toContain('`');
   });
+
+  test('shows clear button only with input and clears search on click', () => {
+    const result = {
+      item: buildDoc({
+        title: 'Clear Button Doc',
+        slug: 'clear-button-doc',
+        content: 'Simple content for clear button behavior.',
+      }),
+      matches: [
+        {
+          key: 'content',
+          value: 'Simple content for clear button behavior.',
+          indices: [[0, 5]],
+        },
+      ],
+    };
+
+    const { fuse } = renderSearch([result]);
+    const input = screen.getByLabelText(/search documentation/i);
+
+    expect(screen.queryByRole('button', { name: /clear search/i })).not.toBeInTheDocument();
+
+    fireEvent.change(input, { target: { value: 'simple' } });
+
+    expect(fuse.search).toHaveBeenCalledWith('simple', { limit: 8 });
+    expect(screen.getByRole('button', { name: /clear search/i })).toBeInTheDocument();
+    expect(screen.getByRole('listbox')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: /clear search/i }));
+
+    expect(input).toHaveValue('');
+    expect(screen.queryByRole('button', { name: /clear search/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+  });
 });

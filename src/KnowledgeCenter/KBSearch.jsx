@@ -43,6 +43,13 @@ function KBSearch({ fuse, onSelect }) {
     onSelect(doc);
   };
 
+  const clearSearch = () => {
+    setQuery("");
+    setResults([]);
+    setIsOpen(false);
+    setActiveIndex(-1);
+  };
+
   /**
    * Strip markdown syntax to produce plain text for snippets.
    */
@@ -227,6 +234,16 @@ function KBSearch({ fuse, onSelect }) {
           activeIndex >= 0 ? `kb-search-result-${activeIndex}` : undefined
         }
       />
+      {query.trim().length > 0 && (
+        <button
+          type="button"
+          className="kb-search__clear-btn"
+          aria-label="Clear search"
+          onClick={clearSearch}
+        >
+          ×
+        </button>
+      )}
       {isOpen && (
         <ul
           id="kb-search-results"
