@@ -16,8 +16,8 @@
  *   GITHUB_DOCS_PATH - Root path for docs in repo (default: "docs")
  */
 
-import { writeFileSync, mkdirSync } from "fs";
-import { dirname, join } from "path";
+import { writeFileSync, mkdirSync, existsSync, lstatSync } from "fs";
+import { basename, dirname, relative, resolve } from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -52,7 +52,10 @@ const HEADERS = {
 // Folders to exclude from processing
 const EXCLUDED_DIRS = new Set(["assets"]);
 
-const OUTPUT_PATH = join(__dirname, "..", "src", "data", "knowledge-base.json");
+const PROJECT_ROOT = resolve(__dirname, "..");
+const OUTPUT_DIR = resolve(PROJECT_ROOT, "src", "data");
+const OUTPUT_FILENAME = "knowledge-base.json";
+const OUTPUT_PATH = resolve(OUTPUT_DIR, OUTPUT_FILENAME);
 
 // Max retries for transient GitHub API failures
 const MAX_RETRIES = 3;
@@ -60,6 +63,27 @@ const RETRY_DELAY_MS = 1000;
 
 // Concurrency limit for parallel blob fetches
 const CONCURRENCY = 10;
+
+function assertSafeOutputPath(outputPath) {
+  const resolved = resolve(outputPath);
+
+  // Ensure writes are constrained to the intended fixed location.
+  if (basename(resolved) !== OUTPUT_FILENAME) {
+    throw new Error(`Unsafe output filename: ${resolved}`);
+  }
+
+  const rel = relative(OUTPUT_DIR, resolved);
+  if (rel.startsWith("..") || rel.startsWith("/") || rel === "") {
+    throw new Error(`Unsafe output path outside allowed directory: ${resolved}`);
+  }
+
+  // Prevent writing through symbolic links.
+  if (existsSync(resolved) && lstatSync(resolved).isSymbolicLink()) {
+    throw new Error(`Refusing to write to symlinked output path: ${resolved}`);
+  }
+
+  return resolved;
+}
 
 // ---------------------------------------------------------------------------
 // GitHub API helpers
@@ -98,7 +122,7 @@ async function apiFetch(url, retries = MAX_RETRIES) {
 }
 
 function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise((done) => setTimeout(done, ms));
 }
 
 /**
@@ -620,10 +644,10 @@ function transformInternalLinks(content, relativePath, routeByPath = null) {
 }
 
 /** Resolve a relative file path against a base directory. */
-function resolveRelativePath(base, relative) {
+function resolveRelativePath(base, relativePath) {
   // Start from the base directory segments
   const parts = base ? base.split("/") : [];
-  for (const seg of relative.split("/")) {
+  for (const seg of relativePath.split("/")) {
     if (seg === ".." && parts.length > 0) parts.pop();
     else if (seg !== "." && seg !== "") parts.push(seg);
   }
@@ -969,12 +993,16 @@ async function main() {
 
   const output = buildOutput(allItems, manifest, navStructure);
 
-  // Ensure output directory exists and write
-  mkdirSync(dirname(OUTPUT_PATH), { recursive: true });
-  writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2), "utf-8");
+  // Ensure output directory exists and write to a validated fixed path
+  const safeOutputPath = assertSafeOutputPath(OUTPUT_PATH);
+  mkdirSync(dirname(safeOutputPath), { recursive: true });
+  writeFileSync(safeOutputPath, JSON.stringify(output, null, 2), {
+    encoding: "utf-8",
+    mode: 0o600,
+  });
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
-  console.log(`Knowledge base written to ${OUTPUT_PATH}`);
+  console.log(`Knowledge base written to ${safeOutputPath}`);
   console.log(
     `  ${output.categories.length} categories, ${output.documents.length} documents (${elapsed}s)`
   );
