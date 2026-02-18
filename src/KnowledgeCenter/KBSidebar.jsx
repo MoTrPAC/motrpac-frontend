@@ -13,23 +13,32 @@ function KBSidebar({
   onClose,
 }) {
   // Track which categories and subcategories are expanded
-  const [expanded, setExpanded] = useState({});
+  const [expandedKeys, setExpandedKeys] = useState(() => new Set());
 
   // Auto-expand active category/subcategory on route change
   useEffect(() => {
     if (activeCategory) {
-      setExpanded((prev) => ({
-        ...prev,
-        [activeCategory]: true,
-        ...(activeSubcategory
-          ? { [`${activeCategory}/${activeSubcategory}`]: true }
-          : {}),
-      }));
+      setExpandedKeys((prev) => {
+        const next = new Set(prev);
+        next.add(activeCategory);
+        if (activeSubcategory) {
+          next.add(`${activeCategory}/${activeSubcategory}`);
+        }
+        return next;
+      });
     }
   }, [activeCategory, activeSubcategory]);
 
   const toggleExpand = (key) => {
-    setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
+    setExpandedKeys((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) {
+        next.delete(key);
+      } else {
+        next.add(key);
+      }
+      return next;
+    });
   };
 
   const getDocsForCategory = (catSlug, subSlug = null) =>
@@ -62,7 +71,7 @@ function KBSidebar({
         <nav>
           <ul className="kb-sidebar__list">
             {categories.map((cat) => {
-              const isExpanded = expanded[cat.slug];
+              const isExpanded = expandedKeys.has(cat.slug);
               const catDocs = getDocsForCategory(cat.slug);
               const isActiveCat = activeCategory === cat.slug;
 
@@ -118,7 +127,7 @@ function KBSidebar({
                       {/* Subcategories */}
                       {cat.subcategories.map((sub) => {
                         const subKey = `${cat.slug}/${sub.slug}`;
-                        const isSubExpanded = expanded[subKey];
+                        const isSubExpanded = expandedKeys.has(subKey);
                         const subDocs = getDocsForCategory(
                           cat.slug,
                           sub.slug
