@@ -576,6 +576,11 @@ function stripHtmlTags(content) {
         /<\/?[a-zA-Z][a-zA-Z0-9]*\b[^>]*>/g,
         (tag) => (/^<span\s+id=["'][^"']*["']\s*>$/i.test(tag) || tag === "</span>" ? tag : "")
       );
+
+      // As a final safety measure, strip any remaining angle brackets so no stray
+      // HTML-like tags (e.g., "<script") can survive outside of code blocks.
+      cleaned = cleaned.replace(/[<>]/g, "");
+
       return cleaned;
     })
     .join("");
@@ -647,6 +652,20 @@ function fixBrandNames(text) {
 }
 
 /**
+ * Remove all HTML comments, guarding against incomplete multi-character
+ * sanitization by applying the replacement until no more matches exist.
+ */
+function removeHtmlComments(input) {
+  let previous;
+  let current = input;
+  do {
+    previous = current;
+    current = current.replace(/<!--[\s\S]*?-->/g, "");
+  } while (current !== previous);
+  return current;
+}
+
+/**
  * Fix brand casing in plain text while preserving original casing in
  * markdown links, URLs, and email addresses.
  */
@@ -680,7 +699,7 @@ function fixBrandNamesInPlainTextOnly(text) {
 
 /** Clean up markdown: strip comments, HTML tags, fix whitespace, fix brands. */
 function normalizeContent(content, relativePath, routeByPath = null) {
-  let result = content.replace(/<!--[\s\S]*?-->/g, "");
+  let result = removeHtmlComments(content);
   result = stripHtmlTags(result);
   result = transformInternalLinks(result, relativePath, routeByPath);
   result = fixBrandNamesInPlainTextOnly(result);
