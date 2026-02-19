@@ -30,7 +30,8 @@ function KBSearch({ fuse, onSelect }) {
       return;
     }
 
-    const searchResults = fuse.search(value, { limit: 8 });
+    if (!fuse) return;
+    const searchResults = fuse.search(value.trim(), { limit: 8 });
     setResults(searchResults);
     setIsOpen(searchResults.length > 0);
   };
