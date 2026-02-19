@@ -92,7 +92,7 @@ function KBSidebar({
                     <button
                       className="kb-sidebar__toggle"
                       onClick={() => toggleExpand(cat.slug)}
-                      aria-expanded={isExpanded}
+                      aria-expanded={!!isExpanded}
                       aria-label={`Toggle ${cat.label}`}
                     >
                       <span
@@ -157,7 +157,7 @@ function KBSidebar({
                                 <button
                                   className="kb-sidebar__toggle"
                                   onClick={() => toggleExpand(subKey)}
-                                  aria-expanded={isSubExpanded}
+                                  aria-expanded={!!isSubExpanded}
                                   aria-label={`Toggle ${sub.label}`}
                                 >
                                   <span
