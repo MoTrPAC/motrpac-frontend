@@ -36,11 +36,14 @@ function KnowledgeCenter() {
   const subcategoryOrDoc = pathSegments[1] || null;
   const doc = pathSegments[2] || null;
 
+  const safeKnowledgeBase =
+    knowledgeBase && typeof knowledgeBase === 'object' ? knowledgeBase : {};
+
   const {
     categories = [],
     documents = [],
     rootIndexContent = null,
-  } = knowledgeBase;
+  } = safeKnowledgeBase;
 
   // Build fuse search index
   const fuse = useMemo(
@@ -73,7 +76,9 @@ function KnowledgeCenter() {
     }
 
     // Check if subcategoryOrDoc is a subcategory or a document
-    const sub = cat.subcategories.find((s) => s.slug === subcategoryOrDoc);
+    const sub = (cat.subcategories || []).find(
+      (s) => s.slug === subcategoryOrDoc
+    );
 
     if (sub && !doc) {
       // It's a subcategory landing — if no index content, redirect to first child doc
