@@ -1,12 +1,12 @@
-import React, { useState, useMemo } from "react";
-import { useParams, useNavigate, Navigate } from "react-router-dom";
-import Fuse from "fuse.js";
+import React, { useState, useMemo } from 'react';
+import { useParams, useNavigate, Navigate } from 'react-router-dom';
+import Fuse from 'fuse.js';
 import { Helmet } from 'react-helmet';
-import knowledgeBase from "../data/knowledge-base.json";
-import KBSidebar from "./KBSidebar";
-import KBDocument from "./KBDocument";
-import KBTableOfContents from "./KBTableOfContents";
-import KBSearch from "./KBSearch";
+import knowledgeBase from '../data/knowledge-base.json';
+import KBSidebar from './KBSidebar';
+import KBDocument from './KBDocument';
+import KBTableOfContents from './KBTableOfContents';
+import KBSearch from './KBSearch';
 
 import '@styles/knowledgeCenter.scss';
 

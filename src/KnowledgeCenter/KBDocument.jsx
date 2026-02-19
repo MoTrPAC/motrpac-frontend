@@ -1,17 +1,17 @@
-import React from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeSlug from 'rehype-slug';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
 const AUTOLINK_OPTIONS = {
-  behavior: "append",
-  properties: { className: ["kb-heading-anchor"], ariaHidden: true, tabIndex: -1 },
+  behavior: 'append',
+  properties: { className: ['kb-heading-anchor'], ariaHidden: true, tabIndex: -1 },
   content: {
-    type: "element",
-    tagName: "span",
-    properties: { className: ["kb-heading-anchor__icon"] },
-    children: [{ type: "text", value: "#" }],
+    type: 'element',
+    tagName: 'span',
+    properties: { className: ['kb-heading-anchor__icon'] },
+    children: [{ type: 'text', value: '#' }],
   },
 };
 

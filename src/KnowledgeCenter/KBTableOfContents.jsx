@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import tocbot from "tocbot";
+import React, { useEffect } from 'react';
+import tocbot from 'tocbot';
 
 /**
  * Right-side table of contents that auto-generates from document headings.

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-const BASE_PATH = "/knowledge-center";
+const BASE_PATH = '/knowledge-center';
 
 function KBSidebar({
   categories,
