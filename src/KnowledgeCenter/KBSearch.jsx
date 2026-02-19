@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 function KBSearch({ fuse, onSelect }) {
   const [query, setQuery] = useState("");
@@ -41,7 +42,7 @@ function KBSearch({ fuse, onSelect }) {
     setResults([]);
     setIsOpen(false);
     inputRef.current?.blur();
-    onSelect(doc);
+    onSelect?.(doc);
   };
 
   const clearSearch = () => {
@@ -279,5 +280,10 @@ function KBSearch({ fuse, onSelect }) {
     </div>
   );
 }
+
+KBSearch.propTypes = {
+  fuse: PropTypes.shape({ search: PropTypes.func.isRequired }),
+  onSelect: PropTypes.func.isRequired,
+};
 
 export default KBSearch;
