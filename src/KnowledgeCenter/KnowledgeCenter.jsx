@@ -83,6 +83,13 @@ function KnowledgeCenter() {
             redirectTo: `/knowledge-center/${category}/${subcategoryOrDoc}/${firstDoc.slug}`,
           };
         }
+
+        return {
+          type: "subcategory-empty",
+          title: sub.label,
+          category: cat,
+          subcategory: sub,
+        };
       }
       return {
         type: "subcategory-index",
@@ -169,6 +176,11 @@ function KnowledgeCenter() {
         <main className="knowledge-center__content">
           {activeContent.type === "subcategory-redirect" ? (
             <Navigate to={activeContent.redirectTo} replace />
+          ) : activeContent.type === "subcategory-empty" ? (
+            <div className="text-center py-5">
+              <h2>{activeContent.title}</h2>
+              <p>No documentation pages are currently available in this section.</p>
+            </div>
           ) : activeContent.type === "not-found" ? (
             <div className="text-center py-5">
               <h2>Page not found</h2>
