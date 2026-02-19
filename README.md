@@ -67,6 +67,24 @@
    - `yarn inspect-branch`
    - Compiles Scss, rebuilds node_modules if different, and starts react app
 
+#### Knowledge Center docs refresh (manual local run)
+
+`yarn build` does **not** run `scripts/fetch-docs.js`.
+
+To refresh Knowledge Center docs locally on demand, run: `node scripts/fetch-docs.js`.
+(`yarn fetch-docs` is an equivalent shortcut.)
+
+The script automatically loads root `.env` values when present.
+
+- If `GITHUB_PAT`, `GITHUB_REPO_OWNER`, and `GITHUB_REPO_NAME` are present, docs are fetched from GitHub and `src/data/knowledge-base.json` is regenerated.
+- If those variables are missing, fetch is skipped and the existing `knowledge-base.json` remains unchanged.
+- Set `DOCS_FETCH_STRICT=true` to fail the build on docs fetch errors.
+
+Optional docs source variables:
+
+- `GITHUB_DOCS_BRANCH` (default: `main`)
+- `GITHUB_DOCS_PATH` (default: `docs`)
+
 ### Software versions and styles
 
 #### Software:
