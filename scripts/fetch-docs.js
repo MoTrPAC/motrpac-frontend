@@ -618,19 +618,8 @@ function stripHtmlTags(content) {
         (_, href, text) => `[${text.trim()}](${href})`
       );
 
-      // Convert anchor targets <a id="xxx">text</a> / <a name="xxx">text</a>
-      // to inline anchor spans that markdown renderers can use as jump targets:
-      // <span id="xxx">text</span>
-      cleaned = cleaned.replace(
-        /<a\s+(?:[^>]*?\s)?(?:id|name)=["']([^"']*)["'][^>]*>([\s\S]*?)<\/a>/gi,
-        (_, id, text) => `<span id="${id}">${text.trim()}</span>`
-      );
-
-      // Remove all remaining HTML tags except <span id="..."> anchors
-      cleaned = cleaned.replace(
-        /<\/?[a-zA-Z][a-zA-Z0-9]*\b[^>]*>/g,
-        (tag) => (/^<span\s+id=["'][^"']*["']\s*>$/i.test(tag) || tag === "</span>" ? tag : "")
-      );
+      // Remove all remaining HTML tags.
+      cleaned = cleaned.replace(/<\/?[a-zA-Z][a-zA-Z0-9]*\b[^>]*>/g, "");
 
       // As a final safety measure, strip any remaining angle brackets so no stray
       // HTML-like tags (e.g., "<script") can survive outside of code blocks.
