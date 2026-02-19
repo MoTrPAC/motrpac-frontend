@@ -28,6 +28,10 @@ vi.mock('../../LinkoutPage/linkoutPage', () => ({
   default: () => <div>Useful Links</div>,
 }));
 
+vi.mock('../../KnowledgeCenter/KnowledgeCenter', () => ({
+  default: () => <h1>Knowledge Center</h1>,
+}));
+
 vi.mock('../../KnowledgeCenter/KBTableOfContents', () => ({
   default: () => <div data-testid="mock-kb-toc" />,
 }));
