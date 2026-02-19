@@ -149,6 +149,7 @@ function KnowledgeCenter() {
       ? `/knowledge-center/${document.category}/${document.subcategory}/${document.slug}`
       : `/knowledge-center/${document.category}/${document.slug}`;
     navigate(path);
+    setSidebarOpen(false);
   };
 
   return (
