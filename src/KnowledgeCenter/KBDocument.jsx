@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeSlug from 'rehype-slug';
@@ -15,7 +16,7 @@ const AUTOLINK_OPTIONS = {
   },
 };
 
-function KBDocument({ title, content }) {
+function KBDocument({ title = '', content = '' }) {
   if (!content) {
     return (
       <div className="kb-document">
@@ -33,5 +34,10 @@ function KBDocument({ title, content }) {
     </article>
   );
 }
+
+KBDocument.propTypes = {
+  title: PropTypes.string.isRequired,
+  content: PropTypes.string,
+};
 
 export default KBDocument;
