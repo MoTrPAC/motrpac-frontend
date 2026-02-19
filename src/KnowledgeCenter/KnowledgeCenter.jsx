@@ -165,6 +165,7 @@ function KnowledgeCenter() {
             className="btn btn-secondary d-lg-none"
             onClick={() => setSidebarOpen(!sidebarOpen)}
             aria-label="Toggle navigation"
+            aria-expanded={sidebarOpen}
           >
             <span className="navbar-toggler-icon" />
           </button>
