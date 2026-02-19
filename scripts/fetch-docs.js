@@ -720,12 +720,14 @@ function removeHtmlComments(input) {
 function fixBrandNamesInPlainTextOnly(text) {
   const protectedTokens = [];
   const patterns = [
-    /!?\[[^\]]*\]\([^)]*\)/g,                          // markdown links/images
-    /<https?:\/\/[^>]+>/gi,                                // autolink URLs
-    /<mailto:[^>]+>/gi,                                     // autolink mailto
-    /\bhttps?:\/\/[^\s)]+/gi,                              // bare URLs
-    /\bwww\.[^\s)]+/gi,                                    // bare www URLs
-    /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi,         // email addresses
+    /```[\s\S]*?```/g,                                  // fenced code blocks
+    /`[^`\n]+`/g,                                       // inline code
+    /!?\[[^\]]*\]\([^)]*\)/g,                           // markdown links/images
+    /<https?:\/\/[^>]+>/gi,                             // autolink URLs
+    /<mailto:[^>]+>/gi,                                 // autolink mailto
+    /\bhttps?:\/\/[^\s)]+/gi,                           // bare URLs
+    /\bwww\.[^\s)]+/gi,                                 // bare www URLs
+    /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi,      // email addresses
   ];
 
   let masked = text;
