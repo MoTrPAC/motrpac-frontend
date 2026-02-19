@@ -36,7 +36,11 @@ function KnowledgeCenter() {
   const subcategoryOrDoc = pathSegments[1] || null;
   const doc = pathSegments[2] || null;
 
-  const { categories, documents, rootIndexContent } = knowledgeBase;
+  const {
+    categories = [],
+    documents = [],
+    rootIndexContent = null,
+  } = knowledgeBase;
 
   // Build fuse search index
   const fuse = useMemo(
