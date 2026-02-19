@@ -23,9 +23,18 @@ const FUSE_OPTIONS = {
 };
 
 function KnowledgeCenter() {
-  const { category, subcategoryOrDoc, doc } = useParams();
+  const { "*": splat = "" } = useParams();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const pathSegments = useMemo(
+    () => splat.split("/").filter(Boolean),
+    [splat]
+  );
+
+  const category = pathSegments[0] || null;
+  const subcategoryOrDoc = pathSegments[1] || null;
+  const doc = pathSegments[2] || null;
 
   const { categories, documents, rootIndexContent } = knowledgeBase;
 

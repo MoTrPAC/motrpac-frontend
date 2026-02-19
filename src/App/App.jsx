@@ -205,10 +205,7 @@ function App({ history = History }) {
                 <Route path="/technical-guides/phenotype" element={<Phenotype/>}/>
                 <Route path="/citation" element={<Citation/>}/>
                 <Route path="/glossary" element={<Glossary/>}/>
-                <Route path="/knowledge-center" element={<KnowledgeCenter />} />
-                <Route path="/knowledge-center/:category" element={<KnowledgeCenter />} />
-                <Route path="/knowledge-center/:category/:subcategoryOrDoc" element={<KnowledgeCenter />} />
-                <Route path="/knowledge-center/:category/:subcategoryOrDoc/:doc" element={<KnowledgeCenter />} />
+                <Route path="/knowledge-center/*" element={<KnowledgeCenter />} />
               </Route>
             </Routes>
           </Suspense>
