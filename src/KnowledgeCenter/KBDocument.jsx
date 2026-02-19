@@ -16,7 +16,7 @@ const AUTOLINK_OPTIONS = {
   },
 };
 
-function KBDocument({ title = '', content = '' }) {
+function KBDocument({ title, content = '' }) {
   if (!content) {
     return (
       <div className="kb-document">
