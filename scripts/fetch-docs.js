@@ -19,6 +19,7 @@
 import { writeFileSync, mkdirSync, existsSync, lstatSync } from "fs";
 import { basename, dirname, relative, resolve } from "path";
 import { fileURLToPath } from "url";
+import { load } from "js-yaml";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -215,65 +216,43 @@ async function fetchMkdocsYaml() {
  *     - Child: child.md
  */
 function parseMkdocsNav(yaml) {
-  const lines = yaml.replace(/\r\n/g, "\n").split("\n");
-  const navStart = lines.findIndex((line) => line.trim() === "nav:");
-  if (navStart === -1) return [];
-
-  const navLines = [];
-  for (let i = navStart + 1; i < lines.length; i++) {
-    const line = lines[i];
-    if (!line.trim()) continue;
-
-    // Stop at next top-level key
-    if (/^[A-Za-z0-9_-]+:\s*$/.test(line) && !line.startsWith(" ")) break;
-    if (line.trimStart().startsWith("#")) continue;
-    if (!line.trimStart().startsWith("- ")) continue;
-
-    navLines.push(line);
-  }
-
-  let idx = 0;
-
-  function lineIndent(line) {
-    const match = line.match(/^(\s*)/);
-    return match ? match[1].length : 0;
-  }
-
-  function parseList(expectedIndent) {
-    const items = [];
-
-    while (idx < navLines.length) {
-      const line = navLines[idx];
-      const indent = lineIndent(line);
-      if (indent < expectedIndent) break;
-      if (indent > expectedIndent) {
-        idx += 1;
-        continue;
+  function toNavItems(navArray) {
+    return navArray.flatMap((entry) => {
+      if (!entry || typeof entry !== "object" || Array.isArray(entry)) {
+        return [];
       }
 
-      const raw = line.trim().replace(/^-\s+/, "");
-      const colonPos = raw.indexOf(":");
-      if (colonPos === -1) {
-        idx += 1;
-        continue;
-      }
+      return Object.entries(entry).map(([label, value]) => {
+        if (typeof value === "string") {
+          return { label, path: value };
+        }
 
-      const label = raw.slice(0, colonPos).trim();
-      const value = raw.slice(colonPos + 1).trim();
-      idx += 1;
+        if (Array.isArray(value)) {
+          return { label, children: toNavItems(value) };
+        }
 
-      if (value) {
-        items.push({ label, path: value });
-      } else {
-        const children = parseList(expectedIndent + 4);
-        items.push({ label, children });
-      }
-    }
+        // Be permissive in case nested nav blocks are provided as maps.
+        if (value && typeof value === "object") {
+          const nestedEntries = Object.entries(value).map(
+            ([nestedLabel, nestedValue]) => ({ [nestedLabel]: nestedValue })
+          );
+          return { label, children: toNavItems(nestedEntries) };
+        }
 
-    return items;
+        return { label, children: [] };
+      });
+    });
   }
 
-  return parseList(2);
+  try {
+    const parsed = load(yaml);
+    const nav = parsed?.nav;
+    if (!Array.isArray(nav)) return [];
+    return toNavItems(nav);
+  } catch (error) {
+    console.warn("Failed to parse mkdocs nav; using fallback structure.", error.message);
+    return [];
+  }
 }
 
 function slugifyLabel(label) {

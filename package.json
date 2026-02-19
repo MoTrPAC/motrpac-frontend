@@ -22,6 +22,7 @@
     "http-proxy-middleware": "^2.0.1",
     "jose": "^6.0.10",
     "jquery": "^3.5.1",
+    "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
     "popper.js": "^1.16.1",
     "prop-types": "15.8.1",
