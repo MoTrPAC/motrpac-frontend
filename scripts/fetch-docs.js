@@ -268,6 +268,11 @@ function parseMkdocsNav(yaml) {
     return [];
   }
 
+  // MkDocs files may include Python-specific YAML tags (for plugin settings)
+  // that js-yaml cannot resolve by default. We only need `nav`, so strip known
+  // unsupported tag tokens to keep parsing resilient and preserve nav ordering.
+  const sanitizedYaml = yaml.replace(/!!python\/name:[^\s]+/g, "");
+
   function toNavItems(navArray) {
     return navArray.flatMap((entry) => {
       if (!entry || typeof entry !== "object" || Array.isArray(entry)) {
@@ -297,7 +302,7 @@ function parseMkdocsNav(yaml) {
   }
 
   try {
-    const parsed = loadYaml(yaml);
+    const parsed = loadYaml(sanitizedYaml);
     const nav = parsed?.nav;
     if (!Array.isArray(nav)) return [];
     return toNavItems(nav);
