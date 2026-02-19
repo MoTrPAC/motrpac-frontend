@@ -6,7 +6,7 @@
  *
  * Usage: node scripts/fetch-docs.js
  *
- * Required .env variables:
+ * Required variables (only when fetching docs from GitHub):
  *   GITHUB_PAT - Fine-grained personal access token with contents:read scope
  *   GITHUB_REPO_OWNER - Repository owner (e.g., "MoTrPAC")
  *   GITHUB_REPO_NAME - Repository name
@@ -14,18 +14,49 @@
  * Optional .env variables:
  *   GITHUB_DOCS_BRANCH - Branch to fetch from (default: "main")
  *   GITHUB_DOCS_PATH - Root path for docs in repo (default: "docs")
+ *   DOCS_FETCH_STRICT - "true" to fail build on fetch errors (default: "false")
  */
 
-import { writeFileSync, mkdirSync, existsSync, lstatSync } from "fs";
+import { writeFileSync, mkdirSync, existsSync, lstatSync, readFileSync } from "fs";
 import { basename, dirname, relative, resolve } from "path";
 import { fileURLToPath } from "url";
-import { load } from "js-yaml";
+import { createRequire } from "module";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
 
 // ---------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------
+
+function loadEnvFileIfPresent() {
+  const envPath = resolve(__dirname, "..", ".env");
+  if (!existsSync(envPath)) return;
+
+  const content = readFileSync(envPath, "utf-8");
+  for (const rawLine of content.split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith("#")) continue;
+
+    const match = line.match(/^(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/);
+    if (!match) continue;
+
+    const [, key, valueRaw] = match;
+    if (Object.prototype.hasOwnProperty.call(process.env, key)) continue;
+
+    let value = valueRaw.trim();
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+
+    process.env[key] = value;
+  }
+}
+
+loadEnvFileIfPresent();
 
 const {
   GITHUB_PAT,
@@ -33,13 +64,16 @@ const {
   GITHUB_REPO_NAME,
   GITHUB_DOCS_BRANCH = "main",
   GITHUB_DOCS_PATH = "docs",
+  DOCS_FETCH_STRICT = "false",
 } = process.env;
 
+const isStrictDocsFetch = /^true$/i.test(String(DOCS_FETCH_STRICT).trim());
+
 if (!GITHUB_PAT || !GITHUB_REPO_OWNER || !GITHUB_REPO_NAME) {
-  console.error(
-    "Missing required env vars: GITHUB_PAT, GITHUB_REPO_OWNER, GITHUB_REPO_NAME"
+  console.warn(
+    "Skipping docs fetch: missing one or more required env vars (GITHUB_PAT, GITHUB_REPO_OWNER, GITHUB_REPO_NAME)."
   );
-  process.exit(1);
+  process.exit(0);
 }
 
 const API_BASE = "https://api.github.com";
@@ -216,6 +250,17 @@ async function fetchMkdocsYaml() {
  *     - Child: child.md
  */
 function parseMkdocsNav(yaml) {
+  let loadYaml;
+  try {
+    ({ load: loadYaml } = require("js-yaml"));
+  } catch (error) {
+    console.warn(
+      "js-yaml is unavailable; skipping mkdocs nav parsing and using fallback structure.",
+      error.message
+    );
+    return [];
+  }
+
   function toNavItems(navArray) {
     return navArray.flatMap((entry) => {
       if (!entry || typeof entry !== "object" || Array.isArray(entry)) {
@@ -245,7 +290,7 @@ function parseMkdocsNav(yaml) {
   }
 
   try {
-    const parsed = load(yaml);
+    const parsed = loadYaml(yaml);
     const nav = parsed?.nav;
     if (!Array.isArray(nav)) return [];
     return toNavItems(nav);
@@ -989,5 +1034,12 @@ async function main() {
 
 main().catch((err) => {
   console.error("Failed to fetch docs:", err);
-  process.exit(1);
+  if (isStrictDocsFetch) {
+    process.exit(1);
+  }
+
+  console.warn(
+    "Continuing build because DOCS_FETCH_STRICT is not enabled. Knowledge Center content may be stale."
+  );
+  process.exit(0);
 });
