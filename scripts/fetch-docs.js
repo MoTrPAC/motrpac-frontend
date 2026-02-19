@@ -623,9 +623,6 @@ function stripHtmlTags(content) {
         (_, href, text) => `[${text.trim()}](${href})`
       );
 
-      // Remove all remaining HTML tags.
-      cleaned = cleaned.replace(/<\/?[a-zA-Z][a-zA-Z0-9]*\b[^>]*>/g, "");
-
       // As a final safety measure, strip any remaining angle brackets so no stray
       // HTML-like tags (e.g., "<script") can survive outside of code blocks.
       cleaned = cleaned.replace(/[<>]/g, "");
