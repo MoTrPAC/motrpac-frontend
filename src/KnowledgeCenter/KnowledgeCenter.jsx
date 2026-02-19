@@ -116,6 +116,18 @@ function KnowledgeCenter() {
     return { type: "document", ...document };
   }, [category, subcategoryOrDoc, doc, categories, documents, rootIndexContent]);
 
+  const activeSubcategory = useMemo(() => {
+    if (activeContent.type === "subcategory-index") {
+      return activeContent.subcategory?.slug || null;
+    }
+
+    if (activeContent.type === "document") {
+      return activeContent.subcategory || null;
+    }
+
+    return null;
+  }, [activeContent]);
+
   const handleSearchSelect = (document) => {
     const path = document.subcategory
       ? `/knowledge-center/${document.category}/${document.subcategory}/${document.slug}`
@@ -149,13 +161,7 @@ function KnowledgeCenter() {
           categories={categories}
           documents={documents}
           activeCategory={category}
-          activeSubcategory={
-            categories
-              .find((c) => c.slug === category)
-              ?.subcategories.find((s) => s.slug === subcategoryOrDoc)
-              ? subcategoryOrDoc
-              : null
-          }
+          activeSubcategory={activeSubcategory}
           activeDoc={doc || subcategoryOrDoc}
           isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
