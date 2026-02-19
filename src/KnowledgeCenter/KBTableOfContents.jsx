@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import tocbot from 'tocbot';
 
 /**
@@ -43,5 +44,10 @@ function KBTableOfContents({
     </nav>
   );
 }
+
+KBTableOfContents.propTypes = {
+  contentKey: PropTypes.string.isRequired,
+  contentSelector: PropTypes.string,
+};
 
 export default KBTableOfContents;
