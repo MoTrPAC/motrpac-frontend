@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const BASE_PATH = '/knowledge-center';
@@ -6,10 +7,10 @@ const BASE_PATH = '/knowledge-center';
 function KBSidebar({
   categories,
   documents,
-  activeCategory,
-  activeSubcategory,
-  activeDoc,
-  isOpen,
+  activeCategory = '',
+  activeSubcategory = '',
+  activeDoc = '',
+  isOpen = false,
   onClose,
 }) {
   // Track which categories and subcategories are expanded
@@ -65,7 +66,14 @@ function KBSidebar({
     <>
       {/* Mobile overlay */}
       {isOpen && (
-        <div className="kb-sidebar__overlay" onClick={onClose} />
+        <div
+          className="kb-sidebar__overlay"
+          onClick={onClose}
+          onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClose()}
+          role="button"
+          tabIndex={0}
+          aria-label="Close navigation"
+        />
       )}
       <aside className={`kb-sidebar ${isOpen ? "kb-sidebar--open" : ""}`}>
         <nav>
@@ -210,5 +218,33 @@ function KBSidebar({
     </>
   );
 }
+
+KBSidebar.propTypes = {
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      slug: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      subcategories: PropTypes.arrayOf(
+        PropTypes.shape({
+          slug: PropTypes.string.isRequired,
+          label: PropTypes.string.isRequired,
+        })
+      ),
+    })
+  ).isRequired,
+  documents: PropTypes.arrayOf(
+    PropTypes.shape({
+      category: PropTypes.string.isRequired,
+      subcategory: PropTypes.string,
+      slug: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  activeCategory: PropTypes.string,
+  activeSubcategory: PropTypes.string,
+  activeDoc: PropTypes.string,
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 
 export default KBSidebar;
