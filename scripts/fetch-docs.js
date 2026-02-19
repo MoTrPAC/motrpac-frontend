@@ -133,6 +133,13 @@ async function apiFetch(url, retries = MAX_RETRIES) {
   // Handle rate limiting with retry-after
   if (res.status === 403 || res.status === 429) {
     const retryAfter = res.headers.get("retry-after");
+
+    // No Retry-After on a 403 → likely a permissions error, not rate limiting
+    if (res.status === 403 && !retryAfter) {
+      const body = await res.text();
+      throw new Error(`GitHub API 403 (permission denied): ${body}`);
+    }
+
     const waitMs = retryAfter ? parseInt(retryAfter, 10) * 1000 : RETRY_DELAY_MS * 2;
     if (retries > 0) {
       console.warn(`Rate limited. Retrying in ${waitMs}ms... (${retries} retries left)`);
