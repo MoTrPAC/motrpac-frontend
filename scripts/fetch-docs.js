@@ -610,8 +610,10 @@ function extractFrontmatter(content) {
  * inner text. Self-closing tags (e.g., <br/>, <hr/>) are removed entirely.
  */
 function stripHtmlTags(content) {
-  // Split on fenced code blocks to avoid stripping inside them
-  const parts = content.split(/(```[\s\S]*?```|`[^`\n]+`)/g);
+  // Split on fenced, inline, and indented code blocks to avoid stripping inside them
+  const parts = content.split(
+    /(```[\s\S]*?```|`[^`\n]+`|(?:^(?: {4}|\t).*(?:\r?\n|$))+)/gm
+  );
   return parts
     .map((part, i) => {
       // Odd indices are code blocks — leave untouched
