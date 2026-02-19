@@ -52,8 +52,8 @@
   },
   "scripts": {
     "start": "vite",
-    "fetch-docs": "node --env-file=.env scripts/fetch-docs.js",
-    "build": "npm run fetch-docs && vite build",
+    "fetch-docs": "node scripts/fetch-docs.js",
+    "build": "vite build",
     "serve": "vite preview",
     "test": "vitest",
     "storybook": "storybook dev -p 9009",
