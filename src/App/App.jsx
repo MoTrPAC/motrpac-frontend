@@ -74,6 +74,7 @@ const BiospecimenSummary = lazy(
 const Citation = lazy(() => import('../Citation/citationPage'));
 const Glossary = lazy(() => import('../Glossary/glossaryPage'));
 const AskAssistant = lazy(() => import('../Assistant/assistant'));
+const MCPServer = lazy(() => import('../MCPServer/mcpServer'));
 
 function App({ history = History }) {
   return (
@@ -212,6 +213,7 @@ function App({ history = History }) {
                 <Route path="/citation" element={<Citation/>}/>
                 <Route path="/glossary" element={<Glossary/>}/>
                 <Route path="/ask-assistant" element={<AskAssistant/>}/>
+                <Route path="/mcp-server" element={<MCPServer/>}/>
               </Route>
             </Routes>
           </Suspense>
