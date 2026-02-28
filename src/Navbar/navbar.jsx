@@ -383,6 +383,9 @@ export function Navbar({
                   <Link to="/ask-assistant" className="dropdown-item">
                     Ask Assistant
                   </Link>
+                  <Link to="mcp-server" className="dropdown-item">
+                    MCP Server
+                  </Link>
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
