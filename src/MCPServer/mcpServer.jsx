@@ -89,7 +89,7 @@ export function MCPServer({ profile = {} }) {
             as it provides access to your account and the associated data. 
           </p>
           {profile && profile.user_metadata && (
-            <div className="mcp-server-token-container row mb-4">
+            <div className="mcp-server-token-container col-12 row mt-3 mb-4">
               <button className="btn btn-primary btn mx-auto" onClick={handleGenerate}>
                 Generate MCP Access Token
               </button>
