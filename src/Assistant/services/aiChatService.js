@@ -39,13 +39,14 @@ export const askAI = async ({
   // Limit history to last 10 messages to avoid payload bloat
   const recentHistory = history.slice(-10).map((m) => ({
     role: m.role === 'user' ? 'user' : 'model',
-    parts: [{ text: m.content }],
+    content: m.content,
   }));
 
   try {
     await axios.post(
       `${apiUrl}${apiEndpoint}?key=${apiKey}`,
       {
+        action: 'ask',  // Explicit action (backend defaults to 'ask' if omitted)
         prompt,
         history: recentHistory,
       },
@@ -89,13 +90,45 @@ export const askAI = async ({
 };
 
 /**
- * Helper to format conversation history for API
- * @param {Array} messages - Array of message objects
- * @returns {Array} Formatted history for API
+ * Save conversation to backend for persistence and analytics
+ * @param {string} conversationId - UUID for this conversation
+ * @param {Array} messages - All messages in conversation
+ * @param {string} accessToken - Auth0 JWT
+ * @param {number} offset - Index of first new message to save (for incremental saves)
+ * @returns {Promise<boolean>}
  */
-export const formatHistory = (messages) => {
-  return messages.map((m) => ({
-    role: m.role === 'user' ? 'user' : 'model',
-    parts: [{ text: m.content }],
-  }));
+export const saveConversation = async (conversationId, messages, accessToken, offset = 0) => {
+  if (!conversationId || !messages || messages.length === 0) {
+    return false;
+  }
+
+  // Get the appropriate API URL
+  const apiUrl = import.meta.env.VITE_API_SERVICE_ADDRESS;
+  const apiEndpoint = import.meta.env.VITE_API_RAG_SERVICE_ENDPOINT;
+  const apiKey = import.meta.env.VITE_API_SERVICE_KEY;
+
+  try {
+    await axios.post(
+      `${apiUrl}${apiEndpoint}?key=${apiKey}`,
+      {
+        action: 'save_conversation',  // Action-based routing
+        conversationId,
+        messages,
+        offset,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+        timeout: 10000, // 10 second timeout
+      },
+    );
+
+    return true;
+  } catch (err) {
+    // Non-blocking - log error but don't throw
+    console.error('Failed to save conversation:', err.message);
+    return false;
+  }
 };
