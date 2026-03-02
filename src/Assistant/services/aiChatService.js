@@ -42,6 +42,8 @@ export const askAI = async ({
     content: m.content,
   }));
 
+  let processed = 0;
+
   try {
     await axios.post(
       `${apiUrl}${apiEndpoint}?key=${apiKey}`,
@@ -57,9 +59,11 @@ export const askAI = async ({
           // Access response text from XHR target
           const xhr = progressEvent.target || progressEvent.currentTarget;
           if (!xhr) return;
-          
+
           const responseText = xhr.responseText || '';
-          const lines = responseText.split('\n');
+          const newText = responseText.slice(processed);
+          processed = responseText.length;
+          const lines = newText.split('\n');
 
           for (const line of lines) {
             if (line.startsWith('data: ')) {
