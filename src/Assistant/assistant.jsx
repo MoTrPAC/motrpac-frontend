@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { v4 as uuidv4 } from 'uuid';
 import MessageList from './MessageList.jsx';
 import InputField from './InputField.jsx';
 import ReferencePanel from './ReferencePanel.jsx';
-import { askAI } from './services/aiChatService';
+import { askAI, saveConversation } from './services/aiChatService';
 
 import '@styles/aiAssistant.scss';
 
@@ -19,9 +20,20 @@ const AskAssistant = () => {
   const [error, setError] = useState(null);
   const [showReferencePanel, setShowReferencePanel] = useState(false);
   const messagesEndRef = useRef(null);
+  const lastSavedCountRef = useRef(0);
+
+  // Get or create conversation ID (persists across page refreshes)
+  const [conversationId, setConversationId] = useState(
+    () => sessionStorage.getItem('motrpac-conversation-id') || uuidv4()
+  );
 
   // Get Auth0 token from Redux
   const accessToken = useSelector((state) => state.auth.accessToken);
+
+  // Save conversation ID to sessionStorage
+  useEffect(() => {
+    sessionStorage.setItem('motrpac-conversation-id', conversationId);
+  }, [conversationId]);
 
   // Load chat history from sessionStorage on mount
   useEffect(() => {
@@ -35,12 +47,26 @@ const AskAssistant = () => {
     }
   }, []);
 
-  // Save chat history to sessionStorage on change
+  // Save chat history (sessionStorage + backend with debounce)
   useEffect(() => {
-    if (messages.length > 0) {
-      sessionStorage.setItem('motrpac-chat-history', JSON.stringify(messages));
-    }
-  }, [messages]);
+    if (messages.length === 0) return;
+
+    // Save to sessionStorage immediately (fast local backup)
+    sessionStorage.setItem('motrpac-chat-history', JSON.stringify(messages));
+
+    // Debounced save to backend (3 seconds after last message)
+    const timeoutId = setTimeout(async () => {
+      if (accessToken) {
+        const offset = lastSavedCountRef.current;
+        const ok = await saveConversation(conversationId, messages, accessToken, offset);
+        if (ok) {
+          lastSavedCountRef.current = messages.length;
+        }
+      }
+    }, 3000);
+
+    return () => clearTimeout(timeoutId);
+  }, [messages, conversationId, accessToken]);
 
   // Auto-scroll to bottom when messages update
   useEffect(() => {
@@ -51,7 +77,11 @@ const AskAssistant = () => {
   const clearChat = () => {
     setMessages([]);
     setError(null);
+    const newId = uuidv4();
+    setConversationId(newId);
+    sessionStorage.setItem('motrpac-conversation-id', newId);
     sessionStorage.removeItem('motrpac-chat-history');
+    lastSavedCountRef.current = 0;
   };
 
   const handleSubmit = async (question) => {
