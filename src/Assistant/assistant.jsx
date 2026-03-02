@@ -21,6 +21,7 @@ const AskAssistant = () => {
   const [showReferencePanel, setShowReferencePanel] = useState(false);
   const messagesEndRef = useRef(null);
   const lastSavedCountRef = useRef(0);
+  const saveInFlightRef = useRef(false);
 
   // Get or create conversation ID (persists across page refreshes)
   const [conversationId, setConversationId] = useState(
@@ -40,7 +41,9 @@ const AskAssistant = () => {
     const saved = sessionStorage.getItem('motrpac-chat-history');
     if (saved) {
       try {
-        setMessages(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        setMessages(parsed);
+        lastSavedCountRef.current = parsed.length;
       } catch {
         // Invalid saved data, ignore
       }
@@ -56,9 +59,11 @@ const AskAssistant = () => {
 
     // Debounced save to backend (3 seconds after last message)
     const timeoutId = setTimeout(async () => {
-      if (accessToken) {
+      if (accessToken && !saveInFlightRef.current) {
+        saveInFlightRef.current = true;
         const offset = lastSavedCountRef.current;
         const ok = await saveConversation(conversationId, messages, accessToken, offset);
+        saveInFlightRef.current = false;
         if (ok) {
           lastSavedCountRef.current = messages.length;
         }
@@ -82,6 +87,7 @@ const AskAssistant = () => {
     sessionStorage.setItem('motrpac-conversation-id', newId);
     sessionStorage.removeItem('motrpac-chat-history');
     lastSavedCountRef.current = 0;
+    saveInFlightRef.current = false;
   };
 
   const handleSubmit = async (question) => {
