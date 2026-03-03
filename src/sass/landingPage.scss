@@ -1,1709 +1,438 @@
 @use 'colors';
 @use 'fonts';
-@use 'bootstrapCustom';
 
-.marketing.row {
-  margin-left: 0;
-  margin-right: 0;
+// ============================================================================
+// Variables & Mixins
+// ============================================================================
+
+$img-base-url: 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/landing_page/';
+
+// Fluid typography: clamp(min, preferred, max)
+@mixin fluid-text($min, $preferred, $max) {
+  font-size: clamp(#{$min}, #{$preferred}, #{$max});
 }
 
-.content-container {
-  scroll-snap-type: y mandatory;
-  height: 100vh;
-  overflow-y: scroll;
+// ============================================================================
+// Base Layout
+// ============================================================================
 
-  /* Hide container scrollbar */
-  &::-webkit-scrollbar {
-    display: none;
-  }
+.landing-page {
+  width: 100%;
+  overflow-x: hidden;
 
   section {
     width: 100%;
-    height: 100vh;
-    min-height: 900px;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+    padding: clamp(3rem, 10vw, 6rem) 0;
+  }
+}
 
-    background-position-x: center;
-    background-position-y: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+// ============================================================================
+// Hero Section
+// ============================================================================
 
-    position: relative;
+.hero-section {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('#{$img-base-url}background_hero_image.jpg');
+  background-size: cover;
+  background-position: center;
+  padding-bottom: clamp(0.25rem, 1vw, 0.5rem);
 
-    h1 {
+  // Background video
+  video.fullscreen {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+
+    &::-webkit-media-controls {
+      display: none !important;
+    }
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  .background-video-preloader {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.hero-logo {
+  width: 100%;
+  max-width: clamp(23rem, 45vw, 45rem);
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  @include fluid-text(2rem, 5vw, 4.5rem);
+  color: colors.$accent-yellow;
+  line-height: 1.1 !important;
+  text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.5);
+  margin: 0;
+}
+
+.hero-title {
+  @include fluid-text(3rem, 8vw, 6rem);
+  color: colors.$accent-yellow;
+  line-height: 1.1 !important;
+  text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.5);
+  margin: 0 0 1rem;
+}
+
+.hero-description {
+  font-weight: 400 !important;
+  margin: 1.65rem auto;
+  max-width: 60rem;
+
+  .hero-link {
+    @include fluid-text(1.25rem, 2.5vw, 2.05rem);
+    color: #fff;
+    line-height: 1.4;
+    text-decoration: none;
+    text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.75);
+  }
+}
+
+.announcement-badge {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 3px solid #fff;
+  border-radius: 2.45rem;
+  padding: 0.75rem 1.85rem 0.9rem;
+  margin: 0.25rem auto 0.75rem;
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgba(90, 92, 106, 1) 0%,
+    rgba(32, 45, 58, 1) 81.3%
+  );
+  box-shadow: inset 0 5rem rgba(255, 255, 255, 0.22);
+
+  .badge-icon,
+  .badge-text {
+    color: #fff;
+    font-weight: 400;
+    text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.5);
+    @include fluid-text(1.25rem, 2.5vw, 2rem);
+  }
+
+  .btn-link {
+    color: #fff;
+    text-decoration: underline;
+    @include fluid-text(1.15rem, 2vw, 1.45rem);
+
+    &:hover {
       color: #fff;
-    }
-
-    .animated-down-arrow {
-      position: absolute;
-      bottom: 0.5rem;
-      text-align: center;
-      z-index: 5;
-
-      img {
-        width: 2.75rem;
-        height: 2.75rem;
-        margin: 0 auto !important;
-        opacity: 0.55;
-      }
-    }
-
-    &.first {
-      position: relative;
-      background-image: url(https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/landing_page/background_hero_image.jpg);
-
-      video.fullscreen {
-        position: absolute;
-        z-index: 0;
-        object-fit: cover;
-        width:100%;
-        height:100%;
-        top: 0;
-        left: 0;
-      
-        &::-webkit-media-controls {
-          display: none !important;
-        }
-      }
-
-      .background-video-preloader {
-        position: absolute;
-        z-index: 1;
-        object-fit: cover;
-        width:100%;
-        height:100%;
-        top: 0;
-        left: 0;
-      }
-
-      .section-content-container {
-        z-index: 5;
-
-        .logo-container {
-          margin-bottom: 1.5rem;
-          img {
-            width: 100%;
-            max-width: 35.0rem;
-          }
-        }
-
-        h2, h3 {
-          color: colors.$accent-yellow;
-          line-height: 1;
-          text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.5);
-        }
-
-        p.hero {
-          font-weight: 400;
-          margin-top: 1.75rem;
-
-          a {
-            color: #fff;
-            font-size: 2.05rem;
-            line-height: 1.5;
-            text-decoration: none;
-            text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.75);
-          }
-        }
-
-        .highlighted-links-container {
-          .btn {
-            box-shadow: 0 0 2.0em 0.1em rgba(0, 0, 0, 0.25);
-            max-width: 206px;
-            width: 100%;
-            font-weight: 500;
-            margin-left: 0.75em;
-            margin-right: 0.75em;
-          }
-        }
-
-        .office-hour-anchor-link-container {
-          margin-top: 3.0em;
-
-          .office-hour-anchor-link {
-            border: solid 2px #fff;
-            border-radius: 1.4rem;
-            color: #fff;
-            display: inline-block;
-            font-size: 1.35rem;
-            font-weight: 400;
-            opacity: 1.0;
-            box-shadow: inset 0 3.0rem rgba(255, 255, 255, 0.22);
-            padding: 0.3rem 1.55rem 0.35rem 1.55rem;
-            text-decoration: none;
-            text-shadow: 0 0.15em 0.15em rgba(0, 0, 0, 0.8);
-            transition: ease-in-out 0.25s;
-
-            &:hover {
-              text-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 1.0);
-            }
-          }
-        }
-
-        .compliance-review-notice {
-          color: #fff;
-          font-size: 1.15rem;
-          font-weight: 300;
-          text-shadow: 0 0.15em 0.15em rgba(0, 0, 0, 0.8);
-          margin-top: 2.25rem;
-          opacity: 0.85;
-        }
-      }
-    }
-    &.second {
-      background-image: url(https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/landing_page/background_wave.jpg);
-    }
-    &.third {
-      background-image: url(https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/landing_page/background_wave_gradient.jpg);
-
-      .section-content-container {
-        height: 75vh;
-        padding-top: 72px;
-        padding-bottom: 15px;
-
-        .vis-tooltip {
-          background-color: #000;
-          border: none;
-          border-radius: 0.5rem;
-          padding: 0.5rem 1.0rem;
-          text-align: left;
-          vertical-align: middle;
-
-          div span {
-            color: #fff;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 1.0rem;
-            margin-bottom: 0;
-            text-align: left;
-          }
-        }
-      }
-    }
-    &.fourth {
-      background-image: url(https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/landing_page/background_molecule_network_horizontal_wave.jpg);
-
-      .section-content-container {
-        padding-top: 15px;
-        padding-bottom: 15px;
-
-        img {
-          margin-left: 15em;
-          margin-right: 15em;
-
-          &.img-fluid {
-            max-width: 70%;
-            height: auto;
-          }
-        }
-      }
-    }
-    &.fifth {
-      background-image: url(https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/landing_page/background_molecule_network_vertical_wave.jpg);
-
-      .section-content-container {
-        padding-top: 15px;
-        padding-bottom: 15px;
-
-        .content-landscape-paper {
-          .feature-image {
-            background-color: #fff;
-            border-radius: 0.75rem;
-            box-shadow: 0 2em 3em rgba(0, 0, 0, 0.5);
-            cursor: pointer;
-            padding: 1.45rem 1.6rem;
-            text-align: center;
-            transition: all 0.25s ease-out;
-
-            &:hover {
-              padding: 1.25rem 1.4rem;
-            }
-      
-            img {
-              width: 100%;
-              height: 100%;
-            }
-          }
-
-          .feature-image-attribution {
-            color: #fff;
-            font-size: 0.9rem;
-            font-weight: 400;
-            opacity: 0.4;
-          }
-        }
-
-        .content {
-          text-align: left;
-
-          h1 {
-            font-size: 3.55rem;
-            line-height: 1.3;
-          }
-        }
-      }
-    }
-    &.sixth {
-      background-image: url(https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/landing_page/background_molecules_gradient.jpg);
-
-      #youtube-tutorial-video-container {
-        border: 1px solid #000;
-        border-radius: 0.5rem;
-        box-shadow: 0 2em 3em rgba(0, 0, 0, 0.5);
-      }
-
-      .embed-youtube-video-container {
-        border-radius: 0.5rem;
-      }
-    }
-    &.seventh {
-      background-color: #fff;
-
-      .section-content-container {
-        .content-code-repository {
-          min-height: 560px;
-
-          .feature-image {
-            text-align: center;
-      
-            img {
-              height: 40.0rem;
-              transition: height 0.5s ease;
-      
-              &:hover {
-                height: 42.0rem;
-              }
-            }
-          }
-        }
-
-        .content {
-          text-align: left;
-
-          h1 .material-icons {
-            color: #56bf46;
-            font-size: 3.5em !important;
-            margin-left: -10px;
-          }
-      
-          p {
-            color: colors.$stanford-black;
-            font-size: 2.0rem;
-          }
-        }
-      }
-    }
-    &.eighth {
-      background-color: #fff;
-
-      .section-content-container {
-        height: calc(100vh - 67.2px);
-        padding-top: 4.65em;
-
-        .panel-content-container {
-          padding: 1.25em 0;
-        }
-
-        .office-hour-signup {
-          border-radius: 0.45rem;
-          color: #fff;
-          margin-bottom: 6.0em;
-
-          background-color: hsla(197, 92%, 60%, 1);
-          background-image: radial-gradient(circle at 96% 96%, hsla(55.36363636363636, 93%, 54%, 0.85) 5%, transparent 86%), radial-gradient(circle at 5% 90%, hsla(229, 71%, 68%, 1) 13%, transparent 65%), radial-gradient(circle at 57% 73%, hsla(308, 93%, 51%, 1) 3%, transparent 89%), radial-gradient(circle at 20% 4%, hsla(318, 60%, 76%, 1) 22%, transparent 56%), radial-gradient(circle at 74% 15%, hsla(324, 92%, 59%, 1) 13%, transparent 57%);
-          background-blend-mode: normal, normal, normal, normal, normal;
-        }
-
-        .data-update-signup {
-          h1 {
-            color: colors.$stanford-black;
-          }
-        }
-      }
     }
   }
 }
 
-/* Homepage-specific styling */
-body.homepage {
-  // hide global footer
-  footer.footer {
-    display: none;
-  }
-  // but show homepage-specific footer
-  .homepage-footer-container {
-    footer.footer {
-      display: block;
-    }
-  }
-  // figure 1c heatmap styling
-  #heatmap-container {
-    min-width: 1450px !important;
-    min-height: 610px;
-  }
+.hero-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem 1.5rem;
+  margin: 2rem 0;
 
-  .heatmap-y-axis {
-    .tick {
-      text {
-        font-size: 1.35rem;
-        font-weight: 800;
-      }
-    }
-    .tick:last-child,
-    .tick:nth-child(7),
-    .tick:nth-child(8) {
-      text {
-        fill: #ff8839;
-        text-shadow: 0 0 0.15rem rgba(0, 0, 0, 1), 0 0 0.5rem rgba(0, 0, 0, 0.5);
-      }
-    }
-    .tick:nth-child(3),
-    .tick:nth-child(4),
-    .tick:nth-child(5),
-    .tick:nth-child(6) {
-      text {
-        fill: #dba0ff;
-        text-shadow: 0 0 0.15rem rgba(0, 0, 0, 1), 0 0 0.5rem rgba(0, 0, 0, 0.5);
-      }
-    }
-    .tick:nth-child(2) {
-      text {
-        fill: #f9e802;
-        text-shadow: 0 0 0.15rem rgba(0, 0, 0, 1), 0 0 0.5rem rgba(0, 0, 0, 0.5);
-      }
-    }
-    .tick:first-child {
-      text {
-        fill: #31fd94;
-        text-shadow: 0 0 0.15rem rgba(0, 0, 0, 1), 0 0 0.5rem rgba(0, 0, 0, 0.5);
-      }
-    }
+  .btn {
+    @include fluid-text(0.9rem, 1.5vw, 1.15rem);
+    font-weight: 500;
+    min-width: clamp(140px, 18vw, 206px);
+    box-shadow: 0 0 2em 0.1em rgba(0, 0, 0, 0.25);
   }
+}
 
-  .heatmap-tooltip {
-    background: #000;
-    border-radius: 4px;
-    color: #ffffff;
-    font-size: 0.7rem;
-    font-weight: 600;
-    padding: 9px 13px;
-    position: absolute;
+.office-hour-link {
+  display: inline-block;
+  border: 2px solid #fff;
+  border-radius: 1.4rem;
+  margin-top: 0.75rem;
+  padding: 0.3rem 1.55rem 0.35rem;
+  color: #fff;
+  @include fluid-text(1rem, 1.8vw, 1.35rem);
+  font-weight: 400;
+  text-decoration: none;
+  text-shadow: 0 0.15em 0.15em rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 3rem rgba(255, 255, 255, 0.22);
+  transition: text-shadow 0.25s ease;
+
+  &:hover {
+    text-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 1);
+    color: #fff;
+  }
+}
+
+.compliance-notice {
+  color: #fff;
+  @include fluid-text(0.9rem, 1.5vw, 1.15rem);
+  font-weight: 300;
+  text-shadow: 0 0.15em 0.15em rgba(0, 0, 0, 0.8);
+  margin-top: 2rem;
+  opacity: 0.85;
+}
+
+// ============================================================================
+// Publication Section (Nature Paper)
+// ============================================================================
+
+.publication-section {
+  background-image: url('#{$img-base-url}background_molecule_network_vertical_wave.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: clamp(3.45rem, 11.5vw, 6.9rem) 0;
+}
+
+.publication-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+.publication-content {
+  text-align: center;
+
+  @media (min-width: 768px) {
     text-align: left;
   }
 
-  .legend-title-diff-proportion,
-  .legend-title-ome-type {
-    tspan {
-      fill: #fff;
-      font-size: 1.0rem;
+  h2 {
+    @include fluid-text(2rem, 4.6vw, 4.1rem);
+    color: #fff;
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.publication-image {
+  text-align: center;
+
+  .image-link {
+    display: block;
+    background: #fff;
+    border-radius: 0.75rem;
+    padding: clamp(1rem, 2vw, 1.6rem);
+    box-shadow: 0 2em 3em rgba(0, 0, 0, 0.5);
+    transition: padding 0.25s ease-out;
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
   }
-  
-  .legend-y-axis {
-    font-size: 0.7rem;
 
-    .tick {
-      text {
-        fill: #fff;
-        font-size: 0.85rem;
-      }
-      text::before {
-        content: '%';
-      }
+  .image-attribution {
+    display: block;
+    margin-top: 0.5rem;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 400;
+    opacity: 0.4;
+  }
+}
+
+// ============================================================================
+// Code Repository Section
+// ============================================================================
+
+.code-section {
+  background-image: url('#{$img-base-url}background_wave.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: clamp(3.45rem, 11.5vw, 6.9rem) 0;
+}
+
+.code-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+  min-height: clamp(400px, 60vw, 560px);
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+.code-image {
+  text-align: center;
+  order: 2;
+
+  @media (min-width: 768px) {
+    order: 1;
+  }
+
+  img {
+    height: clamp(20.7rem, 52vw, 46rem);
+    width: auto;
+    max-width: 100%;
+    transition: height 0.5s ease;
+  }
+}
+
+.code-content {
+  text-align: center;
+  order: 1;
+
+  @media (min-width: 768px) {
+    text-align: left;
+    order: 2;
+  }
+
+  .terminal-icon {
+    color: #56bf46;
+    @include fluid-text(6rem, 12vw, 8.25rem);
+    margin-left: -10px;
+  }
+
+  p {
+    @include fluid-text(1.25rem, 2.5vw, 2rem);
+    color: colors.$stanford-black;
+    font-weight: 500;
+    line-height: 1.5;
+    margin: 1rem 0 1.5rem;
+  }
+}
+
+// ============================================================================
+// Community Section (Office Hour + Subscribe)
+// ============================================================================
+
+.community-section {
+  background-color: #fff;
+  padding-bottom: 0;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+    padding-top: 0;
+    text-align: center;
+  }
+
+  .office-hour-signup {
+    border-radius: 0.45rem;
+    color: #fff;
+    margin-bottom: 2rem;
+    padding: clamp(2rem, 5vw, 3.5rem);
+    background-color: hsla(197, 92%, 60%, 1);
+    background-image:
+      radial-gradient(circle at 96% 96%, hsla(55, 93%, 54%, 0.85) 5%, transparent 86%),
+      radial-gradient(circle at 5% 90%, hsla(229, 71%, 68%, 1) 13%, transparent 65%),
+      radial-gradient(circle at 57% 73%, hsla(308, 93%, 51%, 1) 3%, transparent 89%),
+      radial-gradient(circle at 20% 4%, hsla(318, 60%, 76%, 1) 22%, transparent 56%),
+      radial-gradient(circle at 74% 15%, hsla(324, 92%, 59%, 1) 13%, transparent 57%);
+
+    .office-hour-title {
+      @include fluid-text(3.3rem, 8.8vw, 5.5rem);
     }
   }
 
-  .compliance-review-notice {
-    z-index: 300;
-    right: 0;
-    bottom: 0;
+  .data-update-signup {
+    text-align: center;
 
-    .toast.show {
-      opacity: 0.85;
-      max-width: 400px;
+    h1 {
+      color: colors.$stanford-black;
+      @include fluid-text(2.5rem, 6vw, 4.5rem);
+    }
+
+    .lead {
+      @include fluid-text(1rem, 1.8vw, 1.35rem);
     }
   }
 }
 
-/****************************************************
- * Responsive styling
- ****************************************************/
+// ============================================================================
+// Modal
+// ============================================================================
 
-/* Hack to switch to static svg due to non-responsive scg grid */
-@media (max-width: 1449.98px) {
-  .content-container {
-    section {
-      &.fourth {
-        .section-content-container {
-          #heatmap-container {
-            svg, .heatmap-tooltip {
-              display: none;
-            }
-            background-image: url(https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/landing_page/figure1c-differential-analytes-grid-bkgd.svg);
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 95%;
-            width: 100% !important;
-            min-width: 1200px !important;
-            min-height: 580px !important;
-          }
-        }
+.modal-content.announcement-modal {
+  border: 4px solid #0178c7;
+  border-radius: 1rem;
+  padding: 0.75rem 1.65rem 1.25rem 1.85rem;
+  background-image: radial-gradient(
+    circle 1055px at -5.3% 49%,
+    rgba(2, 65, 97, 1) 0%,
+    rgba(7, 122, 159, 1) 41.3%,
+    rgb(12, 81, 150) 100.2%
+  );
+
+  .modal-header {
+    border-bottom: none;
+    padding-bottom: 0;
+
+    .modal-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #fff;
+      font-weight: 300;
+      @include fluid-text(2.08rem, 5.52vw, 3.46rem);
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .close {
+      font-size: 2rem;
+      opacity: 0.8;
+
+      &:hover {
+        opacity: 1;
       }
     }
   }
-}
 
-/* Large devices (desktops, less than 1200px) */
-@include bootstrapCustom.media-breakpoint-down(lg) {
-  .content-container {
-    justify-content: center;
+  .modal-body p {
+    color: #fff;
+    @include fluid-text(1.1rem, 2vw, 1.4rem);
+    line-height: 1.65;
 
-    section {
-      .animated-down-arrow {
-        display: none;
-      }
+    a {
+      color: colors.$accent-yellow;
 
-      &.first {
-        .section-content-container {
-          padding-top: 40px;
-
-          .logo-container {
-            margin-bottom: 1.5rem;
-            img {
-              width: 100%;
-              max-width: 28.0rem;
-            }
-          }
-
-          .display-2 {
-            font-size: 4.5rem;
-          }
-
-          .display-3 {
-            font-size: 3.5rem;
-          }
-
-          p.hero {
-            a {
-              font-size: 1.85rem;
-              line-height: 1.45;
-            }
-          }
-
-          .highlighted-links-container {
-            .btn {
-              font-size: 1.05rem;
-              max-width: 185px;
-            }
-          }
-        }
-      }
-
-      &.fourth {
-        .section-content-container {
-          padding-top: 50px;
-
-          #heatmap-container {
-            width: 100% !important;
-            min-width: 992px !important;
-            min-height: 500px !important;
-          }
-
-          .container {
-            h1 {
-              font-size: 2.35rem;
-            }
-          }
-        }
-      }
-
-      &.fifth {
-        .section-content-container {
-          padding-top: 70px;
-        }
-      }
-
-      &.sixth {
-        .section-content-container {
-          padding-top: 70px;
-        }
-      }
-
-      &.seventh {
-        .section-content-container {
-          .feature-image {
-            img {
-              height: 38.0rem;
-
-              &:hover {
-                height: 40.0rem;
-              }
-            }
-          }
-        }
-      }
-
-      &.eighth {
-        .section-content-container {
-          padding-top: 4.65em;
-        }
-      }
-    }
-  }
-}
-
-/* Medium devices (tablets, less than 992px) */
-@include bootstrapCustom.media-breakpoint-down(md) {
-  .content-container {
-    justify-content: center;
-
-    section {
-      .animated-down-arrow {
-        display: none;
-      }
-
-      &.first {
-        .section-content-container {
-
-          .logo-container {
-            margin-bottom: 1.5rem;
-            img {
-              width: 100%;
-              max-width: 24.0rem;
-            }
-          }
-
-          .display-2 {
-            font-size: 4.0rem;
-          }
-
-          .display-3 {
-            font-size: 3.0rem;
-          }
-
-          p.hero {
-            margin-top: 1.75rem;
-  
-            a {
-              font-size: 1.65rem;
-              line-height: 1.45;
-  
-              .about-motrpac-emphasis {
-                color: colors.$accent-yellow;
-              }
-            }
-          }
-
-          .highlighted-links-container {
-            .btn {
-              font-size: 1.05rem;
-            max-width: 185px;
-            }
-          }
-          
-          .office-hour-anchor-link-container {
-            margin-top: 3.0rem;
-
-            .office-hour-anchor-link {
-              border-radius: 1.4rem;
-              box-shadow: inset 0 3.0rem rgba(255, 255, 255, 0.2);
-              font-size: 1.35rem;
-            }
-          }
-
-          .compliance-review-notice {
-            font-size: 1.1rem;
-            margin-top: 2rem;
-          }
-        }
-      }
-
-      &.third {
-        .section-content-container {
-          .container {
-            h1 {
-              font-size: 1.95rem;
-              line-height: 1.65;
-            }
-          }
-        }
-      }
-
-      &.fourth {
-        .section-content-container {
-          height: 70vh;
-
-          #heatmap-container {
-            width: 100% !important;
-            min-width: 768px !important;
-            min-height: 430px !important;
-          }
-
-          .container {
-            h1 {
-              font-size: 1.95rem;
-              line-height: 1.65;
-            }
-          }
-        }
-      }
-
-      &.fifth {
-        .section-content-container {
-          padding-top: 72px;
-
-          .content {
-            h1 {
-              font-size: 2.5rem;
-              line-height: 1.45;
-            }
-
-            .btn {
-              font-size: 1.25rem;
-            }
-          }
-        }
-      }
-
-      &.sixth {
-        .section-content-container {
-          height: 65vh;
-        }
-      }
-
-      &.seventh {
-        .section-content-container {
-          .content-code-repository {
-            .feature-image {
-              img {
-                height: 32.0rem;
-        
-                &:hover {
-                  height: 32.0rem;
-                }
-              }
-            }
-          }
-
-          .content {
-            h1 .material-icons {
-              font-size: 3.0em !important;
-            }
-
-            p {
-              font-size: 1.85rem;
-            }
-          }
-        }
-      }
-
-      &.eighth {
-        .section-content-container {
-          padding-top: 4.65em;
-
-          .office-hour-signup {
-            margin-bottom: 4.0em;
-          }
-
-          .data-updates-signup-title {
-            line-height: 1.0;
-          }
-        }
+      .external-linkout-icon {
+        font-size: 1.5rem;
+        line-height: 1.5;
       }
     }
   }
 }
 
-/* Small devices (landscape phones, less than 768px) */
-@include bootstrapCustom.media-breakpoint-down(sm) {
-  .content-container {
-    justify-content: center;
-
-    section {
-      .animated-down-arrow {
-        display: none;
-      }
-
-      &.first {
-        .section-content-container {
-          .logo-container {
-            margin-bottom: 1.5rem;
-            img {
-              width: 100%;
-              max-width: 22.0rem;
-            }
-          }
-
-          .display-2 {
-            font-size: 3.5rem;
-          }
-
-          .display-3 {
-            font-size: 2.75rem;
-          }
-
-          p.hero {
-            margin-top: 1.55rem;
-  
-            a {
-              font-size: 1.55rem;
-              line-height: 1.4;
-  
-              .about-motrpac-emphasis {
-                color: colors.$accent-yellow;
-              }
-            }
-          }
-
-          .highlighted-links-container {
-            .btn {
-              font-size: 1.0rem;
-              max-width: 180px;
-            }
-          }
-          
-          .office-hour-anchor-link-container {
-            margin-top: 2.75rem;
-
-            .office-hour-anchor-link {
-              border-radius: 1.4rem;
-              box-shadow: inset 0 3.0rem rgba(255, 255, 255, 0.2);
-              font-size: 1.35rem;
-            }
-          }
-
-          .compliance-review-notice {
-            font-size: 0.95rem;
-          }
-        }
-      }
-
-      &.third {
-        .section-content-container {
-          height: 75vh;
-          padding-top: 70px;
-
-          .container {
-            h1 {
-              font-size: 1.85rem;
-              line-height: 1.55;
-            }
-          }
-        }
-      }
-
-      &.fourth {
-        .section-content-container {
-          #heatmap-container {
-            width: 100% !important;
-            min-width: 576px !important;
-            min-height: 360px !important;
-          }
-
-          .container {
-            h1 {
-              font-size: 1.95rem;
-              line-height: 1.55;
-            }
-          }
-        }
-      }
-
-      &.fifth {
-        .section-content-container {
-          padding-top: 6.0em;
-
-          .content {
-            h1 {
-              font-size: 2.0rem;
-              line-height: 1.45;
-            }
-
-            .btn {
-              font-size: 1.25rem;
-            }
-          }
-
-          .feature-image-content-container {
-            padding-left: 4.5em !important;
-            padding-right: 4.5em !important;
-          }
-
-          .feature-image {
-            margin: 3.0rem 1.25rem 1.0rem 1.25rem !important;
-            padding: 1.45rem 1.6rem;
-
-            &:hover {
-              padding: 1.45rem 1.6rem !important;
-            }
-          }
-        }
-      }
-
-      &.sixth {
-        .section-content-container {
-          height: 60vh;
-        }
-      }
-
-      &.seventh {
-        .section-content-container {
-          padding-top: 4.65em;
-
-          .feature-image {
-            img {
-              height: 24.0em !important;
-
-              &:hover {
-                height: 24.0em !important;
-              }
-            }
-          }
-
-          .content {
-            h1 {
-              margin-bottom: 0 !important;
-
-              .material-icons {
-                font-size: 2.5em !important;
-              }
-            }
-        
-            p {
-              font-size: 1.5rem;
-              line-height: 1.3;
-            }
-
-            .btn {
-              font-size: 1.15rem;
-              margin-top: 0.65em !important;
-            }
-          }
-        }
-      }
-
-      &.eighth {
-        .section-content-container {
-          padding-top: 4.65em;
-
-          .office-hour-signup {
-            margin-bottom: 3.0em;
-            padding: 2.55rem !important;
-
-            .office-hour-title {
-              font-size: 5.0rem;
-            }
-          }
-
-          .data-updates-signup-title {
-            font-size: 4.15rem;
-            line-height: 1.0;
-          }
-
-          .btn {
-            font-size: 1.15rem;
-          }
-        }
-      }
-    }
-  }
-}
-
-/* Extra small screen devices (e.g. less than 576px) */
-@include bootstrapCustom.media-breakpoint-down(xs) {
-  .content-container {
-    justify-content: center;
-
-    section {
-      min-height: unset;
-
-      .animated-down-arrow {
-        display: none;
-      }
-
-      &.first {
-        .section-content-container {
-          .logo-container {
-            margin-bottom: 1.5rem;
-            img {
-              width: 100%;
-              max-width: 22.0rem;
-            }
-          }
-
-          .display-2 {
-            font-size: 3.5rem;
-          }
-
-          .display-3 {
-            font-size: 2.75rem;
-          }
-
-          p.hero {
-            margin-top: 1.55rem;
-  
-            a {
-              font-size: 1.55rem;
-              line-height: 1.4;
-            }
-          }
-
-          .highlighted-links-container {
-            .btn {
-              font-size: 1.0rem;
-              max-width: 180px;
-            }
-          }
-          
-          .office-hour-anchor-link-container {
-            margin-top: 3.0rem;
-
-            .office-hour-anchor-link {
-              border-radius: 1.4rem;
-              box-shadow: inset 0 3.0rem rgba(255, 255, 255, 0.2);
-              font-size: 1.25rem;
-            }
-          }
-        }
-      }
-
-      &.third {
-        .section-content-container {
-          height: 75vh;
-          padding-top: 60px;
-
-          .container {
-            h1 {
-              font-size: 1.75rem;
-              line-height: 1.45;
-            }
-          }
-        }
-      }
-
-      &.fourth {
-        .section-content-container {
-          #heatmap-container {
-            width: 100% !important;
-            min-width: 430px !important;
-            min-height: 300px !important;
-          }
-
-          .container {
-            h1 {
-              font-size: 1.85rem;
-              line-height: 1.55;
-            }
-          }
-        }
-      }
-
-      &.fifth {
-        .section-content-container {
-          padding-top: 5.0em;
-
-          .content {
-            margin-bottom: 1.0em;
-            padding-left: 2.0em;
-            padding-right: 2.0em;
-
-            h1 {
-              font-size: 1.95rem;
-              line-height: 1.45;
-            }
-
-            .btn {
-              font-size: 1.15rem;
-            }
-          }
-
-          .feature-image-content-container {
-            padding-left: 6.0em !important;
-            padding-right: 6.0em !important;
-          }
-
-          .feature-image {
-            margin: 3.0rem 1.25rem 1.0rem 1.25rem !important;
-          }
-        }
-      }
-
-      &.seventh {
-        .section-content-container {
-          .feature-image {
-            img {
-              height: 22.0em !important;
-
-              &:hover {
-                height: 22.0em !important;
-              }
-            }
-          }
-  
-          .content {
-            padding-left: 2.5em;
-            padding-right: 2.5em;
-
-            h1 {
-              margin-bottom: 0 !important;
-
-              .material-icons {
-                font-size: 2.5em !important;
-                margin-left: -6px;
-              }
-            }
-        
-            p {
-              font-size: 1.4rem;
-              line-height: 1.3;
-            }
-
-            .btn {
-              font-size: 1.15rem;
-              margin-top: 0.65em !important;
-            }
-          }
-        }
-      }
-
-      &.eighth {
-        .section-content-container {
-          .panel-content-container {
-            padding: 1.25em;
-
-            .office-hour-signup {
-              margin-bottom: 3.0em;
-              padding: 2.55rem !important;
-
-              .office-hour-title {
-                font-size: 4.85rem;
-              }
-            }
-
-            .data-updates-signup-title {
-              font-size: 4.0rem;
-              line-height: 1.0;
-            }
-
-            .btn {
-              font-size: 1.15rem;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-/* Phone portrait at 430x932 (e.g. iPhone 15 plus) or smaller */
-@media (max-width: 430px) {
-  .content-container {
-    justify-content: center;
-
-    section {
-      .animated-down-arrow {
-        display: none;
-      }
-
-      &.first {
-        .section-content-container {
-          .logo-container {
-            margin-bottom: 1.5rem;
-            img {
-              width: 100%;
-              max-width: 18.0rem;
-            }
-          }
-
-          .display-2 {
-            font-size: 2.75rem;
-          }
-
-          .display-3 {
-            font-size: 2.25rem;
-          }
-
-          p.hero {
-            margin-top: 1.55rem;
-  
-            a {
-              font-size: 1.25rem;
-              line-height: 1.2;
-            }
-          }
-
-          .highlighted-links-container {
-            .btn {
-              font-size: 0.9rem;
-              max-width: 165px;
-            }
-          }
-          
-          .office-hour-anchor-link-container {
-            margin-top: 2.5rem;
-            padding: 0 0.75rem;
-
-            .office-hour-anchor-link {
-              border-radius: 2.35rem;
-              box-shadow: inset 0 4.5rem rgba(255, 255, 255, 0.2);
-              font-size: 1.15rem;
-            }
-          }
-
-          .compliance-review-notice {
-            margin-top: 1.85rem;
-          }
-        }
-      }
-
-      &.third {
-        .section-content-container {
-          height: 70vh;
-          padding-top: 60px;
-
-          .container {
-            h1 {
-              font-size: 1.6rem;
-              line-height: 1.35;
-            }
-          }
-        }
-      }
-
-      &.fourth {
-        .section-content-container {
-          #heatmap-container {
-            width: 100% !important;
-            min-width: 355px !important;
-            min-height: 220px !important;
-          }
-
-          .container {
-            h1 {
-              font-size: 1.65rem;
-              line-height: 1.35;
-            }
-          }
-        }
-      }
-
-      &.fifth {
-        .section-content-container {
-          padding-top: 1.0em;
-
-          .content {
-            h1 {
-              font-size: 1.85rem;
-              line-height: 1.35;
-            }
-
-            .btn {
-              font-size: 1.15rem;
-            }
-          }
-
-          .feature-image-content-container {
-            padding-left: 4.5em !important;
-            padding-right: 4.5em !important;
-          }
-
-          .feature-image {
-            margin: 2.0rem 1.25rem 1.0rem 1.25rem !important;
-            padding: 1.25rem 1.4rem !important;
-
-            &:hover {
-              padding: 1.25rem 1.4rem;
-            }
-          }
-        }
-      }
-
-      &.sixth {
-        .section-content-container {
-          height: 70vh;
-        }
-      }
-
-      &.seventh {
-        .section-content-container {
-          padding-top: 3.5em;
-
-          .feature-image {
-            img {
-              height: 22.0em !important;
-
-              &:hover {
-                height: 22.0em !important;
-              }
-            }
-          }
-  
-          .content {
-            padding-left: 2.5em;
-            padding-right: 2.5em;
-
-            h1 {
-              margin-bottom: 0 !important;
-
-              .material-icons {
-                font-size: 2.25em !important;
-                margin-left: -6px;
-              }
-            }
-        
-            p {
-              font-size: 1.3rem;
-              line-height: 1.3;
-            }
-
-            .btn {
-              font-size: 1.15rem;
-              margin-top: 0.65em !important;
-            }
-          }
-        }
-      }
-
-      &.eighth {
-        .section-content-container {
-          .panel-content-container {
-            padding: 1.25em;
-
-            .office-hour-signup {
-              margin-bottom: 3.5em;
-              padding: 2.55rem !important;
-
-              .office-hour-title {
-                font-size: 4.15rem;
-              }
-            }
-
-            .data-updates-signup-title {
-              font-size: 3.0rem;
-              line-height: 1.0;
-              margin-bottom: 0.5em;
-            }
-
-            .lead {
-              font-size: 1.25rem;
-              line-height: 1.3;
-            }
-
-            .btn {
-              font-size: 1.0rem;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-/* Phone portrait at 390x844 (e.g. iPhone12/13 + Pro) or smaller */
-@media (max-width: 398px) {
-  .content-container {
-    justify-content: center;
-
-    section {
-      .animated-down-arrow {
-        display: none;
-      }
-
-      &.first {
-        .section-content-container {
-          .logo-container {
-            margin-bottom: 1.5rem;
-            img {
-              width: 100%;
-              max-width: 18.0rem;
-            }
-          }
-
-          .display-2 {
-            font-size: 2.75rem;
-          }
-
-          .display-3 {
-            font-size: 2.25rem;
-          }
-
-          p.hero {
-            margin-top: 1.25rem;
-            margin-bottom: 0.25rem;
-            line-height: 1.25;
-  
-            a {
-              font-size: 1.15rem;
-            }
-          }
-
-          .highlighted-links-container {
-            .btn {
-              font-size: 0.8rem;
-              max-width: 150px;
-            }
-          }
-          
-          .office-hour-anchor-link-container {
-            margin-top: 2.5rem;
-            padding: 0 0.75rem;
-
-            .office-hour-anchor-link {
-              border-radius: 2.35rem;
-              box-shadow: inset 0 4.5rem rgba(255, 255, 255, 0.2);
-              font-size: 1.15rem;
-            }
-          }
-
-          .compliance-review-notice {
-            font-size: 0.85rem;
-          }
-        }
-      }
-
-      &.third {
-        .section-content-container {
-          height: 60vh;
-          padding-top: 60px;
-
-          .container {
-            h1 {
-              font-size: 1.65rem;
-              line-height: 1.35;
-            }
-          }
-        }
-      }
-
-      &.fourth {
-        .section-content-container {
-          height: 55vh;
-          padding-top: 0;
-
-          #heatmap-container {
-            width: 100% !important;
-            min-width: 355px !important;
-            min-height: 220px !important;
-          }
-
-          .container {
-            h1 {
-              font-size: 1.65rem;
-              line-height: 1.35;
-            }
-          }
-        }
-      }
-
-      &.fifth {
-        .section-content-container {
-          padding-top: 1.0em;
-
-          .content {
-            h1 {
-              font-size: 1.75rem;
-              line-height: 1.3;
-            }
-
-            .btn {
-              font-size: 1.15rem;
-            }
-          }
-
-          .feature-image-content-container {
-            padding-left: 4.5em !important;
-            padding-right: 4.5em !important;
-          }
-
-          .feature-image {
-            margin: 2.0rem 1.25rem 1.0rem 1.25rem !important;
-            padding: 1.15rem 1.3rem !important;
-
-            &:hover {
-              padding: 1.15rem 1.3rem;
-            }
-          }
-
-          .feature-image-attribution {
-            font-size: 0.8rem !important;
-          }
-        }
-      }
-
-      &.seventh {
-        .section-content-container {
-          .feature-image {
-            img {
-              height: 20.0em !important;
-
-              &:hover {
-                height: 20.0em !important;
-              }
-            }
-          }
-  
-          .content {
-            h1 {
-              .material-icons {
-                font-size: 2.0em !important;
-              }
-            }
-        
-            p {
-              font-size: 1.25rem;
-              line-height: 1.3;
-            }
-
-            .btn {
-              font-size: 1.1rem;
-              margin-top: 0.65em !important;
-            }
-          }
-        }
-      }
-
-      &.eighth {
-        .section-content-container {
-          .panel-content-container {
-            padding: 1.25em;
-
-            .office-hour-signup {
-              margin-bottom: 3.0em;
-              padding: 2.25rem !important;
-
-              .office-hour-title {
-                font-size: 3.65rem;
-              }
-            }
-
-            .data-updates-signup-title {
-              font-size: 2.65rem;
-              line-height: 1.0;
-              margin-bottom: 0.5em;
-            }
-
-            .lead {
-              font-size: 1.0rem;
-              line-height: 1.3;
-            }
-
-            .btn {
-              font-size: 1.0rem;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-/* Phone portrait at 375x667 (e.g. iPhone 8 or iPhone 11 Pro) or smaller */
-@media (max-width: 375px) {
-  .content-container {
-    justify-content: center;
-
-    section {
-      .animated-down-arrow {
-        display: none;
-      }
-
-      &.first {
-        .section-content-container {
-          .logo-container {
-            margin-bottom: 1.0rem;
-
-            img {
-              width: 100%;
-              max-width: 12.5rem;
-            }
-          }
-
-          .display-2 {
-            font-size: 1.95rem;
-          }
-
-          .display-3 {
-            font-size: 1.55rem;
-          }
-
-          p.hero {
-            margin-top: 0.75rem;
-            margin-bottom: 0;
-            line-height: 1.2;
-
-            a {
-              font-size: 1.0rem;
-            }
-          }
-
-          .highlighted-links-container {
-            margin-top: 0.25rem;
-
-            .btn {
-              font-size: 0.7rem;
-              max-width: 140px;
-              margin-top: 1.0rem !important;
-            }
-          }
-          
-          .office-hour-anchor-link-container {
-            margin-top: 1.85rem;
-            padding: 0 0.75rem;
-
-            .office-hour-anchor-link {
-              border-radius: 2.35rem;
-              box-shadow: inset 0 4.5rem rgba(255, 255, 255, 0.2);
-              font-size: 0.95rem;
-            }
-          }
-        }
-      }
-
-      &.third {
-        .section-content-container {
-          height: 55vh;
-          padding-top: 60px;
-
-          .container {
-            h1 {
-              font-size: 1.55rem;
-              line-height: 1.35;
-            }
-          }
-        }
-      }
-
-      &.fourth {
-        .section-content-container {
-          height: 55vh;
-          padding-top: 0;
-
-          #heatmap-container {
-            width: 100% !important;
-            min-width: 300px !important;
-            min-height: 180px !important;
-          }
-
-          .container {
-            h1 {
-              font-size: 1.55rem;
-              line-height: 1.35;
-            }
-          }
-        }
-      }
-
-      &.fifth {
-        .section-content-container {
-          padding-top: 1.0em;
-
-          .content {
-            h1 {
-              font-size: 1.45rem;
-              line-height: 1.3;
-              margin-bottom: 0;
-            }
-
-            .btn {
-              font-size: 0.85rem;
-            }
-          }
-
-          .feature-image {
-            margin: 2.0rem 1.25rem 0.85rem 1.25rem !important;
-            padding: 1.0rem 1.15rem !important;
-
-            &:hover {
-              padding: 1.0rem 1.15rem;
-            }
-          }
-
-          .feature-image-attribution {
-            font-size: 0.75rem !important;
-          }
-        }
-      }
-
-      &.sixth {
-        .section-content-container {
-          h1 {
-            font-size: 2.0rem;
-          }
-        }
-      }
-
-      &.seventh {
-        .section-content-container {
-          .content-code-repository {
-            min-height: unset;
-          }
-
-          .feature-image {
-            img {
-              height: 16.0em !important;
-
-              &:hover {
-                height: 16.0em !important;
-              }
-            }
-          }
-  
-          .content {
-            h1 {
-              .material-icons {
-                font-size: 1.8em !important;
-              }
-            }
-        
-            p {
-              font-size: 1.0rem;
-              line-height: 1.2;
-            }
-
-            .btn {
-              font-size: 0.85rem;
-              margin-top: 0.5em !important;
-            }
-          }
-        }
-      }
-
-      &.eighth {
-        .section-content-container {
-          .panel-content-container {
-            padding: 1.25em;
-
-            .office-hour-signup {
-              margin-bottom: 2.25em;
-              padding: 1.25rem 2.0rem 1.75rem 2.0rem !important;
-
-              .office-hour-title {
-                font-size: 2.65rem;
-              }
-            }
-
-            .data-update-signup {
-              margin-bottom: 1.0em !important;
-            }
-
-            .data-updates-signup-title {
-              font-size: 2.15rem;
-              line-height: 1.0;
-              margin-bottom: 0.35em;
-            }
-
-            .lead {
-              font-size: 0.9rem;
-              line-height: 1.25;
-              margin-bottom: 1.25rem !important;
-            }
-
-            .btn {
-              font-size: 0.85rem;
-            }
-          }
-        }
-      }
-    }
+// ============================================================================
+// Body-level styles
+// ============================================================================
+
+body.homepage {
+  > footer.footer {
+    display: none;
   }
 }

@@ -4,24 +4,39 @@ import { Helmet } from 'react-helmet';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import PageTitle from '../lib/ui/pageTitle';
 import ExternalLink from '../lib/ui/externalLink';
+import LanguageSelector from '../lib/ui/languageSelector';
 
 import '@styles/license.scss';
 
 const LANG_EN = 'en';
 const LANG_ES = 'es';
+const DEFAULT_LANGUAGE = LANG_EN;
+
+// Language options for the Tutorials page
+const TUTORIALS_LANGUAGES = [
+  { code: LANG_EN, nativeName: 'English' },
+  { code: LANG_ES, nativeName: 'Español' },
+];
 
 function Tutorials() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const language = searchParams.get('lang') === LANG_ES ? LANG_ES : LANG_EN;
-  const toggleLanguage = (lang) => {
-    setSearchParams(prev => {
-      if (lang === LANG_EN) {
+  const langParam = searchParams.get('lang');
+  const language = TUTORIALS_LANGUAGES.some((lang) => lang.code === langParam)
+    ? langParam
+    : DEFAULT_LANGUAGE;
+
+  /**
+   * Handle language change from selector
+   */
+  const handleLanguageChange = (newLanguage) => {
+    setSearchParams((prev) => {
+      if (newLanguage === DEFAULT_LANGUAGE) {
         prev.delete('lang');
       } else {
-        prev.set('lang', lang);
+        prev.set('lang', newLanguage);
       }
       return prev;
-    });
+    }, { replace: true });
   };
 
   return (
@@ -36,40 +51,35 @@ function Tutorials() {
           <div className="col-12">
             <div className="section-title-container d-flex align-items-center justify-content-between mt-3 mb-2">
               <h3 className="mb-0">{language === LANG_EN ? 'MoTrPAC Data Hub Overview' : 'Descripción General del Centro de Datos de MoTrPAC'}</h3>
-              {/* Language Toggle */}
-              <div className="btn-group" role="group" aria-label="Language selection">
-                <button
-                  type="button"
-                  className={`btn btn-sm ${language === LANG_EN ? 'btn-primary' : 'btn-outline-primary'}`}
-                  onClick={() => toggleLanguage(LANG_EN)}
-                  aria-pressed={language === LANG_EN}
-                >
-                  English
-                </button>
-                <button
-                  type="button"
-                  className={`btn btn-sm ${language === LANG_ES ? 'btn-primary' : 'btn-outline-primary'}`}
-                  onClick={() => toggleLanguage(LANG_ES)}
-                  aria-pressed={language === LANG_ES}
-                >
-                  Español
-                </button>
-              </div>
+              {/* Language Selector */}
+              <LanguageSelector
+                id="tutorials-language-select"
+                currentLanguage={language}
+                languages={TUTORIALS_LANGUAGES}
+                onLanguageChange={handleLanguageChange}
+                ariaLabel={
+                  language === LANG_EN
+                    ? 'Select tutorials page language'
+                    : 'Seleccionar idioma de la página de tutoriales'
+                }
+              />
             </div>
             {language === LANG_EN ? (
               <div className="video-tutorial-container">
                 <p className="lead">
-                  The following tutorial video (also available in Spanish) is designed
-                  to help you get started with the MoTrPAC study and the exploration
-                  of the Data Hub. Please check out our{' '}
+                  The following tutorial video (also available in Spanish) was originally
+                  created to help users get started with the MoTrPAC study and explore
+                  the Data Hub. Please note that some content may no longer reflect the
+                  latest updates. Be sure to check our
+                  {' '}
                   <ExternalLink
                     to="https://www.youtube.com/@MoTrPAC-Data-Hub"
-                    label="collection of videos on YouTube"
+                    label="YouTube channel"
                   />
                   {' '}
-                  and reach out to us with any
+                  for the latest tutorials, and feel free to contact us with any
                   {' '}
-                  <Link to="/contact">questions or comments</Link>
+                  <Link to="/contact">questions or feedback</Link>
                   .
                 </p>
                 <div
@@ -88,17 +98,20 @@ function Tutorials() {
             ) : (
               <div className="video-tutorial-container">
                 <p className="lead">
-                  El siguiente video tutorial (también disponible en inglés) está diseñado
-                  para ayudarte a comenzar con el estudio MoTrPAC y la exploración del
-                  Centro de Datos. Por favor, consulta nuestra{' '}
+                  El siguiente video tutorial (también disponible en inglés) fue creado
+                  originalmente para ayudar a los usuarios a comenzar con el estudio
+                  MoTrPAC y explorar el Data Hub. Tenga en cuenta que parte del contenido
+                  puede no reflejar las actualizaciones más recientes. Asegúrese de visitar
+                  nuestro
+                  {' '}
                   <ExternalLink
                     to="https://www.youtube.com/@MoTrPAC-Data-Hub"
-                    label="colección de videos en YouTube"
+                    label="canal de YouTube"
                   />
                   {' '}
-                  y contáctanos si tienes alguna
+                  para ver los tutoriales más actualizados, y no dude en contactarnos si tiene
                   {' '}
-                  <Link to="/contact">pregunta o comentario</Link>
+                  <Link to="/contact">preguntas o comentarios</Link>
                   .
                 </p>
                 <div
@@ -121,7 +134,7 @@ function Tutorials() {
             <p className="lead">
               <ExternalLink
                 to="https://motrpac.github.io/MotrpacWorkshops/docs/articles/rat-endurance-6m.html"
-                label="MoTrPAC R Packages from the Endurance Training in Young Rats Study"
+                label="MoTrPAC R Packages from the Endurance Training in Young Adult Rats study"
               />
             </p>
           </div>

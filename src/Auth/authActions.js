@@ -68,6 +68,12 @@ export function handleAuthCallbackAsync() {
         return dispatch(loginError(`${err.error}: ${err.errorDescription}`));
       }
 
+      // Handle edge case where parseHash returns neither err nor authResult
+      // (e.g., hash already consumed or invalid). Reset isFetching to prevent hang.
+      if (!data) {
+        return dispatch(loginError('Authentication callback received no result'));
+      }
+
       dispatch(loginSuccess(data));
       auth.getProfile((error, profile) => {
         return dispatch(receiveProfile(profile));

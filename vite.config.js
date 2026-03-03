@@ -11,13 +11,6 @@ export default defineConfig({
   plugins: [react(), visualizer(), ViteImageOptimizer()],
   build: {
     outDir: 'build',
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'vis': ['vis-network', 'vis-data'],
-        }
-      }
-    }
   },
   css: {
     preprocessorOptions: {

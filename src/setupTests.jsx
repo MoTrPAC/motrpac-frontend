@@ -15,14 +15,13 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
-// Mock React Router
+// Mock React Router - only mock Navigate and useNavigate, not useLocation
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return {
     ...actual,
     useNavigate: () => vi.fn(),
-    useLocation: () => ({ pathname: '/', search: '', hash: '', state: null }),
-    useSearchParams: () => [new URLSearchParams(), vi.fn()],
+    // eslint-disable-next-line react/prop-types
     Navigate: ({ to }) => <div data-testid="mock-navigate">Navigate to {to}</div>,
   };
 });

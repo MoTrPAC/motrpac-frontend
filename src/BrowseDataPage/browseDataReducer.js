@@ -234,6 +234,18 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
         pass1a06DataSelected: false,
         humanPrecovidSedAduDataSelected: true,
       };
+    case types.SELECT_HUMAN_PRECOVID_SED_ADU_EXTERNAL_DATA:
+      return {
+        ...state,
+        allFiles: action.files,
+        filteredFiles: action.files.slice(0, action.files.length),
+        selectedFileUrls: [],
+        selectedFileNames: [],
+        fileCount: action.files.length,
+        pass1b06DataSelected: false,
+        pass1a06DataSelected: false,
+        humanPrecovidSedAduDataSelected: true,
+      };
     case types.RESET_BROWSE_STATE:
       return defaultBrowseDataState;
     default:

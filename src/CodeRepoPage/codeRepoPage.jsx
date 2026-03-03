@@ -69,6 +69,9 @@ export function CodeRepositories() {
         <div className="component-repos-connector mt-2">
           <span className="vertical-line" />
         </div>
+        {(componentName === 'QC' || componentName === 'Analysis') && (
+          <h6 className="font-weight-bold border-bottom">Endurance Training in Young Adult Rats</h6>
+        )}
         <ul className="component-repos">
           {repos.map((repo) => (
             <li key={repo.name}>
@@ -84,6 +87,12 @@ export function CodeRepositories() {
             </li>
           ))}
         </ul>
+        {(componentName === 'QC' || componentName === 'Analysis') && (
+          <>
+          <h6 className="font-weight-bold border-bottom mt-4">Acute Exercise in Human Sed Adults</h6>
+          <p><i>Coming Soon</i></p>
+          </>
+        )}
       </div>
     );
   }

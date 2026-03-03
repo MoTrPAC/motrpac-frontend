@@ -13,9 +13,15 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
   const userType = profile?.user_metadata?.userType;
 
   const fileFilters = [...browseDataFilters];
-  // Remove phenotype filter if human-precovid-sed-adu data tab is selected
+  // When human-precovid-sed-adu data tab is selected
   if (dataDownload.humanPrecovidSedAduDataSelected) {
-    fileFilters.splice(4, 1);
+    // Remove category only if logged-in user is internal
+    if (userType && userType === 'internal') {
+      fileFilters.splice(4, 1);
+    } else {
+      // Remove category and metadata filters if user is not internal
+      fileFilters.splice(4);
+    }
   }
 
   fileFilters.forEach((item) => {

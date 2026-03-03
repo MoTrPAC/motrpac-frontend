@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import BundleDownloadButton from './bundleDownloadButton';
@@ -11,7 +11,7 @@ const tagColors = {
   acute: 'badge-info',
   youngAdult: 'badge-secondary',
   adult: 'badge-dark',
-  preCovid: 'badge-danger',
+  preSuspension: 'badge-danger',
   sedentary: 'badge-purple',
 };
 
@@ -22,6 +22,7 @@ function BundleDatasets({
   downloadedData,
 }) {
   const dispatch = useDispatch();
+  const [filterKeywords, setFilterKeywords] = useState('');
 
   useEffect(() => {
     // show user survey modal if user has not submitted survey after downloading data
@@ -34,9 +35,51 @@ function BundleDatasets({
     }
   }, [dispatch, downloadedData, surveySubmitted]);
 
+  // Filter datasets based on keywords (title, description, species, intervention, etc.)
+  const filteredDatasets = useMemo(() => {
+    if (filterKeywords.length < 2) {
+      return bundleDatasets;
+    }
+
+    const keywords = filterKeywords.toLowerCase();
+    return bundleDatasets.filter((item) =>
+      item.title?.toLowerCase().includes(keywords) ||
+      item.description?.toLowerCase().includes(keywords) ||
+      item.species?.toLowerCase().includes(keywords) ||
+      item.intervention?.toLowerCase().includes(keywords) ||
+      item.participant_type?.toLowerCase().includes(keywords) ||
+      item.study_group?.toLowerCase().includes(keywords)
+    );
+  }, [filterKeywords, bundleDatasets]);
+
+  const handleFilterChange = (e) => {
+    setFilterKeywords(e.target.value);
+  };
+
   return (
-    <div className="row row-cols-1 row-cols-md-3 bundle-datasets">
-      {bundleDatasets.map((item) => {
+    <div className="bundle-datasets-container">
+      <div className="bundle-datasets-filter-container mb-3">
+        <div className="input-group d-flex align-items-center">
+          <label className="bundle-datasets-filter-label mr-2" htmlFor="bundle-datasets-filter">
+            <b>Search bundled datasets:</b>
+          </label>
+          <input
+            id="bundle-datasets-filter"
+            type="search"
+            className="form-control"
+            placeholder="Enter at least 2 characters to filter results"
+            value={filterKeywords}
+            onChange={handleFilterChange}
+          />
+        </div>
+        {filterKeywords.length >= 2 && (
+          <small className="text-muted mt-1">
+            Showing {filteredDatasets.length} of {bundleDatasets.length} datasets
+          </small>
+        )}
+      </div>
+      <div className="row row-cols-1 row-cols-md-3 bundle-datasets">
+        {filteredDatasets.map((item) => {
         return (
           <div
             key={`${item.type}-${item.object_zipfile}`}
@@ -63,7 +106,7 @@ function BundleDatasets({
                   </span>
                   {item.species === 'Human' && (
                     <span
-                      className={`badge badge-pill ${item.study_group === 'Pre-COVID' && tagColors.preCovid} mr-1`}
+                      className={`badge badge-pill ${item.study_group === 'Pre-Suspension' ? tagColors.preSuspension : ''} mr-1`}
                     >
                       {item.study_group}
                     </span>
@@ -92,6 +135,7 @@ function BundleDatasets({
           </div>
         );
       })}
+      </div>
     </div>
   );
 }
