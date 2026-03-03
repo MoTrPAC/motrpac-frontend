@@ -16,8 +16,6 @@ export function MCPServer({ profile = {} }) {
   const [mcpToken, setMcpToken] = useState(null);
   const [copied, setCopied] = useState(false);
 
-  const userType = profile.user_metadata && profile.user_metadata.userType;
-
   const handleGenerate = async () => {
     if (!profile.user_metadata) return;
 
@@ -117,7 +115,7 @@ export function MCPServer({ profile = {} }) {
                     args: [
                       "-y",
                       "mcp-remote",
-                      "https://dev.motrpac-data.org/mcp",
+                      "https://motrpac-data.org/mcp",
                       "--header",
                       "Authorization: Bearer <YOUR_ACCESS_TOKEN>"
                     ]
@@ -135,7 +133,7 @@ export function MCPServer({ profile = {} }) {
               {[
                 'claude mcp add motrpac-search \\',
                 '  --scope user \\',
-                '  -- npx -y mcp-remote https://dev.motrpac-data.org/mcp/ \\',
+                '  -- npx -y mcp-remote https://motrpac-data.org/mcp/ \\',
                 '  --header "Authorization: Bearer <YOUR_TOKEN>"',
               ].join('\n')}
             </pre>
@@ -153,7 +151,7 @@ export function MCPServer({ profile = {} }) {
                     args: [
                       "-y",
                       "mcp-remote",
-                      "https://dev.motrpac-data.org/mcp",
+                      "https://motrpac-data.org/mcp",
                       "--header",
                       "Authorization: Bearer <YOUR_ACCESS_TOKEN>"
                     ]
