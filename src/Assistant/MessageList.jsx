@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
+import runningWebm from '@/assets/icons/animated_motrpac_m.webm';
+import runningMp4 from '@/assets/icons/animated_motrpac_m.mp4';
+import runningGif from '@/assets/icons/animated_motrpac_m.gif';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -21,26 +24,38 @@ const Message = ({ message, isLoading = false }) => {
       role="article"
       aria-label={`${isUser ? 'User' : 'Assistant'} message`}
     >
-      <div
-        className={`message-icon rounded-circle p-2 border ${isUser ? 'border-primary ml-3' : 'border-dark mr-3'}`}
-        aria-hidden="true"
-      >
-        <i className={`bi ${isUser ? 'bi-person-fill' : 'bi-robot'} text-${isUser ? 'primary' : 'secondary'}`}/>
-      </div>
-      <div className={`message-content-container p-3 ${isUser ? 'bg-primary text-white' : 'bg-light border'}`}>
-        {message.content ? (
-          isUser ? (
-            // User messages: plain text with pre-wrap
+      {!isUser && isLoading && !message.content ? (
+        <video
+          className="assistant-typing-indicator"
+          autoPlay
+          loop
+          muted
+          playsInline
+          role="status"
+          aria-label="Assistant is working"
+        >
+          <source src={runningWebm} type="video/webm" />
+          <source src={runningMp4} type="video/mp4" />
+          <img src={runningGif} alt="Assistant is working" />
+        </video>
+      ) : (
+        <>
+        <div
+          className={`message-icon rounded-circle p-2 border ${isUser ? 'border-primary ml-3' : 'border-dark mr-3'}`}
+          aria-hidden="true"
+        >
+          <i className={`bi ${isUser ? 'bi-person-fill' : 'bi-robot'} text-${isUser ? 'primary' : 'secondary'}`}/>
+        </div>
+        <div className={`message-content-container p-3 ${isUser ? 'bg-primary text-white' : 'bg-light border'}`}>
+          {message.content && (isUser ? (
             <div style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
               {message.content}
             </div>
           ) : (
-            // Assistant messages: render as markdown
             <div className="markdown-content">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  // Custom code block renderer with syntax highlighting
                   code({ node: _node, inline, className, children, ...props }) {
                     const match = /language-(\w+)/.exec(className || '');
                     return !inline && match ? (
@@ -58,7 +73,6 @@ const Message = ({ message, isLoading = false }) => {
                       </code>
                     );
                   },
-                  // Style links
                   a({ node: _node, children, ...props }) {
                     return (
                       <a
@@ -76,30 +90,16 @@ const Message = ({ message, isLoading = false }) => {
                 {message.content}
               </ReactMarkdown>
             </div>
-          )
-        ) : (
-          // Show typing indicator for empty assistant messages
-          !isUser &&
-          isLoading && (
-            <div
-              className="assistant-typing-indicator"
-              role="status"
-              aria-live="polite"
-              aria-label="Assistant is typing"
-            >
-              <span className="typing-dot"></span>
-              <span className="typing-dot"></span>
-              <span className="typing-dot"></span>
-            </div>
-          )
-        )}
-        {message.hasInternalKnowledge && (
-          <small className="d-block mt-2 text-info">
-            <i className="bi bi-lock-fill mr-1" aria-hidden="true" />
-            Internal knowledge used
-          </small>
-        )}
-      </div>
+          ))}
+          {message.hasInternalKnowledge && (
+            <small className="d-block mt-2 text-info">
+              <i className="bi bi-lock-fill mr-1" aria-hidden="true" />
+              Internal knowledge used
+            </small>
+          )}
+        </div>
+        </>
+      )}
     </div>
   );
 };
