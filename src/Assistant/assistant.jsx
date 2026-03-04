@@ -176,9 +176,13 @@ const AskAssistant = () => {
           >
             <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
               <div>
-                <h1 className="h3 card-title mb-0">
-                  <i className="bi bi-robot mr-2" aria-hidden="true" />
-                  MoTrPAC ExerWise
+                <h1 className="h3 card-title mb-0 d-flex align-items-center">
+                  <div
+                    className="assistant-header-icon mr-1" aria-hidden="true"
+                  >
+                    <i className="bi bi-robot text-light" />
+                  </div>
+                  <span>MoTrPAC ExerWise</span>
                 </h1>
               </div>
               <div className="d-flex align-items-center">
