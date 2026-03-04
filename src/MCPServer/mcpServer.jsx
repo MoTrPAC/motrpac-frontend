@@ -66,10 +66,10 @@ export function MCPServer({ profile = {} }) {
             multi-omic, multi-tissue, multi-species datasets directly queryable
             by LLM-powered assistants. The available MCP toolset makes data
             exploration across common query types (genes, proteins, metabolites,
-            and phenotype/sample metadata) much faster through LLM-powered client
-            including Claude Desktop, Claude Code, and VS Code Copilot. The MCP
-            server is currently in the early stages of development, and we welcome
-            any feedback or suggestions from our users.
+            and phenotype/sample metadata) much faster through LLM-powered clients
+            including Claude Desktop, Claude Code, and GitHub Copilot in VS Code.
+            The MCP server is currently in the early stages of development, and we
+            welcome any feedback or suggestions from our users.
           </div>
           <h2 className="col-12 mt-4">Access Token</h2>
           <p className="col-12 mt-3">
@@ -115,7 +115,7 @@ export function MCPServer({ profile = {} }) {
                     args: [
                       "-y",
                       "mcp-remote",
-                      "https://motrpac-data.org/mcp",
+                      "https://motrpac-data.org/mcp/",
                       "--header",
                       "Authorization: Bearer <YOUR_ACCESS_TOKEN>"
                     ]
@@ -147,14 +147,11 @@ export function MCPServer({ profile = {} }) {
               {JSON.stringify({
                 servers: {
                   "motrpac-search": {
-                    command: "npx",
-                    args: [
-                      "-y",
-                      "mcp-remote",
-                      "https://motrpac-data.org/mcp",
-                      "--header",
-                      "Authorization: Bearer <YOUR_ACCESS_TOKEN>"
-                    ]
+                    type: "http",
+                    url: "https://motrpac-data.org/mcp/",
+                    headers: {
+                      Authorization: "Bearer <YOUR_ACCESS_TOKEN>"
+                    }
                   }
                 }
               }, null, 2)}
