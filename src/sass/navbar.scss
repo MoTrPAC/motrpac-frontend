@@ -26,6 +26,20 @@ nav {
       font-size: 1.125rem;
       font-weight: fonts.$semibold-weight;
 
+      &.feature-message {
+        .nav-link {
+          background: -webkit-linear-gradient(45deg, #a64d79, #1c4587);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+        .bi {
+          font-size: 1.5rem;
+          top: 0.1rem;
+          position: relative;
+        }
+      }
+
       .nav-link {
         color: colors.$stanford-cool-grey;
 
