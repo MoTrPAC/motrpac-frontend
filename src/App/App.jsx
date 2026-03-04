@@ -206,7 +206,7 @@ function App({ history = History }) {
                 <Route path="/technical-guides/phenotype" element={<Phenotype/>}/>
                 <Route path="/citation" element={<Citation/>}/>
                 <Route path="/glossary" element={<Glossary/>}/>
-                <Route path="/ask-assistant" element={<AskAssistant/>}/>
+                <Route path="/exerwise" element={<AskAssistant/>}/>
                 <Route path="/mcp-server" element={<MCPServer/>}/>
               </Route>
             </Routes>

@@ -378,8 +378,8 @@ export function Navbar({
                   <Link to="/glossary" className="dropdown-item">
                     Glossary
                   </Link>
-                  <Link to="/ask-assistant" className="dropdown-item">
-                    Ask Assistant
+                  <Link to="/exerwise" className="dropdown-item">
+                    ExerWise
                   </Link>
                   <Link to="mcp-server" className="dropdown-item">
                     MCP Server
