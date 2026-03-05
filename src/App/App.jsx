@@ -77,7 +77,7 @@ const KnowledgeCenter = lazy(() => import('../KnowledgeCenter/KnowledgeCenter'))
 
 function App({ history = History }) {
   return (
-    <BrowserRouter history={history} future={{ v7_relativeSplatPath: true, v7_startTransitions: true }}>
+    <BrowserRouter history={history} future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
       <ScrollToTop/>
       <div className="App container-fluid">
         <header>
