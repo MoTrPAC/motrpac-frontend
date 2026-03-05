@@ -28,6 +28,14 @@ vi.mock('../../LinkoutPage/linkoutPage', () => ({
   default: () => <div>Useful Links</div>,
 }));
 
+vi.mock('../../KnowledgeCenter/KnowledgeCenter', () => ({
+  default: () => <h1>Knowledge Center</h1>,
+}));
+
+vi.mock('../../KnowledgeCenter/KBTableOfContents', () => ({
+  default: () => <div data-testid="mock-kb-toc" />,
+}));
+
 // Reset browser history before each test to avoid test isolation issues
 beforeEach(() => {
   window.history.pushState({}, '', '/');
@@ -98,6 +106,21 @@ describe('<App /> routing (Unauthenticated)', () => {
   test('loads the contact page at /contact', async () => {
     renderWithRouterAndStore(<App />, { route: '/contact' });
     await waitFor(() => expect(screen.getByText(/contact us/i)).toBeInTheDocument());
+  });
+
+  test('loads the Knowledge Center root route at /knowledge-center', async () => {
+    renderWithRouterAndStore(<App />, { route: '/knowledge-center' });
+    await waitFor(() => expect(screen.getByRole('heading', { name: /^knowledge center$/i })).toBeInTheDocument());
+  });
+
+  test('loads a Knowledge Center deep-link route without 404', async () => {
+    renderWithRouterAndStore(<App />, { route: '/knowledge-center/project-overview/studies/rat-training' });
+
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: /^knowledge center$/i })).toBeInTheDocument();
+    });
+
+    expect(screen.queryByText(/page not found/i)).not.toBeInTheDocument();
   });
 
 });

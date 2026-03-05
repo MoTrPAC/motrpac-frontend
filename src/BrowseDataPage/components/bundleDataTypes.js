@@ -316,7 +316,7 @@ const BundleDataTypes = {
         'Differential analysis, metadata, QC normalized data across human tissues for ATAC-seq and Methylcap-seq assays.',
       object_zipfile:
         'bundles/motrpac_human-precovid-sed-adu_epigenomics.zip',
-      object_zipfile_size: '6.12 GB',
+      object_zipfile_size: '2.79 GB',
     },
     {
       type: 'transcriptomics',
@@ -330,7 +330,7 @@ const BundleDataTypes = {
         'Differential analysis, metadata, QC normalized data across human tissues for RNA-seq.',
       object_zipfile:
         'bundles/motrpac_human-precovid-sed-adu_transcriptomics.zip',
-      object_zipfile_size: '860.88 MB',
+      object_zipfile_size: '472.07 MB',
     },
     {
       type: 'proteomics',
@@ -344,7 +344,7 @@ const BundleDataTypes = {
         'Differential analysis, metadata, QC normalized data across human tissues for Global Proteomics, Phosphoproteomics, and OLink.',
       object_zipfile:
         'bundles/motrpac_human-precovid-sed-adu_proteomics.zip',
-      object_zipfile_size: '407.27 MB',
+      object_zipfile_size: '346.55 MB',
     },
     {
       type: 'metabolomics-untargeted',
@@ -358,7 +358,7 @@ const BundleDataTypes = {
         'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-untargeted assays.',
       object_zipfile:
         'bundles/motrpac_human-precovid-sed-adu_metabolomics-untargeted.zip',
-      object_zipfile_size: '501.32 MB',
+      object_zipfile_size: '269.27 MB',
     },
     {
       type: 'metabolomics-targeted',
@@ -372,7 +372,7 @@ const BundleDataTypes = {
         'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-targeted assays.',
       object_zipfile:
         'bundles/motrpac_human-precovid-sed-adu_metabolomics-targeted.zip',
-      object_zipfile_size: '59.98 MB',
+      object_zipfile_size: '25 MB',
     },
   ],
   human_sed_adu_external: [

@@ -366,6 +366,9 @@ export function Navbar({
                   className="dropdown-menu"
                   aria-labelledby="helpNavbarItemMenuLink"
                 >
+                  <Link to="/knowledge-center" className="dropdown-item">
+                    Knowledge Center
+                  </Link>
                   <Link to="/project-overview" className="dropdown-item">
                     Project Overview
                   </Link>
