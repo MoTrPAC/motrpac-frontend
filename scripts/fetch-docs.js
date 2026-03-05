@@ -20,10 +20,9 @@
 import { writeFileSync, mkdirSync, existsSync, lstatSync, readFileSync } from "fs";
 import { basename, dirname, relative, resolve } from "path";
 import { fileURLToPath } from "url";
-import { createRequire } from "module";
+import { load as loadYaml } from "js-yaml";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const require = createRequire(import.meta.url);
 
 // ---------------------------------------------------------------------------
 // Config
@@ -257,17 +256,6 @@ async function fetchMkdocsYaml() {
  *     - Child: child.md
  */
 function parseMkdocsNav(yaml) {
-  let loadYaml;
-  try {
-    ({ load: loadYaml } = require("js-yaml"));
-  } catch (error) {
-    console.warn(
-      "js-yaml is unavailable; skipping mkdocs nav parsing and using fallback structure.",
-      error.message
-    );
-    return [];
-  }
-
   // MkDocs files may include Python-specific YAML tags (for plugin settings)
   // that js-yaml cannot resolve by default. We only need `nav`, so strip known
   // unsupported tag tokens to keep parsing resilient and preserve nav ordering.
