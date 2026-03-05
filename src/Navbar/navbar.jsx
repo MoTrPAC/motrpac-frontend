@@ -185,19 +185,6 @@ export function Navbar({
             id="navbarSupportedContent"
           >
             <ul className="navbar-nav">
-              {!isAuthenticated && (
-                <li className="nav-item navItem feature-message mr-4 d-flex align-items-center">
-                  <a
-                    href="https://www.youtube.com/watch?v=0RjuKZk_2FU"
-                    className="nav-link text-muted"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <span>As Seen on PBS News Hour</span>
-                  </a>
-                  <i className="bi bi-youtube text-danger" />
-                </li>
-              )}
               {isAuthenticated && hasAccess && (
                 <li className="nav-item navItem">
                   <Link to="/dashboard" className="nav-link">
