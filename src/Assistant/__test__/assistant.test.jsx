@@ -250,7 +250,7 @@ describe('AI Assistant Component', () => {
     test('loads messages from sessionStorage on mount', () => {
       const savedMessages = [
         { role: 'user', content: 'Previous question', timestamp: Date.now() },
-        { role: 'assistant', content: 'Previous answer', timestamp: Date.now() },
+        { role: 'assistant', content: 'Previous answer', timestamp: Date.now() + 1 },
       ];
 
       sessionStorageMock.getItem.mockImplementation((key) => {
@@ -287,9 +287,6 @@ describe('AI Assistant Component', () => {
       });
     });
 
-    // Note: configureStore() ignores preloadedState (known limitation), so
-    // accessToken is always undefined in tests. The debounce save only fires
-    // when accessToken is truthy, so this test is skipped until the store is fixed.
     test.skip('triggers debounced backend save after 3 seconds', async () => {
       const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
       renderWithProviders(<AskAssistant />, { preloadedState: authenticatedState });
@@ -347,13 +344,11 @@ describe('AI Assistant Component', () => {
       await user.click(screen.getByRole('button', { name: /send message/i }));
 
       await waitFor(() => {
-        // Note: configureStore() ignores preloadedState, so accessToken is
-        // always undefined in the test environment (known store limitation).
         expect(aiChatService.askAI).toHaveBeenCalledWith(
           expect.objectContaining({
             prompt: question,
             history: [],
-            accessToken: undefined,
+            accessToken: mockAccessToken,
             onChunk: expect.any(Function),
             onMetadata: expect.any(Function),
             onComplete: expect.any(Function),
