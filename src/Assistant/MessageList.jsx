@@ -124,7 +124,7 @@ const MessageList = ({ messages, isLoading = false, messagesEndRef = null }) => 
     >
       {messages.map((msg, idx) => (
         <Message
-          key={msg.timestamp || idx}
+          key={`${msg.timestamp}-${idx}`}
           message={msg}
           isLoading={isLoading}
         />
