@@ -131,15 +131,10 @@ function resetBrowseState() {
   };
 }
 
-function selectPass1B06Data(userType = null, files = pass1b06) {
-  // Filter out RN7 files for non-internal users
-  const filteredFiles = userType === 'internal' 
-    ? files 
-    : files.filter((file) => file.reference_genome !== 'RN7');
-  
+function selectPass1B06Data(files = pass1b06) {
   return {
     type: SELECT_PASS1B_06_DATA,
-    files: filteredFiles,
+    files,
   };
 }
 
