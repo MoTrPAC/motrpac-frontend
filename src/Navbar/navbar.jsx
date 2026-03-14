@@ -384,9 +384,11 @@ export function Navbar({
                   <Link to="/glossary" className="dropdown-item">
                     Glossary
                   </Link>
-                  <Link to="/exerwise" className="dropdown-item">
-                    ExerWise
-                  </Link>
+                  {isAuthenticated && hasAccess && userType && userType === 'internal' && (
+                    <Link to="/exerwise" className="dropdown-item">
+                      ExerWise
+                    </Link>
+                  )}
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
