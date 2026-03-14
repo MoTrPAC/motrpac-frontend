@@ -1,33 +1,17 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 /**
  * InputField Component
- * Handles user input with debouncing to prevent rapid-fire requests
+ * Handles user input for the AI assistant chat
  */
 
-const InputField = ({ onSubmit, isLoading, placeholder, debounceMs = 300 }) => {
+const InputField = ({ onSubmit, isLoading, placeholder }) => {
   const [query, setQuery] = useState('');
-  const debounceTimerRef = useRef(null);
 
-  // Debounced change handler
-  const handleChange = useCallback(
-    (e) => {
-      const value = e.target.value;
-      setQuery(value);
-
-      // Clear existing timer
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
-
-      // Set new timer (debouncing prevents excessive re-renders)
-      debounceTimerRef.current = setTimeout(() => {
-        // Any additional debounced logic can go here
-      }, debounceMs);
-    },
-    [debounceMs],
-  );
+  const handleChange = useCallback((e) => {
+    setQuery(e.target.value);
+  }, []);
 
   const handleSubmit = useCallback(
     (e) => {
@@ -35,11 +19,6 @@ const InputField = ({ onSubmit, isLoading, placeholder, debounceMs = 300 }) => {
 
       const trimmedQuery = query.trim();
       if (!trimmedQuery || isLoading) return;
-
-      // Clear debounce timer
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
 
       onSubmit(trimmedQuery);
       setQuery('');
@@ -111,7 +90,6 @@ InputField.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   placeholder: PropTypes.string,
-  debounceMs: PropTypes.number,
 };
 
 export default InputField;
