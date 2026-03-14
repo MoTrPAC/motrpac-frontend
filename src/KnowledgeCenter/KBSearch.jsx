@@ -57,17 +57,18 @@ function KBSearch({ fuse, onSelect }) {
    */
   const stripMarkdown = (text) =>
     text
-      .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")   // images: ![alt](url) → alt
+      .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")    // images: ![alt](url) → alt
       .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")     // links: [text](url) → text
-      .replace(/(`{1,3})[\s\S]*?\1/g, "")          // inline/fenced code
+      .replace(/```([\s\S]*?)```/g, "$1")          // fenced code blocks: ```code``` → code
+      .replace(/`([^`]*?)`/g, "$1")                // inline code: `code` → code
       .replace(/^#{1,6}\s+/gm, "")                 // headings
       .replace(/[*_]{1,3}([^*_]+)[*_]{1,3}/g, "$1") // bold/italic
       .replace(/~~([^~]+)~~/g, "$1")               // strikethrough
       .replace(/^[>\-*+]\s+/gm, "")                // blockquotes, list markers
       .replace(/^\d+\.\s+/gm, "")                  // ordered list markers
-      .replace(/\|/g, " ")                          // table pipes
+      .replace(/\|/g, " ")                         // table pipes
       .replace(/^[-=]{3,}$/gm, "")                 // horizontal rules
-      .replace(/\s+/g, " ")                         // collapse whitespace
+      .replace(/\s+/g, " ")                        // collapse whitespace
       .trim();
 
   /**
