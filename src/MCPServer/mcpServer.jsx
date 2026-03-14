@@ -15,6 +15,7 @@ import PageTitle from '../lib/ui/pageTitle';
 export function MCPServer({ profile = {} }) {
   const [mcpToken, setMcpToken] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleGenerate = async () => {
     if (!profile.user_metadata) return;
@@ -23,6 +24,8 @@ export function MCPServer({ profile = {} }) {
 
     const host = import.meta.env.VITE_ES_PROXY_HOST;
     const accessToken = import.meta.env.VITE_ES_ACCESS_TOKEN;
+
+    setError(null);
 
     try {
       const response = await fetch(`${host}/register`, {
@@ -39,10 +42,10 @@ export function MCPServer({ profile = {} }) {
         setMcpToken(data.access_token);
         setCopied(false);
       } else {
-        console.error('Failed to generate MCP token');
+        setError('Failed to generate MCP token. Please try again later.');
       }
-    } catch (error) {
-      console.error('Error generating MCP token:', error);
+    } catch {
+      setError('Network error. Please check your connection and try again.');
     }
   };
 
@@ -91,6 +94,13 @@ export function MCPServer({ profile = {} }) {
               <button className="btn btn-primary btn mx-auto" onClick={handleGenerate}>
                 Generate MCP Access Token
               </button>
+              {error && (
+                <div className="col-12 mt-3">
+                  <div className="alert alert-danger mb-0" role="alert">
+                    {error}
+                  </div>
+                </div>
+              )}
               {mcpToken && (
                 <div className="row">
                   <div className="mt-3 mb-3 p-3 border rounded">
