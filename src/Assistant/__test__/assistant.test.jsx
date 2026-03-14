@@ -55,6 +55,7 @@ describe('AI Assistant Component', () => {
       profile: {
         user_metadata: {
           hasAccess: true,
+          userType: 'internal',
         },
       },
     },
@@ -80,6 +81,35 @@ describe('AI Assistant Component', () => {
 
   afterEach(() => {
     vi.useRealTimers();
+  });
+
+  describe('Access Control Tests', () => {
+    test('redirects unauthenticated users to homepage', () => {
+      renderWithProviders(<AskAssistant />, { preloadedState: defaultRootState });
+
+      expect(screen.queryByText(/motrpac exerwise/i)).not.toBeInTheDocument();
+    });
+
+    test('redirects non-internal users to homepage', () => {
+      const externalUserState = {
+        ...defaultRootState,
+        auth: {
+          ...defaultRootState.auth,
+          isAuthenticated: true,
+          accessToken: mockAccessToken,
+          profile: {
+            user_metadata: {
+              hasAccess: true,
+              userType: 'external',
+            },
+          },
+        },
+      };
+
+      renderWithProviders(<AskAssistant />, { preloadedState: externalUserState });
+
+      expect(screen.queryByText(/motrpac exerwise/i)).not.toBeInTheDocument();
+    });
   });
 
   describe('Component Rendering Tests', () => {
