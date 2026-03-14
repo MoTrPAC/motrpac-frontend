@@ -313,7 +313,7 @@ export function Navbar({
                   <Link to="/code-repositories" className="dropdown-item">
                     Code Repositories
                   </Link>
-                  <Link to="mcp-server" className="dropdown-item">
+                  <Link to="/mcp-server" className="dropdown-item">
                     MCP Server
                   </Link>
                   <Link to="/methods" className="dropdown-item">
