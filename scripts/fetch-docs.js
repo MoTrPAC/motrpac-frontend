@@ -226,8 +226,11 @@ async function fetchManifest() {
     const content = Buffer.from(data.content, "base64").toString("utf-8");
     return JSON.parse(content);
   } catch (error) {
-    console.warn("No docs-manifest.json found, using fallback metadata. Error: ", error.message);
-    return null;
+    if (error.message && error.message.startsWith("GitHub API 404")) {
+      console.warn("No docs-manifest.json found, using fallback metadata.");
+      return null;
+    }
+    throw error;
   }
 }
 
@@ -243,8 +246,11 @@ async function fetchMkdocsYaml() {
 
     return Buffer.from(data.content, "base64").toString("utf-8");
   } catch (error) {
-    console.warn("No mkdocs.yml found, falling back to path-based organization. Error: ", error.message);
-    return null;
+    if (error.message && error.message.startsWith("GitHub API 404")) {
+      console.warn("No mkdocs.yml found, falling back to path-based organization.");
+      return null;
+    }
+    throw error;
   }
 }
 
