@@ -30,11 +30,6 @@ const AskAssistant = () => {
   );
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
-  // Redirect unauthenticated non-internal users to homepage
-  if (!isAuthenticated || userType !== 'internal') {
-    return <Navigate to="/" />;
-  }
-
   // Get or create conversation ID (persists across page refreshes)
   const [conversationId, setConversationId] = useState(
     () => sessionStorage.getItem('motrpac-conversation-id') || uuidv4()
@@ -86,6 +81,11 @@ const AskAssistant = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  // Redirect unauthenticated non-internal users to homepage
+  if (!isAuthenticated || userType !== 'internal') {
+    return <Navigate to="/" />;
+  }
 
   // Clear chat function
   const clearChat = () => {
