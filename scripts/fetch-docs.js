@@ -371,15 +371,15 @@ function buildNavStructure(navTree) {
       route = `/knowledge-center/${category}`;
       if (subcategory) route += `/${subcategory}`;
       if (!isIndex) route += `/${file}`;
+    } else if (!isIndex) {
+      route = `/knowledge-center/${file}`;
     }
     routeByPath.set(relativePath, route);
 
-    if (!category) {
-      if (relativePath.endsWith("index.md")) homePath = relativePath;
+    if (isIndex) {
+      if (!category) homePath = relativePath;
       return;
     }
-
-    if (isIndex) return;
 
     docsByPath.set(relativePath, {
       title: fixBrandNames(title),
@@ -523,7 +523,17 @@ function buildFallbackNavStructure(files) {
 
     const { category, subcategory, slug, isIndex } = parseDocPath(file.relativePath);
     if (!category) {
-      if (isIndex) homePath = file.relativePath;
+      if (isIndex) {
+        homePath = file.relativePath;
+        continue;
+      }
+      docsByPath.set(file.relativePath, {
+        title: slugToTitle(slug),
+        category: null,
+        subcategory: null,
+        order: docOrder++,
+        slug,
+      });
       continue;
     }
 
