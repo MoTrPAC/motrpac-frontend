@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { v4 as uuidv4 } from 'uuid';
 import MessageList from './MessageList.jsx';
@@ -23,13 +24,21 @@ const AskAssistant = () => {
   const lastSavedCountRef = useRef(0);
   const saveInFlightRef = useRef(false);
 
+  // Auth state
+  const { isAuthenticated, profile, accessToken } = useSelector(
+    (state) => state.auth,
+  );
+  const userType = profile.user_metadata && profile.user_metadata.userType;
+
+  // Redirect unauthenticated non-internal users to homepage
+  if (!isAuthenticated || userType !== 'internal') {
+    return <Navigate to="/" />;
+  }
+
   // Get or create conversation ID (persists across page refreshes)
   const [conversationId, setConversationId] = useState(
     () => sessionStorage.getItem('motrpac-conversation-id') || uuidv4()
   );
-
-  // Get Auth0 token from Redux
-  const accessToken = useSelector((state) => state.auth.accessToken);
 
   // Save conversation ID to sessionStorage
   useEffect(() => {
