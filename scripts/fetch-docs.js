@@ -615,7 +615,7 @@ function stripHtmlTags(content) {
 
       // As a final safety measure, strip any remaining angle brackets so no stray
       // HTML-like tags (e.g., "<script") can survive outside of code blocks.
-      cleaned = cleaned.replace(/[<>]/g, "");
+      cleaned = cleaned.replace(/<\/?[^>]+(>|$)/g, "");
 
       return cleaned;
     })
