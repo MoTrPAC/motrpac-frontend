@@ -103,8 +103,7 @@ Software
 
 * [Node v16](https://github.com/nodejs/Release)
   * Check your version: `node --version`
-  * If the version is not 16, you can `brew install node@16` or use [nvm](<https://github>.
-       com/creationix/nvm/blob/master/README.md#installation), the Node Version Manager
+  * If the version is not 16, you can `brew install node@16` or use [nvm](https://github.com/creationix/nvm/blob/master/README.md#installation), the Node Version Manager
 
 * [React v16](https://reactjs.org/versions)
   * Storybook used to visualize individual UI components
