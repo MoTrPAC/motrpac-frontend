@@ -36,6 +36,11 @@ export const askAI = async ({
   const apiEndpoint = import.meta.env.VITE_API_RAG_SERVICE_ENDPOINT;
   const apiKey = import.meta.env.VITE_API_SERVICE_KEY;
 
+  // Add API key as a header instead of a query parameter
+  if (apiKey) {
+    headers['x-api-key'] = apiKey;
+  }
+
   // Limit history to last 10 messages to avoid payload bloat
   const recentHistory = history.slice(-10).map((m) => ({
     role: m.role === 'user' ? 'user' : 'model',
@@ -46,7 +51,7 @@ export const askAI = async ({
 
   try {
     await axios.post(
-      `${apiUrl}${apiEndpoint}?key=${apiKey}`,
+      `${apiUrl}${apiEndpoint}`,
       {
         action: 'ask',  // Explicit action (backend defaults to 'ask' if omitted)
         prompt,
