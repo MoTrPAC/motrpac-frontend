@@ -161,7 +161,7 @@ export function MCPServer({ profile = {} }) {
           <div className="col-12 m-3 p-3 bg-light rounded">
             <code className="text-dark">
               Give me an overview and key findings of the summary-level results
-              for BAG3 gene in th emuscle tissue in MoTrPAC's human sedentary
+              for BAG3 gene in the muscle tissue in MoTrPAC's human sedentary
               adults acute exercise study.
             </code>
           </div>
