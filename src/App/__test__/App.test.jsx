@@ -113,9 +113,11 @@ describe('<App /> routing (Unauthenticated)', () => {
     await waitFor(() => expect(screen.getByRole('heading', { name: /^knowledge center$/i })).toBeInTheDocument());
   });
 
-  test('loads a Knowledge Center deep-link route without 404', async () => {
+  test('matches deep wildcard route to KnowledgeCenter (mocked)', async () => {
     renderWithRouterAndStore(<App />, { route: '/knowledge-center/project-overview/studies/rat-training' });
 
+    // Verifies React Router's wildcard route matches; KnowledgeCenter is mocked
+    // so this does NOT exercise real deep-link rendering or 404 handling.
     await waitFor(() => {
       expect(screen.getByRole('heading', { name: /^knowledge center$/i })).toBeInTheDocument();
     });
