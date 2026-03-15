@@ -48,6 +48,7 @@ export const askAI = async ({
   }));
 
   let processed = 0;
+  let sseBuffer = '';
 
   try {
     await axios.post(
@@ -66,9 +67,12 @@ export const askAI = async ({
           if (!xhr) return;
 
           const responseText = xhr.responseText || '';
-          const newText = responseText.slice(processed);
+          const newText = sseBuffer + responseText.slice(processed);
           processed = responseText.length;
           const lines = newText.split('\n');
+
+          // Last element may be incomplete; buffer it for the next chunk
+          sseBuffer = lines.pop();
 
           for (const line of lines) {
             if (line.startsWith('data: ')) {
