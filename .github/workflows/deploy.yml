@@ -107,6 +107,11 @@ jobs:
           node-version: 20
           cache: yarn
 
+      - name: Enable Corepack
+        run: |
+          corepack enable
+          corepack prepare yarn@4.1.1 --activate
+
       - name: Clean input string
         run: |
           INPUT_VERSION="${{ needs.get-version-bump.outputs.increment }}"
