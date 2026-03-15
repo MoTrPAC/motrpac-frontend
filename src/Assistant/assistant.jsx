@@ -23,6 +23,7 @@ const AskAssistant = () => {
   const messagesEndRef = useRef(null);
   const lastSavedCountRef = useRef(0);
   const saveInFlightRef = useRef(false);
+  const saveVersionRef = useRef(0);
 
   // Auth state
   const { isAuthenticated, profile, accessToken } = useSelector(
@@ -34,6 +35,7 @@ const AskAssistant = () => {
   // Namespaced sessionStorage keys to prevent cross-user leakage
   const convKey = `motrpac-conversation-id-${userId}`;
   const histKey = `motrpac-chat-history-${userId}`;
+  const savedCountKey = `motrpac-saved-count-${userId}`;
 
   // Get or create conversation ID (persists across page refreshes)
   const [conversationId, setConversationId] = useState(
@@ -47,6 +49,8 @@ const AskAssistant = () => {
 
   // Reset state when user identity changes (load their conversation)
   useEffect(() => {
+    saveVersionRef.current += 1;
+
     const savedConvId = sessionStorage.getItem(convKey);
     if (savedConvId) {
       setConversationId(savedConvId);
@@ -59,7 +63,8 @@ const AskAssistant = () => {
       try {
         const parsed = JSON.parse(saved);
         setMessages(parsed);
-        lastSavedCountRef.current = parsed.length;
+        const count = parseInt(sessionStorage.getItem(savedCountKey), 10);
+        lastSavedCountRef.current = Number.isFinite(count) ? count : 0;
       } catch {
         setMessages([]);
         lastSavedCountRef.current = 0;
@@ -69,7 +74,7 @@ const AskAssistant = () => {
       lastSavedCountRef.current = 0;
     }
     saveInFlightRef.current = false;
-  }, [userId, convKey, histKey]);
+  }, [userId, convKey, histKey, savedCountKey]);
 
   // Save chat history (sessionStorage + backend with debounce)
   useEffect(() => {
@@ -79,20 +84,22 @@ const AskAssistant = () => {
     sessionStorage.setItem(histKey, JSON.stringify(messages));
 
     // Debounced save to backend (3 seconds after last message)
+    const versionAtSchedule = saveVersionRef.current;
     const timeoutId = setTimeout(async () => {
       if (accessToken && !saveInFlightRef.current) {
         saveInFlightRef.current = true;
         const offset = lastSavedCountRef.current;
         const ok = await saveConversation(conversationId, messages, accessToken, offset);
         saveInFlightRef.current = false;
-        if (ok) {
+        if (ok && saveVersionRef.current === versionAtSchedule) {
           lastSavedCountRef.current = messages.length;
+          sessionStorage.setItem(savedCountKey, String(messages.length));
         }
       }
     }, 3000);
 
     return () => clearTimeout(timeoutId);
-  }, [messages, conversationId, accessToken, histKey]);
+  }, [messages, conversationId, accessToken, histKey, savedCountKey]);
 
   // Auto-scroll to bottom when messages update
   useEffect(() => {
@@ -106,12 +113,14 @@ const AskAssistant = () => {
 
   // Clear chat function
   const clearChat = () => {
+    saveVersionRef.current += 1;
     setMessages([]);
     setError(null);
     const newId = uuidv4();
     setConversationId(newId);
     sessionStorage.setItem(convKey, newId);
     sessionStorage.removeItem(histKey);
+    sessionStorage.removeItem(savedCountKey);
     lastSavedCountRef.current = 0;
     saveInFlightRef.current = false;
   };
