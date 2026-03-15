@@ -50,7 +50,7 @@ const InputField = ({ onSubmit, isLoading, placeholder }) => {
           disabled={isLoading}
           required
           aria-label="Message input"
-          aria-describedby="send-button"
+          aria-describedby="input-shortcut-tip"
         />
         <div className="input-group-append">
           <button
@@ -78,7 +78,7 @@ const InputField = ({ onSubmit, isLoading, placeholder }) => {
           </button>
         </div>
       </div>
-      <small className="form-text text-muted mt-2">
+      <small id="input-shortcut-tip" className="form-text text-muted mt-2">
         <i className="bi bi-keyboard mr-1" aria-hidden="true" />
         Tip: Press Cmd+Enter (Mac) or Ctrl+Enter (Windows) to send
       </small>
