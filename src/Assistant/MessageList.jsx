@@ -56,7 +56,7 @@ const Message = ({ message, isLoading = false }) => {
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  code({ node: _node, inline, className, children, ...props }) {
+                  code({ inline, className, children, ...props }) {
                     const match = /language-(\w+)/.exec(className || '');
                     return !inline && match ? (
                       <SyntaxHighlighter
@@ -73,7 +73,7 @@ const Message = ({ message, isLoading = false }) => {
                       </code>
                     );
                   },
-                  a({ node: _node, children, ...props }) {
+                  a({ children, ...props }) {
                     return (
                       <a
                         {...props}
