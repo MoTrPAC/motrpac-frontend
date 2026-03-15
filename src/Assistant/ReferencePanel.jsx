@@ -39,15 +39,13 @@ const ReferencePanel = ({ isVisible = false, onToggle = () => {} }) => {
         <div className="text-center text-muted py-5">
           <i className="bi bi-journal-code" style={{ fontSize: '3rem' }} />
           <p className="mt-3">Reference panel coming soon!</p>
-          <small>
-            Future features:
-            <ul className="list-unstyled mt-2">
-              <li>• Documentation references</li>
-              <li>• Code snippets</li>
-              <li>• Data visualizations</li>
-              <li>• Related resources</li>
-            </ul>
-          </small>
+          <p className="small mb-2">Future features:</p>
+          <ul className="mt-2">
+            <li>Documentation references</li>
+            <li>Code snippets</li>
+            <li>Data visualizations</li>
+            <li>Related resources</li>
+          </ul>
         </div>
       </div>
     </aside>
