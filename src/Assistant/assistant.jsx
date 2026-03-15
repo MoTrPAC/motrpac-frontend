@@ -29,37 +29,54 @@ const AskAssistant = () => {
     (state) => state.auth,
   );
   const userType = profile.user_metadata && profile.user_metadata.userType;
+  const userId = profile.nickname || profile.email || '';
+
+  // Namespaced sessionStorage keys to prevent cross-user leakage
+  const convKey = `motrpac-conversation-id-${userId}`;
+  const histKey = `motrpac-chat-history-${userId}`;
 
   // Get or create conversation ID (persists across page refreshes)
   const [conversationId, setConversationId] = useState(
-    () => sessionStorage.getItem('motrpac-conversation-id') || uuidv4()
+    () => sessionStorage.getItem(convKey) || uuidv4()
   );
 
   // Save conversation ID to sessionStorage
   useEffect(() => {
-    sessionStorage.setItem('motrpac-conversation-id', conversationId);
-  }, [conversationId]);
+    sessionStorage.setItem(convKey, conversationId);
+  }, [conversationId, convKey]);
 
-  // Load chat history from sessionStorage on mount
+  // Reset state when user identity changes (load their conversation)
   useEffect(() => {
-    const saved = sessionStorage.getItem('motrpac-chat-history');
+    const savedConvId = sessionStorage.getItem(convKey);
+    if (savedConvId) {
+      setConversationId(savedConvId);
+    } else {
+      setConversationId(uuidv4());
+    }
+
+    const saved = sessionStorage.getItem(histKey);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
         setMessages(parsed);
         lastSavedCountRef.current = parsed.length;
       } catch {
-        // Invalid saved data, ignore
+        setMessages([]);
+        lastSavedCountRef.current = 0;
       }
+    } else {
+      setMessages([]);
+      lastSavedCountRef.current = 0;
     }
-  }, []);
+    saveInFlightRef.current = false;
+  }, [userId, convKey, histKey]);
 
   // Save chat history (sessionStorage + backend with debounce)
   useEffect(() => {
     if (messages.length === 0) return;
 
     // Save to sessionStorage immediately (fast local backup)
-    sessionStorage.setItem('motrpac-chat-history', JSON.stringify(messages));
+    sessionStorage.setItem(histKey, JSON.stringify(messages));
 
     // Debounced save to backend (3 seconds after last message)
     const timeoutId = setTimeout(async () => {
@@ -75,7 +92,7 @@ const AskAssistant = () => {
     }, 3000);
 
     return () => clearTimeout(timeoutId);
-  }, [messages, conversationId, accessToken]);
+  }, [messages, conversationId, accessToken, histKey]);
 
   // Auto-scroll to bottom when messages update
   useEffect(() => {
@@ -93,8 +110,8 @@ const AskAssistant = () => {
     setError(null);
     const newId = uuidv4();
     setConversationId(newId);
-    sessionStorage.setItem('motrpac-conversation-id', newId);
-    sessionStorage.removeItem('motrpac-chat-history');
+    sessionStorage.setItem(convKey, newId);
+    sessionStorage.removeItem(histKey);
     lastSavedCountRef.current = 0;
     saveInFlightRef.current = false;
   };

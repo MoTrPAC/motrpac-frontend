@@ -53,6 +53,7 @@ describe('AI Assistant Component', () => {
       isAuthenticated: true,
       accessToken: mockAccessToken,
       profile: {
+        nickname: 'testUser1',
         user_metadata: {
           hasAccess: true,
           userType: 'internal',
@@ -251,7 +252,7 @@ describe('AI Assistant Component', () => {
 
       expect(screen.queryByText('Test question')).not.toBeInTheDocument();
       expect(screen.getByText(/start a conversation/i)).toBeInTheDocument();
-      expect(sessionStorageMock.removeItem).toHaveBeenCalledWith('motrpac-chat-history');
+      expect(sessionStorageMock.removeItem).toHaveBeenCalledWith('motrpac-chat-history-testUser1');
     });
 
     test('keyboard shortcut (Cmd+Enter) submits question', async () => {
@@ -284,7 +285,7 @@ describe('AI Assistant Component', () => {
       ];
 
       sessionStorageMock.getItem.mockImplementation((key) => {
-        if (key === 'motrpac-chat-history') return JSON.stringify(savedMessages);
+        if (key === 'motrpac-chat-history-testUser1') return JSON.stringify(savedMessages);
         return null;
       });
 
@@ -311,7 +312,7 @@ describe('AI Assistant Component', () => {
 
       await waitFor(() => {
         expect(sessionStorageMock.setItem).toHaveBeenCalledWith(
-          'motrpac-chat-history',
+          'motrpac-chat-history-testUser1',
           expect.stringContaining('New question')
         );
       });
