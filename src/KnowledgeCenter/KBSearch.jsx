@@ -114,17 +114,19 @@ function KBSearch({ fuse, onSelect }) {
 
       if (!text) return "";
 
-      const textSnippet = buildSnippetFromText(text);
-      if (textSnippet) return textSnippet;
-
+      // Use Fuse's match indices for a snippet centered on the fuzzy hit
       const [start, end] = match.indices[0];
       const snippetStart = Math.max(0, start - SNIPPET_RADIUS);
       const snippetEnd = Math.min(text.length, end + 1 + SNIPPET_RADIUS);
       const prefix = snippetStart > 0 ? "…" : "";
       const suffix = snippetEnd < text.length ? "…" : "";
       const raw = text.slice(snippetStart, snippetEnd);
+      const rangeSnippet = prefix + stripMarkdown(raw) + suffix;
 
-      return prefix + stripMarkdown(raw) + suffix;
+      if (rangeSnippet) return rangeSnippet;
+
+      // Fall back to literal query search / first 120 chars
+      return buildSnippetFromText(text);
     };
 
     // Prefer content snippet; fall back to first available matched key (e.g., title/tags)
