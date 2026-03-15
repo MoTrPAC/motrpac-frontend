@@ -116,7 +116,7 @@ export function MCPServer({ profile = {} }) {
             Claude Desktop:
           </h4>
           <div className="col-12 m-3 p-3 bg-light rounded">
-            <pre className="text-muted">// claude_desktop_config.json</pre>
+            <pre className="text-muted">{'// claude_desktop_config.json'}</pre>
             <pre>
               {JSON.stringify({
                 mcpServers: {
@@ -138,7 +138,7 @@ export function MCPServer({ profile = {} }) {
             Claude Code:
           </h4>
           <div className="col-12 m-3 p-3 bg-light rounded">
-            <pre className="text-muted">// Run the following command line and then `claude mcp list` to verify</pre>
+            <pre className="text-muted">{'// Run the following command line and then `claude mcp list` to verify'}</pre>
             <pre>
               {[
                 'claude mcp add motrpac-search \\',
@@ -152,7 +152,7 @@ export function MCPServer({ profile = {} }) {
             GitHub Copilot in VS Code:
           </h4>
           <div className="col-12 m-3 p-3 bg-light rounded">
-            <pre className="text-muted">// ../Code/User/mcp.json</pre>
+            <pre className="text-muted">{'// ../Code/User/mcp.json'}</pre>
             <pre>
               {JSON.stringify({
                 servers: {
