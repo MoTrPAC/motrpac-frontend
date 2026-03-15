@@ -60,8 +60,13 @@ export function MCPServer({ profile = {} }) {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(mcpToken)
-      .then(() => setCopied(true))
-      .catch((err) => console.error('Failed to copy token:', err));
+      .then(() => {
+        setCopied(true);
+        setError(null);
+      })
+      .catch(() => {
+        setError('Failed to copy token. Please copy it manually.');
+      });
   };
 
   return (
