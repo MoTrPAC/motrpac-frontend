@@ -16,16 +16,23 @@ export function MCPServer({ profile = {} }) {
   const [mcpToken, setMcpToken] = useState(null);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const handleGenerate = async () => {
+    if (isGenerating) return;
     if (!profile.user_metadata) return;
 
     const { email, name } = profile.user_metadata;
+    if (!email || !name) {
+      setError('User profile is missing required information. Please ensure your account has a valid email and name.');
+      return;
+    }
 
     const host = import.meta.env.VITE_ES_PROXY_HOST;
     const accessToken = import.meta.env.VITE_ES_ACCESS_TOKEN;
 
     setError(null);
+    setIsGenerating(true);
 
     try {
       const response = await fetch(`${host}/register`, {
@@ -46,6 +53,8 @@ export function MCPServer({ profile = {} }) {
       }
     } catch {
       setError('Network error. Please check your connection and try again.');
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -91,7 +100,7 @@ export function MCPServer({ profile = {} }) {
           </p>
           {profile && profile.user_metadata && (
             <div className="mcp-server-token-container col-12 row mt-3 mb-4">
-              <button className="btn btn-primary btn mx-auto" onClick={handleGenerate}>
+              <button className="btn btn-primary btn mx-auto" onClick={handleGenerate} disabled={isGenerating}>
                 Generate MCP Access Token
               </button>
               {error && (
