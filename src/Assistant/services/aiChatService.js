@@ -111,7 +111,7 @@ export const askAI = async ({
  * @returns {Promise<boolean>}
  */
 export const saveConversation = async (conversationId, messages, accessToken, offset = 0) => {
-  if (!conversationId || !messages || messages.length === 0) {
+  if (!conversationId || !messages || messages.length === 0 || !accessToken) {
     return false;
   }
 
