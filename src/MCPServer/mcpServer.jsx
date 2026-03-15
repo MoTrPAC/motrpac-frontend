@@ -78,7 +78,7 @@ export function MCPServer({ profile = {} }) {
           <p className="col-12 mt-3">
             To access the MCP server, you will need to generate an access token.
             If you have an account on the MoTrPAC Data Hub, you can login and
-            generate a token on this page by clicking the "Generate Access Token"
+            generate a token on this page by clicking the &quot;Generate Access Token&quot;
             button below. If you do not have an account, you can create one by
             {' '}
             <Link to="/data-access">signing up</Link>
@@ -171,7 +171,7 @@ export function MCPServer({ profile = {} }) {
           <div className="col-12 m-3 p-3 bg-light rounded">
             <code className="text-dark">
               Give me an overview and key findings of the summary-level results
-              for BAG3 gene in the muscle tissue in MoTrPAC's human sedentary
+              for BAG3 gene in the muscle tissue in MoTrPAC&apos;s human sedentary
               adults acute exercise study.
             </code>
           </div>
