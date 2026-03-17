@@ -48,7 +48,17 @@ export function MCPServer({ profile = {} }) {
         const data = await response.json();
         setMcpToken(data.access_token);
         setCopied(false);
+        if (typeof data?.access_token === 'string' && data.access_token.length > 0) {
+          setMcpToken(data.access_token);
+          setCopied(false);
+        } else {
+          setMcpToken(null);
+          setCopied(false);
+          setError('Token generation response was invalid. Please try again.');
+        }
       } else {
+        setMcpToken(null);
+        setCopied(false);
         setError('Failed to generate MCP token. Please try again later.');
       }
     } catch {
@@ -65,6 +75,7 @@ export function MCPServer({ profile = {} }) {
         setError(null);
       })
       .catch(() => {
+        setCopied(false);
         setError('Failed to copy token. Please copy it manually.');
       });
   };
