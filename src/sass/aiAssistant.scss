@@ -1,0 +1,63 @@
+@use "sass:color";
+
+.ai-assistant {
+  height: calc(100vh - 220px);
+
+  .assistant-header-icon {
+    background-color: transparent;
+    background-image: url('../assets/icons/person-running-white.svg');
+    background-size: 88%;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+
+    .bi {
+      display: none;
+    }
+  }
+}
+
+.messages-list {
+  .message-item {
+    .message-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background-color: color.adjust(#2094e8, $lightness: 40%, $space: hsl);
+
+      .bi {
+        font-size: 1.75rem;
+      }
+    }
+
+    &.assistant {
+      .message-icon {
+        background-color: #fff;
+        background-image: url('https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/motrpac-m.png');
+        background-size: 75%;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        .bi {
+          display: none;
+        }
+      }
+    }
+
+    .message-content-container {
+      border-radius: 10px;
+      max-width: 80%;
+    }
+  }
+}
+
+// Typing indicator
+.assistant-typing-indicator {
+  display: block;
+  height: 54px;
+  width: auto;
+}

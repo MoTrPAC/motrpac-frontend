@@ -99,8 +99,9 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
             </Link>
           </nav>
 
-          <a href="#join-office-hour" className="office-hour-link">
-            Join our monthly open office event to learn more
+          <a href="https://www.youtube.com/watch?v=0RjuKZk_2FU" className="pbs-interview-link" target="_blank" rel="noreferrer">
+            <span>As Seen on PBS News Hour</span>
+            <i className="bi bi-youtube text-danger" />
           </a>
 
           <p className="compliance-notice">

@@ -87,10 +87,22 @@ export function CodeRepositories() {
             </li>
           ))}
         </ul>
-        {(componentName === 'QC' || componentName === 'Analysis') && (
+        {componentName === 'Analysis' && (
           <>
           <h6 className="font-weight-bold border-bottom mt-4">Acute Exercise in Human Sed Adults</h6>
-          <p><i>Coming Soon</i></p>
+            <ul className="component-repos">
+              <li>
+                <i className="bi-github repo-icon" />
+                <a
+                  className="ml-1"
+                  href="https://github.com/MoTrPAC/MotrpacHumanPreSuspensionAnalysis"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  MotrpacHumanPreSuspensionAnalysis
+                </a>
+              </li>
+            </ul>
           </>
         )}
       </div>

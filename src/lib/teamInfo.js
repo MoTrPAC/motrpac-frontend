@@ -85,11 +85,6 @@ const teamInfo = {
       image: `${imgSourceUrl}Nik.jpg`,
     },
     {
-      name: 'Laurens van de Wiel, Ph.D.',
-      title: 'Postdoctoral Scholar',
-      image: `${imgSourceUrl}Laurens.jpg`,
-    },
-    {
       name: 'Terra Coakley',
       title: 'Administrative Director',
       image: `${imgSourceUrl}Terra.jpg`,
@@ -114,6 +109,11 @@ const teamInfo = {
       title: 'Bioinformatics Engineer',
       image: `${imgSourceUrl}Sasha.jpg`,
     },
+    {
+      name: 'Crystal Han',
+      title: 'Bioinformatics Engineer',
+      image: `${imgSourceUrl}Crystal.jpg`,
+    },
   ],
   CoIs: [
     {
@@ -133,6 +133,11 @@ const teamInfo = {
     },
   ],
   Alumni: [
+    {
+      name: 'Laurens van de Wiel, Ph.D.',
+      title: 'Postdoctoral Scholar',
+      image: `${imgSourceUrl}Laurens.jpg`,
+    },
     {
       name: 'Archana Raja, M.S.',
       title: 'Alumni',

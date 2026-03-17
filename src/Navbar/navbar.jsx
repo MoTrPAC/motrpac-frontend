@@ -313,6 +313,9 @@ export function Navbar({
                   <Link to="/code-repositories" className="dropdown-item">
                     Code Repositories
                   </Link>
+                  <Link to="/mcp-server" className="dropdown-item">
+                    MCP Server
+                  </Link>
                   <Link to="/methods" className="dropdown-item">
                     Methods
                   </Link>
@@ -363,6 +366,9 @@ export function Navbar({
                   className="dropdown-menu"
                   aria-labelledby="helpNavbarItemMenuLink"
                 >
+                  <Link to="/knowledge-center" className="dropdown-item">
+                    Knowledge Center
+                  </Link>
                   <Link to="/project-overview" className="dropdown-item">
                     Project Overview
                   </Link>
@@ -378,6 +384,11 @@ export function Navbar({
                   <Link to="/glossary" className="dropdown-item">
                     Glossary
                   </Link>
+                  {isAuthenticated && hasAccess && userType && userType === 'internal' && (
+                    <Link to="/exerwise" className="dropdown-item">
+                      ExerWise
+                    </Link>
+                  )}
                 </div>
               </li>
               <li className="nav-item navItem dropdown">

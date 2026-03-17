@@ -163,23 +163,31 @@ $img-base-url: 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/im
   }
 }
 
-.office-hour-link {
+.pbs-interview-link {
   display: inline-block;
   border: 2px solid #fff;
-  border-radius: 1.4rem;
+  border-radius: 1.65rem;
   margin-top: 0.75rem;
-  padding: 0.3rem 1.55rem 0.35rem;
+  padding: 0.3rem 1.55rem 0.4rem;
   color: #fff;
   @include fluid-text(1rem, 1.8vw, 1.35rem);
   font-weight: 400;
   text-decoration: none;
   text-shadow: 0 0.15em 0.15em rgba(0, 0, 0, 0.8);
-  box-shadow: inset 0 3rem rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 4rem rgba(255, 255, 255, 0.22);
   transition: text-shadow 0.25s ease;
+
+  .bi {
+    font-size: 1.5rem;
+    margin-left: 0.6rem;
+    top: 0.13rem;
+    position: relative;
+  }
 
   &:hover {
     text-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 1);
     color: #fff;
+    text-decoration: none;
   }
 }
 
