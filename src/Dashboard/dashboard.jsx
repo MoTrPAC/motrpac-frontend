@@ -33,64 +33,52 @@ export function Dashboard({
 
       {userType && userType === 'internal' && (
         <div className="jumbotron jumbotron-fluid alert-data-release">
-          <div className="container">
-            <h1 className="highlight-title display-1 text-center mb-4">
+          <div className="w-75 mx-auto">
+            <h1 className="highlight-title display-2 text-center mb-4">
               <i className="bi bi-rocket-takeoff mr-3" />
               <span>Available Now!</span>
             </h1>
             <div className="row">
-              <div className="col-md-6 lead d-flex align-items-start">
+              <div className="col-md-4 lead d-flex align-items-start">
                 <div className="data-release-icon mr-2">
                   <span className="material-icons">
-                    person
+                    insights
                   </span>
                 </div>
                 <div className="data-release-icon mr-1">
-                  <span className="data-release-text">
-                    The pre-COVID human sedentary adults dataset has been made available
-                    to consortium users. You may
-                    {' '}
-                    <Link to="/data-download">download them</Link>
-                    {' '}
-                    or
-                    {' '}
-                    <Link to="/search">explore the differential abundance</Link>
-                    {' '}
-                    in the dataset. Please refer to the
-                    {' '}
-                    <a href={import.meta.env.VITE_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
-                      Consortium Release document
-                    </a>
-                    {' '}
-                    for more information on this dataset.
-                  </span>
+                  <h3>Human Sample Data Tracker</h3>
+                  <div className="data-release-text mb-3">
+                    Stay informed on the latest data availability of human omic sample data across assays and tissue types through their lifecycle 
+                  </div>
+                  <Link to="/sample-data-tracker" className="btn btn-primary">Learn More</Link>
                 </div>
               </div>
-              <div className="col-md-6 lead d-flex align-items-start">
+              <div className="col-md-4 lead d-flex align-items-start">
                 <div className="data-release-icon mr-2">
                   <span className="material-icons">
-                    pest_control_rodent
+                    auto_stories
                   </span>
                 </div>
                 <div className="data-release-icon mr-1">
-                  <span className="data-release-text">
-                    The consortium release of young adult rats acute exercise data is also
-                    accessible now. Users may
-                    {' '}
-                    <Link to="/data-download">download them</Link>
-                    {' '}
-                    or
-                    {' '}
-                    <Link to="/search">explore the differential abundance</Link>
-                    {' '}
-                    in the dataset. Please refer to the
-                    {' '}
-                    <a href="https://docs.google.com/document/d/1PlWzZ6SPMX7SeW8TxeDKEfnACrG2YOiZclDsw2UBs84/edit?tab=t.0#heading=h.nizg0n7kpig1" target="_blank" rel="noopener noreferrer">
-                      Consortium Release document
-                    </a>
-                    {' '}
-                    for more information on this dataset.
+                  <h3>Knowledge Center</h3>
+                  <div className="data-release-text mb-3">
+                    Dive into the comprehensive documentation on the end-to-end lifecycle of MoTrPAC data from submission and processing to analysis and public release
+                  </div>
+                  <Link to="/knowledge-center" className="btn btn-primary">Learn More</Link>
+                </div>
+              </div>
+              <div className="col-md-4 lead d-flex align-items-start">
+                <div className="data-release-icon mr-2">
+                  <span className="material-icons">
+                    auto_awesome
                   </span>
+                </div>
+                <div className="data-release-icon mr-1">
+                  <h3>AI Assistant: <i>ExerWise</i></h3>
+                  <div className="data-release-text mb-3">
+                    Find answers quickly from <i>ExerWise</i>, an AI-powered assistant on topics ranging from data and study designs to processing pipelines and analysis results
+                  </div>
+                  <Link to="/exerwise" className="btn btn-primary">Learn More</Link>
                 </div>
               </div>
             </div>
