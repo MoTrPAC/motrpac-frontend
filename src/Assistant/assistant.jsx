@@ -213,7 +213,7 @@ const AskAssistant = () => {
               <div>
                 <h1 className="h3 card-title mb-0 d-flex align-items-center">
                   <div
-                    className="assistant-header-icon mr-1" aria-hidden="true"
+                    className="assistant-header-icon mr-2" aria-hidden="true"
                   >
                     <i className="bi bi-robot text-light" />
                   </div>
