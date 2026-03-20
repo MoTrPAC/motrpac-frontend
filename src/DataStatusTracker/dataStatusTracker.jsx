@@ -30,7 +30,7 @@ export function DataStatusTracker({ profile }) {
       </Helmet>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-2 page-header">
         <div className="page-title">
-          <h1 className="mb-0">Human Assay Data Status</h1>
+          <h1 className="mb-0">Human Sample Data Tracker</h1>
           <p className="text-muted mb-0 small">Last Updated: {generatedDate}</p>
         </div>
       </div>
