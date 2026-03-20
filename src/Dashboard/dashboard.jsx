@@ -42,15 +42,15 @@ export function Dashboard({
               <div className="col-md-4 lead d-flex align-items-start">
                 <div className="feature-highlight-icon mr-3">
                   <span className="material-icons" aria-hidden="true">
-                    insights
+                    auto_awesome
                   </span>
                 </div>
                 <div className="feature-highlight-content mr-1">
-                  <h3>Human Sample Data Tracker</h3>
+                  <h3>AI Assistant: <i>ExerWise</i></h3>
                   <div className="data-release-text mb-3">
-                    Stay informed on the latest data availability of human omic sample data across assays and tissue types through their lifecycle
+                    Find answers quickly from <i>ExerWise</i>, an AI-powered assistant on topics ranging from data and study designs to processing pipelines and analysis results
                   </div>
-                  <Link to="/sample-data-tracker" className="btn btn-primary">Learn More</Link>
+                  <Link to="/exerwise" className="btn btn-primary">Learn More</Link>
                 </div>
               </div>
               <div className="col-md-4 lead d-flex align-items-start">
@@ -70,15 +70,15 @@ export function Dashboard({
               <div className="col-md-4 lead d-flex align-items-start">
                 <div className="feature-highlight-icon mr-3">
                   <span className="material-icons" aria-hidden="true">
-                    auto_awesome
+                    insights
                   </span>
                 </div>
                 <div className="feature-highlight-content mr-1">
-                  <h3>AI Assistant: <i>ExerWise</i></h3>
+                  <h3>Human Sample Data Tracker</h3>
                   <div className="data-release-text mb-3">
-                    Find answers quickly from <i>ExerWise</i>, an AI-powered assistant on topics ranging from data and study designs to processing pipelines and analysis results
+                    Stay informed on the latest data availability of human omic sample data across assays and tissue types through their lifecycle
                   </div>
-                  <Link to="/exerwise" className="btn btn-primary">Learn More</Link>
+                  <Link to="/sample-data-tracker" className="btn btn-primary">Learn More</Link>
                 </div>
               </div>
             </div>
