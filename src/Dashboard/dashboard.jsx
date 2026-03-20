@@ -34,13 +34,13 @@ export function Dashboard({
       {userType && userType === 'internal' && (
         <div className="jumbotron jumbotron-fluid alert-data-release">
           <div className="w-75 mx-auto">
-            <h1 className="highlight-title display-2 text-center mb-4">
-              <i className="bi bi-rocket-takeoff mr-3" />
-              <span>Available Now!</span>
+            <h1 className="highlight-title display-3 text-center mb-5">
+              <i className="bi bi-fire mr-3" />
+              <span>What's New</span>
             </h1>
             <div className="row">
               <div className="col-md-4 lead d-flex align-items-start">
-                <div className="data-release-icon mr-2">
+                <div className="data-release-icon mr-3">
                   <span className="material-icons">
                     insights
                   </span>
@@ -54,7 +54,7 @@ export function Dashboard({
                 </div>
               </div>
               <div className="col-md-4 lead d-flex align-items-start">
-                <div className="data-release-icon mr-2">
+                <div className="data-release-icon mr-3">
                   <span className="material-icons">
                     auto_stories
                   </span>
@@ -68,7 +68,7 @@ export function Dashboard({
                 </div>
               </div>
               <div className="col-md-4 lead d-flex align-items-start">
-                <div className="data-release-icon mr-2">
+                <div className="data-release-icon mr-3">
                   <span className="material-icons">
                     auto_awesome
                   </span>
