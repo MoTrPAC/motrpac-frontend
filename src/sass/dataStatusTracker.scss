@@ -1,0 +1,12 @@
+.dataStatusTrackerPage {
+  .data-status-legend-text {
+    font-size: 13px;
+    max-width: 900px;
+    margin: 0 0 6px;
+  }
+
+  .data-status-chart-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+}
