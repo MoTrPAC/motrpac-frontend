@@ -313,8 +313,9 @@ export function Navbar({
                   <Link to="/code-repositories" className="dropdown-item">
                     Code Repositories
                   </Link>
-                  <Link to="/mcp-server" className="dropdown-item">
-                    MCP Server
+                  <Link to="/mcp-server" className="dropdown-item has-icon">
+                    <span>MCP Server</span>
+                    <i className="material-icons dropdown-item-icon">auto_awesome</i>
                   </Link>
                   <Link to="/methods" className="dropdown-item">
                     Methods
@@ -385,8 +386,9 @@ export function Navbar({
                     Glossary
                   </Link>
                   {isAuthenticated && hasAccess && userType && userType === 'internal' && (
-                    <Link to="/exerwise" className="dropdown-item">
-                      ExerWise
+                    <Link to="/exerwise" className="dropdown-item has-icon">
+                      <span>ExerWise</span>
+                      <i className="material-icons dropdown-item-icon">auto_awesome</i>
                     </Link>
                   )}
                 </div>
