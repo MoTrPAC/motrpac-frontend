@@ -268,6 +268,9 @@ const AskAssistant = () => {
                     Example: &ldquo;Give me a brief summary of the MoTrPAC rats
                     endurance training study.&rdquo;
                   </small>
+                  <small className="d-block mt-3">
+                    (ExerWise only provides information within the scope of MoTrPAC data, study designs, processing pipelines, and analysis results.)
+                  </small>
                 </div>
               ) : (
                 <MessageList
