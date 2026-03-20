@@ -40,26 +40,26 @@ export function Dashboard({
             </h1>
             <div className="row">
               <div className="col-md-4 lead d-flex align-items-start">
-                <div className="data-release-icon mr-3">
+                <div className="feature-highlight-icon mr-3">
                   <span className="material-icons">
                     insights
                   </span>
                 </div>
-                <div className="data-release-icon mr-1">
+                <div className="feature-highlight-content mr-1">
                   <h3>Human Sample Data Tracker</h3>
                   <div className="data-release-text mb-3">
-                    Stay informed on the latest data availability of human omic sample data across assays and tissue types through their lifecycle 
+                    Stay informed on the latest data availability of human omic sample data across assays and tissue types through their lifecycle
                   </div>
                   <Link to="/sample-data-tracker" className="btn btn-primary">Learn More</Link>
                 </div>
               </div>
               <div className="col-md-4 lead d-flex align-items-start">
-                <div className="data-release-icon mr-3">
+                <div className="feature-highlight-icon mr-3">
                   <span className="material-icons">
                     auto_stories
                   </span>
                 </div>
-                <div className="data-release-icon mr-1">
+                <div className="feature-highlight-content mr-1">
                   <h3>Knowledge Center</h3>
                   <div className="data-release-text mb-3">
                     Dive into the comprehensive documentation on the end-to-end lifecycle of MoTrPAC data from submission and processing to analysis and public release
@@ -68,12 +68,12 @@ export function Dashboard({
                 </div>
               </div>
               <div className="col-md-4 lead d-flex align-items-start">
-                <div className="data-release-icon mr-3">
+                <div className="feature-highlight-icon mr-3">
                   <span className="material-icons">
                     auto_awesome
                   </span>
                 </div>
-                <div className="data-release-icon mr-1">
+                <div className="feature-highlight-content mr-1">
                   <h3>AI Assistant: <i>ExerWise</i></h3>
                   <div className="data-release-text mb-3">
                     Find answers quickly from <i>ExerWise</i>, an AI-powered assistant on topics ranging from data and study designs to processing pipelines and analysis results
