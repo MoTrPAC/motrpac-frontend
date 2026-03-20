@@ -19,5 +19,15 @@
         margin-left: 0.35rem;
       }
     }
+
+    .dropdown-item.has-icon {
+      display: inline-flex;
+      align-items: center;
+
+      .dropdown-item-icon {
+        font-size: 1.05rem;
+        margin-left: 0.35rem;
+      }
+    }
   }
 }

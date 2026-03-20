@@ -74,6 +74,9 @@ const Glossary = lazy(() => import('../Glossary/glossaryPage'));
 const AskAssistant = lazy(() => import('../Assistant/assistant'));
 const MCPServer = lazy(() => import('../MCPServer/mcpServer'));
 const KnowledgeCenter = lazy(() => import('../KnowledgeCenter/KnowledgeCenter'));
+const DataStatusTrackerConnected = lazy(
+  () => import('../DataStatusTracker/dataStatusTracker'),
+);
 
 function App({ history = History }) {
   return (
@@ -144,6 +147,10 @@ function App({ history = History }) {
                   <Route
                     path="/biospecimen-summary"
                     element={<BiospecimenSummary/>}
+                  />
+                  <Route
+                    path="/sample-data-tracker"
+                    element={<DataStatusTrackerConnected/>}
                   />
                 </Route>
                 <Route

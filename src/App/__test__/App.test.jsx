@@ -36,6 +36,23 @@ vi.mock('../../KnowledgeCenter/KBTableOfContents', () => ({
   default: () => <div data-testid="mock-kb-toc" />,
 }));
 
+vi.mock('../../DataStatusTracker/dataStatusTracker', async () => {
+  const { useSelector } = await vi.importActual('react-redux');
+  const { Navigate } = await vi.importActual('react-router-dom');
+
+  function MockDataStatusTracker() {
+    // Mirror the real component's access control logic
+    const profile = useSelector((state) => state.auth.profile);
+    const userType = profile?.user_metadata?.userType;
+    if (!profile || userType === 'external') {
+      return <Navigate to="/dashboard" />;
+    }
+    return <div>Human Sample Data Tracker</div>;
+  }
+
+  return { default: MockDataStatusTracker };
+});
+
 // Reset browser history before each test to avoid test isolation issues
 beforeEach(() => {
   window.history.pushState({}, '', '/');
@@ -170,5 +187,31 @@ describe('<App /> routing (Authenticated)', () => {
     // "Useful Links" appears in both navbar and page content, so expect at least 2 matches
     const elements = await screen.findAllByText(/useful links/i);
     expect(elements.length).toBeGreaterThanOrEqual(2);
+  });
+
+  test('loads the sample data tracker page at /sample-data-tracker for internal user', async () => {
+    renderWithRouterAndStore(<App />, { route: '/sample-data-tracker', preloadedState: preloadedAuthState });
+    expect(await screen.findByText(/human sample data tracker/i)).toBeInTheDocument();
+  });
+
+  test('redirects external user from /sample-data-tracker to /dashboard', async () => {
+    const externalUserState = {
+      auth: {
+        isAuthenticated: true,
+        isFetching: false,
+        profile: {
+          ...testUser,
+          user_metadata: {
+            ...testUser.user_metadata,
+            userType: 'external',
+          },
+        },
+      },
+    };
+    renderWithRouterAndStore(<App />, { route: '/sample-data-tracker', preloadedState: externalUserState });
+    // External users should be redirected away — the tracker content should not appear
+    await waitFor(() => {
+      expect(screen.queryByText(/human sample data tracker/i)).not.toBeInTheDocument();
+    });
   });
 });

@@ -213,7 +213,7 @@ const AskAssistant = () => {
               <div>
                 <h1 className="h3 card-title mb-0 d-flex align-items-center">
                   <div
-                    className="assistant-header-icon mr-1" aria-hidden="true"
+                    className="assistant-header-icon mr-2" aria-hidden="true"
                   >
                     <i className="bi bi-robot text-light" />
                   </div>
@@ -267,6 +267,9 @@ const AskAssistant = () => {
                   <small>
                     Example: &ldquo;Give me a brief summary of the MoTrPAC rats
                     endurance training study.&rdquo;
+                  </small>
+                  <small className="d-block mt-3">
+                    (ExerWise only provides information within the scope of MoTrPAC data, study designs, processing pipelines, and analysis results.)
                   </small>
                 </div>
               ) : (
