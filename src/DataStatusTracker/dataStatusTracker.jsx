@@ -11,14 +11,16 @@ import '@styles/dataStatusTracker.scss';
 
 const Plot = createPlotlyComponent(Plotly);
 
+const DEFAULT_PLOT_HEIGHT_PX = 3126;
+
 /**
  * Renders the Human Assay Data Status Tracker page.
  * Internal/consortium users only.
  */
 export function DataStatusTracker({ profile }) {
-  const userType = profile.user_metadata && profile.user_metadata.userType;
+  const userType = profile?.user_metadata?.userType;
 
-  if (userType === 'external') {
+  if (!profile || userType === 'external') {
     return <Navigate to="/dashboard" />;
   }
 
@@ -51,7 +53,7 @@ export function DataStatusTracker({ profile }) {
           }}
           config={plotConfig}
           useResizeHandler
-          style={{ width: '100%', height: `${plotLayout.height || 3126}px` }}
+          style={{ width: '100%', height: `${plotLayout.height || DEFAULT_PLOT_HEIGHT_PX}px` }}
         />
       </div>
     </div>
