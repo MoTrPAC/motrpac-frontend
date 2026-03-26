@@ -5,38 +5,21 @@ import axios from 'axios';
  * Abstracts axios calls and streaming logic for better testability and maintainability
  */
 
-/**
- * Send a message to the AI assistant with streaming response
- * @param {string} prompt - User's question
- * @param {Array} history - Conversation history (last 10 messages)
- * @param {string|null} accessToken - Auth0 JWT token
- * @param {Function} onChunk - Callback for streaming chunks
- * @param {Function} onMetadata - Callback for metadata updates
- * @param {Function} onComplete - Callback when streaming completes
- * @returns {Promise} Axios promise
- */
 export const askAI = async ({
   prompt,
   history = [],
-  accessToken = null,
+  conversationId = null,
+  userId = null,
   onChunk = () => {},
   onMetadata = () => {},
   onComplete = () => {},
   onError = () => {},
 }) => {
-  const headers = { 'Content-Type': 'application/json' };
-
-  // Add authentication token if available
-  if (accessToken) {
-    headers['Authorization'] = `Bearer ${accessToken}`;
-  }
-
-  // Get the appropriate API URL
   const apiUrl = import.meta.env.VITE_API_SERVICE_ADDRESS;
   const apiEndpoint = import.meta.env.VITE_API_RAG_SERVICE_ENDPOINT;
   const apiKey = import.meta.env.VITE_API_SERVICE_KEY;
 
-  // Add API key as a header instead of a query parameter
+  const headers = { 'Content-Type': 'application/json' };
   if (apiKey) {
     headers['x-api-key'] = apiKey;
   }
@@ -54,9 +37,11 @@ export const askAI = async ({
     await axios.post(
       `${apiUrl}${apiEndpoint}`,
       {
-        action: 'ask',  // Explicit action (backend defaults to 'ask' if omitted)
+        action: 'ask',
         prompt,
         history: recentHistory,
+        conversationId,
+        userId,
       },
       {
         headers,
@@ -106,12 +91,12 @@ export const askAI = async ({
  * Save conversation to backend for persistence and analytics
  * @param {string} conversationId - UUID for this conversation
  * @param {Array} messages - All messages in conversation
- * @param {string} accessToken - Auth0 JWT
+ * @param {string} userId - Authenticated user ID
  * @param {number} offset - Index of first new message to save (for incremental saves)
  * @returns {Promise<boolean>}
  */
-export const saveConversation = async (conversationId, messages, accessToken, offset = 0) => {
-  if (!conversationId || !messages || messages.length === 0 || !accessToken) {
+export const saveConversation = async (conversationId, messages, userId, offset = 0) => {
+  if (!conversationId || !messages || messages.length === 0 || !userId) {
     return false;
   }
 
@@ -124,17 +109,15 @@ export const saveConversation = async (conversationId, messages, accessToken, of
     await axios.post(
       `${apiUrl}${apiEndpoint}?key=${apiKey}`,
       {
-        action: 'save_conversation',  // Action-based routing
+        action: 'save_conversation',
         conversationId,
+        userId,
         messages,
         offset,
       },
       {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-        timeout: 10000, // 10 second timeout
+        headers: { 'Content-Type': 'application/json' },
+        timeout: 10000,
       },
     );
 
