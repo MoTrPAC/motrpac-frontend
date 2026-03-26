@@ -26,11 +26,11 @@ const AskAssistant = () => {
   const saveVersionRef = useRef(0);
 
   // Auth state
-  const { isAuthenticated, profile, accessToken } = useSelector(
+  const { isAuthenticated, profile } = useSelector(
     (state) => state.auth,
   );
   const userType = profile.user_metadata && profile.user_metadata.userType;
-  const userId = profile.nickname || profile.email || '';
+  const userId = profile?.user_metadata?.email || '';
 
   // Namespaced sessionStorage keys to prevent cross-user leakage
   const convKey = `motrpac-conversation-id-${userId}`;
@@ -86,10 +86,10 @@ const AskAssistant = () => {
     // Debounced save to backend (3 seconds after last message)
     const versionAtSchedule = saveVersionRef.current;
     const timeoutId = setTimeout(async () => {
-      if (accessToken && !saveInFlightRef.current) {
+      if (userId && !isLoading && !saveInFlightRef.current) {
         saveInFlightRef.current = true;
         const offset = lastSavedCountRef.current;
-        const ok = await saveConversation(conversationId, messages, accessToken, offset);
+        const ok = await saveConversation(conversationId, messages, userId, offset);
         saveInFlightRef.current = false;
         if (ok && saveVersionRef.current === versionAtSchedule) {
           lastSavedCountRef.current = messages.length;
@@ -99,7 +99,7 @@ const AskAssistant = () => {
     }, 3000);
 
     return () => clearTimeout(timeoutId);
-  }, [messages, conversationId, accessToken, histKey, savedCountKey]);
+  }, [messages, conversationId, userId, isLoading, histKey, savedCountKey]);
 
   // Auto-scroll to bottom when messages update
   useEffect(() => {
@@ -155,7 +155,8 @@ const AskAssistant = () => {
       await askAI({
         prompt: question,
         history: messages,
-        accessToken,
+        conversationId,
+        userId,
         onChunk: (text) => {
           // Update last message incrementally
           setMessages((prev) => [
