@@ -36,6 +36,14 @@ nav {
         &.show, &.active {
           color: #000;
         }
+
+        .ai-icon {
+          position: relative;
+          top: 0.125rem;
+          background: -webkit-linear-gradient(45deg, rgb(169, 114, 255), rgb(41, 151, 255) 50%, rgb(67, 185, 185));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
       }
 
       &.show {
@@ -59,6 +67,12 @@ nav {
 
           &:hover {
             color: colors.$stanford-black;
+          }
+
+          .ai-icon {
+            background: -webkit-linear-gradient(45deg, rgb(169, 114, 255), rgb(41, 151, 255) 50%, rgb(67, 185, 185));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
           }
         }
       }

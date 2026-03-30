@@ -186,11 +186,18 @@ export function Navbar({
           >
             <ul className="navbar-nav">
               {isAuthenticated && hasAccess && (
-                <li className="nav-item navItem">
-                  <Link to="/dashboard" className="nav-link">
-                    Dashboard
-                  </Link>
-                </li>
+                <>
+                  <li className="nav-item navItem">
+                    <Link to="/exerwise" className="nav-link" alt="ExerWise AI Assistant" title="ExerWise AI Assistant">
+                      <i className="material-icons ai-icon">auto_awesome</i>
+                    </Link>
+                  </li>
+                  <li className="nav-item navItem">
+                    <Link to="/dashboard" className="nav-link">
+                      Dashboard
+                    </Link>
+                  </li>
+                </>
               )}
               <li className="nav-item navItem dropdown">
                 <div
@@ -315,7 +322,7 @@ export function Navbar({
                   </Link>
                   <Link to="/mcp-server" className="dropdown-item has-icon">
                     <span>MCP Server</span>
-                    <i className="material-icons dropdown-item-icon">auto_awesome</i>
+                    <i className="material-icons dropdown-item-icon ai-icon">auto_awesome</i>
                   </Link>
                   <Link to="/methods" className="dropdown-item">
                     Methods
@@ -388,7 +395,7 @@ export function Navbar({
                   {isAuthenticated && hasAccess && userType && userType === 'internal' && (
                     <Link to="/exerwise" className="dropdown-item has-icon">
                       <span>ExerWise</span>
-                      <i className="material-icons dropdown-item-icon">auto_awesome</i>
+                      <i className="material-icons dropdown-item-icon ai-icon">auto_awesome</i>
                     </Link>
                   )}
                 </div>
