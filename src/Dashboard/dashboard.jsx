@@ -46,7 +46,7 @@ export function Dashboard({
                   </span>
                 </div>
                 <div className="feature-highlight-content mr-1">
-                  <h3>AI Assistant: <i>ExerWise</i></h3>
+                  <h3><i>ExerWise</i> AI Assistant</h3>
                   <div className="data-release-text mb-3">
                     Find answers quickly from <i>ExerWise</i>, an AI-powered assistant on topics ranging from data and study designs to processing pipelines and analysis results
                   </div>
