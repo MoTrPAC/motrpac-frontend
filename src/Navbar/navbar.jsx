@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
@@ -33,6 +33,7 @@ export function Navbar({
   handleQCDataFetch = null,
   lastModified = '',
 }) {
+  const [gameOpen, setGameOpen] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
   const isHomepage = currentPath === '/';
@@ -398,6 +399,9 @@ export function Navbar({
                       <i className="material-icons dropdown-item-icon ai-icon">auto_awesome</i>
                     </Link>
                   )}
+                  <button type="button" className="dropdown-item" onClick={() => setGameOpen(true)}>
+                    Play Game
+                  </button>
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
@@ -448,6 +452,23 @@ export function Navbar({
         handleLogout={handleLogout}
         login={handleLogIn}
       />
+      {gameOpen && (
+        <div className="game-modal-overlay">
+          <div className="game-modal-container">
+            <button 
+              className="close-button" 
+              onClick={() => setGameOpen(false)}
+            >
+              ✕
+            </button>
+            <iframe
+              src="https://endurance-train-academy.lovable.app/"
+              className="game-iframe"
+              title="MoTrPAC Endurance Training Game"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
   return navbar;
