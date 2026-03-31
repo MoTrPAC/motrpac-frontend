@@ -13,7 +13,6 @@ function FeatureLinks({
   handleQCDataFetch,
   lastModified = '',
   userType = '',
-  userRole = '',
 }) {
   const navigate = useNavigate();
 
@@ -174,7 +173,11 @@ function FeatureLinks({
     e.stopPropagation();
 
     if (item.route.indexOf('https') !== -1) {
-      return window.open(item.route, '_blank');
+      const newWindow = window.open(item.route, '_blank', 'noopener,noreferrer');
+      if (newWindow) {
+        newWindow.opener = null;
+      }
+      return newWindow;
     }
 
     if (item.eventHandler) {
@@ -215,7 +218,6 @@ FeatureLinks.propTypes = {
   handleQCDataFetch: PropTypes.func.isRequired,
   lastModified: PropTypes.string,
   userType: PropTypes.string,
-  userRole: PropTypes.string,
 };
 
 export default FeatureLinks;
