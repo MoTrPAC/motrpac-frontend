@@ -33,13 +33,13 @@ export function Dashboard({
 
       {userType && userType === 'internal' && (
         <div className="jumbotron jumbotron-fluid alert-data-release">
-          <div className="w-75 mx-auto">
+          <div className="w-100 mx-auto px-5">
             <h1 className="highlight-title display-3 text-center mb-5">
               <i className="bi bi-fire mr-3" aria-hidden="true" />
               <span>What's New</span>
             </h1>
             <div className="row">
-              <div className="col-md-4 lead d-flex align-items-start">
+              <div className="col-md-3 lead d-flex align-items-start">
                 <div className="feature-highlight-icon mr-3">
                   <span className="material-icons" aria-hidden="true">
                     auto_awesome
@@ -53,7 +53,21 @@ export function Dashboard({
                   <Link to="/exerwise" className="btn btn-primary">Learn More</Link>
                 </div>
               </div>
-              <div className="col-md-4 lead d-flex align-items-start">
+              <div className="col-md-3 lead d-flex align-items-start">
+                <div className="feature-highlight-icon mr-3">
+                  <span className="material-icons" aria-hidden="true">
+                    auto_awesome
+                  </span>
+                </div>
+                <div className="feature-highlight-content mr-1">
+                  <h3>MCP Server</h3>
+                  <div className="data-release-text mb-3">
+                    Query and explore publicly released MoTrPAC datasets directly from LLM-powered clients including Claude Desktop and other supported clients
+                  </div>
+                  <Link to="/mcp-server" className="btn btn-primary">Learn More</Link>
+                </div>
+              </div>
+              <div className="col-md-3 lead d-flex align-items-start">
                 <div className="feature-highlight-icon mr-3">
                   <span className="material-icons" aria-hidden="true">
                     auto_stories
@@ -67,7 +81,7 @@ export function Dashboard({
                   <Link to="/knowledge-center" className="btn btn-primary">Learn More</Link>
                 </div>
               </div>
-              <div className="col-md-4 lead d-flex align-items-start">
+              <div className="col-md-3 lead d-flex align-items-start">
                 <div className="feature-highlight-icon mr-3">
                   <span className="material-icons" aria-hidden="true">
                     insights
