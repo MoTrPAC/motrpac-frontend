@@ -243,19 +243,16 @@ export function Navbar({
                       <Link to="/analysis-phenotype" className="dropdown-item">
                         Phenotype
                       </Link>
+                      <Link to="/sample-data-tracker" className="dropdown-item">
+                        Human Sample Data Tracker
+                      </Link>
+                      <Link to="/qc-data-monitor" className="dropdown-item" onClick={fecthQCData}>
+                        QC Data Monitor
+                      </Link>
                     </>
                   )}
-                  {isAuthenticated && hasAccess ? (
+                  {isAuthenticated && hasAccess && (
                     <>
-                      {userType === 'internal' && (
-                        <Link
-                          to="/qc-data-monitor"
-                          className="dropdown-item"
-                          onClick={fecthQCData}
-                        >
-                          QC Data Monitor
-                        </Link>
-                      )}
                       <Link to="/summary" className="dropdown-item">
                         Sample Summary
                       </Link>
@@ -263,7 +260,7 @@ export function Navbar({
                         Prior Data Releases
                       </Link>
                     </>
-                  ) : null}
+                  )}
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
@@ -300,6 +297,17 @@ export function Navbar({
                   <Link to="/graphical-clustering" className="dropdown-item">
                     Graphical Clustering
                   </Link>
+                  {isAuthenticated && hasAccess && userType && userType === 'internal' && (
+                    <a
+                      href="https://ccv-dev.motrpac-data.org"
+                      className="dropdown-item external-link"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <span>Human HA Adult Data Analyses</span>
+                      <i className="material-icons external-link-icon">open_in_new</i>
+                    </a>
+                  )}
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
