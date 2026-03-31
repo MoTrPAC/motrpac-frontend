@@ -57,6 +57,7 @@ describe('AI Assistant Component', () => {
         user_metadata: {
           hasAccess: true,
           userType: 'internal',
+          email: 'testUser1',
         },
       },
     },
@@ -253,6 +254,7 @@ describe('AI Assistant Component', () => {
       expect(screen.queryByText('Test question')).not.toBeInTheDocument();
       expect(screen.getByText(/start a conversation/i)).toBeInTheDocument();
       expect(sessionStorageMock.removeItem).toHaveBeenCalledWith('motrpac-chat-history-testUser1');
+      expect(sessionStorageMock.removeItem).toHaveBeenCalledWith('motrpac-saved-count-testUser1');
     });
 
     test('keyboard shortcut (Cmd+Enter) submits question', async () => {
@@ -286,7 +288,7 @@ describe('AI Assistant Component', () => {
 
       sessionStorageMock.getItem.mockImplementation((key) => {
         if (key === 'motrpac-chat-history-testUser1') return JSON.stringify(savedMessages);
-        return null;
+        return _store[key] ?? null;
       });
 
       renderWithProviders(<AskAssistant />, { preloadedState: authenticatedState });
@@ -379,7 +381,8 @@ describe('AI Assistant Component', () => {
           expect.objectContaining({
             prompt: question,
             history: [],
-            accessToken: mockAccessToken,
+            conversationId: expect.any(String),
+            userId: 'testUser1',
             onChunk: expect.any(Function),
             onMetadata: expect.any(Function),
             onComplete: expect.any(Function),
