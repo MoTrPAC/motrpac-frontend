@@ -107,7 +107,7 @@ function FeatureLinks({
       route:
         'https://ccv-dev.motrpac-data.org',
       description:
-        'An interactive visualizations for the analyses of human highly active (HA) adult data (Neptune).',
+        'Interactive visualizations for the analyses of human highly active (HA) adult data (Neptune).',
       icon: 'area_chart',
       title: 'Human HA Adult Data Analyses',
       eventHandler: null,
@@ -177,10 +177,10 @@ function FeatureLinks({
       return window.open(item.route, '_blank');
     }
 
-    navigate(`/${item.route}`);
     if (item.eventHandler) {
       item.eventHandler();
     }
+    navigate(`/${item.route}`);
   }
 
   return (
