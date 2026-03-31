@@ -22,7 +22,6 @@ export function Dashboard({
   lastModified = '',
 }) {
   const userType = profile.user_metadata && profile.user_metadata.userType;
-  const userRole = profile.app_metadata && profile.app_metadata.role;
 
   return (
     <div className="dashboardPage px-3 px-md-4 mb-3">
@@ -100,7 +99,7 @@ export function Dashboard({
         </div>
       )}
 
-      {userType && userType === 'external' && !userRole && (
+      {userType && userType === 'external' && (
         <>
           <div className="jumbotron jumbotron-fluid alert-data-release external-user">
             <div className="w-75 mx-auto">
@@ -196,7 +195,6 @@ export function Dashboard({
             handleQCDataFetch={handleQCDataFetch}
             lastModified={lastModified}
             userType={userType}
-            userRole={userRole || ''}
           />
         )}
       </div>
