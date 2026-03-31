@@ -186,7 +186,7 @@ export function Navbar({
             id="navbarSupportedContent"
           >
             <ul className="navbar-nav">
-              {isAuthenticated && hasAccess && (
+              {isAuthenticated && hasAccess && userType === 'internal' && (
                 <>
                   <li className="nav-item navItem">
                     <Link to="/exerwise" className="nav-link" alt="ExerWise AI Assistant" title="ExerWise AI Assistant">
