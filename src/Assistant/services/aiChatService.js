@@ -1,10 +1,34 @@
 import axios from 'axios';
 
 /**
- * AI Chat Service - Handles all API communication with the RAG backend
- * Abstracts axios calls and streaming logic for better testability and maintainability
+ * AI Chat Service - Handles all API communication with the RAG backend.
+ * Abstracts axios calls and streaming logic for better testability and maintainability.
+ *
+ * @module aiChatService
  */
 
+/**
+ * Send a prompt to the RAG backend and stream the response via Server-Sent Events (SSE).
+ *
+ * The backend returns an SSE stream with three event types:
+ * - `content` – incremental text chunks of the assistant's reply
+ * - `metadata` – additional context (e.g. `hasInternalKnowledge` flag)
+ * - `done` – signals the response is complete
+ *
+ * History is capped at the last 10 messages to limit payload size.
+ *
+ * @param {Object} options
+ * @param {string} options.prompt - The user's question to send to the AI
+ * @param {Array<{role: string, content: string}>} [options.history=[]] - Prior conversation messages for context
+ * @param {string|null} [options.conversationId=null] - UUID identifying the current conversation
+ * @param {string|null} [options.userId=null] - Authenticated user's email address
+ * @param {function(string): void} [options.onChunk] - Called with each incremental text chunk
+ * @param {function(Object): void} [options.onMetadata] - Called with metadata (e.g. `{ hasInternalKnowledge: boolean }`)
+ * @param {function(): void} [options.onComplete] - Called when the response stream is finished
+ * @param {function(string): void} [options.onError] - Called with an error message on failure
+ * @returns {Promise<void>} Resolves when the stream completes; rejects on network/server errors
+ * @throws {Error} Re-throws after calling onError so callers can handle it
+ */
 export const askAI = async ({
   prompt,
   history = [],
