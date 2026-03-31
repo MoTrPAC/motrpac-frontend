@@ -56,9 +56,15 @@ function FeatureLinks({
       title: 'Data Visualization: Endurance Training in Young Adult Rats',
       eventHandler: null,
     },
-  ];
-
-  const commonGeneralFeaturedLinks = [
+    {
+      name: 'precovid-human-data-visualization',
+      route: getDataVizURL('human-precovid', userType),
+      description:
+        'An interactive data visualization tool for the analysis of acute exercise in human sedentary adults (pre-suspension).',
+      icon: 'analytics',
+      title: 'Data Visualization: Acute Exercise in Human Sedentary Adults (Pre-Suspension)',
+      eventHandler: null,
+    },
     {
       name: 'code-repositories',
       route: 'code-repositories',
@@ -79,37 +85,12 @@ function FeatureLinks({
     },
   ];
 
-  const precawgDataVizFeaturedLink = [
-    {
-      name: 'precovid-human-data-visualization',
-      route: getDataVizURL('human-precovid', userType),
-      description:
-        'An interactive data visualization tool for the analysis of acute exercise in human sedentary adults (pre-suspension).',
-      icon: 'analytics',
-      title: 'Data Visualization: Acute Exercise in Human Sedentary Adults (Pre-Suspension)',
-      eventHandler: null,
-    },
-  ];
-
   const externalFeaturedLinks = [
     ...commonEssentialFeaturedLinks,
-    ...precawgDataVizFeaturedLink,
-    ...commonGeneralFeaturedLinks,
   ];
-
-  // Helper to find link by name
-  const findLinkByName = (links, name) => links.find(link => link.name === name);
-
-  const reviewerFeaturedLinks = [
-    ...precawgDataVizFeaturedLink,
-    findLinkByName(commonEssentialFeaturedLinks, 'differential-abundance'),
-    findLinkByName(commonGeneralFeaturedLinks, 'code-repositories'),
-  ].filter(Boolean);
   
   const internalFeaturedLinks = [
     ...commonEssentialFeaturedLinks,
-    ...precawgDataVizFeaturedLink,
-    ...commonGeneralFeaturedLinks,
 
     {
       name: 'clinical-biospecimen-summary',
@@ -119,6 +100,16 @@ function FeatureLinks({
         'Look up biospecimen data in the pre-COVID human sedentary adults and the human main highly active adults studies.',
       icon: 'stacked_bar_chart',
       title: 'Clinical Biospecimen Data Lookup',
+      eventHandler: null,
+    },
+    {
+      name: 'human-ha-adult-data-analyses',
+      route:
+        'https://ccv-dev.motrpac-data.org',
+      description:
+        'An interactive visualizations for the analyses of human highly active (HA) adult data (Neptune).',
+      icon: 'area_chart',
+      title: 'Human HA Adult Data Analyses',
       eventHandler: null,
     },
     {
@@ -137,16 +128,6 @@ function FeatureLinks({
         'Data analysis resources, including onboarding guide and Jupyter notebooks, for each of the MoTrPAC multi-omics working groups.',
       icon: 'group',
       title: 'Multi-omics Working Groups',
-      eventHandler: null,
-    },
-    {
-      name: 'motrpac-collab',
-      route:
-        'https://collab.motrpac-data.org/hub/oauth_login?next=%2Fhub%2Fhome',
-      description:
-        'A multi-user Jupyter notebook workspace containing a collection of notebooks for in-depth data exploration and analysis.',
-      icon: 'hub',
-      title: 'MoTrPAC Collab',
       eventHandler: null,
     },
     {
@@ -169,23 +150,21 @@ function FeatureLinks({
       title: 'Consortium and External Data Releases Timing',
       eventHandler: null,
     },
-    /*
     {
-      route: 'releases',
+      name: 'motrpac-collab',
+      route:
+        'https://collab.motrpac-data.org/hub/oauth_login?next=%2Fhub%2Fhome',
       description:
-        'Access prior versions of the data sets in the young adult rat endurance training and acute exercise studies.',
-      icon: 'rocket_launch',
-      title: 'Data Releases',
+        'A multi-user Jupyter notebook workspace containing a collection of notebooks for in-depth data exploration and analysis.',
+      icon: 'hub',
+      title: 'MoTrPAC Collab',
       eventHandler: null,
     },
-    */
   ];
 
   let featuresToRender;
   if (userType === 'internal') {
     featuresToRender = internalFeaturedLinks;
-  } else if (userRole === 'reviewer') {
-    featuresToRender = reviewerFeaturedLinks;
   } else {
     featuresToRender = externalFeaturedLinks;
   }
