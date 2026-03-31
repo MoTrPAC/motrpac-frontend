@@ -189,7 +189,12 @@ export function Navbar({
               {isAuthenticated && hasAccess && userType === 'internal' && (
                 <>
                   <li className="nav-item navItem">
-                    <Link to="/exerwise" className="nav-link" alt="ExerWise AI Assistant" title="ExerWise AI Assistant">
+                    <Link
+                      to="/exerwise"
+                      className="nav-link"
+                      aria-label="ExerWise AI Assistant"
+                      title="ExerWise AI Assistant"
+                    >
                       <i className="material-icons ai-icon">auto_awesome</i>
                     </Link>
                   </li>
@@ -462,10 +467,16 @@ export function Navbar({
       />
       {gameOpen && (
         <div className="game-modal-overlay">
-          <div className="game-modal-container">
+          <div
+            className="game-modal-container"
+            role="dialog"
+            aria-modal="true"
+            aria-label="MoTrPAC Endurance Training Game dialog"
+          >
             <button 
               className="close-button" 
               onClick={() => setGameOpen(false)}
+              aria-label="Close game modal"
             >
               ✕
             </button>
@@ -473,6 +484,7 @@ export function Navbar({
               src="https://endurance-train-academy.lovable.app/"
               className="game-iframe"
               title="MoTrPAC Endurance Training Game"
+              sandbox="allow-scripts allow-same-origin"
             />
           </div>
         </div>
