@@ -30,7 +30,7 @@ const AskAssistant = () => {
     (state) => state.auth,
   );
   const userType = profile.user_metadata && profile.user_metadata.userType;
-  const userId = profile?.user_metadata?.email || '';
+  const userId = profile?.user_metadata?.email || profile?.email || '';
 
   // Namespaced sessionStorage keys to prevent cross-user leakage
   const convKey = `motrpac-conversation-id-${userId}`;
