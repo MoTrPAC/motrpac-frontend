@@ -104,7 +104,7 @@ export function Dashboard({
           <div className="jumbotron jumbotron-fluid alert-data-release external-user">
             <div className="w-75 mx-auto">
               <h1 className="highlight-title display-4 mb-4 text-center">
-                <i className="bi bi-rocket-takeoff mr-3" />
+                <i className="bi bi-rocket-takeoff mr-3" aria-hidden="true" />
                 <span>New human dataset now available!</span>
               </h1>
               <div className="row mb-5">
