@@ -187,24 +187,22 @@ export function Navbar({
           >
             <ul className="navbar-nav">
               {isAuthenticated && hasAccess && userType === 'internal' && (
-                <>
-                  <li className="nav-item navItem">
-                    <Link
-                      to="/exerwise"
-                      className="nav-link"
-                      aria-label="ExerWise AI Assistant"
-                      title="ExerWise AI Assistant"
-                    >
-                      <i className="material-icons ai-icon">auto_awesome</i>
-                    </Link>
-                  </li>
-                  <li className="nav-item navItem">
-                    <Link to="/dashboard" className="nav-link">
-                      Dashboard
-                    </Link>
-                  </li>
-                </>
+                <li className="nav-item navItem">
+                  <Link
+                    to="/exerwise"
+                    className="nav-link"
+                    aria-label="ExerWise AI Assistant"
+                    title="ExerWise AI Assistant"
+                  >
+                    <i className="material-icons ai-icon" aria-hidden="true">auto_awesome</i>
+                  </Link>
+                </li>
               )}
+              <li className="nav-item navItem">
+                <Link to="/dashboard" className="nav-link">
+                  Dashboard
+                </Link>
+              </li>
               <li className="nav-item navItem dropdown">
                 <div
                   className="nav-link dropdown-toggle"
