@@ -40,7 +40,9 @@ nav {
         .ai-icon {
           position: relative;
           top: 0.125rem;
-          background: -webkit-linear-gradient(45deg, rgb(169, 114, 255), rgb(41, 151, 255) 50%, rgb(67, 185, 185));
+          color: rgb(41, 151, 255);
+          background: linear-gradient(45deg, rgb(169, 114, 255), rgb(41, 151, 255) 50%, rgb(67, 185, 185));
+          background-clip: text;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
@@ -70,7 +72,9 @@ nav {
           }
 
           .ai-icon {
-            background: -webkit-linear-gradient(45deg, rgb(169, 114, 255), rgb(41, 151, 255) 50%, rgb(67, 185, 185));
+            color: rgb(41, 151, 255);
+            background: linear-gradient(45deg, rgb(169, 114, 255), rgb(41, 151, 255) 50%, rgb(67, 185, 185));
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
           }
@@ -359,5 +363,12 @@ nav {
   50% {
     box-shadow: 0 0 20px rgba(255, 87, 51, 0.8);
     transform: scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .close-button {
+    animation: none;
+    transition: none;
   }
 }
