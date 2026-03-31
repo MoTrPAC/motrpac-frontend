@@ -105,9 +105,14 @@ export const saveConversation = async (conversationId, messages, userId, offset 
   const apiEndpoint = import.meta.env.VITE_API_RAG_SERVICE_ENDPOINT;
   const apiKey = import.meta.env.VITE_API_SERVICE_KEY;
 
+  const headers = { 'Content-Type': 'application/json' };
+  if (apiKey) {
+    headers['x-api-key'] = apiKey;
+  }
+
   try {
     await axios.post(
-      `${apiUrl}${apiEndpoint}?key=${apiKey}`,
+      `${apiUrl}${apiEndpoint}`,
       {
         action: 'save_conversation',
         conversationId,
@@ -116,7 +121,7 @@ export const saveConversation = async (conversationId, messages, userId, offset 
         offset,
       },
       {
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         timeout: 10000,
       },
     );
