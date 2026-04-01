@@ -101,6 +101,7 @@ function FeatureLinks({
       title: 'Clinical Biospecimen Data Lookup',
       eventHandler: null,
     },
+    /*
     {
       name: 'human-ha-adult-data-analyses',
       route:
@@ -111,6 +112,7 @@ function FeatureLinks({
       title: 'Human HA Adult Data Analyses',
       eventHandler: null,
     },
+    */
     {
       name: 'qc-data-monitor',
       route: 'qc-data-monitor',

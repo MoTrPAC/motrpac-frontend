@@ -300,6 +300,7 @@ export function Navbar({
                   <Link to="/graphical-clustering" className="dropdown-item">
                     Graphical Clustering
                   </Link>
+                  {/* 
                   {isAuthenticated && hasAccess && userType && userType === 'internal' && (
                     <a
                       href="https://ccv-dev.motrpac-data.org"
@@ -311,6 +312,7 @@ export function Navbar({
                       <i className="material-icons external-link-icon">open_in_new</i>
                     </a>
                   )}
+                  */}
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
