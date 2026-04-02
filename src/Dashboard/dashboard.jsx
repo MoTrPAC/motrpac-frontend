@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import FeatureLinks from '../Search/featureLinks';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
@@ -18,10 +18,16 @@ import '@styles/dashboard.scss';
  */
 export function Dashboard({ 
   profile = {}, 
+  isAuthenticated = false,
   handleQCDataFetch, 
   lastModified = '',
 }) {
   const userType = profile.user_metadata && profile.user_metadata.userType;
+  const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+
+  if (!isAuthenticated || !hasAccess) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="dashboardPage px-3 px-md-4 mb-3">
@@ -206,6 +212,7 @@ Dashboard.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
   }),
+  isAuthenticated: PropTypes.bool,
   handleQCDataFetch: PropTypes.func.isRequired,
   lastModified: PropTypes.string,
 };
