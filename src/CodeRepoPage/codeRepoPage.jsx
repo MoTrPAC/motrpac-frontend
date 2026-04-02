@@ -102,6 +102,17 @@ export function CodeRepositories() {
                   MotrpacHumanPreSuspensionAnalysis
                 </a>
               </li>
+              <li>
+                <i className="bi-github repo-icon" />
+                <a
+                  className="ml-1"
+                  href="https://github.com/MoTrPAC/MotrpacPreSuspensionAcute"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  MotrpacPreSuspensionAcute
+                </a>
+              </li>
             </ul>
           </>
         )}

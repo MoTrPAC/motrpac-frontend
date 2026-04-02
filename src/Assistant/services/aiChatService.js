@@ -1,42 +1,49 @@
 import axios from 'axios';
 
 /**
- * AI Chat Service - Handles all API communication with the RAG backend
- * Abstracts axios calls and streaming logic for better testability and maintainability
+ * AI Chat Service - Handles all API communication with the RAG backend.
+ * Abstracts axios calls and streaming logic for better testability and maintainability.
+ *
+ * @module aiChatService
  */
 
 /**
- * Send a message to the AI assistant with streaming response
- * @param {string} prompt - User's question
- * @param {Array} history - Conversation history (last 10 messages)
- * @param {string|null} accessToken - Auth0 JWT token
- * @param {Function} onChunk - Callback for streaming chunks
- * @param {Function} onMetadata - Callback for metadata updates
- * @param {Function} onComplete - Callback when streaming completes
- * @returns {Promise} Axios promise
+ * Send a prompt to the RAG backend and stream the response via Server-Sent Events (SSE).
+ *
+ * The backend returns an SSE stream with three event types:
+ * - `content` – incremental text chunks of the assistant's reply
+ * - `metadata` – additional context (e.g. `hasInternalKnowledge` flag)
+ * - `done` – signals the response is complete
+ *
+ * History is capped at the last 10 messages to limit payload size.
+ *
+ * @param {Object} options
+ * @param {string} options.prompt - The user's question to send to the AI
+ * @param {Array<{role: string, content: string}>} [options.history=[]] - Prior conversation messages for context
+ * @param {string|null} [options.conversationId=null] - UUID identifying the current conversation
+ * @param {string|null} [options.userId=null] - Authenticated user's email address
+ * @param {function(string): void} [options.onChunk] - Called with each incremental text chunk
+ * @param {function(Object): void} [options.onMetadata] - Called with metadata (e.g. `{ hasInternalKnowledge: boolean }`)
+ * @param {function(): void} [options.onComplete] - Called when the response stream is finished
+ * @param {function(string): void} [options.onError] - Called with an error message on failure
+ * @returns {Promise<void>} Resolves when the stream completes; rejects on network/server errors
+ * @throws {Error} Re-throws after calling onError so callers can handle it
  */
 export const askAI = async ({
   prompt,
   history = [],
-  accessToken = null,
+  conversationId = null,
+  userId = null,
   onChunk = () => {},
   onMetadata = () => {},
   onComplete = () => {},
   onError = () => {},
 }) => {
-  const headers = { 'Content-Type': 'application/json' };
-
-  // Add authentication token if available
-  if (accessToken) {
-    headers['Authorization'] = `Bearer ${accessToken}`;
-  }
-
-  // Get the appropriate API URL
   const apiUrl = import.meta.env.VITE_API_SERVICE_ADDRESS;
   const apiEndpoint = import.meta.env.VITE_API_RAG_SERVICE_ENDPOINT;
   const apiKey = import.meta.env.VITE_API_SERVICE_KEY;
 
-  // Add API key as a header instead of a query parameter
+  const headers = { 'Content-Type': 'application/json' };
   if (apiKey) {
     headers['x-api-key'] = apiKey;
   }
@@ -54,9 +61,11 @@ export const askAI = async ({
     await axios.post(
       `${apiUrl}${apiEndpoint}`,
       {
-        action: 'ask',  // Explicit action (backend defaults to 'ask' if omitted)
+        action: 'ask',
         prompt,
         history: recentHistory,
+        conversationId,
+        userId,
       },
       {
         headers,
@@ -106,12 +115,12 @@ export const askAI = async ({
  * Save conversation to backend for persistence and analytics
  * @param {string} conversationId - UUID for this conversation
  * @param {Array} messages - All messages in conversation
- * @param {string} accessToken - Auth0 JWT
+ * @param {string} userId - Authenticated user ID
  * @param {number} offset - Index of first new message to save (for incremental saves)
  * @returns {Promise<boolean>}
  */
-export const saveConversation = async (conversationId, messages, accessToken, offset = 0) => {
-  if (!conversationId || !messages || messages.length === 0 || !accessToken) {
+export const saveConversation = async (conversationId, messages, userId, offset = 0) => {
+  if (!conversationId || !messages || messages.length === 0 || !userId) {
     return false;
   }
 
@@ -120,21 +129,24 @@ export const saveConversation = async (conversationId, messages, accessToken, of
   const apiEndpoint = import.meta.env.VITE_API_RAG_SERVICE_ENDPOINT;
   const apiKey = import.meta.env.VITE_API_SERVICE_KEY;
 
+  const headers = { 'Content-Type': 'application/json' };
+  if (apiKey) {
+    headers['x-api-key'] = apiKey;
+  }
+
   try {
     await axios.post(
-      `${apiUrl}${apiEndpoint}?key=${apiKey}`,
+      `${apiUrl}${apiEndpoint}`,
       {
-        action: 'save_conversation',  // Action-based routing
+        action: 'save_conversation',
         conversationId,
+        userId,
         messages,
         offset,
       },
       {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-        timeout: 10000, // 10 second timeout
+        headers,
+        timeout: 10000,
       },
     );
 

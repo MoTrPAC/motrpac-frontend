@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
@@ -33,6 +33,7 @@ export function Navbar({
   handleQCDataFetch = null,
   lastModified = '',
 }) {
+  const [gameOpen, setGameOpen] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
   const isHomepage = currentPath === '/';
@@ -185,13 +186,23 @@ export function Navbar({
             id="navbarSupportedContent"
           >
             <ul className="navbar-nav">
-              {isAuthenticated && hasAccess && (
+              {isAuthenticated && hasAccess && userType === 'internal' && (
                 <li className="nav-item navItem">
-                  <Link to="/dashboard" className="nav-link">
-                    Dashboard
+                  <Link
+                    to="/exerwise"
+                    className="nav-link"
+                    aria-label="ExerWise AI Assistant"
+                    title="ExerWise AI Assistant"
+                  >
+                    <i className="material-icons ai-icon" aria-hidden="true">auto_awesome</i>
                   </Link>
                 </li>
               )}
+              <li className="nav-item navItem">
+                <Link to="/dashboard" className="nav-link">
+                  Dashboard
+                </Link>
+              </li>
               <li className="nav-item navItem dropdown">
                 <div
                   className="nav-link dropdown-toggle"
@@ -235,19 +246,16 @@ export function Navbar({
                       <Link to="/analysis-phenotype" className="dropdown-item">
                         Phenotype
                       </Link>
+                      <Link to="/sample-data-tracker" className="dropdown-item">
+                        Human Sample Data Tracker
+                      </Link>
+                      <Link to="/qc-data-monitor" className="dropdown-item" onClick={fecthQCData}>
+                        QC Data Monitor
+                      </Link>
                     </>
                   )}
-                  {isAuthenticated && hasAccess ? (
+                  {isAuthenticated && hasAccess && (
                     <>
-                      {userType === 'internal' && (
-                        <Link
-                          to="/qc-data-monitor"
-                          className="dropdown-item"
-                          onClick={fecthQCData}
-                        >
-                          QC Data Monitor
-                        </Link>
-                      )}
                       <Link to="/summary" className="dropdown-item">
                         Sample Summary
                       </Link>
@@ -255,7 +263,7 @@ export function Navbar({
                         Prior Data Releases
                       </Link>
                     </>
-                  ) : null}
+                  )}
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
@@ -292,6 +300,19 @@ export function Navbar({
                   <Link to="/graphical-clustering" className="dropdown-item">
                     Graphical Clustering
                   </Link>
+                  {/* 
+                  {isAuthenticated && hasAccess && userType && userType === 'internal' && (
+                    <a
+                      href="https://ccv-dev.motrpac-data.org"
+                      className="dropdown-item external-link"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <span>Human HA Adult Data Analyses</span>
+                      <i className="material-icons external-link-icon">open_in_new</i>
+                    </a>
+                  )}
+                  */}
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
@@ -315,7 +336,7 @@ export function Navbar({
                   </Link>
                   <Link to="/mcp-server" className="dropdown-item has-icon">
                     <span>MCP Server</span>
-                    <i className="material-icons dropdown-item-icon">auto_awesome</i>
+                    <i className="material-icons dropdown-item-icon ai-icon">auto_awesome</i>
                   </Link>
                   <Link to="/methods" className="dropdown-item">
                     Methods
@@ -388,9 +409,12 @@ export function Navbar({
                   {isAuthenticated && hasAccess && userType && userType === 'internal' && (
                     <Link to="/exerwise" className="dropdown-item has-icon">
                       <span>ExerWise</span>
-                      <i className="material-icons dropdown-item-icon">auto_awesome</i>
+                      <i className="material-icons dropdown-item-icon ai-icon">auto_awesome</i>
                     </Link>
                   )}
+                  <button type="button" className="dropdown-item" onClick={() => setGameOpen(true)}>
+                    Play Game
+                  </button>
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
@@ -441,6 +465,30 @@ export function Navbar({
         handleLogout={handleLogout}
         login={handleLogIn}
       />
+      {gameOpen && (
+        <div className="game-modal-overlay">
+          <div
+            className="game-modal-container"
+            role="dialog"
+            aria-modal="true"
+            aria-label="MoTrPAC Endurance Training Game dialog"
+          >
+            <button 
+              className="close-button" 
+              onClick={() => setGameOpen(false)}
+              aria-label="Close game modal"
+            >
+              ✕
+            </button>
+            <iframe
+              src="https://endurance-train-academy.lovable.app/"
+              className="game-iframe"
+              title="MoTrPAC Endurance Training Game"
+              sandbox="allow-scripts allow-same-origin"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
   return navbar;
