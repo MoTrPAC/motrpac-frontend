@@ -121,6 +121,8 @@ export function Navbar({
 
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   const userType = profile.user_metadata && profile.user_metadata.userType;
+  const isAuthorized = isAuthenticated && hasAccess;
+  const isInternalUser = isAuthorized && userType === 'internal';
 
   // Call to invoke Redux action to fetch QC data
   // if timestamp is empty or older than 24 hours
@@ -186,7 +188,7 @@ export function Navbar({
             id="navbarSupportedContent"
           >
             <ul className="navbar-nav">
-              {isAuthenticated && hasAccess && userType === 'internal' && (
+              {isInternalUser && (
                 <li className="nav-item navItem">
                   <Link
                     to="/exerwise"
@@ -198,7 +200,7 @@ export function Navbar({
                   </Link>
                 </li>
               )}
-              {isAuthenticated && hasAccess && (
+              {isAuthorized && (
                 <li className="nav-item navItem">
                   <Link to="/dashboard" className="nav-link">
                     Dashboard
@@ -227,7 +229,7 @@ export function Navbar({
                   <Link
                     id="reg_user"
                     to={
-                      isAuthenticated && hasAccess
+                      isAuthorized
                         ? '/releases'
                         : '/data-access'
                     }
@@ -240,7 +242,7 @@ export function Navbar({
                   <Link to="/data-deposition" className="dropdown-item">
                     Public Data Repositories
                   </Link>
-                  {isAuthenticated && hasAccess && userType === 'internal' && (
+                  {isInternalUser && (
                     <>
                       <Link to="/biospecimen-summary" className="dropdown-item">
                         Biospecimens
@@ -256,7 +258,7 @@ export function Navbar({
                       </Link>
                     </>
                   )}
-                  {isAuthenticated && hasAccess && (
+                  {isAuthorized && (
                     <>
                       <Link to="/summary" className="dropdown-item">
                         Sample Summary
@@ -408,7 +410,7 @@ export function Navbar({
                   <Link to="/glossary" className="dropdown-item">
                     Glossary
                   </Link>
-                  {isAuthenticated && hasAccess && userType && userType === 'internal' && (
+                  {isInternalUser && (
                     <Link to="/exerwise" className="dropdown-item has-icon">
                       <span>ExerWise</span>
                       <i className="material-icons dropdown-item-icon ai-icon">auto_awesome</i>

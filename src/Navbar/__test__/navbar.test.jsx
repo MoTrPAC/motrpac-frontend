@@ -48,4 +48,39 @@ describe('Navbar', () => {
     expect(screen.getByText(/learn/i)).toBeInTheDocument();
     expect(screen.getByText(/about/i)).toBeInTheDocument();
   });
+
+  test('shows Dashboard link for authenticated users with access', () => {
+    renderWithProviders(
+      <Navbar
+        profile={testUser}
+        isAuthenticated={true}
+        {...mockActions}
+      />
+    );
+
+    expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+  });
+
+  test('hides Dashboard link for unauthenticated users', () => {
+    renderWithProviders(<Navbar />);
+
+    expect(screen.queryByText(/dashboard/i)).not.toBeInTheDocument();
+  });
+
+  test('hides Dashboard link for users without access', () => {
+    const noAccessUser = {
+      ...testUser,
+      user_metadata: { ...testUser.user_metadata, hasAccess: false },
+    };
+
+    renderWithProviders(
+      <Navbar
+        profile={noAccessUser}
+        isAuthenticated={true}
+        {...mockActions}
+      />
+    );
+
+    expect(screen.queryByText(/dashboard/i)).not.toBeInTheDocument();
+  });
 });
