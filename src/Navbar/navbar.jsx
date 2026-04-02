@@ -198,11 +198,13 @@ export function Navbar({
                   </Link>
                 </li>
               )}
-              <li className="nav-item navItem">
-                <Link to="/dashboard" className="nav-link">
-                  Dashboard
-                </Link>
-              </li>
+              {isAuthenticated && hasAccess && (
+                <li className="nav-item navItem">
+                  <Link to="/dashboard" className="nav-link">
+                    Dashboard
+                  </Link>
+                </li>
+              )}
               <li className="nav-item navItem dropdown">
                 <div
                   className="nav-link dropdown-toggle"
