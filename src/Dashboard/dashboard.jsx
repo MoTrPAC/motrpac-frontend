@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import FeatureLinks from '../Search/featureLinks';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
