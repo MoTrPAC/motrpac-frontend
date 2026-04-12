@@ -374,6 +374,20 @@ const BundleDataTypes = {
         'bundles/motrpac_human-precovid-sed-adu_metabolomics-targeted.zip',
       object_zipfile_size: '25 MB',
     },
+    {
+      type: 'clinical-chemistry',
+      phase: 'human-precovid-sed-adu',
+      title: 'Clinical chemistry',
+      species: 'Human',
+      participant_type: 'Adult',
+      intervention: 'Sedentary',
+      study_group: 'Pre-Suspension',
+      description:
+        'Differential analysis, metadata, QC normalized data from human blood tissue for clinical chemistry experiment.',
+      object_zipfile:
+        'bundles/motrpac_human-precovid-sed-adu_clinical-chemistry.zip',
+      object_zipfile_size: '22.54 MB',
+    },
   ],
   human_sed_adu_external: [
     {
@@ -445,6 +459,20 @@ const BundleDataTypes = {
       object_zipfile:
         'bundles/external/motrpac_human-presuspension-sed-adu_metabolomics-targeted.zip',
       object_zipfile_size: '22.9 MB',
+    },
+    {
+      type: 'clinical-chemistry',
+      phase: 'human-precovid-sed-adu',
+      title: 'Clinical chemistry',
+      species: 'Human',
+      participant_type: 'Adult',
+      intervention: 'Sedentary',
+      study_group: 'Pre-Suspension',
+      description:
+        'Summary-level results and metadata human blood tissue for clinical chemistry experiment.',
+      object_zipfile:
+        'bundles/external/motrpac_human-presuspension-sed-adu_clinical-chemistry.zip',
+      object_zipfile_size: '22.44 MB',
     },
   ],
 };
