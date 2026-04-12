@@ -314,8 +314,7 @@ const BundleDataTypes = {
       study_group: 'Pre-Suspension',
       description:
         'Differential analysis, metadata, QC normalized data across human tissues for ATAC-seq and Methylcap-seq assays.',
-      object_zipfile:
-        'bundles/motrpac_human-precovid-sed-adu_epigenomics.zip',
+      object_zipfile: 'bundles/motrpac_human-precovid-sed-adu_epigenomics.zip',
       object_zipfile_size: '2.79 GB',
     },
     {
@@ -342,8 +341,7 @@ const BundleDataTypes = {
       study_group: 'Pre-Suspension',
       description:
         'Differential analysis, metadata, QC normalized data across human tissues for Global Proteomics, Phosphoproteomics, and OLink.',
-      object_zipfile:
-        'bundles/motrpac_human-precovid-sed-adu_proteomics.zip',
+      object_zipfile: 'bundles/motrpac_human-precovid-sed-adu_proteomics.zip',
       object_zipfile_size: '346.55 MB',
     },
     {
