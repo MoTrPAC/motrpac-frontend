@@ -381,9 +381,8 @@ const BundleDataTypes = {
       intervention: 'Sedentary',
       study_group: 'Pre-Suspension',
       description:
-        'Differential analysis, metadata, QC normalized data from human plasma tissue for clinical chemistry experiment.',
-      object_zipfile:
-        'bundles/motrpac_human-precovid-sed-adu_clinical-chemistry.zip',
+        'Differential analysis, metadata, QC normalized data from human plasma samples for clinical chemistry experiment.',
+      object_zipfile: 'bundles/motrpac_human-precovid-sed-adu_clinical-chemistry.zip',
       object_zipfile_size: '22.54 MB',
     },
   ],
@@ -467,9 +466,8 @@ const BundleDataTypes = {
       intervention: 'Sedentary',
       study_group: 'Pre-Suspension',
       description:
-        'Summary-level results from human plasma tissue for clinical chemistry experiment.',
-      object_zipfile:
-        'bundles/external/motrpac_human-presuspension-sed-adu_clinical-chemistry.zip',
+        'Summary-level results from human plasma samples for clinical chemistry experiment.',
+      object_zipfile: 'bundles/external/motrpac_human-presuspension-sed-adu_clinical-chemistry.zip',
       object_zipfile_size: '22.44 MB',
     },
   ],
