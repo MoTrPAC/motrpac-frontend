@@ -2714,7 +2714,7 @@ __metadata:
     jquery: "npm:^3.5.1"
     js-yaml: "npm:^4.1.0"
     jsdom: "npm:^24.0.0"
-    lodash: "npm:^4.17.21"
+    lodash: "npm:^4.18.0"
     plotly.js-basic-dist-min: "npm:^3.4.0"
     popper.js: "npm:^1.16.1"
     postcss-normalize: "npm:^13.0.1"
@@ -7140,10 +7140,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.19, lodash@npm:^4.17.21":
-  version: 4.17.23
-  resolution: "lodash@npm:4.17.23"
-  checksum: 10c0/1264a90469f5bb95d4739c43eb6277d15b6d9e186df4ac68c3620443160fc669e2f14c11e7d8b2ccf078b81d06147c01a8ccced9aab9f9f63d50dcf8cace6bf6
+"lodash@npm:^4.17.19, lodash@npm:^4.17.21, lodash@npm:^4.18.0":
+  version: 4.18.1
+  resolution: "lodash@npm:4.18.1"
+  checksum: 10c0/757228fc68805c59789e82185135cf85f05d0b2d3d54631d680ca79ec21944ec8314d4533639a14b8bcfbd97a517e78960933041a5af17ecb693ec6eecb99a27
   languageName: node
   linkType: hard
 
