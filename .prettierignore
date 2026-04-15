@@ -4,3 +4,10 @@ coverage
 
 # Ignore all HTML files:
 *.html
+
+node_modules
+/.cache
+.eslintignore
+.gitignore
+.git
+dist

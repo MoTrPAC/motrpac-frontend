@@ -54,7 +54,7 @@ const proteomics1A1CIndependentAnalyses = [
   't70-white-adipose_prot-pr_1A1C-independent-analyses_report.html',
 ];
 
-function DawgPAC({ profile }) {
+function DawgPAC({ profile = {} }) {
   const [selectedReport, setSelectedReport] = useState(null);
   const [selectedReportLabel, setSelectedReportLabel] = useState(null);
 
@@ -134,9 +134,9 @@ function DawgPAC({ profile }) {
         </table>
       </div>
       <div className="bd-callout bd-callout-warning mb-4">
-        <b>2025MAY16 Data Freeze →</b>
+        <b>2025JUN09 Consortium Data Release →</b>
         {' '}
-        <a href="https://docs.google.com/document/d/1-VphKxR9jQKFUFRjsF12YVY_pkO2oLOAHunjFc2Alxg/edit?tab=t.0#heading=h.ve0qe6m0m7t7" target="_blank" rel="noopener noreferrer">
+        <a href="https://docs.google.com/document/d/1PlWzZ6SPMX7SeW8TxeDKEfnACrG2YOiZclDsw2UBs84/edit?tab=t.0#heading=h.nizg0n7kpig1" target="_blank" rel="noopener noreferrer">
           Read Notes
         </a>
       </div>
@@ -198,7 +198,14 @@ function DawgPAC({ profile }) {
                 <li>
                   QC + DEA:
                   {' '}
-                  pass1ac-6-rna-seq-analysis-report.html
+                  <a
+                    href="#"
+                    data-toggle="modal"
+                    data-target="#html-report-modal"
+                    onClick={(e) => { e.preventDefault(); handleClickReport('transcriptomics/pass1ac-6-rna-seq-analysis-report.html', 'pass1ac-6-rna-seq-analysis-report.html'); }}
+                  >
+                    pass1ac-6-rna-seq-analysis-report.html
+                  </a>
                 </li>
               </ul>
             </li>
@@ -208,7 +215,14 @@ function DawgPAC({ profile }) {
                 <li>
                   QC + DA:
                   {' '}
-                  pass1ac-6-metabolomics-analysis-report.html
+                  <a
+                    href="#"
+                    data-toggle="modal"
+                    data-target="#html-report-modal"
+                    onClick={(e) => { e.preventDefault(); handleClickReport('metabolomics/pass1ac-6-metabolomics-analysis-report.html', 'pass1ac-6-metabolomics-analysis-report.html'); }}
+                  >
+                    pass1ac-6-metabolomics-analysis-report.html
+                  </a>
                 </li>
               </ul>
             </li>
@@ -356,10 +370,6 @@ DawgPAC.propTypes = {
     userid: PropTypes.string,
     user_metadata: PropTypes.object,
   }),
-};
-
-DawgPAC.defaultProps = {
-  profile: {},
 };
 
 export default DawgPAC;

@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Heatmap from './heatmap';
 
-const figureTissueProps = require('./figureTissueProps');
-const figureAssayProps = require('./figureAssayProps');
+import figureTissueProps from './figureTissueProps';
+import figureAssayProps from './figureAssayProps';
 
 /**
  * Renders bootstrap modal containing heatmap of top 50 DE genes
@@ -15,7 +15,7 @@ const figureAssayProps = require('./figureAssayProps');
  *
  * @returns {Object} JSX representation of the heatmap modal
  */
-function HeatmapModal({ tissue, assay, dismissModal }) {
+function HeatmapModal({ tissue = '', assay = '', dismissModal = null }) {
   // Transform tissue abbreviation to full name
   function renderTissueName() {
     let tissueName = '';
@@ -79,12 +79,6 @@ HeatmapModal.propTypes = {
   tissue: PropTypes.string,
   assay: PropTypes.string,
   dismissModal: PropTypes.func,
-};
-
-HeatmapModal.defaultProps = {
-  tissue: '',
-  assay: '',
-  dismissModal: null,
 };
 
 export default HeatmapModal;

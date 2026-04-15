@@ -1,21 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function SelectiveDataDownloadsCard({
   cardIcon,
   cardTitle,
   dataSelectHandler,
-  selectedData,
-  cssSelector,
+  selectedData = '',
+  cssSelector = '',
   children,
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function handleDataSelect(e) {
     e.preventDefault();
     dataSelectHandler();
-    history.push('/data-download/file-browser', {
+
+    const studyDataMap = {
+      'pass1b-06': 'rat-training-06',
+      'pass1a-06': 'rat-acute-06',
+      'human-precovid-sed-adu': 'human-precovid',
+    };
+    const studyData = studyDataMap[selectedData] || 'rat-training-06';
+
+    navigate(`/data-download/file-browser/${studyData}`, {
       state: { selectedData },
     });
   }
@@ -37,7 +45,7 @@ function SelectiveDataDownloadsCard({
           className="btn btn-lg btn-block btn-primary"
           onClick={(e) => handleDataSelect(e)}
         >
-          Get Started
+          Browse Files
         </button>
       </div>
     </div>
@@ -50,11 +58,6 @@ SelectiveDataDownloadsCard.propTypes = {
   dataSelectHandler: PropTypes.func.isRequired,
   selectedData: PropTypes.string,
   cssSelector: PropTypes.string,
-};
-
-SelectiveDataDownloadsCard.defaultProps = {
-  selectedData: '',
-  cssSelector: '',
 };
 
 export default SelectiveDataDownloadsCard;

@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-const dataAcuteTest = require('../data/testAnimalAcuteTest');
-const dataRegistration = require('../data/testAnimalRegistration');
-const dataFamiliarization = require('../data/testAnimalFamiliarization');
+import '@styles/graph.scss'
+
+import dataAcuteTest from '../data/testAnimalAcuteTest';
+import dataRegistration from '../data/testAnimalRegistration';
+import dataFamiliarization from '../data/testAnimalFamiliarization';
 
 /**
  * Dictionary

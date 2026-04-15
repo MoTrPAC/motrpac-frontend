@@ -168,8 +168,8 @@ function GraphicalAnalysisGastrocnemius() {
             <div className="section level3">
               <h3 id="selected-nodes">Selected nodes</h3>
 
-              <div className="section level4" id="skm-gn8w_f1_m1">
-                <h4>SKM-GN:8w_F1_M1</h4>
+              <div className="section level4">
+                <h4 id="skm-gn8w_f1_m1">SKM-GN:8w_F1_M1</h4>
                 <p>
                   <img src={`${imageURL}/figure_22.png`} width="100%" alt="" />
                   <img src={`${imageURL}/figure_23.png`} width="100%" alt="" />

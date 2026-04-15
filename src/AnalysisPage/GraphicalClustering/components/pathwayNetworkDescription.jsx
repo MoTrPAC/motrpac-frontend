@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ExternalLink from '../../../lib/ui/externalLink';
 
-function PathwayNetworkDescription({ tissue, clusterName }) {
+function PathwayNetworkDescription({ tissue = null, clusterName = null }) {
   const tissueParam = tissue && tissue.length ? `tissues[${tissue}]=1&` : '';
   const clusterParam = clusterName && clusterName.length ? `&cluster=${clusterName}` : '';
   const url = `https://data-viz.motrpac-data.org/?${tissueParam}plot_type=Pathway${clusterParam}`;
@@ -84,11 +84,6 @@ function PathwayNetworkDescription({ tissue, clusterName }) {
 PathwayNetworkDescription.propTypes = {
   tissue: PropTypes.string,
   clusterName: PropTypes.string,
-};
-
-PathwayNetworkDescription.defaultProps = {
-  tissue: null,
-  clusterName: null,
 };
 
 export default PathwayNetworkDescription;

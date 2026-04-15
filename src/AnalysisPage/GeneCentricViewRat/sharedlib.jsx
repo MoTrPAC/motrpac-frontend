@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tooltip';
 import roundNumbers from '../../lib/utils/roundNumbers';
-import { tissueList, assayList } from '../../lib/searchFilters';
+import { tissues, assayListRat } from '../../lib/searchFilters';
 
 export const geneSearchParamsPropType = {
   ktype: PropTypes.string,
   keys: PropTypes.string,
   omics: PropTypes.arrayOf(PropTypes.string),
+  study: PropTypes.string,
   filters: PropTypes.shape({
     assay: PropTypes.arrayOf(PropTypes.string),
     tissue: PropTypes.arrayOf(PropTypes.string),
@@ -25,7 +26,7 @@ export const geneSearchParamsPropType = {
  */
 export const geneSearchTrainingResultsTablePropType = {
   gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  feature_ID: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  feature_id: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tissue: PropTypes.string,
   assay: PropTypes.string,
   p_value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -36,7 +37,7 @@ export const geneSearchTrainingResultsTablePropType = {
 
 export const geneSearchTimewisePlotPropType = {
   gene_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  feature_ID: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  feature_id: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tissue: PropTypes.string,
   assay: PropTypes.string,
   sex: PropTypes.string,
@@ -55,7 +56,7 @@ export const geneSearchTrainingTableColumns = [
   },
   {
     Header: 'Feature ID',
-    accessor: 'feature_ID',
+    accessor: 'feature_id',
   },
   {
     Header: 'Tissue',
@@ -131,7 +132,7 @@ export const geneSearchTrainingTableColumns = [
  * page count and page index rendering function
  * common to all data qc status reports
  */
-export const PageIndex = ({ pageIndex, pageOptions }) => (
+export const PageIndex = ({ pageIndex = 0, pageOptions = [] }) => (
   <span className="page-index">
     Showing Page {pageIndex + 1} of {pageOptions.length}
   </span>
@@ -140,11 +141,6 @@ export const PageIndex = ({ pageIndex, pageOptions }) => (
 PageIndex.propTypes = {
   pageIndex: PropTypes.number,
   pageOptions: PropTypes.arrayOf(PropTypes.number),
-};
-
-PageIndex.defaultProps = {
-  pageIndex: 0,
-  pageOptions: [],
 };
 
 /**
@@ -256,7 +252,7 @@ export const transformData = (arr) => {
       const newGeneVal = item.gene_symbol;
       item.gene_symbol = (
         <a
-          href={`https://www.ncbi.nlm.nih.gov/gene/?term=${newGeneVal.toLowerCase()}`}
+          href={`https://cfdeknowledge.org/r/kc_entity_gene?entity=gene&gene=${newGeneVal.toUpperCase()}`}
           target="_blank"
           rel="noreferrer"
         >
@@ -266,17 +262,17 @@ export const transformData = (arr) => {
     }
     // Transform tissue values
     if (item.tissue && item.tissue.length) {
-      const matchedTissue = tissueList.find(
+      const matchedTissue = tissues.find(
         (filter) => filter.filter_value === item.tissue
       );
-      item.tissue = matchedTissue && matchedTissue.filter_label;
+      item.tissue = matchedTissue ? matchedTissue.filter_label : item.tissue;
     }
     // Transform assay values
     if (item.assay && item.assay.length) {
-      const matchedAssay = assayList.find(
+      const matchedAssay = assayListRat.find(
         (filter) => filter.filter_value === item.assay
       );
-      item.assay = matchedAssay && matchedAssay.filter_label;
+      item.assay = matchedAssay ? matchedAssay.filter_label : item.assay;
     }
     // Round values
     if (item.p_value && item.p_value.length && item.p_value !== 'NA') {

@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
-import pass1b06 from '../data/file_download_metadata/rat_endurance_training_6mo_minified.json';
-import pass1a06 from '../data/file_download_metadata/rat_acute_exercise_6mo_minified.json';
-import humanPrecovidSedAdu from '../data/file_download_metadata/human_precovid_sed_adu_minified.json';
+import pass1b06 from '../data/file_download_metadata/rat-training-06-all-version-files-minified.json';
+import pass1a06 from '../data/file_download_metadata/rat-acute-06-files-minified.json';
+import humanPrecovidSedAdu from '../data/file_download_metadata/human-precovid-files-minified.json';
+import humanPrecovidSedAduExternal from '../data/file_download_metadata/human-precovid-external-files-minified.json';
 
 const CHANGE_FILTER = 'CHANGE_FILTER';
 const SORT_CHANGE = 'SORT_CHANGE';
@@ -20,6 +21,7 @@ const RESET_BROWSE_STATE = 'RESET_BROWSE_STATE';
 const SELECT_PASS1B_06_DATA = 'SELECT_PASS1B_06_DATA';
 const SELECT_PASS1A_06_DATA = 'SELECT_PASS1A_06_DATA';
 const SELECT_HUMAN_PRECOVID_SED_ADU_DATA = 'SELECT_HUMAN_PRECOVID_SED_ADU_DATA';
+const SELECT_HUMAN_PRECOVID_SED_ADU_EXTERNAL_DATA = 'SELECT_HUMAN_PRECOVID_SED_ADU_EXTERNAL_DATA';
 
 export const types = {
   CHANGE_FILTER,
@@ -38,6 +40,7 @@ export const types = {
   SELECT_PASS1B_06_DATA,
   SELECT_PASS1A_06_DATA,
   SELECT_HUMAN_PRECOVID_SED_ADU_DATA,
+  SELECT_HUMAN_PRECOVID_SED_ADU_EXTERNAL_DATA,
 };
 
 function changeFilter(category, filter) {
@@ -149,6 +152,13 @@ function selectHumanPreCovidSedAduData(files = humanPrecovidSedAdu) {
   };
 }
 
+function selectHumanPreCovidSedAduExternalData(files = humanPrecovidSedAduExternal) {
+  return {
+    type: SELECT_HUMAN_PRECOVID_SED_ADU_EXTERNAL_DATA,
+    files,
+  };
+}
+
 // Mock Async Getting List
 const files = [];
 
@@ -182,17 +192,17 @@ function useNull() {
   return null;
 }
 
-const bucket = process.env.REACT_APP_DATA_FILE_BUCKET;
+const bucket = import.meta.env.VITE_DATA_FILE_BUCKET;
 const api =
-  process.env.NODE_ENV !== 'production'
-    ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
-    : process.env.REACT_APP_API_SERVICE_ADDRESS;
-const endpoint = process.env.REACT_APP_SIGNED_URL_ENDPOINT;
-const fileDownloadEndpoint = process.env.REACT_APP_FILE_DOWNLOAD_ENDPOINT;
+  import.meta.env.DEV
+    ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+    : import.meta.env.VITE_API_SERVICE_ADDRESS;
+const endpoint = import.meta.env.VITE_SIGNED_URL_ENDPOINT;
+const fileDownloadEndpoint = import.meta.env.VITE_FILE_DOWNLOAD_ENDPOINT;
 const key =
-  process.env.NODE_ENV !== 'production'
-    ? process.env.REACT_APP_API_SERVICE_KEY_DEV
-    : process.env.REACT_APP_API_SERVICE_KEY;
+  import.meta.env.DEV
+    ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+    : import.meta.env.VITE_API_SERVICE_KEY;
 
 function handleUrlFetch(selectedFiles) {
   if (selectedFiles.length === 0) {
@@ -282,6 +292,7 @@ const actions = {
   selectPass1B06Data,
   selectPass1A06Data,
   selectHumanPreCovidSedAduData,
+  selectHumanPreCovidSedAduExternalData,
 };
 
 export default actions;

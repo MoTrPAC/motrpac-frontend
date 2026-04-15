@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import figureRat from '../../assets/figures/rat-figure-pass1b.svg';
 import FigureAssayLegends from './figureAssayLegends';
 import HeatmapModal from './heatmapModal';
+
+import '@styles/differentialExpression.scss';
+
+const imgSourceUrl = 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/images/figures/';
 
 /**
  * Renders the data exploration page in both
@@ -10,7 +13,7 @@ import HeatmapModal from './heatmapModal';
  *
  * @returns {Object} JSX representation of the data exploration page.
  */
-function DifferenrialExpression() {
+function DifferentialExpression() {
   const [tissue, setTissue] = useState();
   const [assay, setAssay] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -35,7 +38,7 @@ function DifferenrialExpression() {
   // Draw svg rat figure with labels
   function renderFigure() {
     // import svg rat figure as xml
-    d3.xml(figureRat)
+    d3.xml(`${imgSourceUrl}rat-figure-pass1b.svg`)
       .then((data) => {
         const svgFigure = data.documentElement;
         d3.select(ref.current).node().append(svgFigure);
@@ -147,4 +150,4 @@ function DifferenrialExpression() {
   );
 }
 
-export default DifferenrialExpression;
+export default DifferentialExpression;

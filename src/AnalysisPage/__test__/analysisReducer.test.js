@@ -1,12 +1,15 @@
+import { describe, test, expect } from 'vitest';
 import AnalysisReducer, { defaultAnalysisState } from '../analysisReducer';
 
 const analysisSelectAction = {
   type: 'ANALYSIS_SELECT',
   analysis: 'PHENOTYPE',
 };
+
 const goBackAction = {
   type: 'GO_BACK',
 };
+
 describe('Analysis Reducer', () => {
   test('Return initial state if no action', () => {
     expect(AnalysisReducer(defaultAnalysisState, {})).toEqual(defaultAnalysisState);

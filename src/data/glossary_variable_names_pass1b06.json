@@ -1,0 +1,242 @@
+[
+  {
+    "variable_name": "adj_p_value",
+    "definition": "Adjusted p-value"
+  },
+  {
+    "variable_name": "adj_p_value_female",
+    "definition": "Adjusted p-value for females"
+  },
+  {
+    "variable_name": "adj_p_value_male",
+    "definition": "Adjusted p-value for males"
+  },
+  {
+    "variable_name": "assay",
+    "definition": "Assay abbreviation: technique used to measure a specific set of biological molecules at a large scale"
+  },
+  {
+    "variable_name": "Chr",
+    "definition": "Chromosome"
+  },
+  {
+    "variable_name": "comparison_average_intensity",
+    "definition": "Average intensity among replicates in the comparison group"
+  },
+  {
+    "variable_name": "comparison_average_intensity_se",
+    "definition": "Standard error of the average intensity in the comparison group"
+  },
+  {
+    "variable_name": "comparison_group",
+    "definition": "Time point of trained animals compared to sex-matched sedentary control animals"
+  },
+  {
+    "variable_name": "control_cv",
+    "definition": "Coefficient of variation in the control group"
+  },
+  {
+    "variable_name": "covariates",
+    "definition": "Covariates used in the model"
+  },
+  {
+    "variable_name": "covariates_female",
+    "definition": "Covariates used in the model for females"
+  },
+  {
+    "variable_name": "covariates_male",
+    "definition": "Covariates used in the model for males"
+  },
+  {
+    "variable_name": "cv",
+    "definition": "Coefficient of variation"
+  },
+  {
+    "variable_name": "dataset",
+    "definition": "Dataset identifier"
+  },
+  {
+    "variable_name": "dataset_female",
+    "definition": "Dataset identifier for females"
+  },
+  {
+    "variable_name": "dataset_male",
+    "definition": "Dataset identifier for males"
+  },
+  {
+    "variable_name": "EntrezID",
+    "definition": "Entrez Gene ID"
+  },
+  {
+    "variable_name": "feature_ID",
+    "definition": "Unique MoTrPAC identifier for a feature"
+  },
+  {
+    "variable_name": "fscore",
+    "definition": "F statistic"
+  },
+  {
+    "variable_name": "fscore_female",
+    "definition": "F statistic for females"
+  },
+  {
+    "variable_name": "fscore_male",
+    "definition": "F statistic for males"
+  },
+  {
+    "variable_name": "full_model",
+    "definition": "Full model used in the analysis"
+  },
+  {
+    "variable_name": "full_model_female",
+    "definition": "Full model used in the analysis for females"
+  },
+  {
+    "variable_name": "full_model_male",
+    "definition": "Full model used in the analysis for males"
+  },
+  {
+    "variable_name": "groups_tested_female",
+    "definition": "Groups tested in females"
+  },
+  {
+    "variable_name": "groups_tested_male",
+    "definition": "Groups tested in males"
+  },
+  {
+    "variable_name": "is_targeted",
+    "definition": "Whether the feature is targeted"
+  },
+  {
+    "variable_name": "Locus",
+    "definition": "Genomic locus"
+  },
+  {
+    "variable_name": "logFC",
+    "definition": "Log fold-change"
+  },
+  {
+    "variable_name": "logFC_se",
+    "definition": "Standard error of the log fold-change"
+  },
+  {
+    "variable_name": "lrt",
+    "definition": "Likelihood ratio test statistic"
+  },
+  {
+    "variable_name": "lrt_female",
+    "definition": "Likelihood ratio test statistic for females"
+  },
+  {
+    "variable_name": "lrt_male",
+    "definition": "Likelihood ratio test statistic for males"
+  },
+  {
+    "variable_name": "meta_reg_het_p",
+    "definition": "P-value for heterogeneity in meta-regression"
+  },
+  {
+    "variable_name": "meta_reg_pvalue",
+    "definition": "P-value from meta-regression"
+  },
+  {
+    "variable_name": "metabolite",
+    "definition": "Metabolite name"
+  },
+  {
+    "variable_name": "metabolite_refmet",
+    "definition": "Metabolite reference ID"
+  },
+  {
+    "variable_name": "mz",
+    "definition": "Mass-to-charge ratio"
+  },
+  {
+    "variable_name": "neutral_mass",
+    "definition": "Neutral mass"
+  },
+  {
+    "variable_name": "original_ftest_ps",
+    "definition": "Original F-test p-values"
+  },
+  {
+    "variable_name": "p_value",
+    "definition": "Unadjusted p-value"
+  },
+  {
+    "variable_name": "p_value_female",
+    "definition": "P-value for females"
+  },
+  {
+    "variable_name": "p_value_male",
+    "definition": "P-value for males"
+  },
+  {
+    "variable_name": "reduced_model",
+    "definition": "Reduced model used in the analysis"
+  },
+  {
+    "variable_name": "reduced_model_female",
+    "definition": "Reduced model used in the analysis for females"
+  },
+  {
+    "variable_name": "reduced_model_male",
+    "definition": "Reduced model used in the analysis for males"
+  },
+  {
+    "variable_name": "reference_average_intensity",
+    "definition": "Average intensity among replicates in the sex-matched sedentary control animals"
+  },
+  {
+    "variable_name": "reference_average_intensity_se",
+    "definition": "Standard error of the average intensity in the reference group"
+  },
+  {
+    "variable_name": "removed_samples",
+    "definition": "Comma-separated list of outliers (vial labels) removed from differential analysis"
+  },
+  {
+    "variable_name": "rt",
+    "definition": "Retention time"
+  },
+  {
+    "variable_name": "selection_fdr",
+    "definition": "False discovery rate for feature selection"
+  },
+  {
+    "variable_name": "sex",
+    "definition": "Sex of the animal, either 'male' or 'female'"
+  },
+  {
+    "variable_name": "shrunk_logFC",
+    "definition": "Log fold-change with shrinkage applied"
+  },
+  {
+    "variable_name": "shrunk_logFC_se",
+    "definition": "Standard error of the shrunk log fold-change"
+  },
+  {
+    "variable_name": "site",
+    "definition": "Site of the study"
+  },
+  {
+    "variable_name": "Symbol",
+    "definition": "Gene symbol"
+  },
+  {
+    "variable_name": "tissue",
+    "definition": "Tissue name"
+  },
+  {
+    "variable_name": "tissue_abbreviation",
+    "definition": "Tissue abbreviation"
+  },
+  {
+    "variable_name": "tscore",
+    "definition": "t statistic"
+  },
+  {
+    "variable_name": "zscore",
+    "definition": "Z statistic"
+  }
+]

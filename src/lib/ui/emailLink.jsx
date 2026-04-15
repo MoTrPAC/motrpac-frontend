@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
  *
  * @returns {Object} JSX representation of an email link.
  */
-function EmailLink({ mailto, label }) {
+function EmailLink({ mailto, label = null }) {
   return (
     <a
       href={`mailto:${mailto}`}
@@ -27,10 +27,6 @@ function EmailLink({ mailto, label }) {
 EmailLink.propTypes = {
   mailto: PropTypes.string.isRequired,
   label: PropTypes.string,
-};
-
-EmailLink.defaultProps = {
-  label: null,
 };
 
 export default EmailLink;

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+import '@styles/footer.scss'
+
 /**
  * Renders the global footer.
  *
@@ -62,8 +64,17 @@ function Footer() {
           <span className="mr-2">
             <Link to="/license">License</Link>
           </span>
-          <span>
+          <span className="mr-2">
             <Link to="/contact">Contact</Link>
+          </span>
+          <span>
+            <a
+              href="https://redcap.stanford.edu/surveys/?s=XDHKYFE9FAAC7YAF"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Request Assistance
+            </a>
           </span>
         </div>
       </div>

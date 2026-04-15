@@ -38,14 +38,14 @@ function useNull() {
 }
 
 const api =
-  process.env.NODE_ENV !== 'production'
-    ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
-    : process.env.REACT_APP_API_SERVICE_ADDRESS;
-const endpoint = process.env.REACT_APP_QC_DATA_ENDPOINT;
+  import.meta.env.DEV
+    ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+    : import.meta.env.VITE_API_SERVICE_ADDRESS;
+const endpoint = import.meta.env.VITE_QC_DATA_ENDPOINT;
 const key =
-  process.env.NODE_ENV !== 'production'
-    ? process.env.REACT_APP_API_SERVICE_KEY_DEV
-    : process.env.REACT_APP_API_SERVICE_KEY;
+  import.meta.env.DEV
+    ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+    : import.meta.env.VITE_API_SERVICE_KEY;
 
 // Handler for predefined searches
 function fetchData() {

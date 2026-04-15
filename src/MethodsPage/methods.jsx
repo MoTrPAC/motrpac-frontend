@@ -7,6 +7,8 @@ import StudyDocumentsTable from '../lib/studyDocumentsTable';
 import HumanStudyDocumentsTable from '../lib/humanStudyDocumentsTable';
 import ExternalLink from '../lib/ui/externalLink';
 
+import '@styles/methods.scss';
+
 /**
  * Renders the Methods page.
  *
@@ -14,7 +16,7 @@ import ExternalLink from '../lib/ui/externalLink';
  *
  * @returns {object} JSX representation of the Methods component
  */
-export function Methods({ profile }) {
+export function Methods({ profile= {} }) {
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
   const baseUrl = 'https://d1yw74buhe0ts0.cloudfront.net/docs';
@@ -82,10 +84,6 @@ Methods.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
   }),
-};
-
-Methods.defaultProps = {
-  profile: {},
 };
 
 const mapStateToProps = (state) => ({

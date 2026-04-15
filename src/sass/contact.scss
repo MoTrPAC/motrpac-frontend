@@ -1,0 +1,83 @@
+@use 'bootstrapCustom';
+@use 'colors';
+
+.contactPage {
+  margin-bottom: 1.25rem;
+
+  .page-title {
+    h3 {
+      margin-bottom: 0;
+    }
+  }
+
+  .contact-form-container {
+    .required-flag {
+      margin-left: 0.4rem;
+
+      .required-flag-text {
+        color: colors.$stanford-bright-red;
+        margin: 0 0.15rem;
+      }
+    }
+
+    label {
+      color: #2e2d29;
+
+      &.required-field {
+        &:after {
+          content: ' *';
+          color: colors.$stanford-bright-red;
+        }
+      }
+    }
+
+    input#name,
+    input#email,
+    input#subject,
+    textarea#message {
+      &:disabled {
+        cursor: not-allowed;
+      }
+    }
+
+    button.contact-form-submit {
+      &:disabled {
+        cursor: not-allowed;
+      }
+  
+      img.in-progress-spinner {
+        animation-name: spinner;
+        animation-duration: 1.75s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        -webkit-filter: invert(100%) brightness(100%) contrast(100%);
+        filter: invert(100%) brightness(100%) contrast(100%);
+        height: 30%;
+        width: 30%;
+      }
+  
+      @keyframes spinner {
+        from {
+            transform:rotate(0deg);
+        }
+        to {
+            transform:rotate(360deg);
+        }
+      }
+    }
+  }
+}
+
+@include bootstrapCustom.media-breakpoint-down(sm) {
+  .contactPage {
+    .contact-form-container {
+      .form-footer {
+        flex-direction: column;
+
+        .contact-form-button-group {
+          margin-top: 1.25rem;
+        }
+      }
+    }
+  }
+}

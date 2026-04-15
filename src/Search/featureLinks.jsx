@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { getDataVizURL } from '../lib/utils/dataVizUrl';
 
 /**
  * Renders the feature links on  search page
@@ -10,14 +11,14 @@ import dayjs from 'dayjs';
  */
 function FeatureLinks({
   handleQCDataFetch,
-  lastModified,
-  userType,
+  lastModified = '',
+  userType = '',
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Call to invoke Redux action to fetch QC data
   // if timestamp is empty or older than 24 hours
-  const fecthQCData = () => {
+  const fetchQCData = () => {
     if (
       !lastModified ||
       !lastModified.length ||
@@ -27,37 +28,40 @@ function FeatureLinks({
     }
   };
 
-  // Get localStorage item
-  const token = localStorage.getItem('ut');
-
-  const dataVizHost = process.env.NODE_ENV !== 'production'
-    ? `https://data-viz-dev.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`
-    : `https://data-viz.motrpac-data.org/precawg/${token && token.length ? `?ut=${token}` : ''}`;
-
-  const features = [
+  // Feature links by groups
+  const commonEssentialFeaturedLinks = [
     {
       name: 'data-download',
       route: 'data-download',
       description:
-        'Browse and download the available MoTrPAC study data in young adult rats by tissue, assay, or omics.',
+        'Browse and download the available MoTrPAC endurance training in young adult rats study data by tissue, assay, or omics.',
       icon: 'cloud_download',
-      title: 'Data Downloads',
+      title: 'Download Datasets',
     },
     {
       name: 'differential-abundance',
       route: 'search',
       description:
-        'Explore the differential abundance analysis results by gene, protein or metabolite in the MoTrPAC multi-omics exercise studies.',
+        'Search and browse the summary-level results by gene, protein or metabolite in the MoTrPAC multi-omics studies, including endurance training in young adult rats and acute exercise in human sedentary adults (pre-suspension).',
       icon: 'search',
-      title: 'Differential Abundance Analysis Results',
+      title: 'Browse Results',
     },
     {
       name: 'pass1b-06-data-visualization',
-      route: process.env.NODE_ENV !== 'production' ? 'https://data-viz-dev.motrpac-data.org/' : 'https://data-viz.motrpac-data.org/',
+      route: getDataVizURL('rat-training-06'),
       description:
         'An interactive data visualization tool for the graphical clustering analysis of endurance training response in young adult rats.',
       icon: 'data_exploration',
-      title: 'Endurance Trained Young Adult Rats Data Visualization',
+      title: 'Data Visualization: Endurance Training in Young Adult Rats',
+      eventHandler: null,
+    },
+    {
+      name: 'precovid-human-data-visualization',
+      route: getDataVizURL('human-precovid', userType),
+      description:
+        'An interactive data visualization tool for the analysis of acute exercise in human sedentary adults (pre-suspension).',
+      icon: 'analytics',
+      title: 'Data Visualization: Acute Exercise in Human Sedentary Adults (Pre-Suspension)',
       eventHandler: null,
     },
     {
@@ -74,17 +78,38 @@ function FeatureLinks({
       route: 'summary',
       description:
         'A dashboard to visualize sample counts by tissue, assay, or omics in the young adult rat endurance training and acute exercise studies.',
-      icon: 'assessment',
+      icon: 'pie_chart',
       title: 'Sample Summary',
+      eventHandler: null,
+    },
+  ];
+
+  const externalFeaturedLinks = [
+    ...commonEssentialFeaturedLinks,
+  ];
+  
+  const internalFeaturedLinks = [
+    ...commonEssentialFeaturedLinks,
+
+    {
+      name: 'clinical-biospecimen-summary',
+      route:
+        'biospecimen-summary',
+      description:
+        'Look up biospecimen data in the pre-COVID human sedentary adults and the human main highly active adults studies.',
+      icon: 'stacked_bar_chart',
+      title: 'Clinical Biospecimen Data Lookup',
       eventHandler: null,
     },
     /*
     {
-      route: 'releases',
+      name: 'human-ha-adult-data-analyses',
+      route:
+        'https://ccv-dev.motrpac-data.org',
       description:
-        'Access prior versions of the data sets in the young adult rat endurance training and acute exercise studies.',
-      icon: 'rocket_launch',
-      title: 'Data Releases',
+        'Interactive visualizations for the analyses of human highly active (HA) adult data (Neptune).',
+      icon: 'area_chart',
+      title: 'Human HA Adult Data Analyses',
       eventHandler: null,
     },
     */
@@ -95,16 +120,7 @@ function FeatureLinks({
         'Track and visualize the sample-level data submissions and their QC statuses by omics or assays.',
       icon: 'fact_check',
       title: 'QC Data Monitor',
-      eventHandler: fecthQCData,
-    },
-    {
-      name: 'precovid-human-data-visualization',
-      route: dataVizHost,
-      description:
-        'An interactive data visualization tool for the analysis of pre-COVID human sedentary adults study data.',
-      icon: 'airline_seat_recline_normal',
-      title: 'Pre-COVID Human Data Visualization',
-      eventHandler: null,
+      eventHandler: fetchQCData,
     },
     {
       name: 'multiomics-working-groups',
@@ -113,6 +129,26 @@ function FeatureLinks({
         'Data analysis resources, including onboarding guide and Jupyter notebooks, for each of the MoTrPAC multi-omics working groups.',
       icon: 'group',
       title: 'Multi-omics Working Groups',
+      eventHandler: null,
+    },
+    {
+      name: 'motrpac-data-status-overview',
+      route:
+        'https://docs.google.com/spreadsheets/d/1f8A5zlQyzNfSJP33t0dZvdT2jTlBIcdaBEF0c197Mtw/edit?gid=1293449257#gid=1293449257',
+      description:
+        'A document exhibiting the data milestones, timelines and statuses pertaining to the MoTrPAC studies.',
+      icon: 'view_timeline',
+      title: 'Data Status Overview',
+      eventHandler: null,
+    },
+    {
+      name: 'motrpac-consortium-and-external-data-releases-timing',
+      route:
+        'https://docs.google.com/document/d/1zqdXGvtsBdBZlQ1Kdzeap3Nt5twGbqibffu20Ce5pM4/edit?pli=1&tab=t.0',
+      description:
+        'A document consisting of both consortium and external data release schedules pertaining to the MoTrPAC studies.',
+      icon: 'calendar_month',
+      title: 'Consortium and External Data Releases Timing',
       eventHandler: null,
     },
     {
@@ -127,20 +163,29 @@ function FeatureLinks({
     },
   ];
 
-  const featuresToRender = userType === 'internal' ? features : features.slice(0, 5);
+  let featuresToRender;
+  if (userType === 'internal') {
+    featuresToRender = internalFeaturedLinks;
+  } else {
+    featuresToRender = externalFeaturedLinks;
+  }
 
   // handle click event for external links
   function handleFeatureLinkClick(e, item) {
     e.stopPropagation();
 
     if (item.route.indexOf('https') !== -1) {
-      return window.open(item.route, '_blank');
+      const newWindow = window.open(item.route, '_blank', 'noopener,noreferrer');
+      if (newWindow) {
+        newWindow.opener = null;
+      }
+      return newWindow;
     }
 
-    history.push(`/${item.route}`);
     if (item.eventHandler) {
       item.eventHandler();
     }
+    navigate(`/${item.route}`);
   }
 
   return (
@@ -148,10 +193,6 @@ function FeatureLinks({
       <div className="row row-cols-1 row-cols-xl-4 row-cols-lg-3 row-cols-sm-1">
         {featuresToRender.map((item) => (
           <div key={item.name} className="col mb-4">
-            {/*
-              eslint-disable-next-line jsx-a11y/no-static-element-interactions,
-              jsx-a11y/click-events-have-key-events
-            */}
             <div
               className={`card h-100 mb-3 p-3 shadow-sm ${item.name}`}
               onClick={(e) => handleFeatureLinkClick(e, item)}
@@ -179,11 +220,6 @@ FeatureLinks.propTypes = {
   handleQCDataFetch: PropTypes.func.isRequired,
   lastModified: PropTypes.string,
   userType: PropTypes.string,
-};
-
-FeatureLinks.defaultProps = {
-  lastModified: '',
-  userType: '',
 };
 
 export default FeatureLinks;

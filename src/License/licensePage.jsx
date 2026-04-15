@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import ExternalLink from '../lib/ui/externalLink';
 
+import '@styles/license.scss';
+
 function License() {
   return (
     <div className="licensePage px-3 px-md-4 mb-3 container">

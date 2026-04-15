@@ -14,20 +14,25 @@ import AnimatedLoadingIcon from '../../lib/ui/loading';
 import { genes } from '../../data/genes';
 import { trackEvent } from '../../GoogleAnalytics/googleAnalytics';
 
+import '@styles/analysisPage.scss';
+import '@styles/search.scss';
+
 function GeneCentricView({
-  geneSearchResults,
-  geneSearchParams,
-  geneSearching,
-  genSearchError,
+  geneSearchResults = {},
+  geneSearchParams = { ...defaultGeneSearchParams },
+  geneSearching = false,
+  genSearchError = '',
   handleGeneCentricSearch,
   geneSearchReset,
   geneSearchChangeFilter,
-  scope,
-  hasResultFilters,
-  profile,
+  scope = 'all',
+  hasResultFilters = {},
+  profile = {},
 }) {
   const [multiSelections, setMultiSelections] = useState([]);
   const inputRef = useRef(null);
+
+  const userType = profile.user_metadata && profile.user_metadata.userType;
 
   // Function to map array of keys to each array of values for each row
   function mapKeyToValue(indexObj) {
@@ -111,6 +116,18 @@ function GeneCentricView({
               protein, protein phosphorylation/acetylation and promoter
               methylation) for that gene over 8 weeks of training in adult rats.
             </div>
+            {userType === 'internal' && (
+              <div className="lead col-12 mt-3">
+                Go to the {' '}
+                <Link
+                  to="/search"
+                >
+                  differential abundance search page
+                </Link>{' '}
+                to explore the available data from the young adult rats acute exercise
+                and pre-COVID human sedentary adults studies.
+              </div>
+            )}
             <Tooltip anchorSelect=".timewise-definition" place="top">
               Select time-point-specific differential analytes
             </Tooltip>
@@ -254,6 +271,7 @@ GeneCentricView.propTypes = {
     ktype: PropTypes.string,
     keys: PropTypes.string,
     omics: PropTypes.arrayOf(PropTypes.string),
+    study: PropTypes.string,
     filters: PropTypes.shape({
       assay: PropTypes.arrayOf(PropTypes.string),
       tissue: PropTypes.arrayOf(PropTypes.string),
@@ -276,16 +294,6 @@ GeneCentricView.propTypes = {
     userid: PropTypes.string,
     user_metadata: PropTypes.object,
   }),
-};
-
-GeneCentricView.defaultProps = {
-  geneSearchResults: {},
-  geneSearching: false,
-  genSearchError: '',
-  geneSearchParams: { ...defaultGeneSearchParams },
-  scope: 'all',
-  hasResultFilters: {},
-  profile: {},
 };
 
 const mapStateToProps = (state) => ({

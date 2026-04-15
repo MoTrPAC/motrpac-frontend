@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { SearchReducer, defaultSearchState } from '../searchReducer';
 import {
   CHANGE_RESULT_FILTER,
@@ -28,19 +29,19 @@ describe('Search Reducer', () => {
   };
 
   // Default state
-  test('Returns initial state if no action or state', () => {
+  it('Returns initial state if no action or state', () => {
     expect(SearchReducer(undefined, {})).toEqual({ ...defaultSearchState });
   });
 
   // No action, no state changes
-  test('Returns state given if no action', () => {
+  it('Returns state given if no action', () => {
     expect(
       SearchReducer({ ...defaultSearchState, searchResults: {} }, {})
     ).toEqual({ ...defaultSearchState, searchResults: {} });
   });
 
   // Search result filter is changed
-  test('Updates tissue filter value after a tissue is selected', () => {
+  it('Updates tissue filter value after a tissue is selected', () => {
     const searchResultFiltereAction = {
       type: CHANGE_RESULT_FILTER,
       field: 'tissue',
@@ -54,7 +55,7 @@ describe('Search Reducer', () => {
   });
 
   // Search input value for the respective term/param is changed
-  test('Updates keys param value after a gene is given', () => {
+  it('Updates keys param value after a gene is given', () => {
     const searchParamAction = {
       type: CHANGE_PARAM,
       field: 'keys',
@@ -66,7 +67,7 @@ describe('Search Reducer', () => {
   });
 
   // User clicks the 'Search' button to submit the search request
-  test('Submits search request after clicking Search button', () => {
+  it('Submits search request after clicking Search button', () => {
     const newState = {
       ...state,
       searchParams: { ...searchParams },
@@ -82,7 +83,7 @@ describe('Search Reducer', () => {
   });
 
   // Submitted search fails due to some error
-  test('Search submission unsuccessful', () => {
+  it('Search submission unsuccessful', () => {
     const newState = {
       ...state,
       searchParams: { ...searchParams },
@@ -99,7 +100,7 @@ describe('Search Reducer', () => {
   });
 
   // Submitted search successfully returns data
-  test('Search submission successfully returns data', () => {
+  it('Search submission successfully returns data', () => {
     const newState = {
       ...state,
       searchParams: { ...searchParams },
@@ -116,7 +117,7 @@ describe('Search Reducer', () => {
   });
 
   // User clicks on the 'Reset' button of the search form
-  test('Resets search form after clicking Reset button', () => {
+  it('Resets search form after clicking Reset button', () => {
     const newState = {
       ...state,
       searchParams: { ...searchParams },

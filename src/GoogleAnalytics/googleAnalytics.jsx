@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import gtag from 'ga-gtag';
+import { Outlet, useLocation } from "react-router-dom";
 
 const trackingId = () => {
   // available tracking Ids for motrpac apps
@@ -21,26 +22,24 @@ const trackingId = () => {
   }
 
   // use correct tracking Id based on hostname
-  const tracker = trackers[analyticsTrackerHostname];
-
-  return tracker;
+  return trackers[analyticsTrackerHostname];
 };
 
-export const withTracker = (WrappedComponent) => {
+export const PageTracker = () => {
+  const location = useLocation()
+
   const trackPage = (page) => {
-    gtag('config', trackingId(), {'page_path': page, 'site_speed_sample_rate' : 100});
+    gtag('config', trackingId(), {
+      page_path: page,
+      site_speed_sample_rate: 100,
+    });
   };
 
-  const HOC = (props) => {
-    const { location } = props;
-    useEffect(() => trackPage(location.pathname), [
-      location.pathname,
-    ]);
+  useEffect(() => {
+    if (location && location.pathname) trackPage(location.pathname);
+  }, [location]);
 
-    return <WrappedComponent {...props} />;
-  };
-
-  return HOC;
+  return <Outlet />;
 };
 
 export const trackEvent = (category, action, label, target) => {

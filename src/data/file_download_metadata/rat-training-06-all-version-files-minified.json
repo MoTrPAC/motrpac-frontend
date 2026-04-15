@@ -1,0 +1,17 @@
+[
+  {
+    "object": "pass1b-06/analysis/epigenomics/epigen-atac-seq/dea/pass1b-06_t52-hippocampus_epigen-atac-seq_timewise-dea-fdr_20211005.txt",
+    "phase": "PASS1B-06",
+    "study": "Endurance Training",
+    "species": "Rat",
+    "omics": "Epigenomics",
+    "assay": "ATAC-seq",
+    "tissue_name": "Hippocampus",
+    "tissue_code": "T52",
+    "category": "Analysis",
+    "sub_category": "DEA",
+    "object_size": 1695428451,
+    "external_release": true,
+    "uuid": "76274789-660b-4121-b400-ea9db9391375"
+  }
+]

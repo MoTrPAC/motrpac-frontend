@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import dayjs from 'dayjs';
-import actions from '../Auth/authActions';
-import LoginButton from '../lib/loginButton';
 import MoTrPAClogo from '../assets/logo-motrpac.png';
-import onVisibilityChange from '../lib/utils/pageVisibility';
+import actions from '../Auth/authActions';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
+import LoginButton from '../lib/loginButton';
+import onVisibilityChange from '../lib/utils/pageVisibility';
+import { getDataVizURL } from '../lib/utils/dataVizUrl';
+
+import '@styles/navbar.scss';
 
 /**
  * Renders the global header nav bar.
@@ -22,14 +25,15 @@ import DataStatusActions from '../DataStatusPage/dataStatusActions';
  * @returns {Object} JSX representation of the global header nav bar.
  */
 export function Navbar({
-  isAuthenticated,
-  profile,
-  login,
-  logout,
-  resetBrowseState,
-  handleQCDataFetch,
-  lastModified,
+  profile = {},
+  isAuthenticated = false,
+  login = null,
+  logout = null,
+  resetBrowseState = null,
+  handleQCDataFetch = null,
+  lastModified = '',
 }) {
+  const [gameOpen, setGameOpen] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
   const isHomepage = currentPath === '/';
@@ -42,7 +46,8 @@ export function Navbar({
 
   useEffect(() => {
     /* Handle logout for various use cases */
-    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    const storedExpiresAt = localStorage.getItem('expires_at');
+    const expiresAt = storedExpiresAt ? JSON.parse(storedExpiresAt) : null;
     let expirationCheckInterval;
     const intervalLength = 2 * 60 * 60 * 1000;
 
@@ -96,6 +101,8 @@ export function Navbar({
 
   const handleLogout = () => {
     logout();
+    // Clear reviewer agreement from sessionStorage
+    sessionStorage.removeItem('reviewerAgreement');
     // delay state reset so that list files do not
     // disappear from the UI prior to page change
     setTimeout(() => {
@@ -114,6 +121,8 @@ export function Navbar({
 
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   const userType = profile.user_metadata && profile.user_metadata.userType;
+  const isAuthorized = isAuthenticated && hasAccess;
+  const isInternalUser = isAuthorized && userType === 'internal';
 
   // Call to invoke Redux action to fetch QC data
   // if timestamp is empty or older than 24 hours
@@ -128,15 +137,15 @@ export function Navbar({
   };
 
   const api =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
-      : process.env.REACT_APP_API_SERVICE_ADDRESS;
-  const endpointRegUser = process.env.REACT_APP_USER_REGISTRATION_ENDPOINT;
-  const endpointSendEmail = process.env.REACT_APP_SEND_EMAIL_ENDPOINT;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+      : import.meta.env.VITE_API_SERVICE_ADDRESS;
+  const endpointRegUser = import.meta.env.VITE_USER_REGISTRATION_ENDPOINT;
+  const endpointSendEmail = import.meta.env.VITE_SEND_EMAIL_ENDPOINT;
   const key =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_KEY_DEV
-      : process.env.REACT_APP_API_SERVICE_KEY;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+      : import.meta.env.VITE_API_SERVICE_KEY;
 
   // Send GET request to endpoint to 'warm up' CF backend service
   function checkServiceStatus(e) {
@@ -179,118 +188,78 @@ export function Navbar({
             id="navbarSupportedContent"
           >
             <ul className="navbar-nav">
-              {isAuthenticated && hasAccess && (
-                <li className="nnav-item navItem">
+              {isInternalUser && (
+                <li className="nav-item navItem">
                   <Link
-                    to="/dashboard"
+                    to="/exerwise"
                     className="nav-link"
+                    aria-label="ExerWise AI Assistant"
+                    title="ExerWise AI Assistant"
                   >
+                    <i className="material-icons ai-icon" aria-hidden="true">auto_awesome</i>
+                  </Link>
+                </li>
+              )}
+              {isAuthorized && (
+                <li className="nav-item navItem">
+                  <Link to="/dashboard" className="nav-link">
                     Dashboard
                   </Link>
                 </li>
               )}
-              <li className="nnav-item navItem">
-                <Link
-                  to="/data-download"
-                  className="nav-link"
-                >
-                  Downloads
-                </Link>
-              </li>
-              <li className="nnav-item navItem dropdown">
-                <div
-                  className="nav-link dropdown-toggle"
-                  role="button"
-                  id="exploreNavbarItemMenuLink"
-                  data-toggle="dropdown"
-                >
-                  Explore
-                </div>
-                <div
-                  className="dropdown-menu"
-                  aria-labelledby="exploreNavbarItemMenuLink"
-                >
-                  <Link to="/search" className="dropdown-item">
-                    Differential Abundance
-                  </Link>
-                  <Link to="/gene-centric" className="dropdown-item">
-                    Gene-centric View
-                  </Link>
-                  <Link to="/graphical-clustering" className="dropdown-item">
-                    Graphical Clustering
-                  </Link>
-                  <a
-                    href="https://data-viz.motrpac-data.org"
-                    className="dropdown-item"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Interactive Data Visualization
-                  </a>
-                  {isAuthenticated && hasAccess && userType === 'internal' ? (
-                    <Link to="/analysis-phenotype" className="dropdown-item">
-                      Phenotype
-                    </Link>
-                  ) : null}
-                </div>
-              </li>
               <li className="nav-item navItem dropdown">
                 <div
                   className="nav-link dropdown-toggle"
                   role="button"
-                  id="dataAccessNavbarItemMenuLink"
+                  id="browseDataNavbarItemMenuLink"
                   data-toggle="dropdown"
                 >
-                  Data Access
+                  Browse Data
                 </div>
                 <div
                   className="dropdown-menu"
-                  aria-labelledby="dataAccessNavbarItemMenuLink"
+                  aria-labelledby="browseDataNavbarItemMenuLink"
                 >
-                  <Link
-                    to="/data-download"
-                    className="dropdown-item"
-                  >
-                    {isAuthenticated && hasAccess && userType === 'internal'
-                      ? 'Rat and Human Data'
-                      : 'Endurance Training Data'}
+                  <Link to="/data-download" className="dropdown-item">
+                    Download Datasets
+                  </Link>
+                  <Link to="/search" className="dropdown-item">
+                    Browse Results
                   </Link>
                   <Link
                     id="reg_user"
                     to={
-                      isAuthenticated && hasAccess
+                      isAuthorized
                         ? '/releases'
                         : '/data-access'
                     }
                     className="dropdown-item"
                     onClick={(e) => checkServiceStatus(e)}
                   >
-                    Limited Acute Exercise Data
+                    Acute Exercise in Young Adult Rats
+                    <span className="badge badge-primary ml-2">Limited</span>
                   </Link>
                   <Link to="/data-deposition" className="dropdown-item">
                     Public Data Repositories
                   </Link>
-                  {!userType || (userType && userType !== 'internal') ? (
-                    <a
-                      href={process.env.REACT_APP_DATA_UPDATES_SIGNUP_URL}
-                      className="dropdown-item"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Data Updates Signup
-                    </a>
-                  ) : null}
-                  {isAuthenticated && hasAccess ? (
+                  {isInternalUser && (
                     <>
-                      {userType === 'internal' && (
-                        <Link
-                          to="/qc-data-monitor"
-                          className="dropdown-item"
-                          onClick={fecthQCData}
-                        >
-                          QC Data Monitor
-                        </Link>
-                      )}
+                      <Link to="/biospecimen-summary" className="dropdown-item">
+                        Biospecimens
+                      </Link>
+                      <Link to="/analysis-phenotype" className="dropdown-item">
+                        Phenotype
+                      </Link>
+                      <Link to="/sample-data-tracker" className="dropdown-item">
+                        Human Sample Data Tracker
+                      </Link>
+                      <Link to="/qc-data-monitor" className="dropdown-item" onClick={fecthQCData}>
+                        QC Data Monitor
+                      </Link>
+                    </>
+                  )}
+                  {isAuthorized && (
+                    <>
                       <Link to="/summary" className="dropdown-item">
                         Sample Summary
                       </Link>
@@ -298,7 +267,56 @@ export function Navbar({
                         Prior Data Releases
                       </Link>
                     </>
-                  ) : null}
+                  )}
+                </div>
+              </li>
+              <li className="nav-item navItem dropdown">
+                <div
+                  className="nav-link dropdown-toggle"
+                  role="button"
+                  id="dataVisualizationNavbarItemMenuLink"
+                  data-toggle="dropdown"
+                >
+                  Data Visualization
+                </div>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="dataVisualizationNavbarItemMenuLink"
+                >
+                  <a
+                    href={getDataVizURL('rat-training-06')}
+                    className="dropdown-item external-link"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span>Endurance Training in Young Adult Rats</span>
+                    <i className="material-icons external-link-icon">open_in_new</i>
+                  </a>
+                  <a
+                    href={getDataVizURL('human-precovid', userType)}
+                    className="dropdown-item external-link"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span>Acute Exercise in Human Sedentary Adults</span>
+                    <i className="material-icons external-link-icon">open_in_new</i>
+                  </a>
+                  <Link to="/graphical-clustering" className="dropdown-item">
+                    Graphical Clustering
+                  </Link>
+                  {/* 
+                  {isAuthenticated && hasAccess && userType && userType === 'internal' && (
+                    <a
+                      href="https://ccv-dev.motrpac-data.org"
+                      className="dropdown-item external-link"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <span>Human HA Adult Data Analyses</span>
+                      <i className="material-icons external-link-icon">open_in_new</i>
+                    </a>
+                  )}
+                  */}
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
@@ -320,6 +338,10 @@ export function Navbar({
                   <Link to="/code-repositories" className="dropdown-item">
                     Code Repositories
                   </Link>
+                  <Link to="/mcp-server" className="dropdown-item has-icon">
+                    <span>MCP Server</span>
+                    <i className="material-icons dropdown-item-icon ai-icon">auto_awesome</i>
+                  </Link>
                   <Link to="/methods" className="dropdown-item">
                     Methods
                   </Link>
@@ -328,20 +350,33 @@ export function Navbar({
                   </Link>
                   <a
                     href="https://omicspipelines.org/"
-                    className="dropdown-item"
+                    className="dropdown-item external-link"
                     target="_blank"
                     rel="noreferrer"
                   >
-                    OmicsPipelines
+                    <span>OmicsPipelines</span>
+                    <i className="material-icons external-link-icon">open_in_new</i>
                   </a>
                   <a
                     href="https://community.motrpac-data.org/"
-                    className="dropdown-item"
+                    className="dropdown-item external-link"
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Community
+                    <span>Community</span>
+                    <i className="material-icons external-link-icon">open_in_new</i>
                   </a>
+                  {!userType || (userType && userType !== 'internal') ? (
+                    <a
+                      href={import.meta.env.VITE_DATA_UPDATES_SIGNUP_URL}
+                      className="dropdown-item external-link"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <span>Data Updates Signup</span>
+                      <i className="material-icons external-link-icon">open_in_new</i>
+                    </a>
+                  ) : null}
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
@@ -357,6 +392,9 @@ export function Navbar({
                   className="dropdown-menu"
                   aria-labelledby="helpNavbarItemMenuLink"
                 >
+                  <Link to="/knowledge-center" className="dropdown-item">
+                    Knowledge Center
+                  </Link>
                   <Link to="/project-overview" className="dropdown-item">
                     Project Overview
                   </Link>
@@ -369,9 +407,18 @@ export function Navbar({
                   <Link to="/tutorials" className="dropdown-item">
                     Tutorials
                   </Link>
-                  <Link to="/license" className="dropdown-item">
-                    License
+                  <Link to="/glossary" className="dropdown-item">
+                    Glossary
                   </Link>
+                  {isInternalUser && (
+                    <Link to="/exerwise" className="dropdown-item has-icon">
+                      <span>ExerWise</span>
+                      <i className="material-icons dropdown-item-icon ai-icon">auto_awesome</i>
+                    </Link>
+                  )}
+                  <button type="button" className="dropdown-item" onClick={() => setGameOpen(true)}>
+                    Play Game
+                  </button>
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
@@ -396,6 +443,12 @@ export function Navbar({
                   <Link to="/external-links" className="dropdown-item">
                     Useful Links
                   </Link>
+                  <Link to="/license" className="dropdown-item">
+                    License
+                  </Link>
+                  <Link to="/citation" className="dropdown-item">
+                    Cite Us
+                  </Link>
                   <Link
                     id="send_email"
                     to="/contact"
@@ -416,6 +469,30 @@ export function Navbar({
         handleLogout={handleLogout}
         login={handleLogIn}
       />
+      {gameOpen && (
+        <div className="game-modal-overlay">
+          <div
+            className="game-modal-container"
+            role="dialog"
+            aria-modal="true"
+            aria-label="MoTrPAC Endurance Training Game dialog"
+          >
+            <button 
+              className="close-button" 
+              onClick={() => setGameOpen(false)}
+              aria-label="Close game modal"
+            >
+              ✕
+            </button>
+            <iframe
+              src="https://endurance-train-academy.lovable.app/"
+              className="game-iframe"
+              title="MoTrPAC Endurance Training Game"
+              sandbox="allow-scripts allow-same-origin"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
   return navbar;
@@ -429,6 +506,10 @@ Navbar.propTypes = {
       hasAccess: PropTypes.bool,
       name: PropTypes.string,
       siteName: PropTypes.string,
+      userType: PropTypes.string,
+    }),
+    app_metadata: PropTypes.shape({
+      role: PropTypes.string,
     }),
   }),
   isAuthenticated: PropTypes.bool,
@@ -437,16 +518,6 @@ Navbar.propTypes = {
   resetBrowseState: PropTypes.func,
   handleQCDataFetch: PropTypes.func,
   lastModified: PropTypes.string,
-};
-
-Navbar.defaultProps = {
-  profile: {},
-  isAuthenticated: false,
-  login: null,
-  logout: null,
-  resetBrowseState: null,
-  handleQCDataFetch: null,
-  lastModified: '',
 };
 
 const mapStateToProps = (state) => ({
@@ -466,7 +537,7 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
 
 // Function to render login button
-function LogoutButton({ profile, isAuthenticated, handleLogout, login }) {
+function LogoutButton({ profile = {}, isAuthenticated = false, handleLogout = null, login = null }) {
   const userDisplayName =
     profile.user_metadata && profile.user_metadata.name
       ? profile.user_metadata.name
@@ -503,3 +574,19 @@ function LogoutButton({ profile, isAuthenticated, handleLogout, login }) {
 
   return <LoginButton login={login} />;
 }
+
+LogoutButton.propTypes = {
+  profile: PropTypes.shape({
+    name: PropTypes.string,
+    picture: PropTypes.string,
+    user_metadata: PropTypes.shape({
+      hasAccess: PropTypes.bool,
+      name: PropTypes.string,
+      email: PropTypes.string,
+      userType: PropTypes.string,
+    }),
+  }),
+  isAuthenticated: PropTypes.bool,
+  handleLogout: PropTypes.func,
+  login: PropTypes.func,
+};

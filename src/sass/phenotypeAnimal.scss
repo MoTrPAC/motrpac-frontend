@@ -1,0 +1,135 @@
+@use "colors";
+
+.analysisPhenotypePage {
+  .nav-pills.phenotype-data-nav {
+    .nav-link {
+      border-radius: 0;
+      color: #777;
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+
+      &.active {
+        color: #000;
+        background: 0 0 !important;
+        border-bottom: solid 2px #000;
+
+        .material-icons {
+          color: $primary;
+        }
+      }
+
+      .nav-label {
+        font-size: 1.15rem;
+        margin-left: 0.15rem;
+      }
+    }
+  }
+
+  .analysis-phenotype-container.pass1b-06 {
+    .card-container-phenotype-animal {
+      .card-header {
+        padding: 1.05rem 1.25rem;
+        margin-bottom: 0;
+        background-color: #fff;
+        border-bottom: 0 solid transparent;
+  
+        .card-title {
+          font-size: 1.20rem;
+        }
+      }
+  
+      .badge {
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 0.35em 0.4em;
+  
+        &.badge-phase {
+          background-color: #c6c6c6;
+        }
+      }
+  
+      /* dropdown menus for plot and table */
+      .controlPanel {
+        .controlRow {
+          .controlLabel {
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-right: 0.45rem;
+            white-space: nowrap;
+          }
+  
+          .btn.dropdown-toggle,
+          button.dropdown-item {
+            font-size: 0.85rem;
+          }
+        }
+      }
+  
+      /* chart.js plot */
+      .phenotype-plot {
+        .weightGainPlot
+        .bodyFatPlot {
+          min-height: 65vh;
+        }
+  
+        .remark {
+          color: $gray;
+          font-size: 1.0rem;
+          margin-left: 0.5rem;
+          margin-right: 0.5rem;
+        }
+      }
+    }
+  }
+
+  .analysis-phenotype-container.pass1ac-06 {
+    .analysis-category-navigation-container {
+      .panel-header {
+        font-size: 1.1rem;
+      }
+
+      h6 {
+        font-weight: 600;
+      }
+
+      .form-check.selection-item {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    .analysis-category-content-container {
+      h2 {
+        color: $stanford-cardinal-red;
+      }
+
+      h3 {
+        color: $stanford-cardinal-red;
+        margin-top: 1.5rem;
+      }
+    }
+
+    .analysis-plot-display-options-container {
+      .panel-header {
+        font-size: 1.1rem;
+      }
+
+      h6 {
+        font-weight: 600;
+      }
+
+      .form-check.selection-item {
+        margin-bottom: 0;
+      }
+
+      .form-group.selection-group {
+        margin-bottom: 0;
+      }
+    }
+
+    .phenotype-plot-container {
+      .highcharts-container {
+        height: 600px !important;
+      }
+    }
+  }
+}

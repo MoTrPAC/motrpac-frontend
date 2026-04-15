@@ -9,6 +9,8 @@ import GraphicalClusteringIntroduction from './components/graphicalClusteringInt
 import TissueSelection from './components/tissueSelection';
 import { handleScroll } from './sharedLib';
 
+import '@styles/analysisPage.scss';
+
 function GraphicalClustering() {
   const [tissue, setTissue] = useState('SKM_GN');
   const [mitoTissue, setMitoTissue] = useState('HEART');

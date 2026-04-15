@@ -74,7 +74,18 @@ export const omes = {
   ],
 };
 
+export const referenceGenomes = {
+  pass1b_06: ['RN6', 'RN7'],
+  pass1a_06: [],
+  human_sed_adu: [],
+};
+
 const browseDataFilters = [
+  {
+    keyName: 'reference_genome',
+    name: 'Genome Assembly',
+    filters: referenceGenomes,
+  },
   {
     keyName: 'tissue_name',
     name: 'Tissue',

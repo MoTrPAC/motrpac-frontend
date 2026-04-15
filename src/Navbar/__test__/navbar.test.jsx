@@ -1,51 +1,86 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { Router } from 'react-router-dom';
+import { describe, expect, test } from 'vitest';
+import { screen } from '@testing-library/react';
+import { renderWithProviders, testUser, mockActions } from '../../testUtils/test-utils';
 import { Navbar } from '../navbar';
-import History from '../../App/history';
-
-const internalUser = require('../../testData/testUser');
-
-const navbarActions = {
-  login: jest.fn(),
-  logout: jest.fn(),
-  handleDataFetch: jest.fn(),
-  resetBrowseState: jest.fn(),
-};
-
-const defaultMountNav = mount(
-  <Router history={History}>
-    <Navbar />
-  </Router>
-);
-
-const internalUserMountNav = mount(
-  <Router history={History}>
-    <Navbar profile={internalUser} isAuthenticated {...navbarActions} />
-  </Router>
-);
 
 describe('Navbar', () => {
-  test('Has no logout button by default', () => {
-    expect(
-      defaultMountNav.find('Navbar').first().props().isAuthenticated
-    ).toBeFalsy();
-    expect(defaultMountNav.find('.logOutBtn')).not.toHaveLength(1);
+  test('renders without authentication by default', () => {
+    renderWithProviders(<Navbar />);
+    
+    // Should show login button instead of logout
+    expect(screen.queryByText(/log out/i)).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /login/i })).toBeInTheDocument();
+    
+    // Should show Downloads nav link
+    expect(screen.getByText(/browse data/i)).toBeInTheDocument();
   });
 
-  test('Has Downloads nav link by default', () => {
-    expect(defaultMountNav.find('.nav-link').first().text()).toMatch(
-      'Downloads'
+  test('displays user info and logout button when authenticated', () => {
+    renderWithProviders(
+      <Navbar
+        profile={testUser}
+        isAuthenticated={true}
+        {...mockActions}
+      />
     );
+
+    expect(screen.getByText(/log out/i)).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: /avatar/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /avatar/i })).toBeInTheDocument();
   });
 
-  test('Displays [username, sitename] and logout button if logged in', () => {
-    expect(
-      internalUserMountNav.find('Navbar').first().props().isAuthenticated
-    ).toBeTruthy();
-    expect(internalUserMountNav.find('.user-display-name').text()).toEqual(
-      `${internalUser.user_metadata.name}`
+  test('renders internal user specific navigation items', () => {
+    renderWithProviders(
+      <Navbar
+        profile={testUser}
+        isAuthenticated={true}
+        {...mockActions}
+      />
     );
-    expect(internalUserMountNav.find('.logOutBtn').text()).toMatch('Log out');
+
+    expect(screen.getByText(/biospecimen/i)).toBeInTheDocument();
+    
+    // Verify dropdown menus exist
+    expect(screen.getByText(/browse data/i)).toBeInTheDocument();
+    expect(screen.getByText(/data visualization/i)).toBeInTheDocument();
+    expect(screen.getByText(/resources/i)).toBeInTheDocument();
+    expect(screen.getByText(/learn/i)).toBeInTheDocument();
+    expect(screen.getByText(/about/i)).toBeInTheDocument();
+  });
+
+  test('shows Dashboard link for authenticated users with access', () => {
+    renderWithProviders(
+      <Navbar
+        profile={testUser}
+        isAuthenticated={true}
+        {...mockActions}
+      />
+    );
+
+    expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+  });
+
+  test('hides Dashboard link for unauthenticated users', () => {
+    renderWithProviders(<Navbar />);
+
+    expect(screen.queryByText(/dashboard/i)).not.toBeInTheDocument();
+  });
+
+  test('hides Dashboard link for users without access', () => {
+    const noAccessUser = {
+      ...testUser,
+      user_metadata: { ...testUser.user_metadata, hasAccess: false },
+    };
+
+    renderWithProviders(
+      <Navbar
+        profile={noAccessUser}
+        isAuthenticated={true}
+        {...mockActions}
+      />
+    );
+
+    expect(screen.queryByText(/dashboard/i)).not.toBeInTheDocument();
   });
 });

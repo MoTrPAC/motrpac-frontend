@@ -6,7 +6,9 @@ import { Helmet } from 'react-helmet';
 import PageTitle from '../lib/ui/pageTitle';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 
-const announcementData = require('./announcements');
+import '@styles/announcementsPage.scss';
+
+import announcementData from './announcements';
 // Pre-sort array in reverse order to workaround Storybook issue
 const announcements = announcementData.reverse();
 

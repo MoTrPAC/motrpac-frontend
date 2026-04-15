@@ -1,5 +1,6 @@
 import React, { useMemo, useEffect, forwardRef, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import {
   useTable,
   useFilters,
@@ -41,10 +42,16 @@ function BrowseDataTable({
   waitingForResponse,
   handleDownloadRequest,
   downloadRequestResponse,
-  profile,
+  profile = {},
 }) {
+  const dataDownload = useSelector((state) => state.browseData || {});
+  const userType = profile?.user_metadata?.userType;
+
   // Define table column headers
-  const columns = useMemo(() => tableColumns, []);
+  const columns = useMemo(
+    () => tableColumns(userType, dataDownload.pass1b06DataSelected),
+    [userType, dataDownload.pass1b06DataSelected]
+  );
   const data = useMemo(() => transformData(filteredFiles), [filteredFiles]);
   return (
     <DataTable
@@ -71,7 +78,7 @@ function DataTable({
   waitingForResponse,
   handleDownloadRequest,
   downloadRequestResponse,
-  profile,
+  profile = {},
 }) {
   const filterTypes = React.useMemo(
     () => ({
@@ -195,36 +202,44 @@ function DataTable({
               className="table table-sm browseDataTable"
             >
               <thead>
-                {headerGroups.map((headerGroup) => (
-                  <tr
-                    {...headerGroup.getHeaderGroupProps()}
-                    className="table-head"
-                  >
-                    {headerGroup.headers.map((column) => (
-                      <th {...column.getHeaderProps()}>
-                        <div className="d-flex align-items-center justify-content-between">
-                          {column.render('Header')}
-                        </div>
-                      </th>
-                    ))}
-                  </tr>
-                ))}
+                {headerGroups.map((headerGroup) => {
+                  const { key, ...restHeaderGroups } = headerGroup.getHeaderGroupProps();
+                  return (
+                    <tr key={key} {...restHeaderGroups} className="table-head">
+                      {headerGroup.headers.map((column) => {
+                        const { key, ...rest } = column.getHeaderProps();
+                        return (
+                          <th key={key} {...rest}>
+                          <div className="d-flex align-items-center justify-content-between">
+                            {column.render('Header')}
+                          </div>
+                        </th>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </thead>
               <tbody {...getTableBodyProps()}>
                 {page.map((row) => {
                   prepareRow(row);
+                  const { key, ...restRowProps } = row.getRowProps();
                   return (
-                    <tr {...row.getRowProps()}>
-                      {row.cells.map((cell) => (
-                        <td
-                          {...cell.getCellProps()}
-                          className={`${cell.column.id} ${
-                            cell.value ? cell.value : 'not-available'
-                          }`}
-                        >
-                          <span>{cell.render('Cell')}</span>
-                        </td>
-                      ))}
+                    <tr key={key} {...restRowProps}>
+                      {row.cells.map((cell) => {
+                        const { key, ...restCellProps } = cell.getCellProps();
+                        return (
+                          <td
+                            key={key}
+                            {...restCellProps}
+                            className={`${cell.column.id} ${
+                              cell.value ? cell.value : 'not-available'
+                            }`}
+                          >
+                            <span>{cell.render('Cell')}</span>
+                          </td>
+                        );
+                      })}
                     </tr>
                   );
                 })}
@@ -264,10 +279,6 @@ BrowseDataTable.propTypes = {
   }),
 };
 
-BrowseDataTable.defaultProps = {
-  profile: {},
-};
-
 DataTable.propTypes = {
   columns: PropTypes.arrayOf(
     PropTypes.shape({
@@ -288,10 +299,6 @@ DataTable.propTypes = {
       name: PropTypes.string,
     }),
   }),
-};
-
-DataTable.defaultProps = {
-  profile: {},
 };
 
 export default BrowseDataTable;

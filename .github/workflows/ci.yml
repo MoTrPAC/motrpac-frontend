@@ -3,11 +3,11 @@ name: ci
 on:
   pull_request:
     branches:
-      - main
+      - master
       - dev
   push:
     branches:
-      - main
+      - master
       - dev
 jobs:
   test:
@@ -15,11 +15,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Run corepack enable
+        run: corepack enable
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: yarn
+#          cache: yarn
 
       - name: Install project
         run: yarn install --frozen-lockfile
@@ -28,20 +31,23 @@ jobs:
         env:
           ESLINT_NO_DEV_ERRORS: true
           DISABLE_ESLINT_PLUGIN: true
-          REACT_APP_AUTH0_CLIENT_ID: "${{secrets.REACT_APP_AUTH0_CLIENT_ID}}"
-          REACT_APP_reCAPTCHA_SITE_KEY: "${{secrets.REACT_APP_reCAPTCHA_SITE_KEY}}"
-        run: yarn test --updateSnapshot --ci
+          VITE_AUTH0_CLIENT_ID: "${{secrets.VITE_AUTH0_CLIENT_ID}}"
+          VITE_RECAPTCHA_SITE_KEY: "${{secrets.VITE_RECAPTCHA_SITE_KEY}}"
+        run: yarn test
 
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
+      - name: Run corepack enable
+        run: corepack enable
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: yarn
+#          cache: yarn
 
       - name: Install project
         run: yarn install --frozen-lockfile
@@ -50,4 +56,4 @@ jobs:
         env:
           ESLINT_NO_DEV_ERRORS: true
           DISABLE_ESLINT_PLUGIN: true
-        run: yarn sass && yarn build
+        run: yarn build

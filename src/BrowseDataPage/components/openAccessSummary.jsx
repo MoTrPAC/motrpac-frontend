@@ -7,7 +7,7 @@ import ExternalLink from '../../lib/ui/externalLink';
 import OpenAccessBundleDownloads from './openAccessBundleDownloads';
 import DataTypeInfo from './dataTypeInfo';
 
-function OpenAccessBrowseDataSummary({ profile }) {
+function OpenAccessBrowseDataSummary({ profile = {} }) {
   const dispatch = useDispatch();
 
   // get states from redux store
@@ -131,10 +131,6 @@ OpenAccessBrowseDataSummary.propTypes = {
       name: PropTypes.string,
     }),
   }),
-};
-
-OpenAccessBrowseDataSummary.defaultProps = {
-  profile: {},
 };
 
 export default OpenAccessBrowseDataSummary;

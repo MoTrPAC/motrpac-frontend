@@ -10,7 +10,7 @@ import QCReportByPhaseTabContent from './qcReportByPhaseTabContent';
  *
  * @returns {object} JSX representation of QC report samples by phase page
  */
-function QcReportByPhase({ phaseData }) {
+function QcReportByPhase({ phaseData = {} }) {
   // Render QC report by phase tabs
   function renderQcReportByPhaseTabs() {
     return (
@@ -72,10 +72,6 @@ function QcReportByPhase({ phaseData }) {
 
 QcReportByPhase.propTypes = {
   phaseData: PropTypes.object,
-};
-
-QcReportByPhase.defaultProps = {
-  phaseData: {},
 };
 
 export default QcReportByPhase;

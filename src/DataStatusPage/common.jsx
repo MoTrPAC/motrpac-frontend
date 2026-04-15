@@ -403,8 +403,8 @@ export const immunoTableColumns = [
  * common to all data qc status reports
  */
 export function GlobalFilter({
-  preGlobalFilteredRows,
-  globalFilter,
+  preGlobalFilteredRows = [],
+  globalFilter = '',
   setGlobalFilter,
 }) {
   const count = preGlobalFilteredRows.length;
@@ -432,16 +432,11 @@ GlobalFilter.propTypes = {
   setGlobalFilter: PropTypes.func.isRequired,
 };
 
-GlobalFilter.defaultProps = {
-  globalFilter: '',
-  preGlobalFilteredRows: [],
-};
-
 /**
  * page count and page index rendering function
  * common to all data qc status reports
  */
-export const PageIndex = ({ pageIndex, pageOptions }) => (
+export const PageIndex = ({ pageIndex = 0, pageOptions = [] }) => (
   <span className="page-index">
     Showing Page
     {' '}
@@ -457,11 +452,6 @@ export const PageIndex = ({ pageIndex, pageOptions }) => (
 PageIndex.propTypes = {
   pageIndex: PropTypes.number,
   pageOptions: PropTypes.arrayOf(PropTypes.number),
-};
-
-PageIndex.defaultProps = {
-  pageIndex: 0,
-  pageOptions: [],
 };
 
 /**
@@ -640,18 +630,18 @@ export const transformData = (arr, qcFiles, omicType) => {
 export function retrieveReport(e, filename) {
   e.preventDefault();
   const api =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_ADDRESS_DEV
-      : process.env.REACT_APP_API_SERVICE_ADDRESS;
-  const endpoint = process.env.REACT_APP_SIGNED_URL_ENDPOINT;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_ADDRESS_DEV
+      : import.meta.env.VITE_API_SERVICE_ADDRESS;
+  const endpoint = import.meta.env.VITE_SIGNED_URL_ENDPOINT;
   const key =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_API_SERVICE_KEY_DEV
-      : process.env.REACT_APP_API_SERVICE_KEY;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_API_SERVICE_KEY_DEV
+      : import.meta.env.VITE_API_SERVICE_KEY;
   const bucket =
-    process.env.NODE_ENV !== 'production'
-      ? process.env.REACT_APP_QC_REPORT_BUCKET_DEV
-      : process.env.REACT_APP_QC_REPORT_BUCKET;
+    import.meta.env.DEV
+      ? import.meta.env.VITE_QC_REPORT_BUCKET_DEV
+      : import.meta.env.VITE_QC_REPORT_BUCKET;
   return axios
     .get(`${api}${endpoint}?bucket=${bucket}&object=${filename}&key=${key}`)
     .then((response) => {

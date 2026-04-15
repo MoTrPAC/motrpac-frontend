@@ -1,16 +1,19 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import ReleasedSampleTable from '../Widgets/releasedSampleTable';
-import ReleasedSamplePlot from '../Widgets/releasedSamplePlot';
-import ReleasedSampleHighlight from '../Widgets/releasedSampleHighlight';
-import ReleasedSampleSummary from '../Widgets/releasedSampleSummary';
+
 import PlotControls from '../Widgets/plotControls';
+import ReleasedSampleHighlight from '../Widgets/releasedSampleHighlight';
+import ReleasedSamplePlot from '../Widgets/releasedSamplePlot';
+import ReleasedSampleSummary from '../Widgets/releasedSampleSummary';
+import ReleasedSampleTable from '../Widgets/releasedSampleTable';
 import TableControls from '../Widgets/tableControls';
 import DataSummaryPageActions from './dataSummaryPageActions';
 
-const animalReleaseSamples = require('../data/animal_release_samples.json');
+import '@styles/dataSummaryPage.scss';
+
+import animalReleaseSamples from '../data/animal_release_samples.json';
 
 /**
  * Renders the release samples summary page.
@@ -35,12 +38,12 @@ const animalReleaseSamples = require('../data/animal_release_samples.json');
  * @returns {object} JSX representation of the release samples summary page
  */
 export function DataSummaryPage({
-  profile,
-  release,
-  phase,
-  plot,
-  sort,
-  showQC,
+  profile = {},
+  release = 'internal',
+  phase = 'pass1b_06',
+  plot = 'tissue_name',
+  sort = 'default',
+  showQC = true,
   toggleRelease,
   togglePhase,
   togglePlot,
@@ -215,14 +218,6 @@ DataSummaryPage.propTypes = {
   toggleQC: PropTypes.func.isRequired,
 };
 
-DataSummaryPage.defaultProps = {
-  profile: {},
-  release: 'internal',
-  phase: 'pass1b_06',
-  plot: 'tissue_name',
-  sort: 'default',
-  showQC: true,
-};
 
 const mapStateToProps = (state) => ({
   ...state.auth,

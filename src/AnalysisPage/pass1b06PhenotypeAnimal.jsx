@@ -11,7 +11,7 @@ import PhenotypePass1a06Rats from './Phenotype/pass1a06Rats';
  */
 function Pass1b06PhenotypeAnimal() {
   return (
-    <div className="analysisPhenotypePage px-3 px-md-4 mb-3 w-100">
+    <div className="analysisPhenotypePage px-3 px-md-4 mb-3 w-100" data-testid="animal-data-analysis">
       <Helmet>
         <html lang="en" />
         <title>Phenotypic Data Analysis - MoTrPAC Data Hub</title>

@@ -11,7 +11,7 @@ import DataSummaryPageConnected from '../DataSummaryPage/dataSummaryPage';
  *
  * @returns {object} JSX representation of a component
  */
-export function HomePage({ profile }) {
+export function HomePage({ profile = {} }) {
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
   if (userType === 'external') {
@@ -25,10 +25,6 @@ HomePage.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
   }),
-};
-
-HomePage.defaultProps = {
-  profile: {},
 };
 
 const mapStateToProps = (state) => ({

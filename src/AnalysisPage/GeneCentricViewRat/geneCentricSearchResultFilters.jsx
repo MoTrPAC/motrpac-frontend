@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   geneCentricSearchFilters,
-  tissueList,
-  assayList,
+  tissues,
+  assayListRat,
 } from '../../lib/searchFilters';
 import { geneSearchParamsPropType } from './sharedlib';
 
@@ -13,16 +13,17 @@ function GeneCentricSearchResultFilters({
   geneSearchChangeFilter,
   geneSearchInputValue,
   geneSearchReset,
-  hasResultFilters,
+  hasResultFilters = {},
 }) {
   // FIXME - this is a hack to get the search filters such as tissue and assay
   // to render accordingly to the ktype (gene)
   function customizeTissueList() {
-    return tissueList.filter((t) => t.filter_value !== 'plasma');
+    const excludedTissues = ['adipose', 'blood', 'muscle', 'plasma'];
+    return tissues.filter((t) => !excludedTissues.includes(t.filter_value));
   }
 
   function customizeAssayList() {
-    return assayList.filter((t) =>
+    return assayListRat.filter((t) =>
       t.filter_value.match(
         /^(transcript-rna-seq|prot-pr|prot-ph|prot-ac|prot-ub|immunoassay)$/
       )
@@ -44,10 +45,11 @@ function GeneCentricSearchResultFilters({
         <div className="card-body">
           {item.filters.map((filter) => {
             const isActiveFilter =
+              geneSearchParams.filters &&
               geneSearchParams.filters[item.keyName] &&
-              geneSearchParams.filters[item.keyName].indexOf(
-                filter.filter_value
-              ) > -1;
+              geneSearchParams.filters[item.keyName].includes(
+              filter.filter_value
+              );
             const resultCount =
               hasResultFilters &&
               hasResultFilters[item.keyName] &&
@@ -109,7 +111,13 @@ function GeneCentricSearchResultFilters({
 }
 
 GeneCentricSearchResultFilters.propTypes = {
-  geneSearchParams: PropTypes.shape({ ...geneSearchParamsPropType }).isRequired,
+  geneSearchParams: PropTypes.shape({
+    ...geneSearchParamsPropType,
+    filters: PropTypes.shape({
+      assay: PropTypes.arrayOf(PropTypes.string),
+      tissue: PropTypes.arrayOf(PropTypes.string),
+    }),
+  }).isRequired,
   handleGeneCentricSearch: PropTypes.func.isRequired,
   geneSearchChangeFilter: PropTypes.func.isRequired,
   geneSearchInputValue: PropTypes.string.isRequired,
@@ -118,10 +126,6 @@ GeneCentricSearchResultFilters.propTypes = {
     assay: PropTypes.object,
     tissue: PropTypes.object,
   }),
-};
-
-GeneCentricSearchResultFilters.defaultProps = {
-  hasResultFilters: {},
 };
 
 export default GeneCentricSearchResultFilters;

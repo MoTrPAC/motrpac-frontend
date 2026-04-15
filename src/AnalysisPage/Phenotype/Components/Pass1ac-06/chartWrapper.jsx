@@ -4,11 +4,18 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
 // Import order is important!
-require('highcharts/highcharts-more')(Highcharts);
-require('highcharts/modules/heatmap')(Highcharts);
-require('highcharts/modules/boost')(Highcharts);
-require('highcharts/modules/exporting')(Highcharts);
-require('highcharts/modules/export-data')(Highcharts);
+import HighchartsMore from 'highcharts/highcharts-more';
+import HeatMap from 'highcharts/modules/heatmap';
+import Boost from 'highcharts/modules/boost';
+import Exporting from 'highcharts/modules/exporting';
+import ExportData from 'highcharts/modules/export-data';
+
+// Initialize modules
+HighchartsMore(Highcharts);
+HeatMap(Highcharts);
+Boost(Highcharts);
+Exporting(Highcharts);
+ExportData(Highcharts);
 
 /**
  * A component to render a Highcharts chart wrapper container.

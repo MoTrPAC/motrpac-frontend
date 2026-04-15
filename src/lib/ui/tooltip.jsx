@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '@styles/tooltip.scss';
+
 /**
  * Renders the hover tooltip UI
  *

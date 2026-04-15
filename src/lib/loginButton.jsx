@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
  *
  * @returns {object} JSX representation of the login button.
  */
-function LoginButton({ login }) {
+function LoginButton({ login = null }) {
   return (
     <span className="user-login-button">
       <button type="button" onClick={login} className="logInBtn btn btn-primary">
@@ -20,10 +20,6 @@ function LoginButton({ login }) {
 
 LoginButton.propTypes = {
   login: PropTypes.func,
-};
-
-LoginButton.defaultProps = {
-  login: null,
 };
 
 export default LoginButton;

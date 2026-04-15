@@ -4,7 +4,7 @@ import * as jose from 'jose';
 import AUTH0_CONFIG from './auth0-variables';
 
 async function createJWT(email) {
-  const secretKey = new TextEncoder().encode(process.env.REACT_APP_JWT_SIGNING_SECRET);
+  const secretKey = new TextEncoder().encode(import.meta.env.VITE_JWT_SIGNING_SECRET);
 
   const jwt = await new jose.SignJWT({ email })
     .setProtectedHeader({ alg: 'HS256' })
@@ -67,7 +67,7 @@ class Auth {
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 1);
         // Set the cookie only if the user is internal
-        if (userType === 'internal') {
+        if (userType && userType === 'internal') {
           createJWT(email).then((token) => {
             localStorage.setItem('ut', token);
           });
@@ -78,10 +78,9 @@ class Auth {
         console.log(`${err.error}: ${err.errorDescription}`);
         console.log('Could not authenticate');
         cb(err);
-      } else {
-        console.log(`Unexpected error encountered: ${authResult}`);
-        cb(new Error('Unexpected error encountered'));
       }
+      // If both err and authResult are null, parseHash was called without
+      // a valid hash (e.g., already consumed). Silently ignore this case.
     });
   }
 

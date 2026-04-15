@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { Tooltip } from 'react-tooltip';
 import StatusReportGetData from './statusReportGetData';
@@ -15,6 +15,8 @@ import QcReportHelpLink from './sharelib/qcReportHelpLink';
 import QcReportMetabolomics from './qcReportMetab';
 import QcReportProteomics from './qcReportProt';
 
+import '@styles/dataStatusPage.scss';
+
 /**
  * Renders the data qc status page
  *
@@ -23,10 +25,21 @@ import QcReportProteomics from './qcReportProt';
  * @returns {object} JSX representation of the data qc status page
  */
 export function DataStatusPage({
+    qcData = {
+    atacSeq: [],
+    immunoAssay: [],
+    metabolomics: [],
+    metabolomicsRaw: [],
+    proteomics: [],
+    proteomicsRaw: [],
+    rnaSeq: [],
+    rrbs: [],
+    methylcapSeq: [],
+    lastModified: '',
+  },
+  isFetchingQcData = false,
+  errMsg = '',
   qcReportView,
-  qcData,
-  isFetchingQcData,
-  errMsg,
   qcReportViewChange,
   profile,
 }) {
@@ -35,7 +48,7 @@ export function DataStatusPage({
   // Send users to default page if they are not consortium members
   const userType = profile.user_metadata && profile.user_metadata.userType;
   if (userType === 'external') {
-    return <Redirect to="/dashboard" />;
+    return <Navigate to="/dashboard" />;
   }
 
   // Render button group
@@ -221,24 +234,6 @@ DataStatusPage.propTypes = {
   profile: PropTypes.shape({
     user_metadata: PropTypes.object,
   }),
-};
-
-DataStatusPage.defaultProps = {
-  qcData: {
-    atacSeq: [],
-    immunoAssay: [],
-    metabolomics: [],
-    metabolomicsRaw: [],
-    proteomics: [],
-    proteomicsRaw: [],
-    rnaSeq: [],
-    rrbs: [],
-    methylcapSeq: [],
-    lastModified: '',
-  },
-  isFetchingQcData: false,
-  errMsg: '',
-  profile: {},
 };
 
 const mapStateToProps = (state) => ({
