@@ -1,6 +1,64 @@
 .dataStatusTrackerPage {
-  .data-status-chart-container {
+  .status-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0.5rem 0;
+
+    .status-legend-item {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    .status-legend-swatch {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 1px solid #000;
+      margin-right: 0.35rem;
+      flex-shrink: 0;
+    }
+  }
+
+  .data-status-charts {
     width: 100%;
-    overflow-x: auto;
+  }
+
+  .domain-header {
+    text-align: center;
+    font-weight: 700;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+
+    &.with-rule {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid #ccc;
+    }
+  }
+
+  .site-section {
+    margin-bottom: 1.5rem;
+
+    .site-header {
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  .tissue-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1.5rem;
+    margin-bottom: 1rem;
+    align-items: start;
+  }
+
+  @media (max-width: 768px) {
+    .tissue-row {
+      grid-template-columns: 1fr;
+    }
   }
 }
