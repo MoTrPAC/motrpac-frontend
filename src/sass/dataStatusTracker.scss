@@ -60,6 +60,12 @@
     column-gap: 1.5rem;
     margin-bottom: 1rem;
     align-items: start;
+
+    .tissue-shipped-chart,
+    .tissue-status-chart {
+      min-width: 0;
+      overflow: hidden;
+    }
   }
 
   @media (max-width: 768px) {

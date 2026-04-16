@@ -128,6 +128,7 @@ export function DataStatusTracker({ profile }) {
                         <HighchartsReact
                           highcharts={Highcharts}
                           options={tg.shippedOptions}
+                          containerProps={{ style: { width: '100%' } }}
                         />
                       </div>
                       <div className="tissue-status-chart">
@@ -135,6 +136,7 @@ export function DataStatusTracker({ profile }) {
                           <HighchartsReact
                             highcharts={Highcharts}
                             options={tg.statusOptions}
+                            containerProps={{ style: { width: '100%' } }}
                           />
                         )}
                       </div>
