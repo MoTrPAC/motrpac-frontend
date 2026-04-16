@@ -257,11 +257,12 @@ function buildStatusOptions(tissueGroup, site, axisMax) {
       useHTML: true,
       formatter() {
         const c = this.point.custom;
+        const pct = (val, total) => (total > 0 ? ` (${((val / total) * 100).toFixed(1)}%)` : '');
         return (
           `<b>${c.assay}</b> · ${c.tissue} · ${c.tranche}<br/>`
           + `Data Received: ${c.dr.toLocaleString()}<br/>`
-          + `quant-id completed: ${c.qid.toLocaleString()}<br/>`
-          + `analysis completed: ${c.ac.toLocaleString()}`
+          + `quant-id completed: ${c.qid.toLocaleString()}${pct(c.qid, c.dr)}<br/>`
+          + `analysis completed: ${c.ac.toLocaleString()}${pct(c.ac, c.dr)}`
         );
       },
     },
