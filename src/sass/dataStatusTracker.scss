@@ -4,6 +4,12 @@
     flex-wrap: wrap;
     gap: 1rem;
     padding: 0.5rem 0;
+    position: sticky;
+    top: 4.75rem;
+    z-index: 10;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
 
     .status-legend-item {
       display: inline-flex;
