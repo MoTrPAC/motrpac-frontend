@@ -82,7 +82,7 @@ export function DataStatusTracker({ profile }) {
     <div className="dataStatusTrackerPage px-3 px-md-4 mb-3 w-100">
       <Helmet>
         <html lang="en" />
-        <title>HHuman Sample Data Tracker - MoTrPAC Data Hub</title>
+        <title>Human Sample Data Tracker - MoTrPAC Data Hub</title>
       </Helmet>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-2 page-header">
         <div className="page-title">
