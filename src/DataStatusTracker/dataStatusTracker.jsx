@@ -120,7 +120,7 @@ export function DataStatusTracker({ profile }) {
             const showDomainHeader = siteGroup.domain !== prevDomain;
 
             return (
-              <div key={siteGroup.site}>
+              <div key={`${siteGroup.domain}__${siteGroup.site}`}>
                 {showDomainHeader && (
                   <h4 className={`domain-header${idx > 0 ? ' with-rule' : ''}`}>{siteGroup.domain}</h4>
                 )}
