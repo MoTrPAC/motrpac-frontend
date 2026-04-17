@@ -296,21 +296,29 @@ export function transformCDNData(records) {
 
   for (const siteGroup of grouped) {
     for (const tg of siteGroup.tissues) {
+      // Build lookups once per tissue group
+      const byTranche = new Map();
+      const byAssayTranche = new Map();
+      for (const r of tg.records) {
+        if (!byTranche.has(r.Tranche)) byTranche.set(r.Tranche, []);
+        byTranche.get(r.Tranche).push(r);
+        byAssayTranche.set(`${r.Assay}|${r.Tranche}`, r);
+      }
+
       // Left: sum of max-shipped-per-tranche across all tranches
-      const tranches = [...new Set(tg.records.map((r) => r.Tranche))];
       let shippedSum = 0;
-      for (const tr of tranches) {
-        const trRecs = tg.records.filter((r) => r.Tranche === tr);
+      for (const trRecs of byTranche.values()) {
         shippedSum += Math.max(...trRecs.map((r) => r.Shipped));
       }
       shippedMax = Math.max(shippedMax, shippedSum);
 
       // Right: sum of Data Received across all tranches per assay
+      const tranches = [...byTranche.keys()];
       const assays = [...new Set(tg.records.map((r) => r.Assay))];
       for (const assay of assays) {
         let assaySum = 0;
         for (const tr of tranches) {
-          const r = tg.records.find((rec) => rec.Assay === assay && rec.Tranche === tr);
+          const r = byAssayTranche.get(`${assay}|${tr}`);
           if (r) assaySum += r['Data Received'];
         }
         statusMax = Math.max(statusMax, assaySum);
