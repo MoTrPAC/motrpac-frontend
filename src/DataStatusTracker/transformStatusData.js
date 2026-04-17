@@ -91,7 +91,8 @@ function buildShippedOptions(tissueGroup, site, axisMax) {
   const series = tranches.map((tr) => {
     // Max shipped across assays for this tranche
     const trRecords = records.filter((r) => r.Tranche === tr);
-    const maxShipped = Math.max(...trRecords.map((r) => r.Shipped));
+    const shippedValues = trRecords.map((r) => Number(r.Shipped)).filter(Number.isFinite);
+    const maxShipped = shippedValues.length > 0 ? Math.max(...shippedValues) : 0;
     return {
       name: tr,
       data: [maxShipped],
@@ -308,7 +309,8 @@ export function transformCDNData(records) {
       // Left: sum of max-shipped-per-tranche across all tranches
       let shippedSum = 0;
       for (const trRecs of byTranche.values()) {
-        shippedSum += Math.max(...trRecs.map((r) => r.Shipped));
+        const vals = trRecs.map((r) => Number(r.Shipped)).filter(Number.isFinite);
+        shippedSum += vals.length > 0 ? Math.max(...vals) : 0;
       }
       shippedMax = Math.max(shippedMax, shippedSum);
 
