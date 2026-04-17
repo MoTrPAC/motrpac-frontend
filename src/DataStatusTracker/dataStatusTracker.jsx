@@ -49,25 +49,24 @@ export function DataStatusTracker({ profile }) {
   useEffect(() => {
     let cancelled = false;
 
-    fetch(DATA_URL)
+    fetch(DATA_URL, { signal: controller.signal })
       .then((res) => {
         if (!res.ok) throw new Error(`Failed to fetch data (${res.status})`);
         return res.json();
       })
       .then((json) => {
-        if (!cancelled) {
-          setRawData(json);
-          setLoading(false);
-        }
+        setRawData(json);
+        setLoading(false);
       })
       .catch((err) => {
-        if (!cancelled) {
-          setError(err.message);
-          setLoading(false);
-        }
+        if (err.name === 'AbortError') return;
+        setError(err.message);
+        setLoading(false);
       });
 
-    return () => { cancelled = true; };
+    return () => {
+      controller.abort();
+    };
   }, []);
 
   const chartGroups = useMemo(
@@ -83,7 +82,7 @@ export function DataStatusTracker({ profile }) {
     <div className="dataStatusTrackerPage px-3 px-md-4 mb-3 w-100">
       <Helmet>
         <html lang="en" />
-        <title>Human Assay Data Status - MoTrPAC Data Hub</title>
+        <title>HHuman Sample Data Tracker - MoTrPAC Data Hub</title>
       </Helmet>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-2 page-header">
         <div className="page-title">
