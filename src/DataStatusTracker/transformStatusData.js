@@ -26,6 +26,14 @@ const DOMAIN_ORDER = [
   'Proteomics untargeted',
 ];
 
+function escapeHTML(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 function stripSitePrefix(site) {
   return site.replace('motrpac-portal-transfer-', '');
 }
@@ -261,7 +269,7 @@ function buildStatusOptions(tissueGroup, site, axisMax) {
         const c = this.point.custom;
         const pct = (val, total) => (total > 0 ? ` (${((val / total) * 100).toFixed(1)}%)` : '');
         return (
-          `<b>${c.assay}</b> · ${c.tissue} · ${c.tranche}<br/>`
+          `<b>${escapeHTML(c.assay)}</b> · ${escapeHTML(c.tissue)} · ${escapeHTML(c.tranche)}<br/>`
           + `Data Received: ${c.dr.toLocaleString()}<br/>`
           + `quant-id completed: ${c.qid.toLocaleString()}${pct(c.qid, c.dr)}<br/>`
           + `analysis completed: ${c.ac.toLocaleString()}${pct(c.ac, c.dr)}`
