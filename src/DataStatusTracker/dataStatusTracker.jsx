@@ -100,7 +100,12 @@ export function DataStatusTracker({ profile }) {
 
       <StatusLegend />
 
-      <AnimatedLoadingIcon isFetching={loading} />
+      {loading && (
+        <div role="status" aria-live="polite">
+          <AnimatedLoadingIcon isFetching={loading} />
+          <span className="sr-only">Loading sample data tracker…</span>
+        </div>
+      )}
 
       {error && (
         <div className="alert alert-danger" role="alert">
