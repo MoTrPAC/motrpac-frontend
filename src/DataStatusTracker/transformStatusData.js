@@ -49,11 +49,13 @@ function groupRecords(records) {
     siteGroup.tissues.get(r.Tissue).push(r);
   }
 
-  // Sort sites by domain order, then alphabetically within domain
+  // Sort sites by domain order, then alphabetically within domain.
+  // Unknown domains sort after all known domains.
+  const fallback = DOMAIN_ORDER.length;
   const sites = [...bySite.values()].sort((a, b) => {
     const da = DOMAIN_ORDER.indexOf(a.domain);
     const db = DOMAIN_ORDER.indexOf(b.domain);
-    if (da !== db) return da - db;
+    if (da !== db) return (da === -1 ? fallback : da) - (db === -1 ? fallback : db);
     return a.site.localeCompare(b.site);
   });
 
