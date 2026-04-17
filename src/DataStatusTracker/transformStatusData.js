@@ -139,6 +139,7 @@ function buildShippedOptions(tissueGroup, site, axisMax) {
       },
     },
     tooltip: {
+      outside: true,
       formatter() {
         return `<b>${abbrev}</b> — ${site}<br/>${this.series.name}: ${this.y.toLocaleString()}`;
       },
@@ -265,6 +266,7 @@ function buildStatusOptions(tissueGroup, site, axisMax) {
       },
     },
     tooltip: {
+      outside: true,
       useHTML: true,
       formatter() {
         const c = this.point.custom;
