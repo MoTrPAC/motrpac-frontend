@@ -219,5 +219,8 @@ describe('transformCDNData', () => {
     expect(series[0].data[0].y).toEqual(80);
     expect(series[1].data[0].y).toEqual(0); // max(0, 50-80)
     expect(series[2].data[0].y).toEqual(0); // max(0, 30-50)
+    expect(result[0].tissues[0].statusOptions.yAxis.max).toBeGreaterThanOrEqual(
+      80,
+    );
   });
 });
