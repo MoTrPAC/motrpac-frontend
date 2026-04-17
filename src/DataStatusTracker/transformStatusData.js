@@ -317,14 +317,20 @@ export function transformCDNData(records) {
       }
       shippedMax = Math.max(shippedMax, shippedSum);
 
-      // Right: sum of Data Received across all tranches per assay
+      // Right: sum of actual stacked-bar height across all tranches per assay.
+      // Because deltas are clamped to zero, the bar height for a single
+      // record is max(DR, AC) (not just DR), so we must account for that.
       const tranches = [...byTranche.keys()];
       const assays = [...new Set(tg.records.map((r) => r.Assay))];
       for (const assay of assays) {
         let assaySum = 0;
         for (const tr of tranches) {
           const r = byAssayTranche.get(`${assay}|${tr}`);
-          if (r) assaySum += r['Data Received'];
+          if (r) {
+            const dr = r['Data Received'];
+            const ac = r['analysis completed'];
+            assaySum += Math.max(dr, ac);
+          }
         }
         statusMax = Math.max(statusMax, assaySum);
       }
