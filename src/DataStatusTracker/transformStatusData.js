@@ -35,7 +35,7 @@ function escapeHTML(str) {
 }
 
 function stripSitePrefix(site) {
-  return site.replace('motrpac-portal-transfer-', '');
+  return (site || '').replace('motrpac-portal-transfer-', '');
 }
 
 /**
@@ -47,10 +47,11 @@ function groupRecords(records) {
 
   for (const r of records) {
     const site = stripSitePrefix(r.Site);
-    if (!bySite.has(site)) {
-      bySite.set(site, { site, domain: r.Domain, tissues: new Map() });
+    const key = r.Domain + '|' + site;
+    if (!bySite.has(key)) {
+      bySite.set(key, { site, domain: r.Domain, tissues: new Map() });
     }
-    const siteGroup = bySite.get(site);
+    const siteGroup = bySite.get(key);
     if (!siteGroup.tissues.has(r.Tissue)) {
       siteGroup.tissues.set(r.Tissue, []);
     }
