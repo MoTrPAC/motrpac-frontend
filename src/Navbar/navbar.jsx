@@ -416,9 +416,11 @@ export function Navbar({
                       <i className="material-icons dropdown-item-icon ai-icon">auto_awesome</i>
                     </Link>
                   )}
+                  {/*
                   <button type="button" className="dropdown-item" onClick={() => setGameOpen(true)}>
                     Play Game
                   </button>
+                  */}
                 </div>
               </li>
               <li className="nav-item navItem dropdown">
