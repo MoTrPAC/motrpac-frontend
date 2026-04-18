@@ -2715,7 +2715,6 @@ __metadata:
     js-yaml: "npm:^4.1.0"
     jsdom: "npm:^24.0.0"
     lodash: "npm:^4.17.21"
-    plotly.js-basic-dist-min: "npm:^3.4.0"
     popper.js: "npm:^1.16.1"
     postcss-normalize: "npm:^13.0.1"
     prettier: "npm:^3.7.4"
@@ -2730,7 +2729,6 @@ __metadata:
     react-just-parallax: "npm:^3.1.16"
     react-lite-youtube-embed: "npm:2.4.0"
     react-markdown: "npm:^10.1.0"
-    react-plotly.js: "npm:^2.6.0"
     react-redux: "npm:^9.1.2"
     react-router-dom: "npm:^6.27.0"
     react-syntax-highlighter: "npm:^16.1.0"
@@ -8461,13 +8459,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"plotly.js-basic-dist-min@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "plotly.js-basic-dist-min@npm:3.4.0"
-  checksum: 10c0/75ebd19fff78b4f32382f8fb53d6e3f2ba9dbf1d73e38dcf76e9522c57e5584ea6ba08f2d1c7d25680b05020ff0b79ece0103ead19eb76a677725cda686b0285
-  languageName: node
-  linkType: hard
-
 "polished@npm:^4.2.2":
   version: 4.3.1
   resolution: "polished@npm:4.3.1"
@@ -8931,18 +8922,6 @@ __metadata:
     react: ">=16.3.0"
     react-dom: ">=16.3.0"
   checksum: 10c0/61836490040cfcdebc792b6eddcfac47b7b7e159f99304165371e9eb389a6875f20ddba3433421413ccfb918e8da6042ab2829f9b1f6f5dd9f8476aa16ddcfbe
-  languageName: node
-  linkType: hard
-
-"react-plotly.js@npm:^2.6.0":
-  version: 2.6.0
-  resolution: "react-plotly.js@npm:2.6.0"
-  dependencies:
-    prop-types: "npm:^15.8.1"
-  peerDependencies:
-    plotly.js: ">1.34.0"
-    react: ">0.13.0"
-  checksum: 10c0/9b5ba8e33782daa9624d79295975d08d4c7581bac41d67d497eec0a306e4d030465a1e8282fab145bc02705fe96262f6fb0d214133657c480982fc268763644a
   languageName: node
   linkType: hard
 
