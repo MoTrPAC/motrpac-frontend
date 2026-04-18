@@ -55,6 +55,9 @@ export function DataStatusTracker({ profile }) {
         return res.json();
       })
       .then((json) => {
+        if (!Array.isArray(json)) {
+          throw new Error('Unexpected sample data tracker response format');
+        }
         setRawData(json);
         setLoading(false);
       })
