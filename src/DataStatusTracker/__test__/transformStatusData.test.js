@@ -127,14 +127,17 @@ describe('transformCDNData', () => {
     expect(shippedMax).toEqual(300);
   });
 
-  test('status axis max reflects sum of Data Received across tranches per assay', () => {
+  test('status axis max reflects stacked bar height across tranches per assay', () => {
     const records = [
       makeRecord({ Assay: 'assay-1', Tranche: 'T1', 'Data Received': 50 }),
       makeRecord({ Assay: 'assay-1', Tranche: 'T2', 'Data Received': 70 }),
     ];
     const result = transformCDNData(records);
     const statusMax = result[0].tissues[0].statusOptions.yAxis.max;
-    expect(statusMax).toEqual(120);
+    // T1: ac(40) + max(0,60-40) + max(0,50-60) = 60
+    // T2: ac(40) + max(0,60-40) + max(0,70-60) = 70
+    // Total = 130
+    expect(statusMax).toEqual(130);
   });
 
   // --- Chart structure ---
@@ -221,6 +224,21 @@ describe('transformCDNData', () => {
     expect(series[2].data[0].y).toEqual(0); // max(0, 30-50)
     expect(result[0].tissues[0].statusOptions.yAxis.max).toBeGreaterThanOrEqual(
       80,
+    );
+  });
+
+  test('status axis max accounts for qid being the largest value', () => {
+    const records = [
+      makeRecord({
+        'analysis completed': 20,
+        'quant-id completed': 100,
+        'Data Received': 50,
+      }),
+    ];
+    const result = transformCDNData(records);
+    // Stack: ac(20) + max(0,100-20)(80) + max(0,50-100)(0) = 100
+    expect(result[0].tissues[0].statusOptions.yAxis.max).toBeGreaterThanOrEqual(
+      100,
     );
   });
 });
