@@ -142,7 +142,10 @@ function buildShippedOptions(tissueGroup, site, axisMax) {
     tooltip: {
       outside: true,
       formatter() {
-        return `<b>${abbrev}</b> — ${site}<br/>${this.series.name}: ${this.y.toLocaleString()}`;
+        return (
+          `<b>${escapeHTML(abbrev)}</b> — ${escapeHTML(site)}<br/>`
+          + `${escapeHTML(this.series.name)}: ${this.y.toLocaleString()}`
+        );
       },
     },
     legend: { enabled: false },
