@@ -47,7 +47,7 @@ export function DataStatusTracker({ profile }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    let cancelled = false;
+    const controller = new AbortController();
 
     fetch(DATA_URL, { signal: controller.signal })
       .then((res) => {
