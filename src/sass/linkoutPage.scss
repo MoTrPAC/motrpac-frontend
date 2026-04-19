@@ -60,11 +60,13 @@
 
       .card-title {
         .inline-link-with-icon {
+          display: inline;
           text-decoration: none;
 
           .material-icons {
-            font-size: 1.25rem;
-            vertical-align: middle;
+            font-size: 1.28rem;
+            vertical-align: text-bottom;
+            margin-left: 0.17rem;
           }
         }
       }

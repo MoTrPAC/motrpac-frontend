@@ -38,10 +38,6 @@ const repositories = {
   ],
   analysis: [
     {
-      name: 'MoTrPAC/MotrpacRatTraining6moQCRep',
-      url: 'https://github.com/MoTrPAC/MotrpacRatTraining6moQCRep',
-    },
-    {
       name: 'MoTrPAC/MotrpacRatTraining6mo',
       url: 'https://github.com/MoTrPAC/MotrpacRatTraining6mo',
     },
@@ -87,6 +83,24 @@ export function CodeRepositories() {
             </li>
           ))}
         </ul>
+        {componentName === 'QC' && (
+          <>
+          <h6 className="font-weight-bold border-bottom mt-4">Acute Exercise in Human Sed Adults</h6>
+            <ul className="component-repos">
+              <li>
+                <i className="bi-github repo-icon" />
+                <a
+                  className="ml-1"
+                  href="https://github.com/MoTrPAC/motrpac-human-presuspension-acute"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  motrpac-human-presuspension-acute
+                </a>
+              </li>
+            </ul>
+          </>
+        )}
         {componentName === 'Analysis' && (
           <>
           <h6 className="font-weight-bold border-bottom mt-4">Acute Exercise in Human Sed Adults</h6>
@@ -100,17 +114,6 @@ export function CodeRepositories() {
                   rel="noreferrer"
                 >
                   MotrpacHumanPreSuspensionAnalysis
-                </a>
-              </li>
-              <li>
-                <i className="bi-github repo-icon" />
-                <a
-                  className="ml-1"
-                  href="https://github.com/MoTrPAC/MotrpacPreSuspensionAcute"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  MotrpacPreSuspensionAcute
                 </a>
               </li>
             </ul>
