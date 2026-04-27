@@ -13,7 +13,6 @@ yarn start              # Dev server (Vite on :5173)
 yarn test              # Run Vitest tests
 yarn test --coverage   # Coverage report
 yarn test --ui         # Interactive test UI
-yarn storybook         # Storybook on :9009
 yarn sass              # Compile SCSS separately
 yarn sass-lint         # Lint SCSS files
 yarn format            # Prettier formatting
@@ -45,7 +44,7 @@ import newFeatureReducer, { defaultNewFeatureState } from '../NewFeaturePage/new
 // Add to combineReducers and defaultRootState
 ```
 
-- **Create tests**: `__test__/newFeature.stories.jsx` and `__test__/newFeature.test.jsx`
+- **Create tests**: `__test__/newFeature.test.jsx`
 
 ### Connecting to Redux
 
@@ -224,11 +223,7 @@ graph TB
 
 - **Authentication**: Auth0 with JWT signing (jose library, HS256 algorithm)
 
-- **Testing**:
-
-- Unit Tests: Vitest + React Testing Library
-
-- Visual Tests: Storybook
+- **Testing**: Vitest + React Testing Library
 
 - **Styling**:
 
@@ -256,7 +251,6 @@ src/[FeatureName]/
 ├── components/                 # Feature-specific components (optional)
 │   └── [subComponent].jsx
 └── __test__/
-    ├── [feature].stories.jsx   # Storybook stories
     └── [feature].test.jsx      # Vitest unit tests
 ```
 
@@ -722,12 +716,6 @@ yarn sass       # Compile all SCSS files
 yarn sass-lint  # Lint SCSS files
 ```
 
-**Storybook:**
-
-```bash
-yarn storybook  # Run Storybook on http://localhost:9009
-```
-
 **Code Formatting:**
 
 ```bash
@@ -742,8 +730,6 @@ yarn format  # Run Prettier on all files
 
 - **Run tests before committing** to catch issues early
 
-- **Use Storybook** for component development in isolation
-
 - **Check file size** if adding new dependencies (impacts bundle size)
 
 ---
@@ -752,44 +738,9 @@ yarn format  # Run Prettier on all files
 
 ### Test Structure
 
-Every feature requires **TWO** test files:
+Every feature requires a test file:
 
-**1. Storybook Story** (`__test__/[component].stories.jsx`):
-
-```javascript
-import { Component } from '../component';
-import Navbar from '../../Navbar/navbar';
-import Footer from '../../Footer/footer';
-
-export default {
-  title: 'FeatureName/Component',
-  component: Component,
-  decorators: [
-    (story) => (
-      <>
-        <Navbar />
-        {story()}
-        <Footer />
-      </>
-    ),
-  ],
-};
-
-export const Default = {
-  args: {
-    prop1: 'value1',
-    prop2: 'value2',
-  },
-};
-
-export const WithData = {
-  args: {
-    data: [{ id: 1, name: 'Test' }],
-  },
-};
-```
-
-**2. Unit Tests** (`__test__/[component].test.jsx`):
+**Unit Tests** (`__test__/[component].test.jsx`):
 
 ```javascript
 import { describe, test, expect, vi } from 'vitest';
@@ -952,7 +903,7 @@ VITE_NEW_CONFIG=value
 const config = import.meta.env.VITE_NEW_CONFIG;
 ```
 
-- **Add to CI/CD secrets** (CircleCI, GitHub Actions)
+- **Add to CI/CD secrets** (GitHub Actions)
 
 ---
 
@@ -1509,7 +1460,6 @@ motrpac-frontend/
 │   │   ├── GeneCentricViewRat/    # Sub-feature
 │   │   ├── GraphicalClustering/   # Sub-feature
 │   │   └── __test__/
-│   │       ├── analysisHomePage.stories.jsx
 │   │       └── analysisHomePage.test.jsx
 │   │
 │   ├── App/
@@ -1636,28 +1586,6 @@ const AnalysisPage = lazy(() => import('../AnalysisPage/analysisHomePage'));
 
 - Code-split per route
 
-### Storybook Decorators
-
-Stories wrap components with Navbar/Footer for consistent layout:
-
-```javascript
-export default {
-  title: 'Feature/Component',
-  component: Component,
-  decorators: [
-    (story) => (
-      <>
-        <Navbar {...navbarAction} />
-        {story()}
-        <Footer />
-      </>
-    ),
-  ],
-};
-```
-
-**Why:** Provides full page context for component preview in Storybook.
-
 ---
 
 ## When Editing
@@ -1695,7 +1623,7 @@ export const defaultRootState = {
 };
 ```
 
-- **Create tests**: Storybook story and Vitest tests
+- **Create tests**: Vitest unit tests in `__test__/newFeaturePage.test.jsx`
 
 ### Updating Redux State
 
@@ -1770,7 +1698,7 @@ VITE_NEW_CONFIG=value
 const config = import.meta.env.VITE_NEW_CONFIG;
 ```
 
-- **Add to CI/CD secrets** (CircleCI, GitHub Actions)
+- **Add to CI/CD secrets** (GitHub Actions)
 
 ---
 
@@ -1780,13 +1708,11 @@ const config = import.meta.env.VITE_NEW_CONFIG;
 
 **Platforms:**
 
-- **CircleCI** - Primary CI pipeline
-
-- **GitHub Actions** - Secondary checks
+- **GitHub Actions** - CI pipeline (`.github/workflows/ci.yml`)
 
 **Test Environment:**
 
-- Node 20 (tests run on newer Node than dev)
+- Node 20
 
 - All tests must pass before merge
 
@@ -1798,23 +1724,15 @@ const config = import.meta.env.VITE_NEW_CONFIG;
 
 - Other `VITE_*` environment variables
 
-### Cross-Browser Testing
-
-- **SauceLabs** integration for cross-browser testing
-
-- Tests run on multiple browsers/versions
-
-- Ensure compatibility before release
-
 ### Deployment Workflow
 
 - **Develop** → Create feature branch
 
-- **Test** → Run `yarn test` and `yarn storybook`
+- **Test** → Run `yarn test`
 
 - **Commit** → Push to GitHub
 
-- **CI** → Automated tests run on CircleCI
+- **CI** → Automated tests run via GitHub Actions
 
 - **Review** → Code review and approval
 
@@ -1907,8 +1825,6 @@ This comprehensive guide covers the MoTrPAC Data Hub architecture, patterns, and
 - Node 20.19.x required for local dev
 
 **Testing:**
-
-- Storybook stories for visual testing
 
 - Vitest + RTL for unit tests
 

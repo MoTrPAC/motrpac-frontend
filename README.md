@@ -33,10 +33,9 @@ Flow for creating new components
 --------------------------------
 
   1. Create \[component\].jsx file in src/\[Component\]
-  2. Create storybook story file src/\[Component\]/\_\_test\_\_/\[component\].stories.jsx
-  3. Create tests in src/\[Component\]/\_\_test\_\_/\[component\].test.jsx
-  4. Integrate required actions and reducers in to the components directory (ex. for upload handling logic that would be src/UploadPage/uploadReducer.js)
-  5. If it is a full page, add routing logic to src/App/App.jsx
+  2. Create tests in src/\[Component\]/\_\_test\_\_/\[component\].test.jsx
+  3. Integrate required actions and reducers in to the components directory (ex. for upload handling logic that would be src/UploadPage/uploadReducer.js)
+  4. If it is a full page, add routing logic to src/App/App.jsx
 
 Building and running
 --------------------
@@ -55,10 +54,6 @@ Building and running
 * Running React App:
   * `yarn start`
   * Runs core React app at localhost:5173 (Vite dev server)
-
-* Running Storybook:
-  * `yarn storybook`
-  * Runs storybook server at localhost:9009
 
 * Testing:
   * `yarn test`
@@ -105,7 +100,6 @@ Software
 
 * [React v18](https://react.dev)
   * Built with [Vite 5](https://vitejs.dev) + SWC for fast refresh
-  * Storybook used to visualize individual UI components
 
 * Style guide:
   * [Eslint](https://github.com/eslint/eslint) (flat config: `eslint.config.js`)
@@ -131,11 +125,6 @@ Notes on redux integration
 * mapStateToProps used to link the section from the combined reducer to properties required by the container
 * mapDispatchtoProps defines required actions and what to send to a reducer.
 * redux-thunk middleware used to handle asynchronous requests like for authentication
-
-Potential down the line dependency issues
------------------------------------------
-
-* Storybook has trouble integrating with react-router. The `storybook-addon-remix-react-router` package handles this. If you run in to an issue with storybook saying something like "You should not use Link outside Router" it has something to do with react-router and this addon.
 
 Current navigation/routing implementation
 ----------------------------------------
