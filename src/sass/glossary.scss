@@ -17,3 +17,21 @@
     }
   }
 }
+
+@media (max-width: 575.98px) {
+  .glossaryPage {
+    .glossary-content-container {
+      .study-title-species-icon {
+        .material-icons {
+          display: none;
+        }
+      }
+
+      table {
+        th {
+          width: 100px;
+        }
+      }
+    }
+  }
+}
