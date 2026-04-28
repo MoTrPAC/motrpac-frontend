@@ -128,7 +128,7 @@ function StudyAssays() {
                 <span className="material-icons study-title-species-icon mr-1">pest_control_rodent</span>
                 <span>Endurance trained young adult rats study</span>
               </h3>
-              <div className="btn-group ml-3" role="group" aria-label="Assay View Select Button Group">
+              <div className="btn-group ml-md-3" role="group" aria-label="Assay View Select Button Group">
                 <button
                   type="button"
                   className={`btn btn-outline-primary btn-sm ${
