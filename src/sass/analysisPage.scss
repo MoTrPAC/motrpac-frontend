@@ -244,3 +244,12 @@
     }
   }
 }
+
+@media (max-width: 575.98px) {
+  .graphicalClusteringPage {
+    .page-header, .graphical-clustering-container {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+}

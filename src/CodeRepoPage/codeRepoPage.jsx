@@ -160,7 +160,7 @@ export function CodeRepositories() {
             .
           </p>
         </div>
-        <div className="code-repo-content-container d-flex align-items-start justify-content-between">
+        <div className="code-repo-content-container repo-tree">
           {renderRepoComponent('Pipelines', repositories.pipelines)}
           {renderEdgeComponent()}
           {renderRepoComponent('QC', repositories.qc)}
