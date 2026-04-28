@@ -9,6 +9,13 @@
       }
     }
 
+    .repo-tree {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
     .code-repo-container {
       .component {
         border: 1px solid #ccc;
@@ -60,6 +67,25 @@
 
       img {
         width: 70%;
+      }
+    }
+  }
+}
+
+@media (max-width: 575.98px) {
+  .codeRepoPage {
+    .code-repo-content-container {
+      .repo-tree {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .code-repo-container {
+        margin-top: 2.0em;
+      }
+
+      .component-connector {
+        display: none;
       }
     }
   }
