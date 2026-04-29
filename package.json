@@ -5,7 +5,7 @@
   "packageManager": "yarn@4.1.1",
   "private": true,
   "dependencies": {
-    "auth0-js": "9.32.0",
+    "auth0-js": "9.26.0",
     "axios": "0.28.0",
     "bootstrap": "4.6.1",
     "chart.js": "^2.9.4",
@@ -45,7 +45,8 @@
     "tocbot": "^4.36.4",
     "uuid": "^14.0.0",
     "victory": "37.0.2",
-    "vite": "^5.4.21"
+    "vite": "^5.4.21",
+    "vitest": "^2.1.2"
   },
   "scripts": {
     "start": "vite",
@@ -75,9 +76,9 @@
     "@types/react": "^18.3.28",
     "@types/react-dom": "^18.3.7",
     "@types/react-router-dom": "^5.3.3",
-    "@vitejs/plugin-react-swc": "^4.3.0",
-    "@vitest/coverage-v8": "^4.1.5",
-    "@vitest/ui": "4.1.5",
+    "@vitejs/plugin-react-swc": "^3.11.0",
+    "@vitest/coverage-v8": "^2.1.9",
+    "@vitest/ui": "^2.1.9",
     "eslint": "^10.2.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-github": "^6.0.0",
@@ -90,7 +91,7 @@
     "eslint-plugin-testing-library": "^7.16.2",
     "eslint-plugin-vitest": "^0.5.4",
     "globals": "^15.15.0",
-    "jsdom": "^29.1.0",
+    "jsdom": "^24.1.3",
     "prettier": "^3.8.3",
     "rollup-plugin-visualizer": "^5.14.0",
     "sass": "1.99.0",
@@ -101,7 +102,6 @@
     "stylelint-scss": "^7.0.0",
     "svgo": "^4.0.1",
     "vite-plugin-image-optimizer": "^2.0.3",
-    "vitest": "^2.1.9",
-    "vitest-canvas-mock": "^1.1.4"
+    "vitest-canvas-mock": "^0.3.3"
   }
 }
