@@ -17,14 +17,12 @@ File Structure
 .  
 ├── src  
 │   ├── assets: images, logos, etc.  
-│   ├── components: jsx UI components  
-│   ├── data: static JSON data (study datasets, metadata)  
-│   ├── lib: static information like team member names and assay lists  
-│   ├── sass: source sass styling (compiled to src/main.css via `yarn sass`)  
+│   ├── data: static JSON and JS data files (study datasets, metadata, search indices)  
+│   ├── lib: shared utilities, UI components, and static reference data  
+│   ├── sass: SCSS source files — global styles compiled via `yarn sass`; component styles imported directly in JSX via the `@styles/` alias  
 │   └── \[Component/Feature Name\]: contains reducers, actions, components, subcomponents, and tests  
-│   |   └── \_\_test\_\_: contains the storybook story and vitest tests for the feature.  
+│   |   └── \_\_test\_\_: contains vitest tests for the feature  
 ├── public  
-├── .storybook: configuration for storybook  
 ├── eslint.config.js: ESLint configuration  
 ├── stylelint.config.js: StyleLint configurations for Sass linting  
 ├── vite.config.js: Vite build configuration and path aliases
