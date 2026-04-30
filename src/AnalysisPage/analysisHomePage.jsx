@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import analysisTypes from '../lib/analysisTypes';
-import AuthContentContainer from '../lib/ui/authContentContainer';
 import AnalysisCard from './analysisCard';
 import AnimalDataAnalysis from './animalDataAnalysis';
 
@@ -74,7 +73,7 @@ export function AnalysisHomePage({
   }
 
   return (
-    <AuthContentContainer classes="analysisPage">
+    <div className="analysisPage px-3 px-md-4 mb-3 container">
       <div className="page-title pt-3 pb-2 mb-3 border-bottom">
         <h3>
           {depth > 0 ? <BackButton /> : ''}
@@ -89,7 +88,7 @@ export function AnalysisHomePage({
       {depth === 1 && subjectType === 'animal' && (
         <AnimalDataAnalysis analysis={currentAnalysis} />
       )}
-    </AuthContentContainer>
+    </div>
   );
 }
 
