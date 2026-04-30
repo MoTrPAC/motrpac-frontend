@@ -41,8 +41,7 @@ Building and running
 * Preparation:
   * Run `corepack enable` to activate the Yarn version pinned in `package.json` (Yarn 4).
   * Set `node` environment to `20.x`, or use `nvm` to run `nvm use v20.19.5`.
-  * Create a `.env` file at the root of the local working copy and add `ESLINT_NO_DEV_ERRORS=true`.
-  * Add additional required environment variables to the `.env` file in root (e.g. the API service address). All client-side variables must be prefixed with `VITE_`.
+  * Create a `.env` file at the root of the local working copy and add required environment variables (e.g. the API service address). All client-side variables must be prefixed with `VITE_`.
   * Run `yarn install`.
 
 * Building CSS: Uses sass in `node_modules/sass/sass.js`
