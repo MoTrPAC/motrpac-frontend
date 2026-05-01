@@ -201,6 +201,89 @@ $img-base-url: 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/im
 }
 
 // ============================================================================
+// Tribute Section (In Memoriam — Dr. Russell P. Tracy)
+// ============================================================================
+
+.tribute-section {
+  background-color: #f5dcbe;
+  padding: clamp(3.45rem, 11.5vw, 6.9rem) 0;
+}
+
+.tribute-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    grid-template-columns: auto 1fr;
+    gap: clamp(2.5rem, 5vw, 4rem);
+  }
+}
+
+.tribute-photo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 0.5rem;
+
+  .tribute-photo {
+    width: 100%;
+    max-width: clamp(320px, 50vw, 510px);
+    height: auto;
+    flex-shrink: 0;
+  }
+}
+
+.tribute-content {
+  text-align: center;
+
+  @media (min-width: 768px) {
+    text-align: left;
+  }
+
+  .tribute-eyebrow {
+    display: block;
+    color: rgba(100, 85, 60, 0.75);
+    @include fluid-text(0.8rem, 1.3vw, 0.95rem);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .tribute-title {
+    @include fluid-text(1.75rem, 3.8vw, 2.85rem);
+    color: #1c1a16;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0 0 1rem;
+  }
+
+  .tribute-divider {
+    width: 3rem;
+    height: 2px;
+    background: rgba(210, 175, 110, 0.55);
+    border: none;
+    margin: 0 auto 1.25rem;
+
+    @media (min-width: 768px) {
+      margin-left: 0;
+    }
+  }
+
+  .tribute-description {
+    @include fluid-text(1.05rem, 2vw, 1.4rem);
+    color: rgba(45, 38, 28, 0.82);
+    line-height: 1.75;
+    font-weight: 300;
+    font-style: italic;
+    margin: 0;
+    max-width: 52rem;
+  }
+}
+
+// ============================================================================
 // Publication Section (Nature Paper)
 // ============================================================================
 
