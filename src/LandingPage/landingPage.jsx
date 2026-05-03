@@ -70,6 +70,32 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
             </a>
           </p>
 
+          <div className="hero-tribute-card">
+            <img
+              src={russTracyPhoto}
+              alt="Dr. Russell P. Tracy, PhD"
+              className="tribute-photo"
+            />
+            <div className="tribute-content">
+              <span className="tribute-eyebrow">In Memoriam</span>
+              <h2 className="tribute-title">Dr. Russell P. Tracy, PhD</h2>
+              <div className="tribute-divider" />
+              <p className="tribute-description">
+                With great sadness, MoTrPAC recognizes the loss of Dr. Russell
+                P. Tracy, PhD, our esteemed colleague and friend. We are deeply
+                grateful for the wisdom, dedication, and humor he brought to our
+                Consortium. Russ leaves an enduring legacy of discovery,
+                leadership, and collaboration. Our deepest sympathies to his
+                family and friends.
+              </p>
+              <p className="tribute-obituary mt-3">
+                <a href="https://www.sevendaysvt.com/life-lines/obituaries/obituary-russell-p-tracy-1949-2026/" target="_blank" rel="noreferrer">
+                  Obituary: Russell P. Tracy, 1949–2026 | Seven Days
+                </a>
+              </p>
+            </div>
+          </div>
+
           <div className="announcement-badge">
             <span className="badge-icon">
               <i className="bi bi-rocket-takeoff" />
@@ -109,39 +135,6 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
             This repository is under review for potential modification in
             compliance with Administration directives.
           </p>
-        </div>
-      </section>
-
-      {/* Tribute to Dr. Russell P. Tracy Section */}
-      <section className="tribute-section">
-        <div className="container">
-          <div className="tribute-grid">
-            <div className="tribute-photo-wrapper">
-              <img
-                src={russTracyPhoto}
-                alt="Dr. Russell P. Tracy, PhD"
-                className="tribute-photo"
-              />
-            </div>
-            <div className="tribute-content">
-              <span className="tribute-eyebrow">In Memoriam</span>
-              <h2 className="tribute-title">Dr. Russell P. Tracy, PhD</h2>
-              <div className="tribute-divider" />
-              <p className="tribute-description lead">
-                With great sadness, MoTrPAC recognizes the loss of Dr. Russell
-                P. Tracy, PhD, our esteemed colleague and friend. We are deeply
-                grateful for the wisdom, dedication, and humor he brought to our
-                Consortium. Russ leaves an enduring legacy of discovery,
-                leadership, and collaboration. Our deepest sympathies to his
-                family and friends.
-              </p>
-              <p className="tribute-obituary lead mt-3">
-                <a href="https://www.sevendaysvt.com/life-lines/obituaries/obituary-russell-p-tracy-1949-2026/" target="_blank" rel="noreferrer">
-                  Obituary: Russell P. Tracy, 1949-2026 | Seven Days
-                </a>
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
