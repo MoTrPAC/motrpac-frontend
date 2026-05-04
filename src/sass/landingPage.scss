@@ -39,7 +39,7 @@ $img-base-url: 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/im
   background-image: url('#{$img-base-url}background_hero_image.jpg');
   background-size: cover;
   background-position: center;
-  padding-bottom: clamp(0.25rem, 1vw, 0.25rem);
+  padding-bottom: 0.25rem;
 
   // Background video
   video.fullscreen {
@@ -216,8 +216,7 @@ $img-base-url: 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/im
   border: 5px solid #fff;
   box-shadow: 0 1.5em 3em rgba(0, 0, 0, 0.4);
   padding: clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 3vw, 2rem) clamp(0.75rem, 1.5vw, 1.25rem);
-  margin: 2.85rem auto;
-  margin-bottom: 3.5rem;
+  margin: 2.85rem auto 3.5rem;
   max-width: 62rem;
   text-align: left;
 
@@ -248,9 +247,10 @@ $img-base-url: 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/im
   }
 
   .tribute-eyebrow {
+    @include fluid-text(0.75rem, 1.2vw, 0.9rem);
+
     display: block;
     color: rgba(100, 85, 60, 0.85);
-    @include fluid-text(0.75rem, 1.2vw, 0.9rem);
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -259,6 +259,7 @@ $img-base-url: 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/im
 
   .tribute-title {
     @include fluid-text(1.35rem, 2.8vw, 2rem);
+
     color: #1c1a16;
     font-weight: 600;
     line-height: 1.2;
@@ -279,6 +280,7 @@ $img-base-url: 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/im
 
   .tribute-description {
     @include fluid-text(0.9rem, 1.6vw, 1.1rem);
+
     color: rgba(45, 38, 28, 0.85);
     line-height: 1.5;
     font-weight: 400;
@@ -288,6 +290,7 @@ $img-base-url: 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/im
 
   .tribute-obituary {
     @include fluid-text(0.85rem, 1.4vw, 1rem);
+
     margin-bottom: 0;
 
     a {
