@@ -10,7 +10,6 @@ import SubscribeDataUpdates from './components/subscribeDataUpdates';
 import landingPageStructuredData from '../lib/searchStructuredData/landingPage';
 import BackgroundVideo from './components/backgroundVideo';
 import ExternalLink from '@/lib/ui/externalLink';
-import russTracyPhoto from './photo_russ_tribute.png';
 
 import '@styles/landingPage.scss';
 
@@ -72,7 +71,7 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
 
           <div className="hero-tribute-card">
             <img
-              src={russTracyPhoto}
+              src={`${IMG_BASE_URL}photo_russ_tribute.png`}
               alt="Dr. Russell P. Tracy, PhD"
               className="tribute-photo"
             />
