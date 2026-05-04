@@ -89,7 +89,11 @@ export function LandingPage({ isAuthenticated = false, profile = {} }) {
                 family and friends.
               </p>
               <p className="tribute-obituary mt-3">
-                <a href="https://www.sevendaysvt.com/life-lines/obituaries/obituary-russell-p-tracy-1949-2026/" target="_blank" rel="noreferrer">
+                <a
+                  href="https://www.sevendaysvt.com/life-lines/obituaries/obituary-russell-p-tracy-1949-2026/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Obituary: Russell P. Tracy, 1949–2026
                 </a>
               </p>
