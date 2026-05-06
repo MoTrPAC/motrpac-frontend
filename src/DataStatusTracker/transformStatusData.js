@@ -297,50 +297,6 @@ function buildStatusOptions(tissueGroup, site, axisMax) {
 export function transformCDNData(records) {
   const grouped = groupRecords(records);
 
-  // Compute global axis max for each column so scales are consistent
-  let shippedMax = 0;
-  let statusMax = 0;
-
-  for (const siteGroup of grouped) {
-    for (const tg of siteGroup.tissues) {
-      // Build lookups once per tissue group
-      const byTranche = new Map();
-      const byAssayTranche = new Map();
-      for (const r of tg.records) {
-        if (!byTranche.has(r.Tranche)) byTranche.set(r.Tranche, []);
-        byTranche.get(r.Tranche).push(r);
-        byAssayTranche.set(`${r.Assay}|${r.Tranche}`, r);
-      }
-
-      // Left: sum of max-shipped-per-tranche across all tranches
-      let shippedSum = 0;
-      for (const trRecs of byTranche.values()) {
-        const vals = trRecs.map((r) => Number(r.Shipped)).filter(Number.isFinite);
-        shippedSum += vals.length > 0 ? Math.max(...vals) : 0;
-      }
-      shippedMax = Math.max(shippedMax, shippedSum);
-
-      // Right: sum of actual stacked-bar height across all tranches per assay.
-      // Each bar segment is: ac + max(0, qid-ac) + max(0, dr-qid), which
-      // correctly handles every ordering of ac, qid, dr.
-      const tranches = [...byTranche.keys()];
-      const assays = [...new Set(tg.records.map((r) => r.Assay))];
-      for (const assay of assays) {
-        let assaySum = 0;
-        for (const tr of tranches) {
-          const r = byAssayTranche.get(`${assay}|${tr}`);
-          if (r) {
-            const ac = r['analysis completed'];
-            const qid = r['quant-id completed'];
-            const dr = r['Data Received'];
-            assaySum += ac + Math.max(0, qid - ac) + Math.max(0, dr - qid);
-          }
-        }
-        statusMax = Math.max(statusMax, assaySum);
-      }
-    }
-  }
-
   return grouped.map((siteGroup) => ({
     site: siteGroup.site,
     domain: siteGroup.domain,
@@ -348,11 +304,50 @@ export function transformCDNData(records) {
       .filter((tg) => tg.records.some((r) =>
         r.Shipped > 0 || r['Data Received'] > 0 || r['quant-id completed'] > 0 || r['analysis completed'] > 0,
       ))
-      .map((tg) => ({
-        tissue: tg.tissue,
-        abbrev: tg.abbrev,
-        shippedOptions: buildShippedOptions(tg, siteGroup.site, shippedMax),
-        statusOptions: buildStatusOptions(tg, siteGroup.site, statusMax),
-      })),
+      .map((tg) => {
+        // Compute a shared axis max for this chart pair so left and right
+        // use the same x-axis range (matching the original Python report).
+        const byTranche = new Map();
+        const byAssayTranche = new Map();
+        for (const r of tg.records) {
+          if (!byTranche.has(r.Tranche)) byTranche.set(r.Tranche, []);
+          byTranche.get(r.Tranche).push(r);
+          byAssayTranche.set(`${r.Assay}|${r.Tranche}`, r);
+        }
+
+        // Left: sum of max-shipped-per-tranche across all tranches
+        let shippedSum = 0;
+        for (const trRecs of byTranche.values()) {
+          const vals = trRecs.map((r) => Number(r.Shipped)).filter(Number.isFinite);
+          shippedSum += vals.length > 0 ? Math.max(...vals) : 0;
+        }
+
+        // Right: max stacked-bar total across assays
+        const tranches = [...byTranche.keys()];
+        const assays = [...new Set(tg.records.map((r) => r.Assay))];
+        let statusMax = 0;
+        for (const assay of assays) {
+          let assaySum = 0;
+          for (const tr of tranches) {
+            const r = byAssayTranche.get(`${assay}|${tr}`);
+            if (r) {
+              const ac = r['analysis completed'];
+              const qid = r['quant-id completed'];
+              const dr = r['Data Received'];
+              assaySum += ac + Math.max(0, qid - ac) + Math.max(0, dr - qid);
+            }
+          }
+          statusMax = Math.max(statusMax, assaySum);
+        }
+
+        const pairMax = Math.max(shippedSum, statusMax, 1);
+
+        return {
+          tissue: tg.tissue,
+          abbrev: tg.abbrev,
+          shippedOptions: buildShippedOptions(tg, siteGroup.site, pairMax),
+          statusOptions: buildStatusOptions(tg, siteGroup.site, pairMax),
+        };
+      }),
   }));
 }
