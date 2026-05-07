@@ -323,17 +323,16 @@ export function transformCDNData(records) {
         }
 
         // Right: max stacked-bar total across assays
-        const tranches = [...byTranche.keys()];
-        const assays = [...new Set(tg.records.map((r) => r.Assay))];
+        const { tranches, assays } = tg;
         let statusMax = 0;
         for (const assay of assays) {
           let assaySum = 0;
           for (const tr of tranches) {
             const r = byAssayTranche.get(`${assay}|${tr}`);
             if (r) {
-              const ac = r['analysis completed'];
-              const qid = r['quant-id completed'];
-              const dr = r['Data Received'];
+              const ac = Number(r['analysis completed']) || 0;
+              const qid = Number(r['quant-id completed']) || 0;
+              const dr = Number(r['Data Received']) || 0;
               assaySum += ac + Math.max(0, qid - ac) + Math.max(0, dr - qid);
             }
           }
