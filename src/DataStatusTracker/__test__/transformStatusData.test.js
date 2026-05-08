@@ -114,7 +114,7 @@ describe('transformCDNData', () => {
     expect(statusOpts.xAxis.categories).toEqual(['active-assay']);
   });
 
-  // --- Global axis max ---
+  // --- Per-pair axis max (left and right charts share the same scale) ---
 
   test('shipped axis max reflects stacked tranche totals', () => {
     const records = [
@@ -136,8 +136,9 @@ describe('transformCDNData', () => {
     const statusMax = result[0].tissues[0].statusOptions.yAxis.max;
     // T1: ac(40) + max(0,60-40) + max(0,50-60) = 60
     // T2: ac(40) + max(0,60-40) + max(0,70-60) = 70
-    // Total = 130
-    expect(statusMax).toEqual(130);
+    // Status total = 130, but shippedSum = 100+100 = 200 (default Shipped per tranche)
+    // pairMax = max(200, 130) = 200 — both charts share this scale
+    expect(statusMax).toEqual(200);
   });
 
   // --- Chart structure ---
