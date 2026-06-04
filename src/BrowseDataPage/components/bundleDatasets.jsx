@@ -95,17 +95,21 @@ function BundleDatasets({
                   >
                     {item.species}
                   </span>
+                  {item.participant_type && item.participant_type.length && (
+                    <span
+                      className={`badge badge-pill ${item.participant_type === 'Young Adult' ? tagColors.youngAdult : tagColors.adult} mr-1`}
+                    >
+                      {item.participant_type}
+                    </span>
+                  )}
+                  {item.intervention && item.intervention.length && (
                   <span
-                    className={`badge badge-pill ${item.participant_type.length && item.participant_type === 'Young Adult' ? tagColors.youngAdult : tagColors.adult} mr-1`}
-                  >
-                    {item.participant_type}
-                  </span>
-                  <span
-                    className={`badge badge-pill ${item.intervention.length && item.intervention === 'Endurance Training' ? tagColors.endurance : item.intervention === 'Acute Exercise' ? tagColors.acute : tagColors.sedentary} mr-1`}
+                    className={`badge badge-pill ${item.intervention === 'Endurance Training' ? tagColors.endurance : item.intervention === 'Acute Exercise' ? tagColors.acute : tagColors.sedentary} mr-1`}
                   >
                     {item.intervention}
                   </span>
-                  {item.species === 'Human' && (
+                  )}
+                  {item.species === 'Human' && item.study_group && item.study_group.length && (
                     <span
                       className={`badge badge-pill ${item.study_group === 'Pre-Suspension' ? tagColors.preSuspension : tagColors.postSuspension} mr-1`}
                     >
