@@ -17,7 +17,10 @@ export default function useCdnData(url) {
     setLoading(true);
     setError(null);
 
-    fetch(url, { signal: controller.signal })
+    // `no-cache` forces the browser to revalidate with the CDN (via ETag /
+    // Last-Modified) on every load instead of serving a heuristically-cached
+    // stale copy, so newly published data shows up without a hard refresh.
+    fetch(url, { cache: 'no-cache', signal: controller.signal })
       .then((res) => {
         if (!res.ok) throw new Error(`Failed to fetch data (${res.status})`);
         return res.json();
