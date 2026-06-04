@@ -24,6 +24,61 @@
       border: 1px solid #000;
       margin-right: 0.35rem;
       flex-shrink: 0;
+
+      &.outline {
+        background-color: transparent;
+        border-width: 2px;
+        border-style: solid;
+      }
+    }
+  }
+
+  .organism-toggle {
+    .btn {
+      min-width: 5rem;
+    }
+  }
+
+  .study-tab-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 1rem;
+
+    .study-tab-btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #666;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.15s, border-color 0.15s;
+
+      &:hover {
+        color: #333;
+        border-bottom-color: #bbb;
+      }
+
+      &.active {
+        color: #1a6fb5;
+        border-bottom-color: #1a6fb5;
+      }
+    }
+  }
+
+  .assay-row {
+    margin-bottom: 0.75rem;
+    min-width: 0;
+    overflow: hidden;
+
+    .assay-header {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.1rem;
     }
   }
 
