@@ -227,7 +227,7 @@ function DataDownloadsMain({
           <ul className="nav nav-tabs" id="bundleDatasetsTab" role="tablist">
             <li className="nav-item font-weight-bold" role="presentation">
               <a
-                className="nav-link active"
+                className="nav-link"
                 id="pass1b_06_bundle_datasets_tab"
                 data-toggle="pill"
                 href="#pass1b_06_bundle_datasets"
@@ -269,7 +269,7 @@ function DataDownloadsMain({
             {userType && userType === 'internal' && (
               <li className="nav-item font-weight-bold" role="presentation">
                 <a
-                  className="nav-link"
+                  className="nav-link active"
                   id="human_main_bundle_datasets_tab"
                   data-toggle="pill"
                   href="#human_main_bundle_datasets"
@@ -285,7 +285,7 @@ function DataDownloadsMain({
           {/* tab panes */}
           <div className="tab-content mt-3">
             <div
-              className="tab-pane fade show active"
+              className="tab-pane fade"
               id="pass1b_06_bundle_datasets"
               role="tabpanel"
               aria-labelledby="pass1b_06_bundle_datasets_tab"
@@ -339,7 +339,7 @@ function DataDownloadsMain({
             </div>
             {userType && userType === 'internal' && (
               <div
-                className="tab-pane fade"
+                className="tab-pane fade show active"
                 id="human_main_bundle_datasets"
                 role="tabpanel"
                 aria-labelledby="human_main_bundle_datasets_tab"
