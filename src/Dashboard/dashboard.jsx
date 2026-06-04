@@ -53,7 +53,8 @@ export function Dashboard({
                 <div className="feature-highlight-content mr-1">
                   <h3>Main Study Clinical Data</h3>
                   <div className="data-release-text mb-3">
-                    Phenotypic data for adults and pediatrics from the main human study, including highly active cohort and ancillary studies now available for download
+                    <span className="mr-2">Adults and pediatrics phenotypic data from the main human study now available for download in bundled dataset</span>
+                    <span className="badge badge-pill badge-danger">Consortium Release</span>
                   </div>
                   <Link to="/data-download" className="btn btn-primary">Download Now</Link>
                 </div>
