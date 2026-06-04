@@ -191,4 +191,34 @@ describe('transformRatData', () => {
     const protPh = group.sites[0].assays.find((a) => a.assay === 'PROT-PH');
     expect(protPh.chartOptions.series[0].data[0].custom.shipped).toEqual(159);
   });
+
+  // --- Status selection / legend filtering ---
+
+  test('all series are visible by default', () => {
+    const group = studyGroup(transformRatData([makeRecord()]), 'PASS1AC-06');
+    const { series } = group.sites[0].assays[0].chartOptions;
+    expect(series.every((s) => s.visible)).toBe(true);
+  });
+
+  test('only the selected status series stay visible', () => {
+    const group = studyGroup(
+      transformRatData([makeRecord()], ['shipped', 'analysis']),
+      'PASS1AC-06',
+    );
+    const visibility = Object.fromEntries(
+      group.sites[0].assays[0].chartOptions.series.map((s) => [s.statusType, s.visible]),
+    );
+    expect(visibility).toEqual({
+      shipped: true,
+      received: false,
+      quant: false,
+      analysis: true,
+    });
+  });
+
+  test('deselecting everything hides all series', () => {
+    const group = studyGroup(transformRatData([makeRecord()], []), 'PASS1AC-06');
+    const { series } = group.sites[0].assays[0].chartOptions;
+    expect(series.every((s) => s.visible === false)).toBe(true);
+  });
 });

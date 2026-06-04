@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import AnimatedLoadingIcon from '../lib/ui/loading';
@@ -12,44 +13,69 @@ import {
 const RAT_DATA_URL =
   'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/sample-data-tracker/data/rat-sample-data-status.json';
 
-function RatStatusLegend() {
-  const items = [
-    { color: RAT_STATUS_COLORS.shipped, label: 'Shipped to CAS', outline: true },
-    { color: RAT_STATUS_COLORS.dataReceived, label: 'Data Received by BIC' },
-    { color: RAT_STATUS_COLORS.quantId, label: 'quant-id completed' },
-    { color: RAT_STATUS_COLORS.analysisCompleted, label: 'analysis completed' },
-  ];
+const RAT_LEGEND_ITEMS = [
+  { token: 'shipped', color: RAT_STATUS_COLORS.shipped, label: 'Shipped to CAS', outline: true },
+  { token: 'received', color: RAT_STATUS_COLORS.dataReceived, label: 'Data Received by BIC' },
+  { token: 'quant', color: RAT_STATUS_COLORS.quantId, label: 'quant-id completed' },
+  { token: 'analysis', color: RAT_STATUS_COLORS.analysisCompleted, label: 'analysis completed' },
+];
 
+function RatStatusLegend({ selected, onToggle }) {
   return (
     <div className="status-legend mb-3">
-      {items.map((item) => (
-        <span key={item.label} className="status-legend-item">
-          <span
-            className={`status-legend-swatch${item.outline ? ' outline' : ''}`}
-            style={
-              item.outline
-                ? { borderColor: item.color }
-                : { backgroundColor: item.color }
-            }
-          />
-          {item.label}
-        </span>
-      ))}
+      {RAT_LEGEND_ITEMS.map((item) => {
+        const active = selected.has(item.token);
+        return (
+          <button
+            key={item.token}
+            type="button"
+            className={`status-legend-item status-legend-toggle${active ? '' : ' is-off'}`}
+            aria-pressed={active}
+            onClick={() => onToggle(item.token)}
+          >
+            <span
+              className={`status-legend-swatch${item.outline ? ' outline' : ''}`}
+              style={
+                item.outline
+                  ? { borderColor: item.color }
+                  : { backgroundColor: item.color }
+              }
+            />
+            {item.label}
+          </button>
+        );
+      })}
     </div>
   );
 }
+
+RatStatusLegend.propTypes = {
+  selected: PropTypes.instanceOf(Set).isRequired,
+  onToggle: PropTypes.func.isRequired,
+};
 
 /**
  * Renders the Rat Sample Data Tracker view: a study tab bar, then site sections
  * with one horizontal bar chart per assay.
  */
+const ALL_RAT_TOKENS = RAT_LEGEND_ITEMS.map((i) => i.token);
+
 export default function RatDataStatus() {
   const { data, loading, error } = useCdnData(RAT_DATA_URL);
   const [activeStudy, setActiveStudy] = useState(null);
+  const [selected, setSelected] = useState(() => new Set(ALL_RAT_TOKENS));
+
+  const toggleStatus = (token) =>
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(token)) next.delete(token);
+      else next.add(token);
+      return next;
+    });
 
   const studies = useMemo(
-    () => (data ? transformRatData(data) : []),
-    [data],
+    () => (data ? transformRatData(data, [...selected]) : []),
+    [data, selected],
   );
 
   // Default to the first study that has data.
@@ -79,21 +105,23 @@ export default function RatDataStatus() {
 
   return (
     <div className="data-status-charts">
-      <RatStatusLegend />
+      <div className="rat-sticky-header">
+        <RatStatusLegend selected={selected} onToggle={toggleStatus} />
 
-      <div className="study-tab-bar" role="tablist">
-        {studies.map((s) => (
-          <button
-            key={s.study}
-            type="button"
-            role="tab"
-            aria-selected={s.study === selectedStudy}
-            className={`study-tab-btn${s.study === selectedStudy ? ' active' : ''}`}
-            onClick={() => setActiveStudy(s.study)}
-          >
-            {s.label}
-          </button>
-        ))}
+        <div className="study-tab-bar" role="tablist">
+          {studies.map((s) => (
+            <button
+              key={s.study}
+              type="button"
+              role="tab"
+              aria-selected={s.study === selectedStudy}
+              className={`study-tab-btn${s.study === selectedStudy ? ' active' : ''}`}
+              onClick={() => setActiveStudy(s.study)}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {activeGroup && activeGroup.sites.length === 0 && (

@@ -1,4 +1,5 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import AnimatedLoadingIcon from '../lib/ui/loading';
@@ -8,28 +9,44 @@ import { transformCDNData, STATUS_COLORS } from './transformStatusData';
 const HUMAN_DATA_URL =
   'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/sample-data-tracker/data/human-sample-data-status.json';
 
-function StatusLegend() {
-  const items = [
-    { color: STATUS_COLORS.shipped, label: 'Shipped to CAS' },
-    { color: STATUS_COLORS.dataReceived, label: 'Data Received by BIC' },
-    { color: STATUS_COLORS.quantId, label: 'quant-id completed (ready for analysis)' },
-    { color: STATUS_COLORS.analysisCompleted, label: 'analysis completed' },
-  ];
+const HUMAN_LEGEND_ITEMS = [
+  { token: 'shipped', color: STATUS_COLORS.shipped, label: 'Shipped to CAS' },
+  { token: 'received', color: STATUS_COLORS.dataReceived, label: 'Data Received by BIC' },
+  { token: 'quant', color: STATUS_COLORS.quantId, label: 'quant-id completed (ready for analysis)' },
+  { token: 'analysis', color: STATUS_COLORS.analysisCompleted, label: 'analysis completed' },
+];
 
+const ALL_HUMAN_TOKENS = HUMAN_LEGEND_ITEMS.map((i) => i.token);
+
+function StatusLegend({ selected, onToggle }) {
   return (
     <div className="status-legend mb-3">
-      {items.map((item) => (
-        <span key={item.label} className="status-legend-item">
-          <span
-            className="status-legend-swatch"
-            style={{ backgroundColor: item.color }}
-          />
-          {item.label}
-        </span>
-      ))}
+      {HUMAN_LEGEND_ITEMS.map((item) => {
+        const active = selected.has(item.token);
+        return (
+          <button
+            key={item.token}
+            type="button"
+            className={`status-legend-item status-legend-toggle${active ? '' : ' is-off'}`}
+            aria-pressed={active}
+            onClick={() => onToggle(item.token)}
+          >
+            <span
+              className="status-legend-swatch"
+              style={{ backgroundColor: item.color }}
+            />
+            {item.label}
+          </button>
+        );
+      })}
     </div>
   );
 }
+
+StatusLegend.propTypes = {
+  selected: PropTypes.instanceOf(Set).isRequired,
+  onToggle: PropTypes.func.isRequired,
+};
 
 /**
  * Renders the Human Sample Data Tracker view: paired shipped/status charts
@@ -37,10 +54,26 @@ function StatusLegend() {
  */
 export default function HumanDataStatus() {
   const { data, loading, error } = useCdnData(HUMAN_DATA_URL);
+  const [selected, setSelected] = useState(() => new Set(ALL_HUMAN_TOKENS));
+
+  const toggleStatus = (token) =>
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(token)) next.delete(token);
+      else next.add(token);
+      return next;
+    });
+
+  const showShipped = selected.has('shipped');
 
   const chartGroups = useMemo(
-    () => (data ? transformCDNData(data) : []),
-    [data],
+    () =>
+      (data
+        // The status chart only knows the three processing statuses; 'shipped'
+        // is handled here in the layout (show/hide the left chart).
+        ? transformCDNData(data, [...selected].filter((t) => t !== 'shipped'))
+        : []),
+    [data, selected],
   );
 
   if (loading) {
@@ -62,7 +95,7 @@ export default function HumanDataStatus() {
 
   return (
     <div className="data-status-charts">
-      <StatusLegend />
+      <StatusLegend selected={selected} onToggle={toggleStatus} />
       {chartGroups.map((siteGroup, idx) => {
         const prevDomain = idx > 0 ? chartGroups[idx - 1].domain : null;
         const showDomainHeader = siteGroup.domain !== prevDomain;
@@ -75,14 +108,19 @@ export default function HumanDataStatus() {
             <div className="site-section">
               <h5 className="site-header">{siteGroup.site}</h5>
               {siteGroup.tissues.map((tg) => (
-                <div key={tg.tissue} className="tissue-row">
-                  <div className="tissue-shipped-chart">
-                    <HighchartsReact
-                      highcharts={Highcharts}
-                      options={tg.shippedOptions}
-                      containerProps={{ style: { width: '100%' } }}
-                    />
-                  </div>
+                <div
+                  key={tg.tissue}
+                  className={`tissue-row${showShipped ? '' : ' status-only'}`}
+                >
+                  {showShipped && (
+                    <div className="tissue-shipped-chart">
+                      <HighchartsReact
+                        highcharts={Highcharts}
+                        options={tg.shippedOptions}
+                        containerProps={{ style: { width: '100%' } }}
+                      />
+                    </div>
+                  )}
                   <div className="tissue-status-chart">
                     {tg.statusOptions && (
                       <HighchartsReact

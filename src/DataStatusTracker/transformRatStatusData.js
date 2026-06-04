@@ -70,9 +70,11 @@ function hasData(r) {
 /**
  * Build Highcharts options for a single (site, assay) horizontal bar chart.
  * `shippedByTissue` maps tissue → shipped count (tissue-level, shared across
- * assays within a site).
+ * assays within a site). `selected`, when non-null, is a Set of status tokens
+ * ('shipped' | 'received' | 'quant' | 'analysis') whose series stay visible.
  */
-function buildAssayChart(site, assay, records, shippedByTissue) {
+function buildAssayChart(site, assay, records, shippedByTissue, selected) {
+  const isSel = (token) => !selected || selected.has(token);
   const tissues = [...new Set(records.map((r) => r.Tissue))].sort();
 
   const byTissue = new Map();
@@ -123,6 +125,7 @@ function buildAssayChart(site, assay, records, shippedByTissue) {
       borderColor: RAT_STATUS_COLORS.shipped,
       borderWidth: 2,
       statusType: 'shipped',
+      visible: isSel('shipped'),
     },
     {
       name: 'Data Received by BIC',
@@ -130,6 +133,7 @@ function buildAssayChart(site, assay, records, shippedByTissue) {
       color: RAT_STATUS_COLORS.dataReceived,
       borderWidth: 0,
       statusType: 'received',
+      visible: isSel('received'),
     },
     {
       name: 'quant-id completed',
@@ -137,6 +141,7 @@ function buildAssayChart(site, assay, records, shippedByTissue) {
       color: RAT_STATUS_COLORS.quantId,
       borderWidth: 0,
       statusType: 'quant',
+      visible: isSel('quant'),
     },
     {
       name: 'analysis completed',
@@ -144,6 +149,7 @@ function buildAssayChart(site, assay, records, shippedByTissue) {
       color: RAT_STATUS_COLORS.analysisCompleted,
       borderWidth: 0,
       statusType: 'analysis',
+      visible: isSel('analysis'),
     },
   ];
 
@@ -207,9 +213,14 @@ function buildAssayChart(site, assay, records, shippedByTissue) {
  *
  * Returns: [{ study, label, sites: [{ site, assays: [{ assay, chartOptions }] }] }]
  * A study present in STUDY_ORDER but with no data yields `sites: []`.
+ *
+ * `selectedStatuses` is an optional array of status tokens
+ * ('shipped' | 'received' | 'quant' | 'analysis'); series not in the set are
+ * built hidden (`visible: false`). When omitted, all series are visible.
  */
-export function transformRatData(records) {
+export function transformRatData(records, selectedStatuses) {
   const withData = (records || []).filter(hasData);
+  const selected = selectedStatuses ? new Set(selectedStatuses) : null;
 
   // Bucket records by study → site → assay, and capture tissue-level shipped.
   const byStudy = new Map();
@@ -253,7 +264,7 @@ export function transformRatData(records) {
 
       const assays = [...assayMap.keys()].sort().map((assay) => ({
         assay,
-        chartOptions: buildAssayChart(site, assay, assayMap.get(assay), shippedByTissue),
+        chartOptions: buildAssayChart(site, assay, assayMap.get(assay), shippedByTissue, selected),
       }));
 
       return { site: shortSite(site), assays };

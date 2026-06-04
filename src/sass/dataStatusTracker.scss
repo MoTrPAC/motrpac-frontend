@@ -17,6 +17,20 @@
       font-size: 0.85rem;
     }
 
+    .status-legend-toggle {
+      border: none;
+      background: none;
+      padding: 0;
+      cursor: pointer;
+      color: inherit;
+      user-select: none;
+
+      &.is-off {
+        opacity: 0.4;
+        text-decoration: line-through;
+      }
+    }
+
     .status-legend-swatch {
       display: inline-block;
       width: 14px;
@@ -36,6 +50,27 @@
   .organism-toggle {
     .btn {
       min-width: 5rem;
+    }
+  }
+
+  // Freeze the legend + phase tabs together as one block while scrolling.
+  .rat-sticky-header {
+    position: sticky;
+    top: 4.75rem;
+    z-index: 11;
+    background-color: #fff;
+    padding-bottom: 0.5rem;
+
+    // The legend scrolls inside this sticky block instead of sticking on its own.
+    .status-legend {
+      position: static;
+      top: auto;
+      margin-bottom: 0.5rem;
+    }
+
+    // Keep the tab bar flush with the sticky block (spacing comes from padding).
+    .study-tab-bar {
+      margin-bottom: 0;
     }
   }
 
@@ -115,6 +150,10 @@
     column-gap: 1.5rem;
     margin-bottom: 1rem;
     align-items: start;
+
+    &.status-only {
+      grid-template-columns: 1fr;
+    }
 
     .tissue-shipped-chart,
     .tissue-status-chart {

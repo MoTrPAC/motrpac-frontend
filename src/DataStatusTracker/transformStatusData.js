@@ -155,13 +155,26 @@ function buildShippedOptions(tissueGroup, site, axisMax) {
   };
 }
 
+// Canonical nesting order (innermost → outermost) for the status segments.
+// Each entry maps a selection token to its raw-count field, color and label.
+const STATUS_SEGMENTS = [
+  { token: 'analysis', field: 'analysis completed', color: STATUS_COLORS.analysisCompleted, statusType: 'analysis completed' },
+  { token: 'quant', field: 'quant-id completed', color: STATUS_COLORS.quantId, statusType: 'quant-id completed' },
+  { token: 'received', field: 'Data Received', color: STATUS_COLORS.dataReceived, statusType: 'Data Received' },
+];
+
 /**
  * Build Highcharts options for the right (processing status) chart.
- * Categories = assay names. Stacked series: for each tranche, three segments
- * (analysis completed, quant-id delta, data-received delta).
+ * Categories = assay names. For each tranche the selected status counts are
+ * drawn as nested stacked segments (a segment's height is its raw count minus
+ * the nearest earlier selected status's count), so the chart shows only the
+ * selected counts while preserving the stacked-tranche / nested-status style.
+ * `selected` is a Set of tokens ('analysis' | 'quant' | 'received'); when null
+ * all statuses are selected (identical to the unfiltered chart).
  */
-function buildStatusOptions(tissueGroup, site, axisMax) {
+function buildStatusOptions(tissueGroup, site, axisMax, selected) {
   const { abbrev, tranches, assays, records } = tissueGroup;
+  const isSel = (token) => !selected || selected.has(token);
 
   // Build lookup: records keyed by assay+tranche
   const lookup = new Map();
@@ -177,59 +190,58 @@ function buildStatusOptions(tissueGroup, site, axisMax) {
     }),
   );
 
+  // The outermost selected segment carries the tranche data label.
+  const outerToken = [...STATUS_SEGMENTS].reverse().find((s) => isSel(s.token))?.token;
+
   const series = [];
 
   for (const tr of tranches) {
-    const analysisData = [];
-    const quantIdDelta = [];
-    const receivedDelta = [];
+    // One data array per status segment, in canonical nesting order.
+    const segData = STATUS_SEGMENTS.map(() => []);
 
     for (const assay of activeAssays) {
       const r = lookup.get(`${assay}|${tr}`);
       const ac = r ? r['analysis completed'] : 0;
       const qid = r ? r['quant-id completed'] : 0;
       const dr = r ? r['Data Received'] : 0;
+      const counts = { analysis: ac, quant: qid, received: dr };
+      const custom = { assay, tissue: abbrev, tranche: tr, ac, qid, dr };
 
-      analysisData.push({ y: ac, custom: { assay, tissue: abbrev, tranche: tr, ac, qid, dr } });
-      quantIdDelta.push({ y: Math.max(0, qid - ac), custom: { assay, tissue: abbrev, tranche: tr, ac, qid, dr } });
-      receivedDelta.push({ y: Math.max(0, dr - qid), custom: { assay, tissue: abbrev, tranche: tr, ac, qid, dr } });
+      // Nest selected counts: each band = count - nearest earlier selected count.
+      let baseline = 0;
+      STATUS_SEGMENTS.forEach((seg, i) => {
+        if (isSel(seg.token)) {
+          const count = counts[seg.token];
+          segData[i].push({ y: Math.max(0, count - baseline), custom });
+          baseline = count;
+        } else {
+          segData[i].push({ y: 0, custom });
+        }
+      });
     }
 
-    series.push(
-      {
-        name: `${tr} analysis completed`,
-        data: analysisData,
-        color: STATUS_COLORS.analysisCompleted,
+    STATUS_SEGMENTS.forEach((seg, i) => {
+      series.push({
+        name: `${tr} ${seg.statusType}`,
+        data: segData[i],
+        color: seg.color,
         borderWidth: 0.5,
         borderColor: '#000',
         tranche: tr,
-        statusType: 'analysis completed',
-      },
-      {
-        name: `${tr} quant-id completed`,
-        data: quantIdDelta,
-        color: STATUS_COLORS.quantId,
-        borderWidth: 0.5,
-        borderColor: '#000',
-        tranche: tr,
-        statusType: 'quant-id completed',
-      },
-      {
-        name: `${tr} Data Received`,
-        data: receivedDelta,
-        color: STATUS_COLORS.dataReceived,
-        borderWidth: 0.5,
-        borderColor: '#000',
-        tranche: tr,
-        statusType: 'Data Received',
-        dataLabels: {
-          enabled: true,
-          format: tr,
-          align: 'right',
-          style: { fontSize: '9px', fontWeight: 'normal', textOutline: 'none' },
-        },
-      },
-    );
+        statusType: seg.statusType,
+        visible: isSel(seg.token),
+        ...(seg.token === outerToken
+          ? {
+            dataLabels: {
+              enabled: true,
+              format: tr,
+              align: 'right',
+              style: { fontSize: '9px', fontWeight: 'normal', textOutline: 'none' },
+            },
+          }
+          : {}),
+      });
+    });
   }
 
   if (activeAssays.length === 0) return null;
@@ -291,55 +303,61 @@ function buildStatusOptions(tissueGroup, site, axisMax) {
 }
 
 /**
- * Main entry point. Takes the raw CDN JSON array and returns an array of
- * site groups, each with tissues containing Highcharts option objects.
+ * Compute the axis max for a single tissue-group (row): the larger of its
+ * shipped total and its tallest status stack, so the left (shipped) and right
+ * (status) charts in a row share one scale and are visually comparable.
  */
-export function transformCDNData(records) {
-  const grouped = groupRecords(records);
+function rowAxisMax(tg) {
+  const byTranche = new Map();
+  const byAssayTranche = new Map();
+  for (const r of tg.records) {
+    if (!byTranche.has(r.Tranche)) byTranche.set(r.Tranche, []);
+    byTranche.get(r.Tranche).push(r);
+    byAssayTranche.set(`${r.Assay}|${r.Tranche}`, r);
+  }
 
-  // Compute global axis max for each column so scales are consistent
-  let shippedMax = 0;
-  let statusMax = 0;
+  // Left: sum of max-shipped-per-tranche across all tranches
+  let shippedSum = 0;
+  for (const trRecs of byTranche.values()) {
+    const vals = trRecs.map((r) => Number(r.Shipped)).filter(Number.isFinite);
+    shippedSum += vals.length > 0 ? Math.max(...vals) : 0;
+  }
 
-  for (const siteGroup of grouped) {
-    for (const tg of siteGroup.tissues) {
-      // Build lookups once per tissue group
-      const byTranche = new Map();
-      const byAssayTranche = new Map();
-      for (const r of tg.records) {
-        if (!byTranche.has(r.Tranche)) byTranche.set(r.Tranche, []);
-        byTranche.get(r.Tranche).push(r);
-        byAssayTranche.set(`${r.Assay}|${r.Tranche}`, r);
-      }
-
-      // Left: sum of max-shipped-per-tranche across all tranches
-      let shippedSum = 0;
-      for (const trRecs of byTranche.values()) {
-        const vals = trRecs.map((r) => Number(r.Shipped)).filter(Number.isFinite);
-        shippedSum += vals.length > 0 ? Math.max(...vals) : 0;
-      }
-      shippedMax = Math.max(shippedMax, shippedSum);
-
-      // Right: sum of actual stacked-bar height across all tranches per assay.
-      // Each bar segment is: ac + max(0, qid-ac) + max(0, dr-qid), which
-      // correctly handles every ordering of ac, qid, dr.
-      const tranches = [...byTranche.keys()];
-      const assays = [...new Set(tg.records.map((r) => r.Assay))];
-      for (const assay of assays) {
-        let assaySum = 0;
-        for (const tr of tranches) {
-          const r = byAssayTranche.get(`${assay}|${tr}`);
-          if (r) {
-            const ac = r['analysis completed'];
-            const qid = r['quant-id completed'];
-            const dr = r['Data Received'];
-            assaySum += ac + Math.max(0, qid - ac) + Math.max(0, dr - qid);
-          }
-        }
-        statusMax = Math.max(statusMax, assaySum);
+  // Right: tallest stacked-bar height across assays. Each tranche segment is
+  // ac + max(0, qid-ac) + max(0, dr-qid), which handles every ordering.
+  const tranches = [...byTranche.keys()];
+  const assays = [...new Set(tg.records.map((r) => r.Assay))];
+  let statusSum = 0;
+  for (const assay of assays) {
+    let assaySum = 0;
+    for (const tr of tranches) {
+      const r = byAssayTranche.get(`${assay}|${tr}`);
+      if (r) {
+        const ac = r['analysis completed'];
+        const qid = r['quant-id completed'];
+        const dr = r['Data Received'];
+        assaySum += ac + Math.max(0, qid - ac) + Math.max(0, dr - qid);
       }
     }
+    statusSum = Math.max(statusSum, assaySum);
   }
+
+  return Math.max(shippedSum, statusSum);
+}
+
+/**
+ * Main entry point. Takes the raw CDN JSON array and returns an array of
+ * site groups, each with tissues containing Highcharts option objects.
+ *
+ * `selectedStatuses` is an optional array of status tokens
+ * ('analysis' | 'quant' | 'received') controlling which nested counts the
+ * status chart shows. When omitted, all statuses are shown. The axis scale is
+ * computed per row (from the full, unfiltered data) so the two charts in a row
+ * match each other and stay stable across selections.
+ */
+export function transformCDNData(records, selectedStatuses) {
+  const grouped = groupRecords(records);
+  const selected = selectedStatuses ? new Set(selectedStatuses) : null;
 
   return grouped.map((siteGroup) => ({
     site: siteGroup.site,
@@ -348,11 +366,14 @@ export function transformCDNData(records) {
       .filter((tg) => tg.records.some((r) =>
         r.Shipped > 0 || r['Data Received'] > 0 || r['quant-id completed'] > 0 || r['analysis completed'] > 0,
       ))
-      .map((tg) => ({
-        tissue: tg.tissue,
-        abbrev: tg.abbrev,
-        shippedOptions: buildShippedOptions(tg, siteGroup.site, shippedMax),
-        statusOptions: buildStatusOptions(tg, siteGroup.site, statusMax),
-      })),
+      .map((tg) => {
+        const axisMax = rowAxisMax(tg);
+        return {
+          tissue: tg.tissue,
+          abbrev: tg.abbrev,
+          shippedOptions: buildShippedOptions(tg, siteGroup.site, axisMax),
+          statusOptions: buildStatusOptions(tg, siteGroup.site, axisMax, selected),
+        };
+      }),
   }));
 }
