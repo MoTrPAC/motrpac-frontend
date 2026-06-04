@@ -481,7 +481,7 @@ const BundleDataTypes = {
       intervention: '',
       study_group: 'Post-Suspension',
       description:
-        'Phenotypic data of adults and pediatrics from the main human study, including highly active cohort and ancillary studies',
+        '(Consortium Release) Adults and pediatrics phenotypic data from the main human study, including highly active cohort and ancillary studies.',
       object_zipfile:
         'bundles/motrpac_human-main_phenotype.zip',
       object_zipfile_size: '14.16 MB',
