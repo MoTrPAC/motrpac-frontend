@@ -227,7 +227,7 @@ function DataDownloadsMain({
           <ul className="nav nav-tabs" id="bundleDatasetsTab" role="tablist">
             <li className="nav-item font-weight-bold" role="presentation">
               <a
-                className="nav-link active"
+                className="nav-link"
                 id="pass1b_06_bundle_datasets_tab"
                 data-toggle="pill"
                 href="#pass1b_06_bundle_datasets"
@@ -266,11 +266,26 @@ function DataDownloadsMain({
                 Acute Exercise in Humans
               </a>
             </li>
+            {userType && userType === 'internal' && (
+              <li className="nav-item font-weight-bold" role="presentation">
+                <a
+                  className="nav-link active"
+                  id="human_main_bundle_datasets_tab"
+                  data-toggle="pill"
+                  href="#human_main_bundle_datasets"
+                  role="tab"
+                  aria-controls="human_main_bundle_datasets"
+                  aria-selected="false"
+                >
+                  Main Study in Humans
+                </a>
+              </li>
+            )}
           </ul>
           {/* tab panes */}
           <div className="tab-content mt-3">
             <div
-              className="tab-pane fade show active"
+              className="tab-pane fade"
               id="pass1b_06_bundle_datasets"
               role="tabpanel"
               aria-labelledby="pass1b_06_bundle_datasets_tab"
@@ -322,6 +337,21 @@ function DataDownloadsMain({
                 </span>
               </div>
             </div>
+            {userType && userType === 'internal' && (
+              <div
+                className="tab-pane fade show active"
+                id="human_main_bundle_datasets"
+                role="tabpanel"
+                aria-labelledby="human_main_bundle_datasets_tab"
+              >
+                <BundleDatasets
+                  profile={profile}
+                  bundleDatasets={BundleDataTypes.human_main_internal}
+                  surveySubmitted={surveySubmitted}
+                  downloadedData={downloadedData}
+                />
+              </div>
+            )}
           </div>
         </div>
         {/* Additional data information */}

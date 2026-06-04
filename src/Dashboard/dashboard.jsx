@@ -47,15 +47,16 @@ export function Dashboard({
               <div className="col-md-3 lead d-flex align-items-start">
                 <div className="feature-highlight-icon mr-3">
                   <span className="material-icons" aria-hidden="true">
-                    auto_awesome
+                    cloud_download
                   </span>
                 </div>
                 <div className="feature-highlight-content mr-1">
-                  <h3><i>ExerWise</i> AI Assistant</h3>
+                  <h3>Main Study Clinical Data</h3>
                   <div className="data-release-text mb-3">
-                    Find answers quickly from <i>ExerWise</i>, an AI-powered assistant on topics ranging from data and study designs to processing pipelines and analysis results
+                    <span className="mr-2">Adults and pediatrics phenotypic data from the main human study now available for download in bundled dataset</span>
+                    <span className="badge badge-pill badge-danger">Consortium Release</span>
                   </div>
-                  <Link to="/exerwise" className="btn btn-primary">Learn More</Link>
+                  <Link to="/data-download" className="btn btn-primary">Download Now</Link>
                 </div>
               </div>
               <div className="col-md-3 lead d-flex align-items-start">
@@ -65,11 +66,11 @@ export function Dashboard({
                   </span>
                 </div>
                 <div className="feature-highlight-content mr-1">
-                  <h3>MCP Server</h3>
+                  <h3><i>ExerWise</i> AI Assistant</h3>
                   <div className="data-release-text mb-3">
-                    Query and explore publicly released MoTrPAC datasets directly from LLM-powered clients including Claude Desktop and other supported clients
+                    Find answers quickly from <i>ExerWise</i>, an AI-powered assistant on topics ranging from data and study designs to processing pipelines and analysis results
                   </div>
-                  <Link to="/mcp-server" className="btn btn-primary">Learn More</Link>
+                  <Link to="/exerwise" className="btn btn-primary">Learn More</Link>
                 </div>
               </div>
               <div className="col-md-3 lead d-flex align-items-start">
