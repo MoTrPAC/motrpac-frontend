@@ -227,7 +227,7 @@ function DataDownloadsMain({
           <ul className="nav nav-tabs" id="bundleDatasetsTab" role="tablist">
             <li className="nav-item font-weight-bold" role="presentation">
               <a
-                className={`nav-link ${!userType || (userType && userType === 'external') ? 'active' : ''}`}
+                className={`nav-link ${!userType || userType === 'external' ? 'active' : ''}`}
                 id="pass1b_06_bundle_datasets_tab"
                 data-toggle="pill"
                 href="#pass1b_06_bundle_datasets"
@@ -285,7 +285,7 @@ function DataDownloadsMain({
           {/* tab panes */}
           <div className="tab-content mt-3">
             <div
-              className={`tab-pane fade ${!userType || (userType && userType === 'external') ? 'show active' : ''}`}
+              className={`tab-pane fade ${!userType || userType === 'external' ? 'show active' : ''}`}
               id="pass1b_06_bundle_datasets"
               role="tabpanel"
               aria-labelledby="pass1b_06_bundle_datasets_tab"
