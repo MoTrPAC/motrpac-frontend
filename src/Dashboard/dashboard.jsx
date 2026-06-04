@@ -47,7 +47,7 @@ export function Dashboard({
               <div className="col-md-3 lead d-flex align-items-start">
                 <div className="feature-highlight-icon mr-3">
                   <span className="material-icons" aria-hidden="true">
-                    feedback
+                    cloud_download
                   </span>
                 </div>
                 <div className="feature-highlight-content mr-1">
