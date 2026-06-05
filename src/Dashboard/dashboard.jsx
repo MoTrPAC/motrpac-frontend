@@ -44,6 +44,7 @@ export function Dashboard({
               <span>What's New</span>
             </h1>
             <div className="row">
+              {/* Placeholder for future data releases and features for internal users
               <div className="col-md-3 lead d-flex align-items-start">
                 <div className="feature-highlight-icon mr-3">
                   <span className="material-icons" aria-hidden="true">
@@ -59,6 +60,7 @@ export function Dashboard({
                   <Link to="/data-download" className="btn btn-primary">Download Now</Link>
                 </div>
               </div>
+              */}
               <div className="col-md-3 lead d-flex align-items-start">
                 <div className="feature-highlight-icon mr-3">
                   <span className="material-icons" aria-hidden="true">
@@ -71,6 +73,20 @@ export function Dashboard({
                     Find answers quickly from <i>ExerWise</i>, an AI-powered assistant on topics ranging from data and study designs to processing pipelines and analysis results
                   </div>
                   <Link to="/exerwise" className="btn btn-primary">Learn More</Link>
+                </div>
+              </div>
+              <div className="col-md-3 lead d-flex align-items-start">
+                <div className="feature-highlight-icon mr-3">
+                  <span className="material-icons" aria-hidden="true">
+                    auto_awesome
+                  </span>
+                </div>
+                <div className="feature-highlight-content mr-1">
+                  <h3>MCP Server</h3>
+                  <div className="data-release-text mb-3">
+                    Query and explore publicly released MoTrPAC datasets directly from LLM-powered clients including Claude Desktop and other supported clients
+                  </div>
+                  <Link to="/mcp-server" className="btn btn-primary">Learn More</Link>
                 </div>
               </div>
               <div className="col-md-3 lead d-flex align-items-start">
