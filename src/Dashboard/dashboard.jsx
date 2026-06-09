@@ -44,6 +44,23 @@ export function Dashboard({
               <span>What's New</span>
             </h1>
             <div className="row">
+              {/* Placeholder for future data releases and features for internal users
+              <div className="col-md-3 lead d-flex align-items-start">
+                <div className="feature-highlight-icon mr-3">
+                  <span className="material-icons" aria-hidden="true">
+                    cloud_download
+                  </span>
+                </div>
+                <div className="feature-highlight-content mr-1">
+                  <h3>Main Study Clinical Data</h3>
+                  <div className="data-release-text mb-3">
+                    <span className="mr-2">Adults and pediatrics phenotypic data from the main human study now available for download in bundled dataset</span>
+                    <span className="badge badge-pill badge-danger">Consortium Release</span>
+                  </div>
+                  <Link to="/data-download" className="btn btn-primary">Download Now</Link>
+                </div>
+              </div>
+              */}
               <div className="col-md-3 lead d-flex align-items-start">
                 <div className="feature-highlight-icon mr-3">
                   <span className="material-icons" aria-hidden="true">

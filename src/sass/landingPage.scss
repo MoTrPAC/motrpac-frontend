@@ -39,7 +39,7 @@ $img-base-url: 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/im
   background-image: url('#{$img-base-url}background_hero_image.jpg');
   background-size: cover;
   background-position: center;
-  padding-bottom: clamp(0.25rem, 1vw, 0.5rem);
+  padding-bottom: 0.25rem;
 
   // Background video
   video.fullscreen {
@@ -73,12 +73,13 @@ $img-base-url: 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/im
   position: relative;
   z-index: 5;
   text-align: center;
-  padding: 3rem 1rem;
+  padding: 3rem 1rem 1rem;
 }
 
 .hero-logo {
   width: 100%;
   max-width: clamp(23rem, 45vw, 45rem);
+  margin-top: 1.5rem;
   margin-bottom: 1rem;
 }
 
@@ -198,6 +199,110 @@ $img-base-url: 'https://d1yw74buhe0ts0.cloudfront.net/static/motrpac-data-hub/im
   text-shadow: 0 0.15em 0.15em rgba(0, 0, 0, 0.8);
   margin-top: 2rem;
   opacity: 0.85;
+}
+
+// ============================================================================
+// Tribute Card (In Memoriam — Dr. Russell P. Tracy, inline in hero)
+// ============================================================================
+
+.hero-tribute-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  background: rgba(240, 210, 170, 0.86);
+  backdrop-filter: blur(8px);
+  border-radius: 1rem;
+  border: 5px solid #fff;
+  box-shadow: 0 1.5em 3em rgba(0, 0, 0, 0.4);
+  padding: clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 3vw, 2rem) clamp(0.75rem, 1.5vw, 1.25rem);
+  margin: 2.85rem auto 3.5rem;
+  max-width: 62rem;
+  text-align: left;
+
+  @media (min-width: 640px) {
+    grid-template-columns: auto 1fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .tribute-photo {
+    width: 100%;
+    max-width: clamp(182px, 25vw, 294px);
+    height: auto;
+    justify-self: center;
+
+    @media (min-width: 640px) {
+      justify-self: start;
+    }
+  }
+
+  .tribute-content {
+    text-align: center;
+    top: -10px;
+    position: relative;
+
+    @media (min-width: 640px) {
+      text-align: left;
+    }
+  }
+
+  .tribute-eyebrow {
+    @include fluid-text(0.75rem, 1.2vw, 0.9rem);
+
+    display: block;
+    color: rgba(100, 85, 60, 0.85);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .tribute-title {
+    @include fluid-text(1.35rem, 2.8vw, 2rem);
+
+    color: #1c1a16;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0 0 0.75rem;
+  }
+
+  .tribute-divider {
+    width: 2.5rem;
+    height: 2px;
+    background: rgba(175, 144, 87, 0.7);
+    border: none;
+    margin: 0 auto 1rem;
+
+    @media (min-width: 640px) {
+      margin-left: 0;
+    }
+  }
+
+  .tribute-description {
+    @include fluid-text(0.9rem, 1.6vw, 1.1rem);
+
+    color: rgba(45, 38, 28, 0.85);
+    line-height: 1.5;
+    font-weight: 400;
+    font-style: italic;
+    margin: 0;
+  }
+
+  .tribute-obituary {
+    @include fluid-text(0.85rem, 1.4vw, 1rem);
+
+    margin-bottom: 0;
+
+    a {
+      color: rgba(80, 55, 20, 0.9);
+      font-weight: 500;
+      text-decoration: underline;
+
+      &:hover {
+        color: rgba(60, 40, 10, 1);
+      }
+    }
+  }
 }
 
 // ============================================================================

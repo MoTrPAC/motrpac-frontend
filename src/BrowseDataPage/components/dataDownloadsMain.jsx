@@ -266,6 +266,23 @@ function DataDownloadsMain({
                 Acute Exercise in Humans
               </a>
             </li>
+            {/* Placeholder for future data releases for internal users
+            {userType && userType === 'internal' && (
+              <li className="nav-item font-weight-bold" role="presentation">
+                <a
+                  className="nav-link active"
+                  id="human_main_bundle_datasets_tab"
+                  data-toggle="pill"
+                  href="#human_main_bundle_datasets"
+                  role="tab"
+                  aria-controls="human_main_bundle_datasets"
+                  aria-selected="false"
+                >
+                  Main Study in Humans
+                </a>
+              </li>
+            )}
+            */}
           </ul>
           {/* tab panes */}
           <div className="tab-content mt-3">
@@ -322,6 +339,23 @@ function DataDownloadsMain({
                 </span>
               </div>
             </div>
+            {/* Placeholder for future data releases for internal users
+            {userType && userType === 'internal' && (
+              <div
+                className="tab-pane fade show active"
+                id="human_main_bundle_datasets"
+                role="tabpanel"
+                aria-labelledby="human_main_bundle_datasets_tab"
+              >
+                <BundleDatasets
+                  profile={profile}
+                  bundleDatasets={BundleDataTypes.human_main_internal}
+                  surveySubmitted={surveySubmitted}
+                  downloadedData={downloadedData}
+                />
+              </div>
+            )}
+            */}
           </div>
         </div>
         {/* Additional data information */}

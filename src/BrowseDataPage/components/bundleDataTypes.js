@@ -471,6 +471,22 @@ const BundleDataTypes = {
       object_zipfile_size: '22.44 MB',
     },
   ],
+  human_main_internal: [
+    {
+      type: 'phenotype',
+      phase: 'human-main',
+      title: 'Phenotype',
+      species: 'Human',
+      participant_type: '',
+      intervention: '',
+      study_group: 'Post-Suspension',
+      description:
+        '(Consortium Release) Adults and pediatrics phenotypic data from the main human study, including highly active cohort and ancillary studies.',
+      object_zipfile:
+        'bundles/motrpac_human-main_phenotype.zip',
+      object_zipfile_size: '14.16 MB',
+    },
+  ],
 };
 
 export default BundleDataTypes;
