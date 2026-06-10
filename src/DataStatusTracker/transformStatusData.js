@@ -333,17 +333,16 @@ function rowAxisMax(tg) {
     for (const tr of tranches) {
       const r = byAssayTranche.get(`${assay}|${tr}`);
       if (r) {
-        const ac = r['analysis completed'];
-        const qid = r['quant-id completed'];
-        const dr = r['Data Received'];
+        const ac = Number(r['analysis completed']) || 0;
+        const qid = Number(r['quant-id completed']) || 0;
+        const dr = Number(r['Data Received']) || 0;
         assaySum += ac + Math.max(0, qid - ac) + Math.max(0, dr - qid);
       }
     }
     statusSum = Math.max(statusSum, assaySum);
   }
 
-  return Math.max(shippedSum, statusSum);
-}
+  return Math.max(shippedSum, statusSum, 1);
 
 /**
  * Main entry point. Takes the raw CDN JSON array and returns an array of
