@@ -240,10 +240,13 @@ export function transformRatData(records, selectedStatuses) {
     assays.get(r.Assay).push(r);
 
     // Shipped is tissue-level (shared across assays within a site): keep the
-    // first value seen per (site, tissue).
-    const shipKey = `${r.Site}|${r.Tissue}`;
-    if (!studyEntry.shippedByTissue.has(shipKey)) {
-      studyEntry.shippedByTissue.set(shipKey, num(r.Shipped));
+    // first value seen per (site, tissue), stored as a nested Site → Tissue map.
+    if (!studyEntry.shippedByTissue.has(r.Site)) {
+      studyEntry.shippedByTissue.set(r.Site, new Map());
+    }
+    const siteShipped = studyEntry.shippedByTissue.get(r.Site);
+    if (!siteShipped.has(r.Tissue)) {
+      siteShipped.set(r.Tissue, num(r.Shipped));
     }
   }
 
@@ -256,11 +259,7 @@ export function transformRatData(records, selectedStatuses) {
 
     const sites = [...studyEntry.sites.keys()].sort().map((site) => {
       const assayMap = studyEntry.sites.get(site);
-      const shippedByTissue = new Map();
-      for (const [shipKey, val] of studyEntry.shippedByTissue) {
-        const [s, tissue] = shipKey.split('|');
-        if (s === site) shippedByTissue.set(tissue, val);
-      }
+      const shippedByTissue = studyEntry.shippedByTissue.get(site) || new Map();
 
       const assays = [...assayMap.keys()].sort().map((assay) => ({
         assay,
