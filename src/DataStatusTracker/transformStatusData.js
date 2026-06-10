@@ -201,9 +201,9 @@ function buildStatusOptions(tissueGroup, site, axisMax, selected) {
 
     for (const assay of activeAssays) {
       const r = lookup.get(`${assay}|${tr}`);
-      const ac = r ? r['analysis completed'] : 0;
-      const qid = r ? r['quant-id completed'] : 0;
-      const dr = r ? r['Data Received'] : 0;
+      const ac = r ? Number(r['analysis completed']) || 0 : 0;
+      const qid = r ? Number(r['quant-id completed']) || 0 : 0;
+      const dr = r ? Number(r['Data Received']) || 0 : 0;
       const counts = { analysis: ac, quant: qid, received: dr };
       const custom = { assay, tissue: abbrev, tranche: tr, ac, qid, dr };
 
