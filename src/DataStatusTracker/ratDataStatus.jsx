@@ -108,13 +108,12 @@ export default function RatDataStatus() {
       <div className="rat-sticky-header">
         <RatStatusLegend selected={selected} onToggle={toggleStatus} />
 
-        <div className="study-tab-bar" role="tablist">
+        <div className="study-tab-bar">
           {studies.map((s) => (
             <button
               key={s.study}
               type="button"
-              role="tab"
-              aria-selected={s.study === selectedStudy}
+              aria-pressed={s.study === selectedStudy}
               className={`study-tab-btn${s.study === selectedStudy ? ' active' : ''}`}
               onClick={() => setActiveStudy(s.study)}
             >
