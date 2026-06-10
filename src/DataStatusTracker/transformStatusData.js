@@ -343,6 +343,7 @@ function rowAxisMax(tg) {
   }
 
   return Math.max(shippedSum, statusSum, 1);
+}
 
 /**
  * Main entry point. Takes the raw CDN JSON array and returns an array of
