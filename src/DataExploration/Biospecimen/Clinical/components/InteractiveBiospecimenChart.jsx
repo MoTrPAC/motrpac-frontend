@@ -9,7 +9,7 @@ import {
   FILTER_OPTIONS,
   filterUtils,
 } from '../constants/plotOptions';
-import { transformTissueCode, transformTrancheCode, transformCASReceived } from '../utils/dataTransformUtils';
+import { transformTissueCode, transformTrancheCode } from '../utils/dataTransformUtils';
 import roundNumbers from '../../../../lib/utils/roundNumbers';
 import { getAssayFullName } from '../utils/assayCodeMapping';
 import { getStudyName } from '../utils/studyUtils';
@@ -90,7 +90,7 @@ const InteractiveBiospecimenChart = () => {
     if (!tableData || tableData.length === 0) return;
     
     // CSV header
-    const header = 'Vial Label,Participant ID,Tranche,Visit Code,Randomized Group,Tissue,Sex,Age Group,Timepoint,BMI,Temp Sample Profile,Study,CAS Received\n';
+    const header = 'Vial Label,Participant ID,Tranche,Visit Code,Randomized Group,Tissue,Sex,Age Group,Timepoint,BMI,Temp Sample Profile,Study\n';
     
     // Format a single row with all transformations
     const formatRow = (sample) => [
@@ -106,7 +106,6 @@ const InteractiveBiospecimenChart = () => {
       roundNumbers(sample.bmi, 1) || '',
       sample.temp_samp_profile || '',
       getStudyName(sample.study) || '',
-      transformCASReceived(sample.received_cas),
     ].join(',');
     
     // Generate CSV content
@@ -274,7 +273,6 @@ const InteractiveBiospecimenChart = () => {
                         <th scope="col">BMI</th>
                         <th scope="col">Temp Sample Profile</th>
                         <th scope="col">Study</th>
-                        <th scope="col">CAS Received</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -298,11 +296,6 @@ const InteractiveBiospecimenChart = () => {
                           <td>{roundNumbers(sample.bmi, 1)}</td>
                           <td>{sample.temp_samp_profile || 'N/A'}</td>
                           <td>{getStudyName(sample.study) || 'N/A'}</td>
-                          <td>
-                            <span className="badge badge-success">
-                              {transformCASReceived(sample.received_cas)}
-                            </span>
-                          </td>
                         </tr>
                       ))}
                     </tbody>
