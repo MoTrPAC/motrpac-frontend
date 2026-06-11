@@ -40,15 +40,6 @@ export const transformTrancheCode = (code) => {
 };
 
 /**
- * Transform received_cas code to Yes/No
- * @param {number|string} value - CAS received value (typically 0 or 1)
- * @returns {string} 'Yes' or 'No'
- */
-export const transformCASReceived = (value) => {
-  return Number(value) === 1 ? 'Yes' : 'No';
-};
-
-/**
  * Get all available tranche codes
  * @returns {Array<string>} Array of tranche codes
  */
