@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useAdvancedPagination } from '../hooks/useAdvancedPagination';
 import AdvancedPagination from './AdvancedPagination';
-import { transformTissueCode, transformTrancheCode, transformCASReceived } from '../utils/dataTransformUtils';
+import { transformTissueCode, transformTrancheCode } from '../utils/dataTransformUtils';
 import roundNumbers from '../../../../lib/utils/roundNumbers';
 
 import '@styles/biospecimenSummary.scss';
@@ -55,7 +55,6 @@ function BiospecimenResultsTable({ data = [] }) {
               <th scope="col">Sex</th>
               <th scope="col">Age Group</th>
               <th scope="col">BMI</th>
-              <th scope="col">CAS Received</th>
             </tr>
           </thead>
           <tbody>
@@ -78,11 +77,6 @@ function BiospecimenResultsTable({ data = [] }) {
                 </td>
                 <td>{specimen.age_groups}</td>
                 <td>{roundNumbers(specimen.bmi, 1)}</td>
-                <td>
-                  <span className="badge badge-success">
-                    {Number(specimen.receivedCAS) === 1 ? 'Yes' : 'No'}
-                  </span>
-                </td>
               </tr>
             ))}
           </tbody>
