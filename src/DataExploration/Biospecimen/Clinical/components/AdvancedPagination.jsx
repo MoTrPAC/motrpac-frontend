@@ -73,7 +73,9 @@ const AdvancedPagination = ({
             // Export current page data
             const header = 'Vial Label,Participant ID,Tranche,Temp Sample Profile,Randomized Group,Visit Code,Timepoint,Tissue,Sex,Age Groups,BMI\n';
             const rows = data.map(item =>
-              `${item.vial_label},${item.pid},${item.tranche},${item.tempSampProfile},${item.randomGroupCode},${item.visitcode},${item.timepoint},${item.sampleGroupCode},${item.sex},${item.age_groups},${item.bmi}`
+              [item.vial_label, item.pid, item.tranche, item.tempSampProfile, item.randomGroupCode, item.visitcode, item.timepoint, item.sampleGroupCode, item.sex, item.age_groups, item.bmi]
+                .map(val => val ?? '')
+                .join(',')
             ).join('\n');
             const csvData = 'data:text/csv;charset=utf-8,' + header + rows;
             const encodedUri = encodeURI(csvData);
