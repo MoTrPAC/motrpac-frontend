@@ -76,9 +76,28 @@ const AdvancedPagination = ({
             // both match Array.slice semantics after converting startIndex back to 0-based.
             const pageData = data.slice(startIndex - 1, endIndex);
             const header = 'Vial Label,Participant ID,Tranche,Temp Sample Profile,Randomized Group,Visit Code,Timepoint,Tissue,Sex,Age Group,BMI\n';
-            const rows = pageData.map(item =>
-              [item.vial_label, item.pid, transformTrancheCode(item.tranche), item.tempSampProfile, item.randomGroupCode, item.visitcode, item.timepoint, transformTissueCode(item.sampleGroupCode), item.sex, item.age_groups, item.bmi]
-                .map(val => val ?? '')
+            const toSafeCsvCell = (val) => {
+              const raw = String(val ?? '');
+              const noFormula = /^[=+\-@]/.test(raw) ? `'${raw}` : raw;
+              return /[",\n]/.test(noFormula)
+                ? `"${noFormula.replace(/"/g, '""')}"`
+                : noFormula;
+            };
+            const rows = pageData.map((item) =>
+              [
+                item.vial_label,
+                item.pid,
+                transformTrancheCode(item.tranche),
+                item.tempSampProfile,
+                item.randomGroupCode,
+                item.visitcode,
+                item.timepoint,
+                transformTissueCode(item.sampleGroupCode),
+                item.sex,
+                item.age_groups,
+                item.bmi,
+              ]
+                .map(toSafeCsvCell)
                 .join(',')
             ).join('\n');
             const csvData = 'data:text/csv;charset=utf-8,' + header + rows;
