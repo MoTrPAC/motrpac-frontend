@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { transformTrancheCode, transformTissueCode } from '../utils/dataTransformUtils';
 
 const AdvancedPagination = ({
   data,
@@ -74,9 +75,9 @@ const AdvancedPagination = ({
             // startIndex is 1-based (display value); endIndex is the 0-based exclusive bound —
             // both match Array.slice semantics after converting startIndex back to 0-based.
             const pageData = data.slice(startIndex - 1, endIndex);
-            const header = 'Vial Label,Participant ID,Tranche,Temp Sample Profile,Randomized Group,Visit Code,Timepoint,Tissue,Sex,Age Groups,BMI\n';
+            const header = 'Vial Label,Participant ID,Tranche,Temp Sample Profile,Randomized Group,Visit Code,Timepoint,Tissue,Sex,Age Group,BMI\n';
             const rows = pageData.map(item =>
-              [item.vial_label, item.pid, item.tranche, item.tempSampProfile, item.randomGroupCode, item.visitcode, item.timepoint, item.sampleGroupCode, item.sex, item.age_groups, item.bmi]
+              [item.vial_label, item.pid, transformTrancheCode(item.tranche), item.tempSampProfile, item.randomGroupCode, item.visitcode, item.timepoint, transformTissueCode(item.sampleGroupCode), item.sex, item.age_groups, item.bmi]
                 .map(val => val ?? '')
                 .join(',')
             ).join('\n');
