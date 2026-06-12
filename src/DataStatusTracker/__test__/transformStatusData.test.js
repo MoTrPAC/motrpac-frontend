@@ -114,7 +114,7 @@ describe('transformCDNData', () => {
     expect(statusOpts.xAxis.categories).toEqual(['active-assay']);
   });
 
-  // --- Per-pair axis max (left and right charts share the same scale) ---
+  // --- Per-row axis max ---
 
   test('shipped axis max reflects stacked tranche totals', () => {
     const records = [
@@ -127,18 +127,38 @@ describe('transformCDNData', () => {
     expect(shippedMax).toEqual(300);
   });
 
-  test('status axis max reflects stacked bar height across tranches per assay', () => {
+  test('the two charts in a row share one axis max (max of shipped vs status)', () => {
     const records = [
-      makeRecord({ Assay: 'assay-1', Tranche: 'T1', 'Data Received': 50 }),
-      makeRecord({ Assay: 'assay-1', Tranche: 'T2', 'Data Received': 70 }),
+      makeRecord({ Assay: 'assay-1', Tranche: 'T1', Shipped: 100, 'Data Received': 50 }),
+      makeRecord({ Assay: 'assay-1', Tranche: 'T2', Shipped: 100, 'Data Received': 70 }),
+    ];
+    const { shippedOptions, statusOptions } = transformCDNData(records)[0].tissues[0];
+    // Shipped total = 100 + 100 = 200; status stack = 60 + 70 = 130 → row max = 200
+    expect(shippedOptions.yAxis.max).toEqual(200);
+    expect(statusOptions.yAxis.max).toEqual(200);
+  });
+
+  test('row axis follows the status stack when it exceeds shipped', () => {
+    const records = [
+      makeRecord({ Assay: 'assay-1', Tranche: 'T1', Shipped: 0, 'Data Received': 50 }),
+      makeRecord({ Assay: 'assay-1', Tranche: 'T2', Shipped: 0, 'Data Received': 70 }),
+    ];
+    const { shippedOptions, statusOptions } = transformCDNData(records)[0].tissues[0];
+    // Shipped = 0; status stack = 60 + 70 = 130 → row max = 130, shared by both
+    expect(statusOptions.yAxis.max).toEqual(130);
+    expect(shippedOptions.yAxis.max).toEqual(130);
+  });
+
+  test('each row is scaled independently (a large row does not inflate another)', () => {
+    const records = [
+      makeRecord({ Site: 'motrpac-portal-transfer-big', Tissue: 'BLOOD', Shipped: 13000 }),
+      makeRecord({ Site: 'motrpac-portal-transfer-small', Tissue: 'BLOOD', Shipped: 120 }),
     ];
     const result = transformCDNData(records);
-    const statusMax = result[0].tissues[0].statusOptions.yAxis.max;
-    // T1: ac(40) + max(0,60-40) + max(0,50-60) = 60
-    // T2: ac(40) + max(0,60-40) + max(0,70-60) = 70
-    // Status total = 130, but shippedSum = 100+100 = 200 (default Shipped per tranche)
-    // pairMax = max(200, 130) = 200 — both charts share this scale
-    expect(statusMax).toEqual(200);
+    const big = result.find((s) => s.site === 'big').tissues[0];
+    const small = result.find((s) => s.site === 'small').tissues[0];
+    expect(big.shippedOptions.yAxis.max).toEqual(13000);
+    expect(small.shippedOptions.yAxis.max).toEqual(120);
   });
 
   // --- Chart structure ---
@@ -241,5 +261,73 @@ describe('transformCDNData', () => {
     expect(result[0].tissues[0].statusOptions.yAxis.max).toBeGreaterThanOrEqual(
       100,
     );
+  });
+
+  // --- Status selection / legend filtering ---
+
+  test('selecting all statuses matches the default (unfiltered) output', () => {
+    const records = [
+      makeRecord({ 'analysis completed': 20, 'quant-id completed': 50, 'Data Received': 80 }),
+    ];
+    const def = transformCDNData(records);
+    const all = transformCDNData(records, ['analysis', 'quant', 'received']);
+    const defData = def[0].tissues[0].statusOptions.series.map((s) => s.data[0].y);
+    const allData = all[0].tissues[0].statusOptions.series.map((s) => s.data[0].y);
+    expect(allData).toEqual(defData);
+  });
+
+  test('all status series are visible by default', () => {
+    const records = [makeRecord()];
+    const series = transformCDNData(records)[0].tissues[0].statusOptions.series;
+    expect(series.every((s) => s.visible)).toBe(true);
+  });
+
+  test('deselecting analysis nests only quant + received from baseline 0', () => {
+    const records = [
+      makeRecord({ 'analysis completed': 20, 'quant-id completed': 50, 'Data Received': 80 }),
+    ];
+    const series = transformCDNData(records, ['quant', 'received'])[0].tissues[0]
+      .statusOptions.series;
+    // analysis hidden + zeroed; quant now measured from 0; received from quant.
+    expect(series[0].statusType).toEqual('analysis completed');
+    expect(series[0].visible).toBe(false);
+    expect(series[0].data[0].y).toEqual(0);
+    expect(series[1].data[0].y).toEqual(50); // quant = qid - 0
+    expect(series[2].data[0].y).toEqual(30); // received = dr - qid = 80 - 50
+  });
+
+  test('deselecting the middle status rebaselines the outer one', () => {
+    const records = [
+      makeRecord({ 'analysis completed': 20, 'quant-id completed': 50, 'Data Received': 80 }),
+    ];
+    const series = transformCDNData(records, ['analysis', 'received'])[0].tissues[0]
+      .statusOptions.series;
+    expect(series[0].data[0].y).toEqual(20); // analysis from 0
+    expect(series[1].visible).toBe(false); // quant hidden
+    expect(series[1].data[0].y).toEqual(0);
+    expect(series[2].data[0].y).toEqual(60); // received = dr - analysis = 80 - 20
+  });
+
+  test('selecting a single status shows its full raw count', () => {
+    const records = [
+      makeRecord({ 'analysis completed': 20, 'quant-id completed': 50, 'Data Received': 80 }),
+    ];
+    const series = transformCDNData(records, ['received'])[0].tissues[0]
+      .statusOptions.series;
+    expect(series[2].data[0].y).toEqual(80);
+    expect(series[0].visible).toBe(false);
+    expect(series[1].visible).toBe(false);
+  });
+
+  test('the outermost selected status carries the tranche data label', () => {
+    const records = [
+      makeRecord({ Tranche: 'TR01', 'analysis completed': 20, 'quant-id completed': 50, 'Data Received': 80 }),
+    ];
+    // With received deselected, quant becomes the outer (labeled) segment.
+    const series = transformCDNData(records, ['analysis', 'quant'])[0].tissues[0]
+      .statusOptions.series;
+    const labeled = series.filter((s) => s.dataLabels && s.dataLabels.enabled);
+    expect(labeled).toHaveLength(1);
+    expect(labeled[0].statusType).toEqual('quant-id completed');
   });
 });
