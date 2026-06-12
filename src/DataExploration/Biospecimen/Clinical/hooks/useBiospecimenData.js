@@ -58,7 +58,7 @@ export const useBiospecimenData = () => {
         `Loaded ${response.data.length} total biospecimen records in ${(endTime - startTime).toFixed(2)}ms`
       );
       
-      setAllData(response.data.filter(item => item.raw_assays_with_results != null));
+      setAllData((response?.data || []).filter(item => item?.raw_assays_with_results != null));
       setLoading(false);
     } catch (err) {
       // Handle cancellation - don't update state if request was cancelled
