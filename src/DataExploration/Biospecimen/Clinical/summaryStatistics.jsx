@@ -25,8 +25,9 @@ function ClinicalBiospecimenSummaryStatistics() {
         <span>Biospecimen Lookup</span>
       </h1>
       <div className="lead mb-4">
-        Use this tool to look up clinical biospecimen data curated from human
-        adults and pediatrics across multiple interventions, timepoints and assays.
+        This tool summarizes participants and samples with biomolecular data at the
+        bioinformatics center. It does not reflect all enrollees nor does it reflect
+        all collected biosamples.
       </div>
       <div className="biospecimen-lookup-container mb-4">
         {/* Interactive Biospecimen Chart Component - handles all filtering and visualization */}
