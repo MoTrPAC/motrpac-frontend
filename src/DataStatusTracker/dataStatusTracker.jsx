@@ -10,9 +10,9 @@ import { RAT_BLURB } from './transformRatStatusData';
 import '@styles/dataStatusTracker.scss';
 
 const HUMAN_BLURB =
-  'This report is automatically generated using sample shipping information and '
-  + 'automated parsing of processed data files stored in BIC Google Cloud Storage '
-  + 'buckets. Red indicates data received by the BIC that has not yet been processed '
+  'This report is generated using sample shipping records and '
+  + 'automated parsing of data submitted to and processed by the BIC.'
+  + 'Red indicates data received by the BIC that has not yet been processed '
   + 'or made available to the consortium. Yellow and green indicate data available to '
   + 'the consortium (either early access, consortium release, or public release — not '
   + 'distinguished here).';
