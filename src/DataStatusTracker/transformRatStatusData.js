@@ -20,11 +20,29 @@ export const RAT_STATUS_COLORS = {
 export const STUDY_ORDER = ['PASS1AC-06', 'PASS1B-06', 'PASS1AC-18', 'PASS1B-18'];
 
 export const STUDY_TAB_LABELS = {
-  'PASS1AC-06': 'PASS1AC-06 · 6-mo Acute',
-  'PASS1B-06': 'PASS1B-06 · 6-mo Training',
-  'PASS1AC-18': 'PASS1AC-18 · 18-mo Acute',
-  'PASS1B-18': 'PASS1B-18 · 18-mo Training',
+  'PASS1AC-06': '6-mo Acute',
+  'PASS1B-06': '6-mo Training',
+  'PASS1AC-18': '18-mo Acute',
+  'PASS1B-18': '18-mo Training',
 };
+
+// Omics-domain grouping for the assay charts, mirroring the human tracker.
+// Records carry a `Domain` field (added by the report generator); anything
+// without one falls back to OTHER_DOMAIN and sorts last.
+const DOMAIN_ORDER = [
+  'GET',
+  'Metabolomics targeted',
+  'Metabolomics untargeted',
+  'Proteomics targeted',
+  'Proteomics untargeted',
+];
+
+const OTHER_DOMAIN = 'Other';
+
+function domainRank(domain) {
+  const i = DOMAIN_ORDER.indexOf(domain);
+  return i === -1 ? DOMAIN_ORDER.length : i;
+}
 
 export const RAT_BLURB =
   'This report is automatically generated using automated parsing of processed '
@@ -209,9 +227,12 @@ function buildAssayChart(site, assay, records, shippedByTissue, selected) {
 
 /**
  * Main entry point. Takes the raw CDN JSON array and returns an array of study
- * groups in STUDY_ORDER, each with sites → assays containing Highcharts options.
+ * groups in STUDY_ORDER. Each study holds a flat list of (domain, site) sections
+ * ordered by omics domain then site name; the view renders a domain header
+ * whenever the domain changes, matching the human tracker.
  *
- * Returns: [{ study, label, sites: [{ site, assays: [{ assay, chartOptions }] }] }]
+ * Returns:
+ *   [{ study, label, sites: [{ domain, site, assays: [{ assay, chartOptions }] }] }]
  * A study present in STUDY_ORDER but with no data yields `sites: []`.
  *
  * `selectedStatuses` is an optional array of status tokens
@@ -222,18 +243,21 @@ export function transformRatData(records, selectedStatuses) {
   const withData = (records || []).filter(hasData);
   const selected = selectedStatuses ? new Set(selectedStatuses) : null;
 
-  // Bucket records by study → site → assay, and capture tissue-level shipped.
+  // Bucket records by study → (domain + site) section → assay, and capture
+  // tissue-level shipped per site (shared across domains/assays within a site).
   const byStudy = new Map();
   for (const r of withData) {
     if (!byStudy.has(r.Study)) {
-      byStudy.set(r.Study, { sites: new Map(), shippedByTissue: new Map() });
+      byStudy.set(r.Study, { sections: new Map(), shippedByTissue: new Map() });
     }
     const studyEntry = byStudy.get(r.Study);
 
-    if (!studyEntry.sites.has(r.Site)) {
-      studyEntry.sites.set(r.Site, new Map());
+    const domain = r.Domain || OTHER_DOMAIN;
+    const sectionKey = `${domain}|${r.Site}`;
+    if (!studyEntry.sections.has(sectionKey)) {
+      studyEntry.sections.set(sectionKey, { domain, site: r.Site, assays: new Map() });
     }
-    const assays = studyEntry.sites.get(r.Site);
+    const { assays } = studyEntry.sections.get(sectionKey);
     if (!assays.has(r.Assay)) {
       assays.set(r.Assay, []);
     }
@@ -257,16 +281,27 @@ export function transformRatData(records, selectedStatuses) {
       return { study, label, sites: [] };
     }
 
-    const sites = [...studyEntry.sites.keys()].sort().map((site) => {
-      const assayMap = studyEntry.sites.get(site);
-      const shippedByTissue = studyEntry.shippedByTissue.get(site) || new Map();
+    const sections = [...studyEntry.sections.values()].sort((a, b) => {
+      const rank = domainRank(a.domain) - domainRank(b.domain);
+      if (rank !== 0) return rank;
+      return shortSite(a.site).localeCompare(shortSite(b.site));
+    });
 
-      const assays = [...assayMap.keys()].sort().map((assay) => ({
+    const sites = sections.map((section) => {
+      const shippedByTissue = studyEntry.shippedByTissue.get(section.site) || new Map();
+
+      const assays = [...section.assays.keys()].sort().map((assay) => ({
         assay,
-        chartOptions: buildAssayChart(site, assay, assayMap.get(assay), shippedByTissue, selected),
+        chartOptions: buildAssayChart(
+          section.site,
+          assay,
+          section.assays.get(assay),
+          shippedByTissue,
+          selected,
+        ),
       }));
 
-      return { site: shortSite(site), assays };
+      return { domain: section.domain, site: shortSite(section.site), assays };
     });
 
     return { study, label, sites };

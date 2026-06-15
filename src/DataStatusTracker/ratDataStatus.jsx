@@ -128,21 +128,33 @@ export default function RatDataStatus() {
       )}
 
       {activeGroup
-        && activeGroup.sites.map((siteGroup) => (
-          <div key={siteGroup.site} className="site-section">
-            <h5 className="site-header">{siteGroup.site}</h5>
-            {siteGroup.assays.map((assayGroup) => (
-              <div key={assayGroup.assay} className="assay-row">
-                <h6 className="assay-header">{assayGroup.assay}</h6>
-                <HighchartsReact
-                  highcharts={Highcharts}
-                  options={assayGroup.chartOptions}
-                  containerProps={{ style: { width: '100%' } }}
-                />
+        && activeGroup.sites.map((siteGroup, idx) => {
+          const prevDomain = idx > 0 ? activeGroup.sites[idx - 1].domain : null;
+          const showDomainHeader = siteGroup.domain !== prevDomain;
+
+          return (
+            <div key={`${siteGroup.domain}__${siteGroup.site}`}>
+              {showDomainHeader && (
+                <h4 className={`domain-header${idx > 0 ? ' with-rule' : ''}`}>
+                  {siteGroup.domain}
+                </h4>
+              )}
+              <div className="site-section">
+                <h5 className="site-header">{siteGroup.site}</h5>
+                {siteGroup.assays.map((assayGroup) => (
+                  <div key={assayGroup.assay} className="assay-row">
+                    <h6 className="assay-header">{assayGroup.assay}</h6>
+                    <HighchartsReact
+                      highcharts={Highcharts}
+                      options={assayGroup.chartOptions}
+                      containerProps={{ style: { width: '100%' } }}
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        ))}
+            </div>
+          );
+        })}
     </div>
   );
 }

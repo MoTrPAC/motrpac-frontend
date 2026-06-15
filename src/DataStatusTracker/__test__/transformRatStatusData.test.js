@@ -89,6 +89,44 @@ describe('transformRatData', () => {
     ]);
   });
 
+  test('groups sites by omics domain, ordered GET → metabolomics → proteomics', () => {
+    const records = [
+      makeRecord({ Domain: 'Proteomics untargeted', Assay: 'PROT-PR' }),
+      makeRecord({ Domain: 'GET', Assay: 'RNA-SEQ' }),
+      makeRecord({ Domain: 'Metabolomics targeted', Assay: 'TCA' }),
+    ];
+    const group = studyGroup(transformRatData(records), 'PASS1AC-06');
+    expect(group.sites.map((s) => s.domain)).toEqual([
+      'GET',
+      'Metabolomics targeted',
+      'Proteomics untargeted',
+    ]);
+  });
+
+  test('the same site appears once per domain', () => {
+    const records = [
+      makeRecord({ Domain: 'GET', Assay: 'RNA-SEQ' }),
+      makeRecord({ Domain: 'GET', Assay: 'ATAC-SEQ' }),
+      makeRecord({ Domain: 'Proteomics untargeted', Assay: 'PROT-PR' }),
+    ];
+    const group = studyGroup(transformRatData(records), 'PASS1AC-06');
+    expect(group.sites.map((s) => ({ domain: s.domain, site: s.site }))).toEqual([
+      { domain: 'GET', site: 'pnnl' },
+      { domain: 'Proteomics untargeted', site: 'pnnl' },
+    ]);
+    // GET section keeps both of its assays.
+    expect(group.sites[0].assays.map((a) => a.assay)).toEqual(['ATAC-SEQ', 'RNA-SEQ']);
+  });
+
+  test('records without a Domain fall back to "Other" and sort last', () => {
+    const records = [
+      makeRecord({ Assay: 'PROT-PR' }), // no Domain
+      makeRecord({ Domain: 'GET', Assay: 'RNA-SEQ' }),
+    ];
+    const group = studyGroup(transformRatData(records), 'PASS1AC-06');
+    expect(group.sites.map((s) => s.domain)).toEqual(['GET', 'Other']);
+  });
+
   test('sorts assays alphabetically within a site', () => {
     const records = [
       makeRecord({ Assay: 'RNA-SEQ' }),
