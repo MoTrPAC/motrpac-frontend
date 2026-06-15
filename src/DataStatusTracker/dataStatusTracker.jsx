@@ -23,7 +23,7 @@ const HUMAN_BLURB =
  */
 export function DataStatusTracker({ profile }) {
   const userType = profile?.user_metadata?.userType;
-  const [organism, setOrganism] = useState('human');
+  const [species, setSpecies] = useState('human');
 
   if (!profile || userType === 'external') {
     return <Navigate to="/dashboard" />;
@@ -41,28 +41,28 @@ export function DataStatusTracker({ profile }) {
         </div>
       </div>
 
-      <div className="organism-toggle btn-group mb-3" role="group" aria-label="Select organism">
+      <div className="species-toggle btn-group mb-3" role="group" aria-label="Select species">
         <button
           type="button"
-          className={`btn ${organism === 'human' ? 'btn-primary' : 'btn-outline-primary'}`}
-          aria-pressed={organism === 'human'}
-          onClick={() => setOrganism('human')}
+          className={`btn ${species === 'human' ? 'btn-primary' : 'btn-outline-primary'}`}
+          aria-pressed={species === 'human'}
+          onClick={() => setSpecies('human')}
         >
           Human
         </button>
         <button
           type="button"
-          className={`btn ${organism === 'rat' ? 'btn-primary' : 'btn-outline-primary'}`}
-          aria-pressed={organism === 'rat'}
-          onClick={() => setOrganism('rat')}
+          className={`btn ${species === 'rat' ? 'btn-primary' : 'btn-outline-primary'}`}
+          aria-pressed={species === 'rat'}
+          onClick={() => setSpecies('rat')}
         >
           Rat
         </button>
       </div>
 
-      <p>{organism === 'human' ? HUMAN_BLURB : RAT_BLURB}</p>
+      <p>{species === 'human' ? HUMAN_BLURB : RAT_BLURB}</p>
 
-      {organism === 'human' ? <HumanDataStatus /> : <RatDataStatus />}
+      {species === 'human' ? <HumanDataStatus /> : <RatDataStatus />}
     </div>
   );
 }
