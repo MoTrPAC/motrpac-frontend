@@ -251,7 +251,7 @@ export function Navbar({
                         Phenotype
                       </Link>
                       <Link to="/sample-data-tracker" className="dropdown-item">
-                        Human Sample Data Tracker
+                        Sample Data Tracker
                       </Link>
                       <Link to="/qc-data-monitor" className="dropdown-item" onClick={fecthQCData}>
                         QC Data Monitor

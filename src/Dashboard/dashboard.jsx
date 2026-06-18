@@ -110,9 +110,9 @@ export function Dashboard({
                   </span>
                 </div>
                 <div className="feature-highlight-content mr-1">
-                  <h3>Human Sample Data Tracker</h3>
+                  <h3>Sample Data Tracker</h3>
                   <div className="data-release-text mb-3">
-                    Stay informed on the latest data availability of human omic sample data across assays and tissue types through their lifecycle
+                    Stay informed on the latest data availability of human and rat omic sample data across assays and tissue types through their lifecycle
                   </div>
                   <Link to="/sample-data-tracker" className="btn btn-primary">Learn More</Link>
                 </div>
