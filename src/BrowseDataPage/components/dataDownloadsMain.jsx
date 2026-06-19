@@ -227,7 +227,7 @@ function DataDownloadsMain({
           <ul className="nav nav-tabs" id="bundleDatasetsTab" role="tablist">
             <li className="nav-item font-weight-bold" role="presentation">
               <a
-                className="nav-link active"
+                className={`nav-link ${!userType || userType === 'external' ? 'active' : ''}`}
                 id="pass1b_06_bundle_datasets_tab"
                 data-toggle="pill"
                 href="#pass1b_06_bundle_datasets"
@@ -266,28 +266,26 @@ function DataDownloadsMain({
                 Acute Exercise in Humans
               </a>
             </li>
-            {/* Placeholder for future data releases for internal users
             {userType && userType === 'internal' && (
               <li className="nav-item font-weight-bold" role="presentation">
                 <a
                   className="nav-link active"
-                  id="human_main_bundle_datasets_tab"
+                  id="human_clinical_data_bundle_datasets_tab"
                   data-toggle="pill"
-                  href="#human_main_bundle_datasets"
+                  href="#human_clinical_data_bundle_datasets"
                   role="tab"
-                  aria-controls="human_main_bundle_datasets"
+                  aria-controls="human_clinical_data_bundle_datasets"
                   aria-selected="false"
                 >
-                  Main Study in Humans
+                  Clinical Data in Humans
                 </a>
               </li>
             )}
-            */}
           </ul>
           {/* tab panes */}
           <div className="tab-content mt-3">
             <div
-              className="tab-pane fade show active"
+              className={`tab-pane fade ${!userType || userType === 'external' ? 'show active' : ''}`}
               id="pass1b_06_bundle_datasets"
               role="tabpanel"
               aria-labelledby="pass1b_06_bundle_datasets_tab"
@@ -339,23 +337,21 @@ function DataDownloadsMain({
                 </span>
               </div>
             </div>
-            {/* Placeholder for future data releases for internal users
             {userType && userType === 'internal' && (
               <div
                 className="tab-pane fade show active"
-                id="human_main_bundle_datasets"
+                id="human_clinical_data_bundle_datasets"
                 role="tabpanel"
-                aria-labelledby="human_main_bundle_datasets_tab"
+                aria-labelledby="human_clinical_data_bundle_datasets_tab"
               >
                 <BundleDatasets
                   profile={profile}
-                  bundleDatasets={BundleDataTypes.human_main_internal}
+                  bundleDatasets={BundleDataTypes.human_clinical_data_internal}
                   surveySubmitted={surveySubmitted}
                   downloadedData={downloadedData}
                 />
               </div>
             )}
-            */}
           </div>
         </div>
         {/* Additional data information */}
