@@ -344,6 +344,7 @@ function DataDownloadsMain({
                 role="tabpanel"
                 aria-labelledby="human_clinical_data_bundle_datasets_tab"
               >
+                {/*
                 <BundleDatasets
                   profile={profile}
                   bundleDatasets={BundleDataTypes.human_clinical_data_internal}
@@ -362,6 +363,8 @@ function DataDownloadsMain({
                     </span>
                   </span>
                 </div>
+                */}
+                <span className="font-weight-bold">Coming soon</span>
               </div>
             )}
           </div>
