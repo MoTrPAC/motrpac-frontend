@@ -44,6 +44,7 @@ export function Dashboard({
               <span>What's New</span>
             </h1>
             <div className="row">
+              {/*
               <div className="col-md-3 lead d-flex align-items-start">
                 <div className="feature-highlight-icon mr-3">
                   <span className="material-icons" aria-hidden="true">
@@ -59,7 +60,8 @@ export function Dashboard({
                   <Link to="/data-download" className="btn btn-primary">Download Datasets</Link>
                 </div>
               </div>
-              <div className="col-md-3 lead d-flex align-items-start">
+              */}
+              <div className="col-md-4 lead d-flex align-items-start">
                 <div className="feature-highlight-icon mr-3">
                   <span className="material-icons" aria-hidden="true">
                     auto_awesome
@@ -73,7 +75,7 @@ export function Dashboard({
                   <Link to="/exerwise" className="btn btn-primary">Learn More</Link>
                 </div>
               </div>
-              <div className="col-md-3 lead d-flex align-items-start">
+              <div className="col-md-4 lead d-flex align-items-start">
                 <div className="feature-highlight-icon mr-3">
                   <span className="material-icons" aria-hidden="true">
                     auto_stories
@@ -87,7 +89,7 @@ export function Dashboard({
                   <Link to="/knowledge-center" className="btn btn-primary">Learn More</Link>
                 </div>
               </div>
-              <div className="col-md-3 lead d-flex align-items-start">
+              <div className="col-md-4 lead d-flex align-items-start">
                 <div className="feature-highlight-icon mr-3">
                   <span className="material-icons" aria-hidden="true">
                     insights
