@@ -233,7 +233,7 @@ function DataDownloadsMain({
                 href="#pass1b_06_bundle_datasets"
                 role="tab"
                 aria-controls="pass1b_06_bundle_datasets"
-                aria-selected="true"
+                aria-selected={!userType || userType === 'external' ? 'true' : 'false'}
               >
                 Endurance Training in Rats
               </a>
@@ -275,7 +275,7 @@ function DataDownloadsMain({
                   href="#human_clinical_data_bundle_datasets"
                   role="tab"
                   aria-controls="human_clinical_data_bundle_datasets"
-                  aria-selected="false"
+                  aria-selected="true"
                 >
                   Clinical Data in Humans
                 </a>
@@ -355,9 +355,10 @@ function DataDownloadsMain({
                     <i className="bi bi-file-earmark-fill mr-2 text-primary" />
                     <span>
                       Learn more about the sedentary adults (post-suspension) and low active pediatrics clinical data in the{' '}
-                      <a href="https://docs.google.com/document/d/1cFPnB1cBKimUJo-5hwnq8yKDJ5DWgdDj4Y0pvl2UZYw/edit?tab=t.0#heading=h.7tm379xtz7sk" target="_blank" rel="noopener noreferrer">
-                        Clinical Data Release Notes
-                      </a>
+                      <ExternalLink
+                        to="https://docs.google.com/document/d/1cFPnB1cBKimUJo-5hwnq8yKDJ5DWgdDj4Y0pvl2UZYw/edit?tab=t.0#heading=h.7tm379xtz7sk"
+                        label="Clinical Data Release Notes"
+                      />
                     </span>
                   </span>
                 </div>
