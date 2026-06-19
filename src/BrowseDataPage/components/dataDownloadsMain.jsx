@@ -350,6 +350,17 @@ function DataDownloadsMain({
                   surveySubmitted={surveySubmitted}
                   downloadedData={downloadedData}
                 />
+                <div className="bd-callout bd-callout-primary mt-3">
+                  <span className="font-weight-bold">
+                    <i className="bi bi-file-earmark-fill mr-2 text-primary" />
+                    <span>
+                      Learn more about the sedentary adults (post-suspension) and low active pediatrics clinical data in the{' '}
+                      <a href="https://docs.google.com/document/d/1cFPnB1cBKimUJo-5hwnq8yKDJ5DWgdDj4Y0pvl2UZYw/edit?tab=t.0#heading=h.7tm379xtz7sk" target="_blank" rel="noopener noreferrer">
+                        Clinical Data Release Notes
+                      </a>
+                    </span>
+                  </span>
+                </div>
               </div>
             )}
           </div>
