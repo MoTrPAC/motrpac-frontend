@@ -471,20 +471,34 @@ const BundleDataTypes = {
       object_zipfile_size: '22.44 MB',
     },
   ],
-  human_main_internal: [
+  human_clinical_data_internal: [
     {
       type: 'phenotype',
       phase: 'human-main',
-      title: 'Phenotype',
+      title: 'Post-Suspension Sedentary Adults (Consortium Release)',
       species: 'Human',
-      participant_type: '',
-      intervention: '',
+      participant_type: 'Adult',
+      intervention: 'Sedentary',
       study_group: 'Post-Suspension',
       description:
-        '(Consortium Release) Adults and pediatrics phenotypic data from the main human study, including highly active cohort and ancillary studies.',
+        'Post-suspension sedentary human adults phenotypic data, excluding highly active cohort and ancillary studies.',
       object_zipfile:
-        'bundles/motrpac_human-main_phenotype.zip',
-      object_zipfile_size: '14.16 MB',
+        'bundles/motrpac_human-main-sed-adu_phenotype.zip',
+      object_zipfile_size: '3.9 MB',
+    },
+    {
+      type: 'phenotype',
+      phase: 'human-all',
+      title: 'Low Active Pediatrics (Consortium Release)',
+      species: 'Human',
+      participant_type: 'Pediatric',
+      intervention: 'Low Active',
+      study_group: 'Pre- & Post-Suspension',
+      description:
+        'Low active pediatrics phenotypic data, excluding highly active cohort and ancillary studies.',
+      object_zipfile:
+        'bundles/motrpac_human-all-ped_phenotype.zip',
+      object_zipfile_size: '467.8 KB',
     },
   ],
 };

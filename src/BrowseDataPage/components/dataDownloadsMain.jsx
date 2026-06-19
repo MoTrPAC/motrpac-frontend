@@ -227,13 +227,13 @@ function DataDownloadsMain({
           <ul className="nav nav-tabs" id="bundleDatasetsTab" role="tablist">
             <li className="nav-item font-weight-bold" role="presentation">
               <a
-                className="nav-link active"
+                className={`nav-link ${!userType || userType === 'external' ? 'active' : ''}`}
                 id="pass1b_06_bundle_datasets_tab"
                 data-toggle="pill"
                 href="#pass1b_06_bundle_datasets"
                 role="tab"
                 aria-controls="pass1b_06_bundle_datasets"
-                aria-selected="true"
+                aria-selected={!userType || userType === 'external' ? 'true' : 'false'}
               >
                 Endurance Training in Rats
               </a>
@@ -266,28 +266,26 @@ function DataDownloadsMain({
                 Acute Exercise in Humans
               </a>
             </li>
-            {/* Placeholder for future data releases for internal users
             {userType && userType === 'internal' && (
               <li className="nav-item font-weight-bold" role="presentation">
                 <a
                   className="nav-link active"
-                  id="human_main_bundle_datasets_tab"
+                  id="human_clinical_data_bundle_datasets_tab"
                   data-toggle="pill"
-                  href="#human_main_bundle_datasets"
+                  href="#human_clinical_data_bundle_datasets"
                   role="tab"
-                  aria-controls="human_main_bundle_datasets"
-                  aria-selected="false"
+                  aria-controls="human_clinical_data_bundle_datasets"
+                  aria-selected="true"
                 >
-                  Main Study in Humans
+                  Clinical Data in Humans
                 </a>
               </li>
             )}
-            */}
           </ul>
           {/* tab panes */}
           <div className="tab-content mt-3">
             <div
-              className="tab-pane fade show active"
+              className={`tab-pane fade ${!userType || userType === 'external' ? 'show active' : ''}`}
               id="pass1b_06_bundle_datasets"
               role="tabpanel"
               aria-labelledby="pass1b_06_bundle_datasets_tab"
@@ -339,23 +337,33 @@ function DataDownloadsMain({
                 </span>
               </div>
             </div>
-            {/* Placeholder for future data releases for internal users
             {userType && userType === 'internal' && (
               <div
                 className="tab-pane fade show active"
-                id="human_main_bundle_datasets"
+                id="human_clinical_data_bundle_datasets"
                 role="tabpanel"
-                aria-labelledby="human_main_bundle_datasets_tab"
+                aria-labelledby="human_clinical_data_bundle_datasets_tab"
               >
                 <BundleDatasets
                   profile={profile}
-                  bundleDatasets={BundleDataTypes.human_main_internal}
+                  bundleDatasets={BundleDataTypes.human_clinical_data_internal}
                   surveySubmitted={surveySubmitted}
                   downloadedData={downloadedData}
                 />
+                <div className="bd-callout bd-callout-primary mt-3">
+                  <span className="font-weight-bold">
+                    <i className="bi bi-file-earmark-fill mr-2 text-primary" />
+                    <span>
+                      Learn more about the sedentary adults (post-suspension) and low active pediatrics clinical data in the{' '}
+                      <ExternalLink
+                        to="https://docs.google.com/document/d/1cFPnB1cBKimUJo-5hwnq8yKDJ5DWgdDj4Y0pvl2UZYw/edit?tab=t.0#heading=h.7tm379xtz7sk"
+                        label="Clinical Data Release Notes"
+                      />
+                    </span>
+                  </span>
+                </div>
               </div>
             )}
-            */}
           </div>
         </div>
         {/* Additional data information */}
