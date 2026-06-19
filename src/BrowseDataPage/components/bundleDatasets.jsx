@@ -97,7 +97,7 @@ function BundleDatasets({
                   </span>
                   {item.participant_type && item.participant_type.length && (
                     <span
-                      className={`badge badge-pill ${item.participant_type === 'Young Adult' ? tagColors.youngAdult : tagColors.adult} mr-1`}
+                      className={`badge badge-pill ${item.participant_type === 'Young Adult' || item.participant_type === 'Pediatric' ? tagColors.youngAdult : tagColors.adult} mr-1`}
                     >
                       {item.participant_type}
                     </span>
