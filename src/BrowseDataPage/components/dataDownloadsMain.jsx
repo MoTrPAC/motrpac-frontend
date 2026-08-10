@@ -354,11 +354,12 @@ function DataDownloadsMain({
                   <span className="font-weight-bold">
                     <i className="bi bi-file-earmark-fill mr-2 text-primary" />
                     <span>
-                      Learn more about the sedentary adults (post-suspension) and low active pediatrics clinical data in the{' '}
+                      Read the{' '}
                       <ExternalLink
                         to="https://docs.google.com/document/d/1cFPnB1cBKimUJo-5hwnq8yKDJ5DWgdDj4Y0pvl2UZYw/edit?tab=t.0#heading=h.7tm379xtz7sk"
                         label="Clinical Data Release Notes"
                       />
+                      {' '}to learn more about these human clinical data collections.
                     </span>
                   </span>
                 </div>
