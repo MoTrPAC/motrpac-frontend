@@ -483,22 +483,64 @@ const BundleDataTypes = {
       description:
         'Post-suspension sedentary human adults phenotypic data, excluding highly active cohort and ancillary studies.',
       object_zipfile:
-        'bundles/motrpac_human-main-sed-adu_phenotype.zip',
-      object_zipfile_size: '3.9 MB',
+        'bundles/motrpac_human-main-sed-adu_phenotype-c2.0.zip',
+      object_zipfile_size: '4.0 MB',
     },
     {
       type: 'phenotype',
       phase: 'human-all',
-      title: 'Low Active Pediatrics (Consortium Release)',
+      title: 'Highly and Low Active Pediatrics (Consortium Release)',
       species: 'Human',
       participant_type: 'Pediatric',
-      intervention: 'Low Active',
-      study_group: 'Pre- & Post-Suspension',
+      intervention: 'Highly & Low Active',
+      study_group: '',
       description:
-        'Low active pediatrics phenotypic data, excluding highly active cohort and ancillary studies.',
+        'Highly and low active pediatrics clinical data, excluding ancillary studies.',
       object_zipfile:
-        'bundles/motrpac_human-all-ped_phenotype.zip',
-      object_zipfile_size: '467.8 KB',
+        'bundles/motrpac_human-all-ped_phenotype-c2.0.zip',
+      object_zipfile_size: '569.5 KB',
+    },
+    {
+      type: 'phenotype',
+      phase: 'human-all',
+      title: 'Highly Active Adults (Consortium Release)',
+      species: 'Human',
+      participant_type: 'Adult',
+      intervention: 'Highly Active',
+      study_group: '',
+      description:
+        'Highly active adults clinical data, excluding low active cohort and ancillary studies.',
+      object_zipfile:
+        'bundles/motrpac_human-all-ha-adu_phenotype-c2.0.zip',
+      object_zipfile_size: '9.3 KB',
+    },
+    {
+      type: 'phenotype',
+      phase: 'human-all',
+      title: 'Adult Screening (Consortium Release)',
+      species: 'Human',
+      participant_type: 'Adult',
+      intervention: 'Screening',
+      study_group: '',
+      description:
+        'Adult recruitment screening and exclusion clinical data.',
+      object_zipfile:
+        'bundles/motrpac_human-screening-adu_phenotype-c2.0.zip',
+      object_zipfile_size: '138.6 KB',
+    },
+    {
+      type: 'phenotype',
+      phase: 'human-all',
+      title: 'Pediatric Screening (Consortium Release)',
+      species: 'Human',
+      participant_type: 'Pediatric',
+      intervention: 'Screening',
+      study_group: '',
+      description:
+        'Pediatric recruitment screening and exclusion clinical data.',
+      object_zipfile:
+        'bundles/motrpac_human-screening-ped_phenotype-c2.0.zip',
+      object_zipfile_size: '9.6 KB',
     },
   ],
 };
