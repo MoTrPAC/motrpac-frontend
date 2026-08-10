@@ -53,7 +53,7 @@ export function Dashboard({
                 <div className="feature-highlight-content mr-1">
                   <h3>Human Clinical Data</h3>
                   <div className="data-release-text mb-3">
-                    <span className="mr-2">Sedentary adults (post-suspension) and low active pediatrics phenotypic data now available for download in bundled datasets</span>
+                    <span className="mr-2">Selected datasets from sedentary adults (post-suspension) as well as highly and low active pediatrics collections now available for bundle download</span>
                     <span className="badge badge-pill badge-danger">Consortium Release</span>
                   </div>
                   <Link to="/data-download" className="btn btn-primary">Download Datasets</Link>
