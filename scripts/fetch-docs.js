@@ -752,13 +752,20 @@ function fixBrandNamesInPlainTextOnly(text) {
   // do-while loop in removeHtmlComments.
   let result = masked;
   let previous;
+  let restorationPasses = 0;
+  const maxRestorationPasses = patterns.length + 1;
+
   do {
     previous = result;
     result = result.replace(/__KB_PROTECTED_(\d+)__/g, (_, idx) => {
       const tokenIndex = Number(idx);
       return protectedTokens[tokenIndex] ?? "";
     });
+    if (result !== previous && ++restorationPasses > maxRestorationPasses) {
+      throw new Error("Protected-token restoration did not converge");
+    }
   } while (result !== previous);
+
   return result;
 }
 
