@@ -745,10 +745,28 @@ function fixBrandNamesInPlainTextOnly(text) {
 
   masked = fixBrandNames(masked);
 
-  return masked.replace(/__KB_PROTECTED_(\d+)__/g, (_, idx) => {
-    const tokenIndex = Number(idx);
-    return protectedTokens[tokenIndex] || "";
-  });
+  // Restore protected tokens. A later pattern (e.g. markdown links) can end up
+  // wrapping text that an earlier pattern already masked (e.g. inline code
+  // used as a link's label), producing a token whose stored original still
+  // contains another token. Repeat the restore until stable, mirroring the
+  // do-while loop in removeHtmlComments.
+  let result = masked;
+  let previous;
+  let restorationPasses = 0;
+  const maxRestorationPasses = patterns.length + 1;
+
+  do {
+    previous = result;
+    result = result.replace(/__KB_PROTECTED_(\d+)__/g, (_, idx) => {
+      const tokenIndex = Number(idx);
+      return protectedTokens[tokenIndex] ?? "";
+    });
+    if (result !== previous && ++restorationPasses > maxRestorationPasses) {
+      throw new Error("Protected-token restoration did not converge");
+    }
+  } while (result !== previous);
+
+  return result;
 }
 
 /** Clean up markdown: strip comments, HTML tags, fix whitespace, fix brands. */
