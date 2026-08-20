@@ -517,3 +517,37 @@
     display: block;
   }
 }
+
+.study-collection-kind-cell {
+  &:not(:last-child) {
+    border-right: 1px solid #dee2e6;
+  }
+
+  .other-versions {
+    .btn.btn-link {
+      font-size: inherit;
+      font-weight: 500;
+      color: #333;
+      padding: 0;
+
+      &:focus,
+      &:active {
+        box-shadow: none;
+        outline: none;
+        text-decoration: none;
+      }
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    .other-version-list-item {
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #dee2e6;
+      }
+    }
+  }
+}
