@@ -2,61 +2,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import studyDataCards, { KIND_LABELS, KIND_ORDER } from '../../lib/studyDataCards';
+import studyDataCards from '../../lib/studyDataCards';
 import { hasVisibleCollections } from '../../lib/studyDataAccess';
 import actions from '../browseDataActions';
 import StudyCollectionCard from './studyCollectionCard';
-
-const STAGE_SECTIONS = [
-  { key: 'public', heading: 'Public' },
-  { key: 'consortium', heading: 'Consortium' },
-];
-
-function releaseEntries(studies, stage) {
-  const entries = [];
-  studies.forEach((study) => {
-    KIND_ORDER.forEach((kind) => {
-      (study.dataTypes[kind] || [])
-        .filter((version) => version.releaseStage === stage)
-        .forEach((version) => entries.push({ study, kind, version }));
-    });
-  });
-  return entries;
-}
-
-function DataReleasesPanel({ studies, userType }) {
-  const sections = STAGE_SECTIONS.filter(
-    (section) => section.key === 'public' || userType === 'internal'
-  );
-
-  return (
-    <div className="data-releases-panel">
-      {sections.map((section) => {
-        const entries = releaseEntries(studies, section.key);
-        return (
-          <section key={section.key} className={`rel-section ${section.key}`}>
-            <h3>{section.heading}</h3>
-            {entries.length === 0 && <p className="text-muted">No collections at this stage.</p>}
-            <ul className="list-unstyled">
-              {entries.map(({ study, kind, version }) => (
-                <li key={`${study.code}-${kind}-${version.collection}`}>
-                  <span className="font-weight-bold mr-1">{study.name}</span>
-                  <span className="mr-1">{KIND_LABELS[kind]}</span>
-                  <span>{version.collection}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        );
-      })}
-    </div>
-  );
-}
-
-DataReleasesPanel.propTypes = {
-  studies: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  userType: PropTypes.string,
-};
+import DataReleaseCards from './dataReleaseCard';
 
 // Maps a study's config `code` to how the file browser is reached: the Redux
 // action that loads its data, and the (cosmetic-only) URL segment for the
@@ -195,7 +145,7 @@ function StudyDataExplorer({ userType = undefined }) {
       </div>
       */}
       {activeView === 'collections' && (
-        <div className="study-collections-panel card-deck">
+        <div className="study-collections-panel">
           {visibleStudies.map((study) => (
             <StudyCollectionCard
               key={study.code}
@@ -208,7 +158,11 @@ function StudyDataExplorer({ userType = undefined }) {
       )}
 
       {activeView === 'releases' && (
-        <DataReleasesPanel studies={visibleStudies} userType={userType} />
+        <DataReleaseCards
+          studies={visibleStudies}
+          userType={userType}
+          onBrowseFiles={handleBrowseFiles}
+        />
       )}
     </div>
   );
