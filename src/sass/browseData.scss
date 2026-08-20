@@ -522,7 +522,262 @@
   &:not(:last-child) {
     border-right: 1px solid #dee2e6;
   }
+}
 
+// Collection family chip - the lettered, colour-coded Quant-ID / Analysis /
+// Phenotype label shared by the study collection and data release views.
+.kind-chip {
+  font-size: 0.85rem;
+
+  .kind-chip-letter {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 0.35rem;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 900;
+    flex: none;
+  }
+
+  &.kind-chip-quantID {
+    color: #4544a5;
+
+    .kind-chip-letter {
+      background-color: #4544a5;
+    }
+  }
+
+  &.kind-chip-analysis {
+    color: #0d7d76;
+
+    .kind-chip-letter {
+      background-color: #0d7d76;
+    }
+  }
+
+  &.kind-chip-phenotype {
+    color: #93407c;
+
+    .kind-chip-letter {
+      background-color: #93407c;
+    }
+  }
+}
+
+// Shared collection display vocabulary - used by both the study collection
+// cards and the data release cards.
+.stage-badge {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 0.55rem;
+
+  &.stage-badge-public {
+    background-color: #e4f5ea;
+    color: #12784a;
+    border: 1px solid #b9e2c8;
+  }
+
+  &.stage-badge-consortium {
+    background-color: #e8f1fd;
+    color: #1f5fb0;
+    border: 1px solid #c2daf6;
+  }
+}
+
+.genome-badge {
+  background-color: #f1f4f6;
+  border: 1px solid #dde5e9;
+  color: #38474f;
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.species-badge {
+  background-color: #fff;
+  border: 1px solid #dde5e9;
+  color: #38474f;
+  font-size: 0.66rem;
+  letter-spacing: 0.07em;
+  padding: 0.25rem 0.5rem;
+
+  .material-icons {
+    font-size: 0.9rem;
+  }
+}
+
+.design-badge {
+  font-size: 0.72rem;
+  padding: 0.3rem 0.6rem;
+
+  &.design-badge-acute {
+    background-color: #eff7e6;
+    color: #548f2c;
+    border: 1px solid #d3e8bd;
+  }
+
+  &.design-badge-endurance {
+    background-color: #f8f0e7;
+    color: #96602c;
+    border: 1px solid #e6d2ba;
+  }
+}
+
+.collection-label,
+.collection-version {
+  font-size: 0.9rem;
+}
+
+.latest-tag {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.earlier-collections-heading {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+}
+
+.other-versions-list {
+  background-color: #f5f8f9;
+  border: 1px solid #dde5e9;
+}
+
+// Study collections view
+.study-collection-card {
+  background-color: #fff;
+  border: 1px solid #dde5e9;
+  border-left-width: 5px;
+  overflow: hidden;
+
+  &:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+
+  &.study-collection-card-acute {
+    border-left-color: #548f2c;
+  }
+
+  &.study-collection-card-endurance {
+    border-left-color: #96602c;
+  }
+
+  .study-collection-head {
+    padding: 1.125rem 1.375rem 1rem;
+    border-bottom: 1px solid #edf2f4;
+  }
+
+  .study-collection-name {
+    font-size: 1.15rem;
+  }
+
+  .study-collection-code {
+    font-size: 0.8rem;
+  }
+
+  .study-collection-desc {
+    font-size: 0.85rem;
+  }
+
+  .study-collection-badges {
+    flex: none;
+    white-space: nowrap;
+  }
+
+  .study-collection-kind-cell {
+    &.is-empty {
+      background-color: #fbfcfd;
+    }
+
+    .empty-msg {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+.data-release-section {
+  background-color: #fff;
+  border: 1px solid #dde5e9;
+  border-top-width: 4px;
+  overflow: hidden;
+
+  &:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+
+  &.data-release-section-public {
+    border-top-color: #12784a;
+  }
+
+  &.data-release-section-consortium {
+    border-top-color: #1f5fb0;
+  }
+
+  .data-release-head {
+    padding: 1.125rem 1.375rem;
+    border-bottom: 1px solid #edf2f4;
+  }
+
+  .data-release-icon-badge {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.7rem;
+    font-size: 0.8rem;
+    font-weight: 900;
+    flex: none;
+  }
+
+  .data-release-icon-badge-public {
+    background-color: #e4f5ea;
+    color: #12784a;
+  }
+
+  .data-release-icon-badge-consortium {
+    background-color: #e8f1fd;
+    color: #1f5fb0;
+  }
+
+  .data-release-name {
+    font-size: 1.125rem;
+  }
+
+  .data-release-desc {
+    max-width: 70ch;
+    font-size: 0.8125rem;
+  }
+
+  .data-release-count {
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .data-release-study-row {
+    padding: 1rem 1.375rem;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #edf2f4;
+    }
+  }
+
+  .data-release-study-name {
+    font-size: 0.95rem;
+  }
+
+  .data-release-study-code {
+    font-size: 0.8rem;
+  }
+
+  .data-release-kind-cell {
+    background-color: #fcfdfd;
+    border: 1px solid #dde5e9;
+  }
+}
+
+.study-collection-kind-cell,
+.data-release-kind-cell {
   .other-versions {
     .btn.btn-link {
       font-size: inherit;
