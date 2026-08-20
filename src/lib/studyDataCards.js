@@ -6,6 +6,16 @@ export const KIND_LABELS = {
 
 export const KIND_ORDER = ['quantID', 'analysis', 'phenotype'];
 
+export const STAGE_LABELS = {
+  public: 'Public',
+  consortium: 'Consortium',
+};
+
+export const STAGE_CODES = {
+  public: 'PR',
+  consortium: 'CR',
+};
+
 const studyDataCards = [
   {
     code: 'rat-training-06',
