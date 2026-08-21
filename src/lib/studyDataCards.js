@@ -16,6 +16,8 @@ export const STAGE_CODES = {
   consortium: 'CR',
 };
 
+const bucketName = import.meta.env.VITE_DATA_FILE_BUCKET;
+
 const studyDataCards = [
   {
     code: 'rat-training-06',
@@ -32,21 +34,21 @@ const studyDataCards = [
           collection: 'c3.0',
           referenceGenome: 'Rn8',
           latest: true,
-          storageLocation: 'gs://motrpac-data-hub/quant-id/rat-training-06/c3.0',
+          storageLocation: `gs://${bucketName}/quant-id/rat-training-06/c3.0`,
           releaseStage: 'consortium',
         },
         {
           collection: 'c2.0',
           referenceGenome: 'Rn7',
           latest: false,
-          storageLocation: 'gs://motrpac-data-hub/quant-id/rat-training-06/c2.0',
+          storageLocation: `gs://${bucketName}/quant-id/rat-training-06/c2.0`,
           releaseStage: 'public',
         },
         {
           collection: 'c1.0',
           referenceGenome: 'Rn6',
           latest: false,
-          storageLocation: 'gs://motrpac-data-hub/quant-id/rat-training-06/c1.0',
+          storageLocation: `gs://${bucketName}/quant-id/rat-training-06/c1.0`,
           releaseStage: 'public',
         },
       ],
@@ -55,14 +57,14 @@ const studyDataCards = [
           collection: 'c2.0',
           referenceGenome: 'Rn7',
           latest: true,
-          storageLocation: 'gs://motrpac-data-hub/analysis/rat-training-06/c2.0',
+          storageLocation: `gs://${bucketName}/analysis/rat-training-06/c2.0`,
           releaseStage: 'public',
         },
         {
           collection: 'c1.0',
           referenceGenome: 'Rn6',
           latest: false,
-          storageLocation: 'gs://motrpac-data-hub/analysis/rat-training-06/c1.0',
+          storageLocation: `gs://${bucketName}/analysis/rat-training-06/c1.0`,
           releaseStage: 'public',
         },
       ],
@@ -70,7 +72,7 @@ const studyDataCards = [
         {
           collection: 'c4.0',
           latest: true,
-          storageLocation: 'gs://motrpac-data-hub/phenotype/rat-training-06/c4.0',
+          storageLocation: `gs://${bucketName}/phenotype/rat-training-06/c4.0`,
           releaseStage: 'public',
         },
       ],
@@ -91,14 +93,14 @@ const studyDataCards = [
           collection: 'c2.0',
           referenceGenome: 'Rn8',
           latest: true,
-          storageLocation: 'gs://motrpac-data-hub/quant-id/rat-acute-06/c2.0',
+          storageLocation: `gs://${bucketName}/quant-id/rat-acute-06/c2.0`,
           releaseStage: 'consortium',
         },
         {
           collection: 'c1.0',
           referenceGenome: 'Rn7',
           latest: false,
-          storageLocation: 'gs://motrpac-data-hub/quant-id/rat-acute-06/c1.0',
+          storageLocation: `gs://${bucketName}/quant-id/rat-acute-06/c1.0`,
           releaseStage: 'consortium',
         },
       ],
@@ -107,21 +109,21 @@ const studyDataCards = [
           collection: 'c2.0',
           referenceGenome: 'Rn7',
           latest: true,
-          storageLocation: 'gs://motrpac-data-hub/analysis/rat-acute-06/c2.0',
+          storageLocation: `gs://${bucketName}/analysis/rat-acute-06/c2.0`,
           releaseStage: 'consortium',
         },
         {
           collection: 'c1.1',
           referenceGenome: 'Rn7',
           latest: false,
-          storageLocation: 'gs://motrpac-data-hub/analysis/rat-acute-06/c1.1',
+          storageLocation: `gs://${bucketName}/analysis/rat-acute-06/c1.1`,
           releaseStage: 'consortium',
         },
         {
           collection: 'c1.0',
           referenceGenome: 'Rn7',
           latest: false,
-          storageLocation: 'gs://motrpac-data-hub/analysis/rat-acute-06/c1.0',
+          storageLocation: `gs://${bucketName}/analysis/rat-acute-06/c1.0`,
           releaseStage: 'consortium',
         },
       ],
@@ -129,7 +131,7 @@ const studyDataCards = [
         {
           collection: 'c4.0',
           latest: true,
-          storageLocation: 'gs://motrpac-data-hub/phenotype/rat-acute-06/c4.0',
+          storageLocation: `gs://${bucketName}/phenotype/rat-acute-06/c4.0`,
           releaseStage: 'consortium',
         },
       ],
@@ -153,7 +155,7 @@ const studyDataCards = [
         {
           collection: 'c1.0',
           latest: true,
-          storageLocation: 'gs://motrpac-data-hub/quant-id/human-precovid/c1.0',
+          storageLocation: `gs://${bucketName}/quant-id/human-precovid/c1.0`,
           releaseStage: 'consortium',
         },
       ],
@@ -161,7 +163,7 @@ const studyDataCards = [
         {
           collection: 'c1.3',
           latest: true,
-          storageLocation: 'gs://motrpac-data-hub/analysis/human-precovid-sed-adu/c1.3',
+          storageLocation: `gs://${bucketName}/analysis/human-precovid-sed-adu/c1.3`,
           releaseStage: 'public',
         },
       ],
@@ -169,13 +171,13 @@ const studyDataCards = [
         {
           collection: 'c3.0',
           latest: true,
-          storageLocation: 'gs://motrpac-data-hub/phenotype/human-precovid-sed-adu/c3.0',
+          storageLocation: `gs://${bucketName}/phenotype/human-precovid-sed-adu/c3.0`,
           releaseStage: 'consortium',
         },
         {
           collection: 'c2.0',
           latest: false,
-          storageLocation: 'gs://motrpac-data-hub/phenotype/human-precovid-sed-adu/c2.0',
+          storageLocation: `gs://${bucketName}/phenotype/human-precovid-sed-adu/c2.0`,
           releaseStage: 'consortium',
         },
       ],
@@ -199,7 +201,7 @@ export const humanPhenotypeDataCards = [
         {
           collection: 'c14.0',
           latest: true,
-          storageLocation: 'gs://motrpac-data-hub/phenotype/human-eqc/c14.0',
+          storageLocation: `gs://${bucketName}/phenotype/human-eqc/c14.0`,
           releaseStage: 'consortium',
         },
       ],
