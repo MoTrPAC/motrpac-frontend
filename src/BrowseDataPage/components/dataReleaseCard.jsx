@@ -142,9 +142,6 @@ function ReleaseStudyRow({ study, kinds, stageCode, userType, onBrowseFiles }) {
             </span>
           )}
         </div>
-        <button type="button" className="btn btn-sm btn-primary" onClick={onBrowseFiles}>
-          Browse Files
-        </button>
       </div>
       <div className="data-release-kind-row col-12 col-lg-9">
         <div className="row no-gutters">
