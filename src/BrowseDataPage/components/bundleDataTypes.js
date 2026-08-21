@@ -302,7 +302,7 @@ const BundleDataTypes = {
         'Phenotypic data from the acute exercise in human sedentary adults study (pre-suspension).',
       object_zipfile:
         'bundles/motrpac_human-presuspension-sed-adu_phenotype.zip',
-      object_zipfile_size: '1.67 MB',
+      object_zipfile_size: '94.10 MB',
     },
     {
       type: 'epigenomics',
@@ -484,21 +484,21 @@ const BundleDataTypes = {
         'Post-suspension sedentary human adults phenotypic data, excluding highly active cohort and ancillary studies.',
       object_zipfile:
         'bundles/motrpac_human-main-sed-adu_phenotype.zip',
-      object_zipfile_size: '3.9 MB',
+      object_zipfile_size: '4 MB',
     },
     {
       type: 'phenotype',
       phase: 'human-all',
-      title: 'Low Active Pediatrics (Consortium Release)',
+      title: 'Low and Highly Active Pediatrics (Consortium Release)',
       species: 'Human',
       participant_type: 'Pediatric',
       intervention: 'Low Active',
       study_group: 'Pre- & Post-Suspension',
       description:
-        'Low active pediatrics phenotypic data, excluding highly active cohort and ancillary studies.',
+        'Low and highly active pediatrics phenotypic data, excluding ancillary studies.',
       object_zipfile:
         'bundles/motrpac_human-all-ped_phenotype.zip',
-      object_zipfile_size: '467.8 KB',
+      object_zipfile_size: '569.5 KB',
     },
   ],
 };
