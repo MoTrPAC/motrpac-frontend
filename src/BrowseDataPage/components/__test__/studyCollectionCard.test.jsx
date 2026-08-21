@@ -7,6 +7,8 @@ import studyDataCards from '../../../lib/studyDataCards';
 
 const ratTraining06 = studyDataCards.find((s) => s.code === 'rat-training-06');
 
+const bucketName = import.meta.env.VITE_DATA_FILE_BUCKET;
+
 describe('StudyCollectionCard - genome badge access control', () => {
   test('external users see the Rn7 badge (latest public quantID) but never Rn8 (consortium-only c3.0)', () => {
     render(<StudyCollectionCard study={ratTraining06} userType="external" />);
@@ -39,7 +41,7 @@ describe('StudyCollectionCard - GCS-path reveal', () => {
     fireEvent.click(screen.getAllByRole('button', { name: /gcp storage/i })[0]);
 
     expect(
-      screen.getByText('gs://motrpac-data-hub/quant-id/rat-training-06/c3.0')
+      screen.getByText(`gs://${bucketName}/quant-id/rat-training-06/c3.0`)
     ).toBeInTheDocument();
     expect(screen.queryByRole('link', { name: /open/i })).not.toBeInTheDocument();
   });

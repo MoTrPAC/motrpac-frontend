@@ -20,6 +20,8 @@ function renderReleases(userType, onBrowseFiles = () => {}) {
   );
 }
 
+const bucketName = import.meta.env.VITE_DATA_FILE_BUCKET;
+
 describe('DataReleaseCards - stage sections', () => {
   test('external users get a Public section only; the Consortium section is absent, not empty', () => {
     renderReleases('external');
@@ -58,7 +60,7 @@ describe('DataReleaseCards - consortium data never leaks to external users', () 
 
     // c3.0 of rat-training-06 quant-id is consortium-only.
     expect(container.textContent).not.toContain(
-      'gs://motrpac-data-hub/quant-id/rat-training-06/c3.0'
+      `gs://${bucketName}/quant-id/rat-training-06/c3.0`
     );
     expect(container.textContent).not.toContain('c3.0');
     expect(screen.queryByRole('button', { name: /gcp storage/i })).not.toBeInTheDocument();
