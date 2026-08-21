@@ -145,12 +145,16 @@ const studyDataCards = [
     studyDesign: 'Acute exercise',
     description: 'Sedentary adults performing a single endurance or resistance bout, with muscle, blood and adipose sampled before, during and after exercise. Enrolled before the study suspension.',
     dataTypes: {
+      // Quant-ID and Phenotype for this study are not directly accessible to
+      // external users through the Data Hub. Access will require dbGaP approval
+      // plus a signed-in Data Hub account; until that is worked out these
+      // collections stay consortium-only.
       quantID: [
         {
           collection: 'c1.0',
           latest: true,
           storageLocation: 'gs://motrpac-data-hub/quant-id/human-precovid/c1.0',
-          releaseStage: 'public',
+          releaseStage: 'consortium',
         },
       ],
       analysis: [
@@ -172,7 +176,7 @@ const studyDataCards = [
           collection: 'c2.0',
           latest: false,
           storageLocation: 'gs://motrpac-data-hub/phenotype/human-precovid-sed-adu/c2.0',
-          releaseStage: 'public',
+          releaseStage: 'consortium',
         },
       ],
     },
