@@ -492,7 +492,7 @@ const BundleDataTypes = {
       title: 'Low and Highly Active Pediatrics (Consortium Release)',
       species: 'Human',
       participant_type: 'Pediatric',
-      intervention: 'Low Active',
+      intervention: 'Low and Highly Active',
       study_group: 'Pre- & Post-Suspension',
       description:
         'Low and highly active pediatrics phenotypic data, excluding ancillary studies.',
