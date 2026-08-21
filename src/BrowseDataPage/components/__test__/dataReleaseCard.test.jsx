@@ -39,14 +39,16 @@ describe('DataReleaseCards - stage sections', () => {
     renderReleases('internal');
 
     // Public: rat-training-06 (quantID c2.0/c1.0, analysis c2.0/c1.0, phenotype c4.0) = 5,
-    // plus human-precovid-sed-adu (quantID c1.0, analysis c1.3, phenotype c2.0) = 3.
+    // plus human-precovid-sed-adu analysis c1.3 = 1. Its Quant-ID and Phenotype are
+    // consortium-only pending dbGaP-gated access.
     const publicSection = screen.getByRole('region', { name: /^public release$/i });
-    expect(within(publicSection).getByText('8 collections')).toBeInTheDocument();
+    expect(within(publicSection).getByText('6 collections')).toBeInTheDocument();
 
     // Consortium: rat-training-06 quantID c3.0 = 1, rat-acute-06 (quantID c2.0/c1.0,
-    // analysis c2.0/c1.1/c1.0, phenotype c4.0) = 6, human-precovid phenotype c3.0 = 1.
+    // analysis c2.0/c1.1/c1.0, phenotype c4.0) = 6, human-precovid (quantID c1.0,
+    // phenotype c3.0/c2.0) = 3.
     const consortiumSection = screen.getByRole('region', { name: /^consortium release$/i });
-    expect(within(consortiumSection).getByText('8 collections')).toBeInTheDocument();
+    expect(within(consortiumSection).getByText('10 collections')).toBeInTheDocument();
   });
 });
 
@@ -66,6 +68,16 @@ describe('DataReleaseCards - consortium data never leaks to external users', () 
     renderReleases('external');
 
     expect(screen.queryByText('Acute Exercise in Young Adult Rats')).not.toBeInTheDocument();
+  });
+
+  test('human-precovid-sed-adu exposes only its Analysis collection publicly - Quant-ID and Phenotype are dbGaP-gated', () => {
+    const { container } = renderReleases('external');
+
+    // The study is visible (its Analysis c1.3 is public)...
+    expect(screen.getByText('Acute Exercise in Human Sedentary Adults')).toBeInTheDocument();
+    // ...but neither gated collection's storage path may appear.
+    expect(container.textContent).not.toContain('quant-id/human-precovid');
+    expect(container.textContent).not.toContain('phenotype/human-precovid-sed-adu');
   });
 });
 
