@@ -74,6 +74,7 @@ const Glossary = lazy(() => import('../Glossary/glossaryPage'));
 const AskAssistant = lazy(() => import('../Assistant/assistant'));
 const MCPServer = lazy(() => import('../MCPServer/mcpServer'));
 const KnowledgeCenter = lazy(() => import('../KnowledgeCenter/KnowledgeCenter'));
+const DataVizPage = lazy(() => import('../DataVizPage/dataVizPage'));
 const DataStatusTrackerConnected = lazy(
   () => import('../DataStatusTracker/dataStatusTracker'),
 );
@@ -114,6 +115,7 @@ function App({ history = History }) {
                   element={<AnnouncementsPage/>}
                 />
                 <Route path="/error" element={<ErrorPageConnected/>}/>
+                <Route path="/data-viz" element={<DataVizPage/>}/>
                 <Route element={<AuthWrapper/>}>
                   <Route
                     path="/analysis/:subjectType"

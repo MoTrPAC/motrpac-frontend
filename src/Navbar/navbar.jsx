@@ -304,6 +304,9 @@ export function Navbar({
                   <Link to="/graphical-clustering" className="dropdown-item">
                     Graphical Clustering
                   </Link>
+                  <Link to="/data-viz" className="dropdown-item">
+                    PreCAWG Data Visualization
+                  </Link>
                   {/* 
                   {isAuthenticated && hasAccess && userType && userType === 'internal' && (
                     <a

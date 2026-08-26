@@ -1,0 +1,17 @@
+/* Data Visualization page — the container for the embedded PreCAWG application.
+ *
+ * The application ships its own stylesheet, every rule scoped to `.precawg-app`,
+ * so nothing here styles the visualization itself. This only shapes the box the
+ * portal hands it. */
+
+.dataVizPage {
+  /* How much vertical room the embedded app should claim. It reads this custom
+   * property (falling back to 80vh) to size its own root and content area; the
+   * portal is the side that knows what its navbar and footer consume. */
+  --precawg-embed-height: 78vh;
+
+  .dataviz-loading {
+    min-height: var(--precawg-embed-height);
+    color: #6c757d;
+  }
+}

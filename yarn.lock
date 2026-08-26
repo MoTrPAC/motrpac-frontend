@@ -1055,6 +1055,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@motrpac/precawg-dataviz@portal:../motrpac-data-viz/precawg/python_app/vega_lite_frontend/frontend/dist-embed::locator=MoTrPAC%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@motrpac/precawg-dataviz@portal:../motrpac-data-viz/precawg/python_app/vega_lite_frontend/frontend/dist-embed::locator=MoTrPAC%40workspace%3A."
+  peerDependencies:
+    react: ^18.3.1
+    react-dom: ^18.3.1
+  languageName: node
+  linkType: soft
+
 "@noble/hashes@npm:^1.1.5":
   version: 1.8.0
   resolution: "@noble/hashes@npm:1.8.0"
@@ -2277,6 +2286,7 @@ __metadata:
   resolution: "MoTrPAC@workspace:."
   dependencies:
     "@eslint/js": "npm:^10.0.1"
+    "@motrpac/precawg-dataviz": "portal:../motrpac-data-viz/precawg/python_app/vega_lite_frontend/frontend/dist-embed"
     "@testing-library/dom": "npm:^10.4.1"
     "@testing-library/jest-dom": "npm:^6.9.1"
     "@testing-library/react": "npm:^16.3.2"

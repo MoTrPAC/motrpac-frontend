@@ -156,3 +156,5 @@ stats.html
 
 # JetBrains IDEs
 .idea
+
+.nvmrc
