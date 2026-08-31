@@ -125,13 +125,17 @@ describe('DataReleaseCards - collection family chips', () => {
 });
 
 describe('DataReleaseCards - Browse Files', () => {
-  test('clicking Browse Files passes the owning study back to the caller', () => {
+  test('clicking Browse Files passes back the clicked collection, not its study', () => {
     const onBrowseFiles = vi.fn();
     renderReleases('external', onBrowseFiles);
 
     fireEvent.click(screen.getAllByRole('button', { name: /browse files/i })[0]);
 
     expect(onBrowseFiles).toHaveBeenCalledTimes(1);
-    expect(onBrowseFiles.mock.calls[0][0]).toMatchObject({ code: 'rat-training-06' });
+    // The storage location identifies one collection; the study alone could not
+    // tell the file browser which of its collections to load.
+    expect(onBrowseFiles.mock.calls[0][0]).toMatch(
+      /^gs:\/\/[^/]+\/(quant-id|analysis|phenotype)\/rat-training-06\/c\d+\.\d+$/
+    );
   });
 });
