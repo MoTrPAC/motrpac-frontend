@@ -225,7 +225,7 @@ function DataReleaseCards({ studies, userType = undefined, onBrowseFiles = () =>
                   kinds={kinds}
                   stageCode={STAGE_CODES[section.key]}
                   userType={userType}
-                  onBrowseFiles={() => onBrowseFiles(study)}
+                  onBrowseFiles={onBrowseFiles}
                 />
               ))
             )}
