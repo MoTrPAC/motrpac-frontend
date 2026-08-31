@@ -2,36 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import studyDataCards from '../../lib/studyDataCards';
+import studyDataCards, { humanPhenotypeDataCards } from '../../lib/studyDataCards';
 import { hasVisibleCollections } from '../../lib/studyDataAccess';
+import { prefixFromStorageLocation } from '../../lib/collectionFiles';
 import actions from '../browseDataActions';
 import StudyCollectionCard from './studyCollectionCard';
 import DataReleaseCards from './dataReleaseCard';
-
-// Maps a study's config `code` to how the file browser is reached: the Redux
-// action that loads its data, and the (cosmetic-only) URL segment for the
-// file-browser route. DataDownloadsMain's routing only checks the path
-// prefix, so the exact segment doesn't drive behavior - see
-// browseDataActions.js and dataDownloadsMain.jsx:31.
-const BROWSE_FILES_CONFIG = {
-  'rat-training-06': {
-    select: (dispatch) => dispatch(actions.selectPass1B06Data()),
-    browserPath: 'rat-training-06',
-  },
-  'rat-acute-06': {
-    select: (dispatch) => dispatch(actions.selectPass1A06Data()),
-    browserPath: 'rat-acute-06',
-  },
-  'human-precovid-sed-adu': {
-    select: (dispatch, userType) =>
-      dispatch(
-        userType === 'internal'
-          ? actions.selectHumanPreCovidSedAduData()
-          : actions.selectHumanPreCovidSedAduExternalData()
-      ),
-    browserPath: 'human-precovid',
-  },
-};
 
 const SPECIES_OPTIONS = ['all', 'rat', 'human'];
 const DESIGN_OPTIONS = ['all', 'Acute exercise', 'Endurance training'];
@@ -59,12 +35,19 @@ function StudyDataExplorer({ userType = undefined }) {
     .filter((study) => hasVisibleCollections(study, userType))
     .filter((study) => matchesFilters(study, filters));
 
-  function handleBrowseFiles(study) {
-    const { select, browserPath } = BROWSE_FILES_CONFIG[study.code];
-    select(dispatch, userType);
-    navigate(`/data-download/file-browser/${browserPath}`, {
-      state: { selectedData: study.code },
-    });
+  // human-eqc and friends are not tied to one study, so they are not subject to
+  // the species/design filters -- only to what the user may see.
+  const visibleSupportingCollections = humanPhenotypeDataCards.filter((collection) =>
+    hasVisibleCollections(collection, userType)
+  );
+
+  // Every Browse Files button hands back the collection's own storageLocation,
+  // which reduces to the object-path prefix -- the same string the file
+  // metadata's `object` field starts with, and the one the URL carries.
+  function handleBrowseFiles(storageLocation) {
+    const prefix = prefixFromStorageLocation(storageLocation);
+    dispatch(actions.selectCollection(prefix));
+    navigate(`/data-download/file-browser/${prefix}`);
   }
 
   return (
@@ -151,9 +134,26 @@ function StudyDataExplorer({ userType = undefined }) {
               key={study.code}
               study={study}
               userType={userType}
-              onBrowseFiles={() => handleBrowseFiles(study)}
+              onBrowseFiles={handleBrowseFiles}
             />
           ))}
+          {visibleSupportingCollections.length > 0 && (
+            <section className="supporting-collections-panel mt-5">
+              <h2 className="h4">Supporting human collections</h2>
+              <p className="supporting-collections-intro">
+                Cross-study phenotype resources that sit alongside the primary study
+                collections.
+              </p>
+              {visibleSupportingCollections.map((collection) => (
+                <StudyCollectionCard
+                  key={collection.code}
+                  study={collection}
+                  userType={userType}
+                  onBrowseFiles={handleBrowseFiles}
+                />
+              ))}
+            </section>
+          )}
         </div>
       )}
 
