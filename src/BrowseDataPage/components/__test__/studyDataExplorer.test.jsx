@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { screen, fireEvent, within } from '@testing-library/react';
+import { screen, fireEvent, waitFor, within } from '@testing-library/react';
 import React from 'react';
 import { renderWithProviders } from '../../../testUtils/test-utils';
 import StudyDataExplorer from '../studyDataExplorer';
@@ -74,14 +74,55 @@ describe('StudyDataExplorer - Data Releases panel', () => {
   });
 });
 
-describe('StudyDataExplorer - Browse Files dispatches the correct study selection', () => {
-  test('clicking Browse Files in the Data Releases view selects that study\'s data in the store', () => {
+describe('StudyDataExplorer - Browse Files scopes the file browser to one collection', () => {
+  test('clicking Browse Files loads only that collection, not the whole study', async () => {
     const { store } = renderExplorer('internal');
     fireEvent.click(screen.getByRole('tab', { name: /data releases/i }));
 
     // First row of the Public section is rat-training-06.
     fireEvent.click(screen.getAllByRole('button', { name: /browse files/i })[0]);
 
-    expect(store.getState().browseData.pass1b06DataSelected).toBe(true);
+    await waitFor(() => {
+      expect(store.getState().browseData.loadingFiles).toBe(false);
+    });
+
+    const state = store.getState().browseData;
+    expect(state.selectedCollections).toHaveLength(1);
+
+    const [prefix] = state.selectedCollections;
+    expect(prefix).toMatch(/^(quant-id|analysis|phenotype)\/rat-training-06\/c\d+\.\d+$/);
+    expect(state.allFiles.length).toBeGreaterThan(0);
+
+    // Every loaded file belongs to the clicked collection - this is the whole point.
+    const strays = state.allFiles.filter((file) => !file.object.startsWith(`${prefix}/`));
+    expect(strays).toEqual([]);
+
+    // The legacy per-study flag is still derived for the components that read it.
+    expect(state.pass1b06DataSelected).toBe(true);
+    expect(state.pass1a06DataSelected).toBe(false);
+  });
+
+  test('the collection a user is not entitled to is never offered', () => {
+    renderExplorer('external');
+    fireEvent.click(screen.getByRole('tab', { name: /data releases/i }));
+    expect(screen.queryByText('c3.0')).not.toBeInTheDocument();
+  });
+});
+
+describe('StudyDataExplorer - supporting human collections', () => {
+  test('internal users see the cross-study phenotype section', () => {
+    renderExplorer('internal');
+    expect(
+      screen.getByRole('heading', { name: /supporting human collections/i })
+    ).toBeInTheDocument();
+    expect(screen.getByText(/human extended quality control/i)).toBeInTheDocument();
+  });
+
+  test('external users do not - human-eqc is consortium-only', () => {
+    renderExplorer('external');
+    expect(
+      screen.queryByRole('heading', { name: /supporting human collections/i })
+    ).not.toBeInTheDocument();
+    expect(screen.queryByText(/human extended quality control/i)).not.toBeInTheDocument();
   });
 });
