@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import BrowseDataFilter from '../browseDataFilter';
 import BundleDatasets from './bundleDatasets';
@@ -7,6 +8,8 @@ import BundleDataTypes from './bundleDataTypes';
 import SelectiveDataDownloads from './selectiveDataDownloads';
 import StudyDataExplorer from './studyDataExplorer';
 import ExternalLink from '../../lib/ui/externalLink';
+import { resolveScope } from '../../lib/collectionScope';
+import actions from '../browseDataActions';
 
 function DataDownloadsMain({
   profile = {},
@@ -21,11 +24,35 @@ function DataDownloadsMain({
   downloadedData,
 }) {
   const location = useLocation();
+  const dispatch = useDispatch();
 
   // anonymous user or authenticated user
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
-  if (location.pathname.startsWith('/data-download/file-browser')) {
+  // The URL is the source of truth for what is loaded, so a reload, a bookmark
+  // or the browser's back button all reconstruct the same view.
+  const scope = resolveScope(location, userType);
+  // A primitive key so the effect compares by value, not array identity.
+  const collectionsKey = scope.prefixes.join(',');
+  const selectionKey = scope.selected.join(',');
+  const loadedKey = useSelector((state) => state.browseData.loadedCollections.join(','));
+
+  useEffect(() => {
+    // The picker navigates *and* dispatches, so skip the reload when the store
+    // already holds exactly what the URL is asking for.
+    if (collectionsKey && collectionsKey !== loadedKey) {
+      dispatch(
+        actions.selectCollections(
+          collectionsKey.split(','),
+          selectionKey ? selectionKey.split(',') : []
+        )
+      );
+    }
+  }, [collectionsKey, selectionKey, loadedKey, dispatch]);
+
+  // An empty scope inside the file browser means the URL named collections this
+  // user may not see; falling through to the download page is the destination.
+  if (scope.prefixes.length) {
     return (
       <SelectiveDataDownloads
         profile={profile}
@@ -36,7 +63,7 @@ function DataDownloadsMain({
         handleDownloadRequest={handleDownloadRequest}
         downloadRequestResponse={downloadRequestResponse}
         waitingForResponse={waitingForResponse}
-        selectedData={location.state.selectedData}
+        selectedData={collectionsKey}
       />
     );
   }
