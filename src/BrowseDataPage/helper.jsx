@@ -269,7 +269,13 @@ PageNavigationControl.propTypes = {
  * Utility function to tranform some fields within each object in the array
  */
 export const transformData = (arr) => {
-  const tranformArray = [...arr];
+  // Copy each record, not just the array. These objects are the ones held in
+  // `browseData.allFiles`, and the rewrites below (tissue_name -> superclass,
+  // merged assay/omics labels) used to land on Redux state itself: rendering
+  // the table changed the data the filter facets are derived from, so the
+  // tissue pickers silently swapped from names to superclasses after the first
+  // render and clicks stopped matching.
+  const tranformArray = arr.map((item) => ({ ...item }));
   tranformArray.forEach((item) => {
     // Extract file name from object
     const splits = item.object.split('/');
