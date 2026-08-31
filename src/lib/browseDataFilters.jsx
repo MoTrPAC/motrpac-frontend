@@ -80,16 +80,23 @@ export const referenceGenomes = {
   human_sed_adu: [],
 };
 
+// `tissue_name`, `omics` and `assay` options are derived at render time from the
+// files actually loaded (see browseDataFilter.jsx), so the values here are
+// placeholders and are always replaced. They are empty arrays rather than the
+// `tissues` lookup object that used to sit here: an object reaching the render
+// path crashed it on `filters.map`.
+//
+// There is no Genome Assembly facet, and no Category/Metadata facet either. A
+// collection has exactly one reference genome and exactly one category -- the
+// family in its object path decides both -- so filtering by either within a
+// collection matches everything or nothing. CollectionFilterModule expresses
+// both: each option names its kind (Quant-ID / Analysis / Phenotype) and its
+// genome.
 const browseDataFilters = [
-  {
-    keyName: 'reference_genome',
-    name: 'Genome Assembly',
-    filters: referenceGenomes,
-  },
   {
     keyName: 'tissue_name',
     name: 'Tissue',
-    filters: tissues,
+    filters: [],
   },
   {
     keyName: 'omics',
@@ -107,16 +114,6 @@ const browseDataFilters = [
     keyName: 'assay',
     name: 'Assay',
     filters: assayList,
-  },
-  {
-    keyName: 'category',
-    name: 'Category',
-    filters: ['Analysis', 'Results'],
-  },
-  {
-    keyName: 'category',
-    name: 'Metadata',
-    filters: ['Phenotype'],
   },
 ];
 
