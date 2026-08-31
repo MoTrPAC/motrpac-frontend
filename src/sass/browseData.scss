@@ -404,14 +404,6 @@
       &.reference_genome.not-available {
         background-color: #f3f3f3;
       }
-
-      &.category.Phenotype {
-        background-color: #f3f3f3;
-
-        span {
-          display: none;
-        }
-      }
     }
   }
 }
@@ -804,5 +796,38 @@
         border-bottom: 1px solid #dee2e6;
       }
     }
+  }
+}
+// Cross-study phenotype collections (human-eqc and friends). They are not owned
+// by any one study, so the prototype sets them below the study cards under their
+// own heading rather than mixing them in.
+.supporting-collections-panel {
+  h2 {
+    font-weight: 700;
+  }
+
+  .supporting-collections-intro {
+    color: #6c757d;
+    margin-bottom: 1.25rem;
+  }
+}
+
+
+// Collection picker in the file browser's filter panel. It replaced the Genome
+// Assembly facet, which could only match everything or nothing once the browser
+// was scoped to a single collection.
+.collection-filter-module {
+  .collection-filter-clear {
+    font-size: 0.8rem;
+  }
+
+  .collection-filter-genome {
+    font-size: 0.7rem;
+    opacity: 0.75;
+  }
+
+  .filterBtn:disabled {
+    opacity: 0.5;
+    cursor: progress;
   }
 }
