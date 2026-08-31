@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import BrowseDataFilter from '../browseDataFilter';
 import SelectiveDataDownloadFileBrowser from './selectiveDataDownloadFileBrowser';
+import CollectionScopeBar from './collectionScopeBar';
 
 function SelectiveDataDownloads({
   profile = {},
@@ -124,19 +125,28 @@ function SelectiveDataDownloads({
         {renderPageTitle()}
       </div>
       <div className="browse-data-summary-container mb-4">{renderStudySummary()}</div>
-      <div className="browse-data-container row">
-        <div className="tab-content mx-3">
-          <SelectiveDataDownloadFileBrowser
-            profile={profile}
-            filteredFiles={filteredFiles}
-            activeFilters={activeFilters}
-            onChangeFilter={onChangeFilter}
-            onResetFilters={onResetFilters}
-            handleDownloadRequest={handleDownloadRequest}
-            downloadRequestResponse={downloadRequestResponse}
-            waitingForResponse={waitingForResponse}
-          />
-        </div>
+      <CollectionScopeBar userType={profile.user_metadata && profile.user_metadata.userType} />
+      {/*
+        No `row`/`tab-content` wrapper here. `.tab-content` carried no `col-*`
+        class, so as a flex item in a `.row` it defaulted to `flex: 0 1 auto` and
+        sized to its content rather than filling the width -- which is why the
+        table stopped short of the right edge while the status line above it did
+        not. It was a leftover from the tab UI that was removed (see the
+        commented-out `.nav.nav-tabs` block in browseData.scss); the file browser
+        renders its own `.row` with the `col-md-3` / `col-md-9` split.
+        `.browse-data-container` stays because the filter-panel styles hang off it.
+      */}
+      <div className="browse-data-container">
+        <SelectiveDataDownloadFileBrowser
+          profile={profile}
+          filteredFiles={filteredFiles}
+          activeFilters={activeFilters}
+          onChangeFilter={onChangeFilter}
+          onResetFilters={onResetFilters}
+          handleDownloadRequest={handleDownloadRequest}
+          downloadRequestResponse={downloadRequestResponse}
+          waitingForResponse={waitingForResponse}
+        />
       </div>
     </div>
   );
