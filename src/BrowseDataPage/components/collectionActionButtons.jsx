@@ -6,7 +6,14 @@ import PropTypes from 'prop-types';
  * members only) reveal its Google Cloud Storage path. Shared by the study
  * collection cards and the data release cards so both behave identically.
  */
-function CollectionActionButtons({ storageLocation, userType, onBrowseFiles = () => {} }) {
+// `userType` is undefined for anonymous visitors -- a normal state, not a
+// missing prop -- so it is optional here as it is everywhere else in the tree.
+// Only 'internal' unlocks the GCS path, so any other value stays hidden.
+function CollectionActionButtons({
+  storageLocation,
+  userType = undefined,
+  onBrowseFiles = () => {},
+}) {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -15,7 +22,7 @@ function CollectionActionButtons({ storageLocation, userType, onBrowseFiles = ()
         <button
           type="button"
           className="btn btn-sm btn-primary"
-          onClick={() => onBrowseFiles()}
+          onClick={() => onBrowseFiles(storageLocation)}
         >
           Browse Files
         </button>
@@ -50,7 +57,7 @@ function CollectionActionButtons({ storageLocation, userType, onBrowseFiles = ()
 
 CollectionActionButtons.propTypes = {
   storageLocation: PropTypes.string.isRequired,
-  userType: PropTypes.string.isRequired,
+  userType: PropTypes.string,
   onBrowseFiles: PropTypes.func,
 };
 
