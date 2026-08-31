@@ -9,11 +9,13 @@ export const KIND_ORDER = ['quantID', 'analysis', 'phenotype'];
 export const STAGE_LABELS = {
   public: 'Public',
   consortium: 'Consortium',
+  early: 'Early Access',
 };
 
 export const STAGE_CODES = {
   public: 'PR',
   consortium: 'CR',
+  early: 'EA',
 };
 
 const bucketName = import.meta.env.VITE_DATA_FILE_BUCKET;
