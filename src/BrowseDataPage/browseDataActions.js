@@ -1,9 +1,6 @@
 import axios from 'axios';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
-import pass1b06 from '../data/file_download_metadata/rat-training-06-all-version-files-minified.json';
-import pass1a06 from '../data/file_download_metadata/rat-acute-06-files-minified.json';
-import humanPrecovidSedAdu from '../data/file_download_metadata/human-precovid-files-minified.json';
-import humanPrecovidSedAduExternal from '../data/file_download_metadata/human-precovid-external-files-minified.json';
+import { entitledPrefixes, loadCollections } from '../lib/collectionFiles';
 
 const CHANGE_FILTER = 'CHANGE_FILTER';
 const SORT_CHANGE = 'SORT_CHANGE';
@@ -18,6 +15,9 @@ const DOWNLOAD_REQUEST_SUBMITTED = 'DOWNLOAD_REQUEST_SUBMITTED';
 const DOWNLOAD_REQUEST_SUCCESS = 'DOWNLOAD_REQUEST_SUCCESS';
 const DOWNLOAD_REQUEST_FAILURE = 'DOWNLOAD_REQUEST_FAILURE';
 const RESET_BROWSE_STATE = 'RESET_BROWSE_STATE';
+const SELECT_COLLECTIONS_START = 'SELECT_COLLECTIONS_START';
+const SELECT_COLLECTIONS_SUCCESS = 'SELECT_COLLECTIONS_SUCCESS';
+const SELECT_COLLECTIONS_FAILURE = 'SELECT_COLLECTIONS_FAILURE';
 const SELECT_PASS1B_06_DATA = 'SELECT_PASS1B_06_DATA';
 const SELECT_PASS1A_06_DATA = 'SELECT_PASS1A_06_DATA';
 const SELECT_HUMAN_PRECOVID_SED_ADU_DATA = 'SELECT_HUMAN_PRECOVID_SED_ADU_DATA';
@@ -37,6 +37,9 @@ export const types = {
   DOWNLOAD_REQUEST_SUCCESS,
   DOWNLOAD_REQUEST_FAILURE,
   RESET_BROWSE_STATE,
+  SELECT_COLLECTIONS_START,
+  SELECT_COLLECTIONS_SUCCESS,
+  SELECT_COLLECTIONS_FAILURE,
   SELECT_PASS1B_06_DATA,
   SELECT_PASS1A_06_DATA,
   SELECT_HUMAN_PRECOVID_SED_ADU_DATA,
@@ -131,33 +134,9 @@ function resetBrowseState() {
   };
 }
 
-function selectPass1B06Data(files = pass1b06) {
-  return {
-    type: SELECT_PASS1B_06_DATA,
-    files,
-  };
-}
 
-function selectPass1A06Data(files = pass1a06) {
-  return {
-    type: SELECT_PASS1A_06_DATA,
-    files,
-  };
-}
 
-function selectHumanPreCovidSedAduData(files = humanPrecovidSedAdu) {
-  return {
-    type: SELECT_HUMAN_PRECOVID_SED_ADU_DATA,
-    files,
-  };
-}
 
-function selectHumanPreCovidSedAduExternalData(files = humanPrecovidSedAduExternal) {
-  return {
-    type: SELECT_HUMAN_PRECOVID_SED_ADU_EXTERNAL_DATA,
-    files,
-  };
-}
 
 // Mock Async Getting List
 const files = [];
@@ -279,6 +258,42 @@ function handleDownloadRequest(email, name, userid, selectedFiles) {
   };
 }
 
+/**
+ * Load collections into the file browser.
+ *
+ * `prefixes` is what to load; `selection` is what the user actually picked, and
+ * they differ in exactly one case: an empty selection means "no constraint", so
+ * every collection in the study is loaded while nothing shows as checked. The
+ * two are kept apart because the picker cannot otherwise tell "all of them are
+ * selected" from "none of them are", which are the same set of files but
+ * different UI states.
+ */
+function selectCollections(prefixes, selection = prefixes) {
+  return async (dispatch) => {
+    dispatch({ type: SELECT_COLLECTIONS_START, prefixes, selection });
+    try {
+      const files = await loadCollections(prefixes);
+      dispatch({ type: SELECT_COLLECTIONS_SUCCESS, prefixes, selection, files });
+      return files;
+    } catch (error) {
+      dispatch({ type: SELECT_COLLECTIONS_FAILURE, prefixes, error: error.message });
+      return [];
+    }
+  };
+}
+
+function selectCollection(prefix) {
+  return selectCollections([prefix]);
+}
+
+/**
+ * Load every collection this user may see, so the tissue/assay facets can filter
+ * across the whole corpus rather than one collection at a time.
+ */
+function selectAllEntitledCollections(userType) {
+  return selectCollections(entitledPrefixes(userType));
+}
+
 const actions = {
   changeFilter,
   resetFilters,
@@ -289,10 +304,9 @@ const actions = {
   handleUrlFetch,
   handleDownloadRequest,
   resetBrowseState,
-  selectPass1B06Data,
-  selectPass1A06Data,
-  selectHumanPreCovidSedAduData,
-  selectHumanPreCovidSedAduExternalData,
+  selectCollection,
+  selectCollections,
+  selectAllEntitledCollections,
 };
 
 export default actions;
