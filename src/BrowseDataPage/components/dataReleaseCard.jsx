@@ -129,7 +129,7 @@ function ReleaseStudyRow({ study, kinds, stageCode, userType, onBrowseFiles }) {
           <code>{study.code}</code>
           {study.cohort ? ` · ${study.cohort}` : ''}
         </div>
-        <div className="data-release-study-badges mb-3">
+        <div className="data-release-study-badges mb-3 d-flex align-items-center">
           <span className="species-badge badge badge-pill mr-1 d-inline-flex align-items-center">
             <span className="material-icons mr-1">{study.icon}</span>
             <span className="text-uppercase">{study.species}</span>
