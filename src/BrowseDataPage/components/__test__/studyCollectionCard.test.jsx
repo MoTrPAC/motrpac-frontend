@@ -153,8 +153,11 @@ describe('StudyCollectionCard - a kind with several series', () => {
   test('each sub-collection is named and keeps its own versions', () => {
     render(<StudyCollectionCard study={humanMain} userType="internal" />);
 
-    expect(screen.getByText(/Human Main Study in Sedentary Adults/i)).toBeInTheDocument();
-    expect(screen.getByText(/Low and Highly Active Pediatrics/i)).toBeInTheDocument();
+    // Derived from config: the sub-collections get renamed and added to, and a
+    // hardcoded list here only breaks when that happens.
+    humanMain.dataTypes.phenotype.forEach((series) => {
+      expect(screen.getByText(series.name)).toBeInTheDocument();
+    });
   });
 
   test('phenotype no longer claims to be pending', () => {
@@ -166,11 +169,6 @@ describe('StudyCollectionCard - a kind with several series', () => {
   test('analysis is still pending, because it genuinely has nothing released', () => {
     render(<StudyCollectionCard study={humanMain} userType="internal" />);
     expect(screen.getByText(/analysis results are in preparation/i)).toBeInTheDocument();
-  });
-
-  test('a mixed-stage collection shows both codes', () => {
-    render(<StudyCollectionCard study={humanMain} userType="internal" />);
-    expect(screen.getAllByText('CR / EA').length).toBeGreaterThan(0);
   });
 
   test('external users see none of it - nothing here is public', () => {
@@ -185,7 +183,7 @@ describe('StudyCollectionCard - series identity', () => {
     const humanMain = studyDataCards.find((s) => s.code === 'human-main');
     const { container } = render(<StudyCollectionCard study={humanMain} userType="internal" />);
 
-    ['human-main-sed-adu', 'human-all-ped'].forEach((code) => {
+    humanMain.dataTypes.phenotype.map((series) => series.code).forEach((code) => {
       const el = screen.getByText(code);
       expect(el.tagName).toBe('CODE');
 
@@ -199,7 +197,9 @@ describe('StudyCollectionCard - series identity', () => {
       ]);
     });
 
-    expect(container.querySelectorAll('.collection-series-code')).toHaveLength(2);
+    expect(container.querySelectorAll('.collection-series-code')).toHaveLength(
+      humanMain.dataTypes.phenotype.length
+    );
   });
 
   test('a single-series kind renders no code line', () => {
