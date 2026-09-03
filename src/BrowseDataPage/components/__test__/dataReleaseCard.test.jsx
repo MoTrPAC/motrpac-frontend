@@ -1,9 +1,9 @@
 import { describe, test, expect, vi } from 'vitest';
 import { screen, fireEvent, render, within } from '@testing-library/react';
 import React from 'react';
-import DataReleaseCards from '../dataReleaseCard';
-import studyDataCards from '../../../lib/studyDataCards';
-import { hasVisibleCollections } from '../../../lib/studyDataAccess';
+import DataReleaseCards, { STAGE_SECTIONS } from '../dataReleaseCard';
+import studyDataCards, { humanPhenotypeDataCards } from '../../../lib/studyDataCards';
+import { allVersions, hasVisibleCollections, versionStages } from '../../../lib/studyDataAccess';
 
 // Mirrors what StudyDataExplorer passes in: studies already access-filtered.
 function visibleStudiesFor(userType) {
@@ -21,6 +21,20 @@ function renderReleases(userType, onBrowseFiles = () => {}) {
 }
 
 const bucketName = import.meta.env.VITE_DATA_FILE_BUCKET;
+
+function countCollections(stage) {
+  return studyDataCards.reduce(
+    (total, study) =>
+      total
+      + Object.values(study.dataTypes).reduce(
+        (subtotal, entries) =>
+          subtotal
+          + allVersions(entries).filter((v) => versionStages(v).includes(stage)).length,
+        0
+      ),
+    0
+  );
+}
 
 describe('DataReleaseCards - stage sections', () => {
   test('external users get a Public section only; the Consortium section is absent, not empty', () => {
@@ -40,17 +54,21 @@ describe('DataReleaseCards - stage sections', () => {
   test('each section counts only the collections it contains', () => {
     renderReleases('internal');
 
-    // Public: rat-training-06 (quantID c2.0/c1.0, analysis c2.0/c1.0, phenotype c4.0) = 5,
-    // plus human-precovid-sed-adu analysis c1.3 = 1. Its Quant-ID and Phenotype are
-    // consortium-only pending dbGaP-gated access.
+    // Counted from the config rather than hardcoded: a magic number breaks every
+    // time a collection is declared, which says nothing about whether the count
+    // logic is right.
     const publicSection = screen.getByRole('region', { name: /^public release$/i });
-    expect(within(publicSection).getByText('6 collections')).toBeInTheDocument();
+    expect(
+      within(publicSection).getByText(`${countCollections('public')} collections`)
+    ).toBeInTheDocument();
 
-    // Consortium: rat-training-06 quantID c3.0 = 1, rat-acute-06 (quantID c2.0/c1.0,
-    // analysis c2.0/c1.1/c1.0, phenotype c4.0) = 6, human-precovid (quantID c1.0,
-    // phenotype c3.0/c2.0) = 3.
     const consortiumSection = screen.getByRole('region', { name: /^consortium release$/i });
-    expect(within(consortiumSection).getByText('10 collections')).toBeInTheDocument();
+    expect(
+      within(consortiumSection).getByText(`${countCollections('consortium')} collections`)
+    ).toBeInTheDocument();
+    // The count must reflect the rendered collections, not just any number.
+    expect(within(consortiumSection).getAllByRole('button', { name: /browse files/i }).length)
+      .toBeGreaterThan(0);
   });
 });
 
@@ -137,5 +155,64 @@ describe('DataReleaseCards - Browse Files', () => {
     expect(onBrowseFiles.mock.calls[0][0]).toMatch(
       /^gs:\/\/[^/]+\/(quant-id|analysis|phenotype)\/rat-training-06\/c\d+\.\d+$/
     );
+  });
+});
+
+describe('DataReleaseCards - every collection an internal user may see is rendered', () => {
+  test('no collection is stranded without a section to appear in', () => {
+    // Early-access collections used to be invisible here: there were only
+    // Public and Consortium sections, so the seven `early` collections had
+    // nowhere to render. Compared by count across every section, because a
+    // collection released at two stages appears under both.
+    const cards = [...studyDataCards, ...humanPhenotypeDataCards];
+    render(
+      <DataReleaseCards studies={cards} userType="internal" onBrowseFiles={() => {}} />
+    );
+
+    const declared = cards.flatMap((card) =>
+      Object.values(card.dataTypes).flatMap((entries) => allVersions(entries))
+    );
+    // Only stages that have a section can place a collection; early access
+    // deliberately has none.
+    const sectionKeys = STAGE_SECTIONS.map((section) => section.key);
+    const placements = declared.reduce(
+      (total, version) =>
+        total + versionStages(version).filter((stage) => sectionKeys.includes(stage)).length,
+      0
+    );
+
+    const shown = [...document.querySelectorAll('.data-release-count')].reduce(
+      (total, el) => total + Number(el.textContent.trim().split(' ')[0]),
+      0
+    );
+    expect(shown).toBe(placements);
+  });
+
+  test('there is no Early Access section, for any user', () => {
+    // Early-access data is not distributed through the data download feature.
+    ['internal', 'external'].forEach((userType) => {
+      const { unmount } = render(
+        <DataReleaseCards studies={studyDataCards} userType={userType} onBrowseFiles={() => {}} />
+      );
+      expect(screen.queryByRole('heading', { name: /^early access$/i })).not.toBeInTheDocument();
+      unmount();
+    });
+  });
+});
+
+describe('DataReleaseCards - sub-collections stay apart', () => {
+  test('two series at the same collection number are not folded together', () => {
+    // human-main phenotype holds human-main-sed-adu c2.0 and human-all-ped c2.0.
+    // Flattening them presented one as an earlier version of the other, and
+    // collided on the React key.
+    const humanMain = studyDataCards.filter((s) => s.code === 'human-main');
+    render(<DataReleaseCards studies={humanMain} userType="internal" onBrowseFiles={() => {}} />);
+
+    // Listed once, under Consortium: a mixed collection is placed on the
+    // strength of its released files, and there is no Early Access section.
+    expect(screen.getAllByText('human-main-sed-adu')).toHaveLength(1);
+    expect(screen.getAllByText('human-all-ped')).toHaveLength(1);
+    // Neither is presented as an "earlier collection" of the other.
+    expect(screen.queryByRole('button', { name: /other collections/i })).not.toBeInTheDocument();
   });
 });
