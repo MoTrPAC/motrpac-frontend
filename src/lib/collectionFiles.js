@@ -1,5 +1,5 @@
 import studyDataCards, { humanPhenotypeDataCards } from './studyDataCards';
-import { visibleVersions } from './studyDataAccess';
+import { allVersions, visibleSeries } from './studyDataAccess';
 
 /**
  * Loads file metadata one collection at a time.
@@ -60,12 +60,14 @@ export function isKnownCollection(prefix) {
 export function entitledPrefixes(userType) {
   const prefixes = [];
   allDataCards.forEach((card) => {
-    Object.values(card.dataTypes).forEach((versions) => {
-      visibleVersions(versions, userType).forEach((version) => {
-        const prefix = prefixFromStorageLocation(version.storageLocation);
-        if (isKnownCollection(prefix)) {
-          prefixes.push(prefix);
-        }
+    Object.values(card.dataTypes).forEach((entries) => {
+      visibleSeries(entries, userType).forEach((series) => {
+        series.versions.forEach((version) => {
+          const prefix = prefixFromStorageLocation(version.storageLocation);
+          if (isKnownCollection(prefix)) {
+            prefixes.push(prefix);
+          }
+        });
       });
     });
   });
@@ -76,8 +78,8 @@ export function entitledPrefixes(userType) {
 export function findCollection(prefix) {
   let found = null;
   allDataCards.forEach((card) => {
-    Object.entries(card.dataTypes).forEach(([kind, versions]) => {
-      versions.forEach((version) => {
+    Object.entries(card.dataTypes).forEach(([kind, entries]) => {
+      allVersions(entries).forEach((version) => {
         if (prefixFromStorageLocation(version.storageLocation) === prefix) {
           found = { card, kind, version };
         }
