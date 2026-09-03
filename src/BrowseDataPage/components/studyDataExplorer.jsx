@@ -10,7 +10,7 @@ import StudyCollectionCard from './studyCollectionCard';
 import DataReleaseCards from './dataReleaseCard';
 
 const SPECIES_OPTIONS = ['all', 'rat', 'human'];
-const DESIGN_OPTIONS = ['all', 'Acute exercise', 'Endurance training'];
+const DESIGN_OPTIONS = ['all', 'Acute exercise', 'Endurance training', 'Acute + training'];
 
 function matchesFilters(study, filters) {
   if (filters.species !== 'all' && study.species !== filters.species) {
@@ -159,7 +159,7 @@ function StudyDataExplorer({ userType = undefined }) {
 
       {activeView === 'releases' && (
         <DataReleaseCards
-          studies={visibleStudies}
+          studies={[...visibleStudies, ...visibleSupportingCollections]}
           userType={userType}
           onBrowseFiles={handleBrowseFiles}
         />
