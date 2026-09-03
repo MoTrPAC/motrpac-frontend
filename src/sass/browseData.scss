@@ -575,6 +575,14 @@
     color: #1f5fb0;
     border: 1px solid #c2daf6;
   }
+
+  // Violet rather than amber: amber is already the Endurance training design
+  // badge, and both pills can sit on the same card.
+  &.stage-badge-early {
+    background-color: #f4edfc;
+    color: #6b3fa0;
+    border: 1px solid #dcc9f0;
+  }
 }
 
 .genome-badge {
@@ -829,5 +837,82 @@
   .filterBtn:disabled {
     opacity: 0.5;
     cursor: progress;
+  }
+}
+
+// A study that runs both the acute and endurance arms - the Human Main Study -
+// is not described by either single-arm label.
+.design-badge.design-badge-combined {
+  background-color: #eef1fb;
+  color: #3f51a8;
+  border: 1px solid #cfd6ef;
+}
+
+.study-collection-card.study-collection-card-combined {
+  border-left-color: #3f51a8;
+}
+
+// Released, but not served by the Data Hub -- distinct from Pending, which
+// means the data does not exist yet.
+.restricted-badge {
+  background-color: #fdf3e3;
+  color: #96602c;
+  border: 1px solid #efdcc0;
+  font-size: 0.7rem;
+  padding: 0.25rem 0.55rem;
+}
+
+// A kind that applies to a study but has no released collection yet. Cards for
+// phenotype-only collections omit the kind entirely instead of showing this.
+.pending-badge {
+  background-color: #f1f1f1;
+  color: #6c757d;
+  border: 1px solid #e0e0e0;
+  font-size: 0.7rem;
+  padding: 0.25rem 0.55rem;
+}
+
+// A kind that holds several independent series - Human Main Study's phenotype
+// arrives as separate sub-collections, each with its own version lineage.
+.study-collection-kind-cell {
+  .kind-cell-series + .kind-cell-series {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ececec;
+  }
+
+}
+
+
+// "EA / CR" - a collection whose datasets were released at different times.
+.stage-badge.stage-badge-varies {
+  letter-spacing: 0.02em;
+}
+
+// Several series inside one release kind cell.
+.data-release-kind-cell {
+  .data-release-series + .data-release-series {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e6ebee;
+  }
+}
+
+// Identity of one sub-collection within a kind, shared by both card types.
+.collection-series-head {
+  margin-top: 0.75rem;
+
+  .collection-series-name {
+    font-size: 0.85rem;
+  }
+
+  .collection-series-code {
+    font-size: 0.75rem;
+    margin-top: 0.1rem;
+  }
+
+  .collection-series-desc {
+    font-size: 0.78rem;
+    margin-top: 0.25rem;
   }
 }
