@@ -12,6 +12,14 @@ export const STAGE_LABELS = {
   early: 'Early Access',
 };
 
+// Studies that run both arms need their own label; a study is not limited to
+// one design.
+export const DESIGN_MODIFIERS = {
+  'Acute exercise': 'acute',
+  'Endurance training': 'endurance',
+  'Acute + training': 'combined',
+};
+
 export const STAGE_CODES = {
   public: 'PR',
   consortium: 'CR',
@@ -149,16 +157,18 @@ const studyDataCards = [
     studyDesign: 'Acute exercise',
     description: 'Sedentary adults performing a single endurance or resistance bout, with muscle, blood and adipose sampled before, during and after exercise. Enrolled before the study suspension.',
     dataTypes: {
-      // Quant-ID and Phenotype for this study are not directly accessible to
-      // external users through the Data Hub. Access will require dbGaP approval
-      // plus a signed-in Data Hub account; until that is worked out these
-      // collections stay consortium-only.
+      // Quant-ID and Phenotype for this study are publicly released, but are
+      // not distributed through the Data Hub: external users obtain them by
+      // applying to dbGaP. They are held at `consortium` so the Data Hub never
+      // serves them directly, and carry an `accessNote` so the card says why
+      // rather than implying the data does not exist yet.
       quantID: [
         {
           collection: 'c1.0',
           latest: true,
           storageLocation: `gs://${bucketName}/quant-id/human-precovid/c1.0`,
           releaseStage: 'consortium',
+          accessNote: 'Please obtain access to this data by applying through dbGaP.',
         },
       ],
       analysis: [
@@ -175,12 +185,105 @@ const studyDataCards = [
           latest: true,
           storageLocation: `gs://${bucketName}/phenotype/human-precovid-sed-adu/c3.0`,
           releaseStage: 'consortium',
+          accessNote: 'Please obtain access to this data by applying through dbGaP.',
         },
         {
           collection: 'c2.0',
           latest: false,
           storageLocation: `gs://${bucketName}/phenotype/human-precovid-sed-adu/c2.0`,
           releaseStage: 'consortium',
+          accessNote: 'Please obtain access to this data by applying through dbGaP.',
+        },
+      ],
+    },
+  },
+  {
+    code: 'human-main',
+    name: 'Human Main Study',
+    cardTitle: 'Human Main Study',
+    icon: 'person',
+    species: 'human',
+    cohort: 'Post-Suspension',
+    studyDesign: 'Acute + training',
+    description: 'The main human cohort, covering both acute exercise and endurance training arms and sub-collections such as highly active adults and pediatric participants. Data collection and processing are ongoing.',
+    dataTypes: {
+      // Quant-ID and Phenotype for this study are publicly released, but are
+      // not distributed through the Data Hub: external users obtain them by
+      // applying to dbGaP. They are held at `consortium` so the Data Hub never
+      // serves them directly, and carry an `accessNote` so the card says why
+      // rather than implying the data does not exist yet.
+      quantID: [],
+      analysis: [],
+      phenotype: [
+        {
+          code: 'human-main-sed-adu',
+          name: 'Sedentary Adults (Post-Suspension)',
+          cardTitle: 'Sedentary Adults (Post-Suspension)',
+          description: 'Phenotype data collected from sedentary adults enrolled after the study suspension. This collection includes early access data.',
+          collections: [
+            {
+              collection: 'c2.0',
+              latest: true,
+              storageLocation: `gs://${bucketName}/phenotype/human-main-sed-adu/c2.0`,
+              releaseStage: 'consortium',
+            },
+          ],
+        },
+        {
+          code: 'human-all-ped',
+          name: 'Low and Highly Active Pediatrics',
+          cardTitle: 'Low and Highly Active Pediatrics',
+          description: 'Phenotype data collected from low and highly active pediatric participants. This collection includes early access data.',
+          collections: [
+            {
+              collection: 'c2.0',
+              latest: true,
+              storageLocation: `gs://${bucketName}/phenotype/human-all-ped/c2.0`,
+              releaseStage: 'consortium',
+            },
+          ],
+        },
+        {
+          code: 'human-all-ha-adu',
+          name: 'Highly Active Adults',
+          cardTitle: 'Highly Active Adults',
+          description: 'Phenotype data collected from highly active adult participants. This collection includes early access data.',
+          collections: [
+            {
+              collection: 'c2.0',
+              latest: true,
+              storageLocation: `gs://${bucketName}/phenotype/human-all-ha-adu/c2.0`,
+              releaseStage: 'consortium',
+            },
+          ],
+        },
+        {
+          code: 'human-screening-adu',
+          name: 'Screening Adults',
+          cardTitle: 'Screening Adults',
+          description: 'Phenotype data collected from adult participants during the screening phase. This collection includes early access data.',
+          collections: [
+            {
+              collection: 'c2.0',
+              latest: true,
+              storageLocation: `gs://${bucketName}/phenotype/human-screening-adu/c2.0`,
+              releaseStage: 'consortium',
+            },
+          ],
+        },
+        {
+          code: 'human-screening-ped',
+          name: 'Screening Pediatrics',
+          cardTitle: 'Screening Pediatrics',
+          description: 'Phenotype data collected from pediatric participants during the screening phase. This collection includes early access data.',
+          collections: [
+            {
+              collection: 'c2.0',
+              latest: true,
+              storageLocation: `gs://${bucketName}/phenotype/human-screening-ped/c2.0`,
+              releaseStage: 'consortium',
+            },
+          ],
         },
       ],
     },
@@ -204,6 +307,25 @@ export const humanPhenotypeDataCards = [
           collection: 'c14.0',
           latest: true,
           storageLocation: `gs://${bucketName}/phenotype/human-eqc/c14.0`,
+          releaseStage: 'consortium',
+        },
+      ],
+    },
+  },
+  {
+    code: 'human-biospecimen',
+    name: 'Human Biospecimen',
+    cardTitle: 'Human Biospecimen',
+    icon: 'person',
+    species: 'human',
+    cohort: 'Adults and pediatrics',
+    description: 'Curated biospecimen data supporting the human phenotype collections.',
+    dataTypes: {
+      phenotype: [
+        {
+          collection: 'c3.0',
+          latest: true,
+          storageLocation: `gs://${bucketName}/phenotype/human-biospecimen/c3.0`,
           releaseStage: 'consortium',
         },
       ],
