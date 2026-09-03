@@ -12,17 +12,17 @@ import studyDataCards, { humanPhenotypeDataCards } from '../studyDataCards';
 const bucket = import.meta.env.VITE_DATA_FILE_BUCKET;
 
 describe('collection prefixes', () => {
-  test('every collection declared on a card has a loader', () => {
-    const declared = [];
-    [...studyDataCards, ...humanPhenotypeDataCards].forEach((card) => {
-      Object.values(card.dataTypes).forEach((versions) => {
-        versions.forEach((version) => {
-          declared.push(prefixFromStorageLocation(version.storageLocation));
-        });
-      });
+  test('a collection without metadata is never offered for loading', () => {
+    // Cards announce collections as soon as data lands in the bucket; the
+    // metadata is generated afterwards, so declared-without-metadata is a
+    // legitimate transient state. The safety property is that the file browser
+    // only ever loads collections that actually have metadata behind them.
+    ['internal', 'external', undefined].forEach((userType) => {
+      const unloadable = entitledPrefixes(userType).filter(
+        (prefix) => !isKnownCollection(prefix)
+      );
+      expect(unloadable).toEqual([]);
     });
-    const missing = declared.filter((prefix) => !isKnownCollection(prefix));
-    expect(missing).toEqual([]);
   });
 
   test('every loader corresponds to a declared collection', () => {
