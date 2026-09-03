@@ -916,3 +916,42 @@
     margin-top: 0.25rem;
   }
 }
+
+// The view switcher matches the bundle datasets tab strip. Bootstrap's nav-tabs
+// styling assumes anchors; these are buttons, which carry a default background
+// and a focus outline that would break the strip.
+.study-data-explorer-tabs {
+  .nav-link {
+    background-color: transparent;
+    cursor: pointer;
+    // Buttons do not inherit font-weight from the `li` the way the bundle
+    // tabs' anchors do, so the bold has to be set here.
+    font-weight: 700;
+  }
+
+  .nav-link:not(.active) {
+    color: #007bff;
+  }
+
+  .nav-link:focus {
+    outline: none;
+  }
+}
+
+// Crossfade when switching between Study Collections and Data Releases. Not
+// Bootstrap's `.tab-pane.fade`: that hides the pane with `display: none` unless
+// it is `.active`, so the outgoing panel would vanish rather than fade.
+.study-data-explorer-panel {
+  opacity: 1;
+  transition: opacity 150ms linear;
+
+  &.is-fading {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .study-data-explorer-panel {
+    transition: none;
+  }
+}
