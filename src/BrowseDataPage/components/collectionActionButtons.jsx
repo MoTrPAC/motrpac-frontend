@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { isKnownCollection, prefixFromStorageLocation } from '../../lib/collectionFiles';
 
 /**
  * Per-collection actions: browse the collection's files, and (for consortium
@@ -16,12 +17,20 @@ function CollectionActionButtons({
 }) {
   const [expanded, setExpanded] = useState(false);
 
+  // A card can announce a collection before its file metadata is generated --
+  // the data lands in the bucket first. Browsing it would navigate to an empty
+  // scope and bounce straight back to the download page, so the button says so
+  // instead. The GCS path still works, which is the useful action meanwhile.
+  const browsable = isKnownCollection(prefixFromStorageLocation(storageLocation));
+
   return (
     <div className="kind-cell-actions mt-3">
       <div className="kind-cell-action-button-wrapper d-flex align-items-center">
         <button
           type="button"
           className="btn btn-sm btn-primary"
+          disabled={!browsable}
+          title={browsable ? undefined : 'File listing for this collection is not available yet'}
           onClick={() => onBrowseFiles(storageLocation)}
         >
           Browse Files
@@ -29,11 +38,16 @@ function CollectionActionButtons({
         {userType === 'internal' && (
           <button
             type="button"
-            className="btn btn-secondary btn-sm gcs-toggle ml-2"
+            className="btn btn-secondary btn-sm gcs-toggle ml-2 d-inline-flex align-items-center"
             aria-expanded={expanded}
             onClick={() => setExpanded(!expanded)}
           >
-            GCP Storage
+            <span>GCP Storage</span>
+            {/* Same affordance as the "Other collections" toggle: the caret says
+                the button expands something rather than navigating. */}
+            <span className="material-icons ml-1" aria-hidden="true">
+              {expanded ? 'expand_less' : 'expand_more'}
+            </span>
           </button>
         )}
       </div>
