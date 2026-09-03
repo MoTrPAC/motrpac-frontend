@@ -11,7 +11,7 @@ function renderExplorer(userType) {
 }
 
 describe('StudyDataExplorer - view toggle', () => {
-  test('shows the Study Collections panel by default, and switches to Data Releases on click', () => {
+  test('shows the Study Collections panel by default, and switches to Data Releases on click', async () => {
     renderExplorer('internal');
 
     // Stage sections belong to the Data Releases view only.
@@ -20,7 +20,9 @@ describe('StudyDataExplorer - view toggle', () => {
 
     fireEvent.click(screen.getByRole('tab', { name: /data releases/i }));
 
-    expect(screen.getByRole('heading', { name: /^public release$/i })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { name: /^public release$/i })
+    ).toBeInTheDocument();
   });
 });
 
@@ -52,11 +54,13 @@ describe.skip('StudyDataExplorer - species filter', () => {
 });
 
 describe('StudyDataExplorer - Data Releases panel', () => {
-  test('external users see a Public section but no Consortium section at all', () => {
+  test('external users see a Public section but no Consortium section at all', async () => {
     renderExplorer('external');
     fireEvent.click(screen.getByRole('tab', { name: /data releases/i }));
 
-    expect(screen.getByRole('heading', { name: /^public release$/i })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { name: /^public release$/i })
+    ).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: /^consortium release$/i })).not.toBeInTheDocument();
     // rat-training-06 c2.0 quantID/analysis and human-precovid phenotype c2.0 are public
     expect(screen.getAllByText('c2.0').length).toBeGreaterThan(0);
@@ -64,11 +68,13 @@ describe('StudyDataExplorer - Data Releases panel', () => {
     expect(screen.queryByText('c3.0')).not.toBeInTheDocument();
   });
 
-  test('internal users see both Public and Consortium sections', () => {
+  test('internal users see both Public and Consortium sections', async () => {
     renderExplorer('internal');
     fireEvent.click(screen.getByRole('tab', { name: /data releases/i }));
 
-    expect(screen.getByRole('heading', { name: /^public release$/i })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { name: /^public release$/i })
+    ).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /^consortium release$/i })).toBeInTheDocument();
     expect(screen.getAllByText('c3.0').length).toBeGreaterThan(0);
   });
@@ -78,6 +84,7 @@ describe('StudyDataExplorer - Browse Files scopes the file browser to one collec
   test('clicking Browse Files loads only that collection, not the whole study', async () => {
     const { store } = renderExplorer('internal');
     fireEvent.click(screen.getByRole('tab', { name: /data releases/i }));
+    await screen.findByRole('heading', { name: /^public release$/i });
 
     // First row of the Public section is rat-training-06.
     fireEvent.click(screen.getAllByRole('button', { name: /browse files/i })[0]);
@@ -102,9 +109,10 @@ describe('StudyDataExplorer - Browse Files scopes the file browser to one collec
     expect(state.pass1a06DataSelected).toBe(false);
   });
 
-  test('the collection a user is not entitled to is never offered', () => {
+  test('the collection a user is not entitled to is never offered', async () => {
     renderExplorer('external');
     fireEvent.click(screen.getByRole('tab', { name: /data releases/i }));
+    await screen.findByRole('heading', { name: /^public release$/i });
     expect(screen.queryByText('c3.0')).not.toBeInTheDocument();
   });
 });
@@ -124,5 +132,35 @@ describe('StudyDataExplorer - supporting human collections', () => {
       screen.queryByRole('heading', { name: /supporting human collections/i })
     ).not.toBeInTheDocument();
     expect(screen.queryByText(/human extended quality control/i)).not.toBeInTheDocument();
+  });
+});
+
+describe('StudyDataExplorer - the panel crossfades between views', () => {
+  test('fades out, swaps while invisible, then fades back in', async () => {
+    const { container } = renderExplorer('internal');
+    const panel = () => container.querySelector('.study-data-explorer-panel');
+
+    expect(panel().className).not.toMatch(/is-fading/);
+    expect(container.querySelector('.study-collections-panel')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('tab', { name: /data releases/i }));
+
+    // Still showing the old view, now transparent - the swap happens while the
+    // panel is invisible, so the user never sees content jump.
+    expect(panel().className).toMatch(/is-fading/);
+    expect(container.querySelector('.study-collections-panel')).toBeInTheDocument();
+
+    await screen.findByRole('heading', { name: /^public release$/i });
+
+    expect(panel().className).not.toMatch(/is-fading/);
+    expect(container.querySelector('.study-collections-panel')).not.toBeInTheDocument();
+  });
+
+  test('clicking the already-active tab does not start a fade', () => {
+    const { container } = renderExplorer('internal');
+    fireEvent.click(screen.getByRole('tab', { name: /study collections/i }));
+    expect(container.querySelector('.study-data-explorer-panel').className).not.toMatch(
+      /is-fading/
+    );
   });
 });
