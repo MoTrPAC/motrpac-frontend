@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { KIND_ORDER, STAGE_CODES, STAGE_LABELS } from '../../lib/studyDataCards';
+import { DESIGN_MODIFIERS, KIND_ORDER, STAGE_CODES, STAGE_LABELS } from '../../lib/studyDataCards';
+import { collectionSeries, versionStages } from '../../lib/studyDataAccess';
 import CollectionActionButtons from './collectionActionButtons';
 import CollectionLine from './collectionLine';
 import KindChip from './kindChip';
+import SeriesHeading from './seriesHeading';
 
-const STAGE_SECTIONS = [
+// No Early Access section by design: early-access data is not distributed
+// through the data download feature. A collection that mixes consortium and
+// early-access files is listed under Consortium on the strength of its released
+// files; one holding only early-access files is not listed at all
+// (see visibleVersions).
+export const STAGE_SECTIONS = [
   {
     key: 'public',
     name: 'Public Release',
@@ -20,11 +27,6 @@ const STAGE_SECTIONS = [
   },
 ];
 
-const DESIGN_MODIFIERS = {
-  'Acute exercise': 'acute',
-  'Endurance training': 'endurance',
-};
-
 /**
  * Release stage is a property of a collection, not of a study, so one study can
  * appear under more than one stage - rat-training-06 Quant-ID is public at c1.0
@@ -37,10 +39,18 @@ function studyRowsForStage(studies, stage) {
       study,
       kinds: KIND_ORDER.map((kind) => ({
         kind,
-        versions: (study.dataTypes[kind] || []).filter(
-          (version) => version.releaseStage === stage
-        ),
-      })).filter(({ versions }) => versions.length > 0),
+        // Series stay apart here as they do on the collection cards: two
+        // sub-collections can both be at c2.0, and collapsing them would present
+        // one as an earlier version of the other.
+        series: collectionSeries(study.dataTypes[kind])
+          .map((entry) => ({
+            ...entry,
+            versions: entry.versions.filter((version) =>
+              versionStages(version).includes(stage)
+            ),
+          }))
+          .filter((entry) => entry.versions.length > 0),
+      })).filter(({ series }) => series.length > 0),
     }))
     .filter(({ kinds }) => kinds.length > 0);
 }
@@ -48,18 +58,23 @@ function studyRowsForStage(studies, stage) {
 function collectionCount(rows) {
   return rows.reduce(
     (total, { kinds }) =>
-      total + kinds.reduce((subtotal, { versions }) => subtotal + versions.length, 0),
+      total
+      + kinds.reduce(
+        (subtotal, { series }) =>
+          subtotal + series.reduce((count, entry) => count + entry.versions.length, 0),
+        0
+      ),
     0
   );
 }
 
-function ReleaseCollectionItem({ kind, versions, stageCode, userType, onBrowseFiles }) {
-  const [latest, ...earlier] = versions;
+function ReleaseSeries({ series, stageCode, userType, onBrowseFiles }) {
+  const [latest, ...earlier] = series.versions;
   const [showEarlier, setShowEarlier] = useState(false);
 
   return (
-    <div className="data-release-kind-cell h-100 rounded-lg p-3">
-      <KindChip kind={kind} />
+    <div className="data-release-series">
+      <SeriesHeading series={series} />
       <div className="mt-2">
         <CollectionLine version={latest} latestLabel={`Latest ${stageCode}`} />
       </div>
@@ -78,7 +93,7 @@ function ReleaseCollectionItem({ kind, versions, stageCode, userType, onBrowseFi
           >
             <span>Other collections</span>
             <span className="ml-1">({earlier.length})</span>
-            <span className="material-icons ml-1">
+            <span className="material-icons ml-1" aria-hidden="true">
               {showEarlier ? 'expand_less' : 'expand_more'}
             </span>
           </button>
@@ -88,7 +103,7 @@ function ReleaseCollectionItem({ kind, versions, stageCode, userType, onBrowseFi
                 Earlier {stageCode} collections
               </div>
               {earlier.map((version) => (
-                <div key={version.collection} className="other-version-list-item">
+                <div key={version.storageLocation} className="other-version-list-item">
                   <CollectionLine version={version} />
                   <CollectionActionButtons
                     storageLocation={version.storageLocation}
@@ -105,16 +120,36 @@ function ReleaseCollectionItem({ kind, versions, stageCode, userType, onBrowseFi
   );
 }
 
+ReleaseSeries.propTypes = {
+  series: PropTypes.shape({
+    name: PropTypes.string,
+    versions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  }).isRequired,
+  stageCode: PropTypes.string.isRequired,
+  userType: PropTypes.string,
+  onBrowseFiles: PropTypes.func,
+};
+
+function ReleaseCollectionItem({ kind, series, stageCode, userType, onBrowseFiles }) {
+  return (
+    <div className="data-release-kind-cell h-100 rounded-lg p-3">
+      <KindChip kind={kind} />
+      {series.map((entry, index) => (
+        <ReleaseSeries
+          key={entry.name || `series-${index}`}
+          series={entry}
+          stageCode={stageCode}
+          userType={userType}
+          onBrowseFiles={onBrowseFiles}
+        />
+      ))}
+    </div>
+  );
+}
+
 ReleaseCollectionItem.propTypes = {
   kind: PropTypes.oneOf(KIND_ORDER).isRequired,
-  versions: PropTypes.arrayOf(
-    PropTypes.shape({
-      collection: PropTypes.string.isRequired,
-      referenceGenome: PropTypes.string,
-      storageLocation: PropTypes.string.isRequired,
-      releaseStage: PropTypes.oneOf(Object.keys(STAGE_LABELS)).isRequired,
-    })
-  ).isRequired,
+  series: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   stageCode: PropTypes.string.isRequired,
   userType: PropTypes.string,
   onBrowseFiles: PropTypes.func,
@@ -145,11 +180,11 @@ function ReleaseStudyRow({ study, kinds, stageCode, userType, onBrowseFiles }) {
       </div>
       <div className="data-release-kind-row col-12 col-lg-9">
         <div className="row no-gutters">
-          {kinds.map(({ kind, versions }) => (
+          {kinds.map(({ kind, series }) => (
             <div key={kind} className="col-12 col-xl-4 p-1">
               <ReleaseCollectionItem
                 kind={kind}
-                versions={versions}
+                series={series}
                 stageCode={stageCode}
                 userType={userType}
                 onBrowseFiles={onBrowseFiles}
