@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -25,10 +25,29 @@ function matchesFilters(study, filters) {
   return true;
 }
 
+// Matches the opacity transition in browseData.scss. The panel fades out, the
+// view swaps while it is invisible, then it fades back in.
+const FADE_MS = 150;
+
 function StudyDataExplorer({ userType = undefined }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [activeView, setActiveView] = useState('collections');
+  const [shown, setShown] = useState(true);
+  const fadeTimer = useRef(null);
+
+  useEffect(() => () => clearTimeout(fadeTimer.current), []);
+
+  function showView(view) {
+    if (view === activeView) {
+      return;
+    }
+    setShown(false);
+    fadeTimer.current = setTimeout(() => {
+      setActiveView(view);
+      setShown(true);
+    }, FADE_MS);
+  }
   const [filters, setFilters] = useState({ species: 'all', design: 'all', stage: 'all' });
 
   const visibleStudies = studyDataCards
@@ -52,29 +71,27 @@ function StudyDataExplorer({ userType = undefined }) {
 
   return (
     <div className="study-data-explorer mt-4">
-      <ul className="study-data-explorer-tabs nav nav-pills border-bottom pb-3 mb-3" id="pills-tab" role="tablist" aria-label="Choose a view">
-        <li className="nav-item" role="presentation">
+      <ul className="study-data-explorer-tabs nav nav-tabs mb-3" id="study-data-explorer-tab" role="tablist" aria-label="Choose a view">
+        <li className="nav-item font-weight-bold" role="presentation">
           <button
             type="button"
-            className="nav-link active font-weight-bold"
-            id="pills-collections-tab"
+            className={`nav-link ${activeView === 'collections' ? 'active' : ''}`}
+            id="study-collections-tab"
             role="tab"
-            data-toggle="pill"
             aria-selected={activeView === 'collections'}
-            onClick={() => setActiveView('collections')}
+            onClick={() => showView('collections')}
           >
             Study Collections
           </button>
         </li>
-        <li className="nav-item" role="presentation">
+        <li className="nav-item font-weight-bold" role="presentation">
           <button
             type="button"
-            className="nav-link font-weight-bold"
-            id="pills-releases-tab"
+            className={`nav-link ${activeView === 'releases' ? 'active' : ''}`}
+            id="data-releases-tab"
             role="tab"
-            data-toggle="pill"
             aria-selected={activeView === 'releases'}
-            onClick={() => setActiveView('releases')}
+            onClick={() => showView('releases')}
           >
             Data Releases
           </button>
@@ -127,43 +144,47 @@ function StudyDataExplorer({ userType = undefined }) {
         </div>
       </div>
       */}
-      {activeView === 'collections' && (
-        <div className="study-collections-panel">
-          {visibleStudies.map((study) => (
-            <StudyCollectionCard
-              key={study.code}
-              study={study}
+      <div className={`study-data-explorer-panel ${shown ? '' : 'is-fading'}`}>
+        {activeView === 'collections' && (
+          <div className="study-collections-panel">
+            {visibleStudies.map((study) => (
+              <StudyCollectionCard
+                key={study.code}
+                study={study}
+                userType={userType}
+                onBrowseFiles={handleBrowseFiles}
+              />
+            ))}
+            {visibleSupportingCollections.length > 0 && (
+              <section className="supporting-collections-panel mt-5">
+                <h2 className="h4">Supporting human collections</h2>
+                <p className="supporting-collections-intro">
+                  Cross-study phenotype resources that sit alongside the primary study
+                  collections.
+                </p>
+                {visibleSupportingCollections.map((collection) => (
+                  <StudyCollectionCard
+                    key={collection.code}
+                    study={collection}
+                    userType={userType}
+                    onBrowseFiles={handleBrowseFiles}
+                  />
+                ))}
+              </section>
+            )}
+          </div>
+        )}
+
+        {activeView === 'releases' && (
+          <div className="data-releases-panel">
+            <DataReleaseCards
+              studies={[...visibleStudies, ...visibleSupportingCollections]}
               userType={userType}
               onBrowseFiles={handleBrowseFiles}
             />
-          ))}
-          {visibleSupportingCollections.length > 0 && (
-            <section className="supporting-collections-panel mt-5">
-              <h2 className="h4">Supporting human collections</h2>
-              <p className="supporting-collections-intro">
-                Cross-study phenotype resources that sit alongside the primary study
-                collections.
-              </p>
-              {visibleSupportingCollections.map((collection) => (
-                <StudyCollectionCard
-                  key={collection.code}
-                  study={collection}
-                  userType={userType}
-                  onBrowseFiles={handleBrowseFiles}
-                />
-              ))}
-            </section>
-          )}
-        </div>
-      )}
-
-      {activeView === 'releases' && (
-        <DataReleaseCards
-          studies={[...visibleStudies, ...visibleSupportingCollections]}
-          userType={userType}
-          onBrowseFiles={handleBrowseFiles}
-        />
-      )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
