@@ -1,41 +1,23 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { KIND_LABELS, KIND_ORDER } from '../../lib/studyDataCards';
-import { visibleVersions } from '../../lib/studyDataAccess';
+import { DESIGN_MODIFIERS, KIND_LABELS, KIND_ORDER } from '../../lib/studyDataCards';
+import { allVersions, visibleSeries } from '../../lib/studyDataAccess';
 import CollectionActionButtons from './collectionActionButtons';
 import CollectionLine from './collectionLine';
 import KindChip from './kindChip';
+import SeriesHeading from './seriesHeading';
 import StageBadge from './stageBadge';
 
-const DESIGN_MODIFIERS = {
-  'Acute exercise': 'acute',
-  'Endurance training': 'endurance',
-};
-
-function KindCell({ kind, versions, userType, onBrowseFiles }) {
+function VersionSeries({ series, userType, onBrowseFiles }) {
   const [showOlder, setShowOlder] = useState(false);
-
-  if (versions.length === 0) {
-    return (
-      <div className="study-collection-kind-cell is-empty col px-4 py-3">
-        <KindChip kind={kind} />
-        <p className="empty-msg text-muted mt-2 mb-0">
-          No {KIND_LABELS[kind]} collections available.
-        </p>
-      </div>
-    );
-  }
-
-  const [latest, ...otherVersions] = versions;
+  const [latest, ...otherVersions] = series.versions;
 
   return (
-    <div className="study-collection-kind-cell col px-4 py-3">
-      <div className="kind-cell-label-wrapper d-flex align-items-center justify-content-between">
-        <KindChip kind={kind} />
-        <StageBadge stage={latest.releaseStage} />
-      </div>
-      <div className="mt-2">
+    <div className="kind-cell-series">
+      <SeriesHeading series={series} />
+      <div className="kind-cell-latest-line d-flex align-items-center justify-content-between mt-2">
         <CollectionLine version={latest} latestLabel="Latest" />
+        <StageBadge stage={latest.releaseStage} />
       </div>
       <CollectionActionButtons
         storageLocation={latest.storageLocation}
@@ -62,7 +44,7 @@ function KindCell({ kind, versions, userType, onBrowseFiles }) {
                 Earlier collections
               </div>
               {otherVersions.map((version) => (
-                <div key={version.collection} className="other-version-list-item">
+                <div key={version.storageLocation} className="other-version-list-item">
                   <CollectionLine version={version} showStage />
                   <CollectionActionButtons
                     storageLocation={version.storageLocation}
@@ -79,15 +61,84 @@ function KindCell({ kind, versions, userType, onBrowseFiles }) {
   );
 }
 
+VersionSeries.propTypes = {
+  series: PropTypes.shape({
+    code: PropTypes.string,
+    name: PropTypes.string,
+    description: PropTypes.string,
+    versions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  }).isRequired,
+  userType: PropTypes.string,
+  onBrowseFiles: PropTypes.func,
+};
+
+/**
+ * One family column. A kind can hold several independent series -- Human Main
+ * Study's phenotype arrives as separate sub-collections, each with its own
+ * versions -- so each gets its own latest and its own "other collections" list.
+ * Collapsing them into one list would present c2.0 of one as a later version of
+ * c1.0 of another.
+ */
+function KindCell({ kind, declared, series, userType, onBrowseFiles }) {
+  if (series.length === 0) {
+    // Two different reasons for an empty cell, and they must not read alike.
+    // Nothing declared means the data does not exist yet. Something declared
+    // but not visible to this user means it exists and is withheld -- saying
+    // "in preparation" there is simply false.
+    const withheld = declared.length > 0;
+    const note = declared.find((version) => version.accessNote)?.accessNote;
+
+    return (
+      <div className="study-collection-kind-cell is-empty col px-4 py-3">
+        <div className="kind-cell-label-wrapper d-flex align-items-center justify-content-between">
+          <KindChip kind={kind} />
+          <span className={`${withheld ? 'restricted-badge' : 'pending-badge'} badge badge-pill`}>
+            {withheld ? 'Restricted' : 'Pending'}
+          </span>
+        </div>
+        <p className="empty-msg text-muted mt-2 mb-0">
+          {withheld
+            ? note || `${KIND_LABELS[kind]} collections are not available for direct download.`
+            : `${KIND_LABELS[kind]} results are in preparation — no released collections yet.`}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="study-collection-kind-cell col px-4 py-3">
+      <div className="kind-cell-label-wrapper d-flex align-items-center justify-content-between">
+        <KindChip kind={kind} />
+      </div>
+      {series.map((entry, index) => (
+        <VersionSeries
+          key={entry.name || `series-${index}`}
+          series={entry}
+          userType={userType}
+          onBrowseFiles={onBrowseFiles}
+        />
+      ))}
+    </div>
+  );
+}
+
 KindCell.propTypes = {
   kind: PropTypes.oneOf(KIND_ORDER).isRequired,
-  versions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  declared: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  series: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   userType: PropTypes.string,
   onBrowseFiles: PropTypes.func,
 };
 
 function StudyCollectionCard({ study, userType = undefined, onBrowseFiles = () => {} }) {
   const designModifier = DESIGN_MODIFIERS[study.studyDesign] || 'acute';
+
+  // A missing `dataTypes` key means the kind does not apply to this card at all
+  // -- the supporting human collections are phenotype-only and will never have
+  // Quant-ID or Analysis. An empty array means the kind applies but has nothing
+  // released yet, which renders as Pending. The two are deliberately different:
+  // "not applicable" should not look like "coming soon".
+  const applicableKinds = KIND_ORDER.filter((kind) => study.dataTypes[kind] !== undefined);
 
   return (
     <div
@@ -119,11 +170,12 @@ function StudyCollectionCard({ study, userType = undefined, onBrowseFiles = () =
         <p className="study-collection-desc text-muted mt-3 mb-0">{study.description}</p>
       </div>
       <div className="study-collection-kind-row row no-gutters">
-        {KIND_ORDER.map((kind) => (
+        {applicableKinds.map((kind) => (
           <KindCell
             key={kind}
             kind={kind}
-            versions={visibleVersions(study.dataTypes[kind] || [], userType)}
+            declared={allVersions(study.dataTypes[kind])}
+            series={visibleSeries(study.dataTypes[kind], userType)}
             userType={userType}
             onBrowseFiles={onBrowseFiles}
           />
