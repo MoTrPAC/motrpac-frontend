@@ -1023,3 +1023,14 @@
     margin-top: 1.5rem;
   }
 }
+
+// The subscribe callout borrows its card's own accent green (the same
+// #548f2c on the acute-exercise card's top border) so it reads as part of the
+// card rather than as a page-level alert.
+.bundle-dataset-notice {
+  border-left-color: #548f2c;
+
+  .bundle-dataset-notice-icon {
+    color: #548f2c;
+  }
+}
