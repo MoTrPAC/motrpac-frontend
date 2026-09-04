@@ -3,6 +3,7 @@ import { screen, fireEvent, waitFor, within } from '@testing-library/react';
 import React from 'react';
 import { renderWithProviders } from '../../../testUtils/test-utils';
 import StudyDataExplorer from '../studyDataExplorer';
+import { visibleBundleCards } from '../../../lib/bundleDataCards';
 
 function renderExplorer(userType) {
   return renderWithProviders(
@@ -162,5 +163,59 @@ describe('StudyDataExplorer - the panel crossfades between views', () => {
     expect(container.querySelector('.study-data-explorer-panel').className).not.toMatch(
       /is-fading/
     );
+  });
+});
+
+describe('StudyDataExplorer - Bundle Datasets tab', () => {
+  test('is the third tab, after Study Collections and Data Releases', () => {
+    const { container } = renderExplorer('internal');
+    const labels = [...container.querySelectorAll('.study-data-explorer-tabs button')].map(
+      (b) => b.textContent
+    );
+    expect(labels).toEqual(['Study Collections', 'Data Releases', 'Bundle Datasets']);
+  });
+
+  test('shows a card per bundle group, in the collection-card style', async () => {
+    const { container } = renderExplorer('internal');
+    fireEvent.click(screen.getByRole('tab', { name: /bundle datasets/i }));
+
+    // Bundle cards share their names with the study collection cards, so waiting
+    // on a name would resolve against the panel we are leaving. Wait for the
+    // bundles panel itself.
+    const cards = visibleBundleCards('internal');
+    await waitFor(() =>
+      expect(container.querySelectorAll('.bundle-dataset-card').length).toBe(cards.length)
+    );
+    cards.forEach((card) => expect(screen.getByText(card.name)).toBeInTheDocument());
+    expect(container.querySelectorAll('.bundle-dataset-card')).toHaveLength(cards.length);
+  });
+
+  test('external users get only the groups they may see', async () => {
+    const { container } = renderExplorer('external');
+    fireEvent.click(screen.getByRole('tab', { name: /bundle datasets/i }));
+
+    const external = visibleBundleCards('external');
+    await waitFor(() =>
+      expect(container.querySelectorAll('.bundle-dataset-card').length).toBe(external.length)
+    );
+    // The internal-only groups must be absent, not merely empty.
+    const internalOnly = visibleBundleCards('internal')
+      .map((card) => card.name)
+      .filter((name) => !external.some((card) => card.name === name));
+    expect(internalOnly.length).toBeGreaterThan(0);
+    internalOnly.forEach((name) => expect(screen.queryByText(name)).not.toBeInTheDocument());
+    expect(container.querySelectorAll('.bundle-dataset-card')).toHaveLength(external.length);
+  });
+
+  test('switching away unmounts the bundle cards', async () => {
+    const { container } = renderExplorer('internal');
+    fireEvent.click(screen.getByRole('tab', { name: /bundle datasets/i }));
+    await waitFor(() =>
+      expect(container.querySelectorAll('.bundle-dataset-card').length).toBeGreaterThan(0)
+    );
+
+    fireEvent.click(screen.getByRole('tab', { name: /study collections/i }));
+    await screen.findByRole('heading', { name: /supporting human collections/i });
+    expect(container.querySelectorAll('.bundle-dataset-card')).toHaveLength(0);
   });
 });
