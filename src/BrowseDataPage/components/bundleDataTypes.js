@@ -20,11 +20,11 @@ const BundleDataTypes = {
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across tissues for ATAC-seq and RRBS (excluding RRBS quantitative results).',
+        'Analyses, sample-level metadata, QC, and quantitative results across tissues for ATAC-seq and RRBS (excluding RRBS quantitative results), with c1.0 using RN6 and c2.0 using RN7.',
       object_zipfile: 'bundles/motrpac_rat-training-06_epigenomics_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 10.74 GB',
+      object_zipfile_size: 'c1.0, 10.74 GB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_epigenomics_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 14.60 GB',
+      object_rn7_zipfile_size: 'c2.0, 14.60 GB',
     },
     {
       type: 'transcriptomics',
@@ -34,11 +34,11 @@ const BundleDataTypes = {
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across tissues for RNA-seq.',
+        'Analyses, sample-level metadata, QC, and quantitative results across tissues for RNA-seq, with c1.0 using RN6 and c2.0 using RN7.',
       object_zipfile: 'bundles/motrpac_rat-training-06_transcriptomics_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 566.97 MB',
+      object_zipfile_size: 'c1.0, 566.97 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_transcriptomics_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 474.69 MB',
+      object_rn7_zipfile_size: 'c2.0, 474.69 MB',
     },
     {
       type: 'proteomics-untargeted',
@@ -48,11 +48,11 @@ const BundleDataTypes = {
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across tissues for the Acetyl Proteomics, Global Proteomics, Phosphoproteomics, and Protein Ubiquitination.',
+        'Analyses, sample-level metadata, QC, and quantitative results across tissues for the Acetyl Proteomics, Global Proteomics, Phosphoproteomics, and Protein Ubiquitination assays, with c1.0 using RN6 and c2.0 using RN7.',
       object_zipfile: 'bundles/motrpac_rat-training-06_proteomics-untargeted_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 1.02 GB',
+      object_zipfile_size: 'c1.0, 1.02 GB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_proteomics-untargeted_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 1.40 GB',
+      object_rn7_zipfile_size: 'c2.0, 1.40 GB',
     },
     {
       type: 'metabolomics-untargeted',
@@ -98,11 +98,11 @@ const BundleDataTypes = {
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the gastrocnemius tissue (excluding RRBS quantitative results).',
+        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the gastrocnemius tissue (excluding RRBS quantitative results), with c1.0 using RN6 and c2.0 using RN7.',
       object_zipfile: 'bundles/motrpac_rat-training-06_gastrocnemius_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 159.07 MB',
+      object_zipfile_size: 'c1.0, 159.07 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_gastrocnemius_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 2.26 GB',
+      object_rn7_zipfile_size: 'c2.0, 2.26 GB',
     },
     {
       type: 'tissue-heart',
@@ -112,11 +112,11 @@ const BundleDataTypes = {
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the heart tissue (excluding RRBS quantitative results).',
+        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the heart tissue (excluding RRBS quantitative results), with c1.0 using RN6 and c2.0 using RN7.',
       object_zipfile: 'bundles/motrpac_rat-training-06_heart_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 196.71 MB',
+      object_zipfile_size: 'c1.0, 196.71 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_heart_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 1.93 GB',
+      object_rn7_zipfile_size: 'c2.0, 1.93 GB',
     },
     {
       type: 'tissue-liver',
@@ -126,11 +126,11 @@ const BundleDataTypes = {
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
       description:
-        'Analyses, sample-level metadata, QC and quantitative results across omes/assays for the liver tissue (excluding RRBS quantitative results).',
+        'Analyses, sample-level metadata, QC and quantitative results across omes/assays for the liver tissue (excluding RRBS quantitative results), with c1.0 using RN6 and c2.0 using RN7.',
       object_zipfile: 'bundles/motrpac_rat-training-06_liver_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 224.71 MB',
+      object_zipfile_size: 'c1.0, 224.71 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_liver_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 1.82 GB',
+      object_rn7_zipfile_size: 'c2.0, 1.82 GB',
     },
     {
       type: 'tissue-lung',
@@ -140,11 +140,11 @@ const BundleDataTypes = {
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the lung tissue (excluding RRBS quantitative results).',
+        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the lung tissue (excluding RRBS quantitative results), with c1.0 using RN6 and c2.0 using RN7.',
       object_zipfile: 'bundles/motrpac_rat-training-06_lung_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 254.39 MB',
+      object_zipfile_size: 'c1.0, 254.39 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_lung_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 2.36 GB',
+      object_rn7_zipfile_size: 'c2.0, 2.36 GB',
     },
     {
       type: 'tissue-kidney',
@@ -154,11 +154,11 @@ const BundleDataTypes = {
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the kidney tissue (excluding RRBS quantitative results).',
+        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the kidney tissue (excluding RRBS quantitative results), with c1.0 using RN6 and c2.0 using RN7.',
       object_zipfile: 'bundles/motrpac_rat-training-06_kidney_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 188.64 MB',
+      object_zipfile_size: 'c1.0, 188.64 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_kidney_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 1.82 GB',
+      object_rn7_zipfile_size: 'c2.0, 1.82 GB',
     },
     {
       type: 'tissue-brown-adipose',
@@ -168,11 +168,11 @@ const BundleDataTypes = {
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the brown adipose tissue (excluding RRBS quantitative results).',
+        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the brown adipose tissue (excluding RRBS quantitative results), with c1.0 using RN6 and c2.0 using RN7.',
       object_zipfile: 'bundles/motrpac_rat-training-06_brown-adipose_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 61.03 MB',
+      object_zipfile_size: 'c1.0, 61.03 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_brown-adipose_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 2.36 GB',
+      object_rn7_zipfile_size: 'c2.0, 2.36 GB',
     },
     {
       type: 'tissue-white-adipose',
@@ -182,11 +182,11 @@ const BundleDataTypes = {
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the white adipose tissue (excluding RRBS quantitative results).',
+        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the white adipose tissue (excluding RRBS quantitative results), with c1.0 using RN6 and c2.0 using RN7.',
       object_zipfile: 'bundles/motrpac_rat-training-06_white-adipose_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 199.13 MB',
+      object_zipfile_size: 'c1.0, 199.13 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_white-adipose_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 2.04 GB',
+      object_rn7_zipfile_size: 'c2.0, 2.04 GB',
     },
     {
       type: 'tissue-blood-rna',
@@ -196,11 +196,11 @@ const BundleDataTypes = {
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results in RNA-seq for blood RNA.',
+        'Analyses, sample-level metadata, QC, and quantitative results in RNA-seq for blood RNA, with c1.0 using RN6 and c2.0 using RN7.',
       object_zipfile: 'bundles/motrpac_rat-training-06_blood_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 19.08 MB',
+      object_zipfile_size: 'c1.0, 19.08 MB',
       object_rn7_zipfile: 'bundles/motrpac_rat-training-06_blood_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 22.13 MB',
+      object_rn7_zipfile_size: 'c2.0, 22.13 MB',
     },
     {
       type: 'tissue-plasma',
