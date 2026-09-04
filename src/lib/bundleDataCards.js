@@ -18,6 +18,7 @@ const bundleDataCards = [
     name: 'Endurance Training in Young Adult Rats',
     icon: 'pest_control_rodent',
     species: 'rat',
+    cohort: '6 month old',
     studyDesign: 'Endurance training',
     description:
       'Bundled downloads for young adult rats that completed the endurance training protocol. Each bundle packages one data type across all tissues.',
@@ -25,9 +26,10 @@ const bundleDataCards = [
   },
   {
     code: 'rat-acute-06',
-    name: 'Acute Exercise in Rats',
+    name: 'Acute Exercise in Young Adult Rats',
     icon: 'pest_control_rodent',
     species: 'rat',
+    cohort: '6 month old',
     studyDesign: 'Acute exercise',
     description:
       'Bundled downloads for young adult rats that performed a single exercise bout.',
@@ -39,9 +41,20 @@ const bundleDataCards = [
     name: 'Acute Exercise in Human Sedentary Adults',
     icon: 'person',
     species: 'human',
+    cohort: 'Pre-Suspension',
     studyDesign: 'Acute exercise',
     description:
       'Bundled downloads for sedentary adults who performed a single endurance or resistance bout.',
+    // Carried over from the tab this card replaced. Held here rather than in the
+    // component so a second study can have its own notice without a special case.
+    notice: {
+      icon: 'bi-envelope-paper',
+      before: 'Be sure to ',
+      linkText: 'subscribe',
+      href: 'https://docs.google.com/forms/d/e/1FAIpQLScjGxwsHDDsE4P4j1VNvIUR73cEyh9SJrofxuQyHqucl0GhBg/viewform',
+      after:
+        ' to receive notifications about future data updates for the acute exercise in human sedentary adults study!',
+    },
     datasets: (userType) =>
       userType === 'internal'
         ? BundleDataTypes.human_sed_adu_internal
@@ -49,11 +62,18 @@ const bundleDataCards = [
   },
   {
     code: 'human-clinical',
-    name: 'Clinical Data in Humans',
+    name: 'Phenotypic Data Across Human Cohorts',
     icon: 'person',
     species: 'human',
     description:
       'Bundled clinical and phenotypic data across the human cohorts, as shared at consortium release.',
+    notice: {
+      icon: 'bi-file-earmark-fill',
+      before:
+        'Learn more about the available clinical data in the ',
+      linkText: 'Clinical Data Release Notes',
+      href: 'https://docs.google.com/document/d/1cFPnB1cBKimUJo-5hwnq8yKDJ5DWgdDj4Y0pvl2UZYw/edit?tab=t.0#heading=h.7tm379xtz7sk',
+    },
     internalOnly: true,
     datasets: () => BundleDataTypes.human_clinical_data_internal,
   },
