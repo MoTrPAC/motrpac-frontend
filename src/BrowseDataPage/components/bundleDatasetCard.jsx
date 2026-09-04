@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { DESIGN_MODIFIERS } from '../../lib/studyDataCards';
 import BundleDownloadButton from './bundleDownloadButton';
+import ExternalLink from '../../lib/ui/externalLink';
 
 /**
  * One pre-bundled dataset, as a cell inside its card.
@@ -98,6 +99,7 @@ function BundleDatasetCard({ card, profile = {} }) {
             <h4 className="study-collection-name mb-1">{card.name}</h4>
             <div className="study-collection-code text-muted">
               <code>{card.code}</code>
+              {card.cohort && <span className="ml-1">· {card.cohort}</span>}
               <span className="ml-1">
                 · {card.datasets.length} {card.datasets.length === 1 ? 'bundle' : 'bundles'}
               </span>
@@ -127,6 +129,20 @@ function BundleDatasetCard({ card, profile = {} }) {
           />
         ))}
       </div>
+      {card.notice && (
+        <div className="bundle-dataset-notice bd-callout m-3">
+          <span className="font-weight-normal">
+            <i className={`bi ${card.notice.icon} mr-2 bundle-dataset-notice-icon`} />
+            <span>
+              {card.notice.before}
+              {/* ExternalLink keeps target/rel correct by construction and gives
+                  both notices the same external-link affordance. */}
+              <ExternalLink to={card.notice.href} label={card.notice.linkText} />
+              {card.notice.after}
+            </span>
+          </span>
+        </div>
+      )}
     </div>
   );
 }
@@ -137,8 +153,16 @@ BundleDatasetCard.propTypes = {
     name: PropTypes.string.isRequired,
     icon: PropTypes.string.isRequired,
     species: PropTypes.string.isRequired,
+    cohort: PropTypes.string,
     studyDesign: PropTypes.string,
     description: PropTypes.string.isRequired,
+    notice: PropTypes.shape({
+      icon: PropTypes.string.isRequired,
+      before: PropTypes.string,
+      linkText: PropTypes.string.isRequired,
+      href: PropTypes.string.isRequired,
+      after: PropTypes.string,
+    }),
     datasets: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }).isRequired,
   profile: PropTypes.shape({}),
