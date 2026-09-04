@@ -475,7 +475,7 @@ const BundleDataTypes = {
     {
       type: 'phenotype',
       phase: 'human-main',
-      title: 'Post-Suspension Sedentary Adults (Consortium Release)',
+      title: 'Post-Suspension Sedentary Adults',
       species: 'Human',
       participant_type: 'Adult',
       intervention: 'Sedentary',
@@ -489,13 +489,13 @@ const BundleDataTypes = {
     {
       type: 'phenotype',
       phase: 'human-all',
-      title: 'Low Active Pediatrics (Consortium Release)',
+      title: 'Low and Highly Active Pediatrics',
       species: 'Human',
       participant_type: 'Pediatric',
       intervention: 'Low Active',
       study_group: 'Pre- & Post-Suspension',
       description:
-        'Low active pediatrics phenotypic data, excluding highly active cohort and ancillary studies.',
+        'Low and highly active pediatrics phenotypic data, excluding ancillary studies.',
       object_zipfile:
         'bundles/motrpac_human-all-ped_phenotype.zip',
       object_zipfile_size: '467.8 KB',
