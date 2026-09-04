@@ -650,7 +650,7 @@
 .study-collection-card {
   background-color: #fff;
   border: 1px solid #dde5e9;
-  border-left-width: 5px;
+  border-top-width: 4px;
   overflow: hidden;
 
   &:not(:last-child) {
@@ -658,11 +658,11 @@
   }
 
   &.study-collection-card-acute {
-    border-left-color: #548f2c;
+    border-top-color: #548f2c;
   }
 
   &.study-collection-card-endurance {
-    border-left-color: #96602c;
+    border-top-color: #96602c;
   }
 
   .study-collection-head {
@@ -849,7 +849,7 @@
 }
 
 .study-collection-card.study-collection-card-combined {
-  border-left-color: #3f51a8;
+  border-top-color: #3f51a8;
 }
 
 // Released, but not served by the Data Hub -- distinct from Pending, which
@@ -953,5 +953,73 @@
 @media (prefers-reduced-motion: reduce) {
   .study-data-explorer-panel {
     transition: none;
+  }
+}
+
+// Pre-bundled datasets, rendered in the collection-card language: the card is a
+// study, each cell one bundle. Reuses .study-collection-card for the frame.
+.bundle-dataset-card {
+  // Separators live on the cells, as a top border: in a two-column grid the
+  // first row's cells draw the line under the card header, and no cell draws a
+  // line that would double up with the card's own bottom edge.
+  .bundle-dataset-cell {
+    border-top: 1px solid #e9eef1;
+    border-right: 1px solid #e9eef1;
+
+    .bundle-dataset-actions {
+      gap: 0.5rem;
+    }
+
+    // Uniform width regardless of the size label, which varies from
+    // "617.78 KB" to "v1.0, RN6, 199.13 MB".
+    .open-access-bundle-data-download-container {
+      width: 10.75rem;
+    }
+
+    .btn-bundle-data-download {
+      width: 100%;
+      white-space: nowrap;
+    }
+
+    // A tinted tile in the same geometry as the collection cards' kind chips,
+    // so a bundle title carries the same kind of visual anchor a collection
+    // family does, rather than leaving the download button as the only focal
+    // point in the row.
+    .bundle-dataset-icon {
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 0.4rem;
+      background-color: #e8eef3;
+      color: #3d5666;
+      flex: none;
+
+      .material-icons {
+        font-size: 1rem;
+      }
+    }
+
+    .bundle-dataset-title {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #22323c;
+    }
+
+    .bundle-dataset-desc {
+      font-size: 0.82rem;
+    }
+
+    .participant-badge {
+      background-color: #eef1f4;
+      color: #4a5860;
+      border: 1px solid #dde4e9;
+      font-size: 0.68rem;
+      padding: 0.25rem 0.55rem;
+    }
+  }
+}
+
+.bundle-datasets-panel {
+  .bundle-dataset-card + .bundle-dataset-card {
+    margin-top: 1.5rem;
   }
 }
