@@ -207,3 +207,118 @@ describe('BundleDatasetCard - the title has its own anchor', () => {
     });
   });
 });
+
+describe('BundleDatasetCard - cohort line', () => {
+  test('the card header names its cohort, as the study collection cards do', () => {
+    const card = cardFor('human-precovid-sed-adu', 'internal');
+    const { container } = renderWithProviders(<BundleDatasetCard card={card} profile={{}} />);
+    const header = container.querySelector('.study-collection-code');
+    expect(header.textContent).toContain(card.code);
+    expect(header.textContent).toContain('Pre-Suspension');
+    expect(header.textContent).toContain('bundles');
+  });
+
+  test('a card with no single cohort omits the line rather than inventing one', () => {
+    // Clinical Data spans adults and pediatrics; its per-bundle badges say so.
+    const card = cardFor('human-clinical', 'internal');
+    expect(card.cohort).toBeUndefined();
+    const { container } = renderWithProviders(<BundleDatasetCard card={card} profile={{}} />);
+    expect(container.querySelector('.study-collection-code').textContent).toContain(card.code);
+  });
+});
+
+describe('BundleDatasetCard - subscribe notice', () => {
+  test('the human acute card carries it, below its bundles', () => {
+    const card = cardFor('human-precovid-sed-adu', 'internal');
+    const { container } = renderWithProviders(<BundleDatasetCard card={card} profile={{}} />);
+
+    const notice = container.querySelector('.bundle-dataset-notice');
+    expect(notice).toBeInTheDocument();
+    expect(notice.textContent).toMatch(/subscribe/i);
+    expect(notice.textContent).toMatch(/future data updates/i);
+
+    // Below the grid, matching where it sat on the tab this replaced.
+    const cardChildren = [...container.querySelector('.bundle-dataset-card').children];
+    expect(cardChildren[cardChildren.length - 1]).toBe(notice);
+  });
+
+  test('the link opens the sign-up form safely in a new tab', () => {
+    const card = cardFor('human-precovid-sed-adu', 'internal');
+    renderWithProviders(<BundleDatasetCard card={card} profile={{}} />);
+
+    const link = screen.getByRole('link', { name: /subscribe/i });
+    expect(link).toHaveAttribute('href', card.notice.href);
+    expect(link).toHaveAttribute('target', '_blank');
+    // Without noopener the opened page gets a handle back to this one.
+    expect(link).toHaveAttribute('rel', expect.stringContaining('noopener'));
+  });
+
+  test('external users see it too - it is not gated', () => {
+    const card = cardFor('human-precovid-sed-adu', 'external');
+    const { container } = renderWithProviders(<BundleDatasetCard card={card} profile={{}} />);
+    expect(container.querySelector('.bundle-dataset-notice')).toBeInTheDocument();
+  });
+
+  test('cards without a notice render none', () => {
+    ['rat-training-06', 'rat-acute-06'].forEach((code) => {
+      const card = cardFor(code, 'internal');
+      const { container, unmount } = renderWithProviders(
+        <BundleDatasetCard card={card} profile={{}} />
+      );
+      expect(container.querySelector('.bundle-dataset-notice')).toBeNull();
+      unmount();
+    });
+  });
+});
+
+describe('BundleDatasetCard - the notice takes its card’s accent', () => {
+  test('it is not styled as a page-level primary callout', () => {
+    // Painting bd-callout-primary green would leave a class named "primary"
+    // rendering green, which the next reader would have to un-pick.
+    const card = cardFor('human-precovid-sed-adu', 'internal');
+    const { container } = renderWithProviders(<BundleDatasetCard card={card} profile={{}} />);
+
+    const notice = container.querySelector('.bundle-dataset-notice');
+    expect(notice.className).toContain('bd-callout');
+    expect(notice.className).not.toContain('bd-callout-primary');
+    expect(notice.querySelector('.bundle-dataset-notice-icon')).toBeInTheDocument();
+    expect(notice.querySelector('.text-primary')).toBeNull();
+  });
+});
+
+describe('BundleDatasetCard - the clinical data notice', () => {
+  const card = () => cardFor('human-clinical', 'internal');
+
+  test('points at the Clinical Data Release Notes', () => {
+    const { container } = renderWithProviders(<BundleDatasetCard card={card()} profile={{}} />);
+
+    const notice = container.querySelector('.bundle-dataset-notice');
+    expect(notice).toBeInTheDocument();
+    expect(notice.textContent).toMatch(/sedentary adults \(post-suspension\)/i);
+    expect(notice.textContent).toMatch(/low active pediatrics/i);
+
+    const link = screen.getByRole('link', { name: /clinical data release notes/i });
+    expect(link).toHaveAttribute('href', card().notice.href);
+    expect(link).toHaveAttribute('target', '_blank');
+    expect(link).toHaveAttribute('rel', expect.stringContaining('noopener'));
+  });
+
+  test('carries its own icon, not the subscribe envelope', () => {
+    const { container } = renderWithProviders(<BundleDatasetCard card={card()} profile={{}} />);
+    const icon = container.querySelector('.bundle-dataset-notice-icon');
+    expect(icon.className).toContain('bi-file-earmark-fill');
+    expect(icon.className).not.toContain('bi-envelope-paper');
+  });
+
+  test('every notice routes through ExternalLink, so target and rel cannot drift', () => {
+    ['human-precovid-sed-adu', 'human-clinical'].forEach((code) => {
+      const { container, unmount } = renderWithProviders(
+        <BundleDatasetCard card={cardFor(code, 'internal')} profile={{}} />
+      );
+      const link = container.querySelector('.bundle-dataset-notice a');
+      expect(link.className).toContain('inline-link-with-icon');
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+      unmount();
+    });
+  });
+});
