@@ -179,6 +179,21 @@ function DataDownloadsMain({
             {' '}
             in MoTrPAC studies.
           </p>
+          {/* Applies to every collection on this page, not to one study's
+              bundles, which is where it used to live. */}
+          <div className="data-updates-notice bd-callout bd-callout-primary m-0 mb-4">
+            <span className="font-weight-bold">
+              <i className="bi bi-envelope-paper mr-2 text-primary" />
+              <span>
+                Be sure to{' '}
+                <ExternalLink
+                  to="https://docs.google.com/forms/d/e/1FAIpQLScjGxwsHDDsE4P4j1VNvIUR73cEyh9SJrofxuQyHqucl0GhBg/viewform"
+                  label="subscribe"
+                />
+                {' '}to receive notifications about future MoTrPAC data updates!
+              </span>
+            </span>
+          </div>
           <StudyDataExplorer userType={userType} profile={profile} />
         </div>
         {/* Additional data information */}
