@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import surveyModdalActions from '../../UserSurvey/userSurveyActions';
 import { trackEvent } from '../../GoogleAnalytics/googleAnalytics';
 
-function BundleDownloadButton({ bundlefile, bundlefileSize, profile = {} }) {
+function BundleDownloadButton({ bundlefile, label, profile = {} }) {
   const [fetchStatus, setFetchStatus] = useState({
     status: null,
     fileUrl: null,
@@ -75,8 +75,7 @@ function BundleDownloadButton({ bundlefile, bundlefileSize, profile = {} }) {
         >
           <span className="sr-only">Loading...</span>
         </div>
-        <span className="file-size font-weight-bold">Get</span> (
-        {bundlefileSize})
+        <span className="font-weight-bold">{label}</span>
       </button>
     );
   }
@@ -126,9 +125,7 @@ function BundleDownloadButton({ bundlefile, bundlefileSize, profile = {} }) {
           handleFileFetch(e, import.meta.env.VITE_DATA_FILE_BUCKET, file)
         }
       >
-        <span className="file-size">
-          <span className="font-weight-bold">Get</span> ({bundlefileSize})
-        </span>
+        <span className="font-weight-bold">{label}</span>
       </button>
     );
   }
@@ -155,7 +152,7 @@ function BundleDownloadButton({ bundlefile, bundlefileSize, profile = {} }) {
 
 BundleDownloadButton.propTypes = {
   bundlefile: PropTypes.string.isRequired,
-  bundlefileSize: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
   profile: PropTypes.shape({
     userid: PropTypes.string,
     user_metadata: PropTypes.shape({
