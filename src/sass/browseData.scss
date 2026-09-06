@@ -777,7 +777,8 @@
 }
 
 .study-collection-kind-cell,
-.data-release-kind-cell {
+.data-release-kind-cell,
+.bundle-dataset-cell {
   .other-versions {
     .btn.btn-link {
       font-size: inherit;
@@ -983,18 +984,20 @@
 
     // A tinted tile in the same geometry as the collection cards' kind chips,
     // so a bundle title carries the same kind of visual anchor a collection
-    // family does, rather than leaving the download button as the only focal
-    // point in the row.
+    // family does. It names what the row *is* -- an archive -- because the
+    // button beneath it already says what happens.
+    // A plain `folder`: at this size the zipper teeth on `folder_zip` were
+    // sub-pixel detail and read as noise, so the simpler silhouette wins.
     .bundle-dataset-icon {
-      width: 1.6rem;
-      height: 1.6rem;
+      width: 1.8rem;
+      height: 1.8rem;
       border-radius: 0.4rem;
       background-color: #e8eef3;
       color: #3d5666;
       flex: none;
 
       .material-icons {
-        font-size: 1rem;
+        font-size: 1.15rem;
       }
     }
 
@@ -1024,13 +1027,9 @@
   }
 }
 
-// The subscribe callout borrows its card's own accent green (the same
-// #548f2c on the acute-exercise card's top border) so it reads as part of the
-// card rather than as a page-level alert.
-.bundle-dataset-notice {
-  border-left-color: #548f2c;
 
-  .bundle-dataset-notice-icon {
-    color: #548f2c;
-  }
+// A bundle leads with its latest collection; older ones sit behind a toggle,
+// in the same boxed panel the study collection cards use.
+.bundle-older-collections {
+  gap: 0.75rem;
 }
