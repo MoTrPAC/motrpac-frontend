@@ -3,6 +3,7 @@ import { screen } from '@testing-library/react';
 import React from 'react';
 import { renderWithProviders } from '../../../testUtils/test-utils';
 import DataDownloadsMain from '../dataDownloadsMain';
+import { defaultBrowseDataState } from '../../browseDataReducer';
 
 const requiredProps = {
   filteredFiles: [],
@@ -44,5 +45,54 @@ describe('DataDownloadsMain - redundant RN6/RN7 callout removed', () => {
     expect(
       screen.queryByText(/now accessible in both v1\.0 \(RN6\) and v2\.0 \(RN7\)/i)
     ).not.toBeInTheDocument();
+  });
+});
+
+describe('DataDownloadsMain - data updates notice', () => {
+  function renderMain(userType) {
+    return renderWithProviders(
+      <DataDownloadsMain
+        profile={userType ? { user_metadata: { userType } } : {}}
+        filteredFiles={[]}
+        activeFilters={defaultBrowseDataState.activeFilters}
+        onChangeFilter={() => {}}
+        onResetFilters={() => {}}
+        handleDownloadRequest={() => {}}
+        downloadRequestResponse=""
+        waitingForResponse={false}
+        surveySubmitted={false}
+        downloadedData={false}
+      />
+    );
+  }
+
+  test('sits at page level, above the tabs, not inside one study’s card', () => {
+    const { container } = renderMain('internal');
+    const notice = container.querySelector('.data-updates-notice');
+    expect(notice).toBeInTheDocument();
+
+    const tabs = container.querySelector('.study-data-explorer-tabs');
+    // Document order: the notice precedes the explorer it applies to.
+    expect(notice.compareDocumentPosition(tabs) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  test('its wording is no longer tied to one study', () => {
+    const { container } = renderMain('internal');
+    const notice = container.querySelector('.data-updates-notice');
+    expect(notice.textContent).toMatch(/future MoTrPAC data updates/i);
+    expect(notice.textContent).not.toMatch(/human sedentary adults/i);
+  });
+
+  test('anonymous visitors see it too', () => {
+    const { container } = renderMain(undefined);
+    expect(container.querySelector('.data-updates-notice')).toBeInTheDocument();
+  });
+
+  test('the subscribe link is external and safe', () => {
+    const { container } = renderMain('internal');
+    const link = container.querySelector('.data-updates-notice a');
+    expect(link).toHaveAttribute('target', '_blank');
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    expect(link.textContent).toMatch(/subscribe/i);
   });
 });

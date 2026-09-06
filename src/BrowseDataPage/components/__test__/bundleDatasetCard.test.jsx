@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest';
 import React from 'react';
-import { screen, within } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 import { renderWithProviders } from '../../../testUtils/test-utils';
 import BundleDatasetCard from '../bundleDatasetCard';
 import { visibleBundleCards } from '../../../lib/bundleDataCards';
@@ -27,13 +27,28 @@ describe('visibleBundleCards - access', () => {
     });
   });
 
-  test('the human acute group serves a different list per audience', () => {
-    // Same gating the tab strip had: internal sees more bundles than external.
-    const internal = cardFor('human-precovid-sed-adu', 'internal').datasets;
-    const external = cardFor('human-precovid-sed-adu', 'external').datasets;
-    expect(internal).toHaveLength(BundleDataTypes.human_sed_adu_internal.length);
-    expect(external).toHaveLength(BundleDataTypes.human_sed_adu_external.length);
-    expect(external.length).toBeLessThan(internal.length);
+  test('gating is per collection, so a consortium-only group vanishes for external users', () => {
+    // rat_acute_06 and human_phenotype are consortium throughout, so neither
+    // card should appear at all rather than appearing empty.
+    const consortiumOnly = ['rat_acute_06', 'human_phenotype'].every((key) =>
+      BundleDataTypes[key].every((bundle) =>
+        bundle.collections.every((c) => c.releaseStage !== 'public')
+      )
+    );
+    expect(consortiumOnly).toBe(true);
+
+    const codes = visibleBundleCards('external').map((card) => card.code);
+    expect(codes).not.toContain('rat-acute-06');
+    expect(codes).not.toContain('human-clinical');
+  });
+
+  test('every bundle an external user sees has only public collections', () => {
+    visibleBundleCards('external').forEach((card) => {
+      card.datasets.forEach((bundle) => {
+        expect(bundle.collections.length).toBeGreaterThan(0);
+        bundle.collections.forEach((c) => expect(c.releaseStage).toBe('public'));
+      });
+    });
   });
 });
 
@@ -43,7 +58,7 @@ describe('BundleDatasetCard - rendering', () => {
   test('renders one cell per bundle, none dropped', () => {
     const { container } = renderWithProviders(<BundleDatasetCard card={card} profile={{}} />);
     expect(container.querySelectorAll('.bundle-dataset-cell')).toHaveLength(
-      BundleDataTypes.pass1b_06.length
+      card.datasets.length
     );
   });
 
@@ -141,15 +156,12 @@ describe('BundleDatasetCard - buttons sit below the description', () => {
       });
   });
 
-  test('a paired build still offers both, side by side', () => {
+  test('a bundle leads with its latest collection only', () => {
     const { container } = renderWithProviders(<BundleDatasetCard card={card} profile={{}} />);
-    const paired = [...container.querySelectorAll('.bundle-dataset-actions')].find(
-      (actions) => actions.children.length === 2
+    // One button per bundle up front, however many collections it has.
+    expect(container.querySelectorAll('.bundle-dataset-actions .bundle-collection')).toHaveLength(
+      card.datasets.length
     );
-    expect(paired).toBeTruthy();
-    [...paired.children].forEach((child) => {
-      expect(child.className).toContain('open-access-bundle-data-download-container');
-    });
   });
 });
 
@@ -186,7 +198,10 @@ describe('BundleDatasetCard - the title has its own anchor', () => {
     headings.forEach((heading) => {
       const tile = heading.querySelector('.bundle-dataset-icon');
       expect(tile).toBeInTheDocument();
-      expect(tile.textContent.trim()).toBe('cloud_download');
+      // The tile says what the row is; the button says what happens to it.
+      // `folder` is in the classic Material Icons set the app loads -- a newer
+      // glyph would render as its own literal name.
+      expect(tile.textContent.trim()).toBe('folder');
       expect(heading.querySelector('.bundle-dataset-title')).toBeInTheDocument();
     });
   });
@@ -227,98 +242,266 @@ describe('BundleDatasetCard - cohort line', () => {
   });
 });
 
-describe('BundleDatasetCard - subscribe notice', () => {
-  test('the human acute card carries it, below its bundles', () => {
-    const card = cardFor('human-precovid-sed-adu', 'internal');
-    const { container } = renderWithProviders(<BundleDatasetCard card={card} profile={{}} />);
+describe('BundleDatasetCard - card notices', () => {
+  const withNotice = () => visibleBundleCards('internal').filter((card) => card.notice);
 
-    const notice = container.querySelector('.bundle-dataset-notice');
-    expect(notice).toBeInTheDocument();
-    expect(notice.textContent).toMatch(/subscribe/i);
-    expect(notice.textContent).toMatch(/future data updates/i);
-
-    // Below the grid, matching where it sat on the tab this replaced.
-    const cardChildren = [...container.querySelector('.bundle-dataset-card').children];
-    expect(cardChildren[cardChildren.length - 1]).toBe(notice);
+  test('at least one card carries a notice', () => {
+    expect(withNotice().length).toBeGreaterThan(0);
   });
 
-  test('the link opens the sign-up form safely in a new tab', () => {
-    const card = cardFor('human-precovid-sed-adu', 'internal');
-    renderWithProviders(<BundleDatasetCard card={card} profile={{}} />);
-
-    const link = screen.getByRole('link', { name: /subscribe/i });
-    expect(link).toHaveAttribute('href', card.notice.href);
-    expect(link).toHaveAttribute('target', '_blank');
-    // Without noopener the opened page gets a handle back to this one.
-    expect(link).toHaveAttribute('rel', expect.stringContaining('noopener'));
-  });
-
-  test('external users see it too - it is not gated', () => {
-    const card = cardFor('human-precovid-sed-adu', 'external');
-    const { container } = renderWithProviders(<BundleDatasetCard card={card} profile={{}} />);
-    expect(container.querySelector('.bundle-dataset-notice')).toBeInTheDocument();
-  });
-
-  test('cards without a notice render none', () => {
-    ['rat-training-06', 'rat-acute-06'].forEach((code) => {
-      const card = cardFor(code, 'internal');
+  test('a notice renders below the bundles, with its own icon and link', () => {
+    withNotice().forEach((card) => {
       const { container, unmount } = renderWithProviders(
         <BundleDatasetCard card={card} profile={{}} />
       );
-      expect(container.querySelector('.bundle-dataset-notice')).toBeNull();
+
+      const notice = container.querySelector('.bundle-dataset-notice');
+      expect(notice).toBeInTheDocument();
+      // Last thing in the card, after the grid.
+      const children = [...container.querySelector('.bundle-dataset-card').children];
+      expect(children[children.length - 1]).toBe(notice);
+
+      expect(notice.querySelector('.bundle-dataset-notice-icon').className).toContain(
+        card.notice.icon
+      );
+      expect(notice.textContent).toContain(card.notice.linkText);
       unmount();
     });
-  });
-});
-
-describe('BundleDatasetCard - the notice takes its card’s accent', () => {
-  test('it is not styled as a page-level primary callout', () => {
-    // Painting bd-callout-primary green would leave a class named "primary"
-    // rendering green, which the next reader would have to un-pick.
-    const card = cardFor('human-precovid-sed-adu', 'internal');
-    const { container } = renderWithProviders(<BundleDatasetCard card={card} profile={{}} />);
-
-    const notice = container.querySelector('.bundle-dataset-notice');
-    expect(notice.className).toContain('bd-callout');
-    expect(notice.className).not.toContain('bd-callout-primary');
-    expect(notice.querySelector('.bundle-dataset-notice-icon')).toBeInTheDocument();
-    expect(notice.querySelector('.text-primary')).toBeNull();
-  });
-});
-
-describe('BundleDatasetCard - the clinical data notice', () => {
-  const card = () => cardFor('human-clinical', 'internal');
-
-  test('points at the Clinical Data Release Notes', () => {
-    const { container } = renderWithProviders(<BundleDatasetCard card={card()} profile={{}} />);
-
-    const notice = container.querySelector('.bundle-dataset-notice');
-    expect(notice).toBeInTheDocument();
-    expect(notice.textContent).toMatch(/sedentary adults \(post-suspension\)/i);
-    expect(notice.textContent).toMatch(/low active pediatrics/i);
-
-    const link = screen.getByRole('link', { name: /clinical data release notes/i });
-    expect(link).toHaveAttribute('href', card().notice.href);
-    expect(link).toHaveAttribute('target', '_blank');
-    expect(link).toHaveAttribute('rel', expect.stringContaining('noopener'));
-  });
-
-  test('carries its own icon, not the subscribe envelope', () => {
-    const { container } = renderWithProviders(<BundleDatasetCard card={card()} profile={{}} />);
-    const icon = container.querySelector('.bundle-dataset-notice-icon');
-    expect(icon.className).toContain('bi-file-earmark-fill');
-    expect(icon.className).not.toContain('bi-envelope-paper');
   });
 
   test('every notice routes through ExternalLink, so target and rel cannot drift', () => {
-    ['human-precovid-sed-adu', 'human-clinical'].forEach((code) => {
+    withNotice().forEach((card) => {
       const { container, unmount } = renderWithProviders(
-        <BundleDatasetCard card={cardFor(code, 'internal')} profile={{}} />
+        <BundleDatasetCard card={card} profile={{}} />
       );
       const link = container.querySelector('.bundle-dataset-notice a');
+      expect(link).toHaveAttribute('href', card.notice.href);
       expect(link.className).toContain('inline-link-with-icon');
+      expect(link).toHaveAttribute('target', '_blank');
+      // Without noopener the opened page gets a handle back to this one.
       expect(link).toHaveAttribute('rel', 'noopener noreferrer');
       unmount();
     });
+  });
+
+  test('uses the stock primary callout treatment', () => {
+    const card = withNotice()[0];
+    const { container } = renderWithProviders(<BundleDatasetCard card={card} profile={{}} />);
+    const notice = container.querySelector('.bundle-dataset-notice');
+    expect(notice.className).toContain('bd-callout-primary');
+    expect(notice.querySelector('.text-primary')).toBeInTheDocument();
+  });
+
+  test('cards without a notice render none', () => {
+    visibleBundleCards('internal')
+      .filter((card) => !card.notice)
+      .forEach((card) => {
+        const { container, unmount } = renderWithProviders(
+          <BundleDatasetCard card={card} profile={{}} />
+        );
+        expect(container.querySelector('.bundle-dataset-notice')).toBeNull();
+        unmount();
+      });
+  });
+});
+
+describe('BundleDatasetCard - collection versions', () => {
+  const card = () => cardFor('rat-training-06', 'internal');
+  const multi = () => card().datasets.find((bundle) => bundle.collections.length > 1);
+
+  test('the button names the collection rather than a file size', () => {
+    const { container } = renderWithProviders(<BundleDatasetCard card={card()} profile={{}} />);
+    const buttons = [...container.querySelectorAll('.btn-bundle-data-download')];
+    expect(buttons.length).toBeGreaterThan(0);
+    buttons.forEach((button) => {
+      // A verb, so the control reads as an action rather than naming a thing.
+      expect(button.textContent).toMatch(/^Get Collection c\d+\.\d+$/);
+    });
+  });
+
+  test('no size is rendered under the buttons; it belongs in the description', () => {
+    const { container } = renderWithProviders(<BundleDatasetCard card={card()} profile={{}} />);
+    expect(container.querySelector('.bundle-collection-size')).toBeNull();
+  });
+
+  test('older collections are hidden until asked for', () => {
+    const bundle = multi();
+    expect(bundle).toBeTruthy();
+    const older = bundle.collections.find((c) => !c.latest);
+
+    const { container } = renderWithProviders(<BundleDatasetCard card={card()} profile={{}} />);
+    // Scoped to this bundle's cell: other bundles have their own c1.0.
+    const cell = [...container.querySelectorAll('.bundle-dataset-cell')].find((c) =>
+      c.textContent.includes(bundle.title)
+    );
+
+    expect(
+      within(cell).queryByText(`Get Collection ${older.collection}`)
+    ).not.toBeInTheDocument();
+
+    fireEvent.click(within(cell).getByRole('button', { name: /other versions/i }));
+    expect(within(cell).getByText(`Get Collection ${older.collection}`)).toBeInTheDocument();
+  });
+
+  test('a single-collection bundle offers no toggle', () => {
+    const single = card().datasets.filter((bundle) => bundle.collections.length === 1);
+    expect(single.length).toBeGreaterThan(0);
+    const { container } = renderWithProviders(<BundleDatasetCard card={card()} profile={{}} />);
+    // One toggle per multi-collection bundle, and no more.
+    expect(container.querySelectorAll('.other-versions')).toHaveLength(
+      card().datasets.filter((b) => b.collections.length > 1).length
+    );
+  });
+
+  test('the latest collection leads, whatever order the config lists them in', () => {
+    const bundle = multi();
+    const latest = bundle.collections.find((c) => c.latest);
+    expect(bundle.collections.indexOf(latest)).toBeGreaterThan(0);
+
+    const { container } = renderWithProviders(<BundleDatasetCard card={card()} profile={{}} />);
+    const cell = [...container.querySelectorAll('.bundle-dataset-cell')].find((c) =>
+      c.textContent.includes(bundle.title)
+    );
+    expect(cell.querySelector('.bundle-dataset-actions').textContent).toContain(
+      `Get Collection ${latest.collection}`
+    );
+  });
+});
+
+describe('human-precovid bundles - restricted vs unrestricted', () => {
+  const raw = BundleDataTypes.human_precovid_sed_adu;
+  const card = (userType) => cardFor('human-precovid-sed-adu', userType);
+
+  test('a bundle with no unrestricted build is withheld from external users', () => {
+    // Phenotype is individual-level only; there is no summary-level build of it.
+    const restrictedOnly = raw.filter((bundle) =>
+      bundle.collections.every((c) => !c.bundleVersions.unrestricted)
+    );
+    expect(restrictedOnly).toHaveLength(1);
+
+    const titles = (userType) => card(userType).datasets.map((b) => b.title);
+    expect(titles('internal')).toContain(restrictedOnly[0].title);
+    expect(titles('external')).not.toContain(restrictedOnly[0].title);
+    expect(titles(undefined)).not.toContain(restrictedOnly[0].title);
+  });
+
+  test('external users are never given a restricted file name', () => {
+    const restrictedNames = new Set(
+      raw.flatMap((bundle) =>
+        bundle.collections.map((c) => c.bundleVersions.restricted?.name).filter(Boolean)
+      )
+    );
+    expect(restrictedNames.size).toBeGreaterThan(0);
+
+    ['external', undefined].forEach((userType) => {
+      card(userType).datasets.forEach((bundle) => {
+        bundle.collections.forEach((c) => {
+          expect(restrictedNames.has(c.name)).toBe(false);
+        });
+      });
+    });
+  });
+
+  test('internal users get the restricted build where one exists', () => {
+    card('internal').datasets.forEach((bundle) => {
+      const source = raw.find((b) => b.title === bundle.title);
+      const expected = source.collections[0].bundleVersions.restricted.name;
+      expect(bundle.collections[0].name).toBe(expected);
+    });
+  });
+
+  test('the description follows the build, not the bundle', () => {
+    // The restricted build describes individual-level results; the unrestricted
+    // one describes summary-level. Showing the wrong text would misrepresent
+    // what the download contains.
+    const split = raw.find((b) => b.collections[0].bundleVersions.unrestricted);
+    const internal = card('internal').datasets.find((b) => b.title === split.title);
+    const external = card('external').datasets.find((b) => b.title === split.title);
+
+    expect(internal.description).toBe(split.collections[0].bundleVersions.restricted.description);
+    expect(external.description).toBe(
+      split.collections[0].bundleVersions.unrestricted.description
+    );
+    expect(internal.description).not.toBe(external.description);
+  });
+
+  test('the resolved collection still carries the size of the build offered', () => {
+    // Nothing renders it today, but the model must not hand back the wrong
+    // build's size if a caller starts using it again.
+    const split = raw.find((b) => b.collections[0].bundleVersions.unrestricted);
+    const external = card('external').datasets.find((b) => b.title === split.title);
+    expect(external.collections[0].size).toBe(
+      split.collections[0].bundleVersions.unrestricted.size
+    );
+  });
+
+  test('external users see six of the seven bundles', () => {
+    expect(card('internal').datasets).toHaveLength(raw.length);
+    expect(card('external').datasets).toHaveLength(raw.length - 1);
+  });
+});
+
+describe('human-precovid bundles - signing in does not widen external access', () => {
+  test('an authenticated external user gets exactly what an anonymous visitor gets', () => {
+    // Restricted is consortium-only. Being signed in is not the qualification;
+    // being internal is.
+    const asExternal = cardFor('human-precovid-sed-adu', 'external');
+    const asAnonymous = cardFor('human-precovid-sed-adu', undefined);
+
+    const shape = (card) =>
+      card.datasets.map((bundle) => ({
+        title: bundle.title,
+        description: bundle.description,
+        files: bundle.collections.map((c) => `${c.name}|${c.size}`),
+      }));
+
+    expect(shape(asExternal)).toEqual(shape(asAnonymous));
+  });
+
+  test('only internal users are served restricted files', () => {
+    const restricted = new Set(
+      BundleDataTypes.human_precovid_sed_adu.flatMap((bundle) =>
+        bundle.collections.map((c) => c.bundleVersions.restricted?.name).filter(Boolean)
+      )
+    );
+    const served = (userType) =>
+      cardFor('human-precovid-sed-adu', userType).datasets.flatMap((b) =>
+        b.collections.map((c) => c.name)
+      );
+
+    expect(served('internal').filter((n) => restricted.has(n))).toHaveLength(restricted.size);
+    expect(served('external').filter((n) => restricted.has(n))).toHaveLength(0);
+    expect(served(undefined).filter((n) => restricted.has(n))).toHaveLength(0);
+  });
+});
+
+describe('BundleDatasetCard - the Other versions toggle matches Study Collections', () => {
+  const card = () => cardFor('rat-training-06', 'internal');
+
+  test('the toggle carries the same classes the study cards use', () => {
+    const { container } = renderWithProviders(<BundleDatasetCard card={card()} profile={{}} />);
+    const toggle = container.querySelector('.other-versions .more-btn');
+    expect(toggle).toBeInTheDocument();
+    // `.more-btn` inside `.other-versions` is what the shared SCSS rule targets;
+    // without both, the toggle falls back to a default blue link.
+    expect(toggle.className).toContain('btn-link');
+    expect(toggle.closest('.other-versions')).toBeInTheDocument();
+  });
+
+  test('expanding shows the same boxed panel with a heading', () => {
+    const bundle = card().datasets.find((b) => b.collections.length > 1);
+    const { container } = renderWithProviders(<BundleDatasetCard card={card()} profile={{}} />);
+    const cell = [...container.querySelectorAll('.bundle-dataset-cell')].find((c) =>
+      c.textContent.includes(bundle.title)
+    );
+
+    fireEvent.click(within(cell).getByRole('button', { name: /other versions/i }));
+
+    const panel = cell.querySelector('.other-versions-list');
+    expect(panel).toBeInTheDocument();
+    expect(panel.querySelector('.earlier-collections-heading')).toBeInTheDocument();
+    expect(panel.querySelectorAll('.bundle-collection')).toHaveLength(
+      bundle.collections.length - 1
+    );
   });
 });
