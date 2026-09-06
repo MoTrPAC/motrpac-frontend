@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { DESIGN_MODIFIERS } from '../../lib/studyDataCards';
+import { orderedCollections } from '../../lib/bundleDataCards';
 import BundleDownloadButton from './bundleDownloadButton';
 import ExternalLink from '../../lib/ui/externalLink';
 
@@ -13,7 +14,36 @@ import ExternalLink from '../../lib/ui/externalLink';
  * other, because neither supersedes the other for a user who needs a specific
  * assembly.
  */
+/**
+ * One downloadable collection of a bundle.
+ *
+ * The size is not shown here: it is written into the bundle's description, so
+ * the reader gets it in context rather than as a number under a button.
+ */
+function BundleCollection({ collection, profile }) {
+  return (
+    <div className="bundle-collection">
+      <BundleDownloadButton
+        bundlefile={collection.name}
+        label={`Get Collection ${collection.collection}`}
+        profile={profile}
+      />
+    </div>
+  );
+}
+
+BundleCollection.propTypes = {
+  collection: PropTypes.shape({
+    collection: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+  profile: PropTypes.shape({}).isRequired,
+};
+
 function BundleDatasetCell({ dataset, badgeFields, profile }) {
+  const [showOlder, setShowOlder] = useState(false);
+  const [latest, ...older] = orderedCollections(dataset);
+
   return (
     <div className="bundle-dataset-cell col d-flex flex-column px-4 py-3">
       <div className="bundle-dataset-info flex-grow-1">
@@ -22,7 +52,7 @@ function BundleDatasetCell({ dataset, badgeFields, profile }) {
             className="bundle-dataset-icon d-inline-flex align-items-center justify-content-center mr-2"
             aria-hidden="true"
           >
-            <i className="material-icons">cloud_download</i>
+            <i className="material-icons">folder</i>
           </span>
           <h5 className="bundle-dataset-title mb-0">{dataset.title}</h5>
         </div>
@@ -37,22 +67,43 @@ function BundleDatasetCell({ dataset, badgeFields, profile }) {
         )}
         <p className="bundle-dataset-desc text-muted mt-2 mb-0">{dataset.description}</p>
       </div>
-      {/* Below the description, centred. Two builds sit side by side and wrap
-          if the column is too narrow for both. */}
       <div className="bundle-dataset-actions d-flex flex-wrap justify-content-center mt-3">
-        <BundleDownloadButton
-          bundlefile={dataset.object_zipfile}
-          bundlefileSize={dataset.object_zipfile_size}
-          profile={profile}
-        />
-        {dataset.object_rn7_zipfile && (
-          <BundleDownloadButton
-            bundlefile={dataset.object_rn7_zipfile}
-            bundlefileSize={dataset.object_rn7_zipfile_size}
-            profile={profile}
-          />
-        )}
+        <BundleCollection collection={latest} profile={profile} />
       </div>
+      {/* Older collections stay behind a toggle, as they do on the study
+          collection cards, so a bundle leads with its current release. */}
+      {older.length > 0 && (
+        <div className="other-versions mt-2 text-center">
+          <button
+            type="button"
+            className="btn btn-link btn-sm more-btn d-inline-flex align-items-center"
+            aria-expanded={showOlder}
+            onClick={() => setShowOlder(!showOlder)}
+          >
+            <span>Other versions</span>
+            <span className="ml-1">({older.length})</span>
+            <span className="material-icons ml-1" aria-hidden="true">
+              {showOlder ? 'expand_less' : 'expand_more'}
+            </span>
+          </button>
+          {showOlder && (
+            <div className="other-versions-list mt-2 rounded-lg p-3">
+              <div className="earlier-collections-heading text-muted text-uppercase mb-2">
+                Earlier collections
+              </div>
+              <div className="bundle-older-collections d-flex flex-wrap justify-content-center">
+                {older.map((collection) => (
+                  <BundleCollection
+                    key={collection.name}
+                    collection={collection}
+                    profile={profile}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -64,10 +115,7 @@ BundleDatasetCell.propTypes = {
     description: PropTypes.string,
     participant_type: PropTypes.string,
     study_group: PropTypes.string,
-    object_zipfile: PropTypes.string.isRequired,
-    object_zipfile_size: PropTypes.string,
-    object_rn7_zipfile: PropTypes.string,
-    object_rn7_zipfile_size: PropTypes.string,
+    collections: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }).isRequired,
   profile: PropTypes.shape({}).isRequired,
 };
@@ -122,7 +170,7 @@ function BundleDatasetCard({ card, profile = {} }) {
       <div className="bundle-dataset-row row no-gutters row-cols-1 row-cols-lg-2">
         {card.datasets.map((dataset) => (
           <BundleDatasetCell
-            key={dataset.object_zipfile}
+            key={dataset.title}
             dataset={dataset}
             badgeFields={badgeFields}
             profile={profile}
@@ -130,9 +178,9 @@ function BundleDatasetCard({ card, profile = {} }) {
         ))}
       </div>
       {card.notice && (
-        <div className="bundle-dataset-notice bd-callout m-3">
+        <div className="bundle-dataset-notice bd-callout bd-callout-primary m-3">
           <span className="font-weight-normal">
-            <i className={`bi ${card.notice.icon} mr-2 bundle-dataset-notice-icon`} />
+            <i className={`bi ${card.notice.icon} mr-2 text-primary bundle-dataset-notice-icon`} />
             <span>
               {card.notice.before}
               {/* ExternalLink keeps target/rel correct by construction and gives
