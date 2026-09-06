@@ -1,4 +1,5 @@
 import BundleDataTypes from '../BrowseDataPage/components/bundleDataTypes';
+import { visibleVersions } from './studyDataAccess';
 
 /**
  * Pre-bundled datasets, grouped into cards.
@@ -7,10 +8,10 @@ import BundleDataTypes from '../BrowseDataPage/components/bundleDataTypes';
  * they sit in, in the same shape the study collection cards use (code, name,
  * species, studyDesign, description) so both render with one visual language.
  *
- * `datasets` is a function of userType because two groups differ by audience:
- * the human acute-exercise bundles have separate internal and external lists,
- * and two groups are internal-only. That gating is preserved exactly as it was
- * on the tab strip this replaced.
+ * Access is decided per collection, by the same `releaseStage` the study cards
+ * use -- not by separate internal and external lists. A bundle with nothing
+ * visible drops out, and a card with no visible bundles drops out with it, so a
+ * consortium-only group is absent for external users rather than empty.
  */
 const bundleDataCards = [
   {
@@ -22,7 +23,7 @@ const bundleDataCards = [
     studyDesign: 'Endurance training',
     description:
       'Bundled downloads for young adult rats that completed the endurance training protocol. Each bundle packages one data type across all tissues.',
-    datasets: () => BundleDataTypes.pass1b_06,
+    datasets: () => BundleDataTypes.rat_training_06,
   },
   {
     code: 'rat-acute-06',
@@ -33,8 +34,7 @@ const bundleDataCards = [
     studyDesign: 'Acute exercise',
     description:
       'Bundled downloads for young adult rats that performed a single exercise bout.',
-    internalOnly: true,
-    datasets: () => BundleDataTypes.pass1a_06,
+    datasets: () => BundleDataTypes.rat_acute_06,
   },
   {
     code: 'human-precovid-sed-adu',
@@ -45,20 +45,7 @@ const bundleDataCards = [
     studyDesign: 'Acute exercise',
     description:
       'Bundled downloads for sedentary adults who performed a single endurance or resistance bout.',
-    // Carried over from the tab this card replaced. Held here rather than in the
-    // component so a second study can have its own notice without a special case.
-    notice: {
-      icon: 'bi-envelope-paper',
-      before: 'Be sure to ',
-      linkText: 'subscribe',
-      href: 'https://docs.google.com/forms/d/e/1FAIpQLScjGxwsHDDsE4P4j1VNvIUR73cEyh9SJrofxuQyHqucl0GhBg/viewform',
-      after:
-        ' to receive notifications about future data updates for the acute exercise in human sedentary adults study!',
-    },
-    datasets: (userType) =>
-      userType === 'internal'
-        ? BundleDataTypes.human_sed_adu_internal
-        : BundleDataTypes.human_sed_adu_external,
+    datasets: () => BundleDataTypes.human_precovid_sed_adu,
   },
   {
     code: 'human-clinical',
@@ -74,17 +61,81 @@ const bundleDataCards = [
       linkText: 'Clinical Data Release Notes',
       href: 'https://docs.google.com/document/d/1cFPnB1cBKimUJo-5hwnq8yKDJ5DWgdDj4Y0pvl2UZYw/edit?tab=t.0#heading=h.7tm379xtz7sk',
     },
-    internalOnly: true,
-    datasets: () => BundleDataTypes.human_clinical_data_internal,
+    datasets: () => BundleDataTypes.human_phenotype,
   },
 ];
 
-/** Cards this user may see, each with its dataset list resolved. */
+/**
+ * May this user download restricted bundles?
+ *
+ * Restricted bundles hold individual-level human data. The rule is signed-in
+ * consortium members only -- an authenticated external user gets exactly what
+ * an anonymous visitor gets. dbGaP-approved access may widen this later, but
+ * there is no dbGaP entitlement on the profile, so it is not a case the app can
+ * recognise; this function is the one place that would change.
+ */
+function mayAccessRestricted(userType) {
+  return userType === 'internal';
+}
+
+/**
+ * The file a collection offers this user.
+ *
+ * human-precovid-sed-adu splits each collection into restricted and
+ * unrestricted builds of the same data -- the restricted one carries
+ * individual-level results, the unrestricted one summary-level. They have
+ * different sizes and different descriptions, so the choice decides what the
+ * card says as well as what it downloads. Returns null when the user may have
+ * neither, which drops the bundle rather than showing a download they cannot
+ * take.
+ */
+function fileFor(collection, userType) {
+  if (!collection.bundleVersions) {
+    return { name: collection.name, size: collection.size, description: null };
+  }
+  const { restricted, unrestricted } = collection.bundleVersions;
+  const chosen = mayAccessRestricted(userType) ? restricted || unrestricted : unrestricted;
+  return chosen || null;
+}
+
+/**
+ * Cards this user may see, each bundle carrying only the collections they may
+ * download. Gating is per collection, so a bundle whose newer build is
+ * consortium-only still offers its public one.
+ */
 export function visibleBundleCards(userType) {
   return bundleDataCards
-    .filter((card) => !card.internalOnly || userType === 'internal')
-    .map((card) => ({ ...card, datasets: card.datasets(userType) || [] }))
+    .map((card) => ({
+      ...card,
+      datasets: card
+        .datasets()
+        .map((bundle) => {
+          const collections = visibleVersions(bundle.collections, userType)
+            .map((collection) => {
+              const file = fileFor(collection, userType);
+              return file ? { ...collection, ...file } : null;
+            })
+            .filter(Boolean);
+          return {
+            ...bundle,
+            collections,
+            // A split bundle describes itself differently per audience.
+            description: collections[0]?.description || bundle.description,
+          };
+        })
+        .filter((bundle) => bundle.collections.length > 0),
+    }))
     .filter((card) => card.datasets.length > 0);
+}
+
+/** Newest collection first, so the latest is what a card leads with. */
+export function orderedCollections(bundle) {
+  const collections = [...bundle.collections];
+  const latestIndex = collections.findIndex((entry) => entry.latest);
+  if (latestIndex > 0) {
+    collections.unshift(collections.splice(latestIndex, 1)[0]);
+  }
+  return collections;
 }
 
 export default bundleDataCards;
