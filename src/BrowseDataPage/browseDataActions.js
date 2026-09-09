@@ -267,12 +267,17 @@ function handleDownloadRequest(email, name, userid, selectedFiles) {
  * two are kept apart because the picker cannot otherwise tell "all of them are
  * selected" from "none of them are", which are the same set of files but
  * different UI states.
+ *
+ * `userType` gates the file rows, not just the collections: a public collection
+ * can hold consortium-only files. It is read from the store rather than passed
+ * in, so no call site can omit it and quietly widen what gets loaded.
  */
 function selectCollections(prefixes, selection = prefixes) {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch({ type: SELECT_COLLECTIONS_START, prefixes, selection });
     try {
-      const files = await loadCollections(prefixes);
+      const userType = getState().auth?.profile?.user_metadata?.userType;
+      const files = await loadCollections(prefixes, userType);
       dispatch({ type: SELECT_COLLECTIONS_SUCCESS, prefixes, selection, files });
       return files;
     } catch (error) {
@@ -289,6 +294,11 @@ function selectCollection(prefix) {
 /**
  * Load every collection this user may see, so the tissue/assay facets can filter
  * across the whole corpus rather than one collection at a time.
+ *
+ * Not currently called: the Study picker scopes what loads, and the facets read
+ * their options from the built vocabulary rather than from what is in memory.
+ * Kept because "load everything I'm entitled to" is the obvious next control if
+ * that changes.
  */
 function selectAllEntitledCollections(userType) {
   return selectCollections(entitledPrefixes(userType));
