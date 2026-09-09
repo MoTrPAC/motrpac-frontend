@@ -62,20 +62,23 @@ describe('the checked-in vocabulary matches the shipped metadata', () => {
     });
   });
 
-  test('the phenotype collections contribute nothing, and that is not a bug', () => {
-    // Phenotype files are subject-level: no tissue, no ome, no assay. A scope
-    // holding only phenotype collections therefore shows all three facets with
-    // every option disabled, which is the honest rendering of "these do not
-    // apply here".
+  test('a collection contributes exactly the values its files carry', () => {
+    // Phenotype files are subject-level -- no tissue, no ome, no assay -- so a
+    // scope holding only those shows all three facets with every option
+    // disabled, which is the honest rendering of "these do not apply here".
+    // Stated as an equivalence so it holds for any collection, rather than
+    // naming the families that happen to be silent today.
     const covered = new Set(
       CATEGORIES.flatMap((category) =>
         vocabulary[category].flatMap((entry) => entry.collections)
       )
     );
-    const silent = collections
-      .map((collection) => collection.prefix)
-      .filter((prefix) => !covered.has(prefix));
-    expect(silent.every((prefix) => prefix.startsWith('phenotype/'))).toBe(true);
+    collections.forEach(({ prefix, files }) => {
+      const hasAnyValue = files.some((file) =>
+        CATEGORIES.some((category) => facetValues(file, category).length > 0)
+      );
+      expect(covered.has(prefix)).toBe(hasAnyValue);
+    });
   });
 });
 
@@ -93,15 +96,21 @@ describe('facetOptions', () => {
   });
 
   test('scope decides enablement, not existence', () => {
+    // An option is enabled iff some in-scope collection carries it, and every
+    // option stays on screen either way. Asserted as that equivalence rather
+    // than by naming tissues, because the committed metadata is one record per
+    // collection and carries no particular value.
     const entitled = entitledPrefixes('internal');
-    const options = facetOptions('tissue_name', entitled, studyCollections('rat-training-06', 'internal'));
-    const enabled = options.filter((option) => option.enabled).map((option) => option.value);
+    const inScope = studyCollections('rat-training-06', 'internal');
+    const scoped = new Set(inScope);
+    const options = facetOptions('tissue_name', entitled, inScope);
+    const all = facetOptions('tissue_name', entitled, []);
 
-    // Rat specimens from the study in scope are enabled; the human superclasses,
-    // which only human collections carry, are present but not.
-    expect(enabled).toContain('Gastrocnemius');
-    expect(options.map((option) => option.value)).toContain('Adipose');
-    expect(enabled).not.toContain('Adipose');
+    expect(options.map((o) => o.value)).toEqual(all.map((o) => o.value));
+    options.forEach((option) => {
+      const entry = vocabulary.tissue_name.find((e) => e.value === option.value);
+      expect(option.enabled).toBe(entry.collections.some((p) => scoped.has(p)));
+    });
   });
 
   test('an empty scope enables nothing but still offers everything', () => {
@@ -116,40 +125,13 @@ describe('facetOptions', () => {
   });
 });
 
-describe('the vocabulary fixes what the hand-written lists got wrong', () => {
-  test('rat-training-06 offers only the targeted assays it actually has', () => {
-    // The list this replaced (`assayList.pass1b_06`) named 15 targeted assays
-    // for this study. The metadata has 7; the other 8 belong to rat-acute-06,
-    // so those buttons matched zero files.
-    const targeted = facetOptions(
-      'assay',
-      entitledPrefixes('internal'),
-      studyCollections('rat-training-06', 'internal')
-    )
-      .filter((option) => option.enabled && option.value.startsWith('Targeted'))
-      .map((option) => option.value);
-
-    expect(targeted).toHaveLength(7);
-    expect(targeted).not.toContain('Targeted Acylcarnitines');
-    expect(targeted).toContain('Targeted Acyl-CoA');
-  });
-
-  test('rat-acute-06 offers the assays the old list omitted', () => {
-    // The same list under-reported the other direction: four assays present in
-    // rat-acute-06 were unreachable.
-    const values = facetOptions(
-      'assay',
-      entitledPrefixes('internal'),
-      studyCollections('rat-acute-06', 'internal')
-    )
-      .filter((option) => option.enabled)
-      .map((option) => option.value);
-
-    ['Targeted Amines', 'Targeted Ceramides', 'Targeted Tricarboxylic Acid Cycle'].forEach(
-      (assay) => expect(values).toContain(assay)
-    );
-  });
-
+describe('the vocabulary is derived, not hand-written', () => {
+  // The counts that motivated this -- rat-training-06 offering 8 targeted
+  // assays it never ran, rat-acute-06 missing 4 it has, 24 of human-precovid's
+  // 46 unreachable -- were measured against the full listings, which are not in
+  // this repo. They are recorded in scripts/build-facet-vocabulary.js and in
+  // dev_resources/multi-study-file-browser-plan.md rather than asserted here,
+  // since a test cannot check data it does not have.
   test('no option is a comma-joined pair', () => {
     // `omics: ['Epigenomics', 'Transcriptomics, Proteomics']` used to reach the
     // panel verbatim as one option.

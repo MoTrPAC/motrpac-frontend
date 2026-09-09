@@ -3,7 +3,7 @@ import React from 'react';
 import { screen, within } from '@testing-library/react';
 import { renderWithProviders } from '../../testUtils/test-utils';
 import BrowseDataFilter from '../browseDataFilter';
-import vocabulary, { facetOptions } from '../../lib/facetVocabulary';
+import vocabulary, { FACETS, facetOptions } from '../../lib/facetVocabulary';
 import { entitledPrefixes } from '../../lib/collectionFiles';
 import { studyCollections } from '../../lib/collectionScope';
 import { transformData } from '../helper';
@@ -99,30 +99,49 @@ describe('BrowseDataFilter - species tags', () => {
       span.className,
     ]);
 
-  const tissueButton = (container, label) =>
-    buttons(container, 'Tissue').find((button) => button.textContent.startsWith(label));
+  const EXPECTED = {
+    Rat: ['R', 'filter-species-tag ml-1 badge badge-rat'],
+    Human: ['H', 'filter-species-tag ml-1 badge badge-human'],
+  };
 
-  test('a value belonging to one species carries that one badge', () => {
+  // Asserted against the vocabulary rather than named tissues: the committed
+  // metadata is one record per collection (see `generator mock`), so no
+  // particular value is guaranteed to be present. The rule is what matters --
+  // one badge per species the value belongs to, rat first, matching the search
+  // feature's markup exactly.
+  test.each(FACETS.map((facet) => [facet.name, facet.keyName]))(
+    'every %s option is badged with exactly the species that carry it',
+    (name, keyName) => {
+      const { container } = renderFilter({
+        profile: { user_metadata: { userType: 'internal' } },
+      });
+      const options = facetOptions(keyName, entitledPrefixes('internal'), []);
+      const rendered = buttons(container, name);
+      expect(rendered).toHaveLength(options.length);
+
+      rendered.forEach((button, index) => {
+        const expected = ['Rat', 'Human']
+          .filter((species) => options[index].species.includes(species))
+          .map((species) => EXPECTED[species]);
+        expect(tags(button)).toEqual(expected);
+      });
+    }
+  );
+
+  test('badges always read rat-first, never human-first', () => {
+    // The corpus has values both species carry -- `Plasma` is one -- and they
+    // must read "R H". Asserted as a subsequence of [R, H] so it holds however
+    // many species a given option has.
     const { container } = renderFilter({
       profile: { user_metadata: { userType: 'internal' } },
     });
+    const rendered = FACETS.flatMap((facet) => buttons(container, facet.name));
+    expect(rendered.length).toBeGreaterThan(0);
 
-    expect(tags(tissueButton(container, 'Gastrocnemius'))).toEqual([
-      ['R', 'filter-species-tag ml-1 badge badge-rat'],
-    ]);
-    expect(tags(tissueButton(container, 'Adipose'))).toEqual([
-      ['H', 'filter-species-tag ml-1 badge badge-human'],
-    ]);
-  });
-
-  test('a value both species carry gets both badges, rat first', () => {
-    const { container } = renderFilter({
-      profile: { user_metadata: { userType: 'internal' } },
+    rendered.forEach((button) => {
+      const initials = tags(button).map(([initial]) => initial);
+      expect(initials).toEqual(['R', 'H'].filter((i) => initials.includes(i)));
     });
-    expect(tags(tissueButton(container, 'Plasma'))).toEqual([
-      ['R', 'filter-species-tag ml-1 badge badge-rat'],
-      ['H', 'filter-species-tag ml-1 badge badge-human'],
-    ]);
   });
 });
 

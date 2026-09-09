@@ -4,6 +4,7 @@ import LOADERS, {
   findCollection,
   isKnownCollection,
   loadCollection,
+  visibleTo,
   loadCollections,
   prefixFromStorageLocation,
 } from '../collectionFiles';
@@ -87,38 +88,35 @@ describe('loading', () => {
     expect(files.every((file) => file.species === 'Human')).toBe(true);
   });
 
-  test('release stage varies per file within a collection', async () => {
-    const files = await loadCollection('analysis/human-precovid-sed-adu/c1.3', 'internal');
-    const stages = new Set(files.map((file) => file.release_stage));
-    expect(stages).toEqual(new Set(['public_release', 'consortium_release']));
-  });
 });
 
 describe('a public collection may still hold consortium-only files', () => {
   // `analysis/human-precovid-sed-adu/c1.3` is public, so `entitledPrefixes`
-  // offers it to everyone -- but in the real corpus 98 of its 218 files are
-  // consortium-only. The collection-level gate cannot see that, so the
-  // file-level one has to.
+  // offers it to everyone -- but in the real corpus 98 of its 218 files carry
+  // `external_release: false`. The collection-level gate cannot see that, so
+  // the file-level one has to.
   //
-  // Stated as relations rather than those two counts, because the metadata
-  // committed here is a sample of the real listings (see `generator mock`) --
-  // and because hardcoded totals would have broken on the next regeneration
-  // anyway. These hold against the sample and the real data alike, so CI and
-  // the staging build assert the same property.
-  const PARTIAL = 'analysis/human-precovid-sed-adu/c1.3';
+  // Tested against a fixture rather than the shipped metadata: the JSON
+  // committed here is one record per collection (see `generator mock`), which
+  // cannot carry a mixed-stage collection. Shipped data is only checked for
+  // self-consistency, further down.
+  const mixed = [
+    { object: 'a', release_stage: 'public_release', external_release: true },
+    { object: 'b', release_stage: 'consortium_release', external_release: false },
+  ];
 
-  test('internal users get strictly more of it than external users', async () => {
-    const internal = await loadCollection(PARTIAL, 'internal');
-    const external = await loadCollection(PARTIAL, 'external');
-    expect(external.length).toBeGreaterThan(0);
-    expect(internal.length).toBeGreaterThan(external.length);
+  test('internal users get the whole collection', () => {
+    expect(visibleTo(mixed, 'internal')).toEqual(mixed);
   });
 
-  test.each(['external', undefined])('%s users get only its public files', async (userType) => {
-    const all = await loadCollection(PARTIAL, 'internal');
-    const files = await loadCollection(PARTIAL, userType);
-    expect(files).toHaveLength(all.filter((file) => file.external_release === true).length);
-    expect(files.every((file) => file.external_release === true)).toBe(true);
+  test.each(['external', undefined])('%s users get only its public files', (userType) => {
+    expect(visibleTo(mixed, userType)).toEqual([mixed[0]]);
+  });
+
+  test('a missing flag is withheld, not published', () => {
+    // Fails safe: a record the generator never stamped must not be served.
+    expect(visibleTo([{ object: 'c' }], 'external')).toEqual([]);
+    expect(visibleTo([{ object: 'c', external_release: 'true' }], 'external')).toEqual([]);
   });
 
   test('no unreleased file reaches a non-internal user, across the whole corpus', async () => {
