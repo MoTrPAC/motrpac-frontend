@@ -29,10 +29,17 @@ const LOADERS = {
   'analysis/rat-acute-06/c1.0': () => import('../data/file_download_metadata/collections/analysis_rat-acute-06_c1.0-minified.json'),
   'phenotype/rat-acute-06/c4.0': () => import('../data/file_download_metadata/collections/phenotype_rat-acute-06_c4.0-minified.json'),
   'quant-id/human-precovid/c1.0': () => import('../data/file_download_metadata/collections/quant-id_human-precovid_c1.0-minified.json'),
+  'analysis/human-precovid-sed-adu/c2.0': () => import('../data/file_download_metadata/collections/analysis_human-precovid-sed-adu_c2.0-minified.json'),
   'analysis/human-precovid-sed-adu/c1.3': () => import('../data/file_download_metadata/collections/analysis_human-precovid-sed-adu_c1.3-minified.json'),
   'phenotype/human-precovid-sed-adu/c3.0': () => import('../data/file_download_metadata/collections/phenotype_human-precovid-sed-adu_c3.0-minified.json'),
   'phenotype/human-precovid-sed-adu/c2.0': () => import('../data/file_download_metadata/collections/phenotype_human-precovid-sed-adu_c2.0-minified.json'),
   'phenotype/human-eqc/c14.0': () => import('../data/file_download_metadata/collections/phenotype_human-eqc_c14.0-minified.json'),
+  'phenotype/human-biospecimen/c3.0': () => import('../data/file_download_metadata/collections/phenotype_human-biospecimen_c3.0-minified.json'),
+  'phenotype/human-main-sed-adu/c2.0': () => import('../data/file_download_metadata/collections/phenotype_human-main-sed-adu_c2.0-minified.json'),
+  'phenotype/human-all-ped/c2.0': () => import('../data/file_download_metadata/collections/phenotype_human-all-ped_c2.0-minified.json'),
+  'phenotype/human-all-ha-adu/c2.0': () => import('../data/file_download_metadata/collections/phenotype_human-all-ha-adu_c2.0-minified.json'),
+  'phenotype/human-screening-adu/c2.0': () => import('../data/file_download_metadata/collections/phenotype_human-screening-adu_c2.0-minified.json'),
+  'phenotype/human-screening-ped/c2.0': () => import('../data/file_download_metadata/collections/phenotype_human-screening-ped_c2.0-minified.json'),
 };
 
 const BUCKET_PREFIX = `gs://${import.meta.env.VITE_DATA_FILE_BUCKET}/`;
@@ -45,6 +52,11 @@ export function prefixFromStorageLocation(storageLocation) {
   return storageLocation.startsWith(BUCKET_PREFIX)
     ? storageLocation.slice(BUCKET_PREFIX.length)
     : storageLocation;
+}
+
+/** `quant-id/rat-training-06/c3.0/file.txt` -> `quant-id/rat-training-06/c3.0`. */
+export function prefixFromObject(object) {
+  return String(object || '').split('/').slice(0, 3).join('/');
 }
 
 export function isKnownCollection(prefix) {
@@ -89,23 +101,48 @@ export function findCollection(prefix) {
   return found;
 }
 
-export async function loadCollection(prefix) {
+/**
+ * Release stage is a per-file property, not just a per-collection one.
+ *
+ * `analysis/human-precovid-sed-adu/c1.3` is a public collection whose
+ * sample-level metadata and QC-normalized data are not: 98 of its 218 files are
+ * consortium-only. Entitlement checked at collection granularity therefore is
+ * not enough -- `entitledPrefixes` correctly offers the collection, and the
+ * file rows inside it would still have reached anonymous visitors.
+ *
+ * The old per-study loaders avoided this by shipping two files and picking one
+ * by user type. One file per collection is the better trade, but it moves the
+ * per-file gate here, next to the per-collection one, so both are applied in
+ * the same place and neither can be forgotten.
+ */
+function visibleTo(records, userType) {
+  return userType === 'internal'
+    ? records
+    : records.filter((record) => record.external_release === true);
+}
+
+export async function loadCollection(prefix, userType) {
   const loader = LOADERS[prefix];
   if (!loader) {
     throw new Error(`Unknown collection: ${prefix}`);
   }
   const module = await loader();
-  return module.default;
+  return visibleTo(module.default, userType);
 }
 
 /**
  * Load several collections at once, for browsing across the whole corpus.
  *
  * A prefix the user is not entitled to is a programming error, not a runtime
- * condition -- callers pass the output of `entitledPrefixes`.
+ * condition -- callers pass the output of `entitledPrefixes`. `userType` is not
+ * optional: defaulting it would mean the least privileged reading, which fails
+ * safe, but silently dropping an internal user's consortium files is still a
+ * bug, and one that looks like missing data rather than a mistake.
  */
-export async function loadCollections(prefixes) {
-  const loaded = await Promise.all(prefixes.map((prefix) => loadCollection(prefix)));
+export async function loadCollections(prefixes, userType) {
+  const loaded = await Promise.all(
+    prefixes.map((prefix) => loadCollection(prefix, userType))
+  );
   return loaded.flat();
 }
 
