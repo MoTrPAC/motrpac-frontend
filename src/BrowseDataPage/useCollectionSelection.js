@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import actions from './browseDataActions';
-import { resolveScope, scopeToPath } from '../lib/collectionScope';
+import { entitledPrefixes } from '../lib/collectionFiles';
+import { resolveScope, scopeStudies, scopeToPath } from '../lib/collectionScope';
 
 /**
  * The file browser's collection selection, and the one way to change it.
@@ -9,6 +10,11 @@ import { resolveScope, scopeToPath } from '../lib/collectionScope';
  * Both the Collection picker and the panel's "Reset filters" button change the
  * selection, so the dispatch/navigate/collapse rules live here rather than being
  * written twice.
+ *
+ * `entitled` is every collection this user may see; `available` is the subset
+ * belonging to the studies currently in scope. The picker renders the first and
+ * enables the second, so its buttons neither appear nor vanish as studies are
+ * toggled.
  */
 export default function useCollectionSelection(userType) {
   const dispatch = useDispatch();
@@ -16,7 +22,9 @@ export default function useCollectionSelection(userType) {
   const location = useLocation();
   const selectedCollections = useSelector((state) => state.browseData.selectedCollections);
 
-  const { studyCode, available } = resolveScope(location, userType);
+  const scope = resolveScope(location, userType);
+  const { studyCodes, available } = scope;
+  const entitled = entitledPrefixes(userType);
   const selected = selectedCollections.filter((prefix) => available.includes(prefix));
 
   function apply(next) {
@@ -25,7 +33,7 @@ export default function useCollectionSelection(userType) {
     const collapsed = next.length === available.length ? [] : next;
     const load = collapsed.length ? collapsed : available;
     dispatch(actions.selectCollections(load, collapsed));
-    navigate(scopeToPath(studyCode, collapsed));
+    navigate(scopeToPath(scopeStudies(scope), collapsed));
   }
 
   function toggle(prefix) {
@@ -36,5 +44,14 @@ export default function useCollectionSelection(userType) {
     );
   }
 
-  return { studyCode, available, selected, apply, toggle };
+  return {
+    inFileBrowser: scope.inFileBrowser,
+    studyCodes,
+    available,
+    entitled,
+    selected,
+    prefixes: scope.prefixes,
+    apply,
+    toggle,
+  };
 }
