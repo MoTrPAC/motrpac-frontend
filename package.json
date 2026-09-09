@@ -51,6 +51,7 @@
   "scripts": {
     "start": "vite",
     "fetch-docs": "node scripts/fetch-docs.js",
+    "build-facet-vocabulary": "node scripts/build-facet-vocabulary.js",
     "build": "vite build",
     "serve": "vite preview",
     "test": "vitest",
