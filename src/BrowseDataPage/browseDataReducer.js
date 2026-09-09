@@ -1,4 +1,5 @@
 import { types } from './browseDataActions';
+import facetValues from '../lib/fileFacets';
 
 export const defaultBrowseDataState = {
   sortBy: 'tissue_name',
@@ -10,7 +11,6 @@ export const defaultBrowseDataState = {
     assay: [],
     omics: [],
     tissue_name: [],
-    tissue_superclass: [],
     category: [],
     reference_genome: [],
   },
@@ -22,37 +22,10 @@ export const defaultBrowseDataState = {
   waitingForResponse: false,
   fetching: false,
   error: '',
-  pass1b06DataSelected: false,
-  pass1a06DataSelected: false,
-  humanPrecovidSedAduDataSelected: false,
   selectedCollections: [],
   loadedCollections: [],
   loadingFiles: false,
 };
-
-/**
- * Which study a set of collection prefixes belongs to.
- *
- * browseDataFilter, browseDataTable and selectiveDataDownloads still branch on
- * these per-study booleans, so they are derived here rather than removed. More
- * than one can be true at once now -- "load all entitled collections" spans
- * every study.
- */
-function studyFlagsFor(prefixes) {
-  return {
-    pass1b06DataSelected: prefixes.some((p) => p.includes('/rat-training-06/')),
-    pass1a06DataSelected: prefixes.some((p) => p.includes('/rat-acute-06/')),
-    humanPrecovidSedAduDataSelected: prefixes.some((p) => p.includes('human-precovid')),
-  };
-}
-
-// omics, tissue_name and assay may hold comma-joined multi-values.
-function valuesOf(file, category) {
-  return String(file[category] ?? '')
-    .split(',')
-    .map((value) => value.trim())
-    .filter(Boolean);
-}
 
 // A file matches a facet when one of its own values equals a selected one. The
 // predicate this replaced asked whether the *selected* option contained the
@@ -62,15 +35,15 @@ function filterFiles(filters, files) {
   return files.filter((file) =>
     Object.keys(filters).every((category) => {
       if (!filters[category].length) return true;
-      const fileValues = valuesOf(file, category);
+      const fileValues = facetValues(file, category);
       return filters[category].some(
         (selected) =>
-          fileValues.includes(selected) ||
+          fileValues.includes(selected)
           // Merged metabolomics files carry the generic omics value, so asking
           // for either specific metabolomics ome still finds them.
-          (category === 'omics' &&
-            selected.startsWith('Metabolomics') &&
-            fileValues.includes('Metabolomics'))
+          || (category === 'omics'
+            && selected.startsWith('Metabolomics')
+            && fileValues.includes('Metabolomics'))
       );
     })
   );
@@ -89,7 +62,7 @@ function pruneFilters(activeFilters, files) {
   const pruned = {};
   Object.keys(activeFilters).forEach((category) => {
     const present = new Set();
-    files.forEach((file) => valuesOf(file, category).forEach((value) => present.add(value)));
+    files.forEach((file) => facetValues(file, category).forEach((value) => present.add(value)));
     pruned[category] = activeFilters[category].filter((value) => present.has(value));
   });
   return pruned;
@@ -207,7 +180,6 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
           assay: [],
           omics: [],
           tissue_name: [],
-          tissue_superclass: [],
           category: [],
           reference_genome: [],
         },
@@ -259,7 +231,6 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
         loadingFiles: false,
         error: '',
         activeFilters,
-        ...studyFlagsFor(action.prefixes),
       };
     }
     case types.SELECT_COLLECTIONS_FAILURE:
