@@ -104,7 +104,7 @@ const studyDataCards = [
           referenceGenome: 'Rn8',
           latest: true,
           storageLocation: `gs://${bucketName}/quant-id/rat-acute-06/c2.0`,
-          releaseStage: 'consortium',
+          releaseStage: 'public',
         },
         {
           collection: 'c1.0',
@@ -120,7 +120,7 @@ const studyDataCards = [
           referenceGenome: 'Rn7',
           latest: true,
           storageLocation: `gs://${bucketName}/analysis/rat-acute-06/c2.0`,
-          releaseStage: 'consortium',
+          releaseStage: 'public',
         },
         {
           collection: 'c1.1',
@@ -142,7 +142,7 @@ const studyDataCards = [
           collection: 'c4.0',
           latest: true,
           storageLocation: `gs://${bucketName}/phenotype/rat-acute-06/c4.0`,
-          releaseStage: 'consortium',
+          releaseStage: 'public',
         },
       ],
     },
@@ -172,6 +172,12 @@ const studyDataCards = [
         },
       ],
       analysis: [
+        {
+          collection: 'c2.0',
+          latest: true,
+          storageLocation: `gs://${bucketName}/analysis/human-precovid-sed-adu/c2.0`,
+          releaseStage: 'consortium',
+        },
         {
           collection: 'c1.3',
           latest: true,
