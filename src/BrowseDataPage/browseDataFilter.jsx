@@ -1,23 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import browseDataFilters from '../lib/browseDataFilters';
+import { FACETS, facetOptions } from '../lib/facetVocabulary';
+import StudyFilterModule from './components/studyFilterModule';
 import CollectionFilterModule from './components/collectionFilterModule';
 import useCollectionSelection from './useCollectionSelection';
 
 import '@styles/browseData.scss';
 import '@styles/tooltip.scss';
 
-function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name: [], tissue_superclass: [], category: [], reference_genome: [] }, onChangeFilter, onResetFilters }) {
-  const dataDownload = useSelector((state) => state.browseData);
+/**
+ * Species tags, spelled the way the search feature spells them.
+ *
+ * Same markup, same class names, same colours: a user who has learned what a
+ * yellow R means on the search page should not have to learn it again here.
+ * Rat first, and a value both species carry gets both tags.
+ */
+const SPECIES_TAGS = [
+  { name: 'Rat', initial: 'R', variant: 'badge-rat' },
+  { name: 'Human', initial: 'H', variant: 'badge-human' },
+];
+
+function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name: [], category: [], reference_genome: [] }, onChangeFilter, onResetFilters }) {
   const profile = useSelector((state) => state.auth.profile);
   const userType = profile?.user_metadata?.userType;
-  const { selected: selectedCollections, apply: applyCollections } =
-    useCollectionSelection(userType);
+  const {
+    selected: selectedCollections,
+    entitled,
+    prefixes,
+    apply: applyCollections,
+  } = useCollectionSelection(userType);
 
   // The Collection picker is a module in this panel, so "Reset filters" clears
   // it too. Leaving collections selected after a reset read as the button being
-  // broken. Clearing means "every collection in this study", not "none".
+  // broken. Clearing means "every collection in scope", not "none".
   function handleReset() {
     if (selectedCollections.length) {
       applyCollections([]);
@@ -25,79 +41,53 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
     onResetFilters();
   }
 
-  // Facet values are derived from the files actually loaded, not from hardcoded
-  // per-study lists. Three reasons:
-  //   1. The old code left `filters` as an object whenever no per-study flag was
-  //      set - which is every first render now that loading is async - and
-  //      `item.filters.map` threw.
-  //   2. It assigned to `item.filters` on a shallow copy, mutating the shared
-  //      module-level config for the rest of the session.
-  //   3. The hardcoded lists cannot describe the newer collections at all
-  //      (rat-acute RN8, human-eqc, which has no tissue or omics).
-  // Deriving means a collection only ever offers filters that can match one of
-  // its own files.
-  function facetOptions(files, keyName) {
-    const values = new Set();
-    files.forEach((file) => {
-      const raw = file[keyName];
-      if (raw === null || raw === undefined || raw === '') {
-        return;
-      }
-      // omics, tissue_name and assay may hold comma-joined multi-values.
-      String(raw)
-        .split(',')
-        .forEach((part) => {
-          const value = part.trim();
-          if (value) {
-            values.add(value);
-          }
-        });
-    });
-    return [...values].sort();
-  }
+  // Options come from the built vocabulary, not from the loaded files. Deriving
+  // them from what was loaded made the panel reflow on every study toggle and
+  // hid the rest of the corpus; deriving them from the hand-written per-study
+  // lists that preceded it was worse, since those had drifted from the data in
+  // both directions. `entitled` decides which options exist, `prefixes` which
+  // are enabled -- an option no loaded collection can match stays visible but
+  // cannot be clicked into an empty table.
+  const facets = FACETS.map((facet) => ({
+    ...facet,
+    options: facetOptions(facet.keyName, entitled, prefixes),
+  })).filter((facet) => facet.options.length > 0);
 
-  // Human tissue names in this dataset are variants of the same specimen --
-  // "Human Muscle" / "Human Muscle Powder", "Human EDTA Plasma" / "HUman EDTA
-  // Plasma" -- so the useful grain is the superclass: Adipose, Blood, Muscle,
-  // Plasma. Rat names are already distinct specimens and must not be collapsed:
-  // Heart, Gastrocnemius and Vastus Lateralis all share the superclass "Muscle".
-  const isHuman = dataDownload.allFiles.some((file) => file.species === 'Human');
-  const tissueKey = isHuman ? 'tissue_superclass' : 'tissue_name';
-
-  const fileFilters = browseDataFilters
-    .map((item) => {
-      const keyName = item.keyName === 'tissue_name' ? tissueKey : item.keyName;
-      return { ...item, keyName, filters: facetOptions(dataDownload.allFiles, keyName) };
-    })
-    .filter((item) => item.filters.length > 0);
-
-  const filters = fileFilters
-    .map((item) => (
-      <div key={item.name} className="card filter-module mb-4">
-        <div className="card-header font-weight-bold d-flex align-items-center">
-          <div>{item.name}</div>
-        </div>
-        <div className="card-body">
-          {item.filters.map((filter) => {
-            const isActiveFilter =
-              activeFilters[item.keyName] &&
-              activeFilters[item.keyName].indexOf(filter) > -1;
-            return (
-              <button
-                key={filter}
-                type="button"
-                className={`btn filterBtn ${
-                  isActiveFilter ? 'activeFilter' : ''
-                }`}
-                onClick={() => onChangeFilter(item.keyName, filter)}
-              >
-                {filter}
-              </button>
-            );
-          })}
-        </div>
+  const filters = facets.map((facet) => (
+    <div key={facet.name} className="card filter-module mb-4">
+      <div className="card-header font-weight-bold d-flex align-items-center">
+        <div>{facet.name}</div>
       </div>
-    ));
+      <div className="card-body">
+        {facet.options.map((option) => {
+          const isActiveFilter =
+            activeFilters[facet.keyName]
+            && activeFilters[facet.keyName].indexOf(option.value) > -1;
+          return (
+            <button
+              key={option.value}
+              type="button"
+              disabled={!option.enabled}
+              aria-pressed={isActiveFilter}
+              className={`btn filterBtn ${isActiveFilter ? 'activeFilter' : ''}`}
+              onClick={() => onChangeFilter(facet.keyName, option.value)}
+            >
+              {option.value}
+              {SPECIES_TAGS.filter((tag) => option.species.includes(tag.name)).map((tag) => (
+                <span
+                  key={tag.name}
+                  className={`filter-species-tag ml-1 badge ${tag.variant}`}
+                >
+                  {tag.initial}
+                </span>
+              ))}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  ));
+
   return (
     <div className="col-md-3 browse-data-filter-group">
       <div className="browse-data-filter-group-header d-flex justify-content-between align-items-center mb-3">
@@ -110,6 +100,7 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
           Reset filters
         </button>
       </div>
+      <StudyFilterModule userType={userType} />
       <CollectionFilterModule userType={userType} />
       {filters}
     </div>
@@ -119,7 +110,6 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
 BrowseDataFilter.propTypes = {
   activeFilters: PropTypes.shape({
     tissue_name: PropTypes.arrayOf(PropTypes.string),
-    tissue_superclass: PropTypes.arrayOf(PropTypes.string),
     assay: PropTypes.arrayOf(PropTypes.string),
     omics: PropTypes.arrayOf(PropTypes.string),
     category: PropTypes.arrayOf(PropTypes.string),
