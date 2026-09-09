@@ -18,10 +18,12 @@ function CollectionScopeBar({ userType = undefined }) {
     (state) => state.browseData
   );
   const location = useLocation();
-  const { studyCode, available } = resolveScope(location, userType);
+  const { studyCodes, available } = resolveScope(location, userType);
 
-  const study = studyCode ? findCollection(available[0]) : null;
-  const studyName = study ? study.card.name : null;
+  // One study in scope can be named; several cannot, so the text says how many
+  // rather than inventing a combined name.
+  const owner = studyCodes.length === 1 && available.length ? findCollection(available[0]) : null;
+  const scopeName = owner ? owner.card.name : `${studyCodes.length} studies`;
   const selected = selectedCollections.filter((prefix) => available.includes(prefix));
 
   function describe() {
@@ -38,9 +40,9 @@ function CollectionScopeBar({ userType = undefined }) {
     }
     // No selection means no constraint, which is every collection in the study.
     if (selected.length === 0) {
-      return `Showing all ${available.length} collections in ${studyName}`;
+      return `Showing all ${available.length} collections in ${scopeName}`;
     }
-    return `Showing ${selected.length} of ${available.length} collections in ${studyName}`;
+    return `Showing ${selected.length} of ${available.length} collections in ${scopeName}`;
   }
 
   return (
