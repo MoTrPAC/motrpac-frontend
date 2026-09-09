@@ -1,9 +1,11 @@
-import { describe, test, expect, vi } from 'vitest';
+import { describe, test, expect } from 'vitest';
 import React from 'react';
 import { screen, within } from '@testing-library/react';
 import { renderWithProviders } from '../../testUtils/test-utils';
 import BrowseDataFilter from '../browseDataFilter';
-import browseDataFilters from '../../lib/browseDataFilters';
+import vocabulary, { facetOptions } from '../../lib/facetVocabulary';
+import { entitledPrefixes } from '../../lib/collectionFiles';
+import { studyCollections } from '../../lib/collectionScope';
 import { transformData } from '../helper';
 import browseDataReducer, { defaultBrowseDataState } from '../browseDataReducer';
 import { types } from '../browseDataActions';
@@ -12,7 +14,6 @@ const noop = () => {};
 
 function renderFilter({
   allFiles = [],
-  flags = {},
   profile = {},
   route = '/data-download/file-browser/rat-training-06',
 } = {}) {
@@ -25,67 +26,112 @@ function renderFilter({
     {
       route,
       preloadedState: {
-        browseData: { ...defaultBrowseDataState, allFiles, ...flags },
+        browseData: { ...defaultBrowseDataState, allFiles },
         auth: { profile },
       },
     }
   );
 }
 
-describe('BrowseDataFilter - no study selected', () => {
+const facetCard = (container, name) =>
+  [...container.querySelectorAll('.filter-module')].find((card) =>
+    within(card).queryByText(name)
+  );
+
+const buttons = (container, name) => [...facetCard(container, name).querySelectorAll('.filterBtn')];
+
+describe('BrowseDataFilter - the panel does not depend on what has loaded', () => {
   test('renders without throwing before any collection has loaded', () => {
     // Reproduces the reported crash: an anonymous user clicks Browse Files and
-    // the filter panel renders while the collection is still loading, so none
-    // of the per-study flags is set yet. `filters` was left as an object and
-    // `item.filters.map` threw "item.filters.map is not a function".
+    // the filter panel renders while the collection is still loading.
     expect(() => renderFilter()).not.toThrow();
   });
 
-  test('offers no facets when nothing is loaded', () => {
+  test('every facet is offered with nothing loaded', () => {
+    // Options used to be derived from the loaded files, so the panel was empty
+    // until the fetch resolved and then reflowed on every study toggle.
     const { container } = renderFilter();
-    // Category/Metadata have static options, so they remain; the derived facets
-    // must not appear with zero files behind them.
-    expect(screen.queryByText('Tissue')).not.toBeInTheDocument();
-    expect(container.querySelectorAll('.filter-module').length).toBeGreaterThan(0);
+    ['Tissue', 'Omics', 'Assay'].forEach((name) => {
+      expect(buttons(container, name).length).toBeGreaterThan(0);
+    });
+  });
+
+  test('options outside the scope are disabled, not hidden', () => {
+    const { container } = renderFilter({
+      profile: { user_metadata: { userType: 'internal' } },
+    });
+    const tissue = buttons(container, 'Tissue');
+    const inScope = facetOptions(
+      'tissue_name',
+      entitledPrefixes('internal'),
+      studyCollections('rat-training-06', 'internal')
+    );
+
+    expect(tissue).toHaveLength(inScope.length);
+    expect(tissue.filter((button) => !button.disabled)).toHaveLength(
+      inScope.filter((option) => option.enabled).length
+    );
+    expect(tissue.some((button) => button.disabled)).toBe(true);
   });
 });
 
-describe('BrowseDataFilter - facets follow the loaded files', () => {
-  const files = [
-    {
-      object: 'quant-id/rat-training-06/c3.0/a.txt',
-      tissue_name: 'Liver',
-      omics: 'Epigenomics',
-      assay: 'RRBS',
-      reference_genome: 'RN8',
-      category: 'Quant-ID',
-    },
-    {
-      object: 'quant-id/rat-training-06/c3.0/b.txt',
-      tissue_name: 'Heart',
-      omics: 'Transcriptomics',
-      assay: 'RNA-seq',
-      reference_genome: 'RN8',
-      category: 'Quant-ID',
-    },
-  ];
+describe('BrowseDataFilter - entitlement', () => {
+  test('a value only a restricted collection carries is never offered', () => {
+    // Disabling is a UI affordance. Entitlement is not: an option the user may
+    // not reach must not appear at all.
+    const internal = facetOptions('assay', entitledPrefixes('internal'), []);
+    const external = facetOptions('assay', entitledPrefixes('external'), []);
+    const anonymous = facetOptions('assay', entitledPrefixes(undefined), []);
 
-  test('shows only values present in the loaded collection', () => {
-    const { container } = renderFilter({ allFiles: files });
-    const tissue = [...container.querySelectorAll('.filter-module')].find((card) =>
-      within(card).queryByText('Tissue')
-    );
+    const values = (options) => options.map((option) => option.value);
+    expect(values(external).every((value) => values(internal).includes(value))).toBe(true);
+    expect(external.length).toBeLessThan(internal.length);
+    expect(values(anonymous)).toEqual(values(external));
+  });
+});
 
-    const labels = [...tissue.querySelectorAll('.filterBtn')].map((b) => b.textContent);
-    expect(labels).toEqual(['Heart', 'Liver']);
+describe('BrowseDataFilter - species tags', () => {
+  // Same markup and class names the search feature uses, so the tags read the
+  // same on both pages: <span class="filter-species-tag ml-1 badge badge-rat">R
+  const tags = (button) =>
+    [...button.querySelectorAll('.filter-species-tag')].map((span) => [
+      span.textContent,
+      span.className,
+    ]);
+
+  const tissueButton = (container, label) =>
+    buttons(container, 'Tissue').find((button) => button.textContent.startsWith(label));
+
+  test('a value belonging to one species carries that one badge', () => {
+    const { container } = renderFilter({
+      profile: { user_metadata: { userType: 'internal' } },
+    });
+
+    expect(tags(tissueButton(container, 'Gastrocnemius'))).toEqual([
+      ['R', 'filter-species-tag ml-1 badge badge-rat'],
+    ]);
+    expect(tags(tissueButton(container, 'Adipose'))).toEqual([
+      ['H', 'filter-species-tag ml-1 badge badge-human'],
+    ]);
   });
 
-  test('facets a collection cannot vary are absent', () => {
+  test('a value both species carry gets both badges, rat first', () => {
+    const { container } = renderFilter({
+      profile: { user_metadata: { userType: 'internal' } },
+    });
+    expect(tags(tissueButton(container, 'Plasma'))).toEqual([
+      ['R', 'filter-species-tag ml-1 badge badge-rat'],
+      ['H', 'filter-species-tag ml-1 badge badge-human'],
+    ]);
+  });
+});
+
+describe('BrowseDataFilter - facets a collection cannot vary are absent', () => {
+  test('no Genome Assembly, Category or Metadata facet', () => {
     // A collection has exactly one reference genome and exactly one category,
     // so those facets could only match everything or nothing. The Collection
     // picker expresses both -- each option names its kind and its genome.
     const { container } = renderFilter({
-      allFiles: files,
       profile: { user_metadata: { userType: 'internal' } },
     });
     expect(screen.queryByText('Genome Assembly')).not.toBeInTheDocument();
@@ -94,30 +140,10 @@ describe('BrowseDataFilter - facets follow the loaded files', () => {
     expect(container.querySelector('.collection-filter-module')).toBeInTheDocument();
   });
 
-  test('comma-joined multi-values are split into separate options', () => {
-    const merged = [
-      {
-        object: 'analysis/rat-training-06/c1.0/m.txt',
-        assay: 'Targeted Amines, Targeted Tricarboxylic Acid Cycle',
-        omics: 'Metabolomics',
-        tissue_name: 'Liver',
-        category: 'Analysis',
-      },
-    ];
-    const { container } = renderFilter({ allFiles: merged });
-    const assay = [...container.querySelectorAll('.filter-module')].find((card) =>
-      within(card).queryByText('Assay')
-    );
-    expect([...assay.querySelectorAll('.filterBtn')].map((b) => b.textContent)).toEqual([
-      'Targeted Amines',
-      'Targeted Tricarboxylic Acid Cycle',
-    ]);
-  });
-
-  test('rendering does not mutate the shared filter config', () => {
-    const before = JSON.stringify(browseDataFilters);
-    renderFilter({ allFiles: files });
-    expect(JSON.stringify(browseDataFilters)).toBe(before);
+  test('rendering does not mutate the shared vocabulary', () => {
+    const before = JSON.stringify(vocabulary);
+    renderFilter({ profile: { user_metadata: { userType: 'internal' } } });
+    expect(JSON.stringify(vocabulary)).toBe(before);
   });
 });
 
@@ -150,6 +176,15 @@ describe('browseDataReducer - filter matching', () => {
     const next = applyFilter(files, 'omics', 'Metabolomics Targeted');
     expect(next.filteredFiles.map((f) => f.object)).toEqual(['merged']);
   });
+
+  test('a human tissue filter matches on the superclass, under the one tissue key', () => {
+    const human = [
+      { object: 'a', species: 'Human', tissue_name: 'Human Muscle Powder', tissue_superclass: 'Muscle' },
+      { object: 'b', species: 'Human', tissue_name: 'HUman EDTA Plasma', tissue_superclass: 'Plasma' },
+    ];
+    const next = applyFilter(human, 'tissue_name', 'Muscle');
+    expect(next.filteredFiles.map((f) => f.object)).toEqual(['a']);
+  });
 });
 
 describe('browseDataReducer - a collection change prunes filters instead of wiping them', () => {
@@ -178,7 +213,7 @@ describe('browseDataReducer - a collection change prunes filters instead of wipi
 
   test('a filter whose only source collection was removed is dropped', () => {
     // Liver is gone from the loaded set; keeping it active would empty the table
-    // with its facet button no longer visible to explain why.
+    // while its facet button sits disabled with nothing to explain why.
     const next = afterLoad(filters(['Liver'], ['RNA-seq']), [heartRna], ['b']);
     expect(next.activeFilters.tissue_name).toEqual([]);
     expect(next.activeFilters.assay).toEqual(['RNA-seq']);
@@ -190,68 +225,14 @@ describe('browseDataReducer - a collection change prunes filters instead of wipi
     expect(next.activeFilters.assay).toEqual(['RNA-seq']);
   });
 
-  test('exactly one per-study flag is true after any collection change', () => {
+  test('the loaded collections are recorded, with no per-study flags', () => {
+    // The per-study booleans are gone: they could only ever describe one study,
+    // and the browser can now hold several. Consumers read the loaded set.
     const next = afterLoad(defaultBrowseDataState.activeFilters, [liverRna], [
       'quant-id/rat-training-06/c1.0',
     ]);
-    const flags = [
-      next.pass1b06DataSelected,
-      next.pass1a06DataSelected,
-      next.humanPrecovidSedAduDataSelected,
-    ];
-    expect(flags.filter(Boolean)).toHaveLength(1);
-    expect(next.pass1b06DataSelected).toBe(true);
-  });
-});
-
-describe('tissue facets are grouped for human data', () => {
-  const human = [
-    { object: 'analysis/human-precovid-sed-adu/c1.3/a.txt', species: 'Human',
-      tissue_name: 'Human Muscle Powder', tissue_superclass: 'Muscle' },
-    { object: 'analysis/human-precovid-sed-adu/c1.3/b.txt', species: 'Human',
-      tissue_name: 'Human Muscle', tissue_superclass: 'Muscle' },
-    { object: 'analysis/human-precovid-sed-adu/c1.3/c.txt', species: 'Human',
-      tissue_name: 'HUman EDTA Plasma', tissue_superclass: 'Plasma' },
-    { object: 'analysis/human-precovid-sed-adu/c1.3/d.txt', species: 'Human',
-      tissue_name: 'Human EDTA Packed Cells', tissue_superclass: 'Blood' },
-    { object: 'analysis/human-precovid-sed-adu/c1.3/e.txt', species: 'Human',
-      tissue_name: 'Human Adipose Powder', tissue_superclass: 'Adipose' },
-  ];
-
-  const rat = [
-    { object: 'quant-id/rat-training-06/c1.0/a.txt', species: 'Rat',
-      tissue_name: 'Heart', tissue_superclass: 'Muscle' },
-    { object: 'quant-id/rat-training-06/c1.0/b.txt', species: 'Rat',
-      tissue_name: 'Gastrocnemius', tissue_superclass: 'Muscle' },
-  ];
-
-  const tissueOptions = (container) => {
-    const card = [...container.querySelectorAll('.filter-module')].find((node) =>
-      within(node).queryByText('Tissue')
-    );
-    return [...card.querySelectorAll('.filterBtn')].map((b) => b.textContent);
-  };
-
-  test('human tissues collapse to the four superclasses', () => {
-    // The raw names are variants of one specimen and include a typo
-    // ("HUman EDTA Plasma"); the superclass is the grain that means something.
-    const { container } = renderFilter({ allFiles: human });
-    expect(tissueOptions(container)).toEqual(['Adipose', 'Blood', 'Muscle', 'Plasma']);
-  });
-
-  test('rat tissues stay at the specimen level', () => {
-    // Heart and Gastrocnemius are both superclass "Muscle"; collapsing them
-    // would merge distinct specimens.
-    const { container } = renderFilter({ allFiles: rat });
-    expect(tissueOptions(container)).toEqual(['Gastrocnemius', 'Heart']);
-  });
-
-  test('a human tissue filter matches on the superclass', () => {
-    const state = { ...defaultBrowseDataState, allFiles: human };
-    const next = browseDataReducer(state, {
-      type: types.CHANGE_FILTER, category: 'tissue_superclass', filter: 'Muscle',
-    });
-    expect(next.filteredFiles.map((f) => f.object.slice(-5))).toEqual(['a.txt', 'b.txt']);
+    expect(next.loadedCollections).toEqual(['quant-id/rat-training-06/c1.0']);
+    expect(Object.keys(next).some((key) => /DataSelected$/.test(key))).toBe(false);
   });
 });
 
@@ -274,5 +255,13 @@ describe('rendering the table does not rewrite the data behind the filters', () 
 
     expect(JSON.stringify(files)).toBe(snapshot);
     expect(out[0].tissue_name).toBe('Muscle');
+  });
+
+  test('every row names its collection, from the object path', () => {
+    const out = transformData([
+      { object: 'quant-id/rat-training-06/c3.0/a.txt', phase: 'x', study: 'y' },
+      { object: 'phenotype/human-precovid-sed-adu/c2.0/b.csv', phase: 'x', study: 'y' },
+    ]);
+    expect(out.map((row) => row.collection)).toEqual(['Quant-ID c3.0', 'Phenotype c2.0']);
   });
 });

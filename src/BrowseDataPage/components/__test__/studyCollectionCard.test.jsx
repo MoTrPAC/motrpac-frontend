@@ -112,26 +112,57 @@ describe('StudyCollectionCard - empty kind-cell state', () => {
       <StudyCollectionCard study={ratTraining06} userType="external" />
     );
 
-    // rat-acute-06 has no public collections at all, so every cell starts empty and
-    // then populates for an internal user - this used to break the Rules of Hooks.
-    // Its collections exist, so the cells read "Restricted", not "in preparation".
+    // A study whose every kind holds collections, none of them public: each cell
+    // starts empty and then populates for an internal user, which used to break
+    // the Rules of Hooks. Because the collections exist, the cells read
+    // "Restricted", not "in preparation".
+    //
+    // Built here rather than picked from the real cards: rat-acute-06 had this
+    // shape until its c2.0 and c4.0 were released publicly on 2026-09-08, and
+    // the property under test is the component's, not any study's release state.
     const ratAcute06 = studyDataCards.find((s) => s.code === 'rat-acute-06');
-    rerender(<StudyCollectionCard study={ratAcute06} userType="external" />);
+    const consortiumOnly = {
+      ...ratAcute06,
+      dataTypes: Object.fromEntries(
+        Object.entries(ratAcute06.dataTypes).map(([kind, versions]) => [
+          kind,
+          versions.map((version) => ({ ...version, releaseStage: 'consortium' })),
+        ])
+      ),
+    };
+
+    rerender(<StudyCollectionCard study={consortiumOnly} userType="external" />);
     expect(screen.getAllByText(/not available for direct download/i)).toHaveLength(3);
     expect(screen.queryByText(/results are in preparation/i)).not.toBeInTheDocument();
 
-    rerender(<StudyCollectionCard study={ratAcute06} userType="internal" />);
+    rerender(<StudyCollectionCard study={consortiumOnly} userType="internal" />);
     expect(screen.queryByText(/not available for direct download/i)).not.toBeInTheDocument();
   });
 });
 
 describe('StudyCollectionCard - collections whose metadata is not generated yet', () => {
   test('Browse Files is disabled rather than navigating nowhere', () => {
-    // human-main's phenotype sub-collections are declared but have no metadata
-    // file yet, so browsing them would resolve to an empty scope and bounce the
-    // user back to the download page.
-    const humanMain = studyDataCards.find((s) => s.code === 'human-main');
-    const { container } = render(<StudyCollectionCard study={humanMain} userType="internal" />);
+    // A card may declare a collection before its metadata is generated, and
+    // browsing that would resolve to an empty scope and bounce the user back to
+    // the download page. human-main's phenotype sub-collections were the real
+    // example until they were generated on 2026-09-09, so the study is built
+    // here instead: the property is the card's, not any collection's readiness.
+    const notGenerated = {
+      ...ratTraining06,
+      dataTypes: {
+        phenotype: [
+          {
+            collection: 'c9.9',
+            latest: true,
+            storageLocation: `gs://${bucketName}/phenotype/not-generated-yet/c9.9`,
+            releaseStage: 'consortium',
+          },
+        ],
+      },
+    };
+    const { container } = render(
+      <StudyCollectionCard study={notGenerated} userType="internal" />
+    );
 
     const browse = [...container.querySelectorAll('.study-collection-kind-cell')]
       .flatMap((cell) => [...cell.querySelectorAll('button')])

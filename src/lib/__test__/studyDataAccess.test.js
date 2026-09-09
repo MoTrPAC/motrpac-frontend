@@ -11,10 +11,18 @@ import studyDataCards from '../studyDataCards';
 const ratTraining06 = studyDataCards.find((s) => s.code === 'rat-training-06');
 const ratAcute06 = studyDataCards.find((s) => s.code === 'rat-acute-06');
 const humanPrecovid = studyDataCards.find((s) => s.code === 'human-precovid-sed-adu');
+// rat-acute-06 was the consortium-only example until c2.0/c4.0 were released
+// publicly on 2026-09-08. The human main study is the one that holds that shape
+// now; the property under test is the gating, not the study.
+const consortiumOnly = studyDataCards.find((s) => s.code === 'human-main');
 
 describe('hasVisibleCollections', () => {
-  test('external users: rat-acute-06 has zero public collections, so it is not visible', () => {
-    expect(hasVisibleCollections(ratAcute06, 'external')).toBe(false);
+  test('external users: a study with zero public collections is not visible', () => {
+    expect(hasVisibleCollections(consortiumOnly, 'external')).toBe(false);
+  });
+
+  test('external users: rat-acute-06 became visible when c2.0 and c4.0 went public', () => {
+    expect(hasVisibleCollections(ratAcute06, 'external')).toBe(true);
   });
 
   test('external users: rat-training-06 has public collections, so it is visible', () => {
@@ -25,8 +33,8 @@ describe('hasVisibleCollections', () => {
     expect(hasVisibleCollections(humanPrecovid, 'external')).toBe(true);
   });
 
-  test('internal users always see every study, including rat-acute-06 (consortium-only)', () => {
-    expect(hasVisibleCollections(ratAcute06, 'internal')).toBe(true);
+  test('internal users always see every study, including consortium-only ones', () => {
+    expect(hasVisibleCollections(consortiumOnly, 'internal')).toBe(true);
   });
 });
 

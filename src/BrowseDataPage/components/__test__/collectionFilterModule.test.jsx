@@ -6,6 +6,7 @@ import CollectionFilterModule from '../collectionFilterModule';
 import BrowseDataFilter from '../../browseDataFilter';
 import { defaultBrowseDataState } from '../../browseDataReducer';
 import actions from '../../browseDataActions';
+import { entitledPrefixes } from '../../../lib/collectionFiles';
 import { studyCollections } from '../../../lib/collectionScope';
 
 const STUDY_ROUTE = '/data-download/file-browser/rat-training-06';
@@ -25,18 +26,28 @@ const labelled = (container, text) =>
     button.textContent.includes(text)
   );
 
+const enabled = (container) =>
+  [...container.querySelectorAll('.filterBtn')].filter((button) => !button.disabled);
+
 describe('CollectionFilterModule - options', () => {
-  test('offers only the current study, not the whole corpus', () => {
+  test('lists the whole entitled corpus, enabling only what is in scope', () => {
+    // Every collection stays on screen so the panel does not reflow as studies
+    // are toggled; the ones whose study is out of scope are disabled instead.
     const { container } = render('internal');
-    const buttons = [...container.querySelectorAll('.filterBtn')];
-    expect(buttons).toHaveLength(studyCollections('rat-training-06', 'internal').length);
-    expect(container.textContent).not.toContain('rat-acute-06');
+    expect(container.querySelectorAll('.filterBtn')).toHaveLength(
+      entitledPrefixes('internal').length
+    );
+    expect(enabled(container)).toHaveLength(
+      studyCollections('rat-training-06', 'internal').length
+    );
   });
 
-  test('an external user is offered only that study’s public collections', () => {
+  test('a collection the user may not see is absent, not merely disabled', () => {
+    // Disabling is a UI affordance; entitlement is not. An external user is
+    // never told that Quant-ID c3.0 exists.
     const { container } = render('external');
-    expect([...container.querySelectorAll('.filterBtn')]).toHaveLength(
-      studyCollections('rat-training-06', 'external').length
+    expect(container.querySelectorAll('.filterBtn')).toHaveLength(
+      entitledPrefixes('external').length
     );
     expect(labelled(container, 'Quant-ID c3.0')).toBeUndefined();
   });
@@ -46,14 +57,38 @@ describe('CollectionFilterModule - options', () => {
     expect(labelled(container, 'Quant-ID c3.0').textContent).toContain('Rn8');
   });
 
-  test('a study with one entitled collection hides the module', () => {
+  test('a scope holding one collection still shows the rest, disabled', () => {
     const { container } = render('internal', '/data-download/file-browser/human-eqc');
-    expect(container.querySelector('.collection-filter-module')).toBeNull();
+    expect(container.querySelector('.collection-filter-module')).toBeInTheDocument();
+    expect(enabled(container)).toHaveLength(1);
   });
 
   test('nothing renders outside the file browser', () => {
     const { container } = render('internal', '/data-download');
     expect(container.querySelector('.collection-filter-module')).toBeNull();
+  });
+
+  test('picking a collection does not narrow the study scope', () => {
+    // Study gates collection, not the reverse. If choosing one collection
+    // collapsed the scope to its study, every other study's buttons would
+    // disable and a second collection could never be added by clicking.
+    const { container } = render(
+      'internal',
+      '/data-download/file-browser/all?collections=quant-id/rat-training-06/c3.0'
+    );
+    expect(enabled(container)).toHaveLength(entitledPrefixes('internal').length);
+  });
+
+  test('an explicit study list survives a collection selection too', () => {
+    const { container } = render(
+      'internal',
+      '/data-download/file-browser?studies=rat-training-06,rat-acute-06'
+        + '&collections=quant-id/rat-training-06/c3.0'
+    );
+    expect(enabled(container)).toHaveLength(
+      studyCollections('rat-training-06', 'internal').length
+        + studyCollections('rat-acute-06', 'internal').length
+    );
   });
 });
 
@@ -106,8 +141,9 @@ describe('CollectionFilterModule - selection', () => {
       await store.dispatch(actions.selectCollections(available.slice(1)));
     });
 
-    // Check the one remaining unchecked collection.
-    const remaining = [...container.querySelectorAll('.filterBtn')].find(
+    // Check the one remaining unchecked collection. Only in-scope buttons are
+    // candidates; the rest of the corpus is on screen but disabled.
+    const remaining = enabled(container).find(
       (button) => !button.classList.contains('activeFilter')
     );
     await act(async () => {

@@ -28,13 +28,20 @@ describe('StudyDataExplorer - view toggle', () => {
 });
 
 describe('StudyDataExplorer - access control on card visibility', () => {
-  test('external users never see rat-acute-06 (zero public collections)', () => {
+  // rat-acute-06 was the consortium-only example until c2.0/c4.0 were released
+  // publicly on 2026-09-08. The human main study holds that shape now.
+  test('external users never see a study with zero public collections', () => {
     renderExplorer('external');
-    expect(screen.queryByText('Acute Exercise in Young Adult Rats')).not.toBeInTheDocument();
+    expect(screen.queryByText('Human Main Study')).not.toBeInTheDocument();
   });
 
-  test('internal users see all three studies', () => {
+  test('internal users see it', () => {
     renderExplorer('internal');
+    expect(screen.getByText('Human Main Study')).toBeInTheDocument();
+  });
+
+  test('rat-acute-06 is visible to external users now that c2.0 and c4.0 are public', () => {
+    renderExplorer('external');
     expect(screen.getByText('Acute Exercise in Young Adult Rats')).toBeInTheDocument();
   });
 });
@@ -105,9 +112,9 @@ describe('StudyDataExplorer - Browse Files scopes the file browser to one collec
     const strays = state.allFiles.filter((file) => !file.object.startsWith(`${prefix}/`));
     expect(strays).toEqual([]);
 
-    // The legacy per-study flag is still derived for the components that read it.
-    expect(state.pass1b06DataSelected).toBe(true);
-    expect(state.pass1a06DataSelected).toBe(false);
+    // No per-study flags any more: the loaded set is the record of what is in
+    // scope, and it can span studies.
+    expect(state.loadedCollections).toEqual([prefix]);
   });
 
   test('the collection a user is not entitled to is never offered', async () => {

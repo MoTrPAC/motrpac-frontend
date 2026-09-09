@@ -84,10 +84,12 @@ describe('DataReleaseCards - consortium data never leaks to external users', () 
     expect(screen.queryByRole('button', { name: /gcp storage/i })).not.toBeInTheDocument();
   });
 
-  test('rat-acute-06 is absent entirely for external users - all of its collections are consortium', () => {
+  test('a study with no public collections is absent entirely for external users', () => {
+    // rat-acute-06 filled this role until its c2.0/c4.0 went public on
+    // 2026-09-08; the Human Main Study is consortium-only throughout.
     renderReleases('external');
 
-    expect(screen.queryByText('Acute Exercise in Young Adult Rats')).not.toBeInTheDocument();
+    expect(screen.queryByText('Human Main Study')).not.toBeInTheDocument();
   });
 
   test('human-precovid-sed-adu exposes only its Analysis collection publicly - Quant-ID and Phenotype are dbGaP-gated', () => {

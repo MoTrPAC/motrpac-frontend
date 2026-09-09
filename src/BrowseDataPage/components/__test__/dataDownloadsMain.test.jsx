@@ -30,12 +30,14 @@ function renderMain(userType) {
 }
 
 describe('DataDownloadsMain - Study Data card access gating (integration smoke test)', () => {
-  test('external users do not see rat-acute-06 (consortium-only), internal users do - confirms userType reaches StudyDataExplorer', () => {
+  test('external users do not see a consortium-only study, internal users do - confirms userType reaches StudyDataExplorer', () => {
+    // The Human Main Study replaced rat-acute-06 as the consortium-only example
+    // when rat-acute c2.0/c4.0 were released publicly on 2026-09-08.
     renderMain('external');
-    expect(screen.queryByText('Acute Exercise in Young Adult Rats')).not.toBeInTheDocument();
+    expect(screen.queryByText('Human Main Study')).not.toBeInTheDocument();
 
     renderMain('internal');
-    expect(screen.getByText('Acute Exercise in Young Adult Rats')).toBeInTheDocument();
+    expect(screen.getByText('Human Main Study')).toBeInTheDocument();
   });
 });
 

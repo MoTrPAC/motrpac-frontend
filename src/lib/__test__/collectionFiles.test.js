@@ -58,7 +58,7 @@ describe('entitlement', () => {
 
 describe('loading', () => {
   test('a collection loads only its own files', async () => {
-    const files = await loadCollection('quant-id/rat-training-06/c3.0');
+    const files = await loadCollection('quant-id/rat-training-06/c3.0', 'internal');
     expect(files.length).toBeGreaterThan(0);
     const strays = files.filter(
       (file) => !file.object.startsWith('quant-id/rat-training-06/c3.0/')
@@ -67,26 +67,76 @@ describe('loading', () => {
   });
 
   test('an unknown collection is rejected rather than silently empty', async () => {
-    await expect(loadCollection('quant-id/nope/c1.0')).rejects.toThrow('Unknown collection');
+    await expect(loadCollection('quant-id/nope/c1.0', 'internal')).rejects.toThrow(
+      'Unknown collection'
+    );
   });
 
   test('loading several collections concatenates them', async () => {
     const prefixes = ['phenotype/human-eqc/c14.0', 'phenotype/rat-training-06/c4.0'];
-    const files = await loadCollections(prefixes);
-    const [first, second] = await Promise.all(prefixes.map(loadCollection));
+    const files = await loadCollections(prefixes, 'internal');
+    const [first, second] = await Promise.all(
+      prefixes.map((prefix) => loadCollection(prefix, 'internal'))
+    );
     expect(files).toHaveLength(first.length + second.length);
   });
 
   test('cross-study collections carry a null phase and study', async () => {
-    const files = await loadCollection('phenotype/human-eqc/c14.0');
+    const files = await loadCollection('phenotype/human-eqc/c14.0', 'internal');
     expect(files.every((file) => file.phase === null && file.study === null)).toBe(true);
     expect(files.every((file) => file.species === 'Human')).toBe(true);
   });
 
   test('release stage varies per file within a collection', async () => {
-    const files = await loadCollection('analysis/human-precovid-sed-adu/c1.3');
+    const files = await loadCollection('analysis/human-precovid-sed-adu/c1.3', 'internal');
     const stages = new Set(files.map((file) => file.release_stage));
     expect(stages).toEqual(new Set(['public_release', 'consortium_release']));
-    expect(files.filter((file) => file.external_release)).toHaveLength(120);
+  });
+});
+
+describe('a public collection may still hold consortium-only files', () => {
+  // `analysis/human-precovid-sed-adu/c1.3` is public, so `entitledPrefixes`
+  // offers it to everyone -- but in the real corpus 98 of its 218 files are
+  // consortium-only. The collection-level gate cannot see that, so the
+  // file-level one has to.
+  //
+  // Stated as relations rather than those two counts, because the metadata
+  // committed here is a sample of the real listings (see `generator mock`) --
+  // and because hardcoded totals would have broken on the next regeneration
+  // anyway. These hold against the sample and the real data alike, so CI and
+  // the staging build assert the same property.
+  const PARTIAL = 'analysis/human-precovid-sed-adu/c1.3';
+
+  test('internal users get strictly more of it than external users', async () => {
+    const internal = await loadCollection(PARTIAL, 'internal');
+    const external = await loadCollection(PARTIAL, 'external');
+    expect(external.length).toBeGreaterThan(0);
+    expect(internal.length).toBeGreaterThan(external.length);
+  });
+
+  test.each(['external', undefined])('%s users get only its public files', async (userType) => {
+    const all = await loadCollection(PARTIAL, 'internal');
+    const files = await loadCollection(PARTIAL, userType);
+    expect(files).toHaveLength(all.filter((file) => file.external_release === true).length);
+    expect(files.every((file) => file.external_release === true)).toBe(true);
+  });
+
+  test('no unreleased file reaches a non-internal user, across the whole corpus', async () => {
+    // The property that matters, stated once over everything rather than per
+    // collection, so a future collection with per-file rules is covered too.
+    const checks = await Promise.all(
+      ['external', undefined].map((userType) =>
+        loadCollections(entitledPrefixes(userType), userType)
+      )
+    );
+    checks.forEach((files) => {
+      expect(files.length).toBeGreaterThan(0);
+      expect(files.every((file) => file.release_stage === 'public_release')).toBe(true);
+    });
+  });
+
+  test('internal users still see consortium files', async () => {
+    const files = await loadCollections(entitledPrefixes('internal'), 'internal');
+    expect(files.some((file) => file.release_stage === 'consortium_release')).toBe(true);
   });
 });
