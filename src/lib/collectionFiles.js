@@ -115,7 +115,7 @@ export function findCollection(prefix) {
  * per-file gate here, next to the per-collection one, so both are applied in
  * the same place and neither can be forgotten.
  */
-function visibleTo(records, userType) {
+export function visibleTo(records, userType) {
   return userType === 'internal'
     ? records
     : records.filter((record) => record.external_release === true);
