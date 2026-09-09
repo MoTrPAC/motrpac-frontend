@@ -1,3 +1,13 @@
+/**
+ * NOT IMPORTED. Kept for reference alongside `assayList.js`, at the BIC's
+ * request, while the derived facet vocabulary settles.
+ *
+ * The file browser's facet options now come from
+ * `src/data/file_download_metadata/facet-vocabulary.json`, built from the
+ * shipped metadata by `scripts/build-facet-vocabulary.js`. These hand-written
+ * lists had drifted from the data in both directions -- see that script's
+ * header for the counts.
+ */
 import assayList from './assayList';
 
 export const tissues = {
