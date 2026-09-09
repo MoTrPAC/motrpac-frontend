@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import BrowseDataFilter from '../browseDataFilter';
 import SelectiveDataDownloadFileBrowser from './selectiveDataDownloadFileBrowser';
@@ -16,96 +15,50 @@ function SelectiveDataDownloads({
   downloadRequestResponse,
   waitingForResponse,
 }) {
-  const dataDownload = useSelector((state) => state.browseData);
-
-  // set page title based on selected data
+  /**
+   * The title and summary are fixed.
+   *
+   * They used to be rewritten from whichever study was in scope, which made the
+   * page rename itself on every facet click, and could only be honest while the
+   * browser held exactly one study. The browser is now a destination in its own
+   * right -- the cards on /data-download are the per-study overview -- so it is
+   * named for what it is.
+   *
+   * The summary carries what the "Show Info" dropdown used to hide: the same
+   * page cannot both hide its description behind a toggle and claim to be a
+   * self-contained entry point.
+   */
   function renderPageTitle() {
-    let title = '';
-    let showInfo = false;
-
-    if (dataDownload.pass1a06DataSelected) {
-      title = 'Data Download - Acute Exercise Rats';
-    } else if (dataDownload.humanPrecovidSedAduDataSelected) {
-      title = 'Data Download - Human Sedentary Adults (Pre-Suspension)';
-    } else {
-      title = 'Data Download - Endurance Training Rats';
-      showInfo = true;
-    }
-
     return (
-      <>
-        <div className="page-title">
-          <h1 className={`mb-0 ${showInfo ? 'flex-grow-1' : ''}`}>{title}</h1>
-        </div>
-        {showInfo && (
-          <div className="btn-group show-data-download-info-link">
-            <button type="button" className="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-              <i className="bi bi-info-circle-fill"></i>
-              <span className="ml-1">Show Info</span>
-            </button>
-            <div className="dropdown-menu dropdown-menu-right">
-              <p>Data available for download on this page includes:</p>
-              <h6 className="border-bottom mb-2 pb-2">Raw &quot;Results&quot;</h6>
-              <ul className="pl-3">
-                <li><b>Untargeted Metabolomics:</b> MS intensities</li>
-                <li><b>Targeted Metabolomics</b>: Absolute concentrations</li>
-                <li><b>Proteomics:</b> Reporter ion intensities and log ratios</li>
-                <li><b>ATAC-seq:</b> Peak counts</li>
-                <li><b>RRBS:</b> CpG methylation counts (or methylation beta values)</li>
-                <li><b>Immunoassay (Luminex):</b> Protein concentrations</li>
-              </ul>
-              <h6 className="border-bottom mb-2 pb-2">&quot;Analysis&quot; Results</h6>
-              <ul className="pl-3">
-                <li>Normalized data tables</li>
-                <li>Differential analysis results (e.g., log2 fold-change, p-values, adjusted p-values)</li>
-              </ul>
-            </div>
-          </div>
-        )}
-      </>
+      <div className="page-title">
+        <h1 className="mb-0">Data Download - File Browser</h1>
+      </div>
     );
   }
 
-  // set page summary based on selected data
-  function renderStudySummary() {
-    if (dataDownload.pass1a06DataSelected) {
-      return (
-        <p className="lead">
-          Experimental data from acute exercise study on young adult rats for a comprehensive
-          analysis of the physiological responses following a single exercise session in
-          6-month-old F344 rats.
-        </p>
-      );
-    }
-    if (dataDownload.humanPrecovidSedAduDataSelected) {
-      return (
-        <p className="lead">
-          The data included here are summary-level results for differences in changes during
-          the acute bout, comparing the change from pre-exercise baseline at any given
-          timepoint during the acute bout as compared to resting control. This is an initial
-          set of human data representing a subset of sedentary adults who underwent an acute
-          exercise bout before the study was suspended due to COVID-19. Please refer to the
-          {' '}
-          <a href={import.meta.env.VITE_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
-            Data Release Notes
-          </a>
-          {' '}
-          for more information on this dataset.
-        </p>
-      );
-    }
-
+  function renderSummary() {
     return (
-      <p className="lead">
-        This study investigates the long-term adaptive effects of endurance training in young
-        adult rats by analyzing multi-omics profiles across 18 tissues and blood at 1, 2, 4,
-        and 8 weeks of treadmill training.{' '}
-        <Link to="/project-overview#endurance-training" className="link">
-          Learn more
-        </Link>
-        {' '}
-        about this study.
-      </p>
+      <>
+        <p className="lead mb-2">
+          Browse and download individual data files from across MoTrPAC. Use the filters to
+          narrow by study, collection, tissue, ome or assay, then select the files you want.
+          For a study-by-study overview of what has been released, see the{' '}
+          <Link to="/data-download" className="link" onClick={onResetFilters}>
+            data collections
+          </Link>
+          .
+        </p>
+        <p className="mb-0">
+          <b>Quant-ID</b> files hold the measured values for each assay: MS intensities for
+          untargeted metabolomics, absolute concentrations for targeted metabolomics, reporter
+          ion intensities and log ratios for proteomics, peak counts for ATAC-seq, CpG
+          methylation counts for RRBS, and protein concentrations for immunoassay (Luminex).
+          {' '}
+          <b>Analysis</b> files hold normalized data tables and differential analysis results
+          such as log2 fold-changes, p-values and adjusted p-values. <b>Phenotype</b> files
+          hold the accompanying subject, sample and QC measurements.
+        </p>
+      </>
     );
   }
 
@@ -124,7 +77,7 @@ function SelectiveDataDownloads({
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3">
         {renderPageTitle()}
       </div>
-      <div className="browse-data-summary-container mb-4">{renderStudySummary()}</div>
+      <div className="browse-data-summary-container mb-4">{renderSummary()}</div>
       <CollectionScopeBar userType={profile.user_metadata && profile.user_metadata.userType} />
       {/*
         No `row`/`tab-content` wrapper here. `.tab-content` carried no `col-*`
