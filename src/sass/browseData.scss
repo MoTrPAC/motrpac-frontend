@@ -330,8 +330,26 @@
         padding: 0.2rem 0.4rem;
         white-space: normal;
 
+        // Which species a facet value belongs to. Same markup, class names and
+        // colours as the search feature's filters (see search.scss), so the
+        // tags mean the same thing on both pages.
+        .filter-species-tag {
+          &.badge-rat {
+            background-color: colors.$accent-yellow-shade-light;
+            color: #000;
+          }
+
+          &.badge-human {
+            background-color: colors.$primary-blue-shade-light;
+            color: #fff;
+          }
+        }
+
+        // A value no in-scope study can match. Kept on screen so the panel does
+        // not reflow as studies are toggled, and so the corpus stays legible.
         &:disabled {
           cursor: not-allowed;
+          opacity: 0.5;
         }
       }
 
@@ -835,9 +853,11 @@
     opacity: 0.75;
   }
 
+  // Disabled here means either "still loading" or "its study is not in scope";
+  // the second is the common case, so the cursor says unavailable, not busy.
   .filterBtn:disabled {
     opacity: 0.5;
-    cursor: progress;
+    cursor: not-allowed;
   }
 }
 
@@ -1032,4 +1052,20 @@
 // in the same boxed panel the study collection cards use.
 .bundle-older-collections {
   gap: 0.75rem;
+}
+
+// Collection labels repeat across studies ("Quant-ID c1.0" belongs to three), so
+// a multi-study scope groups them under the study that owns them.
+.collection-filter-module {
+  .collection-filter-group + .collection-filter-group {
+    margin-top: 0.6rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .collection-filter-study {
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.25rem;
+  }
 }
