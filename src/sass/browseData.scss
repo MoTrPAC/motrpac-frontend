@@ -1063,9 +1063,15 @@
     border-top: 1px solid #f0f0f0;
   }
 
+  // The study a group of collections belongs to. It has to out-weigh the
+  // collection buttons under it, or the eye reads the list as flat and the
+  // grouping stops doing its job -- which matters most where the labels repeat.
+  // Indented to line up with the buttons, which carry their own 0.3rem margin.
   .collection-filter-study {
-    font-size: 0.72rem;
+    font-size: 0.85rem;
+    font-weight: 700;
     letter-spacing: 0.02em;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.35rem;
+    padding-left: 0.45rem;
   }
 }
