@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { prefixFromObject } from '../lib/collectionFiles';
-import { collectionLabel } from '../lib/collectionScope';
+import { collectionVersion } from '../lib/collectionScope';
 
 /**
  * BrowseDataTable props
@@ -109,10 +109,15 @@ export const tableColumns = () => {
       accessor: 'study',
     },
     {
-      Header: 'Category',
+      // "Type", not "Category": the values are Quant-ID / Analysis / Phenotype,
+      // which the study cards already call data types (`dataTypes` in
+      // studyDataCards.js). Same word in both places, and it is the shorter one.
+      Header: 'Type',
       accessor: 'category',
     },
     {
+      // Just the version -- "c1.0" -- since Type beside it already says which
+      // family it belongs to.
       Header: 'Collection',
       accessor: 'collection',
       sortType: 'basic',
@@ -297,7 +302,7 @@ export const transformData = (arr) => {
     item.filename = splits.pop();
     // The object path names the collection; the table shows the same short
     // label the Collection picker does.
-    item.collection = collectionLabel(prefixFromObject(item.object));
+    item.collection = collectionVersion(prefixFromObject(item.object));
     // Transform metabolomics assay value
     if (item.assay) {
       const newMetabAssayVal = Array.isArray(item.assay) ? item.assay.join(', ') : item.assay;
