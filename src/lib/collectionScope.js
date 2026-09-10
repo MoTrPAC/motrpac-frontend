@@ -4,7 +4,6 @@ import {
   findCollection,
   isKnownCollection,
 } from './collectionFiles';
-import { KIND_LABELS } from './studyDataCards';
 
 /**
  * The file browser's scope: which study is being viewed, and which of its
@@ -65,22 +64,22 @@ export function studyOf(prefix) {
 }
 
 /**
- * A collection's short name: its kind and version, e.g. "Quant-ID c1.0".
+ * A collection's version code, e.g. "c1.0".
  *
- * The Collection picker and the file table's Collection column show the same
- * label, so it is written once. Memoised because the table asks per row and
- * `findCollection` scans every card.
+ * Just the version: the file table shows this beside a Type column that already
+ * says Quant-ID / Analysis / Phenotype, so prefixing the kind repeats it on
+ * every row. The Collection *picker* does prefix it, because its options are
+ * grouped by study and "c1.0" alone cannot tell Quant-ID from Analysis there.
+ *
+ * Memoised because the table asks per row and `findCollection` scans every card.
  */
-const COLLECTION_LABELS = new Map();
-export function collectionLabel(prefix) {
-  if (!COLLECTION_LABELS.has(prefix)) {
+const COLLECTION_VERSIONS = new Map();
+export function collectionVersion(prefix) {
+  if (!COLLECTION_VERSIONS.has(prefix)) {
     const owner = findCollection(prefix);
-    COLLECTION_LABELS.set(
-      prefix,
-      owner ? `${KIND_LABELS[owner.kind] || owner.kind} ${owner.version.collection}` : ''
-    );
+    COLLECTION_VERSIONS.set(prefix, owner ? owner.version.collection : '');
   }
-  return COLLECTION_LABELS.get(prefix);
+  return COLLECTION_VERSIONS.get(prefix);
 }
 
 /** A study's display name, or null when the code is unknown. */
