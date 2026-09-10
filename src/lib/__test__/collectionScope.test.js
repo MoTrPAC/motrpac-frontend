@@ -4,7 +4,7 @@ import {
   DEFAULT_STUDY,
   FILE_BROWSER_PATH,
   availableStudies,
-  collectionLabel,
+  collectionVersion,
   isKnownStudy,
   resolveScope,
   scopeStudies,
@@ -51,16 +51,16 @@ describe('studyCollections', () => {
   });
 });
 
-describe('collectionLabel', () => {
-  test('names a collection by its kind and version', () => {
-    // The Collection picker and the file table both show this, so it is written
-    // once.
-    expect(collectionLabel('quant-id/rat-training-06/c3.0')).toBe('Quant-ID c3.0');
-    expect(collectionLabel('phenotype/human-precovid-sed-adu/c2.0')).toBe('Phenotype c2.0');
+describe('collectionVersion', () => {
+  test('is the version alone, without the family', () => {
+    // The file table shows this beside a Type column that already says Quant-ID
+    // / Analysis / Phenotype, so prefixing the family repeats it on every row.
+    expect(collectionVersion('quant-id/rat-training-06/c3.0')).toBe('c3.0');
+    expect(collectionVersion('phenotype/human-precovid-sed-adu/c2.0')).toBe('c2.0');
   });
 
   test('an unknown prefix is empty rather than a broken label', () => {
-    expect(collectionLabel('quant-id/nope/c9.9')).toBe('');
+    expect(collectionVersion('quant-id/nope/c9.9')).toBe('');
   });
 });
 

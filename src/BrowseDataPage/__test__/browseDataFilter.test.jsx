@@ -276,11 +276,12 @@ describe('rendering the table does not rewrite the data behind the filters', () 
     expect(out[0].tissue_name).toBe('Muscle');
   });
 
-  test('every row names its collection, from the object path', () => {
+  test('every row names its collection version, from the object path', () => {
+    // The version alone: the Type column beside it already says which family.
     const out = transformData([
       { object: 'quant-id/rat-training-06/c3.0/a.txt', phase: 'x', study: 'y' },
       { object: 'phenotype/human-precovid-sed-adu/c2.0/b.csv', phase: 'x', study: 'y' },
     ]);
-    expect(out.map((row) => row.collection)).toEqual(['Quant-ID c3.0', 'Phenotype c2.0']);
+    expect(out.map((row) => row.collection)).toEqual(['c3.0', 'c2.0']);
   });
 });

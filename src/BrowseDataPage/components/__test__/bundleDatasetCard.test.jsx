@@ -20,26 +20,43 @@ describe('visibleBundleCards - access', () => {
   });
 
   test('the internal-only groups are absent for everyone else', () => {
+    // rat-acute-06 used to be here too; its c2.0 and c4.0 bundles were released
+    // publicly on 2026-09-08, so it is visible now. The property is the gating,
+    // not which studies happen to be consortium-only this week.
     ['external', undefined].forEach((userType) => {
       const codes = visibleBundleCards(userType).map((c) => c.code);
-      expect(codes).not.toContain('rat-acute-06');
       expect(codes).not.toContain('human-clinical');
     });
   });
 
   test('gating is per collection, so a consortium-only group vanishes for external users', () => {
-    // rat_acute_06 and human_phenotype are consortium throughout, so neither
-    // card should appear at all rather than appearing empty.
-    const consortiumOnly = ['rat_acute_06', 'human_phenotype'].every((key) =>
+    // Derived rather than hardcoded: whichever groups are consortium throughout
+    // must be absent entirely for external users, rather than appearing empty.
+    const CODE_FOR = {
+      rat_training_06: 'rat-training-06',
+      rat_acute_06: 'rat-acute-06',
+      human_precovid_sed_adu: 'human-precovid-sed-adu',
+      human_phenotype: 'human-clinical',
+    };
+    const consortiumOnly = Object.entries(CODE_FOR).filter(([key]) =>
       BundleDataTypes[key].every((bundle) =>
         bundle.collections.every((c) => c.releaseStage !== 'public')
       )
     );
-    expect(consortiumOnly).toBe(true);
+    expect(consortiumOnly.length).toBeGreaterThan(0);
 
     const codes = visibleBundleCards('external').map((card) => card.code);
-    expect(codes).not.toContain('rat-acute-06');
-    expect(codes).not.toContain('human-clinical');
+    consortiumOnly.forEach(([, code]) => expect(codes).not.toContain(code));
+  });
+
+  test('a group with any public collection stays visible to external users', () => {
+    // The other half of the same rule: rat-acute-06 is mixed since 2026-09-08,
+    // and a mixed group must appear, carrying only its public bundles.
+    const mixed = BundleDataTypes.rat_acute_06.some((bundle) =>
+      bundle.collections.some((c) => c.releaseStage === 'public')
+    );
+    expect(mixed).toBe(true);
+    expect(visibleBundleCards('external').map((c) => c.code)).toContain('rat-acute-06');
   });
 
   test('every bundle an external user sees has only public collections', () => {
@@ -103,10 +120,16 @@ describe('BundleDatasetCard - badges only where they distinguish', () => {
 
   test('a card whose bundles genuinely differ keeps the badges', () => {
     // Clinical Data spans Adult and Pediatric, so the badge carries information.
+    // `getAllByText`, not `getByText`: two of its bundles are pediatric since
+    // the human-main cohorts were added, and the point is that the badge is
+    // present, not that it is unique.
     const card = cardFor('human-clinical', 'internal');
     const { container } = renderWithProviders(<BundleDatasetCard card={card} profile={{}} />);
-    expect(container.querySelectorAll('.participant-badge').length).toBeGreaterThan(0);
-    expect(screen.getByText('Pediatric')).toBeInTheDocument();
+    const badges = [...container.querySelectorAll('.participant-badge')].map(
+      (badge) => badge.textContent
+    );
+    expect(badges).toContain('Pediatric');
+    expect(badges).toContain('Adult');
   });
 });
 
