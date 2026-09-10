@@ -63,9 +63,6 @@ function StudyFilterModule({ userType = undefined }) {
     <div className="card filter-module study-filter-module mb-4">
       <div className="card-header font-weight-bold d-flex align-items-center">
         <div>Study</div>
-        <span className="ml-auto font-weight-normal text-muted small">
-          {studyCodes.length} of {available.length}
-        </span>
       </div>
       <div className="card-body">
         {available.map((code) => {
