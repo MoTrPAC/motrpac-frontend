@@ -1,55 +1,24 @@
 {
   "tissue_name": [
     {
-      "value": "Blood",
-      "species": [
-        "Human"
-      ],
-      "collections": [
-        "analysis/human-precovid-sed-adu/c2.0"
-      ]
-    },
-    {
-      "value": "Gastrocnemius",
-      "species": [
-        "Rat"
-      ],
-      "collections": [
-        "analysis/rat-acute-06/c1.0",
-        "analysis/rat-acute-06/c2.0"
-      ]
-    },
-    {
-      "value": "Hippocampus",
-      "species": [
-        "Rat"
-      ],
-      "collections": [
-        "analysis/rat-training-06/c1.0",
-        "analysis/rat-training-06/c2.0"
-      ]
-    },
-    {
-      "value": "Plasma",
+      "value": "Adipose",
       "species": [
         "Human"
       ],
       "collections": [
         "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
         "quant-id/human-precovid/c1.0"
       ]
-    }
-  ],
-  "omics": [
+    },
     {
-      "value": "Epigenomics",
+      "value": "Adrenal",
       "species": [
-        "Human",
         "Rat"
       ],
       "collections": [
-        "analysis/human-precovid-sed-adu/c2.0",
         "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
         "analysis/rat-acute-06/c2.0",
         "analysis/rat-training-06/c1.0",
         "analysis/rat-training-06/c2.0",
@@ -61,27 +30,571 @@
       ]
     },
     {
-      "value": "Metabolomics",
-      "species": [
-        "Human"
-      ],
-      "collections": [
-        "analysis/human-precovid-sed-adu/c1.3",
-        "quant-id/human-precovid/c1.0"
-      ]
-    }
-  ],
-  "assay": [
-    {
-      "value": "ATAC-seq",
+      "value": "Aorta",
       "species": [
         "Rat"
       ],
       "collections": [
         "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0"
+      ]
+    },
+    {
+      "value": "Blood",
+      "species": [
+        "Human"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "quant-id/human-precovid/c1.0"
+      ]
+    },
+    {
+      "value": "Blood RNA",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
         "analysis/rat-acute-06/c2.0",
         "analysis/rat-training-06/c1.0",
         "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Brown Adipose",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Colon",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Cortex",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "EDTA Plasma",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0"
+      ]
+    },
+    {
+      "value": "Gastrocnemius",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Heart",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Hippocampus",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Hypothalamus",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Kidney",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Liver",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Lung",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Muscle",
+      "species": [
+        "Human"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "quant-id/human-precovid/c1.0"
+      ]
+    },
+    {
+      "value": "Ovaries",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Plasma",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-training-06/c1.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-training-06/c1.0"
+      ]
+    },
+    {
+      "value": "Small Intestine",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Spleen",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Testes",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Tibia",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0"
+      ]
+    },
+    {
+      "value": "Vastus Lateralis",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Vena Cava",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "White Adipose",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    }
+  ],
+  "omics": [
+    {
+      "value": "Epigenomics",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Metabolomics",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "quant-id/human-precovid/c1.0"
+      ]
+    },
+    {
+      "value": "Metabolomics Targeted",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0"
+      ]
+    },
+    {
+      "value": "Metabolomics Untargeted",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0"
+      ]
+    },
+    {
+      "value": "Phenotype",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0"
+      ]
+    },
+    {
+      "value": "Proteomics Targeted",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-training-06/c1.0"
+      ]
+    },
+    {
+      "value": "Proteomics Untargeted",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Transcriptomics",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    }
+  ],
+  "assay": [
+    {
+      "value": "Acetyl Proteomics",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "ATAC-seq",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
         "quant-id/rat-acute-06/c2.0",
         "quant-id/rat-training-06/c1.0",
         "quant-id/rat-training-06/c2.0",
@@ -99,7 +612,7 @@
       ]
     },
     {
-      "value": "MethylCap-seq",
+      "value": "Clinical Chemistry Metabolites",
       "species": [
         "Human"
       ],
@@ -108,12 +621,505 @@
       ]
     },
     {
+      "value": "Clinical Chemistry Proteins",
+      "species": [
+        "Human"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c2.0"
+      ]
+    },
+    {
+      "value": "Global Proteomics",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Immunoassay",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c1.0"
+      ]
+    },
+    {
+      "value": "Immunoassay for corticosteroids",
+      "species": [
+        "Human"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "quant-id/human-precovid/c1.0"
+      ]
+    },
+    {
+      "value": "Immunoassay for glucagon and related metabolic hormones",
+      "species": [
+        "Human"
+      ],
+      "collections": [
+        "quant-id/human-precovid/c1.0"
+      ]
+    },
+    {
+      "value": "Immunoassay for insulin and related metabolic hormones",
+      "species": [
+        "Human"
+      ],
+      "collections": [
+        "quant-id/human-precovid/c1.0"
+      ]
+    },
+    {
+      "value": "MethylCap-seq",
+      "species": [
+        "Human"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "quant-id/human-precovid/c1.0"
+      ]
+    },
+    {
+      "value": "Phosphoproteomics",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Protein Ubiquitination",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Proteomics Olink",
+      "species": [
+        "Human"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "quant-id/human-precovid/c1.0"
+      ]
+    },
+    {
+      "value": "RNA-seq",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
       "value": "RRBS",
       "species": [
         "Rat"
       ],
       "collections": [
-        "quant-id/rat-acute-06/c1.0"
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Targeted 3-Hydroxyisobutyric Acid (3-HIB)",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0"
+      ]
+    },
+    {
+      "value": "Targeted Acyl-CoA",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0"
+      ]
+    },
+    {
+      "value": "Targeted Acylcarnitines",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0"
+      ]
+    },
+    {
+      "value": "Targeted Amines",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0"
+      ]
+    },
+    {
+      "value": "Targeted Amino Acids",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0"
+      ]
+    },
+    {
+      "value": "Targeted Beta-Aminoisobutyric acid",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0"
+      ]
+    },
+    {
+      "value": "Targeted Ceramides",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0"
+      ]
+    },
+    {
+      "value": "Targeted Conventional",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0"
+      ]
+    },
+    {
+      "value": "Targeted Ethanolamides",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c1.0"
+      ]
+    },
+    {
+      "value": "Targeted Keto Acids",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0"
+      ]
+    },
+    {
+      "value": "Targeted Nucleotides",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0"
+      ]
+    },
+    {
+      "value": "Targeted Organic Acids",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0"
+      ]
+    },
+    {
+      "value": "Targeted Oxylipins",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-training-06/c1.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0"
+      ]
+    },
+    {
+      "value": "Targeted Sphingomyelin",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0"
+      ]
+    },
+    {
+      "value": "Targeted Tricarboxylic Acid Cycle",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0"
+      ]
+    },
+    {
+      "value": "Untargeted HILIC-Positive",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0"
+      ]
+    },
+    {
+      "value": "Untargeted Ion-Pair Negative",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0"
+      ]
+    },
+    {
+      "value": "Untargeted Lipidomics Reversed-Phase Negative",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0"
+      ]
+    },
+    {
+      "value": "Untargeted Lipidomics Reversed-Phase Positive",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0"
+      ]
+    },
+    {
+      "value": "Untargeted Reversed-Phase Negative",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0"
+      ]
+    },
+    {
+      "value": "Untargeted Reversed-Phase Positive",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c1.1",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "quant-id/human-precovid/c1.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0"
       ]
     }
   ]
