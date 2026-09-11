@@ -25,18 +25,19 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
   const profile = useSelector((state) => state.auth.profile);
   const userType = profile?.user_metadata?.userType;
   const {
+    studyCodes,
     selected: selectedCollections,
     entitled,
     prefixes,
-    apply: applyCollections,
+    reset: resetScope,
   } = useCollectionSelection(userType);
 
-  // The Collection picker is a module in this panel, so "Reset filters" clears
-  // it too. Leaving collections selected after a reset read as the button being
-  // broken. Clearing means "every collection in scope", not "none".
+  // Study and Collection are modules in this panel, so "Reset filters" clears
+  // them too. Leaving either set after a reset read as the button being broken.
+  // Clearing means "every study, every collection", not "none".
   function handleReset() {
-    if (selectedCollections.length) {
-      applyCollections([]);
+    if (studyCodes.length || selectedCollections.length) {
+      resetScope();
     }
     onResetFilters();
   }
