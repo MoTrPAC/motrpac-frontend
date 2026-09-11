@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import useCollectionSelection from '../useCollectionSelection';
 import { findCollection } from '../../lib/collectionFiles';
-import { studyName, studyOf } from '../../lib/collectionScope';
+import { studyName, studyOf, studySpecies } from '../../lib/collectionScope';
 import { KIND_LABELS } from '../../lib/studyDataCards';
+import { SpeciesLegend, SpeciesTags } from './speciesTags';
 
 /**
  * Picks which collections the file browser has loaded.
@@ -47,7 +48,12 @@ function CollectionFilterModule({ userType = undefined }) {
     const code = studyOf(prefix);
     let group = groups.find((candidate) => candidate.code === code);
     if (!group) {
-      group = { code, name: studyName(code) || code, options: [] };
+      group = {
+        code,
+        name: studyName(code) || code,
+        species: studySpecies(code),
+        options: [],
+      };
       groups.push(group);
     }
     group.options.push({
@@ -62,7 +68,10 @@ function CollectionFilterModule({ userType = undefined }) {
   return (
     <div className="card filter-module collection-filter-module mb-4">
       <div className="card-header font-weight-bold d-flex align-items-center">
-        <div>Collection</div>
+        <div className="card-header-label">
+          <span>Collection</span>
+          <SpeciesLegend id="collection" />
+        </div>
         {selected.length > 0 && (
           <button
             type="button"
@@ -78,7 +87,13 @@ function CollectionFilterModule({ userType = undefined }) {
         {groups.map((group) => (
           <div key={group.code} className="collection-filter-group">
             {grouped && (
-              <div className="collection-filter-study text-muted">{group.name}</div>
+              // The badge sits on the heading rather than on every button: a
+              // study is one species, so repeating it down the group would say
+              // the same thing five times beside labels that are already long.
+              <div className="collection-filter-study text-muted">
+                {group.name}
+                <SpeciesTags species={group.species} />
+              </div>
             )}
             {group.options.map((option) => (
               <button
