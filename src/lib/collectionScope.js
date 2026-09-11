@@ -74,6 +74,17 @@ export function studyName(code) {
   return card ? card.name : null;
 }
 
+/**
+ * A study's species, as its card spells it ('rat' / 'human').
+ *
+ * One value, never a list: a study is one species. That is why the file facets
+ * can carry two badges and this cannot.
+ */
+export function studySpecies(code) {
+  const card = allDataCards.find((entry) => entry.code === code);
+  return card ? card.species : null;
+}
+
 export function isKnownStudy(code) {
   return allDataCards.some((card) => card.code === code);
 }
