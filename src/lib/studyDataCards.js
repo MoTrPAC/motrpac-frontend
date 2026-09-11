@@ -37,7 +37,7 @@ const studyDataCards = [
     species: 'rat',
     cohort: '6 month old',
     studyDesign: 'Endurance training',
-    description: 'Progressive treadmill training for 1, 2, 4 or 8 weeks in young adult rats, with 18 tissues coillected 48-hour after the last bout.',
+    description: 'This study investigates the long-term adaptive effects of endurance training in young adult rats by analyzing multi-omics profiles across 18 tissues and blood at 1, 2, 4, and 8 weeks of progressive treadmill training.',
     dataTypes: {
       quantID: [
         {
@@ -104,7 +104,7 @@ const studyDataCards = [
           referenceGenome: 'Rn8',
           latest: true,
           storageLocation: `gs://${bucketName}/quant-id/rat-acute-06/c2.0`,
-          releaseStage: 'public',
+          releaseStage: 'consortium',
         },
         {
           collection: 'c1.0',
@@ -120,7 +120,7 @@ const studyDataCards = [
           referenceGenome: 'Rn7',
           latest: true,
           storageLocation: `gs://${bucketName}/analysis/rat-acute-06/c2.0`,
-          releaseStage: 'public',
+          releaseStage: 'consortium',
         },
         {
           collection: 'c1.1',
@@ -142,7 +142,7 @@ const studyDataCards = [
           collection: 'c4.0',
           latest: true,
           storageLocation: `gs://${bucketName}/phenotype/rat-acute-06/c4.0`,
-          releaseStage: 'public',
+          releaseStage: 'consortium',
         },
       ],
     },
