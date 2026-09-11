@@ -299,9 +299,35 @@
   }
 
   .browse-data-filter-group {
+    // Which species a value belongs to. Same markup, class names and colours as
+    // the search feature's filters (see search.scss), so the tags mean the same
+    // thing on both pages.
+    //
+    // Scoped to the whole panel rather than to `.filterBtn`: the Collection
+    // picker badges its study *headings* instead of its buttons, since a study
+    // is one species and repeating it down the group says nothing new.
+    .filter-species-tag {
+      &.badge-rat {
+        background-color: colors.$accent-yellow-shade-light;
+        color: #000;
+      }
+
+      &.badge-human {
+        background-color: colors.$primary-blue-shade-light;
+        color: #fff;
+      }
+    }
+
     .filter-module {
       .card-header {
         padding: 0.4rem 0.85rem;
+
+        // Name and legend icon on one line, so the icon sits with the text
+        // rather than against the Clear button on the far side of the header.
+        .card-header-label {
+          display: flex;
+          align-items: center;
+        }
 
         .data-filter-info-icon {
           color: colors.$gray;
@@ -329,21 +355,6 @@
         margin: 0.3rem;
         padding: 0.2rem 0.4rem;
         white-space: normal;
-
-        // Which species a facet value belongs to. Same markup, class names and
-        // colours as the search feature's filters (see search.scss), so the
-        // tags mean the same thing on both pages.
-        .filter-species-tag {
-          &.badge-rat {
-            background-color: colors.$accent-yellow-shade-light;
-            color: #000;
-          }
-
-          &.badge-human {
-            background-color: colors.$primary-blue-shade-light;
-            color: #fff;
-          }
-        }
 
         // A value no in-scope study can match. Kept on screen so the panel does
         // not reflow as studies are toggled, and so the corpus stays legible.
