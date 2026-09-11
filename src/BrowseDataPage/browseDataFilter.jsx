@@ -4,22 +4,12 @@ import { useSelector } from 'react-redux';
 import { FACETS, facetOptions } from '../lib/facetVocabulary';
 import StudyFilterModule from './components/studyFilterModule';
 import CollectionFilterModule from './components/collectionFilterModule';
+import { SpeciesLegend, SpeciesTags } from './components/speciesTags';
 import useCollectionSelection from './useCollectionSelection';
 
 import '@styles/browseData.scss';
 import '@styles/tooltip.scss';
 
-/**
- * Species tags, spelled the way the search feature spells them.
- *
- * Same markup, same class names, same colours: a user who has learned what a
- * yellow R means on the search page should not have to learn it again here.
- * Rat first, and a value both species carry gets both tags.
- */
-const SPECIES_TAGS = [
-  { name: 'Rat', initial: 'R', variant: 'badge-rat' },
-  { name: 'Human', initial: 'H', variant: 'badge-human' },
-];
 
 function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name: [], category: [], reference_genome: [] }, onChangeFilter, onResetFilters }) {
   const profile = useSelector((state) => state.auth.profile);
@@ -57,7 +47,10 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
   const filters = facets.map((facet) => (
     <div key={facet.name} className="card filter-module mb-4">
       <div className="card-header font-weight-bold d-flex align-items-center">
-        <div>{facet.name}</div>
+        <div className="card-header-label">
+          <span>{facet.name}</span>
+          <SpeciesLegend id={facet.keyName} />
+        </div>
       </div>
       <div className="card-body">
         {facet.options.map((option) => {
@@ -74,14 +67,7 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
               onClick={() => onChangeFilter(facet.keyName, option.value)}
             >
               {option.value}
-              {SPECIES_TAGS.filter((tag) => option.species.includes(tag.name)).map((tag) => (
-                <span
-                  key={tag.name}
-                  className={`filter-species-tag ml-1 badge ${tag.variant}`}
-                >
-                  {tag.initial}
-                </span>
-              ))}
+              <SpeciesTags species={option.species} />
             </button>
           );
         })}
