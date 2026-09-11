@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import actions from './browseDataActions';
 import { entitledPrefixes } from '../lib/collectionFiles';
-import { resolveScope, scopeStudies, scopeToPath } from '../lib/collectionScope';
+import { resolveScope, scopeCollections, scopeToPath } from '../lib/collectionScope';
 
 /**
  * The file browser's collection selection, and the one way to change it.
@@ -33,7 +33,21 @@ export default function useCollectionSelection(userType) {
     const collapsed = next.length === available.length ? [] : next;
     const load = collapsed.length ? collapsed : available;
     dispatch(actions.selectCollections(load, collapsed));
-    navigate(scopeToPath(scopeStudies(scope), collapsed));
+    navigate(scopeToPath(studyCodes, collapsed));
+  }
+
+  /**
+   * Clear every scope control at once, for "Reset filters".
+   *
+   * Study has to be cleared here rather than in its own module: a reset that
+   * left studies pressed while clearing tissue and assay would make Study look
+   * like the one filter the button does not reach, which is exactly how it read
+   * before. Clearing means "every study, every collection", not "none".
+   */
+  function reset() {
+    const everything = scopeCollections([], userType);
+    dispatch(actions.selectCollections(everything, []));
+    navigate(scopeToPath([], []));
   }
 
   function toggle(prefix) {
@@ -45,6 +59,7 @@ export default function useCollectionSelection(userType) {
   }
 
   return {
+    reset,
     inFileBrowser: scope.inFileBrowser,
     studyCodes,
     available,
