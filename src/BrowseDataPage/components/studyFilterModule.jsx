@@ -9,7 +9,9 @@ import {
   scopeCollections,
   scopeToPath,
   studyName,
+  studySpecies,
 } from '../../lib/collectionScope';
+import { SpeciesLegend, SpeciesTags } from './speciesTags';
 
 /**
  * Which studies the file browser has in scope.
@@ -60,7 +62,10 @@ function StudyFilterModule({ userType = undefined }) {
   return (
     <div className="card filter-module study-filter-module mb-4">
       <div className="card-header font-weight-bold d-flex align-items-center">
-        <div>Study</div>
+        <div className="card-header-label">
+          <span>Study</span>
+          <SpeciesLegend id="study" />
+        </div>
       </div>
       <div className="card-body">
         {available.map((code) => {
@@ -75,6 +80,7 @@ function StudyFilterModule({ userType = undefined }) {
               onClick={() => toggle(code)}
             >
               {studyName(code) || code}
+              <SpeciesTags species={studySpecies(code)} />
             </button>
           );
         })}
