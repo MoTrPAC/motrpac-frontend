@@ -419,7 +419,7 @@ const BundleDataTypes = {
         },
         {
           collection: 'c4.0',
-          releaseStage: 'public',
+          releaseStage: 'consortium',
           size: '8.2 MB',
           name: 'bundles/motrpac_rat-acute-06_phenotype_c4.0.zip',
           latest: true,
@@ -438,7 +438,7 @@ const BundleDataTypes = {
       collections: [
         {
           collection: 'c2.0',
-          releaseStage: 'public',
+          releaseStage: 'consortium',
           size: '8 GB',
           name: 'bundles/motrpac_rat-acute-06_epigenomics_c2.0.zip',
           latest: true,
@@ -464,7 +464,7 @@ const BundleDataTypes = {
         },
         {
           collection: 'c2.0',
-          releaseStage: 'public',
+          releaseStage: 'consortium',
           size: '1.9 GB',
           name: 'bundles/motrpac_rat-acute-06_transcriptomics_c2.0.zip',
           latest: true,
@@ -490,7 +490,7 @@ const BundleDataTypes = {
         },
         {
           collection: 'c2.0',
-          releaseStage: 'public',
+          releaseStage: 'consortium',
           size: '1.3 GB',
           name: 'bundles/motrpac_rat-acute-06_proteomics-untargeted_c2.0.zip',
           latest: true,
@@ -516,7 +516,7 @@ const BundleDataTypes = {
         },
         {
           collection: 'c2.0',
-          releaseStage: 'public',
+          releaseStage: 'consortium',
           size: '841.1 MB',
           name: 'bundles/motrpac_rat-acute-06_metabolomics_c2.0.zip',
           latest: true,
