@@ -17,38 +17,24 @@ import {
  *   /data-download/file-browser/rat-training-06                 all of a study
  *   /data-download/file-browser/rat-training-06?collections=a,b some of a study
  *   /data-download/file-browser?studies=a,b                     several studies
- *   /data-download/file-browser/all                             every study
- *   /data-download/file-browser                                 the default study
+ *   /data-download/file-browser                                 every study
  *
  * One path segment is a study code, three are a collection prefix; the two
- * cannot collide. An empty collection selection means "every collection in
- * scope", matching the Tissue/Omics/Assay facets where an empty selection means
- * no constraint.
+ * cannot collide.
  *
- * A bare URL is a destination, not a fall-through: the browser is reachable
- * without going through the cards. It opens on DEFAULT_STUDY rather than on
- * everything, because "no scope was named" is not the same as "no constraint
- * within a scope", and loading every study for a glancing visitor is a poor
- * trade.
+ * **An empty selection means no constraint**, and that holds for studies exactly
+ * as it does for collections and for the Tissue/Omics/Assay facets: no study
+ * named is every study, rendered as no button pressed. Representing "everything"
+ * as every button pressed instead -- which is what an expanded study list would
+ * do -- made the Study picker the one control where clearing the last selection
+ * appeared to select them all.
  *
- * `/all` is what "no scope named" is not: an explicit request for everything,
- * reached by deselecting the last study or selecting them all. It has to be
- * written down rather than inferred from an empty study list, because an empty
- * study list already means something else -- the URL asked for collections this
- * user may not see -- and turning that denial into "show everything" would be a
- * grant, not a fallback.
+ * The one state that is *not* "no constraint" is a refusal: a URL naming only
+ * collections this user may not see. `resolveScope` returns early there with an
+ * empty `prefixes`, so callers distinguish the two by `prefixes`, never by an
+ * empty `studyCodes`.
  */
 export const FILE_BROWSER_PATH = '/data-download/file-browser';
-
-/** Opened when the URL names no scope: the one study every visitor can reach. */
-export const DEFAULT_STUDY = 'rat-training-06';
-
-/**
- * Stands in for every study in the URL, so the scope survives a bookmark even
- * as the corpus grows and regardless of who opens it. Safe as a path segment
- * because no card uses it as a code -- `isKnownStudy('all')` is false.
- */
-export const ALL_STUDIES = 'all';
 
 /**
  * The study a collection belongs to.
@@ -97,25 +83,24 @@ export function studyCollections(studyCode, userType) {
   return entitledPrefixes(userType).filter((prefix) => studyOf(prefix) === studyCode);
 }
 
-/** Every collection of these studies that this user may see. */
+/**
+ * Every collection of these studies that this user may see.
+ *
+ * No study named is every study, the same way no tissue selected is every
+ * tissue.
+ */
 export function scopeCollections(studyCodes, userType) {
+  const entitled = entitledPrefixes(userType);
+  if (studyCodes.length === 0) {
+    return entitled;
+  }
   const wanted = new Set(studyCodes);
-  return entitledPrefixes(userType).filter((prefix) => wanted.has(studyOf(prefix)));
+  return entitled.filter((prefix) => wanted.has(studyOf(prefix)));
 }
 
 /** Every study this user may see anything of, in card order. */
 export function availableStudies(userType) {
   return [...new Set(entitledPrefixes(userType).map(studyOf))].filter(Boolean);
-}
-
-/**
- * The study list to write back into a URL for a resolved scope.
- *
- * Both the Study picker and the Collection picker rebuild the URL, and neither
- * should have to remember that "everything" has its own spelling.
- */
-export function scopeStudies(scope) {
-  return scope.allStudies ? [ALL_STUDIES] : scope.studyCodes;
 }
 
 /**
@@ -138,8 +123,10 @@ export function scopeToPath(studyCodes, selected) {
     const path = `${FILE_BROWSER_PATH}/${studyCodes[0]}`;
     return query ? `${path}?${query}` : path;
   }
-  const studies = `studies=${studyCodes.join(',')}`;
-  return `${FILE_BROWSER_PATH}?${[studies, query].filter(Boolean).join('&')}`;
+  // No study named is the bare path: every study, no button pressed.
+  const studies = studyCodes.length ? `studies=${studyCodes.join(',')}` : '';
+  const search = [studies, query].filter(Boolean).join('&');
+  return search ? `${FILE_BROWSER_PATH}?${search}` : FILE_BROWSER_PATH;
 }
 
 function trimSlashes(value) {
@@ -152,7 +139,6 @@ const NOT_BROWSING = Object.freeze({
   available: [],
   selected: [],
   prefixes: [],
-  allStudies: false,
 });
 
 function listParam(search, key) {
@@ -170,10 +156,9 @@ function listParam(search, key) {
  * `prefixes` while `inFileBrowser` means the URL asked for collections this
  * user may not see, and the caller should fall through to the download page.
  *
- * `allStudies` records that the scope was asked for as "everything" rather than
- * as a list that happens to be complete, so rebuilding the URL keeps the short
- * form. `studyCodes` is expanded either way -- callers render from it and never
- * see the sentinel.
+ * An empty `studyCodes` with a non-empty `prefixes` means every study; an empty
+ * `studyCodes` with an empty `prefixes` means the URL asked for collections this
+ * user may not see. Those are the only two, and `prefixes` tells them apart.
  */
 export function resolveScope(location, userType) {
   if (!location.pathname.startsWith(FILE_BROWSER_PATH)) {
@@ -197,30 +182,32 @@ export function resolveScope(location, userType) {
     return { ...NOT_BROWSING, inFileBrowser: true };
   }
 
-  const studiesParam = listParam(location.search, 'studies');
-  const namedStudies = studiesParam.filter(isKnownStudy);
-  const everything = segment === ALL_STUDIES || studiesParam.includes(ALL_STUDIES);
+  // A path segment that names neither a study nor a collection is a bad URL, not
+  // an absent one. Now that no study named means *every* study, letting it fall
+  // through would answer a typo with the whole corpus.
+  if (segment && !isKnownStudy(segment) && !pathNamesCollection) {
+    return { ...NOT_BROWSING, inFileBrowser: true };
+  }
+
+  const namedStudies = listParam(location.search, 'studies').filter(isKnownStudy);
 
   // Study and collection answer different questions -- which collections are
   // offered, and which of them are loaded -- so an explicit study scope outlives
   // a collection selection. Deriving the scope from the selection instead meant
   // picking one collection disabled every other study's buttons, which made a
   // second study's collection unreachable by clicking.
-  let studyCodes;
-  let allStudies = false;
-  if (everything) {
-    studyCodes = availableStudies(userType);
-    allStudies = true;
-  } else {
-    const selectedStudies = selected.map(studyOf).filter(Boolean);
-    studyCodes = [...new Set([...namedStudies, ...selectedStudies])];
-    if (studyCodes.length === 0) {
-      if (isKnownStudy(segment)) {
-        studyCodes = [segment];
-      } else if (!segment) {
-        studyCodes = [DEFAULT_STUDY];
-      }
+  //
+  // The exception is the single-collection path form the study cards link to:
+  // there the collection *is* the scope the user asked for, and its study
+  // belongs in the picker.
+  let studyCodes = namedStudies;
+  if (studyCodes.length === 0) {
+    if (isKnownStudy(segment)) {
+      studyCodes = [segment];
+    } else if (pathNamesCollection && selected.length) {
+      studyCodes = [...new Set(selected.map(studyOf))].filter(Boolean);
     }
+    // Otherwise: no study named, which means every study.
   }
 
   const available = scopeCollections(studyCodes, userType);
@@ -235,6 +222,5 @@ export function resolveScope(location, userType) {
     available,
     selected,
     prefixes: selected.length ? selected : available,
-    allStudies,
   };
 }
