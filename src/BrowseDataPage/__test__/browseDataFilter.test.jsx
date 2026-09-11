@@ -285,3 +285,28 @@ describe('rendering the table does not rewrite the data behind the filters', () 
     expect(out.map((row) => row.collection)).toEqual(['c3.0', 'c2.0']);
   });
 });
+
+describe('every filter group explains its species badges', () => {
+  test('Study, Collection, Tissue, Omics and Assay each carry the legend', () => {
+    // The badges are only self-explanatory once you have seen the legend, so a
+    // group that shows them without one is the failure worth guarding.
+    const { container } = renderFilter({
+      profile: { user_metadata: { userType: 'internal' } },
+    });
+    const ids = [...container.querySelectorAll('[data-tooltip-id]')].map((icon) =>
+      icon.getAttribute('data-tooltip-id')
+    );
+    expect(ids).toEqual([
+      'study-species-legend',
+      'collection-species-legend',
+      'tissue_name-species-legend',
+      'omics-species-legend',
+      'assay-species-legend',
+    ]);
+    ids.forEach((id) => {
+      expect(container.querySelector(`[data-tooltip-id="${id}"]`).dataset.tooltipHtml).toBe(
+        '<span>H = Human, R = Rat</span>'
+      );
+    });
+  });
+});
