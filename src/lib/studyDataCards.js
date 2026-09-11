@@ -96,7 +96,11 @@ const studyDataCards = [
     species: 'rat',
     cohort: '6 month old',
     studyDesign: 'Acute exercise',
-    description: 'A single treadmill bout in young adult rats, with tissues collected from immediately post-exercise through 48 h to trace the recovery time course.',
+    // Merged with the production study summary. Most of that sentence repeated
+    // what the card already shows -- "young adult rats" is in the title,
+    // "6-month-old" is the cohort badge -- so what carried across is the F344
+    // strain and the physiological-response framing, not the wording.
+    description: 'Experimental data from an acute exercise study in young adult rats: a single treadmill bout in 6-month-old F344 rats, with tissues collected from immediately post-exercise through 48 h to trace the physiological responses during recovery.',
     dataTypes: {
       quantID: [
         {
@@ -155,7 +159,12 @@ const studyDataCards = [
     species: 'human',
     cohort: 'Pre-Suspension',
     studyDesign: 'Acute exercise',
-    description: 'Sedentary adults performing a single endurance or resistance bout, with muscle, blood and adipose sampled before, during and after exercise. Enrolled before the study suspension.',
+    // The last sentence names the analysis collection deliberately. Production
+    // said "the data included here are summary-level results", which was true of
+    // the file browser when it showed only analysis/c1.3 -- this card also
+    // covers quant-id/human-precovid/c1.0, whose 257 files include per-sample
+    // results and sample metadata.
+    description: 'Sedentary adults performing a single endurance or resistance bout, with muscle, blood and adipose sampled before, during and after exercise. An initial set of human data, from participants enrolled before the study was suspended due to COVID-19. The analysis collection compares the change from pre-exercise baseline at each timepoint against resting control.',
     dataTypes: {
       // Quant-ID and Phenotype for this study are publicly released, but are
       // not distributed through the Data Hub: external users obtain them by
