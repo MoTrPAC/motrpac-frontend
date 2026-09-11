@@ -74,7 +74,7 @@ describe('CollectionFilterModule - options', () => {
     // disable and a second collection could never be added by clicking.
     const { container } = render(
       'internal',
-      '/data-download/file-browser/all?collections=quant-id/rat-training-06/c3.0'
+      '/data-download/file-browser?collections=quant-id/rat-training-06/c3.0'
     );
     expect(enabled(container)).toHaveLength(entitledPrefixes('internal').length);
   });
@@ -178,14 +178,17 @@ describe('CollectionFilterModule - Clear', () => {
     });
     await settle(store);
 
+    // Clear is the Collection module's own control, so it restores the study --
+    // it does not touch the Study picker. "Reset filters" is the one that clears
+    // both; see below.
     const state = store.getState().browseData;
     expect(state.selectedCollections).toEqual([]);
     expect(state.loadedCollections).toEqual(studyCollections('rat-training-06', 'internal'));
   });
 });
 
-describe('Reset filters clears the collection selection too', () => {
-  test('a narrowed selection is restored to the whole study', async () => {
+describe('Reset filters clears every scope control, Study included', () => {
+  test('a narrowed selection is restored to the whole corpus', async () => {
     const { store, container } = renderWithProviders(
       <BrowseDataFilter
         activeFilters={defaultBrowseDataState.activeFilters}
@@ -210,8 +213,11 @@ describe('Reset filters clears the collection selection too', () => {
     });
     await settle(store);
 
+    // Reset clears Study as well as Collection, so it lands on the whole corpus
+    // rather than the study it started in -- Study is a filter like the others,
+    // and a reset that skipped it read as the button being broken.
     const state = store.getState().browseData;
     expect(state.selectedCollections).toEqual([]);
-    expect(state.loadedCollections).toEqual(studyCollections('rat-training-06', 'internal'));
+    expect(state.loadedCollections).toEqual(entitledPrefixes('internal'));
   });
 });

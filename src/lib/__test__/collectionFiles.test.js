@@ -55,6 +55,18 @@ describe('entitlement', () => {
   test('internal users are entitled to every collection', () => {
     expect(entitledPrefixes('internal').sort()).toEqual(Object.keys(LOADERS).sort());
   });
+
+  test('signing in changes nothing for an external user', () => {
+    // Consortium membership is what unlocks collections, not authentication:
+    // an external user gets the publicly released ones whether or not they have
+    // a Data Hub account. Asserted because the two are separate code paths --
+    // `userType === 'external'` and `userType === undefined` -- and nothing
+    // structural forces them to agree.
+    expect(entitledPrefixes('external')).toEqual(entitledPrefixes(undefined));
+    expect(entitledPrefixes('external').length).toBeLessThan(
+      entitledPrefixes('internal').length
+    );
+  });
 });
 
 describe('loading', () => {

@@ -5,7 +5,7 @@ import { renderWithProviders } from '../../../testUtils/test-utils';
 import StudyFilterModule from '../studyFilterModule';
 import CollectionFilterModule from '../collectionFilterModule';
 import { entitledPrefixes } from '../../../lib/collectionFiles';
-import { DEFAULT_STUDY, studyOf } from '../../../lib/collectionScope';
+import { resolveScope, studyOf } from '../../../lib/collectionScope';
 
 const BROWSER = '/data-download/file-browser';
 const studiesFor = (userType) => [...new Set(entitledPrefixes(userType).map(studyOf))];
@@ -33,25 +33,32 @@ describe('StudyFilterModule - what it offers', () => {
     expect(external.length).toBeLessThan(studiesFor('internal').length);
   });
 
-  test('the default study is the one in scope on a bare URL', () => {
+  test('a bare URL presses nothing, the same as every other facet', () => {
+    // No study selected is every study. Pressing one button per study instead
+    // made this the only control where clearing the last selection looked like
+    // it selected them all.
     const { container } = render('internal');
-    const active = [...container.querySelectorAll('.filterBtn.activeFilter')];
-    expect(active).toHaveLength(1);
-    expect(active[0].textContent).toContain('Endurance Training');
-    expect(studyOf(entitledPrefixes('internal')[0])).toBeTruthy();
-    expect(DEFAULT_STUDY).toBe('rat-training-06');
+    expect(container.querySelectorAll('.filterBtn.activeFilter')).toHaveLength(0);
+    expect(container.querySelectorAll('.filterBtn').length).toBe(
+      studiesFor('internal').length
+    );
+  });
+
+  test('with nothing pressed, every entitled collection is in scope', () => {
+    // What the bare URL resolves to, which is what dataDownloadsMain loads.
+    const scope = resolveScope({ pathname: BROWSER, search: '' }, 'internal');
+    expect(scope.studyCodes).toEqual([]);
+    expect(scope.prefixes).toEqual(entitledPrefixes('internal'));
   });
 });
 
 describe('StudyFilterModule - changing the scope', () => {
-  test('adding a study loads its collections alongside the first', async () => {
+  test('pressing one study narrows the load to it', async () => {
+    // From the unconstrained default, the first click is a narrowing, not a
+    // widening -- the opposite of what it was when the default was one study.
     const { store, container } = render('internal');
-    const add = [...container.querySelectorAll('.filterBtn')].find(
-      (button) => !button.classList.contains('activeFilter')
-    );
-
     await act(async () => {
-      fireEvent.click(add);
+      fireEvent.click(container.querySelectorAll('.filterBtn')[0]);
     });
     await waitFor(() => {
       expect(store.getState().browseData.loadingFiles).toBe(false);
@@ -60,8 +67,7 @@ describe('StudyFilterModule - changing the scope', () => {
     const studies = new Set(
       store.getState().browseData.loadedCollections.map(studyOf)
     );
-    expect(studies.size).toBe(2);
-    expect(studies).toContain(DEFAULT_STUDY);
+    expect(studies.size).toBe(1);
   });
 
   test('a study with more than one in scope can be removed', async () => {
@@ -73,10 +79,10 @@ describe('StudyFilterModule - changing the scope', () => {
   });
 
   test('deselecting the last study means every study, not none', async () => {
-    // A scope with no study has nothing to render, so asking for none is read
-    // the way an empty selection is read everywhere else in the panel: as no
-    // constraint. (`useNavigate` is mocked away in setupTests, so the resulting
-    // URL is covered in collectionScope.test.js; here we check what loads.)
+    // Asking for none is read the way an empty selection is read everywhere else
+    // in the panel: as no constraint. (`useNavigate` is mocked away in
+    // setupTests, so the resulting URL is covered in collectionScope.test.js;
+    // here we check what loads.)
     const { store, container } = render('internal', `${BROWSER}/rat-training-06`);
     await act(async () => {
       fireEvent.click(container.querySelector('.filterBtn.activeFilter'));

@@ -1,17 +1,15 @@
 import { describe, expect, test } from 'vitest';
 import {
-  ALL_STUDIES,
-  DEFAULT_STUDY,
   FILE_BROWSER_PATH,
   availableStudies,
   collectionVersion,
   isKnownStudy,
   resolveScope,
-  scopeStudies,
   scopeToPath,
   studyCollections,
   studyOf,
 } from '../collectionScope';
+import { entitledPrefixes } from '../collectionFiles';
 
 const at = (pathname, search = '') => ({ pathname, search });
 
@@ -181,8 +179,11 @@ describe('resolveScope - malformed input', () => {
       ),
       'internal'
     );
-    expect([...scope.studyCodes].sort()).toEqual(['rat-acute-06', 'rat-training-06']);
+    // The path names the study, so that stays the scope; both collections still
+    // load, including the one from outside it.
+    expect(scope.studyCodes).toEqual(['rat-training-06']);
     expect(scope.selected).toHaveLength(2);
+    expect(scope.prefixes).toHaveLength(2);
   });
 
   test('an unknown study falls through', () => {
@@ -207,13 +208,15 @@ describe('resolveScope - malformed input', () => {
 });
 
 describe('resolveScope - the browser is reachable on its own', () => {
-  test('a bare URL opens on the default study, not on everything', () => {
-    // rat-training-06 is the one study any visitor can reach. Loading all
-    // studies for someone who merely typed the URL would be a poor trade.
+  test('a bare URL names no study, which is every study', () => {
+    // No constraint, the same way no tissue selected is every tissue -- so the
+    // Study picker opens with nothing pressed rather than one study chosen for
+    // the user.
     ['internal', 'external', undefined].forEach((userType) => {
       const scope = resolveScope(at(FILE_BROWSER_PATH), userType);
       expect(scope.inFileBrowser).toBe(true);
-      expect(scope.studyCodes).toEqual([DEFAULT_STUDY]);
+      expect(scope.studyCodes).toEqual([]);
+      expect(scope.available).toEqual(entitledPrefixes(userType));
       expect(scope.prefixes).toEqual(scope.available);
       expect(scope.prefixes.length).toBeGreaterThan(0);
     });
@@ -228,29 +231,41 @@ describe('resolveScope - the browser is reachable on its own', () => {
 });
 
 describe('resolveScope - asking for everything', () => {
-  test('the all-studies path brings every entitled study into scope', () => {
-    const scope = resolveScope(at(`${FILE_BROWSER_PATH}/${ALL_STUDIES}`), 'internal');
-    expect(scope.inFileBrowser).toBe(true);
-    expect(scope.allStudies).toBe(true);
-    expect(new Set(scope.studyCodes)).toEqual(new Set(availableStudies('internal')));
+  test('an empty study list is every entitled study, not a refusal', () => {
+    const scope = resolveScope(at(FILE_BROWSER_PATH), 'internal');
+    expect(scope.studyCodes).toEqual([]);
+    expect(new Set(scope.available.map(studyOf))).toEqual(
+      new Set(availableStudies('internal'))
+    );
     expect(scope.prefixes).toEqual(scope.available);
   });
 
+  test('a refusal is told apart by prefixes, never by an empty study list', () => {
+    // Both carry `studyCodes: []`. Only one of them may show anything.
+    const everything = resolveScope(at(FILE_BROWSER_PATH), undefined);
+    const denied = resolveScope(
+      at(`${FILE_BROWSER_PATH}/quant-id/rat-training-06/c3.0`),
+      undefined
+    );
+    expect(everything.studyCodes).toEqual(denied.studyCodes);
+    expect(everything.prefixes.length).toBeGreaterThan(0);
+    expect(denied.prefixes).toEqual([]);
+  });
+
   test('it is still filtered by entitlement', () => {
-    const internal = resolveScope(at(`${FILE_BROWSER_PATH}/${ALL_STUDIES}`), 'internal');
-    const anonymous = resolveScope(at(`${FILE_BROWSER_PATH}/${ALL_STUDIES}`), undefined);
+    const internal = resolveScope(at(FILE_BROWSER_PATH), 'internal');
+    const anonymous = resolveScope(at(FILE_BROWSER_PATH), undefined);
     expect(anonymous.prefixes.length).toBeLessThan(internal.prefixes.length);
     expect(anonymous.prefixes).not.toContain('quant-id/rat-training-06/c3.0');
     // rat-acute-06 is in scope for everyone now that c2.0 and c4.0 are public,
     // but only those two collections of it.
     expect(anonymous.prefixes).not.toContain('quant-id/rat-acute-06/c1.0');
-    expect(anonymous.studyCodes).not.toContain('human-eqc');
+    expect(anonymous.available.map(studyOf)).not.toContain('human-eqc');
   });
 
-  test('it round trips, and keeps the short form', () => {
-    const scope = resolveScope(at(`${FILE_BROWSER_PATH}/${ALL_STUDIES}`), 'internal');
-    expect(scopeStudies(scope)).toEqual([ALL_STUDIES]);
-    expect(scopeToPath(scopeStudies(scope), [])).toBe(`${FILE_BROWSER_PATH}/${ALL_STUDIES}`);
+  test('it round trips as the bare path', () => {
+    expect(scopeToPath([], [])).toBe(FILE_BROWSER_PATH);
+    expect(resolveScope(at(FILE_BROWSER_PATH), 'internal').studyCodes).toEqual([]);
   });
 
   test('a collection selection narrows what loads, not the scope', () => {
@@ -258,27 +273,24 @@ describe('resolveScope - asking for everything', () => {
     // are loaded. Collapsing the scope onto the selection would disable every
     // other study's collections and make a second one unpickable.
     const scope = resolveScope(
-      at(
-        `${FILE_BROWSER_PATH}/${ALL_STUDIES}`,
-        '?collections=quant-id/rat-training-06/c3.0'
-      ),
+      at(FILE_BROWSER_PATH, '?collections=quant-id/rat-training-06/c3.0'),
       'internal'
     );
     expect(scope.selected).toEqual(['quant-id/rat-training-06/c3.0']);
     expect(scope.prefixes).toEqual(['quant-id/rat-training-06/c3.0']);
-    expect(scope.studyCodes).toEqual(availableStudies('internal'));
-    expect(scope.allStudies).toBe(true);
+    expect(scope.studyCodes).toEqual([]);
+    expect(scope.available).toEqual(entitledPrefixes('internal'));
   });
 
   test('the scope survives the round trip with a selection', () => {
     const scope = resolveScope(
-      at(`${FILE_BROWSER_PATH}/${ALL_STUDIES}`, '?collections=quant-id/rat-training-06/c3.0'),
+      at(FILE_BROWSER_PATH, '?collections=quant-id/rat-training-06/c3.0'),
       'internal'
     );
-    const path = scopeToPath(scopeStudies(scope), scope.selected);
+    const path = scopeToPath(scope.studyCodes, scope.selected);
     const [pathname, search] = path.split('?');
     const again = resolveScope(at(pathname, `?${search}`), 'internal');
-    expect(again.allStudies).toBe(true);
+    expect(again.studyCodes).toEqual([]);
     expect(again.selected).toEqual(scope.selected);
   });
 
@@ -303,25 +315,27 @@ describe('resolveScope - asking for everything', () => {
     expect(path).toBe(`${FILE_BROWSER_PATH}/quant-id/rat-training-06/c3.0`);
     const scope = resolveScope(at(path), 'internal');
     expect(scope.studyCodes).toEqual(['rat-training-06']);
-    expect(scope.allStudies).toBe(false);
   });
 
   test('a denial is not turned into a grant', () => {
     // The empty study list that a refusal produces must stay a refusal. "All"
-    // has its own spelling precisely so the two cannot be confused.
+    // `prefixes` is what tells a refusal from "no constraint".
     const denied = resolveScope(
       at(`${FILE_BROWSER_PATH}/quant-id/rat-training-06/c3.0`),
       undefined
     );
     expect(denied.studyCodes).toEqual([]);
-    expect(denied.allStudies).toBe(false);
     expect(denied.prefixes).toEqual([]);
   });
 
-  test('a bare URL is still the default study, not everything', () => {
-    const scope = resolveScope(at(FILE_BROWSER_PATH), 'internal');
-    expect(scope.studyCodes).toEqual([DEFAULT_STUDY]);
-    expect(scope.allStudies).toBe(false);
+  test('a bad path segment refuses, rather than answering with everything', () => {
+    // Since no study named now means every study, a typo must not fall through
+    // to the whole corpus.
+    ['not-a-study', 'quant-id/nope/c9.9'].forEach((segment) => {
+      const scope = resolveScope(at(`${FILE_BROWSER_PATH}/${segment}`), 'internal');
+      expect(scope.inFileBrowser).toBe(true);
+      expect(scope.prefixes).toEqual([]);
+    });
   });
 });
 
