@@ -11,9 +11,9 @@ import studyDataCards from '../studyDataCards';
 const ratTraining06 = studyDataCards.find((s) => s.code === 'rat-training-06');
 const ratAcute06 = studyDataCards.find((s) => s.code === 'rat-acute-06');
 const humanPrecovid = studyDataCards.find((s) => s.code === 'human-precovid-sed-adu');
-// rat-acute-06 was the consortium-only example until c2.0/c4.0 were released
-// publicly on 2026-09-08. The human main study is the one that holds that shape
-// now; the property under test is the gating, not the study.
+// Two studies are consortium-only: rat-acute-06 and the human main study. The
+// property under test is the gating, not which study happens to have that shape
+// this week -- rat-acute-06 was briefly public in September 2026.
 const consortiumOnly = studyDataCards.find((s) => s.code === 'human-main');
 
 describe('hasVisibleCollections', () => {
@@ -21,8 +21,8 @@ describe('hasVisibleCollections', () => {
     expect(hasVisibleCollections(consortiumOnly, 'external')).toBe(false);
   });
 
-  test('external users: rat-acute-06 became visible when c2.0 and c4.0 went public', () => {
-    expect(hasVisibleCollections(ratAcute06, 'external')).toBe(true);
+  test('external users: rat-acute-06 is consortium throughout, so it is not visible', () => {
+    expect(hasVisibleCollections(ratAcute06, 'external')).toBe(false);
   });
 
   test('external users: rat-training-06 has public collections, so it is visible', () => {

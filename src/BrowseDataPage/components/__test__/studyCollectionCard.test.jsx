@@ -56,9 +56,9 @@ describe('StudyCollectionCard - header content', () => {
     expect(screen.getByText(/6 month old/)).toBeInTheDocument();
     expect(screen.getByText('rat')).toBeInTheDocument();
     expect(screen.getByText('Endurance training')).toBeInTheDocument();
-    expect(
-      screen.getByText(/Progressive treadmill training for 1, 2, 4 or 8 weeks/)
-    ).toBeInTheDocument();
+    // Derived from the config: the card's job is to render whatever copy the
+    // BIC writes, and pinning the string here only breaks when they edit it.
+    expect(screen.getByText(ratTraining06.description)).toBeInTheDocument();
   });
 });
 

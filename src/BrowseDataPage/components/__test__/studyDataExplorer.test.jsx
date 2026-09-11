@@ -4,6 +4,7 @@ import React from 'react';
 import { renderWithProviders } from '../../../testUtils/test-utils';
 import StudyDataExplorer from '../studyDataExplorer';
 import { visibleBundleCards } from '../../../lib/bundleDataCards';
+import studyDataCards from '../../../lib/studyDataCards';
 
 function renderExplorer(userType) {
   return renderWithProviders(
@@ -17,7 +18,10 @@ describe('StudyDataExplorer - view toggle', () => {
 
     // Stage sections belong to the Data Releases view only.
     expect(screen.queryByRole('heading', { name: /^public release$/i })).not.toBeInTheDocument();
-    expect(screen.getByText('Progressive treadmill training for 1, 2, 4 or 8 weeks in young adult rats, with 18 tissues coillected 48-hour after the last bout.')).toBeInTheDocument();
+    // Any study card's description proves the Study Collections panel rendered;
+    // the exact copy is the BIC's to change without breaking this.
+    const ratTraining = studyDataCards.find((s) => s.code === 'rat-training-06');
+    expect(screen.getByText(ratTraining.description)).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('tab', { name: /data releases/i }));
 
@@ -28,8 +32,7 @@ describe('StudyDataExplorer - view toggle', () => {
 });
 
 describe('StudyDataExplorer - access control on card visibility', () => {
-  // rat-acute-06 was the consortium-only example until c2.0/c4.0 were released
-  // publicly on 2026-09-08. The human main study holds that shape now.
+  // Two studies are consortium-only: the human main study and rat-acute-06.
   test('external users never see a study with zero public collections', () => {
     renderExplorer('external');
     expect(screen.queryByText('Human Main Study')).not.toBeInTheDocument();
@@ -40,9 +43,9 @@ describe('StudyDataExplorer - access control on card visibility', () => {
     expect(screen.getByText('Human Main Study')).toBeInTheDocument();
   });
 
-  test('rat-acute-06 is visible to external users now that c2.0 and c4.0 are public', () => {
+  test('rat-acute-06 is consortium throughout, so external users never see it', () => {
     renderExplorer('external');
-    expect(screen.getByText('Acute Exercise in Young Adult Rats')).toBeInTheDocument();
+    expect(screen.queryByText('Acute Exercise in Young Adult Rats')).not.toBeInTheDocument();
   });
 });
 

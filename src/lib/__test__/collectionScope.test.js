@@ -353,12 +353,11 @@ describe('resolveScope - several studies in scope', () => {
   test('entitlement still applies across the whole scope', () => {
     const internal = resolveScope(at(FILE_BROWSER_PATH, `?studies=${two.join(',')}`), 'internal');
     const external = resolveScope(at(FILE_BROWSER_PATH, `?studies=${two.join(',')}`), 'external');
-    // Both studies stay in scope -- rat-acute-06 has public collections since
-    // 2026-09-08 -- but an external user gets fewer collections of each.
-    expect(new Set(external.available.map(studyOf))).toEqual(new Set(two));
+    // rat-acute-06 is consortium throughout, so an external user gets none of
+    // it -- naming it in the URL does not widen what they may see.
+    expect(new Set(external.available.map(studyOf))).toEqual(new Set(['rat-training-06']));
     expect(external.available.length).toBeLessThan(internal.available.length);
-    expect(external.available).not.toContain('quant-id/rat-acute-06/c1.0');
-    expect(external.available).toContain('quant-id/rat-acute-06/c2.0');
+    expect(external.available.some((p) => p.includes('rat-acute-06'))).toBe(false);
   });
 
   test('a multi-study scope round trips through the URL', () => {

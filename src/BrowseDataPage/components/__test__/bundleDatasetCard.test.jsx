@@ -20,9 +20,9 @@ describe('visibleBundleCards - access', () => {
   });
 
   test('the internal-only groups are absent for everyone else', () => {
-    // rat-acute-06 used to be here too; its c2.0 and c4.0 bundles were released
-    // publicly on 2026-09-08, so it is visible now. The property is the gating,
-    // not which studies happen to be consortium-only this week.
+    // Asserted on human-clinical alone: rat-acute-06 belongs here too today, but
+    // it went public for two days in September 2026, and the test below derives
+    // the full set rather than naming studies that move.
     ['external', undefined].forEach((userType) => {
       const codes = visibleBundleCards(userType).map((c) => c.code);
       expect(codes).not.toContain('human-clinical');
@@ -50,13 +50,23 @@ describe('visibleBundleCards - access', () => {
   });
 
   test('a group with any public collection stays visible to external users', () => {
-    // The other half of the same rule: rat-acute-06 is mixed since 2026-09-08,
-    // and a mixed group must appear, carrying only its public bundles.
-    const mixed = BundleDataTypes.rat_acute_06.some((bundle) =>
-      bundle.collections.some((c) => c.releaseStage === 'public')
+    // The other half of the same rule, asserted on whichever groups qualify --
+    // rat-acute-06 was one for two days in September 2026 and is not any more.
+    const CODE_FOR = {
+      rat_training_06: 'rat-training-06',
+      rat_acute_06: 'rat-acute-06',
+      human_precovid_sed_adu: 'human-precovid-sed-adu',
+      human_phenotype: 'human-clinical',
+    };
+    const withPublic = Object.entries(CODE_FOR).filter(([key]) =>
+      BundleDataTypes[key].some((bundle) =>
+        bundle.collections.some((c) => c.releaseStage === 'public')
+      )
     );
-    expect(mixed).toBe(true);
-    expect(visibleBundleCards('external').map((c) => c.code)).toContain('rat-acute-06');
+    expect(withPublic.length).toBeGreaterThan(0);
+
+    const codes = visibleBundleCards('external').map((c) => c.code);
+    withPublic.forEach(([, code]) => expect(codes).toContain(code));
   });
 
   test('every bundle an external user sees has only public collections', () => {
