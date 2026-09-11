@@ -71,7 +71,7 @@ function SelectiveDataDownloads({
           onClick={onResetFilters}
         >
           <span className="material-icons mr-1">arrow_back</span>
-          <span>Back</span>
+          <span>Back to Main</span>
         </Link>
       </div>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3">
