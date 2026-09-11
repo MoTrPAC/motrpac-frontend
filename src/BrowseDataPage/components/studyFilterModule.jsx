@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import actions from '../browseDataActions';
 import {
-  ALL_STUDIES,
   availableStudies,
   resolveScope,
   scopeCollections,
@@ -21,10 +20,10 @@ import {
  * control navigates and reloads while the others do not.
  *
  * It follows the same empty-means-everything rule as the facets below it, with
- * one wrinkle those do not have: an empty scope cannot be rendered, so instead
- * of leaving nothing checked, deselecting the last study resolves to every study
- * and checks them all. Selecting them all one by one lands in the same place --
- * the two actions agree, and there is only ever one state on screen.
+ * no exceptions: nothing checked is every study, exactly as no tissue checked is
+ * every tissue. Checking every study one by one collapses back to nothing
+ * checked, because those describe the same set and two representations of one
+ * state is what made this control confusing.
  */
 function StudyFilterModule({ userType = undefined }) {
   const dispatch = useDispatch();
@@ -39,16 +38,15 @@ function StudyFilterModule({ userType = undefined }) {
   }
 
   function apply(nextStudies) {
-    // Asking for none and asking for all describe the same set. Both take the
-    // short URL, so the scope reads the same however it was reached.
-    const everything = nextStudies.length === 0 || nextStudies.length === available.length;
-    const scope = everything ? available : nextStudies;
+    // Asking for none and asking for all describe the same set, so both collapse
+    // to none -- one state, one representation, one URL.
+    const scope = nextStudies.length === available.length ? [] : nextStudies;
     const prefixes = scopeCollections(scope, userType);
     // Widening or narrowing the scope resets the collection selection: a
     // collection chosen from a study that is no longer in scope would be a
     // filter the user cannot see or clear.
     dispatch(actions.selectCollections(prefixes, []));
-    navigate(scopeToPath(everything ? [ALL_STUDIES] : scope, []));
+    navigate(scopeToPath(scope, []));
   }
 
   function toggle(code) {
