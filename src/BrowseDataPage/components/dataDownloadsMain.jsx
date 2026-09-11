@@ -145,7 +145,14 @@ function DataDownloadsMain({
                 <Link to="/search">summary-level results</Link>
                 {' '}
                 representing a subset of participants who underwent an acute exercise bout before the study
-                was suspended due to COVID-19.
+                was suspended due to COVID-19. Please refer to the
+                {' '}
+                <ExternalLink
+                  to="https://d1yw74buhe0ts0.cloudfront.net/docs/MoTrPAC_Human_PreSuspension_Sed_Adu_Analysis_Data_Release_Notes.pdf"
+                  label="Data Release Notes"
+                />
+                {' '}
+                for more information on this dataset.
               </li>
             </ul>
           </div>
@@ -156,10 +163,15 @@ function DataDownloadsMain({
               </p>
             )}
           <p className="mb-2">
-            For study designs, protocols, and updates on upcoming data releases, visit our
+            For study designs, protocols, data updates, and release notes, visit our
             {' '}
             <Link to="/project-overview">Project Overview</Link>
             {' '}
+            and
+            {' '}
+            <Link to="/knowledge-center">Knowledge Center</Link>
+            {' '}
+            and
             page.
           </p>
         </div>
