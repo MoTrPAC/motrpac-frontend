@@ -140,7 +140,7 @@ function DataDownloadsMain({
                 )
               </li>
               <li>
-                <span className="font-weight-bold">Acute exercise in human sedentary adults study</span> -
+                <span className="font-weight-bold">Acute exercise in human sedentary adults study (pre-suspension)</span> -
                 {' '}
                 <Link to="/search">summary-level results</Link>
                 {' '}
@@ -152,7 +152,7 @@ function DataDownloadsMain({
                   label="Data Release Notes"
                 />
                 {' '}
-                for more information on this dataset.
+                for more information on this dataset. Please obtain access to the individual-level human data by applying through dbGaP.
               </li>
             </ul>
           </div>
