@@ -164,7 +164,7 @@ const studyDataCards = [
     // the file browser when it showed only analysis/c1.3 -- this card also
     // covers quant-id/human-precovid/c1.0, whose 257 files include per-sample
     // results and sample metadata.
-    description: 'Sedentary adults performing a single endurance or resistance bout, with muscle, blood and adipose sampled before, during and after exercise. An initial set of human data, from participants enrolled before the study was suspended due to COVID-19. The analysis collection compares the change from pre-exercise baseline at each timepoint against resting control.',
+    description: 'Sedentary adults performing a single endurance or resistance bout, with muscle, blood and adipose sampled before, during and after exercise. An initial set of human data, from participants enrolled before the study was suspended due to COVID-19. The analysis collection compares the change from pre-exercise baseline at each timepoint against resting control. Access to individual-level human data can be obtained by applying through dbGaP.',
     dataTypes: {
       // Quant-ID and Phenotype for this study are publicly released, but are
       // not distributed through the Data Hub: external users obtain them by
