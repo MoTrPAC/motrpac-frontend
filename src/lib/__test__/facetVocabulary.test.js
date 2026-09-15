@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import vocabulary, { FACETS, facetOptions } from '../facetVocabulary';
 import facetValues from '../fileFacets';
 import { entitledPrefixes } from '../collectionFiles';
-import { studyCollections } from '../collectionScope';
+import { scopeCollections } from '../collectionScope';
 
 const CATEGORIES = FACETS.map((facet) => facet.keyName);
 
@@ -101,7 +101,7 @@ describe('facetOptions', () => {
     // than by naming tissues, because the committed metadata is one record per
     // collection and carries no particular value.
     const entitled = entitledPrefixes('internal');
-    const inScope = studyCollections('rat-training-06', 'internal');
+    const inScope = scopeCollections(['rat-training-06'], 'internal');
     const scoped = new Set(inScope);
     const options = facetOptions('tissue_name', entitled, inScope);
     const all = facetOptions('tissue_name', entitled, []);

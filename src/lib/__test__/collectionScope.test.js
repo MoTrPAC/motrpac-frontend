@@ -6,7 +6,7 @@ import {
   isKnownStudy,
   resolveScope,
   scopeToPath,
-  studyCollections,
+  scopeCollections,
   studyOf,
 } from '../collectionScope';
 import { entitledPrefixes } from '../collectionFiles';
@@ -27,24 +27,24 @@ describe('studyOf', () => {
   });
 });
 
-describe('studyCollections', () => {
+describe('scopeCollections - one study', () => {
   test('keeps a split-folder study together', () => {
-    const collections = studyCollections('human-precovid-sed-adu', 'internal');
+    const collections = scopeCollections(['human-precovid-sed-adu'], 'internal');
     expect(collections).toContain('quant-id/human-precovid/c1.0');
     expect(collections).toContain('analysis/human-precovid-sed-adu/c1.3');
     expect(collections).toHaveLength(5);
   });
 
   test('is filtered by entitlement', () => {
-    const internal = studyCollections('rat-training-06', 'internal');
-    const external = studyCollections('rat-training-06', 'external');
+    const internal = scopeCollections(['rat-training-06'], 'internal');
+    const external = scopeCollections(['rat-training-06'], 'external');
     expect(internal).toContain('quant-id/rat-training-06/c3.0');
     expect(external).not.toContain('quant-id/rat-training-06/c3.0');
     expect(external.length).toBeLessThan(internal.length);
   });
 
   test('never mixes studies', () => {
-    const collections = studyCollections('rat-acute-06', 'internal');
+    const collections = scopeCollections(['rat-acute-06'], 'internal');
     expect(collections.every((prefix) => studyOf(prefix) === 'rat-acute-06')).toBe(true);
   });
 });
