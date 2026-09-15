@@ -4,12 +4,11 @@ import { useSelector } from 'react-redux';
 import { FACETS, facetOptions } from '../lib/facetVocabulary';
 import StudyFilterModule from './components/studyFilterModule';
 import CollectionFilterModule from './components/collectionFilterModule';
-import { SpeciesLegend, SpeciesTags } from './components/speciesTags';
+import { SpeciesLegend, SpeciesLegendTooltip, SpeciesTags } from './components/speciesTags';
 import useCollectionSelection from './useCollectionSelection';
 
 import '@styles/browseData.scss';
 import '@styles/tooltip.scss';
-
 
 function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name: [], category: [], reference_genome: [] }, onChangeFilter, onResetFilters }) {
   const profile = useSelector((state) => state.auth.profile);
@@ -49,7 +48,7 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
       <div className="card-header font-weight-bold d-flex align-items-center">
         <div className="card-header-label">
           <span>{facet.name}</span>
-          <SpeciesLegend id={facet.keyName} />
+          <SpeciesLegend />
         </div>
       </div>
       <div className="card-body">
@@ -87,6 +86,7 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
           Reset filters
         </button>
       </div>
+      <SpeciesLegendTooltip />
       <StudyFilterModule userType={userType} />
       <CollectionFilterModule userType={userType} />
       {filters}
