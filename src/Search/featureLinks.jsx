@@ -134,7 +134,7 @@ function FeatureLinks({
     {
       name: 'motrpac-data-status-overview',
       route:
-        'https://docs.google.com/spreadsheets/d/1f8A5zlQyzNfSJP33t0dZvdT2jTlBIcdaBEF0c197Mtw/edit?gid=1293449257#gid=1293449257',
+        'https://docs.google.com/spreadsheets/d/1HhYvgPD5NU-3tep8Ps9jlxkqtJw78gwW34PwrzaG9hU/edit?usp=sharing',
       description:
         'A document exhibiting the data milestones, timelines and statuses pertaining to the MoTrPAC studies.',
       icon: 'view_timeline',
@@ -144,7 +144,7 @@ function FeatureLinks({
     {
       name: 'motrpac-consortium-and-external-data-releases-timing',
       route:
-        'https://docs.google.com/document/d/1zqdXGvtsBdBZlQ1Kdzeap3Nt5twGbqibffu20Ce5pM4/edit?pli=1&tab=t.0',
+        'https://docs.google.com/document/d/1h3W4apsTxElN2fKiUPXE1oVlhqfDJO8QmQ-HTDX7EOw/edit?usp=sharing',
       description:
         'A document consisting of both consortium and external data release schedules pertaining to the MoTrPAC studies.',
       icon: 'calendar_month',

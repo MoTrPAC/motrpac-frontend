@@ -165,6 +165,23 @@ function ProjectOverview() {
               </tbody>
             </table>
           </div>
+          <div className="study-clinical-trial-gov-links alert alert-primary mt-2" role="alert">
+            <h4 className="alert-heading">Learn more at ClinicalTrials.gov:</h4>
+              <ul className="list-unstyled mb-0">
+                <li>
+                  <ExternalLink
+                    to="https://clinicaltrials.gov/study/NCT03960827"
+                    label="Molecular Transducers of Physical Activity Consortium (MoTrPAC)"
+                  />
+                </li>
+                <li>
+                  <ExternalLink
+                    to="https://clinicaltrials.gov/study/NCT04151199"
+                    label="Molecular Transducers of Physical Activity Consortium (MoTrPAC) - Pediatric Protocol (MoTrPAC)"
+                  />
+                </li>
+              </ul>
+          </div>
         </div>
         <div
           className="main-study-content-container acute-exercise mt-5"
