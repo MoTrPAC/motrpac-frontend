@@ -64,7 +64,7 @@ function StudyFilterModule({ userType = undefined }) {
       <div className="card-header font-weight-bold d-flex align-items-center">
         <div className="card-header-label">
           <span>Study</span>
-          <SpeciesLegend id="study" />
+          <SpeciesLegend />
         </div>
       </div>
       <div className="card-body">
