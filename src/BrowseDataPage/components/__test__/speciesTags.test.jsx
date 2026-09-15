@@ -1,7 +1,7 @@
 import { describe, test, expect } from 'vitest';
 import React from 'react';
 import { render } from '@testing-library/react';
-import { SpeciesLegend, SpeciesTags } from '../speciesTags';
+import { SPECIES_LEGEND_ID, SpeciesLegend, SpeciesTags } from '../speciesTags';
 
 const tags = (container) =>
   [...container.querySelectorAll('.filter-species-tag')].map((span) => [
@@ -44,22 +44,19 @@ describe('SpeciesTags', () => {
 
 describe('SpeciesLegend', () => {
   test('carries the same wording the search filters use', () => {
-    const { container } = render(<SpeciesLegend id="tissue_name" />);
+    const { container } = render(<SpeciesLegend />);
     const icon = container.querySelector('i');
     expect(icon.className).toContain('bi-info-circle-fill');
     expect(icon.getAttribute('data-tooltip-html')).toBe('<span>H = Human, R = Rat</span>');
   });
 
-  test('scopes its tooltip id, so two modules cannot collide', () => {
-    // react-tooltip resolves by id; a shared one would anchor the same tooltip
-    // to every filter group.
-    const first = render(<SpeciesLegend id="study" />).container;
-    const second = render(<SpeciesLegend id="collection" />).container;
-    expect(first.querySelector('i').getAttribute('data-tooltip-id')).toBe(
-      'study-species-legend'
+  test('is an anchor only, pointing every group at the one shared tooltip', () => {
+    // One `<Tooltip>` serves any number of anchors. Rendering one per group
+    // would mount five components doing the same work for the same text.
+    const { container } = render(<SpeciesLegend />);
+    expect(container.querySelector('i').getAttribute('data-tooltip-id')).toBe(
+      SPECIES_LEGEND_ID
     );
-    expect(second.querySelector('i').getAttribute('data-tooltip-id')).toBe(
-      'collection-species-legend'
-    );
+    expect(container.querySelector('.react-tooltip')).toBeNull();
   });
 });

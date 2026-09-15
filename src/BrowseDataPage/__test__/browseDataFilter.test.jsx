@@ -5,7 +5,8 @@ import { renderWithProviders } from '../../testUtils/test-utils';
 import BrowseDataFilter from '../browseDataFilter';
 import vocabulary, { FACETS, facetOptions } from '../../lib/facetVocabulary';
 import { entitledPrefixes } from '../../lib/collectionFiles';
-import { studyCollections } from '../../lib/collectionScope';
+import { SPECIES_LEGEND_ID } from '../components/speciesTags';
+import { scopeCollections } from '../../lib/collectionScope';
 import { transformData } from '../helper';
 import browseDataReducer, { defaultBrowseDataState } from '../browseDataReducer';
 import { types } from '../browseDataActions';
@@ -64,7 +65,7 @@ describe('BrowseDataFilter - the panel does not depend on what has loaded', () =
     const inScope = facetOptions(
       'tissue_name',
       entitledPrefixes('internal'),
-      studyCollections('rat-training-06', 'internal')
+      scopeCollections(['rat-training-06'], 'internal')
     );
 
     expect(tissue).toHaveLength(inScope.length);
@@ -293,20 +294,16 @@ describe('every filter group explains its species badges', () => {
     const { container } = renderFilter({
       profile: { user_metadata: { userType: 'internal' } },
     });
-    const ids = [...container.querySelectorAll('[data-tooltip-id]')].map((icon) =>
-      icon.getAttribute('data-tooltip-id')
-    );
-    expect(ids).toEqual([
-      'study-species-legend',
-      'collection-species-legend',
-      'tissue_name-species-legend',
-      'omics-species-legend',
-      'assay-species-legend',
-    ]);
-    ids.forEach((id) => {
-      expect(container.querySelector(`[data-tooltip-id="${id}"]`).dataset.tooltipHtml).toBe(
-        '<span>H = Human, R = Rat</span>'
-      );
+    const anchors = [...container.querySelectorAll('i[data-tooltip-id]')];
+    // Study, Collection, Tissue, Omics, Assay.
+    expect(anchors).toHaveLength(5);
+    anchors.forEach((icon) => {
+      expect(icon.dataset.tooltipId).toBe(SPECIES_LEGEND_ID);
+      expect(icon.dataset.tooltipHtml).toBe('<span>H = Human, R = Rat</span>');
     });
+    // ...all pointing at the same tooltip, which the panel renders once. (The
+    // instance itself emits no DOM until shown, so the shared id is what there
+    // is to assert.)
+    expect(new Set(anchors.map((icon) => icon.dataset.tooltipId)).size).toBe(1);
   });
 });

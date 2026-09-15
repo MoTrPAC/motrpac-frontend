@@ -5,7 +5,7 @@ import { renderWithProviders } from '../../../testUtils/test-utils';
 import CollectionScopeBar from '../collectionScopeBar';
 import { defaultBrowseDataState } from '../../browseDataReducer';
 import actions from '../../browseDataActions';
-import { studyCollections } from '../../../lib/collectionScope';
+import { scopeCollections } from '../../../lib/collectionScope';
 
 const STUDY_ROUTE = '/data-download/file-browser/rat-training-06';
 
@@ -40,7 +40,7 @@ describe('CollectionScopeBar - what it says', () => {
   });
 
   test('says "all" when nothing is selected, since that means no constraint', () => {
-    const total = studyCollections('rat-training-06', 'internal').length;
+    const total = scopeCollections(['rat-training-06'], 'internal').length;
     render('internal');
     expect(
       screen.getByText(new RegExp(`all ${total} collections in Endurance Training`, 'i'))
@@ -49,7 +49,7 @@ describe('CollectionScopeBar - what it says', () => {
 
   test('counts a partial selection honestly rather than claiming "all"', async () => {
     const { store } = render('internal');
-    const total = studyCollections('rat-training-06', 'internal').length;
+    const total = scopeCollections(['rat-training-06'], 'internal').length;
     await act(async () => {
       await store.dispatch(
         actions.selectCollections([

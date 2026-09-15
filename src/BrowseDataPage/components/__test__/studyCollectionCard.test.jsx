@@ -244,12 +244,20 @@ describe('StudyCollectionCard - series identity', () => {
 describe('StudyCollectionCard - released but not served by the Data Hub', () => {
   const humanPrecovid = studyDataCards.find((s) => s.code === 'human-precovid-sed-adu');
 
+  // Scoped to the kind cells throughout: the study description mentions dbGaP
+  // too, and these tests are about the per-kind notice, not the card's prose.
+  const kindCells = (container) => [...container.querySelectorAll('.study-collection-kind-cell')];
+  const cellsSaying = (container, pattern) =>
+    kindCells(container).filter((cell) => pattern.test(cell.textContent));
+
   test('a dbGaP-gated kind says so, instead of claiming the data is unfinished', () => {
-    render(<StudyCollectionCard study={humanPrecovid} userType="external" />);
+    const { container } = render(
+      <StudyCollectionCard study={humanPrecovid} userType="external" />
+    );
 
     // Quant-ID and Phenotype are publicly released but obtained through dbGaP.
-    expect(screen.getAllByText(/applying through dbGaP/i)).toHaveLength(2);
-    expect(screen.queryByText(/results are in preparation/i)).not.toBeInTheDocument();
+    expect(cellsSaying(container, /applying through dbGaP/i)).toHaveLength(2);
+    expect(cellsSaying(container, /results are in preparation/i)).toHaveLength(0);
     expect(screen.getAllByText('Restricted')).toHaveLength(2);
   });
 
@@ -259,8 +267,10 @@ describe('StudyCollectionCard - released but not served by the Data Hub', () => 
   });
 
   test('internal users get the collections themselves, not the notice', () => {
-    render(<StudyCollectionCard study={humanPrecovid} userType="internal" />);
-    expect(screen.queryByText(/applying through dbGaP/i)).not.toBeInTheDocument();
+    const { container } = render(
+      <StudyCollectionCard study={humanPrecovid} userType="internal" />
+    );
+    expect(cellsSaying(container, /applying through dbGaP/i)).toHaveLength(0);
     expect(screen.queryByText('Restricted')).not.toBeInTheDocument();
     expect(screen.getByText('c1.0')).toBeInTheDocument();
   });

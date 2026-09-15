@@ -7,7 +7,7 @@ import BrowseDataFilter from '../../browseDataFilter';
 import { defaultBrowseDataState } from '../../browseDataReducer';
 import actions from '../../browseDataActions';
 import { entitledPrefixes } from '../../../lib/collectionFiles';
-import { studyCollections } from '../../../lib/collectionScope';
+import { scopeCollections } from '../../../lib/collectionScope';
 
 const STUDY_ROUTE = '/data-download/file-browser/rat-training-06';
 
@@ -38,7 +38,7 @@ describe('CollectionFilterModule - options', () => {
       entitledPrefixes('internal').length
     );
     expect(enabled(container)).toHaveLength(
-      studyCollections('rat-training-06', 'internal').length
+      scopeCollections(['rat-training-06'], 'internal').length
     );
   });
 
@@ -86,8 +86,8 @@ describe('CollectionFilterModule - options', () => {
         + '&collections=quant-id/rat-training-06/c3.0'
     );
     expect(enabled(container)).toHaveLength(
-      studyCollections('rat-training-06', 'internal').length
-        + studyCollections('rat-acute-06', 'internal').length
+      scopeCollections(['rat-training-06'], 'internal').length
+        + scopeCollections(['rat-acute-06'], 'internal').length
     );
   });
 });
@@ -98,7 +98,7 @@ describe('CollectionFilterModule - selection', () => {
     await act(async () => {
       // An empty selection is how "the whole study" is expressed.
       await store.dispatch(
-        actions.selectCollections(studyCollections('rat-training-06', 'internal'), [])
+        actions.selectCollections(scopeCollections(['rat-training-06'], 'internal'), [])
       );
     });
     expect(container.querySelectorAll('.filterBtn.activeFilter')).toHaveLength(0);
@@ -131,12 +131,12 @@ describe('CollectionFilterModule - selection', () => {
 
     const state = store.getState().browseData;
     expect(state.selectedCollections).toEqual([]);
-    expect(state.loadedCollections).toEqual(studyCollections('rat-training-06', 'internal'));
+    expect(state.loadedCollections).toEqual(scopeCollections(['rat-training-06'], 'internal'));
   });
 
   test('checking every collection collapses to the empty set', async () => {
     const { store, container } = render('internal');
-    const available = studyCollections('rat-training-06', 'internal');
+    const available = scopeCollections(['rat-training-06'], 'internal');
     await act(async () => {
       await store.dispatch(actions.selectCollections(available.slice(1)));
     });
@@ -183,7 +183,7 @@ describe('CollectionFilterModule - Clear', () => {
     // both; see below.
     const state = store.getState().browseData;
     expect(state.selectedCollections).toEqual([]);
-    expect(state.loadedCollections).toEqual(studyCollections('rat-training-06', 'internal'));
+    expect(state.loadedCollections).toEqual(scopeCollections(['rat-training-06'], 'internal'));
   });
 });
 
