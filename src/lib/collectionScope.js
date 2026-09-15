@@ -89,11 +89,6 @@ export function isKnownStudy(code) {
   return allDataCards.some((card) => card.code === code);
 }
 
-/** Every collection of one study that this user may see. */
-export function studyCollections(studyCode, userType) {
-  return entitledPrefixes(userType).filter((prefix) => studyOf(prefix) === studyCode);
-}
-
 /**
  * Every collection of these studies that this user may see.
  *
