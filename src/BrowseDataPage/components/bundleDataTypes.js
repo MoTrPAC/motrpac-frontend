@@ -535,6 +535,13 @@ const BundleDataTypes = {
       participant_type: 'Adult',
       intervention: 'Sedentary',
       study_group: 'Pre-Suspension',
+      // `public` here where studyDataCards.js says `consortium` for the same
+      // collection, and both are right: the data is publicly released, but the
+      // Data Hub does not serve it -- external access goes through dbGaP. The
+      // card uses `consortium` to keep it off the download page; this bundle
+      // relies instead on having no `unrestricted` build, which is what
+      // `fileFor` gates on. Adding one here would publish it immediately, so
+      // don't -- see the "withheld from external users" test.
       collections: [
         {
           collection: 'c3.0',
