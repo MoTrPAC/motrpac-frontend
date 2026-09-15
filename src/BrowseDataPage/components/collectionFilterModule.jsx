@@ -70,7 +70,7 @@ function CollectionFilterModule({ userType = undefined }) {
       <div className="card-header font-weight-bold d-flex align-items-center">
         <div className="card-header-label">
           <span>Collection</span>
-          <SpeciesLegend id="collection" />
+          <SpeciesLegend />
         </div>
         {selected.length > 0 && (
           <button
