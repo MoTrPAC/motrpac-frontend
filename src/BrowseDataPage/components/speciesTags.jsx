@@ -41,27 +41,35 @@ SpeciesTags.propTypes = {
   species: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
 };
 
+/** All five filter groups explain the badges the same way, so they share one. */
+export const SPECIES_LEGEND_ID = 'species-legend';
+
 /**
  * The info icon beside a filter group's name.
  *
- * `id` has to be unique per instance -- react-tooltip resolves by id, so two
- * modules sharing one would anchor the same tooltip twice.
+ * Anchor only. react-tooltip resolves by id, and one `<Tooltip>` serves any
+ * number of anchors -- rendering one per group would mount five components that
+ * each do the same mount-time state update for the same text. The single
+ * instance lives in `SpeciesLegendTooltip`, which the filter panel renders once.
  */
-export function SpeciesLegend({ id }) {
-  const tooltipId = `${id}-species-legend`;
+export function SpeciesLegend() {
   return (
-    <>
-      <i
-        className="bi bi-info-circle-fill ml-2 text-secondary"
-        data-tooltip-id={tooltipId}
-        data-tooltip-html="<span>H = Human, R = Rat</span>"
-        data-tooltip-place="right"
-      />
-      <Tooltip id={tooltipId} />
-    </>
+    <i
+      className="bi bi-info-circle-fill ml-2 text-secondary"
+      data-tooltip-id={SPECIES_LEGEND_ID}
+      data-tooltip-html="<span>H = Human, R = Rat</span>"
+      data-tooltip-place="right"
+    />
   );
 }
 
-SpeciesLegend.propTypes = {
-  id: PropTypes.string.isRequired,
-};
+/**
+ * The one tooltip every `SpeciesLegend` anchors to.
+ *
+ * Rendered by the filter panel, not by the groups: a group shown on its own --
+ * which only happens in tests -- keeps its icon and simply has nothing to pop
+ * up, rather than each group carrying a duplicate.
+ */
+export function SpeciesLegendTooltip() {
+  return <Tooltip id={SPECIES_LEGEND_ID} />;
+}
