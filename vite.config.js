@@ -48,6 +48,14 @@ export default defineConfig({
     setupFiles: './src/setupTests.jsx',
     css: true,
     reporters: ['verbose'],
+    // Cap the pool in CI rather than letting vitest size it from the CPU count,
+    // which a container can report as the host's rather than its own share. A
+    // worker costs about 150 MB here -- a jsdom instance plus, because
+    // `css: true`, its own Bootstrap SCSS compile -- so an oversized pool
+    // exceeds the container's memory and the run dies before the reporter
+    // prints anything. Measured: 2.0 GB peak uncapped, 0.8 GB at two workers.
+    minWorkers: 1,
+    maxWorkers: process.env.CI ? 2 : undefined,
     coverage: {
       reporter: ['text', 'json', 'html'],
       include: ['src/**/*'],
