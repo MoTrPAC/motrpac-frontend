@@ -234,9 +234,9 @@ function DataTable({
                                 <span>
                                   {column.isSorted
                                     ? column.isSortedDesc
-                                      ? <i className="material-icons">expand_more</i>
-                                      : <i className="material-icons">expand_less</i>
-                                    : <i className="material-icons">unfold_more</i>}
+                                      ? <i className="material-icons" aria-hidden="true">expand_more</i>
+                                      : <i className="material-icons" aria-hidden="true">expand_less</i>
+                                    : <i className="material-icons" aria-hidden="true">unfold_more</i>}
                                 </span>
                               </button>
                             ) : (
