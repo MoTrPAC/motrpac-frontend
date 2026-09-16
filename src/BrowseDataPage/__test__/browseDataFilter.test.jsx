@@ -384,3 +384,66 @@ describe('browseDataReducer - only the most recent load may land', () => {
     expect(state.allFiles).toEqual([]);
   });
 });
+
+describe('browseDataReducer - pruning agrees with matching', () => {
+  // Merged metabolomics files carry the generic omics value, and all three
+  // `analysis/rat-acute-06/*` collections carry *only* that. So a user with
+  // "Metabolomics Targeted" active who narrows to one of them used to lose the
+  // filter, even though it still matched every row.
+  const merged = [
+    { object: 'analysis/rat-acute-06/c2.0/m.txt', omics: 'Metabolomics', tissue_name: 'Liver' },
+  ];
+  const withFilter = (omics) => ({ ...defaultBrowseDataState.activeFilters, omics });
+
+  function afterLoad(activeFilters, files, prefixes) {
+    const started = browseDataReducer(
+      { ...defaultBrowseDataState, activeFilters },
+      { type: types.SELECT_COLLECTIONS_START, prefixes, selection: prefixes }
+    );
+    return browseDataReducer(started, {
+      type: types.SELECT_COLLECTIONS_SUCCESS,
+      prefixes,
+      selection: prefixes,
+      files,
+    });
+  }
+
+  test.each(['Metabolomics Targeted', 'Metabolomics Untargeted'])(
+    '%s survives a load holding only the generic value',
+    (selected) => {
+      const next = afterLoad(withFilter([selected]), merged, ['analysis/rat-acute-06/c2.0']);
+      expect(next.activeFilters.omics).toEqual([selected]);
+      // ...and the filter it kept still matches, which is the whole point.
+      expect(next.filteredFiles).toEqual(merged);
+    }
+  );
+
+  test('the alias does not leak to other categories or other omes', () => {
+    const gone = afterLoad(withFilter(['Transcriptomics']), merged, ['a']);
+    expect(gone.activeFilters.omics).toEqual([]);
+
+    const tissue = { ...defaultBrowseDataState.activeFilters, tissue_name: ['Heart'] };
+    expect(afterLoad(tissue, merged, ['a']).activeFilters.tissue_name).toEqual([]);
+  });
+
+  test('anything the matcher keeps, the pruner keeps', () => {
+    // The invariant behind both, over every omics value the vocabulary offers.
+    // "Would the matcher keep it" is measured through CHANGE_FILTER, which runs
+    // filterFiles without pruning -- reading it off `filteredFiles` after a load
+    // would be circular, since a dropped filter matches everything.
+    const files = [
+      ...merged,
+      { object: 'a/b/c/x.txt', omics: 'Metabolomics Targeted', tissue_name: 'Liver' },
+      { object: 'a/b/c/y.txt', omics: 'Transcriptomics', tissue_name: 'Heart' },
+    ];
+    vocabulary.omics.forEach(({ value }) => {
+      const selects = browseDataReducer(
+        { ...defaultBrowseDataState, allFiles: files },
+        { type: types.CHANGE_FILTER, category: 'omics', filter: value }
+      ).filteredFiles.length > 0;
+
+      const kept = afterLoad(withFilter([value]), files, ['a/b/c']).activeFilters.omics;
+      expect(kept).toEqual(selects ? [value] : []);
+    });
+  });
+});

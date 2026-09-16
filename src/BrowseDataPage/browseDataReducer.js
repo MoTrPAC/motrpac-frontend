@@ -30,23 +30,38 @@ export const defaultBrowseDataState = {
   loadingFiles: false,
 };
 
-// A file matches a facet when one of its own values equals a selected one. The
-// predicate this replaced asked whether the *selected* option contained the
-// file's whole value as a substring, which no comma-joined row could satisfy -
-// all 135 of them were unreachable.
+/**
+ * Does any of `values` satisfy `selected` for this facet?
+ *
+ * A facet matches when one of the file's own values equals the selected one.
+ * The predicate this replaced asked whether the *selected* option contained the
+ * file's whole value as a substring, which no comma-joined row could satisfy --
+ * all 135 of them were unreachable.
+ *
+ * The one alias: merged metabolomics files carry the generic omics value, so
+ * asking for either specific metabolomics ome still finds them. Written once
+ * because `filterFiles` and `pruneFilters` have to agree -- a value the matcher
+ * honours but the pruner drops is a filter that vanishes for no visible reason,
+ * which is exactly what pruning exists to prevent. All three
+ * `analysis/rat-acute-06/*` collections carry only the generic value, so that
+ * disagreement was reachable by narrowing the Collection picker to one of them.
+ */
+function matchesFacet(values, category, selected) {
+  return (
+    values.includes(selected)
+    || (category === 'omics'
+      && selected.startsWith('Metabolomics')
+      && values.includes('Metabolomics'))
+  );
+}
+
 function filterFiles(filters, files) {
   return files.filter((file) =>
     Object.keys(filters).every((category) => {
       if (!filters[category].length) return true;
       const fileValues = facetValues(file, category);
-      return filters[category].some(
-        (selected) =>
-          fileValues.includes(selected)
-          // Merged metabolomics files carry the generic omics value, so asking
-          // for either specific metabolomics ome still finds them.
-          || (category === 'omics'
-            && selected.startsWith('Metabolomics')
-            && fileValues.includes('Metabolomics'))
+      return filters[category].some((selected) =>
+        matchesFacet(fileValues, category, selected)
       );
     })
   );
@@ -66,7 +81,10 @@ function pruneFilters(activeFilters, files) {
   Object.keys(activeFilters).forEach((category) => {
     const present = new Set();
     files.forEach((file) => facetValues(file, category).forEach((value) => present.add(value)));
-    pruned[category] = activeFilters[category].filter((value) => present.has(value));
+    const values = [...present];
+    pruned[category] = activeFilters[category].filter((value) =>
+      matchesFacet(values, category, value)
+    );
   });
   return pruned;
 }
