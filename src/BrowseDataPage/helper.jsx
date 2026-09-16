@@ -130,6 +130,8 @@ export const tableColumns = () => {
       id: 'filesize',
       Header: 'Size',
       accessor: 'object_size',
+      // Byte counts -- compare as numbers, matching the other declared sortTypes.
+      sortType: 'basic',
       Cell: (row) => formatBytes(row.value),
     },
   ];

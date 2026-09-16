@@ -111,6 +111,10 @@ function DataTable({
         // Let's make a column for selection
         {
           id: 'selection',
+          // Checkboxes, not data: there is nothing to order by, and the header
+          // is itself a control -- without this, selecting every row would also
+          // re-sort the table.
+          disableSortBy: true,
           // The header can use the table's getToggleAllRowsSelectedProps method
           // to render a checkbox
           Header: ({ getToggleAllRowsSelectedProps }) => (
@@ -202,11 +206,24 @@ function DataTable({
                       {headerGroup.headers.map((column) => {
                         const { key, ...rest } = column.getHeaderProps();
                         return (
-                          <th key={key} {...rest}>
-                          <div className="d-flex align-items-center justify-content-between">
-                            {column.render('Header')}
-                          </div>
-                        </th>
+                          <th
+                            key={key}
+                            {...rest}
+                            {...column.getSortByToggleProps({ title: '' })}
+                          >
+                            <div className="d-flex align-items-center justify-content-between">
+                              {column.render('Header')}
+                              {column.canSort && (
+                                <span>
+                                  {column.isSorted
+                                    ? column.isSortedDesc
+                                      ? <i className="material-icons">expand_more</i>
+                                      : <i className="material-icons">expand_less</i>
+                                    : <i className="material-icons">unfold_more</i>}
+                                </span>
+                              )}
+                            </div>
+                          </th>
                         );
                       })}
                     </tr>
