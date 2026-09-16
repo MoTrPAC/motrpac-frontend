@@ -80,7 +80,7 @@ function BundleDatasetCell({ dataset, badgeFields, profile }) {
             aria-expanded={showOlder}
             onClick={() => setShowOlder(!showOlder)}
           >
-            <span>Other versions</span>
+            <span>Other collections</span>
             <span className="ml-1">({older.length})</span>
             <span className="material-icons ml-1" aria-hidden="true">
               {showOlder ? 'expand_less' : 'expand_more'}
