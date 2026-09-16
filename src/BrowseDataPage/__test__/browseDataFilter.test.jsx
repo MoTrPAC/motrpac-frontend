@@ -211,11 +211,19 @@ describe('browseDataReducer - a collection change prunes filters instead of wipi
   const liverRna = { object: 'quant-id/rat-training-06/c1.0/a.txt', tissue_name: 'Liver', assay: 'RNA-seq' };
   const heartRna = { object: 'quant-id/rat-training-06/c2.0/b.txt', tissue_name: 'Heart', assay: 'RNA-seq' };
 
+  // START then SUCCESS, as the thunk dispatches them: SUCCESS is ignored unless
+  // it matches the request in flight.
   function afterLoad(activeFilters, files, prefixes) {
-    return browseDataReducer(
+    const started = browseDataReducer(
       { ...defaultBrowseDataState, activeFilters },
-      { type: types.SELECT_COLLECTIONS_SUCCESS, prefixes, selection: prefixes, files }
+      { type: types.SELECT_COLLECTIONS_START, prefixes, selection: prefixes }
     );
+    return browseDataReducer(started, {
+      type: types.SELECT_COLLECTIONS_SUCCESS,
+      prefixes,
+      selection: prefixes,
+      files,
+    });
   }
 
   const filters = (tissue, assay) => ({
@@ -305,5 +313,74 @@ describe('every filter group explains its species badges', () => {
     // instance itself emits no DOM until shown, so the shared id is what there
     // is to assert.)
     expect(new Set(anchors.map((icon) => icon.dataset.tooltipId)).size).toBe(1);
+  });
+});
+
+describe('browseDataReducer - only the most recent load may land', () => {
+  // Two loads can overlap: "Reset filters" is not disabled while loading, and
+  // the browser's back button re-fires the effect in dataDownloadsMain. Dynamic
+  // `import()` resolves a cached chunk far faster than a cold 1 MB one, so a
+  // slow first request really can finish after a fast second one.
+  const slow = { object: 'quant-id/rat-acute-06/c1.0/a.txt', tissue_name: 'Liver' };
+  const fast = { object: 'phenotype/human-eqc/c14.0/b.csv', tissue_name: null };
+
+  const start = (state, prefixes) =>
+    browseDataReducer(state, {
+      type: types.SELECT_COLLECTIONS_START,
+      prefixes,
+      selection: prefixes,
+    });
+  const succeed = (state, prefixes, files) =>
+    browseDataReducer(state, {
+      type: types.SELECT_COLLECTIONS_SUCCESS,
+      prefixes,
+      selection: prefixes,
+      files,
+    });
+
+  test('a superseded request cannot overwrite the current one', () => {
+    let state = start(defaultBrowseDataState, ['quant-id/rat-acute-06/c1.0']);
+    state = start(state, ['phenotype/human-eqc/c14.0']);
+
+    state = succeed(state, ['phenotype/human-eqc/c14.0'], [fast]);
+    expect(state.allFiles).toEqual([fast]);
+
+    // The first request finally resolves. It must be dropped.
+    state = succeed(state, ['quant-id/rat-acute-06/c1.0'], [slow]);
+    expect(state.allFiles).toEqual([fast]);
+    expect(state.loadedCollections).toEqual(['phenotype/human-eqc/c14.0']);
+  });
+
+  test('a superseded failure cannot blank the table or post an error', () => {
+    let state = start(defaultBrowseDataState, ['quant-id/rat-acute-06/c1.0']);
+    state = start(state, ['phenotype/human-eqc/c14.0']);
+    state = succeed(state, ['phenotype/human-eqc/c14.0'], [fast]);
+
+    state = browseDataReducer(state, {
+      type: types.SELECT_COLLECTIONS_FAILURE,
+      prefixes: ['quant-id/rat-acute-06/c1.0'],
+      error: 'network',
+    });
+    expect(state.allFiles).toEqual([fast]);
+    expect(state.error).toBe('');
+    expect(state.loadingFiles).toBe(false);
+  });
+
+  test('the request in flight still lands, and its failure still reports', () => {
+    let state = start(defaultBrowseDataState, ['phenotype/human-eqc/c14.0']);
+    state = browseDataReducer(state, {
+      type: types.SELECT_COLLECTIONS_FAILURE,
+      prefixes: ['phenotype/human-eqc/c14.0'],
+      error: 'network',
+    });
+    expect(state.error).toBe('network');
+    expect(state.loadingFiles).toBe(false);
+  });
+
+  test('a load left in flight across a reset is dropped', () => {
+    let state = start(defaultBrowseDataState, ['quant-id/rat-acute-06/c1.0']);
+    state = browseDataReducer(state, { type: types.RESET_BROWSE_STATE });
+    state = succeed(state, ['quant-id/rat-acute-06/c1.0'], [slow]);
+    expect(state.allFiles).toEqual([]);
   });
 });

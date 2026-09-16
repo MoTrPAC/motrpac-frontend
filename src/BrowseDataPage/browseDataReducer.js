@@ -24,6 +24,9 @@ export const defaultBrowseDataState = {
   error: '',
   selectedCollections: [],
   loadedCollections: [],
+  // The load currently in flight, as a comma-joined prefix key. See
+  // SELECT_COLLECTIONS_SUCCESS.
+  pendingCollections: '',
   loadingFiles: false,
 };
 
@@ -215,8 +218,17 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
         loadingFiles: true,
         error: '',
         selectedCollections: action.selection ?? action.prefixes,
+        pendingCollections: action.prefixes.join(','),
       };
     case types.SELECT_COLLECTIONS_SUCCESS: {
+      // Two loads can be in flight at once -- "Reset filters" is not disabled
+      // while loading, and the browser's back button re-fires the effect in
+      // dataDownloadsMain -- so a slow first request can resolve after a fast
+      // second one and put another study's files under the current selection.
+      // Only the most recent request may land.
+      if (action.prefixes.join(',') !== state.pendingCollections) {
+        return state;
+      }
       const activeFilters = pruneFilters(state.activeFilters, action.files);
       const filteredFiles = filterFiles(activeFilters, action.files);
       return {
@@ -234,6 +246,11 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
       };
     }
     case types.SELECT_COLLECTIONS_FAILURE:
+      // Same rule as SUCCESS: a superseded request must not blank the table or
+      // post an error against a load the user has already moved on from.
+      if (action.prefixes.join(',') !== state.pendingCollections) {
+        return state;
+      }
       return {
         ...state,
         allFiles: [],
