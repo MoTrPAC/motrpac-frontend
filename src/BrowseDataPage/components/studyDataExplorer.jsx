@@ -44,10 +44,12 @@ function StudyDataExplorer({ userType = undefined, profile = {} }) {
     if (view === activeView) {
       return;
     }
+    clearTimeout(fadeTimer.current);
     setShown(false);
     fadeTimer.current = setTimeout(() => {
       setActiveView(view);
       setShown(true);
+      fadeTimer.current = null;
     }, FADE_MS);
   }
   const [filters, setFilters] = useState({ species: 'all', design: 'all', stage: 'all' });
