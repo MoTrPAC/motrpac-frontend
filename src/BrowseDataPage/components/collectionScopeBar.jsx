@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { findCollection } from '../../lib/collectionFiles';
-import { resolveScope } from '../../lib/collectionScope';
+import { resolveScope, studyOf } from '../../lib/collectionScope';
 import { KIND_LABELS } from '../../lib/studyDataCards';
 
 /**
@@ -23,7 +23,8 @@ function CollectionScopeBar({ userType = undefined }) {
   // One study in scope can be named; several cannot, so the text says how many
   // rather than inventing a combined name.
   const owner = studyCodes.length === 1 && available.length ? findCollection(available[0]) : null;
-  const scopeName = owner ? owner.card.name : `${studyCodes.length} studies`;
+  const scopeCount = studyCodes.length || new Set(available.map(studyOf)).size;
+  const scopeName = owner ? owner.card.name : `${scopeCount} studies`;
   const selected = selectedCollections.filter((prefix) => available.includes(prefix));
 
   function describe() {
