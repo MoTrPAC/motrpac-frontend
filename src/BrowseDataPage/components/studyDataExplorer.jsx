@@ -41,10 +41,11 @@ function StudyDataExplorer({ userType = undefined, profile = {} }) {
   useEffect(() => () => clearTimeout(fadeTimer.current), []);
 
   function showView(view) {
+    clearTimeout(fadeTimer.current);
     if (view === activeView) {
+      setShown(true);
       return;
     }
-    clearTimeout(fadeTimer.current);
     setShown(false);
     fadeTimer.current = setTimeout(() => {
       setActiveView(view);
