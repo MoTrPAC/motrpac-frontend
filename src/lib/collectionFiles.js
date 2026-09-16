@@ -14,8 +14,15 @@ import { allVersions, visibleSeries } from './studyDataAccess';
  * written out rather than built from a template string. Keys are object-path
  * prefixes -- the same `{family}/{study-folder}/{collection}` that each file's
  * `object` field starts with, and that `storageLocation` ends with.
+ *
+ * A `Map`, not an object literal. Prefixes originate in the URL, and an
+ * object-literal lookup can in principle reach `Object.prototype` -- guarded
+ * here already, and twice, since `resolveScope` filters through
+ * `isKnownCollection` first. The Map removes the pattern rather than guarding
+ * it: there are no inherited keys to reach, so `get` can only return something
+ * put here deliberately, and static analysis has nothing left to flag.
  */
-const LOADERS = {
+const LOADERS = new Map(Object.entries({
   'quant-id/rat-training-06/c3.0': () => import('../data/file_download_metadata/collections/quant-id_rat-training-06_c3.0-minified.json'),
   'quant-id/rat-training-06/c2.0': () => import('../data/file_download_metadata/collections/quant-id_rat-training-06_c2.0-minified.json'),
   'quant-id/rat-training-06/c1.0': () => import('../data/file_download_metadata/collections/quant-id_rat-training-06_c1.0-minified.json'),
@@ -40,7 +47,7 @@ const LOADERS = {
   'phenotype/human-all-ha-adu/c2.0': () => import('../data/file_download_metadata/collections/phenotype_human-all-ha-adu_c2.0-minified.json'),
   'phenotype/human-screening-adu/c2.0': () => import('../data/file_download_metadata/collections/phenotype_human-screening-adu_c2.0-minified.json'),
   'phenotype/human-screening-ped/c2.0': () => import('../data/file_download_metadata/collections/phenotype_human-screening-ped_c2.0-minified.json'),
-};
+}));
 
 const BUCKET_PREFIX = `gs://${import.meta.env.VITE_DATA_FILE_BUCKET}/`;
 
@@ -60,7 +67,7 @@ export function prefixFromObject(object) {
 }
 
 export function isKnownCollection(prefix) {
-  return Object.prototype.hasOwnProperty.call(LOADERS, prefix);
+  return LOADERS.has(prefix);
 }
 
 /**
@@ -122,12 +129,9 @@ export function visibleTo(records, userType) {
 }
 
 export async function loadCollection(prefix, userType) {
-  if (!Object.prototype.hasOwnProperty.call(LOADERS, prefix)) {
-    throw new Error(`Unknown collection: ${prefix}`);
-  }
-  const loader = LOADERS[prefix];
+  const loader = LOADERS.get(prefix);
   if (typeof loader !== 'function') {
-    throw new Error(`Invalid loader for collection: ${prefix}`);
+    throw new Error(`Unknown collection: ${prefix}`);
   }
   const module = await loader();
   return visibleTo(module.default, userType);

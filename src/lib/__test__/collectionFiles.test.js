@@ -27,7 +27,7 @@ describe('collection prefixes', () => {
   });
 
   test('every loader corresponds to a declared collection', () => {
-    const orphans = Object.keys(LOADERS).filter((prefix) => findCollection(prefix) === null);
+    const orphans = [...LOADERS.keys()].filter((prefix) => findCollection(prefix) === null);
     expect(orphans).toEqual([]);
   });
 
@@ -53,7 +53,7 @@ describe('entitlement', () => {
   });
 
   test('internal users are entitled to every collection', () => {
-    expect(entitledPrefixes('internal').sort()).toEqual(Object.keys(LOADERS).sort());
+    expect(entitledPrefixes('internal').sort()).toEqual([...LOADERS.keys()].sort());
   });
 
   test('signing in changes nothing for an external user', () => {
