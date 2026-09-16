@@ -355,10 +355,9 @@ describe('resolveScope - several studies in scope', () => {
     const external = resolveScope(at(FILE_BROWSER_PATH, `?studies=${two.join(',')}`), 'external');
     // rat-acute-06 is consortium throughout, so an external user gets none of
     // it -- naming it in the URL does not widen what they may see.
-    expect(new Set(external.available.map(studyOf))).toEqual(new Set(two));
+    expect(new Set(external.available.map(studyOf))).toEqual(new Set(['rat-training-06']));
     expect(external.available.length).toBeLessThan(internal.available.length);
-    expect(external.available.some((p) => p.includes('rat-acute-06'))).toBe(true);
-    expect(external.available).not.toContain('quant-id/rat-acute-06/c1.0');
+    expect(external.available.some((p) => p.includes('rat-acute-06'))).toBe(false);
   });
 
   test('a multi-study scope round trips through the URL', () => {

@@ -80,3 +80,23 @@ describe('CollectionScopeBar - what it says', () => {
     expect(screen.getByText(/Unknown collection/)).toBeInTheDocument();
   });
 });
+
+describe('CollectionScopeBar - a selection reaching outside the study in scope', () => {
+  test('counts every loaded collection, not just the in-scope ones', async () => {
+    // A URL may name a study in its path and a collection from another study in
+    // its query; resolveScope honours both, so two collections load while
+    // `available` holds only the path study's six. Filtering the bar's count by
+    // `available` reported one while the table showed both.
+    const inScope = 'quant-id/rat-training-06/c3.0';
+    const outOfScope = 'quant-id/rat-acute-06/c1.0';
+    const { store } = render('internal', {
+      route: `${STUDY_ROUTE}?collections=${inScope},${outOfScope}`,
+    });
+
+    await act(async () => {
+      await store.dispatch(actions.selectCollections([inScope, outOfScope]));
+    });
+
+    expect(screen.getByText(/2 of 6 collections in Endurance Training/i)).toBeInTheDocument();
+  });
+});

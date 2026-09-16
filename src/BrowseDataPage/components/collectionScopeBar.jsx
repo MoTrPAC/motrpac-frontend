@@ -14,9 +14,15 @@ import { KIND_LABELS } from '../../lib/studyDataCards';
  * duplication this replaced.
  */
 function CollectionScopeBar({ userType = undefined }) {
-  const { selectedCollections, loadingFiles, fileCount, error } = useSelector(
-    (state) => state.browseData
-  );
+  // `selected` is the loaded selection, deliberately not filtered by
+  // `available`: a URL may name a study in its path and a collection from
+  // another study in its query, and `resolveScope` honours both, so two
+  // collections load while `available` holds only the path study's. Filtering
+  // here made the bar report one while the table showed both. The pickers
+  // cannot produce that URL, but a hand-edited one or an old bookmark can.
+  const {
+    selectedCollections: selected, loadingFiles, fileCount, error,
+  } = useSelector((state) => state.browseData);
   const location = useLocation();
   const { studyCodes, available } = resolveScope(location, userType);
 
@@ -25,7 +31,6 @@ function CollectionScopeBar({ userType = undefined }) {
   const owner = studyCodes.length === 1 && available.length ? findCollection(available[0]) : null;
   const scopeCount = studyCodes.length || new Set(available.map(studyOf)).size;
   const scopeName = owner ? owner.card.name : `${scopeCount} studies`;
-  const selected = selectedCollections.filter((prefix) => available.includes(prefix));
 
   function describe() {
     if (loadingFiles) {
