@@ -171,8 +171,7 @@ function DataDownloadsMain({
             {' '}
             <Link to="/knowledge-center">Knowledge Center</Link>
             {' '}
-            and
-            page.
+            pages.
           </p>
         </div>
         <div className="col-12 mt-4">
