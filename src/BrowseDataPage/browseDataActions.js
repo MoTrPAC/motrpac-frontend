@@ -272,16 +272,24 @@ function handleDownloadRequest(email, name, userid, selectedFiles) {
  * can hold consortium-only files. It is read from the store rather than passed
  * in, so no call site can omit it and quietly widen what gets loaded.
  */
+// Identifies a load, so the reducer can drop one that has been superseded. The
+// prefixes cannot stand in for this: two requests may name the same collections
+// and differ only in `selection` -- "the whole study, nothing checked" against
+// "these collections, checked" -- and the stale one would wipe the selection.
+let requestCounter = 0;
+
 function selectCollections(prefixes, selection = prefixes) {
   return async (dispatch, getState) => {
-    dispatch({ type: SELECT_COLLECTIONS_START, prefixes, selection });
+    requestCounter += 1;
+    const requestId = requestCounter;
+    dispatch({ type: SELECT_COLLECTIONS_START, requestId, prefixes, selection });
     try {
       const userType = getState().auth?.profile?.user_metadata?.userType;
       const files = await loadCollections(prefixes, userType);
-      dispatch({ type: SELECT_COLLECTIONS_SUCCESS, prefixes, selection, files });
+      dispatch({ type: SELECT_COLLECTIONS_SUCCESS, requestId, prefixes, selection, files });
       return files;
     } catch (error) {
-      dispatch({ type: SELECT_COLLECTIONS_FAILURE, prefixes, error: error.message });
+      dispatch({ type: SELECT_COLLECTIONS_FAILURE, requestId, prefixes, error: error.message });
       return [];
     }
   };

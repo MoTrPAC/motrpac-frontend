@@ -214,12 +214,14 @@ describe('browseDataReducer - a collection change prunes filters instead of wipi
   // START then SUCCESS, as the thunk dispatches them: SUCCESS is ignored unless
   // it matches the request in flight.
   function afterLoad(activeFilters, files, prefixes) {
+    const requestId = 1;
     const started = browseDataReducer(
       { ...defaultBrowseDataState, activeFilters },
-      { type: types.SELECT_COLLECTIONS_START, prefixes, selection: prefixes }
+      { type: types.SELECT_COLLECTIONS_START, requestId, prefixes, selection: prefixes }
     );
     return browseDataReducer(started, {
       type: types.SELECT_COLLECTIONS_SUCCESS,
+      requestId,
       prefixes,
       selection: prefixes,
       files,
@@ -324,40 +326,43 @@ describe('browseDataReducer - only the most recent load may land', () => {
   const slow = { object: 'quant-id/rat-acute-06/c1.0/a.txt', tissue_name: 'Liver' };
   const fast = { object: 'phenotype/human-eqc/c14.0/b.csv', tissue_name: null };
 
-  const start = (state, prefixes) =>
+  const start = (state, requestId, prefixes) =>
     browseDataReducer(state, {
       type: types.SELECT_COLLECTIONS_START,
+      requestId,
       prefixes,
       selection: prefixes,
     });
-  const succeed = (state, prefixes, files) =>
+  const succeed = (state, requestId, prefixes, files) =>
     browseDataReducer(state, {
       type: types.SELECT_COLLECTIONS_SUCCESS,
+      requestId,
       prefixes,
       selection: prefixes,
       files,
     });
 
   test('a superseded request cannot overwrite the current one', () => {
-    let state = start(defaultBrowseDataState, ['quant-id/rat-acute-06/c1.0']);
-    state = start(state, ['phenotype/human-eqc/c14.0']);
+    let state = start(defaultBrowseDataState, 1, ['quant-id/rat-acute-06/c1.0']);
+    state = start(state, 2, ['phenotype/human-eqc/c14.0']);
 
-    state = succeed(state, ['phenotype/human-eqc/c14.0'], [fast]);
+    state = succeed(state, 2, ['phenotype/human-eqc/c14.0'], [fast]);
     expect(state.allFiles).toEqual([fast]);
 
     // The first request finally resolves. It must be dropped.
-    state = succeed(state, ['quant-id/rat-acute-06/c1.0'], [slow]);
+    state = succeed(state, 1, ['quant-id/rat-acute-06/c1.0'], [slow]);
     expect(state.allFiles).toEqual([fast]);
     expect(state.loadedCollections).toEqual(['phenotype/human-eqc/c14.0']);
   });
 
   test('a superseded failure cannot blank the table or post an error', () => {
-    let state = start(defaultBrowseDataState, ['quant-id/rat-acute-06/c1.0']);
-    state = start(state, ['phenotype/human-eqc/c14.0']);
-    state = succeed(state, ['phenotype/human-eqc/c14.0'], [fast]);
+    let state = start(defaultBrowseDataState, 1, ['quant-id/rat-acute-06/c1.0']);
+    state = start(state, 2, ['phenotype/human-eqc/c14.0']);
+    state = succeed(state, 2, ['phenotype/human-eqc/c14.0'], [fast]);
 
     state = browseDataReducer(state, {
       type: types.SELECT_COLLECTIONS_FAILURE,
+      requestId: 1,
       prefixes: ['quant-id/rat-acute-06/c1.0'],
       error: 'network',
     });
@@ -367,9 +372,10 @@ describe('browseDataReducer - only the most recent load may land', () => {
   });
 
   test('the request in flight still lands, and its failure still reports', () => {
-    let state = start(defaultBrowseDataState, ['phenotype/human-eqc/c14.0']);
+    let state = start(defaultBrowseDataState, 1, ['phenotype/human-eqc/c14.0']);
     state = browseDataReducer(state, {
       type: types.SELECT_COLLECTIONS_FAILURE,
+      requestId: 1,
       prefixes: ['phenotype/human-eqc/c14.0'],
       error: 'network',
     });
@@ -377,10 +383,32 @@ describe('browseDataReducer - only the most recent load may land', () => {
     expect(state.loadingFiles).toBe(false);
   });
 
+  test('two loads of the same collections are told apart by their id', () => {
+    // The prefixes cannot identify a request: the same collections can be loaded
+    // as "the whole study, nothing checked" or as "these, checked". A guard
+    // keyed on prefixes let the stale one through and wiped the selection.
+    const P = ['quant-id/rat-training-06/c3.0', 'quant-id/rat-training-06/c2.0'];
+    let state = browseDataReducer(defaultBrowseDataState, {
+      type: types.SELECT_COLLECTIONS_START, requestId: 1, prefixes: P, selection: [],
+    });
+    state = browseDataReducer(state, {
+      type: types.SELECT_COLLECTIONS_START, requestId: 2, prefixes: P, selection: P,
+    });
+    state = browseDataReducer(state, {
+      type: types.SELECT_COLLECTIONS_SUCCESS, requestId: 2, prefixes: P, selection: P, files: [],
+    });
+    expect(state.selectedCollections).toEqual(P);
+
+    state = browseDataReducer(state, {
+      type: types.SELECT_COLLECTIONS_SUCCESS, requestId: 1, prefixes: P, selection: [], files: [],
+    });
+    expect(state.selectedCollections).toEqual(P);
+  });
+
   test('a load left in flight across a reset is dropped', () => {
-    let state = start(defaultBrowseDataState, ['quant-id/rat-acute-06/c1.0']);
+    let state = start(defaultBrowseDataState, 1, ['quant-id/rat-acute-06/c1.0']);
     state = browseDataReducer(state, { type: types.RESET_BROWSE_STATE });
-    state = succeed(state, ['quant-id/rat-acute-06/c1.0'], [slow]);
+    state = succeed(state, 1, ['quant-id/rat-acute-06/c1.0'], [slow]);
     expect(state.allFiles).toEqual([]);
   });
 });
@@ -396,12 +424,14 @@ describe('browseDataReducer - pruning agrees with matching', () => {
   const withFilter = (omics) => ({ ...defaultBrowseDataState.activeFilters, omics });
 
   function afterLoad(activeFilters, files, prefixes) {
+    const requestId = 1;
     const started = browseDataReducer(
       { ...defaultBrowseDataState, activeFilters },
-      { type: types.SELECT_COLLECTIONS_START, prefixes, selection: prefixes }
+      { type: types.SELECT_COLLECTIONS_START, requestId, prefixes, selection: prefixes }
     );
     return browseDataReducer(started, {
       type: types.SELECT_COLLECTIONS_SUCCESS,
+      requestId,
       prefixes,
       selection: prefixes,
       files,
