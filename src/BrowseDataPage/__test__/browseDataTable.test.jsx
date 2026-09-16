@@ -37,6 +37,10 @@ const headers = (container) => [...container.querySelectorAll('.browseDataTable 
 const header = (container, name) =>
   headers(container).find((cell) => cell.textContent.startsWith(name));
 
+/** The sort control itself -- a button, so the header is operable by keyboard. */
+const sortToggle = (container, name) =>
+  header(container, name).querySelector('.column-sort-toggle');
+
 const column = (container, name) =>
   [...container.querySelectorAll(`.browseDataTable tbody td.${name}`)].map(
     (cell) => cell.textContent
@@ -49,10 +53,14 @@ describe('BrowseDataTable - column sorting', () => {
     const { container } = renderTable([file()]);
     const [selection, ...dataColumns] = headers(container);
 
-    expect(selection.querySelector('.material-icons')).toBeNull();
+    expect(selection.querySelector('.column-sort-toggle')).toBeNull();
+    expect(selection.getAttribute('aria-sort')).toBeNull();
     expect(dataColumns).toHaveLength(9);
     dataColumns.forEach((cell) => {
-      expect(cell.querySelector('.material-icons')).not.toBeNull();
+      const toggle = cell.querySelector('.column-sort-toggle');
+      expect(toggle).not.toBeNull();
+      expect(toggle.tagName).toBe('BUTTON');
+      expect(toggle.querySelector('.material-icons')).not.toBeNull();
     });
   });
 
@@ -65,23 +73,46 @@ describe('BrowseDataTable - column sorting', () => {
     // Tissue carries the initial sort, so start from a column that does not.
     expect(column(container, 'assay')).toEqual(['RNA-seq', 'ATAC-seq']);
 
-    await user.click(header(container, 'Assay'));
+    await user.click(sortToggle(container, 'Assay'));
     expect(column(container, 'assay')).toEqual(['ATAC-seq', 'RNA-seq']);
 
-    await user.click(header(container, 'Assay'));
+    await user.click(sortToggle(container, 'Assay'));
     expect(column(container, 'assay')).toEqual(['RNA-seq', 'ATAC-seq']);
+  });
+
+  test('the sort control is reachable and operable by keyboard', async () => {
+    // The reason the control is a button. A click handler on the <th> sorted
+    // for mouse users only; tabbing never reached it and Enter did nothing.
+    const user = userEvent.setup();
+    const { container } = renderTable([
+      file({ tissue_name: 'Liver', assay: 'ATAC-seq' }),
+      file({ tissue_name: 'Heart', assay: 'RNA-seq' }),
+    ]);
+    expect(column(container, 'assay')).toEqual(['RNA-seq', 'ATAC-seq']);
+
+    sortToggle(container, 'Assay').focus();
+    expect(document.activeElement).toBe(sortToggle(container, 'Assay'));
+
+    await user.keyboard('{Enter}');
+    expect(column(container, 'assay')).toEqual(['ATAC-seq', 'RNA-seq']);
   });
 
   test('the sorted column says which way it is sorted', async () => {
     const user = userEvent.setup();
     const { container } = renderTable([file()]);
-    const assay = () => header(container, 'Assay').querySelector('.material-icons').textContent;
+    const icon = () => sortToggle(container, 'Assay').querySelector('.material-icons').textContent;
+    const announced = () => header(container, 'Assay').getAttribute('aria-sort');
 
-    expect(assay()).toBe('unfold_more');
-    await user.click(header(container, 'Assay'));
-    expect(assay()).toBe('expand_less');
-    await user.click(header(container, 'Assay'));
-    expect(assay()).toBe('expand_more');
+    expect(icon()).toBe('unfold_more');
+    expect(announced()).toBe('none');
+
+    await user.click(sortToggle(container, 'Assay'));
+    expect(icon()).toBe('expand_less');
+    expect(announced()).toBe('ascending');
+
+    await user.click(sortToggle(container, 'Assay'));
+    expect(icon()).toBe('expand_more');
+    expect(announced()).toBe('descending');
   });
 
   test('Size sorts by magnitude, not by how the digits read', async () => {
@@ -95,7 +126,7 @@ describe('BrowseDataTable - column sorting', () => {
       file({ object_size: 1200 }),
     ]);
 
-    await user.click(header(container, 'Size'));
+    await user.click(sortToggle(container, 'Size'));
     expect(column(container, 'filesize')).toEqual([
       '900.00 Bytes',
       '1.17 KB',

@@ -370,6 +370,24 @@
     .material-icons {
       color: #888;
     }
+
+    // The sort control is a <button> so it can be reached by keyboard. Stripped
+    // back to look like the header text it replaced -- everything here is
+    // undoing a browser default, except the focus ring, which is the point.
+    .column-sort-toggle {
+      background: none;
+      border: 0;
+      color: inherit;
+      font: inherit;
+      padding: 0;
+      text-align: left;
+      width: 100%;
+
+      &:focus-visible {
+        outline: 2px solid colors.$dblue;
+        outline-offset: 2px;
+      }
+    }
   }
 
   tbody {

@@ -31,6 +31,14 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   return <input type="checkbox" ref={resolvedRef} {...rest} />;
 });
 
+/** What the column header announces to assistive technology. */
+function ariaSort(column) {
+  if (!column.isSorted) {
+    return 'none';
+  }
+  return column.isSortedDesc ? 'descending' : 'ascending';
+}
+
 /**
  * Sets up table column headers and renders the table component
  *
@@ -205,15 +213,24 @@ function DataTable({
                     <tr key={key} {...restHeaderGroups} className="table-head">
                       {headerGroup.headers.map((column) => {
                         const { key, ...rest } = column.getHeaderProps();
+                        // The sort control is a real <button>, not a click
+                        // handler on the <th>: a bare onClick is reachable by
+                        // mouse only, so sorting was unavailable to keyboard
+                        // and screen-reader users. `aria-sort` on the cell is
+                        // what announces the current order.
                         return (
                           <th
                             key={key}
                             {...rest}
-                            {...column.getSortByToggleProps({ title: '' })}
+                            aria-sort={column.canSort ? ariaSort(column) : undefined}
                           >
-                            <div className="d-flex align-items-center justify-content-between">
-                              {column.render('Header')}
-                              {column.canSort && (
+                            {column.canSort ? (
+                              <button
+                                type="button"
+                                className="column-sort-toggle d-flex align-items-center justify-content-between"
+                                {...column.getSortByToggleProps({ title: '' })}
+                              >
+                                {column.render('Header')}
                                 <span>
                                   {column.isSorted
                                     ? column.isSortedDesc
@@ -221,8 +238,12 @@ function DataTable({
                                       : <i className="material-icons">expand_less</i>
                                     : <i className="material-icons">unfold_more</i>}
                                 </span>
-                              )}
-                            </div>
+                              </button>
+                            ) : (
+                              <div className="d-flex align-items-center justify-content-between">
+                                {column.render('Header')}
+                              </div>
+                            )}
                           </th>
                         );
                       })}
