@@ -122,9 +122,12 @@ export function visibleTo(records, userType) {
 }
 
 export async function loadCollection(prefix, userType) {
-  const loader = LOADERS[prefix];
-  if (!loader) {
+  if (!Object.prototype.hasOwnProperty.call(LOADERS, prefix)) {
     throw new Error(`Unknown collection: ${prefix}`);
+  }
+  const loader = LOADERS[prefix];
+  if (typeof loader !== 'function') {
+    throw new Error(`Invalid loader for collection: ${prefix}`);
   }
   const module = await loader();
   return visibleTo(module.default, userType);
