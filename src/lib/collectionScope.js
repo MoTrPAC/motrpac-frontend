@@ -174,10 +174,11 @@ export function resolveScope(location, userType) {
   const segment = trimSlashes(location.pathname.slice(FILE_BROWSER_PATH.length));
   const permitted = new Set(entitledPrefixes(userType));
 
-  const requested = listParam(location.search, 'collections').filter(isKnownCollection);
+  const rawRequested = listParam(location.search, 'collections');
+  const requested = rawRequested.filter(isKnownCollection);
   const pathNamesCollection = isKnownCollection(segment);
 
-  const namedCollections = pathNamesCollection || requested.length > 0;
+  const namedCollections = pathNamesCollection || rawRequested.length > 0;
   const fromQuery = requested.filter((prefix) => permitted.has(prefix));
   const fromPath = pathNamesCollection && permitted.has(segment) ? [segment] : [];
   const selected = fromQuery.length ? fromQuery : fromPath;
