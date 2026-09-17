@@ -86,7 +86,7 @@ function BundleDownloadButton({ bundlefile, label, profile = {} }) {
       <a
         id={file}
         href={fetchStatus.fileUrl}
-        className="btn-bundle-data-download ready-to-download-link px-3"
+        className="btn btn-sm btn-bundle-data-download ready-to-download-link px-3"
         download
         onClick={(e) => handleFileDownload(file, e)}
       >
@@ -110,7 +110,7 @@ function BundleDownloadButton({ bundlefile, label, profile = {} }) {
           });
         }}
       >
-        Something went wrong. Try again.
+        Download failed. Try again.
       </button>
     );
   }

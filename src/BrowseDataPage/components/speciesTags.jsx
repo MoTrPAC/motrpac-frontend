@@ -69,7 +69,13 @@ export function SpeciesLegend() {
  * Rendered by the filter panel, not by the groups: a group shown on its own --
  * which only happens in tests -- keeps its icon and simply has nothing to pop
  * up, rather than each group carrying a duplicate.
+ *
+ * The class is not cosmetic. react-tooltip ships the tooltip as `position:
+ * absolute` with no z-index, and a Bootstrap `.card` is `position: relative`,
+ * so the filter modules are positioned siblings that paint in DOM order --
+ * every one of them over a tooltip declared above them. Giving it a layer is
+ * what makes it visible from wherever the panel chooses to mount it.
  */
 export function SpeciesLegendTooltip() {
-  return <Tooltip id={SPECIES_LEGEND_ID} />;
+  return <Tooltip id={SPECIES_LEGEND_ID} className="species-legend-tooltip" />;
 }
