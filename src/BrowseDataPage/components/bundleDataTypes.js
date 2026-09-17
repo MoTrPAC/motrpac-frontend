@@ -1,295 +1,532 @@
 const BundleDataTypes = {
-  pass1b_06: [
+  rat_training_06: [
     {
       type: 'phenotype',
-      phase: 'pass1b-06',
+      phase: 'rat-training-06',
       title: 'Phenotype',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
+      collections: [
+        {
+          collection: 'c4.0',
+          releaseStage: 'public',
+          size: '617.78 KB',
+          name: 'bundles/motrpac_rat-training-06_phenotype.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Phenotypic data from young adult rats (6-month old) that performed the endurance exercise training.',
-      object_zipfile: 'bundles/motrpac_rat-training-06_phenotype.zip',
-      object_zipfile_size: '617.78 KB',
+        'Phenotypic data from young adult rats (6-month old) that performed the endurance exercise training (bundle size: 617.78 KB).',
     },
     {
       type: 'epigenomics',
-      phase: 'pass1b-06',
+      phase: 'rat-training-06',
       title: 'Epigenomics',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'public',
+          size: '10.74 GB',
+          name: 'bundles/motrpac_rat-training-06_epigenomics_v1.zip',
+          latest: false,
+        },
+        {
+          collection: 'c2.0',
+          releaseStage: 'public',
+          size: '14.60 GB',
+          name: 'bundles/motrpac_rat-training-06_epigenomics_v2.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across tissues for ATAC-seq and RRBS (excluding RRBS quantitative results).',
-      object_zipfile: 'bundles/motrpac_rat-training-06_epigenomics_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 10.74 GB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_epigenomics_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 14.60 GB',
+        'Analyses, sample-level metadata, QC, and quantitative results across tissues for ATAC-seq and RRBS (excluding RRBS quantitative results), with Collection c1.0 using RN6 (bundle size: 10.74 GB) and c2.0 using RN7 (bundle size: 14.60 GB).',
     },
     {
       type: 'transcriptomics',
-      phase: 'pass1b-06',
+      phase: 'rat-training-06',
       title: 'Transcriptomics',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'public',
+          size: '566.97 MB',
+          name: 'bundles/motrpac_rat-training-06_transcriptomics_v1.zip',
+          latest: false,
+        },
+        {
+          collection: 'c2.0',
+          releaseStage: 'public',
+          size: '474.69 MB',
+          name: 'bundles/motrpac_rat-training-06_transcriptomics_v2.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across tissues for RNA-seq.',
-      object_zipfile: 'bundles/motrpac_rat-training-06_transcriptomics_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 566.97 MB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_transcriptomics_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 474.69 MB',
+        'Analyses, sample-level metadata, QC, and quantitative results across tissues for RNA-seq, with Collection c1.0 using RN6 (bundle size: 566.97 MB) and c2.0 using RN7 (bundle size: 474.69 MB).',
     },
     {
       type: 'proteomics-untargeted',
-      phase: 'pass1b-06',
+      phase: 'rat-training-06',
       title: 'Proteomics-untargeted',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'public',
+          size: '1.02 GB',
+          name: 'bundles/motrpac_rat-training-06_proteomics-untargeted_v1.zip',
+          latest: false,
+        },
+        {
+          collection: 'c2.0',
+          releaseStage: 'public',
+          size: '1.40 GB',
+          name: 'bundles/motrpac_rat-training-06_proteomics-untargeted_v2.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across tissues for the Acetyl Proteomics, Global Proteomics, Phosphoproteomics, and Protein Ubiquitination.',
-      object_zipfile: 'bundles/motrpac_rat-training-06_proteomics-untargeted_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 1.02 GB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_proteomics-untargeted_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 1.40 GB',
+        'Analyses, sample-level metadata, QC, and quantitative results across tissues for the Acetyl Proteomics, Global Proteomics, Phosphoproteomics, and Protein Ubiquitination assays, with Collection c1.0 using RN6 (bundle size: 1.02 GB) and c2.0 using RN7 (bundle size: 1.40 GB).',
     },
     {
       type: 'metabolomics-untargeted',
-      phase: 'pass1b-06',
+      phase: 'rat-training-06',
       title: 'Metabolomics-untargeted',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'public',
+          size: '272.42 MB',
+          name: 'bundles/motrpac_rat-training-06_metabolomics-untargeted.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across tissues for metabolomics-untargeted assays.',
-      object_zipfile: 'bundles/motrpac_rat-training-06_metabolomics-untargeted.zip',
-      object_zipfile_size: '272.42 MB',
+        'Analyses, sample-level metadata, QC, and quantitative results across tissues for metabolomics-untargeted assays (bundle size: 272.42 MB).',
     },
     {
       type: 'metabolomics-targeted',
-      phase: 'pass1b-06',
+      phase: 'rat-training-06',
       title: 'Metabolomics-targeted',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'public',
+          size: '27.58 MB',
+          name: 'bundles/motrpac_rat-training-06_metabolomics-targeted.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across tissues for metabolomics-targeted assays.',
-      object_zipfile: 'bundles/motrpac_rat-training-06_metabolomics-targeted.zip',
-      object_zipfile_size: '27.58 MB',
+        'Analyses, sample-level metadata, QC, and quantitative results across tissues for metabolomics-targeted assays (bundle size: 27.58 MB).',
     },
     {
       type: 'proteomics-targeted',
-      phase: 'pass1b-06',
+      phase: 'rat-training-06',
       title: 'Proteomics-targeted',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'public',
+          size: '12.06 MB',
+          name: 'bundles/motrpac_rat-training-06_proteomics-targeted.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across tissues for immunoassay.',
-      object_zipfile: 'bundles/motrpac_rat-training-06_proteomics-targeted.zip',
-      object_zipfile_size: '12.06 MB',
+        'Analyses, sample-level metadata, QC, and quantitative results across tissues for immunoassay (bundle size: 12.06 MB).',
     },
     {
       type: 'tissue-gastrocnemius',
-      phase: 'pass1b-06',
+      phase: 'rat-training-06',
       title: 'Gastrocnemius',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'public',
+          size: '159.07 MB',
+          name: 'bundles/motrpac_rat-training-06_gastrocnemius_v1.zip',
+          latest: false,
+        },
+        {
+          collection: 'c2.0',
+          releaseStage: 'public',
+          size: '2.26 GB',
+          name: 'bundles/motrpac_rat-training-06_gastrocnemius_v2.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the gastrocnemius tissue (excluding RRBS quantitative results).',
-      object_zipfile: 'bundles/motrpac_rat-training-06_gastrocnemius_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 159.07 MB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_gastrocnemius_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 2.26 GB',
+        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the gastrocnemius tissue (excluding RRBS quantitative results), with Collection c1.0 using RN6 (bundle size: 159.07 MB) and c2.0 using RN7 (bundle size: 2.26 GB).',
     },
     {
       type: 'tissue-heart',
-      phase: 'pass1b-06',
+      phase: 'rat-training-06',
       title: 'Heart',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'public',
+          size: '196.71 MB',
+          name: 'bundles/motrpac_rat-training-06_heart_v1.zip',
+          latest: false,
+        },
+        {
+          collection: 'c2.0',
+          releaseStage: 'public',
+          size: '1.93 GB',
+          name: 'bundles/motrpac_rat-training-06_heart_v2.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the heart tissue (excluding RRBS quantitative results).',
-      object_zipfile: 'bundles/motrpac_rat-training-06_heart_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 196.71 MB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_heart_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 1.93 GB',
+        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the heart tissue (excluding RRBS quantitative results), with Collection c1.0 using RN6 (bundle size: 196.71 MB) and c2.0 using RN7 (bundle size: 1.93 GB).',
     },
     {
       type: 'tissue-liver',
-      phase: 'pass1b-06',
+      phase: 'rat-training-06',
       title: 'Liver',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'public',
+          size: '224.71 MB',
+          name: 'bundles/motrpac_rat-training-06_liver_v1.zip',
+          latest: false,
+        },
+        {
+          collection: 'c2.0',
+          releaseStage: 'public',
+          size: '1.82 GB',
+          name: 'bundles/motrpac_rat-training-06_liver_v2.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Analyses, sample-level metadata, QC and quantitative results across omes/assays for the liver tissue (excluding RRBS quantitative results).',
-      object_zipfile: 'bundles/motrpac_rat-training-06_liver_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 224.71 MB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_liver_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 1.82 GB',
+        'Analyses, sample-level metadata, QC and quantitative results across omes/assays for the liver tissue (excluding RRBS quantitative results), with Collection c1.0 using RN6 (bundle size: 224.71 MB) and c2.0 using RN7 (bundle size: 1.82 GB).',
     },
     {
       type: 'tissue-lung',
-      phase: 'pass1b-06',
+      phase: 'rat-training-06',
       title: 'Lung',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'public',
+          size: '254.39 MB',
+          name: 'bundles/motrpac_rat-training-06_lung_v1.zip',
+          latest: false,
+        },
+        {
+          collection: 'c2.0',
+          releaseStage: 'public',
+          size: '2.36 GB',
+          name: 'bundles/motrpac_rat-training-06_lung_v2.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the lung tissue (excluding RRBS quantitative results).',
-      object_zipfile: 'bundles/motrpac_rat-training-06_lung_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 254.39 MB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_lung_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 2.36 GB',
+        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the lung tissue (excluding RRBS quantitative results), with Collection c1.0 using RN6 (bundle size: 254.39 MB) and c2.0 using RN7 (bundle size: 2.36 GB).',
     },
     {
       type: 'tissue-kidney',
-      phase: 'pass1b-06',
+      phase: 'rat-training-06',
       title: 'Kidney',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'public',
+          size: '188.64 MB',
+          name: 'bundles/motrpac_rat-training-06_kidney_v1.zip',
+          latest: false,
+        },
+        {
+          collection: 'c2.0',
+          releaseStage: 'public',
+          size: '1.82 GB',
+          name: 'bundles/motrpac_rat-training-06_kidney_v2.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the kidney tissue (excluding RRBS quantitative results).',
-      object_zipfile: 'bundles/motrpac_rat-training-06_kidney_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 188.64 MB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_kidney_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 1.82 GB',
+        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the kidney tissue (excluding RRBS quantitative results), with Collection c1.0 using RN6 (bundle size: 188.64 MB) and c2.0 using RN7 (bundle size: 1.82 GB).',
     },
     {
       type: 'tissue-brown-adipose',
-      phase: 'pass1b-06',
+      phase: 'rat-training-06',
       title: 'Brown adipose',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'public',
+          size: '61.03 MB',
+          name: 'bundles/motrpac_rat-training-06_brown-adipose_v1.zip',
+          latest: false,
+        },
+        {
+          collection: 'c2.0',
+          releaseStage: 'public',
+          size: '2.36 GB',
+          name: 'bundles/motrpac_rat-training-06_brown-adipose_v2.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the brown adipose tissue (excluding RRBS quantitative results).',
-      object_zipfile: 'bundles/motrpac_rat-training-06_brown-adipose_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 61.03 MB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_brown-adipose_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 2.36 GB',
+        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the brown adipose tissue (excluding RRBS quantitative results), with Collection c1.0 using RN6 (bundle size: 61.03 MB) and c2.0 using RN7 (bundle size: 2.36 GB).',
     },
     {
       type: 'tissue-white-adipose',
-      phase: 'pass1b-06',
+      phase: 'rat-training-06',
       title: 'White adipose',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'public',
+          size: '199.13 MB',
+          name: 'bundles/motrpac_rat-training-06_white-adipose_v1.zip',
+          latest: false,
+        },
+        {
+          collection: 'c2.0',
+          releaseStage: 'public',
+          size: '2.04 GB',
+          name: 'bundles/motrpac_rat-training-06_white-adipose_v2.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the white adipose tissue (excluding RRBS quantitative results).',
-      object_zipfile: 'bundles/motrpac_rat-training-06_white-adipose_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 199.13 MB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_white-adipose_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 2.04 GB',
+        'Analyses, sample-level metadata, QC, and quantitative results across omes/assays for the white adipose tissue (excluding RRBS quantitative results), with Collection c1.0 using RN6 (bundle size: 199.13 MB) and c2.0 using RN7 (bundle size: 2.04 GB).',
     },
     {
       type: 'tissue-blood-rna',
-      phase: 'pass1b-06',
+      phase: 'rat-training-06',
       title: 'Blood RNA',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'public',
+          size: '19.08 MB',
+          name: 'bundles/motrpac_rat-training-06_blood_v1.zip',
+          latest: false,
+        },
+        {
+          collection: 'c2.0',
+          releaseStage: 'public',
+          size: '22.13 MB',
+          name: 'bundles/motrpac_rat-training-06_blood_v2.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results in RNA-seq for blood RNA.',
-      object_zipfile: 'bundles/motrpac_rat-training-06_blood_v1.zip',
-      object_zipfile_size: 'v1.0, RN6, 19.08 MB',
-      object_rn7_zipfile: 'bundles/motrpac_rat-training-06_blood_v2.zip',
-      object_rn7_zipfile_size: 'v2.0, RN7, 22.13 MB',
+        'Analyses, sample-level metadata, QC, and quantitative results in RNA-seq for blood RNA, with Collection c1.0 using RN6 (bundle size: 19.08 MB) and c2.0 using RN7 (bundle size: 22.13 MB).',
     },
     {
       type: 'tissue-plasma',
-      phase: 'pass1b-06',
+      phase: 'rat-training-06',
       title: 'Plasma',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'public',
+          size: '53.58 MB',
+          name: 'bundles/motrpac_rat-training-06_plasma_v1.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Analyses, sample-level metadata, QC, and quantitative results in targeted/untargeted metabolomics and immunoassay for plasma.',
-      object_zipfile: 'bundles/motrpac_rat-training-06_plasma.zip',
-      object_zipfile_size: '53.58 MB',
+        'Analyses, sample-level metadata, QC, and quantitative results in targeted/untargeted metabolomics and immunoassay for plasma (bundle size: 53.58 MB).',
     },
     {
       type: 'misc-analysis-resources',
-      phase: 'pass1b-06',
+      phase: 'rat-training-06',
       title: 'Miscellaneous analysis resources',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Endurance Training',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'public',
+          size: '166.93 MB',
+          name: 'bundles/motrpac_rat-training-06_misc-analysis-resources.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Miscellaneous resource files for R objects used in the data analysis of young adult rats performing endurance exercise training.',
-      object_zipfile: 'bundles/motrpac_rat-training-06_misc-analysis-resources.zip',
-      object_zipfile_size: '166.93 MB',
+        'Miscellaneous resource files for R objects used in the data analysis of young adult rats performing endurance exercise training (bundle size: 166.93 MB).',
     },
   ],
-  pass1a_06: [
+  rat_acute_06: [
     {
       type: 'phenotype',
-      phase: 'pass1a-06',
+      phase: 'rat-acute-06',
       title: 'Phenotype',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Acute Exercise',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'consortium',
+          size: '339.5 KB',
+          name: 'bundles/motrpac_rat-acute-06_phenotype.zip',
+          latest: false,
+        },
+        {
+          collection: 'c4.0',
+          releaseStage: 'consortium',
+          size: '8.2 MB',
+          name: 'bundles/motrpac_rat-acute-06_phenotype_c4.0.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Phenotypic data from young adult rats (6-month old) that performed the acute exercise training.',
-      object_zipfile: 'bundles/motrpac_rat-acute-06_phenotype.zip',
-      object_zipfile_size: '347.65 KB',
+        'Phenotypic data from young adult rats (6-month old) that performed the acute exercise training (bundle size: 8.2 MB).',
+    },
+    {
+      type: 'epigenomics',
+      phase: 'rat-acute-06',
+      title: 'Epigenomics',
+      species: 'Rat',
+      participant_type: 'Young Adult',
+      intervention: 'Acute Exercise',
+      collections: [
+        {
+          collection: 'c2.0',
+          releaseStage: 'consortium',
+          size: '8 GB',
+          name: 'bundles/motrpac_rat-acute-06_epigenomics_c2.0.zip',
+          latest: true,
+        },
+      ],
+      description:
+        'Sample-level metadata, QC, and quantitative results across tissues for ATAC-seq and RRBS (bundle size: 8 GB).',
     },
     {
       type: 'transcriptomics',
-      phase: 'pass1a-06',
+      phase: 'rat-acute-06',
       title: 'Transcriptomics',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Acute Exercise',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'consortium',
+          size: '381.1 MB',
+          name: 'bundles/motrpac_rat-acute-06_transcriptomics.zip',
+          latest: false,
+        },
+        {
+          collection: 'c2.0',
+          releaseStage: 'consortium',
+          size: '1.9 GB',
+          name: 'bundles/motrpac_rat-acute-06_transcriptomics_c2.0.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Sample-level metadata, QC, and quantitative results across tissues for RNA-seq.',
-      object_zipfile: 'bundles/motrpac_rat-acute-06_transcriptomics.zip',
-      object_zipfile_size: '399.61 MB',
+        'Sample-level metadata, QC, and quantitative results across tissues for RNA-seq (bundle size: 1.9 GB).',
     },
     {
       type: 'proteomics-untargeted',
-      phase: 'pass1a-06',
+      phase: 'rat-acute-06',
       title: 'Proteomics-untargeted',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Acute Exercise',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'consortium',
+          size: '2.2 GB',
+          name: 'bundles/motrpac_rat-acute-06_proteomics-untargeted.zip',
+          latest: false,
+        },
+        {
+          collection: 'c2.0',
+          releaseStage: 'consortium',
+          size: '1.3 GB',
+          name: 'bundles/motrpac_rat-acute-06_proteomics-untargeted_c2.0.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Sample-level metadata, QC, and quantitative results across tissues for Acetyl Proteomics, Global Proteomics, Phosphoproteomics.',
-      object_zipfile: 'bundles/motrpac_rat-acute-06_proteomics-untargeted.zip',
-      object_zipfile_size: '2.36 GB',
+        'Sample-level metadata, QC, and quantitative results across tissues for Acetyl Proteomics, Global Proteomics, Phosphoproteomics (bundle size: 1.3 GB).',
     },
     {
-      type: 'metabolomics-untargeted',
-      phase: 'pass1a-06',
-      title: 'Metabolomics-untargeted',
+      type: 'metabolomics',
+      phase: 'rat-acute-06',
+      title: 'Metabolomics',
       species: 'Rat',
       participant_type: 'Young Adult',
       intervention: 'Acute Exercise',
+      collections: [
+        {
+          collection: 'c1.0',
+          releaseStage: 'consortium',
+          size: '208.7 MB',
+          name: 'bundles/motrpac_rat-acute-06_metabolomics.zip',
+          latest: false,
+        },
+        {
+          collection: 'c2.0',
+          releaseStage: 'consortium',
+          size: '841.1 MB',
+          name: 'bundles/motrpac_rat-acute-06_metabolomics_c2.0.zip',
+          latest: true,
+        },
+      ],
       description:
-        'Sample-level metadata, QC, and quantitative results across tissues for metabolomics-untargeted assays.',
-      object_zipfile: 'bundles/motrpac_rat-acute-06_metabolomics-untargeted.zip',
-      object_zipfile_size: '217.79 MB',
-    },
-    {
-      type: 'metabolomics-targeted',
-      phase: 'pass1a-06',
-      title: 'Metabolomics-targeted',
-      species: 'Rat',
-      participant_type: 'Young Adult',
-      intervention: 'Acute Exercise',
-      description:
-        'Sample-level metadata, QC, and quantitative results across tissues for metabolomics-targeted assays.',
-      object_zipfile: 'bundles/motrpac_rat-acute-06_metabolomics-targeted.zip',
-      object_zipfile_size: '1 MB',
+        'Sample-level metadata, QC, and quantitative results across tissues for metabolomics-targeted and metabolomics-untargeted assays (bundle size: 841.1 MB).',
     },
   ],
-  human_sed_adu_internal: [
+  human_precovid_sed_adu: [
     {
       type: 'phenotype',
       phase: 'human-precovid-sed-adu',
@@ -298,11 +535,28 @@ const BundleDataTypes = {
       participant_type: 'Adult',
       intervention: 'Sedentary',
       study_group: 'Pre-Suspension',
-      description:
-        'Phenotypic data from the acute exercise in human sedentary adults study (pre-suspension).',
-      object_zipfile:
-        'bundles/motrpac_human-presuspension-sed-adu_phenotype.zip',
-      object_zipfile_size: '94.10 MB',
+      // `public` here where studyDataCards.js says `consortium` for the same
+      // collection, and both are right: the data is publicly released, but the
+      // Data Hub does not serve it -- external access goes through dbGaP. The
+      // card uses `consortium` to keep it off the download page; this bundle
+      // relies instead on having no `unrestricted` build, which is what
+      // `fileFor` gates on. Adding one here would publish it immediately, so
+      // don't -- see the "withheld from external users" test.
+      collections: [
+        {
+          collection: 'c3.0',
+          latest: true,
+          releaseStage: 'public',
+          bundleVersions: {
+            restricted: {
+              name: 'bundles/motrpac_human-presuspension-sed-adu_phenotype.zip',
+              size: '94.1 MB',
+              description:
+                'Phenotypic data from the acute exercise in human sedentary adults study (pre-suspension) (bundle size: 94.1 MB).',
+            },
+          },
+        },
+      ],
     },
     {
       type: 'epigenomics',
@@ -312,10 +566,40 @@ const BundleDataTypes = {
       participant_type: 'Adult',
       intervention: 'Sedentary',
       study_group: 'Pre-Suspension',
-      description:
-        'Differential analysis, metadata, QC normalized data across human tissues for ATAC-seq and Methylcap-seq assays.',
-      object_zipfile: 'bundles/motrpac_human-precovid-sed-adu_epigenomics.zip',
-      object_zipfile_size: '2.79 GB',
+      collections: [
+        {
+          collection: 'c1.3',
+          latest: false,
+          releaseStage: 'public',
+          bundleVersions: {
+            restricted: {
+              name: 'bundles/motrpac_human-precovid-sed-adu_epigenomics.zip',
+              size: '2.6 GB',
+              description:
+                'Differential analysis, metadata, QC normalized data across human tissues for ATAC-seq and Methylcap-seq assays (bundle size: 2.6 GB).',
+            },
+            unrestricted: {
+              name: 'bundles/external/motrpac_human-presuspension-sed-adu_epigenomics.zip',
+              size: '1.3 GB',
+              description:
+                'Summary-level results and metadata across different human tissues for the ATAC-seq and Methylcap-seq assays (bundle size: 1.3 GB).',
+            },
+          },
+        },
+        {
+          collection: 'c2.0',
+          latest: true,
+          releaseStage: 'consortium',
+          bundleVersions: {
+            restricted: {
+              name: 'bundles/motrpac_human-precovid-sed-adu_epigenomics_c2.0.zip',
+              size: '2.7 GB',
+              description:
+                'Differential analysis, metadata, QC normalized data across human tissues for ATAC-seq and Methylcap-seq assays (bundle size: 2.7 GB).',
+            },
+          },
+        },
+      ],
     },
     {
       type: 'transcriptomics',
@@ -325,11 +609,40 @@ const BundleDataTypes = {
       participant_type: 'Adult',
       intervention: 'Sedentary',
       study_group: 'Pre-Suspension',
-      description:
-        'Differential analysis, metadata, QC normalized data across human tissues for RNA-seq.',
-      object_zipfile:
-        'bundles/motrpac_human-precovid-sed-adu_transcriptomics.zip',
-      object_zipfile_size: '472.07 MB',
+      collections: [
+        {
+          collection: 'c1.3',
+          latest: false,
+          releaseStage: 'public',
+          bundleVersions: {
+            restricted: {
+              name: 'bundles/motrpac_human-precovid-sed-adu_transcriptomics.zip',
+              size: '450.2 MB',
+              description:
+                'Differential analysis, metadata, QC normalized data across human tissues for RNA-seq (bundle size: 450.2 MB).',
+            },
+            unrestricted: {
+              name: 'bundles/external/motrpac_human-presuspension-sed-adu_transcriptomics.zip',
+              size: '162.6 MB',
+              description:
+                'Summary-level results and metadata across different human tissues for the RNA-seq assay (bundle size: 162.6 MB).',
+            },
+          },
+        },
+        {
+          collection: 'c2.0',
+          latest: true,
+          releaseStage: 'consortium',
+          bundleVersions: {
+            restricted: {
+              name: 'bundles/motrpac_human-precovid-sed-adu_transcriptomics_c2.0.zip',
+              size: '510.4 MB',
+              description:
+                'Differential analysis, metadata, QC normalized data across human tissues for RNA-seq (bundle size: 510.4 MB).',
+            },
+          },
+        },
+      ],
     },
     {
       type: 'proteomics',
@@ -339,10 +652,40 @@ const BundleDataTypes = {
       participant_type: 'Adult',
       intervention: 'Sedentary',
       study_group: 'Pre-Suspension',
-      description:
-        'Differential analysis, metadata, QC normalized data across human tissues for Global Proteomics, Phosphoproteomics, and OLink.',
-      object_zipfile: 'bundles/motrpac_human-precovid-sed-adu_proteomics.zip',
-      object_zipfile_size: '346.55 MB',
+      collections: [
+        {
+          collection: 'c1.3',
+          latest: false,
+          releaseStage: 'public',
+          bundleVersions: {
+            restricted: {
+              name: 'bundles/motrpac_human-precovid-sed-adu_proteomics.zip',
+              size: '330.5 MB',
+              description:
+                'Differential analysis, metadata, QC normalized data across human tissues for Global Proteomics, Phosphoproteomics, and OLink (bundle size: 330.5 MB).',
+            },
+            unrestricted: {
+              name: 'bundles/external/motrpac_human-presuspension-sed-adu_proteomics.zip',
+              size: '104.7 MB',
+              description:
+                'Summary-level results and metadata across different human tissues for the Global Proteomics, Phosphoproteomics, and OLink assays (bundle size: 104.7 MB).',
+            },
+          },
+        },
+        {
+          collection: 'c2.0',
+          latest: true,
+          releaseStage: 'consortium',
+          bundleVersions: {
+            restricted: {
+              name: 'bundles/motrpac_human-precovid-sed-adu_proteomics_c2.0.zip',
+              size: '303 MB',
+              description:
+                'Differential analysis, metadata, QC normalized data across human tissues for Global Proteomics, Phosphoproteomics, and OLink (bundle size: 303 MB).',
+            },
+          },
+        },
+      ],
     },
     {
       type: 'metabolomics-untargeted',
@@ -352,11 +695,40 @@ const BundleDataTypes = {
       participant_type: 'Adult',
       intervention: 'Sedentary',
       study_group: 'Pre-Suspension',
-      description:
-        'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-untargeted assays.',
-      object_zipfile:
-        'bundles/motrpac_human-precovid-sed-adu_metabolomics-untargeted.zip',
-      object_zipfile_size: '269.27 MB',
+      collections: [
+        {
+          collection: 'c1.3',
+          latest: false,
+          releaseStage: 'public',
+          bundleVersions: {
+            restricted: {
+              name: 'bundles/motrpac_human-precovid-sed-adu_metabolomics-untargeted.zip',
+              size: '256.8 MB',
+              description:
+                'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-untargeted assays (bundle size: 256.8 MB).',
+            },
+            unrestricted: {
+              name: 'bundles/external/motrpac_human-presuspension-sed-adu_metabolomics-untargeted.zip',
+              size: '30.5 MB',
+              description:
+                'Summary-level results and metadata across different human tissues for the metabolomics-untargeted assays (bundle size: 30.5 MB).',
+            },
+          },
+        },
+        {
+          collection: 'c2.0',
+          latest: true,
+          releaseStage: 'consortium',
+          bundleVersions: {
+            restricted: {
+              name: 'bundles/motrpac_human-precovid-sed-adu_metabolomics-untargeted_c2.0.zip',
+              size: '316.6 MB',
+              description:
+                'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-untargeted assays (bundle size: 316.6 MB).',
+            },
+          },
+        },
+      ],
     },
     {
       type: 'metabolomics-targeted',
@@ -366,11 +738,40 @@ const BundleDataTypes = {
       participant_type: 'Adult',
       intervention: 'Sedentary',
       study_group: 'Pre-Suspension',
-      description:
-        'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-targeted assays.',
-      object_zipfile:
-        'bundles/motrpac_human-precovid-sed-adu_metabolomics-targeted.zip',
-      object_zipfile_size: '25 MB',
+      collections: [
+        {
+          collection: 'c1.3',
+          latest: false,
+          releaseStage: 'public',
+          bundleVersions: {
+            restricted: {
+              name: 'bundles/motrpac_human-precovid-sed-adu_metabolomics-targeted.zip',
+              size: '23.8 MB',
+              description:
+                'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-targeted assays (bundle size: 23.8 MB).',
+            },
+            unrestricted: {
+              name: 'bundles/external/motrpac_human-presuspension-sed-adu_metabolomics-targeted.zip',
+              size: '21.8 MB',
+              description:
+                'Summary-level results and metadata across different human tissues for the metabolomics-targeted assays (bundle size: 21.8 MB).',
+            },
+          },
+        },
+        {
+          collection: 'c2.0',
+          latest: true,
+          releaseStage: 'consortium',
+          bundleVersions: {
+            restricted: {
+              name: 'bundles/motrpac_human-precovid-sed-adu_metabolomics-targeted_c2.0.zip',
+              size: '83.4 MB',
+              description:
+                'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-targeted assays (bundle size: 83.4 MB).',
+            },
+          },
+        },
+      ],
     },
     {
       type: 'clinical-chemistry',
@@ -380,125 +781,129 @@ const BundleDataTypes = {
       participant_type: 'Adult',
       intervention: 'Sedentary',
       study_group: 'Pre-Suspension',
-      description:
-        'Differential analysis, metadata, QC normalized data from human plasma samples for clinical chemistry experiment.',
-      object_zipfile: 'bundles/motrpac_human-precovid-sed-adu_clinical-chemistry.zip',
-      object_zipfile_size: '22.54 MB',
+      collections: [
+        {
+          collection: 'c1.3',
+          latest: true,
+          releaseStage: 'public',
+          bundleVersions: {
+            restricted: {
+              name: 'bundles/motrpac_human-precovid-sed-adu_clinical-chemistry.zip',
+              size: '21.5 MB',
+              description:
+                'Differential analysis, metadata, QC normalized data from human plasma samples for clinical chemistry experiment (bundle size: 21.5 MB).',
+            },
+            unrestricted: {
+              name: 'bundles/external/motrpac_human-presuspension-sed-adu_clinical-chemistry.zip',
+              size: '21.4 MB',
+              description:
+                'Summary-level results from human plasma samples for clinical chemistry experiment (bundle size: 21.4 MB).',
+            },
+          },
+        },
+      ],
     },
   ],
-  human_sed_adu_external: [
-    {
-      type: 'epigenomics',
-      phase: 'human-precovid-sed-adu',
-      title: 'Epigenomics',
-      species: 'Human',
-      participant_type: 'Adult',
-      intervention: 'Sedentary',
-      study_group: 'Pre-Suspension',
-      description:
-        'Summary-level results and metadata across different human tissues for the ATAC-seq and Methylcap-seq assays.',
-      object_zipfile:
-        'bundles/external/motrpac_human-presuspension-sed-adu_epigenomics.zip',
-      object_zipfile_size: '1.4 GB',
-    },
-    {
-      type: 'transcriptomics',
-      phase: 'human-precovid-sed-adu',
-      title: 'Transcriptomics',
-      species: 'Human',
-      participant_type: 'Adult',
-      intervention: 'Sedentary',
-      study_group: 'Pre-Suspension',
-      description:
-        'Summary-level results and metadata across different human tissues for the RNA-seq assay.',
-      object_zipfile:
-        'bundles/external/motrpac_human-presuspension-sed-adu_transcriptomics.zip',
-      object_zipfile_size: '170.5 MB',
-    },
-    {
-      type: 'proteomics',
-      phase: 'human-precovid-sed-adu',
-      title: 'Proteomics',
-      species: 'Human',
-      participant_type: 'Adult',
-      intervention: 'Sedentary',
-      study_group: 'Pre-Suspension',
-      description:
-        'Summary-level results and metadata across different human tissues for the Global Proteomics, Phosphoproteomics, and OLink assays.',
-      object_zipfile:
-        'bundles/external/motrpac_human-presuspension-sed-adu_proteomics.zip',
-      object_zipfile_size: '109.8 MB',
-    },
-    {
-      type: 'metabolomics-untargeted',
-      phase: 'human-precovid-sed-adu',
-      title: 'Metabolomics-untargeted',
-      species: 'Human',
-      participant_type: 'Adult',
-      intervention: 'Sedentary',
-      study_group: 'Pre-Suspension',
-      description:
-        'Summary-level results and metadata across different human tissues for the metabolomics-untargeted assays.',
-      object_zipfile:
-        'bundles/external/motrpac_human-presuspension-sed-adu_metabolomics-untargeted.zip',
-      object_zipfile_size: '32 MB',
-    },
-    {
-      type: 'metabolomics-targeted',
-      phase: 'human-precovid-sed-adu',
-      title: 'Metabolomics-targeted',
-      species: 'Human',
-      participant_type: 'Adult',
-      intervention: 'Sedentary',
-      study_group: 'Pre-Suspension',
-      description:
-        'Summary-level results and metadata across different human tissues for the metabolomics-targeted assays.',
-      object_zipfile:
-        'bundles/external/motrpac_human-presuspension-sed-adu_metabolomics-targeted.zip',
-      object_zipfile_size: '22.9 MB',
-    },
-    {
-      type: 'clinical-chemistry',
-      phase: 'human-precovid-sed-adu',
-      title: 'Clinical chemistry',
-      species: 'Human',
-      participant_type: 'Adult',
-      intervention: 'Sedentary',
-      study_group: 'Pre-Suspension',
-      description:
-        'Summary-level results from human plasma samples for clinical chemistry experiment.',
-      object_zipfile: 'bundles/external/motrpac_human-presuspension-sed-adu_clinical-chemistry.zip',
-      object_zipfile_size: '22.44 MB',
-    },
-  ],
-  human_clinical_data_internal: [
+  human_phenotype: [
     {
       type: 'phenotype',
       phase: 'human-main',
-      title: 'Post-Suspension Sedentary Adults (Consortium Release)',
+      title: 'Sedentary Adults (Post-Suspension)',
       species: 'Human',
       participant_type: 'Adult',
       intervention: 'Sedentary',
       study_group: 'Post-Suspension',
+      collections: [
+        {
+          collection: 'c2.0',
+          latest: true,
+          releaseStage: 'consortium',
+          name: 'bundles/motrpac_human-main-sed-adu_phenotype.zip',
+          size: '4 MB',
+        },
+      ],
       description:
-        'Post-suspension sedentary human adults phenotypic data, excluding highly active cohort and ancillary studies.',
-      object_zipfile:
-        'bundles/motrpac_human-main-sed-adu_phenotype.zip',
-      object_zipfile_size: '4 MB',
+        'Post-suspension sedentary human adults phenotypic data, excluding highly active cohort and ancillary studies (bundle size: 4 MB).',
     },
     {
       type: 'phenotype',
-      phase: 'human-all',
-      title: 'Low and Highly Active Pediatrics (Consortium Release)',
+      phase: 'human-main',
+      title: 'Low and Highly Active Pediatrics',
       species: 'Human',
       participant_type: 'Pediatric',
       intervention: 'Low and Highly Active',
       study_group: 'Pre- & Post-Suspension',
+      collections: [
+        {
+          collection: 'c2.0',
+          latest: true,
+          releaseStage: 'consortium',
+          name: 'bundles/motrpac_human-all-ped_phenotype.zip',
+          size: '569.5 KB',
+        },
+      ],
       description:
-        'Low and highly active pediatrics phenotypic data, excluding ancillary studies.',
-      object_zipfile:
-        'bundles/motrpac_human-all-ped_phenotype.zip',
-      object_zipfile_size: '569.5 KB',
+        'Low and highly active pediatrics phenotypic data, excluding ancillary studies (bundle size: 569.5 KB).',
+    },
+    {
+      type: 'phenotype',
+      phase: 'human-main',
+      title: 'Highly Active Adults',
+      species: 'Human',
+      participant_type: 'Adult',
+      intervention: 'Highly Active',
+      study_group: 'Pre- & Post-Suspension',
+      collections: [
+        {
+          collection: 'c2.0',
+          latest: true,
+          releaseStage: 'consortium',
+          name: 'bundles/motrpac_human-all-ha-adu_phenotype.zip',
+          size: '9.3 KB',
+        },
+      ],
+      description:
+        'Highly active adults phenotypic data, excluding ancillary studies (bundle size: 9.3 KB).',
+    },
+    {
+      type: 'phenotype',
+      phase: 'human-main',
+      title: 'Screening Adults',
+      species: 'Human',
+      participant_type: 'Adult',
+      intervention: 'Screening',
+      study_group: '',
+      collections: [
+        {
+          collection: 'c2.0',
+          latest: true,
+          releaseStage: 'consortium',
+          name: 'bundles/motrpac_human-screening-adu_phenotype.zip',
+          size: '138.6 KB',
+        },
+      ],
+      description:
+        'Screening adults phenotypic data, excluding ancillary studies (bundle size: 138.6 KB).',
+    },
+    {
+      type: 'phenotype',
+      phase: 'human-main',
+      title: 'Screening Pediatrics',
+      species: 'Human',
+      participant_type: 'Pediatric',
+      intervention: 'Screening',
+      study_group: '',
+      collections: [
+        {
+          collection: 'c2.0',
+          latest: true,
+          releaseStage: 'consortium',
+          name: 'bundles/motrpac_human-screening-ped_phenotype.zip',
+          size: '9.6 KB',
+        },
+      ],
+      description:
+        'Screening pediatrics phenotypic data, excluding ancillary studies (bundle size: 9.6 KB).',
     },
   ],
 };

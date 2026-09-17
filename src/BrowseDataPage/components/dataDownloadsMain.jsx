@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import BrowseDataFilter from '../browseDataFilter';
-import BundleDatasets from './bundleDatasets';
-import BundleDataTypes from './bundleDataTypes';
-import actions from '../browseDataActions';
 import SelectiveDataDownloads from './selectiveDataDownloads';
-import SelectiveDataDownloadsCard from './selectiveDataDownloadsCard';
+import StudyDataExplorer from './studyDataExplorer';
 import ExternalLink from '../../lib/ui/externalLink';
+import { resolveScope } from '../../lib/collectionScope';
+import actions from '../browseDataActions';
 
 function DataDownloadsMain({
   profile = {},
@@ -22,13 +21,36 @@ function DataDownloadsMain({
   surveySubmitted,
   downloadedData,
 }) {
-  const dispatch = useDispatch();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   // anonymous user or authenticated user
   const userType = profile.user_metadata && profile.user_metadata.userType;
 
-  if (location.pathname.startsWith('/data-download/file-browser')) {
+  // The URL is the source of truth for what is loaded, so a reload, a bookmark
+  // or the browser's back button all reconstruct the same view.
+  const scope = resolveScope(location, userType);
+  // A primitive key so the effect compares by value, not array identity.
+  const collectionsKey = scope.prefixes.join(',');
+  const selectionKey = scope.selected.join(',');
+  const loadedKey = useSelector((state) => state.browseData.loadedCollections.join(','));
+
+  useEffect(() => {
+    // The picker navigates *and* dispatches, so skip the reload when the store
+    // already holds exactly what the URL is asking for.
+    if (collectionsKey && collectionsKey !== loadedKey) {
+      dispatch(
+        actions.selectCollections(
+          collectionsKey.split(','),
+          selectionKey ? selectionKey.split(',') : []
+        )
+      );
+    }
+  }, [collectionsKey, selectionKey, loadedKey, dispatch]);
+
+  // An empty scope inside the file browser means the URL named collections this
+  // user may not see; falling through to the download page is the destination.
+  if (scope.prefixes.length) {
     return (
       <SelectiveDataDownloads
         profile={profile}
@@ -39,7 +61,7 @@ function DataDownloadsMain({
         handleDownloadRequest={handleDownloadRequest}
         downloadRequestResponse={downloadRequestResponse}
         waitingForResponse={waitingForResponse}
-        selectedData={location.state.selectedData}
+        selectedData={collectionsKey}
       />
     );
   }
@@ -60,15 +82,19 @@ function DataDownloadsMain({
             <h5 className="border-bottom mt-1 mb-2 pb-2">Data types available to download:</h5>
             <ul className="pl-3">
               <li>
-                &quot;Raw&quot; results including assay-specific quantitative results, experiment
+                <span className="font-weight-bold">Quant-ID</span> (Quantification &amp;
+                Identification) - assay-specific quantitative results, experiment
                 metadata and QA/QC reports
               </li>
               <li>
-                &quot;Analysis&quot; results including normalized data tables, differential analysis
-                results (e.g., log2 fold-change, p-values, adjusted p-values), and
-                cross-platform merged metabolomics data tables for named metabolites
+                <span className="font-weight-bold">Analysis</span> - normalized data
+                tables, differential analysis results (e.g., log2 fold-change, p-values,
+                adjusted p-values), and cross-platform merged metabolomics data tables
+                for named metabolites
               </li>
-              <li>Phenotypic data</li>
+              <li>
+                <span className="font-weight-bold">Phenotype</span> - phenotypic data
+              </li>
             </ul>
             <p>
               <span className="font-weight-bold">Note:</span> Raw files are not
@@ -78,6 +104,13 @@ function DataDownloadsMain({
               specify the relevant tissues/assays if you would like to get access
               to the raw files.
             </p>
+            {userType && userType === 'internal' && (
+              <p className="mb-0">
+                <span className="font-weight-bold">GCP bucket:</span> reveals the
+                Google Cloud Storage path for a data type, to copy into{' '}
+                <code>gsutil</code>. Requires separate Google Cloud authorization.
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -89,7 +122,7 @@ function DataDownloadsMain({
       {renderPageTitle()}
       <div className="browse-data-summary-container row mb-4">
         <div className="col-12">
-          <div className="lead mb-2">
+          <div className="mb-2">
             Explore and download MoTrPAC multi-omics datasets, including phenotype, quantitative
             and summary-level results of molecular changes from exercise across multiple tissues. Currently
             available under the
@@ -107,264 +140,72 @@ function DataDownloadsMain({
                 )
               </li>
               <li>
-                <span className="font-weight-bold">Acute exercise in human sedentary adults study</span> -
+                <span className="font-weight-bold">Acute exercise in human sedentary adults study (pre-suspension)</span> -
                 {' '}
                 <Link to="/search">summary-level results</Link>
                 {' '}
                 representing a subset of participants who underwent an acute exercise bout before the study
-                was suspended due to COVID-19.
+                was suspended due to COVID-19. Please refer to the
+                {' '}
+                <ExternalLink
+                  to="https://d1yw74buhe0ts0.cloudfront.net/docs/MoTrPAC_Human_PreSuspension_Sed_Adu_Analysis_Data_Release_Notes.pdf"
+                  label="Data Release Notes"
+                />
+                {' '}
+                for more information on this dataset. Please obtain access to the individual-level human data by applying through dbGaP.
               </li>
             </ul>
           </div>
             {userType && userType === 'internal' && (
-              <p className="lead mb-2">
+              <p className="mb-2">
                 The acute exercise in young adult rats study datasets are currently available to consortium
                 members only in the early preview phase.
               </p>
             )}
-          <p className="lead mb-2">
-            For study designs, protocols, and updates on upcoming data releases, visit our
+          <p className="mb-2">
+            For study designs, protocols, data updates, and release notes, visit our
             {' '}
             <Link to="/project-overview">Project Overview</Link>
             {' '}
-            page.
+            and
+            {' '}
+            <Link to="/knowledge-center">Knowledge Center</Link>
+            {' '}
+            pages.
           </p>
         </div>
         <div className="col-12 mt-4">
-          <h2>Study Data</h2>
+          <h2>Find MoTrPAC data by study or by release</h2>
           <p>
-            Browse and select the data of your interest to download by tissue,
-            ome, or assay types. It is recommended to download the phenotypic data
-            along with the omics data for a comprehensive analysis. Learn more
-            about the
+            Every MoTrPAC dataset lives in a{' '}
+            <span className="font-weight-bold">collection</span>{' '}
+            — a versioned package of Quantification & Identification, Analysis, or
+            Phenotype data for one study. Start from a study to see everything it
+            offers, or browse by release stage to see what is public,
+            consortium-only, or still in early access. It is recommended to download
+            the phenotypic data along with the omics data for a comprehensive
+            analysis. Learn more about the
             {' '}
             <Link to="/technical-guides/phenotype">phenotypic data</Link>
             {' '}
             in MoTrPAC studies.
           </p>
-          {userType && userType === 'internal' && (
-            <div className="bd-callout bd-callout-primary">
-              <span className="font-weight-bold">
-                Data from the endurance trained young adult rats study are now
-                accessible in both v1.0 (RN6) and v2.0 (RN7).
+          {/* Applies to every collection on this page, not to one study's
+              bundles, which is where it used to live. */}
+          <div className="data-updates-notice bd-callout bd-callout-primary m-0 mb-4">
+            <span className="font-weight-bold">
+              <i className="bi bi-envelope-paper mr-2 text-primary" />
+              <span>
+                Be sure to{' '}
+                <ExternalLink
+                  to="https://docs.google.com/forms/d/e/1FAIpQLScjGxwsHDDsE4P4j1VNvIUR73cEyh9SJrofxuQyHqucl0GhBg/viewform"
+                  label="subscribe"
+                />
+                {' '}to receive notifications about future MoTrPAC data updates!
               </span>
-            </div>
-          )}
-          <div className="card-deck mt-4 mb-3 text-center">
-            <SelectiveDataDownloadsCard
-              cardIcon="pest_control_rodent"
-              cardTitle="Young Adult Rats"
-              dataSelectHandler={() => dispatch(actions.selectPass1B06Data())}
-              selectedData="pass1b-06"
-              cssSelector={
-                !userType || (userType && userType === 'external')
-                  ? 'external-access'
-                  : ''
-              }
-            >
-              <h3 className="card-title phase-card-title">
-                Endurance Training
-              </h3>
-              <ul className="list-unstyled mt-3 mb-4 text-muted">
-                <li>Male and female animals</li>
-                <li>20 tissues</li>
-                <li>29 assays across different omes</li>
-                <li>5 time points</li>
-              </ul>
-            </SelectiveDataDownloadsCard>
-            {/* pass1a/1c-06 data set */}
-            {userType && userType === 'internal' && (
-              <SelectiveDataDownloadsCard
-                cardIcon="pest_control_rodent"
-                cardTitle="Young Adult Rats"
-                dataSelectHandler={() => dispatch(actions.selectPass1A06Data())}
-                selectedData="pass1a-06"
-              >
-                <h3 className="card-title phase-card-title">Acute Exercise</h3>
-                <ul className="list-unstyled mt-3 mb-4 text-muted">
-                  <li>Male and female animals</li>
-                  <li>21 tissues</li>
-                  <li>30 assays across different omes</li>
-                  <li>7 time points</li>
-                </ul>
-              </SelectiveDataDownloadsCard>
-            )}
-            {/* human-precovid-sed-adu data set */}
-            <SelectiveDataDownloadsCard
-              cardIcon="person"
-              cardTitle="Human Sedentary Adults"
-              dataSelectHandler={() => userType && userType === 'internal' ? dispatch(actions.selectHumanPreCovidSedAduData()) : dispatch(actions.selectHumanPreCovidSedAduExternalData())}
-              selectedData="human-precovid-sed-adu"
-              cssSelector={
-              !userType || (userType && userType === 'external')
-                ? 'external-access'
-                : ''
-              }
-              >
-              <h3 className="card-title phase-card-title">
-                Acute Exercise
-              </h3>
-              <ul className="list-unstyled mt-3 mb-4 text-muted">
-                <li>Pre-Suspension</li>
-                <li>4 tissues</li>
-                <li>22 assays across different omes</li>
-                {import.meta.env.VITE_DATA_RELEASE_README ? (
-                  <li>
-                    <a href={import.meta.env.VITE_DATA_RELEASE_README} target="_blank" rel="noopener noreferrer">
-                      <i className="bi bi-file-earmark-fill mr-1" />
-                      <span>Data Release Notes</span>
-                    </a>
-                  </li>
-                ) : null}
-              </ul>
-            </SelectiveDataDownloadsCard>
+            </span>
           </div>
-        </div>
-        {/* Pre-bundled data sets */}
-        <div className="col-12 mt-2">
-          <h2>Pre-bundled Data Sets</h2>
-          {/* nav tabs */}
-          <ul className="nav nav-tabs" id="bundleDatasetsTab" role="tablist">
-            <li className="nav-item font-weight-bold" role="presentation">
-              <a
-                className={`nav-link ${!userType || userType === 'external' ? 'active' : ''}`}
-                id="pass1b_06_bundle_datasets_tab"
-                data-toggle="pill"
-                href="#pass1b_06_bundle_datasets"
-                role="tab"
-                aria-controls="pass1b_06_bundle_datasets"
-                aria-selected={!userType || userType === 'external' ? 'true' : 'false'}
-              >
-                Endurance Training in Rats
-              </a>
-            </li>
-            {userType && userType === 'internal' && (
-              <li className="nav-item font-weight-bold" role="presentation">
-                <a
-                  className="nav-link"
-                  id="pass1a_06_bundle_datasets_tab"
-                  data-toggle="pill"
-                  href="#pass1a_06_bundle_datasets"
-                  role="tab"
-                  aria-controls="pass1a_06_bundle_datasets"
-                  aria-selected="false"
-                >
-                  Acute Exercise in Rats
-                </a>
-              </li>
-            )}
-            <li className="nav-item font-weight-bold" role="presentation">
-              <a
-                className="nav-link"
-                id="human_sed_adu_bundle_datasets_tab"
-                data-toggle="pill"
-                href="#human_sed_adu_bundle_datasets"
-                role="tab"
-                aria-controls="human_sed_adu_bundle_datasets"
-                aria-selected="false"
-              >
-                Acute Exercise in Humans
-              </a>
-            </li>
-            {userType && userType === 'internal' && (
-              <li className="nav-item font-weight-bold" role="presentation">
-                <a
-                  className="nav-link active"
-                  id="human_clinical_data_bundle_datasets_tab"
-                  data-toggle="pill"
-                  href="#human_clinical_data_bundle_datasets"
-                  role="tab"
-                  aria-controls="human_clinical_data_bundle_datasets"
-                  aria-selected="true"
-                >
-                  Clinical Data in Humans
-                </a>
-              </li>
-            )}
-          </ul>
-          {/* tab panes */}
-          <div className="tab-content mt-3">
-            <div
-              className={`tab-pane fade ${!userType || userType === 'external' ? 'show active' : ''}`}
-              id="pass1b_06_bundle_datasets"
-              role="tabpanel"
-              aria-labelledby="pass1b_06_bundle_datasets_tab"
-            >
-              <BundleDatasets
-                profile={profile}
-                bundleDatasets={BundleDataTypes.pass1b_06}
-                surveySubmitted={surveySubmitted}
-                downloadedData={downloadedData}
-              />
-            </div>
-            {userType && userType === 'internal' && (
-              <div
-                className="tab-pane fade"
-                id="pass1a_06_bundle_datasets"
-                role="tabpanel"
-                aria-labelledby="pass1a_06_bundle_datasets_tab"
-              >
-                <BundleDatasets
-                  profile={profile}
-                  bundleDatasets={BundleDataTypes.pass1a_06}
-                  surveySubmitted={surveySubmitted}
-                  downloadedData={downloadedData}
-                />
-              </div>
-            )}
-            <div
-              className="tab-pane fade"
-              id="human_sed_adu_bundle_datasets"
-              role="tabpanel"
-              aria-labelledby="human_sed_adu_bundle_datasets_tab"
-            >
-              <BundleDatasets
-                profile={profile}
-                bundleDatasets={userType && userType === 'internal' ? BundleDataTypes.human_sed_adu_internal : BundleDataTypes.human_sed_adu_external}
-                surveySubmitted={surveySubmitted}
-                downloadedData={downloadedData}
-              />
-              <div className="bd-callout bd-callout-primary mt-3">
-                <span className="font-weight-bold">
-                  <i className="bi bi-envelope-paper mr-2 text-primary" />
-                  <span>
-                    Be sure to{' '}
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScjGxwsHDDsE4P4j1VNvIUR73cEyh9SJrofxuQyHqucl0GhBg/viewform" target="_blank" rel="noopener noreferrer">
-                      subscribe
-                    </a>{' '}
-                    to receive notifications about future data updates for the acute exercise in human sedentary adults study!
-                  </span>
-                </span>
-              </div>
-            </div>
-            {userType && userType === 'internal' && (
-              <div
-                className="tab-pane fade show active"
-                id="human_clinical_data_bundle_datasets"
-                role="tabpanel"
-                aria-labelledby="human_clinical_data_bundle_datasets_tab"
-              >
-                <BundleDatasets
-                  profile={profile}
-                  bundleDatasets={BundleDataTypes.human_clinical_data_internal}
-                  surveySubmitted={surveySubmitted}
-                  downloadedData={downloadedData}
-                />
-                <div className="bd-callout bd-callout-primary mt-3">
-                  <span className="font-weight-bold">
-                    <i className="bi bi-file-earmark-fill mr-2 text-primary" />
-                    <span>
-                      Learn more about the sedentary adults (post-suspension) and low active pediatrics clinical data in the{' '}
-                      <ExternalLink
-                        to="https://docs.google.com/document/d/1cFPnB1cBKimUJo-5hwnq8yKDJ5DWgdDj4Y0pvl2UZYw/edit?tab=t.0#heading=h.7tm379xtz7sk"
-                        label="Clinical Data Release Notes"
-                      />
-                    </span>
-                  </span>
-                </div>
-              </div>
-            )}
-          </div>
+          <StudyDataExplorer userType={userType} profile={profile} />
         </div>
         {/* Additional data information */}
         {userType && userType === 'internal' ? (

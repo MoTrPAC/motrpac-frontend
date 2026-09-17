@@ -1,6 +1,5 @@
 import React, { useMemo, useEffect, forwardRef, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import {
   useTable,
   useFilters,
@@ -32,6 +31,14 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   return <input type="checkbox" ref={resolvedRef} {...rest} />;
 });
 
+/** What the column header announces to assistive technology. */
+function ariaSort(column) {
+  if (!column.isSorted) {
+    return 'none';
+  }
+  return column.isSortedDesc ? 'descending' : 'ascending';
+}
+
 /**
  * Sets up table column headers and renders the table component
  *
@@ -44,14 +51,8 @@ function BrowseDataTable({
   downloadRequestResponse,
   profile = {},
 }) {
-  const dataDownload = useSelector((state) => state.browseData || {});
-  const userType = profile?.user_metadata?.userType;
-
   // Define table column headers
-  const columns = useMemo(
-    () => tableColumns(userType, dataDownload.pass1b06DataSelected),
-    [userType, dataDownload.pass1b06DataSelected]
-  );
+  const columns = useMemo(() => tableColumns(), []);
   const data = useMemo(() => transformData(filteredFiles), [filteredFiles]);
   return (
     <DataTable
@@ -118,6 +119,10 @@ function DataTable({
         // Let's make a column for selection
         {
           id: 'selection',
+          // Checkboxes, not data: there is nothing to order by, and the header
+          // is itself a control -- without this, selecting every row would also
+          // re-sort the table.
+          disableSortBy: true,
           // The header can use the table's getToggleAllRowsSelectedProps method
           // to render a checkbox
           Header: ({ getToggleAllRowsSelectedProps }) => (
@@ -208,12 +213,38 @@ function DataTable({
                     <tr key={key} {...restHeaderGroups} className="table-head">
                       {headerGroup.headers.map((column) => {
                         const { key, ...rest } = column.getHeaderProps();
+                        // The sort control is a real <button>, not a click
+                        // handler on the <th>: a bare onClick is reachable by
+                        // mouse only, so sorting was unavailable to keyboard
+                        // and screen-reader users. `aria-sort` on the cell is
+                        // what announces the current order.
                         return (
-                          <th key={key} {...rest}>
-                          <div className="d-flex align-items-center justify-content-between">
-                            {column.render('Header')}
-                          </div>
-                        </th>
+                          <th
+                            key={key}
+                            {...rest}
+                            aria-sort={column.canSort ? ariaSort(column) : undefined}
+                          >
+                            {column.canSort ? (
+                              <button
+                                type="button"
+                                className="column-sort-toggle d-flex align-items-center justify-content-between"
+                                {...column.getSortByToggleProps({ title: '' })}
+                              >
+                                {column.render('Header')}
+                                <span>
+                                  {column.isSorted
+                                    ? column.isSortedDesc
+                                      ? <i className="material-icons" aria-hidden="true">expand_more</i>
+                                      : <i className="material-icons" aria-hidden="true">expand_less</i>
+                                    : <i className="material-icons" aria-hidden="true">unfold_more</i>}
+                                </span>
+                              </button>
+                            ) : (
+                              <div className="d-flex align-items-center justify-content-between">
+                                {column.render('Header')}
+                              </div>
+                            )}
+                          </th>
                         );
                       })}
                     </tr>

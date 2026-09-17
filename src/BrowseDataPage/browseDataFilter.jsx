@@ -1,136 +1,79 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import browseDataFilters, { tissues, omes, referenceGenomes } from '../lib/browseDataFilters';
-import assayList from '../lib/assayList';
+import { FACETS, facetOptions } from '../lib/facetVocabulary';
+import StudyFilterModule from './components/studyFilterModule';
+import CollectionFilterModule from './components/collectionFilterModule';
+import { SpeciesLegend, SpeciesLegendTooltip, SpeciesTags } from './components/speciesTags';
+import useCollectionSelection from './useCollectionSelection';
 
 import '@styles/browseData.scss';
 import '@styles/tooltip.scss';
 
 function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name: [], category: [], reference_genome: [] }, onChangeFilter, onResetFilters }) {
-  const dataDownload = useSelector((state) => state.browseData);
   const profile = useSelector((state) => state.auth.profile);
   const userType = profile?.user_metadata?.userType;
+  const {
+    studyCodes,
+    selected: selectedCollections,
+    entitled,
+    prefixes,
+    reset: resetScope,
+  } = useCollectionSelection(userType);
 
-  const fileFilters = [...browseDataFilters];
-  // When human-precovid-sed-adu data tab is selected
-  if (dataDownload.humanPrecovidSedAduDataSelected) {
-    // Remove category only if logged-in user is internal
-    if (userType && userType === 'internal') {
-      fileFilters.splice(4, 1);
-    } else {
-      // Remove category and metadata filters if user is not internal
-      fileFilters.splice(4);
+  // Study and Collection are modules in this panel, so "Reset filters" clears
+  // them too. Leaving either set after a reset read as the button being broken.
+  // Clearing means "every study, every collection", not "none".
+  function handleReset() {
+    if (studyCodes.length || selectedCollections.length) {
+      resetScope();
     }
+    onResetFilters();
   }
 
-  fileFilters.forEach((item) => {
-    if (item.keyName === 'reference_genome') {
-      if (dataDownload.pass1b06DataSelected) {
-        // Filter out RN7 for non-internal users
-        item.filters = userType === 'internal' 
-          ? referenceGenomes.pass1b_06 
-          : [];
-      } else if (dataDownload.pass1a06DataSelected) {
-        item.filters = referenceGenomes.pass1a_06;
-      } else if (dataDownload.humanPrecovidSedAduDataSelected) {
-        item.filters = referenceGenomes.human_sed_adu;
-      }
-    }
-    if (item.keyName === 'tissue_name') {
-      if (dataDownload.pass1b06DataSelected) {
-        item.filters = tissues.pass1b_06;
-      }
-      if (dataDownload.pass1a06DataSelected) {
-        item.filters = tissues.pass1a_06;
-      }
-      if (dataDownload.humanPrecovidSedAduDataSelected) {
-        item.filters = tissues.human_sed_adu;
-      }
-    }
-    if (item.keyName === 'omics') {
-      if (dataDownload.pass1b06DataSelected) {
-        item.filters = omes.pass1b_06;
-      }
-      if (dataDownload.pass1a06DataSelected) {
-        item.filters = omes.pass1a_06;
-      }
-      if (dataDownload.humanPrecovidSedAduDataSelected) {
-        item.filters = omes.human_sed_adu;
-      }
-    }
-    if (item.keyName === 'assay') {
-      if (dataDownload.pass1b06DataSelected) {
-        item.filters = assayList.pass1b_06;
-      }
-      if (dataDownload.pass1a06DataSelected) {
-        item.filters = assayList.pass1a_06;
-      }
-      if (dataDownload.humanPrecovidSedAduDataSelected) {
-        item.filters = assayList.human_sed_adu;
-      }
-    }
-  });
-  const filters = fileFilters
-    .filter((item) => {
-      // Hide reference genome filter if no options available
-      if (item.keyName === 'reference_genome' && (!item.filters || item.filters.length === 0)) {
-        return false;
-      }
-      return true;
-    })
-    .map((item) => (
-      <div key={item.name} className="card filter-module mb-4">
-        <div className="card-header font-weight-bold d-flex align-items-center">
-          <div>{item.name}</div>
-          {item.keyName === 'category' && item.name === 'Category' && (
-            <div className="data-filter-info-icon-wrapper d-flex align-items-center">
-              <i className="material-icons data-filter-info-icon ml-1">info</i>
-              <span className="tooltip-on-right" id="data-filter-info-tooltip">
-                <span>
-                  <strong>Analysis</strong> - Differential analysis and normalized
-                  data tables.
-                  <br />
-                  <strong>Results</strong> - Quantitative results,
-                  experimental/sample metadata, and QA/QC reports.
-                </span>
-                <i />
-              </span>
-            </div>
-          )}
-          {item.keyName === 'reference_genome' && (
-            <a
-              href={import.meta.env.VITE_RN7_DATA_DOC_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ml-auto pass1b-06-version-doc-link d-flex align-items-center"
-            >
-              <span className="font-weight-normal mr-1">Documentation</span>
-              <i className="material-icons">open_in_new</i>
-            </a>
-          )}
-        </div>
-        <div className="card-body">
-          {item.filters.map((filter) => {
-            const isActiveFilter =
-              activeFilters[item.keyName] &&
-              activeFilters[item.keyName].indexOf(filter) > -1;
-            return (
-              <button
-                key={filter}
-                type="button"
-                className={`btn filterBtn ${
-                  isActiveFilter ? 'activeFilter' : ''
-                }`}
-                onClick={() => onChangeFilter(item.keyName, filter)}
-              >
-                {filter}
-              </button>
-            );
-          })}
+  // Options come from the built vocabulary, not from the loaded files. Deriving
+  // them from what was loaded made the panel reflow on every study toggle and
+  // hid the rest of the corpus; deriving them from the hand-written per-study
+  // lists that preceded it was worse, since those had drifted from the data in
+  // both directions. `entitled` decides which options exist, `prefixes` which
+  // are enabled -- an option no loaded collection can match stays visible but
+  // cannot be clicked into an empty table.
+  const facets = FACETS.map((facet) => ({
+    ...facet,
+    options: facetOptions(facet.keyName, entitled, prefixes),
+  })).filter((facet) => facet.options.length > 0);
+
+  const filters = facets.map((facet) => (
+    <div key={facet.name} className="card filter-module mb-4">
+      <div className="card-header font-weight-bold d-flex align-items-center">
+        <div className="card-header-label">
+          <span>{facet.name}</span>
+          <SpeciesLegend />
         </div>
       </div>
-    ));
+      <div className="card-body">
+        {facet.options.map((option) => {
+          const isActiveFilter =
+            activeFilters[facet.keyName]
+            && activeFilters[facet.keyName].indexOf(option.value) > -1;
+          return (
+            <button
+              key={option.value}
+              type="button"
+              disabled={!option.enabled}
+              aria-pressed={isActiveFilter}
+              className={`btn filterBtn ${isActiveFilter ? 'activeFilter' : ''}`}
+              onClick={() => onChangeFilter(facet.keyName, option.value)}
+            >
+              {option.value}
+              <SpeciesTags species={option.species} />
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  ));
+
   return (
     <div className="col-md-3 browse-data-filter-group">
       <div className="browse-data-filter-group-header d-flex justify-content-between align-items-center mb-3">
@@ -138,11 +81,14 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
         <button
           type="button"
           className="btn btn-secondary btn-sm"
-          onClick={onResetFilters}
+          onClick={handleReset}
         >
           Reset filters
         </button>
       </div>
+      <SpeciesLegendTooltip />
+      <StudyFilterModule userType={userType} />
+      <CollectionFilterModule userType={userType} />
       {filters}
     </div>
   );

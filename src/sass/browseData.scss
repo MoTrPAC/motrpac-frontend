@@ -150,18 +150,6 @@
     }
   }
 
-  .selective-data-downloads-card {
-    .card-header {
-      .material-icons {
-        font-size: 1.85rem;
-      }
-    }
-
-    &.external-access {
-      max-width: 22rem;
-    }
-  }
-
   .data-download-selective-files {
     /* tab UI temporary removed
     .nav.nav-tabs {
@@ -173,35 +161,6 @@
       a {
         text-decoration: none;
         width: fit-content;
-      }
-    }
-
-    .show-data-download-info-link {
-      .btn.btn-link {
-        font-size: inherit;
-        font-weight: 500;
-        color: #007bff;
-        padding: 0;
-
-        &:focus,
-        &:active {
-          box-shadow: none;
-          outline: none;
-          text-decoration: none;
-        }
-      }
-
-      .dropdown-menu {
-        background-color: #fff;
-        border: solid 1px colors.$gray-semi-transparent;
-        box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.1);
-        font-size: 0.9rem;
-        padding: 0.75rem;
-        width: 400px;
-      }
-
-      .dropdown-toggle::after {
-        display: none;
       }
     }
   }
@@ -299,9 +258,35 @@
   }
 
   .browse-data-filter-group {
+    // Which species a value belongs to. Same markup, class names and colours as
+    // the search feature's filters (see search.scss), so the tags mean the same
+    // thing on both pages.
+    //
+    // Scoped to the whole panel rather than to `.filterBtn`: the Collection
+    // picker badges its study *headings* instead of its buttons, since a study
+    // is one species and repeating it down the group says nothing new.
+    .filter-species-tag {
+      &.badge-rat {
+        background-color: colors.$accent-yellow-shade-light;
+        color: #000;
+      }
+
+      &.badge-human {
+        background-color: colors.$primary-blue-shade-light;
+        color: #fff;
+      }
+    }
+
     .filter-module {
       .card-header {
         padding: 0.4rem 0.85rem;
+
+        // Name and legend icon on one line, so the icon sits with the text
+        // rather than against the Clear button on the far side of the header.
+        .card-header-label {
+          display: flex;
+          align-items: center;
+        }
 
         .data-filter-info-icon {
           color: colors.$gray;
@@ -330,8 +315,11 @@
         padding: 0.2rem 0.4rem;
         white-space: normal;
 
+        // A value no in-scope study can match. Kept on screen so the panel does
+        // not reflow as studies are toggled, and so the corpus stays legible.
         &:disabled {
           cursor: not-allowed;
+          opacity: 0.5;
         }
       }
 
@@ -382,6 +370,24 @@
     .material-icons {
       color: #888;
     }
+
+    // The sort control is a <button> so it can be reached by keyboard. Stripped
+    // back to look like the header text it replaced -- everything here is
+    // undoing a browser default, except the focus ring, which is the point.
+    .column-sort-toggle {
+      background: none;
+      border: 0;
+      color: inherit;
+      font: inherit;
+      padding: 0;
+      text-align: left;
+      width: 100%;
+
+      &:focus-visible {
+        outline: 2px solid colors.$dblue;
+        outline-offset: 2px;
+      }
+    }
   }
 
   tbody {
@@ -403,14 +409,6 @@
 
       &.reference_genome.not-available {
         background-color: #f3f3f3;
-      }
-
-      &.category.Phenotype {
-        background-color: #f3f3f3;
-
-        span {
-          display: none;
-        }
       }
     }
   }
@@ -515,5 +513,553 @@
 
   &.show {
     display: block;
+  }
+}
+
+.study-collection-kind-cell {
+  &:not(:last-child) {
+    border-right: 1px solid #dee2e6;
+  }
+}
+
+// Collection family chip - the lettered, colour-coded Quant-ID / Analysis /
+// Phenotype label shared by the study collection and data release views.
+.kind-chip {
+  font-size: 0.85rem;
+
+  .kind-chip-letter {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 0.35rem;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 900;
+    flex: none;
+  }
+
+  &.kind-chip-quantID {
+    color: #4544a5;
+
+    .kind-chip-letter {
+      background-color: #4544a5;
+    }
+  }
+
+  &.kind-chip-analysis {
+    color: #0d7d76;
+
+    .kind-chip-letter {
+      background-color: #0d7d76;
+    }
+  }
+
+  &.kind-chip-phenotype {
+    color: #93407c;
+
+    .kind-chip-letter {
+      background-color: #93407c;
+    }
+  }
+}
+
+// Shared collection display vocabulary - used by both the study collection
+// cards and the data release cards.
+.stage-badge {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 0.55rem;
+
+  &.stage-badge-public {
+    background-color: #e4f5ea;
+    color: #12784a;
+    border: 1px solid #b9e2c8;
+  }
+
+  &.stage-badge-consortium {
+    background-color: #e8f1fd;
+    color: #1f5fb0;
+    border: 1px solid #c2daf6;
+  }
+
+  // Violet rather than amber: amber is already the Endurance training design
+  // badge, and both pills can sit on the same card.
+  &.stage-badge-early {
+    background-color: #f4edfc;
+    color: #6b3fa0;
+    border: 1px solid #dcc9f0;
+  }
+}
+
+.genome-badge {
+  background-color: #f1f4f6;
+  border: 1px solid #dde5e9;
+  color: #38474f;
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.species-badge {
+  background-color: #fff;
+  border: 1px solid #dde5e9;
+  color: #38474f;
+  font-size: 0.66rem;
+  letter-spacing: 0.07em;
+  padding: 0.25rem 0.5rem;
+
+  .material-icons {
+    font-size: 0.9rem;
+  }
+}
+
+.design-badge {
+  font-size: 0.72rem;
+  padding: 0.3rem 0.6rem;
+
+  &.design-badge-acute {
+    background-color: #eff7e6;
+    color: #548f2c;
+    border: 1px solid #d3e8bd;
+  }
+
+  &.design-badge-endurance {
+    background-color: #f8f0e7;
+    color: #96602c;
+    border: 1px solid #e6d2ba;
+  }
+}
+
+.collection-label,
+.collection-version {
+  font-size: 0.9rem;
+}
+
+.latest-tag {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.earlier-collections-heading {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+}
+
+.other-versions-list {
+  background-color: #f5f8f9;
+  border: 1px solid #dde5e9;
+}
+
+// Study collections view
+.study-collection-card {
+  background-color: #fff;
+  border: 1px solid #dde5e9;
+  border-top-width: 4px;
+  overflow: hidden;
+
+  &:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+
+  &.study-collection-card-acute {
+    border-top-color: #548f2c;
+  }
+
+  &.study-collection-card-endurance {
+    border-top-color: #96602c;
+  }
+
+  .study-collection-head {
+    padding: 1.125rem 1.375rem 1rem;
+    border-bottom: 1px solid #edf2f4;
+  }
+
+  .study-collection-name {
+    font-size: 1.15rem;
+  }
+
+  .study-collection-code {
+    font-size: 0.8rem;
+  }
+
+  .study-collection-desc {
+    font-size: 0.85rem;
+  }
+
+  .study-collection-badges {
+    flex: none;
+    white-space: nowrap;
+  }
+
+  .study-collection-kind-cell {
+    &.is-empty {
+      background-color: #fbfcfd;
+    }
+
+    .empty-msg {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+.data-release-section {
+  background-color: #fff;
+  border: 1px solid #dde5e9;
+  border-top-width: 4px;
+  overflow: hidden;
+
+  &:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+
+  &.data-release-section-public {
+    border-top-color: #12784a;
+  }
+
+  &.data-release-section-consortium {
+    border-top-color: #1f5fb0;
+  }
+
+  .data-release-head {
+    padding: 1.125rem 1.375rem;
+    border-bottom: 1px solid #edf2f4;
+  }
+
+  .data-release-icon-badge {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.7rem;
+    font-size: 0.8rem;
+    font-weight: 900;
+    flex: none;
+  }
+
+  .data-release-icon-badge-public {
+    background-color: #e4f5ea;
+    color: #12784a;
+  }
+
+  .data-release-icon-badge-consortium {
+    background-color: #e8f1fd;
+    color: #1f5fb0;
+  }
+
+  .data-release-name {
+    font-size: 1.125rem;
+  }
+
+  .data-release-desc {
+    max-width: 70ch;
+    font-size: 0.8125rem;
+  }
+
+  .data-release-count {
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .data-release-study-row {
+    padding: 1rem 1.375rem;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #edf2f4;
+    }
+  }
+
+  .data-release-study-name {
+    font-size: 0.95rem;
+  }
+
+  .data-release-study-code {
+    font-size: 0.8rem;
+  }
+
+  .data-release-kind-cell {
+    background-color: #fcfdfd;
+    border: 1px solid #dde5e9;
+  }
+}
+
+.study-collection-kind-cell,
+.data-release-kind-cell,
+.bundle-dataset-cell {
+  .other-versions {
+    .btn.btn-link {
+      font-size: inherit;
+      font-weight: 500;
+      color: #333;
+      padding: 0;
+
+      &:focus,
+      &:active {
+        box-shadow: none;
+        outline: none;
+        text-decoration: none;
+      }
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    .other-version-list-item {
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #dee2e6;
+      }
+    }
+  }
+}
+// Cross-study phenotype collections (human-eqc and friends). They are not owned
+// by any one study, so the prototype sets them below the study cards under their
+// own heading rather than mixing them in.
+.supporting-collections-panel {
+  h2 {
+    font-weight: 700;
+  }
+
+  .supporting-collections-intro {
+    color: #6c757d;
+    margin-bottom: 1.25rem;
+  }
+}
+
+
+// Collection picker in the file browser's filter panel. It replaced the Genome
+// Assembly facet, which could only match everything or nothing once the browser
+// was scoped to a single collection.
+.collection-filter-module {
+  .collection-filter-clear {
+    font-size: 0.8rem;
+  }
+
+  .collection-filter-genome {
+    font-size: 0.7rem;
+    opacity: 0.75;
+  }
+
+  // Disabled here means either "still loading" or "its study is not in scope";
+  // the second is the common case, so the cursor says unavailable, not busy.
+  .filterBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// A study that runs both the acute and endurance arms - the Human Main Study -
+// is not described by either single-arm label.
+.design-badge.design-badge-combined {
+  background-color: #eef1fb;
+  color: #3f51a8;
+  border: 1px solid #cfd6ef;
+}
+
+.study-collection-card.study-collection-card-combined {
+  border-top-color: #3f51a8;
+}
+
+// Released, but not served by the Data Hub -- distinct from Pending, which
+// means the data does not exist yet.
+.restricted-badge {
+  background-color: #fdf3e3;
+  color: #96602c;
+  border: 1px solid #efdcc0;
+  font-size: 0.7rem;
+  padding: 0.25rem 0.55rem;
+}
+
+// A kind that applies to a study but has no released collection yet. Cards for
+// phenotype-only collections omit the kind entirely instead of showing this.
+.pending-badge {
+  background-color: #f1f1f1;
+  color: #6c757d;
+  border: 1px solid #e0e0e0;
+  font-size: 0.7rem;
+  padding: 0.25rem 0.55rem;
+}
+
+// A kind that holds several independent series - Human Main Study's phenotype
+// arrives as separate sub-collections, each with its own version lineage.
+.study-collection-kind-cell {
+  .kind-cell-series + .kind-cell-series {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ececec;
+  }
+
+}
+
+
+// "EA / CR" - a collection whose datasets were released at different times.
+.stage-badge.stage-badge-varies {
+  letter-spacing: 0.02em;
+}
+
+// Several series inside one release kind cell.
+.data-release-kind-cell {
+  .data-release-series + .data-release-series {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e6ebee;
+  }
+}
+
+// Identity of one sub-collection within a kind, shared by both card types.
+.collection-series-head {
+  margin-top: 0.75rem;
+
+  .collection-series-name {
+    font-size: 0.85rem;
+  }
+
+  .collection-series-code {
+    font-size: 0.75rem;
+    margin-top: 0.1rem;
+  }
+
+  .collection-series-desc {
+    font-size: 0.78rem;
+    margin-top: 0.25rem;
+  }
+}
+
+// The view switcher matches the bundle datasets tab strip. Bootstrap's nav-tabs
+// styling assumes anchors; these are buttons, which carry a default background
+// and a focus outline that would break the strip.
+.study-data-explorer-tabs {
+  .nav-link {
+    background-color: transparent;
+    cursor: pointer;
+    // Buttons do not inherit font-weight from the `li` the way the bundle
+    // tabs' anchors do, so the bold has to be set here.
+    font-weight: 700;
+  }
+
+  .nav-link:not(.active) {
+    color: #007bff;
+  }
+
+  .nav-link:focus {
+    outline: none;
+  }
+}
+
+// Crossfade when switching between Study Collections and Data Releases. Not
+// Bootstrap's `.tab-pane.fade`: that hides the pane with `display: none` unless
+// it is `.active`, so the outgoing panel would vanish rather than fade.
+.study-data-explorer-panel {
+  opacity: 1;
+  transition: opacity 150ms linear;
+
+  &.is-fading {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .study-data-explorer-panel {
+    transition: none;
+  }
+}
+
+// Pre-bundled datasets, rendered in the collection-card language: the card is a
+// study, each cell one bundle. Reuses .study-collection-card for the frame.
+.bundle-dataset-card {
+  // Separators live on the cells, as a top border: in a two-column grid the
+  // first row's cells draw the line under the card header, and no cell draws a
+  // line that would double up with the card's own bottom edge.
+  .bundle-dataset-cell {
+    border-top: 1px solid #e9eef1;
+    border-right: 1px solid #e9eef1;
+
+    .bundle-dataset-actions {
+      gap: 0.5rem;
+    }
+
+    // Uniform width regardless of the size label, which varies from
+    // "617.78 KB" to "v1.0, RN6, 199.13 MB".
+    .open-access-bundle-data-download-container {
+      width: 10.75rem;
+    }
+
+    .btn-bundle-data-download {
+      width: 100%;
+      white-space: nowrap;
+    }
+
+    // A tinted tile in the same geometry as the collection cards' kind chips,
+    // so a bundle title carries the same kind of visual anchor a collection
+    // family does. It names what the row *is* -- an archive -- because the
+    // button beneath it already says what happens.
+    // A plain `folder`: at this size the zipper teeth on `folder_zip` were
+    // sub-pixel detail and read as noise, so the simpler silhouette wins.
+    .bundle-dataset-icon {
+      width: 1.8rem;
+      height: 1.8rem;
+      border-radius: 0.4rem;
+      background-color: #e8eef3;
+      color: #3d5666;
+      flex: none;
+
+      .material-icons {
+        font-size: 1.15rem;
+      }
+    }
+
+    .bundle-dataset-title {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #22323c;
+    }
+
+    .bundle-dataset-desc {
+      font-size: 0.82rem;
+    }
+
+    .participant-badge {
+      background-color: #eef1f4;
+      color: #4a5860;
+      border: 1px solid #dde4e9;
+      font-size: 0.68rem;
+      padding: 0.25rem 0.55rem;
+    }
+  }
+}
+
+.bundle-datasets-panel {
+  .bundle-dataset-card + .bundle-dataset-card {
+    margin-top: 1.5rem;
+  }
+}
+
+
+// A bundle leads with its latest collection; older ones sit behind a toggle,
+// in the same boxed panel the study collection cards use.
+.bundle-older-collections {
+  gap: 0.75rem;
+}
+
+// Collection labels repeat across studies ("Quant-ID c1.0" belongs to three), so
+// a multi-study scope groups them under the study that owns them.
+.collection-filter-module {
+  .collection-filter-group + .collection-filter-group {
+    margin-top: 0.6rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  // The study a group of collections belongs to. It has to out-weigh the
+  // collection buttons under it, or the eye reads the list as flat and the
+  // grouping stops doing its job -- which matters most where the labels repeat.
+  // Indented to line up with the buttons, which carry their own 0.3rem margin.
+  .collection-filter-study {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.35rem;
+    padding-left: 0.45rem;
   }
 }

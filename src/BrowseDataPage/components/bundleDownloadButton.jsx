@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import surveyModdalActions from '../../UserSurvey/userSurveyActions';
 import { trackEvent } from '../../GoogleAnalytics/googleAnalytics';
 
-function BundleDownloadButton({ bundlefile, bundlefileSize, profile = {} }) {
+function BundleDownloadButton({ bundlefile, label, profile = {} }) {
   const [fetchStatus, setFetchStatus] = useState({
     status: null,
     fileUrl: null,
@@ -66,7 +66,7 @@ function BundleDownloadButton({ bundlefile, bundlefileSize, profile = {} }) {
     return (
       <button
         type="button"
-        className="btn btn-secondary btn-block btn-bundle-data-download d-flex align-items-center justify-content-center px-3"
+        className="btn btn-secondary btn-sm btn-bundle-data-download d-flex align-items-center justify-content-center"
         disabled
       >
         <div
@@ -75,8 +75,7 @@ function BundleDownloadButton({ bundlefile, bundlefileSize, profile = {} }) {
         >
           <span className="sr-only">Loading...</span>
         </div>
-        <span className="file-size font-weight-bold">Get</span> (
-        {bundlefileSize})
+        <span className="font-weight-bold">{label}</span>
       </button>
     );
   }
@@ -87,7 +86,7 @@ function BundleDownloadButton({ bundlefile, bundlefileSize, profile = {} }) {
       <a
         id={file}
         href={fetchStatus.fileUrl}
-        className="btn-bundle-data-download ready-to-download-link px-3 w-100"
+        className="btn-bundle-data-download ready-to-download-link px-3"
         download
         onClick={(e) => handleFileDownload(file, e)}
       >
@@ -101,7 +100,7 @@ function BundleDownloadButton({ bundlefile, bundlefileSize, profile = {} }) {
     return (
       <button
         type="button"
-        className="btn btn-danger btn-block btn-bundle-data-download px-3"
+        className="btn btn-danger btn-sm btn-bundle-data-download"
         onClick={(e) => {
           e.preventDefault();
           setFetchStatus({
@@ -121,23 +120,18 @@ function BundleDownloadButton({ bundlefile, bundlefileSize, profile = {} }) {
     return (
       <button
         type="button"
-        className="btn btn-secondary btn-block btn-bundle-data-download d-flex align-items-center justify-content-center px-3"
+        className="btn btn-secondary btn-sm btn-bundle-data-download d-flex align-items-center justify-content-center"
         onClick={(e) =>
           handleFileFetch(e, import.meta.env.VITE_DATA_FILE_BUCKET, file)
         }
       >
-        <i className="material-icons open-access-bundle-data-download-icon mr-2">
-          cloud_download
-        </i>
-        <span className="file-size">
-          <span className="font-weight-bold">Get</span> ({bundlefileSize})
-        </span>
+        <span className="font-weight-bold">{label}</span>
       </button>
     );
   }
 
   return (
-    <div className="open-access-bundle-data-download-container d-flex justify-content-end">
+    <div className="open-access-bundle-data-download-container d-flex justify-content-center">
       {fetchStatus.fetching &&
         !fetchStatus.fileUrl &&
         renderFetchingDownloadButton()}
@@ -158,7 +152,7 @@ function BundleDownloadButton({ bundlefile, bundlefileSize, profile = {} }) {
 
 BundleDownloadButton.propTypes = {
   bundlefile: PropTypes.string.isRequired,
-  bundlefileSize: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
   profile: PropTypes.shape({
     userid: PropTypes.string,
     user_metadata: PropTypes.shape({

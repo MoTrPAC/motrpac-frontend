@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { prefixFromObject } from '../lib/collectionFiles';
+import { collectionVersion } from '../lib/collectionScope';
 
 /**
  * BrowseDataTable props
@@ -14,6 +16,9 @@ export const browseDataPropType = {
   study: PropTypes.string,
   species: PropTypes.string,
   object: PropTypes.string,
+  // Derived in `transformData` from `object`, not present in the metadata.
+  filename: PropTypes.string,
+  collection: PropTypes.string,
   category: PropTypes.string,
   sub_category: PropTypes.string,
   object_size: PropTypes.number,
@@ -68,8 +73,22 @@ function formatBytes(bytes, decimals = 2) {
 /**
  * column headers
  */
-export const tableColumns = (userType = null, isPass1b06 = false) => {
+/**
+ * The file table's columns.
+ *
+ * Every column here applies to every file. The Assembly column did not: only rat
+ * files carry a reference genome, so once the browser could hold quant-id,
+ * phenotype and human analysis files at once it was blank for most rows.
+ * Species and Collection replace it -- both are present on, or derivable for,
+ * every record, and both are what a multi-study table needs to stay readable.
+ */
+export const tableColumns = () => {
   const columns = [
+    {
+      Header: 'Species',
+      accessor: 'species',
+      sortType: 'basic',
+    },
     {
       Header: 'Tissue',
       accessor: 'tissue_name',
@@ -90,8 +109,18 @@ export const tableColumns = (userType = null, isPass1b06 = false) => {
       accessor: 'study',
     },
     {
-      Header: 'Category',
+      // "Type", not "Category": the values are Quant-ID / Analysis / Phenotype,
+      // which the study cards already call data types (`dataTypes` in
+      // studyDataCards.js). Same word in both places, and it is the shorter one.
+      Header: 'Type',
       accessor: 'category',
+    },
+    {
+      // Just the version -- "c1.0" -- since Type beside it already says which
+      // family it belongs to.
+      Header: 'Collection',
+      accessor: 'collection',
+      sortType: 'basic',
     },
     {
       Header: 'File',
@@ -101,18 +130,11 @@ export const tableColumns = (userType = null, isPass1b06 = false) => {
       id: 'filesize',
       Header: 'Size',
       accessor: 'object_size',
+      // Byte counts -- compare as numbers, matching the other declared sortTypes.
+      sortType: 'basic',
       Cell: (row) => formatBytes(row.value),
     },
   ];
-
-  // Add reference genome column if user is internal and viewing pass1b-06 data
-  if (userType === 'internal' && isPass1b06) {
-    columns.splice(4, 0, {
-      Header: 'Assembly',
-      accessor: 'reference_genome',
-      sortType: 'basic',
-    });
-  }
 
   return columns;
 };
@@ -269,11 +291,20 @@ PageNavigationControl.propTypes = {
  * Utility function to tranform some fields within each object in the array
  */
 export const transformData = (arr) => {
-  const tranformArray = [...arr];
+  // Copy each record, not just the array. These objects are the ones held in
+  // `browseData.allFiles`, and the rewrites below (tissue_name -> superclass,
+  // merged assay/omics labels) used to land on Redux state itself: rendering
+  // the table changed the data the filter facets are derived from, so the
+  // tissue pickers silently swapped from names to superclasses after the first
+  // render and clicks stopped matching.
+  const tranformArray = arr.map((item) => ({ ...item }));
   tranformArray.forEach((item) => {
     // Extract file name from object
     const splits = item.object.split('/');
     item.filename = splits.pop();
+    // The object path names the collection; the table shows the same short
+    // label the Collection picker does.
+    item.collection = collectionVersion(prefixFromObject(item.object));
     // Transform metabolomics assay value
     if (item.assay) {
       const newMetabAssayVal = Array.isArray(item.assay) ? item.assay.join(', ') : item.assay;

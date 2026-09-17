@@ -10,13 +10,16 @@ export function renderWithProviders(
   {
     preloadedState = {},
     store = configureStore(preloadedState),
+    // Components that read the URL for their scope (the file browser's
+    // collection picker and status bar) need a route to render against.
+    route = '/',
     ...renderOptions
   } = {}
 ) {
   function Wrapper({ children }) {
     return (
       <Provider store={store}>
-        <MemoryRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true}}>
+        <MemoryRouter initialEntries={[route]} future={{ v7_relativeSplatPath: true, v7_startTransition: true}}>
           {children}
         </MemoryRouter>
       </Provider>

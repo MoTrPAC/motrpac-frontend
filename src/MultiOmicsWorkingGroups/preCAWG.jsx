@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import IconSet from '../lib/iconSet';
 
+const bucketName = import.meta.env.VITE_DATA_FILE_BUCKET;
+
 function PreCAWG() {
   return (
     <div className="multi-omics-working-groups-content-container pre-cawg mt-4">
@@ -26,22 +28,22 @@ function PreCAWG() {
                 />
                 <p>
                   <a
-                    href="https://console.cloud.google.com/storage/browser/motrpac-data-hub?project=motrpac-portal"
+                    href={`https://console.cloud.google.com/storage/browser/${bucketName}?project=motrpac-portal`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    gs://motrpac-data-hub/analysis
+                    {`gs://${bucketName}/analysis`}
                   </a>
                 </p>
                 <p>
                   <span className="font-weight-bold">Raw clinical data:</span>
                   <br />
                   <a
-                    href="https://console.cloud.google.com/storage/browser/motrpac-data-hub/human-precovid/phenotype/human-precovid-sed-adu/raw?project=motrpac-portal"
+                    href={`https://console.cloud.google.com/storage/browser/${bucketName}/phenotype/human-precovid-sed-adu/raw?project=motrpac-portal`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    gs://motrpac-data-hub/human-precovid/phenotype/human-precovid-sed-adu/raw/
+                    {`gs://${bucketName}/phenotype/human-precovid-sed-adu/raw/`}
                   </a>
                 </p>
               </td>
@@ -241,7 +243,7 @@ function PreCAWG() {
       <p>
         <b>DA data location:</b>{' '}
         <code>
-          gs://motrpac-data-hub/analysis/human-precovid-sed-adu/[ome]/da[ome]
+          {`gs://${bucketName}/analysis/human-precovid-sed-adu/[ome]/da[ome]`}
         </code>{' '}
         represents one of epigenomics, proteomics, metabolomics-targeted,
         metabolomics-untargeted, or transcriptomics.
@@ -370,12 +372,12 @@ function PreCAWG() {
       </p>
       <p>
         <b>Raw results data location:</b>{' '}
-        <code>gs://motrpac-data-hub/human-precovid/results/</code>
+        <code>{`gs://${bucketName}/quant-id/human-precovid/`}</code>
       </p>
       <p>
         <b>QC-normalized data location:</b>{' '}
         <code>
-          gs://motrpac-data-hub/analysis/human-precovid-sed-adu/[ome]/qc-norm*[ome]
+          {`gs://${bucketName}/analysis/human-precovid-sed-adu/[ome]/qc-norm*[ome]`}
         </code>{' '}
         represents one of epigenomics, proteomics, metabolomics-targeted,
         metabolomics-untargeted, or transcriptomics
@@ -396,13 +398,13 @@ function PreCAWG() {
       <p>
         <b>CRF data location:</b>{' '}
         <code>
-          gs://motrpac-data-hub/human-precovid/phenotype/human-precovid-sed-adu/raw
+          {`gs://${bucketName}/phenotype/human-precovid-sed-adu/raw`}
         </code>
       </p>
       <p>
         <b>Key data set:</b>{' '}
         <code>
-          gs://motrpac-data-hub/human-precovid/phenotype/human-precovid-sed-adu/raw/data_sets/human-precovid-sed-adu_clinical_key_ds_crf-redacted_v1.txt
+          {`gs://${bucketName}/phenotype/human-precovid-sed-adu/raw/data_sets/human-precovid-sed-adu_clinical_key_ds_crf-redacted_v1.txt`}
         </code>
       </p>
       <div>
@@ -437,7 +439,7 @@ function PreCAWG() {
       <p>
         <b>Curated clinical data location:</b>{' '}
         <code>
-          gs://motrpac-data-hub/human-precovid/phenotype/human-precovid-sed-adu/curated
+          {`gs://${bucketName}/phenotype/human-precovid-sed-adu/curated`}
         </code>
       </p>
       <h5 className="mt-4 mb-2 pb-2 border-bottom">Metadata</h5>
@@ -450,7 +452,7 @@ function PreCAWG() {
       <p>
         <b>QC report location:</b>{' '}
         <code>
-          gs://motrpac-data-hub/analysis/human-precovid-sed-adu/[ome]/metadata/*qc-report*
+          {`gs://${bucketName}/analysis/human-precovid-sed-adu/[ome]/metadata/*qc-report*`}
         </code>
       </p>
       <h6>Removed samples</h6>
@@ -462,7 +464,7 @@ function PreCAWG() {
       <p>
         <b>Removed samples location:</b>{' '}
         <code>
-          gs://motrpac-data-hub/analysis/human-precovid-sed-adu/[ome]/metadata/*removed-samples*
+          {`gs://${bucketName}/analysis/human-precovid-sed-adu/[ome]/metadata/*removed-samples*`}
         </code>
       </p>
       <h6>Sample metadata</h6>
@@ -481,7 +483,7 @@ function PreCAWG() {
       <p>
         <b>Sample metadata location:</b>{' '}
         <code>
-          gs://motrpac-data-hub/analysis/human-precovid-sed-adu/[ome]/metadata/*metadata_samples*
+          {`gs://${bucketName}/analysis/human-precovid-sed-adu/[ome]/metadata/*metadata_samples*`}
         </code>
       </p>
       <h6>Feature metadata</h6>
@@ -493,7 +495,7 @@ function PreCAWG() {
       <p>
         <b>Feature metadata location:</b>{' '}
         <code>
-          gs://motrpac-data-hub/analysis/human-precovid-sed-adu/[ome]/metadata/*metadata_features*
+          {`gs://${bucketName}/analysis/human-precovid-sed-adu/[ome]/metadata/*metadata_features*`}
         </code>
       </p>
       <h5 className="mt-4 mb-2 pb-2 border-bottom">Code</h5>
@@ -701,7 +703,7 @@ function PreCAWG() {
               <li>
                 The following Google Cloud Platform Buckets:{' '}
                 <code>gs://pre-cawg</code> (read and write) and{' '}
-                <code>gs://motrpac-data-hub</code> (read only)
+                <code>{`gs://${bucketName}`}</code> (read only)
               </li>
               <li>
                 <a
@@ -734,7 +736,7 @@ function PreCAWG() {
             Once this is done, you should be able to open a PowerShell (Windows) or
             Terminal (Mac) and run the command
             {' '}
-            <code>gsutil ls gs://motrpac-data-hub</code>
+            <code>{`gsutil ls gs://${bucketName}`}</code>
             . If you can, that means your Google Cloud CLI is set up and your GCP
             access is working correctly. If this fails, but you think you have access,
             check that

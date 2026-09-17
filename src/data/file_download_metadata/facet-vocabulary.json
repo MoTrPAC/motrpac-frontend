@@ -1,0 +1,120 @@
+{
+  "tissue_name": [
+    {
+      "value": "Blood",
+      "species": [
+        "Human"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c2.0"
+      ]
+    },
+    {
+      "value": "Gastrocnemius",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c2.0"
+      ]
+    },
+    {
+      "value": "Hippocampus",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0"
+      ]
+    },
+    {
+      "value": "Plasma",
+      "species": [
+        "Human"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "quant-id/human-precovid/c1.0"
+      ]
+    }
+  ],
+  "omics": [
+    {
+      "value": "Epigenomics",
+      "species": [
+        "Human",
+        "Rat"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c2.0",
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c1.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Metabolomics",
+      "species": [
+        "Human"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "quant-id/human-precovid/c1.0"
+      ]
+    }
+  ],
+  "assay": [
+    {
+      "value": "ATAC-seq",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "analysis/rat-acute-06/c1.0",
+        "analysis/rat-acute-06/c2.0",
+        "analysis/rat-training-06/c1.0",
+        "analysis/rat-training-06/c2.0",
+        "quant-id/rat-acute-06/c2.0",
+        "quant-id/rat-training-06/c1.0",
+        "quant-id/rat-training-06/c2.0",
+        "quant-id/rat-training-06/c3.0"
+      ]
+    },
+    {
+      "value": "Clinical chemistry assays for conventional metabolites",
+      "species": [
+        "Human"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c1.3",
+        "quant-id/human-precovid/c1.0"
+      ]
+    },
+    {
+      "value": "MethylCap-seq",
+      "species": [
+        "Human"
+      ],
+      "collections": [
+        "analysis/human-precovid-sed-adu/c2.0"
+      ]
+    },
+    {
+      "value": "RRBS",
+      "species": [
+        "Rat"
+      ],
+      "collections": [
+        "quant-id/rat-acute-06/c1.0"
+      ]
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import { types } from './browseDataActions';
+import facetValues from '../lib/fileFacets';
 
 export const defaultBrowseDataState = {
   sortBy: 'tissue_name',
@@ -21,10 +22,71 @@ export const defaultBrowseDataState = {
   waitingForResponse: false,
   fetching: false,
   error: '',
-  pass1b06DataSelected: false,
-  pass1a06DataSelected: false,
-  humanPrecovidSedAduDataSelected: false,
+  selectedCollections: [],
+  loadedCollections: [],
+  // The load currently in flight. See SELECT_COLLECTIONS_SUCCESS.
+  pendingRequestId: null,
+  loadingFiles: false,
 };
+
+/**
+ * Does any of `values` satisfy `selected` for this facet?
+ *
+ * A facet matches when one of the file's own values equals the selected one.
+ * The predicate this replaced asked whether the *selected* option contained the
+ * file's whole value as a substring, which no comma-joined row could satisfy --
+ * all 135 of them were unreachable.
+ *
+ * The one alias: merged metabolomics files carry the generic omics value, so
+ * asking for either specific metabolomics ome still finds them. Written once
+ * because `filterFiles` and `pruneFilters` have to agree -- a value the matcher
+ * honours but the pruner drops is a filter that vanishes for no visible reason,
+ * which is exactly what pruning exists to prevent. All three
+ * `analysis/rat-acute-06/*` collections carry only the generic value, so that
+ * disagreement was reachable by narrowing the Collection picker to one of them.
+ */
+function matchesFacet(values, category, selected) {
+  return (
+    values.includes(selected)
+    || (category === 'omics'
+      && selected.startsWith('Metabolomics')
+      && values.includes('Metabolomics'))
+  );
+}
+
+function filterFiles(filters, files) {
+  return files.filter((file) =>
+    Object.keys(filters).every((category) => {
+      if (!filters[category].length) return true;
+      const fileValues = facetValues(file, category);
+      return filters[category].some((selected) =>
+        matchesFacet(fileValues, category, selected)
+      );
+    })
+  );
+}
+
+/**
+ * Drop filter values that no longer occur in the loaded files, keeping the rest.
+ *
+ * Changing the collection selection used to reset every filter, so toggling a
+ * collection silently wiped the user's tissue and assay choices. Keeping them
+ * wholesale is just as wrong: a value whose only source collection was removed
+ * would stay active with its facet button gone, emptying the table for no
+ * visible reason.
+ */
+function pruneFilters(activeFilters, files) {
+  const pruned = {};
+  Object.keys(activeFilters).forEach((category) => {
+    const present = new Set();
+    files.forEach((file) => facetValues(file, category).forEach((value) => present.add(value)));
+    const values = [...present];
+    pruned[category] = activeFilters[category].filter((value) =>
+      matchesFacet(values, category, value)
+    );
+  });
+  return pruned;
+}
 
 function createSorter(sortBy) {
   function sortTableEntries(a, b) {
@@ -60,42 +122,11 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
       }
       let filtered = state.allFiles;
 
-      // Select a filter in either tissue or assay should
-      // return a subset of matching files
-      // FIXME: need to optimize the workaround to return
-      // merged metabolomics (not assay-specific) files
-      const filterFiles = (filters, files) => {
-        return files.filter((file) => {
-          return Object.keys(filters).every((cat) => {
-            if (!filters[cat].length) return true;
-            if (action.category === 'assay' && action.filter.match(/Targeted|Untargeted/)) {
-              return filters[cat].some((filter) => filter.includes(file[cat]) || file[cat] === 'Merged');
-            } else if (action.category === 'omics' && action.filter.match(/Metabolomics/)) {
-              return filters[cat].some((filter) => filter.includes(file[cat]) || file[cat] === 'Metabolomics');
-            } else {
-              return filters[cat].some((filter) => filter.includes(file[cat]));
-            }
-          });
-        });
-      };
 
-      if (action.category === 'category' && action.filter === 'Phenotype') {
-        // return only phenotype files (not specific to any tissue, assay, or ome)
-        // FIXME: need to move phenotype to its own page
-        newActiveFilters.assay = [];
-        newActiveFilters.tissue_name = [];
-        newActiveFilters.omics = [];
-        filtered = filterFiles(newActiveFilters, filtered);
-      } else if (action.category.match(/assay|omics|tissue_name/)) {
-        // return matching files, including 'merged' files (e.g. omics, assays, tissues)
-        // FIXME: deselect phenotype filter if tissue, assay, or ome is selected
-        if (newActiveFilters.category.indexOf('Phenotype') !== -1) {
-          newActiveFilters.category.splice(newActiveFilters.category.indexOf('Phenotype'), 1);
-        }
-        filtered = filterFiles(newActiveFilters, filtered);
-      } else {
-        filtered = filterFiles(newActiveFilters, filtered);
-      }
+      // The Category/Metadata facets are gone -- a collection has exactly one
+      // category, so the picker already expresses it -- which removed the
+      // Phenotype special cases that used to live here.
+      filtered = filterFiles(newActiveFilters, filtered);
 
       return {
         ...state,
@@ -198,53 +229,52 @@ function browseDataReducer(state = defaultBrowseDataState, action) {
         error: '',
       };
     }
-    case types.SELECT_PASS1B_06_DATA:
+    case types.SELECT_COLLECTIONS_START:
       return {
         ...state,
-        allFiles: action.files,
-        filteredFiles: action.files.slice(0, action.files.length),
-        selectedFileUrls: [],
-        selectedFileNames: [],
-        fileCount: action.files.length,
-        pass1b06DataSelected: true,
-        pass1a06DataSelected: false,
-        humanPrecovidSedAduDataSelected: false,
+        loadingFiles: true,
+        error: '',
+        selectedCollections: action.selection ?? action.prefixes,
+        pendingRequestId: action.requestId,
       };
-    case types.SELECT_PASS1A_06_DATA:
+    case types.SELECT_COLLECTIONS_SUCCESS: {
+      // Two loads can be in flight at once -- "Reset filters" is not disabled
+      // while loading, and the browser's back button re-fires the effect in
+      // dataDownloadsMain -- so a slow first request can resolve after a fast
+      // second one and put another study's files under the current selection.
+      // Only the most recent request may land.
+      if (action.requestId !== state.pendingRequestId) {
+        return state;
+      }
+      const activeFilters = pruneFilters(state.activeFilters, action.files);
+      const filteredFiles = filterFiles(activeFilters, action.files);
       return {
         ...state,
         allFiles: action.files,
-        filteredFiles: action.files.slice(0, action.files.length),
+        filteredFiles,
+        fileCount: action.files.length,
         selectedFileUrls: [],
         selectedFileNames: [],
-        fileCount: action.files.length,
-        pass1b06DataSelected: false,
-        pass1a06DataSelected: true,
-        humanPrecovidSedAduDataSelected: false,
+        selectedCollections: action.selection ?? action.prefixes,
+        loadedCollections: action.prefixes,
+        loadingFiles: false,
+        error: '',
+        activeFilters,
       };
-    case types.SELECT_HUMAN_PRECOVID_SED_ADU_DATA:
+    }
+    case types.SELECT_COLLECTIONS_FAILURE:
+      // Same rule as SUCCESS: a superseded request must not blank the table or
+      // post an error against a load the user has already moved on from.
+      if (action.requestId !== state.pendingRequestId) {
+        return state;
+      }
       return {
         ...state,
-        allFiles: action.files,
-        filteredFiles: action.files.slice(0, action.files.length),
-        selectedFileUrls: [],
-        selectedFileNames: [],
-        fileCount: action.files.length,
-        pass1b06DataSelected: false,
-        pass1a06DataSelected: false,
-        humanPrecovidSedAduDataSelected: true,
-      };
-    case types.SELECT_HUMAN_PRECOVID_SED_ADU_EXTERNAL_DATA:
-      return {
-        ...state,
-        allFiles: action.files,
-        filteredFiles: action.files.slice(0, action.files.length),
-        selectedFileUrls: [],
-        selectedFileNames: [],
-        fileCount: action.files.length,
-        pass1b06DataSelected: false,
-        pass1a06DataSelected: false,
-        humanPrecovidSedAduDataSelected: true,
+        allFiles: [],
+        filteredFiles: [],
+        fileCount: 0,
+        loadingFiles: false,
+        error: action.error,
       };
     case types.RESET_BROWSE_STATE:
       return defaultBrowseDataState;
