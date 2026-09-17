@@ -84,7 +84,6 @@ function BundleDownloadButton({ bundlefile, label, profile = {} }) {
   function renderSuccessDownloadButton(file) {
     return (
       <a
-        role="button"
         id={file}
         href={fetchStatus.fileUrl}
         className="btn btn-sm btn-bundle-data-download ready-to-download-link px-3"
@@ -111,7 +110,7 @@ function BundleDownloadButton({ bundlefile, label, profile = {} }) {
           });
         }}
       >
-        Error: try again later
+        Download failed. Try again.
       </button>
     );
   }
