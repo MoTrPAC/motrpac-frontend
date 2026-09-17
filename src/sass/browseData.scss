@@ -252,6 +252,15 @@
   }
 }
 
+// The species legend pops out of the filter panel, over the filter cards. Those
+// are Bootstrap `.card`s, so they are positioned elements, and react-tooltip
+// leaves its own z-index unset -- without a layer the tooltip renders correctly
+// and is painted over. 1070 is Bootstrap's tooltip layer, which is what this is.
+.species-legend-tooltip {
+  font-weight: bold;
+  z-index: 1070;
+}
+
 .browse-data-container {
   .card-body {
     padding: 0;
