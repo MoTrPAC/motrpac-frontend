@@ -87,7 +87,7 @@ function BundleDownloadButton({ bundlefile, label, profile = {} }) {
         role="button"
         id={file}
         href={fetchStatus.fileUrl}
-        className="btn-bundle-data-download ready-to-download-link px-3"
+        className="btn btn-sm btn-bundle-data-download ready-to-download-link px-3"
         download
         onClick={(e) => handleFileDownload(file, e)}
       >
