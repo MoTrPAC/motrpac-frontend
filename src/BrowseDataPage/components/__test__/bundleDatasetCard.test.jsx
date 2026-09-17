@@ -372,7 +372,7 @@ describe('BundleDatasetCard - collection versions', () => {
       within(cell).queryByText(`Get Collection ${older.collection}`)
     ).not.toBeInTheDocument();
 
-    fireEvent.click(within(cell).getByRole('button', { name: /other versions/i }));
+    fireEvent.click(within(cell).getByRole('button', { name: /other collections/i }));
     expect(within(cell).getByText(`Get Collection ${older.collection}`)).toBeInTheDocument();
   });
 
@@ -508,7 +508,7 @@ describe('human-precovid bundles - signing in does not widen external access', (
   });
 });
 
-describe('BundleDatasetCard - the Other versions toggle matches Study Collections', () => {
+describe('BundleDatasetCard - the Other collections toggle matches Study Collections', () => {
   const card = () => cardFor('rat-training-06', 'internal');
 
   test('the toggle carries the same classes the study cards use', () => {
@@ -528,7 +528,7 @@ describe('BundleDatasetCard - the Other versions toggle matches Study Collection
       c.textContent.includes(bundle.title)
     );
 
-    fireEvent.click(within(cell).getByRole('button', { name: /other versions/i }));
+    fireEvent.click(within(cell).getByRole('button', { name: /other collections/i }));
 
     const panel = cell.querySelector('.other-versions-list');
     expect(panel).toBeInTheDocument();
