@@ -589,13 +589,19 @@ const BundleDataTypes = {
         {
           collection: 'c2.0',
           latest: true,
-          releaseStage: 'consortium',
+          releaseStage: 'public',
           bundleVersions: {
             restricted: {
               name: 'bundles/motrpac_human-precovid-sed-adu_epigenomics_c2.0.zip',
               size: '2.7 GB',
               description:
                 'Differential analysis, metadata, QC normalized data across human tissues for ATAC-seq and Methylcap-seq assays (bundle size: 2.7 GB).',
+            },
+            unrestricted: {
+              name: 'bundles/external/motrpac_human-presuspension-sed-adu_epigenomics_c2.0.zip',
+              size: '1.4 GB',
+              description:
+                'Summary-level results and metadata across different human tissues for the ATAC-seq and Methylcap-seq assays (bundle size: 1.4 GB).',
             },
           },
         },
@@ -632,13 +638,19 @@ const BundleDataTypes = {
         {
           collection: 'c2.0',
           latest: true,
-          releaseStage: 'consortium',
+          releaseStage: 'public',
           bundleVersions: {
             restricted: {
               name: 'bundles/motrpac_human-precovid-sed-adu_transcriptomics_c2.0.zip',
               size: '510.4 MB',
               description:
                 'Differential analysis, metadata, QC normalized data across human tissues for RNA-seq (bundle size: 510.4 MB).',
+            },
+            unrestricted: {
+              name: 'bundles/external/motrpac_human-presuspension-sed-adu_transcriptomics_c2.0.zip',
+              size: '233 MB',
+              description:
+                'Summary-level results and metadata across different human tissues for the RNA-seq assay (bundle size: 233 MB).',
             },
           },
         },
@@ -675,13 +687,19 @@ const BundleDataTypes = {
         {
           collection: 'c2.0',
           latest: true,
-          releaseStage: 'consortium',
+          releaseStage: 'public',
           bundleVersions: {
             restricted: {
               name: 'bundles/motrpac_human-precovid-sed-adu_proteomics_c2.0.zip',
               size: '303 MB',
               description:
                 'Differential analysis, metadata, QC normalized data across human tissues for Global Proteomics, Phosphoproteomics, and OLink (bundle size: 303 MB).',
+            },
+            unrestricted: {
+              name: 'bundles/external/motrpac_human-presuspension-sed-adu_proteomics_c2.0.zip',
+              size: '162.8 MB',
+              description:
+                'Summary-level results and metadata across different human tissues for the Global Proteomics, Phosphoproteomics, and OLink assays (bundle size: 162.8 MB).',
             },
           },
         },
@@ -718,13 +736,19 @@ const BundleDataTypes = {
         {
           collection: 'c2.0',
           latest: true,
-          releaseStage: 'consortium',
+          releaseStage: 'public',
           bundleVersions: {
             restricted: {
               name: 'bundles/motrpac_human-precovid-sed-adu_metabolomics-untargeted_c2.0.zip',
               size: '316.6 MB',
               description:
                 'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-untargeted assays (bundle size: 316.6 MB).',
+            },
+            unrestricted: {
+              name: 'bundles/external/motrpac_human-presuspension-sed-adu_metabolomics-untargeted_c2.0.zip',
+              size: '90.4 MB',
+              description:
+                'Summary-level results and metadata across different human tissues for the metabolomics-untargeted assays (bundle size: 90.4 MB).',
             },
           },
         },
@@ -761,13 +785,19 @@ const BundleDataTypes = {
         {
           collection: 'c2.0',
           latest: true,
-          releaseStage: 'consortium',
+          releaseStage: 'public',
           bundleVersions: {
             restricted: {
               name: 'bundles/motrpac_human-precovid-sed-adu_metabolomics-targeted_c2.0.zip',
               size: '83.4 MB',
               description:
                 'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-targeted assays (bundle size: 83.4 MB).',
+            },
+            unrestricted: {
+              name: 'bundles/external/motrpac_human-presuspension-sed-adu_metabolomics-targeted_c2.0.zip',
+              size: '81.5 MB',
+              description:
+                'Summary-level results and metadata across different human tissues for the metabolomics-targeted assays (bundle size: 81.5 MB).',
             },
           },
         },
