@@ -50,6 +50,11 @@ describe('entitlement', () => {
     const external = entitledPrefixes('external');
     expect(external).toContain('quant-id/rat-training-06/c2.0');
     expect(external).toContain('analysis/human-precovid-sed-adu/c1.3');
+    // Public as of the c2.0 release, and mixed-stage like c1.3: the collection
+    // is offered to everyone while its qc-norm and sample-level metadata files
+    // stay consortium-only. Membership is asserted here; the per-file half is
+    // `visibleTo`, covered against a fixture below.
+    expect(external).toContain('analysis/human-precovid-sed-adu/c2.0');
   });
 
   test('internal users are entitled to every collection', () => {

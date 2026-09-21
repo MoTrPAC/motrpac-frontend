@@ -262,7 +262,17 @@ describe('StudyCollectionCard - released but not served by the Data Hub', () => 
   });
 
   test('its public Analysis collection is still browsable', () => {
-    render(<StudyCollectionCard study={humanPrecovid} userType="external" />);
+    // c2.0 is public as of its release, so it leads the Analysis cell and the
+    // previously-public c1.3 moves under the "Other collections" toggle. Both
+    // stay reachable -- what this guards is that Analysis is never gated the
+    // way Quant-ID and Phenotype are.
+    const { container } = render(
+      <StudyCollectionCard study={humanPrecovid} userType="external" />
+    );
+    expect(screen.getByText('c2.0')).toBeInTheDocument();
+    expect(cellsSaying(container, /applying through dbGaP/i)).toHaveLength(2);
+
+    fireEvent.click(screen.getByRole('button', { name: /other collections/i }));
     expect(screen.getByText('c1.3')).toBeInTheDocument();
   });
 
