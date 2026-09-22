@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import BrowseDataFilter from '../browseDataFilter';
 import SelectiveDataDownloadFileBrowser from './selectiveDataDownloadFileBrowser';
 import CollectionScopeBar from './collectionScopeBar';
+import { accessLevel } from '../../lib/userAccess';
 
 function SelectiveDataDownloads({
   profile = {},
@@ -78,7 +79,7 @@ function SelectiveDataDownloads({
         {renderPageTitle()}
       </div>
       <div className="browse-data-summary-container mb-4">{renderSummary()}</div>
-      <CollectionScopeBar userType={profile.user_metadata && profile.user_metadata.userType} />
+      <CollectionScopeBar userType={accessLevel(profile)} />
       {/*
         No `row`/`tab-content` wrapper here. `.tab-content` carried no `col-*`
         class, so as a flex item in a `.row` it defaulted to `flex: 0 1 auto` and
