@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
 import { entitledPrefixes, loadCollections } from '../lib/collectionFiles';
+import { accessLevel } from '../lib/userAccess';
 
 const CHANGE_FILTER = 'CHANGE_FILTER';
 const SORT_CHANGE = 'SORT_CHANGE';
@@ -284,8 +285,8 @@ function selectCollections(prefixes, selection = prefixes) {
     const requestId = requestCounter;
     dispatch({ type: SELECT_COLLECTIONS_START, requestId, prefixes, selection });
     try {
-      const userType = getState().auth?.profile?.user_metadata?.userType;
-      const files = await loadCollections(prefixes, userType);
+      const access = accessLevel(getState().auth?.profile);
+      const files = await loadCollections(prefixes, access);
       dispatch({ type: SELECT_COLLECTIONS_SUCCESS, requestId, prefixes, selection, files });
       return files;
     } catch (error) {
