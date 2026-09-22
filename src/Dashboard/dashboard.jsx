@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import 'bootstrap';
+import $ from 'jquery';
 import FeatureLinks from '../Search/featureLinks';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
 import ExternalLink from '@/lib/ui/externalLink';
+import ReviewerDownloadButton from './reviewerDownloadButton';
 
 import '@styles/dashboard.scss';
+
+const PACK_ANALYSIS = 'bundles/motrpac_human-precovid-sed-adu_analysis.zip';
+const PACK_DATA = 'bundles/motrpac_human-precovid-sed-adu_data.zip';
+const PACK_CLINICAL_ANALYSIS = 'bundles/motrpac_human-precovid-sed-adu_clinic-analysis.zip';
 
 /**
  * Renders the Dashboard page
@@ -22,12 +29,42 @@ export function Dashboard({
   handleQCDataFetch, 
   lastModified = '',
 }) {
+  // Initialize agreement state from sessionStorage to persist across page navigations
+  const [agreement, setAgreement] = useState(() => {
+    const saved = sessionStorage.getItem('reviewerAgreement');
+    return saved === 'true';
+  });
+
   const userType = profile.user_metadata && profile.user_metadata.userType;
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
+  const userRole = profile.app_metadata && profile.app_metadata.role;
 
   if (!isAuthenticated || !hasAccess) {
     return <Navigate to="/" />;
   }
+
+  // Show modal for reviewers who haven't agreed yet
+  useEffect(() => {
+    if (userType === 'external' && userRole === 'reviewer' && !agreement) {
+      $('#reviewerAgreementModal').modal('show');
+      
+      return () => {
+        $('#reviewerAgreementModal').modal('hide');
+      };
+    }
+  }, [userType, userRole, agreement]);
+
+  // Handler to save agreement to sessionStorage
+  const handleAgree = () => {
+    setAgreement(true);
+    sessionStorage.setItem('reviewerAgreement', 'true');
+  };
+
+  // Handler to dismiss modal without agreeing - keeps buttons disabled
+  const handleCancel = () => {
+    setAgreement(false);
+    sessionStorage.setItem('reviewerAgreement', 'false');
+  };
 
   return (
     <div className="dashboardPage px-3 px-md-4 mb-3">
@@ -106,7 +143,7 @@ export function Dashboard({
         </div>
       )}
 
-      {userType && userType === 'external' && (
+      {userType && userType === 'external' && !userRole && (
         <>
           <div className="jumbotron jumbotron-fluid alert-data-release external-user">
             <div className="w-75 mx-auto">
@@ -193,6 +230,160 @@ export function Dashboard({
                 {profile.user_metadata?.givenName || 'User'}
               </span>
             </h2>
+          </div>
+        </>
+      )}
+      {/* Welcome message for external users with reviewer role */}
+      {userType && userType === 'external' && userRole && userRole === 'reviewer' && (
+        <>
+          <div className="jumbotron jumbotron-fluid alert-data-release external-user">
+            <div className="w-75 mx-auto">
+              <h1 className="highlight-title display-4 mb-4 text-center">
+                <i className="bi bi-person-circle mr-3" aria-hidden="true" />
+                <span>Hello, Reviewer!</span>
+              </h1>
+              <div className="row mb-4">
+                <div className="col-md-12 lead d-flex align-items-start">
+                  <span className="data-release-text">
+                    As a reviewer, you have been granted access to the pre-publication
+                    human data in R packages and the visualization tool. If you have
+                    any questions, please contact the journal editor directly.
+                  </span>
+                </div>
+                <div className="col-md-12 lead d-flex align-items-start mt-2">
+                  <span className="data-release-text">
+                    Please note, the Analysis and Clinical Analysis R packages depend
+                    on the Function and Data R packages. It is recommended to download
+                    and install all four of them. See the README document in each of the
+                    R packages for more details.
+                  </span>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-4 lead d-flex align-items-start">
+                  <div className="feature-highlight-icon mr-3">
+                    <span className="material-icons" aria-hidden="true">
+                      folder
+                    </span>
+                  </div>
+                  <div className="feature-highlight-content mr-1">
+                    <h3>Data R Package</h3>
+                    <div className="data-release-text mb-3">
+                      Clinical and phenotypic data, omic normalized expression, and other resource files from the Acute Exercise in Human Sedentary Adults (pre-suspension) study
+                    </div>
+                    <ReviewerDownloadButton
+                      filename={PACK_DATA}
+                      label="Download"
+                      icon="bi-file-zip-fill"
+                      profile={profile}
+                      disabled={!agreement}
+                    />
+                  </div>
+                </div>
+                <div className="col-md-4 lead d-flex align-items-start">
+                  <div className="feature-highlight-icon mr-3">
+                    <span className="material-icons" aria-hidden="true">
+                      folder
+                    </span>
+                  </div>
+                  <div className="feature-highlight-content mr-1">
+                    <h3>Analysis R Package</h3>
+                    <div className="data-release-text mb-3">
+                      Summary statistics, differential analysis results, and downstream modeling outputs from the Acute Exercise in Human Sedentary Adults (pre-suspension) study
+                    </div>
+                    <ReviewerDownloadButton
+                      filename={PACK_ANALYSIS}
+                      label="Download"
+                      icon="bi-file-zip-fill"
+                      profile={profile}
+                      disabled={!agreement}
+                    />
+                  </div>
+                </div>
+                <div className="col-md-4 lead d-flex align-items-start">
+                  <div className="feature-highlight-icon mr-3">
+                    <span className="material-icons" aria-hidden="true">
+                      folder
+                    </span>
+                  </div>
+                  <div className="feature-highlight-content mr-1">
+                    <h3>Clinical Analysis R Package</h3>
+                    <div className="data-release-text mb-3">
+                      R project pipeline, focusing on clinical data, that creates tables and figures for analysis of the Acute Exercise in Human Sedentary Adults (pre-suspension) study
+                    </div>
+                    <ReviewerDownloadButton
+                      filename={PACK_CLINICAL_ANALYSIS}
+                      label="Download"
+                      icon="bi-file-zip-fill"
+                      profile={profile}
+                      disabled={!agreement}
+                    />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div id="reviewerAgreementModal" className="modal fade" data-backdrop="static" data-keyboard="false" tabIndex="-1" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered modal-lg">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="staticBackdropLabel">Data Use Agreement</h5>
+                </div>
+                <div className="modal-body">
+                  <h5 className="font-weight-bold">PLEASE READ BEFORE DOWNLOADING DATA</h5>
+                  <p>By clicking &quot;I agree&quot; and downloading data from this portal, you agree to:</p>
+                  <div className="my-3">
+                    <span className="font-weight-bold">Review Use Only</span>
+                    <ul>
+                      <li>Use this data solely for your assigned review purposes.</li>
+                      <li>Not use the data for your own research or publications.</li>
+                    </ul>
+                  </div>
+                  <div className="my-3">
+                    <span className="font-weight-bold">Confidentiality</span>
+                    <ul>
+                      <li>Keep all data confidential.</li>
+                      <li>Not share or distribute data to others.</li>
+                      <li>Not attempt to identify individual subjects.</li>
+                    </ul>
+                  </div>
+                  <div className="my-3">
+                    <span className="font-weight-bold">Data Handling</span>
+                    <ul>
+                      <li>Store data securely while reviewing.</li>
+                      <li>Delete data when your review is complete.</li>
+                    </ul>
+                  </div>
+                  <div className="my-3">
+                    <span className="font-weight-bold">Research Integrity</span>
+                    <ul>
+                      <li>These terms are based on research integrity principles and professional responsibility.</li>
+                    </ul>
+                  </div>
+                  <p>Any questions throughout the review process should be directed to journal editors. Please do not contact the authors or the MoTrPAC helpdesk directly.</p>
+                  <p>By proceeding, you acknowledge these expectations.</p>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-dismiss="modal"
+                    onClick={handleCancel}
+                  >
+                    I disagree
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-dismiss="modal"
+                    onClick={handleAgree}
+                  >
+                    I agree
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </>
       )}
