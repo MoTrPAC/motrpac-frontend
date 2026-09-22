@@ -1,3 +1,5 @@
+import { INTERNAL, REVIEWER, reviewerSeesCollection } from './userAccess';
+
 /**
  * Reading the study/collection model, and the access rules over it.
  *
@@ -66,7 +68,7 @@ export function versionStages(version) {
 /**
  * Versions this user may see.
  *
- * Two rules:
+ * Three rules:
  *
  * 1. A collection holding *only* early-access files is not distributed through
  *    the data download feature at all -- not even to internal users. A mixed
@@ -74,29 +76,37 @@ export function versionStages(version) {
  * 2. A mixed-stage collection is public only if *every* stage it names is
  *    public. Taking the most permissive stage instead would expose consortium
  *    datasets inside a collection that also holds public ones.
+ * 3. A reviewer additionally sees the human-precovid-sed-adu Quant-ID and
+ *    Phenotype collections, which are consortium-only to everyone else. Rule 1
+ *    still applies to them: early-access is withheld from reviewers too.
+ *
+ * `access` is an access level, not the raw Auth0 userType -- see `userAccess`.
  */
-export function visibleVersions(versions, userType) {
+export function visibleVersions(versions, access) {
   return (versions || []).filter((version) => {
     const stages = versionStages(version);
     if (stages.length > 0 && stages.every((stage) => stage === 'early')) {
       return false;
     }
-    if (userType === 'internal') {
+    if (access === INTERNAL) {
       return true;
     }
-    return stages.length > 0 && stages.every((stage) => stage === 'public');
+    if (stages.length > 0 && stages.every((stage) => stage === 'public')) {
+      return true;
+    }
+    return access === REVIEWER && reviewerSeesCollection(version.storageLocation);
   });
 }
 
 /** Series with their versions filtered by entitlement; empty series dropped. */
-export function visibleSeries(entries, userType) {
+export function visibleSeries(entries, access) {
   return collectionSeries(entries)
-    .map((series) => ({ ...series, versions: visibleVersions(series.versions, userType) }))
+    .map((series) => ({ ...series, versions: visibleVersions(series.versions, access) }))
     .filter((series) => series.versions.length > 0);
 }
 
-export function hasVisibleCollections(study, userType) {
+export function hasVisibleCollections(study, access) {
   return Object.values(study.dataTypes).some(
-    (entries) => visibleSeries(entries, userType).length > 0
+    (entries) => visibleSeries(entries, access).length > 0
   );
 }
