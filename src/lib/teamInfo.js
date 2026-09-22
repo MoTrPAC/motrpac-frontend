@@ -75,11 +75,6 @@ const teamInfo = {
       image: `${imgSourceUrl}Pauline.jpg`,
     },
     {
-      name: 'Eric Leslie',
-      title: 'Postdoctoral Scholar',
-      image: `${imgSourceUrl}Eric.jpg`,
-    },
-    {
       name: 'Nick Lashinsky',
       title: 'Postdoctoral Scholar',
       image: `${imgSourceUrl}Nik.jpg`,
@@ -133,6 +128,11 @@ const teamInfo = {
     },
   ],
   Alumni: [
+    {
+      name: 'Eric Leslie',
+      title: 'Postdoctoral Scholar',
+      image: `${imgSourceUrl}Eric.jpg`,
+    },
     {
       name: 'Laurens van de Wiel, Ph.D.',
       title: 'Postdoctoral Scholar',
