@@ -6,20 +6,21 @@ import StudyFilterModule from './components/studyFilterModule';
 import CollectionFilterModule from './components/collectionFilterModule';
 import { SpeciesLegend, SpeciesLegendTooltip, SpeciesTags } from './components/speciesTags';
 import useCollectionSelection from './useCollectionSelection';
+import { accessLevel } from '../lib/userAccess';
 
 import '@styles/browseData.scss';
 import '@styles/tooltip.scss';
 
 function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name: [], category: [], reference_genome: [] }, onChangeFilter, onResetFilters }) {
   const profile = useSelector((state) => state.auth.profile);
-  const userType = profile?.user_metadata?.userType;
+  const access = accessLevel(profile);
   const {
     studyCodes,
     selected: selectedCollections,
     entitled,
     prefixes,
     reset: resetScope,
-  } = useCollectionSelection(userType);
+  } = useCollectionSelection(access);
 
   // Study and Collection are modules in this panel, so "Reset filters" clears
   // them too. Leaving either set after a reset read as the button being broken.
@@ -87,8 +88,8 @@ function BrowseDataFilter({ activeFilters = { assay: [], omics: [], tissue_name:
         </button>
       </div>
       <SpeciesLegendTooltip />
-      <StudyFilterModule userType={userType} />
-      <CollectionFilterModule userType={userType} />
+      <StudyFilterModule userType={access} />
+      <CollectionFilterModule userType={access} />
       {filters}
     </div>
   );
