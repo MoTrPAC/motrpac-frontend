@@ -1,5 +1,6 @@
 import studyDataCards, { humanPhenotypeDataCards } from './studyDataCards';
 import { allVersions, visibleSeries } from './studyDataAccess';
+import { INTERNAL, REVIEWER, reviewerSeesFile } from './userAccess';
 
 /**
  * Loads file metadata one collection at a time.
@@ -76,11 +77,11 @@ export function isKnownCollection(prefix) {
  * Derived from the same `visibleVersions` rule the cards render with, so the
  * file browser can never offer a collection the cards would have hidden.
  */
-export function entitledPrefixes(userType) {
+export function entitledPrefixes(access) {
   const prefixes = [];
   allDataCards.forEach((card) => {
     Object.values(card.dataTypes).forEach((entries) => {
-      visibleSeries(entries, userType).forEach((series) => {
+      visibleSeries(entries, access).forEach((series) => {
         series.versions.forEach((version) => {
           const prefix = prefixFromStorageLocation(version.storageLocation);
           if (isKnownCollection(prefix)) {
@@ -122,33 +123,43 @@ export function findCollection(prefix) {
  * per-file gate here, next to the per-collection one, so both are applied in
  * the same place and neither can be forgotten.
  */
-export function visibleTo(records, userType) {
-  return userType === 'internal'
-    ? records
-    : records.filter((record) => record.external_release === true);
+export function visibleTo(records, access) {
+  if (access === INTERNAL) {
+    return records;
+  }
+  if (access === REVIEWER) {
+    // Public files, plus every file of the study under review, whatever its
+    // release stage. Still checked per file rather than per collection: a
+    // reviewer browsing several collections at once gets one flat list, and the
+    // rows from a study they may not see have to drop out of it individually.
+    return records.filter(
+      (record) => record.external_release === true || reviewerSeesFile(record.object)
+    );
+  }
+  return records.filter((record) => record.external_release === true);
 }
 
-export async function loadCollection(prefix, userType) {
+export async function loadCollection(prefix, access) {
   const loader = LOADERS.get(prefix);
   if (typeof loader !== 'function') {
     throw new Error(`Unknown collection: ${prefix}`);
   }
   const module = await loader();
-  return visibleTo(module.default, userType);
+  return visibleTo(module.default, access);
 }
 
 /**
  * Load several collections at once, for browsing across the whole corpus.
  *
  * A prefix the user is not entitled to is a programming error, not a runtime
- * condition -- callers pass the output of `entitledPrefixes`. `userType` is not
+ * condition -- callers pass the output of `entitledPrefixes`. `access` is not
  * optional: defaulting it would mean the least privileged reading, which fails
  * safe, but silently dropping an internal user's consortium files is still a
  * bug, and one that looks like missing data rather than a mistake.
  */
-export async function loadCollections(prefixes, userType) {
+export async function loadCollections(prefixes, access) {
   const loaded = await Promise.all(
-    prefixes.map((prefix) => loadCollection(prefix, userType))
+    prefixes.map((prefix) => loadCollection(prefix, access))
   );
   return loaded.flat();
 }
