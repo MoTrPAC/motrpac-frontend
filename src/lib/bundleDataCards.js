@@ -1,5 +1,6 @@
 import BundleDataTypes from '../BrowseDataPage/components/bundleDataTypes';
 import { visibleVersions } from './studyDataAccess';
+import { INTERNAL, REVIEWER } from './userAccess';
 
 /**
  * Pre-bundled datasets, grouped into cards.
@@ -68,14 +69,24 @@ const bundleDataCards = [
 /**
  * May this user download restricted bundles?
  *
- * Restricted bundles hold individual-level human data. The rule is signed-in
- * consortium members only -- an authenticated external user gets exactly what
- * an anonymous visitor gets. dbGaP-approved access may widen this later, but
- * there is no dbGaP entitlement on the profile, so it is not a case the app can
- * recognise; this function is the one place that would change.
+ * Restricted bundles hold individual-level human data. Consortium members, and
+ * reviewers who have accepted the data use agreement -- `accessLevel` returns
+ * `reviewer` only once that agreement is on record, so declining reads as
+ * `external` here and gets the summary-level build instead. An authenticated
+ * external user gets exactly what an anonymous visitor gets.
+ *
+ * No study check is needed to keep a reviewer inside their own study. Every
+ * restricted build belongs to human-precovid-sed-adu, and the bundle
+ * collections a reviewer can see are already the public-stage ones that any
+ * visitor sees -- bundles carry no `storageLocation`, so `visibleVersions`
+ * cannot widen for a reviewer the way it does for the file browser.
+ *
+ * dbGaP-approved access may widen this further later, but there is no dbGaP
+ * entitlement on the profile, so it is not a case the app can recognise; this
+ * function is the one place that would change.
  */
-function mayAccessRestricted(userType) {
-  return userType === 'internal';
+function mayAccessRestricted(access) {
+  return access === INTERNAL || access === REVIEWER;
 }
 
 /**
