@@ -1,5 +1,12 @@
-import { describe, expect, test } from 'vitest';
-import { accessLevel, reviewerSeesCollection, reviewerSeesFile } from '../userAccess';
+import { beforeEach, describe, expect, test } from 'vitest';
+import {
+  REVIEWER_AGREEMENT_KEY,
+  accessLevel,
+  reviewerAgreementAccepted,
+  reviewerSeesCollection,
+  reviewerSeesFile,
+  setReviewerAgreement,
+} from '../userAccess';
 import { entitledPrefixes, visibleTo } from '../collectionFiles';
 import { visibleBundleCards } from '../bundleDataCards';
 import studyDataCards, { humanPhenotypeDataCards } from '../studyDataCards';
@@ -10,10 +17,20 @@ const REVIEWER = {
   app_metadata: { role: 'reviewer' },
 };
 
+// Reviewer access is conditional on the data use agreement, so every test that
+// expects a reviewer to be one has to say so. Cleared first, because an answer
+// left behind by the previous test would grant the access under examination.
+beforeEach(() => {
+  window.sessionStorage.clear();
+});
+
+const agreeToTerms = () => setReviewerAgreement(true);
+
 describe('accessLevel', () => {
   test('a reviewer is distinguished from the plain external user they look like', () => {
     // The whole reason this function exists: both carry userType 'external',
     // and every gate downstream sees only its return value.
+    agreeToTerms();
     expect(accessLevel(REVIEWER)).toBe('reviewer');
     expect(accessLevel({ user_metadata: { userType: 'external' } })).toBe('external');
   });
@@ -21,6 +38,7 @@ describe('accessLevel', () => {
   test('a role alone does not grant reviewer access', () => {
     // An internal user keeps internal access, and a role on a profile with no
     // userType is not an entitlement -- reviewer is external + role, both.
+    agreeToTerms();
     expect(accessLevel({
       user_metadata: { userType: 'internal' },
       app_metadata: { role: 'reviewer' },
@@ -29,6 +47,7 @@ describe('accessLevel', () => {
   });
 
   test('an unknown role is not a reviewer', () => {
+    agreeToTerms();
     expect(accessLevel({
       user_metadata: { userType: 'external' },
       app_metadata: { role: 'administrator' },
@@ -36,9 +55,64 @@ describe('accessLevel', () => {
   });
 
   test('an absent profile is anonymous, not privileged', () => {
+    agreeToTerms();
     [undefined, null, {}].forEach((profile) => {
       expect(accessLevel(profile)).toBeUndefined();
     });
+  });
+});
+
+describe('the data use agreement gates the access, not just the download buttons', () => {
+  test('declining leaves a reviewer with exactly what any external user gets', () => {
+    // The reported gap: declining disabled the dashboard buttons while the
+    // study collections, the release cards and the file browser stayed open,
+    // because each of those asks `accessLevel` and nothing asked the agreement.
+    setReviewerAgreement(false);
+    expect(accessLevel(REVIEWER)).toBe('external');
+  });
+
+  test('not having answered yet is a refusal, not a pass', () => {
+    // A reviewer who goes straight to /data-download never passes the dashboard
+    // and never sees the modal. Nothing has been stored, and that has to read
+    // as "no" -- the one case where failing open would be silent.
+    expect(reviewerAgreementAccepted()).toBe(false);
+    expect(accessLevel(REVIEWER)).toBe('external');
+  });
+
+  test('accepting grants it, and only an exact yes counts', () => {
+    agreeToTerms();
+    expect(accessLevel(REVIEWER)).toBe('reviewer');
+
+    // Guards the comparison: a truthy-but-wrong value must not pass.
+    window.sessionStorage.setItem(REVIEWER_AGREEMENT_KEY, 'TRUE');
+    expect(accessLevel(REVIEWER)).toBe('external');
+    window.sessionStorage.setItem(REVIEWER_AGREEMENT_KEY, '1');
+    expect(accessLevel(REVIEWER)).toBe('external');
+  });
+
+  test('the agreement never widens anyone else', () => {
+    // Accepting is a condition on reviewer access, not a grant of its own.
+    agreeToTerms();
+    expect(accessLevel({ user_metadata: { userType: 'external' } })).toBe('external');
+    expect(accessLevel({})).toBeUndefined();
+  });
+
+  test('unreadable storage denies rather than throwing', () => {
+    // Private browsing can make sessionStorage throw on access. This function
+    // is called from every access check in the app, so it has to answer.
+    const original = Object.getOwnPropertyDescriptor(window, 'sessionStorage');
+    Object.defineProperty(window, 'sessionStorage', {
+      configurable: true,
+      get() { throw new Error('SecurityError'); },
+    });
+
+    try {
+      expect(reviewerAgreementAccepted()).toBe(false);
+      expect(accessLevel(REVIEWER)).toBe('external');
+      expect(() => setReviewerAgreement(true)).not.toThrow();
+    } finally {
+      Object.defineProperty(window, 'sessionStorage', original);
+    }
   });
 });
 
@@ -139,9 +213,35 @@ describe('reviewers are confined to two studies', () => {
     expect(strays).toEqual([]);
   });
 
-  test('bundles are exactly what an external user gets', () => {
-    // Reviewers receive the R packages from the dashboard instead; the bundled
-    // downloads are deliberately left alone.
-    expect(visibleBundleCards('reviewer')).toEqual(visibleBundleCards('external'));
+});
+
+describe('bundles follow the same agreement', () => {
+  const zips = (access) =>
+    (JSON.stringify(visibleBundleCards(access)).match(/"bundles\/[^"]*"/g) || [])
+      .map((name) => name.replace(/"/g, ''));
+
+  test('accepting hands a reviewer the restricted builds', () => {
+    // The restricted build of a bundle is the individual-level one; the
+    // unrestricted build of the same collection is summary-level. Reviewers get
+    // the former, which is the point of them being reviewers.
+    const gained = zips('reviewer').filter((name) => !zips('external').includes(name));
+
+    expect(gained.length).toBeGreaterThan(0);
+    expect(gained.every((name) => /human-pre(covid|suspension)-sed-adu/.test(name))).toBe(true);
+  });
+
+  test('and nothing beyond what a consortium member gets', () => {
+    // A reviewer is not an internal user: elevated within one study, not past it.
+    expect(zips('reviewer').filter((name) => !zips('internal').includes(name))).toEqual([]);
+    expect(zips('reviewer').length).toBeLessThan(zips('internal').length);
+  });
+
+  test('declining leaves the bundles exactly as an external user sees them', () => {
+    setReviewerAgreement(false);
+    expect(zips(accessLevel(REVIEWER))).toEqual(zips('external'));
+  });
+
+  test('so does never having answered', () => {
+    expect(zips(accessLevel(REVIEWER))).toEqual(zips('external'));
   });
 });
