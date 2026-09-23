@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach, vi } from 'vitest';
+import { describe, test, expect, beforeEach, afterEach, vi } from 'vitest';
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import axios from 'axios';
@@ -24,7 +24,15 @@ describe('ReviewerDownloadButton - the data use agreement gates the fetch', () =
   beforeEach(() => {
     window.sessionStorage.clear();
     vi.clearAllMocks();
+    vi.stubEnv('VITE_API_SERVICE_ADDRESS', 'https://api.example');
+    vi.stubEnv('VITE_SIGNED_URL_ENDPOINT', '/signed-url');
+    vi.stubEnv('VITE_API_SERVICE_KEY', 'test-key');
+    vi.stubEnv('VITE_DATA_FILE_BUCKET', 'test-bucket');
     axios.get = vi.fn().mockResolvedValue({ data: { url: 'https://signed.example/pkg.zip' } });
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
   });
 
   test('a declined agreement blocks the request even with the button enabled', () => {
