@@ -568,25 +568,6 @@ const BundleDataTypes = {
       study_group: 'Pre-Suspension',
       collections: [
         {
-          collection: 'c1.3',
-          latest: false,
-          releaseStage: 'public',
-          bundleVersions: {
-            restricted: {
-              name: 'bundles/motrpac_human-precovid-sed-adu_epigenomics.zip',
-              size: '2.6 GB',
-              description:
-                'Differential analysis, metadata, QC normalized data across human tissues for ATAC-seq and Methylcap-seq assays (bundle size: 2.6 GB).',
-            },
-            unrestricted: {
-              name: 'bundles/external/motrpac_human-presuspension-sed-adu_epigenomics.zip',
-              size: '1.3 GB',
-              description:
-                'Summary-level results and metadata across different human tissues for the ATAC-seq and Methylcap-seq assays (bundle size: 1.3 GB).',
-            },
-          },
-        },
-        {
           collection: 'c2.0',
           latest: true,
           releaseStage: 'public',
@@ -605,6 +586,25 @@ const BundleDataTypes = {
             },
           },
         },
+        {
+          collection: 'c1.3',
+          latest: false,
+          releaseStage: 'public',
+          bundleVersions: {
+            restricted: {
+              name: 'bundles/motrpac_human-precovid-sed-adu_epigenomics.zip',
+              size: '2.6 GB',
+              description:
+                'Differential analysis, metadata, QC normalized data across human tissues for ATAC-seq and Methylcap-seq assays (bundle size: 2.6 GB).',
+            },
+            unrestricted: {
+              name: 'bundles/external/motrpac_human-presuspension-sed-adu_epigenomics.zip',
+              size: '1.3 GB',
+              description:
+                'Summary-level results and metadata across different human tissues for the ATAC-seq and Methylcap-seq assays (bundle size: 1.3 GB).',
+            },
+          },
+        },
       ],
     },
     {
@@ -616,25 +616,6 @@ const BundleDataTypes = {
       intervention: 'Sedentary',
       study_group: 'Pre-Suspension',
       collections: [
-        {
-          collection: 'c1.3',
-          latest: false,
-          releaseStage: 'public',
-          bundleVersions: {
-            restricted: {
-              name: 'bundles/motrpac_human-precovid-sed-adu_transcriptomics.zip',
-              size: '450.2 MB',
-              description:
-                'Differential analysis, metadata, QC normalized data across human tissues for RNA-seq (bundle size: 450.2 MB).',
-            },
-            unrestricted: {
-              name: 'bundles/external/motrpac_human-presuspension-sed-adu_transcriptomics.zip',
-              size: '162.6 MB',
-              description:
-                'Summary-level results and metadata across different human tissues for the RNA-seq assay (bundle size: 162.6 MB).',
-            },
-          },
-        },
         {
           collection: 'c2.0',
           latest: true,
@@ -654,6 +635,25 @@ const BundleDataTypes = {
             },
           },
         },
+        {
+          collection: 'c1.3',
+          latest: false,
+          releaseStage: 'public',
+          bundleVersions: {
+            restricted: {
+              name: 'bundles/motrpac_human-precovid-sed-adu_transcriptomics.zip',
+              size: '450.2 MB',
+              description:
+                'Differential analysis, metadata, QC normalized data across human tissues for RNA-seq (bundle size: 450.2 MB).',
+            },
+            unrestricted: {
+              name: 'bundles/external/motrpac_human-presuspension-sed-adu_transcriptomics.zip',
+              size: '162.6 MB',
+              description:
+                'Summary-level results and metadata across different human tissues for the RNA-seq assay (bundle size: 162.6 MB).',
+            },
+          },
+        },
       ],
     },
     {
@@ -665,25 +665,6 @@ const BundleDataTypes = {
       intervention: 'Sedentary',
       study_group: 'Pre-Suspension',
       collections: [
-        {
-          collection: 'c1.3',
-          latest: false,
-          releaseStage: 'public',
-          bundleVersions: {
-            restricted: {
-              name: 'bundles/motrpac_human-precovid-sed-adu_proteomics.zip',
-              size: '330.5 MB',
-              description:
-                'Differential analysis, metadata, QC normalized data across human tissues for Global Proteomics, Phosphoproteomics, and OLink (bundle size: 330.5 MB).',
-            },
-            unrestricted: {
-              name: 'bundles/external/motrpac_human-presuspension-sed-adu_proteomics.zip',
-              size: '104.7 MB',
-              description:
-                'Summary-level results and metadata across different human tissues for the Global Proteomics, Phosphoproteomics, and OLink assays (bundle size: 104.7 MB).',
-            },
-          },
-        },
         {
           collection: 'c2.0',
           latest: true,
@@ -703,6 +684,25 @@ const BundleDataTypes = {
             },
           },
         },
+        {
+          collection: 'c1.3',
+          latest: false,
+          releaseStage: 'public',
+          bundleVersions: {
+            restricted: {
+              name: 'bundles/motrpac_human-precovid-sed-adu_proteomics.zip',
+              size: '330.5 MB',
+              description:
+                'Differential analysis, metadata, QC normalized data across human tissues for Global Proteomics, Phosphoproteomics, and OLink (bundle size: 330.5 MB).',
+            },
+            unrestricted: {
+              name: 'bundles/external/motrpac_human-presuspension-sed-adu_proteomics.zip',
+              size: '104.7 MB',
+              description:
+                'Summary-level results and metadata across different human tissues for the Global Proteomics, Phosphoproteomics, and OLink assays (bundle size: 104.7 MB).',
+            },
+          },
+        },
       ],
     },
     {
@@ -714,25 +714,6 @@ const BundleDataTypes = {
       intervention: 'Sedentary',
       study_group: 'Pre-Suspension',
       collections: [
-        {
-          collection: 'c1.3',
-          latest: false,
-          releaseStage: 'public',
-          bundleVersions: {
-            restricted: {
-              name: 'bundles/motrpac_human-precovid-sed-adu_metabolomics-untargeted.zip',
-              size: '256.8 MB',
-              description:
-                'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-untargeted assays (bundle size: 256.8 MB).',
-            },
-            unrestricted: {
-              name: 'bundles/external/motrpac_human-presuspension-sed-adu_metabolomics-untargeted.zip',
-              size: '30.5 MB',
-              description:
-                'Summary-level results and metadata across different human tissues for the metabolomics-untargeted assays (bundle size: 30.5 MB).',
-            },
-          },
-        },
         {
           collection: 'c2.0',
           latest: true,
@@ -752,6 +733,25 @@ const BundleDataTypes = {
             },
           },
         },
+        {
+          collection: 'c1.3',
+          latest: false,
+          releaseStage: 'public',
+          bundleVersions: {
+            restricted: {
+              name: 'bundles/motrpac_human-precovid-sed-adu_metabolomics-untargeted.zip',
+              size: '256.8 MB',
+              description:
+                'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-untargeted assays (bundle size: 256.8 MB).',
+            },
+            unrestricted: {
+              name: 'bundles/external/motrpac_human-presuspension-sed-adu_metabolomics-untargeted.zip',
+              size: '30.5 MB',
+              description:
+                'Summary-level results and metadata across different human tissues for the metabolomics-untargeted assays (bundle size: 30.5 MB).',
+            },
+          },
+        },
       ],
     },
     {
@@ -763,25 +763,6 @@ const BundleDataTypes = {
       intervention: 'Sedentary',
       study_group: 'Pre-Suspension',
       collections: [
-        {
-          collection: 'c1.3',
-          latest: false,
-          releaseStage: 'public',
-          bundleVersions: {
-            restricted: {
-              name: 'bundles/motrpac_human-precovid-sed-adu_metabolomics-targeted.zip',
-              size: '23.8 MB',
-              description:
-                'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-targeted assays (bundle size: 23.8 MB).',
-            },
-            unrestricted: {
-              name: 'bundles/external/motrpac_human-presuspension-sed-adu_metabolomics-targeted.zip',
-              size: '21.8 MB',
-              description:
-                'Summary-level results and metadata across different human tissues for the metabolomics-targeted assays (bundle size: 21.8 MB).',
-            },
-          },
-        },
         {
           collection: 'c2.0',
           latest: true,
@@ -798,6 +779,25 @@ const BundleDataTypes = {
               size: '81.5 MB',
               description:
                 'Summary-level results and metadata across different human tissues for the metabolomics-targeted assays (bundle size: 81.5 MB).',
+            },
+          },
+        },
+        {
+          collection: 'c1.3',
+          latest: false,
+          releaseStage: 'public',
+          bundleVersions: {
+            restricted: {
+              name: 'bundles/motrpac_human-precovid-sed-adu_metabolomics-targeted.zip',
+              size: '23.8 MB',
+              description:
+                'Differential analysis, metadata, QC normalized data across human tissues for metabolomics-targeted assays (bundle size: 23.8 MB).',
+            },
+            unrestricted: {
+              name: 'bundles/external/motrpac_human-presuspension-sed-adu_metabolomics-targeted.zip',
+              size: '21.8 MB',
+              description:
+                'Summary-level results and metadata across different human tissues for the metabolomics-targeted assays (bundle size: 21.8 MB).',
             },
           },
         },
