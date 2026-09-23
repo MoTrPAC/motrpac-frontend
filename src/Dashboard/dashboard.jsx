@@ -9,6 +9,7 @@ import FeatureLinks from '../Search/featureLinks';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
 import ExternalLink from '@/lib/ui/externalLink';
 import ReviewerDownloadButton from './reviewerDownloadButton';
+import { reviewerAgreementAccepted, setReviewerAgreement } from '../lib/userAccess';
 
 import '@styles/dashboard.scss';
 
@@ -31,11 +32,11 @@ export function Dashboard({
   handleQCDataFetch, 
   lastModified = '',
 }) {
-  // Initialize agreement state from sessionStorage to persist across page navigations
-  const [agreement, setAgreement] = useState(() => {
-    const saved = sessionStorage.getItem('reviewerAgreement');
-    return saved === 'true';
-  });
+  // Initialize agreement state from sessionStorage to persist across page navigations.
+  // Read through `userAccess`, which is also what decides whether this reviewer
+  // may reach the collections themselves -- the button state and the data
+  // access have to come from the same answer.
+  const [agreement, setAgreement] = useState(reviewerAgreementAccepted);
 
   const userType = profile.user_metadata && profile.user_metadata.userType;
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
@@ -67,13 +68,13 @@ export function Dashboard({
   // Handler to save agreement to sessionStorage
   const handleAgree = () => {
     setAgreement(true);
-    sessionStorage.setItem('reviewerAgreement', 'true');
+    setReviewerAgreement(true);
   };
 
   // Handler to dismiss modal without agreeing - keeps buttons disabled
   const handleCancel = () => {
     setAgreement(false);
-    sessionStorage.setItem('reviewerAgreement', 'false');
+    setReviewerAgreement(false);
   };
 
   return (
