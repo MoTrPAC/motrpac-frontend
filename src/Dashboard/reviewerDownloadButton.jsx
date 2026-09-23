@@ -35,7 +35,12 @@ function ReviewerDownloadButton({
     fetching: false,
   });
 
-  // Fetch signed URL from the API
+  // Fetch signed URL from the API.
+  //
+  // The refusal paths return rather than rejecting. This is wired straight to
+  // onClick, so React discards whatever it returns and a rejected promise has
+  // nowhere to go -- it surfaces as an unhandled rejection in the console. The
+  // error state is already set by then, which is what the user sees either way.
     async function handleFileFetch(e) {
     e.preventDefault();
 
@@ -46,7 +51,7 @@ function ReviewerDownloadButton({
     // and the data it guards can never disagree.
     if (!reviewerAgreementAccepted()) {
       setFetchStatus({ status: 'error', fileUrl: null, fetching: false });
-      return Promise.reject(new Error('Data use agreement not accepted'));
+      return;
     }
 
     setFetchStatus({
@@ -63,7 +68,7 @@ function ReviewerDownloadButton({
     if (!api || !endpoint || !key || !bucket) {
       console.error('Missing required environment variables for file download');
       setFetchStatus({ status: 'error', fileUrl: null, fetching: false });
-      return Promise.reject(new Error('Configuration error'));
+      return;
     }
 
     try {
