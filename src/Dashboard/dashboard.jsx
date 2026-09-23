@@ -40,7 +40,8 @@ function ReviewerPackage({ title, description, filename, profile, disabled }) {
 
 ReviewerPackage.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  // Markup, not only text: two of these name a paper in bold.
+  description: PropTypes.node.isRequired,
   filename: PropTypes.string.isRequired,
   profile: PropTypes.shape({}).isRequired,
   disabled: PropTypes.bool.isRequired,
