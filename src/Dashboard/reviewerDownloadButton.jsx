@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
+import { reviewerAgreementAccepted } from '../lib/userAccess';
 
 /**
  * Renders a download button for reviewer R packages with signed URL fetching
@@ -37,6 +38,16 @@ function ReviewerDownloadButton({
   // Fetch signed URL from the API
     async function handleFileFetch(e) {
     e.preventDefault();
+
+    // The agreement is re-read here rather than trusted from `disabled`. That
+    // prop only decides how the button renders; it does not stop the handler
+    // running, so a declined agreement left these packages a devtools click
+    // away. Checked against the same store `accessLevel` reads, so the button
+    // and the data it guards can never disagree.
+    if (!reviewerAgreementAccepted()) {
+      setFetchStatus({ status: 'error', fileUrl: null, fetching: false });
+      return Promise.reject(new Error('Data use agreement not accepted'));
+    }
 
     setFetchStatus({
       status: 'fetching',
