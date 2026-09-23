@@ -40,21 +40,29 @@ export function Dashboard({
   const userType = profile.user_metadata && profile.user_metadata.userType;
   const hasAccess = profile.user_metadata && profile.user_metadata.hasAccess;
   const userRole = profile.app_metadata && profile.app_metadata.role;
+  const isReviewer = userType === 'external' && userRole === 'reviewer';
 
-  if (!isAuthenticated || !hasAccess) {
-    return <Navigate to="/" />;
-  }
-
-  // Show modal for reviewers who haven't agreed yet
+  // Show modal for reviewers who haven't agreed yet.
+  //
+  // Above the sign-in guard, not below it: hooks have to run on every render,
+  // and a signed-out render that reaches an early return first has called one
+  // hook where the previous render called two. React throws "Rendered fewer
+  // hooks than expected" rather than redirecting -- which is what a session
+  // expiring on this page did.
   useEffect(() => {
-    if (userType === 'external' && userRole === 'reviewer' && !agreement) {
+    if (isAuthenticated && hasAccess && isReviewer && !agreement) {
       $('#reviewerAgreementModal').modal('show');
-      
+
       return () => {
         $('#reviewerAgreementModal').modal('hide');
       };
     }
-  }, [userType, userRole, agreement]);
+    return undefined;
+  }, [isAuthenticated, hasAccess, isReviewer, agreement]);
+
+  if (!isAuthenticated || !hasAccess) {
+    return <Navigate to="/" />;
+  }
 
   // Handler to save agreement to sessionStorage
   const handleAgree = () => {
@@ -237,7 +245,7 @@ export function Dashboard({
         </>
       )}
       {/* Welcome message for external users with reviewer role */}
-      {userType && userType === 'external' && userRole && userRole === 'reviewer' && (
+      {isReviewer && (
         <>
           <div className="jumbotron jumbotron-fluid alert-data-release external-user">
             <div className="w-75 mx-auto">
