@@ -164,7 +164,7 @@ function ReviewerDownloadButton({
   return (
     <button
       type="button"
-      className="reviewer-data-download-link btn btn-primary mr-4"
+      className="reviewer-data-download-link btn btn-primary"
       onClick={handleFileFetch}
       disabled={disabled}
     >
