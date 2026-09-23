@@ -21,10 +21,57 @@ export const REVIEWER = 'reviewer';
 export const EXTERNAL = 'external';
 
 /**
+ * Where the reviewer's answer to the data use agreement is kept.
+ *
+ * `sessionStorage`, so it dies with the tab and a reviewer is asked again next
+ * time rather than being held to an answer they gave weeks ago. The navbar
+ * clears it on sign-out too, so the next person at the same browser starts from
+ * no answer rather than inheriting one.
+ *
+ * The name is exported because three files touch this key, and a typo in any
+ * one of them fails open in a way nothing would notice.
+ */
+export const REVIEWER_AGREEMENT_KEY = 'reviewerAgreement';
+
+/**
+ * Has this reviewer accepted the data use agreement?
+ *
+ * Anything other than an explicit yes is a no: an absent key -- a reviewer who
+ * went straight to the download page without passing the dashboard -- reads the
+ * same as a refusal. Storage access is guarded because a browser that refuses
+ * it (private mode, blocked cookies) must deny the elevated access, not throw
+ * from inside every access check in the app.
+ */
+export function reviewerAgreementAccepted() {
+  try {
+    return window.sessionStorage.getItem(REVIEWER_AGREEMENT_KEY) === 'true';
+  } catch (error) {
+    return false;
+  }
+}
+
+/** Record the reviewer's answer. */
+export function setReviewerAgreement(accepted) {
+  try {
+    window.sessionStorage.setItem(REVIEWER_AGREEMENT_KEY, accepted ? 'true' : 'false');
+  } catch (error) {
+    // Nothing to do: `reviewerAgreementAccepted` already reads an unwritable
+    // store as a refusal, which is the safe answer.
+  }
+}
+
+/**
  * Collapse an Auth0 profile into the one value the access gates understand.
  *
  * Returns `undefined` for an anonymous visitor, which every gate already treats
  * as the least privileged reading.
+ *
+ * A reviewer who has not accepted the data use agreement is `external`, not
+ * `reviewer`. The agreement is a condition of the access, so it belongs here
+ * rather than on the controls it governs: gating the dashboard's download
+ * buttons alone left the study collections, the release cards and the file
+ * browser open to someone who had declined, since each of those asks this
+ * function and nothing else.
  */
 export function accessLevel(profile) {
   const userType = profile?.user_metadata?.userType;
@@ -32,7 +79,7 @@ export function accessLevel(profile) {
     return INTERNAL;
   }
   if (userType === EXTERNAL && profile?.app_metadata?.role === REVIEWER) {
-    return REVIEWER;
+    return reviewerAgreementAccepted() ? REVIEWER : EXTERNAL;
   }
   return userType;
 }
