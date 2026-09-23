@@ -19,6 +19,33 @@ const PACK_CLINICAL_ANALYSIS = 'bundles/motrpac_human-precovid-sed-adu_clinic-an
 const PACK_ACUTE = 'bundles/motrpac_human-precovid-sed-adu_acute.zip';
 const PACK_REPRO = 'bundles/motrpac_human-precovid-sed-adu_repro.zip';
 
+/** One box in the reviewer package flow: what it is, and how to get it. */
+function ReviewerPackage({ title, description, filename, profile, disabled }) {
+  return (
+    <div className="package-flow-node">
+      <div className="feature-highlight-content">
+        <h3>{title}</h3>
+        <div className="data-release-text mb-3">{description}</div>
+        <ReviewerDownloadButton
+          filename={filename}
+          label="Download"
+          icon="bi-file-zip-fill"
+          profile={profile}
+          disabled={disabled}
+        />
+      </div>
+    </div>
+  );
+}
+
+ReviewerPackage.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  filename: PropTypes.string.isRequired,
+  profile: PropTypes.shape({}).isRequired,
+  disabled: PropTypes.bool.isRequired,
+};
+
 /**
  * Renders the Dashboard page
  *
@@ -258,123 +285,91 @@ export function Dashboard({
                 <div className="col-md-12 lead d-flex align-items-start">
                   <span className="data-release-text">
                     As a reviewer, you have been granted access to the pre-publication
-                    human data in R packages and the visualization tool. If you have
-                    any questions, please contact the journal editor directly.
+                    acute exercise in human sedentary adults data and the visualization
+                    tool. If you have any questions, please contact the journal editor directly.
                   </span>
                 </div>
                 <div className="col-md-12 lead d-flex align-items-start mt-2">
                   <span className="data-release-text">
-                    Please note, the Analysis and Clinical Analysis R packages depend
-                    on the Data R packages. It is recommended to download and install
-                    all four of them. See the README document in each of the R packages
-                    for more details.
+                    Please note, the MotrpacHumanPreSuspensionAnalysis package and
+                    motrpac-precovid-adult-sed-clinic-internal project depend on the
+                    MotrpacHumanPreSuspensionData package. It is recommended to download
+                    and install all of them. See the README document in each of the
+                    packages and projects for more details.
                   </span>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-md-4 lead d-flex align-items-start">
-                  <div className="feature-highlight-icon mr-3">
-                    <span className="material-icons" aria-hidden="true">
-                      folder
-                    </span>
-                  </div>
-                  <div className="feature-highlight-content mr-1">
-                    <h3>Data R Package</h3>
-                    <div className="data-release-text mb-3">
-                      Clinical and phenotypic data, omic normalized expression, and other resource files from the Acute Exercise in Human Sedentary Adults (pre-suspension) study
-                    </div>
-                    <ReviewerDownloadButton
-                      filename={PACK_DATA}
-                      label="Download"
-                      icon="bi-file-zip-fill"
-                      profile={profile}
-                      disabled={!agreement}
-                    />
-                  </div>
-                </div>
-                <div className="col-md-4 lead d-flex align-items-start">
-                  <div className="feature-highlight-icon mr-3">
-                    <span className="material-icons" aria-hidden="true">
-                      folder
-                    </span>
-                  </div>
-                  <div className="feature-highlight-content mr-1">
-                    <h3>Analysis R Package</h3>
-                    <div className="data-release-text mb-3">
-                      Summary statistics, differential analysis results, and downstream modeling outputs from the Acute Exercise in Human Sedentary Adults (pre-suspension) study
-                    </div>
-                    <ReviewerDownloadButton
-                      filename={PACK_ANALYSIS}
-                      label="Download"
-                      icon="bi-file-zip-fill"
-                      profile={profile}
-                      disabled={!agreement}
-                    />
-                  </div>
-                </div>
-                <div className="col-md-4 lead d-flex align-items-start">
-                  <div className="feature-highlight-icon mr-3">
-                    <span className="material-icons" aria-hidden="true">
-                      folder
-                    </span>
-                  </div>
-                  <div className="feature-highlight-content mr-1">
-                    <h3>Clinical Analysis R Package</h3>
-                    <div className="data-release-text mb-3">
-                      R project pipeline, focusing on clinical data, that creates tables and figures for analysis of the Acute Exercise in Human Sedentary Adults (pre-suspension) study
-                    </div>
-                    <ReviewerDownloadButton
-                      filename={PACK_CLINICAL_ANALYSIS}
-                      label="Download"
-                      icon="bi-file-zip-fill"
-                      profile={profile}
-                      disabled={!agreement}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="row mt-5">
-                <div className="col-md-4 lead d-flex align-items-start">
-                  <div className="feature-highlight-icon mr-3">
-                    <span className="material-icons" aria-hidden="true">
-                      folder
-                    </span>
-                  </div>
-                  <div className="feature-highlight-content mr-1">
-                    <h3>Manuscript R Package</h3>
-                    <div className="data-release-text mb-3">
-                      Code, parameters, and documentation/links to external data used to generate each of the manuscripts for the Acute Exercise in Human Sedentary Adults (pre-suspension) study
-                    </div>
-                    <ReviewerDownloadButton
-                      filename={PACK_ACUTE}
-                      label="Download"
-                      icon="bi-file-zip-fill"
-                      profile={profile}
-                      disabled={!agreement}
-                    />
-                  </div>
-                </div>
-                <div className="col-md-4 lead d-flex align-items-start">
-                  <div className="feature-highlight-icon mr-3">
-                    <span className="material-icons" aria-hidden="true">
-                      folder
-                    </span>
-                  </div>
-                  <div className="feature-highlight-content mr-1">
-                    <h3>Reproduction R Package</h3>
-                    <div className="data-release-text mb-3">
-                      End-to-end reproduction pipeline for the Acute Exercise in Human Sedentary Adults (pre-suspension) study, run as a single dependency graph
-                    </div>
-                    <ReviewerDownloadButton
-                      filename={PACK_REPRO}
-                      label="Download"
-                      icon="bi-file-zip-fill"
-                      profile={profile}
-                      disabled={!agreement}
-                    />
-                  </div>
-                </div>
-              </div>
+              {/*
+                The packages as a dependency flow rather than a grid of equals:
+                Reproduction builds the objects both R packages carry, and the
+                Manuscript and Clinical Analysis pipelines consume those. Read
+                top to bottom, that is also the install order.
+
+                Drawn in CSS -- see `.reviewer-package-flow` in dashboard.scss.
+                A diagramming library would be several hundred KB for five boxes
+                and four lines, and would not render the download buttons that
+                are the point of the page.
+              */}
+              <ol className="reviewer-package-flow list-unstyled mb-0">
+                <li className="package-flow-tier package-flow-tier-single">
+                  <ReviewerPackage
+                    title="motrpac-human-presuspension-repro"
+                    description="Repository that normalizes omics data, applies statistical models, builds every data object, versions it, uploads it, and carries it into both packages."
+                    filename={PACK_REPRO}
+                    profile={profile}
+                    disabled={!agreement}
+                  />
+                </li>
+
+                <li className="package-flow-link package-flow-link-fan" aria-hidden="true">
+                  <span className="flow-stem" />
+                  <span className="flow-bar" />
+                  <span className="flow-leg flow-leg-left" />
+                  <span className="flow-leg flow-leg-right" />
+                </li>
+
+                <li className="package-flow-tier package-flow-tier-pair">
+                  <ReviewerPackage
+                    title="MotrpacHumanPreSuspensionData"
+                    description="Package of individual level data, including phenotype/clinical, and qc-normalized multi-omic data. Installation required."
+                    filename={PACK_DATA}
+                    profile={profile}
+                    disabled={!agreement}
+                  />
+                  <ReviewerPackage
+                    title="MotrpacHumanPreSuspensionAnalysis"
+                    description="Package of aggregate results (i.e., differential abundance), and functions for integrated analysis. Installation required."
+                    filename={PACK_ANALYSIS}
+                    profile={profile}
+                    disabled={!agreement}
+                  />
+                </li>
+
+                <li className="package-flow-link package-flow-link-merge" aria-hidden="true">
+                  <span className="flow-riser flow-riser-left" />
+                  <span className="flow-riser flow-riser-right" />
+                  <span className="flow-bar" />
+                  <span className="flow-leg flow-leg-left" />
+                  <span className="flow-leg flow-leg-right" />
+                </li>
+
+                <li className="package-flow-tier package-flow-tier-pair">
+                  <ReviewerPackage
+                    title="motrpac-human-presuspension-acute"
+                    description={<span>Repository containing code for reproducing the multi-omic landscape paper entitled <span className="font-weight-bold">Multi-Omic, Multi-Tissue Responses to Acute Exercise in Sedentary Adults: Findings from the Molecular Transducers of Physical Activity Consortium</span>, as well as tissue specific companions.</span>}
+                    filename={PACK_ACUTE}
+                    profile={profile}
+                    disabled={!agreement}
+                  />
+                  <ReviewerPackage
+                    title="motrpac-precovid-adult-sed-clinic-internal"
+                    description={<span>Repository containing code for reproducing the clinical landscape paper entitled <span className="font-weight-bold">Molecular Transducers of Physical Activity Consortium (MoTrPAC): Initial Insights into the Dynamic Human Responses to Exercise</span></span>}
+                    filename={PACK_CLINICAL_ANALYSIS}
+                    profile={profile}
+                    disabled={!agreement}
+                  />
+                </li>
+              </ol>
             </div>
           </div>
           <div id="reviewerAgreementModal" className="modal fade" data-backdrop="static" data-keyboard="false" tabIndex="-1" aria-hidden="true">
