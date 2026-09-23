@@ -691,15 +691,15 @@ const BundleDataTypes = {
           bundleVersions: {
             restricted: {
               name: 'bundles/motrpac_human-precovid-sed-adu_proteomics_c2.0.zip',
-              size: '303 MB',
+              size: '304.7 MB',
               description:
-                'Differential analysis, metadata, QC normalized data across human tissues for Global Proteomics, Phosphoproteomics, and OLink (bundle size: 303 MB).',
+                'Differential analysis, metadata, QC normalized data across human tissues for Global Proteomics, Phosphoproteomics, and OLink (bundle size: 304.7 MB).',
             },
             unrestricted: {
               name: 'bundles/external/motrpac_human-presuspension-sed-adu_proteomics_c2.0.zip',
-              size: '162.8 MB',
+              size: '164.5 MB',
               description:
-                'Summary-level results and metadata across different human tissues for the Global Proteomics, Phosphoproteomics, and OLink assays (bundle size: 162.8 MB).',
+                'Summary-level results and metadata across different human tissues for the Global Proteomics, Phosphoproteomics, and OLink assays (bundle size: 164.5 MB).',
             },
           },
         },
