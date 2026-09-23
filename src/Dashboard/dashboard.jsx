@@ -15,6 +15,8 @@ import '@styles/dashboard.scss';
 const PACK_ANALYSIS = 'bundles/motrpac_human-precovid-sed-adu_analysis.zip';
 const PACK_DATA = 'bundles/motrpac_human-precovid-sed-adu_data.zip';
 const PACK_CLINICAL_ANALYSIS = 'bundles/motrpac_human-precovid-sed-adu_clinic-analysis.zip';
+const PACK_ACUTE = 'bundles/motrpac_human-precovid-sed-adu_acute.zip';
+const PACK_REPRO = 'bundles/motrpac_human-precovid-sed-adu_repro.zip';
 
 /**
  * Renders the Dashboard page
@@ -149,7 +151,7 @@ export function Dashboard({
             <div className="w-75 mx-auto">
               <h1 className="highlight-title display-4 mb-4 text-center">
                 <i className="bi bi-rocket-takeoff mr-3" aria-hidden="true" />
-                <span>New human dataset now available!</span>
+                <span>New human data collection now available!</span>
               </h1>
               <div className="row mb-5">
                 <div className="col-md-12 lead d-flex align-items-start">
@@ -158,8 +160,9 @@ export function Dashboard({
                       to="https://motrpac.org"
                       label="MoTrPAC"
                     />
-                    {' '}has publicly released new data
-                    collections. The Pre-Suspension Acute Exercise Study contains data from
+                    {' '}has publicly released new{' '}
+                    <Link to="/data-download">data collections</Link>
+                    . The Pre-Suspension Acute Exercise Study contains data from
                     sedentary adults undergoing acute resistance or endurance exercise
                     bouts. Visit the{' '}
                     <Link to="/search">Browse Results</Link>
@@ -253,9 +256,9 @@ export function Dashboard({
                 <div className="col-md-12 lead d-flex align-items-start mt-2">
                   <span className="data-release-text">
                     Please note, the Analysis and Clinical Analysis R packages depend
-                    on the Function and Data R packages. It is recommended to download
-                    and install all four of them. See the README document in each of the
-                    R packages for more details.
+                    on the Data R packages. It is recommended to download and install
+                    all four of them. See the README document in each of the R packages
+                    for more details.
                   </span>
                 </div>
               </div>
@@ -321,7 +324,48 @@ export function Dashboard({
                   </div>
                 </div>
               </div>
-
+              <div className="row mt-5">
+                <div className="col-md-4 lead d-flex align-items-start">
+                  <div className="feature-highlight-icon mr-3">
+                    <span className="material-icons" aria-hidden="true">
+                      folder
+                    </span>
+                  </div>
+                  <div className="feature-highlight-content mr-1">
+                    <h3>Manuscript R Package</h3>
+                    <div className="data-release-text mb-3">
+                      Code, parameters, and documentation/links to external data used to generate each of the manuscripts for the Acute Exercise in Human Sedentary Adults (pre-suspension) study
+                    </div>
+                    <ReviewerDownloadButton
+                      filename={PACK_ACUTE}
+                      label="Download"
+                      icon="bi-file-zip-fill"
+                      profile={profile}
+                      disabled={!agreement}
+                    />
+                  </div>
+                </div>
+                <div className="col-md-4 lead d-flex align-items-start">
+                  <div className="feature-highlight-icon mr-3">
+                    <span className="material-icons" aria-hidden="true">
+                      folder
+                    </span>
+                  </div>
+                  <div className="feature-highlight-content mr-1">
+                    <h3>Reproduction R Package</h3>
+                    <div className="data-release-text mb-3">
+                      End-to-end reproduction pipeline for the Acute Exercise in Human Sedentary Adults (pre-suspension) study, run as a single dependency graph
+                    </div>
+                    <ReviewerDownloadButton
+                      filename={PACK_REPRO}
+                      label="Download"
+                      icon="bi-file-zip-fill"
+                      profile={profile}
+                      disabled={!agreement}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div id="reviewerAgreementModal" className="modal fade" data-backdrop="static" data-keyboard="false" tabIndex="-1" aria-hidden="true">
