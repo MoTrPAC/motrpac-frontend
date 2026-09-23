@@ -185,7 +185,7 @@ const studyDataCards = [
           collection: 'c2.0',
           latest: true,
           storageLocation: `gs://${bucketName}/analysis/human-precovid-sed-adu/c2.0`,
-          releaseStage: 'consortium',
+          releaseStage: 'public',
         },
         {
           collection: 'c1.3',

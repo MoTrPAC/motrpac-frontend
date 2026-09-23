@@ -66,6 +66,152 @@
     cursor: not-allowed;
   }
 
+  // The reviewer R packages, drawn as the dependency flow they actually form.
+  //
+  // Lines in CSS, arrowheads as CSS triangles. Axis-aligned lines stretch with
+  // the container without distorting, which is why an SVG is not needed here --
+  // and a triangle drawn from borders keeps its shape whatever the row width,
+  // which is what an SVG marker would not.
+  //
+  // Both connectors put the horizontal bar at their midpoint and hang the legs
+  // off it, so every arrow into a tier starts on that one bar rather than at
+  // the box above it.
+  $flow-line: 2px;
+  $flow-colour: #b9c2cc;
+  $flow-arrow: 6px;
+  // Centre of each column of a two-box tier, measured from its own side.
+  $flow-branch: 25%;
+
+  .reviewer-package-flow {
+    .package-flow-tier {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 2.5rem;
+    }
+
+    // One fixed width and one floor on the height for all five, so the boxes
+    // read as equals however long their descriptions run. `stretch` squares up
+    // the two boxes within a tier; `min-height` squares the tiers with each
+    // other, which nothing else would.
+    .package-flow-node {
+      width: 38rem;
+      padding: 1.25rem 2rem 1.75rem 2rem;
+      border: 2px solid #dee2e6;
+      border-radius: 6px;
+      background-color: #fff;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    // Description takes the slack, so every Download button sits on the same
+    // line as its neighbour's rather than following the text up.
+    .feature-highlight-content {
+      min-width: 0;
+    }
+
+    .data-release-text {
+      flex: 1 1 auto;
+    }
+
+    .package-flow-link {
+      position: relative;
+      height: 3.25rem;
+
+      span {
+        position: absolute;
+        background-color: $flow-colour;
+      }
+
+      // The bar every leg below hangs from.
+      .flow-bar {
+        top: calc(50% - #{$flow-line} / 2);
+        left: $flow-branch;
+        right: $flow-branch;
+        height: $flow-line;
+      }
+
+      // Into the bar from above: one stem when fanning out, two risers when
+      // joining two boxes.
+      .flow-stem {
+        top: 0;
+        left: calc(50% - #{$flow-line} / 2);
+        width: $flow-line;
+        height: 50%;
+      }
+
+      .flow-riser {
+        top: 0;
+        width: $flow-line;
+        height: 50%;
+      }
+
+      // Out of the bar downwards, stopping short so the arrowhead lands on the
+      // box rather than overshooting it.
+      .flow-leg {
+        top: 50%;
+        width: $flow-line;
+        height: calc(50% - #{$flow-arrow});
+
+        &::after {
+          content: '';
+          position: absolute;
+          left: 50%;
+          bottom: -$flow-arrow;
+          transform: translateX(-50%);
+          border-top: $flow-arrow solid $flow-colour;
+          border-right: $flow-arrow solid transparent;
+          border-left: $flow-arrow solid transparent;
+        }
+      }
+
+      .flow-riser-left,
+      .flow-leg-left {
+        left: calc(#{$flow-branch} - #{$flow-line} / 2);
+      }
+
+      .flow-riser-right,
+      .flow-leg-right {
+        right: calc(#{$flow-branch} - #{$flow-line} / 2);
+      }
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .reviewer-package-flow {
+      .package-flow-tier {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .package-flow-node {
+        min-height: 0;
+      }
+
+      // Stacked boxes are one column, so everything belongs on the centre line
+      // and there is nothing left for the bar to join.
+      .package-flow-link {
+        height: 2.5rem;
+
+        .flow-bar,
+        .flow-riser-right,
+        .flow-leg-right {
+          display: none;
+        }
+
+        .flow-riser-left {
+          left: calc(50% - #{$flow-line} / 2);
+          height: 50%;
+        }
+
+        .flow-leg-left {
+          left: calc(50% - #{$flow-line} / 2);
+        }
+      }
+    }
+  }
+
   .feature-links-container {
     .card {
       border-radius: 6px;

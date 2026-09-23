@@ -11,9 +11,9 @@ So `collections/` and `facet-vocabulary.json` will normally show as modified in
 ## Why
 
 The real listings are ~4.8 MB across 24 collections and enumerate the object
-paths and sizes of consortium-only files. Neither belongs in the repo, so this
-follows the convention already used by the four per-study files at this level:
-commit something representative and small, place the real thing out-of-band.
+paths and sizes of consortium-only files. Neither belongs in the repo, so the
+rule here is: commit something representative and small, and place the real
+thing out-of-band.
 
 ## Layout
 
@@ -21,10 +21,12 @@ commit something representative and small, place the real thing out-of-band.
 |---|---|
 | `collections/{family}_{study}_{cN.M}-minified.json` | one file per collection; what the file browser loads |
 | `facet-vocabulary.json` | the Tissue / Omics / Assay options, built from `collections/` |
-| `*-files-minified.json` | the four legacy per-study files. **Nothing imports these.** Kept for reference |
 
-The four legacy files carry one record each — that is the convention this
-directory follows, not an accident.
+Those are the only two things here. Four per-study files used to sit at this
+level — `rat-training-06-all-version-files-minified.json` and its siblings —
+superseded by `collections/` and deleted once nothing imported them. The
+generator's `packaging:` block still names them, so `generator pack` would write
+them back; nothing in the normal workflow runs it.
 
 `collections/` and `facet-vocabulary.json` are generated together and must
 travel together. Real collections with a sampled vocabulary means the filter
@@ -74,11 +76,10 @@ in the checkout *before* the build, not uploaded to a server or CDN afterwards.
 
 ## Regenerating the samples
 
-`yarn metadata:mock` keeps **one real record per collection**, the first by object path — 24
-records, ~11 KB, matching the one-record convention of the legacy per-study
-files beside this README. Real rather than invented, so the shapes stay honest:
-null-vs-absent fields, comma-joined assay lists, the `Human `-prefixed tissue
-names.
+`yarn metadata:mock` keeps **one real record per collection**, the first by
+object path — 24 records, ~11 KB. Real rather than invented, so the shapes stay
+honest: null-vs-absent fields, comma-joined assay lists, the `Human `-prefixed
+tissue names.
 
 ### What that means for tests
 
@@ -95,5 +96,5 @@ Shipped metadata is only ever checked for **self-consistency** (the committed
 - a collection contributes exactly the facet values its files carry
 - no record without `external_release: true` reaches a non-internal user
 
-The suite passes unchanged against these 24 records and against the full 9,698,
+The suite passes unchanged against these 24 records and against the full 10,834,
 which is the property that makes the samples safe to commit.

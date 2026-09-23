@@ -86,6 +86,7 @@ export const assayListRat = assays.sort((a, b) =>
 const assaysHuman = [
   { filter_value: 'transcript-rna-seq', filter_label: 'RNA-seq' },
   { filter_value: 'epigen-methylcap-seq', filter_label: 'Methylcap-seq' },
+  { filter_value: 'epigen-atac-seq', filter_label: 'ATAC-seq' },
   { filter_value: 'metab-t-acoa', filter_label: 'Targeted Acyl-CoA' },
   { filter_value: 'metab-t-amines', filter_label: 'Targeted Amines' },
   { filter_value: 'metab-t-conv', filter_label: 'Targeted Conventional' },
@@ -95,6 +96,10 @@ const assaysHuman = [
   {
     filter_value: 'metab-t-tca',
     filter_label: 'Targeted Tricarboxylic Acid Cycle',
+  },
+  {
+    filter_value: 'metab-t-clinical',
+    filter_label: 'Clinical Chemistry Metabolites',
   },
   {
     filter_value: 'metab-u-hilicpos',
@@ -123,6 +128,10 @@ const assaysHuman = [
   { filter_value: 'prot-pr', filter_label: 'Global Proteomics' },
   { filter_value: 'prot-ph', filter_label: 'Phosphoproteomics' },
   { filter_value: 'prot-ol', filter_label: 'Proteomics Olink' },
+  {
+    filter_value: 'prot-clinical',
+    filter_label: 'Clinical Chemistry Proteins',
+  },
 ];
 
 export const assayListHuman = assaysHuman.sort((a, b) =>
@@ -235,6 +244,10 @@ const assaysGene = [
     filter_value: 'prot-ub-protein-corrected',
     filter_label: 'Protein Ubiquitination Corrected',
   },
+  {
+    filter_value: 'prot-clinical',
+    filter_label: 'Clinical Chemistry Proteins',
+  },
 ];
 
 export const assayListGene = assaysGene.sort((a, b) =>
@@ -250,6 +263,10 @@ const assaysProtein = [
   {
     filter_value: 'prot-ub-protein-corrected',
     filter_label: 'Protein Ubiquitination Corrected',
+  },
+  {
+    filter_value: 'prot-clinical',
+    filter_label: 'Clinical Chemistry Proteins',
   },
 ];
 
@@ -273,6 +290,10 @@ const assaysMetabolite = [
   {
     filter_value: 'metab-t-tca',
     filter_label: 'Targeted Tricarboxylic Acid Cycle',
+  },
+  {
+    filter_value: 'metab-t-clinical',
+    filter_label: 'Clinical Chemistry Metabolites',
   },
   {
     filter_value: 'metab-u-hilicpos',
@@ -317,6 +338,7 @@ export const defaultOmeList = [
   { filter_value: 'prot-pr', filter_label: 'Global Proteomics', filter_param: 'assay', filter_ome: 'proteomics', species: 'rat, human' },
   { filter_value: 'prot-ph', filter_label: 'Phosphoproteomics', filter_param: 'assay', filter_ome: 'proteomics', species: 'rat, human' },
   { filter_value: 'prot-ol', filter_label: 'Proteomics Olink', filter_param: 'assay', filter_ome: 'proteomics', species: 'human' },
+  { filter_value: 'prot-clinical', filter_label: 'Clinical Chemistry Proteins', filter_param: 'assay', filter_ome: 'proteomics', species: 'human' },
   { filter_value: 'prot-ac', filter_label: 'Acetyl Proteomics', filter_param: 'assay', filter_ome: 'proteomics', species: 'rat' },
   { filter_value: 'prot-ub', filter_label: 'Protein Ubiquitination' , filter_param: 'assay', filter_ome: 'proteomics', species: 'rat' },
   { filter_value: 'metabolomics', filter_label: 'Metabolomics', filter_param: 'omics', species: 'rat, human' },

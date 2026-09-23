@@ -6,6 +6,7 @@ import BrowseDataFilter from '../browseDataFilter';
 import SelectiveDataDownloads from './selectiveDataDownloads';
 import StudyDataExplorer from './studyDataExplorer';
 import ExternalLink from '../../lib/ui/externalLink';
+import { accessLevel } from '../../lib/userAccess';
 import { resolveScope } from '../../lib/collectionScope';
 import actions from '../browseDataActions';
 
@@ -25,11 +26,11 @@ function DataDownloadsMain({
   const dispatch = useDispatch();
 
   // anonymous user or authenticated user
-  const userType = profile.user_metadata && profile.user_metadata.userType;
+  const access = accessLevel(profile);
 
   // The URL is the source of truth for what is loaded, so a reload, a bookmark
   // or the browser's back button all reconstruct the same view.
-  const scope = resolveScope(location, userType);
+  const scope = resolveScope(location, access);
   // A primitive key so the effect compares by value, not array identity.
   const collectionsKey = scope.prefixes.join(',');
   const selectionKey = scope.selected.join(',');
@@ -104,7 +105,7 @@ function DataDownloadsMain({
               specify the relevant tissues/assays if you would like to get access
               to the raw files.
             </p>
-            {userType && userType === 'internal' && (
+            {access && access === 'internal' && (
               <p className="mb-0">
                 <span className="font-weight-bold">GCP bucket:</span> reveals the
                 Google Cloud Storage path for a data type, to copy into{' '}
@@ -156,7 +157,7 @@ function DataDownloadsMain({
               </li>
             </ul>
           </div>
-            {userType && userType === 'internal' && (
+            {access && access === 'internal' && (
               <p className="mb-2">
                 The acute exercise in young adult rats study datasets are currently available to consortium
                 members only in the early preview phase.
@@ -205,10 +206,10 @@ function DataDownloadsMain({
               </span>
             </span>
           </div>
-          <StudyDataExplorer userType={userType} profile={profile} />
+          <StudyDataExplorer userType={access} profile={profile} />
         </div>
         {/* Additional data information */}
-        {userType && userType === 'internal' ? (
+        {access && access === 'internal' ? (
           <div className="browse-data-summary-content col-12 col-md-12">
             <div className="bd-callout bd-callout-info">
               <h4>Additional Information</h4>

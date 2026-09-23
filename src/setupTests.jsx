@@ -107,20 +107,22 @@ Object.defineProperty(window, 'ResizeObserver', {
 // Mock fetch
 global.fetch = vi.fn();
 
-// Mock localStorage
-const localStorageMock = {
-  getItem: vi.fn(),
-  setItem: vi.fn(),
-  clear: vi.fn(),
-  removeItem: vi.fn(),
-};
-global.localStorage = localStorageMock;
+// Mock localStorage / sessionStorage.
+//
+// Backed by a real Map rather than bare `vi.fn()` stubs: a getItem that always
+// answers undefined cannot express "this value was stored", so anything that
+// round-trips through storage -- the reviewer data use agreement, which gates
+// access -- would read as absent no matter what the code under test wrote. Still
+// spies, so call assertions keep working.
+function storageMock() {
+  const store = new Map();
+  return {
+    getItem: vi.fn((key) => (store.has(key) ? store.get(key) : null)),
+    setItem: vi.fn((key, value) => { store.set(key, String(value)); }),
+    removeItem: vi.fn((key) => { store.delete(key); }),
+    clear: vi.fn(() => { store.clear(); }),
+  };
+}
 
-// Mock sessionStorage
-const sessionStorageMock = {
-  getItem: vi.fn(),
-  setItem: vi.fn(),
-  clear: vi.fn(),
-  removeItem: vi.fn(),
-};
-global.sessionStorage = sessionStorageMock;
+global.localStorage = storageMock();
+global.sessionStorage = storageMock();

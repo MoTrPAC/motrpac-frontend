@@ -1,7 +1,7 @@
 import { describe, test, expect, vi } from 'vitest';
 import { screen, fireEvent, render, within } from '@testing-library/react';
 import React from 'react';
-import DataReleaseCards, { STAGE_SECTIONS } from '../dataReleaseCard';
+import DataReleaseCards, { STAGE_SECTIONS, studyRowsForStage } from '../dataReleaseCard';
 import studyDataCards, { humanPhenotypeDataCards } from '../../../lib/studyDataCards';
 import { allVersions, hasVisibleCollections, versionStages } from '../../../lib/studyDataAccess';
 
@@ -49,6 +49,34 @@ describe('DataReleaseCards - stage sections', () => {
 
     expect(screen.getByRole('heading', { name: /^public release$/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /^consortium release$/i })).toBeInTheDocument();
+  });
+
+  test('a reviewer gets no Consortium section, though they can browse three of its collections', () => {
+    // Deliberate, and the reason is a modelling gap rather than entitlement.
+    // The three human-precovid-sed-adu collections a reviewer may browse are
+    // publicly released with a dbGaP access condition; the study cards encode
+    // that by holding them at `consortium` so the Data Hub never serves them.
+    // This panel is organised *by* stage, so listing them would label publicly
+    // released data "Consortium Release". Withheld here until release stage and
+    // distribution are separated -- which reaches the metadata generator too.
+    renderReleases('reviewer');
+
+    expect(screen.getByRole('heading', { name: /^public release$/i })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: /^consortium release$/i })).not.toBeInTheDocument();
+  });
+
+  test('the rows are entitlement-filtered too, not just the section', () => {
+    // Defence in depth. The section gate is what withholds consortium data, and
+    // it is one edit away from being the only thing that does -- these rows used
+    // to carry every study's collections regardless of who was asking.
+    const rows = studyRowsForStage(studyDataCards, 'consortium', 'reviewer');
+    const studies = rows.map(({ study }) => study.code);
+
+    expect(studies).toEqual(['human-precovid-sed-adu']);
+    expect(studyRowsForStage(studyDataCards, 'consortium', 'external')).toEqual([]);
+    expect(
+      studyRowsForStage(studyDataCards, 'consortium', 'internal').length
+    ).toBeGreaterThan(studies.length);
   });
 
   test('each section counts only the collections it contains', () => {

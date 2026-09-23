@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { trackEvent } from '../GoogleAnalytics/googleAnalytics';
+import { reviewerAgreementAccepted } from '../lib/userAccess';
 
 /**
  * Renders a download button for reviewer R packages with signed URL fetching
@@ -34,9 +35,24 @@ function ReviewerDownloadButton({
     fetching: false,
   });
 
-  // Fetch signed URL from the API
+  // Fetch signed URL from the API.
+  //
+  // The refusal paths return rather than rejecting. This is wired straight to
+  // onClick, so React discards whatever it returns and a rejected promise has
+  // nowhere to go -- it surfaces as an unhandled rejection in the console. The
+  // error state is already set by then, which is what the user sees either way.
     async function handleFileFetch(e) {
     e.preventDefault();
+
+    // The agreement is re-read here rather than trusted from `disabled`. That
+    // prop only decides how the button renders; it does not stop the handler
+    // running, so a declined agreement left these packages a devtools click
+    // away. Checked against the same store `accessLevel` reads, so the button
+    // and the data it guards can never disagree.
+    if (!reviewerAgreementAccepted()) {
+      setFetchStatus({ status: 'error', fileUrl: null, fetching: false });
+      return;
+    }
 
     setFetchStatus({
       status: 'fetching',
@@ -52,7 +68,7 @@ function ReviewerDownloadButton({
     if (!api || !endpoint || !key || !bucket) {
       console.error('Missing required environment variables for file download');
       setFetchStatus({ status: 'error', fileUrl: null, fetching: false });
-      return Promise.reject(new Error('Configuration error'));
+      return;
     }
 
     try {
@@ -153,7 +169,7 @@ function ReviewerDownloadButton({
   return (
     <button
       type="button"
-      className="reviewer-data-download-link btn btn-primary mr-4"
+      className="reviewer-data-download-link btn btn-primary"
       onClick={handleFileFetch}
       disabled={disabled}
     >
