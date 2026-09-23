@@ -113,7 +113,12 @@ export function visibleBundleCards(userType) {
           const collections = visibleVersions(bundle.collections, userType)
             .map((collection) => {
               const file = fileFor(collection, userType);
-              return file ? { ...collection, ...file } : null;
+              // `bundleVersions` is dropped, not spread through: it names the
+              // restricted build too, and the point of this function is that
+              // the caller is handed one file it may have. Nothing downstream
+              // reads it, and leaving it would let something start to.
+              const { bundleVersions, ...rest } = collection;
+              return file ? { ...rest, ...file } : null;
             })
             .filter(Boolean);
           return {
