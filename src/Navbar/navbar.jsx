@@ -9,7 +9,6 @@ import actions from '../Auth/authActions';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
 import DataStatusActions from '../DataStatusPage/dataStatusActions';
 import LoginButton from '../lib/loginButton';
-import { REVIEWER_AGREEMENT_KEY } from '../lib/userAccess';
 import onVisibilityChange from '../lib/utils/pageVisibility';
 import { getDataVizURL } from '../lib/utils/dataVizUrl';
 
@@ -102,8 +101,6 @@ export function Navbar({
 
   const handleLogout = () => {
     logout();
-    // Clear reviewer agreement from sessionStorage
-    sessionStorage.removeItem(REVIEWER_AGREEMENT_KEY);
     // delay state reset so that list files do not
     // disappear from the UI prior to page change
     setTimeout(() => {

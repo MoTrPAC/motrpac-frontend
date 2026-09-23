@@ -61,6 +61,22 @@ export function setReviewerAgreement(accepted) {
 }
 
 /**
+ * Forget the answer, so the next reviewer at this browser is asked again.
+ *
+ * Called on logout. `Auth.logout` empties localStorage but not sessionStorage,
+ * and the agreement lives in the latter, so without this an expired session
+ * followed by a fresh sign-in would inherit the previous reviewer's acceptance
+ * and never show the modal.
+ */
+export function clearReviewerAgreement() {
+  try {
+    window.sessionStorage.removeItem(REVIEWER_AGREEMENT_KEY);
+  } catch (error) {
+    // An unreadable store has nothing to clear, and logout must not fail here.
+  }
+}
+
+/**
  * Collapse an Auth0 profile into the one value the access gates understand.
  *
  * Returns `undefined` for an anonymous visitor, which every gate already treats

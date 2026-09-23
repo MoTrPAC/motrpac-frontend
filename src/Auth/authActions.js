@@ -1,4 +1,5 @@
 import Auth from './Auth';
+import { clearReviewerAgreement } from '../lib/userAccess';
 
 const auth = new Auth();
 
@@ -55,6 +56,11 @@ export function loginAsync() {
 
 export function logoutAsync() {
   return (dispatch) => {
+    // Before `auth.logout`, which redirects to Auth0 -- anything after it is
+    // racing the navigation. `Auth.logout` clears localStorage; the reviewer
+    // agreement is in sessionStorage, so it has to be cleared by name, and here
+    // rather than at a button, so the expiry paths clear it too.
+    clearReviewerAgreement();
     auth.logout();
     dispatch(receiveLogout());
   };
