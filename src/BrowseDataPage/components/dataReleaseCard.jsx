@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { DESIGN_MODIFIERS, KIND_ORDER, STAGE_CODES, STAGE_LABELS } from '../../lib/studyDataCards';
-import { collectionSeries, versionStages } from '../../lib/studyDataAccess';
+import { collectionSeries, versionStages, visibleVersions } from '../../lib/studyDataAccess';
 import CollectionActionButtons from './collectionActionButtons';
 import CollectionLine from './collectionLine';
 import KindChip from './kindChip';
@@ -32,8 +32,14 @@ export const STAGE_SECTIONS = [
  * appear under more than one stage - rat-training-06 Quant-ID is public at c1.0
  * and c2.0, and consortium-only at c3.0. Each row therefore lists only the kinds
  * that actually have a collection at the stage being rendered.
+ *
+ * Entitlement is applied per collection as well as per section. The section
+ * gate below is what actually withholds consortium data today, so this is the
+ * second layer, not the first -- but without it the rows carry every study's
+ * collections regardless of who is asking, and the gate is one edit away from
+ * being the only thing standing between a reader and data they may not see.
  */
-function studyRowsForStage(studies, stage) {
+export function studyRowsForStage(studies, stage, access) {
   return studies
     .map((study) => ({
       study,
@@ -45,7 +51,7 @@ function studyRowsForStage(studies, stage) {
         series: collectionSeries(study.dataTypes[kind])
           .map((entry) => ({
             ...entry,
-            versions: entry.versions.filter((version) =>
+            versions: visibleVersions(entry.versions, access).filter((version) =>
               versionStages(version).includes(stage)
             ),
           }))
@@ -213,16 +219,27 @@ ReleaseStudyRow.propTypes = {
 };
 
 function DataReleaseCards({ studies, userType = undefined, onBrowseFiles = () => {} }) {
-  // Consortium collections are never rendered for external or anonymous users -
-  // the whole section is absent rather than empty.
-  const sections = STAGE_SECTIONS.filter(
-    (section) => section.key === 'public' || userType === 'internal'
-  );
+  // Consortium collections are rendered for internal users only - the whole
+  // section is absent rather than empty.
+  //
+  // Reviewers are deliberately not included, even though the study cards do let
+  // them browse three of this study's collections. Those three are
+  // publicly released with a dbGaP access condition, and the cards model that
+  // by holding them at `consortium` so the Data Hub never serves them. That
+  // works where stage is invisible, but this panel *is* the stage, so listing
+  // them here would file publicly-released data under "Consortium Release".
+  // Separating release stage from who distributes the bytes is the real fix and
+  // spans the metadata generator too; until then, showing a reviewer nothing is
+  // better than showing them something mislabelled.
+  const sections = STAGE_SECTIONS.map((section) => ({
+    ...section,
+    rows: studyRowsForStage(studies, section.key, userType),
+  })).filter((section) => section.key === 'public' || userType === 'internal');
 
   return (
     <div className="data-releases-panel">
       {sections.map((section) => {
-        const rows = studyRowsForStage(studies, section.key);
+        const { rows } = section;
         const count = collectionCount(rows);
 
         return (
