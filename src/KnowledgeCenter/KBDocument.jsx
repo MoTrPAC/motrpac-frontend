@@ -37,7 +37,13 @@ function KBDocument({ title, content = '' }) {
     // `getElementById` rather than `querySelector`, so ids that are not valid
     // CSS selectors -- a leading digit, a dot from a version number -- still
     // resolve. Slugs here come from heading text and do contain both.
-    const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+    let targetId;
+    try {
+      targetId = decodeURIComponent(hash.slice(1));
+    } catch {
+      return;
+    }
+    const target = document.getElementById(targetId);
     if (target) target.scrollIntoView();
   }, [hash, content]);
 
