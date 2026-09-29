@@ -518,16 +518,23 @@ function addUnlistedDocs(navStructure, files) {
 
     const dir = parts.slice(0, -1).join("/");
     const placement = placementByDir.get(dir);
-    if (!placement) {
+    if (!placement || !placement.category) {
       console.warn(
         `Warning: skipping doc in a directory the nav does not cover: ${file.relativePath}`
       );
       continue;
     }
 
+    // Built the same way as `registerLeaf`, including the uncategorised case:
+    // a nav entry with a direct path registers the docs root with a null
+    // category, so a root-level file lands here and must route to
+    // `/knowledge-center/<slug>` rather than interpolating "null" into the URL.
     const { category, subcategory } = placement;
-    let route = `/knowledge-center/${category}`;
-    if (subcategory) route += `/${subcategory}`;
+    let route = "/knowledge-center";
+    if (category) {
+      route += `/${category}`;
+      if (subcategory) route += `/${subcategory}`;
+    }
     route += `/${slug}`;
 
     routeByPath.set(file.relativePath, route);
