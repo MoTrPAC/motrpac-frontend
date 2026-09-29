@@ -83,8 +83,13 @@ function KnowledgeCenter() {
     if (sub && !doc) {
       // It's a subcategory landing — if no index content, redirect to first child doc
       if (!sub.indexContent) {
+        // Skipping `unlisted` docs: this lands a reader somewhere they did not
+        // choose, so it has to be a page the sidebar would have offered them.
         const firstDoc = documents.find(
-          (d) => d.category === category && d.subcategory === subcategoryOrDoc
+          (d) =>
+            d.category === category
+            && d.subcategory === subcategoryOrDoc
+            && !d.unlisted
         );
         if (firstDoc) {
           return {
