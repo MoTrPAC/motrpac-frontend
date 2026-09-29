@@ -42,9 +42,12 @@ function KBSidebar({
     });
   };
 
+  // `unlisted` docs are absent from the mkdocs nav and stay absent here. They
+  // are published so that a link to one resolves rather than rendering
+  // "not found"; listing them would overrule the decision to leave them out.
   const getDocsForCategory = (catSlug, subSlug = null) =>
     documents.filter(
-      (d) => d.category === catSlug && d.subcategory === subSlug
+      (d) => d.category === catSlug && d.subcategory === subSlug && !d.unlisted
     );
 
   const isActiveDoc = (docSlug, catSlug, subSlug = null) => {

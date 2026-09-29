@@ -68,13 +68,6 @@ const {
 
 const isStrictDocsFetch = /^true$/i.test(String(DOCS_FETCH_STRICT).trim());
 
-if (!GITHUB_PAT || !GITHUB_REPO_OWNER || !GITHUB_REPO_NAME) {
-  console.warn(
-    "Skipping docs fetch: missing one or more required env vars (GITHUB_PAT, GITHUB_REPO_OWNER, GITHUB_REPO_NAME)."
-  );
-  process.exit(0);
-}
-
 const API_BASE = "https://api.github.com";
 const REPO_SLUG = `${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}`;
 const HEADERS = {
@@ -327,6 +320,12 @@ function buildNavStructure(navTree) {
   const categoriesMap = new Map();
   const docsByPath = new Map();
   const routeByPath = new Map();
+  // Directory -> the category/subcategory the nav files that directory under.
+  // A folder name is not the same thing as a nav slug: a subcategory slug comes
+  // from its *label*, so `data-collections/analysis-collections/` is published
+  // under `analysis-results`. Unlisted docs are placed by this map rather than
+  // by their path, or their route would not match their siblings'.
+  const placementByDir = new Map();
   let homePath = "index.md";
 
   function ensureCategory(slug, label, order) {
@@ -375,6 +374,11 @@ function buildNavStructure(navTree) {
       route = `/knowledge-center/${file}`;
     }
     routeByPath.set(relativePath, route);
+
+    const dir = parts.slice(0, -1).join("/");
+    if (!placementByDir.has(dir)) {
+      placementByDir.set(dir, { category, subcategory });
+    }
 
     if (isIndex) {
       if (!category) homePath = relativePath;
@@ -470,7 +474,73 @@ function buildNavStructure(navTree) {
     categories,
     docsByPath,
     routeByPath,
+    placementByDir,
   };
+}
+
+/**
+ * Publish markdown that the mkdocs nav does not list.
+ *
+ * A doc can be linked from a listed page without being in the nav itself. Left
+ * out of `docsByPath` it was dropped, while `transformInternalLinks` still
+ * rewrote the link into a Knowledge Center route -- so the link looked live and
+ * rendered "not found". Two such links shipped.
+ *
+ * These are marked `unlisted` so the sidebar can leave them out: absent from
+ * mkdocs is a decision, and publishing them into the nav would overrule it. The
+ * point is only that a link to one resolves.
+ *
+ * A doc in a directory the nav never mentions is still skipped -- there is no
+ * category to file it under, and inventing one from the folder name is how the
+ * mismatched routes arose in the first place.
+ */
+function addUnlistedDocs(navStructure, files) {
+  const { docsByPath, routeByPath, placementByDir } = navStructure;
+  let order = docsByPath.size;
+
+  for (const file of files) {
+    if (file.type !== "blob") continue;
+    if (!file.relativePath.endsWith(".md")) continue;
+    if (isExcluded(file.relativePath)) continue;
+    if (docsByPath.has(file.relativePath)) continue;
+    if (routeByPath.has(file.relativePath)) continue;
+
+    const parts = file.relativePath.replace(/\.md$/, "").split("/");
+    const slug = parts[parts.length - 1];
+    if (slug === "index") continue;
+
+    const dir = parts.slice(0, -1).join("/");
+    const placement = placementByDir.get(dir);
+    if (!placement || !placement.category) {
+      console.warn(
+        `Warning: skipping doc in a directory the nav does not cover: ${file.relativePath}`
+      );
+      continue;
+    }
+
+    // Built the same way as `registerLeaf`, including the uncategorised case:
+    // a nav entry with a direct path registers the docs root with a null
+    // category, so a root-level file lands here and must route to
+    // `/knowledge-center/<slug>` rather than interpolating "null" into the URL.
+    const { category, subcategory } = placement;
+    let route = "/knowledge-center";
+    if (category) {
+      route += `/${category}`;
+      if (subcategory) route += `/${subcategory}`;
+    }
+    route += `/${slug}`;
+
+    routeByPath.set(file.relativePath, route);
+    docsByPath.set(file.relativePath, {
+      title: slugToTitle(slug),
+      category,
+      subcategory,
+      order: order++,
+      slug,
+      unlisted: true,
+    });
+    console.log(`Publishing doc not in the nav, hidden from the sidebar: ${file.relativePath}`);
+  }
 }
 
 /**
@@ -564,6 +634,8 @@ function buildFallbackNavStructure(files) {
     categories,
     docsByPath,
     routeByPath,
+    // Path-derived already, so there is nothing for `addUnlistedDocs` to place.
+    placementByDir: new Map(),
   };
 }
 
@@ -775,8 +847,20 @@ function normalizeContent(content, relativePath, routeByPath = null) {
   result = stripHtmlTags(result);
   result = transformInternalLinks(result, relativePath, routeByPath);
   result = fixBrandNamesInPlainTextOnly(result);
-  // Trim trailing whitespace per line
-  result = result.replace(/[^\S\r\n]+$/gm, "");
+  // Trim trailing whitespace per line, except the two spaces that mean a hard
+  // line break. Authors use them for label lines that have to stack -- "Data
+  // collection type:", "Levels included:" -- and stripping them left the lines
+  // joined into one paragraph, which is what CommonMark does with a bare
+  // newline. Runs of two or more normalise to exactly two; a single trailing
+  // space or a tab still goes, so the tidying this was written for still holds.
+  result = result.replace(/[^\S\r\n]+$/gm, (trailing, offset, whole) => {
+    // Only after real content. On a whitespace-only line the match is the whole
+    // line, and keeping two spaces there would leave an indented blank line
+    // that the blank-line collapse below can no longer see.
+    const lineStart = whole.lastIndexOf("\n", offset - 1) + 1;
+    const hasContent = offset > lineStart;
+    return hasContent && / {2,}$/.test(trailing) ? "  " : "";
+  });
   // Collapse excessive blank lines (3+ → 2)
   result = result.replace(/(\r?\n){3,}/g, "\n\n");
   return result.trim();
@@ -929,9 +1013,8 @@ function buildOutput(files, manifest, navStructure) {
 
     const navDoc = navStructure.docsByPath.get(file.relativePath);
     if (!navDoc) {
-      console.warn(
-        `Warning: skipping doc not present in mkdocs nav: ${file.relativePath}`
-      );
+      // `addUnlistedDocs` has already placed everything it could and warned
+      // about the rest, so reaching here means the file has no home at all.
       continue;
     }
 
@@ -948,6 +1031,9 @@ function buildOutput(files, manifest, navStructure) {
       order: frontmatter?.order ?? manifestMeta.order ?? navDoc.order,
       tags: frontmatter?.tags || manifestMeta.tags || [],
       content: cleanContent,
+      // Reachable by link, kept out of the sidebar. Only set when true, so the
+      // shape of every other document is unchanged.
+      ...(navDoc.unlisted ? { unlisted: true } : {}),
     });
   }
 
@@ -995,6 +1081,16 @@ function buildOutput(files, manifest, navStructure) {
 // ---------------------------------------------------------------------------
 
 async function main() {
+  // Checked here rather than at module scope so this file can be imported --
+  // its markdown handling is worth testing directly, and a top-level
+  // `process.exit` makes that impossible.
+  if (!GITHUB_PAT || !GITHUB_REPO_OWNER || !GITHUB_REPO_NAME) {
+    console.warn(
+      "Skipping docs fetch: missing one or more required env vars (GITHUB_PAT, GITHUB_REPO_OWNER, GITHUB_REPO_NAME)."
+    );
+    return;
+  }
+
   const startTime = Date.now();
 
   console.log(
@@ -1012,6 +1108,10 @@ async function main() {
   const navStructure = navTree.length > 0
     ? buildNavStructure(navTree)
     : buildFallbackNavStructure(treeItems);
+
+  // Before the links are rewritten: a link to one of these must resolve to the
+  // same route the document is published at, and both come from `routeByPath`.
+  addUnlistedDocs(navStructure, treeItems);
 
   const mdFiles = treeItems.filter(
     (item) =>
@@ -1056,14 +1156,24 @@ async function main() {
   );
 }
 
-main().catch((err) => {
-  console.error("Failed to fetch docs:", err);
-  if (isStrictDocsFetch) {
-    process.exit(1);
-  }
+// Run only as a script, not when imported by a test.
+const isEntryPoint =
+  process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 
-  console.warn(
-    "Continuing build because DOCS_FETCH_STRICT is not enabled. Knowledge Center content may be stale."
-  );
-  process.exit(0);
-});
+if (isEntryPoint) {
+  main().catch((err) => {
+    console.error("Failed to fetch docs:", err);
+    if (isStrictDocsFetch) {
+      process.exit(1);
+    }
+
+    console.warn(
+      "Continuing build because DOCS_FETCH_STRICT is not enabled. Knowledge Center content may be stale."
+    );
+    process.exit(0);
+  });
+}
+
+// Exported for tests. The script's own entry point is the `isEntryPoint` block
+// above; nothing else imports these at runtime.
+export { normalizeContent, docsPathToRoute, addUnlistedDocs, buildNavStructure };
