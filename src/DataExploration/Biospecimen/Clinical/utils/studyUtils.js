@@ -27,11 +27,14 @@ export const STUDY_GROUPS = Object.values(STUDY_CODE_MAPPING);
 
 /**
  * Get study display name from study code
- * @param {string} studyCode - Study code (e.g., '01', '02')
+ * The phenotype API's /api/biospecimens already returns the display name
+ * (e.g., 'Adult Sedentary'), so a known name is passed through unchanged.
+ * @param {string} studyCode - Study code (e.g., '01', '02') or display name
  * @returns {string|null} Study display name or null if not found
  */
 export const getStudyName = (studyCode) => {
-  return STUDY_CODE_MAPPING[studyCode] || null;
+  if (STUDY_CODE_MAPPING[studyCode]) return STUDY_CODE_MAPPING[studyCode];
+  return STUDY_GROUPS.includes(studyCode) ? studyCode : null;
 };
 
 /**

@@ -1,6 +1,97 @@
 import axios from 'axios';
 
 /**
+ * Columns requested from the phenotype API's GET /api/biospecimens, by their
+ * stored (lowercase) names - the only ones the visualization reads. The full
+ * table has ~70 columns.
+ */
+export const BIOSPECIMEN_API_FIELDS = [
+  'vial_label',
+  'pid',
+  'visit_code',
+  'timepoint',
+  'tranche',
+  'study',
+  'sex',
+  'dmaqc_age_groups',
+  'bmi',
+  'samplegroupcode',
+  'randomgroupcode',
+  'enrollrandomgroupcode',
+  'tempsampprofile',
+  'latino_psca',
+  'aablack_psca',
+  'asian_psca',
+  'hawaii_psca',
+  'natamer_psca',
+  'cauc_psca',
+  'raceref_psca',
+  'raceoth_psca',
+  'raw_assays_with_results',
+];
+
+/**
+ * Query parameters for GET /api/biospecimens. not_null keeps only vials with
+ * omics results (~50k of ~520k rows) server-side. List values are
+ * comma-joined because axios would otherwise send `fields[]=...`.
+ */
+const BIOSPECIMEN_API_PARAMS = {
+  return_format: 'json',
+  not_null: 'raw_assays_with_results',
+  fields: BIOSPECIMEN_API_FIELDS.join(','),
+};
+
+/**
+ * Record keys as the visualization components read them
+ */
+const BIOSPECIMEN_RECORD_KEYS = [
+  'vial_label',
+  'pid',
+  'visit_code',
+  'timepoint',
+  'tranche',
+  'study',
+  'sex',
+  'dmaqc_age_groups',
+  'bmi',
+  'sample_group_code',
+  'random_group_code',
+  'enroll_random_group_code',
+  'temp_samp_profile',
+  'latino_psca',
+  'aablack_psca',
+  'asian_psca',
+  'hawaii_psca',
+  'natamer_psca',
+  'cauc_psca',
+  'raceref_psca',
+  'raceoth_psca',
+  'raw_assays_with_results',
+];
+
+const canonicalKey = (key) => key.toLowerCase().replace(/_/g, '');
+
+const RECORD_KEY_BY_CANONICAL = Object.fromEntries(
+  BIOSPECIMEN_RECORD_KEYS.map((key) => [canonicalKey(key), key]),
+);
+
+/**
+ * Rename a record's keys to the spelling the components read
+ * The API returns the data dictionary's original spelling (e.g.,
+ * sampleGroupCode, DMAQC_age_groups); matching ignores case and underscores so
+ * camelCase, lowercase and snake_case responses all normalize the same way.
+ * @param {Object} record - Biospecimen record from the API
+ * @returns {Object} Record with normalized keys
+ */
+export const normalizeBiospecimenRecord = (record) => {
+  const normalized = {};
+  Object.entries(record).forEach(([key, value]) => {
+    normalized[RECORD_KEY_BY_CANONICAL[canonicalKey(key)] || key] = value;
+  });
+  return normalized;
+};
+
+/**
  * Create mock biospecimen service for development when environment variables are missing
  */
 function createMockService() {
@@ -408,6 +499,7 @@ function CreateBiospecimenService() {
       const { signal, ...requestOptions } = options;
       
       const params = {
+        ...BIOSPECIMEN_API_PARAMS,
         ...formatFilters(filters),
         ...requestOptions, // This now excludes signal
       };
@@ -440,7 +532,8 @@ function CreateBiospecimenService() {
         console.log('Making biospecimen API request with filters:', filters);
         console.log('Formatted params:', params);
         
-        const response = await client.get('/', axiosConfig);
+        // '' rather than '/': a trailing slash on /api/biospecimens is redirected
+        const response = await client.get('', axiosConfig);
 
         // Handle 304 Not Modified response (from cache)
         if (response.status === 304 && cachedData) {
@@ -471,13 +564,16 @@ function CreateBiospecimenService() {
           console.warn('Unexpected response format:', response.data);
           responseResults = [];
         }
+        responseResults = responseResults.map(normalizeBiospecimenRecord);
 
-        // Store new ETag if present
-        if (response.etag) {
-          etagCache.setETag(filters, response.etag);
-        }
+        // Not cached in localStorage: the response (~26M characters) is far over
+        // the ~5M-character quota, so the write always failed after serializing
+        // it on the main thread. The browser's HTTP cache revalidates with the
+        // API's ETag instead (304 -> cached body). Leftover entries, e.g. from
+        // the previous backend, are cleared so they don't hold quota or serve
+        // stale data on a network error.
+        etagCache.clearCache(filters);
 
-        // Cache the new data with improved structure
         const responseData = {
           results: responseResults,
           total: response.data.total || responseResults.length,
@@ -485,7 +581,6 @@ function CreateBiospecimenService() {
           next: response.data.next || null,
           previous: response.data.previous || null,
         };
-        etagCache.setCachedData(filters, responseData);
 
         console.log(`Successfully loaded ${responseResults.length} biospecimen records`);
 
