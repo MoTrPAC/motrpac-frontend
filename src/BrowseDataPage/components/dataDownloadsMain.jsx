@@ -206,6 +206,13 @@ function DataDownloadsMain({
               </span>
             </span>
           </div>
+          <div className="alert alert-success">
+            <span className="font-weight-bold">
+              <i className="bi bi-rocket-takeoff-fill mr-2 text-dark"  aria-hidden="true" />
+              The public release of the acute exercise in human sedentary adults (pre-suspension) study analysis collection
+              c2.0 is now available. See <Link to="/knowledge-center/data-collections/analysis-results/analysis-human-precovid-sed-adu">full release notes</Link> for more details.
+            </span>
+          </div>
           <StudyDataExplorer userType={access} profile={profile} />
         </div>
         {/* Additional data information */}
