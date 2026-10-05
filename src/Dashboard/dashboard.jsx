@@ -188,20 +188,16 @@ export function Dashboard({
             <div className="w-75 mx-auto">
               <h1 className="highlight-title display-4 mb-4 text-center">
                 <i className="bi bi-rocket-takeoff mr-3" aria-hidden="true" />
-                <span>New human data collection now available!</span>
+                <span>New human study analysis collection released!</span>
               </h1>
               <div className="row mb-5">
                 <div className="col-md-12 lead d-flex align-items-start">
                   <span className="data-release-text">
-                    <ExternalLink
-                      to="https://motrpac.org"
-                      label="MoTrPAC"
-                    />
-                    {' '}has publicly released new{' '}
-                    <Link to="/data-download">data collections</Link>
-                    . The Pre-Suspension Acute Exercise Study contains data from
-                    sedentary adults undergoing acute resistance or endurance exercise
-                    bouts. Visit the{' '}
+                    {' '}The acute exercise in human sedentary adults (pre-suspension) study{' '}
+                    <Link to="/data-download">analysis collection c2.0</Link>{' '}
+                    is now publicly available. This release reflects the most up-to-date processing
+                    of this dataset, including harmonized metabolite naming and important
+                    refinements compared to c1.3, released earlier this year. Visit the{' '}
                     <Link to="/search">Browse Results</Link>
                     {' '}page for summary-level results and the{' '}
                     <ExternalLink
@@ -209,6 +205,8 @@ export function Dashboard({
                       label="Data Visualization"
                     />
                     {' '}for interactive analysis. Please refer to the{' '}
+                    <Link to="/knowledge-center/data-collections/analysis-results/analysis-human-precovid-sed-adu">full release notes</Link>{' '}
+                    for more details, and the{' '}
                     <Link to="/citation">Citation</Link>
                     {' '}page for information on acknowledging MoTrPAC
                     when using this dataset in your work.
@@ -219,15 +217,15 @@ export function Dashboard({
                 <div className="col-md-4 lead d-flex align-items-start">
                   <div className="feature-highlight-icon mr-3">
                     <span className="material-icons" aria-hidden="true">
-                      auto_awesome
+                      people
                     </span>
                   </div>
                   <div className="feature-highlight-content mr-1">
-                    <h3>MCP Server</h3>
+                    <h3>Human Acute Exercise c2.0</h3>
                     <div className="data-release-text mb-3">
-                      Query and explore publicly released MoTrPAC datasets directly from LLM-powered clients including Claude Desktop and other supported clients
+                      Acute exercise in human sedentary adult study including data from 175 participants with multi-omic profiling who were enrolled prior to the Covid-19 pandemic suspension
                     </div>
-                    <Link to="/mcp-server" className="btn btn-primary">Learn More</Link>
+                    <Link to="/data-download" className="btn btn-primary">Download Datasets</Link>
                   </div>
                 </div>
                 <div className="col-md-4 lead d-flex align-items-start">
@@ -247,19 +245,18 @@ export function Dashboard({
                 <div className="col-md-4 lead d-flex align-items-start">
                   <div className="feature-highlight-icon mr-3">
                     <span className="material-icons" aria-hidden="true">
-                      pest_control_rodent
+                      auto_awesome
                     </span>
                   </div>
                   <div className="feature-highlight-content mr-1">
-                    <h3>Rats Training Data 2.0</h3>
+                    <h3>MCP Server</h3>
                     <div className="data-release-text mb-3">
-                      Endurance training in young adult rats study data using Rat Reference Genome 7 now available for download
+                      Query and explore publicly released MoTrPAC datasets directly from LLM-powered clients including Claude Desktop and other supported clients
                     </div>
-                    <Link to="/data-download" className="btn btn-primary">Download Datasets</Link>
+                    <Link to="/mcp-server" className="btn btn-primary">Learn More</Link>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
           <div className="greeting-message">

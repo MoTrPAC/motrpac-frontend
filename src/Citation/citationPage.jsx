@@ -57,7 +57,13 @@ function Citation() {
           </p>
           <h5 className="mt-4">Acute exercise in human sedentary adults (pre-suspension)</h5>
           <p className="citation-item">
-            Citation information will be provided once the associated manuscript is available.
+            MoTrPAC Study Group., Lead Analysts. & MoTrPAC Study Group. Multi-Omic, Multi-Tissue
+            Responses to Acute Exercise in Sedentary Adults: Findings from the Molecular
+            Transducers of Physical Activity Consortium. bioRxiv 2026.02.27.702183.{' '}
+            <ExternalLink
+              to="https://doi.org/10.64898/2026.02.27.702183"
+              label="https://doi.org/10.64898/2026.02.27.702183"
+            />
           </p>
         </div>
       </div>
