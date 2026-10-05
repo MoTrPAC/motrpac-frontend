@@ -210,7 +210,8 @@ function DataDownloadsMain({
             <span className="font-weight-bold">
               <i className="bi bi-rocket-takeoff-fill mr-2 text-dark"  aria-hidden="true" />
               The public release of the acute exercise in human sedentary adults (pre-suspension) study analysis collection
-              c2.0 is now available. See <Link to="/knowledge-center/data-collections/analysis-results/analysis-human-precovid-sed-adu">full release notes</Link> for more details.
+              c2.0 is now available. See <Link to="/knowledge-center/data-collections/analysis-results/analysis-human-precovid-sed-adu">full release notes</Link> for more details,
+              and explore the data interactively through the companion <a href="https://data-viz.motrpac-data.org/precawg" target="_blank" rel="noopener noreferrer">data visualizations</a>.
             </span>
           </div>
           <StudyDataExplorer userType={access} profile={profile} />
