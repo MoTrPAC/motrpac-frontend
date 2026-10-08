@@ -1,24 +1,29 @@
 import axios from 'axios';
+import { tsvParse } from 'd3';
 
 /**
  * Columns requested from the phenotype API's GET /api/biospecimens, by their
- * stored (lowercase) names - the only ones the visualization reads. The full
- * table has ~70 columns.
+ * stored (lowercase) names. The API also accepts the data dictionary spelling
+ * (e.g. tempSampProfile) but not the snake_case keys the components read
+ * (e.g. temp_samp_profile). The full table has ~70 columns.
  */
 export const BIOSPECIMEN_API_FIELDS = [
   'vial_label',
   'pid',
-  'visit_code',
-  'timepoint',
   'tranche',
+  'tempsampprofile',
+  'visit_code',
   'study',
   'sex',
   'dmaqc_age_groups',
   'bmi',
+  'bmi_groups',
   'samplegroupcode',
   'randomgroupcode',
   'enrollrandomgroupcode',
-  'tempsampprofile',
+  'timepoint',
+  'receivedcas',
+  'raw_assays_with_results',
   'latino_psca',
   'aablack_psca',
   'asian_psca',
@@ -27,17 +32,17 @@ export const BIOSPECIMEN_API_FIELDS = [
   'cauc_psca',
   'raceref_psca',
   'raceoth_psca',
-  'raw_assays_with_results',
 ];
 
 /**
- * Query parameters for GET /api/biospecimens. not_null keeps only vials with
- * omics results (~50k of ~520k rows) server-side. List values are
- * comma-joined because axios would otherwise send `fields[]=...`.
+ * Query parameters for GET /api/biospecimens. Every row is requested (no
+ * not_null filter); useBiospecimenData drops rows without
+ * raw_assays_with_results client-side. List values are comma-joined because
+ * axios would otherwise send `fields[]=...`. TSV is about a quarter the size
+ * of the equivalent JSON to download and parse.
  */
 const BIOSPECIMEN_API_PARAMS = {
-  return_format: 'json',
-  not_null: 'raw_assays_with_results',
+  return_format: 'tsv',
   fields: BIOSPECIMEN_API_FIELDS.join(','),
 };
 
@@ -47,17 +52,20 @@ const BIOSPECIMEN_API_PARAMS = {
 const BIOSPECIMEN_RECORD_KEYS = [
   'vial_label',
   'pid',
-  'visit_code',
-  'timepoint',
   'tranche',
+  'temp_samp_profile',
+  'visit_code',
   'study',
   'sex',
   'dmaqc_age_groups',
   'bmi',
+  'bmi_groups',
   'sample_group_code',
   'random_group_code',
   'enroll_random_group_code',
-  'temp_samp_profile',
+  'timepoint',
+  'received_cas',
+  'raw_assays_with_results',
   'latino_psca',
   'aablack_psca',
   'asian_psca',
@@ -66,7 +74,6 @@ const BIOSPECIMEN_RECORD_KEYS = [
   'cauc_psca',
   'raceref_psca',
   'raceoth_psca',
-  'raw_assays_with_results',
 ];
 
 const canonicalKey = (key) => key.toLowerCase().replace(/_/g, '');
@@ -89,6 +96,27 @@ export const normalizeBiospecimenRecord = (record) => {
     normalized[RECORD_KEY_BY_CANONICAL[canonicalKey(key)] || key] = value;
   });
   return normalized;
+};
+
+/**
+ * Parse the API's TSV response into normalized records
+ * The API writes nulls as empty cells and every requested column is text, so
+ * empty cells become null (keeping `!= null` checks such as the one on
+ * raw_assays_with_results meaningful) and other values stay strings, as they
+ * are in the JSON response.
+ * @param {string} text - TSV body with a header row
+ * @returns {Object[]} Records with normalized keys
+ */
+export const parseBiospecimenTsv = (text) => {
+  const rows = tsvParse(text, (row) => {
+    const record = {};
+    Object.entries(row).forEach(([key, value]) => {
+      record[key] = value === '' ? null : value;
+    });
+    return normalizeBiospecimenRecord(record);
+  });
+  // A plain array, without the `columns` property d3 attaches
+  return rows.slice();
 };
 
 /**
@@ -516,8 +544,9 @@ function CreateBiospecimenService() {
       const cachedETag = etagCache.getETag(filters);
       const { data: cachedData } = etagCache.getCachedData(filters);
 
-      // Create axios config with signal if provided
-      const axiosConfig = { params };
+      // Create axios config with signal if provided. The TSV body is read as
+      // text; axios would otherwise try to parse it as JSON.
+      const axiosConfig = { params, responseType: 'text' };
       if (signal) {
         axiosConfig.signal = signal;
       }
@@ -556,15 +585,16 @@ function CreateBiospecimenService() {
 
         // Handle different response formats
         let responseResults;
-        if (Array.isArray(response.data)) {
-          responseResults = response.data;
+        if (typeof response.data === 'string') {
+          responseResults = parseBiospecimenTsv(response.data);
+        } else if (Array.isArray(response.data)) {
+          responseResults = response.data.map(normalizeBiospecimenRecord);
         } else if (response.data.results && Array.isArray(response.data.results)) {
-          responseResults = response.data.results;
+          responseResults = response.data.results.map(normalizeBiospecimenRecord);
         } else {
           console.warn('Unexpected response format:', response.data);
           responseResults = [];
         }
-        responseResults = responseResults.map(normalizeBiospecimenRecord);
 
         // Not cached in localStorage: the response (~26M characters) is far over
         // the ~5M-character quota, so the write always failed after serializing

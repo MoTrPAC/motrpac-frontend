@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import {
   BIOSPECIMEN_API_FIELDS,
   normalizeBiospecimenRecord,
+  parseBiospecimenTsv,
 } from '../biospecimenService';
 
 describe('normalizeBiospecimenRecord', () => {
@@ -34,7 +35,7 @@ describe('normalizeBiospecimenRecord', () => {
   });
 
   test('keys it does not know are kept as-is', () => {
-    expect(normalizeBiospecimenRecord({ receivedCAS: '1' })).toEqual({ receivedCAS: '1' });
+    expect(normalizeBiospecimenRecord({ timepointOrder: '1' })).toEqual({ timepointOrder: '1' });
   });
 
   test('every requested API field normalizes to a key the components read', () => {
@@ -45,6 +46,33 @@ describe('normalizeBiospecimenRecord', () => {
     expect(normalized).toContain('temp_samp_profile');
     expect(normalized).not.toContain('samplegroupcode');
     expect(normalized).toHaveLength(BIOSPECIMEN_API_FIELDS.length);
+  });
+});
+
+describe('parseBiospecimenTsv', () => {
+  test('parses rows, maps empty cells to null and normalizes keys', () => {
+    const tsv = 'vial_label\tpid\tsampleGroupCode\tbmi\traw_assays_with_results\n'
+      + 'V1\tP1\tBLO\t27.37\tprot-ol\n'
+      + '\tP2\tMUS\t\t\n';
+    expect(parseBiospecimenTsv(tsv)).toEqual([
+      { vial_label: 'V1', pid: 'P1', sample_group_code: 'BLO', bmi: '27.37', raw_assays_with_results: 'prot-ol' },
+      { vial_label: null, pid: 'P2', sample_group_code: 'MUS', bmi: null, raw_assays_with_results: null },
+    ]);
+  });
+
+  test('rows without assay results are dropped by a != null filter', () => {
+    const rows = parseBiospecimenTsv('vial_label\traw_assays_with_results\nV1\tprot-ol\nV2\t\n');
+    expect(rows.filter((item) => item?.raw_assays_with_results != null).map((r) => r.vial_label))
+      .toEqual(['V1']);
+  });
+
+  test('quoted cells, as written for values with tabs or quotes, are unquoted', () => {
+    expect(parseBiospecimenTsv('vial_label\tstudy\nV1\t"a\tb ""c"""\n'))
+      .toEqual([{ vial_label: 'V1', study: 'a\tb "c"' }]);
+  });
+
+  test('a header-only body yields no rows', () => {
+    expect(parseBiospecimenTsv('vial_label\tpid\n')).toEqual([]);
   });
 });
 
@@ -74,7 +102,7 @@ describe('queryBiospecimens caching', () => {
     window.localStorage.setItem('biospecimen-data-{"__all__":true}', '{"data":[]}');
     fakeClient.get.mockResolvedValue({
       status: 200,
-      data: [{ vial_label: 'V1', sampleGroupCode: 'BLO', raw_assays_with_results: 'prot-ol' }],
+      data: 'vial_label\tsampleGroupCode\traw_assays_with_results\nV1\tBLO\tprot-ol\n',
       headers: {},
     });
 
@@ -88,17 +116,47 @@ describe('queryBiospecimens caching', () => {
   });
 
   test('requests the new endpoint without a trailing slash, with the query params', async () => {
-    fakeClient.get.mockResolvedValue({ status: 200, data: [], headers: {} });
+    fakeClient.get.mockResolvedValue({ status: 200, data: 'vial_label\n', headers: {} });
 
     const { CreateBiospecimenService } = await import('../biospecimenService');
     await CreateBiospecimenService().queryBiospecimens({});
 
     const [url, config] = fakeClient.get.mock.calls[0];
     expect(url).toBe('');
-    expect(config.params).toMatchObject({
-      return_format: 'json',
-      not_null: 'raw_assays_with_results',
+    expect(config.params).toMatchObject({ return_format: 'tsv' });
+    expect(config.responseType).toBe('text');
+    // Every row is requested; the hook drops rows without assay results.
+    expect(config.params).not.toHaveProperty('not_null');
+    expect(config.params.fields.split(',')).toEqual(BIOSPECIMEN_API_FIELDS);
+  });
+
+  test('a JSON array response is still accepted', async () => {
+    fakeClient.get.mockResolvedValue({
+      status: 200,
+      data: [{ vial_label: 'V1', sampleGroupCode: 'BLO' }],
+      headers: {},
     });
-    expect(config.params.fields.split(',')).toContain('samplegroupcode');
+
+    const { CreateBiospecimenService } = await import('../biospecimenService');
+    const result = await CreateBiospecimenService().queryBiospecimens({});
+
+    expect(result.data).toEqual([{ vial_label: 'V1', sample_group_code: 'BLO' }]);
+  });
+
+  test('requests stored column names, which the API accepts, not component keys', () => {
+    // The API resolves fields by stored name or data dictionary spelling;
+    // snake_case keys such as temp_samp_profile would be rejected with a 400.
+    ['tempsampprofile', 'samplegroupcode', 'randomgroupcode',
+      'enrollrandomgroupcode', 'receivedcas', 'bmi_groups'].forEach((field) => {
+      expect(BIOSPECIMEN_API_FIELDS).toContain(field);
+    });
+    ['temp_samp_profile', 'sample_group_code', 'received_cas'].forEach((key) => {
+      expect(BIOSPECIMEN_API_FIELDS).not.toContain(key);
+    });
+  });
+
+  test('normalizes the new columns to the component keys', () => {
+    expect(normalizeBiospecimenRecord({ receivedCAS: '1', bmi_groups: 'Normal (18.5-24.9)' }))
+      .toEqual({ received_cas: '1', bmi_groups: 'Normal (18.5-24.9)' });
   });
 });
