@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
+import CFDEWheel from "cfde-wheel";
 import MoTrPAClogo from '../assets/logo-motrpac.png';
 import actions from '../Auth/authActions';
 import BrowseDataActions from '../BrowseDataPage/browseDataActions';
@@ -463,6 +464,9 @@ export function Navbar({
           </div>
         </div>
       </nav>
+      {!isAuthenticated && (
+        <CFDEWheel />
+      )}
       <LogoutButton
         isAuthenticated={isAuthenticated}
         profile={profile}
