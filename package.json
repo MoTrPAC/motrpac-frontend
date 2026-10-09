@@ -8,6 +8,7 @@
     "auth0-js": "9.26.0",
     "axios": "0.28.0",
     "bootstrap": "4.6.1",
+    "cfde-wheel": "git+https://github.com/MaayanLab/cfde-wheel.git",
     "chart.js": "^2.9.4",
     "d3": "7.9.0",
     "dayjs": "1.11.7",
