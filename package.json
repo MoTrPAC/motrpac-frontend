@@ -52,6 +52,7 @@
     "start": "vite",
     "fetch-docs": "node scripts/fetch-docs.js",
     "build-facet-vocabulary": "node scripts/build-facet-vocabulary.js",
+    "compare:biospecimens": "node scripts/compare-biospecimen-counts.js",
     "metadata:mock": "sh scripts/metadata.sh mock",
     "metadata:full": "sh scripts/metadata.sh full",
     "build": "vite build",
