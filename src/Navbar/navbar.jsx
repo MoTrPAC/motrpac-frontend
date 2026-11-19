@@ -252,6 +252,15 @@ export function Navbar({
                       <Link to="/sample-data-tracker" className="dropdown-item">
                         Sample Data Tracker
                       </Link>
+                      <a
+                        href="/static-assets/clinical_data_release_changelog.html"
+                        className="dropdown-item external-link"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <span>Clinical Data Release Changelog</span>
+                        <i className="material-icons external-link-icon">open_in_new</i>
+                      </a>
                       <Link to="/qc-data-monitor" className="dropdown-item" onClick={fecthQCData}>
                         QC Data Monitor
                       </Link>
